@@ -507,12 +507,14 @@ export function finishView (view) {
                 value: Prism.highlight(code, Prism.languages.makefile)
               }
             } else {
-              code = S(code).unescapeHTML().s
               const languages = hljs.listLanguages()
-              if (!languages.includes(reallang)) {
-                result = hljs.highlightAuto(code)
-              } else {
+              if (languages.includes(reallang)) {
+                code = S(code).unescapeHTML().s
                 result = hljs.highlight(reallang, code)
+              } else {
+                result = {
+                  value: code
+                }
               }
             }
             if (codeDiv.length > 0) codeDiv.html(result.value)
