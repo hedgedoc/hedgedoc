@@ -1,19 +1,9 @@
 /* eslint-env browser, jquery */
 /* global moment, serverurl */
 
-require('prismjs/themes/prism.css')
-require('prismjs/components/prism-wiki')
-require('prismjs/components/prism-haskell')
-require('prismjs/components/prism-go')
-require('prismjs/components/prism-typescript')
-require('prismjs/components/prism-jsx')
-require('prismjs/components/prism-makefile')
-require('prismjs/components/prism-gherkin')
-
-import Prism from 'prismjs'
-import hljs from 'highlight.js'
-import PDFObject from 'pdfobject'
-import S from 'string'
+import hljs       from 'highlight.js'
+import PDFObject  from 'pdfobject'
+import S          from 'string'
 import { saveAs } from 'file-saver'
 
 require('./lib/common/login')
@@ -21,6 +11,8 @@ require('../vendor/md-toc')
 var Viz = require('viz.js')
 
 import getUIElements from './lib/editor/ui-elements'
+import highlight     from './lib/highlight'
+
 const ui = getUIElements()
 
 // auto update last change
@@ -491,30 +483,9 @@ export function finishView (view) {
               result = {
                 value: code
               }
-            } else if (reallang === 'haskell' || reallang === 'go' || reallang === 'typescript' || reallang === 'jsx' || reallang === 'gherkin') {
-              code = S(code).unescapeHTML().s
-              result = {
-                value: Prism.highlight(code, Prism.languages[reallang])
-              }
-            } else if (reallang === 'tiddlywiki' || reallang === 'mediawiki') {
-              code = S(code).unescapeHTML().s
-              result = {
-                value: Prism.highlight(code, Prism.languages.wiki)
-              }
-            } else if (reallang === 'cmake') {
-              code = S(code).unescapeHTML().s
-              result = {
-                value: Prism.highlight(code, Prism.languages.makefile)
-              }
             } else {
-              const languages = hljs.listLanguages()
-              if (languages.includes(reallang)) {
-                code = S(code).unescapeHTML().s
-                result = hljs.highlight(reallang, code)
-              } else {
-                result = {
-                  value: code
-                }
+              result = {
+                value: highlight.render(code, reallang)
               }
             }
             if (codeDiv.length > 0) codeDiv.html(result.value)
