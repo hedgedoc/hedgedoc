@@ -22,8 +22,8 @@ describe('User Sequelize model', function () {
       return Promise.all([
         u.verifyPassword(userData.password).then(result => assert.strictEqual(result, true)),
         u.verifyPassword(intentionallyInvalidPassword).then(result => assert.strictEqual(result, false))
-      ]).catch(e => assert.fail(e))
-    })
+      ])
+    }).catch(e => assert.fail(e))
   })
 
   it('can cope with password stored in standard scrypt header format', function () {
