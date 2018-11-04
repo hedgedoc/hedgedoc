@@ -2182,10 +2182,10 @@ socket.on('cursor blur', function (data) {
 })
 
 var options = {
-  valueNames: ['id', 'name'],
+  valueNames: ['id', 'name', { name: 'userURL', attr: 'href' }],
   item: '<li class="ui-user-item">' +
         '<span class="id" style="display:none;"></span>' +
-        '<a href="#">' +
+        '<a href="#" class="userURL">' +
             '<span class="pull-left"><i class="ui-user-icon"></i></span><span class="ui-user-name name"></span><span class="pull-right"><i class="fa fa-circle ui-user-status"></i></span>' +
         '</a>' +
         '</li>'
@@ -2193,8 +2193,15 @@ var options = {
 var onlineUserList = new List('online-user-list', options)
 var shortOnlineUserList = new List('short-online-user-list', options)
 
+function addOnlineUsersURLs () {
+  onlineUsers.forEach((u) => {
+    u.userURL = u.userid ? window.urlpath + '/user/' + u.userid : '#'
+  })
+}
+
 function updateOnlineStatus () {
   if (!window.loaded || !socket.connected) return
+  addOnlineUsersURLs()
   var _onlineUsers = deduplicateOnlineUsers(onlineUsers)
   showStatus(statusType.online, _onlineUsers.length)
   var items = onlineUserList.items
