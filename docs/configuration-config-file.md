@@ -32,6 +32,7 @@ to `config.json` before filling in your own details.
 | `imageUploadType` | `imgur`, `s3`, `minio`, `azure`, `lutim` or `filesystem`(default) | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [Minio](guides/minio-image-upload.md)|
 | `sourceURL` | `https://github.com/codimd/server/tree/<current commit>` | Provides the link to the source code of CodiMD on the entry page (Please, make sure you change this when you run a modified version) |
 | `staticCacheTime` | `1 * 24 * 60 * 60 * 1000` | static file cache time |
+| `tooBusyLag` | `70` | CPU time for one eventloop tick until node throttles connections. (milliseconds) |
 | `heartbeatInterval` | `5000` | socket.io heartbeat interval |
 | `heartbeatTimeout` | `10000` | socket.io heartbeat timeout |
 | `documentMaxLength` | `100000` | note max length |
