@@ -1,5 +1,5 @@
 /* eslint-env browser, jquery */
-/* global moment, serverurl */
+/* global moment, serverurl, plantumlServer */
 
 require('prismjs/themes/prism.css')
 require('prismjs/components/prism-wiki')
@@ -966,6 +966,10 @@ md.use(require('markdown-it-imsize'))
 
 md.use(require('markdown-it-emoji'), {
   shortcuts: {}
+})
+
+md.use(require('markdown-it-plantuml'), {
+  server: plantumlServer
 })
 
 window.emojify.setConfig({
