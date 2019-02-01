@@ -1,7 +1,7 @@
 Configuration Using Config file
 ===
 
-You can choose to configure CodiMD with either a config file or with 
+You can choose to configure CodiMD with either a config file or with
 [environment variables](configuration-env-vars.md). The config file is processed
 in [`lib/config/index.js`](../lib/config/index.js) - so this is the first
 place to look if anything is missing not obvious from this document. The
@@ -29,7 +29,7 @@ to `config.json` before filling in your own details.
 | `dbURL` | `mysql://localhost:3306/database` | set the db URL; if set, then db config (below) won't be applied |
 | `forbiddenNoteIDs` | `['robots.txt']` | disallow creation of notes, even if `allowFreeUrl` is `true` |
 | `loglevel` | `info` | Defines what kind of logs are provided to stdout. |
-| `imageUploadType` | `imgur`, `s3`, `minio`, `azure` or `filesystem`(default) | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [Minio](guides/minio-image-upload.md)|
+| `imageUploadType` | `imgur`, `s3`, `minio`, `azure`, `lutim` or `filesystem`(default) | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [Minio](guides/minio-image-upload.md)|
 | `sourceURL` | `https://github.com/codimd/server/tree/<current commit>` | Provides the link to the source code of CodiMD on the entry page (Please, make sure you change this when you run a modified version) |
 | `staticCacheTime` | `1 * 24 * 60 * 60 * 1000` | static file cache time |
 | `heartbeatInterval` | `5000` | socket.io heartbeat interval |
@@ -143,5 +143,11 @@ Most of these have never been documented for the config.json, feel free to expan
 | variables | example values | description |
 | --------- | ------ | ----------- |
 | `minio` | `{ "accessKey": "YOUR_MINIO_ACCESS_KEY", "secretKey": "YOUR_MINIO_SECRET_KEY", "endpoint": "YOUR_MINIO_HOST", port: 9000, secure: true }` | When `imageUploadType` is set to `minio`, you need to set this key. Also check out our [Minio Image Upload Guide](guides/minio-image-upload.md) |
+
+### Lutim
+
+| variables | example values | description |
+| --------- | ------ | ----------- |
+|`lutim`| `{"url": "YOUR_LUTIM_URL"}`| When `imageUploadType` is set to `lutim`, you can setup the lutim url|
 
 <sup>1</sup>: relative paths are based on CodiMD's base directory

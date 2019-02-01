@@ -33,7 +33,7 @@ defaultNotePath can't be set from env-vars
 | `CMD_DB_URL` | `mysql://localhost:3306/database` | set the database URL |
 | `CMD_LOGLEVEL` | `info`, `debug` ... | Defines what kind of logs are provided to stdout. |
 | `CMD_FORBIDDEN_NOTE_IDS` | `'robots.txt'` | disallow creation of notes, even if `CMD_ALLOW_FREEURL` is `true` |
-| `CMD_IMAGE_UPLOAD_TYPE` | `imgur`, `s3`, `minio` or `filesystem` | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [Minio](guides/minio-image-upload.md), also there's a whole section on their respective env vars below. |
+| `CMD_IMAGE_UPLOAD_TYPE` | `imgur`, `s3`, `minio`, `lutim` or `filesystem` | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [Minio](guides/minio-image-upload.md), also there's a whole section on their respective env vars below. |
 | `CMD_SOURCE_URL` | `https://github.com/codimd/server/tree/<current commit>` | Provides the link to the source code of CodiMD on the entry page (Please, make sure you change this when you run a modified version) |
 
 
@@ -243,6 +243,12 @@ you don't have to use either of these.
 | `CMD_MINIO_PORT` | `9000` | Port that is used for your Minio instance |
 | `CMD_MINIO_SECURE` | `true` | If set to `true` HTTPS is used for Minio |
 
+
+### Lutim
+
+| variable | example value | description |
+| -------- | ------------- | ----------- |
+| `CMD_LUTIM_URL` | `https://framapic.org/` |  When `CMD_IMAGE_UPLOAD_TYPE` is set to `lutim`, you can setup the lutim url |
 
 **Note:** *Due to the rename process we renamed all `HMD_`-prefix variables to be `CMD_`-prefixed. The old ones continue to work.*
 
