@@ -187,6 +187,7 @@ There are some config settings you need to change in the files below.
 | `CMD_USECDN` | `true` or `false` | set to use CDN resources or not (default is `true`) |
 | `CMD_ALLOW_ANONYMOUS` | `true` or `false` | set to allow anonymous usage (default is `true`) |
 | `CMD_ALLOW_ANONYMOUS_EDITS` | `true` or `false` | if `allowAnonymous` is `true`, allow users to select `freely` permission, allowing guests to edit existing notes (default is `false`) |
+| `CMD_ALLOW_ANONYMOUS_VIEWS` | `true` or `false` | set to `false` to delete `freely`, `editable` and `locked` permission when `allowAnonymous` is true (default is `true`) |
 | `CMD_ALLOW_FREEURL` | `true` or `false` | set to allow new note creation by accessing a nonexistent note URL |
 | `CMD_FORBIDDEN_NODE_IDS` | `'robots.txt'` | disallow creation of notes, even if `CMD_ALLOW_FREEURL` is `true` |
 | `CMD_DEFAULT_PERMISSION` | `freely`, `editable`, `limited`, `locked` or `private` | set notes default permission (only applied on signed users) |
@@ -287,6 +288,7 @@ There are some config settings you need to change in the files below.
 | `useCDN` | `true` or `false` | set to use CDN resources or not (default is `true`) |
 | `allowAnonymous` | `true` or `false` | set to allow anonymous usage (default is `true`) |
 | `allowAnonymousEdits` | `true` or `false` | if `allowAnonymous` is `true`: allow users to select `freely` permission, allowing guests to edit existing notes (default is `false`) |
+| `allowAnonymousViews` | `true` or `false` | set to `false` to delete `freely`, `editable` and `locked` permission when `allowAnonymous` is true (default is `true`) |
 | `allowFreeURL` | `true` or `false` | set to allow new note creation by accessing a nonexistent note URL |
 | `forbiddenNoteIDs` | `['robots.txt']` | disallow creation of notes, even if `allowFreeUrl` is `true` |
 | `defaultPermission` | `freely`, `editable`, `limited`, `locked`, `protected` or `private` | set notes default permission (only applied on signed users) |
