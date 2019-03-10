@@ -1,5 +1,4 @@
 /* eslint-env browser, jquery */
-/* global moment, serverurl */
 
 /**
  * WHY

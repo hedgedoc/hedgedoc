@@ -1,9 +1,7 @@
 /* eslint-env browser, jquery */
 /* global moment, serverurl */
 
-import hljs       from 'highlight.js'
 import PDFObject  from 'pdfobject'
-import S          from 'string'
 import { saveAs } from 'file-saver'
 
 require('./lib/common/login')
@@ -149,7 +147,7 @@ export function renderTags (view) {
 
 function slugifyWithUTF8 (text) {
   // remove html tags and trim spaces
-  let newText = S(text).trim().stripTags().s
+  let newText = text.trim().replace(/<\/?[^>]+(>|$)/g, "")
   // replace all spaces in between to dashes
   newText = newText.replace(/\s+/g, '-')
   // slugify string to make it valid for attribute
@@ -469,29 +467,6 @@ export function finishView (view) {
               })
             })
     // syntax highlighting
-  view.find('code.raw').removeClass('raw')
-        .each((key, value) => {
-          const langDiv = $(value)
-          if (langDiv.length > 0) {
-            const reallang = langDiv[0].className.replace(/hljs|wrap/g, '').trim()
-            const codeDiv = langDiv.find('.code')
-            let code = ''
-            if (codeDiv.length > 0) code = codeDiv.html()
-            else code = langDiv.html()
-            var result
-            if (!reallang) {
-              result = {
-                value: code
-              }
-            } else {
-              result = {
-                value: highlight.render(code, reallang)
-              }
-            }
-            if (codeDiv.length > 0) codeDiv.html(result.value)
-            else langDiv.html(result.value)
-          }
-        })
     // mathjax
   const mathjaxdivs = view.find('span.mathjax.raw').removeClass('raw').toArray()
   try {
@@ -873,40 +848,6 @@ export function scrollToHash () {
   location.hash = hash
 }
 
-function highlightRender (code, lang) {
-  if (!lang || /no(-?)highlight|plain|text/.test(lang)) { return }
-  code = S(code).escapeHTML().s
-  if (lang === 'sequence') {
-    return `<div class="sequence-diagram raw">${code}</div>`
-  } else if (lang === 'flow') {
-    return `<div class="flow-chart raw">${code}</div>`
-  } else if (lang === 'graphviz') {
-    return `<div class="graphviz raw">${code}</div>`
-  } else if (lang === 'mermaid') {
-    return `<div class="mermaid raw">${code}</div>`
-  } else if (lang === 'abc') {
-    return `<div class="abc raw">${code}</div>`
-  }
-  const result = {
-    value: code
-  }
-  const showlinenumbers = /=$|=\d+$|=\+$/.test(lang)
-  if (showlinenumbers) {
-    let startnumber = 1
-    const matches = lang.match(/=(\d+)$/)
-    if (matches) { startnumber = parseInt(matches[1]) }
-    const lines = result.value.split('\n')
-    const linenumbers = []
-    for (let i = 0; i < lines.length - 1; i++) {
-      linenumbers[i] = `<span data-linenumber='${startnumber + i}'></span>`
-    }
-    const continuelinenumber = /=\+$/.test(lang)
-    const linegutter = `<div class='gutter linenumber${continuelinenumber ? ' continue' : ''}'>${linenumbers.join('\n')}</div>`
-    result.value = `<div class='wrapper'>${linegutter}<div class='code'>${result.value}</div></div>`
-  }
-  return result.value
-}
-
 import markdownit from 'markdown-it'
 import markdownitContainer from 'markdown-it-container'
 
@@ -916,7 +857,7 @@ export let md = markdownit('default', {
   langPrefix: '',
   linkify: true,
   typographer: true,
-  highlight: highlightRender
+  highlight: highlight.render
 })
 window.md = md
 
