@@ -158,7 +158,7 @@ Release Notes
 
 ### Deprecations
 * NodeJS version 6
-* Mattermost login integration (is replaced by [generic oAuth2 module](https://github.com/hackmdio/codimd/blob/6ce7b20a7f92ccff2f7f870ff5d116d685310cfd/docs/guides/auth/mattermost-self-hosted.md))
+* Mattermost login integration (is replaced by [generic oAuth2 module](https://github.com/codimd/server/blob/6ce7b20a7f92ccff2f7f870ff5d116d685310cfd/docs/guides/auth/mattermost-self-hosted.md))
 
 ### Honorable mentions
 * [Alex Hesse (Pingu501)](https://github.com/Pingu501)
@@ -174,7 +174,7 @@ Release Notes
 ---
 
 ### Announcement
-* HackMD CE is renamed to CodiMD to prevent confusion. [For details see here](https://github.com/hackmdio/codimd#hackmd-ce-became-codimd)
+* HackMD CE is renamed to CodiMD to prevent confusion. [For details see here](https://github.com/codimd/server#hackmd-ce-became-codimd)
 
 ### Enhancements
 * Show full title by hovering over to table of contents entries

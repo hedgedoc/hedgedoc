@@ -36,7 +36,7 @@ cat << EOF
 
 
 Edit the following config file to setup CodiMD server and client.
-Read more info at https://github.com/hackmdio/codimd#configuration-files
+Read more info at https://github.com/codimd/server#configuration-files
 
 * config.json           -- CodiMD config
 * .sequelizerc          -- db config

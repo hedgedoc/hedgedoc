@@ -89,7 +89,7 @@ To stay up to date with your installation it's recommended to join our [Matrix c
 
 You can quickly setup a sample Heroku CodiMD application by clicking the button below.
 
-[![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/hackmdio/codimd/tree/master)
+[![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/codimd/server/tree/master)
 
 If you deploy it without the button, keep in mind to use the right buildpacks. For details check `app.json`.
 
@@ -100,7 +100,7 @@ To install use `helm install stable/hackmd`.
 For all further details, please check out the offical CodiMD  [K8s helm chart](https://github.com/kubernetes/charts/tree/master/stable/hackmd).
 
 ## CodiMD by docker container
-[![Try in PWD](https://cdn.rawgit.com/play-with-docker/stacks/cff22438/assets/images/button.png)](http://play-with-docker.com?stack=https://github.com/hackmdio/codimd-container/raw/master/docker-compose.yml&stack_name=codimd)
+[![Try in PWD](https://cdn.rawgit.com/play-with-docker/stacks/cff22438/assets/images/button.png)](http://play-with-docker.com?stack=https://github.com/codimd/container/raw/master/docker-compose.yml&stack_name=codimd)
 
 
 **Debian-based version:**
@@ -115,11 +115,11 @@ For all further details, please check out the offical CodiMD  [K8s helm chart](h
 The easiest way to setup CodiMD using docker are using the following three commands:
 
 ```console
-git clone https://github.com/hackmdio/codimd-container.git
+git clone https://github.com/codimd/container.git
 cd codimd-container
 docker-compose up
 ```
-Read more about it in the [container repository…](https://github.com/hackmdio/codimd-container)
+Read more about it in the [container repository…](https://github.com/codimd/container)
 
 ## Cloudron
 
@@ -264,7 +264,7 @@ There are some config settings you need to change in the files below.
 | `CMD_HSTS_PRELOAD` | `true` | whether to allow preloading of the site's HSTS status (e.g. into browsers) |
 | `CMD_CSP_ENABLE` | `true` | whether to enable Content Security Policy (directives cannot be configured with environment variables) |
 | `CMD_CSP_REPORTURI` | `https://<someid>.report-uri.com/r/d/csp/enforce` | Allows to add a URL for CSP reports in case of violations |
-| `CMD_SOURCE_URL` | `https://github.com/hackmdio/codimd/tree/<current commit>` | Provides the link to the source code of CodiMD on the entry page (Please, make sure you change this when you run a modified version) |
+| `CMD_SOURCE_URL` | `https://github.com/codimd/server/tree/<current commit>` | Provides the link to the source code of CodiMD on the entry page (Please, make sure you change this when you run a modified version) |
 
 ***Note:** Due to the rename process we renamed all `HMD_`-prefix variables to be `CMD_`-prefixed. The old ones continue to work.*
 
@@ -317,7 +317,7 @@ There are some config settings you need to change in the files below.
 | `minio` | `{ "accessKey": "YOUR_MINIO_ACCESS_KEY", "secretKey": "YOUR_MINIO_SECRET_KEY", "endpoint": "YOUR_MINIO_HOST", port: 9000, secure: true }` | When `imageUploadType` is set to `minio`, you need to set this key. Also checkout our [Minio Image Upload Guide](docs/guides/minio-image-upload.md) |
 | `s3` | `{ "accessKeyId": "YOUR_S3_ACCESS_KEY_ID", "secretAccessKey": "YOUR_S3_ACCESS_KEY", "region": "YOUR_S3_REGION" }` | When `imageuploadtype` be set to `s3`, you would also need to setup this key, check our [S3 Image Upload Guide](docs/guides/s3-image-upload.md) |
 | `s3bucket` | `YOUR_S3_BUCKET_NAME` | bucket name when `imageUploadType` is set to `s3` or `minio` |
-| `sourceURL` | `https://github.com/hackmdio/codimd/tree/<current commit>` | Provides the link to the source code of CodiMD on the entry page (Please, make sure you change this when you run a modified version) |
+| `sourceURL` | `https://github.com/codimd/server/tree/<current commit>` | Provides the link to the source code of CodiMD on the entry page (Please, make sure you change this when you run a modified version) |
 
 <sup>1</sup>: relative paths are based on CodiMD's base directory
 
@@ -376,7 +376,7 @@ See more at [http://operational-transformation.github.io/](http://operational-tr
 [travis-image]: https://travis-ci.org/hackmdio/codimd.svg?branch=master
 [travis-url]: https://travis-ci.org/hackmdio/codimd
 [github-version-badge]: https://img.shields.io/github/release/hackmdio/codimd.svg
-[github-release-page]: https://github.com/hackmdio/codimd/releases
-[github-release-feed]: https://github.com/hackmdio/codimd/releases.atom
+[github-release-page]: https://github.com/codimd/server/releases
+[github-release-feed]: https://github.com/codimd/server/releases.atom
 [poeditor-image]: https://img.shields.io/badge/POEditor-translate-blue.svg
 [poeditor-url]: https://poeditor.com/join/project/1OpGjF2Jir

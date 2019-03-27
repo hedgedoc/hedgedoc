@@ -7,7 +7,7 @@
         "Notes"
     ],
     "website": "https://codimd.org",
-    "repository": "https://github.com/hackmdio/codimd",
+    "repository": "https://github.com/codimd/server",
     "logo": "https://github.com/hackmdio/codimd/raw/master/public/codimd-icon-1024.png",
     "success_url": "/",
     "env": {

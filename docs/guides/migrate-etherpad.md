@@ -12,7 +12,7 @@ require some creativity to work properly in your case. When I wrote this guide, 
 [Etherpad 1.7.0] and [CodiMD 1.2.1]. Good luck!
 
 [Etherpad 1.7.0]: https://github.com/ether/etherpad-lite/tree/1.7.0
-[CodiMD 1.2.1]: https://github.com/hackmdio/codimd/tree/1.2.1
+[CodiMD 1.2.1]: https://github.com/codimd/server/tree/1.2.1
 
 ## 0. Requirements
 
@@ -21,7 +21,7 @@ require some creativity to work properly in your case. When I wrote this guide, 
 - running CodiMD server
 - [codimd-cli]
 
-[codimd-cli]: https://github.com/hackmdio/codimd-cli/blob/master/bin/codimd
+[codimd-cli]: https://github.com/codimd/cli/blob/master/bin/codimd
 
 ## 1. Retrieve the list of pads
 
@@ -56,8 +56,8 @@ configuration settings `ETHERPAD_SERVER` and `CODIMD_SERVER`.
 # Description: Migrate pads from etherpad to codimd
 # Author: Daan Sprenkels <hello@dsprenkels.com>
 
-# This script uses the codimd command line script[1] to import a list of pads from 
-# [1]: https://github.com/hackmdio/codimd-cli/blob/master/bin/codimd
+# This script uses the codimd command line script[1] to import a list of pads from
+# [1]: https://github.com/codimd/cli/blob/master/bin/codimd
 
 # The base url to where etherpad is hosted
 ETHERPAD_SERVER="https://etherpad.example.com"
@@ -80,7 +80,7 @@ for PAD_NAME in $1; do
     # Download the pad
     PAD_FILE="$(mktemp)"
     curl "$ETHERPAD_SERVER/p/$PAD_NAME/export/txt" >"$PAD_FILE"
-    
+
     # Import the pad into codimd
     OUTPUT="$(./codimd import "$PAD_FILE")"
     echo "$PAD_NAME -> $OUTPUT" >>"$REDIRECTS_FILE"
