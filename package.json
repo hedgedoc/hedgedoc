@@ -149,12 +149,13 @@
   "homepage": "https://codimd.org",
   "maintainers": [
     {
-      "name": "Max Wu",
-      "email": "jackymaxj@gmail.com"
+      "name": "Claudius Coenen",
+      "url": "https://www.claudiuscoenen.de/"
     },
     {
       "name": "Christoph (Sheogorath) Kern",
-      "email": "codimd@sheogorath.shivering-isles.com"
+      "email": "codimd@sheogorath.shivering-isles.com",
+      "url": "https://shivering-isles.com"
     }
   ],
   "repository": {
