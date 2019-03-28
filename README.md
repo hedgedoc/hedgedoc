@@ -131,6 +131,8 @@ Install CodiMD on [Cloudron](https://cloudron.io):
 
 ## Native setup
 
+:warning: When you are still running from the old repository, please run: `git remote set-url origin https://github.com/codimd/server.git` :warning:
+
 If you are upgrading CodiMD from an older version, follow these steps:
 
 1. Fully stop your old server first (important)
