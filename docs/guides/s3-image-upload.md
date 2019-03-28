@@ -76,7 +76,7 @@
     }
     ```
 
-9. In additional to edit `config.json` directly, you could also try [environment variable](https://github.com/hackmdio/hackmd#environment-variables-will-overwrite-other-server-configs).
+9. In additional to edit `config.json` directly, you could also try [environment variable](https://github.com/codimd/server#environment-variables-will-overwrite-other-server-configs).
 
 ## Related Tools
 

@@ -373,9 +373,9 @@ See more at [http://operational-transformation.github.io/](http://operational-tr
 
 [matrix.org-image]: https://img.shields.io/badge/Matrix.org-%23CodiMD@matrix.org-green.svg
 [matrix.org-url]: https://riot.im/app/#/room/#codimd:matrix.org
-[travis-image]: https://travis-ci.org/hackmdio/codimd.svg?branch=master
-[travis-url]: https://travis-ci.org/hackmdio/codimd
-[github-version-badge]: https://img.shields.io/github/release/hackmdio/codimd.svg
+[travis-image]: https://travis-ci.org/codimd/server.svg?branch=master
+[travis-url]: https://travis-ci.org/codimd/server
+[github-version-badge]: https://img.shields.io/github/release/codimd/server.svg
 [github-release-page]: https://github.com/codimd/server/releases
 [github-release-feed]: https://github.com/codimd/server/releases.atom
 [poeditor-image]: https://img.shields.io/badge/POEditor-translate-blue.svg
