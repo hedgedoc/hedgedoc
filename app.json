@@ -8,7 +8,7 @@
     ],
     "website": "https://codimd.org",
     "repository": "https://github.com/codimd/server",
-    "logo": "https://github.com/hackmdio/codimd/raw/master/public/codimd-icon-1024.png",
+    "logo": "https://github.com/codimd/server/raw/master/public/codimd-icon-1024.png",
     "success_url": "/",
     "env": {
         "BUILD_ASSETS": {
