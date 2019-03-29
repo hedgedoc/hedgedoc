@@ -1,6 +1,16 @@
 Release Notes
 ===
 
+<i class="fa fa-tag"></i> 1.3.2 <i class="fa fa-clock-o"></i> 2019-03-28 00:00
+---
+
+### Announcement
+* CodiMD is now running in an own organization. [Check out our vision for the future](https://github.com/codimd/server/issues/10)
+
+### Fixes
+* Update various links to the new repositories
+* Fix background color for mode switching button in night mode
+
 <i class="fa fa-tag"></i> 1.3.1 <i class="fa fa-clock-o"></i> 2019-03-23 00:00
 ---
 
