@@ -4,15 +4,15 @@
 
 1. Go to [AWS S3 console](https://console.aws.amazon.com/s3/home) and create a new bucket.
 
-    ![create-bucket](images/s3-image-upload/create-bucket.png)
+    ![create-bucket](../images/s3-image-upload/create-bucket.png)
 
 2. Click on bucket, select **Properties**  on the side panel, and find **Permission** section. Click **Edit bucket policy**.
 
-    ![bucket-property](images/s3-image-upload/bucket-property.png)
+    ![bucket-property](../images/s3-image-upload/bucket-property.png)
 
 3. Enter the following policy, replace `bucket_name` with your bucket name:
 
-    ![bucket-policy-editor](images/s3-image-upload/bucket-policy-editor.png)
+    ![bucket-policy-editor](../images/s3-image-upload/bucket-policy-editor.png)
 
     ```json
     {
@@ -32,15 +32,15 @@
 
 5. Enter user page, select **Permission** tab, look at **Inline Policies** section, and click **Create User Policy**
 
-    ![iam-user](images/s3-image-upload/iam-user.png)
+    ![iam-user](../images/s3-image-upload/iam-user.png)
 
 6. Select **Custom Policy**
 
-    ![custom-policy](images/s3-image-upload/custom-policy.png)
+    ![custom-policy](../images/s3-image-upload/custom-policy.png)
 
 7. Enter the following policy, replace `bucket_name` with your bucket name:
 
-    ![review-policy](images/s3-image-upload/review-policy.png)
+    ![review-policy](../images/s3-image-upload/review-policy.png)
 
     ```json
     {
