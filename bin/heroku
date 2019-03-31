@@ -2,9 +2,7 @@
 
 set -e
 
-if [ "$BUILD_ASSETS" = true ]; then
-  # setup config files
-  cat << EOF > .sequelizerc
+cat << EOF > .sequelizerc
 var path = require('path');
 
 module.exports = {
@@ -17,7 +15,7 @@ module.exports = {
 
 EOF
 
-    cat << EOF > config.json
+cat << EOF > config.json
 
 {
   "production": {
@@ -25,7 +23,3 @@ EOF
 }
 
 EOF
-
-  # build app
-  npm run build
-fi
