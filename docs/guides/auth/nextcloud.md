@@ -9,15 +9,15 @@ This guide uses the generic OAuth2 module for compatibility with Nextcloud 13 an
 
 2. Navigate to the OAuth integration settings: Profile Icon (top right) --> Settings
    Then choose Security Settings from the *Administration* part of the list - Don't confuse this with Personal Security Settings, where you would change your personal password!
-   At the top there's OAuth 2.0-Clients.
-   ![Where to find OAuth2 in Nextcloud](../images/auth/nextcloud-oauth2-1-settings.png)
+   At the top there's OAuth 2.0-Clients.  
+   ![Where to find OAuth2 in Nextcloud](../../images/auth/nextcloud-oauth2-1-settings.png)
 
-3. Add your CodiMD instance by giving it a *name* (perhaps CodiMD, but could be anything) and a *Redirection-URI*. The Redirection-URI will be `\<your-codimd-url\>/auth/oauth2/callback`. Click <kbd>Add</kbd>.
-   ![Adding a client to Nextcloud](../images/auth/nextcloud-oauth2-2-client-add.png)
+3. Add your CodiMD instance by giving it a *name* (perhaps CodiMD, but could be anything) and a *Redirection-URI*. The Redirection-URI will be `\<your-codimd-url\>/auth/oauth2/callback`. Click <kbd>Add</kbd>.  
+   ![Adding a client to Nextcloud](../../images/auth/nextcloud-oauth2-2-client-add.png)
 
 
 4. You'll now see a line containing a *client identifier* and a *Secret*.
-   ![Successfully added OAuth2-client](../images/auth/nextcloud-oauth2-3-clientid-secret.png)
+   ![Successfully added OAuth2-client](../../images/auth/nextcloud-oauth2-3-clientid-secret.png)
 
 5. That's it for Nextcloud, the rest is configured in your CodiMD `config.json` or via the `CMD_` environment variables!
 

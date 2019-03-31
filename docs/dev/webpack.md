@@ -1,4 +1,11 @@
-# Webpack Docs
+Webpack
+===
+
+Webpack is a JavaScript build system for frontend code. You can find out all
+about it on [the webpack website](https://webpack.js.org/).
+
+Here's how we're using it:
+
 ## `webpack.common.js`
 This file contains all common definition for chunks and plugins, that are needed by the whole app.
 

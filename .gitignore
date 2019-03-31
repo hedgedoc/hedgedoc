@@ -8,7 +8,6 @@ composer.lock
 .idea/
 Thumbs.db
 npm-debug.log
-hackmd_io
 newrelic_agent.log
 logs/
 tmp/

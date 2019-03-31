@@ -30,13 +30,6 @@ jobs:
       script:
         - shellcheck bin/heroku bin/setup
       language: generic
-    - env: task=doctoc
-      install: npm install doctoc
-      script:
-        - cp README.md README.md.orig
-        - npm run doctoc
-        - diff -q README.md README.md.orig
-      language: generic
     - env: task=json-lint
       addons:
         apt:
