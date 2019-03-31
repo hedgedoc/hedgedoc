@@ -1,4 +1,5 @@
-## Heroku Deployment
+Heroku Deployment
+===
 
 You can quickly setup a sample Heroku CodiMD application by clicking the button
 below.

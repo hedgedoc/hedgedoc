@@ -1,4 +1,5 @@
-# History of CodiMD
+History of CodiMD
+===
 
 ## It started with HackMD
 

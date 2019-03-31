@@ -1,4 +1,5 @@
-## Cloudron
+Cloudron
+===
 
 Install CodiMD on [Cloudron](https://cloudron.io):
 

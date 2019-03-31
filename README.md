@@ -6,7 +6,8 @@ CodiMD
 [![version][github-version-badge]][github-release-page]
 [![POEditor][poeditor-image]][poeditor-url]
 
-CodiMD lets you create real-time collaborative markdown notes on all platforms.
+CodiMD lets you create real-time collaborative markdown notes.
+
 It is inspired by Hackpad, Etherpad and similar collaborative editors. This
 project originated with the team at [HackMD](https://hackmd.io) and now forked
 into its own organisation. [A longer writeup can be read in the history doc](docs/history.md).
@@ -16,13 +17,14 @@ into its own organisation. [A longer writeup can be read in the history doc](doc
 
 ## Community and Contributions
 
-We welcome contributions! There's a lot to do. If you would like to report bugs
+We welcome contributions! There's a lot to do. If you would like to report bugs,
 the [issue tracker](github-issue-tracker) is the right place. If you want to
 help translating, find us on [POEditor](poeditor-url). To get started developing,
 take a look at the [docs/dev](docs/dev) directory. In any case: come talk to us,
 we'll be delighted to help you with the first steps.
 
-To stay up to date with your installation it's recommended to join our [Matrix channel][matrix.org-url] or subscribe to the [release feed][github-release-feed].
+To stay up to date with our work it's recommended to join our
+[Matrix channel][matrix.org-url] or subscribe to the [release feed][github-release-feed].
 
 
 ## Installation / Upgrading

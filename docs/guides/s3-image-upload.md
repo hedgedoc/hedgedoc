@@ -1,6 +1,7 @@
-# Guide - Setup CodiMD S3 image upload
+Guide - Setup CodiMD S3 image upload
+===
 
-***Note:** This guide was written before the renaming. Just replace `HackMD` with `CodiMD` in your mind :smile: thanks!*
+**Note:** *This guide was written before the renaming. Just replace `HackMD` with `CodiMD` in your mind :smile: thanks!*
 
 1. Go to [AWS S3 console](https://console.aws.amazon.com/s3/home) and create a new bucket.
 
@@ -76,7 +77,7 @@
     }
     ```
 
-9. In additional to edit `config.json` directly, you could also try [environment variable](https://github.com/codimd/server#environment-variables-will-overwrite-other-server-configs).
+9. In additional to edit `config.json` directly, you could also try [environment variables](../configuration-env-vars.md).
 
 ## Related Tools
 

@@ -1,5 +1,6 @@
+CodiMD by docker container
+===
 
-## CodiMD by docker container
 [![Try in PWD](https://cdn.rawgit.com/play-with-docker/stacks/cff22438/assets/images/button.png)](http://play-with-docker.com?stack=https://github.com/codimd/container/raw/master/docker-compose.yml&stack_name=codimd)
 
 
@@ -14,9 +15,9 @@
 
 The easiest way to setup CodiMD using docker are using the following three commands:
 
-```console
+```sh
 git clone https://github.com/codimd/container.git
 cd codimd-container
 docker-compose up
 ```
-Read more about it in the [container repository…](https://github.com/codimd/container)
+Read more about it in the [container repository](https://github.com/codimd/container).

@@ -1,12 +1,12 @@
-# Developer Notes
+Developer Notes
+===
 
 ## Preparing for running the code
 
-**Notice:** *If you're into [docker](../setup/docker.md) or [heroku](../setup/heroku.md),
-there's extra documents for those!*
+**Notice:** *There's [specialised instructions for docker](../setup/docker.md) or [heroku](../setup/heroku.md), if you prefer running code this way!*
 
-1. Clone the repository (Cloning is the preferred way, but you can also download
-   and unzip a release)
+1. Clone the repository with `git clone https://github.com/codimd/server.git codimd-server`
+   (cloning is the preferred way, but you can also download and unzip a release)
 2. Enter the directory and run `bin/setup`, which will install npm dependencies
    and create configs. The setup script is written in Bash, you would need bash
    as a prerequisite.

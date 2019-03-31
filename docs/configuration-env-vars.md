@@ -1,4 +1,5 @@
-# Configuration Using Environment variables
+Configuration Using Environment variables
+===
 
 You can choose to configure CodiMD with either a
 [config file](configuration-config-file.md) or with environment variables.

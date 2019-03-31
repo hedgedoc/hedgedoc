@@ -1,9 +1,11 @@
-## Slide Separators
+Slide Separators
+===
+
 If you're getting started with reveal.js slides, there are a few things you need to know.
 
 There are two types of slides, those that transition horizontally and those that transition vertically (subslides).
 
-The following separators are used for each in the hackmd syntax:
+The following separators are used for each in the CodiMD syntax:
 ```
 # First Slide
 

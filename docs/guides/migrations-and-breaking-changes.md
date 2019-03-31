@@ -1,4 +1,5 @@
-# Migrations and Notable Changes
+Migrations and Notable Changes
+===
 
 ## Migrating to 1.3.2
 
@@ -37,22 +38,15 @@ We deprecated the older lower case config style and moved on to camel case style
 
 ## Migrating to 0.5.0
 
-[**migration-to-0.5.0**](https://github.com/hackmdio/migration-to-0.5.0)
+[migration-to-0.5.0 migration tool](https://github.com/hackmdio/migration-to-0.5.0)
 
 We don't use LZString to compress socket.io data and DB data after version 0.5.0.
 Please run the migration tool if you're upgrading from the old version.
 
 ## Migrating to 0.4.0
 
-[**migration-to-0.4.0**](https://github.com/hackmdio/migration-to-0.4.0)
+[migration-to-0.4.0 migration tool](https://github.com/hackmdio/migration-to-0.4.0)
 
 We've dropped MongoDB after version 0.4.0.
 So here is the migration tool for you to transfer the old DB data to the new DB.
 This tool is also used for official service.
-
-## Operational Transformation in 0.3.2
-
-From 0.3.2, we started supporting operational transformation.
-It makes concurrent editing safe and will not break up other users' operations.
-Additionally, now can show other clients' selections.
-See more at [http://operational-transformation.github.io/](http://operational-transformation.github.io/)

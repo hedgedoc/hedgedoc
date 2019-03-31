@@ -1,7 +1,7 @@
 Minio Guide for CodiMD
 ===
 
-***Note:** This guide was written before the renaming. Just replace `HackMD` with `CodiMD` in your mind :smile: thanks!*
+**Note:** *This guide was written before the renaming. Just replace `HackMD` with `CodiMD` in your mind :smile: thanks!*
 
 1. First of all you need to setup Minio itself.
 
@@ -9,7 +9,7 @@ Minio Guide for CodiMD
    production setup.
 
    For checking it out and development purposes a non-persistent setup is enough:
-   ```console
+   ```sh
    docker run --name test-minio --rm -d -p 9000:9000 minio/minio server /data
    ```
 
@@ -18,7 +18,7 @@ Minio Guide for CodiMD
 
 2. Next step is to get the credentials form the container:
 
-   ```
+   ```sh
    docker logs test-minio
    ```
 
@@ -28,7 +28,7 @@ Minio Guide for CodiMD
 
    ![minio default view](../images/minio-image-upload/default-view.png)
 
-4. Create a bucket for HackMD
+4. Create a bucket for CodiMD
 
    ![minio create bucket](../images/minio-image-upload/create-bucket.png)
 
@@ -40,7 +40,7 @@ Minio Guide for CodiMD
    ![minio policy adding](../images/minio-image-upload/create-policy.png)
    *Add policy for uploads*
 
-6. Set credentials and configs for Minio in HackMD's `config.json`
+6. Set credentials and configs for Minio in CodiMD's `config.json`
 
    ```JSON
    "minio": {
@@ -58,7 +58,7 @@ Minio Guide for CodiMD
 7. Set bucket name
 
    ```JSON
-   "s3bucket": "hackmd"
+   "s3bucket": "codimd"
    ```
 
 8. Set upload type.
@@ -79,7 +79,7 @@ Minio Guide for CodiMD
        "port": 9000,
        "secure": false
      },
-     "s3bucket": "hackmd",
+     "s3bucket": "codimd",
      "imageuploadtype": "minio"
    }
    ```

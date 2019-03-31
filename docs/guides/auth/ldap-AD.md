@@ -1,7 +1,6 @@
 AD LDAP auth
 ===
 
-
 To setup your CodiMD instance with Active Directory you need the following configs:
 
 ```

@@ -184,7 +184,7 @@ Release Notes
 ---
 
 ### Announcement
-* HackMD CE is renamed to CodiMD to prevent confusion. [For details see here](https://github.com/codimd/server#hackmd-ce-became-codimd)
+* HackMD CE is renamed to CodiMD to prevent confusion. [For details see here](https://github.com/codimd/server/tree/master/docs/history.md)
 
 ### Enhancements
 * Show full title by hovering over to table of contents entries

@@ -1,4 +1,5 @@
-# Manual Installation
+Manual Installation
+===
 
 ## Requirements on your server
 
@@ -7,6 +8,7 @@
 - npm (and its dependencies, [node-gyp](https://github.com/nodejs/node-gyp#installation))
 - `libssl-dev` for building scrypt (see [here](https://github.com/ml1nk/node-scrypt/blob/master/README.md#installation-instructions) for further information)
 - For **building** CodiMD we recommend to use a machine with at least **2GB** RAM
+
 
 ## Instructions
 
