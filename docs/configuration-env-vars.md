@@ -4,9 +4,9 @@ Configuration Using Environment variables
 You can choose to configure CodiMD with either a
 [config file](configuration-config-file.md) or with environment variables.
 Environment variables are processed in
-[`lib/config/environment.js`](lib/config/environment.js) - so this is the first
+[`lib/config/environment.js`](../lib/config/environment.js) - so this is the first
 place to look if anything is missing not obvious from this document. The
-default values are defined in [`lib/config/default.js`](lib/config/default.js),
+default values are defined in [`lib/config/default.js`](../lib/config/default.js),
 in case you wonder if you even need to override it.
 
 Environment variables take precedence over configurations from the config files.
@@ -33,7 +33,7 @@ defaultNotePath can't be set from env-vars
 | `CMD_DB_URL` | `mysql://localhost:3306/database` | set the database URL |
 | `CMD_LOGLEVEL` | `info`, `debug` ... | Defines what kind of logs are provided to stdout. |
 | `CMD_FORBIDDEN_NOTE_IDS` | `'robots.txt'` | disallow creation of notes, even if `CMD_ALLOW_FREEURL` is `true` |
-| `CMD_IMAGE_UPLOAD_TYPE` | `imgur`, `s3`, `minio` or `filesystem` | Where to upload images. For S3, see our Image Upload Guides for [S3](docs/guides/s3-image-upload.md) or [Minio](docs/guides/minio-image-upload.md), also there's a whole section on their respective env vars below. |
+| `CMD_IMAGE_UPLOAD_TYPE` | `imgur`, `s3`, `minio` or `filesystem` | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [Minio](guides/minio-image-upload.md), also there's a whole section on their respective env vars below. |
 | `CMD_SOURCE_URL` | `https://github.com/codimd/server/tree/<current commit>` | Provides the link to the source code of CodiMD on the entry page (Please, make sure you change this when you run a modified version) |
 
 
@@ -156,7 +156,7 @@ defaultNotePath can't be set from env-vars
 
 | variable | example value | description |
 | -------- | ------------- | ----------- |
-| `CMD_MATTERMOST_BASEURL` | no example | Mattermost authentication endpoint for versions below 5.0. For Mattermost version 5.0 and above, see [guide](docs/guides/auth/mattermost-self-hosted.md). |
+| `CMD_MATTERMOST_BASEURL` | no example | Mattermost authentication endpoint for versions below 5.0. For Mattermost version 5.0 and above, see [guide](guides/auth/mattermost-self-hosted.md). |
 | `CMD_MATTERMOST_CLIENTID` | no example | Mattermost API client id |
 | `CMD_MATTERMOST_CLIENTSECRET` | no example | Mattermost API client secret |
 
@@ -165,7 +165,7 @@ defaultNotePath can't be set from env-vars
 
 | variable | example value | description |
 | -------- | ------------- | ----------- |
-| `CMD_OAUTH2_USER_PROFILE_URL` | `https://example.com` | where retrieve information about a user after succesful login. Needs to output JSON. (no default value) Refer to the [Mattermost](docs/guides/auth/mattermost-self-hosted.md) or [Nextcloud](docs/guides/auth/nextcloud.md) examples for more details on all of the `CMD_OAUTH2...` options. |
+| `CMD_OAUTH2_USER_PROFILE_URL` | `https://example.com` | where retrieve information about a user after succesful login. Needs to output JSON. (no default value) Refer to the [Mattermost](guides/auth/mattermost-self-hosted.md) or [Nextcloud](guides/auth/nextcloud.md) examples for more details on all of the `CMD_OAUTH2...` options. |
 | `CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR` | `name` | where to find the username in the JSON from the user profile URL. (no default value)|
 | `CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR` | `display-name` | where to find the display-name in the JSON from the user profile URL. (no default value) |
 | `CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR` | `email` | where to find the email address in the JSON from the user profile URL. (no default value) |
@@ -180,7 +180,7 @@ defaultNotePath can't be set from env-vars
 
 | variable | example value | description |
 | -------- | ------------- | ----------- |
-| `CMD_SAML_IDPSSOURL` | `https://idp.example.com/sso` | authentication endpoint of IdP. for details, see [guide](docs/guides/auth/saml-onelogin.md). |
+| `CMD_SAML_IDPSSOURL` | `https://idp.example.com/sso` | authentication endpoint of IdP. for details, see [guide](guides/auth/saml-onelogin.md). |
 | `CMD_SAML_IDPCERT` | `/path/to/cert.pem` | certificate file path of IdP in PEM format |
 | `CMD_SAML_ISSUER` | no example | identity of the service provider (optional, default: serverurl)" |
 | `CMD_SAML_IDENTIFIERFORMAT` | no example | name identifier format (optional, default: `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress`) |
