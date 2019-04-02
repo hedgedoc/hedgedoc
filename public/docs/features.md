@@ -1,8 +1,7 @@
-Features
-===
+# Features
 
-Introduction
-===
+## Introduction
+
 <i class="fa fa-file-text"></i> **CodiMD** is a real-time, multi-platform collaborative markdown note editor.
 This means that you can write notes with other people on your **desktop**, **tablet** or even on the **phone**.
 You can sign-in via multiple auth providers like **Facebook**, **Twitter**, **GitHub** and many more on the [_homepage_](/).
@@ -11,121 +10,129 @@ If you experience any _issues_, feel free to report it on [**GitHub**](https://g
 Or meet us on [**Matrix.org**](https://riot.im/app/#/room/#codimd:matrix.org) for dev-talk and interactive help.
 **Thank you very much!**
 
-Workspace
-===
-## Modes
-**Desktop & Tablet**
+## Workspace
 
-<i class="fa fa-edit fa-fw"></i> Edit: See only the editor.
+### Modes
+
+#### Desktop & Tablet
+
 <i class="fa fa-eye fa-fw"></i> View: See only the result.
-<i class="fa fa-columns fa-fw"></i> Both: See both in split view.
+<i class="fa fa-columns fa-fw"></i> Both: See editor and result at the same time.
+<i class="fa fa-pencil fa-fw"></i> Edit: See only the editor.
 
-**Mobile**
+#### Mobile
 
-<i class="fa fa-toggle-on fa-fw"></i> View: See only the result.
-<i class="fa fa-toggle-off fa-fw"></i> Edit: See only the editor.
+<i class="fa fa-eye fa-fw"></i> View: See only the result.
+<i class="fa fa-pencil fa-fw"></i> Edit: See only the editor.
 
-## Night Mode:
+### Night Mode
+
 When you are tired of a white screen and like a night mode, click on the little moon <i class="fa fa-moon-o"></i> and turn on the night view of CodiMD.
 
 The editor view, which is in night mode by default, can also be toggled between night and day view using the the little sun<i class="fa fa-sun-o fa-fw"></i>.
 
-## Image Upload:
-You can upload an image simply by clicking on the camera button <i class="fa fa-camera"></i>.
+### Image Upload
+
+You can upload an image simply by clicking on the upload button <i class="fa fa-upload"></i>.
 Alternatively, you can **drag-n-drop** an image into the editor. Even **pasting** images is possible!
-This will automatically upload the image to **[imgur](http://imgur.com)**, **[Amazon S3](https://aws.amazon.com/s3/)**, **[Minio](https://minio.io)** or **local filesystem**, nothing to worry about. :tada:
+This will automatically upload the image to **[imgur](http://imgur.com)**, **[Amazon S3](https://aws.amazon.com/s3/)**, **[Minio](https://minio.io)** or the **local filesystem** (depending on the instance's configuration), nothing to worry about. :tada:
+
 ![imgur](https://i.imgur.com/9cgQVqD.png)
 
-## Share Notes:
+### Share Notes
+
 If you want to share an **editable** note, just copy the URL.
-If you want to share a **read-only** note, simply press publish button <i class="fa fa-share-square-o"></i> and copy the URL.
+If you want to share a **read-only** note, simply press the publish button <i class="fa fa-share-square-o"></i> and copy the URL.
 
-## Save a Note:
-Currently, you can save to **Dropbox** <i class="fa fa-dropbox"></i> or save an `.md` file <i class="fa fa-file-text"></i> locally.
+### Save a Note
 
-## Import Notes:
-Similarly to the _save_ feature, you can also import an `.md` file from **Dropbox** <i class="fa fa-dropbox"></i>,
-or import content from your **clipboard** <i class="fa fa-clipboard"></i>, and that can parse some **html** which might be useful :smiley:
+Currently, you can save to **Dropbox** <i class="fa fa-dropbox"></i> (depending on the instance's configuration) or save a Markdown <i class="fa fa-file-text"></i>, HTML or raw HTML <i class="fa fa-file-code-o"></i> file locally.
 
-## Permissions:
-It is possible to change the access permission to a note through the little button on the top right of the view.
+### Import Notes
+
+Similarly to the _save_ feature, you can also import a Markdown file from **Dropbox** <i class="fa fa-dropbox"></i> (depending on the instance's configuration), or import content from your **clipboard** <i class="fa fa-clipboard"></i>, which can parse some HTML. :smiley:
+
+### Permissions
+
+It is possible to change the access permission of a note through the little button on the top right of the view.
 There are four possible options:
 
 |                              |Owner read/write|Signed-in read|Signed-in write|Guest read|Guest write|
 |:-----------------------------|:--------------:|:------------:|:-------------:|:--------:|:---------:|
-|<span class="text-nowrap"><i class="fa fa-leaf fa-fw"></i> **Freely**</span>               |✔|✔|✔|✔|✔|
-|<span class="text-nowrap"><i class="fa fa-pencil fa-fw"></i> **Editable**</span>           |✔|✔|✔|✔|✖|
-|<span class="text-nowrap"><i class="fa fa-id-card fa-fw"></i> **Limited**</span>           |✔|✔|✔|✖|✖|
-|<span class="text-nowrap"><i class="fa fa-lock fa-fw"></i> **Locked**</span>               |✔|✔|✖|✔|✖|
-|<span class="text-nowrap"><i class="fa fa-umbrella fa-fw"></i> **Protected**</span>        |✔|✔|✖|✖|✖|
-|<span class="text-nowrap"><i class="fa fa-hand-stop-o fa-fw"></i> **Private**</span>       |✔|✖|✖|✖|✖|
-
+|<span class="text-nowrap"><i class="fa fa-leaf fa-fw"></i> **Freely**</span>|✔|✔|✔|✔|✔|
+|<span class="text-nowrap"><i class="fa fa-pencil fa-fw"></i> **Editable**</span>|✔|✔|✔|✔|✖|
+|<span class="text-nowrap"><i class="fa fa-id-card fa-fw"></i> **Limited**</span>|✔|✔|✔|✖|✖|
+|<span class="text-nowrap"><i class="fa fa-lock fa-fw"></i> **Locked**</span>|✔|✔|✖|✔|✖|
+|<span class="text-nowrap"><i class="fa fa-umbrella fa-fw"></i> **Protected**</span>|✔|✔|✖|✖|✖|
+|<span class="text-nowrap"><i class="fa fa-hand-stop-o fa-fw"></i> **Private**</span>|✔|✖|✖|✖|✖|
 
 **Only the owner of the note can change the note's permissions.**
 
-## Embed a Note:
+### Embed a Note
+
 Notes can be embedded as follows:
 
 ```xml
 <iframe width="100%" height="500" src="https://demo.codimd.io/features" frameborder="0"></iframe>
 ```
 
-## [Slide Mode](./slide-example):
+### [Slide Mode](./slide-example)
+
 You can use a special syntax to organize your note into slides.
 After that, you can use the **[Slide Mode](./slide-example)** <i class="fa fa-tv"></i> to make a presentation.
 Visit the above link for details.
 
 To switch the editor into slide mode, set the [document type](./yaml-metadata#type) to `slide`.
 
-View
-===
-## Table of Contents:
+## View
+
+### Autogenerated Table of Contents
+
 You can look at the bottom right section of the view area, there is a _ToC_ button <i class="fa fa-bars"></i>.
 Pressing that button will show you a current _Table of Contents_, and will highlight which section you're at.
 ToCs support up to **three header levels**.
 
-## Permalink
+### Permalink
+
 Every header will automatically add a permalink on the right side.
 You can hover and click <i class="fa fa-chain"></i> to anchor on it.
 
-Edit:
-===
-## Editor Modes:
-You can look in the bottom right section of the editor area, there you'll find a button with `sublime` on it.
-When you click it, you can select 3 editor modes:
+## Edit
 
-- sublime (default)
-- emacs
-- vim
+### Editor Modes
 
-## Shortcut Keys:
-The shortcut keys depend on your selected editor mode. By default they are just like Sublime text, which is pretty quick and convenient.
-> For more information, see [here](https://codemirror.net/demo/sublime.html).
+You can look in the bottom right section of the editor area, there you'll find a button with `SUBLIME` on it.
+When you click it, you can select 3 editor modes, which will also define your shortcut keys:
 
-For emacs:
-> For more information, see [here](https://codemirror.net/demo/emacs.html).
+- [Sublime](https://codemirror.net/demo/sublime.html) (default)
+- [Emacs](https://codemirror.net/demo/emacs.html)
+- [Vim](https://codemirror.net/demo/vim.html)
 
-For vim:
-> For more information, see [here](https://codemirror.net/demo/vim.html).
+### Auto-Complete
 
-## Auto-Complete:
 This editor provides full auto-complete hints in markdown.
+
 - Emojis: type `:` to show hints.
-- Code blocks: type ` ``` ` and plus a character to show hint. <i hidden>```</i>
+- Code blocks: type ` ``` `, followed by another character to show syntax highlighting suggestions.
 - Headers: type `#` to show hint.
 - Referrals: type `[]` to show hint.
 - Externals: type `{}` to show hint.
 - Images: type `!` to show hint.
 
-## Title:
-This will take the first **level 1 header** as the note title.
+### Title
 
-## Tags:
+The first **level 1 heading** (e.g. `# Title`) will be used as the note title.
+
+### Tags
+
 Using tags as follows, the specified tags will show in your **history**.
+
 ###### tags: `features` `cool` `updated`
 
-## [YAML Metadata](./yaml-metadata)
+### [YAML Metadata](./yaml-metadata)
+
 You can provide advanced note information to set the browser behavior (visit above link for details):
+
 - robots: set web robots meta
 - lang: set browser language
 - dir: set text direction
@@ -134,23 +141,30 @@ You can provide advanced note information to set the browser behavior (visit abo
 - disqus: set to use Disqus
 - slideOptions: setup slide mode options
 
-## ToC:
-Use the syntax `[TOC]` to embed table of content into your note.
+### Table of Contents
+
+Use the syntax `[TOC]` to embed a table of contents into your note.
 
 [TOC]
 
-## Emoji
+### Emoji
+
 You can type any emoji like this :smile: :smiley: :cry: :wink:
+
 > See full emoji list [here](http://www.emoji-cheat-sheet.com/).
 
-## ToDo List:
+### ToDo List
+
 - [ ] ToDos
   - [x] Buy some salad
   - [ ] Brush teeth
   - [x] Drink some water
+  - [ ] **Click my box** and see the source code, if you're allowed to edit!
 
-## Code Block:
+### Code Block
+
 We support many programming languages, use the auto complete function to see the entire list.
+
 ```javascript=
 var s = "JavaScript syntax highlighting";
 alert(s);
@@ -168,9 +182,11 @@ function $initHighlight(block, cls) {
   }
 }
 ```
-> If you want **line numbers**, type `=` after specifying the code block languagues.
-> Also, you can specify the start line number.
-> Like below, the line number starts from 101:
+
+If you want **line numbers**, type `=` after specifying the code block languagues.
+Also, you can specify the start line number.
+Like below, the line number starts from 101:
+
 ```javascript=101
 var s = "JavaScript syntax highlighting";
 alert(s);
@@ -189,44 +205,50 @@ function $initHighlight(block, cls) {
 }
 ```
 
-> Or you might want to continue the previous code block's line number, use `=+`
+Or you might want to continue the previous code block's line number, use `=+`:
 
 ```javascript=+
 var s = "JavaScript syntax highlighting";
 alert(s);
 ```
 
-> Somtimes you have a super long text without breaks. It's time to use `!` to wrap your code.
+Somtimes you have a super long text without breaks. It's time to use `!` to wrap your code:
 
 ```!
 When you’re a carpenter making a beautiful chest of drawers, you’re not going to use a piece of plywood on the back.
 ```
 
-### Blockquote Tags:
+### Blockquote Tags
+
 > Using the syntax below to specifiy your **name, time and color** to vary the blockquotes.
 > [name=ChengHan Wu] [time=Sun, Jun 28, 2015 9:59 PM] [color=#907bf7]
-> > Even support the nest blockquotes!
-> > [name=ChengHan Wu] [time=Sun, Jun 28, 2015 10:00 PM] [color=red]
+> > Even support nested blockquotes!
+> > [name=Max Mustermann] [time=Sun, Jun 28, 2015 9:47 PM] [color=red]
 
-## Externals
+### Externals
 
-### YouTube
+#### YouTube
+
 {%youtube aqz-KE-bpKQ %}
 
-### Vimeo
+#### Vimeo
+
 {%vimeo 124148255 %}
 
-### Gist
+#### Gist
+
 {%gist schacon/4277%}
 
-### SlideShare
+#### SlideShare
+
 {%slideshare briansolis/26-disruptive-technology-trends-2016-2018-56796196 %}
 
-### PDF
+#### PDF
+
 **Caution: this might be blocked by your browser if not using an `https` URL.**
 {%pdf https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf %}
 
-## MathJax
+### MathJax
 
 You can render *LaTeX* mathematical expressions using **MathJax**, as on [math.stackexchange.com](http://math.stackexchange.com/):
 
@@ -242,9 +264,9 @@ $$
 
 > More information about **LaTeX** mathematical expressions [here](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference).
 
-## UML Diagrams
+### Diagrams
 
-### Sequence Diagrams
+#### UML Sequence Diagrams
 
 You can render sequence diagrams like this:
 
@@ -256,9 +278,12 @@ Note left of Alice: Alice responds
 Alice->Bob: Where have you been?
 ```
 
-### Flow Charts
+More information about **sequence diagrams** syntax [here](http://bramp.github.io/js-sequence-diagrams/).
+
+#### Flow Charts
 
 Flow charts can be specified like this:
+
 ```flow
 st=>start: Start
 e=>end: End
@@ -271,36 +296,45 @@ cond(yes)->e
 cond(no)->op2
 ```
 
-### Graphviz
+More information about **flow charts** syntax [here](http://adrai.github.io/flowchart.js/).
+
+#### Graphviz
+
 ```graphviz
 digraph hierarchy {
+  nodesep=1.0 // Increases the separation between nodes
 
-                nodesep=1.0 // increases the separation between nodes
+  node [color=Red,fontname=Courier,shape=box] // All nodes will this shape and colour
+  edge [color=Blue, style=dashed] // All the lines look like this
 
-                node [color=Red,fontname=Courier,shape=box] //All nodes will this shape and colour
-                edge [color=Blue, style=dashed] //All the lines look like this
-
-                Headteacher->{Deputy1 Deputy2 BusinessManager}
-                Deputy1->{Teacher1 Teacher2}
-                BusinessManager->ITManager
-                {rank=same;ITManager Teacher1 Teacher2}  // Put them on the same level
+  Headteacher->{Deputy1 Deputy2 BusinessManager}
+  Deputy1->{Teacher1 Teacher2}
+  BusinessManager->ITManager
+  {rank=same;ITManager Teacher1 Teacher2} // Put them on the same level
 }
 ```
 
-### Mermaid
+More information about **graphviz** syntax [here](http://www.tonyballantyne.com/graphs.html)
+
+#### Mermaid
+
 ```mermaid
 gantt
-    title A Gantt Diagram
+  title A Gantt Diagram
 
-    section Section
-    A task           :a1, 2014-01-01, 30d
-    Another task     :after a1  , 20d
-    section Another
-    Task in sec      :2014-01-12  , 12d
-    anther task      : 24d
+  section Section
+  A task: a1, 2014-01-01, 30d
+  Another task: after a1, 20d
+  
+  section Another
+  Task in sec: 2014-01-12, 12d
+  Another task: 24d
 ```
 
-### Abc
+More information about **mermaid** syntax [here](http://knsv.github.io/mermaid)
+
+#### Abc Music Notation
+
 ```abc
 X:1
 T:Speed the Plough
@@ -313,14 +347,10 @@ GABc dedB|dedB dedB|c2ec B2dB|A2F2 G4:|
 g2gf g2Bd|g2f2 e2d2|c2ec B2dB|A2F2 G4:|
 ```
 
-> More information about **sequence diagrams** syntax [here](http://bramp.github.io/js-sequence-diagrams/).
-> More information about **flow charts** syntax [here](http://adrai.github.io/flowchart.js/).
-> More information about **graphviz** syntax [here](http://www.tonyballantyne.com/graphs.html)
-> More information about **mermaid** syntax [here](http://knsv.github.io/mermaid)
-> More information about **abc** syntax [here](http://abcnotation.com/learn)
+More information about **abc** syntax [here](http://abcnotation.com/learn)
 
-Alert Area
----
+### Alert Area
+
 :::success
 Yes :tada:
 :::
@@ -337,11 +367,11 @@ Watch out :zap:
 Oh No! :fire:
 :::
 
-## Typography
+### Typography
 
-### Headers
+#### Headers
 
-```
+``` markdown
 # h1 Heading
 ## h2 Heading
 ### h3 Heading
@@ -350,7 +380,7 @@ Oh No! :fire:
 ###### h6 Heading
 ```
 
-### Horizontal Rules
+#### Horizontal Rules
 
 ___
 
@@ -358,8 +388,7 @@ ___
 
 ***
 
-
-### Typographic Replacements
+#### Typographic Replacements
 
 Enable typographer option to see result.
 
@@ -375,7 +404,7 @@ Remarkable -- awesome
 
 'Smartypants, single quotes'
 
-### Emphasis
+#### Emphasis
 
 **This is bold text**
 
@@ -397,18 +426,15 @@ Subscript: H~2~O
 
 ==Marked text==
 
-
-### Blockquotes
-
+#### Blockquotes
 
 > Blockquotes can also be nested...
 >> ...by using additional greater-than signs right next to each other...
 > > > ...or with spaces between arrows.
 
+#### Lists
 
-### Lists
-
-#### Unordered
+##### Unordered
 
 + Create a list by starting a line with `+`, `-`, or `*`
 + Sub-lists are made by indenting 2 spaces:
@@ -418,27 +444,26 @@ Subscript: H~2~O
     - Nulla volutpat aliquam velit
 + Very easy!
 
-#### Ordered
+##### Ordered
 
 1. Lorem ipsum dolor sit amet
 2. Consectetur adipiscing elit
-3. Integer molestie lorem at massa
+3. Aenean commodo ligula eget dolor
 
-
-1. You can use sequential numbers...
-1. ...or keep all the numbers as `1.`
-1. feafw
-2. 332
-3. 242
-4. 2552
-1. e2
+1. **You can use sequential numbers...**
+1. **...or keep all the numbers as `1.`**
+1. Aenean massa
+2. Cum sociis natoque penatibus
+3. Magnis dis parturient montes
+4. Nascetur ridiculus mus
+1. Donec quam felis
 
 Start numbering with offset:
 
 57. foo
 1. bar
 
-### Code
+#### Code
 
 Inline `code`
 
@@ -448,7 +473,6 @@ Indented code
     line 1 of code
     line 2 of code
     line 3 of code
-
 
 Block code "fences"
 
@@ -466,7 +490,7 @@ var foo = function (bar) {
 console.log(foo(5));
 ```
 
-### Tables
+#### Tables
 
 | Option | Description |
 | ------ | ----------- |
@@ -498,26 +522,28 @@ Center aligned columns
 | engine | engine to be used for processing templates. Handlebars is the default. |
 | ext    | extension to be used for dest files. |
 
+#### Links
 
-### Links
-[link text](http://dev.nodeca.com)
-[link with title](http://nodeca.github.io/pica/demo/ "title text!")
+[link text](https://demo.codimd.org)
+[link with title](https://nodeca.github.io/pica/demo/ "title text!")
 Autoconverted link https://github.com/nodeca/pica
 
+#### Images
 
-### Images
 ![Minion](https://octodex.github.com/images/minion.png)
+
+With a title:
 ![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "The Stormtroopocat")
-Like links, Images also have a footnote style syntax
-![Alt text][id]
-With a reference later in the document defining the URL location:
 
-[id]: https://octodex.github.com/images/dojocat.jpg  "The Dojocat"
+Like links, images also have a footnote style syntax with a reference later in the document defining the URL location:
+![Dojocat][dojoref]
 
+[dojoref]: https://octodex.github.com/images/dojocat.jpg  "The Dojocat"
+
+Show the image with given size:
 ![Minion](https://octodex.github.com/images/minion.png =200x200)
-Show the image with given size
 
-### Footnotes
+#### Footnotes
 
 Footnote 1 link[^first].
 Footnote 2 link[^second].
@@ -528,7 +554,7 @@ Duplicated footnote reference[^second].
     and multiple paragraphs.
 [^second]: Footnote text.
 
-### Definition Lists
+#### Definition Lists
 
 Term 1
 
@@ -552,7 +578,7 @@ Term 2
   ~ Definition 2a
   ~ Definition 2b
 
-### Abbreviations
+#### Abbreviations
 
 This is an HTML abbreviation example.
 It converts "HTML", but keeps intact partial entries like "xxxHTMLyyy" and so on.
