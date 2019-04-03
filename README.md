@@ -27,7 +27,7 @@ we'll be delighted to help you with the first steps.
 To stay up to date with our work or get support it's recommended to join our
 [Matrix channel][matrix.org-url], stop by our [community forums][codimd-community]
 or subscribe to the [release feed][github-release-feed]. We also engage in
-regular [community calls][codimd-community-calls] which you are very welcome to join.
+regular [community calls][codimd-community-calls] ([RSS](https://community.codimd.org/t/codimd-community-call/19.rss)) which you are very welcome to join.
 
 
 ## Installation / Upgrading
@@ -97,4 +97,4 @@ Licensed under AGPLv3. For our list of contributors, see [AUTHORS](AUTHORS).
 [codimd-demo]: https://demo.codimd.org
 [codimd-demo-features]: https://demo.codimd.org/features
 [codimd-community]: https://community.codimd.org
-[codimd-community-calls]: https://community.codimd.org/t/codimd-community-call/19/2
+[codimd-community-calls]: https://community.codimd.org/t/codimd-community-call/19
