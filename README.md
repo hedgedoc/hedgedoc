@@ -97,4 +97,4 @@ Licensed under AGPLv3. For our list of contributors, see [AUTHORS](AUTHORS).
 [codimd-demo]: https://demo.codimd.org
 [codimd-demo-features]: https://demo.codimd.org/features
 [codimd-community]: https://community.codimd.org
-[codimd-community-calls]: https://github.com/codimd/server/issues/16
+[codimd-community-calls]: https://community.codimd.org/t/codimd-community-call/19/2
