@@ -34,7 +34,7 @@
     "Cancel": "Одустани",
     "Yes, do it!": "Да, уради!",
     "Choose method": "Изаберите начин",
-    "Sign in via %s": "Пријавите се помоћу %s",
+    "Sign in via %s": "Пријави се уз %s",
     "New": "Ново",
     "Publish": "Објави",
     "Extra": "Додатно",
@@ -113,5 +113,7 @@
     "Delete user": "Брисање корисника",
     "Export user data": "Извоз свих корисничких података",
     "Help us translating on %s": "Помозите нам да преведемо на %s",
-    "Source Code": "Изворни код"
+    "Source Code": "Изворни код",
+    "Register": "Региструј се",
+    "Powered by %s": "Покреће %s"
 }
