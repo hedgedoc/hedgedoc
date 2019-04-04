@@ -17,3 +17,9 @@ trim_trailing_whitespace = false
 [{.travis.yml,npm-shrinkwrap.json,package.json}]
 indent_style = space
 indent_size = 2
+
+[locales/*.json]
+# this is the exact style poeditor.com exports, so this should prevent churn.
+insert_final_newline = false
+indent_style = space
+indent_size = 4
