@@ -4,7 +4,7 @@ cache: yarn
 env:
   global:
     - CXX=g++-4.8
-    - YARN_VERSION=1.3.2
+    - YARN_VERSION=1.15.2
 
 jobs:
   include:
