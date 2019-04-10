@@ -81,7 +81,7 @@
     "mathjax": "~2.7.0",
     "mattermost": "^3.4.0",
     "mermaid": "~7.1.0",
-    "meta-marked": "^0.4.2",
+    "meta-marked": "git+https://github.com/codimd/meta-marked#semver:^0.4.2",
     "method-override": "^2.3.7",
     "minimist": "^1.2.0",
     "minio": "^6.0.0",
