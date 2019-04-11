@@ -112,8 +112,9 @@
 	"This will delete your account, all notes that are owned by you and remove all references to your account from other notes.": "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.",
 	"Delete user": "Delete user",
 	"Export user data": "Export user data",
-	"Help us translating on %s": "Help us translating on %s",
 	"Source Code": "Source Code",
 	"Powered by %s": "Powered by %s",
-	"Register": "Register"
+	"Register": "Register",
+	"Help us translating": "Help us translating",
+	"Join the community": "Join the community"
 }
