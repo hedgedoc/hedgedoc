@@ -3,6 +3,8 @@ import config from './config'
 import statusBarTemplate from './statusbar.html'
 import toolBarTemplate from './toolbar.html'
 
+import '../../../css/ui/toolbar.css'
+
 /* config section */
 const isMac = CodeMirror.keyMap.default === CodeMirror.keyMap.macDefault
 const defaultEditorMode = 'gfm'

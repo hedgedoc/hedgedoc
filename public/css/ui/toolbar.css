@@ -1,0 +1,33 @@
+.toolbar {
+  background-color: #fafafa;
+  border: 1px solid #ededed;
+}
+
+.toolbar > .btn-toolbar > .btn-group > .btn {
+  background-color: #fafafa;
+  padding: 5px;
+  font-size: 1em;
+  color: #555;
+}
+
+.toolbar > .btn-toolbar > .btn-group > .btn:hover {
+  background-color: #e1e1e1;
+  padding: 5px;
+}
+
+body.night .toolbar {
+  background-color: #1c1c1e;
+  border: 1px solid #353538;
+}
+
+body.night .toolbar > .btn-toolbar > .btn-group > .btn {
+  background-color: #1c1c1e;
+  padding: 5px;
+  font-size: 1em;
+  color: #5EB7E0;
+}
+
+body.night .toolbar > .btn-toolbar > .btn-group > .btn:hover {
+  background-color: #37373b;
+  padding: 5px;
+}
