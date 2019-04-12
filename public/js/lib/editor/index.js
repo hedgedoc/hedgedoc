@@ -219,8 +219,8 @@ export default class Editor {
     makeComment.click(() => {
       utils.insertText(this.editor, '> []')
     })
+
     uploadImage.bind('change', function (e) {
-      console.log("tiggered")
       var files = e.target.files || e.dataTransfer.files
       e.dataTransfer = {}
       e.dataTransfer.files = files
