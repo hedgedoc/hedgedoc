@@ -15,6 +15,7 @@ import hljs from 'highlight.js'
 import PDFObject from 'pdfobject'
 import S from 'string'
 import { saveAs } from 'file-saver'
+import escapeHTML from 'escape-html'
 
 require('./lib/common/login')
 require('../vendor/md-toc')
@@ -323,7 +324,7 @@ export function finishView (view) {
       svg[0].setAttribute('preserveAspectRatio', 'xMidYMid meet')
     } catch (err) {
       $value.unwrap()
-      $value.parent().append('<div class="alert alert-warning">' + err + '</div>')
+      $value.parent().append(`<div class="alert alert-warning">${escapeHTML(err)}</div>`)
       console.warn(err)
     }
   })
@@ -347,7 +348,7 @@ export function finishView (view) {
       $value.children().unwrap().unwrap()
     } catch (err) {
       $value.unwrap()
-      $value.parent().append('<div class="alert alert-warning">' + err + '</div>')
+      $value.parent().append(`<div class="alert alert-warning">${escapeHTML(err)}</div>`)
       console.warn(err)
     }
   })
@@ -366,7 +367,7 @@ export function finishView (view) {
       $value.children().unwrap().unwrap()
     } catch (err) {
       $value.unwrap()
-      $value.parent().append('<div class="alert alert-warning">' + err + '</div>')
+      $value.parent().append(`<div class="alert alert-warning">${escapeHTML(err)}</div>`)
       console.warn(err)
     }
   })
@@ -388,7 +389,7 @@ export function finishView (view) {
       }
 
       $value.unwrap()
-      $value.parent().append('<div class="alert alert-warning">' + errormessage + '</div>')
+      $value.parent().append(`<div class="alert alert-warning">${escapeHTML(errormessage)}</div>`)
       console.warn(errormessage)
     }
   })
@@ -408,7 +409,7 @@ export function finishView (view) {
       svg[0].setAttribute('preserveAspectRatio', 'xMidYMid meet')
     } catch (err) {
       $value.unwrap()
-      $value.parent().append('<div class="alert alert-warning">' + err + '</div>')
+      $value.parent().append(`<div class="alert alert-warning">${escapeHTML(err)}</div>`)
       console.warn(err)
     }
   })
@@ -568,7 +569,7 @@ export function postProcess (code) {
     if (warning && warning.length > 0) {
       warning.text(md.metaError)
     } else {
-      warning = $('<div id="meta-error" class="alert alert-warning">' + md.metaError + '</div>')
+      warning = $(`<div id="meta-error" class="alert alert-warning">${escapeHTML(md.metaError)}</div>`)
       result.prepend(warning)
     }
   }
