@@ -195,13 +195,11 @@ module.exports = {
       'bootstrap-validator',
       'expose-loader?select2!select2',
       'expose-loader?moment!moment',
-      'script-loader!js-url',
       path.join(__dirname, 'public/js/cover.js')
     ],
     index: [
       'babel-polyfill',
       'script-loader!jquery-ui-resizable',
-      'script-loader!js-url',
       'script-loader!Idle.Js',
       'expose-loader?LZString!lz-string',
       'script-loader!codemirror',
@@ -248,7 +246,6 @@ module.exports = {
       'expose-loader?jsyaml!js-yaml',
       'script-loader!mermaid',
       'expose-loader?moment!moment',
-      'script-loader!js-url',
       'script-loader!handlebars',
       'expose-loader?hljs!highlight.js',
       'expose-loader?emojify!emojify.js',

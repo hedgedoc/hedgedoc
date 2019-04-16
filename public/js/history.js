@@ -4,6 +4,7 @@
 import store from 'store'
 import S from 'string'
 import LZString from 'lz-string'
+import url from 'wurl'
 
 import {
   checkNoteIdValid,
@@ -23,9 +24,9 @@ window.migrateHistoryFromTempCallback = null
 migrateHistoryFromTemp()
 
 function migrateHistoryFromTemp () {
-  if (window.url('#tempid')) {
+  if (url('#tempid')) {
     $.get(`${serverurl}/temp`, {
-      tempid: window.url('#tempid')
+      tempid: url('#tempid')
     })
     .done(data => {
       if (data && data.temp) {
