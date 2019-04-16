@@ -291,7 +291,7 @@ function handleTermSignals () {
   })
   if (config.path) {
     fs.unlink(config.path)
-  } 
+  }
   var checkCleanTimer = setInterval(function () {
     if (realtime.isReady()) {
       models.Revision.checkAllNotesRevision(function (err, notes) {
