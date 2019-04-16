@@ -289,6 +289,9 @@ function handleTermSignals () {
       socket.disconnect(true)
     }, 0)
   })
+  if (config.path) {
+    fs.unlink(config.path)
+  }
   var checkCleanTimer = setInterval(function () {
     if (realtime.isReady()) {
       models.Revision.checkAllNotesRevision(function (err, notes) {
