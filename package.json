@@ -57,7 +57,7 @@
     "jquery-ui": "^1.12.1",
     "js-cookie": "^2.1.3",
     "js-sequence-diagrams": "git+https://github.com/codimd/js-sequence-diagrams.git",
-    "js-url": "^2.3.0",
+    "wurl": "^2.5.3",
     "js-yaml": "^3.13.1",
     "jsdom-nogyp": "^0.8.3",
     "keymaster": "^1.6.2",

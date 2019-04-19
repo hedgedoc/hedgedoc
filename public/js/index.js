@@ -17,6 +17,7 @@ import { saveAs } from 'file-saver'
 import randomColor from 'randomcolor'
 import store from 'store'
 import hljs from 'highlight.js'
+import url from 'wurl'
 
 import _ from 'lodash'
 
@@ -1373,12 +1374,12 @@ $('#gistImportModalConfirm').click(function () {
   if (!isValidURL(gisturl)) {
     showMessageModal('<i class="fa fa-github"></i> Import from Gist', 'Not a valid URL :(', '', '', false)
   } else {
-    var hostname = window.url('hostname', gisturl)
+    var hostname = url('hostname', gisturl)
     if (hostname !== 'gist.github.com') {
       showMessageModal('<i class="fa fa-github"></i> Import from Gist', 'Not a valid Gist URL :(', '', '', false)
     } else {
       ui.spinner.show()
-      $.get('https://api.github.com/gists/' + window.url('-1', gisturl))
+      $.get('https://api.github.com/gists/' + url('-1', gisturl))
                 .done(function (data) {
                   if (data.files) {
                     var contents = ''
