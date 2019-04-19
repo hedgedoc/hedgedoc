@@ -110,10 +110,12 @@
     "Terms of Use": "Услови коришћења",
     "Do you really want to delete your user account?": "Да ли заиста желите да трајно обришете свој налог?",
     "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.": "Ова операција ће избрисати ваш налог, све ваше белешке, а уклониће и све везе ка вашем налогу из других белешки.",
-    "Delete user": "Брисање корисника",
+    "Delete user": "Обриши корисника",
     "Export user data": "Извоз свих корисничких података",
-    "Help us translating on %s": "Помозите нам да преведемо на %s",
+    "Help us translating on %s": "Помозите око превода на %s",
     "Source Code": "Изворни код",
     "Register": "Региструј се",
-    "Powered by %s": "Покреће %s"
+    "Powered by %s": "Покреће %s",
+    "Help us translating": "Помозите око превода",
+    "Join the community": "Приступите заједници"
 }
