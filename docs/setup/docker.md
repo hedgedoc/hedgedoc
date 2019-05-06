@@ -16,7 +16,7 @@ CodiMD by docker container
 The easiest way to setup CodiMD using docker are using the following three commands:
 
 ```sh
-git clone https://github.com/codimd/container.git
+git clone https://github.com/codimd/container.git codimd-container
 cd codimd-container
 docker-compose up
 ```
