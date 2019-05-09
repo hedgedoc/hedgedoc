@@ -10,6 +10,7 @@ module.exports = {
     // wrong.
     "import/first": ["warn"],
     "indent": ["warn"],
+    "no-console": ["warn"],
     "no-multiple-empty-lines": ["warn"],
     "no-multi-spaces": ["warn"],
     "object-curly-spacing": ["warn"],
