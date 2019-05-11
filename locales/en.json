@@ -123,6 +123,8 @@
     "Account Settings": "Account Settings",
     "About You": "About You",
     "Visit public profile": "Visit public profile",
+    "Your Data": "Your Data",
+	"Preferred Language": "Preferred Language",
     "User could not be saved.": "User could not be saved",
     "username/Validation is failed": "User name contains invalid characters",
     "username/Validation len failed": "User name is too short",

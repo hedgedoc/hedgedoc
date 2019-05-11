@@ -15,7 +15,9 @@
                 <div class="alert alert-danger" style="max-width: 400px; margin: 0 auto;"><%= __('User could not be saved.') %></div>
             <% } %>
 
-            <a href="<%= serverURL %>/user/<%= user.username %>"><%= __('Visit public profile') %></a>
+            <p>
+                <a href="<%= serverURL %>/user/<%= user.username %>"><%= __('Visit public profile') %></a>
+            </p>
 
             <form method="post" enctype="application/x-www-form-urlencoded">
                 <fieldset>
@@ -41,12 +43,17 @@
                 </fieldset>
                 <input type="submit" value="save">
             </form>
-            <hr>
-            <h2>Manage your Account</h2>
-            <ul>
-                <li><a href="<%- serverURL %>/settings/account/export"><i class="fa fa-cloud-download fa-fw"></i> <%= __('Export user data') %></a></li>
-                <li><a href="" class="ui-delete-user" data-toggle="modal" data-target=".delete-user-modal"><i class="fa fa-trash fa-fw"></i> <%= __('Delete user') %></a></li>
-            </ul>
+
+            <h2><%= __('Preferred Language') %></h2>
+            <%- include ../shared/select_locale %>
+
+            <h2><%= __('Your Data') %></h2>
+            <p>
+                <a href="<%- serverURL %>/settings/account/export"><i class="fa fa-cloud-download fa-fw"></i> <%= __('Export user data') %></a>
+            </p>
+            <p>
+                <a href="" class="ui-delete-user" data-toggle="modal" data-target=".delete-user-modal"><i class="fa fa-trash fa-fw"></i> <%= __('Delete user') %></a>
+            </p>
         </div>
     </div>
 

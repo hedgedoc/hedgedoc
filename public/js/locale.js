@@ -1,31 +1,32 @@
-/* eslint-env browser, jquery */
-/* global Cookies */
+const $locale = $('select.ui-locale')
+const supportedLangs = []
 
+const userLang = navigator.language || navigator.userLanguage
+const userLangCode = userLang.split('-')[0]
+const cookieLang = Cookies.get('locale')
 var lang = 'en'
-var userLang = navigator.language || navigator.userLanguage
-var userLangCode = userLang.split('-')[0]
-var locale = $('.ui-locale')
-var supportLangs = []
-$('.ui-locale option').each(function () {
-  supportLangs.push($(this).val())
+
+$locale.find('option').each(function () {
+  supportedLangs.push($(this).val())
 })
-if (Cookies.get('locale')) {
-  lang = Cookies.get('locale')
+
+if (cookieLang && supportedLangs.indexOf(cookieLang) !== -1) {
+  lang = cookieLang
   if (lang === 'zh') {
     lang = 'zh-TW'
   }
-} else if (supportLangs.indexOf(userLang) !== -1) {
-  lang = supportLangs[supportLangs.indexOf(userLang)]
-} else if (supportLangs.indexOf(userLangCode) !== -1) {
-  lang = supportLangs[supportLangs.indexOf(userLangCode)]
+} else if (supportedLangs.indexOf(userLang) !== -1) {
+  lang = userLang
+} else if (supportedLangs.indexOf(userLangCode) !== -1) {
+  lang = userLangCode
 }
 
-locale.val(lang)
-$('select.ui-locale option[value="' + lang + '"]').attr('selected', 'selected')
+$locale.val(lang)
+$locale.find('option[value="' + lang + '"]').attr('selected', 'selected')
 
-locale.change(function () {
+$locale.change(function () {
   Cookies.set('locale', $(this).val(), {
-    expires: 365
+    expires: 5 * 365
   })
   window.location.reload()
 })

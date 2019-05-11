@@ -74,6 +74,7 @@ import Editor from './lib/editor'
 import getUIElements from './lib/editor/ui-elements'
 import modeType from './lib/modeType'
 import appState from './lib/appState'
+require('./locale')
 
 require('../vendor/showup/showup')
 
@@ -1596,7 +1597,7 @@ function toggleNightMode () {
     store.set('nightMode', !isActive)
   } else {
     Cookies.set('nightMode', !isActive, {
-      expires: 365
+      expires: 5 * 365
     })
   }
 }
