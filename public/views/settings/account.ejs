@@ -41,9 +41,16 @@
                 </fieldset>
                 <input type="submit" value="save">
             </form>
-      </div>
+            <hr>
+            <h2>Manage your Account</h2>
+            <ul>
+                <li><a href="<%- serverURL %>/settings/account/export"><i class="fa fa-cloud-download fa-fw"></i> <%= __('Export user data') %></a></li>
+                <li><a href="" class="ui-delete-user" data-toggle="modal" data-target=".delete-user-modal"><i class="fa fa-trash fa-fw"></i> <%= __('Delete user') %></a></li>
+            </ul>
+        </div>
     </div>
 
+    <%- include ./_delete_user_modal %>
     <%- include ../codimd/footer %>
     <%- include ../codimd/foot %>
 </body>

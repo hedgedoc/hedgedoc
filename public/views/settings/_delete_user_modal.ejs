@@ -1,0 +1,21 @@
+<div class="modal fade delete-user-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel"><%= __('Are you sure?') %></h4>
+            </div>
+            <div class="modal-body">
+                <h5 class="ui-delete-user-modal-msg"><%= __('Do you really want to delete your user account?') %></h5>
+                <strong class="ui-delete-user-modal-item"><%= __('This will delete your account, all notes that are owned by you and remove all references to your account from other notes.') %></strong>
+            </div>
+            <div class="modal-footer">
+                <form method="post" action="<%- serverURL %>/settings/account/delete/<%- user.deleteToken %>">
+                    <button type="button" class="btn btn-default ui-delete-user-modal-cancel" data-dismiss="modal"><%= __('Cancel') %></button>
+                    <input type="submit" class="btn btn-danger" value="<%- __('Yes, do it!') %>">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -26,13 +26,13 @@
                                         <img class="ui-avatar" width="20" height="20"><span class="hidden-xs hidden-sm">&ensp;<span class="ui-name"></span></span>&ensp;<i class="fa fa-caret-down"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="profileLabel">
-                                        <li><a href="<%- serverURL %>/features"><i class="fa fa-dot-circle-o fa-fw"></i> <%= __('Features') %></a></li>
                                         <li><a href="<%- serverURL %>/settings/account"><i class="fa fa-cog fa-fw"></i> <%= __('User Settings') %></a></li>
-                                        <li><a href="<%- serverURL %>/settings/account/export"><i class="fa fa-cloud-download fa-fw"></i> <%= __('Export user data') %></a></li>
-                                        <li><a class="ui-delete-user" data-toggle="modal" data-target=".delete-user-modal"><i class="fa fa-trash fa-fw"></i> <%= __('Delete user') %></a></li>
                                         <li><a href="<%- serverURL %>/logout"><i class="fa fa-sign-out fa-fw"></i> <%= __('Sign Out') %></a></li>
                                     </ul>
                                 </span>
+                            </div>
+                            <div style="float: right; margin-top: 8px; margin-right: 3px;">
+                                <a type="button" href="<%- serverURL %>/features" style="float: right" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o fa-fw"></i> <%= __('Features') %></a>
                             </div>
                         </ul>
                     </nav>
@@ -182,26 +182,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><%= __('Cancel') %></button>
                 <button type="button" class="btn btn-danger ui-delete-history-modal-confirm"><%= __('Yes, do it!') %></button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- delete user modal -->
-<div class="modal fade delete-user-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel"><%= __('Are you sure?') %></h4>
-            </div>
-            <div class="modal-body">
-                <h5 class="ui-delete-user-modal-msg"><%= __('Do you really want to delete your user account?') %></h5>
-                <strong class="ui-delete-user-modal-item"><%= __('This will delete your account, all notes that are owned by you and remove all references to your account from other notes.') %></strong>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default ui-delete-user-modal-cancel" data-dismiss="modal"><%= __('Cancel') %></button>
-                <a type="button" class="btn btn-danger" href="<%- serverURL %>/me/delete/<%- deleteToken %>"><%= __('Yes, do it!') %></a>
             </div>
         </div>
     </div>
