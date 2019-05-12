@@ -128,6 +128,7 @@
     "User could not be saved.": "User could not be saved",
     "username/Validation is failed": "User name contains invalid characters",
     "username/Validation len failed": "User name is too short",
+    "username/username must be unique": "This username already exists, please choose a different one.",
     "displayname/Validation is failed": "Display name contains invalid characters",
     "displayname/Validation len failed": "Display name is too short",
     "email/Validation isEmail failed": "Email is not a valid address",

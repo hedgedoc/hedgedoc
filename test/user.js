@@ -12,6 +12,32 @@ describe('User Sequelize model', function () {
     return models.sequelize.sync({ force: true })
   })
 
+  const userData = {
+    email: 'spock@enterprise.example'
+  }
+
+  it('create should populate displayname and username', async function () {
+    const u = await User.create(userData)
+    assert.strictEqual(u.email, userData.email)
+    assert.strictEqual(u.displayname, 'spock', 'should set a default displayname')
+    assert.strictEqual(u.username, 'spock', 'should set a default username')
+  })
+
+  it('should not create the same email address user twice', async () => {
+    await User.create(userData)
+    assert.rejects(async () => {
+      await User.create(userData)
+    }, { name: 'SequelizeUniqueConstraintError' })
+  })
+
+  it('should create distinct users even if their default user names would match', async () => {
+    await User.create({ email: 'bob@example.com' })
+    const second = await User.create({ email: 'bob@example.de' })
+    assert.strictEqual(second.username, 'bob1')
+    const third = await User.create({ email: 'bob@example.org' })
+    assert.strictEqual(third.username, 'bob2')
+  })
+
   it('stores a password hash on creation and verifies that password', function () {
     const userData = {
       password: 'test123'
