@@ -87,26 +87,6 @@
   margin-right: 10px;
 }
 
-/* Light theme */
-.btn-light {
-  color: #555;
-  background-color: rgba(0, 0, 0,.1);
-}
-.btn-light:hover {
-  color: #111;
-  background-color: rgba(0, 0, 0,.25);
-}
-
-/* Dark theme */
-.btn-dark {
-  color: #fff;
-  background-color: rgba(0, 0, 0,.5);
-}
-.btn-dark:hover {
-  color: #fff;
-  background-color: rgba(0, 0, 0,.9);
-}
-
 /* Buttons displayed throughout the content */
 .btn-showup {
   position: relative;

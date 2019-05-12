@@ -3,6 +3,8 @@ import config from './config'
 import statusBarTemplate from './statusbar.html'
 import toolBarTemplate from './toolbar.html'
 
+import '../../../css/ui/toolbar.css'
+
 /* config section */
 const isMac = CodeMirror.keyMap.default === CodeMirror.keyMap.macDefault
 const defaultEditorMode = 'gfm'
@@ -219,8 +221,8 @@ export default class Editor {
     makeComment.click(() => {
       utils.insertText(this.editor, '> []')
     })
+
     uploadImage.bind('change', function (e) {
-      console.log("tiggered")
       var files = e.target.files || e.dataTransfer.files
       e.dataTransfer = {}
       e.dataTransfer.files = files
