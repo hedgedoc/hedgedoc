@@ -139,7 +139,7 @@
     "**/request": "^2.88.0"
   },
   "engines": {
-    "node": ">=6.x"
+    "node": ">=8.x"
   },
   "bugs": "https://github.com/codimd/server/issues",
   "keywords": [
