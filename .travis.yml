@@ -1,5 +1,5 @@
 language: node_js
-dist: trusty
+dist: xenial
 cache: yarn
 env:
   global:
@@ -8,33 +8,43 @@ env:
 
 jobs:
   include:
-    - env: task=npm-test
+    - name: Node.js 8
       node_js:
         - 8
       before_install:
         - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version "$YARN_VERSION"
         - export PATH="$HOME/.yarn/bin:$PATH"
-    - env: task=npm-test
+      script:
+        - yarn run mocha-suite
+    - name: Node.js 10
       node_js:
         - 10
       before_install:
         - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version "$YARN_VERSION"
         - export PATH="$HOME/.yarn/bin:$PATH"
-    - env: task=npm-test
+      script:
+        - yarn run mocha-suite
+    - name: Node.js 12
       node_js:
         - 12
       before_install:
         - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version "$YARN_VERSION"
         - export PATH="$HOME/.yarn/bin:$PATH"
-    - env: task=ShellCheck
+      script:
+        - yarn run mocha-suite
+    - name: eslint
+      script:
+        - yarn run eslint
+      language: generic
+    - name: ShellCheck
       script:
         - shellcheck bin/heroku bin/setup
       language: generic
-    - env: task=json-lint
+    - name: json-lint
       addons:
         apt:
           packages:
           - jq
       script:
-        - npm run jsonlint
+        - yarn run jsonlint
       language: generic
