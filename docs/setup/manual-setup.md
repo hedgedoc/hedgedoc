@@ -7,7 +7,6 @@ Manual Installation
 - Database (PostgreSQL, MySQL, MariaDB, SQLite, MSSQL) use charset `utf8`
 - npm (and its dependencies, [node-gyp](https://github.com/nodejs/node-gyp#installation))
 - yarn
-- `libssl-dev` for building scrypt (see [here](https://github.com/ml1nk/node-scrypt/blob/master/README.md#installation-instructions) for further information)
 - Bash (for the setup script)
 - For **building** CodiMD we recommend to use a machine with at least **2GB** RAM
 
