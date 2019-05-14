@@ -122,11 +122,12 @@ defaultNotePath can't be set from env-vars
 | variable | example value | description |
 | -------- | ------------- | ----------- |
 | `CMD_GITLAB_SCOPE` | `read_user` or `api` | GitLab API requested scope (default is `api`) (GitLab snippet import/export need `api` scope) |
-| `CMD_GITLAB_BASEURL` | no example | GitLab authentication endpoint, set to use other endpoint than GitLab.com (optional) |
+| `CMD_GITLAB_BASEURL` | no example | GitLab authentication endpoint, set to use other endpoint than GitLab.com (optional) - Note: omit trailing `/` to prevent [API errors] |
 | `CMD_GITLAB_CLIENTID` | no example | GitLab API client id |
 | `CMD_GITLAB_CLIENTSECRET` | no example | GitLab API client secret |
 | `CMD_GITLAB_VERSION` | no example | GitLab API version (v3 or v4) |
 
+[API errors]: https://gitlab.com/gitlab-org/gitlab-ce/issues/49782
 
 ### Google Login
 
