@@ -3,11 +3,10 @@ Manual Installation
 
 ## Requirements on your server
 
-- Node.js 6.x or up (test up to 7.5.0) and <10.x
+- Node.js 8.5 or up
 - Database (PostgreSQL, MySQL, MariaDB, SQLite, MSSQL) use charset `utf8`
 - npm (and its dependencies, [node-gyp](https://github.com/nodejs/node-gyp#installation))
 - yarn
-- `libssl-dev` for building scrypt (see [here](https://github.com/ml1nk/node-scrypt/blob/master/README.md#installation-instructions) for further information)
 - Bash (for the setup script)
 - For **building** CodiMD we recommend to use a machine with at least **2GB** RAM
 
