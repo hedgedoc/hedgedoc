@@ -87,4 +87,15 @@ describe('User Sequelize model', function () {
       ])
     })).catch(e => assert.fail(e))
   })
+
+  it('should change passwords correctly', async () => {
+    const u = await User.create({ password: 'old' })
+    assert(await u.verifyPassword('old'))
+    u.password = 'updated'
+    const errors = await u.validate()
+    assert.deepStrictEqual(errors, null)
+    assert(await u.save())
+    assert(await u.verifyPassword('updated'), 'new password should now work')
+    assert(!await u.verifyPassword('old'), 'old password should no longer work')
+  })
 })

@@ -37,9 +37,7 @@
                     <%- validationErrorFor(validationErrors, 'invalid_password_given') %>
                     <p><%= __('user.old_password') %>: <input name="old_password" type="password" value=""></p>
                     <p><%= __('user.new_password') %>: <input name="new_password" type="password" value=""></p>
-                    <%- validationErrorFor(validationErrors, 'confirm_password') %>
-                    <%- validationErrorFor(validationErrors, 'confirmation_matches') %>
-                    <p><%= __('user.password_confirmation') %>: <input name="password_confirmation" type="password" value=""></p>
+                    <p><%= __('user.new_password_confirmation') %>: <input name="new_password_confirmation" type="password" value=""></p>
                 </fieldset>
                 <input type="submit" value="save">
             </form>
