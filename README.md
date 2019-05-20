@@ -5,6 +5,7 @@ CodiMD
 [![build status][travis-image]][travis-url]
 [![version][github-version-badge]][github-release-page]
 [![POEditor][poeditor-image]][poeditor-url]
+[![Mastodon][social-mastodon-image]][social-mastodon]
 
 CodiMD lets you create real-time collaborative markdown notes. You can test-drive
 it by visiting our [CodiMD demo server][codimd-demo].
@@ -98,3 +99,5 @@ Licensed under AGPLv3. For our list of contributors, see [AUTHORS](AUTHORS).
 [codimd-demo-features]: https://demo.codimd.org/features
 [codimd-community]: https://community.codimd.org
 [codimd-community-calls]: https://community.codimd.org/t/codimd-community-call/19
+[social-mastodon]: https://social.codimd.org/mastodon
+[social-mastodon-image]: https://img.shields.io/badge/social-mastodon-3c99dc.svg
