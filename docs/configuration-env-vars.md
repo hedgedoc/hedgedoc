@@ -35,6 +35,7 @@ defaultNotePath can't be set from env-vars
 | `CMD_FORBIDDEN_NOTE_IDS` | `'robots.txt'` | disallow creation of notes, even if `CMD_ALLOW_FREEURL` is `true` |
 | `CMD_IMAGE_UPLOAD_TYPE` | `imgur`, `s3`, `minio`, `lutim` or `filesystem` | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [Minio](guides/minio-image-upload.md), also there's a whole section on their respective env vars below. |
 | `CMD_SOURCE_URL` | `https://github.com/codimd/server/tree/<current commit>` | Provides the link to the source code of CodiMD on the entry page (Please, make sure you change this when you run a modified version) |
+| `CMD_TOOBUSY_LAG` | `70` | CPU time for one eventloop tick until node throttles connections. (milliseconds) |
 
 
 ## CodiMD Location
