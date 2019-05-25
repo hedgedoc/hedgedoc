@@ -106,7 +106,10 @@ body.night{
     color: #78B2F2 !important;
 }
 .CodeMirror-sizer {
-    margin-bottom: 0px !important;
+    /* Make sure CodeMirror doesn't hide text under the status bar
+     * 26px is the height of the status bar.
+     */
+    margin-bottom: 26px !important;
 }
 .CodeMirror-insert-match {
   background: lawngreen;
