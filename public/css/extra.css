@@ -384,6 +384,14 @@ small .dropdown a:focus, small .dropdown a:hover {
     color: #eee;
 }
 
+*[id]:before {
+  display: block;
+  content: " ";
+  margin-top: -55px;
+  height: 55px;
+  visibility: hidden;
+}
+
 @media print {
     div, table, img, pre, blockquote {
         page-break-inside: avoid !important;
