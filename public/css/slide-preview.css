@@ -98,3 +98,7 @@
 .markdown-body.slides h1, .markdown-body.slides h2 {
     border-bottom: 0;
 }
+
+.markdown-body section > section:last-child {
+	margin-bottom: 1.5em !important;
+}
