@@ -56,3 +56,7 @@
   height: 1.5em;
   border: 3px solid #777;
 }
+
+.markdown-body.slides aside.notes {
+  display: none;
+}
