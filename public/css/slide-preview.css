@@ -67,3 +67,30 @@
   margin: 0 0 0 1em;
   padding: 0;
 }
+
+.markdown-body.slides table {
+  width: 50%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+  display: table;
+}
+
+.markdown-body.slides table th, .markdown-body.slides table td {
+  text-align: left;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  border:none;
+  border-bottom: 1px solid;
+}
+
+.markdown-body.slides table tr {
+  border-top: 0;
+}
+
+.markdown-body.slides table tr:nth-child(2n) {
+  background-color: inherit;
+}
+
+.markdown-body.slides table tbody tr:last-child th, .markdown-body.slides table tbody tr:last-child td {
+  border-bottom: none;
+}
