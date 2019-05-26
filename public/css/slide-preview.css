@@ -60,3 +60,10 @@
 .markdown-body.slides aside.notes {
   display: none;
 }
+
+.markdown-body.slides ul, .markdown-body.slides ol {
+  display: inline-block;
+  text-align: left;
+  margin: 0 0 0 1em;
+  padding: 0;
+}
