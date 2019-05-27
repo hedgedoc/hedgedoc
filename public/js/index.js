@@ -2740,6 +2740,7 @@ function updateViewInner () {
   delete md.metaError
   var rendered = md.render(value)
   if (md.meta.type && md.meta.type === 'slide') {
+    ui.area.view.addClass('black')
     var slideOptions = {
       separator: '^(\r\n?|\n)---(\r\n?|\n)$',
       verticalSeparator: '^(\r\n?|\n)----(\r\n?|\n)$'
@@ -2756,6 +2757,7 @@ function updateViewInner () {
     if (lastMeta.type && lastMeta.type === 'slide') {
       refreshView()
       ui.area.markdown.removeClass('slides')
+      ui.area.view.removeClass('black')
       appState.syncscroll = true
       checkSyncToggle()
     }
