@@ -111,3 +111,8 @@
 .markdown-body section > section:last-child {
 	margin-bottom: 1.5em !important;
 }
+
+/* slides previews get a black background, controlled by js */
+.ui-view-area.black {
+  background-color: black !important;;
+}
