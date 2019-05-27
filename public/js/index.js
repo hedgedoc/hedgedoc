@@ -446,8 +446,15 @@ $(document).ready(function () {
     })
   }
 
+  // Use the new CSS selector for dark theme requests to automatically turn on night mode
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme
+  let darkTheme = window.matchMedia("(prefers-color-scheme: dark)")
   // Re-enable nightmode
-  if (store.get('nightMode') || Cookies.get('nightMode')) {
+  let storageNightMode = store.get('nightMode')
+  let cookiesNightMode = Cookies.get('nightMode')
+
+  if (storageNightMode || cookiesNightMode ||
+   ((typeof storageNightMode !== "boolean" && typeof cookiesNightMode !== "boolean") && darkTheme.matches)) {
     $body.addClass('night')
     ui.toolbar.night.addClass('active')
   }
