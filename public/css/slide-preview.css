@@ -85,6 +85,7 @@
 
 .markdown-body.slides table tr {
   border-top: 0;
+  background-color: #fff;
 }
 
 .markdown-body.slides table tr:nth-child(2n) {
