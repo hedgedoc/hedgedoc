@@ -99,6 +99,15 @@
     border-bottom: 0;
 }
 
+.night .markdown-body.slides h1,
+.night .markdown-body.slides h2,
+.night .markdown-body.slides h3,
+.night .markdown-body.slides h4,
+.night .markdown-body.slides h5,
+.night .markdown-body.slides h6 {
+    color: black;
+}
+
 .markdown-body section > section:last-child {
 	margin-bottom: 1.5em !important;
 }
