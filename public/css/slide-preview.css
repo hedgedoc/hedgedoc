@@ -56,3 +56,64 @@
   height: 1.5em;
   border: 3px solid #777;
 }
+
+.markdown-body.slides aside.notes {
+  display: none;
+}
+
+.markdown-body.slides ul, .markdown-body.slides ol {
+  display: inline-block;
+  text-align: left;
+  margin: 0 0 0 1em;
+  padding: 0;
+}
+
+.markdown-body.slides table {
+  width: 50%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+  display: table;
+}
+
+.markdown-body.slides table th, .markdown-body.slides table td {
+  text-align: left;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  border:none;
+  border-bottom: 1px solid;
+}
+
+.markdown-body.slides table tr {
+  border-top: 0;
+  background-color: #fff;
+}
+
+.markdown-body.slides table tr:nth-child(2n) {
+  background-color: inherit;
+}
+
+.markdown-body.slides table tbody tr:last-child th, .markdown-body.slides table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.markdown-body.slides h1, .markdown-body.slides h2 {
+    border-bottom: 0;
+}
+
+.night .markdown-body.slides h1,
+.night .markdown-body.slides h2,
+.night .markdown-body.slides h3,
+.night .markdown-body.slides h4,
+.night .markdown-body.slides h5,
+.night .markdown-body.slides h6 {
+    color: black;
+}
+
+.markdown-body section > section:last-child {
+	margin-bottom: 1.5em !important;
+}
+
+/* slides previews get a black background, controlled by js */
+.ui-view-area.black {
+  background-color: black !important;;
+}
