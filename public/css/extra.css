@@ -384,7 +384,17 @@ small .dropdown a:focus, small .dropdown a:hover {
     color: #eee;
 }
 
-*[id]:before {
+
+/* Prevent linked heading from being hidden underneath navbar.
+ * Example: http://localhost:3000/features#Editor-Modes would open and
+ * hide the headline "Editor Modes" underneath the navbar without this CSS rule.
+ */
+.markdown-body h1[id]:before,
+.markdown-body h2[id]:before,
+.markdown-body h3[id]:before,
+.markdown-body h4[id]:before,
+.markdown-body h5[id]:before,
+.markdown-body h6[id]:before {
   display: block;
   content: " ";
   margin-top: -55px;
