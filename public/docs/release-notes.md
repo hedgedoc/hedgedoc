@@ -1,6 +1,79 @@
 Release Notes
 ===
 
+<i class="fa fa-tag"></i> 1.4.0 <i class="fa fa-clock-o"></i> 2019-05-31 00:00
+---
+
+### Announcements
+* CodiMD now has a [Mastodon account](https://social.codimd.org/mastodon)
+* CodiMD now has a [community forum](https://community.codimd.org)
+* With CodiMD 1.4.0 we're dropping node 6 support. That version of node.js is discontinued and no longer receives any security updates. We would like to encourage you to upgrade node 8 or later. Node 8 will continue to be supported at least until its end-of-life in January 2020.
+
+### Enhancements
+* Use libravatar instead of Gravatar
+* Fix language description capitalization
+* Move upload button into the toolbar
+* Clean up Heroku configurations
+* Add new screenshot to README and index page
+* Add link to community call to README
+* Update languages (pl, sr, zh-CN, fr, it, ja, zh-TW, de, sv, es)
+* Change edit link to `both` view
+* Hide minio default ports
+* Add missing passport-saml configuration
+* Add lutim support
+* Update dependencies
+* Add documentation for keycloak
+* Add tests for user model
+* Add Mastodon link
+* Add config for toobusy middleware
+* Add vietnamese language
+
+### Fixes
+* Fix missing space in footer
+* Fix various possible security vulnerabilities in dependencies
+* Fix broken dependency js-sequence-diagrams
+* Fix XSS in graphviz error message rendering
+* Fix toolbar night mode
+* Fix hidden header on scroll
+* Fix missing pictures for OpenID
+* Fix statusbar hiding text in edit view
+
+### Refactors
+* Refactor README and documentation
+* Integrate the old wiki into documentation section
+* Refactor headers on Features page
+* Replace js-url with wurl
+* Refactor scrypt integration
+
+### Removals
+* Remove sass-loader
+
+### Contributors
+* [Amolith](https://github.com/Amolith)
+* CasperS (translator)
+* Cedric.couralet (translator)
+* [Claudius Coenen (ccoenen)](https://github.com/ccoenen)
+* Daniel (translator)
+* Deluxghost (translator)
+* [Dylan Dervaux (Dylanderv)](https://github.com/Dylanderv)
+* [Emmanuel Ormancey (nopap)](https://github.com/nopap)
+* Grzegorz (translator)
+* [Henrik Hüttemann (HerHde)](https://github.com/HerHde)
+* Hồng (translator)
+* [Mauricio Robayo (archemiro)](https://github.com/archemiro)
+* [Max Wu (jackycute)](https://github.com/jackycute)
+* [naimo](https://github.com/naimo)
+* [Pedro Ferreira (pferreir)](https://github.com/pferreir)
+* [Simon Fish (boardfish)](https://github.com/boardfish)
+* [Stéphane Guillou (stragu)](https://github.com/stragu)
+* Sylke Vicious (translator)
+* [Thor77](https://github.com/Thor77)
+* veracosta (translator)
+* Vladan (translator)
+* War (translator)
+* Zhai233 (translator)
+
+
 <i class="fa fa-tag"></i> 1.3.2 <i class="fa fa-clock-o"></i> 2019-03-28 00:00
 ---
 
@@ -101,7 +174,7 @@ Release Notes
 * Refactor handling of template variables
 * Refactor linting to use eslint
 
-### Removes
+### Removals
 * Remove no longer working Octicons
 * Remove links to our old Gitter channel
 * Remove unused library node-uuid
