@@ -1,6 +1,10 @@
 Migrations and Notable Changes
 ===
 
+## Migrating to 1.4.0
+
+We dropped support for node 6 with this version. If you have any trouble running this version, please double check that you are running at least node 8!
+
 ## Migrating to 1.3.2
 
 This is not a breaking change, but to stay up to date with the community
