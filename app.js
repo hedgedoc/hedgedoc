@@ -84,7 +84,7 @@ app.use(compression())
 if (config.hsts.enable) {
   app.use(helmet.hsts({
     maxAge: config.hsts.maxAgeSeconds,
-    includeSubdomains: config.hsts.includeSubdomains,
+    includeSubDomains: config.hsts.includeSubDomains,
     preload: config.hsts.preload
   }))
 } else if (config.useSSL) {
