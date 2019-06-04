@@ -6,7 +6,7 @@
   "license": "AGPL-3.0",
   "scripts": {
     "test": "npm run-script eslint && npm run-script jsonlint && npm run-script mocha-suite",
-    "eslint": "node_modules/.bin/eslint lib public test app.js",
+    "eslint": "node_modules/.bin/eslint --max-warnings 0 lib public test app.js",
     "jsonlint": "find . -not -path './node_modules/*' -type f -name '*.json' -o -type f -name '*.json.example' | while read json; do echo $json ; jq . $json; done",
     "mocha-suite": "NODE_ENV=test CMD_DB_URL=\"sqlite::memory:\" mocha --exit",
     "standard": "echo 'standard is no longer being used, use `npm run eslint` instead!' && exit 1",
