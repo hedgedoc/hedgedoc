@@ -63,7 +63,7 @@
         </div>
     </div>
     <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="display:none;"></div>
-    <% if(typeof disqus !== 'undefined' && disqus) { %>
+    <% if(typeof disqus !== 'undefined' && disqus && !dnt) { %>
     <div class="container-fluid" style="max-width: 758px; margin-bottom: 40px;">
         <%- include shared/disqus %>
     </div>
