@@ -304,6 +304,8 @@
           var replacements = [];
           var string = this.settings.progressText.replace(this.filenameTag, id);
           var lines = this.editor.getValue().split('\n');
+          this.settings.urlText = (this.origFile.type.includes("image")?"!":"")+"["+this.origFile.name+ "]({filename})";
+
         var newValue = this.settings.urlText.replace(this.filenameTag, filename);
           for(var i = 0; i < lines.length; i++) {
             var ch = lines[i].indexOf(string);
@@ -345,6 +347,7 @@
    * @return {Void}
    */
   inlineAttachment.prototype.onFileInserted = function(file, id) {
+    this.origFile =file; 
     if (this.settings.onFileReceived.call(this, file) !== false) {
       this.lastValue = this.settings.progressText.replace(this.filenameTag, id);
       this.editor.insertValue(this.lastValue + "\n");
