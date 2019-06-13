@@ -114,7 +114,7 @@
     "scrypt-kdf": "^2.0.1",
     "select2": "^3.5.2-browserify",
     "sequelize": "^3.28.0",
-    "sequelize-cli": "^2.5.1",
+    "sequelize-cli": "^5.5.0",
     "shortid": "2.2.8",
     "socket.io": "~2.1.1",
     "socket.io-client": "~2.1.1",
