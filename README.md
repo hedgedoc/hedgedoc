@@ -37,10 +37,11 @@ You can run CodiMD in a number of ways, and we created setup instructions for
 all of these:
 
 * [Docker](docs/setup/docker.md)
+* [Docker (LinuxServer.io)](docs/setup/docker-linuxserver.md)
 * [Kubernetes](docs/setup/kubernetes.md)
 * [Cloudron](docs/setup/cloudron.md)
 * [Heroku](docs/setup/heroku.md)
-* [manual setup](docs/setup/manual-setup.md)
+* [Manual setup](docs/setup/manual-setup.md)
 
 If you do not wish to run your own setup, you can find a commercial offering at
 https://hackmd.io. This is not the same codebase as this one, but it is a very
