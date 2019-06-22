@@ -113,7 +113,7 @@
     "scrypt-async": "^2.0.1",
     "scrypt-kdf": "^2.0.1",
     "select2": "^3.5.2-browserify",
-    "sequelize": "5.3.2",
+    "sequelize": "^5.8.12",
     "shortid": "2.2.8",
     "socket.io": "~2.1.1",
     "socket.io-client": "~2.1.1",
