@@ -1,4 +1,4 @@
-<% if(typeof GA !== 'undefined' && GA) { %>
+<% if(typeof GA !== 'undefined' && GA && !dnt) { %>
 <script nonce="<%= cspNonce %>">
 (function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;

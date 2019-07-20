@@ -78,7 +78,7 @@
                         <% } %>
                     </small>
                 </div>
-                <% if(typeof disqus !== 'undefined' && disqus) { %>
+                <% if(typeof disqus !== 'undefined' && disqus && !dnt) { %>
                 <div class="slides-disqus">
                     <%- include shared/disqus %>
                 </div>
