@@ -13,7 +13,9 @@
     "dev": "webpack --config webpack.dev.js --progress --colors --watch",
     "heroku-prebuild": "bin/heroku",
     "build": "webpack --config webpack.prod.js --progress --colors --bail",
-    "start": "sequelize db:migrate && node app.js"
+    "start": "sequelize db:migrate && node app.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "@passport-next/passport-openid": "^1.0.0",
@@ -132,7 +134,8 @@
     "winston": "^3.1.0",
     "ws": "^6.0.0",
     "wurl": "^2.5.3",
-    "xss": "^1.0.3"
+    "xss": "^1.0.3",
+    "snyk": "^1.208.0"
   },
   "resolutions": {
     "**/tough-cookie": "~2.4.0",
@@ -207,5 +210,6 @@
   "optionalDependencies": {
     "bufferutil": "^4.0.0",
     "utf-8-validate": "^5.0.1"
-  }
+  },
+  "snyk": true
 }
