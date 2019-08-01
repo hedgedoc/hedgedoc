@@ -37,9 +37,9 @@ You can run CodiMD in a number of ways, and we created setup instructions for
 all of these:
 
 * [Docker](docs/setup/docker.md)
-* [Docker (LinuxServer.io)](docs/setup/docker-linuxserver.md)
 * [Kubernetes](docs/setup/kubernetes.md)
 * [Cloudron](docs/setup/cloudron.md)
+* [LinuxServer.io (multi-arch docker)](docs/setup/docker-linuxserver.md)
 * [Heroku](docs/setup/heroku.md)
 * [Manual setup](docs/setup/manual-setup.md)
 
