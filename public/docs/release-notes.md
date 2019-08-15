@@ -1,6 +1,53 @@
 Release Notes
 ===
 
+<i class="fa fa-tag"></i> 1.5.0 <i class="fa fa-clock-o"></i> 2019-08-15 00:00
+---
+
+### Announcements
+* There is a new docker image available by LinuxServer.io providing an ARM container
+* Disabling PDF export due to security problems
+
+### Enhancements
+* Add migration guide for Node version 6
+* Add functionality to respect Do-Not-Track header
+* Add Arabian translation
+
+### Fixes
+* Fix styling in slide preview
+* Fix some lint warning
+* Upgrade Sequelize to version 5
+* Add Linuxserver.io setup instructions for CodiMD
+* Update translations for DE, SV, ID
+* Add ability to upload SVGs
+* Add `dbURL`config as docker secret
+* Upgrade meta-marked - Fixes DOS capability in CodiMD (https://github.com/codimd/server/commit/ba6a24a673c24db25969de2a59b9341247f3f722)
+* Fix variable names in docker secrets config library
+
+### Refactors
+* Refactor debug logging in various places
+
+### Deprecations
+* `useCDN` will be deprecated and will disappear in favor of locally served resources. (https://community.codimd.org/t/poll-on-cdn-usage/28)
+
+### Contributors
+* [Amolith](https://github.com/Amolith) (social media)
+* Aro Row (translator)
+* bitinerant (security)
+* Butterflyoffire (translator)
+* [Claudius Coenen (ccoenen)](https://github.com/ccoenen)
+* Erik (translator)
+* Fajar Maulana (translator)
+* id7xyz (translator)
+* joohoi (security)
+* [Jonas Thelemann (dargmuesli)](https://github.com/dargmuesli)
+* [Lennart Weller (lhw)](https://github.com/lhw)
+* [chbmb](https://github.com/CHBMB)
+* [Raccoon (a60814billy)](https://github.com/a60814billy)
+* RS232 (translator)
+* [Toma Tasovac (ttasovac)](https://github.com/ttasovac)
+
+
 <i class="fa fa-tag"></i> 1.4.0 <i class="fa fa-clock-o"></i> 2019-05-31 00:00
 ---
 
