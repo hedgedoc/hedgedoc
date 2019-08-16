@@ -28,7 +28,7 @@ to `config.json` before filling in your own details.
 | `db` | `{ "dialect": "sqlite", "storage": "./db.codimd.sqlite" }` | set the db configs, [see more here](http://sequelize.readthedocs.org/en/latest/api/sequelize/) |
 | `dbURL` | `mysql://localhost:3306/database` | set the db URL; if set, then `db` config will be overridden. |
 | `forbiddenNoteIDs` | `['robots.txt']` | disallow creation of notes, even if `allowFreeUrl` is `true` |
-| `loglevel` | `info` | Defines what kind of logs are provided to stdout. |
+| `loglevel` | `info` | Defines what kind of logs are provided to stdout. Available options: `debug`, `verbose`, `info`, `warn`, `error` |
 | `imageUploadType` | `imgur`, `s3`, `minio`, `azure`, `lutim` or `filesystem`(default) | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [Minio](guides/minio-image-upload.md)|
 | `sourceURL` | `https://github.com/codimd/server/tree/<current commit>` | Provides the link to the source code of CodiMD on the entry page (Please, make sure you change this when you run a modified version) |
 | `staticCacheTime` | `1 * 24 * 60 * 60 * 1000` | static file cache time |
