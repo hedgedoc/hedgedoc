@@ -29,10 +29,10 @@ to `config.json` before filling in your own details.
 | `dbURL` | `mysql://localhost:3306/database` | set the db URL; if set, then `db` config will be overridden. |
 | `forbiddenNoteIDs` | `['robots.txt']` | disallow creation of notes, even if `allowFreeUrl` is `true` |
 | `loglevel` | `info` | Defines what kind of logs are provided to stdout. Available options: `debug`, `verbose`, `info`, `warn`, `error` |
-| `imageUploadType` | `imgur`, `s3`, `minio`, `azure`, `lutim` or `filesystem`(default) | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [Minio](guides/minio-image-upload.md)|
+| `imageUploadType` | `imgur`, `s3`, `minio`, `azure`, `lutim` or `filesystem`(default) | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [MinIO](guides/minio-image-upload.md)|
 | `sourceURL` | `https://github.com/codimd/server/tree/<current commit>` | Provides the link to the source code of CodiMD on the entry page (Please, make sure you change this when you run a modified version) |
 | `staticCacheTime` | `1 * 24 * 60 * 60 * 1000` | static file cache time |
-| `tooBusyLag` | `70` | CPU time for one eventloop tick until node throttles connections. (milliseconds) |
+| `tooBusyLag` | `70` | CPU time for one event loop tick until node throttles connections. (milliseconds) |
 | `heartbeatInterval` | `5000` | socket.io heartbeat interval |
 | `heartbeatTimeout` | `10000` | socket.io heartbeat timeout |
 | `documentMaxLength` | `100000` | note max length |
@@ -81,7 +81,7 @@ these are rarely used for various reasons.
 
 | variables | example values | description |
 | --------- | ------ | ----------- |
-| `allowGravatar` | `true` or `false` | set to `false` to disable gravatar as profile picture source on your instance |
+| `allowGravatar` | `true` or `false` | set to `false` to disable Gravatar as profile picture source on your instance |
 | `useCDN` | `true` or `false` | set to use CDN resources or not (default is `true`) |
 
 ## Users and Privileges
@@ -105,7 +105,7 @@ Most of these have never been documented for the config.json, feel free to expan
 
 | variables | example values | description |
 | --------- | ------ | ----------- |
-| `email` | `true` or `false` | set to allow email signin |
+| `email` | `true` or `false` | set to allow email sign-in |
 | `allowEmailRegister`  | `true` or `false` | set to allow email register (only applied when email is set, default is `true`. Note `bin/manage_users` might help you if registration is `false`.) |
 
 ### Dropbox Login
@@ -138,8 +138,8 @@ Most of these have never been documented for the config.json, feel free to expan
 | `s3bucket` | `YOUR_S3_BUCKET_NAME` | bucket name when `imageUploadType` is set to `s3` or `minio` |
 
 ### Azure Blob Storage
-### imgur
-### Minio
+### Imgur
+### MinIO
 
 | variables | example values | description |
 | --------- | ------ | ----------- |
