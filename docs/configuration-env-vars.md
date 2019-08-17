@@ -35,7 +35,7 @@ defaultNotePath can't be set from env-vars
 | `CMD_FORBIDDEN_NOTE_IDS` | `'robots.txt'` | disallow creation of notes, even if `CMD_ALLOW_FREEURL` is `true` |
 | `CMD_IMAGE_UPLOAD_TYPE` | `imgur`, `s3`, `minio`, `lutim` or `filesystem` | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [Minio](guides/minio-image-upload.md), also there's a whole section on their respective env vars below. |
 | `CMD_SOURCE_URL` | `https://github.com/codimd/server/tree/<current commit>` | Provides the link to the source code of CodiMD on the entry page (Please, make sure you change this when you run a modified version) |
-| `CMD_TOOBUSY_LAG` | `70` | CPU time for one eventloop tick until node throttles connections. (milliseconds) |
+| `CMD_TOOBUSY_LAG` | `70` | CPU time for one event loop tick until node throttles connections. (milliseconds) |
 
 
 ## CodiMD Location
@@ -166,7 +166,7 @@ defaultNotePath can't be set from env-vars
 
 | variable | example value | description |
 | -------- | ------------- | ----------- |
-| `CMD_OAUTH2_USER_PROFILE_URL` | `https://example.com` | where retrieve information about a user after succesful login. Needs to output JSON. (no default value) Refer to the [Mattermost](guides/auth/mattermost-self-hosted.md) or [Nextcloud](guides/auth/nextcloud.md) examples for more details on all of the `CMD_OAUTH2...` options. |
+| `CMD_OAUTH2_USER_PROFILE_URL` | `https://example.com` | Where to retrieve information about a user after successful login. Needs to output JSON. (no default value) Refer to the [Mattermost](guides/auth/mattermost-self-hosted.md) or [Nextcloud](guides/auth/nextcloud.md) examples for more details on all of the `CMD_OAUTH2...` options. |
 | `CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR` | `name` | where to find the username in the JSON from the user profile URL. (no default value)|
 | `CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR` | `display-name` | where to find the display-name in the JSON from the user profile URL. (no default value) |
 | `CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR` | `email` | where to find the email address in the JSON from the user profile URL. (no default value) |
