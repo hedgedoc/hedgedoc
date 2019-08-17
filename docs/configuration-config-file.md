@@ -105,8 +105,8 @@ Most of these have never been documented for the config.json, feel free to expan
 
 | variables | example values | description |
 | --------- | ------ | ----------- |
-| `email` | `true` or `false` | set to allow email sign-in |
-| `allowEmailRegister`  | `true` or `false` | set to allow email register (only applied when email is set, default is `true`. Note `bin/manage_users` might help you if registration is `false`.) |
+| `email` | `true` or `false` | Set to allow email sign-in. The default is `true`. |
+| `allowEmailRegister`  | `true` or `false` | Set to allow registration of new accounts using an email address. If set to `false`, you can still create accounts using the command line - see `bin/manage_users` for details. This setting has no effect if `email` is `false`. The default for `allowEmailRegister` is `true`. |
 
 ### Dropbox Login
 ### Facebook Login
