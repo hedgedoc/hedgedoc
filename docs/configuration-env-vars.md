@@ -183,7 +183,7 @@ defaultNotePath can't be set from env-vars
 | -------- | ------------- | ----------- |
 | `CMD_SAML_IDPSSOURL` | `https://idp.example.com/sso` | authentication endpoint of IdP. for details, see [guide](guides/auth/saml-onelogin.md). |
 | `CMD_SAML_IDPCERT` | `/path/to/cert.pem` | certificate file path of IdP in PEM format |
-| `CMD_SAML_ISSUER` | no example | identity of the service provider (optional, default: serverurl)" |
+| `CMD_SAML_ISSUER` | no example | Issuer to supply to identity provider (optional, default: `serverURL` config)" |
 | `CMD_SAML_DISABLEREQUESTEDAUTHNCONTEXT` | `true` or `false` | true to allow any authentication method, false restricts to password authentication (PasswordProtectedTransport) method (default: false) |
 | `CMD_SAML_IDENTIFIERFORMAT` | no example | name identifier format (optional, default: `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress`) |
 | `CMD_SAML_GROUPATTRIBUTE` | `memberOf` | attribute name for group list (optional) |
