@@ -88,13 +88,13 @@ these are rarely used for various reasons.
 
 | variables | example values | description |
 | --------- | ------ | ----------- |
-| `allowAnonymous` | `true` or `false` | set to allow anonymous usage (default is `true`) |
-| `allowAnonymousEdits` | `true` or `false` | if `allowAnonymous` is `true`: allow users to select `freely` permission, allowing guests to edit existing notes (default is `false`) |
-| `allowFreeURL` | `true` or `false` | set to allow new note creation by accessing a nonexistent note URL |
-| `defaultPermission` | `freely`, `editable`, `limited`, `locked`, `protected` or `private` | set notes default permission (only applied on signed users) |
-| `sessionName` | `connect.sid` | cookie session name |
-| `sessionLife` | `14 * 24 * 60 * 60 * 1000` | cookie session life |
-| `sessionSecret` | `secret` | cookie session secret | If none is set, one will randomly generated on each startup, meaning all your users will be logged out. |
+| `allowAnonymous` | `true` or `false` | Set to allow anonymous usage (default is `true`). |
+| `allowAnonymousEdits` | `true` or `false` | If `allowAnonymous` is `true`: allow users to select `freely` permission, allowing guests to edit existing notes (default is `false`). |
+| `allowFreeURL` | `true` or `false` | Set to allow new note creation by accessing a nonexistent note URL. |
+| `defaultPermission` | `freely`, `editable`, `limited`, `locked`, `protected` or `private` | Set notes default permission (only applied on signed users). |
+| `sessionName` | `connect.sid` | Cookie session name. |
+| `sessionLife` | `14 * 24 * 60 * 60 * 1000` | Cookie session life time. |
+| `sessionSecret` | `secret` | Cookie session secret. | If none is set, one will randomly generated on each startup, meaning all your users will be logged out. |
 
 
 ## Login methods
