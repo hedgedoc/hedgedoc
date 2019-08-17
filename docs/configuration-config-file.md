@@ -90,11 +90,11 @@ these are rarely used for various reasons.
 | --------- | ------ | ----------- |
 | `allowAnonymous` | `true` or `false` | Set to allow anonymous usage (default is `true`). |
 | `allowAnonymousEdits` | `true` or `false` | If `allowAnonymous` is `true`: allow users to select `freely` permission, allowing guests to edit existing notes (default is `false`). |
-| `allowFreeURL` | `true` or `false` | Set to allow new note creation by accessing a nonexistent note URL. |
+| `allowFreeURL` | `true` or `false` | Set to allow new note creation by accessing a nonexistent note URL. This is the behavior familiar from [Etherpad](https://github.com/ether/etherpad-lite). |
 | `defaultPermission` | `freely`, `editable`, `limited`, `locked`, `protected` or `private` | Set notes default permission (only applied on signed users). |
 | `sessionName` | `connect.sid` | Cookie session name. |
-| `sessionLife` | `14 * 24 * 60 * 60 * 1000` | Cookie session life time. |
-| `sessionSecret` | `secret` | Cookie session secret. | If none is set, one will randomly generated on each startup, meaning all your users will be logged out. |
+| `sessionLife` | `14 * 24 * 60 * 60 * 1000` | Cookie session life time in milliseconds. |
+| `sessionSecret` | `secret` | Cookie session secret. If none is set, one will randomly generated on each startup, meaning all your users will be logged out. |
 
 
 ## Login methods
