@@ -26,7 +26,7 @@ to `config.json` before filling in your own details.
 | --------- | ------ | ----------- |
 | `allowPDFExport` | `true` | Whether or not PDF export is offered. |
 | `db` | `{ "dialect": "sqlite", "storage": "./db.codimd.sqlite" }` | set the db configs, [see more here](http://sequelize.readthedocs.org/en/latest/api/sequelize/) |
-| `dbURL` | `mysql://localhost:3306/database` | set the db URL; if set, then `db` config will be overridden. |
+| `dbURL` | `mysql://localhost:3306/database` | Set the db in URL style. If set, then the relevant `db` config entries will be overridden. |
 | `forbiddenNoteIDs` | `['robots.txt']` | disallow creation of notes, even if `allowFreeUrl` is `true` |
 | `loglevel` | `info` | Defines what kind of logs are provided to stdout. Available options: `debug`, `verbose`, `info`, `warn`, `error` |
 | `imageUploadType` | `imgur`, `s3`, `minio`, `azure`, `lutim` or `filesystem`(default) | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [MinIO](guides/minio-image-upload.md)|

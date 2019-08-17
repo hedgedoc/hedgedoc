@@ -30,7 +30,7 @@ defaultNotePath can't be set from env-vars
 | -------- | ------------- | ----------- |
 | `CMD_ALLOW_PDF_EXPORT` | `true` or `false` | Enable or disable PDF exports |
 | `CMD_CONFIG_FILE` | `/path/to/config.json` | optional override for the path to CodiMD's config file |
-| `CMD_DB_URL` | `mysql://localhost:3306/database` | set the database URL |
+| `CMD_DB_URL` | `mysql://localhost:3306/database` | Set the db in URL style. If set, then the relevant `db` config entries will be overridden. |
 | `CMD_LOGLEVEL` | `info`, `debug` ... | Defines what kind of logs are provided to stdout. |
 | `CMD_FORBIDDEN_NOTE_IDS` | `'robots.txt'` | disallow creation of notes, even if `CMD_ALLOW_FREEURL` is `true` |
 | `CMD_IMAGE_UPLOAD_TYPE` | `imgur`, `s3`, `minio`, `lutim` or `filesystem` | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [Minio](guides/minio-image-upload.md), also there's a whole section on their respective env vars below. |
