@@ -112,7 +112,7 @@
     "reveal.js": "~3.7.0",
     "scrypt-async": "^2.0.1",
     "scrypt-kdf": "^2.0.1",
-    "select2": "^3.5.2-browserify",
+    "select2": "^4.0.8",
     "sequelize": "^5.8.12",
     "shortid": "2.2.8",
     "socket.io": "~2.1.1",
