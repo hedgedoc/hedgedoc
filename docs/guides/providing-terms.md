@@ -21,7 +21,6 @@ Setup your imprint
 
 To add an imprint you can use the same technique as for the terms of use. The main difference is that the document is called `imprint.md`.
 
-
 It has to be provided under `./public/docs/` and will be automatically turned into a CodiMD document. It will also automatically updated as soon as you change the document on disk.
 
 As with the terms of use, a link to the imprint will show up in the area where the release notes are provided on the index page.
