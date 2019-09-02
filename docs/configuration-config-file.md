@@ -26,13 +26,13 @@ to `config.json` before filling in your own details.
 | --------- | ------ | ----------- |
 | `allowPDFExport` | `true` | Whether or not PDF export is offered. |
 | `db` | `{ "dialect": "sqlite", "storage": "./db.codimd.sqlite" }` | set the db configs, [see more here](http://sequelize.readthedocs.org/en/latest/api/sequelize/) |
-| `dbURL` | `mysql://localhost:3306/database` | set the db URL; if set, then db config (below) won't be applied |
+| `dbURL` | `mysql://localhost:3306/database` | Set the db in URL style. If set, then the relevant `db` config entries will be overridden. |
 | `forbiddenNoteIDs` | `['robots.txt']` | disallow creation of notes, even if `allowFreeUrl` is `true` |
-| `loglevel` | `info` | Defines what kind of logs are provided to stdout. |
-| `imageUploadType` | `imgur`, `s3`, `minio`, `azure`, `lutim` or `filesystem`(default) | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [Minio](guides/minio-image-upload.md)|
+| `loglevel` | `info` | Defines what kind of logs are provided to stdout. Available options: `debug`, `verbose`, `info`, `warn`, `error` |
+| `imageUploadType` | `imgur`, `s3`, `minio`, `azure`, `lutim` or `filesystem`(default) | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [MinIO](guides/minio-image-upload.md)|
 | `sourceURL` | `https://github.com/codimd/server/tree/<current commit>` | Provides the link to the source code of CodiMD on the entry page (Please, make sure you change this when you run a modified version) |
 | `staticCacheTime` | `1 * 24 * 60 * 60 * 1000` | static file cache time |
-| `tooBusyLag` | `70` | CPU time for one eventloop tick until node throttles connections. (milliseconds) |
+| `tooBusyLag` | `70` | CPU time for one event loop tick until node throttles connections. (milliseconds) |
 | `heartbeatInterval` | `5000` | socket.io heartbeat interval |
 | `heartbeatTimeout` | `10000` | socket.io heartbeat timeout |
 | `documentMaxLength` | `100000` | note max length |
@@ -81,20 +81,20 @@ these are rarely used for various reasons.
 
 | variables | example values | description |
 | --------- | ------ | ----------- |
-| `allowGravatar` | `true` or `false` | set to `false` to disable gravatar as profile picture source on your instance |
+| `allowGravatar` | `true` or `false` | set to `false` to disable Gravatar as profile picture source on your instance |
 | `useCDN` | `true` or `false` | set to use CDN resources or not (default is `true`) |
 
 ## Users and Privileges
 
 | variables | example values | description |
 | --------- | ------ | ----------- |
-| `allowAnonymous` | `true` or `false` | set to allow anonymous usage (default is `true`) |
-| `allowAnonymousEdits` | `true` or `false` | if `allowAnonymous` is `true`: allow users to select `freely` permission, allowing guests to edit existing notes (default is `false`) |
-| `allowFreeURL` | `true` or `false` | set to allow new note creation by accessing a nonexistent note URL |
-| `defaultPermission` | `freely`, `editable`, `limited`, `locked`, `protected` or `private` | set notes default permission (only applied on signed users) |
-| `sessionName` | `connect.sid` | cookie session name |
-| `sessionLife` | `14 * 24 * 60 * 60 * 1000` | cookie session life |
-| `sessionSecret` | `secret` | cookie session secret | If none is set, one will randomly generated on each startup, meaning all your users will be logged out. |
+| `allowAnonymous` | `true` or `false` | Set to allow anonymous usage (default is `true`). |
+| `allowAnonymousEdits` | `true` or `false` | If `allowAnonymous` is `true`: allow users to select `freely` permission, allowing guests to edit existing notes (default is `false`). |
+| `allowFreeURL` | `true` or `false` | Set to allow new note creation by accessing a nonexistent note URL. This is the behavior familiar from [Etherpad](https://github.com/ether/etherpad-lite). |
+| `defaultPermission` | `freely`, `editable`, `limited`, `locked`, `protected` or `private` | Set notes default permission (only applied on signed-in users). |
+| `sessionName` | `connect.sid` | Cookie session name. |
+| `sessionLife` | `14 * 24 * 60 * 60 * 1000` (14 days) | Cookie session life time in milliseconds. |
+| `sessionSecret` | `secret` | Cookie session secret. If none is set, one will randomly generated on each startup, meaning all your users will be logged out. |
 
 
 ## Login methods
@@ -105,8 +105,8 @@ Most of these have never been documented for the config.json, feel free to expan
 
 | variables | example values | description |
 | --------- | ------ | ----------- |
-| `email` | `true` or `false` | set to allow email signin |
-| `allowEmailRegister`  | `true` or `false` | set to allow email register (only applied when email is set, default is `true`. Note `bin/manage_users` might help you if registration is `false`.) |
+| `email` | `true` or `false` | Set to allow email sign-in. The default is `true`. |
+| `allowEmailRegister`  | `true` or `false` | Set to allow registration of new accounts using an email address. If set to `false`, you can still create accounts using the command line - see `bin/manage_users` for details. This setting has no effect if `email` is `false`. The default for `allowEmailRegister` is `true`. |
 
 ### Dropbox Login
 ### Facebook Login
@@ -138,8 +138,8 @@ Most of these have never been documented for the config.json, feel free to expan
 | `s3bucket` | `YOUR_S3_BUCKET_NAME` | bucket name when `imageUploadType` is set to `s3` or `minio` |
 
 ### Azure Blob Storage
-### imgur
-### Minio
+### Imgur
+### MinIO
 
 | variables | example values | description |
 | --------- | ------ | ----------- |

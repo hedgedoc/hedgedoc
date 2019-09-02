@@ -30,12 +30,12 @@ defaultNotePath can't be set from env-vars
 | -------- | ------------- | ----------- |
 | `CMD_ALLOW_PDF_EXPORT` | `true` or `false` | Enable or disable PDF exports |
 | `CMD_CONFIG_FILE` | `/path/to/config.json` | optional override for the path to CodiMD's config file |
-| `CMD_DB_URL` | `mysql://localhost:3306/database` | set the database URL |
+| `CMD_DB_URL` | `mysql://localhost:3306/database` | Set the db in URL style. If set, then the relevant `db` config entries will be overridden. |
 | `CMD_LOGLEVEL` | `info`, `debug` ... | Defines what kind of logs are provided to stdout. |
 | `CMD_FORBIDDEN_NOTE_IDS` | `'robots.txt'` | disallow creation of notes, even if `CMD_ALLOW_FREEURL` is `true` |
 | `CMD_IMAGE_UPLOAD_TYPE` | `imgur`, `s3`, `minio`, `lutim` or `filesystem` | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [Minio](guides/minio-image-upload.md), also there's a whole section on their respective env vars below. |
 | `CMD_SOURCE_URL` | `https://github.com/codimd/server/tree/<current commit>` | Provides the link to the source code of CodiMD on the entry page (Please, make sure you change this when you run a modified version) |
-| `CMD_TOOBUSY_LAG` | `70` | CPU time for one eventloop tick until node throttles connections. (milliseconds) |
+| `CMD_TOOBUSY_LAG` | `70` | CPU time for one event loop tick until node throttles connections. (milliseconds) |
 
 
 ## CodiMD Location
@@ -76,11 +76,11 @@ defaultNotePath can't be set from env-vars
 
 | variable | example value | description |
 | -------- | ------------- | ----------- |
-| `CMD_ALLOW_ANONYMOUS` | `true` or `false` | set to allow anonymous usage (default is `true`) |
-| `CMD_ALLOW_ANONYMOUS_EDITS` | `true` or `false` | if `allowAnonymous` is `true`, allow users to select `freely` permission, allowing guests to edit existing notes (default is `false`) |
-| `CMD_ALLOW_FREEURL` | `true` or `false` | set to allow new note creation by accessing a nonexistent note URL |
-| `CMD_DEFAULT_PERMISSION` | `freely`, `editable`, `limited`, `locked` or `private` | set notes default permission (only applied on signed users) |
-| `CMD_SESSION_LIFE` | `1209600000` | Session life time. (milliseconds) |
+| `CMD_ALLOW_ANONYMOUS` | `true` or `false` | Set to allow anonymous usage (default is `true`). |
+| `CMD_ALLOW_ANONYMOUS_EDITS` | `true` or `false` | If `allowAnonymous` is `true`: allow users to select `freely` permission, allowing guests to edit existing notes (default is `false`). |
+| `CMD_ALLOW_FREEURL` | `true` or `false` | Set to allow new note creation by accessing a nonexistent note URL. This is the behavior familiar from [Etherpad](https://github.com/ether/etherpad-lite). |
+| `CMD_DEFAULT_PERMISSION` | `freely`, `editable`, `limited`, `locked`, `protected` or `private` | Set notes default permission (only applied on signed-in users). |
+| `CMD_SESSION_LIFE` | `1209600000` (14 days) | Cookie session life time in milliseconds. |
 | `CMD_SESSION_SECRET` | no example | Secret used to sign the session cookie. If none is set, one will randomly generated on each startup, meaning all your users will be logged out. |
 
 
@@ -90,8 +90,8 @@ defaultNotePath can't be set from env-vars
 
 | variable | example value | description |
 | -------- | ------------- | ----------- |
-| `CMD_EMAIL` | `true` or `false` | set to allow email signin |
-| `CMD_ALLOW_EMAIL_REGISTER` | `true` or `false` | set to allow email register (only applied when email is set, default is `true`. Note `bin/manage_users` might help you if registration is `false`.) |
+| `CMD_EMAIL` | `true` or `false` | Set to allow email sign-in. The default is `true`. |
+| `CMD_ALLOW_EMAIL_REGISTER` | `true` or `false` | Set to allow registration of new accounts using an email address. If set to `false`, you can still create accounts using the command line - see `bin/manage_users` for details. This setting has no effect if `CMD_EMAIL` is `false`. The default for `CMD_ALLOW_EMAIL_REGISTER` is `true`. |
 
 
 ### Dropbox Login
@@ -166,7 +166,7 @@ defaultNotePath can't be set from env-vars
 
 | variable | example value | description |
 | -------- | ------------- | ----------- |
-| `CMD_OAUTH2_USER_PROFILE_URL` | `https://example.com` | where retrieve information about a user after succesful login. Needs to output JSON. (no default value) Refer to the [Mattermost](guides/auth/mattermost-self-hosted.md) or [Nextcloud](guides/auth/nextcloud.md) examples for more details on all of the `CMD_OAUTH2...` options. |
+| `CMD_OAUTH2_USER_PROFILE_URL` | `https://example.com` | Where to retrieve information about a user after successful login. Needs to output JSON. (no default value) Refer to the [Mattermost](guides/auth/mattermost-self-hosted.md) or [Nextcloud](guides/auth/nextcloud.md) examples for more details on all of the `CMD_OAUTH2...` options. |
 | `CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR` | `name` | where to find the username in the JSON from the user profile URL. (no default value)|
 | `CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR` | `display-name` | where to find the display-name in the JSON from the user profile URL. (no default value) |
 | `CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR` | `email` | where to find the email address in the JSON from the user profile URL. (no default value) |
@@ -183,7 +183,7 @@ defaultNotePath can't be set from env-vars
 | -------- | ------------- | ----------- |
 | `CMD_SAML_IDPSSOURL` | `https://idp.example.com/sso` | authentication endpoint of IdP. for details, see [guide](guides/auth/saml-onelogin.md). |
 | `CMD_SAML_IDPCERT` | `/path/to/cert.pem` | certificate file path of IdP in PEM format |
-| `CMD_SAML_ISSUER` | no example | identity of the service provider (optional, default: serverurl)" |
+| `CMD_SAML_ISSUER` | no example | Issuer to supply to identity provider (optional, default: `serverURL` config)" |
 | `CMD_SAML_DISABLEREQUESTEDAUTHNCONTEXT` | `true` or `false` | true to allow any authentication method, false restricts to password authentication (PasswordProtectedTransport) method (default: false) |
 | `CMD_SAML_IDENTIFIERFORMAT` | no example | name identifier format (optional, default: `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress`) |
 | `CMD_SAML_GROUPATTRIBUTE` | `memberOf` | attribute name for group list (optional) |

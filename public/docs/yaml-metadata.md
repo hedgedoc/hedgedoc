@@ -31,7 +31,7 @@ title: meta title
 
 description
 ---
-This option will set the note description.
+This option will set the note description as a `<meta name="description">` tag. This only affects the [Publish](../features#Share-Notes) function.
 
 > default: not set
 
@@ -68,7 +68,8 @@ robots: noindex, nofollow
 
 lang
 ---
-This option will set the language of the note, that might alter some typography of it.
+This option will set the language of the note.
+Setting the language helps the browser to apply rules such as typography correctly.
 You can find your the language code in ISO 639-1 standard:
 https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
