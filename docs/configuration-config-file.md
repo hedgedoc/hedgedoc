@@ -81,7 +81,7 @@ these are rarely used for various reasons.
 
 | variables | example values | description |
 | --------- | ------ | ----------- |
-| `allowGravatar` | `true` or `false` | set to `false` to disable Gravatar as profile picture source on your instance |
+| `allowGravatar` | `true` or `false` | set to `false` to disable Libravatar as profile picture source on your instance. Libravatar is a federated open-source alternative to Gravatar. |
 | `useCDN` | `true` or `false` | set to use CDN resources or not (default is `true`) |
 
 ## Users and Privileges
