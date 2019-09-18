@@ -81,7 +81,7 @@ these are rarely used for various reasons.
 
 | variables | example values | description |
 | --------- | ------ | ----------- |
-| `allowGravatar` | `true` or `false` | set to `false` to disable Gravatar as profile picture source on your instance |
+| `allowGravatar` | `true` or `false` | set to `false` to disable [Libravatar](https://www.libravatar.org/) as profile picture source on your instance. Libravatar is a federated open-source alternative to Gravatar. |
 | `useCDN` | `true` or `false` | set to use CDN resources or not (default is `true`) |
 
 ## Users and Privileges
@@ -99,8 +99,6 @@ these are rarely used for various reasons.
 
 ## Login methods
 
-Most of these have never been documented for the config.json, feel free to expand these
-
 ### Email (local account)
 
 | variables | example values | description |
@@ -109,12 +107,47 @@ Most of these have never been documented for the config.json, feel free to expan
 | `allowEmailRegister`  | `true` or `false` | Set to allow registration of new accounts using an email address. If set to `false`, you can still create accounts using the command line - see `bin/manage_users` for details. This setting has no effect if `email` is `false`. The default for `allowEmailRegister` is `true`. |
 
 ### Dropbox Login
+
+| variables | example values | description |
+| --------- | ------ | ----------- |
+| `dropbox` | `{clientID: ..., clientSecret: ...}` | An object containing the client ID and the client secret obtained by the [Dropbox developer tools](https://www.dropbox.com/developers/apps) |
+
 ### Facebook Login
+
+| variables | example values | description |
+| --------- | ------ | ----------- |
+| `facebook` | `{clientID: ..., clientSecret: ...}` | An object containing the client ID and the client secret obtained by the [Facebook app console](https://developers.facebook.com/apps) |
+
 ### GitHub Login
+
+| variables | example values | description |
+| --------- | ------ | ----------- |
+| `github` | `{clientID: ..., clientSecret: ...}` | An object containing the client ID and the client secret obtained by the GitHub developer page. For more details have a look at the [GitHub auth guide](guides/auth/github.md). |
+
 ### GitLab Login
+
+| variables | example values | description |
+| --------- | ------ | ----------- |
+| `gitlab` | `{baseURL: ..., scope: ..., version: ..., clientID: ..., clientSecret: ...}` | An object containing your GitLab application data. Refer to the [GitLab guide](guides/auth/gitlab-self-hosted.md) for more details! |
+
 ### Google Login
+
+| variables | example values | description |
+| --------- | ------ | ----------- |
+| `google` | `{clientID: ..., clientSecret: ...}` | An object containing the client ID and the client secret obtained by the [Google API console](https://console.cloud.google.com/apis) |
+
 ### LDAP Login
+
+| variables | example values | description |
+| --------- | ------ | ----------- |
+| `ldap` | `{providerName: ..., url: ..., bindDn: ..., bindCredentials: ..., searchBase: ..., searchFilter: ..., searchAttributes: ..., usernameField: ..., useridField: ..., tlsca: ...}` | An object detailing the LDAP connection. Refer to the [LDAP-AD guide](guides/auth/ldap-AD.md) for more details! |
+
 ### Mattermost Login
+
+| variables | example values | description |
+| --------- | ------ | ----------- |
+| `mattermost` | `{baseURL: ..., clientID: ..., clientSecret: ...}` | An object containing the base URL of your Mattermost application data. Refer to the [Mattermost guide](guides/auth/mattermost-self-hosted.md) for more details! |
+
 ### OAuth2 Login
 
 | variables | example values | description |
@@ -122,8 +155,16 @@ Most of these have never been documented for the config.json, feel free to expan
 | `oauth2` | `{baseURL: ..., userProfileURL: ..., userProfileUsernameAttr: ..., userProfileDisplayNameAttr: ..., userProfileEmailAttr: ..., tokenURL: ..., authorizationURL: ..., clientID: ..., clientSecret: ...}` | An object detailing your OAuth2 provider. Refer to the [Mattermost](guides/auth/mattermost-self-hosted.md) or [Nextcloud](guides/auth/nextcloud.md) examples for more details!|
 
 ### SAML Login
+
+| variables | example values | description |
+| --------- | ------ | ----------- |
+| `saml` | `{idpSsoUrl: ..., idpCert: ..., issuer: ..., identifierFormat: ..., disableRequestedAuthnContext: ..., groupAttribute: ..., externalGroups: [], requiredGroups: [], attribute: {id: ..., username: ..., email: ...}}` | An object detailing your SAML provider. Refer to the [OneLogin](guides/auth/saml-onelogin.md) and [SAML](guides/auth/saml.md) guides for more details! |
+
 ### Twitter Login
 
+| variables | example values | description |
+| --------- | ------ | ----------- |
+| `twitter` | `{consumerKey: ..., consumerSecret: ...}` | An object containing the consumer key and secret obtained by the [Twitter developer tools](https://developer.twitter.com/apps). For more details have a look at the [Twitter auth guide](guides/auth/twitter.md) |
 
 ## Upload Storage
 
