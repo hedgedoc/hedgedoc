@@ -17,7 +17,11 @@
     <% for (var og in opengraph) { %>
     <% if (opengraph.hasOwnProperty(og) && opengraph[og].trim() !== '') { %>
     <meta property="og:<%= og %>" content="<%= opengraph[og] %>">
-    <% }} %>
+    <% }} if (!opengraph.hasOwnProperty('image')) { %>
+    <meta property="og:image" content="<%- serverURL %>/codimd-icon-1024.png">
+    <meta property="og:image:alt" content="CodiMD logo">
+    <meta property="og:image:type" content="image/png">
+    <% } %>
     <title><%= title %></title>
     <link rel="icon" type="image/png" href="<%- serverURL %>/favicon.png">
     <link rel="apple-touch-icon" href="<%- serverURL %>/apple-touch-icon.png">
