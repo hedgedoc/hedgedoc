@@ -106,7 +106,6 @@
     "Select Visibility Level": "Sichtbarkeit bestimmen",
     "Night Theme": "Nachtmodus",
     "Follow us on %s and %s.": "Folge uns auf %s und %s.",
-    "Imprint": "Impressum",
     "Privacy": "Datenschutz",
     "Terms of Use": "Nutzungsbedingungen",
     "Do you really want to delete your user account?": "Möchten Sie wirklich Ihr Nutzerkonto löschen?",
@@ -118,5 +117,6 @@
     "Register": "Registrieren",
     "Powered by %s": "Ermöglicht durch %s",
     "Help us translating": "Hilf uns beim Übersetzen",
-    "Join the community": "Tritt der Community bei"
+    "Join the community": "Tritt der Community bei",
+    "Imprint": "Impressum"
 }
