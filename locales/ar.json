@@ -46,7 +46,7 @@
     "Download": "تنزيل",
     "Raw HTML": "Raw HTML",
     "Edit": "عدّل",
-    "View": "View",
+    "View": "عرض",
     "Both": "معا",
     "Help": "المساعدة",
     "Upload Image": "تحميل صورة",
@@ -117,5 +117,6 @@
     "Register": "انشئ حسابا",
     "Powered by %s": "مدعوم بـ %s",
     "Help us translating": "ساعدنا في الترجمة",
-    "Join the community": "انضم إلى المجتمع"
+    "Join the community": "انضم إلى المجتمع",
+    "Imprint": "Imprint"
 }
