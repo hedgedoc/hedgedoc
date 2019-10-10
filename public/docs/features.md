@@ -584,3 +584,15 @@ This is an HTML abbreviation example.
 It converts "HTML", but keeps intact partial entries like "xxxHTMLyyy" and so on.
 
 *[HTML]: Hyper Text Markup Language
+
+## Revisions
+
+If you need to revert some changes there is an `Revision` feature which can be very helpful with doing this.
+
+You can find it in `Menu` -> `Revision`. When you click it you can see popup window like below
+
+![](../../docs/images/revision-feature.png)
+
+There is file history on the left. It allows you to display each previous version of file. On the right you can see preview of selected revision with all colorized changes provided in selected revision.
+
+In addition to browsing, you can download a revision or revert it.
