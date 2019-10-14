@@ -16,7 +16,7 @@ You have to replace _\<NOTE\>_ with either the alias or id of a note you want to
 | `/<NOTE>/pdf` | `GET` | **Returns a generated pdf version of the note.**<br>If pdf-support is disabled, a HTTP 403 will be returned.<br>_Please note: Currently pdf export is disabled generally because of a security problem with it._ |
 | `/<NOTE>/publish` | `GET` | **Redirects to the published version of the note.** |
 | `/<NOTE>/slide` | `GET` | **Redirects to the slide-presentation of the note.**<br>This is only useful on notes which are designed to be slides. |
-| `/<NOTE>/info` | `GET` | **Returns metadata about the note.**<br>This includes the title and description of the note as well as the creation date and viewcount.The data is returned as a JSON object. |
+| `/<NOTE>/info` | `GET` | **Returns metadata about the note.**<br>This includes the title and description of the note as well as the creation date and viewcount. The data is returned as a JSON object. |
 | `/<NOTE>/revision` | `GET` | **Returns a list of the available note revisions.**<br>The list is returned as a JSON object with an array of revision-id and length associations. The revision-id equals to the timestamp when the revision was saved. |
 | `/<NOTE>/revision/<REVISION-ID>` | `GET` | **Returns the revision of the note with some metadata.**<br>The revision is returned as a JSON object with the content of the note and the authorship. |
 | `/<NOTE>/gist` | `GET` | **Creates a new GitHub Gist with the note's content.**<br>If [GitHub integration](../configuration-env-vars.md#github-login) is configured, the user will be redirected to GitHub and a new Gist with the content of the note will be created. |

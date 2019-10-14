@@ -1,0 +1,194 @@
+openapi: 3.0.1
+
+info:
+  title: CodiMD
+  description: CodiMD is an open source collaborative note editor. Several tasks of CodiMD can be automated through this API.
+  version: 1.6.0
+  contact:
+    name: CodiMD on GitHub
+    url: https://github.com/codimd/server
+  license:
+    name: AGPLv3
+    url: https://github.com/codimd/server/blob/master/LICENSE
+
+externalDocs:
+  url: https://github.com/codimd/server/blob/master/docs/dev/api.md
+
+
+paths:
+
+  /new:
+    get:
+      tags:
+        - note
+      summary: Creates a new note.
+      description: A random id will be assigned and the content will equal to the template (blank by default). After note creation a redirect is issued to the created note.
+      responses:
+        default:
+          description: Redirect to the new note
+    post:
+      tags:
+        - note
+      summary: Imports some markdown data into a new note.
+      description: A random id will be assigned and the content will equal to the body of the received HTTP-request.
+      requestBody:
+        required: true
+        description: The content of the note to be imported as markdown
+        content:
+          'text/markdown':
+            example: '# Some header'
+      responses:
+        default:
+          description: Redirect to the imported note
+
+  /new/{alias}:
+    post:
+      tags:
+        - note
+      summary: Imports some markdown data into a new note with a given alias.
+      description: 'This endpoint equals to the above one except that the alias from the url will be assigned to the note if [FreeURL-mode](../configuration-env-vars.md#users-and-privileges) is enabled.'
+      requestBody:
+        required: true
+        description: The content of the note to be imported as markdown
+        content:
+          'text/markdown':
+            example: '# Some heading'
+      responses:
+        default:
+          description: Redirect to the imported note
+      parameters:
+        -
+          name: alias
+          in: path
+          required: true
+          description: The alias for the note-id under which the note will be saved
+          content:
+            'text/plain':
+              example: my-note
+
+  /{note}/download:
+    get:
+      tags:
+        - note
+      summary: Returns the raw markdown content of a note.
+      responses:
+        200:
+          description: The raw markdown content of the note
+          content:
+            'text/markdown':
+              example: '# Some heading'
+        404:
+          description: Note does not exist
+      parameters:
+        -
+          name: note
+          in: path
+          required: true
+          description: The note which should be downloaded
+          content:
+            'text/plain':
+              example: my-note
+
+  /{note}/pdf:
+    get:
+      tags:
+        - note
+      summary: Returns a generated pdf version of the note.
+      description: 'If pdf-support is disabled, a HTTP 403 will be returned.<br>_Please note: Currently pdf export is disabled generally because of a security problem with it._'
+      responses:
+        200:
+          description: The generated pdf version of the note
+          content:
+            'application/pdf':
+              example: binary
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note which should be exported as pdf
+          content:
+            'text/plain':
+              example: my-note
+
+  /{note}/publish:
+    get:
+      tags:
+        - note
+      summary: Redirects to the published version of the note.
+      responses:
+        default:
+          description: Redirect to the published version of the note
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note which should be published
+          content:
+            'text/plain':
+              example: my-note
+
+  /{note}/slide:
+    get:
+      tags:
+        - note
+      summary: Redirects to the slide-presentation of the note.
+      description: This is only useful on notes which are designed to be slides.
+      responses:
+        default:
+          description: Redirect to the slide version of the note
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note which should be shown as slide
+          content:
+            'text/plain':
+              example: my-note
+
+  /{note}/info:
+    get:
+      tags:
+        - note
+      summary: Returns metadata about the note.
+      description: This includes the title and description of the note as well as the creation date and viewcount.
+      responses:
+        200:
+          description: Metadata about the note
+          content:
+            'text/json':
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    description: The title of the note
+                    default: Untitled
+                  description:
+                    type: string
+                    description: The description of the note or the first words from the note
+                  viewcount:
+                    type: integer
+                    minimum: 0
+                    description: How often the published version of the note was viewed
+                  createtime:
+                    type: string
+                    description: The timestamp when the note was created in ISO 8601 format.
+                  updatetime:
+                    type: string
+                    description: The timestamp when the note was last updated in ISO 8601 format.
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note which should be published
+          content:
+            'text/plain':
+              example: my-note
