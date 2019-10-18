@@ -378,7 +378,7 @@ paths:
         required: true
         content:
           'application/x-www-form-urlencoded':
-            example: 'history=[{"id":"example","text":"Untitled","time":1556275442010,"tags":[],"pinned":false]'
+            example: 'history=[{"id":"example","text":"Untitled","time":1556275442010,"tags":[],"pinned":false}]'
       responses:
         200:
           description: History replaced
