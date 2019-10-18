@@ -19,15 +19,13 @@ describe('Content security policies', function () {
     defaultConfig = {
       csp: {
         enable: true,
-        directives: {
-        },
+        directives: {},
         addDefaults: true,
         addDisqus: true,
         addGoogleAnalytics: true,
         upgradeInsecureRequests: 'auto',
         reportURI: undefined
-      },
-      useCDN: true
+      }
     }
   })
 
@@ -42,10 +40,8 @@ describe('Content security policies', function () {
   })
 
   // beginnging Tests
-  it('Disable CDN', function () {
-    let testconfig = defaultConfig
-    testconfig.useCDN = false
-    mock('../lib/config', testconfig)
+  it('Ensure that CDN support was dropped successfully', function () {
+    mock('../lib/config', defaultConfig)
     csp = mock.reRequire('../lib/csp')
 
     assert(!csp.computeDirectives().scriptSrc.includes('https://cdnjs.cloudflare.com'))
