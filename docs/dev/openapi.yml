@@ -1,0 +1,481 @@
+openapi: 3.0.1
+
+info:
+  title: CodiMD
+  description: CodiMD is an open source collaborative note editor. Several tasks of CodiMD can be automated through this API.
+  version: 1.6.0
+  contact:
+    name: CodiMD on GitHub
+    url: https://github.com/codimd/server
+  license:
+    name: AGPLv3
+    url: https://github.com/codimd/server/blob/master/LICENSE
+
+externalDocs:
+  url: https://github.com/codimd/server/blob/master/docs/dev/api.md
+
+
+paths:
+
+  /new:
+    get:
+      tags:
+        - note
+      summary: Creates a new note.
+      description: A random id will be assigned and the content will equal to the template (blank by default). After note creation a redirect is issued to the created note.
+      responses:
+        default:
+          description: Redirect to the new note
+    post:
+      tags:
+        - note
+      summary: Imports some markdown data into a new note.
+      description: A random id will be assigned and the content will equal to the body of the received HTTP-request.
+      requestBody:
+        required: true
+        description: The content of the note to be imported as markdown
+        content:
+          'text/markdown':
+            example: '# Some header'
+      responses:
+        default:
+          description: Redirect to the imported note
+
+  /new/{alias}:
+    post:
+      tags:
+        - note
+      summary: Imports some markdown data into a new note with a given alias.
+      description: 'This endpoint equals to the above one except that the alias from the url will be assigned to the note if [FreeURL-mode](../configuration-env-vars.md#users-and-privileges) is enabled.'
+      requestBody:
+        required: true
+        description: The content of the note to be imported as markdown
+        content:
+          'text/markdown':
+            example: '# Some heading'
+      responses:
+        default:
+          description: Redirect to the imported note
+      parameters:
+        -
+          name: alias
+          in: path
+          required: true
+          description: The alias for the note-id under which the note will be saved
+          content:
+            'text/plain':
+              example: my-note
+
+  /{note}/download:
+    get:
+      tags:
+        - note
+      summary: Returns the raw markdown content of a note.
+      responses:
+        200:
+          description: The raw markdown content of the note
+          content:
+            'text/markdown':
+              example: '# Some heading'
+        404:
+          description: Note does not exist
+      parameters:
+        -
+          name: note
+          in: path
+          required: true
+          description: The note which should be downloaded
+          content:
+            'text/plain':
+              example: my-note
+
+  /{note}/pdf:
+    get:
+      tags:
+        - note
+      summary: Returns a generated pdf version of the note.
+      description: 'If pdf-support is disabled, a HTTP 403 will be returned.<br>_Please note: Currently pdf export is disabled generally because of a security problem with it._'
+      responses:
+        200:
+          description: The generated pdf version of the note
+          content:
+            'application/pdf':
+              example: binary
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note which should be exported as pdf
+          content:
+            'text/plain':
+              example: my-note
+
+  /{note}/publish:
+    get:
+      tags:
+        - note
+      summary: Redirects to the published version of the note.
+      responses:
+        default:
+          description: Redirect to the published version of the note
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note which should be published
+          content:
+            'text/plain':
+              example: my-note
+
+  /{note}/slide:
+    get:
+      tags:
+        - note
+      summary: Redirects to the slide-presentation of the note.
+      description: This is only useful on notes which are designed to be slides.
+      responses:
+        default:
+          description: Redirect to the slide version of the note
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note which should be shown as slide
+          content:
+            'text/plain':
+              example: my-note
+
+  /{note}/info:
+    get:
+      tags:
+        - note
+      summary: Returns metadata about the note.
+      description: This includes the title and description of the note as well as the creation date and viewcount.
+      responses:
+        200:
+          description: Metadata about the note
+          content:
+            'text/json':
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    description: The title of the note
+                    default: Untitled
+                  description:
+                    type: string
+                    description: The description of the note or the first words from the note
+                  viewcount:
+                    type: integer
+                    minimum: 0
+                    description: How often the published version of the note was viewed
+                  createtime:
+                    type: string
+                    description: The timestamp when the note was created in ISO 8601 format.
+                  updatetime:
+                    type: string
+                    description: The timestamp when the note was last updated in ISO 8601 format.
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the info should be shown
+          content:
+            'text/plain':
+              example: my-note
+
+  /{note}/revision:
+    get:
+      tags:
+        - note
+      summary: Returns a list of the available note revisions.
+      description: The list is returned as a JSON object with an array of revision-id and length associations. The revision-id equals to the timestamp when the revision was saved.
+      responses:
+        200:
+          description: Revisions of the note
+          content:
+            'text/json':
+              schema:
+                type: object
+                properties:
+                  revision:
+                    type: array
+                    description: Array that holds all revision-info objects
+                    items:
+                      type: object
+                      properties:
+                        time:
+                          type: integer
+                          description: UNIX-timestamp of when the revision was saved. Is also the revision-id.
+                        length:
+                          type: integer
+                          description: Length of the document to the timepoint the revision was saved
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which revisions should be shown
+          content:
+            'text/plain':
+              example: my-note
+
+  /{note}/revision/{revision-id}:
+    get:
+      tags:
+        - note
+      summary: Returns the revision of the note with some metadata.
+      description: The revision is returned as a JSON object with the content of the note and the authorship.
+      responses:
+        200:
+          description: Revision of the note for the given timestamp
+          content:
+            'text/json':
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The raw markdown content of the note revision
+                  authorship:
+                    type: array
+                    description: Data which gives insights about who worked on the note
+                    items:
+                      type: integer
+                      description: Unique user ids and additional data
+                  patch:
+                    type: array
+                    description: Data which gives insight about what changed in comparison to former revisions
+                    items:
+                      type: string
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the revision should be shown
+          content:
+            'text/plain':
+              example: my-note
+        - name: revision-id
+          in: path
+          required: true
+          description: The id (timestamp) of the revision to fetch
+          content:
+            'text/plain':
+              example: 1570921051959
+
+  /{note}/gist:
+    get:
+      tags:
+        - note
+      summary: Creates a new GitHub Gist with the note's content.
+      description: 'If [GitHub integration](https://github.com/codimd/server/blob/master/docs/configuration-env-vars.md#github-login) is configured, the user will be redirected to GitHub and a new Gist with the content of the note will be created.'
+      responses:
+        default:
+          description: Redirect to the created gist (or the GitHub authentication before)
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note which should be pasted to GitHub gist
+          content:
+            'text/plain':
+              example: my-note
+
+  /me:
+    get:
+      tags:
+        - user
+      summary: Returns the profile data of the current logged-in user.
+      description: The data is returned as a JSON object containing the user-id, the user's name and a url to the profile picture. Requires an active session of the user.
+      responses:
+        200:
+          description: If the user is logged-in, the user data otherwise `{"status":"forbidden"}`
+          content:
+            'text/json':
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: ok if everything works as expected, forbidden is the user is not logged-in
+                  id:
+                    type: string
+                    description: Unique id of the user
+                  name:
+                    type: string
+                    description: The user's display name
+                  photo:
+                    type: string
+                    description: An url to the online stored user profile photo
+
+  /me/export:
+    get:
+      tags:
+        - user
+      summary: Exports a zip-archive with all notes of the current user.
+      responses:
+        default:
+          description: The zip-archive with all notes
+
+  /history:
+    get:
+      tags:
+        - user
+      summary: Returns a list of the last viewed notes.
+      description: The list is returned as a JSON object with an array containing for each entry it's id, title, tags, last visit time and pinned status.
+      responses:
+        200:
+          description: The list of recently viewed notes and pinned notes
+          content:
+            'text/json':
+              schema:
+                type: object
+                properties:
+                  history:
+                    type: array
+                    description: The array that contains history objects
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The id or alias of the note
+                        text:
+                          type: string
+                          description: The title of the note
+                        time:
+                          type: integer
+                          description: The UNIX-timestamp when the note was last accessed by the user
+                        tags:
+                          type: array
+                          description: The tags that were added by the user to the note
+                          items:
+                            type: string
+                        pinned:
+                          type: boolean
+                          description: Whether the user has pinned this note
+    post:
+      tags:
+        - user
+      summary: Replace user's history with a new one.
+      description: The body must be form-encoded and contain a field `history` with a JSON-encoded array like its returned from the server when exporting the history.
+      requestBody:
+        required: true
+        content:
+          'application/x-www-form-urlencoded':
+            example: 'history=[{"id":"example","text":"Untitled","time":1556275442010,"tags":[],"pinned":false}]'
+      responses:
+        200:
+          description: History replaced
+    delete:
+      tags:
+        - user
+      summary: Deletes the user's history.
+      responses:
+        200:
+          description: User's history deleted
+
+  /history/{note}:
+    post:
+      tags:
+        - user
+      summary: Toggles the pinned status in the history for a note.
+      description: The body must be form-encoded and contain a field `pinned` that is either `true` or `false`.
+      requestBody:
+        required: true
+        content:
+          'application/x-www-form-urlencoded':
+            example: 'pinned=false'
+      responses:
+        200:
+          description: Pinned state toggled
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the pinned state should be toggled
+          content:
+            'text/plain':
+              example: my-note
+    delete:
+      tags:
+        - user
+      summary: Deletes a note from the user's history.
+      responses:
+        200:
+          description: Pinned state toggled
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the pinned state should be toggled
+          content:
+            'text/plain':
+              example: my-note
+
+  /status:
+    get:
+      tags:
+        - server
+      summary: Returns the current status of the CodiMD instance.
+      description: The data is returned as a JSON object containing the number of notes stored on the server, (distinct) online users and more.
+      responses:
+        200:
+          description: The server info
+          content:
+            'text/json':
+              schema:
+                type: object
+                properties:
+                  onlineNotes:
+                    type: integer
+                    description: How many notes are edited at the moment
+                  onlineUsers:
+                    type: integer
+                    description: How many users are online at the moment
+                  distinctOnlineUsers:
+                    type: integer
+                    description: How many distinct users (different machines) are online at the moment
+                  notesCount:
+                    type: integer
+                    description: How many notes are stored on the server
+                  registeredUsers:
+                    type: integer
+                    description: How many users are registered on the server
+                  onlineRegisteredUsers:
+                    type: integer
+                    description: How many of the online users are registered on the server
+                  distinctOnlineRegisteredUsers:
+                    type: integer
+                    description: How many of the distinct online users are registered on the server
+                  isConnectionBusy:
+                    type: boolean
+                  connectionSocketQueueLength:
+                    type: integer
+                  isDisconnectBusy:
+                    type: boolean
+                  disconnectSocketQueueLength:
+                    type: integer
+
+tags:
+  - name: note
+    description: These endpoints create notes, return information about them or export them.
+  - name: user
+    description: These endpoints return information about the current logged-in user and it's note history. If no user is logged-in, the most of this requests will fail with either a HTTP 403 or a JSON object containing `{"status":"forbidden"}`.
+  - name: server
+    description: These endpoints return information about the running CodiMD instance.
