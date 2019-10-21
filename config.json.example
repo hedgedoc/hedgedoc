@@ -123,6 +123,7 @@
         {
           "connectionString": "change this",
           "container": "change this"
-        }
+        },
+        "linkifyHeaderStyle": "gfm"
     }
 }
