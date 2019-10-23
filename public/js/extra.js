@@ -164,11 +164,11 @@ export function renderTags (view) {
 }
 
 function slugifyWithUTF8 (text) {
-  // remove html tags and trim spaces
+  // remove HTML tags and trim spaces
   let newText = S(text).trim().stripTags().s
-  // replace all spaces in between to dashes
+  // replace space between words with dashes
   newText = newText.replace(/\s+/g, '-')
-  // slugify string to make it valid for attribute
+  // slugify string to make it valid as an attribute
   newText = newText.replace(/([!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~])/g, '')
   return newText
 }
@@ -833,7 +833,11 @@ const linkifyAnchors = (level, containingElement) => {
     if (header.getElementsByClassName('anchor').length === 0) {
       if (typeof header.id === 'undefined' || header.id === '') {
         // to escape characters not allow in css and humanize
-        const id = slugifyWithUTF8(getHeaderContent(header))
+        let id = slugifyWithUTF8(getHeaderContent(header))
+        // to make compatible with GitHub, GitLab, Pandoc and many more
+        if (window.linkifyHeaderStyle !== 'keep-case') {
+          id = id.toLowerCase()
+        }
         header.id = id
       }
       if (!(typeof header.id === 'undefined' || header.id === '')) {
