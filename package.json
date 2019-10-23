@@ -32,6 +32,7 @@
     "compression": "^1.6.2",
     "connect-flash": "^0.1.1",
     "connect-session-sequelize": "^6.0.0",
+    "convict": "^5.2.0",
     "cookie": "0.3.1",
     "cookie-parser": "1.4.3",
     "deep-freeze": "^0.0.1",

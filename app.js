@@ -29,20 +29,20 @@ var csp = require('./lib/csp')
 // server setup
 var app = express()
 var server = null
-if (config.useSSL) {
+if (config.get('useSSL')) {
   var ca = (function () {
     var i, len, results
     results = []
-    for (i = 0, len = config.sslCAPath.length; i < len; i++) {
-      results.push(fs.readFileSync(config.sslCAPath[i], 'utf8'))
+    for (i = 0, len = config.get('sslCAPath').length; i < len; i++) {
+      results.push(fs.readFileSync(config.get('sslCAPath[i]'), 'utf8'))
     }
     return results
   })()
   var options = {
-    key: fs.readFileSync(config.sslKeyPath, 'utf8'),
-    cert: fs.readFileSync(config.sslCertPath, 'utf8'),
+    key: fs.readFileSync(config.get('sslKeyPath'), 'utf8'),
+    cert: fs.readFileSync(config.get('sslCertPath'), 'utf8'),
     ca: ca,
-    dhparam: fs.readFileSync(config.dhParamPath, 'utf8'),
+    dhparam: fs.readFileSync(config.get('dhParamPath'), 'utf8'),
     requestCert: false,
     rejectUnauthorized: false
   }
@@ -81,13 +81,13 @@ var sessionStore = new SequelizeStore({
 app.use(compression())
 
 // use hsts to tell https users stick to this
-if (config.hsts.enable) {
+if (config.get('hsts').enable) {
   app.use(helmet.hsts({
-    maxAge: config.hsts.maxAgeSeconds,
-    includeSubdomains: config.hsts.includeSubdomains,
-    preload: config.hsts.preload
+    maxAge: config.get('hsts').maxAgeSeconds,
+    includeSubdomains: config.get('hsts').includeSubdomains,
+    preload: config.get('hsts').preload
   }))
-} else if (config.useSSL) {
+} else if (config.get('useSSL')) {
   logger.info('Consider enabling HSTS for extra security:')
   logger.info('https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security')
 }
@@ -104,7 +104,7 @@ app.use(csp.addNonceToLocals)
 
 // use Content-Security-Policy to limit XSS, dangerous plugins, etc.
 // https://helmetjs.github.io/docs/csp/
-if (config.csp.enable) {
+if (config.get('csp').enable) {
   app.use(helmet.contentSecurityPolicy({
     directives: csp.computeDirectives()
   }))
@@ -117,7 +117,7 @@ i18n.configure({
   cookie: 'locale',
   indent: '    ', // this is the style poeditor.com exports it, this creates less churn
   directory: path.join(__dirname, '/locales'),
-  updateFiles: config.updateI18nFiles
+  updateFiles: config.get('updateI18nFiles')
 })
 
 app.use(cookieParser())
@@ -126,20 +126,20 @@ app.use(i18n.init)
 
 // routes without sessions
 // static files
-app.use('/', express.static(path.join(__dirname, '/public'), { maxAge: config.staticCacheTime, index: false, redirect: false }))
-app.use('/docs', express.static(path.resolve(__dirname, config.docsPath), { maxAge: config.staticCacheTime, redirect: false }))
-app.use('/uploads', express.static(path.resolve(__dirname, config.uploadsPath), { maxAge: config.staticCacheTime, redirect: false }))
-app.use('/default.md', express.static(path.resolve(__dirname, config.defaultNotePath), { maxAge: config.staticCacheTime }))
+app.use('/', express.static(path.join(__dirname, '/public'), { maxAge: config.get('staticCacheTime'), index: false, redirect: false }))
+app.use('/docs', express.static(path.resolve(__dirname, config.get('docsPath')), { maxAge: config.get('staticCacheTime'), redirect: false }))
+app.use('/uploads', express.static(path.resolve(__dirname, config.get('uploadsPath')), { maxAge: config.get('staticCacheTime'), redirect: false }))
+app.use('/default.md', express.static(path.resolve(__dirname, config.get('defaultNotePath')), { maxAge: config.get('staticCacheTime') }))
 
 // session
 app.use(session({
-  name: config.sessionName,
-  secret: config.sessionSecret,
+  name: config.get('sessionName'),
+  secret: config.get('sessionSecret'),
   resave: false, // don't save session if unmodified
   saveUninitialized: true, // always create session to ensure the origin
   rolling: true, // reset maxAge on every response
   cookie: {
-    maxAge: config.sessionLife
+    maxAge: config.get('sessionLife')
   },
   store: sessionStore
 }))
@@ -171,40 +171,40 @@ app.use(require('./lib/web/middleware/codiMDVersion'))
 
 // routes need sessions
 // template files
-app.set('views', config.viewPath)
+app.set('views', config.get('viewPath'))
 // set render engine
 app.engine('ejs', ejs.renderFile)
 // set view engine
 app.set('view engine', 'ejs')
 // set generally available variables for all views
-app.locals.useCDN = config.useCDN
-app.locals.serverURL = config.serverURL
-app.locals.sourceURL = config.sourceURL
-app.locals.allowAnonymous = config.allowAnonymous
-app.locals.allowAnonymousEdits = config.allowAnonymousEdits
-app.locals.allowPDFExport = config.allowPDFExport
+app.locals.useCDN = config.get('useCDN')
+app.locals.serverURL = config.get('serverURL')
+app.locals.sourceURL = config.get('sourceURL')
+app.locals.allowAnonymous = config.get('allowAnonymous')
+app.locals.allowAnonymousEdits = config.get('allowAnonymousEdits')
+app.locals.allowPDFExport = config.get('allowPDFExport')
 app.locals.authProviders = {
-  facebook: config.isFacebookEnable,
-  twitter: config.isTwitterEnable,
-  github: config.isGitHubEnable,
-  gitlab: config.isGitLabEnable,
-  mattermost: config.isMattermostEnable,
-  dropbox: config.isDropboxEnable,
-  google: config.isGoogleEnable,
-  ldap: config.isLDAPEnable,
-  ldapProviderName: config.ldap.providerName,
-  saml: config.isSAMLEnable,
-  oauth2: config.isOAuth2Enable,
-  oauth2ProviderName: config.oauth2.providerName,
-  openID: config.isOpenIDEnable,
-  email: config.isEmailEnable,
-  allowEmailRegister: config.allowEmailRegister
+  facebook: config.get('isFacebookEnable'),
+  twitter: config.get('isTwitterEnable'),
+  github: config.get('isGitHubEnable'),
+  gitlab: config.get('isGitLabEnable'),
+  mattermost: config.get('isMattermostEnable'),
+  dropbox: config.get('isDropboxEnable'),
+  google: config.get('isGoogleEnable'),
+  ldap: config.get('isLDAPEnable'),
+  ldapProviderName: config.get('ldap').providerName,
+  saml: config.get('isSAMLEnable'),
+  oauth2: config.get('isOAuth2Enable'),
+  oauth2ProviderName: config.get('oauth2').providerName,
+  openID: config.get('isOpenIDEnable'),
+  email: config.get('isEmailEnable'),
+  allowEmailRegister: config.get('allowEmailRegister')
 }
 
-// Export/Import menu items
-app.locals.enableDropBoxSave = config.isDropboxEnable
-app.locals.enableGitHubGist = config.isGitHubEnable
-app.locals.enableGitlabSnippets = config.isGitlabSnippetsEnable
+//') Export/Import menu items
+app.locals.enableDropBoxSave = config.get('isDropboxEnable')
+app.locals.enableGitHubGist = config.get('isGitHubEnable')
+app.locals.enableGitlabSnippets = config.get('isGitlabSnippetsEnable')
 
 app.use(require('./lib/web/baseRouter'))
 app.use(require('./lib/web/statusRouter'))
@@ -224,15 +224,15 @@ io.use(realtime.secure)
 // socket.io auth
 io.use(passportSocketIo.authorize({
   cookieParser: cookieParser,
-  key: config.sessionName,
-  secret: config.sessionSecret,
+  key: config.get('sessionName'),
+  secret: config.get('sessionSecret'),
   store: sessionStore,
   success: realtime.onAuthorizeSuccess,
   fail: realtime.onAuthorizeFail
 }))
 // socket.io heartbeat
-io.set('heartbeat interval', config.heartbeatInterval)
-io.set('heartbeat timeout', config.heartbeatTimeout)
+io.set('heartbeat interval', config.get('heartbeatInterval'))
+io.set('heartbeat timeout', config.get('heartbeatTimeout'))
 // socket.io connection
 io.sockets.on('connection', realtime.connection)
 
@@ -240,18 +240,18 @@ io.sockets.on('connection', realtime.connection)
 function startListen () {
   var address
   var listenCallback = function () {
-    var schema = config.useSSL ? 'HTTPS' : 'HTTP'
+    var schema = config.get('useSSL') ? 'HTTPS' : 'HTTP'
     logger.info('%s Server listening at %s', schema, address)
     realtime.maintenance = false
   }
 
   // use unix domain socket if 'path' is specified
-  if (config.path) {
-    address = config.path
-    server.listen(config.path, listenCallback)
+  if (config.get('path')) {
+    address = config.get('path')
+    server.listen(config.get('path'), listenCallback)
   } else {
-    address = config.host + ':' + config.port
-    server.listen(config.port, config.host, listenCallback)
+    address = config.get('host') + ':' + config.get('port')
+    server.listen(config.get('port'), config.get('host'), listenCallback)
   }
 }
 
@@ -289,8 +289,8 @@ function handleTermSignals () {
       socket.disconnect(true)
     }, 0)
   })
-  if (config.path) {
-    fs.unlink(config.path)
+  if (config.get('path')) {
+    fs.unlink(config.get('path'))
   }
   var checkCleanTimer = setInterval(function () {
     if (realtime.isReady()) {
