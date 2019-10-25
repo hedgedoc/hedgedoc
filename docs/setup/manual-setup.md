@@ -18,10 +18,10 @@ Manual Installation
 3. Enter the directory and type `bin/setup`, which will install npm dependencies and create configs.
 4. Setup the configs, see more below
 5. Setup environment variables which will overwrite the configs
-6. Build front-end bundle by `npm run build` (use `npm run dev` if you are in development)
+6. Build front-end bundle by `yarn run build` (use `yarn run dev` if you are in development)
 7. Modify the file named `.sequelizerc`, change the value of the variable `url` with your db connection string
    For example: `postgres://username:password@localhost:5432/codimd`
-8. It is recommended to start your server manually once: `npm start --production`, this way it's easier to see warnings or errors that might occur (leave out `--production` for development).
+8. It is recommended to start your server manually once: `yarn start --production`, this way it's easier to see warnings or errors that might occur (leave out `--production` for development).
 9. Run the server as you like (node, forever, pm2, SystemD, Init-Scripts)
 
 
@@ -34,6 +34,6 @@ If you are upgrading CodiMD from an older version, follow these steps:
 3. Fully stop your old CodiMD server.
 4. `git pull` or unzip a new release in the directory.
 5. Run `bin/setup`. This will take care of installing dependencies. It is safe to run on an existing installation.
-6. Build front-end bundle by `npm run build` (use `npm run dev` if you are in development).
-7. It is recommended to start your server manually once: `npm start --production`, this way it's easier to see warnings or errors that might occur (leave out `--production` for development).
+6. Build front-end bundle by `yarn run build` (use `yarn run dev` if you are in development).
+7. It is recommended to start your server manually once: `yarn start --production`, this way it's easier to see warnings or errors that might occur (leave out `--production` for development).
 8. You can now restart the CodiMD server!
