@@ -79,7 +79,7 @@
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
     "markdown-pdf": "^10.0.0",
-    "mathjax": "~2.7.0",
+    "mathjax": "~2.7.6",
     "mattermost": "^3.4.0",
     "mermaid": "~8.2.3",
     "meta-marked": "git+https://github.com/codimd/meta-marked#semver:^0.4.5",
