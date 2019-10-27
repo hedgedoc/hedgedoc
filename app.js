@@ -201,7 +201,7 @@ app.locals.authProviders = {
   allowEmailRegister: config.get('allowEmailRegister')
 }
 
-//') Export/Import menu items
+// Export/Import menu items
 app.locals.enableDropBoxSave = config.get('isDropboxEnable')
 app.locals.enableGitHubGist = config.get('isGitHubEnable')
 app.locals.enableGitlabSnippets = config.get('isGitlabSnippetsEnable')
