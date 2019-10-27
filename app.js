@@ -22,7 +22,7 @@ var flash = require('connect-flash')
 // core
 var config = require('./lib/config')
 var logger = require('./lib/logger')
-var response = require('./lib/response')
+var errors = require('./lib/errors')
 var models = require('./lib/models')
 var csp = require('./lib/csp')
 
@@ -212,11 +212,11 @@ app.use(require('./lib/web/auth'))
 app.use(require('./lib/web/historyRouter'))
 app.use(require('./lib/web/userRouter'))
 app.use(require('./lib/web/imageRouter'))
-app.use(require('./lib/web/noteRouter'))
+app.use(require('./lib/web/note/router'))
 
 // response not found if no any route matxches
 app.get('*', function (req, res) {
-  response.errorNotFound(res)
+  errors.errorNotFound(res)
 })
 
 // socket.io secure
