@@ -2,5 +2,5 @@ version: "1"
 rules:
   - base: master
     upstream: codimd:master
-    mergeMethod: rebase
+    mergeMethod: none
 label: ":arrow_heading_down: pull"
