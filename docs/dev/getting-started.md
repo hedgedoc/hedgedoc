@@ -18,7 +18,7 @@ Developer Notes
 
 Now that everything is in place, we can start CodiMD:
 
-4. `npm run build` will build the frontend bundle. It uses webpack to do that.
+4. `yarn run build` will build the frontend bundle. It uses webpack to do that.
 5. Run the server with `node app.js`
 
 
@@ -32,7 +32,7 @@ rebuild the frontend or restart the server if necessary.
 The commands will stay active in your terminal, so you will need multiple tabs
 to run both at the same time.
 
-4. Use `npm run dev` if you want webpack to continuously rebuild the frontend
+4. Use `yarn run dev` if you want webpack to continuously rebuild the frontend
    code.
 5. To auto-reload the server, the easiest method is to install [nodemon](https://www.npmjs.com/package/nodemon)
    and run `nodemon --watch app.js --watch lib --watch locales app.js`.
