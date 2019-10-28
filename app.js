@@ -29,20 +29,20 @@ var csp = require('./lib/csp')
 // server setup
 var app = express()
 var server = null
-if (config.get('useSSL')) {
+if (config.get('tls.enable')) {
   var ca = (function () {
     var i, len, results
     results = []
-    for (i = 0, len = config.get('sslCAPath').length; i < len; i++) {
+    for (i = 0, len = config.get('tls.caPath').length; i < len; i++) {
       results.push(fs.readFileSync(config.get('sslCAPath[i]'), 'utf8'))
     }
     return results
   })()
   var options = {
-    key: fs.readFileSync(config.get('sslKeyPath'), 'utf8'),
-    cert: fs.readFileSync(config.get('sslCertPath'), 'utf8'),
+    key: fs.readFileSync(config.get('tls.keyPath'), 'utf8'),
+    cert: fs.readFileSync(config.get('tls.certPath'), 'utf8'),
     ca: ca,
-    dhparam: fs.readFileSync(config.get('dhParamPath'), 'utf8'),
+    dhparam: fs.readFileSync(config.get('tls.dhParamPath'), 'utf8'),
     requestCert: false,
     rejectUnauthorized: false
   }
@@ -87,7 +87,7 @@ if (config.get('hsts').enable) {
     includeSubDomains: config.get('hsts').includeSubDomains,
     preload: config.get('hsts').preload
   }))
-} else if (config.get('useSSL')) {
+} else if (config.get('tls.enable')) {
   logger.info('Consider enabling HSTS for extra security:')
   logger.info('https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security')
 }
@@ -240,7 +240,7 @@ io.sockets.on('connection', realtime.connection)
 function startListen () {
   var address
   var listenCallback = function () {
-    var schema = config.get('useSSL') ? 'HTTPS' : 'HTTP'
+    var schema = config.get('tls.enable') ? 'HTTPS' : 'HTTP'
     logger.info('%s Server listening at %s', schema, address)
     realtime.maintenance = false
   }
