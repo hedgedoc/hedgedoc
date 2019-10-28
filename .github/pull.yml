@@ -1,0 +1,6 @@
+version: "1"
+rules:
+  - base: master
+    upstream: codimd:master
+    mergeMethod: rebase
+label: ":arrow_heading_down: pull"
