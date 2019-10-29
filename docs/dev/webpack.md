@@ -7,7 +7,14 @@ about it on [the webpack website](https://webpack.js.org/).
 Here's how we're using it:
 
 ## `webpack.common.js`
-This file contains all common definition for chunks and plugins, that are needed by the whole app.
+This file contains all common definitions for chunks and plugins that are needed by the whole app.
+
+The various entrypoints under the `entry` key define groups of files (npm packages or .css/.js files directly from this project) that need to be included together to be useful.
+The `index` group for example bundles all javascript files and libraries used for the note editor.
+
+Entrypoints are referenced in the `plugins` section.
+The `HtmlWebpackPlugin` uses templates in `public/views/includes` to include the path to the generated resources in new templates under `public/views/build`. These templates are then used by the backend to serve HTML to the browser.
+
 
 **TODO:** Document which entry points are used for what.
 
