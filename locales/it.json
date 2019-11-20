@@ -8,7 +8,7 @@
     "Collaborate with URL": "Collabora tramite URL",
     "Support charts and MathJax": "Supporta grafici e MathJax",
     "Support slide mode": "Supporta modalità slide",
-    "Sign In": "Registrati",
+    "Sign In": "Entra",
     "Below is the history from browser": "Qui sotto c'è la cronologia del browser",
     "Welcome!": "Benvenuto!",
     "New note": "Nuova nota",
@@ -34,7 +34,7 @@
     "Cancel": "Annulla",
     "Yes, do it!": "SI, fallo!",
     "Choose method": "Scegli metodo",
-    "Sign in via %s": "Registrati con %s",
+    "Sign in via %s": "Entra con %s",
     "New": "Nuovo",
     "Publish": "Pubblica",
     "Extra": "Extra",
@@ -117,5 +117,6 @@
     "Register": "Registrati",
     "Powered by %s": "Alimentato da %s",
     "Help us translating": "Aiutaci nella traduzione",
-    "Join the community": "Unisciti alla comunità"
+    "Join the community": "Unisciti alla comunità",
+    "Imprint": "Imprint"
 }
