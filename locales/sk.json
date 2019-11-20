@@ -106,16 +106,17 @@
     "Select Visibility Level": "Zvoliť úroveň viditeľnosti",
     "Night Theme": "Nočná téma",
     "Follow us on %s and %s.": "Sledujte nás na %s, a %s.",
-    "Imprint": "Odtlačok",
     "Privacy": "Súkromie",
     "Terms of Use": "Podmienky použitia",
     "Do you really want to delete your user account?": "Naozaj chcete zmazať váš používateľský účet?",
     "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.": "Táto operácia odstráni váš účet, všetky poznámky, ktoré vlastníte, a tiež odstráni všetky odkazy na váš účet z iných poznámok.",
     "Delete user": "Zmazať používateľa",
     "Export user data": "Exportovať používateľské dáta",
+    "Help us translating on %s": "Help us translating on %s",
     "Source Code": "Zdrojový kód",
-    "Powered by %s": "Powered by %s",
     "Register": "Registrovať",
+    "Powered by %s": "Powered by %s",
     "Help us translating": "Pomôžte nám s prekladom",
-    "Join the community": "Pripojiť sa ku komunite"
+    "Join the community": "Pripojiť sa ku komunite",
+    "Imprint": "Odtlačok"
 }
