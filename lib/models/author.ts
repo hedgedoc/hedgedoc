@@ -1,11 +1,11 @@
-'use strict'
 // external modules
-var Sequelize = require('sequelize')
+import {DataTypes} from 'sequelize';
 
-module.exports = function (sequelize, DataTypes) {
-  var Author = sequelize.define('Author', {
+
+function createAutorModel(sequelize) {
+  const Author = sequelize.define('Author', {
     id: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
@@ -19,7 +19,7 @@ module.exports = function (sequelize, DataTypes) {
         fields: ['noteId', 'userId']
       }
     ]
-  })
+  });
 
   Author.associate = function (models) {
     Author.belongsTo(models.Note, {
@@ -28,7 +28,7 @@ module.exports = function (sequelize, DataTypes) {
       constraints: false,
       onDelete: 'CASCADE',
       hooks: true
-    })
+    });
     Author.belongsTo(models.User, {
       foreignKey: 'userId',
       as: 'user',
@@ -36,7 +36,9 @@ module.exports = function (sequelize, DataTypes) {
       onDelete: 'CASCADE',
       hooks: true
     })
-  }
+  };
 
   return Author
 }
+
+export = createAutorModel
