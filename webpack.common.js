@@ -358,7 +358,7 @@ module.exports = {
 
   resolve: {
     modules: ['node_modules'],
-    extensions: ['.js'],
+    extensions: ['.js', '.ts', '.tsx'],
     alias: {
       codemirror: path.join(__dirname, 'node_modules/codemirror/codemirror.min.js'),
       inlineAttachment: path.join(__dirname, 'public/vendor/inlineAttachment/inline-attachment.js'),
@@ -390,6 +390,9 @@ module.exports = {
 
   module: {
     rules: [{
+      test: /\.tsx?$/,
+      use: [{ loader: 'awesome-typescript-loader' }]
+    }, {
       test: /\.js$/,
       use: [{ loader: 'babel-loader' }],
       exclude: [/node_modules/, /public\/vendor/]
