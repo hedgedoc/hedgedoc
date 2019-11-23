@@ -1,8 +1,7 @@
-// external modules
 import {DataTypes} from 'sequelize';
 
 
-function createAutorModel(sequelize) {
+function createAuthorModel(sequelize) {
   const Author = sequelize.define('Author', {
     id: {
       type: DataTypes.INTEGER,
@@ -41,4 +40,4 @@ function createAutorModel(sequelize) {
   return Author
 }
 
-export = createAutorModel
+export = createAuthorModel
