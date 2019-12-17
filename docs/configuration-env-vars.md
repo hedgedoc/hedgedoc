@@ -43,7 +43,7 @@ defaultNotePath can't be set from env-vars
 | variable | example value | description |
 | -------- | ------------- | ----------- |
 | `CMD_DOMAIN` | `codimd.org` | domain name |
-| `CMD_URL_PATH` | `codimd` | If CodiMD is run from a subdirectory like `www.example.com/<urlpath>` |
+| `CMD_URL_PATH` | `codimd` | If CodiMD is run from a subdirectory like `www.example.com/<urlpath>`. DEPRECATED, might not work correctly. |
 | `CMD_HOST` | `localhost` | interface/ip to listen on |
 | `CMD_PORT` | `80` | port to listen on |
 | `CMD_PATH` | `/var/run/codimd.sock` | path to UNIX domain socket to listen on (if specified, `CMD_HOST` and `CMD_PORT` are ignored) |

@@ -60,7 +60,7 @@ these are rarely used for various reasons.
 | variables | example values | description |
 | --------- | ------ | ----------- |
 | `domain` | `localhost` | domain name |
-| `urlPath` | `codimd` | sub URL path, like `www.example.com/<urlpath>` |
+| `urlPath` | `codimd` | sub URL path, like `www.example.com/<urlpath>`. DEPRECATED, might not work correctly. |
 | `host` | `localhost` | interface/ip to listen on |
 | `port` | `80` | port to listen on |
 | `path` | `/var/run/codimd.sock` | path to UNIX domain socket to listen on (if specified, `host` and `port` are ignored) |
