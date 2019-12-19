@@ -9,7 +9,7 @@ module.exports = [
     mode: 'production',
     output: {
       path: path.join(__dirname, 'public/build'),
-      publicPath: '/build/',
+      publicPath: 'build/',
       filename: '[name].[contenthash].js'
     }
   }),
