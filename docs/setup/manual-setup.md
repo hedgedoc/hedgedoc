@@ -4,7 +4,9 @@ Manual Installation
 ## Requirements on your server
 
 - Node.js 8.5 or up
-- Database (PostgreSQL, MySQL, MariaDB, SQLite, MSSQL) use charset `utf8`
+- Database (PostgreSQL, MySQL, MariaDB, SQLite, MSSQL). Must use charset `utf8`: this is typically the
+  default in PostgreSQL and SQLite, while in MySQL and MariaDB utf8 might need to be set with
+  `alter database <DBNAME> character set utf8 collate utf8_bin;`
 - npm (and its dependencies, [node-gyp](https://github.com/nodejs/node-gyp#installation))
 - yarn
 - Bash (for the setup script)
@@ -16,11 +18,14 @@ Manual Installation
 1. Check if you meet the [requirements at the top of this document](#requirements-on-your-server).
 2. Clone this repository (preferred) or download a release and unzip it.
 3. Enter the directory and type `bin/setup`, which will install npm dependencies and create configs.
-4. Setup the configs, see more below
-5. Setup environment variables which will overwrite the configs
+4. Modify `config.json`, see docs [here](https://github.com/codimd/server/blob/master/docs/configuration-config-file.md).
+5. Instead of modifying `config.json`, it's possible to configure CodiMD through environment variables which will
+   overwrite the configs, see docs [here](https://github.com/codimd/server/blob/master/docs/configuration-env-vars.md).
 6. Build front-end bundle by `yarn run build` (use `yarn run dev` if you are in development)
-7. Modify the file named `.sequelizerc`, change the value of the variable `url` with your db connection string
-   For example: `postgres://username:password@localhost:5432/codimd`
+7. Modify the file named `.sequelizerc`, change the value of the variable `url` with your db connection string. For example:
+   - `postgres://username:password@localhost:5432/codimd`
+   - `mysql://username:password@localhost:3306/codimd`
+   - `sqlite://:memory:`
 8. It is recommended to start your server manually once: `yarn start --production`, this way it's easier to see warnings or errors that might occur (leave out `--production` for development).
 9. Run the server as you like (node, forever, pm2, SystemD, Init-Scripts)
 
