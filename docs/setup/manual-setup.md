@@ -26,7 +26,7 @@ Manual Installation
    - `postgres://username:password@localhost:5432/codimd`
    - `mysql://username:password@localhost:3306/codimd`
    - `sqlite://:memory:`
-8. It is recommended to start your server manually once: `yarn start --production`, this way it's easier to see warnings or errors that might occur (leave out `--production` for development).
+8. It is recommended to start your server manually once: `npm start --production`, this way it's easier to see warnings or errors that might occur (leave out `--production` for development).
 9. Run the server as you like (node, forever, pm2, SystemD, Init-Scripts)
 
 
@@ -40,5 +40,5 @@ If you are upgrading CodiMD from an older version, follow these steps:
 4. `git pull` or unzip a new release in the directory.
 5. Run `bin/setup`. This will take care of installing dependencies. It is safe to run on an existing installation.
 6. Build front-end bundle by `yarn run build` (use `yarn run dev` if you are in development).
-7. It is recommended to start your server manually once: `yarn start --production`, this way it's easier to see warnings or errors that might occur (leave out `--production` for development).
+7. It is recommended to start your server manually once: `npm start --production`, this way it's easier to see warnings or errors that might occur (leave out `--production` for development).
 8. You can now restart the CodiMD server!
