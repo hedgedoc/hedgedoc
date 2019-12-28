@@ -11,6 +11,7 @@
         <% if(typeof description !== 'undefined' && description) { %>
         <meta name="description" content="<%= description %>">
         <% } %>
+        <base href="<%- serverURL %>/">
         <title><%= title %></title>
         <link rel="icon" type="image/png" href="<%- serverURL %>/favicon.png">
         <link rel="apple-touch-icon" href="<%- serverURL %>/apple-touch-icon.png">
