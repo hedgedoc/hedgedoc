@@ -91,7 +91,7 @@ defaultNotePath can't be set from env-vars
 | variable | example value | description |
 | -------- | ------------- | ----------- |
 | `CMD_EMAIL` | `true` or `false` | Set to allow email sign-in. The default is `true`. |
-| `CMD_ALLOW_EMAIL_REGISTER` | `true` or `false` | Set to allow registration of new accounts using an email address. If set to `false`, you can still create accounts using the command line - see `bin/manage_users` for details. This setting has no effect if `CMD_EMAIL` is `false`. The default for `CMD_ALLOW_EMAIL_REGISTER` is `true`. |
+| `CMD_ALLOW_EMAIL_REGISTER` | `true` or `false` | Set to allow registration of new accounts using an email address. If set to `false`, you can still create accounts using the command line - see `bin/manage_users` for details (In production mode, remember to run it with `NODE_ENV` set as `production` in the enviroment). This setting has no effect if `CMD_EMAIL` is `false`. The default for `CMD_ALLOW_EMAIL_REGISTER` is `true`. |
 
 
 ### Dropbox Login
