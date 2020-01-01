@@ -63,6 +63,9 @@ CodiMD can integrate with
 
 More info about that can be found in the configuration docs above.
 
+## Upgrade & migrations
+
+[link](/docs/guides/migrations-and-breaking-changes.md)
 
 ## Browser support
 
