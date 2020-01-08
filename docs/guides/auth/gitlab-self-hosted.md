@@ -18,12 +18,12 @@ GitLab (self-hosted)
 6. In the `docker-compose.yml` add the following environment variables to `app:` `environment:`
 
 ```
-- HMD_DOMAIN=your.codimd.domain
-- HMD_URL_ADDPORT=443
-- HMD_PROTOCOL_USESSL=true
-- HMD_GITLAB_BASEURL=https://your.gitlab.domain
-- HMD_GITLAB_CLIENTID=23462a34example99XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-- HMD_GITLAB_CLIENTSECRET=5532e9dexamplXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- CMD_DOMAIN=your.codimd.domain
+- CMD_URL_ADDPORT=true
+- CMD_PROTOCOL_USESSL=true
+- CMD_GITLAB_BASEURL=https://your.gitlab.domain
+- CMD_GITLAB_CLIENTID=23462a34example99XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- CMD_GITLAB_CLIENTSECRET=5532e9dexamplXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
 7. Run `docker-compose up -d` to apply your settings.
