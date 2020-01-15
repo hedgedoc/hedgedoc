@@ -154,15 +154,6 @@ defaultNotePath can't be set from env-vars
 | `CMD_LDAP_PROVIDERNAME` | `My institution` | Optional name to be displayed at login form indicating the LDAP provider |
 
 
-### Mattermost Login
-
-| variable | example value | description |
-| -------- | ------------- | ----------- |
-| `CMD_MATTERMOST_BASEURL` | no example | Mattermost authentication endpoint for versions below 5.0. For Mattermost version 5.0 and above, see [guide](guides/auth/mattermost-self-hosted.md). |
-| `CMD_MATTERMOST_CLIENTID` | no example | Mattermost API client id |
-| `CMD_MATTERMOST_CLIENTSECRET` | no example | Mattermost API client secret |
-
-
 ### OAuth2 Login
 
 | variable | example value | description |
