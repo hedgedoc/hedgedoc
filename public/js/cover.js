@@ -428,3 +428,17 @@ $('.ui-use-tags').on('change', function () {
 $('.search').keyup(() => {
   checkHistoryList()
 })
+
+// focus user field after opening login modal
+$('.signin-modal').on('shown.bs.modal', function () {
+  let fieldLDAP = $('input[name=username]')
+  let fieldEmail = $('input[name=email]')
+  let fieldOpenID = $('input[name=openid_identifier]')
+  if (fieldLDAP.length === 1) {
+    fieldLDAP.focus()
+  } else if (fieldEmail.length === 1) {
+    fieldEmail.focus()
+  } else if (fieldOpenID.length === 1) {
+    fieldOpenID.focus()
+  }
+})
