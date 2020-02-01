@@ -119,6 +119,6 @@ describe('Content security policies', function () {
   it('Unchanged hash for reveal.js speaker notes plugin', function () {
     const hash = crypto.createHash('sha1')
     hash.update(fs.readFileSync(path.resolve(__dirname, '../node_modules/reveal.js/plugin/notes/notes.html'), 'utf8'), 'utf8')
-    assert.strictEqual(hash.digest('hex'), '471f3826880fac884a4a14faabc492bc854ae994')
+    assert.strictEqual(hash.digest('hex'), 'd5d872ae49b5db27f638b152e6e528837204d380')
   })
 })
