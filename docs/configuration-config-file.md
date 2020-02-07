@@ -134,7 +134,7 @@ these are rarely used for various reasons.
 
 | variables | example values | description |
 | --------- | ------ | ----------- |
-| `google` | `{clientID: ..., clientSecret: ...}` | An object containing the client ID and the client secret obtained by the [Google API console](https://console.cloud.google.com/apis) |
+| `google` | `{clientID: ..., clientSecret: ..., hostedDomain: ...}` | An object containing the client ID and the client secret obtained by the [Google API console](https://console.cloud.google.com/apis) |
 
 ### LDAP Login
 
