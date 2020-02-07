@@ -132,6 +132,10 @@
             "description": "Google API client secret",
             "required": false
         },
+        "CMD_GOOGLE_HOSTEDDOMAIN": {
+            "description": "Google API hosted domain (Provided only if the user belongs to a hosted domain)",
+            "required": false
+        },
         "CMD_IMGUR_CLIENTID": {
             "description": "Imgur API client id",
             "required": false
