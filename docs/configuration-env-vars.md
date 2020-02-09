@@ -135,6 +135,7 @@ defaultNotePath can't be set from env-vars
 | -------- | ------------- | ----------- |
 | `CMD_GOOGLE_CLIENTID` | no example | Google API client id |
 | `CMD_GOOGLE_CLIENTSECRET` | no example | Google API client secret |
+| `CMD_GOOGLE_HOSTEDDOMAIN` | `example.com` | Provided only if the user belongs to a hosted domain. default is `undefined` |
 
 
 ### LDAP Login
