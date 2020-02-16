@@ -113,5 +113,10 @@
     "Delete user": "Удалить пользователя",
     "Export user data": "Экспортировать данные пользователя",
     "Help us translating on %s": "Помогите нам перевести %s",
-    "Source Code": "Исходный код"
+    "Source Code": "Исходный код",
+    "Register": "Регистрация",
+    "Powered by %s": "Powered by %s",
+    "Help us translating": "Помочь с переводом",
+    "Join the community": "Присоединиться к сообществу",
+    "Imprint": "Imprint"
 }
