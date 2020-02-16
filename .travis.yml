@@ -23,12 +23,7 @@ jobs:
         - yarn run jsonlint
       language: generic
     - stage: Dynamic Tests
-      name: Node.js 8
-      node_js:
-        - 8
-      script:
-        - yarn run mocha-suite
-    - name: Node.js 10
+      name: Node.js 10
       node_js:
         - 10
       script:
