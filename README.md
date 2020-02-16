@@ -68,12 +68,12 @@ More info about that can be found in the configuration docs above.
 
 To use CodiMD, your browser should match or exceed these versions:
 
-- ![Chrome](http://browserbadge.com/chrome/47/18px) Chrome >= 47, Chrome for Android >= 47
-- ![Safari](http://browserbadge.com/safari/9/18px) Safari >= 9, iOS Safari >= 8.4
-- ![Firefox](http://browserbadge.com/firefox/44/18px) Firefox >= 44
-- ![IE](http://browserbadge.com/ie/9/18px) IE >= 9, Edge >= 12
-- ![Opera](http://browserbadge.com/opera/34/18px) Opera >= 34, Opera Mini not supported
-- Android Browser >= 4.4
+- ![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_24x24.png) Chrome >= 47, ![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_24x24.png) Chrome for Android >= 47
+- ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_24x24.png) Safari >= 9, ![iOS Safarai](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_24x24.png) iOS Safari >= 8.4
+- ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_24x24.png) Firefox >= 44
+- ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/archive/internet-explorer_9-11/internet-explorer_9-11_24x24.png) IE >= 9, ![Edge](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_24x24.png) Edge >= 12
+- ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_24x24.png) Opera >= 34, ![Opera Mini](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera-mini/opera-mini_24x24.png) Opera Mini not supported
+- ![Android Browser](https://raw.githubusercontent.com/alrra/browser-logos/master/src/android-webview-beta/android-webview-beta_24x24.png) Android Browser >= 4.4
 
 
 ## Related Tools
