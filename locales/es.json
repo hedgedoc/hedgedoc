@@ -2,7 +2,7 @@
     "Collaborative markdown notes": "Notas colaborativas en Markdown",
     "Realtime collaborative markdown notes on all platforms.": "Notas colaborativas en Markdown para todas las plataformas en tiempo real.",
     "Best way to write and share your knowledge in markdown.": "La mejor forma de escribir y compartir tu conocimiento en Markdown.",
-    "Intro": "Introducción",
+    "Intro": "Introduccion",
     "History": "Historia",
     "New guest note": "Nueva nota como invitado",
     "Collaborate with URL": "Colaborar via URL",
@@ -117,5 +117,6 @@
     "Register": "Registrar",
     "Powered by %s": "Desarrollado por %s.",
     "Help us translating": "Ayúdanos traduciendo",
-    "Join the community": "Únete a la comunidad"
+    "Join the community": "Únete a la comunidad",
+    "Imprint": "Huella"
 }
