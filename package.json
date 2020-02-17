@@ -1,6 +1,6 @@
 {
   "name": "CodiMD",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Realtime collaborative markdown notes on all platforms.",
   "main": "app.js",
   "license": "AGPL-3.0",

@@ -1,6 +1,91 @@
 Release Notes
 ===
 
+<i class="fa fa-tag"></i> 1.6.0 <i class="fa fa-calendar-o"></i> 2020-02-17
+---
+
+### Announcements
+
+* After the 1.6 release we will start to develop Version 2.0, which will introduce breaking changes. But we will take care of making your way to 2.0 easy.
+* Since Node version 8 is EOL since January 2020, 1.6 will be the last version with support for Node version 8
+* `useCDN` is now `false` by default. This feature is deprecated already and will be removed in 2.0.
+
+### Enhancements
+* Add AWS endpoint configuration options
+* Add ability to add an imprint using `./public/docs/imprint.md`
+* Improve documentation in various sections
+* Add ability to create note based on alias in free-url-mode
+* Add security note describing the preferred way for responsible disclosures
+* Extend forbiddenNoteIds to prevent conflicts with resource directories
+* Add OpenGraph metadata support
+* Add slovak language
+* Add API documentation
+* Allow different reference-url styles
+* Add automatic focus username field in login modal
+* Add ability to limit google-auth to own domain
+* Upgrade revealJS to version 3.9.2
+* Upgrade mermaid to version 8.4.6
+* Update translations (zh-cn, zh-TW, en, de, id, pl, ar, ca, fr, it, sk, sv, ja, nl, pt, ru, es)
+
+### Fixes
+* Fix docker secrets support
+* Fix sequlize-cli dependency location
+* Fix crash in lutim integration
+* Fix manage_users CLI handling of non-existing user
+* Fix ability to serve CodiMD from different urlpath than `/`
+* Fix change from gravatar to libravatar in privacy policy example
+* Fix missing browser icons in README
+
+### Refactors
+* Refactor note creation handling
+* Improve webpack documentation
+* Split note actions into own files
+* Refactor returnTo handling for auth
+
+### Removals
+* Legacy handling of socket.io connections
+* Node 8 CI jobs
+
+### Contributors
+* [Amolith](https://github.com/Amolith)
+* Andrea Rossi (translator)
+* CasperS (translator)
+* Cpp.create (translator)
+* [David Mehren](https://github.com/davidmehren)
+* Deluxghost (translator)
+* em_crx (translator)
+* [Enrico Guiraud](https://github.com/bluehood)
+* Epson12332 (translator)
+* [Erik Michelson](https://github.com/ErikMichelson)
+* Fajar Maulana (translator)
+* [Fonata](https://github.com/Fonata)
+* [foobarable](https://github.com/foobarable)
+* [Girish Ramakrishnan](https://github.com/gramakri)
+* Grzegorz (translator)
+* [hoijui](https://github.com/hoijui)
+* [Ian Tsai](https://github.com/b10102016)
+* id7xyz (translator)
+* [ike](https://github.com/ikewat)
+* Info (translator)
+* Javier Leandro (translator)
+* [Jonas Thelemann](https://github.com/dargmuesli)
+* [Jonas Zohren](https://github.com/jfowl)
+* kazutomo.waragai (translator)
+* [MartinT](https://github.com/MartinTuroci)
+* [Mathias Merscher](https://github.com/madddi)
+* [Matthias Lindinger](https://github.com/morpheus-87)
+* Mdhm (translator)
+* Me (translator)
+* mondstern (translator)
+* Patrick (translator)
+* Rafael Gauna Trindade (translator)
+* Ramon van Biljouw (translator)
+* [RyotaK](https://github.com/Ry0taK)
+* [Sandro](https://github.com/SuperSandro2000)
+* [Sören Wegener](https://github.com/soerface)
+* [Stefan Peters](https://github.com/stefandesu)
+* [Yukai Huang](https://github.com/Yukaii)
+
 <i class="fa fa-tag"></i> 1.5.0 <i class="fa fa-clock-o"></i> 2019-08-15 00:00
 ---
 
