@@ -47,7 +47,7 @@ export module NoteUtils {
     }
   }
 
-  export function newNote(req: any, res: Response, body: string) {
+  export function newNote(req: any, res: Response, body: string | null) {
     let owner = null;
     const noteId = req.params.noteId ? req.params.noteId : null;
     if (req.isAuthenticated()) {
