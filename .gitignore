@@ -24,5 +24,8 @@ config.json
 public/build
 public/views/build
 
+# ignore TypeScript built
+built/
+
 public/uploads/*
 !public/uploads/.gitkeep
