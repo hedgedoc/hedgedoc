@@ -142,12 +142,6 @@ these are rarely used for various reasons.
 | --------- | ------ | ----------- |
 | `ldap` | `{providerName: ..., url: ..., bindDn: ..., bindCredentials: ..., searchBase: ..., searchFilter: ..., searchAttributes: ..., usernameField: ..., useridField: ..., tlsca: ...}` | An object detailing the LDAP connection. Refer to the [LDAP-AD guide](guides/auth/ldap-AD.md) for more details! |
 
-### Mattermost Login
-
-| variables | example values | description |
-| --------- | ------ | ----------- |
-| `mattermost` | `{baseURL: ..., clientID: ..., clientSecret: ...}` | An object containing the base URL of your Mattermost application data. Refer to the [Mattermost guide](guides/auth/mattermost-self-hosted.md) for more details! |
-
 ### OAuth2 Login
 
 | variables | example values | description |

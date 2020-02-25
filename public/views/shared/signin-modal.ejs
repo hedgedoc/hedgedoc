@@ -28,11 +28,6 @@
                     <i class="fa fa-gitlab"></i> <%= __('Sign in via %s', 'GitLab') %>
                 </a>
                 <% } %>
-                <% if (authProviders.mattermost) { %>
-                <a href="<%- serverURL %>/auth/mattermost" class="btn btn-lg btn-block btn-social btn-soundcloud">
-                    <i class="fa fa-mattermost"></i> <%= __('Sign in via %s', 'Mattermost') %>
-                </a>
-                <% } %>
                 <% if (authProviders.dropbox) { %>
                 <a href="<%- serverURL %>/auth/dropbox" class="btn btn-lg btn-block btn-social btn-dropbox">
                     <i class="fa fa-dropbox"></i> <%= __('Sign in via %s', 'Dropbox') %>
@@ -53,7 +48,7 @@
                     <i class="fa fa-mail-forward"></i> <%= __('Sign in via %s', authProviders.oauth2ProviderName || 'OAuth2') %>
                 </a>
                 <% } %>
-                <% if ((authProviders.facebook || authProviders.twitter || authProviders.github || authProviders.gitlab || authProviders.mattermost || authProviders.dropbox || authProviders.google || authProviders.saml || authProviders.oauth2) && authProviders.ldap) { %>
+                <% if ((authProviders.facebook || authProviders.twitter || authProviders.github || authProviders.gitlab || authProviders.dropbox || authProviders.google || authProviders.saml || authProviders.oauth2) && authProviders.ldap) { %>
                 <hr>
                 <% }%>
                 <% if (authProviders.ldap) { %>
@@ -78,7 +73,7 @@
                     </div>
                 </form>
                 <% } %>
-                <% if ((authProviders.facebook || authProviders.twitter || authProviders.github || authProviders.gitlab || authProviders.mattermost || authProviders.dropbox || authProviders.google || authProviders.ldap || authProviders.oauth2) && authProviders.openID) { %>
+                <% if ((authProviders.facebook || authProviders.twitter || authProviders.github || authProviders.gitlab || authProviders.dropbox || authProviders.google || authProviders.ldap || authProviders.oauth2) && authProviders.openID) { %>
                 <hr>
                 <% }%>
                 <% if (authProviders.openID) { %>
@@ -97,7 +92,7 @@
                     </div>
                 </form>
                 <% } %>
-                <% if ((authProviders.facebook || authProviders.twitter || authProviders.github || authProviders.gitlab || authProviders.mattermost || authProviders.dropbox || authProviders.google || authProviders.ldap || authProviders.oauth2 || authProviders.openID) && authProviders.email) { %>
+                <% if ((authProviders.facebook || authProviders.twitter || authProviders.github || authProviders.gitlab || authProviders.dropbox || authProviders.google || authProviders.ldap || authProviders.oauth2 || authProviders.openID) && authProviders.email) { %>
                 <hr>
                 <% }%>
                 <% if (authProviders.email) { %>

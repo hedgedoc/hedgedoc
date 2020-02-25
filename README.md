@@ -57,7 +57,7 @@ works best for you.
 
 CodiMD can integrate with
 
-* facebook, twitter, github, gitlab, mattermost, dropbox, google, ldap, saml and [oauth2](docs/guides/auth/oauth.md) **for login**
+* facebook, twitter, github, gitlab, dropbox, google, ldap, saml and [oauth2](docs/guides/auth/oauth.md) **for login**
 * imgur, s3, minio, azure **for image/attachment storage** (files can also be local!)
 * dropbox **for export and import**
 
