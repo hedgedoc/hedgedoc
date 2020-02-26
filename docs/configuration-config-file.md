@@ -24,7 +24,6 @@ to `config.json` before filling in your own details.
 
 | variables | example values | description |
 | --------- | ------ | ----------- |
-| `allowPDFExport` | `true` | Whether or not PDF export is offered. |
 | `db` | `{ "dialect": "sqlite", "storage": "./db.codimd.sqlite" }` | set the db configs, [see more here](http://sequelize.readthedocs.org/en/latest/api/sequelize/) |
 | `dbURL` | `mysql://localhost:3306/database` | Set the db in URL style. If set, then the relevant `db` config entries will be overridden. |
 | `forbiddenNoteIDs` | `['robots.txt']` | disallow creation of notes, even if `allowFreeUrl` is `true` |

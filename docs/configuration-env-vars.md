@@ -28,7 +28,6 @@ defaultNotePath can't be set from env-vars
 
 | variable | example value | description |
 | -------- | ------------- | ----------- |
-| `CMD_ALLOW_PDF_EXPORT` | `true` or `false` | Enable or disable PDF exports |
 | `CMD_CONFIG_FILE` | `/path/to/config.json` | optional override for the path to CodiMD's config file |
 | `CMD_DB_URL` | `mysql://localhost:3306/database` | Set the db in URL style. If set, then the relevant `db` config entries will be overridden. |
 | `CMD_LOGLEVEL` | `info`, `debug` ... | Defines what kind of logs are provided to stdout. |

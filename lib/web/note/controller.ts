@@ -111,14 +111,6 @@ export module NoteController {
         case 'info':
           noteActions.getInfo(req, res, note);
           break;
-        case 'pdf':
-          if (config.allowPDFExport) {
-            noteActions.createPDF(req, res, note)
-          } else {
-            logger.error('PDF export failed: Disabled by config. Set "allowPDFExport: true" to enable. Check the documentation for details');
-            errors.errorForbidden(res)
-          }
-          break;
         case 'gist':
           noteActions.createGist(req, res, note);
           break;

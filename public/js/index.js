@@ -941,8 +941,6 @@ ui.toolbar.download.rawhtml.click(function (e) {
   e.stopPropagation()
   exportToRawHTML(ui.area.markdown)
 })
-// pdf
-ui.toolbar.download.pdf.attr('download', '').attr('href', noteurl + '/pdf')
 // export to dropbox
 ui.toolbar.export.dropbox.click(function () {
   var filename = renderFilename(ui.area.markdown) + '.md'

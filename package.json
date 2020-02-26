@@ -79,7 +79,6 @@
     "markdown-it-regexp": "^0.4.0",
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
-    "markdown-pdf": "^10.0.0",
     "mathjax": "~2.7.6",
     "mermaid": "~8.4.6",
     "meta-marked": "git+https://github.com/codimd/meta-marked#semver:^0.4.5",

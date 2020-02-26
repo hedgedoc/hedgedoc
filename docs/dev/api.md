@@ -5,7 +5,7 @@ For code-autogeneration there is an OpenAPIv3-compatible description available [
 
 ## Notes
 These endpoints create notes, return information about them or export them.  
-You have to replace _\<NOTE\>_ with either the alias or id of a note you want to work on. 
+You have to replace _\<NOTE\>_ with either the alias or id of a note you want to work on.
 
 | Endpoint | HTTP-Method | Description |
 |---|---|---|
@@ -13,7 +13,6 @@ You have to replace _\<NOTE\>_ with either the alias or id of a note you want to
 | `/new` | `POST` | **Imports some markdown data into a new note.**<br>A random id will be assigned and the content will equal to the body of the received HTTP-request. The `Content-Type: text/markdown` header should be set on this request. |
 | `/new/<ALIAS>` | `POST` | **Imports some markdown data into a new note with a given alias.**<br>This endpoint equals to the above one except that the alias from the url will be assigned to the note if [FreeURL-mode](../configuration-env-vars.md#users-and-privileges) is enabled. |
 | `/<NOTE>/download` or `/s/<SHORT-ID>/download` | `GET` | **Returns the raw markdown content of a note.** |
-| `/<NOTE>/pdf` | `GET` | **Returns a generated pdf version of the note.**<br>If pdf-support is disabled, a HTTP 403 will be returned.<br>_Please note: Currently pdf export is disabled generally because of a security problem with it._ |
 | `/<NOTE>/publish` | `GET` | **Redirects to the published version of the note.** |
 | `/<NOTE>/slide` | `GET` | **Redirects to the slide-presentation of the note.**<br>This is only useful on notes which are designed to be slides. |
 | `/<NOTE>/info` | `GET` | **Returns metadata about the note.**<br>This includes the title and description of the note as well as the creation date and viewcount. The data is returned as a JSON object. |
