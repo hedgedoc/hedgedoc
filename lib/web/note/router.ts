@@ -1,6 +1,6 @@
 import {markdownParser} from "../utils";
 
-import slide from "./slide";
+import {SlideController} from "./slide";
 import {NoteController} from "./controller";
 import {Router} from "express";
 
@@ -16,9 +16,9 @@ router.get('/s/:shortid', NoteController.showPublishNote);
 // publish note actions
 router.get('/s/:shortid/:action', NoteController.publishNoteActions);
 // get publish slide
-router.get('/p/:shortid', slide.showPublishSlide);
+router.get('/p/:shortid', SlideController.showPublishSlide);
 // publish slide actions
-router.get('/p/:shortid/:action', slide.publishSlideActions);
+router.get('/p/:shortid/:action', SlideController.publishSlideActions);
 // get note by id
 router.get('/:noteId', NoteController.showNote);
 // note actions
