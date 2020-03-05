@@ -106,7 +106,7 @@ export module NoteUtils {
   }
 
   function isRevealTheme(theme: string) {
-    if (fs.existsSync(path.join(__dirname, '..', 'public', 'build', 'reveal.js', 'css', 'theme', theme + '.css'))) {
+    if (fs.existsSync(path.join(__dirname, '..', '..', '..', 'public', 'build', 'reveal.js', 'css', 'theme', theme + '.css'))) {
       return theme
     }
     return undefined
