@@ -68,6 +68,10 @@ There are four possible options:
 
 **Only the owner of the note can change the note's permissions.**
 
+### Delete a Note
+
+Notes can be deleted by using the corresponding entry in the permissions menu (see above). This erases the note and its contents from the server, and is different from the action of removing a note from history which is done on the history page.
+
 ### Embed a Note
 
 Notes can be embedded as follows:
