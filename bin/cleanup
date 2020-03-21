@@ -50,6 +50,23 @@ async function cleanup() {
       }
     }
   })
+  await models.Revision.findAll({
+    include: [{
+      model: models.Note,
+      as: 'note'
+    }]
+  }).then(async function(revisions) {
+    for(let i =0, revisionCount = revisions.length; i< revisionCount; i++) {
+      const item = revisions[i]
+      if(item.noteId != null && !item.note) {
+        await models.Revision.destroy({
+          where: {
+            id: item.id
+        }})
+        logger.info(`Deleted revision ${item.id} from note ${item.userId}`)
+      }
+    }
+  })
   process.exit(0)
 }
 
