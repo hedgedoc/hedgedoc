@@ -1,0 +1,56 @@
+#!/usr/bin/env node
+
+const logger = require("../lib/logger");
+const models = require('../lib/models')
+
+logger.info("Cleaning up notes that should already have been removed. Sorry.")
+
+async function cleanup() {
+  await models.Note.findAll({
+    include: [{
+      model: models.User,
+      as: 'owner'
+    }]
+  }).then(async function(notes) {
+    for(let i =0, noteCount = notes.length; i< noteCount; i++) {
+      const item = notes[i]
+      if(item.ownerId != null && !item.owner) {
+        await models.Note.destroy({
+          where: {
+            id: item.id
+        }})
+        await models.Revision.destroy({
+          where: {
+            noteId: item.id
+          }
+        })
+        await models.Author.destroy({
+          where: {
+            noteId: item.id
+          }
+        })
+        logger.info(`Deleted note ${item.id} from user ${item.ownerId}`)
+      }
+    }
+  })
+  await models.Author.findAll({
+    include: [{
+      model: models.User,
+      as: 'user'
+    }]
+  }).then(async function(authors) {
+    for(let i =0, authorCount = authors.length; i< authorCount; i++) {
+      const item = authors[i]
+      if(item.userId != null && !item.user) {
+        await models.Author.destroy({
+          where: {
+            id: item.id
+        }})
+        logger.info(`Deleted authorship ${item.id} from user ${item.userId}`)
+      }
+    }
+  })
+  process.exit(0)
+}
+
+cleanup()
