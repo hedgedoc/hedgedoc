@@ -55,6 +55,26 @@ async function cleanup() {
     }
   })
 
+  await models.Author.findAll({
+    include: [{
+      model: models.Note,
+      as: 'note',
+      attributes: ['id']
+    }],
+    attributes: ['id', 'noteId']
+  }).then(async function(authors) {
+    for(let i =0, authorCount = authors.length; i< authorCount; i++) {
+      const item = authors[i]
+      if(item.noteId != null && !item.note) {
+        await models.Author.destroy({
+          where: {
+            id: item.id
+        }})
+        logger.info(`Deleted authorship ${item.id} from note ${item.noteId}`)
+      }
+    }
+  })
+
   await models.Revision.findAll({
     include: [{
       model: models.Note,
