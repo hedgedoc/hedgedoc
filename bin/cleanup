@@ -9,8 +9,10 @@ async function cleanup() {
   await models.Note.findAll({
     include: [{
       model: models.User,
-      as: 'owner'
-    }]
+      as: 'owner',
+      attributes: ['id']
+    }],
+    attributes: ['id', 'ownerId']
   }).then(async function(notes) {
     for(let i =0, noteCount = notes.length; i< noteCount; i++) {
       const item = notes[i]
@@ -36,8 +38,10 @@ async function cleanup() {
   await models.Author.findAll({
     include: [{
       model: models.User,
-      as: 'user'
-    }]
+      as: 'user',
+      attributes: ['id']
+    }],
+    attributes: ['id', 'userId']
   }).then(async function(authors) {
     for(let i =0, authorCount = authors.length; i< authorCount; i++) {
       const item = authors[i]
@@ -50,11 +54,14 @@ async function cleanup() {
       }
     }
   })
+
   await models.Revision.findAll({
     include: [{
       model: models.Note,
-      as: 'note'
-    }]
+      as: 'note',
+      attributes: ['id']
+    }],
+    attributes: ['id', 'noteId']
   }).then(async function(revisions) {
     for(let i =0, revisionCount = revisions.length; i< revisionCount; i++) {
       const item = revisions[i]
