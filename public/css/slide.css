@@ -255,8 +255,10 @@ pre.abc > svg {
     margin-bottom: -.25em !important;
 }
 
-.reveal .slides, .reveal .backgrounds, .reveal.overview {
-    transform-style: preserve-3d;
+@media only screen {
+    .reveal .slides, .reveal .backgrounds, .reveal.overview {
+        transform-style: preserve-3d;
+    }
 }
 
 .slides, #meta {
