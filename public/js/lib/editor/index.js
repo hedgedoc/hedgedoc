@@ -161,6 +161,16 @@ export default class Editor {
     var makeLine = $('#makeLine')
     var makeComment = $('#makeComment')
     var uploadImage = $('#uploadImage')
+    var makeDiagramUMLSequenc = $('#makeDiagramUMLSequenc')
+    var makeDiagramFlow = $('#makeDiagramFlow')
+    var makeDiagramGraphviz = $('#makeDiagramGraphviz')
+    var makeDiagramMermaidFlowchart = $('#makeDiagramMermaidFlowchart')
+    var makeDiagramMermaidSequence = $('#makeDiagramMermaidSequence')
+    var makeDiagramMermaidClass = $('#makeDiagramMermaidClass')
+    var makeDiagramMermaidState = $('#makeDiagramMermaidState')
+    var makeDiagramMermaidGantt = $('#makeDiagramMermaidGantt')
+    var makeDiagramMermaidPie = $('#makeDiagramMermaidPie')
+    var makeDiagramAbcMusic = $('#makeDiagramAbcMusic')
 
     makeBold.click(() => {
       utils.wrapTextWith(this.editor, this.editor, '**')
@@ -228,6 +238,38 @@ export default class Editor {
       e.dataTransfer.files = files
       inlineAttach.onDrop(e)
     })
+
+    makeDiagramUMLSequenc.click(() => {
+      utils.insertText(this.editor, '```sequence\nAlice->Bob: Hello Bob, how are you?\nNote right of Bob: Bob thinks\nBob-->Alice: I am good thanks!\nNote left of Alice: Alice responds\nAlice->Bob: Where have you been?\n```\n')
+    })
+    makeDiagramFlow.click(() => {
+      utils.insertText(this.editor, '```flow\nst=>start: Start\ne=>end: End\nop=>operation: My Operation\nop2=>operation: lalala\ncond=>condition: Yes or No?\n\nst->op->op2->cond\ncond(yes)->e\ncond(no)->op2\n```\n')
+    })
+    makeDiagramGraphviz.click(() => {
+      utils.insertText(this.editor, '```graphviz\ndigraph hierarchy {\nnodesep=1.0 // Increases the separation between nodes\n\nnode [color=Red,fontname=Courier,shape=box] // All nodes will this shape and colour\nedge [color=Blue, style=dashed] // All the lines look like this\n\nHeadteacher->{Deputy1 Deputy2 BusinessManager}\nDeputy1->{Teacher1 Teacher2}\nBusinessManager->ITManager\n{rank=same;ITManager Teacher1 Teacher2} // Put them on the same level\n}\n```\n')
+    })
+    makeDiagramMermaidFlowchart.click(() => {
+      utils.insertText(this.editor, '```mermaid\ngraph TB\nc1-->a2\nsubgraph one\na1-->a2\nend\nsubgraph two\nb1-->b2\nend\nc1-->c2\n```\n')
+    })
+    makeDiagramMermaidSequence.click(() => {
+      utils.insertText(this.editor, '```mermaid\nsequenceDiagram\nAlice->>John: Hello John, how are you?\nJohn-->>Alice: Great!\n```')
+    })
+    makeDiagramMermaidClass.click(() => {
+      utils.insertText(this.editor, '```mermaid\nclassDiagram\nAnimal <|-- Duck\nAnimal <|-- Fish\nAnimal <|-- Zebra\nAnimal : +int age\nAnimal : +String gender\nAnimal: +isMammal()\nAnimal: +mate()\nclass Duck{\n+String beakColor\n+swim()\n+quack()\n}\nclass Fish{\n-int sizeInFeet\n-canEat()\n}\nclass Zebra{\n+bool is_wild\n+run()\n}\n```')
+    })
+    makeDiagramMermaidState.click(() => {
+      utils.insertText(this.editor, '```mermaid\nstateDiagram\n[*] --> Still\nStill --> [*]\n\nStill --> Moving\nMoving --> Still\nMoving --> Crash\nCrash --> [*]\n```')
+    })
+    makeDiagramMermaidGantt.click(() => {
+      utils.insertText(this.editor, '```mermaid\ngantt\ntitle A Gantt Diagram\n\nsection Section\nA task: a1, 2014-01-01, 30d\nAnother task: after a1, 20d\n\nsection Another\nTask in sec: 2014-01-12, 12d\nAnother task: 24d\n```\n')
+    })
+    makeDiagramMermaidPie.click(() => {
+      utils.insertText(this.editor, '```mermaid\npie title Pets adopted by volunteers\n"Dogs" : 386\n"Cats" : 85\n"Rats" : 15\n```')
+    })
+    makeDiagramAbcMusic.click(() => {
+      utils.insertText(this.editor, '```abc\nX:1\nT:Speed the Plough\nM:4/4\nC:Trad.\nK:G\n|:GABc dedB|dedB dedB|c2ec B2dB|c2A2 A2BA|\nGABc dedB|dedB dedB|c2ec B2dB|A2F2 G4:|\n|:g2gf gdBd|g2f2 e2d2|c2ec B2dB|c2A2 A2df|\ng2gf g2Bd|g2f2 e2d2|c2ec B2dB|A2F2 G4:|\n```\n')
+    })
+
   }
 
   addStatusBar () {
