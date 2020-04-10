@@ -151,7 +151,7 @@ export class Revision extends Model<Revision> {
       return callback(err, null)
     })
   }
-  checkAllNotesRevision (callback) {
+  static checkAllNotesRevision (callback) {
     this.saveAllNotesRevision(function (err, notes) {
       if (err) return callback(err, null)
       if (!notes || notes.length <= 0) {
@@ -161,8 +161,8 @@ export class Revision extends Model<Revision> {
       }
     })
   }
-  saveAllNotesRevision (callback) {
-    Sequelize.models.Note.findAll({
+  static saveAllNotesRevision (callback) {
+    Note.findAll({
       // query all notes that need to save for revision
       where: {
         [Op.and]: [
