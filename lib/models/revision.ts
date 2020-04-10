@@ -94,7 +94,7 @@ export class Revision extends Model<Revision> {
   }
 
   @ForeignKey(() => Note)
-  @Column
+  @Column(DataType.UUID)
   noteId: string
 
   @BelongsTo(() => Note, { foreignKey: 'noteId', constraints: false, onDelete: 'CASCADE', hooks: true })

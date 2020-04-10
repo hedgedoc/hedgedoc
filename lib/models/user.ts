@@ -31,8 +31,7 @@ export class User extends Model<User> {
   @Column(DataType.TEXT)
   refreshToken: string;
 
-  @IsUUID(4)
-  @Column
+  @Column(DataType.UUID)
   deleteToken: string;
 
   @IsEmail

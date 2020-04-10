@@ -16,7 +16,7 @@ export class Author extends Model<Author> {
 
   @ForeignKey(() => Note)
   @NoteUserIndex
-  @Column
+  @Column(DataType.UUID)
   noteId: string;
   
   @BelongsTo(() => Note, { foreignKey: 'noteId', onDelete: 'CASCADE', constraints: false, hooks: true })
@@ -24,7 +24,7 @@ export class Author extends Model<Author> {
 
   @ForeignKey(() => User)
   @NoteUserIndex
-  @Column
+  @Column(DataType.UUID)
   userId: string;
 
   @BelongsTo(() => User, { foreignKey: 'userId', onDelete: 'CASCADE', constraints: false, hooks: true })
