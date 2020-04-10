@@ -1,4 +1,15 @@
-'use strict'
+import { AllowNull, AfterCreate, BeforeCreate, Default, Unique, IsUUID, Model, PrimaryKey, Column, DataType, Table, BelongsTo, HasMany, ForeignKey } from "sequelize-typescript";
+import { generate as shortIdGenerate, isValid as shortIdIsValid } from "shortid";
+import { Author } from "./author";
+import { User } from './user';
+import { Revision } from './revision';
+
+// external modules
+// external modules
+var fs = require('fs')
+var path = require('path')
+var LZString = require('lz-string')
+
 // external modules
 var fs = require('fs')
 var path = require('path')
@@ -7,7 +18,6 @@ var base64url = require('base64url')
 var md = require('markdown-it')()
 var metaMarked = require('meta-marked')
 var cheerio = require('cheerio')
-var shortId = require('shortid')
 var Sequelize = require('sequelize')
 var async = require('async')
 var moment = require('moment')
@@ -23,156 +33,157 @@ var logger = require('../logger')
 var ot = require('../ot')
 
 // permission types
-var permissionTypes = ['freely', 'editable', 'limited', 'locked', 'protected', 'private']
+enum PermissionEnum {
+  freely = "freely",
+  editable = "editable",
+  limited = "limited",
+  locked = "locked",
+  protected = "protected",
+  private = "private"
+};
 
-module.exports = function (sequelize, DataTypes) {
-  var Note = sequelize.define('Note', {
-    id: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-      defaultValue: Sequelize.UUIDV4
-    },
-    shortid: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
-      defaultValue: shortId.generate
-    },
-    alias: {
-      type: DataTypes.STRING,
-      unique: true
-    },
-    permission: {
-      type: DataTypes.ENUM,
-      values: permissionTypes
-    },
-    viewcount: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
-    },
-    title: {
-      type: DataTypes.TEXT,
-      get: function () {
-        return sequelize.processData(this.getDataValue('title'), '')
-      },
-      set: function (value) {
-        this.setDataValue('title', sequelize.stripNullByte(value))
-      }
-    },
-    content: {
-      type: DataTypes.TEXT('long'),
-      get: function () {
-        return sequelize.processData(this.getDataValue('content'), '')
-      },
-      set: function (value) {
-        this.setDataValue('content', sequelize.stripNullByte(value))
-      }
-    },
-    authorship: {
-      type: DataTypes.TEXT('long'),
-      get: function () {
-        return sequelize.processData(this.getDataValue('authorship'), [], JSON.parse)
-      },
-      set: function (value) {
-        this.setDataValue('authorship', JSON.stringify(value))
-      }
-    },
-    lastchangeAt: {
-      type: DataTypes.DATE
-    },
-    savedAt: {
-      type: DataTypes.DATE
-    }
-  }, {
-    paranoid: false,
-    hooks: {
-      beforeCreate: function (note, options) {
-        return new Promise(function (resolve, reject) {
-          // if no content specified then use default note
-          if (!note.content) {
-            var body = null
-            let filePath = null
-            if (!note.alias) {
-              filePath = config.defaultNotePath
-            } else {
-              filePath = path.join(config.docsPath, note.alias + '.md')
-            }
-            if (Note.checkFileExist(filePath)) {
-              var fsCreatedTime = moment(fs.statSync(filePath).ctime)
-              body = fs.readFileSync(filePath, 'utf8')
-              note.title = Note.parseNoteTitle(body)
-              note.content = body
-              if (filePath !== config.defaultNotePath) {
-                note.createdAt = fsCreatedTime
-              }
-            }
-          }
-          // if no permission specified and have owner then give default permission in config, else default permission is freely
-          if (!note.permission) {
-            if (note.ownerId) {
-              note.permission = config.defaultPermission
-            } else {
-              note.permission = 'freely'
-            }
-          }
-          return resolve(note)
-        })
-      },
-      afterCreate: function (note, options, callback) {
-        return new Promise(function (resolve, reject) {
-          sequelize.models.Revision.saveNoteRevision(note, function (err, revision) {
-            if (err) {
-              return reject(err)
-            }
-            return resolve(note)
-          })
-        })
-      }
-    }
-  })
+@Table({ paranoid: false })
+export class Note extends Model<Note> {
+  @PrimaryKey
+  @Default(Sequelize.UUIDV4)
+  @Column(DataType.UUID)
+  id: string;
 
-  Note.associate = function (models) {
-    Note.belongsTo(models.User, {
-      foreignKey: 'ownerId',
-      as: 'owner',
-      constraints: false,
-      onDelete: 'CASCADE',
-      hooks: true
-    })
-    Note.belongsTo(models.User, {
-      foreignKey: 'lastchangeuserId',
-      as: 'lastchangeuser',
-      constraints: false
-    })
-    Note.hasMany(models.Revision, {
-      foreignKey: 'noteId',
-      constraints: false
-    })
-    Note.hasMany(models.Author, {
-      foreignKey: 'noteId',
-      as: 'authors',
-      constraints: false
+  @AllowNull(false)
+  @Default(shortIdGenerate)
+  @Unique
+  @Column(DataType.STRING)
+  shortid: string;
+
+  @Unique
+  @Column(DataType.STRING)
+  alias: string;
+
+  @Column(DataType.ENUM({values: Object.keys(PermissionEnum).map(k => PermissionEnum[k as any])}))
+  permission: PermissionEnum;
+
+  @AllowNull(false)
+  @Default(0)
+  @Column(DataType.INTEGER)
+  viewcount: number;
+
+  @Column(DataType.TEXT)
+  get title(): string {
+    return Sequelize.processData(this.getDataValue('title'), '')
+  }
+  set title(value: string) {
+    this.setDataValue('title', Sequelize.stripNullByte(value))
+  }
+
+  @Column(DataType.TEXT({ length: 'long' }))
+  get content(): string {
+    return Sequelize.processData(this.getDataValue('content'), '')
+  }
+  set content(value: string) {
+    this.setDataValue('content', Sequelize.stripNullByte(value))
+  }
+
+  @Column(DataType.TEXT({ length: 'long' }))
+  get authorship(): string {
+    return Sequelize.processData(this.getDataValue('authorship'), [], JSON.parse)
+  }
+  set authorship(value: string) {
+    this.setDataValue('authorship', JSON.stringify(value))
+  }
+
+  // ToDo: use @UpdatedAt instead? (https://www.npmjs.com/package/sequelize-typescript#createdat--updatedat--deletedat)
+  @Column(DataType.DATE)
+  lastchangeAt: Date;
+
+  // ToDo: use @UpdatedAt instead? (https://www.npmjs.com/package/sequelize-typescript#createdat--updatedat--deletedat)
+  @Column(DataType.DATE)
+  savedAt: Date;
+
+  @ForeignKey(() => User)
+  @Column
+  ownerId: string;
+
+  @BelongsTo(() => User, { foreignKey: 'ownerId', constraints: false, onDelete: 'CASCADE', hooks: true })
+  owner: User;
+
+  @ForeignKey(() => User)
+  @Column
+  lastchangeuserId: string;
+
+  @BelongsTo(() => User, { foreignKey: 'lastchangeuserId', constraints: false })
+  lastchangeuser: User;
+
+  @HasMany(() => Revision, { foreignKey: 'noteId', constraints: false })
+  revisions: Revision[];
+
+  @HasMany(() => Author, { foreignKey: 'noteId', constraints: false })
+  authors: Author[];
+
+  @BeforeCreate
+  static defaultContentAndPermissions(note: Note) {
+    return new Promise(function (resolve, reject) {
+      // if no content specified then use default note
+      if (!note.content) {
+        let filePath = null
+        if (!note.alias) {
+          filePath = config.defaultNotePath
+        } else {
+          filePath = path.join(config.docsPath, note.alias + '.md')
+        }
+        if (Note.checkFileExist(filePath)) {
+          var fsCreatedTime = moment(fs.statSync(filePath).ctime)
+          const body = fs.readFileSync(filePath, 'utf8')
+          note.title = Note.parseNoteTitle(body)
+          note.content = body
+          if (filePath !== config.defaultNotePath) {
+            note.createdAt = fsCreatedTime
+          }
+        }
+      }
+      // if no permission specified and have owner then give default permission in config, else default permission is freely
+      if (!note.permission) {
+        if (note.owner) {
+          note.permission = config.defaultPermission
+        } else {
+          note.permission = PermissionEnum.freely
+        }
+      }
+      return resolve(note)
     })
   }
-  Note.checkFileExist = function (filePath) {
+
+  @AfterCreate
+  static saveRevision(note) {
+    return new Promise(function (resolve, reject) {
+      Sequelize.models.Revision.saveNoteRevision(note, function (err, revision) {
+        if (err) {
+          return reject(err)
+        }
+        return resolve(note)
+      })
+    })
+  }
+
+  static checkFileExist(filePath) {
     try {
       return fs.statSync(filePath).isFile()
     } catch (err) {
       return false
     }
   }
-  Note.encodeNoteId = function (id) {
+
+  static encodeNoteId(id) {
     // remove dashes in UUID and encode in url-safe base64
     let str = id.replace(/-/g, '')
     let hexStr = Buffer.from(str, 'hex')
     return base64url.encode(hexStr)
   }
-  Note.decodeNoteId = function (encodedId) {
+
+  static decodeNoteId(encodedId) {
     // decode from url-safe base64
-    let id = base64url.toBuffer(encodedId).toString('hex')
+    let id: string = base64url.toBuffer(encodedId).toString('hex')
     // add dashes between the UUID string parts
-    let idParts = []
+    let idParts: string[] = []
     idParts.push(id.substr(0, 8))
     idParts.push(id.substr(8, 4))
     idParts.push(id.substr(12, 4))
@@ -180,12 +191,12 @@ module.exports = function (sequelize, DataTypes) {
     idParts.push(id.substr(20, 12))
     return idParts.join('-')
   }
-  Note.checkNoteIdValid = function (id) {
+  static checkNoteIdValid(id) {
     var uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
     var result = id.match(uuidRegex)
     if (result && result.length === 1) { return true } else { return false }
   }
-  Note.parseNoteId = function (noteId, callback) {
+  static parseNoteId(noteId, callback) {
     async.series({
       parseNoteIdByAlias: function (_callback) {
         // try to parse note id by alias (e.g. doc)
@@ -210,7 +221,7 @@ module.exports = function (sequelize, DataTypes) {
                   content: body,
                   lastchangeAt: fsModifiedTime
                 }).then(function (note) {
-                  sequelize.models.Revision.saveNoteRevision(note, function (err, revision) {
+                  Sequelize.models.Revision.saveNoteRevision(note, function (err, revision) {
                     if (err) return _callback(err, null)
                     // update authorship on after making revision of docs
                     var patch = dmp.patch_fromText(revision.patch)
@@ -293,7 +304,7 @@ module.exports = function (sequelize, DataTypes) {
       parseNoteIdByShortId: function (_callback) {
         // try to parse note id by shortId
         try {
-          if (shortId.isValid(noteId)) {
+          if (shortIdIsValid(noteId)) {
             Note.findOne({
               where: {
                 shortid: noteId
@@ -319,7 +330,7 @@ module.exports = function (sequelize, DataTypes) {
       return callback(null, null)
     })
   }
-  Note.parseNoteInfo = function (body) {
+  parseNoteInfo(body) {
     var parsed = Note.extractMeta(body)
     var $ = cheerio.load(md.render(parsed.markdown))
     return {
@@ -327,12 +338,12 @@ module.exports = function (sequelize, DataTypes) {
       tags: Note.extractNoteTags(parsed.meta, $)
     }
   }
-  Note.parseNoteTitle = function (body) {
-    var parsed = Note.extractMeta(body)
+  static parseNoteTitle(body) {
+    const parsed = Note.extractMeta(body)
     var $ = cheerio.load(md.render(parsed.markdown))
     return Note.extractNoteTitle(parsed.meta, $)
   }
-  Note.extractNoteTitle = function (meta, $) {
+  static extractNoteTitle(meta, $) {
     var title = ''
     if (meta.title && (typeof meta.title === 'string' || typeof meta.title === 'number')) {
       title = meta.title
@@ -343,23 +354,23 @@ module.exports = function (sequelize, DataTypes) {
     if (!title) title = 'Untitled'
     return title
   }
-  Note.generateDescription = function (markdown) {
+  static generateDescription(markdown) {
     return markdown.substr(0, 100).replace(/(?:\r\n|\r|\n)/g, ' ')
   }
-  Note.decodeTitle = function (title) {
+  static decodeTitle(title) {
     return title || 'Untitled'
   }
-  Note.generateWebTitle = function (title) {
+  static generateWebTitle(title) {
     title = !title || title === 'Untitled' ? 'CodiMD - Collaborative markdown notes' : title + ' - CodiMD'
     return title
   }
-  Note.extractNoteTags = function (meta, $) {
-    var tags = []
-    var rawtags = []
+  static extractNoteTags(meta, $) {
+    var tags: string[] = []
+    var rawtags: string[] = []
     if (meta.tags && (typeof meta.tags === 'string' || typeof meta.tags === 'number')) {
       var metaTags = ('' + meta.tags).split(',')
       for (let i = 0; i < metaTags.length; i++) {
-        var text = metaTags[i].trim()
+        var text: string = metaTags[i].trim()
         if (text) rawtags.push(text)
       }
     } else {
@@ -386,22 +397,22 @@ module.exports = function (sequelize, DataTypes) {
     }
     return tags
   }
-  Note.extractMeta = function (content) {
-    var obj = null
+
+  static extractMeta(content) {
     try {
-      obj = metaMarked(content)
+      var obj = metaMarked(content)
       if (!obj.markdown) obj.markdown = ''
       if (!obj.meta) obj.meta = {}
+      return obj;
     } catch (err) {
-      obj = {
+      return {
         markdown: content,
         meta: {}
       }
     }
-    return obj
   }
-  Note.parseMeta = function (meta) {
-    var _meta = {}
+  static parseMeta(meta): NoteMetadata {
+    var _meta = new NoteMetadata();
     if (meta) {
       if (meta.title && (typeof meta.title === 'string' || typeof meta.title === 'number')) { _meta.title = meta.title }
       if (meta.description && (typeof meta.description === 'string' || typeof meta.description === 'number')) { _meta.description = meta.description }
@@ -413,15 +424,15 @@ module.exports = function (sequelize, DataTypes) {
     }
     return _meta
   }
-  Note.parseOpengraph = function (meta, title) {
-    var _ogdata = {}
+  static parseOpengraph(meta, title) {
+    var _ogdata: any = {}
     if (meta.opengraph) { _ogdata = meta.opengraph }
     if (!(_ogdata.title && (typeof _ogdata.title === 'string' || typeof _ogdata.title === 'number'))) { _ogdata.title = title }
     if (!(_ogdata.description && (typeof _ogdata.description === 'string' || typeof _ogdata.description === 'number'))) { _ogdata.description = meta.description || '' }
     if (!(_ogdata.type && (typeof _ogdata.type === 'string'))) { _ogdata.type = 'website' }
     return _ogdata
   }
-  Note.updateAuthorshipByOperation = function (operation, userId, authorships) {
+  static updateAuthorshipByOperation(operation, userId, authorships) {
     var index = 0
     var timestamp = Date.now()
     for (let i = 0; i < operation.length; i++) {
@@ -522,8 +533,8 @@ module.exports = function (sequelize, DataTypes) {
     }
     return authorships
   }
-  Note.transformPatchToOperations = function (patch, contentLength) {
-    var operations = []
+  static transformPatchToOperations(patch, contentLength) {
+    var operations: any = []
     if (patch.length > 0) {
       // calculate original content length
       for (let j = patch.length - 1; j >= 0; j--) {
@@ -544,7 +555,7 @@ module.exports = function (sequelize, DataTypes) {
       var bias = 0
       var lengthBias = 0
       for (let j = 0; j < patch.length; j++) {
-        var operation = []
+        var operation: any = []
         let p = patch[j]
         var currIndex = p.start1
         var currLength = contentLength - bias
@@ -581,6 +592,14 @@ module.exports = function (sequelize, DataTypes) {
     }
     return operations
   }
+}
 
-  return Note
+export class NoteMetadata {
+  title: string;
+  description: string;
+  robots: string;
+  GA: string;
+  disqus: string;
+  slideOptions: any;
+  opengraph: any;
 }

@@ -1,26 +1,25 @@
-'use strict'
-// external modules
+import {Table, Model, Column, DataType, BelongsTo, IsUUID, PrimaryKey, ForeignKey} from 'sequelize-typescript'
 var Sequelize = require('sequelize')
-var async = require('async')
-var moment = require('moment')
-var childProcess = require('child_process')
-var shortId = require('shortid')
-var path = require('path')
+import  async = require('async')
+import moment = require('moment')
+import childProcess = require('child_process')
+import shortId = require('shortid')
+import path = require('path')
 
 var Op = Sequelize.Op
 
 // core
-var logger = require('../logger')
+import logger = require('../logger')
+import {ChildProcess} from "child_process";
+import { Note } from './note'
 
-var dmpWorker = createDmpWorker()
+var dmpWorker : ChildProcess | null = createDmpWorker()
 var dmpCallbackCache = {}
 
 function createDmpWorker () {
-  var worker = childProcess.fork(path.resolve(__dirname, '../workers/dmpWorker.js'), {
-    stdio: 'ignore'
-  })
+  var worker = childProcess.fork(path.resolve(__dirname, '../workers/dmpWorker.js'), ['ignore'])
   logger.debug('dmp worker process started')
-  worker.on('message', function (data) {
+  worker.on('message', function (data: any) {
     if (!data || !data.msg || !data.cacheKey) {
       return logger.error('dmp worker error: not enough data on message')
     }
@@ -36,7 +35,7 @@ function createDmpWorker () {
     delete dmpCallbackCache[cacheKey]
   })
   worker.on('close', function (code) {
-    dmpWorker = null
+    dmpWorker = null;
     logger.debug(`dmp worker process exited with code ${code}`)
   })
   return worker
@@ -52,75 +51,67 @@ function sendDmpWorker (data, callback) {
   dmpWorker.send(data)
 }
 
-module.exports = function (sequelize, DataTypes) {
-  var Revision = sequelize.define('Revision', {
-    id: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-      defaultValue: Sequelize.UUIDV4
-    },
-    patch: {
-      type: DataTypes.TEXT('long'),
-      get: function () {
-        return sequelize.processData(this.getDataValue('patch'), '')
-      },
-      set: function (value) {
-        this.setDataValue('patch', sequelize.stripNullByte(value))
-      }
-    },
-    lastContent: {
-      type: DataTypes.TEXT('long'),
-      get: function () {
-        return sequelize.processData(this.getDataValue('lastContent'), '')
-      },
-      set: function (value) {
-        this.setDataValue('lastContent', sequelize.stripNullByte(value))
-      }
-    },
-    content: {
-      type: DataTypes.TEXT('long'),
-      get: function () {
-        return sequelize.processData(this.getDataValue('content'), '')
-      },
-      set: function (value) {
-        this.setDataValue('content', sequelize.stripNullByte(value))
-      }
-    },
-    length: {
-      type: DataTypes.INTEGER
-    },
-    authorship: {
-      type: DataTypes.TEXT('long'),
-      get: function () {
-        return sequelize.processData(this.getDataValue('authorship'), [], JSON.parse)
-      },
-      set: function (value) {
-        this.setDataValue('authorship', value ? JSON.stringify(value) : value)
-      }
-    }
-  })
+@Table
+export class Revision extends Model<Revision> {
+  @IsUUID(4)
+  @PrimaryKey
+  @Column
+  id: string;  
 
-  Revision.associate = function (models) {
-    Revision.belongsTo(models.Note, {
-      foreignKey: 'noteId',
-      as: 'note',
-      constraints: false,
-      onDelete: 'CASCADE',
-      hooks: true
-    })
+  @Column(DataType.TEXT({ length: 'long' }))
+  get patch(): string {
+    return Sequelize.processData(this.getDataValue('patch'), '')
   }
-  Revision.getNoteRevisions = function (note, callback) {
+  set patch(value: string) {
+    this.setDataValue('patch', Sequelize.stripNullByte(value))
+  }
+
+  @Column(DataType.TEXT({ length: 'long' }))
+  get lastContent(): string {
+    return Sequelize.processData(this.getDataValue('lastContent'), '')
+  }
+  set lastContent(value: string) {
+    this.setDataValue('lastContent', Sequelize.stripNullByte(value))
+  }
+
+  @Column(DataType.TEXT({ length: 'long' }))
+  get content(): string {
+    return Sequelize.processData(this.getDataValue('content'), '')
+  }
+  set content(value: string) {
+    this.setDataValue('content', Sequelize.stripNullByte(value))
+  }
+
+  @Column(DataType.INTEGER)
+  length : number
+
+  @Column(DataType.TEXT({ length: 'long' }))
+  get authorship(): string {
+    return Sequelize.processData(this.getDataValue('authorship'), [], JSON.parse)
+  }
+  set authorship(value: string) {
+    this.setDataValue('authorship', value ? JSON.stringify(value) : value)
+  }
+
+  @ForeignKey(() => Note)
+  @Column
+  noteId: string
+
+  @BelongsTo(() => Note, { foreignKey: 'noteId', constraints: false, onDelete: 'CASCADE', hooks: true })
+  note: Note;
+
+  getNoteRevisions (note, callback) {
     Revision.findAll({
       where: {
         noteId: note.id
       },
       order: [['createdAt', 'DESC']]
     }).then(function (revisions) {
-      var data = []
-      for (var i = 0, l = revisions.length; i < l; i++) {
+      var data : any[] = []
+      for (var i = 0; i < revisions.length; i++) {
         var revision = revisions[i]
         data.push({
-          time: moment(revision.createdAt).valueOf(),
+          time : moment(revision.createdAt).valueOf(),
           length: revision.length
         })
       }
@@ -129,7 +120,7 @@ module.exports = function (sequelize, DataTypes) {
       callback(err, null)
     })
   }
-  Revision.getPatchedNoteRevisionByTime = function (note, time, callback) {
+  getPatchedNoteRevisionByTime (note, time, callback) {
     // find all revisions to prepare for all possible calculation
     Revision.findAll({
       where: {
@@ -146,7 +137,6 @@ module.exports = function (sequelize, DataTypes) {
             [Op.gte]: time
           }
         },
-        order: [['createdAt', 'DESC']]
       }).then(function (count) {
         if (count <= 0) return callback(null, null)
         sendDmpWorker({
@@ -161,18 +151,18 @@ module.exports = function (sequelize, DataTypes) {
       return callback(err, null)
     })
   }
-  Revision.checkAllNotesRevision = function (callback) {
-    Revision.saveAllNotesRevision(function (err, notes) {
+  checkAllNotesRevision (callback) {
+    this.saveAllNotesRevision(function (err, notes) {
       if (err) return callback(err, null)
       if (!notes || notes.length <= 0) {
         return callback(null, notes)
       } else {
-        Revision.checkAllNotesRevision(callback)
+        this.checkAllNotesRevision(callback)
       }
     })
   }
-  Revision.saveAllNotesRevision = function (callback) {
-    sequelize.models.Note.findAll({
+  saveAllNotesRevision (callback) {
+    Sequelize.models.Note.findAll({
       // query all notes that need to save for revision
       where: {
         [Op.and]: [
@@ -182,7 +172,7 @@ module.exports = function (sequelize, DataTypes) {
                 [Op.eq]: null,
                 [Op.and]: {
                   [Op.ne]: null,
-                  [Op.gt]: sequelize.col('createdAt')
+                  [Op.gt]: Sequelize.col('createdAt')
                 }
               }
             }
@@ -191,7 +181,7 @@ module.exports = function (sequelize, DataTypes) {
             savedAt: {
               [Op.or]: {
                 [Op.eq]: null,
-                [Op.lt]: sequelize.col('lastchangeAt')
+                [Op.lt]: Sequelize.col('lastchangeAt')
               }
             }
           }
@@ -199,24 +189,24 @@ module.exports = function (sequelize, DataTypes) {
       }
     }).then(function (notes) {
       if (notes.length <= 0) return callback(null, notes)
-      var savedNotes = []
-      async.each(notes, function (note, _callback) {
+      var savedNotes : any[] = []
+      async.each(notes, function (note : any, _callback) {
         // revision saving policy: note not been modified for 5 mins or not save for 10 mins
         if (note.lastchangeAt && note.savedAt) {
           var lastchangeAt = moment(note.lastchangeAt)
           var savedAt = moment(note.savedAt)
           if (moment().isAfter(lastchangeAt.add(5, 'minutes'))) {
             savedNotes.push(note)
-            Revision.saveNoteRevision(note, _callback)
+            this.saveNoteRevision(note, _callback)
           } else if (lastchangeAt.isAfter(savedAt.add(10, 'minutes'))) {
             savedNotes.push(note)
-            Revision.saveNoteRevision(note, _callback)
+            this.saveNoteRevision(note, _callback)
           } else {
             return _callback(null, null)
           }
         } else {
           savedNotes.push(note)
-          Revision.saveNoteRevision(note, _callback)
+          this.saveNoteRevision(note, _callback)
         }
       }, function (err) {
         if (err) {
@@ -230,7 +220,7 @@ module.exports = function (sequelize, DataTypes) {
       return callback(err, null)
     })
   }
-  Revision.saveNoteRevision = function (note, callback) {
+  saveNoteRevision (note, callback) {
     Revision.findAll({
       where: {
         noteId: note.id
@@ -239,13 +229,13 @@ module.exports = function (sequelize, DataTypes) {
     }).then(function (revisions) {
       if (revisions.length <= 0) {
         // if no revision available
-        Revision.create({
+        this.create({
           noteId: note.id,
           lastContent: note.content ? note.content : '',
           length: note.content ? note.content.length : 0,
           authorship: note.authorship
         }).then(function (revision) {
-          Revision.finishSaveNoteRevision(note, revision, callback)
+          this.finishSaveNoteRevision(note, revision, callback)
         }).catch(function (err) {
           return callback(err, null)
         })
@@ -265,12 +255,12 @@ module.exports = function (sequelize, DataTypes) {
             latestRevision.update({
               updatedAt: Date.now()
             }).then(function (revision) {
-              Revision.finishSaveNoteRevision(note, revision, callback)
+              this.finishSaveNoteRevision(note, revision, callback)
             }).catch(function (err) {
               return callback(err, null)
             })
           } else {
-            Revision.create({
+            this.create({
               noteId: note.id,
               patch: patch,
               content: note.content,
@@ -281,7 +271,7 @@ module.exports = function (sequelize, DataTypes) {
               latestRevision.update({
                 content: null
               }).then(function () {
-                Revision.finishSaveNoteRevision(note, revision, callback)
+                this.finishSaveNoteRevision(note, revision, callback)
               }).catch(function (err) {
                 return callback(err, null)
               })
@@ -295,7 +285,7 @@ module.exports = function (sequelize, DataTypes) {
       return callback(err, null)
     })
   }
-  Revision.finishSaveNoteRevision = function (note, revision, callback) {
+  finishSaveNoteRevision (note, revision, callback) {
     note.update({
       savedAt: revision.updatedAt
     }).then(function () {
@@ -305,5 +295,7 @@ module.exports = function (sequelize, DataTypes) {
     })
   }
 
-  return Revision
+
+
 }
+

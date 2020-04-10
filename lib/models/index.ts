@@ -1,8 +1,11 @@
-'use strict'
-// external modules
+import {Sequelize} from 'sequelize-typescript';
+import { Author } from './author';
+import { Note } from './note';
+import { Revision } from './revision';
+import { Temp } from './temp';
+import { User } from './user';
 var fs = require('fs')
-var path = require('path')
-var Sequelize = require('sequelize')
+var path = require('path');
 const { cloneDeep } = require('lodash')
 
 // core
@@ -14,7 +17,7 @@ dbconfig.logging = config.debug ? (data) => {
   logger.info(data)
 } : false
 
-var sequelize = null
+var sequelize: any = null;
 
 // Heroku specific
 if (config.dbURL) {
@@ -34,26 +37,25 @@ sequelize.stripNullByte = stripNullByte
 
 function processData (data, _default, process) {
   if (data === undefined) return data
-  else return data === null ? _default : (process ? process(data) : data)
+  else if (process) {
+    if (data === null) {
+      return _default
+    } else {
+      return process(data)
+    }
+  } else {
+    if (data === null) {
+      return _default
+    } else {
+      return data
+    }
+  }
 }
 sequelize.processData = processData
 
-var db = {}
+var db: any = {}
 
-fs.readdirSync(__dirname)
-  .filter(function (file) {
-    return (file.indexOf('.') !== 0) && (file !== 'index.js')
-  })
-  .forEach(function (file) {
-    var model = sequelize.import(path.join(__dirname, file))
-    db[model.name] = model
-  })
-
-Object.keys(db).forEach(function (modelName) {
-  if ('associate' in db[modelName]) {
-    db[modelName].associate(db)
-  }
-})
+sequelize.addModels([Author, Note, Revision, Temp, User]);
 
 db.sequelize = sequelize
 db.Sequelize = Sequelize

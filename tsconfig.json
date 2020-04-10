@@ -6,7 +6,8 @@
     "target": "es5",
     "module": "commonjs",
     "esModuleInterop": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
     "./lib/**/*"
