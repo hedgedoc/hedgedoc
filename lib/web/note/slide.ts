@@ -1,17 +1,18 @@
-import {NextFunction, Response} from "express";
-import {NoteUtils} from "./util";
-import models from '../../models';
+import { NextFunction, Response } from "express";
+import { NoteUtils } from "./util";
 import errors from '../../errors';
 import logger from '../../logger';
 import config from '../../config';
+import { User } from "../../models/user";
+import { Note } from "../../models/note";
 
 
-export module SlideController{
-  export function publishSlideActions (req: any, res: Response, next: NextFunction) {
-    NoteUtils.findNote(req, res, function (note) {
+export module SlideController {
+  export function publishSlideActions(req: any, res: Response, next: NextFunction) {
+    NoteUtils.findNoteOrCreate(req, res, function (note) {
       const action = req.params.action
       if (action === 'edit') {
-        res.redirect(config.serverURL + '/' + (note.alias ? note.alias : models.Note.encodeNoteId(note.id)) + '?both')
+        res.redirect(config.serverURL + '/' + (note.alias ? note.alias : Note.encodeNoteId(note.id)) + '?both')
       } else { res.redirect(config.serverURL + '/p/' + note.shortid) }
     })
   }
@@ -20,13 +21,13 @@ export module SlideController{
 
   export function showPublishSlide(req: any, res: Response, next: NextFunction) {
     const include = [{
-      model: models.User,
+      model: User,
       as: 'owner'
     }, {
-      model: models.User,
+      model: User,
       as: 'lastchangeuser'
     }]
-    NoteUtils.findNote(req, res, function (note) {
+    NoteUtils.findNoteOrCreate(req, res, function (note) {
       // force to use short id
       const shortid = req.params.shortid
       if ((note.alias && shortid !== note.alias) || (!note.alias && shortid !== note.shortid)) {

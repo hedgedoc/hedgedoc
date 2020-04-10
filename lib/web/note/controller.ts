@@ -1,23 +1,22 @@
 import {NextFunction, Response} from "express";
 import {NoteUtils} from "./util";
-
-import models from "../../models";
-
-import noteActions from "./actions";
+import { ActionController } from "./actions";
 import errors from "../../errors";
 import config from "../../config";
 import logger from "../../logger";
+import { User } from "../../models/user";
+import { Note } from "../../models/note";
 
 export module NoteController {
   export function publishNoteActions(req: any, res: Response, next: NextFunction) {
-    NoteUtils.findNote(req, res, function (note) {
+    NoteUtils.findNoteOrCreate(req, res, function (note) {
       const action = req.params.action;
       switch (action) {
         case 'download':
           exports.downloadMarkdown(req, res, note);
           break;
         case 'edit':
-          res.redirect(config.serverURL + '/' + (note.alias ? note.alias : models.Note.encodeNoteId(note.id)) + '?both');
+          res.redirect(config.serverURL + '/' + (note.alias ? note.alias : Note.encodeNoteId(note.id)) + '?both');
           break;
         default:
           res.redirect(config.serverURL + '/s/' + note.shortid);
@@ -28,13 +27,13 @@ export module NoteController {
 
   export function showPublishNote(req: any, res: Response, next: NextFunction) {
     const include = [{
-      model: models.User,
+      model: User,
       as: 'owner'
     }, {
-      model: models.User,
+      model: User,
       as: 'lastchangeuser'
     }];
-    NoteUtils.findNote(req, res, function (note) {
+    NoteUtils.findNoteOrCreate(req, res, function (note) {
       // force to use short id
       const shortid = req.params.shortid;
       if ((note.alias && shortid !== note.alias) || (!note.alias && shortid !== note.shortid)) {
@@ -58,19 +57,19 @@ export module NoteController {
   }
 
   export function showNote(req: any, res: Response, next: NextFunction) {
-    NoteUtils.findNote(req, res, function (note) {
+    NoteUtils.findNoteOrCreate(req, res, function (note) {
       // force to use note id
       const noteId = req.params.noteId;
-      const id = models.Note.encodeNoteId(note.id);
+      const id = Note.encodeNoteId(note.id);
       if ((note.alias && noteId !== note.alias) || (!note.alias && noteId !== id)) {
         return res.redirect(config.serverURL + '/' + (note.alias || id))
       }
       const body = note.content;
-      const extracted = models.Note.extractMeta(body);
-      const meta = models.Note.parseMeta(extracted.meta);
-      let title = models.Note.decodeTitle(note.title);
-      title = models.Note.generateWebTitle(meta.title || title);
-      const opengraph = models.Note.parseOpengraph(meta, title);
+      const extracted = Note.extractMeta(body);
+      const meta = Note.parseMeta(extracted.meta);
+      let title = Note.decodeTitle(note.title);
+      title = Note.generateWebTitle(meta.title || title);
+      const opengraph = Note.parseOpengraph(meta, title);
       res.set({
         'Cache-Control': 'private', // only cache by client
         'X-Robots-Tag': 'noindex, nofollow' // prevent crawling
@@ -95,8 +94,9 @@ export module NoteController {
 
   export function doAction(req: any, res: Response, next: NextFunction) {
     const noteId = req.params.noteId;
-    NoteUtils.findNote(req, res, function (note) {
+    NoteUtils.findNoteOrCreate(req, res, (note) => {
       const action = req.params.action;
+      // TODO: Don't switch on action, choose action in Router and use separate functions
       switch (action) {
         case 'publish':
         case 'pretty': // pretty deprecated
@@ -109,13 +109,13 @@ export module NoteController {
           exports.downloadMarkdown(req, res, note);
           break;
         case 'info':
-          noteActions.getInfo(req, res, note);
+          ActionController.getInfo(req, res, note);
           break;
         case 'gist':
-          noteActions.createGist(req, res, note);
+          ActionController.createGist(req, res, note);
           break;
         case 'revision':
-          noteActions.getRevision(req, res, note);
+          ActionController.getRevision(req, res, note);
           break;
         default:
           return res.redirect(config.serverURL + '/' + noteId)
@@ -125,7 +125,7 @@ export module NoteController {
 
   export function downloadMarkdown(req: Request, res: Response, note: any) {
     const body = note.content;
-    let filename = models.Note.decodeTitle(note.title);
+    let filename = Note.decodeTitle(note.title);
     filename = encodeURIComponent(filename);
     res.set({
       'Access-Control-Allow-Origin': '*', // allow CORS as API
