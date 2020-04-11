@@ -16,7 +16,7 @@ dbconfig.logging = config.debug ? (data) => {
   logger.info(data)
 } : false
 
-export let sequelize: any = null;
+export let sequelize: any;
 
 // Heroku specific
 if (config.dbURL) {
@@ -26,4 +26,7 @@ if (config.dbURL) {
 }
 
 sequelize.addModels([Author, Note, Revision, Temp, User]);
+
+
+export {Author, Note, Revision, Temp, User};
 
