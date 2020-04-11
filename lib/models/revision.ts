@@ -194,10 +194,10 @@ export class Revision extends Model<Revision> {
           }
         ]
       }
-    }).then(function (notes) {
+    }).then(function (notes: Note[]) {
       if (notes.length <= 0) return callback(null, notes)
-      const savedNotes: any[] = [];
-      async.each(notes, function (note: any, _callback) {
+      const savedNotes: Note[] = [];
+      async.each(notes, function (note: Note, _callback) {
         // revision saving policy: note not been modified for 5 mins or not save for 10 mins
         if (note.lastchangeAt && note.savedAt) {
           const lastchangeAt = moment(note.lastchangeAt);
@@ -220,7 +220,7 @@ export class Revision extends Model<Revision> {
           return callback(err, null)
         }
         // return null when no notes need saving at this moment but have delayed tasks to be done
-        const result = ((savedNotes.length === 0) && (notes.length > savedNotes.length)) ? null : savedNotes;
+        const result = ((savedNotes.length === 0) && (notes.length > 0)) ? null : savedNotes;
         return callback(null, result)
       })
     }).catch(function (err) {
@@ -228,7 +228,7 @@ export class Revision extends Model<Revision> {
     })
   }
 
-  static saveNoteRevision(note, callback) {
+  static saveNoteRevision(note : Note, callback) {
     Revision.findAll({
       where: {
         noteId: note.id
@@ -237,10 +237,14 @@ export class Revision extends Model<Revision> {
     }).then(function (revisions) {
       if (revisions.length <= 0) {
         // if no revision available
+        let noteContent = note.content;
+        if (noteContent.length === 0) {
+          noteContent = '';
+        }
         Revision.create({
           noteId: note.id,
-          lastContent: note.content ? note.content : '',
-          length: note.content ? note.content.length : 0,
+          lastContent: noteContent,
+          length: noteContent.length,
           authorship: note.authorship
         }).then(function (revision) {
           Revision.finishSaveNoteRevision(note, revision, callback)
