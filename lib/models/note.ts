@@ -1,11 +1,25 @@
-import { AllowNull, AfterCreate, BeforeCreate, Default, Unique, IsUUID, Model, PrimaryKey, Column, DataType, Table, BelongsTo, HasMany, ForeignKey } from "sequelize-typescript";
-import { generate as shortIdGenerate, isValid as shortIdIsValid } from "shortid";
-import { Author } from "./author";
-import { User } from './user';
-import { Revision } from './revision';
+import {
+  AfterCreate,
+  AllowNull,
+  BeforeCreate,
+  BelongsTo,
+  Column,
+  DataType,
+  Default,
+  ForeignKey,
+  HasMany,
+  Model,
+  PrimaryKey,
+  Table,
+  Unique
+} from "sequelize-typescript";
+import {generate as shortIdGenerate, isValid as shortIdIsValid} from "shortid";
+import {Author} from "./author";
+import {User} from './user';
+import {Revision} from './revision';
+import {Utils} from "../utils";
+import Sequelize from "sequelize";
 
-// external modules
-// external modules
 var fs = require('fs')
 var path = require('path')
 var LZString = require('lz-string')
@@ -18,7 +32,6 @@ var base64url = require('base64url')
 var md = require('markdown-it')()
 var metaMarked = require('meta-marked')
 var cheerio = require('cheerio')
-var Sequelize = require('sequelize')
 var async = require('async')
 var moment = require('moment')
 var DiffMatchPatch = require('diff-match-patch')
@@ -42,7 +55,7 @@ enum PermissionEnum {
   private = "private"
 };
 
-@Table({ paranoid: false })
+@Table({paranoid: false})
 export class Note extends Model<Note> {
   @PrimaryKey
   @Default(Sequelize.UUIDV4)
@@ -69,24 +82,27 @@ export class Note extends Model<Note> {
 
   @Column(DataType.TEXT)
   get title(): string {
-    return Sequelize.processData(this.getDataValue('title'), '')
+    return Utils.processData(this.getDataValue('title'), '')
   }
+
   set title(value: string) {
-    this.setDataValue('title', Sequelize.stripNullByte(value))
+    this.setDataValue('title', Utils.stripNullByte(value))
   }
 
-  @Column(DataType.TEXT({ length: 'long' }))
+  @Column(DataType.TEXT({length: 'long'}))
   get content(): string {
-    return Sequelize.processData(this.getDataValue('content'), '')
-  }
-  set content(value: string) {
-    this.setDataValue('content', Sequelize.stripNullByte(value))
+    return Utils.processData(this.getDataValue('content'), '')
   }
 
-  @Column(DataType.TEXT({ length: 'long' }))
-  get authorship(): string {
-    return Sequelize.processData(this.getDataValue('authorship'), [], JSON.parse)
+  set content(value: string) {
+    this.setDataValue('content', Utils.stripNullByte(value))
   }
+
+  @Column(DataType.TEXT({length: 'long'}))
+  get authorship(): string {
+    return Utils.processData(this.getDataValue('authorship'), [], JSON.parse)
+  }
+
   set authorship(value: string) {
     this.setDataValue('authorship', JSON.stringify(value))
   }
@@ -103,20 +119,20 @@ export class Note extends Model<Note> {
   @Column
   ownerId: string;
 
-  @BelongsTo(() => User, { foreignKey: 'ownerId', constraints: false, onDelete: 'CASCADE', hooks: true })
+  @BelongsTo(() => User, {foreignKey: 'ownerId', constraints: false, onDelete: 'CASCADE', hooks: true})
   owner: User;
 
   @ForeignKey(() => User)
   @Column
   lastchangeuserId: string;
 
-  @BelongsTo(() => User, { foreignKey: 'lastchangeuserId', constraints: false })
+  @BelongsTo(() => User, {foreignKey: 'lastchangeuserId', constraints: false})
   lastchangeuser: User;
 
-  @HasMany(() => Revision, { foreignKey: 'noteId', constraints: false })
+  @HasMany(() => Revision, {foreignKey: 'noteId', constraints: false})
   revisions: Revision[];
 
-  @HasMany(() => Author, { foreignKey: 'noteId', constraints: false })
+  @HasMany(() => Author, {foreignKey: 'noteId', constraints: false})
   authors: Author[];
 
   @BeforeCreate
@@ -155,7 +171,7 @@ export class Note extends Model<Note> {
   @AfterCreate
   static saveRevision(note) {
     return new Promise(function (resolve, reject) {
-      Sequelize.models.Revision.saveNoteRevision(note, function (err, revision) {
+      Revision.saveNoteRevision(note, function (err, revision) {
         if (err) {
           return reject(err)
         }
@@ -191,11 +207,17 @@ export class Note extends Model<Note> {
     idParts.push(id.substr(20, 12))
     return idParts.join('-')
   }
+
   static checkNoteIdValid(id) {
     var uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
     var result = id.match(uuidRegex)
-    if (result && result.length === 1) { return true } else { return false }
+    if (result && result.length === 1) {
+      return true
+    } else {
+      return false
+    }
   }
+
   static parseNoteId(noteId, callback) {
     async.series({
       parseNoteIdByAlias: function (_callback) {
@@ -221,7 +243,7 @@ export class Note extends Model<Note> {
                   content: body,
                   lastchangeAt: fsModifiedTime
                 }).then(function (note) {
-                  Sequelize.models.Revision.saveNoteRevision(note, function (err, revision) {
+                  Revision.saveNoteRevision(note, function (err, revision) {
                     if (err) return _callback(err, null)
                     // update authorship on after making revision of docs
                     var patch = dmp.patch_fromText(revision.patch)
@@ -281,7 +303,11 @@ export class Note extends Model<Note> {
         // try to parse note id by LZString Base64
         try {
           var id = LZString.decompressFromBase64(noteId)
-          if (id && Note.checkNoteIdValid(id)) { return callback(null, id) } else { return _callback(null, null) }
+          if (id && Note.checkNoteIdValid(id)) {
+            return callback(null, id)
+          } else {
+            return _callback(null, null)
+          }
         } catch (err) {
           if (err.message === 'Cannot read property \'charAt\' of undefined') {
             logger.warning('Looks like we can not decode "' + noteId + '" with LZString. Can be ignored.')
@@ -295,7 +321,11 @@ export class Note extends Model<Note> {
         // try to parse note id by base64url
         try {
           var id = Note.decodeNoteId(noteId)
-          if (id && Note.checkNoteIdValid(id)) { return callback(null, id) } else { return _callback(null, null) }
+          if (id && Note.checkNoteIdValid(id)) {
+            return callback(null, id)
+          } else {
+            return _callback(null, null)
+          }
         } catch (err) {
           logger.error(err)
           return _callback(null, null)
@@ -330,6 +360,7 @@ export class Note extends Model<Note> {
       return callback(null, null)
     })
   }
+
   parseNoteInfo(body) {
     var parsed = Note.extractMeta(body)
     var $ = cheerio.load(md.render(parsed.markdown))
@@ -338,32 +369,40 @@ export class Note extends Model<Note> {
       tags: Note.extractNoteTags(parsed.meta, $)
     }
   }
+
   static parseNoteTitle(body) {
     const parsed = Note.extractMeta(body)
     var $ = cheerio.load(md.render(parsed.markdown))
     return Note.extractNoteTitle(parsed.meta, $)
   }
+
   static extractNoteTitle(meta, $) {
     var title = ''
     if (meta.title && (typeof meta.title === 'string' || typeof meta.title === 'number')) {
       title = meta.title
     } else {
       var h1s = $('h1')
-      if (h1s.length > 0 && h1s.first().text().split('\n').length === 1) { title = S(h1s.first().text()).stripTags().s }
+      if (h1s.length > 0 && h1s.first().text().split('\n').length === 1) {
+        title = S(h1s.first().text()).stripTags().s
+      }
     }
     if (!title) title = 'Untitled'
     return title
   }
+
   static generateDescription(markdown) {
     return markdown.substr(0, 100).replace(/(?:\r\n|\r|\n)/g, ' ')
   }
+
   static decodeTitle(title) {
     return title || 'Untitled'
   }
+
   static generateWebTitle(title) {
     title = !title || title === 'Untitled' ? 'CodiMD - Collaborative markdown notes' : title + ' - CodiMD'
     return title
   }
+
   static extractNoteTags(meta, $) {
     var tags: string[] = []
     var rawtags: string[] = []
@@ -393,7 +432,9 @@ export class Note extends Model<Note> {
           break
         }
       }
-      if (!found) { tags.push(rawtags[i]) }
+      if (!found) {
+        tags.push(rawtags[i])
+      }
     }
     return tags
   }
@@ -411,27 +452,52 @@ export class Note extends Model<Note> {
       }
     }
   }
+
   static parseMeta(meta): NoteMetadata {
     var _meta = new NoteMetadata();
     if (meta) {
-      if (meta.title && (typeof meta.title === 'string' || typeof meta.title === 'number')) { _meta.title = meta.title }
-      if (meta.description && (typeof meta.description === 'string' || typeof meta.description === 'number')) { _meta.description = meta.description }
-      if (meta.robots && (typeof meta.robots === 'string' || typeof meta.robots === 'number')) { _meta.robots = meta.robots }
-      if (meta.GA && (typeof meta.GA === 'string' || typeof meta.GA === 'number')) { _meta.GA = meta.GA }
-      if (meta.disqus && (typeof meta.disqus === 'string' || typeof meta.disqus === 'number')) { _meta.disqus = meta.disqus }
-      if (meta.slideOptions && (typeof meta.slideOptions === 'object')) { _meta.slideOptions = meta.slideOptions }
-      if (meta.opengraph && (typeof meta.opengraph === 'object')) { _meta.opengraph = meta.opengraph }
+      if (meta.title && (typeof meta.title === 'string' || typeof meta.title === 'number')) {
+        _meta.title = meta.title
+      }
+      if (meta.description && (typeof meta.description === 'string' || typeof meta.description === 'number')) {
+        _meta.description = meta.description
+      }
+      if (meta.robots && (typeof meta.robots === 'string' || typeof meta.robots === 'number')) {
+        _meta.robots = meta.robots
+      }
+      if (meta.GA && (typeof meta.GA === 'string' || typeof meta.GA === 'number')) {
+        _meta.GA = meta.GA
+      }
+      if (meta.disqus && (typeof meta.disqus === 'string' || typeof meta.disqus === 'number')) {
+        _meta.disqus = meta.disqus
+      }
+      if (meta.slideOptions && (typeof meta.slideOptions === 'object')) {
+        _meta.slideOptions = meta.slideOptions
+      }
+      if (meta.opengraph && (typeof meta.opengraph === 'object')) {
+        _meta.opengraph = meta.opengraph
+      }
     }
     return _meta
   }
+
   static parseOpengraph(meta, title) {
     var _ogdata: any = {}
-    if (meta.opengraph) { _ogdata = meta.opengraph }
-    if (!(_ogdata.title && (typeof _ogdata.title === 'string' || typeof _ogdata.title === 'number'))) { _ogdata.title = title }
-    if (!(_ogdata.description && (typeof _ogdata.description === 'string' || typeof _ogdata.description === 'number'))) { _ogdata.description = meta.description || '' }
-    if (!(_ogdata.type && (typeof _ogdata.type === 'string'))) { _ogdata.type = 'website' }
+    if (meta.opengraph) {
+      _ogdata = meta.opengraph
+    }
+    if (!(_ogdata.title && (typeof _ogdata.title === 'string' || typeof _ogdata.title === 'number'))) {
+      _ogdata.title = title
+    }
+    if (!(_ogdata.description && (typeof _ogdata.description === 'string' || typeof _ogdata.description === 'number'))) {
+      _ogdata.description = meta.description || ''
+    }
+    if (!(_ogdata.type && (typeof _ogdata.type === 'string'))) {
+      _ogdata.type = 'website'
+    }
     return _ogdata
   }
+
   static updateAuthorshipByOperation(operation, userId, authorships) {
     var index = 0
     var timestamp = Date.now()
@@ -533,6 +599,7 @@ export class Note extends Model<Note> {
     }
     return authorships
   }
+
   static transformPatchToOperations(patch, contentLength) {
     var operations: any = []
     if (patch.length > 0) {
