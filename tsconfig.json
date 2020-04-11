@@ -3,11 +3,12 @@
     "outDir": "./built",
     "allowJs": true,
     "strictNullChecks": true,
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "sourceMap": true
   },
   "include": [
     "./lib/**/*"
