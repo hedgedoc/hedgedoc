@@ -1,4 +1,7 @@
 'use strict'
+
+import { Revision } from "./models/revision"
+
 // app
 // external modules
 var express = require('express')
@@ -28,7 +31,7 @@ var csp = require('./csp')
 
 // server setup
 var app = express()
-var server = null
+var server: any = null
 if (config.useSSL) {
   var ca = (function () {
     var i, len, results
