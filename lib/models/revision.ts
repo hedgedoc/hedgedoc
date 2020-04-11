@@ -114,7 +114,7 @@ export class Revision extends Model<Revision> {
   @BelongsTo(() => Note, { foreignKey: 'noteId', constraints: false, onDelete: 'CASCADE', hooks: true })
   note: Note;
 
-  getNoteRevisions (note: Note, callback): void {
+  static getNoteRevisions (note: Note, callback): void {
     Revision.findAll({
       where: {
         noteId: note.id
@@ -138,7 +138,7 @@ export class Revision extends Model<Revision> {
     })
   }
 
-  getPatchedNoteRevisionByTime (note: Note, time, errorCallback): void {
+  static getPatchedNoteRevisionByTime (note: Note, time, errorCallback): void {
     // find all revisions to prepare for all possible calculation
     Revision.findAll({
       where: {
