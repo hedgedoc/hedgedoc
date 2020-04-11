@@ -1,26 +1,20 @@
-'use strict'
-// realtime
-// external modules
-import { Author, Note, Revision, User } from "./models";
+import { Author, Note, Revision, User } from './models'
 
-var cookie = require('cookie')
-var cookieParser = require('cookie-parser')
-var async = require('async')
-var randomcolor = require('randomcolor')
-var Chance = require('chance')
-var chance = new Chance()
-var moment = require('moment')
+import ot from './ot'
+import history from './history'
+import logger from './logger'
+import config from './config'
+import moment from 'moment'
+import randomcolor from 'randomcolor'
+import async from 'async'
+import cookieParser from 'cookie-parser'
+import cookie from 'cookie'
+import Chance from 'chance'
 
-// core
-var config = require('./config')
-var logger = require('./logger')
-var history = require('./history')
+const chance = new Chance()
 
-// ot
-var ot = require('./ot')
-
-// public
-var realtime: any = {
+/* eslint-disable @typescript-eslint/no-use-before-define */
+const realtime: any = {
   io: null,
   onAuthorizeSuccess: onAuthorizeSuccess,
   onAuthorizeFail: onAuthorizeFail,
@@ -30,19 +24,24 @@ var realtime: any = {
   isReady: isReady,
   maintenance: true
 }
+/* eslint-enable @typescript-eslint/no-use-before-define */
 
-function onAuthorizeSuccess(data, accept) {
+
+const disconnectSocketQueue: any = []
+
+
+function onAuthorizeSuccess (data, accept) {
   accept()
 }
 
-function onAuthorizeFail(data, message, error, accept) {
+function onAuthorizeFail (data, message, error, accept) {
   accept() // accept whether authorize or not to allow anonymous usage
 }
 
 // secure the origin by the cookie
-function secure(socket, next) {
+function secure (socket, next) {
   try {
-    var handshakeData = socket.request
+    const handshakeData = socket.request
     if (handshakeData.headers.cookie) {
       handshakeData.cookie = cookie.parse(handshakeData.headers.cookie)
       handshakeData.sessionID = cookieParser.signedCookie(handshakeData.cookie[config.sessionName], config.sessionSecret)
@@ -62,8 +61,8 @@ function secure(socket, next) {
   }
 }
 
-function emitCheck(note) {
-  var out = {
+function emitCheck (note) {
+  const out = {
     title: note.title,
     updatetime: note.updatetime,
     lastchangeuser: note.lastchangeuser,
@@ -75,48 +74,37 @@ function emitCheck(note) {
 }
 
 // actions
-var users = {}
-var notes = {}
-// update when the note is dirty
-setInterval(function () {
-  async.each(Object.keys(notes), function (key, callback) {
-    var note = notes[key]
-    if (note.server.isDirty) {
-      logger.debug(`updater found dirty note: ${key}`)
-      note.server.isDirty = false
-      updateNote(note, function (err, _note) {
-        // handle when note already been clean up
-        if (!notes[key] || !notes[key].server) return callback(null, null)
-        if (!_note) {
-          realtime.io.to(note.id).emit('info', {
-            code: 404
-          })
-          logger.error('note not found: ', note.id)
-        }
-        if (err || !_note) {
-          for (var i = 0, l = note.socks.length; i < l; i++) {
-            var sock = note.socks[i]
-            if (typeof sock !== 'undefined' && sock) {
-              setTimeout(function () {
-                sock.disconnect(true)
-              }, 0)
-            }
-          }
-          return callback(err, null)
-        }
-        note.updatetime = moment(_note.lastchangeAt).valueOf()
-        emitCheck(note)
-        return callback(null, null)
-      })
-    } else {
-      return callback(null, null)
-    }
-  }, function (err) {
-    if (err) return logger.error('updater error', err)
-  })
-}, 1000)
+const users = {}
+const notes = {}
 
-function updateNote(note, callback) {
+let saverSleep = false
+
+function finishUpdateNote (note, _note, callback) {
+  if (!note || !note.server) return callback(null, null)
+  const body = note.server.document
+  const title = note.title = Note.parseNoteTitle(body)
+  const values = {
+    title: title,
+    content: body,
+    authorship: note.authorship,
+    lastchangeuserId: note.lastchangeuser,
+    lastchangeAt: Date.now()
+  }
+  _note.update(values).then(function (_note) {
+    saverSleep = false
+    return callback(null, _note)
+  }).catch(function (err) {
+    logger.error(err)
+    return callback(err, null)
+  })
+}
+
+function updateHistory (userId, note, time?) {
+  const noteId = note.alias ? note.alias : Note.encodeNoteId(note.id)
+  if (note.server) history.updateHistory(userId, noteId, note.server.document, time)
+}
+
+function updateNote (note, callback) {
   Note.findOne({
     where: {
       id: note.id
@@ -124,7 +112,7 @@ function updateNote(note, callback) {
   }).then(function (_note) {
     if (!_note) return callback(null, null)
     // update user note history
-    var tempUsers = Object.assign({}, note.tempUsers)
+    const tempUsers = Object.assign({}, note.tempUsers)
     note.tempUsers = {}
     Object.keys(tempUsers).forEach(function (key) {
       updateHistory(key, note, tempUsers[key])
@@ -156,48 +144,45 @@ function updateNote(note, callback) {
   })
 }
 
-function finishUpdateNote(note, _note, callback) {
-  if (!note || !note.server) return callback(null, null)
-  var body = note.server.document
-  var title = note.title = Note.parseNoteTitle(body)
-  var values = {
-    title: title,
-    content: body,
-    authorship: note.authorship,
-    lastchangeuserId: note.lastchangeuser,
-    lastchangeAt: Date.now()
-  }
-  _note.update(values).then(function (_note) {
-    saverSleep = false
-    return callback(null, _note)
-  }).catch(function (err) {
-    logger.error(err)
-    return callback(err, null)
-  })
-}
-
-// clean when user not in any rooms or user not in connected list
+// update when the note is dirty
 setInterval(function () {
-  async.each(Object.keys(users), function (key, callback) {
-    var socket = realtime.io.sockets.connected[key]
-    if ((!socket && users[key]) ||
-      (socket && (!socket.rooms || socket.rooms.length <= 0))) {
-      logger.debug(`cleaner found redundant user: ${key}`)
-      if (!socket) {
-        socket = {
-          id: key
+  async.each(Object.keys(notes), function (key, callback) {
+    const note = notes[key]
+    if (note.server.isDirty) {
+      logger.debug(`updater found dirty note: ${key}`)
+      note.server.isDirty = false
+      updateNote(note, function (err, _note) {
+        // handle when note already been clean up
+        if (!notes[key] || !notes[key].server) return callback(null, null)
+        if (!_note) {
+          realtime.io.to(note.id).emit('info', {
+            code: 404
+          })
+          logger.error('note not found: ', note.id)
         }
-      }
-      disconnectSocketQueue.push(socket)
-      disconnect(socket)
+        if (err || !_note) {
+          for (let i = 0, l = note.socks.length; i < l; i++) {
+            const sock = note.socks[i]
+            if (typeof sock !== 'undefined' && sock) {
+              setTimeout(function () {
+                sock.disconnect(true)
+              }, 0)
+            }
+          }
+          return callback(err, null)
+        }
+        note.updatetime = moment(_note.lastchangeAt).valueOf()
+        emitCheck(note)
+        return callback(null, null)
+      })
+    } else {
+      return callback(null, null)
     }
-    return callback(null, null)
   }, function (err) {
-    if (err) return logger.error('cleaner error', err)
+    if (err) return logger.error('updater error', err)
   })
-}, 60000)
+}, 1000)
 
-var saverSleep = false
 // save note revision in interval
 setInterval(function () {
   if (saverSleep) return
@@ -209,13 +194,19 @@ setInterval(function () {
   })
 }, 60000 * 5)
 
-function getStatus(callback) {
+let isConnectionBusy
+
+const connectionSocketQueue: any = []
+
+let isDisconnectBusy
+
+function getStatus (callback) {
   Note.count().then(function (notecount) {
-    var distinctaddresses: string[] = []
-    var regaddresses: string[] = []
-    var distinctregaddresses: string[] = []
+    const distinctaddresses: string[] = []
+    const regaddresses: string[] = []
+    const distinctregaddresses: string[] = []
     Object.keys(users).forEach(function (key) {
-      var user = users[key]
+      const user = users[key]
       if (!user) return
       let found = false
       for (let i = 0; i < distinctaddresses.length; i++) {
@@ -264,14 +255,14 @@ function getStatus(callback) {
   })
 }
 
-function isReady() {
+function isReady () {
   return realtime.io &&
     Object.keys(notes).length === 0 && Object.keys(users).length === 0 &&
     connectionSocketQueue.length === 0 && !isConnectionBusy &&
     disconnectSocketQueue.length === 0 && !isDisconnectBusy
 }
 
-function extractNoteIdFromSocket(socket) {
+function extractNoteIdFromSocket (socket) {
   if (!socket || !socket.handshake) {
     return false
   }
@@ -282,8 +273,8 @@ function extractNoteIdFromSocket(socket) {
   }
 }
 
-function parseNoteIdFromSocket(socket, callback) {
-  var noteId = extractNoteIdFromSocket(socket)
+function parseNoteIdFromSocket (socket, callback) {
+  const noteId = extractNoteIdFromSocket(socket)
   if (!noteId) {
     return callback(null, null)
   }
@@ -293,35 +284,50 @@ function parseNoteIdFromSocket(socket, callback) {
   })
 }
 
-function emitOnlineUsers(socket) {
-  var noteId = socket.noteId
+function buildUserOutData (user) {
+  const out = {
+    id: user.id,
+    login: user.login,
+    userid: user.userid,
+    photo: user.photo,
+    color: user.color,
+    cursor: user.cursor,
+    name: user.name,
+    idle: user.idle,
+    type: user.type
+  }
+  return out
+}
+
+function emitOnlineUsers (socket) {
+  const noteId = socket.noteId
   if (!noteId || !notes[noteId]) return
-  var users: any[] = []
+  const users: any[] = []
   Object.keys(notes[noteId].users).forEach(function (key) {
-    var user = notes[noteId].users[key]
+    const user = notes[noteId].users[key]
     if (user) {
       users.push(buildUserOutData(user))
     }
   })
-  var out = {
+  const out = {
     users: users
   }
   realtime.io.to(noteId).emit('online users', out)
 }
 
-function emitUserStatus(socket) {
-  var noteId = socket.noteId
-  var user = users[socket.id]
+function emitUserStatus (socket) {
+  const noteId = socket.noteId
+  const user = users[socket.id]
   if (!noteId || !notes[noteId] || !user) return
-  var out = buildUserOutData(user)
+  const out = buildUserOutData(user)
   socket.broadcast.to(noteId).emit('user status', out)
 }
 
-function emitRefresh(socket) {
-  var noteId = socket.noteId
+function emitRefresh (socket) {
+  const noteId = socket.noteId
   if (!noteId || !notes[noteId]) return
-  var note = notes[noteId]
-  var out = {
+  const note = notes[noteId]
+  const out = {
     title: note.title,
     docmaxlength: config.documentMaxLength,
     owner: note.owner,
@@ -337,8 +343,8 @@ function emitRefresh(socket) {
   socket.emit('refresh', out)
 }
 
-function isDuplicatedInSocketQueue(queue, socket) {
-  for (var i = 0; i < queue.length; i++) {
+function isDuplicatedInSocketQueue (queue, socket) {
+  for (let i = 0; i < queue.length; i++) {
     if (queue[i] && queue[i].id === socket.id) {
       return true
     }
@@ -346,8 +352,8 @@ function isDuplicatedInSocketQueue(queue, socket) {
   return false
 }
 
-function clearSocketQueue(queue, socket) {
-  for (var i = 0; i < queue.length; i++) {
+function clearSocketQueue (queue, socket) {
+  for (let i = 0; i < queue.length; i++) {
     if (!queue[i] || queue[i].id === socket.id) {
       queue.splice(i, 1)
       i--
@@ -355,16 +361,31 @@ function clearSocketQueue(queue, socket) {
   }
 }
 
-function connectNextSocket() {
+function connectNextSocket () {
   setTimeout(function () {
     isConnectionBusy = false
     if (connectionSocketQueue.length > 0) {
+      // Otherwise we get a loop startConnection - failConnection - connectNextSocket
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       startConnection(connectionSocketQueue[0])
     }
   }, 1)
 }
 
-function interruptConnection(socket, noteId, socketId) {
+function failConnection (code, err, socket) {
+  logger.error(err)
+  // clear error socket in queue
+  clearSocketQueue(connectionSocketQueue, socket)
+  connectNextSocket()
+  // emit error info
+  socket.emit('info', {
+    code: code
+  })
+  return socket.disconnect(true)
+}
+
+
+function interruptConnection (socket, noteId, socketId) {
   if (notes[noteId]) delete notes[noteId]
   if (users[socketId]) delete users[socketId]
   if (socket) {
@@ -375,7 +396,7 @@ function interruptConnection(socket, noteId, socketId) {
   connectNextSocket()
 }
 
-function checkViewPermission(req, note) {
+function checkViewPermission (req, note) {
   if (note.permission === 'private') {
     if (req.user && req.user.logged_in && req.user.id === note.owner) {
       return true
@@ -393,12 +414,7 @@ function checkViewPermission(req, note) {
   }
 }
 
-var isConnectionBusy = false
-var connectionSocketQueue: any = []
-var isDisconnectBusy = false
-var disconnectSocketQueue: any = []
-
-function finishConnection(socket, noteId, socketId) {
+function finishConnection (socket, noteId, socketId) {
   // if no valid info provided will drop the client
   if (!socket || !notes[noteId] || !users[socketId]) {
     return interruptConnection(socket, noteId, socketId)
@@ -408,8 +424,8 @@ function finishConnection(socket, noteId, socketId) {
     interruptConnection(socket, noteId, socketId)
     return failConnection(403, 'connection forbidden', socket)
   }
-  let note = notes[noteId]
-  let user = users[socketId]
+  const note = notes[noteId]
+  const user = users[socketId]
   // update user color to author color
   if (note.authors[user.userid]) {
     user.color = users[socket.id].color = note.authors[user.userid].color
@@ -432,7 +448,7 @@ function finishConnection(socket, noteId, socketId) {
   connectNextSocket()
 
   if (config.debug) {
-    let noteId = socket.noteId
+    const noteId = socket.noteId
     logger.debug(`SERVER connected a client to [${noteId}]:`)
     logger.debug(JSON.stringify(user))
     logger.debug(notes)
@@ -442,17 +458,97 @@ function finishConnection(socket, noteId, socketId) {
   }
 }
 
-function startConnection(socket) {
+function ifMayEdit (socket, callback) {
+  const noteId = socket.noteId
+  if (!noteId || !notes[noteId]) return
+  const note = notes[noteId]
+  let mayEdit = true
+  switch (note.permission) {
+    case 'freely':
+      // not blocking anyone
+      break
+    case 'editable':
+    case 'limited':
+      // only login user can change
+      if (!socket.request.user || !socket.request.user.logged_in) {
+        mayEdit = false
+      }
+      break
+    case 'locked':
+    case 'private':
+    case 'protected':
+      // only owner can change
+      if (!note.owner || note.owner !== socket.request.user.id) {
+        mayEdit = false
+      }
+      break
+  }
+  // if user may edit and this is a text operation
+  if (socket.origin === 'operation' && mayEdit) {
+    // save for the last change user id
+    if (socket.request.user && socket.request.user.logged_in) {
+      note.lastchangeuser = socket.request.user.id
+    } else {
+      note.lastchangeuser = null
+    }
+  }
+  return callback(mayEdit)
+}
+
+function operationCallback (socket, operation) {
+  const noteId = socket.noteId
+  if (!noteId || !notes[noteId]) return
+  const note = notes[noteId]
+  let userId = null
+  // save authors
+  if (socket.request.user && socket.request.user.logged_in) {
+    const user = users[socket.id]
+    if (!user) return
+    userId = socket.request.user.id
+    if (!note.authors[userId]) {
+      Author.findOrCreate({
+        where: {
+          noteId: noteId,
+          userId: userId
+        },
+        defaults: {
+          noteId: noteId,
+          userId: userId,
+          color: user.color
+        }
+      }).then(function ([author, created]) {
+        if (author) {
+          note.authors[author.userId] = {
+            userid: author.userId,
+            color: author.color,
+            photo: user.photo,
+            name: user.name
+          }
+        }
+      }).catch(function (err) {
+        return logger.error('operation callback failed: ' + err)
+      })
+    }
+    note.tempUsers[userId] = Date.now()
+  }
+  // save authorship - use timer here because it's an O(n) complexity algorithm
+  setImmediate(function () {
+    note.authorship = Note.updateAuthorshipByOperation(operation, userId, note.authorship)
+  })
+}
+
+
+function startConnection (socket) {
   if (isConnectionBusy) return
   isConnectionBusy = true
 
-  var noteId = socket.noteId
+  const noteId = socket.noteId
   if (!noteId) {
     return failConnection(404, 'note id not found', socket)
   }
 
   if (!notes[noteId]) {
-    var include = [{
+    const include = [{
       model: User,
       as: 'owner'
     }, {
@@ -476,21 +572,21 @@ function startConnection(socket) {
       if (!note) {
         return failConnection(404, 'note not found', socket)
       }
-      var owner = note.ownerId
-      var ownerprofile = note.owner ? User.getProfile(note.owner) : null
+      const owner = note.ownerId
+      const ownerprofile = note.owner ? User.getProfile(note.owner) : null
 
-      var lastchangeuser = note.lastchangeuserId
-      var lastchangeuserprofile = note.lastchangeuser ? User.getProfile(note.lastchangeuser) : null
+      const lastchangeuser = note.lastchangeuserId
+      const lastchangeuserprofile = note.lastchangeuser ? User.getProfile(note.lastchangeuser) : null
 
-      var body = note.content
-      var createtime = note.createdAt
-      var updatetime = note.lastchangeAt
-      var server = new ot.EditorSocketIOServer(body, [], noteId, ifMayEdit, operationCallback)
+      const body = note.content
+      const createtime = note.createdAt
+      const updatetime = note.lastchangeAt
+      const server = new ot.EditorSocketIOServer(body, [], noteId, ifMayEdit, operationCallback)
 
-      var authors = {}
-      for (var i = 0; i < note.authors.length; i++) {
-        var author = note.authors[i]
-        var profile = User.getProfile(author.user)
+      const authors = {}
+      for (let i = 0; i < note.authors.length; i++) {
+        const author = note.authors[i]
+        const profile = User.getProfile(author.user)
         if (profile) {
           authors[author.userId] = {
             userid: author.userId,
@@ -529,19 +625,10 @@ function startConnection(socket) {
   }
 }
 
-function failConnection(code, err, socket) {
-  logger.error(err)
-  // clear error socket in queue
-  clearSocketQueue(connectionSocketQueue, socket)
-  connectNextSocket()
-  // emit error info
-  socket.emit('info', {
-    code: code
-  })
-  return socket.disconnect(true)
-}
+isConnectionBusy = false
+isDisconnectBusy = false
 
-function disconnect(socket) {
+function disconnect (socket) {
   if (isDisconnectBusy) return
   isDisconnectBusy = true
 
@@ -551,16 +638,17 @@ function disconnect(socket) {
   if (users[socket.id]) {
     delete users[socket.id]
   }
-  var noteId = socket.noteId
-  var note = notes[noteId]
+  const noteId = socket.noteId
+  const note = notes[noteId]
   if (note) {
     // delete user in users
     if (note.users[socket.id]) {
       delete note.users[socket.id]
     }
     // remove sockets in the note socks
+    let index
     do {
-      var index = note.socks.indexOf(socket)
+      index = note.socks.indexOf(socket)
       if (index !== -1) {
         note.socks.splice(index, 1)
       }
@@ -606,27 +694,34 @@ function disconnect(socket) {
   }
 }
 
-function buildUserOutData(user) {
-  var out = {
-    id: user.id,
-    login: user.login,
-    userid: user.userid,
-    photo: user.photo,
-    color: user.color,
-    cursor: user.cursor,
-    name: user.name,
-    idle: user.idle,
-    type: user.type
-  }
-  return out
-}
+// clean when user not in any rooms or user not in connected list
+setInterval(function () {
+  async.each(Object.keys(users), function (key, callback) {
+    let socket = realtime.io.sockets.connected[key]
+    if ((!socket && users[key]) ||
+      (socket && (!socket.rooms || socket.rooms.length <= 0))) {
+      logger.debug(`cleaner found redundant user: ${key}`)
+      if (!socket) {
+        socket = {
+          id: key
+        }
+      }
+      disconnectSocketQueue.push(socket)
+      disconnect(socket)
+    }
+    return callback(null, null)
+  }, function (err) {
+    if (err) return logger.error('cleaner error', err)
+  })
+}, 60000)
 
-function updateUserData(socket, user) {
+
+function updateUserData (socket, user) {
   // retrieve user data from passport
   if (socket.request.user && socket.request.user.logged_in) {
-    var profile = User.getProfile(socket.request.user)
-    user.photo = profile.photo
-    user.name = profile.name
+    const profile = User.getProfile(socket.request.user)
+    user.photo = profile?.photo
+    user.name = profile?.name
     user.userid = socket.request.user.id
     user.login = true
   } else {
@@ -636,91 +731,8 @@ function updateUserData(socket, user) {
   }
 }
 
-function ifMayEdit(socket, callback) {
-  var noteId = socket.noteId
-  if (!noteId || !notes[noteId]) return
-  var note = notes[noteId]
-  var mayEdit = true
-  switch (note.permission) {
-    case 'freely':
-      // not blocking anyone
-      break
-    case 'editable':
-    case 'limited':
-      // only login user can change
-      if (!socket.request.user || !socket.request.user.logged_in) {
-        mayEdit = false
-      }
-      break
-    case 'locked':
-    case 'private':
-    case 'protected':
-      // only owner can change
-      if (!note.owner || note.owner !== socket.request.user.id) {
-        mayEdit = false
-      }
-      break
-  }
-  // if user may edit and this is a text operation
-  if (socket.origin === 'operation' && mayEdit) {
-    // save for the last change user id
-    if (socket.request.user && socket.request.user.logged_in) {
-      note.lastchangeuser = socket.request.user.id
-    } else {
-      note.lastchangeuser = null
-    }
-  }
-  return callback(mayEdit)
-}
 
-function operationCallback(socket, operation) {
-  const noteId = socket.noteId
-  if (!noteId || !notes[noteId]) return
-  const note = notes[noteId]
-  let userId = null
-  // save authors
-  if (socket.request.user && socket.request.user.logged_in) {
-    var user = users[socket.id]
-    if (!user) return
-    userId = socket.request.user.id
-    if (!note.authors[userId]) {
-      Author.findOrCreate({
-        where: {
-          noteId: noteId,
-          userId: userId
-        },
-        defaults: {
-          noteId: noteId,
-          userId: userId,
-          color: user.color
-        }
-      }).then(function ([author, created]) {
-        if (author) {
-          note.authors[author.userId] = {
-            userid: author.userId,
-            color: author.color,
-            photo: user.photo,
-            name: user.name
-          }
-        }
-      }).catch(function (err) {
-        return logger.error('operation callback failed: ' + err)
-      })
-    }
-    note.tempUsers[userId] = Date.now()
-  }
-  // save authorship - use timer here because it's an O(n) complexity algorithm
-  setImmediate(function () {
-    note.authorship = Note.updateAuthorshipByOperation(operation, userId, note.authorship)
-  })
-}
-
-function updateHistory(userId, note, time?) {
-  var noteId = note.alias ? note.alias : Note.encodeNoteId(note.id)
-  if (note.server) history.updateHistory(userId, noteId, note.server.document, time)
-}
-
-function connection(socket) {
+function connection (socket) {
   if (realtime.maintenance) return
   parseNoteIdFromSocket(socket, function (err, noteId) {
     if (err) {
@@ -737,12 +749,12 @@ function connection(socket) {
 
     // initialize user data
     // random color
-    var color = randomcolor()
+    let color = randomcolor()
     // make sure color not duplicated or reach max random count
     if (notes[noteId]) {
-      var randomcount = 0
-      var maxrandomcount = 10
-      var found = false
+      let randomcount = 0
+      const maxrandomcount = 10
+      let found = false
       do {
         Object.keys(notes[noteId].users).forEach(function (userId) {
           if (notes[noteId].users[userId].color === color) {
@@ -782,8 +794,8 @@ function connection(socket) {
 
   // received user status
   socket.on('user status', function (data) {
-    var noteId = socket.noteId
-    var user = users[socket.id]
+    const noteId = socket.noteId
+    const user = users[socket.id]
     if (!noteId || !notes[noteId] || !user) return
     logger.debug(`SERVER received [${noteId}] user status from [${socket.id}]: ${JSON.stringify(data)}`)
     if (data) {
@@ -797,9 +809,9 @@ function connection(socket) {
   socket.on('permission', function (permission) {
     // need login to do more actions
     if (socket.request.user && socket.request.user.logged_in) {
-      var noteId = socket.noteId
+      const noteId = socket.noteId
       if (!noteId || !notes[noteId]) return
-      var note = notes[noteId]
+      const note = notes[noteId]
       // Only owner can change permission
       if (note.owner && note.owner === socket.request.user.id) {
         if (permission === 'freely' && !config.allowAnonymous && !config.allowAnonymousEdits) return
@@ -814,12 +826,12 @@ function connection(socket) {
           if (!count) {
             return
           }
-          var out = {
+          const out = {
             permission: permission
           }
           realtime.io.to(note.id).emit('permission', out)
-          for (var i = 0, l = note.socks.length; i < l; i++) {
-            var sock = note.socks[i]
+          for (let i = 0, l = note.socks.length; i < l; i++) {
+            const sock = note.socks[i]
             if (typeof sock !== 'undefined' && sock) {
               // check view permission
               if (!checkViewPermission(sock.request, note)) {
@@ -843,9 +855,9 @@ function connection(socket) {
   socket.on('delete', function () {
     // need login to do more actions
     if (socket.request.user && socket.request.user.logged_in) {
-      var noteId = socket.noteId
+      const noteId = socket.noteId
       if (!noteId || !notes[noteId]) return
-      var note = notes[noteId]
+      const note = notes[noteId]
       // Only owner can delete note
       if (note.owner && note.owner === socket.request.user.id) {
         Note.destroy({
@@ -854,8 +866,8 @@ function connection(socket) {
           }
         }).then(function (count) {
           if (!count) return
-          for (var i = 0, l = note.socks.length; i < l; i++) {
-            var sock = note.socks[i]
+          for (let i = 0, l = note.socks.length; i < l; i++) {
+            const sock = note.socks[i]
             if (typeof sock !== 'undefined' && sock) {
               sock.emit('delete')
               setTimeout(function () {
@@ -873,9 +885,9 @@ function connection(socket) {
   // reveiced when user logout or changed
   socket.on('user changed', function () {
     logger.info('user changed')
-    var noteId = socket.noteId
+    const noteId = socket.noteId
     if (!noteId || !notes[noteId]) return
-    var user = notes[noteId].users[socket.id]
+    const user = notes[noteId].users[socket.id]
     if (!user) return
     updateUserData(socket, user)
     emitOnlineUsers(socket)
@@ -883,16 +895,16 @@ function connection(socket) {
 
   // received sync of online users request
   socket.on('online users', function () {
-    var noteId = socket.noteId
+    const noteId = socket.noteId
     if (!noteId || !notes[noteId]) return
-    var users: any = []
+    const users: any = []
     Object.keys(notes[noteId].users).forEach(function (key) {
-      var user = notes[noteId].users[key]
+      const user = notes[noteId].users[key]
       if (user) {
         users.push(buildUserOutData(user))
       }
     })
-    var out = {
+    const out = {
       users: users
     }
     socket.emit('online users', out)
@@ -908,31 +920,31 @@ function connection(socket) {
 
   // received cursor focus
   socket.on('cursor focus', function (data) {
-    var noteId = socket.noteId
-    var user = users[socket.id]
+    const noteId = socket.noteId
+    const user = users[socket.id]
     if (!noteId || !notes[noteId] || !user) return
     user.cursor = data
-    var out = buildUserOutData(user)
+    const out = buildUserOutData(user)
     socket.broadcast.to(noteId).emit('cursor focus', out)
   })
 
   // received cursor activity
   socket.on('cursor activity', function (data) {
-    var noteId = socket.noteId
-    var user = users[socket.id]
+    const noteId = socket.noteId
+    const user = users[socket.id]
     if (!noteId || !notes[noteId] || !user) return
     user.cursor = data
-    var out = buildUserOutData(user)
+    const out = buildUserOutData(user)
     socket.broadcast.to(noteId).emit('cursor activity', out)
   })
 
   // received cursor blur
   socket.on('cursor blur', function () {
-    var noteId = socket.noteId
-    var user = users[socket.id]
+    const noteId = socket.noteId
+    const user = users[socket.id]
     if (!noteId || !notes[noteId] || !user) return
     user.cursor = null
-    var out = {
+    const out = {
       id: socket.id
     }
     socket.broadcast.to(noteId).emit('cursor blur', out)
