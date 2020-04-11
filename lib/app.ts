@@ -56,7 +56,11 @@ if (config.useSSL) {
 
 // logger
 app.use(morgan('combined', {
-  'stream': logger.stream
+  stream: {
+    write: function (message): void {
+      logger.info(message)
+    }
+  }
 }))
 
 // socket io

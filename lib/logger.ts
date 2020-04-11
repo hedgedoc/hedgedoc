@@ -1,5 +1,5 @@
 'use strict'
-const { createLogger, format, transports } = require('winston')
+import { createLogger, format, transports } from 'winston'
 
 const logger = createLogger({
   level: 'debug',
@@ -18,10 +18,4 @@ const logger = createLogger({
   exitOnError: false
 })
 
-logger.stream = {
-  write: function (message, encoding) {
-    logger.info(message)
-  }
-}
-
-module.exports = logger
+export { logger }
