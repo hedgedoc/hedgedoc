@@ -1,12 +1,11 @@
 'use strict'
-// external modules
-const crypto = require('crypto')
-const randomcolor = require('randomcolor')
-const config = require('./config')
+import { createHash } from 'crypto'
+import randomColor from 'randomcolor'
+import config from './config'
 
 // core
-exports.generateAvatar = function (name) {
-  const color = randomcolor({
+export function generateAvatar (name: string): string {
+  const color = randomColor({
     seed: name,
     luminosity: 'dark'
   })
@@ -25,16 +24,16 @@ exports.generateAvatar = function (name) {
   return svg
 }
 
-exports.generateAvatarURL = function (name, email = '', big = true) {
+export function generateAvatarURL (name: string, email = '', big = true): string {
   let photo
-  if (typeof email !== 'string') {
+  if (email.length === 0) {
     email = '' + name + '@example.com'
   }
   name = encodeURIComponent(name)
 
-  let hash = crypto.createHash('md5')
+  const hash = createHash('md5')
   hash.update(email.toLowerCase())
-  let hexDigest = hash.digest('hex')
+  const hexDigest = hash.digest('hex')
 
   if (email !== '' && config.allowGravatar) {
     photo = 'https://cdn.libravatar.org/avatar/' + hexDigest
