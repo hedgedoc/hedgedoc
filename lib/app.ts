@@ -1,6 +1,6 @@
 'use strict'
 
-import { Revision } from "./models/revision"
+import { Revision } from "./models"
 import { sequelize } from './models'
 
 // app

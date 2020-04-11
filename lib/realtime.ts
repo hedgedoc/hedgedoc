@@ -1,10 +1,7 @@
 'use strict'
 // realtime
 // external modules
-import {User} from "./models/user";
-import {Author} from "./models/author";
-import {Note} from "./models/note";
-import {Revision} from "./models/revision";
+import { Author, Note, Revision, User } from "./models";
 
 var cookie = require('cookie')
 var cookieParser = require('cookie-parser')

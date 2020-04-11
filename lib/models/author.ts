@@ -1,6 +1,5 @@
 import { AutoIncrement, Table, Column, DataType, PrimaryKey, Model, BelongsTo, createIndexDecorator, ForeignKey } from 'sequelize-typescript'
-import { Note } from './note';
-import { User } from './user';
+import { Note, User } from './index';
 
 const NoteUserIndex = createIndexDecorator({unique: true});
 
@@ -18,7 +17,7 @@ export class Author extends Model<Author> {
   @NoteUserIndex
   @Column(DataType.UUID)
   noteId: string;
-  
+
   @BelongsTo(() => Note, { foreignKey: 'noteId', onDelete: 'CASCADE', constraints: false, hooks: true })
   note: Note;
 

@@ -14,9 +14,7 @@ import {
   Unique
 } from "sequelize-typescript";
 import {generate as shortIdGenerate, isValid as shortIdIsValid} from "shortid";
-import {Author} from "./author";
-import {User} from './user';
-import {Revision} from './revision';
+import {Author, Revision, User} from "./index";
 import {Utils} from "../utils";
 import Sequelize from "sequelize";
 
