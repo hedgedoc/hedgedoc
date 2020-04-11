@@ -1,9 +1,9 @@
-import {BelongsTo, Column, DataType, ForeignKey, IsUUID, Model, PrimaryKey, Table} from 'sequelize-typescript'
-import {ChildProcess} from "child_process";
-import {Note} from './note'
-import {Utils} from "../utils";
+import { BelongsTo, Column, DataType, ForeignKey, IsUUID, Model, PrimaryKey, Table } from 'sequelize-typescript'
+import { ChildProcess } from 'child_process'
+import { Note } from './note'
+import { Utils } from '../utils'
 
-import Sequelize from "sequelize";
+import Sequelize from 'sequelize'
 import async = require('async');
 import moment = require('moment');
 import childProcess = require('child_process');
@@ -12,19 +12,25 @@ import path = require('path');
 // core
 import logger = require('../logger');
 
-const Op = Sequelize.Op;
+const Op = Sequelize.Op
 
-let dmpWorker: ChildProcess | null = createDmpWorker();
-const dmpCallbackCache = {};
+const dmpCallbackCache = {}
 
-function createDmpWorker() {
-  const worker = childProcess.fork(path.resolve(__dirname, '../workers/dmpWorker.js'), ['ignore']);
+class Data {
+  msg;
+  cacheKey;
+  error;
+  result;
+}
+
+function createDmpWorker (): ChildProcess {
+  const worker = childProcess.fork(path.resolve(__dirname, '../workers/dmpWorker.js'), ['ignore'])
   logger.debug('dmp worker process started')
-  worker.on('message', function (data: any) {
+  worker.on('message', function (data: Data) {
     if (!data || !data.msg || !data.cacheKey) {
-      return logger.error('dmp worker error: not enough data on message')
+      logger.error('dmp worker error: not enough data on message')
     }
-    const cacheKey = data.cacheKey;
+    const cacheKey = data.cacheKey
     switch (data.msg) {
       case 'error':
         dmpCallbackCache[cacheKey](data.error, null)
@@ -36,15 +42,18 @@ function createDmpWorker() {
     delete dmpCallbackCache[cacheKey]
   })
   worker.on('close', function (code) {
-    dmpWorker = null;
     logger.debug(`dmp worker process exited with code ${code}`)
   })
   return worker
 }
 
-function sendDmpWorker(data, callback) {
-  if (!dmpWorker) dmpWorker = createDmpWorker()
-  const cacheKey = Date.now() + '_' + shortId.generate();
+let dmpWorker: ChildProcess = createDmpWorker()
+
+function sendDmpWorker (data, callback): void {
+  if (!dmpWorker?.connected) {
+    dmpWorker = createDmpWorker()
+  }
+  const cacheKey = Date.now() + '_' + shortId.generate()
   dmpCallbackCache[cacheKey] = callback
   data = Object.assign(data, {
     cacheKey: cacheKey
@@ -59,42 +68,42 @@ export class Revision extends Model<Revision> {
   @Column
   id: string;
 
-  @Column(DataType.TEXT({length: 'long'}))
-  get patch(): string {
+  @Column(DataType.TEXT({ length: 'long' }))
+  get patch (): string {
     return Utils.processData(this.getDataValue('patch'), '')
   }
 
-  set patch(value: string) {
+  set patch (value: string) {
     this.setDataValue('patch', Utils.stripNullByte(value))
   }
 
-  @Column(DataType.TEXT({length: 'long'}))
-  get lastContent(): string {
+  @Column(DataType.TEXT({ length: 'long' }))
+  get lastContent (): string {
     return Utils.processData(this.getDataValue('lastContent'), '')
   }
 
-  set lastContent(value: string) {
+  set lastContent (value: string) {
     this.setDataValue('lastContent', Utils.stripNullByte(value))
   }
 
-  @Column(DataType.TEXT({length: 'long'}))
-  get content(): string {
+  @Column(DataType.TEXT({ length: 'long' }))
+  get content (): string {
     return Utils.processData(this.getDataValue('content'), '')
   }
 
-  set content(value: string) {
+  set content (value: string) {
     this.setDataValue('content', Utils.stripNullByte(value))
   }
 
   @Column(DataType.INTEGER)
   length: number
 
-  @Column(DataType.TEXT({length: 'long'}))
-  get authorship(): string {
+  @Column(DataType.TEXT({ length: 'long' }))
+  get authorship (): string {
     return Utils.processData(this.getDataValue('authorship'), [], JSON.parse)
   }
 
-  set authorship(value: string) {
+  set authorship (value: string) {
     this.setDataValue('authorship', value ? JSON.stringify(value) : value)
   }
 
@@ -102,17 +111,21 @@ export class Revision extends Model<Revision> {
   @Column(DataType.UUID)
   noteId: string
 
-  @BelongsTo(() => Note, {foreignKey: 'noteId', constraints: false, onDelete: 'CASCADE', hooks: true})
+  @BelongsTo(() => Note, { foreignKey: 'noteId', constraints: false, onDelete: 'CASCADE', hooks: true })
   note: Note;
 
-  getNoteRevisions(note, callback) {
+  getNoteRevisions (note: Note, callback): void {
     Revision.findAll({
       where: {
         noteId: note.id
       },
       order: [['createdAt', 'DESC']]
     }).then(function (revisions) {
-      const data: any[] = [];
+      class RevisionDataActions { // TODO: Fix Type in actions.ts
+        time;
+        length
+      }
+      const data: RevisionDataActions[] = []
       revisions.forEach(function (revision) {
         data.push({
           time: moment(revision.createdAt).valueOf(),
@@ -125,7 +138,7 @@ export class Revision extends Model<Revision> {
     })
   }
 
-  getPatchedNoteRevisionByTime(note, time, callback) {
+  getPatchedNoteRevisionByTime (note: Note, time, errorCallback): void {
     // find all revisions to prepare for all possible calculation
     Revision.findAll({
       where: {
@@ -133,7 +146,9 @@ export class Revision extends Model<Revision> {
       },
       order: [['createdAt', 'DESC']]
     }).then(function (revisions) {
-      if (revisions.length <= 0) return callback(null, null)
+      if (revisions.length <= 0) {
+        errorCallback(null, null)
+      }
       // measure target revision position
       Revision.count({
         where: {
@@ -141,34 +156,38 @@ export class Revision extends Model<Revision> {
           createdAt: {
             [Op.gte]: time
           }
-        },
+        }
       }).then(function (count) {
-        if (count <= 0) return callback(null, null)
+        if (count <= 0) {
+          errorCallback(null, null)
+        }
         sendDmpWorker({
           msg: 'get revision',
           revisions: revisions,
           count: count
-        }, callback)
+        }, errorCallback)
       }).catch(function (err) {
-        return callback(err, null)
+        errorCallback(err, null)
       })
     }).catch(function (err) {
-      return callback(err, null)
+      errorCallback(err, null)
     })
   }
 
-  static checkAllNotesRevision(callback) {
-    Revision.saveAllNotesRevision(function (err, notes) {
-      if (err) return callback(err, null)
+  static checkAllNotesRevision (callback): void {
+    Revision.saveAllNotesRevision(function (err, notes: Note[]) {
+      if (err) {
+        callback(err, null)
+      }
       if (!notes || notes.length <= 0) {
-        return callback(null, notes)
+        callback(null, notes)
       } else {
         Revision.checkAllNotesRevision(callback)
       }
     })
   }
 
-  static saveAllNotesRevision(callback) {
+  static saveAllNotesRevision (callback): void {
     Note.findAll({
       // query all notes that need to save for revision
       where: {
@@ -195,13 +214,15 @@ export class Revision extends Model<Revision> {
         ]
       }
     }).then(function (notes: Note[]) {
-      if (notes.length <= 0) return callback(null, notes)
-      const savedNotes: Note[] = [];
+      if (notes.length <= 0) {
+        callback(null, notes)
+      }
+      const savedNotes: Note[] = []
       async.each(notes, function (note: Note, _callback) {
         // revision saving policy: note not been modified for 5 mins or not save for 10 mins
         if (note.lastchangeAt && note.savedAt) {
-          const lastchangeAt = moment(note.lastchangeAt);
-          const savedAt = moment(note.savedAt);
+          const lastchangeAt = moment(note.lastchangeAt)
+          const savedAt = moment(note.savedAt)
           if (moment().isAfter(lastchangeAt.add(5, 'minutes'))) {
             savedNotes.push(note)
             Revision.saveNoteRevision(note, _callback)
@@ -209,7 +230,7 @@ export class Revision extends Model<Revision> {
             savedNotes.push(note)
             Revision.saveNoteRevision(note, _callback)
           } else {
-            return _callback(null, null)
+            _callback(null, null)
           }
         } else {
           savedNotes.push(note)
@@ -217,59 +238,61 @@ export class Revision extends Model<Revision> {
         }
       }, function (err) {
         if (err) {
-          return callback(err, null)
+          callback(err, null)
         }
         // return null when no notes need saving at this moment but have delayed tasks to be done
-        const result = ((savedNotes.length === 0) && (notes.length > 0)) ? null : savedNotes;
-        return callback(null, result)
+        const result = ((savedNotes.length === 0) && (notes.length > 0)) ? null : savedNotes
+        callback(null, result)
       })
     }).catch(function (err) {
-      return callback(err, null)
+      callback(err, null)
     })
   }
 
-  static saveNoteRevision(note : Note, callback) {
+  static saveNoteRevision (note: Note, callback): void {
     Revision.findAll({
       where: {
         noteId: note.id
       },
       order: [['createdAt', 'DESC']]
-    }).then(function (revisions) {
+    }).then(function (revisions: Revision[]) {
       if (revisions.length <= 0) {
         // if no revision available
-        let noteContent = note.content;
+        let noteContent = note.content
         if (noteContent.length === 0) {
-          noteContent = '';
+          noteContent = ''
         }
         Revision.create({
           noteId: note.id,
           lastContent: noteContent,
           length: noteContent.length,
           authorship: note.authorship
-        }).then(function (revision) {
+        }).then(function (revision: Revision) {
           Revision.finishSaveNoteRevision(note, revision, callback)
         }).catch(function (err) {
-          return callback(err, null)
+          callback(err, null)
         })
       } else {
-        const latestRevision = revisions[0];
-        const lastContent = latestRevision.content || latestRevision.lastContent;
-        const content = note.content;
+        const latestRevision = revisions[0]
+        const lastContent = latestRevision.content || latestRevision.lastContent
+        const content = note.content
         sendDmpWorker({
           msg: 'create patch',
           lastDoc: lastContent,
           currDoc: content
         }, function (err, patch) {
-          if (err) logger.error('save note revision error', err)
+          if (err) {
+            logger.error('save note revision error', err)
+          }
           if (!patch) {
             // if patch is empty (means no difference) then just update the latest revision updated time
             latestRevision.changed('updatedAt', true)
             latestRevision.update({
               updatedAt: Date.now()
-            }).then(function (revision) {
+            }).then(function (revision: Revision) {
               Revision.finishSaveNoteRevision(note, revision, callback)
             }).catch(function (err) {
-              return callback(err, null)
+              callback(err, null)
             })
           } else {
             Revision.create({
@@ -278,36 +301,33 @@ export class Revision extends Model<Revision> {
               content: note.content,
               length: note.content.length,
               authorship: note.authorship
-            }).then(function (revision) {
+            }).then(function (revision: Revision) {
               // clear last revision content to reduce db size
               latestRevision.update({
                 content: null
               }).then(function () {
                 Revision.finishSaveNoteRevision(note, revision, callback)
               }).catch(function (err) {
-                return callback(err, null)
+                callback(err, null)
               })
             }).catch(function (err) {
-              return callback(err, null)
+              callback(err, null)
             })
           }
         })
       }
     }).catch(function (err) {
-      return callback(err, null)
+      callback(err, null)
     })
   }
 
-  static finishSaveNoteRevision(note, revision, callback) {
+  static finishSaveNoteRevision (note: Note, revision: Revision, callback): void {
     note.update({
       savedAt: revision.updatedAt
     }).then(function () {
-      return callback(null, revision)
+      callback(null, revision)
     }).catch(function (err) {
-      return callback(err, null)
+      callback(err, null)
     })
   }
-
-
 }
-
