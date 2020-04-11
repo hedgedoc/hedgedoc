@@ -12,140 +12,145 @@ import {
   PrimaryKey,
   Table,
   Unique
-} from "sequelize-typescript";
-import {generate as shortIdGenerate, isValid as shortIdIsValid} from "shortid";
-import {Author, Revision, User} from "./index";
-import {Utils} from "../utils";
-import Sequelize from "sequelize";
+} from 'sequelize-typescript'
 
-var fs = require('fs')
-var path = require('path')
-var LZString = require('lz-string')
+import { generate as shortIdGenerate, isValid as shortIdIsValid } from 'shortid'
+import { Author, Revision, User } from './index'
+import { Utils } from '../utils'
+import Sequelize from 'sequelize'
+import fs from 'fs'
+import path from 'path'
+import LZString from 'lz-string'
+import base64url from 'base64url'
+import markdownIt from 'markdown-it'
+import metaMarked from 'meta-marked'
+import cheerio from 'cheerio'
+import async from 'async'
+import moment from 'moment'
+// eslint-disable-next-line @typescript-eslint/camelcase
+import { diff_match_patch, patch_obj } from 'diff-match-patch'
+import S from 'string'
+import config from '../config'
+import logger from '../logger'
+import ot from '../ot'
 
-// external modules
-var fs = require('fs')
-var path = require('path')
-var LZString = require('lz-string')
-var base64url = require('base64url')
-var md = require('markdown-it')()
-var metaMarked = require('meta-marked')
-var cheerio = require('cheerio')
-var async = require('async')
-var moment = require('moment')
-var DiffMatchPatch = require('diff-match-patch')
-var dmp = new DiffMatchPatch()
-var S = require('string')
-
-// core
-var config = require('../config')
-var logger = require('../logger')
-
-// ot
-var ot = require('../ot')
+const md = markdownIt()
+// eslint-disable-next-line new-cap
+const dmp = new diff_match_patch()
 
 // permission types
 enum PermissionEnum {
-  freely = "freely",
-  editable = "editable",
-  limited = "limited",
-  locked = "locked",
-  protected = "protected",
-  private = "private"
-};
+  freely = 'freely',
+  editable = 'editable',
+  limited = 'limited',
+  locked = 'locked',
+  protected = 'protected',
+  private = 'private'
+}
+
+export class NoteMetadata {
+  title: string
+  description: string
+  robots: string
+  GA: string
+  disqus: string
+  slideOptions: any
+  opengraph: any
+}
 
 @Table({paranoid: false})
 export class Note extends Model<Note> {
   @PrimaryKey
   @Default(Sequelize.UUIDV4)
   @Column(DataType.UUID)
-  id: string;
+  id: string
 
   @AllowNull(false)
   @Default(shortIdGenerate)
   @Unique
   @Column(DataType.STRING)
-  shortid: string;
+  shortid: string
 
   @Unique
   @Column(DataType.STRING)
-  alias: string;
+  alias: string
 
-  @Column(DataType.ENUM({values: Object.keys(PermissionEnum).map(k => PermissionEnum[k as any])}))
-  permission: PermissionEnum;
+  @Column(DataType.ENUM({values: Object.keys(PermissionEnum).map(k => PermissionEnum[k])}))
+  permission: PermissionEnum
 
   @AllowNull(false)
   @Default(0)
   @Column(DataType.INTEGER)
-  viewcount: number;
+  viewcount: number
+
+  // ToDo: use @UpdatedAt instead? (https://www.npmjs.com/package/sequelize-typescript#createdat--updatedat--deletedat)
+  @Column(DataType.DATE)
+  lastchangeAt: Date
+
+  // ToDo: use @UpdatedAt instead? (https://www.npmjs.com/package/sequelize-typescript#createdat--updatedat--deletedat)
+  @Column(DataType.DATE)
+  savedAt: Date
+
+  @ForeignKey(() => User)
+  @Column
+  ownerId: string
+
+  @BelongsTo(() => User, {foreignKey: 'ownerId', constraints: false, onDelete: 'CASCADE', hooks: true})
+  owner: User
+
+  @ForeignKey(() => User)
+  @Column
+  lastchangeuserId: string
+
+  @BelongsTo(() => User, {foreignKey: 'lastchangeuserId', constraints: false})
+  lastchangeuser: User
+
+  @HasMany(() => Revision, {foreignKey: 'noteId', constraints: false})
+  revisions: Revision[]
+
+  @HasMany(() => Author, {foreignKey: 'noteId', constraints: false})
+  authors: Author[]
 
   @Column(DataType.TEXT)
-  get title(): string {
+  get title (): string {
     return Utils.processData(this.getDataValue('title'), '')
   }
 
-  set title(value: string) {
+  set title (value: string) {
     this.setDataValue('title', Utils.stripNullByte(value))
   }
 
   @Column(DataType.TEXT({length: 'long'}))
-  get content(): string {
+  get content (): string {
     return Utils.processData(this.getDataValue('content'), '')
   }
 
-  set content(value: string) {
+  set content (value: string) {
     this.setDataValue('content', Utils.stripNullByte(value))
   }
 
   @Column(DataType.TEXT({length: 'long'}))
-  get authorship(): string {
+  get authorship (): string {
     return Utils.processData(this.getDataValue('authorship'), [], JSON.parse)
   }
 
-  set authorship(value: string) {
+  set authorship (value: string) {
     this.setDataValue('authorship', JSON.stringify(value))
   }
 
-  // ToDo: use @UpdatedAt instead? (https://www.npmjs.com/package/sequelize-typescript#createdat--updatedat--deletedat)
-  @Column(DataType.DATE)
-  lastchangeAt: Date;
-
-  // ToDo: use @UpdatedAt instead? (https://www.npmjs.com/package/sequelize-typescript#createdat--updatedat--deletedat)
-  @Column(DataType.DATE)
-  savedAt: Date;
-
-  @ForeignKey(() => User)
-  @Column
-  ownerId: string;
-
-  @BelongsTo(() => User, {foreignKey: 'ownerId', constraints: false, onDelete: 'CASCADE', hooks: true})
-  owner: User;
-
-  @ForeignKey(() => User)
-  @Column
-  lastchangeuserId: string;
-
-  @BelongsTo(() => User, {foreignKey: 'lastchangeuserId', constraints: false})
-  lastchangeuser: User;
-
-  @HasMany(() => Revision, {foreignKey: 'noteId', constraints: false})
-  revisions: Revision[];
-
-  @HasMany(() => Author, {foreignKey: 'noteId', constraints: false})
-  authors: Author[];
-
   @BeforeCreate
-  static defaultContentAndPermissions(note: Note) {
-    return new Promise(function (resolve, reject) {
+  static async defaultContentAndPermissions (note: Note) {
+    return await new Promise(function (resolve, reject) {
       // if no content specified then use default note
       if (!note.content) {
-        let filePath = null
+        let filePath: string
         if (!note.alias) {
           filePath = config.defaultNotePath
         } else {
           filePath = path.join(config.docsPath, note.alias + '.md')
         }
         if (Note.checkFileExist(filePath)) {
-          var fsCreatedTime = moment(fs.statSync(filePath).ctime)
+          const fsCreatedTime = moment(fs.statSync(filePath).ctime)
           const body = fs.readFileSync(filePath, 'utf8')
           note.title = Note.parseNoteTitle(body)
           note.content = body
@@ -157,7 +162,8 @@ export class Note extends Model<Note> {
       // if no permission specified and have owner then give default permission in config, else default permission is freely
       if (!note.permission) {
         if (note.owner) {
-          note.permission = config.defaultPermission
+          // TODO: Might explode if the user-defined permission does not exist
+          note.permission = PermissionEnum[config.defaultPermission]
         } else {
           note.permission = PermissionEnum.freely
         }
@@ -167,7 +173,7 @@ export class Note extends Model<Note> {
   }
 
   @AfterCreate
-  static saveRevision(note) {
+  static saveRevision (note) {
     return new Promise(function (resolve, reject) {
       Revision.saveNoteRevision(note, function (err, revision) {
         if (err) {
@@ -178,7 +184,7 @@ export class Note extends Model<Note> {
     })
   }
 
-  static checkFileExist(filePath) {
+  static checkFileExist (filePath): boolean {
     try {
       return fs.statSync(filePath).isFile()
     } catch (err) {
@@ -186,18 +192,18 @@ export class Note extends Model<Note> {
     }
   }
 
-  static encodeNoteId(id) {
+  static encodeNoteId (id): string {
     // remove dashes in UUID and encode in url-safe base64
-    let str = id.replace(/-/g, '')
-    let hexStr = Buffer.from(str, 'hex')
+    const str = id.replace(/-/g, '')
+    const hexStr = Buffer.from(str, 'hex')
     return base64url.encode(hexStr)
   }
 
-  static decodeNoteId(encodedId) {
+  static decodeNoteId (encodedId): string {
     // decode from url-safe base64
-    let id: string = base64url.toBuffer(encodedId).toString('hex')
+    const id: string = base64url.toBuffer(encodedId).toString('hex')
     // add dashes between the UUID string parts
-    let idParts: string[] = []
+    const idParts: string[] = []
     idParts.push(id.substr(0, 8))
     idParts.push(id.substr(8, 4))
     idParts.push(id.substr(12, 4))
@@ -206,17 +212,13 @@ export class Note extends Model<Note> {
     return idParts.join('-')
   }
 
-  static checkNoteIdValid(id) {
-    var uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-    var result = id.match(uuidRegex)
-    if (result && result.length === 1) {
-      return true
-    } else {
-      return false
-    }
+  static checkNoteIdValid (id): boolean {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+    const result = id.match(uuidRegex)
+    return !!(result && result.length === 1)
   }
 
-  static parseNoteId(noteId, callback) {
+  static parseNoteId (noteId, callback): void {
     async.series({
       parseNoteIdByAlias: function (_callback) {
         // try to parse note id by alias (e.g. doc)
@@ -226,15 +228,15 @@ export class Note extends Model<Note> {
           }
         }).then(function (note) {
           if (note) {
-            let filePath = path.join(config.docsPath, noteId + '.md')
+            const filePath = path.join(config.docsPath, noteId + '.md')
             if (Note.checkFileExist(filePath)) {
               // if doc in filesystem have newer modified time than last change time
               // then will update the doc in db
-              var fsModifiedTime = moment(fs.statSync(filePath).mtime)
-              var dbModifiedTime = moment(note.lastchangeAt || note.createdAt)
-              var body = fs.readFileSync(filePath, 'utf8')
-              var contentLength = body.length
-              var title = Note.parseNoteTitle(body)
+              const fsModifiedTime = moment(fs.statSync(filePath).mtime)
+              const dbModifiedTime = moment(note.lastchangeAt || note.createdAt)
+              const body = fs.readFileSync(filePath, 'utf8')
+              const contentLength = body.length
+              const title = Note.parseNoteTitle(body)
               if (fsModifiedTime.isAfter(dbModifiedTime) && note.content !== body) {
                 note.update({
                   title: title,
@@ -244,9 +246,9 @@ export class Note extends Model<Note> {
                   Revision.saveNoteRevision(note, function (err, revision) {
                     if (err) return _callback(err, null)
                     // update authorship on after making revision of docs
-                    var patch = dmp.patch_fromText(revision.patch)
-                    var operations = Note.transformPatchToOperations(patch, contentLength)
-                    var authorship = note.authorship
+                    const patch = dmp.patch_fromText(revision.patch)
+                    const operations = Note.transformPatchToOperations(patch, contentLength)
+                    let authorship = note.authorship
                     for (let i = 0; i < operations.length; i++) {
                       authorship = Note.updateAuthorshipByOperation(operations[i], null, authorship)
                     }
@@ -268,7 +270,7 @@ export class Note extends Model<Note> {
               return callback(null, note.id)
             }
           } else {
-            var filePath = path.join(config.docsPath, noteId + '.md')
+            const filePath = path.join(config.docsPath, noteId + '.md')
             if (Note.checkFileExist(filePath)) {
               Note.create({
                 alias: noteId,
@@ -300,7 +302,7 @@ export class Note extends Model<Note> {
         }
         // try to parse note id by LZString Base64
         try {
-          var id = LZString.decompressFromBase64(noteId)
+          const id = LZString.decompressFromBase64(noteId)
           if (id && Note.checkNoteIdValid(id)) {
             return callback(null, id)
           } else {
@@ -318,7 +320,7 @@ export class Note extends Model<Note> {
       parseNoteIdByBase64Url: function (_callback) {
         // try to parse note id by base64url
         try {
-          var id = Note.decodeNoteId(noteId)
+          const id = Note.decodeNoteId(noteId)
           if (id && Note.checkNoteIdValid(id)) {
             return callback(null, id)
           } else {
@@ -359,27 +361,18 @@ export class Note extends Model<Note> {
     })
   }
 
-  parseNoteInfo(body) {
-    var parsed = Note.extractMeta(body)
-    var $ = cheerio.load(md.render(parsed.markdown))
-    return {
-      title: Note.extractNoteTitle(parsed.meta, $),
-      tags: Note.extractNoteTags(parsed.meta, $)
-    }
-  }
-
-  static parseNoteTitle(body) {
+  static parseNoteTitle (body): string {
     const parsed = Note.extractMeta(body)
-    var $ = cheerio.load(md.render(parsed.markdown))
+    const $ = cheerio.load(md.render(parsed.markdown))
     return Note.extractNoteTitle(parsed.meta, $)
   }
 
-  static extractNoteTitle(meta, $) {
-    var title = ''
+  static extractNoteTitle (meta, $): string {
+    let title = ''
     if (meta.title && (typeof meta.title === 'string' || typeof meta.title === 'number')) {
       title = meta.title
     } else {
-      var h1s = $('h1')
+      const h1s = $('h1')
       if (h1s.length > 0 && h1s.first().text().split('\n').length === 1) {
         title = S(h1s.first().text()).stripTags().s
       }
@@ -388,42 +381,42 @@ export class Note extends Model<Note> {
     return title
   }
 
-  static generateDescription(markdown) {
+  static generateDescription (markdown): string {
     return markdown.substr(0, 100).replace(/(?:\r\n|\r|\n)/g, ' ')
   }
 
-  static decodeTitle(title) {
+  static decodeTitle (title): string {
     return title || 'Untitled'
   }
 
-  static generateWebTitle(title) {
+  static generateWebTitle (title): string {
     title = !title || title === 'Untitled' ? 'CodiMD - Collaborative markdown notes' : title + ' - CodiMD'
     return title
   }
 
-  static extractNoteTags(meta, $) {
-    var tags: string[] = []
-    var rawtags: string[] = []
+  static extractNoteTags (meta, $): string[] {
+    const tags: string[] = []
+    const rawtags: string[] = []
     if (meta.tags && (typeof meta.tags === 'string' || typeof meta.tags === 'number')) {
-      var metaTags = ('' + meta.tags).split(',')
+      const metaTags = ('' + meta.tags).split(',')
       for (let i = 0; i < metaTags.length; i++) {
-        var text: string = metaTags[i].trim()
+        const text: string = metaTags[i].trim()
         if (text) rawtags.push(text)
       }
     } else {
-      var h6s = $('h6')
+      const h6s = $('h6')
       h6s.each(function (key, value) {
         if (/^tags/gmi.test($(value).text())) {
-          var codes = $(value).find('code')
+          const codes = $(value).find('code')
           for (let i = 0; i < codes.length; i++) {
-            var text = S($(codes[i]).text().trim()).stripTags().s
+            const text = S($(codes[i]).text().trim()).stripTags().s
             if (text) rawtags.push(text)
           }
         }
       })
     }
     for (let i = 0; i < rawtags.length; i++) {
-      var found = false
+      let found = false
       for (let j = 0; j < tags.length; j++) {
         if (tags[j] === rawtags[i]) {
           found = true
@@ -437,12 +430,12 @@ export class Note extends Model<Note> {
     return tags
   }
 
-  static extractMeta(content) {
+  static extractMeta (content): any {
     try {
-      var obj = metaMarked(content)
+      const obj = metaMarked(content)
       if (!obj.markdown) obj.markdown = ''
       if (!obj.meta) obj.meta = {}
-      return obj;
+      return obj
     } catch (err) {
       return {
         markdown: content,
@@ -451,8 +444,8 @@ export class Note extends Model<Note> {
     }
   }
 
-  static parseMeta(meta): NoteMetadata {
-    var _meta = new NoteMetadata();
+  static parseMeta (meta): NoteMetadata {
+    const _meta = new NoteMetadata()
     if (meta) {
       if (meta.title && (typeof meta.title === 'string' || typeof meta.title === 'number')) {
         _meta.title = meta.title
@@ -479,8 +472,8 @@ export class Note extends Model<Note> {
     return _meta
   }
 
-  static parseOpengraph(meta, title) {
-    var _ogdata: any = {}
+  static parseOpengraph (meta, title): any {
+    let _ogdata: any = {}
     if (meta.opengraph) {
       _ogdata = meta.opengraph
     }
@@ -496,28 +489,28 @@ export class Note extends Model<Note> {
     return _ogdata
   }
 
-  static updateAuthorshipByOperation(operation, userId, authorships) {
-    var index = 0
-    var timestamp = Date.now()
+  static updateAuthorshipByOperation (operation, userId, authorships) {
+    let index = 0
+    const timestamp = Date.now()
     for (let i = 0; i < operation.length; i++) {
-      var op = operation[i]
+      const op = operation[i]
       if (ot.TextOperation.isRetain(op)) {
         index += op
       } else if (ot.TextOperation.isInsert(op)) {
-        let opStart = index
-        let opEnd = index + op.length
-        var inserted = false
+        const opStart = index
+        const opEnd = index + op.length
+        let inserted = false
         // authorship format: [userId, startPos, endPos, createdAt, updatedAt]
         if (authorships.length <= 0) authorships.push([userId, opStart, opEnd, timestamp, timestamp])
         else {
           for (let j = 0; j < authorships.length; j++) {
-            let authorship = authorships[j]
+            const authorship = authorships[j]
             if (!inserted) {
-              let nextAuthorship = authorships[j + 1] || -1
+              const nextAuthorship = authorships[j + 1] || -1
               if ((nextAuthorship !== -1 && nextAuthorship[1] >= opEnd) || j >= authorships.length - 1) {
                 if (authorship[1] < opStart && authorship[2] > opStart) {
                   // divide
-                  let postLength = authorship[2] - opStart
+                  const postLength = authorship[2] - opStart
                   authorship[2] = opStart
                   authorship[4] = timestamp
                   authorships.splice(j + 1, 0, [userId, opStart, opEnd, timestamp, timestamp])
@@ -543,13 +536,13 @@ export class Note extends Model<Note> {
         }
         index += op.length
       } else if (ot.TextOperation.isDelete(op)) {
-        let opStart = index
-        let opEnd = index - op
+        const opStart = index
+        const opEnd = index - op
         if (operation.length === 1) {
           authorships = []
         } else if (authorships.length > 0) {
           for (let j = 0; j < authorships.length; j++) {
-            let authorship = authorships[j]
+            const authorship = authorships[j]
             if (authorship[1] >= opStart && authorship[1] <= opEnd && authorship[2] >= opStart && authorship[2] <= opEnd) {
               authorships.splice(j, 1)
               j -= 1
@@ -574,12 +567,12 @@ export class Note extends Model<Note> {
     }
     // merge
     for (let j = 0; j < authorships.length; j++) {
-      let authorship = authorships[j]
+      const authorship = authorships[j]
       for (let k = j + 1; k < authorships.length; k++) {
-        let nextAuthorship = authorships[k]
+        const nextAuthorship = authorships[k]
         if (nextAuthorship && authorship[0] === nextAuthorship[0] && authorship[2] === nextAuthorship[1]) {
-          let minTimestamp = Math.min(authorship[3], nextAuthorship[3])
-          let maxTimestamp = Math.max(authorship[3], nextAuthorship[3])
+          const minTimestamp = Math.min(authorship[3], nextAuthorship[3])
+          const maxTimestamp = Math.max(authorship[3], nextAuthorship[3])
           authorships.splice(j, 1, [authorship[0], authorship[1], nextAuthorship[2], minTimestamp, maxTimestamp])
           authorships.splice(k, 1)
           j -= 1
@@ -589,7 +582,7 @@ export class Note extends Model<Note> {
     }
     // clear
     for (let j = 0; j < authorships.length; j++) {
-      let authorship = authorships[j]
+      const authorship = authorships[j]
       if (!authorship[0]) {
         authorships.splice(j, 1)
         j -= 1
@@ -598,14 +591,15 @@ export class Note extends Model<Note> {
     return authorships
   }
 
-  static transformPatchToOperations(patch, contentLength) {
-    var operations: any = []
+  // eslint-disable-next-line @typescript-eslint/camelcase
+  static transformPatchToOperations (patch: patch_obj[], contentLength): number[][] {
+    const operations: number[][] = []
     if (patch.length > 0) {
       // calculate original content length
       for (let j = patch.length - 1; j >= 0; j--) {
-        var p = patch[j]
+        const p = patch[j]
         for (let i = 0; i < p.diffs.length; i++) {
-          var diff = p.diffs[i]
+          const diff = p.diffs[i]
           switch (diff[0]) {
             case 1: // insert
               contentLength -= diff[1].length
@@ -617,15 +611,15 @@ export class Note extends Model<Note> {
         }
       }
       // generate operations
-      var bias = 0
-      var lengthBias = 0
+      let bias = 0
+      let lengthBias = 0
       for (let j = 0; j < patch.length; j++) {
-        var operation: any = []
-        let p = patch[j]
-        var currIndex = p.start1
-        var currLength = contentLength - bias
+        const operation: number[] = []
+        const p = patch[j]
+        let currIndex = p.start1 || 0
+        const currLength = contentLength - bias
         for (let i = 0; i < p.diffs.length; i++) {
-          let diff = p.diffs[i]
+          const diff = p.diffs[i]
           switch (diff[0]) {
             case 0: // retain
               if (i === 0) {
@@ -641,7 +635,7 @@ export class Note extends Model<Note> {
               currIndex += diff[1].length
               break
             case 1: // insert
-              operation.push(diff[1])
+              operation.push(diff[1].length)
               lengthBias += diff[1].length
               currIndex += diff[1].length
               break
@@ -657,14 +651,13 @@ export class Note extends Model<Note> {
     }
     return operations
   }
-}
 
-export class NoteMetadata {
-  title: string;
-  description: string;
-  robots: string;
-  GA: string;
-  disqus: string;
-  slideOptions: any;
-  opengraph: any;
+  parseNoteInfo (body): { title: string; tags: string[] } {
+    const parsed = Note.extractMeta(body)
+    const $ = cheerio.load(md.render(parsed.markdown))
+    return {
+      title: Note.extractNoteTitle(parsed.meta, $),
+      tags: Note.extractNoteTags(parsed.meta, $)
+    }
+  }
 }
