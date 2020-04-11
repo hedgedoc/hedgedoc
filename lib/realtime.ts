@@ -1,6 +1,11 @@
 'use strict'
 // realtime
 // external modules
+import {User} from "./models/user";
+import {Author} from "./models/author";
+import {Note} from "./models/note";
+import {Revision} from "./models/revision";
+
 var cookie = require('cookie')
 var cookieParser = require('cookie-parser')
 var async = require('async')
@@ -13,13 +18,12 @@ var moment = require('moment')
 var config = require('./config')
 var logger = require('./logger')
 var history = require('./history')
-var models = require('./models')
 
 // ot
 var ot = require('./ot')
 
 // public
-var realtime = {
+var realtime: any = {
   io: null,
   onAuthorizeSuccess: onAuthorizeSuccess,
   onAuthorizeFail: onAuthorizeFail,
@@ -30,24 +34,24 @@ var realtime = {
   maintenance: true
 }
 
-function onAuthorizeSuccess (data, accept) {
+function onAuthorizeSuccess(data, accept) {
   accept()
 }
 
-function onAuthorizeFail (data, message, error, accept) {
+function onAuthorizeFail(data, message, error, accept) {
   accept() // accept whether authorize or not to allow anonymous usage
 }
 
 // secure the origin by the cookie
-function secure (socket, next) {
+function secure(socket, next) {
   try {
     var handshakeData = socket.request
     if (handshakeData.headers.cookie) {
       handshakeData.cookie = cookie.parse(handshakeData.headers.cookie)
       handshakeData.sessionID = cookieParser.signedCookie(handshakeData.cookie[config.sessionName], config.sessionSecret)
       if (handshakeData.sessionID &&
-                handshakeData.cookie[config.sessionName] &&
-                handshakeData.cookie[config.sessionName] !== handshakeData.sessionID) {
+        handshakeData.cookie[config.sessionName] &&
+        handshakeData.cookie[config.sessionName] !== handshakeData.sessionID) {
         logger.debug(`AUTH success cookie: ${handshakeData.sessionID}`)
         return next()
       } else {
@@ -61,7 +65,7 @@ function secure (socket, next) {
   }
 }
 
-function emitCheck (note) {
+function emitCheck(note) {
   var out = {
     title: note.title,
     updatetime: note.updatetime,
@@ -115,8 +119,8 @@ setInterval(function () {
   })
 }, 1000)
 
-function updateNote (note, callback) {
-  models.Note.findOne({
+function updateNote(note, callback) {
+  Note.findOne({
     where: {
       id: note.id
     }
@@ -130,13 +134,13 @@ function updateNote (note, callback) {
     })
     if (note.lastchangeuser) {
       if (_note.lastchangeuserId !== note.lastchangeuser) {
-        models.User.findOne({
+        User.findOne({
           where: {
             id: note.lastchangeuser
           }
         }).then(function (user) {
           if (!user) return callback(null, null)
-          note.lastchangeuserprofile = models.User.getProfile(user)
+          note.lastchangeuserprofile = User.getProfile(user)
           return finishUpdateNote(note, _note, callback)
         }).catch(function (err) {
           logger.error(err)
@@ -155,10 +159,10 @@ function updateNote (note, callback) {
   })
 }
 
-function finishUpdateNote (note, _note, callback) {
+function finishUpdateNote(note, _note, callback) {
   if (!note || !note.server) return callback(null, null)
   var body = note.server.document
-  var title = note.title = models.Note.parseNoteTitle(body)
+  var title = note.title = Note.parseNoteTitle(body)
   var values = {
     title: title,
     content: body,
@@ -200,7 +204,7 @@ var saverSleep = false
 // save note revision in interval
 setInterval(function () {
   if (saverSleep) return
-  models.Revision.saveAllNotesRevision(function (err, notes) {
+  Revision.saveAllNotesRevision(function (err, notes) {
     if (err) return logger.error('revision saver failed: ' + err)
     if (notes && notes.length <= 0) {
       saverSleep = true
@@ -208,11 +212,11 @@ setInterval(function () {
   })
 }, 60000 * 5)
 
-function getStatus (callback) {
-  models.Note.count().then(function (notecount) {
-    var distinctaddresses = []
-    var regaddresses = []
-    var distinctregaddresses = []
+function getStatus(callback) {
+  Note.count().then(function (notecount) {
+    var distinctaddresses: string[] = []
+    var regaddresses: string[] = []
+    var distinctregaddresses: string[] = []
     Object.keys(users).forEach(function (key) {
       var user = users[key]
       if (!user) return
@@ -240,7 +244,7 @@ function getStatus (callback) {
         }
       }
     })
-    models.User.count().then(function (regcount) {
+    User.count().then(function (regcount) {
       // eslint-disable-next-line standard/no-callback-literal
       return callback ? callback({
         onlineNotes: Object.keys(notes).length,
@@ -263,14 +267,14 @@ function getStatus (callback) {
   })
 }
 
-function isReady () {
+function isReady() {
   return realtime.io &&
     Object.keys(notes).length === 0 && Object.keys(users).length === 0 &&
     connectionSocketQueue.length === 0 && !isConnectionBusy &&
     disconnectSocketQueue.length === 0 && !isDisconnectBusy
 }
 
-function extractNoteIdFromSocket (socket) {
+function extractNoteIdFromSocket(socket) {
   if (!socket || !socket.handshake) {
     return false
   }
@@ -281,24 +285,26 @@ function extractNoteIdFromSocket (socket) {
   }
 }
 
-function parseNoteIdFromSocket (socket, callback) {
+function parseNoteIdFromSocket(socket, callback) {
   var noteId = extractNoteIdFromSocket(socket)
   if (!noteId) {
     return callback(null, null)
   }
-  models.Note.parseNoteId(noteId, function (err, id) {
+  Note.parseNoteId(noteId, function (err, id) {
     if (err || !id) return callback(err, id)
     return callback(null, id)
   })
 }
 
-function emitOnlineUsers (socket) {
+function emitOnlineUsers(socket) {
   var noteId = socket.noteId
   if (!noteId || !notes[noteId]) return
-  var users = []
+  var users: any[] = []
   Object.keys(notes[noteId].users).forEach(function (key) {
     var user = notes[noteId].users[key]
-    if (user) { users.push(buildUserOutData(user)) }
+    if (user) {
+      users.push(buildUserOutData(user))
+    }
   })
   var out = {
     users: users
@@ -306,7 +312,7 @@ function emitOnlineUsers (socket) {
   realtime.io.to(noteId).emit('online users', out)
 }
 
-function emitUserStatus (socket) {
+function emitUserStatus(socket) {
   var noteId = socket.noteId
   var user = users[socket.id]
   if (!noteId || !notes[noteId] || !user) return
@@ -314,7 +320,7 @@ function emitUserStatus (socket) {
   socket.broadcast.to(noteId).emit('user status', out)
 }
 
-function emitRefresh (socket) {
+function emitRefresh(socket) {
   var noteId = socket.noteId
   if (!noteId || !notes[noteId]) return
   var note = notes[noteId]
@@ -334,7 +340,7 @@ function emitRefresh (socket) {
   socket.emit('refresh', out)
 }
 
-function isDuplicatedInSocketQueue (queue, socket) {
+function isDuplicatedInSocketQueue(queue, socket) {
   for (var i = 0; i < queue.length; i++) {
     if (queue[i] && queue[i].id === socket.id) {
       return true
@@ -343,7 +349,7 @@ function isDuplicatedInSocketQueue (queue, socket) {
   return false
 }
 
-function clearSocketQueue (queue, socket) {
+function clearSocketQueue(queue, socket) {
   for (var i = 0; i < queue.length; i++) {
     if (!queue[i] || queue[i].id === socket.id) {
       queue.splice(i, 1)
@@ -352,7 +358,7 @@ function clearSocketQueue (queue, socket) {
   }
 }
 
-function connectNextSocket () {
+function connectNextSocket() {
   setTimeout(function () {
     isConnectionBusy = false
     if (connectionSocketQueue.length > 0) {
@@ -361,29 +367,41 @@ function connectNextSocket () {
   }, 1)
 }
 
-function interruptConnection (socket, noteId, socketId) {
+function interruptConnection(socket, noteId, socketId) {
   if (notes[noteId]) delete notes[noteId]
   if (users[socketId]) delete users[socketId]
-  if (socket) { clearSocketQueue(connectionSocketQueue, socket) } else { connectionSocketQueue.shift() }
+  if (socket) {
+    clearSocketQueue(connectionSocketQueue, socket)
+  } else {
+    connectionSocketQueue.shift()
+  }
   connectNextSocket()
 }
 
-function checkViewPermission (req, note) {
+function checkViewPermission(req, note) {
   if (note.permission === 'private') {
-    if (req.user && req.user.logged_in && req.user.id === note.owner) { return true } else { return false }
+    if (req.user && req.user.logged_in && req.user.id === note.owner) {
+      return true
+    } else {
+      return false
+    }
   } else if (note.permission === 'limited' || note.permission === 'protected') {
-    if (req.user && req.user.logged_in) { return true } else { return false }
+    if (req.user && req.user.logged_in) {
+      return true
+    } else {
+      return false
+    }
   } else {
     return true
   }
 }
 
 var isConnectionBusy = false
-var connectionSocketQueue = []
+var connectionSocketQueue: any = []
 var isDisconnectBusy = false
-var disconnectSocketQueue = []
+var disconnectSocketQueue: any = []
 
-function finishConnection (socket, noteId, socketId) {
+function finishConnection(socket, noteId, socketId) {
   // if no valid info provided will drop the client
   if (!socket || !notes[noteId] || !users[socketId]) {
     return interruptConnection(socket, noteId, socketId)
@@ -427,7 +445,7 @@ function finishConnection (socket, noteId, socketId) {
   }
 }
 
-function startConnection (socket) {
+function startConnection(socket) {
   if (isConnectionBusy) return
   isConnectionBusy = true
 
@@ -438,21 +456,21 @@ function startConnection (socket) {
 
   if (!notes[noteId]) {
     var include = [{
-      model: models.User,
+      model: User,
       as: 'owner'
     }, {
-      model: models.User,
+      model: User,
       as: 'lastchangeuser'
     }, {
-      model: models.Author,
+      model: Author,
       as: 'authors',
       include: [{
-        model: models.User,
+        model: User,
         as: 'user'
       }]
     }]
 
-    models.Note.findOne({
+    Note.findOne({
       where: {
         id: noteId
       },
@@ -462,10 +480,10 @@ function startConnection (socket) {
         return failConnection(404, 'note not found', socket)
       }
       var owner = note.ownerId
-      var ownerprofile = note.owner ? models.User.getProfile(note.owner) : null
+      var ownerprofile = note.owner ? User.getProfile(note.owner) : null
 
       var lastchangeuser = note.lastchangeuserId
-      var lastchangeuserprofile = note.lastchangeuser ? models.User.getProfile(note.lastchangeuser) : null
+      var lastchangeuserprofile = note.lastchangeuser ? User.getProfile(note.lastchangeuser) : null
 
       var body = note.content
       var createtime = note.createdAt
@@ -475,7 +493,7 @@ function startConnection (socket) {
       var authors = {}
       for (var i = 0; i < note.authors.length; i++) {
         var author = note.authors[i]
-        var profile = models.User.getProfile(author.user)
+        var profile = User.getProfile(author.user)
         if (profile) {
           authors[author.userId] = {
             userid: author.userId,
@@ -514,7 +532,7 @@ function startConnection (socket) {
   }
 }
 
-function failConnection (code, err, socket) {
+function failConnection(code, err, socket) {
   logger.error(err)
   // clear error socket in queue
   clearSocketQueue(connectionSocketQueue, socket)
@@ -526,7 +544,7 @@ function failConnection (code, err, socket) {
   return socket.disconnect(true)
 }
 
-function disconnect (socket) {
+function disconnect(socket) {
   if (isDisconnectBusy) return
   isDisconnectBusy = true
 
@@ -579,7 +597,9 @@ function disconnect (socket) {
   clearSocketQueue(disconnectSocketQueue, socket)
   // seek for next socket
   isDisconnectBusy = false
-  if (disconnectSocketQueue.length > 0) { disconnect(disconnectSocketQueue[0]) }
+  if (disconnectSocketQueue.length > 0) {
+    disconnect(disconnectSocketQueue[0])
+  }
 
   if (config.debug) {
     logger.debug(notes)
@@ -589,7 +609,7 @@ function disconnect (socket) {
   }
 }
 
-function buildUserOutData (user) {
+function buildUserOutData(user) {
   var out = {
     id: user.id,
     login: user.login,
@@ -604,10 +624,10 @@ function buildUserOutData (user) {
   return out
 }
 
-function updateUserData (socket, user) {
+function updateUserData(socket, user) {
   // retrieve user data from passport
   if (socket.request.user && socket.request.user.logged_in) {
-    var profile = models.User.getProfile(socket.request.user)
+    var profile = User.getProfile(socket.request.user)
     user.photo = profile.photo
     user.name = profile.name
     user.userid = socket.request.user.id
@@ -619,7 +639,7 @@ function updateUserData (socket, user) {
   }
 }
 
-function ifMayEdit (socket, callback) {
+function ifMayEdit(socket, callback) {
   var noteId = socket.noteId
   if (!noteId || !notes[noteId]) return
   var note = notes[noteId]
@@ -628,13 +648,20 @@ function ifMayEdit (socket, callback) {
     case 'freely':
       // not blocking anyone
       break
-    case 'editable': case 'limited':
+    case 'editable':
+    case 'limited':
       // only login user can change
-      if (!socket.request.user || !socket.request.user.logged_in) { mayEdit = false }
+      if (!socket.request.user || !socket.request.user.logged_in) {
+        mayEdit = false
+      }
       break
-    case 'locked': case 'private': case 'protected':
+    case 'locked':
+    case 'private':
+    case 'protected':
       // only owner can change
-      if (!note.owner || note.owner !== socket.request.user.id) { mayEdit = false }
+      if (!note.owner || note.owner !== socket.request.user.id) {
+        mayEdit = false
+      }
       break
   }
   // if user may edit and this is a text operation
@@ -649,18 +676,18 @@ function ifMayEdit (socket, callback) {
   return callback(mayEdit)
 }
 
-function operationCallback (socket, operation) {
-  var noteId = socket.noteId
+function operationCallback(socket, operation) {
+  const noteId = socket.noteId
   if (!noteId || !notes[noteId]) return
-  var note = notes[noteId]
-  var userId = null
+  const note = notes[noteId]
+  let userId = null
   // save authors
   if (socket.request.user && socket.request.user.logged_in) {
     var user = users[socket.id]
     if (!user) return
     userId = socket.request.user.id
     if (!note.authors[userId]) {
-      models.Author.findOrCreate({
+      Author.findOrCreate({
         where: {
           noteId: noteId,
           userId: userId
@@ -670,7 +697,7 @@ function operationCallback (socket, operation) {
           userId: userId,
           color: user.color
         }
-      }).spread(function (author, created) {
+      }).then(function ([author, created]) {
         if (author) {
           note.authors[author.userId] = {
             userid: author.userId,
@@ -687,16 +714,16 @@ function operationCallback (socket, operation) {
   }
   // save authorship - use timer here because it's an O(n) complexity algorithm
   setImmediate(function () {
-    note.authorship = models.Note.updateAuthorshipByOperation(operation, userId, note.authorship)
+    note.authorship = Note.updateAuthorshipByOperation(operation, userId, note.authorship)
   })
 }
 
-function updateHistory (userId, note, time) {
-  var noteId = note.alias ? note.alias : models.Note.encodeNoteId(note.id)
+function updateHistory(userId, note, time?) {
+  var noteId = note.alias ? note.alias : Note.encodeNoteId(note.id)
   if (note.server) history.updateHistory(userId, noteId, note.server.document, time)
 }
 
-function connection (socket) {
+function connection(socket) {
   if (realtime.maintenance) return
   parseNoteIdFromSocket(socket, function (err, noteId) {
     if (err) {
@@ -780,7 +807,7 @@ function connection (socket) {
       if (note.owner && note.owner === socket.request.user.id) {
         if (permission === 'freely' && !config.allowAnonymous && !config.allowAnonymousEdits) return
         note.permission = permission
-        models.Note.update({
+        Note.update({
           permission: permission
         }, {
           where: {
@@ -824,7 +851,7 @@ function connection (socket) {
       var note = notes[noteId]
       // Only owner can delete note
       if (note.owner && note.owner === socket.request.user.id) {
-        models.Note.destroy({
+        Note.destroy({
           where: {
             id: noteId
           }
@@ -861,10 +888,12 @@ function connection (socket) {
   socket.on('online users', function () {
     var noteId = socket.noteId
     if (!noteId || !notes[noteId]) return
-    var users = []
+    var users: any = []
     Object.keys(notes[noteId].users).forEach(function (key) {
       var user = notes[noteId].users[key]
-      if (user) { users.push(buildUserOutData(user)) }
+      if (user) {
+        users.push(buildUserOutData(user))
+      }
     })
     var out = {
       users: users
