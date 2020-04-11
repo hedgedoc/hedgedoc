@@ -1,54 +1,54 @@
 'use strict'
 
 import { Revision } from "./models/revision"
+import { sequelize } from './models'
 
 // app
 // external modules
-var express = require('express')
+const express = require('express');
 
-var ejs = require('ejs')
-var passport = require('passport')
-var methodOverride = require('method-override')
-var cookieParser = require('cookie-parser')
-var compression = require('compression')
-var session = require('express-session')
-var SequelizeStore = require('connect-session-sequelize')(session.Store)
-var fs = require('fs')
-var path = require('path')
+const ejs = require('ejs');
+const passport = require('passport');
+const methodOverride = require('method-override');
+const cookieParser = require('cookie-parser');
+const compression = require('compression');
+const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const fs = require('fs');
+const path = require('path');
 
-var morgan = require('morgan')
-var passportSocketIo = require('passport.socketio')
-var helmet = require('helmet')
-var i18n = require('i18n')
-var flash = require('connect-flash')
+const morgan = require('morgan');
+const passportSocketIo = require('passport.socketio');
+const helmet = require('helmet');
+const i18n = require('i18n');
+const flash = require('connect-flash');
 
 // core
-var config = require('./config')
-var logger = require('./logger')
-var errors = require('./errors')
-var models = require('./models')
-var csp = require('./csp')
+const config = require('./config');
+const logger = require('./logger');
+const errors = require('./errors');
+const csp = require('./csp');
 
 // server setup
-var app = express()
-var server: any = null
+const app = express();
+let server: any = null;
 if (config.useSSL) {
-  var ca = (function () {
-    var i, len, results
+  const ca = (function () {
+    let i, len, results;
     results = []
     for (i = 0, len = config.sslCAPath.length; i < len; i++) {
       results.push(fs.readFileSync(config.sslCAPath[i], 'utf8'))
     }
     return results
-  })()
-  var options = {
+  })();
+  const options = {
     key: fs.readFileSync(config.sslKeyPath, 'utf8'),
     cert: fs.readFileSync(config.sslCertPath, 'utf8'),
     ca: ca,
     dhparam: fs.readFileSync(config.dhParamPath, 'utf8'),
     requestCert: false,
     rejectUnauthorized: false
-  }
+  };
   server = require('https').createServer(options, app)
 } else {
   server = require('http').createServer(app)
@@ -60,14 +60,14 @@ app.use(morgan('combined', {
 }))
 
 // socket io
-var io = require('socket.io')(server)
+const io = require('socket.io')(server);
 io.engine.ws = new (require('ws').Server)({
   noServer: true,
   perMessageDeflate: false
 })
 
 // others
-var realtime = require('./realtime.js')
+const realtime = require('./realtime');
 
 // assign socket io to realtime
 realtime.io = io
@@ -76,9 +76,9 @@ realtime.io = io
 app.use(methodOverride('_method'))
 
 // session store
-var sessionStore = new SequelizeStore({
-  db: models.sequelize
-})
+const sessionStore = new SequelizeStore({
+  db: sequelize
+});
 
 // compression
 app.use(compression())
@@ -148,7 +148,7 @@ app.use(session({
 }))
 
 // session resumption
-var tlsSessionStore = {}
+const tlsSessionStore = {};
 server.on('newSession', function (id, data, cb) {
   tlsSessionStore[id.toString('hex')] = data
   cb()
@@ -239,12 +239,12 @@ io.sockets.on('connection', realtime.connection)
 
 // listen
 function startListen () {
-  var address
-  var listenCallback = function () {
-    var schema = config.useSSL ? 'HTTPS' : 'HTTP'
+  let address;
+  const listenCallback = function () {
+    const schema = config.useSSL ? 'HTTPS' : 'HTTP';
     logger.info('%s Server listening at %s', schema, address)
     realtime.maintenance = false
-  }
+  };
 
   // use unix domain socket if 'path' is specified
   if (config.path) {
@@ -257,7 +257,7 @@ function startListen () {
 }
 
 // sync db then start listen
-models.sequelize.authenticate().then(function () {
+sequelize.authenticate().then(function () {
   // check if realtime is ready
   if (realtime.isReady()) {
     Revision.checkAllNotesRevision(function (err, notes) {
@@ -283,7 +283,7 @@ function handleTermSignals () {
   realtime.maintenance = true
   // disconnect all socket.io clients
   Object.keys(io.sockets.sockets).forEach(function (key) {
-    var socket = io.sockets.sockets[key]
+    const socket = io.sockets.sockets[key];
     // notify client server going into maintenance status
     socket.emit('maintenance')
     setTimeout(function () {
@@ -293,9 +293,9 @@ function handleTermSignals () {
   if (config.path) {
     fs.unlink(config.path)
   }
-  var checkCleanTimer = setInterval(function () {
+  const checkCleanTimer = setInterval(function () {
     if (realtime.isReady()) {
-      models.Revision.checkAllNotesRevision(function (err, notes) {
+      Revision.checkAllNotesRevision(function (err, notes) {
         if (err) return logger.error(err)
         if (!notes || notes.length <= 0) {
           clearInterval(checkCleanTimer)
@@ -303,7 +303,7 @@ function handleTermSignals () {
         }
       })
     }
-  }, 100)
+  }, 100);
 }
 process.on('SIGINT', handleTermSignals)
 process.on('SIGTERM', handleTermSignals)
