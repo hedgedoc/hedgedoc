@@ -30,7 +30,6 @@ module.exports = {
     'object-curly-spacing': ['warn'],
     'one-var': ['warn'],
     'quotes': ['warn'],
-    'semi': ['warn'],
     'space-infix-ops': ['warn']
   }
 }
