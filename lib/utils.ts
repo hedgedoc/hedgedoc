@@ -24,6 +24,30 @@ export module Utils {
     }
   }
 
+  // [Postgres] Handling NULL bytes
+  // https://github.com/sequelize/sequelize/issues/6485
+  export function stripNullByte(value) {
+    value = '' + value
+    // eslint-disable-next-line no-control-regex
+    return value ? value.replace(/\u0000/g, '') : value
+  }
+
+  export function processData (data, _default, process?) {
+    if (data === undefined) return data
+    else if (process) {
+      if (data === null) {
+        return _default
+      } else {
+        return process(data)
+      }
+    } else {
+      if (data === null) {
+        return _default
+      } else {
+        return data
+      }
+    }
+  }
 }
 
 
