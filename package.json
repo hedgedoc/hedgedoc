@@ -172,6 +172,7 @@
     "@types/bluebird": "^3.5.30",
     "@types/diff-match-patch": "^1.0.32",
     "@types/express": "^4.17.6",
+    "@types/lodash": "^4.14.149",
     "@types/node": "^13.11.1",
     "@types/passport": "^1.0.3",
     "@types/validator": "^13.0.0",
