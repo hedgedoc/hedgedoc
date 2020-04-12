@@ -652,7 +652,7 @@ export class Note extends Model<Note> {
     return operations
   }
 
-  parseNoteInfo (body): { title: string; tags: string[] } {
+  static parseNoteInfo (body): { title: string; tags: string[] } {
     const parsed = Note.extractMeta(body)
     const $ = cheerio.load(md.render(parsed.markdown))
     return {
