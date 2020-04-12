@@ -1,7 +1,7 @@
 import { BelongsTo, Column, DataType, ForeignKey, IsUUID, Model, PrimaryKey, Table } from 'sequelize-typescript'
 import { ChildProcess } from 'child_process'
 import { Note } from './note'
-import { Utils } from '../utils'
+import { processData, stripNullByte } from '../utils'
 
 import Sequelize from 'sequelize'
 // core
@@ -81,34 +81,34 @@ export class Revision extends Model<Revision> {
 
   @Column(DataType.TEXT({ length: 'long' }))
   get patch (): string {
-    return Utils.processData(this.getDataValue('patch'), '')
+    return processData(this.getDataValue('patch'), '')
   }
 
   set patch (value: string) {
-    this.setDataValue('patch', Utils.stripNullByte(value))
+    this.setDataValue('patch', stripNullByte(value))
   }
 
   @Column(DataType.TEXT({ length: 'long' }))
   get lastContent (): string {
-    return Utils.processData(this.getDataValue('lastContent'), '')
+    return processData(this.getDataValue('lastContent'), '')
   }
 
   set lastContent (value: string) {
-    this.setDataValue('lastContent', Utils.stripNullByte(value))
+    this.setDataValue('lastContent', stripNullByte(value))
   }
 
   @Column(DataType.TEXT({ length: 'long' }))
   get content (): string {
-    return Utils.processData(this.getDataValue('content'), '')
+    return processData(this.getDataValue('content'), '')
   }
 
   set content (value: string) {
-    this.setDataValue('content', Utils.stripNullByte(value))
+    this.setDataValue('content', stripNullByte(value))
   }
 
   @Column(DataType.TEXT({ length: 'long' }))
   get authorship (): string {
-    return Utils.processData(this.getDataValue('authorship'), [], JSON.parse)
+    return processData(this.getDataValue('authorship'), [], JSON.parse)
   }
 
   set authorship (value: string) {

@@ -16,7 +16,7 @@ import {
 
 import { generate as shortIdGenerate, isValid as shortIdIsValid } from 'shortid'
 import { Author, Revision, User } from './index'
-import { Utils } from '../utils'
+import { processData, stripNullByte } from '../utils'
 import Sequelize from 'sequelize'
 import fs from 'fs'
 import path from 'path'
@@ -113,25 +113,25 @@ export class Note extends Model<Note> {
 
   @Column(DataType.TEXT)
   get title (): string {
-    return Utils.processData(this.getDataValue('title'), '')
+    return processData(this.getDataValue('title'), '')
   }
 
   set title (value: string) {
-    this.setDataValue('title', Utils.stripNullByte(value))
+    this.setDataValue('title', stripNullByte(value))
   }
 
   @Column(DataType.TEXT({ length: 'long' }))
   get content (): string {
-    return Utils.processData(this.getDataValue('content'), '')
+    return processData(this.getDataValue('content'), '')
   }
 
   set content (value: string) {
-    this.setDataValue('content', Utils.stripNullByte(value))
+    this.setDataValue('content', stripNullByte(value))
   }
 
   @Column(DataType.TEXT({ length: 'long' }))
   get authorship (): string {
-    return Utils.processData(this.getDataValue('authorship'), [], JSON.parse)
+    return processData(this.getDataValue('authorship'), [], JSON.parse)
   }
 
   set authorship (value: string) {
