@@ -8,7 +8,7 @@ import { logger } from './logger'
 
 import { NoteUtils } from './web/note/util'
 
-import errors from './errors'
+import { errors } from './errors'
 
 import path from 'path'
 

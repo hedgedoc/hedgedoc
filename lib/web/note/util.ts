@@ -3,7 +3,7 @@ import { Response } from 'express'
 
 import path from 'path'
 import fs from 'fs'
-import errors from '../../errors'
+import { errors } from '../../errors'
 import { config } from '../../config'
 import { logger } from '../../logger'
 import { Note , User } from '../../models'

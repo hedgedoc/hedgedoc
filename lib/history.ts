@@ -5,7 +5,7 @@ import LZString from 'lz-string'
 // core
 import { logger } from './logger'
 import { Note, User } from './models'
-import errors from './errors'
+import { errors } from './errors'
 
 // public
 
