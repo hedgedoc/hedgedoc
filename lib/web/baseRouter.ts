@@ -1,12 +1,8 @@
-'use strict'
+import { response } from '../response'
+import { errors } from '../errors'
 
 const Router = require('express').Router
-
-const response = require('../response')
-
 const baseRouter = module.exports = Router()
-
-const errors = require('../errors')
 
 // get index
 baseRouter.get('/', response.showIndex)
