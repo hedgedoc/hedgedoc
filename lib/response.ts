@@ -3,7 +3,7 @@ import { Note, User } from './models'
 
 import fs from 'fs'
 
-import {logger} from './logger'
+import { logger } from './logger'
 
 import { NoteUtils } from './web/note/util'
 
@@ -12,13 +12,8 @@ import errors from './errors'
 import path from 'path'
 
 import request from 'request'
-export const response = {
-  showIndex: showIndex,
-  githubActions: githubActions,
-  gitlabActions: gitlabActions
-}
 
-function showIndex (req, res, next) {
+function showIndex (req, res, _): void {
   const authStatus = req.isAuthenticated()
   const deleteToken = ''
 
@@ -54,8 +49,11 @@ function githubActionGist (req, res, note: Note): void {
   if (!code || !state) {
     return errors.errorForbidden(res)
   } else {
+    // This is the way the github api works, therefore we can't change it to camelcase
     const data = {
+      // eslint-disable-next-line @typescript-eslint/camelcase
       client_id: config.github.clientID,
+      // eslint-disable-next-line @typescript-eslint/camelcase
       client_secret: config.github.clientSecret,
       code: code,
       state: state
@@ -105,7 +103,7 @@ function githubActionGist (req, res, note: Note): void {
   }
 }
 
-function githubActions (req, res, next): void {
+function githubActions (req, res, _): void {
   const noteId = req.params.noteId
   NoteUtils.findNoteOrCreate(req, res, function (note: Note) {
     const action = req.params.action
@@ -120,7 +118,7 @@ function githubActions (req, res, next): void {
   })
 }
 
-function gitlabActionProjects (req, res, note): void {
+function gitlabActionProjects (req, res, _): void {
   if (req.isAuthenticated()) {
     User.findOne({
       where: {
@@ -163,9 +161,9 @@ function gitlabActionProjects (req, res, note): void {
   }
 }
 
-function gitlabActions (req, res, next): void {
+function gitlabActions (req, res, _): void {
   const noteId = req.params.noteId
-  noteUtil.findNote(req, res, function (note) {
+  NoteUtils.findNoteOrCreate(req, res, function (note) {
     const action = req.params.action
     switch (action) {
       case 'projects':
@@ -176,4 +174,10 @@ function gitlabActions (req, res, next): void {
         break
     }
   })
+}
+
+export const response = {
+  showIndex: showIndex,
+  githubActions: githubActions,
+  gitlabActions: gitlabActions
 }
