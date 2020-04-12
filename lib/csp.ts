@@ -2,7 +2,7 @@ import { config } from './config'
 
 var uuid = require('uuid')
 
-var CspStrategy = {}
+var CspStrategy: any = {}
 
 var defaultDirectives = {
   defaultSrc: ['\'self\''],
