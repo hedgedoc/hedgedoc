@@ -1,6 +1,9 @@
 import os from 'os'
+import { Config } from './interfaces'
+import { Permission } from './enum'
 
-export const defaultConfig = {
+export const defaultConfig: Config = {
+  permission: Permission,
   domain: '',
   urlPath: '',
   host: '0.0.0.0',
@@ -17,8 +20,7 @@ export const defaultConfig = {
   },
   csp: {
     enable: true,
-    directives: {
-    },
+    directives: {},
     addDefaults: true,
     addDisqus: true,
     addGoogleAnalytics: true,
@@ -37,7 +39,7 @@ export const defaultConfig = {
   // ssl path
   sslKeyPath: '',
   sslCertPath: '',
-  sslCAPath: '',
+  sslCAPath: [],
   dhParamPath: '',
   // other path
   publicPath: './public',
@@ -65,14 +67,6 @@ export const defaultConfig = {
   lutim: {
     url: 'https://framapic.org/'
   },
-  imgur: {
-    clientID: undefined
-  },
-  s3: {
-    accessKeyId: undefined,
-    secretAccessKey: undefined,
-    region: undefined
-  },
   minio: {
     accessKey: undefined,
     secretKey: undefined,
@@ -80,61 +74,12 @@ export const defaultConfig = {
     secure: true,
     port: 9000
   },
-  s3bucket: undefined,
-  azure: {
-    connectionString: undefined,
-    container: undefined
-  },
-  // authentication
-  oauth2: {
-    providerName: undefined,
-    authorizationURL: undefined,
-    tokenURL: undefined,
-    clientID: undefined,
-    clientSecret: undefined,
-    scope: 'openid email profile'
-  },
-  facebook: {
-    clientID: undefined,
-    clientSecret: undefined
-  },
-  twitter: {
-    consumerKey: undefined,
-    consumerSecret: undefined
-  },
-  github: {
-    clientID: undefined,
-    clientSecret: undefined
-  },
   gitlab: {
     baseURL: undefined,
     clientID: undefined,
     clientSecret: undefined,
     scope: undefined,
     version: 'v4'
-  },
-  dropbox: {
-    clientID: undefined,
-    clientSecret: undefined,
-    appKey: undefined
-  },
-  google: {
-    clientID: undefined,
-    clientSecret: undefined,
-    hostedDomain: undefined
-  },
-  ldap: {
-    providerName: undefined,
-    url: undefined,
-    bindDn: undefined,
-    bindCredentials: undefined,
-    searchBase: undefined,
-    searchFilter: undefined,
-    searchAttributes: undefined,
-    usernameField: undefined,
-    useridField: undefined,
-    tlsca: undefined,
-    starttls: undefined
   },
   saml: {
     idpSsoUrl: undefined,
