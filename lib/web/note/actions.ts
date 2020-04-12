@@ -66,13 +66,15 @@ export function getRevision (req: any, res: Response, note: Note): void {
         res.send(content)
       })
     } else {
-      errors.errorNotFound(res)return
+      errors.errorNotFound(res)
+      return
     }
   } else {
     Revision.getNoteRevisions(note, function (err, data) {
       if (err) {
         logger.error(err)
-        errors.errorInternalError(res)return
+        errors.errorInternalError(res)
+        return
       }
       const out = {
         revision: data
