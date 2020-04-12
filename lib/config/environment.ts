@@ -1,8 +1,6 @@
-'use strict'
+import { toArrayConfig, toBooleanConfig, toIntegerConfig } from './utils'
 
-const { toBooleanConfig, toArrayConfig, toIntegerConfig } = require('./utils')
-
-module.exports = {
+export const environment = {
   sourceURL: process.env.CMD_SOURCE_URL,
   domain: process.env.CMD_DOMAIN,
   urlPath: process.env.CMD_URL_PATH,

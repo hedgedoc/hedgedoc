@@ -1,15 +1,13 @@
-'use strict'
+import fs from 'fs'
 
-const fs = require('fs')
-
-function getFile (path) {
+function getFile (path): string | undefined {
   if (fs.existsSync(path)) {
     return path
   }
   return undefined
 }
 
-module.exports = {
+export const defaultSSL = {
   sslKeyPath: getFile('/run/secrets/key.pem'),
   sslCertPath: getFile('/run/secrets/cert.pem'),
   sslCAPath: getFile('/run/secrets/ca.pem') !== undefined ? [getFile('/run/secrets/ca.pem')] : [],

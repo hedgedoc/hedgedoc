@@ -1,32 +1,30 @@
-'use strict'
+import fs from 'fs'
+import path from 'path'
 
-const fs = require('fs')
-const path = require('path')
-
-exports.toBooleanConfig = function toBooleanConfig (configValue) {
-  if (configValue && typeof configValue === 'string') {
+export function toBooleanConfig (configValue: string | boolean | undefined): boolean {
+  if (typeof configValue === 'string') {
     return (configValue === 'true')
   }
-  return configValue
+  return configValue || false
 }
 
-exports.toArrayConfig = function toArrayConfig (configValue, separator = ',', fallback) {
-  if (configValue && typeof configValue === 'string') {
+export function toArrayConfig (configValue: string | undefined, separator = ',', fallback = []): any[] {
+  if (configValue) {
     return (configValue.split(separator).map(arrayItem => arrayItem.trim()))
   }
   return fallback
 }
 
-exports.toIntegerConfig = function toIntegerConfig (configValue) {
+export function toIntegerConfig (configValue): number {
   if (configValue && typeof configValue === 'string') {
     return parseInt(configValue)
   }
   return configValue
 }
 
-exports.getGitCommit = function getGitCommit (repodir) {
+export function getGitCommit (repodir): string {
   if (!fs.existsSync(repodir + '/.git/HEAD')) {
-    return undefined
+    return ''
   }
   let reference = fs.readFileSync(repodir + '/.git/HEAD', 'utf8')
   if (reference.startsWith('ref: ')) {
@@ -37,7 +35,7 @@ exports.getGitCommit = function getGitCommit (repodir) {
   return reference
 }
 
-exports.getGitHubURL = function getGitHubURL (repo, reference) {
+export function getGitHubURL (repo, reference): string {
   // if it's not a github reference, we handle handle that anyway
   if (!repo.startsWith('https://github.com') && !repo.startsWith('git@github.com')) {
     return repo

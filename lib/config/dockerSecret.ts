@@ -1,18 +1,18 @@
-'use strict'
-
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
 
 const basePath = path.resolve('/run/secrets/')
 
-function getSecret (secret) {
+function getSecret (secret): string | undefined {
   const filePath = path.join(basePath, secret)
   if (fs.existsSync(filePath)) return fs.readFileSync(filePath, 'utf-8')
   return undefined
 }
 
+export let dockerSecret: { s3: { accessKeyId: string | undefined; secretAccessKey: string | undefined }; github: { clientID: string | undefined; clientSecret: string | undefined }; facebook: { clientID: string | undefined; clientSecret: string | undefined }; google: { clientID: string | undefined; hostedDomain: string | undefined; clientSecret: string | undefined }; sessionSecret: string | undefined; sslKeyPath: string | undefined; twitter: { consumerSecret: string | undefined; consumerKey: string | undefined }; dropbox: { clientID: string | undefined; clientSecret: string | undefined; appKey: string | undefined }; gitlab: { clientID: string | undefined; clientSecret: string | undefined }; imgur: string | undefined; sslCertPath: string | undefined; sslCAPath: string | undefined; dhParamPath: string | undefined; dbURL: string | undefined; azure: { connectionString: string | undefined } }
+
 if (fs.existsSync(basePath)) {
-  module.exports = {
+  dockerSecret = {
     dbURL: getSecret('dbURL'),
     sessionSecret: getSecret('sessionsecret'),
     sslKeyPath: getSecret('sslkeypath'),

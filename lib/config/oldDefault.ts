@@ -1,6 +1,4 @@
-'use strict'
-
-module.exports = {
+export const oldDefault = {
   urlpath: undefined,
   urladdport: undefined,
   alloworigin: undefined,

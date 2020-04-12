@@ -1,8 +1,6 @@
-'use strict'
+import os from 'os'
 
-const os = require('os')
-
-module.exports = {
+export const defaultConfig = {
   domain: '',
   urlPath: '',
   host: '0.0.0.0',

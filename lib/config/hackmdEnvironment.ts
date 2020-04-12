@@ -1,8 +1,6 @@
-'use strict'
+import { toArrayConfig, toBooleanConfig, toIntegerConfig } from './utils'
 
-const { toBooleanConfig, toArrayConfig, toIntegerConfig } = require('./utils')
-
-module.exports = {
+export const hackmdEnvironment = {
   domain: process.env.HMD_DOMAIN,
   urlPath: process.env.HMD_URL_PATH,
   port: toIntegerConfig(process.env.HMD_PORT),
