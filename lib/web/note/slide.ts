@@ -1,8 +1,8 @@
 import { NextFunction, Response } from "express";
 import { NoteUtils } from "./util";
 import errors from '../../errors';
-import logger from '../../logger';
-import config from '../../config';
+import { logger } from '../../logger'
+import { config } from '../../config'
 import { User } from "../../models/user";
 import { Note } from "../../models/note";
 

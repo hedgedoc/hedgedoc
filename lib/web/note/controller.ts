@@ -1,9 +1,9 @@
-import { NextFunction, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { NoteUtils } from './util'
 import * as ActionController from './actions'
 import errors from '../../errors'
-import config from '../../config'
-import logger from '../../logger'
+import { config } from '../../config'
+import { logger } from '../../logger'
 import { User, Note } from '../../models'
 
 export module NoteController {

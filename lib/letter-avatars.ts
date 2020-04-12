@@ -1,7 +1,7 @@
 'use strict'
 import { createHash } from 'crypto'
 import randomColor from 'randomcolor'
-import config from './config'
+import { config } from './config'
 
 // core
 export function generateAvatar (name: string): string {

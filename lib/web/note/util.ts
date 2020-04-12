@@ -1,20 +1,19 @@
-import { Includeable } from "sequelize";
-import { Response } from "express";
+import { Includeable } from 'sequelize'
+import { Response } from 'express'
 
-import path from "path";
-import fs from "fs";
-import errors from "../../errors";
-import config from "../../config";
-import logger from "../../logger";
-import { Note } from "../../models/note";
-import { User } from "../../models/user";
+import path from 'path'
+import fs from 'fs'
+import errors from '../../errors'
+import { config } from '../../config'
+import { logger } from '../../logger'
+import { Note , User } from '../../models'
 
 export module NoteUtils {
   export function findNoteOrCreate(req, res, callback: (note: any) => void, include?: Includeable[]) {
-    const id = req.params.noteId || req.params.shortid;
+    const id = req.params.noteId || req.params.shortid
     Note.parseNoteId(id, function (err, _id) {
       if (err) {
-        logger.error(err);
+        logger.error(err)
         return errors.errorInternalError(res)
       }
       Note.findOne({
@@ -31,13 +30,13 @@ export module NoteUtils {
           return callback(note)
         }
       }).catch(function (err) {
-        logger.error(err);
+        logger.error(err)
         return errors.errorInternalError(res)
       })
     })
   }
 
-  export function checkViewPermission(req: any, note: any) {
+  export function checkViewPermission (req: any, note: any) {
     if (note.permission === 'private') {
       return req.isAuthenticated() && note.ownerId === req.user.id
     } else if (note.permission === 'limited' || note.permission === 'protected') {
@@ -47,9 +46,9 @@ export module NoteUtils {
     }
   }
 
-  export function newNote(req: any, res: Response, body: string | null) {
-    let owner = null;
-    const noteId = req.params.noteId ? req.params.noteId : null;
+  export function newNote (req: any, res: Response, body: string | null) {
+    let owner = null
+    const noteId = req.params.noteId ? req.params.noteId : null
     if (req.isAuthenticated()) {
       owner = req.user.id
     } else if (!config.allowAnonymous) {
@@ -67,21 +66,21 @@ export module NoteUtils {
     }).then(function (note) {
       return res.redirect(config.serverURL + '/' + (note.alias ? note.alias : Note.encodeNoteId(note.id)))
     }).catch(function (err) {
-      logger.error(err);
+      logger.error(err)
       return errors.errorInternalError(res)
     })
   }
 
-  export function getPublishData(req: any, res: Response, note: any, callback: (data: any) => void) {
-    const body = note.content;
-    const extracted = Note.extractMeta(body);
-    const markdown = extracted.markdown;
-    const meta = Note.parseMeta(extracted.meta);
-    const createtime = note.createdAt;
-    const updatetime = note.lastchangeAt;
-    let title = Note.decodeTitle(note.title);
-    title = Note.generateWebTitle(meta.title || title);
-    const ogdata = Note.parseOpengraph(meta, title);
+  export function getPublishData (req: any, res: Response, note: any, callback: (data: any) => void) {
+    const body = note.content
+    const extracted = Note.extractMeta(body)
+    const markdown = extracted.markdown
+    const meta = Note.parseMeta(extracted.meta)
+    const createtime = note.createdAt
+    const updatetime = note.lastchangeAt
+    let title = Note.decodeTitle(note.title)
+    title = Note.generateWebTitle(meta.title || title)
+    const ogdata = Note.parseOpengraph(meta, title)
     const data = {
       title: title,
       description: meta.description || (markdown ? Note.generateDescription(markdown) : null),
@@ -101,15 +100,14 @@ export module NoteUtils {
       cspNonce: res.locals.nonce,
       dnt: req.headers.dnt,
       opengraph: ogdata
-    };
+    }
     callback(data)
   }
 
-  function isRevealTheme(theme: string) {
+  function isRevealTheme (theme: string) {
     if (fs.existsSync(path.join(__dirname, '..', '..', '..', 'public', 'build', 'reveal.js', 'css', 'theme', theme + '.css'))) {
       return theme
     }
     return undefined
   }
 }
-

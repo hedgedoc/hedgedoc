@@ -4,13 +4,13 @@ import { Note } from './note'
 import { Utils } from '../utils'
 
 import Sequelize from 'sequelize'
+// core
+import { logger } from '../logger'
 import async = require('async');
 import moment = require('moment');
 import childProcess = require('child_process');
 import shortId = require('shortid');
 import path = require('path');
-// core
-import logger = require('../logger');
 
 const Op = Sequelize.Op
 

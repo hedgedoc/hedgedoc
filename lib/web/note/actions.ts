@@ -1,8 +1,8 @@
 import { Response } from 'express'
 
 import { Note, Revision } from '../../models'
-import logger from '../../logger'
-import config from '../../config'
+import { logger } from '../../logger'
+import { config } from '../../config'
 import errors from '../../errors'
 import shortId from 'shortid'
 import moment from 'moment'

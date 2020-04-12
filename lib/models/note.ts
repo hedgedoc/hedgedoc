@@ -30,8 +30,8 @@ import moment from 'moment'
 // eslint-disable-next-line @typescript-eslint/camelcase
 import { diff_match_patch, patch_obj } from 'diff-match-patch'
 import S from 'string'
-import config from '../config'
-import logger from '../logger'
+import { config } from '../config'
+import { logger } from '../logger'
 import ot from '../ot'
 
 const md = markdownIt()

@@ -2,8 +2,8 @@ import { Author, Note, Revision, User } from './models'
 
 import ot from './ot'
 import history from './history'
-import logger from './logger'
-import config from './config'
+import { logger } from './logger'
+import { config } from './config'
 import moment from 'moment'
 import randomcolor from 'randomcolor'
 import async from 'async'
@@ -26,9 +26,7 @@ const realtime: any = {
 }
 /* eslint-enable @typescript-eslint/no-use-before-define */
 
-
 const disconnectSocketQueue: any = []
-
 
 function onAuthorizeSuccess (data, accept) {
   accept()
@@ -384,7 +382,6 @@ function failConnection (code, err, socket) {
   return socket.disconnect(true)
 }
 
-
 function interruptConnection (socket, noteId, socketId) {
   if (notes[noteId]) delete notes[noteId]
   if (users[socketId]) delete users[socketId]
@@ -536,7 +533,6 @@ function operationCallback (socket, operation) {
     note.authorship = Note.updateAuthorshipByOperation(operation, userId, note.authorship)
   })
 }
-
 
 function startConnection (socket) {
   if (isConnectionBusy) return
@@ -715,7 +711,6 @@ setInterval(function () {
   })
 }, 60000)
 
-
 function updateUserData (socket, user) {
   // retrieve user data from passport
   if (socket.request.user && socket.request.user.logged_in) {
@@ -730,7 +725,6 @@ function updateUserData (socket, user) {
     user.login = false
   }
 }
-
 
 function connection (socket) {
   if (realtime.maintenance) return

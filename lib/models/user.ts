@@ -2,7 +2,7 @@ import { Note } from './note'
 import { Table, BeforeCreate, BeforeUpdate, HasMany, Unique, IsEmail, Column, DataType, PrimaryKey, Model, Default } from 'sequelize-typescript'
 import scrypt from 'scrypt-kdf'
 import { generateAvatarURL } from '../letter-avatars'
-import logger from '../logger'
+import { logger } from '../logger'
 import { UUIDV4 } from 'sequelize'
 
 // core
