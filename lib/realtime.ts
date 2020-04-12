@@ -1,7 +1,7 @@
 import { Author, Note, Revision, User } from './models'
 
 import ot from './ot'
-import history from './history'
+import { History } from './history'
 import { logger } from './logger'
 import { config } from './config'
 import moment from 'moment'
@@ -99,7 +99,7 @@ function finishUpdateNote (note, _note, callback) {
 
 function updateHistory (userId, note, time?) {
   const noteId = note.alias ? note.alias : Note.encodeNoteId(note.id)
-  if (note.server) history.updateHistory(userId, noteId, note.server.document, time)
+  if (note.server) History.updateHistory(userId, noteId, note.server.document, time)
 }
 
 function updateNote (note, callback) {
