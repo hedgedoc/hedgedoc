@@ -33,6 +33,7 @@ module.exports = {
     'one-var': ['warn'],
     'quotes': ['warn'],
     'space-infix-ops': ['warn'],
-    'import/no-default-export': ['error']
+    'import/no-default-export': ['error'],
+    '@typescript-eslint/no-unused-vars': ['warn', { "argsIgnorePattern": "^_+$" }],
   }
 }
