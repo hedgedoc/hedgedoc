@@ -13,7 +13,9 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking'
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:import/recommended',
+    'plugin:import/typescript'
   ],
   'env': {
     'node': true
@@ -30,6 +32,7 @@ module.exports = {
     'object-curly-spacing': ['warn'],
     'one-var': ['warn'],
     'quotes': ['warn'],
-    'space-infix-ops': ['warn']
+    'space-infix-ops': ['warn'],
+    'import/no-default-export': ['error']
   }
 }
