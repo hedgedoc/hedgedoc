@@ -8,7 +8,8 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "lib": ["ES2019"]
   },
   "include": [
     "./lib/**/*"
