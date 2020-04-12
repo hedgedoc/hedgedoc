@@ -1,20 +1,15 @@
-'use strict'
-
 import { config } from '../config'
+import { Router } from 'express'
+import { errors } from '../errors'
+import { realtime } from '../realtime'
+import { Temp } from '../models'
+import { logger } from '../logger'
+import { urlencodedParser } from './utils'
 
-const Router = require('express').Router
-
-const errors = require('../errors')
-const realtime = require('../realtime')
-const models = require('../models')
-const logger = require('../logger')
-
-const { urlencodedParser } = require('./utils')
-
-const statusRouter = module.exports = Router()
+const StatusRouter = Router()
 
 // get status
-statusRouter.get('/status', function (req, res, next) {
+StatusRouter.get('/status', function (req, res, _) {
   realtime.getStatus(function (data) {
     res.set({
       'Cache-Control': 'private', // only cache by client
@@ -25,16 +20,16 @@ statusRouter.get('/status', function (req, res, next) {
   })
 })
 // get status
-statusRouter.get('/temp', function (req, res) {
-  var host = req.get('host')
+StatusRouter.get('/temp', function (req, res) {
+  const host = req.get('host')
   if (config.allowOrigin.indexOf(host) === -1) {
     errors.errorForbidden(res)
   } else {
-    var tempid = req.query.tempid
+    const tempid = req.query.tempid
     if (!tempid) {
       errors.errorForbidden(res)
     } else {
-      models.Temp.findOne({
+      Temp.findOne({
         where: {
           id: tempid
         }
@@ -60,17 +55,17 @@ statusRouter.get('/temp', function (req, res) {
   }
 })
 // post status
-statusRouter.post('/temp', urlencodedParser, function (req, res) {
-  var host = req.get('host')
+StatusRouter.post('/temp', urlencodedParser, function (req, res) {
+  const host = req.get('host')
   if (config.allowOrigin.indexOf(host) === -1) {
     errors.errorForbidden(res)
   } else {
-    var data = req.body.data
+    const data = req.body.data
     if (!data) {
       errors.errorForbidden(res)
     } else {
       logger.debug(`SERVER received temp from [${host}]: ${req.body.data}`)
-      models.Temp.create({
+      Temp.create({
         data: data
       }).then(function (temp) {
         if (temp) {
@@ -90,8 +85,8 @@ statusRouter.post('/temp', urlencodedParser, function (req, res) {
   }
 })
 
-statusRouter.get('/config', function (req, res) {
-  var data = {
+StatusRouter.get('/config', function (req, res) {
+  const data = {
     domain: config.domain,
     urlpath: config.urlPath,
     debug: config.debug,
@@ -107,3 +102,5 @@ statusRouter.get('/config', function (req, res) {
   })
   res.render('../js/lib/common/constant.ejs', data)
 })
+
+export { StatusRouter }
