@@ -20,7 +20,7 @@ const ImgurUploadProvider: UploadProvider = {
     imgur.uploadFile(imagePath)
       .then(function (json) {
         logger.debug(`SERVER uploadimage success: ${JSON.stringify(json)}`)
-        callback(null, json.data.link.replace(/^http:\/\//i, 'https://'))
+        callback(undefined, json.data.link.replace(/^http:\/\//i, 'https://'))
       }).catch(function (err) {
         callback(new Error(err), undefined)
       })

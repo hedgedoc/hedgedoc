@@ -17,7 +17,7 @@ const FilesystemUploadProvider: UploadProvider = {
       return
     }
 
-    callback(null, (new URL(path.basename(imagePath), config.serverURL + '/uploads/')).href)
+    callback(undefined, (new URL(path.basename(imagePath), config.serverURL + '/uploads/')).href)
   }
 }
 
