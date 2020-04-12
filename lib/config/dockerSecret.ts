@@ -9,7 +9,7 @@ function getSecret (secret): string | undefined {
   return undefined
 }
 
-export let dockerSecret: { s3: { accessKeyId: string | undefined; secretAccessKey: string | undefined }; github: { clientID: string | undefined; clientSecret: string | undefined }; facebook: { clientID: string | undefined; clientSecret: string | undefined }; google: { clientID: string | undefined; hostedDomain: string | undefined; clientSecret: string | undefined }; sessionSecret: string | undefined; sslKeyPath: string | undefined; twitter: { consumerSecret: string | undefined; consumerKey: string | undefined }; dropbox: { clientID: string | undefined; clientSecret: string | undefined; appKey: string | undefined }; gitlab: { clientID: string | undefined; clientSecret: string | undefined }; imgur: string | undefined; sslCertPath: string | undefined; sslCAPath: string | undefined; dhParamPath: string | undefined; dbURL: string | undefined; azure: { connectionString: string | undefined } }
+export let dockerSecret: { s3: { accessKeyId: string | undefined; secretAccessKey: string | undefined }; github: { clientID: string | undefined; clientSecret: string | undefined }; facebook: { clientID: string | undefined; clientSecret: string | undefined }; google: { clientID: string | undefined; hostedDomain: string | undefined; clientSecret: string | undefined }; sessionSecret: string | undefined; sslKeyPath: string | undefined; twitter: { consumerSecret: string | undefined; consumerKey: string | undefined }; dropbox: { clientID: string | undefined; clientSecret: string | undefined; appKey: string | undefined }; gitlab: { clientID: string | undefined; clientSecret: string | undefined }; imgur: string | undefined; sslCertPath: string | undefined; sslCAPath: (string | undefined)[]; dhParamPath: string | undefined; dbURL: string | undefined; azure: { connectionString: string | undefined } }
 
 if (fs.existsSync(basePath)) {
   dockerSecret = {
@@ -17,7 +17,7 @@ if (fs.existsSync(basePath)) {
     sessionSecret: getSecret('sessionsecret'),
     sslKeyPath: getSecret('sslkeypath'),
     sslCertPath: getSecret('sslcertpath'),
-    sslCAPath: getSecret('sslcapath'),
+    sslCAPath: [getSecret('sslcapath')],
     dhParamPath: getSecret('dhparampath'),
     s3: {
       accessKeyId: getSecret('s3_acccessKeyId'),

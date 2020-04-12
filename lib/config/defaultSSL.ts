@@ -1,10 +1,10 @@
 import fs from 'fs'
 
-function getFile (path): string | undefined {
+function getFile (path): string {
   if (fs.existsSync(path)) {
     return path
   }
-  return undefined
+  return ''
 }
 
 export const defaultSSL = {
