@@ -1,34 +1,38 @@
+import express from 'express'
+import ejs from 'ejs'
+import passport from 'passport'
+import methodOverride from 'method-override'
+import cookieParser from 'cookie-parser'
+import compression from 'compression'
+import session from 'express-session'
+// eslint-disable-next-line @typescript-eslint/camelcase
+import connect_session_sequelize from 'connect-session-sequelize'
+import fs from 'fs'
+import path from 'path'
+import morgan from 'morgan'
+import passportSocketIo from 'passport.socketio'
+import helmet from 'helmet'
+import i18n from 'i18n'
+import flash from 'connect-flash'
+
 import { Revision, sequelize } from './models'
 import { config } from './config'
 import { logger } from './logger'
+import { errors } from './errors'
+import { addNonceToLocals, computeDirectives } from './csp'
+import { AuthRouter, BaseRouter, HistoryRouter, ImageRouter, NoteRouter, StatusRouter } from './web/'
 
-const express = require('express')
+// others
+import { realtime } from './realtime'
 
-const ejs = require('ejs')
-const passport = require('passport')
-const methodOverride = require('method-override')
-const cookieParser = require('cookie-parser')
-const compression = require('compression')
-const session = require('express-session')
-const SequelizeStore = require('connect-session-sequelize')(session.Store)
-const fs = require('fs')
-const path = require('path')
-
-const morgan = require('morgan')
-const passportSocketIo = require('passport.socketio')
-const helmet = require('helmet')
-const i18n = require('i18n')
-const flash = require('connect-flash')
-const errors = require('./errors')
-const csp = require('./csp')
-
+const SequelizeStore = connect_session_sequelize(session.Store)
 // server setup
 const app = express()
 let server: any = null
 if (config.useSSL) {
-  const ca = (function () {
-    let i, len, results
-    results = []
+  const ca = (function (): string[] {
+    let i, len
+    const results: string[] = []
     for (i = 0, len = config.sslCAPath.length; i < len; i++) {
       results.push(fs.readFileSync(config.sslCAPath[i], 'utf8'))
     }
@@ -62,10 +66,6 @@ io.engine.ws = new (require('ws').Server)({
   noServer: true,
   perMessageDeflate: false
 })
-
-// others
-const realtime = require('./realtime')
-
 // assign socket io to realtime
 realtime.io = io
 
@@ -100,13 +100,13 @@ app.use(
 )
 
 // Generate a random nonce per request, for CSP with inline scripts
-app.use(csp.addNonceToLocals)
+app.use(addNonceToLocals)
 
 // use Content-Security-Policy to limit XSS, dangerous plugins, etc.
 // https://helmetjs.github.io/docs/csp/
 if (config.csp.enable) {
   app.use(helmet.contentSecurityPolicy({
-    directives: csp.computeDirectives()
+    directives: computeDirectives()
   }))
 } else {
   logger.info('Content-Security-Policy is disabled. This may be a security risk.')
@@ -204,13 +204,13 @@ app.locals.enableDropBoxSave = config.isDropboxEnable
 app.locals.enableGitHubGist = config.isGitHubEnable
 app.locals.enableGitlabSnippets = config.isGitlabSnippetsEnable
 
-app.use(require('./web/baseRouter'))
-app.use(require('./web/statusRouter'))
-app.use(require('./web/auth'))
-app.use(require('./web/historyRouter'))
+app.use(BaseRouter)
+app.use(StatusRouter)
+app.use(AuthRouter)
+app.use(HistoryRouter)
 app.use(require('./web/userRouter'))
-app.use(require('./web/imageRouter'))
-app.use(require('./web/note/router'))
+app.use(ImageRouter)
+app.use(NoteRouter)
 
 // response not found if no any route matxches
 app.get('*', function (req, res) {
@@ -288,7 +288,9 @@ function handleTermSignals () {
     }, 0)
   })
   if (config.path) {
-    fs.unlink(config.path)
+    // ToDo: add a proper error handler
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    fs.unlink(config.path, (_) => {})
   }
   const checkCleanTimer = setInterval(function () {
     if (realtime.isReady()) {
