@@ -6,21 +6,21 @@ import { Utils } from '../utils'
 import Sequelize from 'sequelize'
 // core
 import { logger } from '../logger'
-import async = require('async');
-import moment = require('moment');
-import childProcess = require('child_process');
-import shortId = require('shortid');
-import path = require('path');
+import async = require('async')
+import moment = require('moment')
+import childProcess = require('child_process')
+import shortId = require('shortid')
+import path = require('path')
 
 const Op = Sequelize.Op
 
 const dmpCallbackCache = {}
 
 class Data {
-  msg;
-  cacheKey;
-  error;
-  result;
+  msg
+  cacheKey
+  error
+  result
 }
 
 function createDmpWorker (): ChildProcess {
@@ -66,7 +66,17 @@ export class Revision extends Model<Revision> {
   @IsUUID(4)
   @PrimaryKey
   @Column
-  id: string;
+  id: string
+
+  @Column(DataType.INTEGER)
+  length: number
+
+  @ForeignKey(() => Note)
+  @Column(DataType.UUID)
+  noteId: string
+
+  @BelongsTo(() => Note, { foreignKey: 'noteId', constraints: false, onDelete: 'CASCADE', hooks: true })
+  note: Note
 
   @Column(DataType.TEXT({ length: 'long' }))
   get patch (): string {
@@ -95,9 +105,6 @@ export class Revision extends Model<Revision> {
     this.setDataValue('content', Utils.stripNullByte(value))
   }
 
-  @Column(DataType.INTEGER)
-  length: number
-
   @Column(DataType.TEXT({ length: 'long' }))
   get authorship (): string {
     return Utils.processData(this.getDataValue('authorship'), [], JSON.parse)
@@ -107,13 +114,6 @@ export class Revision extends Model<Revision> {
     this.setDataValue('authorship', value ? JSON.stringify(value) : value)
   }
 
-  @ForeignKey(() => Note)
-  @Column(DataType.UUID)
-  noteId: string
-
-  @BelongsTo(() => Note, { foreignKey: 'noteId', constraints: false, onDelete: 'CASCADE', hooks: true })
-  note: Note;
-
   static getNoteRevisions (note: Note, callback): void {
     Revision.findAll({
       where: {
@@ -122,9 +122,11 @@ export class Revision extends Model<Revision> {
       order: [['createdAt', 'DESC']]
     }).then(function (revisions) {
       class RevisionDataActions { // TODO: Fix Type in actions.ts
-        time;
+        time
+
         length
       }
+
       const data: RevisionDataActions[] = []
       revisions.forEach(function (revision) {
         data.push({

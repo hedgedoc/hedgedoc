@@ -1,5 +1,5 @@
 import { DataType, Model, Table, PrimaryKey, Column, Default } from 'sequelize-typescript'
-import { generate as shortIdGenerate, isValid as shortIdIsValid } from "shortid";
+import { generate as shortIdGenerate } from 'shortid'
 
 @Table
 export class Temp extends Model<Temp> {

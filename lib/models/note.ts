@@ -58,7 +58,7 @@ export class NoteMetadata {
   opengraph: any
 }
 
-@Table({paranoid: false})
+@Table({ paranoid: false })
 export class Note extends Model<Note> {
   @PrimaryKey
   @Default(Sequelize.UUIDV4)
@@ -75,7 +75,7 @@ export class Note extends Model<Note> {
   @Column(DataType.STRING)
   alias: string
 
-  @Column(DataType.ENUM({values: Object.keys(PermissionEnum).map(k => PermissionEnum[k])}))
+  @Column(DataType.ENUM({ values: Object.keys(PermissionEnum).map(k => PermissionEnum[k]) }))
   permission: PermissionEnum
 
   @AllowNull(false)
@@ -95,20 +95,20 @@ export class Note extends Model<Note> {
   @Column
   ownerId: string
 
-  @BelongsTo(() => User, {foreignKey: 'ownerId', constraints: false, onDelete: 'CASCADE', hooks: true})
+  @BelongsTo(() => User, { foreignKey: 'ownerId', constraints: false, onDelete: 'CASCADE', hooks: true })
   owner: User
 
   @ForeignKey(() => User)
   @Column
   lastchangeuserId: string
 
-  @BelongsTo(() => User, {foreignKey: 'lastchangeuserId', constraints: false})
+  @BelongsTo(() => User, { foreignKey: 'lastchangeuserId', constraints: false })
   lastchangeuser: User
 
-  @HasMany(() => Revision, {foreignKey: 'noteId', constraints: false})
+  @HasMany(() => Revision, { foreignKey: 'noteId', constraints: false })
   revisions: Revision[]
 
-  @HasMany(() => Author, {foreignKey: 'noteId', constraints: false})
+  @HasMany(() => Author, { foreignKey: 'noteId', constraints: false })
   authors: Author[]
 
   @Column(DataType.TEXT)
@@ -120,7 +120,7 @@ export class Note extends Model<Note> {
     this.setDataValue('title', Utils.stripNullByte(value))
   }
 
-  @Column(DataType.TEXT({length: 'long'}))
+  @Column(DataType.TEXT({ length: 'long' }))
   get content (): string {
     return Utils.processData(this.getDataValue('content'), '')
   }
@@ -129,7 +129,7 @@ export class Note extends Model<Note> {
     this.setDataValue('content', Utils.stripNullByte(value))
   }
 
-  @Column(DataType.TEXT({length: 'long'}))
+  @Column(DataType.TEXT({ length: 'long' }))
   get authorship (): string {
     return Utils.processData(this.getDataValue('authorship'), [], JSON.parse)
   }

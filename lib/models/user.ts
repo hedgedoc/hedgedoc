@@ -1,5 +1,17 @@
 import { Note } from './note'
-import { Table, BeforeCreate, BeforeUpdate, HasMany, Unique, IsEmail, Column, DataType, PrimaryKey, Model, Default } from 'sequelize-typescript'
+import {
+  BeforeCreate,
+  BeforeUpdate,
+  Column,
+  DataType,
+  Default,
+  HasMany,
+  IsEmail,
+  Model,
+  PrimaryKey,
+  Table,
+  Unique
+} from 'sequelize-typescript'
 import scrypt from 'scrypt-kdf'
 import { generateAvatarURL } from '../letter-avatars'
 import { logger } from '../logger'
@@ -41,37 +53,33 @@ export class User extends Model<User> {
   @PrimaryKey
   @Default(UUIDV4)
   @Column(DataType.UUID)
-  id: string;
+  id: string
 
   @Unique
   @Column(DataType.STRING)
-  profileid: string;
+  profileid: string
 
   @Column(DataType.TEXT)
-  profile: string;
+  profile: string
 
   @Column(DataType.TEXT)
-  history: string;
+  history: string
 
   @Column(DataType.TEXT)
-  accessToken: string;
+  accessToken: string
 
   @Column(DataType.TEXT)
-  refreshToken: string;
+  refreshToken: string
 
   @Column(DataType.UUID)
-  deleteToken: string;
+  deleteToken: string
 
   @IsEmail
   @Column(DataType.TEXT)
-  email: string;
+  email: string
 
   @Column(DataType.TEXT)
-  password: string;
-
-  verifyPassword (attempt: string): Promise<boolean> {
-    return scrypt.verify(Buffer.from(this.password, 'hex'), attempt)
-  }
+  password: string
 
   @HasMany(() => Note, { foreignKey: 'lastchangeuserId', constraints: false })
   @HasMany(() => Note, { foreignKey: 'ownerId', constraints: false })
@@ -178,6 +186,10 @@ export class User extends Model<User> {
         return null
       }
     }
+  }
+
+  verifyPassword (attempt: string): Promise<boolean> {
+    return scrypt.verify(Buffer.from(this.password, 'hex'), attempt)
   }
 
   parseProfile (profile: string): PhotoProfile | null {
