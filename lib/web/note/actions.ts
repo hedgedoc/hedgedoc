@@ -51,9 +51,11 @@ export function getRevision (req: any, res: Response, note: Note): void {
         if (err) {
           logger.error(err)
           errors.errorInternalError(res)
+          return
         }
         if (!content) {
           errors.errorNotFound(res)
+          return
         }
         res.set({
           'Access-Control-Allow-Origin': '*', // allow CORS as API
@@ -66,12 +68,14 @@ export function getRevision (req: any, res: Response, note: Note): void {
       })
     } else {
       errors.errorNotFound(res)
+      return
     }
   } else {
     Revision.getNoteRevisions(note, function (err, data) {
       if (err) {
         logger.error(err)
         errors.errorInternalError(res)
+        return
       }
       const out = {
         revision: data

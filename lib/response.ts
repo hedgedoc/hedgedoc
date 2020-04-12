@@ -1,30 +1,29 @@
 'use strict'
-// response
-// external modules
-
-// core
 import { config } from './config'
+import { Note, User } from './models'
 
-var fs = require('fs')
-var path = require('path')
-var request = require('request')
-var logger = require('./logger')
-var models = require('./models')
-const noteUtil = require('./web/note/util')
-const errors = require('./errors')
+import fs from 'fs'
 
-// public
-var response = {
+import {logger} from './logger'
+
+import { NoteUtils } from './web/note/util'
+
+import errors from './errors'
+
+import path from 'path'
+
+import request from 'request'
+export const response = {
   showIndex: showIndex,
   githubActions: githubActions,
   gitlabActions: gitlabActions
 }
 
 function showIndex (req, res, next) {
-  var authStatus = req.isAuthenticated()
-  var deleteToken = ''
+  const authStatus = req.isAuthenticated()
+  const deleteToken = ''
 
-  var data = {
+  const data = {
     signin: authStatus,
     infoMessage: req.flash('info'),
     errorMessage: req.flash('error'),
@@ -35,11 +34,11 @@ function showIndex (req, res, next) {
   }
 
   if (authStatus) {
-    models.User.findOne({
+    User.findOne({
       where: {
         id: req.user.id
       }
-    }).then(function (user) {
+    }).then(function (user: User | null) {
       if (user) {
         data.deleteToken = user.deleteToken
         res.render('index.ejs', data)
@@ -50,10 +49,67 @@ function showIndex (req, res, next) {
   }
 }
 
-function githubActions (req, res, next) {
-  var noteId = req.params.noteId
-  noteUtil.findNote(req, res, function (note) {
-    var action = req.params.action
+function githubActionGist (req, res, note: Note): void {
+  const code = req.query.code
+  const state = req.query.state
+  if (!code || !state) {
+    return errors.errorForbidden(res)
+  } else {
+    const data = {
+      client_id: config.github.clientID,
+      client_secret: config.github.clientSecret,
+      code: code,
+      state: state
+    }
+    const authUrl = 'https://github.com/login/oauth/access_token'
+    request({
+      url: authUrl,
+      method: 'POST',
+      json: data
+    }, function (error, httpResponse, body) {
+      if (!error && httpResponse.statusCode === 200) {
+        const accessToken = body.access_token
+        if (accessToken) {
+          const content = note.content
+          const title = Note.decodeTitle(note.title)
+          const filename = title.replace('/', ' ') + '.md'
+          const gist = {
+            files: {}
+          }
+          gist.files[filename] = {
+            content: content
+          }
+          const gistUrl = 'https://api.github.com/gists'
+          request({
+            url: gistUrl,
+            headers: {
+              'User-Agent': 'CodiMD',
+              Authorization: 'token ' + accessToken
+            },
+            method: 'POST',
+            json: gist
+          }, function (error, httpResponse, body) {
+            if (!error && httpResponse.statusCode === 201) {
+              res.setHeader('referer', '')
+              res.redirect(body.html_url)
+            } else {
+              errors.errorForbidden(res)
+            }
+          })
+        } else {
+          errors.errorForbidden(res)
+        }
+      } else {
+        errors.errorForbidden(res)
+      }
+    })
+  }
+}
+
+function githubActions (req, res, next): void {
+  const noteId = req.params.noteId
+  NoteUtils.findNoteOrCreate(req, res, function (note: Note) {
+    const action = req.params.action
     switch (action) {
       case 'gist':
         githubActionGist(req, res, note)
@@ -65,87 +121,27 @@ function githubActions (req, res, next) {
   })
 }
 
-function githubActionGist (req, res, note) {
-  var code = req.query.code
-  var state = req.query.state
-  if (!code || !state) {
-    return errors.errorForbidden(res)
-  } else {
-    var data = {
-      client_id: config.github.clientID,
-      client_secret: config.github.clientSecret,
-      code: code,
-      state: state
-    }
-    var authUrl = 'https://github.com/login/oauth/access_token'
-    request({
-      url: authUrl,
-      method: 'POST',
-      json: data
-    }, function (error, httpResponse, body) {
-      if (!error && httpResponse.statusCode === 200) {
-        var accessToken = body.access_token
-        if (accessToken) {
-          var content = note.content
-          var title = models.Note.decodeTitle(note.title)
-          var filename = title.replace('/', ' ') + '.md'
-          var gist = {
-            'files': {}
-          }
-          gist.files[filename] = {
-            'content': content
-          }
-          var gistUrl = 'https://api.github.com/gists'
-          request({
-            url: gistUrl,
-            headers: {
-              'User-Agent': 'CodiMD',
-              'Authorization': 'token ' + accessToken
-            },
-            method: 'POST',
-            json: gist
-          }, function (error, httpResponse, body) {
-            if (!error && httpResponse.statusCode === 201) {
-              res.setHeader('referer', '')
-              res.redirect(body.html_url)
-            } else {
-              return errors.errorForbidden(res)
-            }
-          })
-        } else {
-          return errors.errorForbidden(res)
-        }
-      } else {
-        return errors.errorForbidden(res)
-      }
-    })
-  }
-}
-
-function gitlabActions (req, res, next) {
-  var noteId = req.params.noteId
-  noteUtil.findNote(req, res, function (note) {
-    var action = req.params.action
-    switch (action) {
-      case 'projects':
-        gitlabActionProjects(req, res, note)
-        break
-      default:
-        res.redirect(config.serverURL + '/' + noteId)
-        break
-    }
-  })
-}
-
-function gitlabActionProjects (req, res, note) {
+function gitlabActionProjects (req, res, note): void {
   if (req.isAuthenticated()) {
-    models.User.findOne({
+    User.findOne({
       where: {
         id: req.user.id
       }
     }).then(function (user) {
-      if (!user) { return errors.errorNotFound(res) }
-      var ret = { baseURL: config.gitlab.baseURL, version: config.gitlab.version }
+      if (!user) {
+        errors.errorNotFound(res)
+        return
+      }
+      class GitlabReturn {
+        baseURL;
+        version;
+        accesstoken;
+        profileid;
+        projects;
+      }
+      const ret: GitlabReturn = new GitlabReturn()
+      ret.baseURL = config.gitlab.baseURL
+      ret.version = config.gitlab.version
       ret.accesstoken = user.accessToken
       ret.profileid = user.profileid
       request(
@@ -161,11 +157,24 @@ function gitlabActionProjects (req, res, note) {
       )
     }).catch(function (err) {
       logger.error('gitlab action projects failed: ' + err)
-      return errors.errorInternalError(res)
+      errors.errorInternalError(res)
     })
   } else {
-    return errors.errorForbidden(res)
+    errors.errorForbidden(res)
   }
 }
 
-module.exports = response
+function gitlabActions (req, res, next): void {
+  const noteId = req.params.noteId
+  noteUtil.findNote(req, res, function (note) {
+    const action = req.params.action
+    switch (action) {
+      case 'projects':
+        gitlabActionProjects(req, res, note)
+        break
+      default:
+        res.redirect(config.serverURL + '/' + noteId)
+        break
+    }
+  })
+}

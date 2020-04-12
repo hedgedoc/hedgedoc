@@ -29,6 +29,7 @@ function createDmpWorker (): ChildProcess {
   worker.on('message', function (data: Data) {
     if (!data || !data.msg || !data.cacheKey) {
       logger.error('dmp worker error: not enough data on message')
+      return
     }
     const cacheKey = data.cacheKey
     switch (data.msg) {
@@ -150,6 +151,7 @@ export class Revision extends Model<Revision> {
     }).then(function (revisions) {
       if (revisions.length <= 0) {
         errorCallback(null, null)
+        return
       }
       // measure target revision position
       Revision.count({
@@ -162,6 +164,7 @@ export class Revision extends Model<Revision> {
       }).then(function (count) {
         if (count <= 0) {
           errorCallback(null, null)
+          return
         }
         sendDmpWorker({
           msg: 'get revision',
@@ -180,6 +183,7 @@ export class Revision extends Model<Revision> {
     Revision.saveAllNotesRevision(function (err, notes: Note[]) {
       if (err) {
         callback(err, null)
+        return
       }
       if (!notes || notes.length <= 0) {
         callback(null, notes)
@@ -218,6 +222,7 @@ export class Revision extends Model<Revision> {
     }).then(function (notes: Note[]) {
       if (notes.length <= 0) {
         callback(null, notes)
+        return
       }
       const savedNotes: Note[] = []
       async.each(notes, function (note: Note, _callback) {
@@ -241,6 +246,7 @@ export class Revision extends Model<Revision> {
       }, function (err) {
         if (err) {
           callback(err, null)
+          return
         }
         // return null when no notes need saving at this moment but have delayed tasks to be done
         const result = ((savedNotes.length === 0) && (notes.length > 0)) ? null : savedNotes
@@ -285,6 +291,7 @@ export class Revision extends Model<Revision> {
         }, function (err, patch) {
           if (err) {
             logger.error('save note revision error', err)
+            return
           }
           if (!patch) {
             // if patch is empty (means no difference) then just update the latest revision updated time
