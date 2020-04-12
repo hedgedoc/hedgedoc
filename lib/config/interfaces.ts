@@ -65,7 +65,7 @@ export interface Config {
   heartbeatTimeout: number;
   tooBusyLag: number;
   documentMaxLength: number;
-  imageUploadType: string;
+  imageUploadType: 'azure' | 'filesystem' | 'imgur' | 'lutim' | 'minio' | 's3';
   lutim?: {
     url: string;
   };
