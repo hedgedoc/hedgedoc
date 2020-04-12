@@ -121,7 +121,7 @@ export class Revision extends Model<Revision> {
         noteId: note.id
       },
       order: [['createdAt', 'DESC']]
-    }).then(function (revisions) {
+    }).then(function (revisions: Revision[]) {
       class RevisionDataActions { // TODO: Fix Type in actions.ts
         time
 
@@ -129,7 +129,7 @@ export class Revision extends Model<Revision> {
       }
 
       const data: RevisionDataActions[] = []
-      revisions.forEach(function (revision) {
+      revisions.forEach(function (revision: Revision) {
         data.push({
           time: moment(revision.createdAt).valueOf(),
           length: revision.length
@@ -148,7 +148,7 @@ export class Revision extends Model<Revision> {
         noteId: note.id
       },
       order: [['createdAt', 'DESC']]
-    }).then(function (revisions) {
+    }).then(function (revisions: Revision[]) {
       if (revisions.length <= 0) {
         errorCallback(null, null)
         return
@@ -161,7 +161,7 @@ export class Revision extends Model<Revision> {
             [Op.gte]: time
           }
         }
-      }).then(function (count) {
+      }).then(function (count: number) {
         if (count <= 0) {
           errorCallback(null, null)
           return
