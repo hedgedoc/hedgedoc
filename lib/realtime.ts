@@ -163,7 +163,7 @@ setInterval(function () {
             const sock = note.socks[i]
             if (typeof sock !== 'undefined' && sock) {
               setTimeout(function () {
-                sock.disconnect(true)
+                sock.disconnect()
               }, 0)
             }
           }
@@ -952,4 +952,4 @@ function connection (socket) {
   })
 }
 
-module.exports = realtime
+export { realtime }
