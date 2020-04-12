@@ -1,11 +1,11 @@
 import fs from 'fs'
 import path from 'path'
 
-export function toBooleanConfig (configValue: string | boolean | undefined): boolean {
+export function toBooleanConfig (configValue: string | boolean | undefined): boolean | undefined {
   if (typeof configValue === 'string') {
     return (configValue === 'true')
   }
-  return configValue || false
+  return configValue
 }
 
 export function toArrayConfig (configValue: string | undefined, separator = ',', fallback = []): any[] {
