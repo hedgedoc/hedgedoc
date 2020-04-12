@@ -9,7 +9,8 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "sourceMap": true,
-    "lib": ["ES2019"]
+    "lib": ["ES2019"],
+    "alwaysStrict": true
   },
   "include": [
     "./lib/**/*"
