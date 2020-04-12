@@ -51,6 +51,7 @@ export function getRevision (req: any, res: Response, note: Note): void {
         if (err) {
           logger.error(err)
           errors.errorInternalError(res)
+
           return
         }
         if (!content) {
