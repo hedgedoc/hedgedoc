@@ -3,7 +3,6 @@
 import { diff_match_patch, patch_obj, DIFF_INSERT, DIFF_DELETE } from 'diff-match-patch'
 import { logger } from '../logger'
 import { Revision } from '../models'
-import * as process from 'process'
 
 // Function for suppressing TS2722
 // eslint-disable-next-line @typescript-eslint/unbound-method,@typescript-eslint/no-empty-function
