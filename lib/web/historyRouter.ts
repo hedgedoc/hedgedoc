@@ -1,16 +1,18 @@
 import { urlencodedParser } from './utils'
 import { History } from '../history'
+import { Router } from 'express'
 
-const Router = require('express').Router
-const historyRouter = module.exports = Router()
+const HistoryRouter = Router()
 
 // get history
-historyRouter.get('/history', History.historyGet)
+HistoryRouter.get('/history', History.historyGet)
 // post history
-historyRouter.post('/history', urlencodedParser, History.historyPost)
+HistoryRouter.post('/history', urlencodedParser, History.historyPost)
 // post history by note id
-historyRouter.post('/history/:noteId', urlencodedParser, History.historyPost)
+HistoryRouter.post('/history/:noteId', urlencodedParser, History.historyPost)
 // delete history
-historyRouter.delete('/history', History.historyDelete)
+HistoryRouter.delete('/history', History.historyDelete)
 // delete history by note id
-historyRouter.delete('/history/:noteId', History.historyDelete)
+HistoryRouter.delete('/history/:noteId', History.historyDelete)
+
+export { HistoryRouter }
