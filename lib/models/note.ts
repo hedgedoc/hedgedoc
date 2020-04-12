@@ -139,7 +139,7 @@ export class Note extends Model<Note> {
   }
 
   @BeforeCreate
-  static async defaultContentAndPermissions (note: Note) {
+  static async defaultContentAndPermissions (note: Note): Promise<Note> {
     return await new Promise(function (resolve, reject) {
       // if no content specified then use default note
       if (!note.content) {
@@ -173,9 +173,9 @@ export class Note extends Model<Note> {
   }
 
   @AfterCreate
-  static saveRevision (note) {
+  static saveRevision (note): Promise<Note> {
     return new Promise(function (resolve, reject) {
-      Revision.saveNoteRevision(note, function (err, revision) {
+      Revision.saveNoteRevision(note, function (err, _) {
         if (err) {
           return reject(err)
         }
@@ -352,7 +352,7 @@ export class Note extends Model<Note> {
           return _callback(err, null)
         }
       }
-    }, function (err, result) {
+    }, function (err, _) {
       if (err) {
         logger.error(err)
         return callback(err, null)
@@ -489,7 +489,7 @@ export class Note extends Model<Note> {
     return _ogdata
   }
 
-  static updateAuthorshipByOperation (operation, userId, authorships) {
+  static updateAuthorshipByOperation (operation, userId: string|null, authorships): any {
     let index = 0
     const timestamp = Date.now()
     for (let i = 0; i < operation.length; i++) {
