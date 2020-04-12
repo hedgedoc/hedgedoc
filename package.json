@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@passport-next/passport-openid": "^1.0.0",
+    "@types/helmet": "^0.0.45",
     "@types/randomcolor": "^0.5.4",
     "Idle.Js": "git+https://github.com/shawnmclean/Idle.js",
     "archiver": "^2.1.1",
