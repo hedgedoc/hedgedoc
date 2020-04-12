@@ -1,5 +1,3 @@
-'use strict'
-
 import bodyParser from 'body-parser'
 // create application/x-www-form-urlencoded parser
 

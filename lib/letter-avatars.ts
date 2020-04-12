@@ -1,4 +1,3 @@
-'use strict'
 import { createHash } from 'crypto'
 import randomColor from 'randomcolor'
 import { config } from './config'

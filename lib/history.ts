@@ -1,4 +1,3 @@
-'use strict'
 // history
 // external modules
 import LZString from 'lz-string'

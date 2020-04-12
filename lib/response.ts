@@ -1,4 +1,3 @@
-'use strict'
 import { config } from './config'
 import { Note, User } from './models'
 
