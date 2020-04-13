@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { AuthMiddleware } from '../interface'
 import passport from 'passport'
-import * as GoogleStrategy from 'passport-google-oauth20'
+import * as Google from 'passport-google-oauth20'
 import {config} from '../../../config'
 import { passportGeneralCallback } from '../utils'
 
@@ -9,7 +9,7 @@ const googleAuth = Router()
 
 export const GoogleMiddleware: AuthMiddleware = {
   getMiddleware (): Router {
-    passport.use(new GoogleStrategy({
+    passport.use(new Google.Strategy({
       clientID: config.google.clientID,
       clientSecret: config.google.clientSecret,
       callbackURL: config.serverURL + '/auth/google/callback',
@@ -17,7 +17,7 @@ export const GoogleMiddleware: AuthMiddleware = {
     }, passportGeneralCallback))
 
     googleAuth.get('/auth/google', function (req, res, next) {
-      const authOpts: GoogleStrategy.AuthtenticateOptionsGoogle = { scope: ['profile'], hostedDomain: config.google.hostedDomain }
+      const authOpts = { scope: ['profile'], hostedDomain: config.google.hostedDomain }
       passport.authenticate('google', authOpts)(req, res, next)
     })
     googleAuth.get('/auth/google/callback',
