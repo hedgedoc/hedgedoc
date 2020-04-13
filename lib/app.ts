@@ -20,7 +20,7 @@ import { config } from './config'
 import { logger } from './logger'
 import { errors } from './errors'
 import { addNonceToLocals, computeDirectives } from './csp'
-import { BaseRouter, HistoryRouter, ImageRouter, NoteRouter, StatusRouter, UserRouter } from './web/'
+import { AuthRouter, BaseRouter, HistoryRouter, ImageRouter, NoteRouter, StatusRouter, UserRouter } from './web/'
 
 // others
 import { realtime } from './realtime'
@@ -206,7 +206,7 @@ app.locals.enableGitlabSnippets = config.isGitlabSnippetsEnable
 
 app.use(BaseRouter)
 app.use(StatusRouter)
-app.use(require('./web/auth'))
+app.use(AuthRouter)
 app.use(HistoryRouter)
 app.use(UserRouter)
 app.use(ImageRouter)
