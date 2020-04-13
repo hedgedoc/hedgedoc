@@ -1,7 +1,7 @@
 import { User } from '../../models'
 import { logger } from '../../logger'
 
-exports.passportGeneralCallback = function callback (
+export function passportGeneralCallback (
   accessToken,
   refreshToken,
   profile,
