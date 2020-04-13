@@ -11,9 +11,9 @@ import { DropboxMiddleware } from './dropbox'
 import { GoogleMiddleware } from './google'
 import { LdapMiddleware } from './ldap'
 import { SamlMiddleware } from './saml'
-import oauth2 from './oauth2'
+import { OAuth2Middleware } from './oauth2'
 import { EmailMiddleware } from './email'
-import {OPenIDMiddleware } from './openid'
+import { OPenIDMiddleware } from './openid'
 
 const AuthRouter = Router()
 
@@ -51,7 +51,7 @@ if (config.isDropboxEnable) AuthRouter.use(DropboxMiddleware.getMiddleware())
 if (config.isGoogleEnable) AuthRouter.use(GoogleMiddleware.getMiddleware())
 if (config.isLDAPEnable) AuthRouter.use(LdapMiddleware.getMiddleware())
 if (config.isSAMLEnable) AuthRouter.use(SamlMiddleware.getMiddleware())
-if (config.isOAuth2Enable) AuthRouter.use(oauth2)
+if (config.isOAuth2Enable) AuthRouter.use(OAuth2Middleware.getMiddleware())
 if (config.isEmailEnable) AuthRouter.use(EmailMiddleware.getMiddleware())
 if (config.isOpenIDEnable) AuthRouter.use(OPenIDMiddleware.getMiddleware())
 

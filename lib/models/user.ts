@@ -27,6 +27,7 @@ export enum ProviderEnum {
   dropbox = 'dropbox',
   google = 'google',
   ldap = 'ldap',
+  oauth2 = 'oauth2',
   saml = 'saml',
 }
 
