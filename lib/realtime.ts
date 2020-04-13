@@ -10,6 +10,7 @@ import async from 'async'
 import cookieParser from 'cookie-parser'
 import cookie from 'cookie'
 import Chance from 'chance'
+import { EditorSocketIOServer } from './ot/editor-socketio-server'
 
 const chance = new Chance()
 
@@ -577,7 +578,7 @@ function startConnection (socket) {
       const body = note.content
       const createtime = note.createdAt
       const updatetime = note.lastchangeAt
-      const server = new ot.EditorSocketIOServer(body, [], noteId, ifMayEdit, operationCallback)
+      const server = new EditorSocketIOServer(body, [], noteId, ifMayEdit, operationCallback)
 
       const authors = {}
       for (let i = 0; i < note.authors.length; i++) {
