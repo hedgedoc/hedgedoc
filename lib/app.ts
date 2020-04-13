@@ -25,7 +25,10 @@ import { AuthRouter, BaseRouter, HistoryRouter, ImageRouter, NoteRouter, StatusR
 // others
 import { realtime } from './realtime'
 
+import { tooBusy, checkURI, redirectWithoutTrailingSlashes, codiMDVersion } from './web/middleware'
+
 const SequelizeStore = connect_session_sequelize(session.Store)
+const rootPath = path.join(__dirname, '..')
 // server setup
 const app = express()
 let server: any = null
@@ -116,7 +119,7 @@ i18n.configure({
   locales: ['en', 'zh-CN', 'zh-TW', 'fr', 'de', 'ja', 'es', 'ca', 'el', 'pt', 'it', 'tr', 'ru', 'nl', 'hr', 'pl', 'uk', 'hi', 'sv', 'eo', 'da', 'ko', 'id', 'sr', 'vi', 'ar', 'cs', 'sk'],
   cookie: 'locale',
   indent: '    ', // this is the style poeditor.com exports it, this creates less churn
-  directory: path.resolve(__dirname, config.localesPath),
+  directory: path.resolve(rootPath, config.localesPath),
   updateFiles: config.updateI18nFiles
 })
 
@@ -126,10 +129,10 @@ app.use(i18n.init)
 
 // routes without sessions
 // static files
-app.use('/', express.static(path.resolve(__dirname, config.publicPath), { maxAge: config.staticCacheTime, index: false, redirect: false }))
-app.use('/docs', express.static(path.resolve(__dirname, config.docsPath), { maxAge: config.staticCacheTime, redirect: false }))
-app.use('/uploads', express.static(path.resolve(__dirname, config.uploadsPath), { maxAge: config.staticCacheTime, redirect: false }))
-app.use('/default.md', express.static(path.resolve(__dirname, config.defaultNotePath), { maxAge: config.staticCacheTime }))
+app.use('/', express.static(path.resolve(rootPath, config.publicPath), { maxAge: config.staticCacheTime, index: false, redirect: false }))
+app.use('/docs', express.static(path.resolve(rootPath, config.docsPath), { maxAge: config.staticCacheTime, redirect: false }))
+app.use('/uploads', express.static(path.resolve(rootPath, config.uploadsPath), { maxAge: config.staticCacheTime, redirect: false }))
+app.use('/default.md', express.static(path.resolve(rootPath, config.defaultNotePath), { maxAge: config.staticCacheTime }))
 
 // session
 app.use(session({
@@ -155,7 +158,7 @@ server.on('resumeSession', function (id, cb) {
 })
 
 // middleware which blocks requests when we're too busy
-app.use(require('./web/middleware/tooBusy'))
+app.use(tooBusy)
 
 app.use(flash())
 
@@ -164,10 +167,10 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // check uri is valid before going further
-app.use(require('./web/middleware/checkURIValid'))
+app.use(checkURI)
 // redirect url without trailing slashes
-app.use(require('./web/middleware/redirectWithoutTrailingSlashes'))
-app.use(require('./web/middleware/codiMDVersion'))
+app.use(redirectWithoutTrailingSlashes)
+app.use(codiMDVersion)
 
 // routes need sessions
 // template files
