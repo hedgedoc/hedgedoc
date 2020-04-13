@@ -8,7 +8,7 @@ import { TwitterMiddleware } from './twitter'
 import { GithubMiddleware } from './github'
 import { GitlabMiddleware } from './gitlab'
 import { DropboxMiddleware } from './dropbox'
-import google from './google'
+import { GoogleMiddleware } from './google'
 import { LdapMiddleware } from './ldap'
 import { SamlMiddleware } from './saml'
 import oauth2 from './oauth2'
@@ -48,7 +48,7 @@ if (config.isTwitterEnable) AuthRouter.use(TwitterMiddleware.getMiddleware())
 if (config.isGitHubEnable) AuthRouter.use(GithubMiddleware.getMiddleware())
 if (config.isGitLabEnable) AuthRouter.use(GitlabMiddleware.getMiddleware())
 if (config.isDropboxEnable) AuthRouter.use(DropboxMiddleware.getMiddleware())
-if (config.isGoogleEnable) AuthRouter.use(google)
+if (config.isGoogleEnable) AuthRouter.use(GoogleMiddleware.getMiddleware())
 if (config.isLDAPEnable) AuthRouter.use(LdapMiddleware.getMiddleware())
 if (config.isSAMLEnable) AuthRouter.use(SamlMiddleware.getMiddleware())
 if (config.isOAuth2Enable) AuthRouter.use(oauth2)
