@@ -55,12 +55,16 @@ export const EmailMiddleware: AuthMiddleware = {
             password: req.body.password
           }
         }).then(function ([user, created]: [User, boolean]) {
-          if (created) {
-            logger.debug('user registered: ' + user.id)
-            req.flash('info', "You've successfully registered, please signin.")
-          } else {
-            logger.debug('user found: ' + user.id)
-            req.flash('error', 'This email has been used, please try another one.')
+          if (user) {
+            if (created) {
+              logger.debug('user registered: ' + user.id)
+              req.flash('info', "You've successfully registered, please signin.")
+              return
+            } else {
+              logger.debug('user found: ' + user.id)
+              req.flash('error', 'This email has been used, please try another one.')
+              return
+            }
           }
           req.flash('error', 'Failed to register your account, please try again.')
           return res.redirect(config.serverURL + '/')
