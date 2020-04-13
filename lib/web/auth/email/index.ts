@@ -1,12 +1,12 @@
-import { Router, Request, Response, NextFunction } from 'express'
+import { NextFunction, Request, Response, Router } from 'express'
 import passport from 'passport'
+import { Strategy as LocalStrategy } from 'passport-local'
 import validator from 'validator'
-import * as LocalStrategy from 'passport-local'
 import { config } from '../../../config'
-import { User } from '../../../models'
-import { logger } from '../../../logger'
-import { urlencodedParser } from '../../utils'
 import { errors } from '../../../errors'
+import { logger } from '../../../logger'
+import { User } from '../../../models'
+import { urlencodedParser } from '../../utils'
 import { AuthMiddleware } from '../interface'
 
 const emailAuth = Router()
