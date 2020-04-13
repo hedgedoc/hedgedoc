@@ -4,7 +4,7 @@ import { config } from '../../config'
 import { logger } from '../../logger'
 import { User } from '../../models'
 import facebook from './facebook'
-import twitter from './twitter'
+import { TwitterMiddleware } from './twitter'
 import github from './github'
 import gitlab from './gitlab'
 import dropbox from './dropbox'
@@ -44,7 +44,7 @@ passport.deserializeUser(function (id: string, done) {
 })
 
 if (config.isFacebookEnable) AuthRouter.use(facebook)
-if (config.isTwitterEnable) AuthRouter.use(twitter)
+if (config.isTwitterEnable) AuthRouter.use(TwitterMiddleware.getMiddleware())
 if (config.isGitHubEnable) AuthRouter.use(github)
 if (config.isGitLabEnable) AuthRouter.use(gitlab)
 if (config.isDropboxEnable) AuthRouter.use(dropbox)
