@@ -102,47 +102,47 @@ process.on('message', function (data: Data) {
     return logger.error('dmp worker error: not enough data')
   }
   switch (data.msg) {
-    case 'create patch':
-      if (!data.lastDoc || !data.currDoc) {
-        return logger.error('dmp worker error: not enough data on create patch')
-      }
-      try {
-        const patch: string = createPatch(data.lastDoc, data.currDoc)
-        send({
-          msg: 'check',
-          result: patch,
-          cacheKey: data.cacheKey
-        })
-      } catch (err) {
-        logger.error('dmp worker error', err)
-        send({
-          msg: 'error',
-          error: err,
-          cacheKey: data.cacheKey
-        })
-      }
-      break
-    case 'get revision':
-      if (!data.revisions || !data.count) {
-        return logger.error('dmp worker error: not enough data on get revision')
-      }
-      try {
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        const result: {content: string; patch: patch_obj[]; authorship: string} = getRevision(data.revisions, data.count)
-        send({
-          msg: 'check',
-          result: result,
-          cacheKey: data.cacheKey
-        })
-      } catch (err) {
-        logger.error('dmp worker error', err)
-        send({
-          msg: 'error',
-          error: err,
-          cacheKey: data.cacheKey
-        })
-      }
-      break
+  case 'create patch':
+    if (data.lastDoc === undefined || data.currDoc === undefined) {
+      return logger.error('dmp worker error: not enough data on create patch')
+    }
+    try {
+      const patch: string = createPatch(data.lastDoc, data.currDoc)
+      send({
+        msg: 'check',
+        result: patch,
+        cacheKey: data.cacheKey
+      })
+    } catch (err) {
+      logger.error('dmp worker error', err)
+      send({
+        msg: 'error',
+        error: err,
+        cacheKey: data.cacheKey
+      })
+    }
+    break
+  case 'get revision':
+    if (data.revisions === undefined || data.count === undefined) {
+      return logger.error('dmp worker error: not enough data on get revision')
+    }
+    try {
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      const result: {content: string; patch: patch_obj[]; authorship: string} = getRevision(data.revisions, data.count)
+      send({
+        msg: 'check',
+        result: result,
+        cacheKey: data.cacheKey
+      })
+    } catch (err) {
+      logger.error('dmp worker error', err)
+      send({
+        msg: 'error',
+        error: err,
+        cacheKey: data.cacheKey
+      })
+    }
+    break
   }
 })
 
