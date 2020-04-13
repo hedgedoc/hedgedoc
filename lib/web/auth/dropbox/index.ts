@@ -1,13 +1,13 @@
+import { NextFunction, Request, Response, Router } from 'express'
 import passport from 'passport'
-import { config } from '../../../config'
-import { passportGeneralCallback } from '../utils'
-import { Router, Response, NextFunction, Request } from 'express'
 import * as DropboxStrategy from 'passport-dropbox-oauth2'
+import { config } from '../../../config'
 import { AuthMiddleware } from '../interface'
+import { passportGeneralCallback } from '../utils'
 
 export const dropboxAuth = Router()
 
-export const EmailMiddleware: AuthMiddleware = {
+export const DropboxMiddleware: AuthMiddleware = {
   getMiddleware (): Router {
     passport.use(new DropboxStrategy({
       apiVersion: '2',
@@ -27,5 +27,4 @@ export const EmailMiddleware: AuthMiddleware = {
     )
     return dropboxAuth
   }
-
 }

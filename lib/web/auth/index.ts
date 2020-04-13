@@ -6,8 +6,8 @@ import { User } from '../../models'
 import { FacebookMiddleware } from './facebook'
 import { TwitterMiddleware } from './twitter'
 import { GithubMiddleware } from './github'
-import gitlab from './gitlab'
-import dropbox from './dropbox'
+import { GitlabMiddleware } from './gitlab'
+import { DropboxMiddleware } from './dropbox'
 import google from './google'
 import ldap from './ldap'
 import saml from './saml'
@@ -46,8 +46,8 @@ passport.deserializeUser(function (id: string, done) {
 if (config.isFacebookEnable) AuthRouter.use(FacebookMiddleware.getMiddleware())
 if (config.isTwitterEnable) AuthRouter.use(TwitterMiddleware.getMiddleware())
 if (config.isGitHubEnable) AuthRouter.use(GithubMiddleware.getMiddleware())
-if (config.isGitLabEnable) AuthRouter.use(gitlab)
-if (config.isDropboxEnable) AuthRouter.use(dropbox)
+if (config.isGitLabEnable) AuthRouter.use(GitlabMiddleware.getMiddleware())
+if (config.isDropboxEnable) AuthRouter.use(DropboxMiddleware.getMiddleware())
 if (config.isGoogleEnable) AuthRouter.use(google)
 if (config.isLDAPEnable) AuthRouter.use(ldap)
 if (config.isSAMLEnable) AuthRouter.use(saml)
