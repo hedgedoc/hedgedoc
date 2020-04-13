@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { Request, Response, Router } from 'express'
 import passport from 'passport'
 import { config } from '../../config'
 import { logger } from '../../logger'
@@ -31,7 +31,8 @@ passport.deserializeUser(function (id: string, done) {
   }).then(function (user) {
     // Don't die on non-existent user
     if (user == null) {
-      return done(null, false, { message: 'Invalid UserID' })
+      // The extra object with message doesn't exits in @types/passport
+      return done(null, false) // , { message: 'Invalid UserID' })
     }
 
     logger.info('deserializeUser: ' + user.id)
@@ -55,9 +56,9 @@ if (config.isEmailEnable) AuthRouter.use(email)
 if (config.isOpenIDEnable) AuthRouter.use(openid)
 
 // logout
-AuthRouter.get('/logout', function (req, res) {
+AuthRouter.get('/logout', function (req: Request, res: Response) {
   if (config.debug && req.isAuthenticated()) {
-    logger.debug('user logout: ' + req.user.id)
+    logger.debug('user logout: ' + req.user?.id)
   }
   req.logout()
   res.redirect(config.serverURL + '/')
