@@ -20,7 +20,7 @@ import { config } from './config'
 import { logger } from './logger'
 import { errors } from './errors'
 import { addNonceToLocals, computeDirectives } from './csp'
-import { BaseRouter, HistoryRouter, ImageRouter, NoteRouter, StatusRouter } from './web/'
+import { BaseRouter, HistoryRouter, ImageRouter, NoteRouter, StatusRouter, UserRouter } from './web/'
 
 // others
 import { realtime } from './realtime'
@@ -208,7 +208,7 @@ app.use(BaseRouter)
 app.use(StatusRouter)
 app.use(require('./web/auth'))
 app.use(HistoryRouter)
-app.use(require('./web/userRouter'))
+app.use(UserRouter)
 app.use(ImageRouter)
 app.use(NoteRouter)
 
