@@ -2,7 +2,7 @@ import { logger } from '../../logger'
 import { errors } from '../../errors'
 import { NextFunction, Request, Response } from 'express'
 
-export default function checkURI (req: Request, res: Response, next: NextFunction) {
+export function checkURI (req: Request, res: Response, next: NextFunction): void {
   try {
     decodeURIComponent(req.path)
     next()

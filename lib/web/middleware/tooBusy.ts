@@ -5,7 +5,7 @@ import { NextFunction, Request, Response } from 'express'
 
 toobusy.maxLag(config.tooBusyLag)
 
-export default function tooBusy (req: Request, res: Response, next: NextFunction): void {
+export function tooBusy (req: Request, res: Response, next: NextFunction): void {
   if (toobusy()) {
     errors.errorServiceUnavailable(res)
   } else {
