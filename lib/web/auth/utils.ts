@@ -1,11 +1,14 @@
-'use strict'
+import { User } from '../../models'
+import { logger } from '../../logger'
 
-const models = require('../../models')
-const logger = require('../../logger')
-
-exports.passportGeneralCallback = function callback (accessToken, refreshToken, profile, done) {
-  var stringifiedProfile = JSON.stringify(profile)
-  models.User.findOrCreate({
+exports.passportGeneralCallback = function callback (
+  accessToken,
+  refreshToken,
+  profile,
+  done: (err: any, user: User | null) => void
+): void {
+  const stringifiedProfile = JSON.stringify(profile)
+  User.findOrCreate({
     where: {
       profileid: profile.id.toString()
     },
@@ -14,9 +17,9 @@ exports.passportGeneralCallback = function callback (accessToken, refreshToken, 
       accessToken: accessToken,
       refreshToken: refreshToken
     }
-  }).spread(function (user, created) {
+  }).then(function ([user, _]) {
     if (user) {
-      var needSave = false
+      let needSave = false
       if (user.profile !== stringifiedProfile) {
         user.profile = stringifiedProfile
         needSave = true
