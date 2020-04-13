@@ -33,7 +33,9 @@ export function getInfo (req: any, res: Response, note: Note): void {
 
 export function createGist (req: any, res: Response, note: Note): void {
   const data = {
+    // eslint-disable-next-line @typescript-eslint/camelcase
     client_id: config.github.clientID,
+    // eslint-disable-next-line @typescript-eslint/camelcase
     redirect_uri: config.serverURL + '/auth/github/callback/' + Note.encodeNoteId(note.id) + '/gist',
     scope: 'gist',
     state: shortId.generate()
@@ -52,10 +54,12 @@ export function getRevision (req: any, res: Response, note: Note): void {
           logger.error(err)
           errors.errorInternalError(res)
 
-        return
-        }if (!content) {
+          return
+        }
+        if (!content) {
           errors.errorNotFound(res)
-        return}
+          return
+        }
         res.set({
           'Access-Control-Allow-Origin': '*', // allow CORS as API
           'Access-Control-Allow-Headers': 'Range',
@@ -67,7 +71,6 @@ export function getRevision (req: any, res: Response, note: Note): void {
       })
     } else {
       errors.errorNotFound(res)
-      return
     }
   } else {
     Revision.getNoteRevisions(note, function (err, data) {
