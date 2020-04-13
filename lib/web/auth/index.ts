@@ -58,7 +58,9 @@ if (config.isOpenIDEnable) AuthRouter.use(openid)
 // logout
 AuthRouter.get('/logout', function (req: Request, res: Response) {
   if (config.debug && req.isAuthenticated()) {
-    logger.debug('user logout: ' + req.user?.id)
+    if (req.user !== undefined) {
+      logger.debug('user logout: ' + req.user.id)
+    }
   }
   req.logout()
   res.redirect(config.serverURL + '/')
