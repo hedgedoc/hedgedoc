@@ -59,11 +59,11 @@ export const EmailMiddleware: AuthMiddleware = {
             if (created) {
               logger.debug('user registered: ' + user.id)
               req.flash('info', "You've successfully registered, please signin.")
-              return
+              return res.redirect(config.serverURL + '/')
             } else {
               logger.debug('user found: ' + user.id)
               req.flash('error', 'This email has been used, please try another one.')
-              return
+              return res.redirect(config.serverURL + '/')
             }
           }
           req.flash('error', 'Failed to register your account, please try again.')
