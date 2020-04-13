@@ -1,16 +1,7 @@
 import { Permission } from './enum'
+import { IHelmetContentSecurityPolicyDirectives } from 'helmet'
 
-export interface CSPDirectives {
-  defaultSrc?: string[];
-  scriptSrc?: string[];
-  imgSrc?: string[];
-  styleSrc?: string[];
-  fontSrc?: string[];
-  objectSrc?: string[];
-  mediaSrc?: string[];
-  childSrc?: string[];
-  connectSrc?: string[];
-}
+type CSPDirectives = IHelmetContentSecurityPolicyDirectives
 
 export interface Config {
   permission: Permission;
