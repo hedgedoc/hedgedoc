@@ -1,17 +1,7 @@
 import { ChildProcess } from 'child_process'
 
 import Sequelize from 'sequelize'
-import {
-  BelongsTo,
-  Column,
-  DataType,
-  Default,
-  ForeignKey,
-  IsUUID,
-  Model,
-  PrimaryKey,
-  Table
-} from 'sequelize-typescript'
+import { BelongsTo, Column, DataType, Default, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript'
 // core
 import { logger } from '../logger'
 import { processData, stripNullByte } from '../utils'
@@ -61,7 +51,7 @@ function createDmpWorker (): ChildProcess {
 let dmpWorker: ChildProcess = createDmpWorker()
 
 function sendDmpWorker (data, callback): void {
-  if (!dmpWorker?.connected) {
+  if (!dmpWorker) {
     dmpWorker = createDmpWorker()
   }
   const cacheKey = Date.now() + '_' + shortId.generate()
