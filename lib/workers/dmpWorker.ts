@@ -1,19 +1,23 @@
 // external modules
 // eslint-disable-next-line @typescript-eslint/camelcase
-import { diff_match_patch, patch_obj, DIFF_INSERT, DIFF_DELETE } from 'diff-match-patch'
+import { DIFF_DELETE, DIFF_INSERT, diff_match_patch, patch_obj } from 'diff-match-patch'
 import { logger } from '../logger'
 import { Revision } from '../models'
 
 // Function for suppressing TS2722
 // eslint-disable-next-line @typescript-eslint/unbound-method,@typescript-eslint/no-empty-function
-const send = process.send || function (): boolean {
+function processSend (options): boolean {
+  if (process?.send !== undefined) {
+    return process.send(options)
+  }
   return false
 }
+
 // eslint-disable-next-line @typescript-eslint/camelcase,new-cap
 const dmp: diff_match_patch = new diff_match_patch()
 
 // eslint-disable-next-line @typescript-eslint/camelcase
-function getRevision (revisions: Revision[], count: number): {content: string; patch: patch_obj[]; authorship: string} {
+function getRevision (revisions: Revision[], count: number): { content: string; patch: patch_obj[]; authorship: string } {
   const msStart = (new Date()).getTime()
   let startContent = ''
   let lastPatch = ''
@@ -39,7 +43,11 @@ function getRevision (revisions: Revision[], count: number): {content: string; p
     for (let i = 0, l = applyPatches.length; i < l; i++) {
       for (let j = 0, m = applyPatches[i].diffs.length; j < m; j++) {
         const diff = applyPatches[i].diffs[j]
-        if (diff[0] === DIFF_INSERT) { diff[0] = DIFF_DELETE } else if (diff[0] === DIFF_DELETE) { diff[0] = DIFF_INSERT }
+        if (diff[0] === DIFF_INSERT) {
+          diff[0] = DIFF_DELETE
+        } else if (diff[0] === DIFF_DELETE) {
+          diff[0] = DIFF_INSERT
+        }
       }
     }
   } else {
@@ -89,12 +97,12 @@ function createPatch (lastDoc: string, currDoc: string): string {
 }
 
 class Data {
-  msg: string;
-  cacheKey: any;
-  lastDoc?: string;
-  currDoc?: string;
-  revisions?: Revision[];
-  count?: number;
+  msg: string
+  cacheKey: any
+  lastDoc?: string
+  currDoc?: string
+  revisions?: Revision[]
+  count?: number
 }
 
 process.on('message', function (data: Data) {
@@ -108,14 +116,14 @@ process.on('message', function (data: Data) {
     }
     try {
       const patch: string = createPatch(data.lastDoc, data.currDoc)
-      send({
+      processSend({
         msg: 'check',
         result: patch,
         cacheKey: data.cacheKey
       })
     } catch (err) {
-      logger.error('dmp worker error', err)
-      send({
+      logger.error('create patch: dmp worker error', err)
+      processSend({
         msg: 'error',
         error: err,
         cacheKey: data.cacheKey
@@ -128,15 +136,15 @@ process.on('message', function (data: Data) {
     }
     try {
       // eslint-disable-next-line @typescript-eslint/camelcase
-      const result: {content: string; patch: patch_obj[]; authorship: string} = getRevision(data.revisions, data.count)
-      send({
+      const result: { content: string; patch: patch_obj[]; authorship: string } = getRevision(data.revisions, data.count)
+      processSend({
         msg: 'check',
         result: result,
         cacheKey: data.cacheKey
       })
     } catch (err) {
-      logger.error('dmp worker error', err)
-      send({
+      logger.error('get revision: dmp worker error', err)
+      processSend({
         msg: 'error',
         error: err,
         cacheKey: data.cacheKey
