@@ -10,7 +10,7 @@ import { GitlabMiddleware } from './gitlab'
 import { DropboxMiddleware } from './dropbox'
 import google from './google'
 import ldap from './ldap'
-import saml from './saml'
+import { SamlMiddleware } from './saml'
 import oauth2 from './oauth2'
 import email from './email'
 import openid from './openid'
@@ -50,7 +50,7 @@ if (config.isGitLabEnable) AuthRouter.use(GitlabMiddleware.getMiddleware())
 if (config.isDropboxEnable) AuthRouter.use(DropboxMiddleware.getMiddleware())
 if (config.isGoogleEnable) AuthRouter.use(google)
 if (config.isLDAPEnable) AuthRouter.use(ldap)
-if (config.isSAMLEnable) AuthRouter.use(saml)
+if (config.isSAMLEnable) AuthRouter.use(SamlMiddleware.getMiddleware())
 if (config.isOAuth2Enable) AuthRouter.use(oauth2)
 if (config.isEmailEnable) AuthRouter.use(email)
 if (config.isOpenIDEnable) AuthRouter.use(openid)
