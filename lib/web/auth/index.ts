@@ -13,7 +13,7 @@ import { LdapMiddleware } from './ldap'
 import { SamlMiddleware } from './saml'
 import oauth2 from './oauth2'
 import { EmailMiddleware } from './email'
-import openid from './openid'
+import {OPenIDMiddleware } from './openid'
 
 const AuthRouter = Router()
 
@@ -53,7 +53,7 @@ if (config.isLDAPEnable) AuthRouter.use(LdapMiddleware.getMiddleware())
 if (config.isSAMLEnable) AuthRouter.use(SamlMiddleware.getMiddleware())
 if (config.isOAuth2Enable) AuthRouter.use(oauth2)
 if (config.isEmailEnable) AuthRouter.use(EmailMiddleware.getMiddleware())
-if (config.isOpenIDEnable) AuthRouter.use(openid)
+if (config.isOpenIDEnable) AuthRouter.use(OPenIDMiddleware.getMiddleware())
 
 // logout
 AuthRouter.get('/logout', function (req: Request, res: Response) {
