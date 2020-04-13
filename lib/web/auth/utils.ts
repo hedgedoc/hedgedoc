@@ -2,10 +2,10 @@ import { User } from '../../models'
 import { logger } from '../../logger'
 
 export function passportGeneralCallback (
-  accessToken,
-  refreshToken,
-  profile,
-  done: (err: any, user: User | null) => void
+  accessToken: string,
+  refreshToken: string,
+  profile: any,
+  done: (err?: Error | null, user?: User) => void
 ): void {
   const stringifiedProfile = JSON.stringify(profile)
   User.findOrCreate({
@@ -44,6 +44,6 @@ export function passportGeneralCallback (
     }
   }).catch(function (err) {
     logger.error('auth callback failed: ' + err)
-    return done(err, null)
+    return done(err, undefined)
   })
 }
