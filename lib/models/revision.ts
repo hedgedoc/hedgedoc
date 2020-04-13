@@ -1,16 +1,26 @@
-import { BelongsTo, Column, DataType, ForeignKey, IsUUID, Model, PrimaryKey, Table } from 'sequelize-typescript'
 import { ChildProcess } from 'child_process'
-import { Note } from './note'
-import { processData, stripNullByte } from '../utils'
 
 import Sequelize from 'sequelize'
+import {
+  BelongsTo,
+  Column,
+  DataType,
+  Default,
+  ForeignKey,
+  IsUUID,
+  Model,
+  PrimaryKey,
+  Table
+} from 'sequelize-typescript'
 // core
 import { logger } from '../logger'
+import { processData, stripNullByte } from '../utils'
+import { Note } from './note'
 import async = require('async')
-import moment = require('moment')
 import childProcess = require('child_process')
-import shortId = require('shortid')
+import moment = require('moment')
 import path = require('path')
+import shortId = require('shortid')
 
 const Op = Sequelize.Op
 
@@ -64,9 +74,9 @@ function sendDmpWorker (data, callback): void {
 
 @Table
 export class Revision extends Model<Revision> {
-  @IsUUID(4)
+  @Default(Sequelize.UUIDV4)
   @PrimaryKey
-  @Column
+  @Column(DataType.UUID)
   id: string
 
   @Column(DataType.INTEGER)
