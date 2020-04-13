@@ -1,12 +1,10 @@
-'use strict'
+import passport from 'passport'
+import { config } from '../../../config'
+import { passportGeneralCallback } from '../utils'
+import { Router, Response, NextFunction, Request } from 'express'
+import * as DropboxStrategy from 'passport-dropbox-oauth2'
 
-const Router = require('express').Router
-const passport = require('passport')
-const DropboxStrategy = require('passport-dropbox-oauth2').Strategy
-const config = require('../../../config')
-const { passportGeneralCallback } = require('../utils')
-
-let dropboxAuth = module.exports = Router()
+export const dropboxAuth = Router()
 
 passport.use(new DropboxStrategy({
   apiVersion: '2',
@@ -15,7 +13,7 @@ passport.use(new DropboxStrategy({
   callbackURL: config.serverURL + '/auth/dropbox/callback'
 }, passportGeneralCallback))
 
-dropboxAuth.get('/auth/dropbox', function (req, res, next) {
+dropboxAuth.get('/auth/dropbox', function (req: Request, res: Response, next: NextFunction) {
   passport.authenticate('dropbox-oauth2')(req, res, next)
 })
 
