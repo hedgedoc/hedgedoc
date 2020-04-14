@@ -266,7 +266,7 @@ export function finishView (view) {
     html = replaceExtraTags(html)
     li.innerHTML = html
     let disabled = 'disabled'
-    if (typeof editor !== 'undefined' && window.havePermission()) { disabled = '' }
+    if (typeof editor !== 'undefined' && window.canEdit()) { disabled = '' }
     if (/^\s*\[[x ]\]\s*/.test(html)) {
       li.innerHTML = html.replace(/^\s*\[ \]\s*/, `<input type="checkbox" class="task-list-item-checkbox "${disabled}><label></label>`)
         .replace(/^\s*\[x\]\s*/, `<input type="checkbox" class="task-list-item-checkbox" checked ${disabled}><label></label>`)
@@ -276,7 +276,7 @@ export function finishView (view) {
         li.setAttribute('class', 'task-list-item')
       }
     }
-    if (typeof editor !== 'undefined' && window.havePermission()) { $(li).find('input').change(toggleTodoEvent) }
+    if (typeof editor !== 'undefined' && window.canEdit()) { $(li).find('input').change(toggleTodoEvent) }
     // color tag in list will convert it to tag icon with color
     const tagColor = $(li).closest('ul').find('.color')
     tagColor.each((key, value) => {

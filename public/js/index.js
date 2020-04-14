@@ -1548,29 +1548,29 @@ ui.toolbar.night.click(function () {
   toggleNightMode()
 })
 // permission
-// freely
-ui.infobar.permission.freely.click(function () {
-  emitPermission('freely')
+// viewable by anyone
+ui.infobar.permission.viewableBy.anyone.click(function () {
+  emitViewableBy('anyone')
 })
-// editable
-ui.infobar.permission.editable.click(function () {
-  emitPermission('editable')
+// viewable by signed-in users
+ui.infobar.permission.viewableBy.signedIn.click(function () {
+  emitViewableBy('signedIn')
 })
-// locked
-ui.infobar.permission.locked.click(function () {
-  emitPermission('locked')
+// viewable by owner
+ui.infobar.permission.viewableBy.owner.click(function () {
+  emitViewableBy('owner')
 })
-// private
-ui.infobar.permission.private.click(function () {
-  emitPermission('private')
+// editable by anyone
+ui.infobar.permission.editableBy.anyone.click(function () {
+  emitEditableBy('anyone')
 })
-// limited
-ui.infobar.permission.limited.click(function () {
-  emitPermission('limited')
+// editable by signed-in users
+ui.infobar.permission.editableBy.signedIn.click(function () {
+  emitEditableBy('signedIn')
 })
-// protected
-ui.infobar.permission.protected.click(function () {
-  emitPermission('protected')
+// editable by owner
+ui.infobar.permission.editableBy.owner.click(function () {
+  emitEditableBy('owner')
 })
 // delete note
 ui.infobar.delete.click(function () {
@@ -1598,82 +1598,53 @@ function toggleNightMode () {
     })
   }
 }
-function emitPermission (_permission) {
-  if (_permission !== permission) {
-    socket.emit('permission', _permission)
+function emitViewableBy (_viewableBy) {
+  if (_viewableBy !== viewableBy) {
+    socket.emit('viewableBy', _viewableBy)
+  }
+}
+function emitEditableBy (_editableBy) {
+  if (_editableBy !== editableBy) {
+    socket.emit('editableBy', _editableBy)
   }
 }
 
-function updatePermission (newPermission) {
-  if (permission !== newPermission) {
-    permission = newPermission
-    if (window.loaded) refreshView()
-  }
-  var label = null
-  var title = null
-  switch (permission) {
-    case 'freely':
-      label = '<i class="fa fa-leaf"></i> Freely'
-      title = 'Anyone can edit'
-      break
-    case 'editable':
-      label = '<i class="fa fa-shield"></i> Editable'
-      title = 'Signed people can edit'
-      break
-    case 'limited':
-      label = '<i class="fa fa-id-card"></i> Limited'
-      title = 'Signed people can edit (forbid guest)'
-      break
-    case 'locked':
-      label = '<i class="fa fa-lock"></i> Locked'
-      title = 'Only owner can edit'
-      break
-    case 'protected':
-      label = '<i class="fa fa-umbrella"></i> Protected'
-      title = 'Only owner can edit (forbid guest)'
-      break
-    case 'private':
-      label = '<i class="fa fa-hand-stop-o"></i> Private'
-      title = 'Only owner can view & edit'
-      break
-  }
+function setActive(el, active) {
+  if (!active && el.hasClass('active')) el.removeClass('active')
+  if (active && !el.hasClass('active')) el.addClass('active')
+}
+
+function updatePermission () {
+  var label = '<i class="fa fa-shield"></i> Permissions'
   if (personalInfo.userid && window.owner && personalInfo.userid === window.owner) {
     label += ' <i class="fa fa-caret-down"></i>'
     ui.infobar.permission.label.removeClass('disabled')
   } else {
     ui.infobar.permission.label.addClass('disabled')
   }
-  ui.infobar.permission.label.html(label).attr('title', title)
+  ui.infobar.permission.label.html(label)
+}
+function updateViewableBy (newViewableBy) {
+  if (viewableBy !== newViewableBy) viewableBy = newViewableBy;
+  setActive(ui.infobar.permission.viewableBy.anyone, newViewableBy === 'anyone')
+  setActive(ui.infobar.permission.viewableBy.signedIn, newViewableBy === 'signedIn')
+  setActive(ui.infobar.permission.viewableBy.owner, newViewableBy === 'owner')
+}
+function updateEditableBy (newEditableBy) {
+  if (editableBy !== newEditableBy) editableBy = newEditableBy;
+  setActive(ui.infobar.permission.editableBy.anyone, newEditableBy === 'anyone')
+  setActive(ui.infobar.permission.editableBy.signedIn, newEditableBy === 'signedIn')
+  setActive(ui.infobar.permission.editableBy.owner, newEditableBy === 'owner')
 }
 
-function havePermission () {
-  var bool = false
-  switch (permission) {
-    case 'freely':
-      bool = true
-      break
-    case 'editable':
-    case 'limited':
-      if (!personalInfo.login) {
-        bool = false
-      } else {
-        bool = true
-      }
-      break
-    case 'locked':
-    case 'private':
-    case 'protected':
-      if (!window.owner || personalInfo.userid !== window.owner) {
-        bool = false
-      } else {
-        bool = true
-      }
-      break
-  }
-  return bool
+function canEdit () {
+  if (editableBy === 'anyone') return true;
+  if (editableBy === 'signedIn') return !!personalInfo.login;
+  if (editableBy === 'owner') return window.owner && personalInfo.userid === window.owner;
+  return false;
 }
 // global module workaround
-window.havePermission = havePermission
+window.canEdit = canEdit
 
 // socket.io actions
 var io = require('socket.io-client')
@@ -1998,17 +1969,23 @@ socket.on('check', function (data) {
   // console.debug(data);
   updateInfo(data)
 })
-socket.on('permission', function (data) {
-  updatePermission(data.permission)
+socket.on('viewableBy', function (data) {
+  updateViewableBy(data.viewableBy)
+})
+socket.on('editableBy', function (data) {
+  updateEditableBy(data.editableBy)
 })
 
-var permission = null
+var editableBy = null
+var viewableBy = null
 socket.on('refresh', function (data) {
   // console.debug(data);
   editorInstance.config.docmaxlength = data.docmaxlength
   editor.setOption('maxLength', editorInstance.config.docmaxlength)
   updateInfo(data)
-  updatePermission(data.permission)
+  updatePermission()
+  updateViewableBy(data.viewableBy)
+  updateEditableBy(data.editableBy)
   if (!window.loaded) {
     // auto change mode if no content detected
     var nocontent = editor.getValue().length <= 0
@@ -2535,7 +2512,7 @@ editorInstance.on('beforeChange', function (cm, change) {
   }
   var isIgnoreEmitEvent = (ignoreEmitEvents.indexOf(change.origin) !== -1)
   if (!isIgnoreEmitEvent) {
-    if (!havePermission()) {
+    if (!canEdit()) {
       change.canceled = true
       switch (permission) {
         case 'editable':
