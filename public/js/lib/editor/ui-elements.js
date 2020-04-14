@@ -43,12 +43,16 @@ export const getUIElements = () => ({
     permission: {
       permission: $('.ui-permission'),
       label: $('.ui-permission-label'),
-      freely: $('.ui-permission-freely'),
-      editable: $('.ui-permission-editable'),
-      locked: $('.ui-permission-locked'),
-      private: $('.ui-permission-private'),
-      limited: $('.ui-permission-limited'),
-      protected: $('.ui-permission-protected')
+      viewableBy: {
+        anyone: $('.ui-viewable-by-anyone'),
+        signedIn: $('.ui-viewable-by-signed-in'),
+        owner: $('.ui-viewable-by-owner')
+      },
+      editableBy: {
+        anyone: $('.ui-editable-by-anyone'),
+        signedIn: $('.ui-editable-by-signed-in'),
+        owner: $('.ui-editable-by-owner')
+      },
     },
     delete: $('.ui-delete-note')
   },

@@ -38,13 +38,9 @@ export module NoteUtils {
   }
 
   export function checkViewPermission(req: any, note: any) {
-    if (note.permission === 'private') {
-      return !(!req.isAuthenticated() || note.ownerId !== req.user.id)
-    } else if (note.permission === 'limited' || note.permission === 'protected') {
-      return req.isAuthenticated()
-    } else {
-      return true
-    }
+    if (note.viewableBy === 'owner') return !(!req.isAuthenticated() || note.ownerId !== req.user.id)
+    if (note.viewableBy === 'signedIn') return req.isAuthenticated()
+    return true
   }
 
   export function newNote(req: any, res: Response, body: string | null) {
