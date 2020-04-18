@@ -444,5 +444,5 @@ $('.signin-modal').on('shown.bs.modal', function () {
 })
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('js/serviceworker.js')
+  navigator.serviceWorker.register('serviceworker.js')
 }
