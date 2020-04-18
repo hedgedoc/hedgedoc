@@ -1,0 +1,20 @@
+{
+  "name": "CodiMD",
+  "short_name": "CodiMD",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#333",
+  "description": "Collaborative markdown notes",
+  "icons": [
+    {
+      "src": "codimd-icon-1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ]
+}
