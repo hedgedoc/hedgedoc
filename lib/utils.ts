@@ -1,4 +1,9 @@
 import { Sequelize } from 'sequelize-typescript'
+import { logger } from './logger'
+import { realtime } from './realtime'
+import { config } from './config'
+import fs from 'fs'
+import { Revision } from './models'
 
 export function isSQLite (sequelize: Sequelize): boolean {
   return sequelize.options.dialect === 'sqlite'
@@ -48,4 +53,36 @@ export function processData (data, _default, process?) {
       return data
     }
   }
+}
+
+export function handleTermSignals (io): void {
+  logger.info('CodiMD has been killed by signal, try to exit gracefully...')
+  realtime.maintenance = true
+  // disconnect all socket.io clients
+  Object.keys(io.sockets.sockets).forEach(function (key) {
+    const socket = io.sockets.sockets[key]
+    // notify client server going into maintenance status
+    socket.emit('maintenance')
+    setTimeout(function () {
+      socket.disconnect(true)
+    }, 0)
+  })
+  if (config.path) {
+    // ToDo: add a proper error handler
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    fs.unlink(config.path, (_) => {})
+  }
+  const checkCleanTimer = setInterval(function () {
+    if (realtime.isReady()) {
+      Revision.checkAllNotesRevision(function (err, notes) {
+        if (err) {
+          return logger.error(err)
+        }
+        if (!notes || notes.length <= 0) {
+          clearInterval(checkCleanTimer)
+          return process.exit(0)
+        }
+      })
+    }
+  }, 100)
 }

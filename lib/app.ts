@@ -25,14 +25,22 @@ import { errors } from './errors'
 import { logger } from './logger'
 import { Revision, sequelize } from './models'
 import { realtime } from './realtime'
+import { handleTermSignals } from './utils'
 import { AuthRouter, BaseRouter, HistoryRouter, ImageRouter, NoteRouter, StatusRouter, UserRouter } from './web/'
 import { tooBusy, checkURI, redirectWithoutTrailingSlashes, codiMDVersion } from './web/middleware'
 
-const SequelizeStore = connect_session_sequelize(session.Store)
 const rootPath = path.join(__dirname, '..')
+
+// session store
+const SequelizeStore = connect_session_sequelize(session.Store)
+
+const sessionStore = new SequelizeStore({
+  db: sequelize
+})
+
 // server setup
 const app = express()
-let server: any = null
+let server: http.Server
 if (config.useSSL) {
   const ca: string[] = []
   for (const path of config.sslCAPath) {
@@ -54,15 +62,6 @@ if (config.useSSL) {
   server = http.createServer(app)
 }
 
-// logger
-app.use(morgan('combined', {
-  stream: {
-    write: function (message): void {
-      logger.info(message)
-    }
-  }
-}))
-
 // socket io
 const io = SocketIO(server)
 io.engine.ws = new WebSocket.Server({
@@ -72,16 +71,28 @@ io.engine.ws = new WebSocket.Server({
 // assign socket io to realtime
 realtime.io = io
 
-// methodOverride
-app.use(methodOverride('_method'))
+// socket.io secure
+io.use(realtime.secure)
+// socket.io auth
+io.use(passportSocketIo.authorize({
+  cookieParser: cookieParser,
+  key: config.sessionName,
+  secret: config.sessionSecret,
+  store: sessionStore,
+  success: realtime.onAuthorizeSuccess,
+  fail: realtime.onAuthorizeFail
+}))
+// socket.io connection
+io.sockets.on('connection', realtime.connection)
 
-// session store
-const sessionStore = new SequelizeStore({
-  db: sequelize
-})
-
-// compression
-app.use(compression())
+// logger
+app.use(morgan('combined', {
+  stream: {
+    write: function (message): void {
+      logger.info(message)
+    }
+  }
+}))
 
 // use hsts to tell https users stick to this
 if (config.hsts.enable) {
@@ -94,13 +105,6 @@ if (config.hsts.enable) {
   logger.info('Consider enabling HSTS for extra security:')
   logger.info('https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security')
 }
-
-// Add referrer policy to improve privacy
-app.use(
-  helmet.referrerPolicy({
-    policy: 'same-origin'
-  })
-)
 
 // Generate a random nonce per request, for CSP with inline scripts
 app.use(addNonceToLocals)
@@ -115,6 +119,21 @@ if (config.csp.enable) {
   logger.info('Content-Security-Policy is disabled. This may be a security risk.')
 }
 
+// Add referrer policy to improve privacy
+app.use(
+  helmet.referrerPolicy({
+    policy: 'same-origin'
+  })
+)
+
+// methodOverride
+app.use(methodOverride('_method'))
+
+// compression
+app.use(compression())
+
+app.use(cookieParser())
+
 i18n.configure({
   locales: ['en', 'zh-CN', 'zh-TW', 'fr', 'de', 'ja', 'es', 'ca', 'el', 'pt', 'it', 'tr', 'ru', 'nl', 'hr', 'pl', 'uk', 'hi', 'sv', 'eo', 'da', 'ko', 'id', 'sr', 'vi', 'ar', 'cs', 'sk'],
   cookie: 'locale',
@@ -123,16 +142,35 @@ i18n.configure({
   updateFiles: config.updateI18nFiles
 })
 
-app.use(cookieParser())
-
 app.use(i18n.init)
 
-// routes without sessions
-// static files
-app.use('/', express.static(path.resolve(rootPath, config.publicPath), { maxAge: config.staticCacheTime, index: false, redirect: false }))
-app.use('/docs', express.static(path.resolve(rootPath, config.docsPath), { maxAge: config.staticCacheTime, redirect: false }))
-app.use('/uploads', express.static(path.resolve(rootPath, config.uploadsPath), { maxAge: config.staticCacheTime, redirect: false }))
-app.use('/default.md', express.static(path.resolve(rootPath, config.defaultNotePath), { maxAge: config.staticCacheTime }))
+// set generally available variables for all views
+app.locals.useCDN = config.useCDN
+app.locals.serverURL = config.serverURL
+app.locals.sourceURL = config.sourceURL
+app.locals.allowAnonymous = config.allowAnonymous
+app.locals.allowAnonymousEdits = config.allowAnonymousEdits
+app.locals.authProviders = {
+  facebook: config.isFacebookEnable,
+  twitter: config.isTwitterEnable,
+  github: config.isGitHubEnable,
+  gitlab: config.isGitLabEnable,
+  dropbox: config.isDropboxEnable,
+  google: config.isGoogleEnable,
+  ldap: config.isLDAPEnable,
+  ldapProviderName: config.ldap.providerName,
+  saml: config.isSAMLEnable,
+  oauth2: config.isOAuth2Enable,
+  oauth2ProviderName: config.oauth2.providerName,
+  openID: config.isOpenIDEnable,
+  email: config.isEmailEnable,
+  allowEmailRegister: config.allowEmailRegister
+}
+
+// Export/Import menu items
+app.locals.enableDropBoxSave = config.isDropboxEnable
+app.locals.enableGitHubGist = config.isGitHubEnable
+app.locals.enableGitlabSnippets = config.isGitlabSnippetsEnable
 
 // session
 app.use(session({
@@ -172,6 +210,13 @@ app.use(checkURI)
 app.use(redirectWithoutTrailingSlashes)
 app.use(codiMDVersion)
 
+// routes without sessions
+// static files
+app.use('/', express.static(path.resolve(rootPath, config.publicPath), { maxAge: config.staticCacheTime, index: false, redirect: false }))
+app.use('/docs', express.static(path.resolve(rootPath, config.docsPath), { maxAge: config.staticCacheTime, redirect: false }))
+app.use('/uploads', express.static(path.resolve(rootPath, config.uploadsPath), { maxAge: config.staticCacheTime, redirect: false }))
+app.use('/default.md', express.static(path.resolve(rootPath, config.defaultNotePath), { maxAge: config.staticCacheTime }))
+
 // routes need sessions
 // template files
 app.set('views', config.viewPath)
@@ -179,33 +224,6 @@ app.set('views', config.viewPath)
 app.engine('ejs', ejs.renderFile)
 // set view engine
 app.set('view engine', 'ejs')
-// set generally available variables for all views
-app.locals.useCDN = config.useCDN
-app.locals.serverURL = config.serverURL
-app.locals.sourceURL = config.sourceURL
-app.locals.allowAnonymous = config.allowAnonymous
-app.locals.allowAnonymousEdits = config.allowAnonymousEdits
-app.locals.authProviders = {
-  facebook: config.isFacebookEnable,
-  twitter: config.isTwitterEnable,
-  github: config.isGitHubEnable,
-  gitlab: config.isGitLabEnable,
-  dropbox: config.isDropboxEnable,
-  google: config.isGoogleEnable,
-  ldap: config.isLDAPEnable,
-  ldapProviderName: config.ldap.providerName,
-  saml: config.isSAMLEnable,
-  oauth2: config.isOAuth2Enable,
-  oauth2ProviderName: config.oauth2.providerName,
-  openID: config.isOpenIDEnable,
-  email: config.isEmailEnable,
-  allowEmailRegister: config.allowEmailRegister
-}
-
-// Export/Import menu items
-app.locals.enableDropBoxSave = config.isDropboxEnable
-app.locals.enableGitHubGist = config.isGitHubEnable
-app.locals.enableGitlabSnippets = config.isGitlabSnippetsEnable
 
 app.use(BaseRouter)
 app.use(StatusRouter)
@@ -220,19 +238,13 @@ app.get('*', function (req, res) {
   errors.errorNotFound(res)
 })
 
-// socket.io secure
-io.use(realtime.secure)
-// socket.io auth
-io.use(passportSocketIo.authorize({
-  cookieParser: cookieParser,
-  key: config.sessionName,
-  secret: config.sessionSecret,
-  store: sessionStore,
-  success: realtime.onAuthorizeSuccess,
-  fail: realtime.onAuthorizeFail
-}))
-// socket.io connection
-io.sockets.on('connection', realtime.connection)
+// log uncaught exception
+process.on('uncaughtException', function (err) {
+  logger.error('An uncaught exception has occured.')
+  logger.error(err)
+  logger.error('Process will exit now.')
+  process.exit(1)
+})
 
 // listen
 function startListen (): void {
@@ -270,46 +282,6 @@ sequelize.authenticate().then(function () {
   }
 })
 
-// log uncaught exception
-process.on('uncaughtException', function (err) {
-  logger.error('An uncaught exception has occured.')
-  logger.error(err)
-  logger.error('Process will exit now.')
-  process.exit(1)
-})
-
-// install exit handler
-function handleTermSignals (): void {
-  logger.info('CodiMD has been killed by signal, try to exit gracefully...')
-  realtime.maintenance = true
-  // disconnect all socket.io clients
-  Object.keys(io.sockets.sockets).forEach(function (key) {
-    const socket = io.sockets.sockets[key]
-    // notify client server going into maintenance status
-    socket.emit('maintenance')
-    setTimeout(function () {
-      socket.disconnect(true)
-    }, 0)
-  })
-  if (config.path) {
-    // ToDo: add a proper error handler
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    fs.unlink(config.path, (_) => {})
-  }
-  const checkCleanTimer = setInterval(function () {
-    if (realtime.isReady()) {
-      Revision.checkAllNotesRevision(function (err, notes) {
-        if (err) {
-          return logger.error(err)
-        }
-        if (!notes || notes.length <= 0) {
-          clearInterval(checkCleanTimer)
-          return process.exit(0)
-        }
-      })
-    }
-  }, 100)
-}
-process.on('SIGINT', handleTermSignals)
-process.on('SIGTERM', handleTermSignals)
-process.on('SIGQUIT', handleTermSignals)
+process.on('SIGINT', () => handleTermSignals(io))
+process.on('SIGTERM', () => handleTermSignals(io))
+process.on('SIGQUIT', () => handleTermSignals(io))
