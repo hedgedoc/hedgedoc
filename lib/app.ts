@@ -34,13 +34,11 @@ const rootPath = path.join(__dirname, '..')
 const app = express()
 let server: any = null
 if (config.useSSL) {
-  const ca = (function (): string[] {
-    const results: string[] = []
-    for (const path of config.sslCAPath) {
-      results.push(fs.readFileSync(path, 'utf8'))
-    }
-    return results
-  })()
+  const ca: string[] = []
+  for (const path of config.sslCAPath) {
+    ca.push(fs.readFileSync(path, 'utf8'))
+  }
+
   const options = {
     key: fs.readFileSync(config.sslKeyPath, 'utf8'),
     cert: fs.readFileSync(config.sslCertPath, 'utf8'),
