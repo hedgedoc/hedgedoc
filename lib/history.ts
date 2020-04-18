@@ -14,6 +14,7 @@ type HistoryObject = {
   text: string;
   time: number;
   tags: string[];
+  pinned?: boolean;
 }
 
 function parseHistoryMapToArray (historyMap: Map<string, HistoryObject>): HistoryObject[] {
@@ -42,9 +43,8 @@ function getHistory (userId, callback: (err: any, history: any) => void): void {
     if (!user) {
       return callback(null, null)
     }
-    let history
     if (user.history) {
-      history = JSON.parse(user.history)
+      const history = JSON.parse(user.history)
       // migrate LZString encoded note id to base64url encoded note id
       for (let i = 0, l = history.length; i < l; i++) {
         // Calculate minimal string length for an UUID that is encoded
@@ -70,10 +70,11 @@ function getHistory (userId, callback: (err: any, history: any) => void): void {
           }
         }
       }
-      history = parseHistoryArrayToMap(history)
+      logger.debug(`read history success: ${user.id}`)
+      return callback(null, parseHistoryArrayToMap(history))
     }
-    logger.debug(`read history success: ${user.id}`)
-    return callback(null, history)
+    logger.debug(`read empty history: ${user.id}`)
+    return callback(null, [])
   }).catch(function (err) {
     logger.error('read history failed: ' + err)
     return callback(err, null)
