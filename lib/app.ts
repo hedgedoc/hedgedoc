@@ -21,7 +21,10 @@ import { logger } from './logger'
 import { errors } from './errors'
 import { addNonceToLocals, computeDirectives } from './csp'
 import { AuthRouter, BaseRouter, HistoryRouter, ImageRouter, NoteRouter, StatusRouter, UserRouter } from './web/'
-
+import http from 'http'
+import https from 'https'
+import SocketIO from 'socket.io'
+import WebSocket from 'ws'
 // others
 import { realtime } from './realtime'
 
@@ -34,10 +37,9 @@ const app = express()
 let server: any = null
 if (config.useSSL) {
   const ca = (function (): string[] {
-    let i, len
     const results: string[] = []
-    for (i = 0, len = config.sslCAPath.length; i < len; i++) {
-      results.push(fs.readFileSync(config.sslCAPath[i], 'utf8'))
+    for (const path of config.sslCAPath) {
+      results.push(fs.readFileSync(path, 'utf8'))
     }
     return results
   })()
@@ -47,11 +49,13 @@ if (config.useSSL) {
     ca: ca,
     dhparam: fs.readFileSync(config.dhParamPath, 'utf8'),
     requestCert: false,
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
+    heartbeatInterval: config.heartbeatInterval,
+    heartbeatTimeout: config.heartbeatTimeout
   }
-  server = require('https').createServer(options, app)
+  server = https.createServer(options, app)
 } else {
-  server = require('http').createServer(app)
+  server = http.createServer(app)
 }
 
 // logger
@@ -64,8 +68,8 @@ app.use(morgan('combined', {
 }))
 
 // socket io
-const io = require('socket.io')(server)
-io.engine.ws = new (require('ws').Server)({
+const io = SocketIO(server)
+io.engine.ws = new WebSocket.Server({
   noServer: true,
   perMessageDeflate: false
 })
@@ -231,16 +235,13 @@ io.use(passportSocketIo.authorize({
   success: realtime.onAuthorizeSuccess,
   fail: realtime.onAuthorizeFail
 }))
-// socket.io heartbeat
-io.set('heartbeat interval', config.heartbeatInterval)
-io.set('heartbeat timeout', config.heartbeatTimeout)
 // socket.io connection
 io.sockets.on('connection', realtime.connection)
 
 // listen
-function startListen () {
+function startListen (): void {
   let address
-  const listenCallback = function () {
+  const listenCallback = function (): void {
     const schema = config.useSSL ? 'HTTPS' : 'HTTP'
     logger.info('%s Server listening at %s', schema, address)
     realtime.maintenance = false
@@ -261,8 +262,12 @@ sequelize.authenticate().then(function () {
   // check if realtime is ready
   if (realtime.isReady()) {
     Revision.checkAllNotesRevision(function (err, notes) {
-      if (err) throw new Error(err)
-      if (!notes || notes.length <= 0) return startListen()
+      if (err) {
+        throw new Error(err)
+      }
+      if (!notes || notes.length <= 0) {
+        return startListen()
+      }
     })
   } else {
     throw new Error('server still not ready after db synced')
@@ -278,7 +283,7 @@ process.on('uncaughtException', function (err) {
 })
 
 // install exit handler
-function handleTermSignals () {
+function handleTermSignals (): void {
   logger.info('CodiMD has been killed by signal, try to exit gracefully...')
   realtime.maintenance = true
   // disconnect all socket.io clients
@@ -298,7 +303,9 @@ function handleTermSignals () {
   const checkCleanTimer = setInterval(function () {
     if (realtime.isReady()) {
       Revision.checkAllNotesRevision(function (err, notes) {
-        if (err) return logger.error(err)
+        if (err) {
+          return logger.error(err)
+        }
         if (!notes || notes.length <= 0) {
           clearInterval(checkCleanTimer)
           return process.exit(0)
