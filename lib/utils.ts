@@ -1,13 +1,8 @@
-import { Sequelize } from 'sequelize-typescript'
 import { logger } from './logger'
 import { realtime } from './realtime'
 import { config } from './config'
 import fs from 'fs'
 import { Revision } from './models'
-
-export function isSQLite (sequelize: Sequelize): boolean {
-  return sequelize.options.dialect === 'sqlite'
-}
 
 export function getImageMimeType (imagePath: string): string | undefined {
   const fileExtension = /[^.]+$/.exec(imagePath)

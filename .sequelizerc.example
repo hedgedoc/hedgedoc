@@ -1,8 +1,31 @@
+var fs = require('fs');
 var path = require('path');
+const envs = ['development', 'test', 'production'];
+
+if (!fs.existsSync(path.resolve('config'))) {
+    fs.mkdirSync(path.resolve('config'));
+}
+
+const configJson = JSON.parse(fs.readFileSync('config.json'));
+
+let database = {};
+envs.forEach(function (env, i) {
+  if (configJson[env]) {
+    database[env] = {
+      ...configJson[env].db
+    }
+  }
+});
+
+fs.writeFile(path.resolve('config', 'database.json'), JSON.stringify(database), 'utf8', function (err) {
+    if (err) {
+        console.log("An error occured while writing JSON Object to File.");
+        return console.log(err);
+    }
+});
 
 module.exports = {
-    'config':          path.resolve('config.json'),
+    'config':          path.resolve('config', 'database.json'),
     'migrations-path': path.resolve('lib', 'migrations'),
-    'models-path':     path.resolve('lib', 'models'),
-    'url':             'change this'
+    'models-path':     path.resolve('lib', 'models')
 }
