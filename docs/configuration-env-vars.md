@@ -165,6 +165,7 @@ defaultNotePath can't be set from env-vars
 | `CMD_OAUTH2_AUTHORIZATION_URL` | `https://example.com` | authorization URL of your provider, please refer to the documentation of your OAuth2 provider (no default value) |
 | `CMD_OAUTH2_CLIENT_ID` | `afae02fckafd...` | you will get this from your OAuth2 provider when you register CodiMD as OAuth2-client, (no default value) |
 | `CMD_OAUTH2_CLIENT_SECRET` | `afae02fckafd...` | you will get this from your OAuth2 provider when you register CodiMD as OAuth2-client, (no default value) |
+| `CMD_OAUTH2_SCOPE` | `openid email profile` | The requested OAuth2/OIDC scopes, which are privileges that CodiMD can exercise on behalf of the user. Default is `openid email profile`, in order to retrieve user email/profile information via the user profile URL. |
 | `CMD_OAUTH2_PROVIDERNAME` | `My institution` | Optional name to be displayed at login form indicating the oAuth2 provider |
 
 
