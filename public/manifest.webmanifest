@@ -4,6 +4,7 @@
   "start_url": ".",
   "display": "standalone",
   "background_color": "#333",
+  "theme_color": "#333",
   "description": "Collaborative markdown notes",
   "icons": [
     {
