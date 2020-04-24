@@ -137,3 +137,8 @@ Reveal.addEventListener('slidechanged', renderSlide)
 const isWinLike = navigator.platform.indexOf('Win') > -1
 
 if (isWinLike) $('.container').addClass('hidescrollbar')
+
+if (window.location.search.match(/.*[?&]nofooter(?:&.*)?$/)) {
+  $('.footer').addClass('hidden')
+  $('.container').addClass('hidescrollbar')
+}
