@@ -5,6 +5,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="mobile-web-app-capable" content="yes">
+        <meta name="theme-color" content="#333">
         <% if(typeof robots !== 'undefined' && robots) { %>
         <meta name="robots" content="<%= robots %>">
         <% } %>
@@ -13,9 +14,9 @@
         <% } %>
         <base href="<%- serverURL %>/">
         <title><%= title %></title>
-        <link rel="icon" type="image/png" href="<%- serverURL %>/favicon.png">
-        <link rel="apple-touch-icon" href="<%- serverURL %>/apple-touch-icon.png">
-
+        <link rel="icon" type="image/png" href="favicon.png">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="manifest" href="manifest.webmanifest">
         <% if(useCDN) { %>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fork-awesome/1.1.3/css/fork-awesome.min.css" integrity="sha256-ZhApazu+kejqTYhMF+1DzNKjIzP7KXu6AzyXcC1gMus=" crossorigin="anonymous" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
@@ -24,28 +25,28 @@
         <%- include build/slide-header %>
         <%- include shared/polyfill %>
         <% } else { %>
-        <link rel="stylesheet" href="<%- serverURL %>/build/reveal.js/css/reveal.css">
-        <link rel="stylesheet" href='<%- serverURL %>/build/emojify.js/dist/css/basic/emojify.min.css'>
+        <link rel="stylesheet" href="build/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href='build/emojify.js/dist/css/basic/emojify.min.css'>
         <%- include build/slide-pack-header %>
         <% } %>
 
         <!-- For reveal.js theme -->
         <% if(typeof theme !== 'undefined' && theme) { %>
-        <link rel="stylesheet" href="<%- serverURL %>/build/reveal.js/css/theme/<%= theme %>.css" id="theme">
+        <link rel="stylesheet" href="build/reveal.js/css/theme/<%= theme %>.css" id="theme">
         <% } else { %>
-        <link rel="stylesheet" href="<%- serverURL %>/build/reveal.js/css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="build/reveal.js/css/theme/black.css" id="theme">
         <% } %>
         <!-- For syntax highlighting -->
-        <link rel="stylesheet" href="<%- serverURL %>/build/reveal.js/lib/css/zenburn.css">
+        <link rel="stylesheet" href="build/reveal.js/lib/css/zenburn.css">
         <!-- For overwrite reveal.js -->
-        <link rel="stylesheet" href="<%- serverURL %>/css/slide.css">
+        <link rel="stylesheet" href="css/slide.css">
 
         <!-- Printing and PDF exports -->
         <script nonce="<%= cspNonce %>">
             var link = document.createElement( 'link' );
             link.rel = 'stylesheet';
             link.type = 'text/css';
-            link.href = '<%- serverURL %>/build/reveal.js/' + (window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css');
+            link.href = 'build/reveal.js/' + (window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css');
             document.getElementsByTagName( 'head' )[0].appendChild( link );
         </script>
     </head>
@@ -87,7 +88,7 @@
             </div>
         </div>
 
-        <script src="<%= serverURL %>/js/mathjax-config-extra.js"></script>
+        <script src="js/mathjax-config-extra.js"></script>
         <% if(useCDN) { %>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/lib/js/head.min.js" integrity="sha256-CTcwyen1cxIrm4hlqdxe0y7Hq6B0rpxAKLiXMD3dJv0=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/js/reveal.min.js" integrity="sha256-Xr6ZH+/kc7hDVReZLO5khBknteLqu5oen/xnSraXrVk=" crossorigin="anonymous"></script>
@@ -108,9 +109,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/abcjs/3.1.1/abcjs_basic-min.js" integrity="sha256-Sq1r2XXWXQoShQKsS0Wrf5r7fRkErd9Fat9vHYeU68s=" crossorigin="anonymous"></script>
         <%- include build/slide-scripts %>
         <% } else { %>
-        <script src="<%- serverURL %>/build/MathJax/MathJax.js" defer></script>
-        <script src="<%- serverURL %>/build/MathJax/config/TeX-AMS-MML_HTMLorMML.js" defer></script>
-        <script src="<%- serverURL %>/build/MathJax/config/Safe.js" defer></script>
+        <script src="build/MathJax/MathJax.js" defer></script>
+        <script src="build/MathJax/config/TeX-AMS-MML_HTMLorMML.js" defer></script>
+        <script src="build/MathJax/config/Safe.js" defer></script>
         <%- include build/slide-pack-scripts %>
         <% } %>
     </body>

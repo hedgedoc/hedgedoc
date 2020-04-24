@@ -185,7 +185,8 @@ module.exports = {
       'expose-loader?jQuery!expose-loader?$!jquery',
       'velocity-animate',
       'imports-loader?$=jquery!jquery-mousewheel',
-      'bootstrap'
+      'bootstrap',
+      path.join(__dirname, 'public/js/common.js')
     ],
     cover: [
       'babel-polyfill',

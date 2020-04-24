@@ -442,7 +442,3 @@ $('.signin-modal').on('shown.bs.modal', function () {
     fieldOpenID.focus()
   }
 })
-
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('serviceworker.js')
-}
