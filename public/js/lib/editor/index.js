@@ -269,7 +269,6 @@ export default class Editor {
     makeDiagramAbcMusic.click(() => {
       utils.insertText(this.editor, '```abc\nX:1\nT:Speed the Plough\nM:4/4\nC:Trad.\nK:G\n|:GABc dedB|dedB dedB|c2ec B2dB|c2A2 A2BA|\nGABc dedB|dedB dedB|c2ec B2dB|A2F2 G4:|\n|:g2gf gdBd|g2f2 e2d2|c2ec B2dB|c2A2 A2df|\ng2gf g2Bd|g2f2 e2d2|c2ec B2dB|A2F2 G4:|\n```\n')
     })
-
   }
 
   addStatusBar () {
