@@ -52,6 +52,7 @@ these are rarely used for various reasons.
 | `docsPath` | `./public/docs` | docs directory path<sup>1</sup> |
 | `viewPath` | `./public/views` | template directory path<sup>1</sup> |
 | `uploadsPath` | `./public/uploads` | uploads directory<sup>1</sup> - needs to be persistent when you use imageUploadType `filesystem` |
+| `localesPath` | `./locales` | directory for translations<sup>1</sup> |
 
 
 ## CodiMD Location
