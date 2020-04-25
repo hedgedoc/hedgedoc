@@ -3,10 +3,10 @@ import passport from 'passport'
 import LDAPStrategy from 'passport-ldapauth'
 
 import { config } from '../../../config'
-import { User } from '../../../models'
-import { logger } from '../../../logger'
-import { urlencodedParser } from '../../utils'
 import { errors } from '../../../errors'
+import { logger } from '../../../logger'
+import { User } from '../../../models'
+import { urlencodedParser } from '../../utils'
 import { AuthMiddleware } from '../interface'
 
 export const LdapMiddleware: AuthMiddleware = {
@@ -22,7 +22,7 @@ export const LdapMiddleware: AuthMiddleware = {
         searchFilter: config.ldap.searchFilter || null,
         searchAttributes: config.ldap.searchAttributes || null,
         tlsOptions: config.ldap.tlsOptions || null,
-	starttls: config.ldap.starttls || null
+        starttls: config.ldap.starttls || null
       }
     }, function (user, done) {
       let uuid = user.uidNumber || user.uid || user.sAMAccountName || undefined
