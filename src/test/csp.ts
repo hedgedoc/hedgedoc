@@ -1,11 +1,11 @@
 /* eslint-env node, mocha */
 'use strict'
 
-const assert = require('assert')
-const crypto = require('crypto')
-const fs = require('fs')
-const path = require('path')
-const mock = require('mock-require')
+import assert from 'assert'
+import crypto from 'crypto'
+import fs from 'fs'
+import path from 'path'
+import mock from 'mock-require'
 
 describe('Content security policies', function () {
   let defaultConfig, csp
@@ -43,7 +43,7 @@ describe('Content security policies', function () {
 
   // beginnging Tests
   it('Disable CDN', function () {
-    let testconfig = defaultConfig
+    const testconfig = defaultConfig
     testconfig.useCDN = false
     mock('../lib/config', testconfig)
     csp = mock.reRequire('../lib/csp')
@@ -57,7 +57,7 @@ describe('Content security policies', function () {
   })
 
   it('Disable Google Analytics', function () {
-    let testconfig = defaultConfig
+    const testconfig = defaultConfig
     testconfig.csp.addGoogleAnalytics = false
     mock('../lib/config', testconfig)
     csp = mock.reRequire('../lib/csp')
@@ -66,7 +66,7 @@ describe('Content security policies', function () {
   })
 
   it('Disable Disqus', function () {
-    let testconfig = defaultConfig
+    const testconfig = defaultConfig
     testconfig.csp.addDisqus = false
     mock('../lib/config', testconfig)
     csp = mock.reRequire('../lib/csp')
@@ -79,7 +79,7 @@ describe('Content security policies', function () {
   })
 
   it('Set ReportURI', function () {
-    let testconfig = defaultConfig
+    const testconfig = defaultConfig
     testconfig.csp.reportURI = 'https://example.com/reportURI'
     mock('../lib/config', testconfig)
     csp = mock.reRequire('../lib/csp')
@@ -88,7 +88,7 @@ describe('Content security policies', function () {
   })
 
   it('Set own directives', function () {
-    let testconfig = defaultConfig
+    const testconfig = defaultConfig
     mock('../lib/config', defaultConfig)
     csp = mock.reRequire('../lib/csp')
     const unextendedCSP = csp.computeDirectives()
