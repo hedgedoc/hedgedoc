@@ -267,6 +267,7 @@ function startListen (): void {
 
 // sync db then start listen
 sequelize.authenticate().then(function () {
+  sessionStore.sync()
   // check if realtime is ready
   if (realtime.isReady()) {
     Revision.checkAllNotesRevision(function (err, notes) {
