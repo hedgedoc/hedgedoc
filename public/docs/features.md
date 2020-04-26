@@ -35,7 +35,7 @@ The editor view, which is in night mode by default, can also be toggled between 
 
 You can upload an image simply by clicking on the upload button <i class="fa fa-upload"></i>.
 Alternatively, you can **drag-n-drop** an image into the editor. Even **pasting** images is possible!
-This will automatically upload the image to **[imgur](http://imgur.com)**, **[Amazon S3](https://aws.amazon.com/s3/)**, **[Minio](https://minio.io)** or the **local filesystem** (depending on the instance's configuration), nothing to worry about. :tada:
+This will automatically upload the image to **[imgur](https://imgur.com)**, **[Amazon S3](https://aws.amazon.com/s3/)**, **[Minio](https://minio.io)** or the **local filesystem** (depending on the instance's configuration), nothing to worry about. :tada:
 
 ![imgur](https://i.imgur.com/9cgQVqD.png)
 
@@ -254,7 +254,7 @@ When you’re a carpenter making a beautiful chest of drawers, you’re not goin
 
 ### MathJax
 
-You can render *LaTeX* mathematical expressions using **MathJax**, as on [math.stackexchange.com](http://math.stackexchange.com/):
+You can render *LaTeX* mathematical expressions using **MathJax**, as on [math.stackexchange.com](https://math.stackexchange.com/):
 
 The *Gamma function* satisfying $\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$ is via the Euler integral
 
@@ -266,7 +266,7 @@ $$
 \Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
 $$
 
-> More information about **LaTeX** mathematical expressions [here](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference).
+> More information about **LaTeX** mathematical expressions [here](https://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference).
 
 ### Diagrams
 
@@ -282,7 +282,7 @@ Note left of Alice: Alice responds
 Alice->Bob: Where have you been?
 ```
 
-More information about **sequence diagrams** syntax [here](http://bramp.github.io/js-sequence-diagrams/).
+More information about **sequence diagrams** syntax [here](https://bramp.github.io/js-sequence-diagrams/).
 
 #### Flow Charts
 
@@ -318,7 +318,7 @@ digraph hierarchy {
 }
 ```
 
-More information about **graphviz** syntax [here](http://www.tonyballantyne.com/graphs.html)
+More information about **graphviz** syntax [here](https://www.tonyballantyne.com/graphs.html)
 
 #### Mermaid
 
@@ -351,7 +351,7 @@ GABc dedB|dedB dedB|c2ec B2dB|A2F2 G4:|
 g2gf g2Bd|g2f2 e2d2|c2ec B2dB|A2F2 G4:|
 ```
 
-More information about **abc** syntax [here](http://abcnotation.com/learn)
+More information about **abc** syntax [here](https://abcnotation.com/learn)
 
 ### Alert Area
 
