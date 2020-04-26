@@ -1,27 +1,29 @@
-import {markdownParser} from "../utils";
+import { markdownParser } from '../utils'
 
-import {SlideController} from "./slide";
-import {NoteController} from "./controller";
-import {Router} from "express";
+import { SlideController } from './slide'
+import { NoteController } from './controller'
+import { Router } from 'express'
 
-const router = module.exports = Router();
+const NoteRouter = Router()
 // get new note
-router.get('/new', NoteController.createFromPOST);
+NoteRouter.get('/new', NoteController.createFromPOST)
 // post new note with content
-router.post('/new', markdownParser, NoteController.createFromPOST);
+NoteRouter.post('/new', markdownParser, NoteController.createFromPOST)
 // post new note with content and alias
-router.post('/new/:noteId', markdownParser, NoteController.createFromPOST);
+NoteRouter.post('/new/:noteId', markdownParser, NoteController.createFromPOST)
 // get publish note
-router.get('/s/:shortid', NoteController.showPublishNote);
+NoteRouter.get('/s/:shortid', NoteController.showPublishNote)
 // publish note actions
-router.get('/s/:shortid/:action', NoteController.publishNoteActions);
+NoteRouter.get('/s/:shortid/:action', NoteController.publishNoteActions)
 // get publish slide
-router.get('/p/:shortid', SlideController.showPublishSlide);
+NoteRouter.get('/p/:shortid', SlideController.showPublishSlide)
 // publish slide actions
-router.get('/p/:shortid/:action', SlideController.publishSlideActions);
+NoteRouter.get('/p/:shortid/:action', SlideController.publishSlideActions)
 // get note by id
-router.get('/:noteId', NoteController.showNote);
+NoteRouter.get('/:noteId', NoteController.showNote)
 // note actions
-router.get('/:noteId/:action', NoteController.doAction);
+NoteRouter.get('/:noteId/:action', NoteController.doAction)
 // note actions with action id
-router.get('/:noteId/:action/:actionId', NoteController.doAction);
+NoteRouter.get('/:noteId/:action/:actionId', NoteController.doAction)
+
+export { NoteRouter }

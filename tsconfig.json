@@ -3,9 +3,14 @@
     "outDir": "./built",
     "allowJs": true,
     "strictNullChecks": true,
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
+    "lib": ["ES2019"],
+    "alwaysStrict": true
   },
   "include": [
     "./lib/**/*"

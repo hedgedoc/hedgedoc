@@ -1,43 +1,41 @@
-import {DataTypes} from 'sequelize';
+import {
+  AutoIncrement,
+  BelongsTo,
+  Column,
+  createIndexDecorator,
+  DataType,
+  ForeignKey,
+  Model,
+  PrimaryKey,
+  Table
+} from 'sequelize-typescript'
+import { Note, User } from './index'
 
+const NoteUserIndex = createIndexDecorator({ unique: true })
 
-function createAuthorModel(sequelize) {
-  const Author = sequelize.define('Author', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    color: {
-      type: DataTypes.STRING
-    }
-  }, {
-    indexes: [
-      {
-        unique: true,
-        fields: ['noteId', 'userId']
-      }
-    ]
-  });
+@Table
+export class Author extends Model<Author> {
+  @PrimaryKey
+  @AutoIncrement
+  @Column(DataType.INTEGER)
+  id: number
 
-  Author.associate = function (models) {
-    Author.belongsTo(models.Note, {
-      foreignKey: 'noteId',
-      as: 'note',
-      constraints: false,
-      onDelete: 'CASCADE',
-      hooks: true
-    });
-    Author.belongsTo(models.User, {
-      foreignKey: 'userId',
-      as: 'user',
-      constraints: false,
-      onDelete: 'CASCADE',
-      hooks: true
-    })
-  };
+  @Column(DataType.STRING)
+  color: string
 
-  return Author
+  @ForeignKey(() => Note)
+  @NoteUserIndex
+  @Column(DataType.UUID)
+  noteId: string
+
+  @BelongsTo(() => Note, { foreignKey: 'noteId', onDelete: 'CASCADE', constraints: false, hooks: true })
+  note: Note
+
+  @ForeignKey(() => User)
+  @NoteUserIndex
+  @Column(DataType.UUID)
+  userId: string
+
+  @BelongsTo(() => User, { foreignKey: 'userId', onDelete: 'CASCADE', constraints: false, hooks: true })
+  user: User
 }
-
-export = createAuthorModel
