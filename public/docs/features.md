@@ -151,7 +151,7 @@ Use the syntax `[TOC]` to embed a table of contents into your note.
 
 You can type any emoji like this :smile: :smiley: :cry: :wink:
 
-> See full emoji list [here](http://www.emoji-cheat-sheet.com/).
+> See full emoji list [here](https://www.webfx.com/tools/emoji-cheat-sheet/).
 
 ### ToDo List
 
@@ -296,7 +296,7 @@ cond(yes)->e
 cond(no)->op2
 ```
 
-More information about **flow charts** syntax [here](http://adrai.github.io/flowchart.js/).
+More information about **flow charts** syntax [here](https://flowchart.js.org/).
 
 #### Graphviz
 
@@ -331,7 +331,7 @@ gantt
   Another task: 24d
 ```
 
-More information about **mermaid** syntax [here](http://knsv.github.io/mermaid)
+More information about **mermaid** syntax [here](https://mermaid-js.github.io/mermaid/)
 
 #### Abc Music Notation
 
