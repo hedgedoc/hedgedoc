@@ -22,7 +22,7 @@ export module NoteUtils {
         }
       }).then(function (note) {
         if (!note) {
-          return newNote(req, res, null)
+          return newNote(req, res, "")
         }
         if (!checkViewPermission(req, note)) {
           return errors.errorForbidden(res)
