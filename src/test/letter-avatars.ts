@@ -2,11 +2,13 @@
 
 'use strict'
 
+import { ImportMock } from 'ts-mock-imports'
+import * as configModule from '../lib/config'
+
 const assert = require('assert')
-const mock = require('mock-require')
+const avatars = require('../lib/letter-avatars')
 
 describe('generateAvatarURL() gravatar enabled', function () {
-  let avatars
   beforeEach(function () {
     // Reset config to make sure we don't influence other tests
     let testconfig = {
@@ -14,8 +16,7 @@ describe('generateAvatarURL() gravatar enabled', function () {
       serverURL: 'http://localhost:3000',
       port: 3000
     }
-    mock('../lib/config', testconfig)
-    avatars = mock.reRequire('../lib/letter-avatars')
+    ImportMock.mockOther(configModule, 'config', testconfig);
   })
 
   it('should return correct urls', function () {
@@ -29,7 +30,6 @@ describe('generateAvatarURL() gravatar enabled', function () {
 })
 
 describe('generateAvatarURL() gravatar disabled', function () {
-  let avatars
   beforeEach(function () {
     // Reset config to make sure we don't influence other tests
     let testconfig = {
@@ -37,8 +37,7 @@ describe('generateAvatarURL() gravatar disabled', function () {
       serverURL: 'http://localhost:3000',
       port: 3000
     }
-    mock('../lib/config', testconfig)
-    avatars = mock.reRequire('../lib/letter-avatars')
+    ImportMock.mockOther(configModule, 'config', testconfig);
   })
 
   it('should return correct urls', function () {
