@@ -81,9 +81,9 @@ function getHistory (userId, callback: (err: any, history: any) => void): void {
   })
 }
 
-function setHistory (userId: string, history: any, callback: (err: any | null, count: [number, User[]] | null) => void): void {
+function setHistory (userId: string, history: any[], callback: (err: any | null, count: [number, User[]] | null) => void): void {
   User.update({
-    history: JSON.stringify(parseHistoryMapToArray(history))
+    history: JSON.stringify(history)
   }, {
     where: {
       id: userId
