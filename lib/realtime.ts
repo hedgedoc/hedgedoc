@@ -947,7 +947,7 @@ function connection (socket) {
 
   // when a new client disconnect
   socket.on('disconnect', function () {
-    if (isDuplicatedInSocketQueue(socket, disconnectSocketQueue)) return
+    if (isDuplicatedInSocketQueue(disconnectSocketQueue, socket)) return
     disconnectSocketQueue.push(socket)
     disconnect(socket)
   })
