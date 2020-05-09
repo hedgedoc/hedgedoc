@@ -113,7 +113,7 @@ export class Note extends Model<Note> {
 
   @Column(DataType.TEXT)
   get title (): string {
-    return processData(this.getDataValue('title'), '')
+    return this.getDataValue('title') ?? ''
   }
 
   set title (value: string) {
@@ -122,7 +122,7 @@ export class Note extends Model<Note> {
 
   @Column(DataType.TEXT({ length: 'long' }))
   get content (): string {
-    return processData(this.getDataValue('content'), '')
+    return this.getDataValue('content') ?? ''
   }
 
   set content (value: string) {
