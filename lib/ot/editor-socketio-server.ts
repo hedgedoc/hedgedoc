@@ -1,5 +1,6 @@
 import { EventEmitter } from 'events'
 import { logger } from '../logger'
+import { SocketWithNoteId } from '../realtime'
 import Selection from './selection'
 import Server from './server'
 import TextOperation from './text-operation'
@@ -8,7 +9,7 @@ import WrappedOperation from './wrapped-operation'
 export class EditorSocketIOServer extends Server {
   private readonly users: {}
   private readonly docId: any
-  private mayWrite: any
+  private mayWrite: (socket: SocketWithNoteId, originIsOperation: boolean, callback: (mayEdit: boolean) => void) => void
 
   constructor (document, operations, docId, mayWrite, operationCallback) {
     super(document, operations)
@@ -16,7 +17,7 @@ export class EditorSocketIOServer extends Server {
     EventEmitter.call(this)
     this.users = {}
     this.docId = docId
-    this.mayWrite = mayWrite || function (_, cb) {
+    this.mayWrite = mayWrite || function (_, originIsOperation, cb) {
       cb(true)
     }
     this.operationCallback = operationCallback
@@ -32,8 +33,7 @@ export class EditorSocketIOServer extends Server {
     }
     socket.emit('doc', docOut)
     socket.on('operation', function (revision, operation, selection) {
-      socket.origin = 'operation'
-      self.mayWrite(socket, function (mayWrite) {
+      self.mayWrite(socket, true, function (mayWrite) {
         if (!mayWrite) {
           logger.info("User doesn't have the right to edit.")
           return
@@ -59,8 +59,7 @@ export class EditorSocketIOServer extends Server {
       self.onGetOperations(socket, base, head)
     })
     socket.on('selection', function (obj) {
-      socket.origin = 'selection'
-      self.mayWrite(socket, function (mayWrite) {
+      self.mayWrite(socket, false, function (mayWrite) {
         if (!mayWrite) {
           logger.info("User doesn't have the right to edit.")
           return
