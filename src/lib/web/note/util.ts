@@ -21,7 +21,7 @@ export function findNoteOrCreate (req, res, callback: (note: any) => void, inclu
       }
     }).then(function (note) {
       if (!note) {
-        return newNote(req, res, "")
+        return newNote(req, res, '')
       }
       if (!checkViewPermission(req, note)) {
         return errors.errorForbidden(res)

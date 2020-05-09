@@ -110,47 +110,47 @@ process.on('message', function (data: Data) {
     return logger.error('dmp worker error: not enough data')
   }
   switch (data.msg) {
-  case 'create patch':
-    if (data.lastDoc === undefined || data.currDoc === undefined) {
-      return logger.error('dmp worker error: not enough data on create patch')
-    }
-    try {
-      const patch: string = createPatch(data.lastDoc, data.currDoc)
-      processSend({
-        msg: 'check',
-        result: patch,
-        cacheKey: data.cacheKey
-      })
-    } catch (err) {
-      logger.error('create patch: dmp worker error', err)
-      processSend({
-        msg: 'error',
-        error: err,
-        cacheKey: data.cacheKey
-      })
-    }
-    break
-  case 'get revision':
-    if (data.revisions === undefined || data.count === undefined) {
-      return logger.error('dmp worker error: not enough data on get revision')
-    }
-    try {
+    case 'create patch':
+      if (data.lastDoc === undefined || data.currDoc === undefined) {
+        return logger.error('dmp worker error: not enough data on create patch')
+      }
+      try {
+        const patch: string = createPatch(data.lastDoc, data.currDoc)
+        processSend({
+          msg: 'check',
+          result: patch,
+          cacheKey: data.cacheKey
+        })
+      } catch (err) {
+        logger.error('create patch: dmp worker error', err)
+        processSend({
+          msg: 'error',
+          error: err,
+          cacheKey: data.cacheKey
+        })
+      }
+      break
+    case 'get revision':
+      if (data.revisions === undefined || data.count === undefined) {
+        return logger.error('dmp worker error: not enough data on get revision')
+      }
+      try {
       // eslint-disable-next-line @typescript-eslint/camelcase
-      const result: { content: string; patch: patch_obj[]; authorship: string } = getRevision(data.revisions, data.count)
-      processSend({
-        msg: 'check',
-        result: result,
-        cacheKey: data.cacheKey
-      })
-    } catch (err) {
-      logger.error('get revision: dmp worker error', err)
-      processSend({
-        msg: 'error',
-        error: err,
-        cacheKey: data.cacheKey
-      })
-    }
-    break
+        const result: { content: string; patch: patch_obj[]; authorship: string } = getRevision(data.revisions, data.count)
+        processSend({
+          msg: 'check',
+          result: result,
+          cacheKey: data.cacheKey
+        })
+      } catch (err) {
+        logger.error('get revision: dmp worker error', err)
+        processSend({
+          msg: 'error',
+          error: err,
+          cacheKey: data.cacheKey
+        })
+      }
+      break
   }
 })
 
