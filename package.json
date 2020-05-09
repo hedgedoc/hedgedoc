@@ -187,6 +187,7 @@
     "@types/passport-twitter": "^1.0.34",
     "@types/passport.socketio": "^3.7.2",
     "@types/randomcolor": "^0.5.4",
+    "@types/sinon": "^9.0.0",
     "@types/validator": "^13.0.0",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
