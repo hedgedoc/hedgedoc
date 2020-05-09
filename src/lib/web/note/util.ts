@@ -8,6 +8,41 @@ import { errors } from '../../errors'
 import { logger } from '../../logger'
 import { Note, User } from '../../models'
 
+export function newNote (req: any, res: Response, body: string | null) {
+  let owner = null
+  const noteId = req.params.noteId ? req.params.noteId : null
+  if (req.isAuthenticated()) {
+    owner = req.user.id
+  } else if (!config.allowAnonymous) {
+    return errors.errorForbidden(res)
+  }
+  if (config.allowFreeURL && noteId && !config.forbiddenNoteIDs.includes(noteId)) {
+    req.alias = noteId
+  } else if (noteId) {
+    return req.method === 'POST' ? errors.errorForbidden(res) : errors.errorNotFound(res)
+  }
+  Note.create({
+    ownerId: owner,
+    alias: req.alias ? req.alias : null,
+    content: body
+  }).then(function (note) {
+    return res.redirect(config.serverURL + '/' + (note.alias ? note.alias : Note.encodeNoteId(note.id)))
+  }).catch(function (err) {
+    logger.error(err)
+    return errors.errorInternalError(res)
+  })
+}
+
+export function checkViewPermission (req: any, note: any) {
+  if (note.permission === 'private') {
+    return req.isAuthenticated() && note.ownerId === req.user.id
+  } else if (note.permission === 'limited' || note.permission === 'protected') {
+    return req.isAuthenticated()
+  } else {
+    return true
+  }
+}
+
 export function findNoteOrCreate (req, res, callback: (note: any) => void, include?: Includeable[]) {
   const id = req.params.noteId || req.params.shortid
   Note.parseNoteId(id, function (err, _id) {
@@ -35,39 +70,11 @@ export function findNoteOrCreate (req, res, callback: (note: any) => void, inclu
   })
 }
 
-export function checkViewPermission (req: any, note: any) {
-  if (note.permission === 'private') {
-    return req.isAuthenticated() && note.ownerId === req.user.id
-  } else if (note.permission === 'limited' || note.permission === 'protected') {
-    return req.isAuthenticated()
-  } else {
-    return true
+function isRevealTheme (theme: string) {
+  if (fs.existsSync(path.join(__dirname, '..', '..', '..', 'public', 'build', 'reveal.js', 'css', 'theme', theme + '.css'))) {
+    return theme
   }
-}
-
-export function newNote (req: any, res: Response, body: string | null) {
-  let owner = null
-  const noteId = req.params.noteId ? req.params.noteId : null
-  if (req.isAuthenticated()) {
-    owner = req.user.id
-  } else if (!config.allowAnonymous) {
-    return errors.errorForbidden(res)
-  }
-  if (config.allowFreeURL && noteId && !config.forbiddenNoteIDs.includes(noteId)) {
-    req.alias = noteId
-  } else if (noteId) {
-    return req.method === 'POST' ? errors.errorForbidden(res) : errors.errorNotFound(res)
-  }
-  Note.create({
-    ownerId: owner,
-    alias: req.alias ? req.alias : null,
-    content: body
-  }).then(function (note) {
-    return res.redirect(config.serverURL + '/' + (note.alias ? note.alias : Note.encodeNoteId(note.id)))
-  }).catch(function (err) {
-    logger.error(err)
-    return errors.errorInternalError(res)
-  })
+  return undefined
 }
 
 export function getPublishData (req: any, res: Response, note: any, callback: (data: any) => void) {
@@ -101,11 +108,4 @@ export function getPublishData (req: any, res: Response, note: any, callback: (d
     opengraph: ogdata
   }
   callback(data)
-}
-
-function isRevealTheme (theme: string) {
-  if (fs.existsSync(path.join(__dirname, '..', '..', '..', 'public', 'build', 'reveal.js', 'css', 'theme', theme + '.css'))) {
-    return theme
-  }
-  return undefined
 }

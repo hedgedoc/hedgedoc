@@ -21,6 +21,8 @@ const debugConfig = {
 }
 
 // Get version string from package.json
+// TODO: There are other ways to geht the current version
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { version, repository } = require(path.join(appRootPath, 'package.json'))
 
 const commitID = getGitCommit(appRootPath)
