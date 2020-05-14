@@ -1,0 +1,20 @@
+{
+  "allowAnonymous": true,
+  "authProviders": {
+    "facebook": true,
+    "github": true,
+    "twitter": true,
+    "gitlab": true,
+    "dropbox": true,
+    "ldap": true,
+    "google": false,
+    "saml": false,
+    "oauth2": false,
+    "email": false
+  },
+  "specialLinks": {
+    "privacy": "test",
+    "termsOfUse": "test",
+    "imprint": "test"
+  }
+}

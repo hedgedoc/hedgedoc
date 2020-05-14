@@ -1,0 +1,48 @@
+.btn.btn-icon {
+  color: #FFFFFF;
+
+  @mixin button($color) {
+    background-color: $color;
+    &:hover {
+      background-color: darken($color, 10%);
+    }
+  }
+
+  &.btn-social-dropbox {
+    @include button(#1087DD);
+  }
+
+  &.btn-social-facebook {
+    @include button(#3B5998);
+  }
+
+  &.btn-social-github {
+    @include button(#444444);
+  }
+
+  &.btn-social-gitlab {
+    @include button(#FA7035);
+  }
+
+  &.btn-social-google {
+    @include button(#DD4B39);
+  }
+
+  &.btn-social-twitter {
+    @include button(#55ACEE);
+  }
+}
+
+.btn-social-button {
+  padding: 0.375rem 0.375rem;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  display: flex;
+
+  .social-icon {
+    font-size: 1.5em;
+  }
+}
+
+.btn-social-text {
+  padding: 0.375rem 0.75rem;
+}

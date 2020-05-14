@@ -1,0 +1,9 @@
+.header-nav {
+  .nav-link {
+    border-bottom: 2px solid transparent
+  }
+
+  .nav-link.active {
+    border-bottom-color: #fff;
+  }
+}
