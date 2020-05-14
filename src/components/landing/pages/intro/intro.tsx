@@ -17,7 +17,7 @@ const Intro: React.FC = () => {
                     <FontAwesomeIcon icon="file-alt"/> CodiMD
                 </h1>
                 <p className="lead mb-5">
-                    <Trans i18nKey="slogan"/>
+                    <Trans i18nKey="coverSlogan"/>
                 </p>
 
                 <div className="mb-5">
