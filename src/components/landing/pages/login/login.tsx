@@ -39,7 +39,12 @@ const Login: React.FC = () => {
                                     .filter((value) => authProviders[value])
                                     .map((value) => {
                                         return (
-                                            <Col xs={12} md={4} className="p-2 d-flex flex-column">
+                                            <Col
+                                                xs={12}
+                                                md={4}
+                                                className="p-2 d-flex flex-column"
+                                                key={value}
+                                            >
                                                 <ViaOAuth2 oauth2Type={value}/>
                                             </Col>
                                         )
