@@ -11,7 +11,7 @@ const LanguagePicker: React.FC = () => {
     }
 
     return (
-        <select className="ui-locale" value={i18n.language} onChange={onChangeLang}>
+        <select className="mb-2" value={i18n.language} onChange={onChangeLang}>
             <option value="en">English</option>
             <option value="zh-CN">简体中文</option>
             <option value="zh-TW">繁體中文</option>
