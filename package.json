@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "react_client",
   "version": "0.1.0",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
