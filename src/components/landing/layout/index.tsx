@@ -9,20 +9,19 @@ import "./style/index.scss";
 import {Login} from "../pages/login/login";
 
 export const Landing: React.FC = () => {
-    return (
-        <Container>
-            <HeaderBar/>
-            <Switch>
-                <Route path="/history">
-                    <History/>
-                </Route>
-                <Route path="/intro">
-                    <Intro/>
-                </Route>
-                <Route path="/login">
-                    <Login/>
-                </Route>
-            </Switch>
-            <Footer/>
-        </Container>);
+    return (<Container>
+        <HeaderBar/>
+        <Switch>
+            <Route path="/history">
+                <History/>
+            </Route>
+            <Route path="/intro">
+                <Intro/>
+            </Route>
+            <Route path="/login">
+                <Login/>
+            </Route>
+        </Switch>
+        <Footer/>
+    </Container>)
 }

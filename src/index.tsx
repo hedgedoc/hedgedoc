@@ -2,27 +2,23 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {BrowserRouter as Router} from 'react-router-dom'
 import * as serviceWorker from './service-worker';
-import {ApplicationStateStoreProvider} from "./redux/application-state-store-provider/application-state-store-provider";
-import {setUpI18n} from "./initializers/i18n";
-import {InitializeUserStateFromApi} from "./components/initialize/initialize-user-state-from-api";
 import {Landing} from "./components/landing/layout";
-import {setUpFontAwesome} from "./initializers/fontAwesome";
-import {InitializeConfigStateFromApi} from "./components/initialize/initalize-config-state-from-api";
+import {ApplicationLoader} from "./components/application-loader/application-loader";
+import {Provider} from "react-redux";
+import {store} from "./utils/store";
+import {setUp} from "./initializers";
 
-setUpFontAwesome();
-setUpI18n().then(
-    () => {
-        ReactDOM.render(
-            <ApplicationStateStoreProvider>
-                <InitializeUserStateFromApi/>
-                <InitializeConfigStateFromApi/>
-                <Router>
-                    <Landing/>
-                </Router>
-            </ApplicationStateStoreProvider>
-            , document.getElementById('root')
-        )
-    }
+const initTasks = setUp();
+
+ReactDOM.render(
+    <Provider store={store}>
+        <ApplicationLoader initTasks={initTasks}>
+            <Router>
+                <Landing/>
+            </Router>
+        </ApplicationLoader>
+    </Provider>
+    , document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

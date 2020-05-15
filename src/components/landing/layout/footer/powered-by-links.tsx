@@ -18,7 +18,7 @@ const PoweredByLinks: React.FC = () => {
         }
     ]
 
-    const config = useSelector((state: ApplicationState) => state.applicationConfig);
+    const config = useSelector((state: ApplicationState) => state.backendConfig);
 
     const specialLinks = Object.entries(config.specialLinks)
             .filter(([_, value]) => value !== "")

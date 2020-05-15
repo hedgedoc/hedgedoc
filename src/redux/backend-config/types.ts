@@ -1,9 +1,12 @@
-export interface ApplicationConfigState {
+import {Action} from "redux";
+
+export const SET_BACKEND_CONFIG_ACTION_TYPE = 'backend-config/set';
+
+export interface BackendConfigState {
     allowAnonymous: boolean,
     authProviders: AuthProvidersState,
     specialLinks: SpecialLinks,
 }
-
 
 export interface AuthProvidersState {
     facebook: true,
@@ -23,3 +26,12 @@ export interface SpecialLinks {
     termsOfUse: string,
     imprint: string,
 }
+
+export interface SetBackendConfigAction extends Action {
+    type: string;
+    payload: {
+        state: BackendConfigState;
+    };
+}
+
+export type BackendConfigActions = SetBackendConfigAction;

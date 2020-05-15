@@ -1,6 +1,12 @@
 import {Reducer} from 'redux';
-import {LoginStatus, UserState} from './types';
-import {CLEAR_USER_ACTION_TYPE, SET_USER_ACTION_TYPE, SetUserAction, UserActions} from "./actions";
+import {
+    CLEAR_USER_ACTION_TYPE,
+    LoginStatus,
+    SET_USER_ACTION_TYPE,
+    SetUserAction,
+    UserActions,
+    UserState
+} from './types';
 
 export const initialState: UserState = {
     id: "",

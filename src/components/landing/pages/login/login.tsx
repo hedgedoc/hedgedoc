@@ -9,7 +9,7 @@ import {ApplicationState} from "../../../../redux";
 
 const Login: React.FC = () => {
     useTranslation();
-    const authProviders = useSelector((state: ApplicationState) => state.applicationConfig.authProviders);
+    const authProviders = useSelector((state: ApplicationState) => state.backendConfig.authProviders);
 
     const emailForm = authProviders.email ? <ViaEMail/> : null
     const ldapForm = authProviders.ldap ? <ViaLdap/> : null

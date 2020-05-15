@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import {Navbar} from 'react-bootstrap';
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../../../../redux";
@@ -27,19 +27,19 @@ const HeaderBar: React.FC = () => {
             </div>
             <div className="d-inline-flex">
                 {user.status === LoginStatus.forbidden ?
-                    <>
+                    <Fragment>
                         <span className={"mr-1"}>
                             <NewGuestNoteButton/>
                         </span>
                         <SignInButton/>
-                    </>
+                    </Fragment>
                     :
-                    <>
+                    <Fragment>
                         <span className={"mr-1"}>
                             <NewUserNoteButton/>
                         </span>
                         <UserDropdown/>
-                    </>
+                    </Fragment>
                 }
             </div>
         </Navbar>

@@ -1,6 +1,5 @@
 import {Reducer} from 'redux';
-import {ModalShowState} from './types';
-import {ModalShowActions, SET_HISTORY_DELETE_MODAL_SHOW_ACTION_TYPE} from "./actions";
+import {ModalShowActions, ModalShowState, SET_HISTORY_DELETE_MODAL_SHOW_ACTION_TYPE} from './types';
 
 export const initialState: ModalShowState = {
     historyDelete: false

@@ -1,13 +1,11 @@
 import {Trans, useTranslation} from "react-i18next";
-import {Button, Form, Alert} from "react-bootstrap";
+import {Alert, Button, Form} from "react-bootstrap";
 import React, {Fragment, useState} from "react";
 import {postEmailLogin} from "../../../../../api/user";
-import {useDispatch} from "react-redux";
-import {getAndSetUser} from "../../../../initialize/initialize-user-state-from-api";
+import {getAndSetUser} from "../../../../../utils/apiUtils";
 
 const ViaEMail: React.FC = () => {
     const {t} = useTranslation();
-    const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(false);
@@ -15,10 +13,11 @@ const ViaEMail: React.FC = () => {
         postEmailLogin(email, password)
             .then(loginJson => {
                 console.log(loginJson)
-                getAndSetUser(dispatch);
-        }).catch(_reason => {
+                getAndSetUser();
+            }).catch(_reason => {
                 setError(true);
-        })
+            }
+        )
         event.preventDefault();
     }
 
@@ -55,8 +54,7 @@ const ViaEMail: React.FC = () => {
                 <Button
                     type="submit"
                     size="sm"
-                    variant="primary"
-                >
+                    variant="primary">
                     <Trans i18nKey="signIn"/>
                 </Button>
             </Form>
@@ -64,4 +62,4 @@ const ViaEMail: React.FC = () => {
     );
 }
 
-export { ViaEMail }
+export {ViaEMail}
