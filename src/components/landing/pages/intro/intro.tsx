@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import screenshot from './img/screenshot.png';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Button} from 'react-bootstrap';
 import {Trans, useTranslation} from "react-i18next";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {ApplicationState} from "../../../../redux";
 
 const Intro: React.FC = () => {
     // ToDo replace this with comment
     const url = "http://localhost:3000";//useServerUrl();
     useTranslation();
+    const user = useSelector((state: ApplicationState) => state.user);
 
     return (
         <div id="home" className="section">
@@ -20,33 +23,40 @@ const Intro: React.FC = () => {
                     <Trans i18nKey="coverSlogan"/>
                 </p>
 
-                <div className="mb-5">
-                    <Link to="/login">
-                        <Button
-                            variant="success"
-                            size="lg"
-                            style={{minWidth: "200px"}}
-                        >
-                            <Trans i18nKey="signIn"/>
-                        </Button>
-                    </Link>
+                {
+                    user.status === "forbidden" ?
+                        <Fragment>
+                            <div className="mb-5">
+                                <Link to="/login">
+                                    <Button
+                                        variant="success"
+                                        size="lg"
+                                        style={{minWidth: "200px"}}
+                                    >
+                                        <Trans i18nKey="signIn"/>
+                                    </Button>
+                                </Link>
 
 
-                    <span className="m-2">
-                        or
-                    </span>
+                                <span className="m-2">
+                                    or
+                                </span>
 
-                    <Button
-                        variant="primary"
-                        size="lg"
-                        href={`${url}/features`}
-                        style={{minWidth: "200px"}}
-                    >
-                        <Trans i18nKey="exploreFeatures"/>
-                    </Button>
-                </div>
+                                <Button
+                                    variant="primary"
+                                    size="lg"
+                                    href={`${url}/features`}
+                                    style={{minWidth: "200px"}}
+                                >
+                                    <Trans i18nKey="exploreFeatures"/>
+                                </Button>
+                            </div>
 
-                <img alt="CodiMD Screenshot" src={screenshot} className="screenshot img-fluid mb-5"/>
+                            <img alt="CodiMD Screenshot" src={screenshot} className="screenshot img-fluid mb-5"/>
+                        </Fragment>
+                    :
+                        null
+                }
 
                 <div className="lead row mb-5" style={{width: '90%', margin: '0 auto'}}>
                     <div className="col-md-4 inner">
