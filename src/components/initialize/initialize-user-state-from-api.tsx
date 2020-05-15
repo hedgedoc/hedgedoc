@@ -3,9 +3,9 @@ import {getMe} from "../../api/user";
 import {setUser} from "../../redux/user/actions";
 import {LoginStatus, UserState} from "../../redux/user/types";
 import React from "react";
+import {Dispatch} from "redux";
 
-const InitializeUserStateFromApi: React.FC = () => {
-    const dispatch = useDispatch();
+export const getAndSetUser = (dispatch: Dispatch<any>) => {
     getMe()
         .then((me) => {
             if (me.status === 200) {
@@ -23,6 +23,11 @@ const InitializeUserStateFromApi: React.FC = () => {
                 photo: user.photo,
             }));
         });
+}
+
+const InitializeUserStateFromApi: React.FC = () => {
+    const dispatch = useDispatch();
+    getAndSetUser(dispatch);
 
     return null;
 }

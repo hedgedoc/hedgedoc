@@ -118,5 +118,9 @@
   "poweredBy": "Betrieben mit <0></0>",
   "Help us translating": "Hilf uns beim Übersetzen",
   "Join the community": "Tritt der Community bei",
-  "imprint": "Impressum"
+  "imprint": "Impressum",
+  "errorEmailLogin": "E-Mail oder Passwort nicht korrekt",
+  "errorLdapLogin": "Benutzername oder Passwort nicht korrekt",
+  "email": "E-Mail",
+  "password": "Passwort"
 }

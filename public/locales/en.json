@@ -118,5 +118,9 @@
   "poweredBy": "Powered by <0></0>",
   "Help us translating": "Help us translating",
   "Join the community": "Join the community",
-  "imprint": "Imprint"
+  "imprint": "Imprint",
+  "errorEmailLogin": "Invalid email or password",
+  "errorLdapLogin": "Invalid username or password",
+  "email": "Email",
+  "password": "Password"
 }

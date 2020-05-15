@@ -1,33 +1,61 @@
 import {Trans, useTranslation} from "react-i18next";
-import {Button, Form} from "react-bootstrap";
-import React, { Fragment } from "react";
+import {Button, Form, Alert} from "react-bootstrap";
+import React, {Fragment, useState} from "react";
+import {postEmailLogin} from "../../../../../api/user";
 import {useDispatch} from "react-redux";
-import {setUser} from "../../../../../redux/user/actions";
-import {LoginStatus} from "../../../../../redux/user/types";
+import {getAndSetUser} from "../../../../initialize/initialize-user-state-from-api";
 
 const ViaEMail: React.FC = () => {
-    useTranslation();
+    const {t} = useTranslation();
     const dispatch = useDispatch();
-    const login = () => {
-        dispatch(setUser({photo: "https://robohash.org/testy.png", name: "Test", status: LoginStatus.ok}));
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState(false);
+    const login = (event: any) => {
+        postEmailLogin(email, password)
+            .then(loginJson => {
+                console.log(loginJson)
+                getAndSetUser(dispatch);
+        }).catch(_reason => {
+                setError(true);
+        })
+        event.preventDefault();
     }
+
     return (
         <Fragment>
             <h5 className="center">
                 <Trans i18nKey="signInVia" values={{service: "E-Mail"}}/>
             </h5>
-            <Form>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Control type="email" size="sm" placeholder="E-Mail" />
+            <Form onSubmit={login}>
+                <Form.Group controlId="email">
+                    <Form.Control
+                        isInvalid={error}
+                        type="email"
+                        size="sm"
+                        placeholder={t("email")}
+                        onChange={(event) => setEmail(event.currentTarget.value)}
+                    />
                 </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Control type="password" size="sm" placeholder="Password" />
+                <Form.Group controlId="password">
+                    <Form.Control
+                        isInvalid={error}
+                        type="password"
+                        size="sm"
+                        placeholder={t("password")}
+                        onChange={(event) => setPassword(event.currentTarget.value)}
+                    />
                 </Form.Group>
+
+                <Alert className="small" show={error} variant="danger">
+                    <Trans i18nKey="errorEmailLogin"/>
+                </Alert>
+
                 <Button
+                    type="submit"
                     size="sm"
                     variant="primary"
-                    onClick={login}
                 >
                     <Trans i18nKey="signIn"/>
                 </Button>

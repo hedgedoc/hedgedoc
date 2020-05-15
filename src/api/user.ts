@@ -17,5 +17,11 @@ export const postEmailLogin = async (email: string, password: string) => {
                email: email,
                password: password,
           })
-     });
+     }).then(response => {
+          if (response.status !== 200) {
+               return Promise.reject("Response code not 200");
+          } else {
+               return response.json();
+          }
+     })
 }

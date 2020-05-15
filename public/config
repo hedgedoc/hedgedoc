@@ -10,7 +10,7 @@
     "google": false,
     "saml": false,
     "oauth2": false,
-    "email": false
+    "email": true
   },
   "specialLinks": {
     "privacy": "test",
