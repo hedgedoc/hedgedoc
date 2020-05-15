@@ -6,6 +6,7 @@ import {store} from "./store";
 export const getAndSetUser = () => {
     getMe()
         .then(expectResponseCode())
+        .then(response => response.json())
         .then(user => {
             if (!user) {
                 return;
