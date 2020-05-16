@@ -1,10 +1,12 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
+import moment from "moment";
 
 const LanguagePicker: React.FC = () => {
     const {i18n} = useTranslation();
 
     const onChangeLang = (event:  React.ChangeEvent<HTMLSelectElement>) => {
+        moment.locale(event.currentTarget.value);
         i18n.changeLanguage(event.currentTarget.value);
     }
 
