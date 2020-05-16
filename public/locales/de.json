@@ -122,5 +122,6 @@
   "errorEmailLogin": "E-Mail oder Passwort nicht korrekt",
   "errorLdapLogin": "Benutzername oder Passwort nicht korrekt",
   "email": "E-Mail",
-  "password": "Passwort"
+  "password": "Passwort",
+  "username": "Benutzername"
 }

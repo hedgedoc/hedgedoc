@@ -4,7 +4,7 @@ import {BackendConfigActions, BackendConfigState, SET_BACKEND_CONFIG_ACTION_TYPE
 export const initialState: BackendConfigState = {
     allowAnonymous: true,
     authProviders: {
-        facebook: true,
+        facebook: false,
         github: false,
         twitter: false,
         gitlab: false,
@@ -14,6 +14,9 @@ export const initialState: BackendConfigState = {
         saml: false,
         oauth2: false,
         email: false
+    },
+    customAuthNames: {
+      ldap: ""
     },
     specialLinks: {
         privacy: "",

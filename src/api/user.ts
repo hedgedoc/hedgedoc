@@ -23,3 +23,23 @@ export const postEmailLogin = async (email: string, password: string) => {
         .then(expectResponseCode())
         .then(response => response.json());
 }
+
+export const postLdapLogin = async (username: string, password: string) => {
+    return fetch(getBackendUrl() + "/auth/ldap", {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify({
+            username: username,
+            password: password,
+        })
+    })
+        .then(expectResponseCode())
+        .then(response => response.json());
+}

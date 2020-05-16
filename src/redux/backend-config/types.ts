@@ -5,20 +5,25 @@ export const SET_BACKEND_CONFIG_ACTION_TYPE = 'backend-config/set';
 export interface BackendConfigState {
     allowAnonymous: boolean,
     authProviders: AuthProvidersState,
+    customAuthNames: CustomAuthNames,
     specialLinks: SpecialLinks,
 }
 
 export interface AuthProvidersState {
-    facebook: true,
-    github: false,
-    twitter: false,
-    gitlab: false,
-    dropbox: false,
-    ldap: false,
-    google: false,
-    saml: false,
-    oauth2: false,
-    email: false,
+    facebook: boolean,
+    github: boolean,
+    twitter: boolean,
+    gitlab: boolean,
+    dropbox: boolean,
+    ldap: boolean,
+    google: boolean,
+    saml: boolean,
+    oauth2: boolean,
+    email: boolean,
+}
+
+export interface CustomAuthNames {
+    ldap: string;
 }
 
 export interface SpecialLinks {

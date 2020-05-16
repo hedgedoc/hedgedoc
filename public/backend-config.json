@@ -12,6 +12,9 @@
     "oauth2": false,
     "email": true
   },
+  "customAuthNames": {
+    "ldap": "FooBar"
+  },
   "specialLinks": {
     "privacy": "test",
     "termsOfUse": "test",
