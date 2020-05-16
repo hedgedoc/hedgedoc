@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express'
 import passport from 'passport'
-import * as DropboxStrategy from 'passport-dropbox-oauth2'
+import { Strategy as DropboxStrategy } from 'passport-dropbox-oauth2'
 import { config } from '../../../config'
 import { AuthMiddleware } from '../interface'
 import { passportGeneralCallback } from '../utils'
