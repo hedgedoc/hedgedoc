@@ -20,12 +20,13 @@ export interface AuthProvidersState {
     saml: boolean,
     oauth2: boolean,
     email: boolean,
+    openid: boolean,
 }
 
 export interface CustomAuthNames {
     ldap: string;
-    saml: string;
     oauth2: string;
+    saml: string;
 }
 
 export interface SpecialLinks {

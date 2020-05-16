@@ -43,3 +43,22 @@ export const postLdapLogin = async (username: string, password: string) => {
         .then(expectResponseCode())
         .then(response => response.json());
 }
+
+export const postOpenIdLogin = async (openId: string) => {
+    return fetch(getBackendUrl() + "/auth/openid", {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify({
+            openId: openId
+        })
+    })
+        .then(expectResponseCode())
+        .then(response => response.json());
+}

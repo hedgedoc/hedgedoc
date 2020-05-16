@@ -6,6 +6,7 @@ import {OneClickType, ViaOneClick} from "./auth/via-one-click";
 import {ViaLdap} from "./auth/via-ldap";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../../../redux";
+import {ViaOpenId} from "./auth/via-open id";
 
 const Login: React.FC = () => {
     useTranslation();
@@ -13,7 +14,9 @@ const Login: React.FC = () => {
     const customAuthNames = useSelector((state: ApplicationState) => state.backendConfig.customAuthNames);
     const emailForm = authProviders.email ? <ViaEMail/> : null
     const ldapForm = authProviders.ldap ? <ViaLdap/> : null
+    const openIdForm = authProviders.openid ? <ViaOpenId/> : null
     const emailLdapSeparator = authProviders.email && authProviders.ldap ? <hr className="w-100 bg-white"/> : null
+    const ldapOpenIdSeparator = authProviders.ldap && authProviders.openid ? <hr className="w-100 bg-white"/> : null
 
     const oneClickCustomName: (type: OneClickType) => string | undefined = (type) => {
         switch (type) {
@@ -36,6 +39,8 @@ const Login: React.FC = () => {
                                 {emailForm}
                                 {emailLdapSeparator}
                                 {ldapForm}
+                                {ldapOpenIdSeparator}
+                                {openIdForm}
                                 <hr className="w-100 d-lg-none d-block bg-white"/>
                             </Col>
                             : null

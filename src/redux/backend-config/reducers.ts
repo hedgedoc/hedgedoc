@@ -13,12 +13,13 @@ export const initialState: BackendConfigState = {
         google: false,
         saml: false,
         oauth2: false,
-        email: false
+        email: false,
+        openid: false
     },
     customAuthNames: {
         ldap: "",
-        saml: "",
-        oauth2: ""
+        oauth2: "",
+        saml: ""
     },
     specialLinks: {
         privacy: "",

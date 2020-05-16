@@ -10,12 +10,13 @@
     "google": true,
     "saml": true,
     "oauth2": true,
-    "email": true
+    "email": true,
+    "openid": true
   },
   "customAuthNames": {
     "ldap": "FooBar",
-    "saml": "aufSAMLn.de",
-    "oauth2": "Olaf2"
+    "oauth2": "Olaf2",
+    "saml": "aufSAMLn.de"
   },
   "specialLinks": {
     "privacy": "test",

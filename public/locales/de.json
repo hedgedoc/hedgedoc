@@ -123,5 +123,6 @@
   "errorLdapLogin": "Benutzername oder Passwort nicht korrekt",
   "email": "E-Mail",
   "password": "Passwort",
-  "username": "Benutzername"
+  "username": "Benutzername",
+  "errorOpenIdLogin": "OpenID nicht korrekt"
 }
