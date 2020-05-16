@@ -1,5 +1,6 @@
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {
+    faAddressCard,
     faBolt,
     faChartBar,
     faClock,
@@ -8,7 +9,6 @@ import {
     faFileAlt,
     faGlobe,
     faPlus,
-    faShare,
     faSignOutAlt,
     faThumbtack,
     faTimes,
@@ -31,5 +31,5 @@ export function setUpFontAwesome() {
     library.add(faBolt, faPlus, faChartBar, faTv, faFileAlt, faCloudDownloadAlt,
         faTrash, faSignOutAlt, faComment, faDiscourse, faMastodon, faGlobe,
         faThumbtack, faClock, faTimes, faGithub, faGitlab, faGoogle, faFacebook,
-        faDropbox, faTwitter, faShare, faUsers)
+        faDropbox, faTwitter, faUsers, faAddressCard)
 }

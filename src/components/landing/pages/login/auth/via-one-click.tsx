@@ -64,7 +64,7 @@ const getMetadata: OneClick2Map = (oneClickType: OneClickType) => {
         case OneClickType.OAUTH2:
             return {
                 name: "OAuth2",
-                icon: "share",
+                icon: "address-card",
                 className: "btn-primary",
                 url: buildBackendAuthUrl("oauth2")
             }
