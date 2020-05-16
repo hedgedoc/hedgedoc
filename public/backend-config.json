@@ -7,13 +7,15 @@
     "gitlab": true,
     "dropbox": true,
     "ldap": true,
-    "google": false,
-    "saml": false,
-    "oauth2": false,
+    "google": true,
+    "saml": true,
+    "oauth2": true,
     "email": true
   },
   "customAuthNames": {
-    "ldap": "FooBar"
+    "ldap": "FooBar",
+    "saml": "aufSAMLn.de",
+    "oauth2": "Olaf2"
   },
   "specialLinks": {
     "privacy": "test",

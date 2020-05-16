@@ -16,7 +16,9 @@ export const initialState: BackendConfigState = {
         email: false
     },
     customAuthNames: {
-      ldap: ""
+        ldap: "",
+        saml: "",
+        oauth2: ""
     },
     specialLinks: {
         privacy: "",

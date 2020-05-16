@@ -10,10 +10,21 @@ import {ApplicationState} from "../../../../redux";
 const Login: React.FC = () => {
     useTranslation();
     const authProviders = useSelector((state: ApplicationState) => state.backendConfig.authProviders);
-
+    const customAuthNames = useSelector((state: ApplicationState) => state.backendConfig.customAuthNames);
     const emailForm = authProviders.email ? <ViaEMail/> : null
     const ldapForm = authProviders.ldap ? <ViaLdap/> : null
     const emailLdapSeperator = authProviders.email && authProviders.ldap ? <hr className="w-100 bg-white"/> : null
+
+    const oauth2CustomName: (type: OAuth2Type) => string | undefined = (type) => {
+        switch (type) {
+            case OAuth2Type.SAML:
+                return customAuthNames.saml;
+            case OAuth2Type.OAUTH2:
+                return customAuthNames.oauth2;
+            default:
+                return undefined;
+        }
+    }
 
     return (
         <Jumbotron className="bg-dark">
@@ -45,7 +56,10 @@ const Login: React.FC = () => {
                                                 className="p-2 d-flex flex-column"
                                                 key={value}
                                             >
-                                                <ViaOAuth2 oauth2Type={value}/>
+                                                <ViaOAuth2
+                                                    oauth2Type={value}
+                                                    optionalName={oauth2CustomName(value)}
+                                                />
                                             </Col>
                                         )
                                     })

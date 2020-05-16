@@ -63,7 +63,7 @@ const getMetadata: OAuth2Map = (oauth2type: OAuth2Type) => {
             }
         case OAuth2Type.OAUTH2:
             return {
-                name: "oAuth2",
+                name: "OAuth2",
                 icon: "share",
                 className: "btn-primary",
                 url: buildBackendAuthUrl("oauth2")
