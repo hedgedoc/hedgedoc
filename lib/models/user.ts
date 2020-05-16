@@ -36,7 +36,7 @@ export type Profile = {
   id: string;
   username: string;
   displayName: string;
-  emails: any[];
+  emails: string[];
   avatarUrl: string;
   profileUrl: string;
   provider: ProviderEnum;
@@ -125,7 +125,7 @@ export class User extends Model<User> {
         }
         break
       case ProviderEnum.dropbox:
-        photo = generateAvatarURL('', profile.emails[0].value, bigger)
+        photo = generateAvatarURL('', profile.emails[0], bigger)
         break
       case ProviderEnum.google:
         photo = profile.photos[0].value
