@@ -41,7 +41,7 @@ export function loadHistoryFromLocalStore(): HistoryEntry[] {
         // if localStorage["history"] is empty we check the old localStorage["notehistory"]
         // and convert it to the new format
         const oldHistoryJsonString = window.localStorage.getItem("notehistory")
-        const oldHistory = oldHistoryJsonString ? JSON.parse(JSON.parse(oldHistoryJsonString)) : [];
+        const oldHistory = !!oldHistoryJsonString ? JSON.parse(JSON.parse(oldHistoryJsonString)) : [];
         return oldHistory.map((entry: OldHistoryEntry) => {
             return {
                 id: entry.id,
