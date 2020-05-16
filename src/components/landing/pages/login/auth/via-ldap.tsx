@@ -32,7 +32,7 @@ const ViaLdap: React.FC = () => {
                 <Trans i18nKey="signInVia" values={{service: name}}/>
             </h5>
             <Form onSubmit={login}>
-                <Form.Group controlId="email">
+                <Form.Group controlId="username">
                     <Form.Control
                         isInvalid={error}
                         type="text"
