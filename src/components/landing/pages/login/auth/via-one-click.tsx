@@ -2,7 +2,7 @@ import React from "react";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import {IconButton} from "./icon-button/icon-button";
 
-export enum OAuth2Type {
+export enum OneClickType {
     'DROPBOX'="dropbox",
     'FACEBOOK'="facebook",
     'GITHUB'="github",
@@ -13,7 +13,7 @@ export enum OAuth2Type {
     'TWITTER'="twitter"
 }
 
-type OAuth2Map = (oauth2type: OAuth2Type) => {
+type OneClick2Map = (oneClickType: OneClickType) => {
     name: string,
     icon: IconProp,
     className: string,
@@ -24,58 +24,58 @@ const buildBackendAuthUrl = (backendName: string) => {
     return `https://localhost:3000/auth/${backendName}`
 };
 
-const getMetadata: OAuth2Map = (oauth2type: OAuth2Type) => {
-    switch (oauth2type) {
-        case OAuth2Type.DROPBOX:
+const getMetadata: OneClick2Map = (oneClickType: OneClickType) => {
+    switch (oneClickType) {
+        case OneClickType.DROPBOX:
             return {
                 name: "Dropbox",
                 icon: ["fab", "dropbox"],
                 className: "btn-social-dropbox",
                 url: buildBackendAuthUrl("dropbox")
             }
-        case OAuth2Type.FACEBOOK:
+        case OneClickType.FACEBOOK:
             return {
                 name: "Facebook",
                 icon: ["fab", "facebook"],
                 className: "btn-social-facebook",
                 url: buildBackendAuthUrl("facebook")
             }
-        case OAuth2Type.GITHUB:
+        case OneClickType.GITHUB:
             return {
                 name: "GitHub",
                 icon: ["fab", "github"],
                 className: "btn-social-github",
                 url: buildBackendAuthUrl("github")
             }
-        case OAuth2Type.GITLAB:
+        case OneClickType.GITLAB:
             return {
                 name: "GitLab",
                 icon: ["fab", "gitlab"],
                 className: "btn-social-gitlab",
                 url: buildBackendAuthUrl("gitlab")
             }
-        case OAuth2Type.GOOGLE:
+        case OneClickType.GOOGLE:
             return {
                 name: "Google",
                 icon: ["fab", "google"],
                 className: "btn-social-google",
                 url: buildBackendAuthUrl("google")
             }
-        case OAuth2Type.OAUTH2:
+        case OneClickType.OAUTH2:
             return {
                 name: "OAuth2",
                 icon: "share",
                 className: "btn-primary",
                 url: buildBackendAuthUrl("oauth2")
             }
-        case OAuth2Type.SAML:
+        case OneClickType.SAML:
             return {
                 name: "SAML",
                 icon: "users",
                 className: "btn-success",
                 url: buildBackendAuthUrl("saml")
             }
-        case OAuth2Type.TWITTER:
+        case OneClickType.TWITTER:
             return {
                 name: "Twitter",
                 icon: ["fab", "twitter"],
@@ -92,13 +92,13 @@ const getMetadata: OAuth2Map = (oauth2type: OAuth2Type) => {
     }
 }
 
-export interface ViaOAuth2Props {
-    oauth2Type: OAuth2Type;
+export interface ViaOneClickProps {
+    oneClickType: OneClickType;
     optionalName?: string;
 }
 
-const ViaOAuth2: React.FC<ViaOAuth2Props> = ({oauth2Type, optionalName}) => {
-    const {name, icon, className, url} = getMetadata(oauth2Type);
+const ViaOneClick: React.FC<ViaOneClickProps> = ({oneClickType, optionalName}) => {
+    const {name, icon, className, url} = getMetadata(oneClickType);
     const text = !!optionalName ? optionalName : name;
     return (
         <IconButton
@@ -112,4 +112,4 @@ const ViaOAuth2: React.FC<ViaOAuth2Props> = ({oauth2Type, optionalName}) => {
     )
 }
 
-export {ViaOAuth2}
+export {ViaOneClick}

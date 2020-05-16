@@ -2,7 +2,7 @@ import React from "react"
 import {Col, Jumbotron, Row} from "react-bootstrap"
 import {Trans, useTranslation} from "react-i18next";
 import {ViaEMail} from "./auth/via-email";
-import {OAuth2Type, ViaOAuth2} from "./auth/via-oauth2";
+import {OneClickType, ViaOneClick} from "./auth/via-one-click";
 import {ViaLdap} from "./auth/via-ldap";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../../../redux";
@@ -13,13 +13,13 @@ const Login: React.FC = () => {
     const customAuthNames = useSelector((state: ApplicationState) => state.backendConfig.customAuthNames);
     const emailForm = authProviders.email ? <ViaEMail/> : null
     const ldapForm = authProviders.ldap ? <ViaLdap/> : null
-    const emailLdapSeperator = authProviders.email && authProviders.ldap ? <hr className="w-100 bg-white"/> : null
+    const emailLdapSeparator = authProviders.email && authProviders.ldap ? <hr className="w-100 bg-white"/> : null
 
-    const oauth2CustomName: (type: OAuth2Type) => string | undefined = (type) => {
+    const oneClickCustomName: (type: OneClickType) => string | undefined = (type) => {
         switch (type) {
-            case OAuth2Type.SAML:
+            case OneClickType.SAML:
                 return customAuthNames.saml;
-            case OAuth2Type.OAUTH2:
+            case OneClickType.OAUTH2:
                 return customAuthNames.oauth2;
             default:
                 return undefined;
@@ -34,7 +34,7 @@ const Login: React.FC = () => {
                         authProviders.email || authProviders.ldap ?
                             <Col xs={12} sm={10} lg={3}>
                                 {emailForm}
-                                {emailLdapSeperator}
+                                {emailLdapSeparator}
                                 {ldapForm}
                                 <hr className="w-100 d-lg-none d-block bg-white"/>
                             </Col>
@@ -46,7 +46,7 @@ const Login: React.FC = () => {
                         </h5>
                         <div className={"d-flex flex-wrap one-click-login justify-content-center"}>
                             {
-                                Object.values(OAuth2Type)
+                                Object.values(OneClickType)
                                     .filter((value) => authProviders[value])
                                     .map((value) => {
                                         return (
@@ -56,9 +56,9 @@ const Login: React.FC = () => {
                                                 className="p-2 d-flex flex-column"
                                                 key={value}
                                             >
-                                                <ViaOAuth2
-                                                    oauth2Type={value}
-                                                    optionalName={oauth2CustomName(value)}
+                                                <ViaOneClick
+                                                    oneClickType={value}
+                                                    optionalName={oneClickCustomName(value)}
                                                 />
                                             </Col>
                                         )
