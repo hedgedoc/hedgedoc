@@ -7,6 +7,7 @@ import {ViaLdap} from "./auth/via-ldap";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../../../redux";
 import {ViaOpenId} from "./auth/via-open id";
+import "./login.scss";
 
 const Login: React.FC = () => {
     useTranslation();
@@ -55,17 +56,15 @@ const Login: React.FC = () => {
                                     .filter((value) => authProviders[value])
                                     .map((value) => {
                                         return (
-                                            <Col
-                                                xs={12}
-                                                md={4}
-                                                className="p-2 d-flex flex-column"
+                                            <div
+                                                className="p-2 d-flex flex-column social-button-container"
                                                 key={value}
                                             >
                                                 <ViaOneClick
                                                     oneClickType={value}
                                                     optionalName={oneClickCustomName(value)}
                                                 />
-                                            </Col>
+                                            </div>
                                         )
                                     })
                             }
