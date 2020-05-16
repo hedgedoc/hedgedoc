@@ -25,7 +25,7 @@
   "Import history": "Importhistorik",
   "Clear history": "Rensa historik",
   "Refresh history": "Uppdatera historik",
-  "No history": "Ingen historik",
+  "noHistory": "Ingen historik",
   "Import from browser": "Importera från webbläsare",
   "releases": "Lanseringar",
   "Are you sure?": "Är du säker?",

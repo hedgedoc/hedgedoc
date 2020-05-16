@@ -25,7 +25,7 @@
   "Import history": "Nhập lịch sử",
   "Clear history": "Xóa lịch sử",
   "Refresh history": "Làm mới lịch sử",
-  "No history": "Không có lịch sử",
+  "noHistory": "Không có lịch sử",
   "Import from browser": "Nhập từ trình duyệt",
   "releases": "Xuất bản",
   "Are you sure?": "Bạn có chắc chắn không ?",

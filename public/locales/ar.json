@@ -25,7 +25,7 @@
   "Import history": "استيراد التاريخ",
   "Clear history": "مسح التاريخ",
   "Refresh history": "حدث التاريخ",
-  "No history": "ليس هناك سِجِل",
+  "noHistory": "ليس هناك سِجِل",
   "Import from browser": "استيراد من المتصفح",
   "releases": "إصدارات",
   "Are you sure?": "هل أنت واثق؟",

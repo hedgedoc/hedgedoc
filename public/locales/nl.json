@@ -25,7 +25,7 @@
   "Import history": "Importeer geschiedenis",
   "Clear history": "Verwijder geschiedenis",
   "Refresh history": "Ververs geschiedenis",
-  "No history": "Geen geschidenis gevonden",
+  "noHistory": "Geen geschidenis gevonden",
   "Import from browser": "Importeer van browser",
   "releases": "Versies",
   "Are you sure?": "Weet je het zeker?",

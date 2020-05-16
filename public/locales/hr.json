@@ -25,7 +25,7 @@
   "Import history": "Uvezi povijest",
   "Clear history": "Očisti povijest",
   "Refresh history": "Osvježi povijest",
-  "No history": "Nema povijesti",
+  "noHistory": "Nema povijesti",
   "Import from browser": "Uvezi iz preglednika",
   "releases": "Izdanja",
   "Are you sure?": "Jeste li sigurni?",

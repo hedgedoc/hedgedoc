@@ -25,7 +25,7 @@
   "Import history": "匯入紀錄",
   "Clear history": "清空紀錄",
   "Refresh history": "更新紀錄",
-  "No history": "沒有紀錄",
+  "noHistory": "沒有紀錄",
   "Import from browser": "從瀏覽器匯入",
   "releases": "版本",
   "Are you sure?": "你確定嗎？",

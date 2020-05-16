@@ -25,7 +25,7 @@
   "Import history": "Εισαγωγή ιστορίας",
   "Clear history": "Καθαρισμός Ιστορίας",
   "Refresh history": "Ανανέωση ιστορίας",
-  "No history": "Δεν υπάρχει ιστορία",
+  "noHistory": "Δεν υπάρχει ιστορία",
   "Import from browser": "Εισαγωγή απο τον περιηγητή",
   "releases": "Κυκλοφορίες",
   "Are you sure?": "Είστε σίγουρος?",

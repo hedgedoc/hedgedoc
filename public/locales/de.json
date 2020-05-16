@@ -25,7 +25,7 @@
   "Import history": "Verlauf importieren",
   "Clear history": "Verlauf löschen",
   "Refresh history": "Verlauf aktualisieren",
-  "No history": "Kein Verlauf",
+  "noHistory": "Kein Verlauf",
   "Import from browser": "Vom Browser importieren",
   "releases": "Versionen",
   "Are you sure?": "Sind Sie sicher?",

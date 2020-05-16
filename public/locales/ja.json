@@ -25,7 +25,7 @@
   "Import history": "履歴をインポート",
   "Clear history": "履歴をクリア",
   "Refresh history": "履歴を更新",
-  "No history": "履歴はありません",
+  "noHistory": "履歴はありません",
   "Import from browser": "ブラウザからインポート",
   "releases": "リリース",
   "Are you sure?": "本当にいいですか？",

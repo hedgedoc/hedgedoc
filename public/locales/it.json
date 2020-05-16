@@ -25,7 +25,7 @@
   "Import history": "Importa cronologia",
   "Clear history": "Cancella cronologia",
   "Refresh history": "Aggiorna cronologia",
-  "No history": "Nessuna cronologia",
+  "noHistory": "Nessuna cronologia",
   "Import from browser": "Importa da browser",
   "releases": "Versioni",
   "Are you sure?": "Sei sicuro?",

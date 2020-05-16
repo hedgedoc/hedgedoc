@@ -25,7 +25,7 @@
   "Import history": "Importar historial",
   "Clear history": "Borrar historial",
   "Refresh history": "Actualizar historial",
-  "No history": "Ningún historial",
+  "noHistory": "Ningún historial",
   "Import from browser": "Importar del navegador",
   "releases": "Versiones",
   "Are you sure?": "¿Estás seguro?",

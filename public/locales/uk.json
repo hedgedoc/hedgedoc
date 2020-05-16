@@ -25,7 +25,7 @@
   "Import history": "Імпортувати історію",
   "Clear history": "Очистити історію",
   "Refresh history": "Оновити історію",
-  "No history": "Історія відсутня",
+  "noHistory": "Історія відсутня",
   "Import from browser": "Імпортувати з браузера",
   "releases": "Релізи",
   "Are you sure?": "Ви впевнені?",

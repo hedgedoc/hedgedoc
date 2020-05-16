@@ -25,7 +25,7 @@
   "Import history": "Importovať históriu",
   "Clear history": "Odstrániť históriu",
   "Refresh history": "Aktualizovať históriu",
-  "No history": "Žiadna história",
+  "noHistory": "Žiadna história",
   "Import from browser": "Importovať z prehliadača",
   "releases": "Vydania",
   "Are you sure?": "Ste si istý?",

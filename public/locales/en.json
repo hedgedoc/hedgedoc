@@ -25,7 +25,7 @@
   "Import history": "Import history",
   "Clear history": "Clear history",
   "Refresh history": "Refresh history",
-  "No history": "No history",
+  "noHistory": "No history",
   "Import from browser": "Import from browser",
   "releases": "Releases",
   "Are you sure?": "Are you sure?",

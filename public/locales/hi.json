@@ -25,7 +25,7 @@
   "Import history": "इतिहास को आयात करें",
   "Clear history": "इतिहास मिटा दें",
   "Refresh history": "इतिहास ताज़ा करे",
-  "No history": "इतिहास न रखें",
+  "noHistory": "इतिहास न रखें",
   "Import from browser": "ब्राउज़र से आयात",
   "releases": "विज्ञप्ति",
   "Are you sure?": "क्या आपको यकीन है?",

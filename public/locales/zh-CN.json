@@ -25,7 +25,7 @@
   "Import history": "导入历史",
   "Clear history": "清空历史",
   "Refresh history": "刷新历史",
-  "No history": "无历史记录",
+  "noHistory": "无历史记录",
   "Import from browser": "从浏览器导入",
   "releases": "版本",
   "Are you sure?": "您确定吗？",

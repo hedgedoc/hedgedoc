@@ -25,7 +25,7 @@
   "Import history": "Geçmişi içe aktar",
   "Clear history": "Geçmişi temizle",
   "Refresh history": "Geçmişi yenile",
-  "No history": "Geçmiş yok",
+  "noHistory": "Geçmiş yok",
   "Import from browser": "Tarayıcıdan içe aktar",
   "releases": "Sürümler",
   "Are you sure?": "Emin misiniz?",

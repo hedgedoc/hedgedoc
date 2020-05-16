@@ -25,7 +25,7 @@
   "Import history": "Impor Riwayat",
   "Clear history": "Bersihkan Riwayat",
   "Refresh history": "Muat-ulang Riwayat",
-  "No history": "Tidak ada riwayat",
+  "noHistory": "Tidak ada riwayat",
   "Import from browser": "Impor dari browser",
   "releases": "Penerbitan",
   "Are you sure?": "Apakah anda yakin?",

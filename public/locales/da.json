@@ -25,7 +25,7 @@
   "Import history": "Importér historik",
   "Clear history": "Ryd hsitorik",
   "Refresh history": "Genindlæs historik",
-  "No history": "Ingen historik",
+  "noHistory": "Ingen historik",
   "Import from browser": "Importér fra browser",
   "releases": "Releases",
   "Are you sure?": "Er du sikker?",
