@@ -81,7 +81,7 @@ export class Revision extends Model<Revision> {
 
   @Column(DataType.TEXT({ length: 'long' }))
   get patch (): string {
-    return processData(this.getDataValue('patch'), '')
+    return this.getDataValue('patch') ?? ''
   }
 
   set patch (value: string) {
@@ -90,7 +90,7 @@ export class Revision extends Model<Revision> {
 
   @Column(DataType.TEXT({ length: 'long' }))
   get lastContent (): string {
-    return processData(this.getDataValue('lastContent'), '')
+    return this.getDataValue('lastContent') ?? ''
   }
 
   set lastContent (value: string) {
@@ -99,7 +99,7 @@ export class Revision extends Model<Revision> {
 
   @Column(DataType.TEXT({ length: 'long' }))
   get content (): string {
-    return processData(this.getDataValue('content'), '')
+    return this.getDataValue('content') ?? ''
   }
 
   set content (value: string) {

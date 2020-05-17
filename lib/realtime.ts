@@ -1,16 +1,18 @@
-import { Author, Note, Revision, User } from './models'
-
-import ot from './ot'
-import { History } from './history'
-import { logger } from './logger'
-import { config } from './config'
+import async from 'async'
+import Chance from 'chance'
+import cookie from 'cookie'
+import cookieParser from 'cookie-parser'
 import moment from 'moment'
 import randomcolor from 'randomcolor'
-import async from 'async'
-import cookieParser from 'cookie-parser'
-import cookie from 'cookie'
-import Chance from 'chance'
+import { Socket } from 'socket.io'
+import { config } from './config'
+
+import { History } from './history'
+import { logger } from './logger'
+import { Author, Note, Revision, User } from './models'
 import { EditorSocketIOServer } from './ot/editor-socketio-server'
+
+export type SocketWithNoteId = Socket & { noteId: string }
 
 const chance = new Chance()
 
@@ -27,18 +29,18 @@ const realtime: any = {
 }
 /* eslint-enable @typescript-eslint/no-use-before-define */
 
-const disconnectSocketQueue: any = []
+const disconnectSocketQueue: SocketWithNoteId[] = []
 
-function onAuthorizeSuccess (data, accept) {
+function onAuthorizeSuccess (data, accept): void {
   accept()
 }
 
-function onAuthorizeFail (data, message, error, accept) {
+function onAuthorizeFail (data, message, error, accept): void {
   accept() // accept whether authorize or not to allow anonymous usage
 }
 
 // secure the origin by the cookie
-function secure (socket, next) {
+function secure (socket: Socket, next: (err?: any) => void): void {
   try {
     const handshakeData = socket.request
     if (handshakeData.headers.cookie) {
@@ -60,7 +62,7 @@ function secure (socket, next) {
   }
 }
 
-function emitCheck (note) {
+function emitCheck (note): void {
   const out = {
     title: note.title,
     updatetime: note.updatetime,
@@ -78,7 +80,7 @@ const notes = {}
 
 let saverSleep = false
 
-function finishUpdateNote (note, _note, callback) {
+function finishUpdateNote (note: any, _note: Note, callback: any) {
   if (!note || !note.server) return callback(null, null)
   const body = note.server.document
   const title = note.title = Note.parseNoteTitle(body)
@@ -98,12 +100,12 @@ function finishUpdateNote (note, _note, callback) {
   })
 }
 
-function updateHistory (userId, note, time?) {
+function updateHistory (userId, note, time?): void {
   const noteId = note.alias ? note.alias : Note.encodeNoteId(note.id)
   if (note.server) History.updateHistory(userId, noteId, note.server.document, time)
 }
 
-function updateNote (note, callback) {
+function updateNote (note: any, callback: (err, note) => any): any {
   Note.findOne({
     where: {
       id: note.id
@@ -193,11 +195,10 @@ setInterval(function () {
   })
 }, 60000 * 5)
 
-let isConnectionBusy
+let isConnectionBusy: boolean
+let isDisconnectBusy: boolean
 
-const connectionSocketQueue: any = []
-
-let isDisconnectBusy
+const connectionSocketQueue: SocketWithNoteId[] = []
 
 function getStatus (callback) {
   Note.count().then(function (notecount) {
@@ -254,14 +255,14 @@ function getStatus (callback) {
   })
 }
 
-function isReady () {
+function isReady (): boolean {
   return realtime.io &&
     Object.keys(notes).length === 0 && Object.keys(users).length === 0 &&
     connectionSocketQueue.length === 0 && !isConnectionBusy &&
     disconnectSocketQueue.length === 0 && !isDisconnectBusy
 }
 
-function extractNoteIdFromSocket (socket) {
+function extractNoteIdFromSocket (socket): string | boolean {
   if (!socket || !socket.handshake) {
     return false
   }
@@ -272,7 +273,7 @@ function extractNoteIdFromSocket (socket) {
   }
 }
 
-function parseNoteIdFromSocket (socket, callback) {
+function parseNoteIdFromSocket (socket, callback: (err, noteId) => void): void {
   const noteId = extractNoteIdFromSocket(socket)
   if (!noteId) {
     return callback(null, null)
@@ -298,7 +299,7 @@ function buildUserOutData (user) {
   return out
 }
 
-function emitOnlineUsers (socket) {
+function emitOnlineUsers (socket: SocketWithNoteId): void {
   const noteId = socket.noteId
   if (!noteId || !notes[noteId]) return
   const users: any[] = []
@@ -314,7 +315,7 @@ function emitOnlineUsers (socket) {
   realtime.io.to(noteId).emit('online users', out)
 }
 
-function emitUserStatus (socket) {
+function emitUserStatus (socket: SocketWithNoteId): void {
   const noteId = socket.noteId
   const user = users[socket.id]
   if (!noteId || !notes[noteId] || !user) return
@@ -322,7 +323,7 @@ function emitUserStatus (socket) {
   socket.broadcast.to(noteId).emit('user status', out)
 }
 
-function emitRefresh (socket) {
+function emitRefresh (socket: SocketWithNoteId): void {
   const noteId = socket.noteId
   if (!noteId || !notes[noteId]) return
   const note = notes[noteId]
@@ -342,7 +343,7 @@ function emitRefresh (socket) {
   socket.emit('refresh', out)
 }
 
-function isDuplicatedInSocketQueue (queue, socket) {
+function isDuplicatedInSocketQueue (queue: Socket[], socket: Socket): boolean {
   for (let i = 0; i < queue.length; i++) {
     if (queue[i] && queue[i].id === socket.id) {
       return true
@@ -351,7 +352,7 @@ function isDuplicatedInSocketQueue (queue, socket) {
   return false
 }
 
-function clearSocketQueue (queue, socket) {
+function clearSocketQueue (queue: Socket[], socket: Socket): void {
   for (let i = 0; i < queue.length; i++) {
     if (!queue[i] || queue[i].id === socket.id) {
       queue.splice(i, 1)
@@ -360,7 +361,7 @@ function clearSocketQueue (queue, socket) {
   }
 }
 
-function connectNextSocket () {
+function connectNextSocket (): void {
   setTimeout(function () {
     isConnectionBusy = false
     if (connectionSocketQueue.length > 0) {
@@ -371,19 +372,19 @@ function connectNextSocket () {
   }, 1)
 }
 
-function failConnection (code, err, socket) {
-  logger.error(err)
+function failConnection (errorCode: number, errorMessage: string, socket: Socket): void {
+  logger.error(errorMessage)
   // clear error socket in queue
   clearSocketQueue(connectionSocketQueue, socket)
   connectNextSocket()
   // emit error info
   socket.emit('info', {
-    code: code
+    code: errorCode
   })
-  return socket.disconnect(true)
+  socket.disconnect(true)
 }
 
-function interruptConnection (socket, noteId, socketId) {
+function interruptConnection (socket: Socket, noteId: string, socketId): void {
   if (notes[noteId]) delete notes[noteId]
   if (users[socketId]) delete users[socketId]
   if (socket) {
@@ -394,25 +395,17 @@ function interruptConnection (socket, noteId, socketId) {
   connectNextSocket()
 }
 
-function checkViewPermission (req, note) {
+function checkViewPermission (req, note): boolean {
   if (note.permission === 'private') {
-    if (req.user && req.user.logged_in && req.user.id === note.owner) {
-      return true
-    } else {
-      return false
-    }
+    return !!(req.user?.logged_in && req.user.id === note.owner)
   } else if (note.permission === 'limited' || note.permission === 'protected') {
-    if (req.user && req.user.logged_in) {
-      return true
-    } else {
-      return false
-    }
+    return !!(req.user?.logged_in)
   } else {
     return true
   }
 }
 
-function finishConnection (socket, noteId, socketId) {
+function finishConnection (socket: SocketWithNoteId, noteId: string, socketId: string): void {
   // if no valid info provided will drop the client
   if (!socket || !notes[noteId] || !users[socketId]) {
     return interruptConnection(socket, noteId, socketId)
@@ -456,7 +449,7 @@ function finishConnection (socket, noteId, socketId) {
   }
 }
 
-function ifMayEdit (socket, callback) {
+function ifMayEdit (socket: SocketWithNoteId, originIsOperation: boolean, callback: (mayEdit: boolean) => void): void {
   const noteId = socket.noteId
   if (!noteId || !notes[noteId]) return
   const note = notes[noteId]
@@ -482,7 +475,7 @@ function ifMayEdit (socket, callback) {
       break
   }
   // if user may edit and this is a text operation
-  if (socket.origin === 'operation' && mayEdit) {
+  if (originIsOperation && mayEdit) {
     // save for the last change user id
     if (socket.request.user && socket.request.user.logged_in) {
       note.lastchangeuser = socket.request.user.id
@@ -493,7 +486,7 @@ function ifMayEdit (socket, callback) {
   return callback(mayEdit)
 }
 
-function operationCallback (socket, operation) {
+function operationCallback (socket: SocketWithNoteId, operation): void {
   const noteId = socket.noteId
   if (!noteId || !notes[noteId]) return
   const note = notes[noteId]
@@ -524,7 +517,7 @@ function operationCallback (socket, operation) {
           }
         }
       }).catch(function (err) {
-        return logger.error('operation callback failed: ' + err)
+        logger.error('operation callback failed: ' + err)
       })
     }
     note.tempUsers[userId] = Date.now()
@@ -535,11 +528,11 @@ function operationCallback (socket, operation) {
   })
 }
 
-function startConnection (socket) {
+function startConnection (socket: SocketWithNoteId): void {
   if (isConnectionBusy) return
   isConnectionBusy = true
 
-  const noteId = socket.noteId
+  const noteId: string = socket.noteId
   if (!noteId) {
     return failConnection(404, 'note id not found', socket)
   }
@@ -625,7 +618,7 @@ function startConnection (socket) {
 isConnectionBusy = false
 isDisconnectBusy = false
 
-function disconnect (socket) {
+function disconnect (socket: SocketWithNoteId): void {
   if (isDisconnectBusy) return
   isDisconnectBusy = true
 
@@ -712,7 +705,7 @@ setInterval(function () {
   })
 }, 60000)
 
-function updateUserData (socket, user) {
+function updateUserData (socket: Socket, user): void {
   // retrieve user data from passport
   if (socket.request.user && socket.request.user.logged_in) {
     const profile = User.getProfile(socket.request.user)
@@ -727,7 +720,7 @@ function updateUserData (socket, user) {
   }
 }
 
-function connection (socket) {
+function connection (socket: SocketWithNoteId): void {
   if (realtime.maintenance) return
   parseNoteIdFromSocket(socket, function (err, noteId) {
     if (err) {
@@ -947,7 +940,7 @@ function connection (socket) {
 
   // when a new client disconnect
   socket.on('disconnect', function () {
-    if (isDuplicatedInSocketQueue(socket, disconnectSocketQueue)) return
+    if (isDuplicatedInSocketQueue(disconnectSocketQueue, socket)) return
     disconnectSocketQueue.push(socket)
     disconnect(socket)
   })

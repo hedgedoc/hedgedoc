@@ -1,8 +1,8 @@
-import { logger } from './logger'
-import { realtime } from './realtime'
-import { config } from './config'
 import fs from 'fs'
+import { config } from './config'
+import { logger } from './logger'
 import { Revision } from './models'
+import { realtime } from './realtime'
 
 export function getImageMimeType (imagePath: string): string | undefined {
   const fileExtension = /[^.]+$/.exec(imagePath)
@@ -33,21 +33,11 @@ export function stripNullByte (value: string): string {
   return value ? value.replace(/\u0000/g, '') : value
 }
 
-export function processData (data, _default, process?) {
-  if (data === undefined) return data
-  else if (process) {
-    if (data === null) {
-      return _default
-    } else {
-      return process(data)
-    }
-  } else {
-    if (data === null) {
-      return _default
-    } else {
-      return data
-    }
-  }
+export function processData<T> (data: T, _default: T, process?: (T) => T): T | undefined {
+  if (data === undefined) return undefined
+  else if (data === null) return _default
+  else if (process) return process(data)
+  else return data
 }
 
 export function handleTermSignals (io): void {
@@ -65,7 +55,8 @@ export function handleTermSignals (io): void {
   if (config.path) {
     // ToDo: add a proper error handler
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    fs.unlink(config.path, (_) => {})
+    fs.unlink(config.path, (_) => {
+    })
   }
   const checkCleanTimer = setInterval(function () {
     if (realtime.isReady()) {
