@@ -12,5 +12,5 @@
     "lib": ["ES2019"],
     "alwaysStrict": true
   },
-  "include":  ["lib", "test"]
+  "include":  ["src"]
 }
