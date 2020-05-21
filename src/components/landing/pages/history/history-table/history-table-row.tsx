@@ -12,11 +12,11 @@ export const HistoryTableRow: React.FC<HistoryEntryProps> = ({entry, onPinClick}
             <td>{entry.title}</td>
             <td>{formatHistoryDate(entry.lastVisited)}</td>
             <td>
-                <PinButton pin={entry.pinned} onPinClick={() => {
+                <PinButton isDark={true} isPinned={entry.pinned} onPinClick={() => {
                     onPinClick(entry.id)
                 }}/>
                 &nbsp;
-                <CloseButton/>
+                <CloseButton isDark={true}/>
             </td>
         </tr>
     )

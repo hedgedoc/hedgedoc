@@ -1,6 +1,6 @@
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import "./icon-button.scss";
+import "./social-link-button.scss";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
 export interface SocialButtonProps {
@@ -10,14 +10,14 @@ export interface SocialButtonProps {
     title?: string
 }
 
-export const IconButton: React.FC<SocialButtonProps> = ({title, backgroundClass, href, icon, children}) => {
+export const SocialLinkButton: React.FC<SocialButtonProps> = ({title, backgroundClass, href, icon, children}) => {
     return (
         <a href={href} title={title}
-           className={"btn btn-icon p-0 d-inline-flex align-items-stretch " + backgroundClass}>
-            <span className="btn-social-button d-flex align-items-center">
+           className={"btn social-link-button p-0 d-inline-flex align-items-stretch " + backgroundClass}>
+            <span className="icon-part d-flex align-items-center">
                 <FontAwesomeIcon icon={icon} className={"social-icon"}/>
             </span>
-            <span className="btn-social-text d-flex align-items-center">
+            <span className="text-part d-flex align-items-center">
                 {children}
             </span>
         </a>

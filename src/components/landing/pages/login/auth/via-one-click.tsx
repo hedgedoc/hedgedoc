@@ -1,6 +1,6 @@
 import React from "react";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
-import {IconButton} from "./icon-button/icon-button";
+import {SocialLinkButton} from "./social-link-button/social-link-button";
 
 export enum OneClickType {
     'DROPBOX'="dropbox",
@@ -101,14 +101,14 @@ const ViaOneClick: React.FC<ViaOneClickProps> = ({oneClickType, optionalName}) =
     const {name, icon, className, url} = getMetadata(oneClickType);
     const text = !!optionalName ? optionalName : name;
     return (
-        <IconButton
+        <SocialLinkButton
             backgroundClass={className}
             icon={icon}
             href={url}
             title={text}
         >
             {text}
-        </IconButton>
+        </SocialLinkButton>
     )
 }
 

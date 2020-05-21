@@ -1,9 +1,10 @@
 import React from "react";
-import {HistoryEntry, pinClick, ViewStateEnum} from "../history";
+import {HistoryEntry, pinClick} from "../history";
 import {HistoryTable} from "../history-table/history-table";
 import {Alert} from "react-bootstrap";
 import {Trans} from "react-i18next";
 import {HistoryCardList} from "../history-card/history-card-list";
+import {ViewStateEnum} from "../history-toolbar/history-toolbar";
 
 export interface HistoryContentProps {
     viewState: ViewStateEnum
