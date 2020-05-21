@@ -8,13 +8,18 @@ export const ElementSeparator: React.FC<ElementSeparatorProps> = ({children, sep
     return (
         <Fragment>
             {
-                React.Children.map(children, (child, index) => {
-                    return <Fragment>
-                        {
-                            (index > 0) ? separator : null
-                        }
-                        {child}
-                    </Fragment>
+                React.Children
+                    .toArray(children)
+                    .filter(child => child !== null)
+                    .map((child, index) => {
+                        return (
+                            <Fragment>
+                                {
+                                    (index > 0 ) ? separator : null
+                                }
+                                {child}
+                            </Fragment>
+                        )
                 })
             }
         </Fragment>

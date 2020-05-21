@@ -8,6 +8,7 @@ import {useSelector} from "react-redux";
 import {ApplicationState} from "../../../../redux";
 import {ViaOpenId} from "./auth/via-open id";
 import "./login.scss";
+import {ElementSeparator} from "../../../element-separator/element-separator";
 
 const Login: React.FC = () => {
     useTranslation();
@@ -16,8 +17,6 @@ const Login: React.FC = () => {
     const emailForm = authProviders.email ? <ViaEMail/> : null
     const ldapForm = authProviders.ldap ? <ViaLdap/> : null
     const openIdForm = authProviders.openid ? <ViaOpenId/> : null
-    const emailLdapSeparator = authProviders.email && authProviders.ldap ? <hr className="w-100 bg-white"/> : null
-    const ldapOpenIdSeparator = authProviders.ldap && authProviders.openid ? <hr className="w-100 bg-white"/> : null
 
     const oneClickCustomName: (type: OneClickType) => string | undefined = (type) => {
         switch (type) {
@@ -35,13 +34,13 @@ const Login: React.FC = () => {
             <div className="my-3">
                 <Row className="h-100 flex justify-content-center">
                     {
-                        authProviders.email || authProviders.ldap ?
+                        authProviders.email || authProviders.ldap || authProviders.openid ?
                             <Col xs={12} sm={10} lg={3}>
-                                {emailForm}
-                                {emailLdapSeparator}
-                                {ldapForm}
-                                {ldapOpenIdSeparator}
-                                {openIdForm}
+                                <ElementSeparator separator={<hr className="w-100 bg-white"/>}>
+                                    {emailForm}
+                                    {ldapForm}
+                                    {openIdForm}
+                                </ElementSeparator>
                                 <hr className="w-100 d-lg-none d-block bg-white"/>
                             </Col>
                             : null
