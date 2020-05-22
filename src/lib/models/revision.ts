@@ -24,7 +24,7 @@ class Data {
 }
 
 function createDmpWorker (): ChildProcess {
-  const worker = childProcess.fork(path.resolve(__dirname, '../workers/dmpWorker.js'), ['ignore'])
+  const worker = childProcess.fork(path.resolve(__dirname, '../workers/dmpWorker'), ['ignore'])
   logger.debug('dmp worker process started')
   worker.on('message', function (data: Data) {
     if (!data || !data.msg || !data.cacheKey) {
