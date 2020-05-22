@@ -26,6 +26,6 @@ fs.writeFile(path.resolve('config', 'database.json'), JSON.stringify(database), 
 
 module.exports = {
     'config':          path.resolve('config', 'database.json'),
-    'migrations-path': path.resolve('lib', 'migrations'),
-    'models-path':     path.resolve('lib', 'models')
+    'migrations-path': path.resolve('src/lib', 'migrations'),
+    'models-path':     path.resolve('src/lib', 'models')
 }

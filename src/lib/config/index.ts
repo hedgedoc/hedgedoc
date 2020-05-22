@@ -14,7 +14,7 @@ import { environment } from './environment'
 import { dockerSecret } from './dockerSecret'
 import deepFreeze = require('deep-freeze')
 
-const appRootPath = path.resolve(__dirname, '../../')
+const appRootPath = path.resolve(__dirname, '../../../')
 const env = process.env.NODE_ENV || Environment.development
 const debugConfig = {
   debug: (env === Environment.development)
