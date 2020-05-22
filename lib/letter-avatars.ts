@@ -25,9 +25,6 @@ export function generateAvatar (name: string): string {
 
 export function generateAvatarURL (name: string, email = '', big = true): string {
   let photo
-  if (email.length === 0) {
-    email = '' + name + '@example.com'
-  }
   name = encodeURIComponent(name)
 
   const hash = createHash('md5')
