@@ -9,7 +9,7 @@ export const getBackendConfig = async () => {
 }
 
 export const getFrontendConfig = async () => {
-    return fetch(getBackendUrl() + '/config.json')
+    return fetch('config.json')
         .then(expectResponseCode())
         .then(response => response.json() as Promise<FrontendConfigState>);
 }
