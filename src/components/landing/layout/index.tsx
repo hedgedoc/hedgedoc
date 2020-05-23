@@ -1,5 +1,5 @@
 import React from "react";
-import {Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import {History} from "../pages/history/history";
 import {Intro} from "../pages/intro/intro";
 import {Container} from "react-bootstrap";
@@ -20,6 +20,9 @@ export const Landing: React.FC = () => {
             </Route>
             <Route path="/login">
                 <Login/>
+            </Route>
+            <Route path="/">
+                <Redirect to="/intro"/>
             </Route>
         </Switch>
         <Footer/>
