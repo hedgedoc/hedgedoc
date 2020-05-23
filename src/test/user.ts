@@ -1,15 +1,11 @@
 /* eslint-env node, mocha */
 
-'use strict'
-
-const assert = require('assert')
-
-const models = require('../lib/models')
-const User = models.User
+import { User, sequelize } from '../lib/models'
+import assert = require('assert')
 
 describe('User Sequelize model', function () {
   beforeEach(() => {
-    return models.sequelize.sync({ force: true })
+    return sequelize.sync({ force: true })
   })
 
   it('stores a password hash on creation and verifies that password', function () {

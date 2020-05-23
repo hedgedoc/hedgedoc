@@ -1,4 +1,4 @@
-const config = require('./config')
+import { config } from './config'
 
 function responseError (res, code: number, detail: string, msg: string): void {
   res.status(code).render('error.ejs', {

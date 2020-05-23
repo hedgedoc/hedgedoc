@@ -1,8 +1,8 @@
-import { markdownParser } from '../utils'
-
-import { SlideController } from './slide'
-import { NoteController } from './controller'
 import { Router } from 'express'
+import { markdownParser } from '../utils'
+import * as NoteController from './controller'
+
+import * as SlideController from './slide'
 
 const NoteRouter = Router()
 // get new note

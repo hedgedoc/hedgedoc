@@ -1,11 +1,12 @@
 /* eslint-env node, mocha */
 'use strict'
 
-const assert = require('assert')
-const crypto = require('crypto')
-const fs = require('fs')
-const path = require('path')
-const mock = require('mock-require')
+import assert from 'assert'
+import crypto from 'crypto'
+import fs from 'fs'
+import path from 'path'
+import * as configModule from '../lib/config'
+import { ImportMock } from 'ts-mock-imports'
 
 describe('Content security policies', function () {
   let defaultConfig, csp
@@ -31,22 +32,11 @@ describe('Content security policies', function () {
     }
   })
 
-  afterEach(function () {
-    mock.stop('../lib/config')
-    csp = mock.reRequire('../lib/csp')
-  })
-
-  after(function () {
-    mock.stopAll()
-    csp = mock.reRequire('../lib/csp')
-  })
-
   // beginnging Tests
   it('Disable CDN', function () {
-    let testconfig = defaultConfig
+    const testconfig = defaultConfig
     testconfig.useCDN = false
-    mock('../lib/config', testconfig)
-    csp = mock.reRequire('../lib/csp')
+    ImportMock.mockOther(configModule, 'config', testconfig)
 
     assert(!csp.computeDirectives().scriptSrc.includes('https://cdnjs.cloudflare.com'))
     assert(!csp.computeDirectives().scriptSrc.includes('https://cdn.mathjax.org'))
@@ -57,19 +47,17 @@ describe('Content security policies', function () {
   })
 
   it('Disable Google Analytics', function () {
-    let testconfig = defaultConfig
+    const testconfig = defaultConfig
     testconfig.csp.addGoogleAnalytics = false
-    mock('../lib/config', testconfig)
-    csp = mock.reRequire('../lib/csp')
+    ImportMock.mockOther(configModule, 'config', testconfig)
 
     assert(!csp.computeDirectives().scriptSrc.includes('https://www.google-analytics.com'))
   })
 
   it('Disable Disqus', function () {
-    let testconfig = defaultConfig
+    const testconfig = defaultConfig
     testconfig.csp.addDisqus = false
-    mock('../lib/config', testconfig)
-    csp = mock.reRequire('../lib/csp')
+    ImportMock.mockOther(configModule, 'config', testconfig)
 
     assert(!csp.computeDirectives().scriptSrc.includes('https://disqus.com'))
     assert(!csp.computeDirectives().scriptSrc.includes('https://*.disqus.com'))
@@ -79,18 +67,16 @@ describe('Content security policies', function () {
   })
 
   it('Set ReportURI', function () {
-    let testconfig = defaultConfig
+    const testconfig = defaultConfig
     testconfig.csp.reportURI = 'https://example.com/reportURI'
-    mock('../lib/config', testconfig)
-    csp = mock.reRequire('../lib/csp')
+    ImportMock.mockOther(configModule, 'config', testconfig)
 
     assert.strictEqual(csp.computeDirectives().reportUri, 'https://example.com/reportURI')
   })
 
   it('Set own directives', function () {
-    let testconfig = defaultConfig
-    mock('../lib/config', defaultConfig)
-    csp = mock.reRequire('../lib/csp')
+    const testconfig = defaultConfig
+    ImportMock.mockOther(configModule, 'config', testconfig)
     const unextendedCSP = csp.computeDirectives()
     testconfig.csp.directives = {
       defaultSrc: ['https://default.example.com'],
@@ -103,8 +89,7 @@ describe('Content security policies', function () {
       childSrc: ['https://child.example.com'],
       connectSrc: ['https://connect.example.com']
     }
-    mock('../lib/config', testconfig)
-    csp = mock.reRequire('../lib/csp')
+    ImportMock.mockOther(configModule, 'config', testconfig)
 
     const variations = ['default', 'script', 'img', 'style', 'font', 'object', 'media', 'child', 'connect']
 
@@ -118,7 +103,7 @@ describe('Content security policies', function () {
    */
   it('Unchanged hash for reveal.js speaker notes plugin', function () {
     const hash = crypto.createHash('sha1')
-    hash.update(fs.readFileSync(path.resolve(__dirname, '../node_modules/reveal.js/plugin/notes/notes.html'), 'utf8'), 'utf8')
+    hash.update(fs.readFileSync(path.join(process.cwd(), '/node_modules/reveal.js/plugin/notes/notes.html'), 'utf8'), 'utf8')
     assert.strictEqual(hash.digest('hex'), 'd5d872ae49b5db27f638b152e6e528837204d380')
   })
 })

@@ -6,7 +6,7 @@ import fs from 'fs'
 
 import { logger } from './logger'
 
-import { NoteUtils } from './web/note/util'
+import * as NoteUtils from './web/note/util'
 
 import { errors } from './errors'
 
