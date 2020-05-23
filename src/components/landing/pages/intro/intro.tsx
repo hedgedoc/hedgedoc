@@ -39,7 +39,7 @@ const Intro: React.FC = () => {
 
 
                                 <span className="m-2">
-                                    or
+                                    <Trans i18nKey="or"/>
                                 </span>
 
                                 <Button
