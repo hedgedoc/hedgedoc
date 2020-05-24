@@ -11,6 +11,7 @@ const HistoryTable: React.FC<HistoryEntriesProps> = ({entries, onPinClick}) => {
             <tr>
                 <th><Trans i18nKey={"title"}/></th>
                 <th><Trans i18nKey={"lastVisit"}/></th>
+                <th><Trans i18nKey={"tags"}/></th>
                 <th><Trans i18nKey={"actions"}/></th>
             </tr>
             </thead>
