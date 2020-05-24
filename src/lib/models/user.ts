@@ -40,7 +40,7 @@ export type Profile = {
   avatarUrl: string;
   profileUrl: string;
   provider: ProviderEnum;
-  photos: any[];
+  photos: { value: string }[];
 }
 
 export type PhotoProfile = {
