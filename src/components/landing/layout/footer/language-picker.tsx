@@ -1,6 +1,7 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
 import moment from "moment";
+import { Form } from "react-bootstrap";
 
 const LanguagePicker: React.FC = () => {
     const {i18n} = useTranslation();
@@ -11,7 +12,13 @@ const LanguagePicker: React.FC = () => {
     }
 
     return (
-        <select className="mb-2" value={i18n.language} onChange={onChangeLang}>
+        <Form.Control
+            as="select"
+            size="sm"
+            className="mb-2 mx-auto w-auto"
+            value={i18n.language}
+            onChange={onChangeLang}
+        >
             <option value="en">English</option>
             <option value="zh-CN">简体中文</option>
             <option value="zh-TW">繁體中文</option>
@@ -40,7 +47,7 @@ const LanguagePicker: React.FC = () => {
             <option value="ar">العربية</option>
             <option value="cs">Česky</option>
             <option value="sk">Slovensky</option>
-        </select>
+        </Form.Control>
     )
 }
 
