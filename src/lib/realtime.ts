@@ -40,7 +40,7 @@ function onAuthorizeFail (data, message, error, accept): void {
 }
 
 // secure the origin by the cookie
-function secure (socket: Socket, next: (err?: any) => void): void {
+function secure (socket: Socket, next: (err?: Error) => void): void {
   try {
     const handshakeData = socket.request
     if (handshakeData.headers.cookie) {
@@ -74,13 +74,46 @@ function emitCheck (note): void {
   realtime.io.to(note.id).emit('check', out)
 }
 
+class UserSession {
+  id: string;
+  login: any
+  userid: string
+  photo: any
+  color: any
+  cursor: any
+  name: string
+  idle: any
+  type: any
+}
+
+class NoteSession {
+    id: string
+    alias: string
+    title: string
+    owner: UserSession
+    ownerprofile: any
+    permission: any
+    lastchangeuser: string
+    lastchangeuserprofile: any
+    socks: SocketWithNoteId[]
+    users: UserSession[]
+    tempUsers: UserSession[]
+    createtime: number
+    updatetime: number
+    server: any
+    authors: UserSession[]
+    authorship: UserSession
+}
+
+
+
 // actions
-const users = {}
-const notes = {}
+const users: UserSession[] = []
+const notes: NoteSession[] = []
 
 let saverSleep = false
 
-function finishUpdateNote (note: any, _note: Note, callback: any) {
+function finishUpdateNote (note: NoteSession, _note: Note, callback: (err: Error | null, note: Note | null) => void): void {
   if (!note || !note.server) return callback(null, null)
   const body = note.server.document
   const title = note.title = Note.parseNoteTitle(body)
@@ -100,12 +133,12 @@ function finishUpdateNote (note: any, _note: Note, callback: any) {
   })
 }
 
-function updateHistory (userId, note, time?): void {
+function updateHistory (userId, note: NoteSession, time?): void {
   const noteId = note.alias ? note.alias : Note.encodeNoteId(note.id)
   if (note.server) History.updateHistory(userId, noteId, note.server.document, time)
 }
 
-function updateNote (note: any, callback: (err, note) => any): any {
+function updateNote (note: NoteSession, callback: (err, note) => void): void {
   Note.findOne({
     where: {
       id: note.id
@@ -114,7 +147,7 @@ function updateNote (note: any, callback: (err, note) => any): any {
     if (!_note) return callback(null, null)
     // update user note history
     const tempUsers = Object.assign({}, note.tempUsers)
-    note.tempUsers = {}
+    note.tempUsers = []
     Object.keys(tempUsers).forEach(function (key) {
       updateHistory(key, note, tempUsers[key])
     })
@@ -200,7 +233,7 @@ let isDisconnectBusy: boolean
 
 const connectionSocketQueue: SocketWithNoteId[] = []
 
-function getStatus (callback) {
+function getStatus (callback): void {
   Note.count().then(function (notecount) {
     const distinctaddresses: string[] = []
     const regaddresses: string[] = []
@@ -262,7 +295,7 @@ function isReady (): boolean {
     disconnectSocketQueue.length === 0 && !isDisconnectBusy
 }
 
-function extractNoteIdFromSocket (socket): string | boolean {
+function extractNoteIdFromSocket (socket: Socket): string | boolean {
   if (!socket || !socket.handshake) {
     return false
   }
@@ -273,7 +306,7 @@ function extractNoteIdFromSocket (socket): string | boolean {
   }
 }
 
-function parseNoteIdFromSocket (socket, callback: (err, noteId) => void): void {
+function parseNoteIdFromSocket (socket: Socket, callback: (err: string | null, noteId: string | null) => void): void {
   const noteId = extractNoteIdFromSocket(socket)
   if (!noteId) {
     return callback(null, null)
@@ -284,8 +317,8 @@ function parseNoteIdFromSocket (socket, callback: (err, noteId) => void): void {
   })
 }
 
-function buildUserOutData (user) {
-  const out = {
+function buildUserOutData (user): UserSession {
+  return {
     id: user.id,
     login: user.login,
     userid: user.userid,
@@ -296,13 +329,12 @@ function buildUserOutData (user) {
     idle: user.idle,
     type: user.type
   }
-  return out
 }
 
 function emitOnlineUsers (socket: SocketWithNoteId): void {
   const noteId = socket.noteId
   if (!noteId || !notes[noteId]) return
-  const users: any[] = []
+  const users: UserSession[] = []
   Object.keys(notes[noteId].users).forEach(function (key) {
     const user = notes[noteId].users[key]
     if (user) {
@@ -507,7 +539,7 @@ function operationCallback (socket: SocketWithNoteId, operation): void {
           userId: userId,
           color: user.color
         }
-      }).then(function ([author, created]) {
+      }).then(function ([author, _created]) {
         if (author) {
           note.authors[author.userId] = {
             userid: author.userId,
@@ -646,7 +678,7 @@ function disconnect (socket: SocketWithNoteId): void {
     // remove note in notes if no user inside
     if (Object.keys(note.users).length <= 0) {
       if (note.server.isDirty) {
-        updateNote(note, function (err, _note) {
+        updateNote(note, function (err, _note: Note) {
           if (err) return logger.error('disconnect note failed: ' + err)
           // clear server before delete to avoid memory leaks
           note.server.document = ''
@@ -885,7 +917,7 @@ function connection (socket: SocketWithNoteId): void {
   socket.on('online users', function () {
     const noteId = socket.noteId
     if (!noteId || !notes[noteId]) return
-    const users: any = []
+    const users: UserSession[] = []
     Object.keys(notes[noteId].users).forEach(function (key) {
       const user = notes[noteId].users[key]
       if (user) {
