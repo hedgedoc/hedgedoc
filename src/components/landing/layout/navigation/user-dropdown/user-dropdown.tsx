@@ -26,25 +26,25 @@ export const UserDropdown: React.FC = () => {
             <Dropdown.Menu>
                 <LinkContainer to={`/features`}>
                     <Dropdown.Item>
-                        <FontAwesomeIcon icon="bolt"/>&nbsp;
+                        <FontAwesomeIcon icon="bolt" fixedWidth={true} className="mr-2"/>
                         <Trans i18nKey="features"/>
                     </Dropdown.Item>
                 </LinkContainer>
                 <LinkContainer to={`/me/export`}>
                     <Dropdown.Item>
-                        <FontAwesomeIcon icon="cloud-download-alt"/>&nbsp;
+                        <FontAwesomeIcon icon="cloud-download-alt" fixedWidth={true} className="mr-2"/>
                         <Trans i18nKey="exportUserData"/>
                     </Dropdown.Item>
                 </LinkContainer>
                 <Dropdown.Item href="#">
-                    <FontAwesomeIcon icon="trash"/>&nbsp;
+                    <FontAwesomeIcon icon="trash" fixedWidth={true} className="mr-2"/>
                     <Trans i18nKey="deleteUser"/>
                 </Dropdown.Item>
                 <Dropdown.Item
                     onClick={() => {
                         clearUser();
                     }}>
-                    <FontAwesomeIcon icon="sign-out-alt"/>&nbsp;
+                    <FontAwesomeIcon icon="sign-out-alt" fixedWidth={true} className="mr-2"/>
                     <Trans i18nKey="signOut"/>
                 </Dropdown.Item>
             </Dropdown.Menu>
