@@ -98,7 +98,7 @@ function createPatch (lastDoc: string, currDoc: string): string {
 
 class Data {
   msg: string
-  cacheKey: any
+  cacheKey: string
   lastDoc?: string
   currDoc?: string
   revisions?: Revision[]
