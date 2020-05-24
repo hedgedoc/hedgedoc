@@ -5,7 +5,7 @@ export const getMe = async () => {
 }
 
 export const postEmailLogin = async (email: string, password: string) => {
-    const response = await fetch(getBackendUrl() + "/login", {
+    const response = await fetch(getBackendUrl() + "/auth/email", {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
