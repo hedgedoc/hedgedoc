@@ -2,7 +2,6 @@ import { Request, Response } from 'express'
 import fs from 'fs'
 
 import path from 'path'
-import { Includeable } from 'sequelize'
 import { config } from '../../config'
 import { errors } from '../../errors'
 import { logger } from '../../logger'
@@ -33,7 +32,7 @@ export function newNote (req, res: Response, body: string | null): void {
   })
 }
 
-export function checkViewPermission (req, note: any): boolean {
+export function checkViewPermission (req, note: Note): boolean {
   if (note.permission === 'private') {
     return req.isAuthenticated() && note.ownerId === req.user.id
   } else if (note.permission === 'limited' || note.permission === 'protected') {

@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { config } from '../../config'
 import { errors } from '../../errors'
 import { logger } from '../../logger'
-import { Note, User } from '../../models'
+import { Note } from '../../models'
 import * as ActionController from './actions'
 import * as NoteUtils from './util'
 
@@ -24,13 +24,6 @@ export function publishNoteActions (req: Request, res: Response): void {
 }
 
 export function showPublishNote (req: Request, res: Response): void {
-  const include = [{
-    model: User,
-    as: 'owner'
-  }, {
-    model: User,
-    as: 'lastchangeuser'
-  }]
   NoteUtils.findNoteOrCreate(req, res, function (note) {
     // force to use short id
     const shortid = req.params.shortid

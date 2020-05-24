@@ -1,11 +1,11 @@
-import { NextFunction, Response } from 'express'
+import { Request, Response } from 'express'
 import { config } from '../../config'
 import { errors } from '../../errors'
 import { logger } from '../../logger'
-import { Note, User } from '../../models'
+import { Note } from '../../models'
 import * as NoteUtils from './util'
 
-export function publishSlideActions (req: any, res: Response) {
+export function publishSlideActions (req: Request, res: Response): void {
   NoteUtils.findNoteOrCreate(req, res, function (note) {
     const action = req.params.action
     if (action === 'edit') {
@@ -16,14 +16,7 @@ export function publishSlideActions (req: any, res: Response) {
   })
 }
 
-export function showPublishSlide (req: any, res: Response) {
-  const include = [{
-    model: User,
-    as: 'owner'
-  }, {
-    model: User,
-    as: 'lastchangeuser'
-  }]
+export function showPublishSlide (req: Request, res: Response): void {
   NoteUtils.findNoteOrCreate(req, res, function (note) {
     // force to use short id
     const shortid = req.params.shortid
