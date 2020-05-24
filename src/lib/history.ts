@@ -10,12 +10,12 @@ import { LogEntry } from 'winston'
 
 // public
 
-type HistoryObject = {
-  id: string;
-  text: string;
-  time: number;
-  tags: string[];
-  pinned?: boolean;
+class HistoryObject {
+  id: string
+  text: string
+  time: number
+  tags: string[]
+  pinned?: boolean
 }
 
 function parseHistoryMapToArray (historyMap: Map<string, HistoryObject>): HistoryObject[] {
@@ -101,15 +101,13 @@ function updateHistory (userId: string, noteId: string, document, time): void {
   if (userId && noteId && typeof document !== 'undefined') {
     getHistory(userId, function (err, history) {
       if (err || !history) return
-      if (!history[noteId]) {
-        history[noteId] = {}
-      }
-      const noteHistory = history[noteId]
+      const noteHistory = history.get(noteId) || new HistoryObject()
       const noteInfo = Note.parseNoteInfo(document)
       noteHistory.id = noteId
       noteHistory.text = noteInfo.title
       noteHistory.time = time || Date.now()
       noteHistory.tags = noteInfo.tags
+      history.set(noteId, noteHistory)
       setHistory(userId, parseHistoryMapToArray(history), function (err, _) {
         if (err) {
           logger.log(err)
@@ -158,9 +156,10 @@ function historyPost (req, res): void {
       getHistory(req.user.id, function (err, history) {
         if (err) return errors.errorInternalError(res)
         if (!history) return errors.errorNotFound(res)
-        if (!history[noteId]) return errors.errorNotFound(res)
+        const noteHistory = history.get(noteId)
+        if (!noteHistory) return errors.errorNotFound(res)
         if (req.body.pinned === 'true' || req.body.pinned === 'false') {
-          history[noteId].pinned = (req.body.pinned === 'true')
+          noteHistory.pinned = (req.body.pinned === 'true')
           setHistory(req.user.id, parseHistoryMapToArray(history), function (err, _) {
             if (err) return errors.errorInternalError(res)
             res.end()
@@ -187,7 +186,7 @@ function historyDelete (req, res): void {
       getHistory(req.user.id, function (err, history) {
         if (err) return errors.errorInternalError(res)
         if (!history) return errors.errorNotFound(res)
-        delete history[noteId]
+        history.delete(noteId)
         setHistory(req.user.id, parseHistoryMapToArray(history), function (err, _) {
           if (err) return errors.errorInternalError(res)
           res.end()
