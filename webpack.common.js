@@ -211,6 +211,7 @@ module.exports = {
       'script-loader!Idle.Js',
       'expose-loader?LZString!lz-string',
       'script-loader!codemirror',
+      'script-loader!codemirrorWrap',
       'script-loader!inlineAttachment',
       'script-loader!jqueryTextcomplete',
       'script-loader!codemirrorSpellChecker',
@@ -360,6 +361,7 @@ module.exports = {
     extensions: ['.js'],
     alias: {
       codemirror: path.join(__dirname, 'node_modules/codemirror/codemirror.min.js'),
+      codemirrorWrap: path.join(__dirname, 'node_modules/codemirror/addon/wrap/hardwrap.js'),
       inlineAttachment: path.join(__dirname, 'public/vendor/inlineAttachment/inline-attachment.js'),
       jqueryTextcomplete: path.join(__dirname, 'public/vendor/jquery-textcomplete/jquery.textcomplete.js'),
       codemirrorSpellChecker: path.join(__dirname, 'public/vendor/codemirror-spell-checker/spell-checker.min.js'),
