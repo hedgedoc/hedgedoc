@@ -9,29 +9,35 @@ import {ApplicationState} from "../../../../../redux";
 const ViaLdap: React.FC = () => {
     const {t} = useTranslation();
     const ldapCustomName = useSelector((state: ApplicationState) => state.backendConfig.customAuthNames.ldap);
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(false);
-    const login = (event: any) => {
-        postLdapLogin(username, password)
-            .then(loginJson => {
-                console.log(loginJson)
-                getAndSetUser();
-            }).catch(_reason => {
-                setError(true);
-            }
-        )
-        event.preventDefault();
-    }
 
     const name = ldapCustomName ? `${ldapCustomName} (LDAP)` : "LDAP";
+
+    const doAsyncLogin = () => {
+        (async () => {
+            try {
+                await postLdapLogin(username, password);
+                await getAndSetUser();
+            } catch {
+                setError(true);
+            }
+        })();
+    }
+
+    const onFormSubmit = (event: any) => {
+        doAsyncLogin();
+        event.preventDefault();
+    }
 
     return (
         <Fragment>
             <h5 className="center">
                 <Trans i18nKey="signInVia" values={{service: name}}/>
             </h5>
-            <Form onSubmit={login}>
+            <Form onSubmit={onFormSubmit}>
                 <Form.Group controlId="username">
                     <Form.Control
                         isInvalid={error}

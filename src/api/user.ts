@@ -5,7 +5,7 @@ export const getMe = async () => {
 }
 
 export const postEmailLogin = async (email: string, password: string) => {
-    return fetch(getBackendUrl() + "/login", {
+    const response = await fetch(getBackendUrl() + "/login", {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
@@ -19,13 +19,14 @@ export const postEmailLogin = async (email: string, password: string) => {
             email: email,
             password: password,
         })
-    })
-        .then(expectResponseCode())
-        .then(response => response.json());
+    });
+
+    expectResponseCode(response);
+    return await response.json();
 }
 
 export const postLdapLogin = async (username: string, password: string) => {
-    return fetch(getBackendUrl() + "/auth/ldap", {
+    const response = await fetch(getBackendUrl() + "/auth/ldap", {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
@@ -40,12 +41,13 @@ export const postLdapLogin = async (username: string, password: string) => {
             password: password,
         })
     })
-        .then(expectResponseCode())
-        .then(response => response.json());
+
+    expectResponseCode(response)
+    return await response.json();
 }
 
 export const postOpenIdLogin = async (openId: string) => {
-    return fetch(getBackendUrl() + "/auth/openid", {
+    const response = await fetch(getBackendUrl() + "/auth/openid", {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
@@ -59,6 +61,7 @@ export const postOpenIdLogin = async (openId: string) => {
             openId: openId
         })
     })
-        .then(expectResponseCode())
-        .then(response => response.json());
+
+    expectResponseCode(response)
+    return await response.json();
 }

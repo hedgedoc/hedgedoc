@@ -13,16 +13,19 @@ export const ApplicationLoader: React.FC<ApplicationLoaderProps> = ({children, i
 
     useEffect(() => {
         setDoneTasks(0);
-        initTasks.map(task =>
-            task.then(() =>
-                setDoneTasks(prevDoneTasks => {
-                    return prevDoneTasks + 1;
-                }))
-                .catch((reason) => {
+        initTasks.forEach(task => {
+            (async () => {
+                try {
+                    await task;
+                    setDoneTasks(prevDoneTasks => {
+                        return prevDoneTasks + 1;
+                    })
+                } catch (reason) {
                     setFailed(true);
                     console.error(reason);
-                })
-        )
+                }
+            })();
+        })
     }, [initTasks]);
 
     return (<Fragment>{
