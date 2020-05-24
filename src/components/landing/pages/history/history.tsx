@@ -57,11 +57,9 @@ export const History: React.FC = () => {
             <Row className={"justify-content-center mb-3"}>
                 <HistoryToolbar onSettingsChange={setViewState} tags={tags}/>
             </Row>
-            <div className="d-flex flex-wrap justify-content-center">
                 <HistoryContent viewState={viewState.viewState}
                                 entries={entriesToShow}
                                 onPinClick={pinClick}/>
-            </div>
         </Fragment>
     )
 }
