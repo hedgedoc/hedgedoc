@@ -5,7 +5,7 @@ import { logger } from '../../logger'
 import { Note, User } from '../../models'
 import * as NoteUtils from './util'
 
-export function publishSlideActions (req: any, res: Response, next: NextFunction) {
+export function publishSlideActions (req: any, res: Response) {
   NoteUtils.findNoteOrCreate(req, res, function (note) {
     const action = req.params.action
     if (action === 'edit') {
@@ -16,7 +16,7 @@ export function publishSlideActions (req: any, res: Response, next: NextFunction
   })
 }
 
-export function showPublishSlide (req: any, res: Response, next: NextFunction) {
+export function showPublishSlide (req: any, res: Response) {
   const include = [{
     model: User,
     as: 'owner'
@@ -44,5 +44,5 @@ export function showPublishSlide (req: any, res: Response, next: NextFunction) {
       logger.error(err)
       return errors.errorInternalError(res)
     })
-  }, include)
+  })
 }

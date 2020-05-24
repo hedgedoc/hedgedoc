@@ -1,4 +1,4 @@
-import { Response } from 'express'
+import { Request, Response } from 'express'
 import fs from 'fs'
 
 import path from 'path'
@@ -8,7 +8,7 @@ import { errors } from '../../errors'
 import { logger } from '../../logger'
 import { Note, User } from '../../models'
 
-export function newNote (req: any, res: Response, body: string | null) {
+export function newNote (req, res: Response, body: string | null): void {
   let owner = null
   const noteId = req.params.noteId ? req.params.noteId : null
   if (req.isAuthenticated()) {
@@ -33,7 +33,7 @@ export function newNote (req: any, res: Response, body: string | null) {
   })
 }
 
-export function checkViewPermission (req: any, note: any) {
+export function checkViewPermission (req, note: any): boolean {
   if (note.permission === 'private') {
     return req.isAuthenticated() && note.ownerId === req.user.id
   } else if (note.permission === 'limited' || note.permission === 'protected') {
@@ -43,7 +43,7 @@ export function checkViewPermission (req: any, note: any) {
   }
 }
 
-export function findNoteOrCreate (req, res, callback: (note: any) => void, include?: Includeable[]) {
+export function findNoteOrCreate (req: Request, res: Response, callback: (note: Note) => void): void {
   const id = req.params.noteId || req.params.shortid
   Note.parseNoteId(id, function (err, _id) {
     if (err) {
@@ -70,14 +70,14 @@ export function findNoteOrCreate (req, res, callback: (note: any) => void, inclu
   })
 }
 
-function isRevealTheme (theme: string) {
+function isRevealTheme (theme: string): string | undefined {
   if (fs.existsSync(path.join(__dirname, '..', '..', '..', '..', 'public', 'build', 'reveal.js', 'css', 'theme', theme + '.css'))) {
     return theme
   }
   return undefined
 }
 
-export function getPublishData (req: any, res: Response, note: any, callback: (data: any) => void) {
+export function getPublishData (req: Request, res: Response, note, callback: (data) => void): void {
   const body = note.content
   const extracted = Note.extractMeta(body)
   const markdown = extracted.markdown

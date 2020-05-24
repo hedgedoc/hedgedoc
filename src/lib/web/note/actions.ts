@@ -1,4 +1,4 @@
-import { Response } from 'express'
+import { Request, Response } from 'express'
 
 import { Note, Revision } from '../../models'
 import { logger } from '../../logger'
@@ -8,7 +8,7 @@ import shortId from 'shortid'
 import moment from 'moment'
 import querystring from 'querystring'
 
-export function getInfo (req: any, res: Response, note: Note): void {
+export function getInfo (req: Request, res: Response, note: Note): void {
   const body = note.content
   const extracted = Note.extractMeta(body)
   const markdown = extracted.markdown
@@ -31,7 +31,7 @@ export function getInfo (req: any, res: Response, note: Note): void {
   res.send(data)
 }
 
-export function createGist (req: any, res: Response, note: Note): void {
+export function createGist (req: Request, res: Response, note: Note): void {
   const data = {
     // eslint-disable-next-line @typescript-eslint/camelcase
     client_id: config.github.clientID,
@@ -44,7 +44,7 @@ export function createGist (req: any, res: Response, note: Note): void {
   res.redirect('https://github.com/login/oauth/authorize?' + query)
 }
 
-export function getRevision (req: any, res: Response, note: Note): void {
+export function getRevision (req: Request, res: Response, note: Note): void {
   const actionId = req.params.actionId
   if (actionId) {
     const time = moment(parseInt(actionId))
