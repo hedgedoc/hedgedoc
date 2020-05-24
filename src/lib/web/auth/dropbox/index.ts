@@ -18,7 +18,7 @@ export const DropboxMiddleware: AuthMiddleware = {
     }, (
       accessToken: string,
       refreshToken: string,
-      profile: any,
+      profile,
       done: (err?: Error | null, user?: User) => void
     ): void => {
       // the Dropbox plugin wraps the email addresses in an object

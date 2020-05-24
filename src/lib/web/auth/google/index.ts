@@ -17,7 +17,7 @@ export const GoogleMiddleware: AuthMiddleware = {
     }, (
       accessToken: string,
       refreshToken: string,
-      profile: any,
+      profile,
       done) => {
       /*
        This ugly hack is neccessary, because the Google Strategy wants a done-callback with an err as Error | null | undefined
