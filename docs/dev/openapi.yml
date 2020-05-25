@@ -141,12 +141,91 @@ paths:
           content:
             text/plain:
               example: my-note
-  /{note}/download:
+  /n/{note}:
     get:
       tags:
         - note
+      summary: Returns the note.
+      operationId: getNote
+      description: This includes all metadata and the content of the note.
+      responses:
+        200:
+          description: All data of the note
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Note"
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the info should be shown
+          content:
+            text/plain:
+              example: my-note
+  /n/{note}/export/markdown:
+    get:
+      tags:
+        - note
+        - export
       summary: Returns the raw markdown content of a note.
       operationId: getNoteContent
+      responses:
+        200:
+          description: The raw markdown content of the note
+          content:
+            'text/markdown':
+              schema:
+                type: string
+              examples:
+                markdownExample:
+                  "$ref": '#/components/examples/markdownExample'
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the revision should be shown
+          content:
+            text/plain:
+              example: my-note
+  /n/{note}/export/html:
+    get:
+      tags:
+        - note
+        - export
+      summary: Returns the content of a note as HTML.
+      operationId: getNoteContentAsHTML
+      responses:
+        200:
+          description: The raw markdown content of the note
+          content:
+            'text/markdown':
+              schema:
+                type: string
+              examples:
+                markdownExample:
+                  "$ref": '#/components/examples/markdownExample'
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the revision should be shown
+          content:
+            text/plain:
+              example: my-note
+  /n/{note}/export/gist:
+    get:
+      tags:
+        - note
+        - export
+      summary: Exports the content of a note to a gist.
+      operationId: exportNoteToGist
       responses:
         200:
           description: The raw markdown content of the note
@@ -167,7 +246,34 @@ paths:
           content:
             text/plain:
               example: my-note
-  /{note}/info:
+  /n/{note}/export/dropbox:
+    get:
+      tags:
+        - note
+        - export
+      summary: Exports the content of a note to dropbox.
+      operationId: exportNoteToDropbox
+      responses:
+        200:
+          description: The raw markdown content of the note
+          content:
+            'text/markdown':
+              schema:
+                type: string
+              examples:
+                markdownExample:
+                  "$ref": '#/components/examples/markdownExample'
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note which should be downloaded
+          content:
+            text/plain:
+              example: my-note
+  /n/{note}/info:
     get:
       tags:
         - note
@@ -191,7 +297,7 @@ paths:
           content:
             text/plain:
               example: my-note
-  /{note}/revision:
+  /n/{note}/revision:
     get:
       tags:
         - note
@@ -216,7 +322,7 @@ paths:
             text/plain:
               example: my-note
 
-  /{note}/revision/{revision-id}:
+  /n/{note}/revision/{revision-id}:
     get:
       tags:
         - note
@@ -260,6 +366,38 @@ components:
         photo:
           type: string
           format: uri
+    Note:
+      type: object
+      properties:
+        id:
+          type: string
+          format: UUIDv4
+          description: The id of the note
+        alias:
+          type: string
+          description: The alias of the note
+        lastChange:
+          type: object
+          properties:
+            userId:
+              type: string
+              format: UUIDv4
+              description: The id of the user that last changed the note
+            user:
+              type: string
+              description: The name of the user that last changed the note
+            timestamp:
+              type: integer
+              description: UNIX-timestamp of when the note was last changed.
+        content:
+          type: string
+          description: The raw markdown content of the note revision
+        authorship:
+          type: array
+          description: Data which gives insights about who worked on the note
+          items:
+            type: integer
+            description: Unique user ids and additional data
     NoteRevisionsMetadata:
       type: object
       properties:
