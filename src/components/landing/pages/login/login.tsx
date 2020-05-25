@@ -1,14 +1,12 @@
 import React from "react"
-import {Col, Jumbotron, Row} from "react-bootstrap"
+import {Card, Col, Row} from "react-bootstrap"
 import {Trans, useTranslation} from "react-i18next";
 import {ViaEMail} from "./auth/via-email";
 import {OneClickType, ViaOneClick} from "./auth/via-one-click";
 import {ViaLdap} from "./auth/via-ldap";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../../../redux";
-import {ViaOpenId} from "./auth/via-open id";
-import "./login.scss";
-import {ElementSeparator} from "../../../element-separator/element-separator";
+import {ViaOpenId} from "./auth/via-openid";
 import {Redirect} from "react-router";
 import {LoginStatus} from "../../../../redux/user/types";
 
@@ -40,26 +38,23 @@ const Login: React.FC = () => {
     }
 
     return (
-        <Jumbotron className="bg-dark">
-            <div className="my-3">
-                <Row className="h-100 flex justify-content-center">
-                    {
-                        authProviders.email || authProviders.ldap || authProviders.openid ?
-                            <Col xs={12} sm={10} lg={3}>
-                                <ElementSeparator separator={<hr className="w-100 bg-white"/>}>
-                                    {emailForm}
-                                    {ldapForm}
-                                    {openIdForm}
-                                </ElementSeparator>
-                                <hr className="w-100 d-lg-none d-block bg-white"/>
-                            </Col>
-                            : null
-                    }
-                    <Col xs={12} sm={10} lg={5}>
-                        <h5>
-                            <Trans i18nKey="signInVia" values={{service: ""}}/>
-                        </h5>
-                        <div className={"d-flex flex-wrap one-click-login justify-content-center"}>
+        <div className="my-3">
+            <Row className="h-100 flex justify-content-center">
+                {
+                    authProviders.email || authProviders.ldap || authProviders.openid ?
+                        <Col xs={12} sm={10} lg={4}>
+                            {emailForm}
+                            {ldapForm}
+                            {openIdForm}
+                        </Col>
+                        : null
+                }
+                <Col xs={12} sm={10} lg={4}>
+                    <Card className="bg-dark mb-4">
+                        <Card.Body>
+                            <Card.Title>
+                                <Trans i18nKey="signInVia" values={{service: ""}}/>
+                            </Card.Title>
                             {
                                 Object.values(OneClickType)
                                     .filter((value) => authProviders[value])
@@ -77,11 +72,11 @@ const Login: React.FC = () => {
                                         )
                                     })
                             }
-                        </div>
-                    </Col>
-                </Row>
-            </div>
-        </Jumbotron>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </div>
     )
 }
 
