@@ -1,5 +1,6 @@
 {
   "name": "react_client",
+  "license": "AGPL-3.0",
   "version": "0.1.0",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
