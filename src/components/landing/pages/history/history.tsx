@@ -3,6 +3,7 @@ import {HistoryContent} from './history-content/history-content';
 import {HistoryToolbar, HistoryToolbarState, initState as toolbarInitState} from './history-toolbar/history-toolbar';
 import {loadHistoryFromLocalStore, sortAndFilterEntries} from "../../../../utils/historyUtils";
 import {Row} from 'react-bootstrap';
+import {Trans, useTranslation} from "react-i18next";
 
 export interface HistoryEntry {
     id: string,
@@ -15,6 +16,7 @@ export interface HistoryEntry {
 export type pinClick = (entryId: string) => void;
 
 export const History: React.FC = () => {
+    useTranslation();
     const [historyEntries, setHistoryEntries] = useState<HistoryEntry[]>([])
     const [viewState, setViewState] = useState<HistoryToolbarState>(toolbarInitState)
 
@@ -53,7 +55,7 @@ export const History: React.FC = () => {
 
     return (
         <Fragment>
-            <h1>History</h1>
+            <h1 className="mb-4"><Trans i18nKey="history"/></h1>
             <Row className={"justify-content-center mb-3"}>
                 <HistoryToolbar onSettingsChange={setViewState} tags={tags}/>
             </Row>
