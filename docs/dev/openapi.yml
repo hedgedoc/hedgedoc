@@ -436,6 +436,47 @@ paths:
           content:
             text/plain:
               example: 1570921051959
+  /history:
+    get:
+      tags:
+        - history
+      summary: Returns a list of the last viewed notes.
+      operationId: getHistory
+      description: The list is returned as a JSON object with an array containing for each entry it's id, title, tags, last visit time and pinned status.
+      responses:
+        200:
+          description: The list of recently viewed notes and pinned notes
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/History"
+    post:
+      tags:
+        - history
+      summary: Sets the history
+      operationId: updateHistory
+      requestBody:
+        description: The history to update
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/History"
+      responses:
+        200:
+          description: The new history
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/History"
+    delete:
+      tags:
+        - history
+      summary: Clear the users history
+      operationId: deleteHistory
+      responses:
+        200:
+          description: Deleted the history
+          content: {}
 components:
   schemas:
     UserInfo:
@@ -595,6 +636,34 @@ components:
           type: boolean
         disconnectSocketQueueLength:
           type: integer
+    HistoryObject:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id or alias of the note
+        title:
+          type: string
+          description: The title of the note
+        lastVisited:
+          type: integer
+          description: The UNIX-timestamp in milliseconds when the note was last accessed by the user
+        tags:
+          type: array
+          description: The tags that were added by the user to the note
+          items:
+            type: string
+        pinned:
+          type: boolean
+          description: Whether the user has pinned this note
+    History:
+      type: object
+      properties:
+        history:
+          type: array
+          description: The array that contains history objects
+          items:
+            "$ref": "#/components/schemas/HistoryObject"
   examples:
     markdownExample:
       value: '# Some header\nSome normal text. **Some bold text**'
