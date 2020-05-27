@@ -134,7 +134,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/NewNote"
+                "$ref": "#/components/schemas/Note"
   /notes/{note}:
     get:
       tags:
@@ -181,7 +181,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/NewNote"
+                "$ref": "#/components/schemas/Note"
         409:
           description: This alias is already in use
       parameters:
@@ -545,16 +545,6 @@ components:
       properties:
         openId:
           type: string
-    NewNote:
-      type: object
-      properties:
-        id:
-          type: string
-          description: the id of the new note
-          format: UUIDv4
-        alias:
-          type: string
-          description: the alias with which the note should be accessed
     ServerStatus:
       type: object
       properties:
