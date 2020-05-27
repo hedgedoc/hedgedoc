@@ -31,7 +31,48 @@ paths:
       responses:
         200:
           description: login succesful
-          content: {}
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+  /auth/ldap:
+    post:
+      tags:
+        - auth
+      summary: Trying to login via LDAP
+      operationId: loginLdap
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LdapLogin'
+      responses:
+        200:
+          description: login succesful
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+  /auth/openid:
+    post:
+      tags:
+        - auth
+      summary: Trying to login via OpenID
+      operationId: loginOpenId
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpenIdLogin'
+      responses:
+        200:
+          description: login succesful
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
   /me:
     get:
       tags:
@@ -70,20 +111,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/ServerStatus"
-  /new:
-    get:
-      tags:
-        - note
-      summary: Creates a new note.
-      operationId: createNote
-      description: A random id will be assigned and the content will equal to the template (blank by default). After note creation a redirect is issued to the created note.
-      responses:
-        200:
-          description: Get information about the newly created note
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/NewNote"
+  /note:
     post:
       tags:
         - note
@@ -91,7 +119,7 @@ paths:
       operationId: createNoteFromMarkdown
       description: A random id will be assigned and the content will equal to the body of the received HTTP-request.
       requestBody:
-        required: true
+        required: false
         description: The content of the note to be imported as markdown
         content:
           'text/markdown':
@@ -107,7 +135,30 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/NewNote"
-  /new/{alias}:
+  /note/{note}:
+    get:
+      tags:
+        - note
+      summary: Returns the note.
+      operationId: getNote
+      description: This includes all metadata and the content of the note.
+      responses:
+        200:
+          description: All data of the note
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Note"
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the info should be shown
+          content:
+            text/plain:
+              example: my-note
     post:
       tags:
         - note
@@ -134,30 +185,6 @@ paths:
         409:
           description: This alias is already in use
       parameters:
-        - name: alias
-          in: path
-          required: true
-          description: The alias for the note-id under which the note will be saved
-          content:
-            text/plain:
-              example: my-note
-  /n/{note}:
-    get:
-      tags:
-        - note
-      summary: Returns the note.
-      operationId: getNote
-      description: This includes all metadata and the content of the note.
-      responses:
-        200:
-          description: All data of the note
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/Note"
-        404:
-          description: Note does not exist
-      parameters:
         - name: note
           in: path
           required: true
@@ -165,7 +192,7 @@ paths:
           content:
             text/plain:
               example: my-note
-  /n/{note}/export/markdown:
+  /note/{note}/export/markdown:
     get:
       tags:
         - note
@@ -179,20 +206,18 @@ paths:
             'text/markdown':
               schema:
                 type: string
-              examples:
-                markdownExample:
-                  "$ref": '#/components/examples/markdownExample'
+                format: binary
         404:
           description: Note does not exist
       parameters:
         - name: note
           in: path
           required: true
-          description: The note for which the revision should be shown
+          description: The note for which the markdown should be exported
           content:
             text/plain:
               example: my-note
-  /n/{note}/export/html:
+  /note/{note}/export/html:
     get:
       tags:
         - note
@@ -201,25 +226,23 @@ paths:
       operationId: getNoteContentAsHTML
       responses:
         200:
-          description: The raw markdown content of the note
+          description: The raw html content of the note
           content:
-            'text/markdown':
+            'text/html':
               schema:
                 type: string
-              examples:
-                markdownExample:
-                  "$ref": '#/components/examples/markdownExample'
+                format: binary
         404:
           description: Note does not exist
       parameters:
         - name: note
           in: path
           required: true
-          description: The note for which the revision should be shown
+          description: The note for which the html should be exported
           content:
             text/plain:
               example: my-note
-  /n/{note}/export/gist:
+  /note/{note}/export/gist:
     get:
       tags:
         - note
@@ -228,25 +251,22 @@ paths:
       operationId: exportNoteToGist
       responses:
         200:
-          description: The raw markdown content of the note
+          description: The link to Gist of the note
           content:
-            'text/markdown':
+            application/json:
               schema:
-                type: string
-              examples:
-                markdownExample:
-                  "$ref": '#/components/examples/markdownExample'
+                "$ref": '#/components/schemas/GistLink'
         404:
           description: Note does not exist
       parameters:
         - name: note
           in: path
           required: true
-          description: The note which should be downloaded
+          description: The note which should be exported to gist
           content:
             text/plain:
               example: my-note
-  /n/{note}/export/dropbox:
+  /note/{note}/export/dropbox:
     get:
       tags:
         - note
@@ -255,49 +275,47 @@ paths:
       operationId: exportNoteToDropbox
       responses:
         200:
-          description: The raw markdown content of the note
-          content:
-            'text/markdown':
-              schema:
-                type: string
-              examples:
-                markdownExample:
-                  "$ref": '#/components/examples/markdownExample'
-        404:
-          description: Note does not exist
-      parameters:
-        - name: note
-          in: path
-          required: true
-          description: The note which should be downloaded
-          content:
-            text/plain:
-              example: my-note
-  /n/{note}/info:
-    get:
-      tags:
-        - note
-      summary: Returns metadata about the note.
-      operationId: getNoteInfo
-      description: This includes the title and description of the note as well as the creation date and viewcount.
-      responses:
-        200:
-          description: Metadata about the note
+          description: The dropbox link of the note
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/NoteInfo"
+                "$ref": '#/components/schemas/DropboxLink'
         404:
           description: Note does not exist
       parameters:
         - name: note
           in: path
           required: true
-          description: The note for which the info should be shown
+          description: The note which should be exported to dropbox
           content:
             text/plain:
               example: my-note
-  /n/{note}/revision:
+  /note/{note}/export/pdf:
+    get:
+      tags:
+        - note
+        - export
+      summary: Exports the content of a note as PDF.
+      operationId: exportNoteToPDF
+      responses:
+        200:
+          description: The note as an PDF
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        404:
+          description: Note does not exist
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note which should be exported to dropbox
+          content:
+            text/plain:
+              example: my-note
+  /note/{note}/revision:
     get:
       tags:
         - note
@@ -322,7 +340,7 @@ paths:
             text/plain:
               example: my-note
 
-  /n/{note}/revision/{revision-id}:
+  /note/{note}/revision/{revision-id}:
     get:
       tags:
         - note
@@ -389,6 +407,13 @@ components:
             timestamp:
               type: integer
               description: UNIX-timestamp of when the note was last changed.
+        viewcount:
+          type: integer
+          minimum: 0
+          description: How often the published version of the note was viewed
+        createtime:
+          type: string
+          description: The timestamp when the note was created in ISO 8601 format.
         content:
           type: string
           description: The raw markdown content of the note revision
@@ -430,26 +455,20 @@ components:
           description: Data which gives insight about what changed in comparison to former revisions
           items:
             type: string
-    NoteInfo:
+    GistLink:
       type: object
       properties:
-        title:
+        link:
           type: string
-          description: The title of the note
-          default: Untitled
-        description:
+          format: uri
+          description: A Gist link
+    DropboxLink:
+      type: object
+      properties:
+        link:
           type: string
-          description: The description of the note or the first words from the note
-        viewcount:
-          type: integer
-          minimum: 0
-          description: How often the published version of the note was viewed
-        createtime:
-          type: string
-          description: The timestamp when the note was created in ISO 8601 format.
-        updatetime:
-          type: string
-          description: The timestamp when the note was last updated in ISO 8601 format.
+          format: uri
+          description: A Dropbox link
     EmailLogin:
       type: object
       properties:
@@ -459,6 +478,20 @@ components:
         password:
           type: string
           format: password
+    LdapLogin:
+      type: object
+      properties:
+        username:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+    OpenIdLogin:
+      type: object
+      properties:
+        openId:
+          type: string
     NewNote:
       type: object
       properties:
