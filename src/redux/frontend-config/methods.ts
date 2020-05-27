@@ -1,12 +1,12 @@
-import {FrontendConfigState, SET_FRONTEND_CONFIG_ACTION_TYPE, SetFrontendConfigAction} from "./types";
-import {store} from "../../utils/store";
+import { FrontendConfigState, SET_FRONTEND_CONFIG_ACTION_TYPE, SetFrontendConfigAction } from './types'
+import { store } from '../../utils/store'
 
-export const setFrontendConfig = (state: FrontendConfigState) => {
-    const action: SetFrontendConfigAction = {
-        type: SET_FRONTEND_CONFIG_ACTION_TYPE,
-        payload: {
-            state
-        }
+export const setFrontendConfig: (state: FrontendConfigState) => void = (state: FrontendConfigState) => {
+  const action: SetFrontendConfigAction = {
+    type: SET_FRONTEND_CONFIG_ACTION_TYPE,
+    payload: {
+      state
     }
-    store.dispatch(action);
+  }
+  store.dispatch(action)
 }

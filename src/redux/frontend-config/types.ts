@@ -1,6 +1,6 @@
-import {Action} from "redux";
+import { Action } from 'redux'
 
-export const SET_FRONTEND_CONFIG_ACTION_TYPE = 'frontend-config/set';
+export const SET_FRONTEND_CONFIG_ACTION_TYPE = 'frontend-config/set'
 
 export interface SetFrontendConfigAction extends Action {
     type: string;

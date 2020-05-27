@@ -1,46 +1,45 @@
-import {LoginStatus} from "../../../../../redux/user/types";
-import {Link} from "react-router-dom";
-import {Button} from "react-bootstrap";
-import {Trans, useTranslation} from "react-i18next";
-import React from "react";
-import {useSelector} from "react-redux";
-import {ApplicationState} from "../../../../../redux";
-import "./cover-buttons.scss";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Button } from 'react-bootstrap'
+import { LoginStatus } from '../../../../../redux/user/types'
+import { Trans, useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { ApplicationState } from '../../../../../redux'
+import './cover-buttons.scss'
 
 export const CoverButtons: React.FC = () => {
-    useTranslation();
-    const user = useSelector((state: ApplicationState) => state.user);
+  useTranslation()
+  const user = useSelector((state: ApplicationState) => state.user)
 
-    if (user.status === LoginStatus.ok) {
-        return null;
-    }
+  if (user.status === LoginStatus.ok) {
+    return null
+  }
 
-    return (
-        <div className="mb-5">
-            <Link to="/login">
-                <Button
-                    className="cover-button"
-                    variant="success"
-                    size="lg"
-                >
-                    <Trans i18nKey="signIn"/>
-                </Button>
-            </Link>
+  return (
+    <div className="mb-5">
+      <Link to="/login">
+        <Button
+          className="cover-button"
+          variant="success"
+          size="lg"
+        >
+          <Trans i18nKey="signIn"/>
+        </Button>
+      </Link>
 
-            <span className="m-2">
-                <Trans i18nKey="or"/>
-            </span>
+      <span className="m-2">
+        <Trans i18nKey="or"/>
+      </span>
 
-            <Link to="/features">
-                <Button
-                    className="cover-button"
-                    variant="primary"
-                    size="lg"
-                >
-                    <Trans i18nKey="exploreFeatures"/>
-                </Button>
-            </Link>
-        </div>
-    );
-
+      <Link to="/features">
+        <Button
+          className="cover-button"
+          variant="primary"
+          size="lg"
+        >
+          <Trans i18nKey="exploreFeatures"/>
+        </Button>
+      </Link>
+    </div>
+  )
 }

@@ -1,6 +1,6 @@
-import {Action} from "redux";
+import { Action } from 'redux'
 
-export const SET_HISTORY_DELETE_MODAL_SHOW_ACTION_TYPE = 'modal/history-delete/set';
+export const SET_HISTORY_DELETE_MODAL_SHOW_ACTION_TYPE = 'modal/history-delete/set'
 
 export interface ModalShowState {
     historyDelete: boolean

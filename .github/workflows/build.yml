@@ -1,0 +1,27 @@
+name: lint and build
+
+on:
+  push:
+    branches: [master, dev]
+  pull_request:
+    branches: [master, dev]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Cache node_modules
+        uses: actions/cache@v1.1.0
+        with:
+          path: node_modules
+          key: node_modules
+      - name: Install dependencies
+        uses: borales/actions-yarn@v2.1.0
+        with:
+          cmd: install
+      - name: build project
+        uses: borales/actions-yarn@v2.1.0
+        with:
+          cmd: build
