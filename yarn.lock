@@ -8654,10 +8654,10 @@ retry-as-promised@^3.2.0:
   dependencies:
     any-promise "^1.3.0"
 
-reveal.js@~3.9.2:
-  version "3.9.2"
-  resolved "https://registry.yarnpkg.com/reveal.js/-/reveal.js-3.9.2.tgz#7f63d3dfec338b6c313dcabdf006e8cf80e0b358"
-  integrity sha512-Dvv2oA9FrtOHE2DWj5js8pMRfwq++Wmvsn1EyAdYLC80lBjTphns+tPsB652Bnvep9AVviuVS/b4XoVY9rXHLA==
+reveal.js@~4.0.0:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/reveal.js/-/reveal.js-4.0.1.tgz#0ef7f7a4e5707165bf784a57cec58171f6af3550"
+  integrity sha512-RA1fklPgSNCNnQ41XR0bNoaSkXHb8Ji0baQ53HBxgeRlWkb2INVUQShAZfiNK6iI7knKLWGZJ7cs5dh7tvAaXA==
 
 rgb-regex@^1.0.1:
   version "1.0.1"
