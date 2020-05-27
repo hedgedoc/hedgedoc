@@ -453,7 +453,7 @@ paths:
     post:
       tags:
         - history
-      summary: Sets the history
+      summary: Sets the history if none is already set
       operationId: updateHistory
       requestBody:
         description: The history to update
@@ -477,6 +477,50 @@ paths:
         200:
           description: Deleted the history
           content: {}
+  /history/{note}/:
+    put:
+      tags:
+        - history
+      summary: Update the history object of the note (e.g change it's pin status)
+      operationId: updateHistoryObject
+      requestBody:
+        description: The updated history object
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/HistoryObject"
+      responses:
+        200:
+          description: The new history
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HistoryObject"
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the revision should be shown
+          content:
+            text/plain:
+              example: my-note
+    delete:
+      tags:
+        - history
+      summary: remove the history object of the note
+      operationId: deleteHistoryObject
+      responses:
+        200:
+          description: The new history
+          content: {}
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the revision should be shown
+          content:
+            text/plain:
+              example: my-note
   /config:
     get:
       tags:
