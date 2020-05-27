@@ -477,6 +477,19 @@ paths:
         200:
           description: Deleted the history
           content: {}
+  /config:
+    get:
+      tags:
+        - config
+      summary: The config of the backend
+      operationId: getConfig
+      responses:
+        200:
+          description: The config
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Config"
 components:
   schemas:
     UserInfo:
@@ -490,6 +503,78 @@ components:
         photo:
           type: string
           format: uri
+    Config:
+      type: object
+      properties:
+        allowAnonymous:
+          type: boolean
+          description: Wether anonymous notes are allowed
+        authProviders:
+          type: object
+          properties:
+            facebook:
+              type: boolean
+              description: Wether Facebook login is possible
+            github:
+              type: boolean
+              description: Wether GitHub login is possible
+            twitter:
+              type: boolean
+              description: Wether Twitter login is possible
+            gitlab:
+              type: boolean
+              description: Wether Gitlab login is possible
+            dropbox:
+              type: boolean
+              description: Wether Dropbox login is possible
+            google:
+              type: boolean
+              description: Wether Google login is possible
+            saml:
+              type: boolean
+              description: Wether SAML login is possible
+            oauth2:
+              type: boolean
+              description: Wether OAuth2 login is possible
+            email:
+              type: boolean
+              description: Wether E-Mail login is possible
+            ldap:
+              type: boolean
+              description: Wether LDAP login is possible
+            openid:
+              type: boolean
+              description: Wether OpenID login is possible
+        customAuthNames:
+          type: object
+          properties:
+            ldap:
+              type: string
+              description: The custom name for the LDAP Login
+              example: "FooBar LDAP"
+            oauth2:
+              type: string
+              description: The custom name for the OAuth2 Login
+              example: "Olaf2"
+            saml:
+              type: string
+              description: The custom name for the SAML Login
+              example: "aufSAMLn.de"
+        specialLinks:
+          type: object
+          properties:
+            privacy:
+              type: string
+              format: uri
+              description: Link to the privacy notice
+            termsOfUse:
+              type: string
+              format: uri
+              description: Link to the terms of use
+            imprint:
+              type: string
+              format: uri
+              description: Link to the imprint
     Note:
       type: object
       properties:
