@@ -111,7 +111,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/ServerStatus"
-  /note:
+  /notes:
     post:
       tags:
         - note
@@ -135,7 +135,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/NewNote"
-  /note/{note}:
+  /notes/{note}:
     get:
       tags:
         - note
@@ -192,7 +192,54 @@ paths:
           content:
             text/plain:
               example: my-note
-  /note/{note}/export/markdown:
+  /notes/{note}/permissions:
+    put:
+      tags:
+        - note
+      summary: Set the permissions of a note
+      operationId: updateNotePermissions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/NotePermissions"
+      responses:
+        200:
+          description: The updated permissions of the note
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotePermissions"
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the info should be shown
+          content:
+            text/plain:
+              example: my-note
+    get:
+      tags:
+        - note
+      summary: Get the permissions of a note
+      operationId: getNotePermissions
+      responses:
+        200:
+          description: The permissions of the note
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotePermissions"
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the info should be shown
+          content:
+            text/plain:
+              example: my-note
+  /notes/{note}/export/markdown:
     get:
       tags:
         - note
@@ -217,7 +264,7 @@ paths:
           content:
             text/plain:
               example: my-note
-  /note/{note}/export/html:
+  /notes/{note}/export/html:
     get:
       tags:
         - note
@@ -242,7 +289,7 @@ paths:
           content:
             text/plain:
               example: my-note
-  /note/{note}/export/gist:
+  /notes/{note}/export/gist:
     get:
       tags:
         - note
@@ -266,7 +313,7 @@ paths:
           content:
             text/plain:
               example: my-note
-  /note/{note}/export/dropbox:
+  /notes/{note}/export/dropbox:
     get:
       tags:
         - note
@@ -290,7 +337,7 @@ paths:
           content:
             text/plain:
               example: my-note
-  /note/{note}/export/pdf:
+  /notes/{note}/export/pdf:
     get:
       tags:
         - note
@@ -315,7 +362,7 @@ paths:
           content:
             text/plain:
               example: my-note
-  /note/{note}/revision:
+  /notes/{note}/revision:
     get:
       tags:
         - note
@@ -340,7 +387,7 @@ paths:
             text/plain:
               example: my-note
 
-  /note/{note}/revision/{revision-id}:
+  /notes/{note}/revision/{revision-id}:
     get:
       tags:
         - note
@@ -423,6 +470,12 @@ components:
           items:
             type: integer
             description: Unique user ids and additional data
+    NotePermissions:
+      type: object
+      properties:
+        permission:
+          type: string
+          enum: ['freely', 'editable', 'limited', 'locked', 'protected', 'private']
     NoteRevisionsMetadata:
       type: object
       properties:
