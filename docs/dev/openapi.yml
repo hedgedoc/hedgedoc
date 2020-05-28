@@ -29,7 +29,7 @@ paths:
             schema:
               $ref: '#/components/schemas/EmailLogin'
       responses:
-        200:
+        '200':
           description: login succesful
           headers:
             Set-Cookie:
@@ -48,7 +48,7 @@ paths:
             schema:
               $ref: '#/components/schemas/LdapLogin'
       responses:
-        200:
+        '200':
           description: login succesful
           headers:
             Set-Cookie:
@@ -67,7 +67,7 @@ paths:
             schema:
               $ref: '#/components/schemas/OpenIdLogin'
       responses:
-        200:
+        '200':
           description: login succesful
           headers:
             Set-Cookie:
@@ -80,13 +80,13 @@ paths:
       summary: Get the user information of the currently logged in user
       operationId: getMe
       responses:
-        200:
+        '200':
           description: the user information
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/UserInfo"
-        401:
+        '401':
           description: the user is not logged in
           content: {}
   /me/export:
@@ -95,7 +95,7 @@ paths:
         - user
       summary: Exports a zip-archive with all notes of the current user.
       responses:
-        200:
+        '200':
           description: The zip-archive with all notes
   /status:
     get:
@@ -105,7 +105,7 @@ paths:
       operationId: getStatus
       description: The data is returned as a JSON object containing the number of notes stored on the server, (distinct) online users and more.
       responses:
-        200:
+        '200':
           description: The server info
           content:
             application/json:
@@ -129,7 +129,7 @@ paths:
               markdownExample:
                 "$ref": '#/components/examples/markdownExample'
       responses:
-        200:
+        '200':
           description: Get information about the newly created note
           content:
             application/json:
@@ -143,13 +143,13 @@ paths:
       operationId: getNote
       description: This includes all metadata and the content of the note.
       responses:
-        200:
+        '200':
           description: All data of the note
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Note"
-        404:
+        '404':
           description: Note does not exist
       parameters:
         - name: note
@@ -176,13 +176,13 @@ paths:
               markdownExample:
                 "$ref": '#/components/examples/markdownExample'
       responses:
-        200:
+        '200':
           description: Get information about the newly created note
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Note"
-        409:
+        '409':
           description: This alias is already in use
       parameters:
         - name: note
@@ -205,7 +205,7 @@ paths:
             schema:
               "$ref": "#/components/schemas/NotePermissions"
       responses:
-        200:
+        '200':
           description: The updated permissions of the note
           content:
             application/json:
@@ -225,7 +225,7 @@ paths:
       summary: Get the permissions of a note
       operationId: getNotePermissions
       responses:
-        200:
+        '200':
           description: The permissions of the note
           content:
             application/json:
@@ -246,7 +246,7 @@ paths:
       summary: Returns the websocket of a note.
       operationId: getNoteWebsocket
       responses:
-        200:
+        '200':
           description: The websocket of the note
           content: {}
       parameters:
@@ -265,14 +265,14 @@ paths:
       summary: Returns the raw markdown content of a note.
       operationId: getNoteContent
       responses:
-        200:
+        '200':
           description: The raw markdown content of the note
           content:
             'text/markdown':
               schema:
                 type: string
                 format: binary
-        404:
+        '404':
           description: Note does not exist
       parameters:
         - name: note
@@ -290,14 +290,14 @@ paths:
       summary: Returns the content of a note as HTML.
       operationId: getNoteContentAsHTML
       responses:
-        200:
+        '200':
           description: The raw html content of the note
           content:
             'text/html':
               schema:
                 type: string
                 format: binary
-        404:
+        '404':
           description: Note does not exist
       parameters:
         - name: note
@@ -315,13 +315,13 @@ paths:
       summary: Exports the content of a note to a gist.
       operationId: exportNoteToGist
       responses:
-        200:
+        '200':
           description: The link to Gist of the note
           content:
             application/json:
               schema:
                 "$ref": '#/components/schemas/GistLink'
-        404:
+        '404':
           description: Note does not exist
       parameters:
         - name: note
@@ -339,13 +339,13 @@ paths:
       summary: Exports the content of a note to dropbox.
       operationId: exportNoteToDropbox
       responses:
-        200:
+        '200':
           description: The dropbox link of the note
           content:
             application/json:
               schema:
                 "$ref": '#/components/schemas/DropboxLink'
-        404:
+        '404':
           description: Note does not exist
       parameters:
         - name: note
@@ -363,14 +363,14 @@ paths:
       summary: Exports the content of a note as PDF.
       operationId: exportNoteToPDF
       responses:
-        200:
+        '200':
           description: The note as an PDF
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
-        404:
+        '404':
           description: Note does not exist
       parameters:
         - name: note
@@ -388,13 +388,13 @@ paths:
       operationId: getAllRevisionsOfNote
       description: The list is returned as a JSON object with an array of revision-id and length associations. The revision-id equals to the timestamp when the revision was saved.
       responses:
-        200:
+        '200':
           description: Revisions of the note
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/NoteRevisionsMetadata"
-        404:
+        '404':
           description: Note does not exist
       parameters:
         - name: note
@@ -413,13 +413,13 @@ paths:
       operationId: getSpecificRevisionOfNote
       description: The revision is returned as a JSON object with the content of the note and the authorship.
       responses:
-        200:
+        '200':
           description: Revision of the note for the given timestamp
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/NoteRevision"
-        404:
+        '404':
           description: Note does not exist
       parameters:
         - name: note
@@ -444,7 +444,7 @@ paths:
       operationId: getHistory
       description: The list is returned as a JSON object with an array containing for each entry it's id, title, tags, last visit time and pinned status.
       responses:
-        200:
+        '200':
           description: The list of recently viewed notes and pinned notes
           content:
             application/json:
@@ -462,7 +462,7 @@ paths:
             schema:
               "$ref": "#/components/schemas/History"
       responses:
-        200:
+        '200':
           description: The new history
           content:
             application/json:
@@ -474,7 +474,7 @@ paths:
       summary: Clear the users history
       operationId: deleteHistory
       responses:
-        200:
+        '200':
           description: Deleted the history
           content: {}
   /history/{note}/:
@@ -490,7 +490,7 @@ paths:
             schema:
               "$ref": "#/components/schemas/HistoryObject"
       responses:
-        200:
+        '200':
           description: The new history
           content:
             application/json:
@@ -510,7 +510,7 @@ paths:
       summary: remove the history object of the note
       operationId: deleteHistoryObject
       responses:
-        200:
+        '200':
           description: The new history
           content: {}
       parameters:
@@ -528,7 +528,7 @@ paths:
       summary: The config of the backend
       operationId: getConfig
       responses:
-        200:
+        '200':
           description: The config
           content:
             application/json:
