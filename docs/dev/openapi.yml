@@ -619,6 +619,17 @@ components:
               type: string
               format: uri
               description: Link to the imprint
+        version:
+          type: object
+          properties:
+            version:
+              type: string
+            sourceCodeUrl:
+              type: string
+              format: uri
+            issueTrackerUrl:
+              type: string
+              format: uri
     Note:
       type: object
       properties:
