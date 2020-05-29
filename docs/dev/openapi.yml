@@ -89,6 +89,21 @@ paths:
         '401':
           description: the user is not logged in
           content: {}
+    delete:
+      tags:
+        - user
+      summary: "Deletes the currently logged-in user from the system and removes all it's notes"
+      operationId: deleteMe
+      parameters:
+        - in: header
+          name: X-Token
+          schema:
+            type: string
+          required: true
+          description: Token to ensure that no accidental account deletions will be performed
+      responses:
+        '200':
+          description: The user was deleted successfully
   /me/export:
     get:
       tags:
@@ -97,6 +112,21 @@ paths:
       responses:
         '200':
           description: The zip-archive with all notes
+  /me/password:
+    post:
+      tags:
+        - user
+      summary: Sets the new password of a user
+      requestBody:
+        required: true
+        description: The new password of the user
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserPasswordChange"
+      responses:
+        '200':
+          description: The password was changed
   /status:
     get:
       tags:
@@ -547,6 +577,22 @@ components:
         photo:
           type: string
           format: uri
+        provider:
+          type: string
+          enum: ['facebook', 'github', 'twitter', 'gitlab', 'dropbox', 'google', 'saml', 'oauth2', 'email', 'ldap', 'openid']
+    UserPasswordChange:
+      type: object
+      properties:
+        password:
+          type: string
+        token:
+          type: string
+          description: Token to avoid unwanted password change requests
+    UserDeleteToken:
+      type: object
+      properties:
+        token:
+          type: string
     Config:
       type: object
       properties:
