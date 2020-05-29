@@ -6,6 +6,7 @@ import {
   faClock,
   faCloudDownloadAlt,
   faComment,
+  faCopy,
   faDownload,
   faFileAlt,
   faGlobe,
@@ -37,5 +38,5 @@ export const setUpFontAwesome: () => void = () => {
   library.add(faBolt, faPlus, faChartBar, faTv, faFileAlt, faCloudDownloadAlt,
     faTrash, faSignOutAlt, faComment, faDiscourse, faMastodon, faGlobe,
     faThumbtack, faClock, faTimes, faGithub, faGitlab, faGoogle, faFacebook,
-    faDropbox, faTwitter, faUsers, faAddressCard, faSort, faDownload, faUpload, faTrash, faSync, faSortUp, faSortDown)
+    faDropbox, faTwitter, faUsers, faAddressCard, faSort, faDownload, faUpload, faTrash, faSync, faSortUp, faSortDown, faCopy)
 }

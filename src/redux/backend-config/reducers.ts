@@ -25,6 +25,11 @@ export const initialState: BackendConfigState = {
     privacy: '',
     termsOfUse: '',
     imprint: ''
+  },
+  version: {
+    version: '',
+    sourceCodeUrl: '',
+    issueTrackerUrl: ''
   }
 }
 

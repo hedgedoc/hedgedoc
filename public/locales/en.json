@@ -115,7 +115,7 @@
   "deleteUser": "Delete user",
   "exportUserData": "Export user data",
   "Help us translating on %s": "Help us translating on %s",
-  "sourceCode": "Source Code",
+  "sourceCode": "Read the source code",
   "Register": "Register",
   "poweredBy": "Powered by <0></0>",
   "Help us translating": "Help us translating",
@@ -128,5 +128,12 @@
   "username": "Username",
   "cards": "Cards",
   "table": "Table",
-  "errorOpenIdLogin": "Invalid OpenID provided"
+  "errorOpenIdLogin": "Invalid OpenID provided",
+  "versionInfo": "Version info",
+  "successfullyCopied": "Copied!",
+  "serverVersion": "Server version",
+  "clientVersion": "Client version",
+  "youAreUsing": "You are using",
+  "close": "Close",
+  "issueTracker": "Found a bug? Fill an issue!"
 }

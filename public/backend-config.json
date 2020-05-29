@@ -22,5 +22,10 @@
     "privacy": "test",
     "termsOfUse": "test",
     "imprint": "test"
+  },
+  "version": {
+    "version": "mock",
+    "sourceCodeUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "issueTrackerUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
   }
 }
