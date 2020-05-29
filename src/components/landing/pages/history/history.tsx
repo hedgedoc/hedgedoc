@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { loadHistoryFromLocalStore, sortAndFilterEntries } from '../../../../utils/historyUtils'
+import { loadHistoryFromLocalStore, setHistoryToLocalStore, sortAndFilterEntries } from '../../../../utils/historyUtils'
 import { HistoryContent } from './history-content/history-content'
 import { HistoryToolbar, HistoryToolbarState, initState as toolbarInitState } from './history-toolbar/history-toolbar'
 
@@ -29,8 +29,13 @@ export const History: React.FC = () => {
     if (historyEntries === []) {
       return
     }
-    window.localStorage.setItem('history', JSON.stringify(historyEntries))
+    setHistoryToLocalStore(historyEntries)
   }, [historyEntries])
+
+  const clearHistory = () => {
+    setHistoryToLocalStore([])
+    setHistoryEntries([])
+  }
 
   const pinClick: pinClick = (entryId: string) => {
     setHistoryEntries((entries) => {
@@ -57,7 +62,11 @@ export const History: React.FC = () => {
     <Fragment>
       <h1 className="mb-4"><Trans i18nKey="history"/></h1>
       <Row className={'justify-content-center mb-3'}>
-        <HistoryToolbar onSettingsChange={setViewState} tags={tags}/>
+        <HistoryToolbar
+          onSettingsChange={setViewState}
+          tags={tags}
+          onClearHistory={clearHistory}
+        />
       </Row>
       <HistoryContent viewState={viewState.viewState}
         entries={entriesToShow}

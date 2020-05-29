@@ -135,5 +135,7 @@
   "clientVersion": "Client version",
   "youAreUsing": "You are using",
   "close": "Close",
-  "issueTracker": "Found a bug? Fill an issue!"
+  "issueTracker": "Found a bug? Fill an issue!",
+  "clearHistoryQuestion": "Do you want to clear the history?",
+  "clearHistoryDisclaimer": "This won't delete any notes."
 }

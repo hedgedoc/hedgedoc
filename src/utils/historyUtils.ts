@@ -86,3 +86,7 @@ export function loadHistoryFromLocalStore (): HistoryEntry[] {
     return JSON.parse(historyJsonString) as HistoryEntry[]
   }
 }
+
+export function setHistoryToLocalStore (entries: HistoryEntry[]): void {
+  window.localStorage.setItem('history', JSON.stringify(entries))
+}

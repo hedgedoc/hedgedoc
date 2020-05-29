@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { SortButton, SortModeEnum } from '../../../../sort-button/sort-button'
 import { Typeahead } from 'react-bootstrap-typeahead'
 import './typeahead-hacks.scss'
+import { ClearHistoryButton } from './clear-history-button'
 
 export type HistoryToolbarChange = (settings: HistoryToolbarState) => void;
 
@@ -17,24 +18,25 @@ export interface HistoryToolbarState {
 }
 
 export enum ViewStateEnum {
-    card,
-    table
+  CARD,
+  TABLE
 }
 
 export interface HistoryToolbarProps {
-    onSettingsChange: HistoryToolbarChange
-    tags: string[]
+  onSettingsChange: HistoryToolbarChange
+  tags: string[]
+  onClearHistory: () => void
 }
 
 export const initState: HistoryToolbarState = {
-  viewState: ViewStateEnum.card,
+  viewState: ViewStateEnum.CARD,
   titleSortDirection: SortModeEnum.no,
   lastVisitedSortDirection: SortModeEnum.no,
   keywordSearch: '',
   selectedTags: []
 }
 
-export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange, tags }) => {
+export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange, tags, onClearHistory }) => {
   const [t] = useTranslation()
   const [state, setState] = useState<HistoryToolbarState>(initState)
 
@@ -102,9 +104,7 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
         </Button>
       </InputGroup>
       <InputGroup className={'mr-1'}>
-        <Button variant={'light'} title={t('clearHistory')}>
-          <FontAwesomeIcon icon={'trash'}/>
-        </Button>
+        <ClearHistoryButton onClearHistory={onClearHistory}/>
       </InputGroup>
       <InputGroup className={'mr-1'}>
         <Button variant={'light'} title={t('refreshHistory')}>
@@ -116,9 +116,9 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
           onChange={(newViewState: ViewStateEnum) => {
             toggleViewChanged(newViewState)
           }}>
-          <ToggleButton className={'btn-light'} value={ViewStateEnum.card}><Trans
+          <ToggleButton className={'btn-light'} value={ViewStateEnum.CARD}><Trans
             i18nKey={'cards'}/></ToggleButton>
-          <ToggleButton className={'btn-light'} value={ViewStateEnum.table}><Trans
+          <ToggleButton className={'btn-light'} value={ViewStateEnum.TABLE}><Trans
             i18nKey={'table'}/></ToggleButton>
         </ToggleButtonGroup>
       </InputGroup>
