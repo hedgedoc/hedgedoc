@@ -1,0 +1,14 @@
+.activeIndicator {
+  $indicator-size: 12px;
+  border-radius: $indicator-size;
+  height: $indicator-size;
+  width: $indicator-size;
+
+  &.active {
+    background-color: #5cb85c;
+  }
+
+  &.inactive {
+    background-color: #d20000;
+  }
+}

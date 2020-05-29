@@ -3,8 +3,8 @@ import { setFrontendConfig } from '../redux/frontend-config/methods'
 import { setBackendConfig } from '../redux/backend-config/methods'
 import { getAndSetUser } from '../utils/apiUtils'
 
-export const loadAllConfig: () => Promise<void> = async () => {
-  const frontendConfig = await getFrontendConfig()
+export const loadAllConfig: (baseUrl: string) => Promise<void> = async (baseUrl) => {
+  const frontendConfig = await getFrontendConfig(baseUrl)
   if (!frontendConfig) {
     return Promise.reject(new Error('Frontend config empty!'))
   }

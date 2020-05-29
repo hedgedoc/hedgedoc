@@ -1,6 +1,5 @@
-import { setUpFontAwesome } from './fontAwesome'
-import { setUpI18n } from './i18n'
 import { loadAllConfig } from './configLoader'
+import { setUpI18n } from './i18n'
 
 const customDelay: () => Promise<void> = async () => {
   if (window.localStorage.getItem('customDelay')) {
@@ -10,7 +9,6 @@ const customDelay: () => Promise<void> = async () => {
   }
 }
 
-export const setUp: () => Promise<void>[] = () => {
-  setUpFontAwesome()
-  return [setUpI18n(), loadAllConfig(), customDelay()]
+export const setUp: (baseUrl: string) => Promise<void>[] = (baseUrl) => {
+  return [setUpI18n(), loadAllConfig(baseUrl), customDelay()]
 }

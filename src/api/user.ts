@@ -12,7 +12,7 @@ export interface meResponse {
   photo: string
 }
 
-export const postEmailLogin: ((email: string, password: string) => Promise<void>) = async (email, password) => {
+export const postEmailLogin = async (email: string, password: string):Promise<void> => {
   const response = await fetch(getBackendUrl() + '/auth/email', {
     method: 'POST',
     mode: 'cors',

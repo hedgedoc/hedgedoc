@@ -1,22 +1,48 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter as Router } from 'react-router-dom'
-import * as serviceWorker from './service-worker'
-import { Landing } from './components/landing/layout'
-import { ApplicationLoader } from './components/application-loader/application-loader'
 import { Provider } from 'react-redux'
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import { ApplicationLoader } from './components/application-loader/application-loader'
+import { Editor } from './components/editor/editor'
+import { LandingLayout } from './components/landing/landing-layout'
+import { History } from './components/landing/pages/history/history'
+import { Intro } from './components/landing/pages/intro/intro'
+import { Login } from './components/landing/pages/login/login'
+import { setUpFontAwesome } from './initializers/fontAwesome'
+import * as serviceWorker from './service-worker'
 import { store } from './utils/store'
-import { setUp } from './initializers'
 
-const initTasks = setUp()
+setUpFontAwesome()
 
 ReactDOM.render(
   <Provider store={store}>
-    <ApplicationLoader initTasks={initTasks}>
-      <Router>
-        <Landing/>
-      </Router>
-    </ApplicationLoader>
+    <Router>
+      <ApplicationLoader>
+        <Switch>
+          <Route path="/history">
+            <LandingLayout>
+              <History/>
+            </LandingLayout>
+          </Route>
+          <Route path="/intro">
+            <LandingLayout>
+              <Intro/>
+            </LandingLayout>
+          </Route>
+          <Route path="/login">
+            <LandingLayout>
+              <Login/>
+            </LandingLayout>
+          </Route>
+          <Route path="/n/:id">
+            <Editor/>
+          </Route>
+          <Route path="/">
+            <Redirect to="/intro"/>
+          </Route>
+        </Switch>
+      </ApplicationLoader>
+    </Router>
   </Provider>
   , document.getElementById('root')
 )

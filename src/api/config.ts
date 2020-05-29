@@ -8,8 +8,8 @@ export const getBackendConfig: () => Promise<BackendConfigState> = async () => {
   return await response.json() as Promise<BackendConfigState>
 }
 
-export const getFrontendConfig: () => Promise<FrontendConfigState> = async () => {
-  const response = await fetch('config.json')
+export const getFrontendConfig: (baseUrl: string) => Promise<FrontendConfigState> = async (baseUrl) => {
+  const response = await fetch(`${baseUrl}config.json`)
   expectResponseCode(response)
   return await response.json() as Promise<FrontendConfigState>
 }
