@@ -10,6 +10,7 @@ export const ApplicationLoader: React.FC = ({ children }) => {
   const [doneTasks, setDoneTasks] = useState<number>(0)
   const [initTasks, setInitTasks] = useState<InitTask[]>([])
   const { pathname } = useLocation()
+  const [applicationLoading, setApplicationLoading] = useState<boolean>(false)
 
   const runTask = async (task: Promise<void>): Promise<void> => {
     await task
@@ -19,10 +20,14 @@ export const ApplicationLoader: React.FC = ({ children }) => {
   }
 
   useEffect(() => {
+    if (applicationLoading) {
+      return
+    }
+    setApplicationLoading(true)
     const baseUrl:string = window.location.pathname.replace(pathname, '') + '/'
     console.debug('Base URL is', baseUrl)
     setInitTasks(setUp(baseUrl))
-  }, [pathname])
+  }, [applicationLoading, pathname])
 
   useEffect(() => {
     for (const task of initTasks) {
