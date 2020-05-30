@@ -2,7 +2,7 @@ import React, { FormEvent, useState } from 'react'
 
 import { Trans, useTranslation } from 'react-i18next'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
-import { postLdapLogin } from '../../../../../api/user'
+import { doLdapLogin } from '../../../../../api/user'
 import { getAndSetUser } from '../../../../../utils/apiUtils'
 import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../../../../redux'
@@ -19,7 +19,7 @@ export const ViaLdap: React.FC = () => {
 
   const doAsyncLogin = async () => {
     try {
-      await postLdapLogin(username, password)
+      await doLdapLogin(username, password)
       await getAndSetUser()
     } catch {
       setError(true)

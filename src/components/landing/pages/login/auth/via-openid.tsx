@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
-import { postOpenIdLogin } from '../../../../../api/user'
+import { doOpenIdLogin } from '../../../../../api/user'
 import { getAndSetUser } from '../../../../../utils/apiUtils'
 
 export const ViaOpenId: React.FC = () => {
@@ -9,7 +9,7 @@ export const ViaOpenId: React.FC = () => {
   const [openId, setOpenId] = useState('')
   const [error, setError] = useState(false)
   const doAsyncLogin: (() => Promise<void>) = async () => {
-    await postOpenIdLogin(openId)
+    await doOpenIdLogin(openId)
     await getAndSetUser()
   }
 
