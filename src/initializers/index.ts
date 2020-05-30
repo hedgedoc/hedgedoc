@@ -9,6 +9,20 @@ const customDelay: () => Promise<void> = async () => {
   }
 }
 
-export const setUp: (baseUrl: string) => Promise<void>[] = (baseUrl) => {
-  return [setUpI18n(), loadAllConfig(baseUrl), customDelay()]
+export interface InitTask {
+  name: string
+  task: Promise<void>
+}
+
+export const setUp = (baseUrl: string): InitTask[] => {
+  return [{
+    name: 'Load Translations',
+    task: setUpI18n()
+  }, {
+    name: 'Load config',
+    task: loadAllConfig(baseUrl)
+  }, {
+    name: 'Add Delay',
+    task: customDelay()
+  }]
 }

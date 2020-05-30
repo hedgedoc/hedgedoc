@@ -1,13 +1,14 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
-import { setUp } from '../../initializers'
+import { setUp, InitTask } from '../../initializers'
 import './application-loader.scss'
+
 import { LoadingScreen } from './loading-screen'
 
 export const ApplicationLoader: React.FC = ({ children }) => {
-  const [failed, setFailed] = useState<boolean>(false)
+  const [failedTitle, setFailedTitle] = useState<string>('')
   const [doneTasks, setDoneTasks] = useState<number>(0)
-  const [initTasks, setInitTasks] = useState<Promise<void>[]>([])
+  const [initTasks, setInitTasks] = useState<InitTask[]>([])
   const { pathname } = useLocation()
 
   const runTask = async (task: Promise<void>): Promise<void> => {
@@ -25,16 +26,16 @@ export const ApplicationLoader: React.FC = ({ children }) => {
 
   useEffect(() => {
     for (const task of initTasks) {
-      runTask(task).catch(reason => {
-        setFailed(true)
+      runTask(task.task).catch((reason: Error) => {
         console.error(reason)
+        setFailedTitle(task.name)
       })
     }
   }, [initTasks])
 
   return (
     doneTasks < initTasks.length || initTasks.length === 0
-      ? <LoadingScreen failed={failed}/>
+      ? <LoadingScreen failedTitle={failedTitle}/>
       : <Fragment>{children}</Fragment>
   )
 }

@@ -3,18 +3,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Alert } from 'react-bootstrap'
 
 export interface LoadingScreenProps {
-  failed: boolean
+  failedTitle: string
 }
 
-export const LoadingScreen: React.FC<LoadingScreenProps> = ({ failed }) => {
+export const LoadingScreen: React.FC<LoadingScreenProps> = ({ failedTitle }) => {
   return (
     <div className="loader middle">
       <div className="icon">
         <FontAwesomeIcon icon="file-alt" size="6x"
-          className={failed ? 'animation-shake' : 'animation-pulse'}/>
+          className={failedTitle ? 'animation-shake' : 'animation-pulse'}/>
       </div>
       {
-        failed ? <Alert variant={'danger'}>An error occurred while loading the application!</Alert> : null
+        failedTitle !== ''
+          ? (
+            <Alert variant={'danger'}>
+              The task '{failedTitle}' failed.<br/>
+              For further information look into the browser console.
+            </Alert>
+          )
+          : null
       }
     </div>
   )

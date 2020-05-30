@@ -31,7 +31,7 @@ import 'moment/locale/vi'
 import 'moment/locale/zh-cn'
 import 'moment/locale/zh-tw'
 
-export const setUpI18n: () => Promise<void> = async () => {
+export const setUpI18n = async (): Promise<void> => {
   await i18n
     .use(Backend)
     .use(LanguageDetector)

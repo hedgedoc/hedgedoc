@@ -3,7 +3,7 @@ import { BackendConfigState } from '../redux/backend-config/types'
 import { expectResponseCode, getBackendUrl } from '../utils/apiUtils'
 
 export const getBackendConfig = async (): Promise<BackendConfigState> => {
-  const response = await fetch(getBackendUrl() + '/backend-config.json')
+  const response = await fetch(getBackendUrl() + '/config')
   expectResponseCode(response)
   return await response.json() as Promise<BackendConfigState>
 }
