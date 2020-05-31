@@ -46,12 +46,13 @@ import {
   faTrash,
   faTv,
   faUpload,
+  faUser,
   faUsers
 } from '@fortawesome/free-solid-svg-icons'
 
 export const setUpFontAwesome: (() => void) = () => {
   library.add(faBolt, faPlus, faChartBar, faTv, faFileAlt, faCloudDownloadAlt,
-    faTrash, faSignOutAlt, faComment, faDiscourse, faMastodon, faGlobe,
+    faTrash, faSignOutAlt, faComment, faDiscourse, faMastodon, faGlobe, faUser,
     faThumbtack, faClock, faTimes, faGithub, faGitlab, faGoogle, faFacebook,
     faDropbox, faTwitter, faUsers, faAddressCard, faEye, faPencilAlt, faColumns,
     faMoon, faQuestionCircle, faShareSquare, faHistory, faFileCode, faPaste,

@@ -8,6 +8,7 @@ import { LandingLayout } from './components/landing/landing-layout'
 import { History } from './components/landing/pages/history/history'
 import { Intro } from './components/landing/pages/intro/intro'
 import { Login } from './components/landing/pages/login/login'
+import { Profile } from './components/landing/pages/profile/profile'
 import { setUpFontAwesome } from './initializers/fontAwesome'
 import * as serviceWorker from './service-worker'
 import { store } from './utils/store'
@@ -33,6 +34,11 @@ ReactDOM.render(
           <Route path="/login">
             <LandingLayout>
               <Login/>
+            </LandingLayout>
+          </Route>
+          <Route path="/profile">
+            <LandingLayout>
+              <Profile/>
             </LandingLayout>
           </Route>
           <Route path="/n/:id">

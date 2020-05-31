@@ -1,11 +1,20 @@
 import { Reducer } from 'redux'
-import { CLEAR_USER_ACTION_TYPE, LoginStatus, SET_USER_ACTION_TYPE, SetUserAction, UserActions, UserState } from './types'
+import {
+  CLEAR_USER_ACTION_TYPE,
+  LoginProvider,
+  LoginStatus,
+  SET_USER_ACTION_TYPE,
+  SetUserAction,
+  UserActions,
+  UserState
+} from './types'
 
 export const initialState: UserState = {
   id: '',
   name: '',
   photo: '',
-  status: LoginStatus.forbidden
+  status: LoginStatus.forbidden,
+  provider: LoginProvider.EMAIL
 }
 
 export const UserReducer: Reducer<UserState, UserActions> = (state: UserState = initialState, action: UserActions) => {

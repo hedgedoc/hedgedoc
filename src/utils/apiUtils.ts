@@ -9,7 +9,8 @@ export const getAndSetUser: () => (Promise<void>) = async () => {
     status: LoginStatus.ok,
     id: me.id,
     name: me.name,
-    photo: me.photo
+    photo: me.photo,
+    provider: me.provider
   })
 }
 

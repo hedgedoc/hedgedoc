@@ -67,6 +67,17 @@
         }
     },
     "profile": {
+        "userProfile": "User profile",
+        "displayName": "Display name",
+        "displayNameInfo": "This name will be shown publicly on notes you created or edited.",
+        "changePassword": {
+            "title": "Change password",
+            "old": "Old password",
+            "new": "New password",
+            "newAgain": "New password again",
+            "info": "Your new password should contain at least 6 characters."
+        },
+        "accountManagement": "Account management",
         "deleteUser": "Delete user",
         "exportUserData": "Export user data",
         "modal": {
@@ -207,6 +218,7 @@
         "cancel": "Cancel",
         "ok": "OK",
         "close": "Close",
+        "save": "Save",
         "or": "or",
         "and": "and"
     },
