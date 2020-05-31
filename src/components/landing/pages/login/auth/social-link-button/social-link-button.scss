@@ -2,9 +2,10 @@
   color: #FFFFFF;
 
   @mixin button($color) {
+    color: #ffffff;
     background-color: $color;
     &:hover {
-      background-color: darken($color, 10%);
+      background-color: darken($color, 15%);
     }
   }
 
