@@ -242,7 +242,6 @@ function getStatus (callback): void {
     const distinctaddresses: string[] = []
     const regaddresses: string[] = []
     const distinctregaddresses: string[] = []
-    // Object.keys(users).forEach(function (key) {
     for (const user of users.values()) {
       if (!user) return
       let found = false
@@ -331,8 +330,6 @@ function buildUserOutData (user): UserSession {
   return {
     id: user.id,
     login: user.login,
-    address: '',
-    'user-agent': '',
     userid: user.userid,
     photo: user.photo,
     color: user.color,
