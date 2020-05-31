@@ -1,11 +1,11 @@
 import React, { FormEvent, useState } from 'react'
+import { Alert, Button, Card, Form } from 'react-bootstrap'
 
 import { Trans, useTranslation } from 'react-i18next'
-import { Alert, Button, Card, Form } from 'react-bootstrap'
-import { doLdapLogin } from '../../../../../api/user'
-import { getAndSetUser } from '../../../../../utils/apiUtils'
 import { useSelector } from 'react-redux'
+import { doLdapLogin } from '../../../../../api/auth'
 import { ApplicationState } from '../../../../../redux'
+import { getAndSetUser } from '../../../../../utils/apiUtils'
 
 export const ViaLdap: React.FC = () => {
   const { t } = useTranslation()

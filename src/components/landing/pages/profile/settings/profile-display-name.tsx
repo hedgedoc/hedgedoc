@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { updateDisplayName } from '../../../../../api/user'
+import { updateDisplayName } from '../../../../../api/me'
 import { ApplicationState } from '../../../../../redux'
 import { getAndSetUser } from '../../../../../utils/apiUtils'
 

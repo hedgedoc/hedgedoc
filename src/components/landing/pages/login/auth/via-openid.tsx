@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
-import { doOpenIdLogin } from '../../../../../api/user'
+import { Trans, useTranslation } from 'react-i18next'
+import { doOpenIdLogin } from '../../../../../api/auth'
 import { getAndSetUser } from '../../../../../utils/apiUtils'
 
 export const ViaOpenId: React.FC = () => {

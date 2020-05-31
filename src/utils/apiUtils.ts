@@ -1,6 +1,6 @@
-import { getMe } from '../api/user'
-import { LoginStatus } from '../redux/user/types'
+import { getMe } from '../api/me'
 import { setUser } from '../redux/user/methods'
+import { LoginStatus } from '../redux/user/types'
 import { store } from './store'
 
 export const getAndSetUser: () => (Promise<void>) = async () => {

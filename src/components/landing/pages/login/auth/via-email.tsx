@@ -1,7 +1,7 @@
-import { Trans, useTranslation } from 'react-i18next'
-import { Alert, Button, Card, Form } from 'react-bootstrap'
 import React, { FormEvent, useState } from 'react'
-import { doEmailLogin } from '../../../../../api/user'
+import { Alert, Button, Card, Form } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
+import { doEmailLogin } from '../../../../../api/auth'
 import { getAndSetUser } from '../../../../../utils/apiUtils'
 
 export const ViaEMail: React.FC = () => {

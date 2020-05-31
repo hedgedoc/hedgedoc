@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { changePassword } from '../../../../../api/user'
+import { changePassword } from '../../../../../api/me'
 
 export const ProfileChangePassword: React.FC = () => {
   useTranslation()
