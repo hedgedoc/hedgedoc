@@ -19,12 +19,15 @@ import {
   faColumns,
   faComment,
   faCopy,
+  faDotCircle,
   faDownload,
   faEye,
   faFileAlt,
   faFileCode,
   faGlobe,
+  faHashtag,
   faHistory,
+  faLanguage,
   faMoon,
   faPaste,
   faPencilAlt,
@@ -36,6 +39,7 @@ import {
   faSortDown,
   faSortUp,
   faSync,
+  faTag,
   faThumbtack,
   faTimes,
   faTrash,
@@ -50,5 +54,6 @@ export const setUpFontAwesome: (() => void) = () => {
     faThumbtack, faClock, faTimes, faGithub, faGitlab, faGoogle, faFacebook,
     faDropbox, faTwitter, faUsers, faAddressCard, faEye, faPencilAlt, faColumns,
     faMoon, faQuestionCircle, faShareSquare, faHistory, faFileCode, faPaste,
-    faCircle, faSort, faDownload, faUpload, faTrash, faSync, faSortUp, faSortDown, faCopy)
+    faCircle, faSort, faDownload, faUpload, faTrash, faSync, faSortUp, faSortDown, faCopy,
+    faHashtag, faLanguage, faTag, faDotCircle)
 }

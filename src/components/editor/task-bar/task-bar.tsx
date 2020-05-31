@@ -7,6 +7,7 @@ import { EditorViewMode } from './editor-view-mode'
 import { Trans, useTranslation } from 'react-i18next'
 import { EditorMenu } from './editor-menu'
 import { ConnectionIndicator } from './connection-indicator'
+import { HelpButton } from './help-button'
 
 const TaskBar: React.FC = () => {
   useTranslation()
@@ -20,10 +21,7 @@ const TaskBar: React.FC = () => {
         </Navbar.Brand>
         <EditorViewMode/>
         <DarkModeButton/>
-        <Button className="ml-2 text-secondary" size="sm"
-          variant="outline-light">
-          <FontAwesomeIcon icon="question-circle"/>
-        </Button>
+        <HelpButton/>
       </Nav>
       <Nav className="d-flex align-items-center text-secondary">
         <Button className="ml-2 text-secondary" size="sm" variant="outline-light">

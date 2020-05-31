@@ -64,7 +64,7 @@
             "contacts": {
                 "title": "Kontak",
                 "community": "Bergabung dengan komunitas",
-                "meetUsOn": "Temui kami di %s",
+                "meetUsOn": "Temui kami di {{service}}",
                 "helpTranslating": "Bantu kami menerjemahkan",
                 "reportIssue": "Laporkan kesalahan"
             },

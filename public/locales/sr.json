@@ -63,7 +63,7 @@
             "contacts": {
                 "title": "Контакти",
                 "community": "Приступите заједници",
-                "meetUsOn": "Пронађите нас на %s",
+                "meetUsOn": "Пронађите нас на {{service}}",
                 "helpTranslating": "Помозите око превода",
                 "reportIssue": "Пријава проблема"
             },

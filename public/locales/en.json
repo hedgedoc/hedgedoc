@@ -82,7 +82,7 @@
             "contacts": {
                 "title": "Contacts",
                 "community": "Join the community",
-                "meetUsOn": "Meet us on %s",
+                "meetUsOn": "Meet us on {{service}}",
                 "helpTranslating": "Help us translating",
                 "reportIssue": "Report an issue"
             },
@@ -224,7 +224,7 @@
                 "openIdLogin": "Invalid OpenID provided",
                 "emailLogin": "Invalid email or password",
                 "ldapLogin": "Invalid username or password"
-            } 
+            }
         }
     }
 }

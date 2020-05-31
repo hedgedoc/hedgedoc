@@ -64,7 +64,7 @@
             "contacts": {
                 "title": "Kontakter",
                 "community": "Gå med i samhället",
-                "meetUsOn": "Träffa oss på %s",
+                "meetUsOn": "Träffa oss på {{service}}",
                 "helpTranslating": "Hjälp oss att översätta",
                 "reportIssue": "Rapportera ett fel"
             },

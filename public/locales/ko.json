@@ -61,7 +61,7 @@
         "help": {
             "contacts": {
                 "title": "연락처",
-                "meetUsOn": "%s에서 만나보세요",
+                "meetUsOn": "{{service}}에서 만나보세요",
                 "reportIssue": "이슈 보고하기"
             },
             "documents": {

@@ -9,7 +9,7 @@ export interface LoadingScreenProps {
 export const LoadingScreen: React.FC<LoadingScreenProps> = ({ failedTitle }) => {
   return (
     <div className="loader middle">
-      <div className="icon">
+      <div className="icon text-white">
         <FontAwesomeIcon icon="file-alt" size="6x"
           className={failedTitle ? 'animation-shake' : 'animation-pulse'}/>
       </div>

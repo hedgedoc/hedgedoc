@@ -4,15 +4,11 @@ import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../../../redux'
 import { ExternalLink } from '../../../links/external-link'
 import { TranslatedExternalLink } from '../../../links/translated-external-link'
+import { TranslatedInternalLink } from '../../../links/translated-internal-link'
 import { VersionInfo } from '../version-info/version-info'
 
 export const PoweredByLinks: React.FC = () => {
   useTranslation()
-
-  const defaultLinks =
-    {
-      releases: '/n/release-notes'
-    }
 
   const config = useSelector((state: ApplicationState) => state.backendConfig)
 
@@ -21,8 +17,10 @@ export const PoweredByLinks: React.FC = () => {
       <Trans i18nKey="landing.footer.poweredBy">
         <ExternalLink href="https://codimd.org" text="CodiMD"/>
       </Trans>
+      &nbsp;|&nbsp;
+      <TranslatedInternalLink path='/n/release-notes' i18nKey='landing.footer.releases'/>
       {
-        Object.entries({ ...defaultLinks, ...(config.specialLinks) }).map(([i18nKey, href]) =>
+        Object.entries({ ...config.specialLinks }).map(([i18nKey, href]) =>
           <Fragment key={i18nKey}>
             &nbsp;|&nbsp;
             <TranslatedExternalLink href={href} i18nKey={'landing.footer.' + i18nKey}/>

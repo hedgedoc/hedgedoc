@@ -63,7 +63,7 @@
             "contacts": {
                 "title": "Liên Lạc",
                 "community": "Tham gia vào cộng đồng",
-                "meetUsOn": "Gặp chúng tôi ở %s",
+                "meetUsOn": "Gặp chúng tôi ở {{service}}",
                 "helpTranslating": "Giúp chúng tôi dịch",
                 "reportIssue": "Báo cáo vấn đề"
             },

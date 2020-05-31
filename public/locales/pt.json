@@ -64,7 +64,7 @@
             "contacts": {
                 "title": "Contatos",
                 "community": "Join the community",
-                "meetUsOn": "Meet us on %s",
+                "meetUsOn": "Meet us on {{service}}",
                 "helpTranslating": "Help us translating",
                 "reportIssue": "Relatar um problema"
             },

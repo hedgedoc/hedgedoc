@@ -1,22 +1,21 @@
 import React, { Fragment } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { LinkContainer } from 'react-router-bootstrap'
 import { IconProp } from '../../utils/iconProp'
 
-export interface ExternalLinkProp {
-  href: string;
+export interface InternalLinkProp {
+  path: string;
   icon?: IconProp;
   className?: string
 }
 
-export interface ExternalLinkTextProp {
+export interface InternalLinkTextProp {
   text: string;
 }
 
-export const ExternalLink: React.FC<ExternalLinkProp & ExternalLinkTextProp> = ({ href, text, icon, className = 'text-light' }) => {
+export const InternalLink: React.FC<InternalLinkProp & InternalLinkTextProp> = ({ path, text, icon, className = 'text-light' }) => {
   return (
-    <a href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+    <LinkContainer to={path}
       className={className}>
       {
         icon
@@ -26,6 +25,6 @@ export const ExternalLink: React.FC<ExternalLinkProp & ExternalLinkTextProp> = (
           : null
       }
       {text}
-    </a>
+    </LinkContainer>
   )
 }

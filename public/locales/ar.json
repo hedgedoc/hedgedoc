@@ -64,7 +64,7 @@
             "contacts": {
                 "title": "جهات الاتصال",
                 "community": "انضم إلى المجتمع",
-                "meetUsOn": "قابِلنا في %s",
+                "meetUsOn": "قابِلنا في {{service}}",
                 "helpTranslating": "ساعدنا في الترجمة",
                 "reportIssue": "بلغ عن خطأ"
             },
