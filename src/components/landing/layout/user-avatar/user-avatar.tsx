@@ -8,6 +8,7 @@ export interface UserAvatarProps {
 }
 
 const UserAvatar: React.FC<UserAvatarProps> = ({ name, photo, additionalClasses = '' }) => {
+  // ToDo: add Translation Key for Avatar of ${name}
   return (
     <span className={'d-inline-flex align-items-center ' + additionalClasses}>
       <img

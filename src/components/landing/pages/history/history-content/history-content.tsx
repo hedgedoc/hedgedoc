@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import { HistoryEntry, pinClick } from '../history'
 import { HistoryTable } from '../history-table/history-table'
 import { Alert, Row } from 'react-bootstrap'
-import { Trans } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { HistoryCardList } from '../history-card/history-card-list'
 import { ViewStateEnum } from '../history-toolbar/history-toolbar'
 import { PagerPagination } from '../../../../pagination/pager-pagination'
@@ -26,6 +26,7 @@ export interface HistoryEntriesProps {
 }
 
 export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entries, onPinClick }) => {
+  useTranslation()
   const [pageIndex, setPageIndex] = useState(0)
   const [lastPageIndex, setLastPageIndex] = useState(0)
 
@@ -33,7 +34,7 @@ export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entri
     return (
       <Row className={'justify-content-center'}>
         <Alert variant={'secondary'}>
-          <Trans i18nKey={'noHistory'}/>
+          <Trans i18nKey={'landing.history.noHistory'}/>
         </Alert>
       </Row>
     )

@@ -53,7 +53,7 @@ export const Login: React.FC = () => {
           <Card className="bg-dark mb-4">
             <Card.Body>
               <Card.Title>
-                <Trans i18nKey="signInVia" values={{ service: '' }}/>
+                <Trans i18nKey="login.signInVia" values={{ service: '' }}/>
               </Card.Title>
               {
                 Object.values(OneClickType)

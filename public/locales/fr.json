@@ -1,122 +1,189 @@
 {
-  "Collaborative markdown notes": "Notes collaboratives en markdown",
-  "Realtime collaborative markdown notes on all platforms.": "Notes en markdown collaboratives en temps réel sur toutes les plateformes.",
-  "coverSlogan": "Le meilleur moyen d'écrire et partager votre savoir en markdown.",
-  "intro": "Intro",
-  "history": "Historique",
-  "newGuestNote": "Nouvelle note invité",
-  "featureCollaboration": "Collaborez avec l'URL",
-  "featureMathJax": "Gère les graphiques et MathJax",
-  "featureSlides": "Gère le mode présentation",
-  "signIn": "Se connecter",
-  "Below is the history from browser": "Ci-dessous, l'historique du navigateur",
-  "Welcome!": "Bienvenue !",
-  "newNote": "Nouvelle note",
-  "or": "ou",
-  "signOut": "Se déconnecter",
-  "exploreFeatures": "Explorer toutes les fonctionnalités",
-  "selectTags": "Sélectionner les tags...",
-  "searchKeywords": "Chercher un mot-clef...",
-  "sortByTitle": "Trier par titre",
-  "Title": "Titre",
-  "sortByLastVisited": "Trier par date",
-  "Time": "Date",
-  "exportHistory": "Exporter l'historique",
-  "importHistory": "Importer l'historique",
-  "clearHistory": "Effacer l'historique",
-  "refreshHistory": "Actualiser l'historique",
-  "noHistory": "Pas d'historique",
-  "Import from browser": "Importer depuis le navigateur",
-  "releases": "Versions",
-  "Are you sure?": "Ëtes-vous sûr ?",
-  "Do you really want to delete this note?": "Voulez-vous vraiment supprimer cette note ?",
-  "All users will lose their connection.": "Tous les utilisateurs perdront leur connexion.",
-  "Cancel": "Annuler",
-  "Yes, do it!": "Oui, je suis sûr !",
-  "chooseMethod": "Choisir la méthode",
-  "signInVia": "Se connecter depuis {{service}}",
-  "new": "Nouvelle",
-  "publish": "Publier",
-  "extra": "Extra",
-  "revision": "Historique",
-  "slideMode": "Mode présentation",
-  "export": "Exporter",
-  "import": "Importer",
-  "clipboard": "Presse-papier",
-  "download": "Télécharger",
-  "Raw HTML": "HTML brut",
-  "edit": "Modifier",
-  "View": "Voir",
-  "Both": "Les deux",
-  "help": "Aide",
-  "Upload Image": "Téléverser une image",
-  "menu": "Menu",
-  "This page need refresh": "Cette page doit être rechargée",
-  "You have an incompatible client version.": "Vous avez une version client incompatible.",
-  "Refresh to update.": "Recharger pour mettre à jour.",
-  "New version available!": "Nouvelle version disponible !",
-  "See releases notes here": "Voir les commentaires de version ici",
-  "Refresh to enjoy new features.": "Recharger pour bénéficier des nouvelles fonctionnalités.",
-  "Your user state has changed.": "Votre statut utilisateur a changé.",
-  "Refresh to load new user state.": "Recharger pour avoir le nouveau statut utilisateur.",
-  "Refresh": "Recharger",
-  "Contacts": "Contacts",
-  "Report an issue": "Signaler un problème",
-  "Meet us on %s": "Rencontrez-nous sur %s",
-  "Send us email": "Envoyez-nous un courriel",
-  "Documents": "Documents",
-  "features": "Fonctionnalités",
-  "YAML Metadata": "Métadonnées YAML",
-  "Slide Example": "Exemple de présentation",
-  "Cheatsheet": "Pense-bête",
-  "Example": "Exemple",
-  "Syntax": "Syntaxe",
-  "Header": "Entête",
-  "Unordered List": "Liste à puce",
-  "Ordered List": "List numérotée",
-  "Todo List": "Liste de tâches",
-  "Blockquote": "Citation",
-  "Bold font": "Gras",
-  "Italics font": "Italique",
-  "Strikethrough": "Barré",
-  "Inserted text": "Souligné",
-  "Marked text": "Surligné",
-  "Link": "Lien",
-  "Image": "Image",
-  "Code": "Code",
-  "Externals": "Externes",
-  "This is a alert area.": "Ceci est un texte d'alerte.",
-  "Revert": "Annuler",
-  "Import from clipboard": "Importer depuis le presse-papier",
-  "Paste your markdown or webpage here...": "Collez votre markdown ou votre page web ici...",
-  "Clear": "Effacer",
-  "This note is locked": "Cette note est verrouillée",
-  "Sorry, only owner can edit this note.": "Désolé, seul le propriétaire peut modifier cette note.",
-  "OK": "OK",
-  "Reach the limit": "Atteindre la limite",
-  "Sorry, you've reached the max length this note can be.": "Désolé, vous avez atteint la longueur maximale que cette note peut avoir.",
-  "Please reduce the content or divide it to more notes, thank you!": "Merci de réduire le contenu ou de le diviser en plusieurs notes !",
-  "Import from Gist": "Importer depuis Gist",
-  "Paste your gist url here...": "Coller l'URL de votre Gist ici...",
-  "Import from Snippet": "Importer depuis Snippet",
-  "Select From Available Projects": "Sélectionner depuis les projets disponibles",
-  "Select From Available Snippets": "Sélectionner depuis les Snippets disponibles",
-  "OR": "OU",
-  "Export to Snippet": "Exporter vers Snippet",
-  "Select Visibility Level": "Sélectionner le niveau de visibilité",
-  "Night Theme": "Thème Nuit",
-  "followUs": "Suivez-nous sur <0></0>, <1></1>, <2></2>, <3></3> et <4></4>.",
-  "privacy": "Confidentialité",
-  "termsOfUse": "Conditions d'utilisation",
-  "Do you really want to delete your user account?": "Voulez-vous vraiment supprimer votre compte utilisateur ?",
-  "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.": "Cela supprimera votre compte, toutes les notes dont vous êtes propriétaire et supprimera toute référence à votre compte dans les autres notes.",
-  "deleteUser": "Supprimer l'utilisateur",
-  "exportUserData": "Exporter les données utilisateur",
-  "Help us translating on %s": "Aidez-nous à traduire sur %s",
-  "sourceCode": "Code source",
-  "Register": "S'enregistrer",
-  "poweredBy": "Propulsé par <1>{{name}}</1>",
-  "Help us translating": "Aidez-nous à traduire",
-  "Join the community": "Rejoignez la communauté",
-  "imprint": "Mentions légales"
+    "app": {
+        "slogan": "Le meilleur moyen d'écrire et partager votre savoir en markdown.",
+        "title": "Notes collaboratives en markdown"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Explorer toutes les fonctionnalités",
+            "features": {
+                "collaboration": "Collaborez avec l'URL",
+                "mathJax": "Gère les graphiques et MathJax",
+                "slides": "Gère le mode présentation"
+            }
+        },
+        "history": {
+            "noHistory": "Pas d'historique",
+            "localHistory": "Ci-dessous, l'historique du navigateur",
+            "toolbar": {
+                "selectTags": "Sélectionner les tags...",
+                "searchKeywords": "Chercher un mot-clef...",
+                "sortByTitle": "Trier par titre",
+                "sortByLastVisited": "Trier par date",
+                "export": "Exporter l'historique",
+                "import": "Importer l'historique",
+                "clear": "Effacer l'historique",
+                "refresh": "Actualiser l'historique"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Intro",
+            "history": "Historique",
+            "newGuestNote": "Nouvelle note invité",
+            "newNote": "Nouvelle note"
+        },
+        "footer": {
+            "releases": "Versions",
+            "poweredBy": "Propulsé par <1>{{name}}</1>",
+            "imprint": "Mentions légales",
+            "followUs": "Suivez-nous sur <0></0>, <1></1>, <2></2>, <3></3> et <4></4>.",
+            "privacy": "Confidentialité",
+            "termsOfUse": "Conditions d'utilisation"
+        },
+        "versionInfo": {
+            "sourceCode": "Code source"
+        }
+    },
+    "profile": {
+        "deleteUser": "Supprimer l'utilisateur",
+        "exportUserData": "Exporter les données utilisateur",
+        "modal": {
+            "deleteUser": {
+                "title": "Supprimer l'utilisateur",
+                "message": "Voulez-vous vraiment supprimer votre compte utilisateur ?",
+                "subMessage": "Cela supprimera votre compte, toutes les notes dont vous êtes propriétaire et supprimera toute référence à votre compte dans les autres notes."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Contacts",
+                "community": "Rejoignez la communauté",
+                "meetUsOn": "Rencontrez-nous sur %s",
+                "helpTranslating": "Aidez-nous à traduire",
+                "reportIssue": "Signaler un problème"
+            },
+            "documents": {
+                "title": "Documents",
+                "yamlMetadata": "Métadonnées YAML",
+                "slideExample": "Exemple de présentation"
+            },
+            "cheatsheet": {
+                "title": "Pense-bête",
+                "example": "Exemple",
+                "syntax": "Syntaxe",
+                "underlinedText": "Souligné",
+                "highlightedText": "Surligné",
+                "externalService": "Externes"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Cette note est verrouillée",
+                "description": "Désolé, seul le propriétaire peut modifier cette note."
+            },
+            "limitReached": {
+                "title": "Atteindre la limite",
+                "description": "Désolé, vous avez atteint la longueur maximale que cette note peut avoir.",
+                "advice": "Merci de réduire le contenu ou de le diviser en plusieurs notes !"
+            },
+            "incompatible": {
+                "title": "Vous avez une version client incompatible.",
+                "advice": "Recharger pour mettre à jour."
+            },
+            "newVersion": {
+                "title": "Nouvelle version disponible !",
+                "linkText": "Voir les commentaires de version ici",
+                "advice": "Recharger pour bénéficier des nouvelles fonctionnalités."
+            },
+            "userStateChanged": {
+                "title": "Votre statut utilisateur a changé.",
+                "description": "Recharger pour avoir le nouveau statut utilisateur."
+            }
+        },
+        "viewMode": {
+            "view": "Voir",
+            "both": "Les deux"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Gras",
+            "strikethrough": "Barré",
+            "header": "Entête",
+            "code": "Code",
+            "blockquote": "Citation",
+            "unorderedList": "Liste à puce",
+            "orderedList": "List numérotée",
+            "checkList": "Liste de tâches",
+            "link": "Lien",
+            "image": "Image",
+            "uploadImage": "Téléverser une image"
+        },
+        "menu": {
+            "menu": "Menu",
+            "new": "Nouvelle",
+            "publish": "Publier",
+            "extra": "Extra",
+            "revision": "Historique",
+            "slideMode": "Mode présentation",
+            "download": "Télécharger",
+            "help": "Aide"
+        },
+        "export": {
+            "rawHtml": "HTML brut"
+        },
+        "import": {
+            "clipboard": "Presse-papier"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Importer depuis Snippet",
+                "selectProject": "Sélectionner depuis les projets disponibles",
+                "selectSnippet": "Sélectionner depuis les Snippets disponibles"
+            },
+            "gistImport": {
+                "title": "Importer depuis Gist",
+                "insertGistUrl": "Coller l'URL de votre Gist ici..."
+            },
+            "snippetExport": {
+                "title": "Exporter vers Snippet",
+                "visibilityLevel": "Sélectionner le niveau de visibilité"
+            },
+            "revision": {
+                "title": "Historique",
+                "revertButton": "Annuler"
+            },
+            "clipboardImport": {
+                "title": "Importer depuis le presse-papier",
+                "insertMarkdown": "Collez votre markdown ou votre page web ici..."
+            },
+            "deleteNote": {
+                "question": "Voulez-vous vraiment supprimer cette note ?",
+                "warning": "Tous les utilisateurs perdront leur connexion."
+            }
+        }
+    },
+    "common": {
+        "import": "Importer",
+        "export": "Exporter",
+        "refresh": "Recharger",
+        "cancel": "Annuler",
+        "ok": "OK",
+        "or": "ou"
+    },
+    "login": {
+        "chooseMethod": "Choisir la méthode",
+        "signInVia": "Se connecter depuis {{service}}",
+        "signIn": "Se connecter",
+        "signOut": "Se déconnecter",
+        "register": "S'enregistrer",
+        "auth": {
+            "error": {}
+        }
+    }
 }

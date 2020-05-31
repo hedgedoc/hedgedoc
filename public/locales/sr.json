@@ -1,121 +1,188 @@
 {
-  "Collaborative markdown notes": "Дељене белешке у Markdown формату",
-  "Realtime collaborative markdown notes on all platforms.": "Заједнички рад на markdown тексту у реалном времену, на свим платформама",
-  "coverSlogan": "Савршен начин за писање и дељење знања у markdown формату",
-  "intro": "Увод",
-  "history": "Историја",
-  "newGuestNote": "Нова белешка госта",
-  "featureCollaboration": "Сарадња уз помоћ URL-а",
-  "featureMathJax": "Подршка за графиконе и MathJax",
-  "featureSlides": "Подршка за слајдове и презентације",
-  "signIn": "Пријави се",
-  "Below is the history from browser": "Ниже је историјат преузет из прегледача",
-  "Welcome!": "Добродошли!",
-  "newNote": "Нова белешка",
-  "or": "или",
-  "signOut": "Одјави се",
-  "exploreFeatures": "Истражи све могућности",
-  "selectTags": "Одабери тагове...",
-  "searchKeywords": "Претрага по кључној речи...",
-  "sortByTitle": "Редослед по наслову",
-  "Title": "Наслов",
-  "sortByLastVisited": "Редослед по времену",
-  "Time": "време",
-  "exportHistory": "Извези историјат",
-  "importHistory": "Увези историјат",
-  "clearHistory": "Очисти историју",
-  "refreshHistory": "Освежи историју",
-  "noHistory": "Нема историје",
-  "Import from browser": "Увези из прегледача",
-  "releases": "Издања",
-  "Are you sure?": "Јесте ли сигурни?",
-  "Do you really want to delete this note?": "Да ли заиста желите да обришете ову белешку?",
-  "All users will lose their connection.": "Сви корисници ће изгубити везу у реалном времену.",
-  "Cancel": "Одустани",
-  "Yes, do it!": "Да, уради!",
-  "chooseMethod": "Изаберите начин",
-  "signInVia": "Пријави се уз {{service}}",
-  "new": "Ново",
-  "publish": "Објави",
-  "extra": "Додатно",
-  "revision": "Ревизија",
-  "slideMode": "Презентациони мод",
-  "export": "Извоз",
-  "import": "Увоз",
-  "clipboard": "Клипборд",
-  "download": "Преузимање",
-  "Raw HTML": "Сирови HTML",
-  "edit": "Измени",
-  "View": "Прегледај",
-  "Both": "Обоје",
-  "help": "Помоћ",
-  "Upload Image": "Пошаљи слику",
-  "menu": "Мени",
-  "This page need refresh": "Ову страну је неопходно освежити",
-  "You have an incompatible client version.": "Ова верзија клијента није компатибилна.",
-  "Refresh to update.": "Освежите за приказ измена.",
-  "New version available!": "Доступна је нова верзија!",
-  "See releases notes here": "Овде погледајте напомене о издањима",
-  "Refresh to enjoy new features.": "Освежите како бисте уживали у новим функцијама.",
-  "Your user state has changed.": "Ваше корисничко стање се променило.",
-  "Refresh to load new user state.": "Освежите за учитавање новог корисничког стања.",
-  "Refresh": "Освежи",
-  "Contacts": "Контакти",
-  "Report an issue": "Пријава проблема",
-  "Meet us on %s": "Пронађите нас на %s",
-  "Send us email": "Пошаљите нам имејл",
-  "Documents": "Документи",
-  "features": "Могућности",
-  "YAML Metadata": "YAML Метаподаци",
-  "Slide Example": "Пример слајда",
-  "Cheatsheet": "Трикови и форе",
-  "Example": "Пример",
-  "Syntax": "Синтакса",
-  "Header": "Заглавље",
-  "Unordered List": "Неуређени списак",
-  "Ordered List": "Уређени списак",
-  "Todo List": "Списак обавеза",
-  "Blockquote": "Пасус са наводима",
-  "Bold font": "Масна слова",
-  "Italics font": "Закривљена слова",
-  "Strikethrough": "Прецртано",
-  "Inserted text": "Уметнут текст",
-  "Marked text": "Означени текст",
-  "Link": "Линк",
-  "Image": "Слика",
-  "Code": "Код",
-  "Externals": "Спољни",
-  "This is a alert area.": "Ово је пасус за упозорења.",
-  "Revert": "Врати",
-  "Import from clipboard": "Увези из клипборда",
-  "Paste your markdown or webpage here...": "Залепи свој markdown или веб страну овде...",
-  "Clear": "Очисти",
-  "This note is locked": "Ова белешка је закључана",
-  "Sorry, only owner can edit this note.": "Жао нам је, ову белешку може мењати само њен власник.",
-  "OK": "OK",
-  "Reach the limit": "Досегни лимит",
-  "Sorry, you've reached the max length this note can be.": "Нажалост, досегли сте максималну дужину ове белешке.",
-  "Please reduce the content or divide it to more notes, thank you!": "Молимо Вас да смањите количину текста или да га поделите на више белешки, хвала!",
-  "Import from Gist": "Увези из Github Gist-а",
-  "Paste your gist url here...": "Залепите Gist URL адресу овде...",
-  "Import from Snippet": "Увези из \"исечака\"",
-  "Select From Available Projects": "Изабери из доступних пројеката",
-  "Select From Available Snippets": "Изабери из доступних исечака",
-  "OR": "ИЛИ",
-  "Export to Snippet": "Извези у \"исечак\"",
-  "Select Visibility Level": "Изаберите ниво читкости",
-  "Night Theme": "Ноћна тема",
-  "followUs": "Пратите нас на <0></0>, <1></1>, <2></2>, <3></3> и <4></4>.",
-  "privacy": "Приватност",
-  "termsOfUse": "Услови коришћења",
-  "Do you really want to delete your user account?": "Да ли заиста желите да трајно обришете свој налог?",
-  "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.": "Ова операција ће избрисати ваш налог, све ваше белешке, а уклониће и све везе ка вашем налогу из других белешки.",
-  "deleteUser": "Обриши корисника",
-  "exportUserData": "Извоз свих корисничких података",
-  "Help us translating on %s": "Помозите око превода на %s",
-  "sourceCode": "Изворни код",
-  "Register": "Региструј се",
-  "poweredBy": "Покреће <0></0>",
-  "Help us translating": "Помозите око превода",
-  "Join the community": "Приступите заједници"
+    "app": {
+        "slogan": "Савршен начин за писање и дељење знања у markdown формату",
+        "title": "Дељене белешке у Markdown формату"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Истражи све могућности",
+            "features": {
+                "collaboration": "Сарадња уз помоћ URL-а",
+                "mathJax": "Подршка за графиконе и MathJax",
+                "slides": "Подршка за слајдове и презентације"
+            }
+        },
+        "history": {
+            "noHistory": "Нема историје",
+            "localHistory": "Ниже је историјат преузет из прегледача",
+            "toolbar": {
+                "selectTags": "Одабери тагове...",
+                "searchKeywords": "Претрага по кључној речи...",
+                "sortByTitle": "Редослед по наслову",
+                "sortByLastVisited": "Редослед по времену",
+                "export": "Извези историјат",
+                "import": "Увези историјат",
+                "clear": "Очисти историју",
+                "refresh": "Освежи историју"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Увод",
+            "history": "Историја",
+            "newGuestNote": "Нова белешка госта",
+            "newNote": "Нова белешка"
+        },
+        "footer": {
+            "releases": "Издања",
+            "poweredBy": "Покреће <0></0>",
+            "followUs": "Пратите нас на <0></0>, <1></1>, <2></2>, <3></3> и <4></4>.",
+            "privacy": "Приватност",
+            "termsOfUse": "Услови коришћења"
+        },
+        "versionInfo": {
+            "sourceCode": "Изворни код"
+        }
+    },
+    "profile": {
+        "deleteUser": "Обриши корисника",
+        "exportUserData": "Извоз свих корисничких података",
+        "modal": {
+            "deleteUser": {
+                "title": "Обриши корисника",
+                "message": "Да ли заиста желите да трајно обришете свој налог?",
+                "subMessage": "Ова операција ће избрисати ваш налог, све ваше белешке, а уклониће и све везе ка вашем налогу из других белешки."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Контакти",
+                "community": "Приступите заједници",
+                "meetUsOn": "Пронађите нас на %s",
+                "helpTranslating": "Помозите око превода",
+                "reportIssue": "Пријава проблема"
+            },
+            "documents": {
+                "title": "Документи",
+                "yamlMetadata": "YAML Метаподаци",
+                "slideExample": "Пример слајда"
+            },
+            "cheatsheet": {
+                "title": "Трикови и форе",
+                "example": "Пример",
+                "syntax": "Синтакса",
+                "underlinedText": "Уметнут текст",
+                "highlightedText": "Означени текст",
+                "externalService": "Спољни"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Ова белешка је закључана",
+                "description": "Жао нам је, ову белешку може мењати само њен власник."
+            },
+            "limitReached": {
+                "title": "Досегни лимит",
+                "description": "Нажалост, досегли сте максималну дужину ове белешке.",
+                "advice": "Молимо Вас да смањите количину текста или да га поделите на више белешки, хвала!"
+            },
+            "incompatible": {
+                "title": "Ова верзија клијента није компатибилна.",
+                "advice": "Освежите за приказ измена."
+            },
+            "newVersion": {
+                "title": "Доступна је нова верзија!",
+                "linkText": "Овде погледајте напомене о издањима",
+                "advice": "Освежите како бисте уживали у новим функцијама."
+            },
+            "userStateChanged": {
+                "title": "Ваше корисничко стање се променило.",
+                "description": "Освежите за учитавање новог корисничког стања."
+            }
+        },
+        "viewMode": {
+            "view": "Прегледај",
+            "both": "Обоје"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Масна слова",
+            "strikethrough": "Прецртано",
+            "header": "Заглавље",
+            "code": "Код",
+            "blockquote": "Пасус са наводима",
+            "unorderedList": "Неуређени списак",
+            "orderedList": "Уређени списак",
+            "checkList": "Списак обавеза",
+            "link": "Линк",
+            "image": "Слика",
+            "uploadImage": "Пошаљи слику"
+        },
+        "menu": {
+            "menu": "Мени",
+            "new": "Ново",
+            "publish": "Објави",
+            "extra": "Додатно",
+            "revision": "Ревизија",
+            "slideMode": "Презентациони мод",
+            "download": "Преузимање",
+            "help": "Помоћ"
+        },
+        "export": {
+            "rawHtml": "Сирови HTML"
+        },
+        "import": {
+            "clipboard": "Клипборд"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Увези из \"исечака\"",
+                "selectProject": "Изабери из доступних пројеката",
+                "selectSnippet": "Изабери из доступних исечака"
+            },
+            "gistImport": {
+                "title": "Увези из Github Gist-а",
+                "insertGistUrl": "Залепите Gist URL адресу овде..."
+            },
+            "snippetExport": {
+                "title": "Извези у \"исечак\"",
+                "visibilityLevel": "Изаберите ниво читкости"
+            },
+            "revision": {
+                "title": "Ревизија",
+                "revertButton": "Врати"
+            },
+            "clipboardImport": {
+                "title": "Увези из клипборда",
+                "insertMarkdown": "Залепи свој markdown или веб страну овде..."
+            },
+            "deleteNote": {
+                "question": "Да ли заиста желите да обришете ову белешку?",
+                "warning": "Сви корисници ће изгубити везу у реалном времену."
+            }
+        }
+    },
+    "common": {
+        "import": "Увоз",
+        "export": "Извоз",
+        "refresh": "Освежи",
+        "cancel": "Одустани",
+        "ok": "OK",
+        "or": "или"
+    },
+    "login": {
+        "chooseMethod": "Изаберите начин",
+        "signInVia": "Пријави се уз {{service}}",
+        "signIn": "Пријави се",
+        "signOut": "Одјави се",
+        "register": "Региструј се",
+        "auth": {
+            "error": {}
+        }
+    }
 }

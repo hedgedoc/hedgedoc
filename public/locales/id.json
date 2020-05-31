@@ -1,122 +1,189 @@
 {
-  "Collaborative markdown notes": "Catatan markdown kolaboratif",
-  "Realtime collaborative markdown notes on all platforms.": "Berkolaborasi di catatan markdown di semua platform secara realtime",
-  "coverSlogan": "Platform terbaik untuk menulis dan membagikan markdown",
-  "intro": "Perkenalan",
-  "history": "Riwayat",
-  "newGuestNote": "Catatan baru (sebagai tamu)",
-  "featureCollaboration": "Kolaborasi real-time",
-  "featureMathJax": "Mendukung charts dan MathJax",
-  "featureSlides": "Mendukung mode slide",
-  "signIn": "Masuk",
-  "Below is the history from browser": "Dibawah ini adalah riwayat dari peramban ini",
-  "Welcome!": "Selamat Datang",
-  "newNote": "Catatan Baru",
-  "or": "atau",
-  "signOut": "Keluar",
-  "exploreFeatures": "Jelajahi semua fitur",
-  "selectTags": "Pilih tanda...",
-  "searchKeywords": "Cari berdasarkan kata kunci...",
-  "sortByTitle": "Urutkan berdasarkan judul",
-  "Title": "Judul",
-  "sortByLastVisited": "Urutkan berdasarkan waktu",
-  "Time": "Waktu",
-  "exportHistory": "Ekspor Riwayat",
-  "importHistory": "Impor Riwayat",
-  "clearHistory": "Bersihkan Riwayat",
-  "refreshHistory": "Muat-ulang Riwayat",
-  "noHistory": "Tidak ada riwayat",
-  "Import from browser": "Impor dari browser",
-  "releases": "Penerbitan",
-  "Are you sure?": "Apakah anda yakin?",
-  "Do you really want to delete this note?": "Apakah anda yakin ingin menghapus catatan ini?",
-  "All users will lose their connection.": "Semua pengguna akan kehilangan koneksi nya",
-  "Cancel": "Batal",
-  "Yes, do it!": "Ya, lakukan!",
-  "chooseMethod": "Pilih cara",
-  "signInVia": "Masuk menggunakan {{service}}",
-  "new": "Baru",
-  "publish": "Terbitkan",
-  "extra": "Tambahan",
-  "revision": "Revisi",
-  "slideMode": "Mode Slide",
-  "export": "Ekspor",
-  "import": "Impor",
-  "clipboard": "Papan Klip",
-  "download": "Unduh",
-  "Raw HTML": "File HTML",
-  "edit": "Ubah",
-  "View": "Lihat",
-  "Both": "Keduanya",
-  "help": "Bantuan",
-  "Upload Image": "Unggah Gambar",
-  "menu": "Menu",
-  "This page need refresh": "Halaman ini perlu dimuat ulang",
-  "You have an incompatible client version.": "Versi pramban anda tidak kompatibel",
-  "Refresh to update.": "Muat ulang untuk memperbarui",
-  "New version available!": "Versi baru tersedia!",
-  "See releases notes here": "Lihat catatan penerbitan",
-  "Refresh to enjoy new features.": "Muat ulang untuk menikmati fitur baru.",
-  "Your user state has changed.": "Data pengguna anda telah berubah.",
-  "Refresh to load new user state.": "Muat ulang untuk memuat data baru pengguna.",
-  "Refresh": "Muat ulang",
-  "Contacts": "Kontak",
-  "Report an issue": "Laporkan kesalahan",
-  "Meet us on %s": "Temui kami di %s",
-  "Send us email": "Kirim kami email",
-  "Documents": "Dokumen",
-  "features": "Fitur",
-  "YAML Metadata": "Metadata YML",
-  "Slide Example": "Contoh Slide",
-  "Cheatsheet": "Cheatsheet",
-  "Example": "Contoh",
-  "Syntax": "Sintaks",
-  "Header": "Header",
-  "Unordered List": "Daftar tak ber-urutan",
-  "Ordered List": "Daftar ber-urutan",
-  "Todo List": "Centang",
-  "Blockquote": "Blok kutipan",
-  "Bold font": "Tebal",
-  "Italics font": "Miring",
-  "Strikethrough": "Garis",
-  "Inserted text": "Teks ber-garis bawah",
-  "Marked text": "Teks yang disorot",
-  "Link": "Link",
-  "Image": "Gambar",
-  "Code": "Kode",
-  "Externals": "Eksternal",
-  "This is a alert area.": "Ini adalah area alert.",
-  "Revert": "Kembalikan",
-  "Import from clipboard": "Impor dari papan klip",
-  "Paste your markdown or webpage here...": "Tempel markdown atau halaman web disini",
-  "Clear": "Bersihkan",
-  "This note is locked": "Catatan ini terkunci",
-  "Sorry, only owner can edit this note.": "Maaf, hanya pemilik yang bisa mengubah catatan ini",
-  "OK": "OK",
-  "Reach the limit": "Memenuhi batas",
-  "Sorry, you've reached the max length this note can be.": "Maaf, anda telah memenuhi batas maksimum jumlah catatan ini",
-  "Please reduce the content or divide it to more notes, thank you!": "Tolong persingkat catatan nya.",
-  "Import from Gist": "Impor dari Gist",
-  "Paste your gist url here...": "Templekan URL gist anda disini...",
-  "Import from Snippet": "Impor dari Snippet",
-  "Select From Available Projects": "Pilih dari Project yang tersedia",
-  "Select From Available Snippets": "Pilih dari Snippet yang tersedia",
-  "OR": "Atau",
-  "Export to Snippet": "Ekspor ke Snippet",
-  "Select Visibility Level": "Pilih tingkat penglihatan",
-  "Night Theme": "Mode Malam",
-  "followUs": "Ikuti kami di <0></0>, <1></1>, <2></2>, <3></3>, dan <4></4>.",
-  "privacy": "Privasi",
-  "termsOfUse": "Aturan Penggunaan",
-  "Do you really want to delete your user account?": "Apakah anda yakin ingin menghapus akun anda?",
-  "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.": "Ini akan menghapus akun anda, semua catatan yang dimiliki oleh anda akan dihapus dan menghapus semua referensi ke akun anda dari catatan lain.",
-  "deleteUser": "Hapus pengguna",
-  "exportUserData": "Ekspor data pengguna",
-  "Help us translating on %s": "Bantu kami menerjemahkan di %s",
-  "sourceCode": "Sumber Kode",
-  "Register": "Daftar",
-  "poweredBy": "Ditenagai oleh <0></0>",
-  "Help us translating": "Bantu kami menerjemahkan",
-  "Join the community": "Bergabung dengan komunitas",
-  "imprint": "Jejak"
+    "app": {
+        "slogan": "Platform terbaik untuk menulis dan membagikan markdown",
+        "title": "Catatan markdown kolaboratif"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Jelajahi semua fitur",
+            "features": {
+                "collaboration": "Kolaborasi real-time",
+                "mathJax": "Mendukung charts dan MathJax",
+                "slides": "Mendukung mode slide"
+            }
+        },
+        "history": {
+            "noHistory": "Tidak ada riwayat",
+            "localHistory": "Dibawah ini adalah riwayat dari peramban ini",
+            "toolbar": {
+                "selectTags": "Pilih tanda...",
+                "searchKeywords": "Cari berdasarkan kata kunci...",
+                "sortByTitle": "Urutkan berdasarkan judul",
+                "sortByLastVisited": "Urutkan berdasarkan waktu",
+                "export": "Ekspor Riwayat",
+                "import": "Impor Riwayat",
+                "clear": "Bersihkan Riwayat",
+                "refresh": "Muat-ulang Riwayat"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Perkenalan",
+            "history": "Riwayat",
+            "newGuestNote": "Catatan baru (sebagai tamu)",
+            "newNote": "Catatan Baru"
+        },
+        "footer": {
+            "releases": "Penerbitan",
+            "poweredBy": "Ditenagai oleh <0></0>",
+            "imprint": "Jejak",
+            "followUs": "Ikuti kami di <0></0>, <1></1>, <2></2>, <3></3>, dan <4></4>.",
+            "privacy": "Privasi",
+            "termsOfUse": "Aturan Penggunaan"
+        },
+        "versionInfo": {
+            "sourceCode": "Sumber Kode"
+        }
+    },
+    "profile": {
+        "deleteUser": "Hapus pengguna",
+        "exportUserData": "Ekspor data pengguna",
+        "modal": {
+            "deleteUser": {
+                "title": "Hapus pengguna",
+                "message": "Apakah anda yakin ingin menghapus akun anda?",
+                "subMessage": "Ini akan menghapus akun anda, semua catatan yang dimiliki oleh anda akan dihapus dan menghapus semua referensi ke akun anda dari catatan lain."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Kontak",
+                "community": "Bergabung dengan komunitas",
+                "meetUsOn": "Temui kami di %s",
+                "helpTranslating": "Bantu kami menerjemahkan",
+                "reportIssue": "Laporkan kesalahan"
+            },
+            "documents": {
+                "title": "Dokumen",
+                "yamlMetadata": "Metadata YML",
+                "slideExample": "Contoh Slide"
+            },
+            "cheatsheet": {
+                "title": "Cheatsheet",
+                "example": "Contoh",
+                "syntax": "Sintaks",
+                "underlinedText": "Teks ber-garis bawah",
+                "highlightedText": "Teks yang disorot",
+                "externalService": "Eksternal"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Catatan ini terkunci",
+                "description": "Maaf, hanya pemilik yang bisa mengubah catatan ini"
+            },
+            "limitReached": {
+                "title": "Memenuhi batas",
+                "description": "Maaf, anda telah memenuhi batas maksimum jumlah catatan ini",
+                "advice": "Tolong persingkat catatan nya."
+            },
+            "incompatible": {
+                "title": "Versi pramban anda tidak kompatibel",
+                "advice": "Muat ulang untuk memperbarui"
+            },
+            "newVersion": {
+                "title": "Versi baru tersedia!",
+                "linkText": "Lihat catatan penerbitan",
+                "advice": "Muat ulang untuk menikmati fitur baru."
+            },
+            "userStateChanged": {
+                "title": "Data pengguna anda telah berubah.",
+                "description": "Muat ulang untuk memuat data baru pengguna."
+            }
+        },
+        "viewMode": {
+            "view": "Lihat",
+            "both": "Keduanya"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Tebal",
+            "strikethrough": "Garis",
+            "header": "Header",
+            "code": "Kode",
+            "blockquote": "Blok kutipan",
+            "unorderedList": "Daftar tak ber-urutan",
+            "orderedList": "Daftar ber-urutan",
+            "checkList": "Centang",
+            "link": "Link",
+            "image": "Gambar",
+            "uploadImage": "Unggah Gambar"
+        },
+        "menu": {
+            "menu": "Menu",
+            "new": "Baru",
+            "publish": "Terbitkan",
+            "extra": "Tambahan",
+            "revision": "Revisi",
+            "slideMode": "Mode Slide",
+            "download": "Unduh",
+            "help": "Bantuan"
+        },
+        "export": {
+            "rawHtml": "File HTML"
+        },
+        "import": {
+            "clipboard": "Papan Klip"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Impor dari Snippet",
+                "selectProject": "Pilih dari Project yang tersedia",
+                "selectSnippet": "Pilih dari Snippet yang tersedia"
+            },
+            "gistImport": {
+                "title": "Impor dari Gist",
+                "insertGistUrl": "Templekan URL gist anda disini..."
+            },
+            "snippetExport": {
+                "title": "Ekspor ke Snippet",
+                "visibilityLevel": "Pilih tingkat penglihatan"
+            },
+            "revision": {
+                "title": "Revisi",
+                "revertButton": "Kembalikan"
+            },
+            "clipboardImport": {
+                "title": "Impor dari papan klip",
+                "insertMarkdown": "Tempel markdown atau halaman web disini"
+            },
+            "deleteNote": {
+                "question": "Apakah anda yakin ingin menghapus catatan ini?",
+                "warning": "Semua pengguna akan kehilangan koneksi nya"
+            }
+        }
+    },
+    "common": {
+        "import": "Impor",
+        "export": "Ekspor",
+        "refresh": "Muat ulang",
+        "cancel": "Batal",
+        "ok": "OK",
+        "or": "atau"
+    },
+    "login": {
+        "chooseMethod": "Pilih cara",
+        "signInVia": "Masuk menggunakan {{service}}",
+        "signIn": "Masuk",
+        "signOut": "Keluar",
+        "register": "Daftar",
+        "auth": {
+            "error": {}
+        }
+    }
 }

@@ -12,7 +12,7 @@ export const FeatureLinks: React.FC = () => {
         <Link to={'/features#Share-Notes'} className="text-light">
           <FontAwesomeIcon icon="bolt" size="3x"/>
           <h5>
-            <Trans i18nKey="featureCollaboration"/>
+            <Trans i18nKey="landing.intro.features.collaboration"/>
           </h5>
         </Link>
       </Col>
@@ -20,7 +20,7 @@ export const FeatureLinks: React.FC = () => {
         <Link to={'/features#MathJax'} className="text-light">
           <FontAwesomeIcon icon="chart-bar" size="3x"/>
           <h5>
-            <Trans i18nKey="featureMathJax"/>
+            <Trans i18nKey="landing.intro.features.mathJax"/>
           </h5>
         </Link>
       </Col>
@@ -28,7 +28,7 @@ export const FeatureLinks: React.FC = () => {
         <Link to={'/features#Slide-Mode'} className="text-light">
           <FontAwesomeIcon icon="tv" size="3x"/>
           <h5>
-            <Trans i18nKey="featureSlides"/>
+            <Trans i18nKey="landing.intro.features.slides"/>
           </h5>
         </Link>
       </Col>

@@ -6,7 +6,7 @@ const SocialLink: React.FC = () => {
   useTranslation()
   return (
     <p>
-      <Trans i18nKey="followUs" components={[
+      <Trans i18nKey="landing.footer.followUs" components={[
         <ExternalLink href="https://github.com/codimd/server" icon={['fab', 'github']} text="GitHub"/>,
         <ExternalLink href="https://community.codimd.org" icon={['fab', 'discourse']} text="Discourse"/>,
         <ExternalLink href="https://riot.im/app/#/room/#codimd:matrix.org" icon="comment" text="Riot"/>,

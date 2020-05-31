@@ -35,7 +35,7 @@ export const ViaLdap: React.FC = () => {
     <Card className="bg-dark mb-4">
       <Card.Body>
         <Card.Title>
-          <Trans i18nKey="signInVia" values={{ service: name }}/>
+          <Trans i18nKey="login.signInVia" values={{ service: name }}/>
         </Card.Title>
         <Form onSubmit={onFormSubmit}>
           <Form.Group controlId="username">
@@ -43,7 +43,7 @@ export const ViaLdap: React.FC = () => {
               isInvalid={error}
               type="text"
               size="sm"
-              placeholder={t('username')}
+              placeholder={t('login.auth.username')}
               onChange={(event) => setUsername(event.currentTarget.value)} className="bg-dark text-white"
             />
           </Form.Group>
@@ -53,19 +53,19 @@ export const ViaLdap: React.FC = () => {
               isInvalid={error}
               type="password"
               size="sm"
-              placeholder={t('password')}
+              placeholder={t('login.auth.password')}
               onChange={(event) => setPassword(event.currentTarget.value)}
               className="bg-dark text-white"/>
           </Form.Group>
 
           <Alert className="small" show={error} variant="danger">
-            <Trans i18nKey="errorLdapLogin"/>
+            <Trans i18nKey="login.auth.error.ldapLogin"/>
           </Alert>
 
           <Button
             type="submit"
             variant="primary">
-            <Trans i18nKey="signIn"/>
+            <Trans i18nKey="login.signIn"/>
           </Button>
         </Form>
       </Card.Body>

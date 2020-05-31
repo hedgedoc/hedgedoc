@@ -5,16 +5,16 @@ import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
 export const NewUserNoteButton: React.FC = () => {
-  const { i18n } = useTranslation()
+  const { t } = useTranslation()
   return (
-    <LinkContainer to={'/new'} title={i18n.t('newNote')}>
+    <LinkContainer to={'/new'} title={t('landing.navigation.newNote')}>
       <Button
         variant="primary"
         size="sm"
         className="d-inline-flex align-items-center">
         <FontAwesomeIcon icon="plus" className="mr-1"/>
         <span>
-          <Trans i18nKey='newNote'/>
+          <Trans i18nKey='landing.navigation.newNote'/>
         </span>
       </Button>
     </LinkContainer>

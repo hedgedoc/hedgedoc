@@ -2,18 +2,19 @@ import React from 'react'
 import { Table } from 'react-bootstrap'
 import { HistoryTableRow } from './history-table-row'
 import { HistoryEntriesProps } from '../history-content/history-content'
-import { Trans } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { Pager } from '../../../../pagination/pager'
 
 export const HistoryTable: React.FC<HistoryEntriesProps> = ({ entries, onPinClick, pageIndex, onLastPageIndexChange }) => {
+  useTranslation()
   return (
     <Table striped bordered hover size="sm" variant="dark">
       <thead>
         <tr>
-          <th><Trans i18nKey={'title'}/></th>
-          <th><Trans i18nKey={'lastVisit'}/></th>
-          <th><Trans i18nKey={'tags'}/></th>
-          <th><Trans i18nKey={'actions'}/></th>
+          <th><Trans i18nKey={'landing.history.tableHeader.title'}/></th>
+          <th><Trans i18nKey={'landing.history.tableHeader.lastVisit'}/></th>
+          <th><Trans i18nKey={'landing.history.tableHeader.tags'}/></th>
+          <th><Trans i18nKey={'landing.history.tableHeader.actions'}/></th>
         </tr>
       </thead>
       <tbody>

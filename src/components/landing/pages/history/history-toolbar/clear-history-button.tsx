@@ -16,20 +16,22 @@ export const ClearHistoryButton: React.FC<ClearHistoryButtonProps> = ({ onClearH
 
   return (
     <Fragment>
-      <Button variant={'light'} title={t('clearHistory')} onClick={handleShow}>
+      <Button variant={'light'} title={t('landing.history.toolbar.clear')} onClick={handleShow}>
         <FontAwesomeIcon icon={'trash'}/>
       </Button>
-      <Modal show={show} onHide={handleClose} animation={true} size="sm">
+      <Modal show={show} onHide={handleClose} animation={true} className="text-dark">
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <Trans i18nKey={'landing.history.modal.clearHistory.title'}/>
+          </Modal.Title>
+        </Modal.Header>
         <Modal.Body className="text-dark">
-          <h5><Trans i18nKey={'clearHistoryQuestion'}/></h5>
-          <h6><Trans i18nKey={'clearHistoryDisclaimer'}/></h6>
+            <h5><Trans i18nKey={'landing.history.modal.clearHistory.question'}/></h5>
+          <h6><Trans i18nKey={'landing.history.modal.clearHistory.disclaimer'}/></h6>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            <Trans i18nKey={'close'}/>
-          </Button>
           <Button variant="danger" onClick={onClearHistory}>
-            <Trans i18nKey={'clearHistory'}/>
+            <Trans i18nKey={'landing.history.toolbar.clear'}/>
           </Button>
         </Modal.Footer>
       </Modal>

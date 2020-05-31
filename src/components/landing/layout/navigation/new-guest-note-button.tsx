@@ -5,16 +5,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Trans, useTranslation } from 'react-i18next'
 
 export const NewGuestNoteButton: React.FC = () => {
-  const { i18n } = useTranslation()
+  const { t } = useTranslation()
   return (
-    <LinkContainer to={'/new'} title={i18n.t('newGuestNote')}>
+    <LinkContainer to={'/new'} title={t('landing.navigation.newGuestNote')}>
       <Button
         variant="primary"
         size="sm"
         className="d-inline-flex align-items-center">
         <FontAwesomeIcon icon="plus" className="mr-1"/>
         <span>
-          <Trans i18nKey='newGuestNote'/>
+          <Trans i18nKey='landing.navigation.newGuestNote'/>
         </span>
       </Button>
     </LinkContainer>)

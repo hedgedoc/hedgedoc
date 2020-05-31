@@ -1,104 +1,169 @@
 {
-  "Collaborative markdown notes": "Kolaborativne markdown bilješke",
-  "Realtime collaborative markdown notes on all platforms.": "Kolaborativne markdown bilješke na svim platformama u realnom vremenu.",
-  "coverSlogan": "Najbolji način za pisanje i dijeljenje svog znanja u markdown-u.",
-  "intro": "Uvod",
-  "history": "Povijest",
-  "newGuestNote": "Nova bilješka gosta",
-  "featureCollaboration": "Kolaboracija sa URL-om",
-  "featureMathJax": "Support charts and MathJax",
-  "featureSlides": "Način podrške slajda",
-  "signIn": "Prijavu se",
-  "Below is the history from browser": "Ispod je povijest preglednika",
-  "Welcome!": "Dobrodošli!",
-  "newNote": "Nova bilješka",
-  "or": "ili",
-  "signOut": "Odjavi se",
-  "exploreFeatures": "Istraži sve značajke",
-  "selectTags": "Odaberi oznake...",
-  "searchKeywords": "Pretraži ključnu riječ...",
-  "sortByTitle": "Sortiraj po naslovu",
-  "Title": "Naslov",
-  "sortByLastVisited": "Sortiraj po vremenu",
-  "Time": "Vrijeme",
-  "exportHistory": "Izvezi povijest",
-  "importHistory": "Uvezi povijest",
-  "clearHistory": "Očisti povijest",
-  "refreshHistory": "Osvježi povijest",
-  "noHistory": "Nema povijesti",
-  "Import from browser": "Uvezi iz preglednika",
-  "releases": "Izdanja",
-  "Are you sure?": "Jeste li sigurni?",
-  "Cancel": "Odustani",
-  "Yes, do it!": "Da, učini to!",
-  "chooseMethod": "Izaberi metodu",
-  "signInVia": "Prijavi se pomoću {{service}}",
-  "new": "Novo",
-  "publish": "Objavi",
-  "extra": "Dodatno",
-  "revision": "Revizija",
-  "slideMode": "Način slajda",
-  "export": "Izvoz",
-  "import": "Uvoz",
-  "clipboard": "Međuspremnik",
-  "download": "Preuzimanje",
-  "Raw HTML": "Raw HTML",
-  "edit": "Uredi",
-  "View": "Pregledaj",
-  "Both": "Oboje",
-  "help": "Pomoć",
-  "Upload Image": "Prenesi sliku",
-  "menu": "Meni",
-  "This page need refresh": "Ovu stranicu je potrebno osvježiti",
-  "You have an incompatible client version.": "Imate nekompatibilnu verziju klijenta.",
-  "Refresh to update.": "Osvježite za ažuriranje.",
-  "New version available!": "Nova verzija dostupna!",
-  "See releases notes here": "Pogledajte bilješke izdanja ovdje",
-  "Refresh to enjoy new features.": "Osvježi za nove značajke.",
-  "Your user state has changed.": "Stanje Vašeg korisnika se promijenilo.",
-  "Refresh to load new user state.": "Osvježi za učitavanje novog stanja korisnika.",
-  "Refresh": "Osvježi",
-  "Contacts": "Kontakti",
-  "Report an issue": "Prijavi problem",
-  "Send us email": "Pošalji nam email",
-  "Documents": "Dokumenti",
-  "features": "Značajke",
-  "YAML Metadata": "YAML Metadata",
-  "Slide Example": "Primjer slajda",
-  "Cheatsheet": "Cheatsheet",
-  "Example": "Primjer",
-  "Syntax": "Sintaksa",
-  "Header": "Zaglavlje",
-  "Unordered List": "Neuređeni popis",
-  "Ordered List": "Uređeni popis",
-  "Todo List": "Popis obaveza",
-  "Blockquote": "Blockquote",
-  "Bold font": "Bold font",
-  "Italics font": "Kurzivan font",
-  "Strikethrough": "Precrtano",
-  "Inserted text": "Umetnuti tekst",
-  "Marked text": "Označeni tekst",
-  "Link": "Link",
-  "Image": "Slika",
-  "Code": "Kod",
-  "Externals": "Vanjski izgled",
-  "This is a alert area.": "Ovo je područje upozorenja.",
-  "Revert": "Vrati",
-  "Import from clipboard": "Uvezi iz međuspremnika",
-  "Paste your markdown or webpage here...": "Zalijepi svoj markdown ili web stranicu ovdje...",
-  "Clear": "Očisti",
-  "This note is locked": "Ova bilješka je zaključana",
-  "Sorry, only owner can edit this note.": "Žao nam je, samo vlasnik ove bilješke ju može uređivati.",
-  "OK": "OK",
-  "Reach the limit": "Dosegni granicu",
-  "Sorry, you've reached the max length this note can be.": "Žao nam je, dosegli ste maksimalnu moguću duljinu ove bilješke.",
-  "Please reduce the content or divide it to more notes, thank you!": "Molimo Vas smanjite sardžaj ili ga podijelite na više bilješki, hvala!",
-  "Import from Gist": "Uvezi iz Gist-a",
-  "Paste your gist url here...": "Zalijepi svoj gist url ovdje...",
-  "Import from Snippet": "Uvezi iz isječka",
-  "Select From Available Projects": "Odaberi iz raspoloživih projekta",
-  "Select From Available Snippets": "Odaberi iz raspoloživih isječaka",
-  "OR": "ILI",
-  "Export to Snippet": "Izvoz u isječak",
-  "Select Visibility Level": "Odaberi razinu vidljivosti"
+    "app": {
+        "slogan": "Najbolji način za pisanje i dijeljenje svog znanja u markdown-u.",
+        "title": "Kolaborativne markdown bilješke"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Istraži sve značajke",
+            "features": {
+                "collaboration": "Kolaboracija sa URL-om",
+                "mathJax": "Support charts and MathJax",
+                "slides": "Način podrške slajda"
+            }
+        },
+        "history": {
+            "noHistory": "Nema povijesti",
+            "localHistory": "Ispod je povijest preglednika",
+            "toolbar": {
+                "selectTags": "Odaberi oznake...",
+                "searchKeywords": "Pretraži ključnu riječ...",
+                "sortByTitle": "Sortiraj po naslovu",
+                "sortByLastVisited": "Sortiraj po vremenu",
+                "export": "Izvezi povijest",
+                "import": "Uvezi povijest",
+                "clear": "Očisti povijest",
+                "refresh": "Osvježi povijest"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Uvod",
+            "history": "Povijest",
+            "newGuestNote": "Nova bilješka gosta",
+            "newNote": "Nova bilješka"
+        },
+        "footer": {
+            "releases": "Izdanja"
+        },
+        "versionInfo": {}
+    },
+    "profile": {
+        "modal": {
+            "deleteUser": {}
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Kontakti",
+                "reportIssue": "Prijavi problem"
+            },
+            "documents": {
+                "title": "Dokumenti",
+                "yamlMetadata": "YAML Metadata",
+                "slideExample": "Primjer slajda"
+            },
+            "cheatsheet": {
+                "title": "Cheatsheet",
+                "example": "Primjer",
+                "syntax": "Sintaksa",
+                "underlinedText": "Umetnuti tekst",
+                "highlightedText": "Označeni tekst",
+                "externalService": "Vanjski izgled"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Ova bilješka je zaključana",
+                "description": "Žao nam je, samo vlasnik ove bilješke ju može uređivati."
+            },
+            "limitReached": {
+                "title": "Dosegni granicu",
+                "description": "Žao nam je, dosegli ste maksimalnu moguću duljinu ove bilješke.",
+                "advice": "Molimo Vas smanjite sardžaj ili ga podijelite na više bilješki, hvala!"
+            },
+            "incompatible": {
+                "title": "Imate nekompatibilnu verziju klijenta.",
+                "advice": "Osvježite za ažuriranje."
+            },
+            "newVersion": {
+                "title": "Nova verzija dostupna!",
+                "linkText": "Pogledajte bilješke izdanja ovdje",
+                "advice": "Osvježi za nove značajke."
+            },
+            "userStateChanged": {
+                "title": "Stanje Vašeg korisnika se promijenilo.",
+                "description": "Osvježi za učitavanje novog stanja korisnika."
+            }
+        },
+        "viewMode": {
+            "view": "Pregledaj",
+            "both": "Oboje"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Bold font",
+            "strikethrough": "Precrtano",
+            "header": "Zaglavlje",
+            "code": "Kod",
+            "blockquote": "Blockquote",
+            "unorderedList": "Neuređeni popis",
+            "orderedList": "Uređeni popis",
+            "checkList": "Popis obaveza",
+            "link": "Link",
+            "image": "Slika",
+            "uploadImage": "Prenesi sliku"
+        },
+        "menu": {
+            "menu": "Meni",
+            "new": "Novo",
+            "publish": "Objavi",
+            "extra": "Dodatno",
+            "revision": "Revizija",
+            "slideMode": "Način slajda",
+            "download": "Preuzimanje",
+            "help": "Pomoć"
+        },
+        "export": {
+            "rawHtml": "Raw HTML"
+        },
+        "import": {
+            "clipboard": "Međuspremnik"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Uvezi iz isječka",
+                "selectProject": "Odaberi iz raspoloživih projekta",
+                "selectSnippet": "Odaberi iz raspoloživih isječaka"
+            },
+            "gistImport": {
+                "title": "Uvezi iz Gist-a",
+                "insertGistUrl": "Zalijepi svoj gist url ovdje..."
+            },
+            "snippetExport": {
+                "title": "Izvoz u isječak",
+                "visibilityLevel": "Odaberi razinu vidljivosti"
+            },
+            "revision": {
+                "title": "Revizija",
+                "revertButton": "Vrati"
+            },
+            "clipboardImport": {
+                "title": "Uvezi iz međuspremnika",
+                "insertMarkdown": "Zalijepi svoj markdown ili web stranicu ovdje..."
+            },
+            "deleteNote": {}
+        }
+    },
+    "common": {
+        "import": "Uvoz",
+        "export": "Izvoz",
+        "refresh": "Osvježi",
+        "cancel": "Odustani",
+        "ok": "OK",
+        "or": "ili"
+    },
+    "login": {
+        "chooseMethod": "Izaberi metodu",
+        "signInVia": "Prijavi se pomoću {{service}}",
+        "signIn": "Prijavu se",
+        "signOut": "Odjavi se",
+        "auth": {
+            "error": {}
+        }
+    }
 }

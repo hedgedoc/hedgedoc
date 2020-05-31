@@ -1,122 +1,189 @@
 {
-  "Collaborative markdown notes": "ملاحظات ماركداون تعاونية",
-  "Realtime collaborative markdown notes on all platforms.": "تعاون آني في ملاحظات ماركداون على كافة المنصات.",
-  "coverSlogan": "أحسن منصة لكتابة ومشاركة ماركداون.",
-  "intro": "مُقدِّمة",
-  "history": "التاريخ",
-  "newGuestNote": "ملاحظة جديدة كضَيف",
-  "featureCollaboration": "تعاون آني",
-  "featureMathJax": "دعم المنحنيات البيانية و MathJax",
-  "featureSlides": "دعم الشرائح التقديمية",
-  "signIn": "لِج",
-  "Below is the history from browser": "تحته سِجِل هذا المتصفّح",
-  "Welcome!": "أهلا بك!",
-  "newNote": "ملاحظة جديدة",
-  "or": "أو",
-  "signOut": "خروج",
-  "exploreFeatures": "استكشف جميع الميزات",
-  "selectTags": "اختر كلمات مفتاحية...",
-  "searchKeywords": "البحث عن كلمة مفتاحية...",
-  "sortByTitle": "الترتيب حسب العنوان",
-  "Title": "العنوان",
-  "sortByLastVisited": "فرز حسب الوقت",
-  "Time": "الزمن",
-  "exportHistory": "تصدير التاريخ",
-  "importHistory": "استيراد التاريخ",
-  "clearHistory": "مسح التاريخ",
-  "refreshHistory": "حدث التاريخ",
-  "noHistory": "ليس هناك سِجِل",
-  "Import from browser": "استيراد من المتصفح",
-  "releases": "إصدارات",
-  "Are you sure?": "هل أنت واثق؟",
-  "Do you really want to delete this note?": "هل تريد حقًا حذف هذه الملاحظة؟",
-  "All users will lose their connection.": "سيفقد جميع المستخدمين اتصالهم.",
-  "Cancel": "إلغاء",
-  "Yes, do it!": "نعم ، قم بذلك!",
-  "chooseMethod": "اختر الطريقة",
-  "signInVia": "لِج عبر {{service}}",
-  "new": "جديد",
-  "publish": "انشر",
-  "extra": "إضافي",
-  "revision": "مراجعة",
-  "slideMode": "نمط الشرائح التقديمية",
-  "export": "تصدير",
-  "import": "استيراد",
-  "clipboard": "الحافظة",
-  "download": "تنزيل",
-  "Raw HTML": "Raw HTML",
-  "edit": "عدّل",
-  "View": "عرض",
-  "Both": "معا",
-  "help": "المساعدة",
-  "Upload Image": "تحميل صورة",
-  "menu": "القائمة",
-  "This page need refresh": "هذه الصفحة بحاجة إلى تحديث",
-  "You have an incompatible client version.": "نسخة عميلك غير متوافقة.",
-  "Refresh to update.": "حدث الصفحة للحصول على التحديث",
-  "New version available!": "نسخة جديدة متوفرة!",
-  "See releases notes here": "إطلع على ملاحظات الإصدار هنا",
-  "Refresh to enjoy new features.": "حدث الصفحة لتستمتع بالميزات الجديدة.",
-  "Your user state has changed.": "لقد تغيرت حالة المستخدم الخاصة بك.",
-  "Refresh to load new user state.": "قم بتحديث الصفحة لتحميل حالة المستخدم الجديدة.",
-  "Refresh": "تحديث",
-  "Contacts": "جهات الاتصال",
-  "Report an issue": "بلغ عن خطأ",
-  "Meet us on %s": "قابِلنا في %s",
-  "Send us email": "أرسل لنا بريدا إلكترونيا",
-  "Documents": "المستندات",
-  "features": "المميزات",
-  "YAML Metadata": "YAML Metadata",
-  "Slide Example": "Slide Example",
-  "Cheatsheet": "Cheatsheet",
-  "Example": "مثال",
-  "Syntax": "Syntax",
-  "Header": "الرأسية",
-  "Unordered List": "قائمة غير مرتبة",
-  "Ordered List": "قائمة مرتبة",
-  "Todo List": "Checklist",
-  "Blockquote": "Blockquote",
-  "Bold font": "خط غامق",
-  "Italics font": "خط مائل",
-  "Strikethrough": "Strikethrough",
-  "Inserted text": "نص مُسَطَّر",
-  "Marked text": "نص بارز",
-  "Link": "الرابط",
-  "Image": "صورة",
-  "Code": "الشفرة",
-  "Externals": "Externals",
-  "This is a alert area.": "هذه منطقة تنبيه.",
-  "Revert": "تراجع",
-  "Import from clipboard": "استيراد من الحافظة",
-  "Paste your markdown or webpage here...": "يرجى وضع ماركداون أو صفحة الويب الخاصة بك هنا…",
-  "Clear": "امسح",
-  "This note is locked": "هذه الملاحظة مقفلة",
-  "Sorry, only owner can edit this note.": "آسف ، يمكن للمالك فقط تعديل هذه الملاحظة.",
-  "OK": "حسنا",
-  "Reach the limit": "Reach the limit",
-  "Sorry, you've reached the max length this note can be.": "عذرًا ، لقد بلغت الحد الأقصى لطول هذه الملاحظة.",
-  "Please reduce the content or divide it to more notes, thank you!": "يرجى جعل هذه الملاحظة قصيرة.",
-  "Import from Gist": "استيراد من Gist",
-  "Paste your gist url here...": "الصق عنوان url الخاص بك هنا...",
-  "Import from Snippet": "استرداد من سنيبت",
-  "Select From Available Projects": "اختر من بين المشاريع المتاحة",
-  "Select From Available Snippets": "اختر من بين المقتطفات المتاحة",
-  "OR": "أو",
-  "Export to Snippet": "صدر إلى سنيبت",
-  "Select Visibility Level": "حدد مستوى الرؤية",
-  "Night Theme": "الوضع الليلي",
-  "followUs": "تابِعنا على <0></0>, <1></1>, <2></2>, <3></3> و على <4></4>.",
-  "privacy": "الخصوصية",
-  "termsOfUse": "شروط الاستخدام",
-  "Do you really want to delete your user account?": "هل تريد حقًا حذف حسابك؟",
-  "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.": "سيؤدي هذا إلى حذف حسابك ، وجميع الملاحظات التي تملكها وإزالة جميع الإشارات إلى حسابك من الملاحظات الأخرى.",
-  "deleteUser": "احذف المستخدم",
-  "exportUserData": "تصدير بيانات المستخدم",
-  "Help us translating on %s": "ساعدنا في الترجمة على %s",
-  "sourceCode": "الشفرة المصدرية",
-  "Register": "انشئ حسابا",
-  "poweredBy": "مدعوم بـ <0></0>",
-  "Help us translating": "ساعدنا في الترجمة",
-  "Join the community": "انضم إلى المجتمع",
-  "imprint": "Imprint"
+    "app": {
+        "slogan": "أحسن منصة لكتابة ومشاركة ماركداون.",
+        "title": "ملاحظات ماركداون تعاونية"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "استكشف جميع الميزات",
+            "features": {
+                "collaboration": "تعاون آني",
+                "mathJax": "دعم المنحنيات البيانية و MathJax",
+                "slides": "دعم الشرائح التقديمية"
+            }
+        },
+        "history": {
+            "noHistory": "ليس هناك سِجِل",
+            "localHistory": "تحته سِجِل هذا المتصفّح",
+            "toolbar": {
+                "selectTags": "اختر كلمات مفتاحية...",
+                "searchKeywords": "البحث عن كلمة مفتاحية...",
+                "sortByTitle": "الترتيب حسب العنوان",
+                "sortByLastVisited": "فرز حسب الوقت",
+                "export": "تصدير التاريخ",
+                "import": "استيراد التاريخ",
+                "clear": "مسح التاريخ",
+                "refresh": "حدث التاريخ"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "مُقدِّمة",
+            "history": "التاريخ",
+            "newGuestNote": "ملاحظة جديدة كضَيف",
+            "newNote": "ملاحظة جديدة"
+        },
+        "footer": {
+            "releases": "إصدارات",
+            "poweredBy": "مدعوم بـ <0></0>",
+            "imprint": "Imprint",
+            "followUs": "تابِعنا على <0></0>, <1></1>, <2></2>, <3></3> و على <4></4>.",
+            "privacy": "الخصوصية",
+            "termsOfUse": "شروط الاستخدام"
+        },
+        "versionInfo": {
+            "sourceCode": "الشفرة المصدرية"
+        }
+    },
+    "profile": {
+        "deleteUser": "احذف المستخدم",
+        "exportUserData": "تصدير بيانات المستخدم",
+        "modal": {
+            "deleteUser": {
+                "title": "احذف المستخدم",
+                "message": "هل تريد حقًا حذف حسابك؟",
+                "subMessage": "سيؤدي هذا إلى حذف حسابك ، وجميع الملاحظات التي تملكها وإزالة جميع الإشارات إلى حسابك من الملاحظات الأخرى."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "جهات الاتصال",
+                "community": "انضم إلى المجتمع",
+                "meetUsOn": "قابِلنا في %s",
+                "helpTranslating": "ساعدنا في الترجمة",
+                "reportIssue": "بلغ عن خطأ"
+            },
+            "documents": {
+                "title": "المستندات",
+                "yamlMetadata": "YAML Metadata",
+                "slideExample": "Slide Example"
+            },
+            "cheatsheet": {
+                "title": "Cheatsheet",
+                "example": "مثال",
+                "syntax": "Syntax",
+                "underlinedText": "نص مُسَطَّر",
+                "highlightedText": "نص بارز",
+                "externalService": "Externals"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "هذه الملاحظة مقفلة",
+                "description": "آسف ، يمكن للمالك فقط تعديل هذه الملاحظة."
+            },
+            "limitReached": {
+                "title": "Reach the limit",
+                "description": "عذرًا ، لقد بلغت الحد الأقصى لطول هذه الملاحظة.",
+                "advice": "يرجى جعل هذه الملاحظة قصيرة."
+            },
+            "incompatible": {
+                "title": "نسخة عميلك غير متوافقة.",
+                "advice": "حدث الصفحة للحصول على التحديث"
+            },
+            "newVersion": {
+                "title": "نسخة جديدة متوفرة!",
+                "linkText": "إطلع على ملاحظات الإصدار هنا",
+                "advice": "حدث الصفحة لتستمتع بالميزات الجديدة."
+            },
+            "userStateChanged": {
+                "title": "لقد تغيرت حالة المستخدم الخاصة بك.",
+                "description": "قم بتحديث الصفحة لتحميل حالة المستخدم الجديدة."
+            }
+        },
+        "viewMode": {
+            "view": "عرض",
+            "both": "معا"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "خط غامق",
+            "strikethrough": "Strikethrough",
+            "header": "الرأسية",
+            "code": "الشفرة",
+            "blockquote": "Blockquote",
+            "unorderedList": "قائمة غير مرتبة",
+            "orderedList": "قائمة مرتبة",
+            "checkList": "Checklist",
+            "link": "الرابط",
+            "image": "صورة",
+            "uploadImage": "تحميل صورة"
+        },
+        "menu": {
+            "menu": "القائمة",
+            "new": "جديد",
+            "publish": "انشر",
+            "extra": "إضافي",
+            "revision": "مراجعة",
+            "slideMode": "نمط الشرائح التقديمية",
+            "download": "تنزيل",
+            "help": "المساعدة"
+        },
+        "export": {
+            "rawHtml": "Raw HTML"
+        },
+        "import": {
+            "clipboard": "الحافظة"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "استرداد من سنيبت",
+                "selectProject": "اختر من بين المشاريع المتاحة",
+                "selectSnippet": "اختر من بين المقتطفات المتاحة"
+            },
+            "gistImport": {
+                "title": "استيراد من Gist",
+                "insertGistUrl": "الصق عنوان url الخاص بك هنا..."
+            },
+            "snippetExport": {
+                "title": "صدر إلى سنيبت",
+                "visibilityLevel": "حدد مستوى الرؤية"
+            },
+            "revision": {
+                "title": "مراجعة",
+                "revertButton": "تراجع"
+            },
+            "clipboardImport": {
+                "title": "استيراد من الحافظة",
+                "insertMarkdown": "يرجى وضع ماركداون أو صفحة الويب الخاصة بك هنا…"
+            },
+            "deleteNote": {
+                "question": "هل تريد حقًا حذف هذه الملاحظة؟",
+                "warning": "سيفقد جميع المستخدمين اتصالهم."
+            }
+        }
+    },
+    "common": {
+        "import": "استيراد",
+        "export": "تصدير",
+        "refresh": "تحديث",
+        "cancel": "إلغاء",
+        "ok": "حسنا",
+        "or": "أو"
+    },
+    "login": {
+        "chooseMethod": "اختر الطريقة",
+        "signInVia": "لِج عبر {{service}}",
+        "signIn": "لِج",
+        "signOut": "خروج",
+        "register": "انشئ حسابا",
+        "auth": {
+            "error": {}
+        }
+    }
 }

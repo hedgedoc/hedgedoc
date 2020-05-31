@@ -1,122 +1,189 @@
 {
-  "Collaborative markdown notes": "Совместные markdown заметки",
-  "Realtime collaborative markdown notes on all platforms.": "Совместные markdown заметки в режиме реального времени на всех платформах.",
-  "coverSlogan": "Лучший способ записывать свои знания и делиться ими в формате markdown.",
-  "intro": "Введение",
-  "history": "История",
-  "newGuestNote": "Новая гостевая заметка",
-  "featureCollaboration": "Сотрудничество по ссылке",
-  "featureMathJax": "Поддержка графиков и MathJax",
-  "featureSlides": "Поддержка режима слайдера",
-  "signIn": "Войти",
-  "Below is the history from browser": "Ниже приводится история браузера",
-  "Welcome!": "Добро пожаловать!",
-  "newNote": "Новая заметка",
-  "or": "или",
-  "signOut": "Выйти",
-  "exploreFeatures": "Изучите все возможности",
-  "selectTags": "Выберите теги...",
-  "searchKeywords": "Поиск...",
-  "sortByTitle": "Сортировка по заголовку",
-  "Title": "Заголовок",
-  "sortByLastVisited": "Сортировка по времени",
-  "Time": "Время",
-  "exportHistory": "Экспорт истории",
-  "importHistory": "Импорт истории",
-  "clearHistory": "Очистить историю",
-  "refreshHistory": "Обновить историю",
-  "noHistory": "Нет истории",
-  "Import from browser": "Импорт из браузера",
-  "releases": "Релизы",
-  "Are you sure?": "Вы уверены?",
-  "Do you really want to delete this note?": "Вы точно хотите удалить эту заметку?",
-  "All users will lose their connection.": "Все пользователи потеряют соединение.",
-  "Cancel": "Отмена",
-  "Yes, do it!": "Да, сделать это!",
-  "chooseMethod": "Выберите метод",
-  "signInVia": "Войти с помощью {{service}}",
-  "new": "Новая",
-  "publish": "Опубликовать",
-  "extra": "Дополнительно",
-  "revision": "Изменения",
-  "slideMode": "Режим слайдера",
-  "export": "Экспорт",
-  "import": "Импорт",
-  "clipboard": "Буфер обмена",
-  "download": "Скачать",
-  "Raw HTML": "Raw HTML",
-  "edit": "Редактировать",
-  "View": "Посмотреть",
-  "Both": "И то и другое",
-  "help": "Помощь",
-  "Upload Image": "Загрузить изображение",
-  "menu": "Меню",
-  "This page need refresh": "Эту страницу необходимо обновить",
-  "You have an incompatible client version.": "Вы используете несовместимую версию клиента.",
-  "Refresh to update.": "Обновите страницу для обновления клиента.",
-  "New version available!": "Доступна новая версия!",
-  "See releases notes here": "Смотрите подробности обновлений здесь",
-  "Refresh to enjoy new features.": "Обновите, чтобы наслаждаться новыми возможностями.",
-  "Your user state has changed.": "Ваш аккаунт изменен.",
-  "Refresh to load new user state.": "Обновите, чтобы загрузить изменения аккаунта.",
-  "Refresh": "Обновить",
-  "Contacts": "Контакты",
-  "Report an issue": "Сообщить о проблеме",
-  "Meet us on %s": "Познакомьтесь с нами в %s",
-  "Send us email": "Отправить нам письмо",
-  "Documents": "Документы",
-  "features": "Особенности",
-  "YAML Metadata": "Метаданные YAML",
-  "Slide Example": "Пример слайдера",
-  "Cheatsheet": "Шпаргалка",
-  "Example": "Пример",
-  "Syntax": "Синтаксис",
-  "Header": "Заголовок",
-  "Unordered List": "Маркированный список",
-  "Ordered List": "Нумерованный список",
-  "Todo List": "Список дел",
-  "Blockquote": "Цитата",
-  "Bold font": "Жирный шрифт",
-  "Italics font": "Курсив",
-  "Strikethrough": "Зачеркнутый",
-  "Inserted text": "Подчеркнутый текст",
-  "Marked text": "Выделенный текст",
-  "Link": "Ссылка",
-  "Image": "Изображение",
-  "Code": "Код",
-  "Externals": "Внешнее",
-  "This is a alert area.": "Это уведомление.",
-  "Revert": "Отменить",
-  "Import from clipboard": "Импорт из буфера обмена",
-  "Paste your markdown or webpage here...": "Вставьте ваш markdown код или веб-страницу здесь...",
-  "Clear": "Очистить",
-  "This note is locked": "Эта заметка заблокирована",
-  "Sorry, only owner can edit this note.": "К сожалению, только автор может редактировать эту заметку.",
-  "OK": "OK",
-  "Reach the limit": "Вы достигли лимита",
-  "Sorry, you've reached the max length this note can be.": "К сожалению, вы достигли максимальной длины заметки.",
-  "Please reduce the content or divide it to more notes, thank you!": "Пожалуйста, уменьшите размер содержимого или разделите его на несколько заметок, спасибо!",
-  "Import from Gist": "Импорт из Gist",
-  "Paste your gist url here...": "Вставьте ссылку на ваш gist здесь...",
-  "Import from Snippet": "Импорт фрагмента кода",
-  "Select From Available Projects": "Выберите из доступных проектов",
-  "Select From Available Snippets": "Выберите из доступных фрагментов кода",
-  "OR": "ИЛИ",
-  "Export to Snippet": "Экспорт фрагмента кода",
-  "Select Visibility Level": "Выберите уровень видимости",
-  "Night Theme": "Тёмная тема",
-  "followUs": "Подпишитесь на нас в <0></0>, <1></1>, <2></2>, <3></3> и <4></4>.",
-  "privacy": "Безопасность",
-  "termsOfUse": "Условия использования",
-  "Do you really want to delete your user account?": "Вы точно хотите удалить свою учётную запись?",
-  "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.": "Это действие удалит вашу учётную запись, все ваши заметки и удалит все ссылки на вашу учетную запись из других заметок.",
-  "deleteUser": "Удалить пользователя",
-  "exportUserData": "Экспортировать данные пользователя",
-  "Help us translating on %s": "Помогите нам перевести %s",
-  "sourceCode": "Исходный код",
-  "Register": "Регистрация",
-  "poweredBy": "Powered by <0></0>",
-  "Help us translating": "Помочь с переводом",
-  "Join the community": "Присоединиться к сообществу",
-  "imprint": "Imprint"
+    "app": {
+        "slogan": "Лучший способ записывать свои знания и делиться ими в формате markdown.",
+        "title": "Совместные markdown заметки"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Изучите все возможности",
+            "features": {
+                "collaboration": "Сотрудничество по ссылке",
+                "mathJax": "Поддержка графиков и MathJax",
+                "slides": "Поддержка режима слайдера"
+            }
+        },
+        "history": {
+            "noHistory": "Нет истории",
+            "localHistory": "Ниже приводится история браузера",
+            "toolbar": {
+                "selectTags": "Выберите теги...",
+                "searchKeywords": "Поиск...",
+                "sortByTitle": "Сортировка по заголовку",
+                "sortByLastVisited": "Сортировка по времени",
+                "export": "Экспорт истории",
+                "import": "Импорт истории",
+                "clear": "Очистить историю",
+                "refresh": "Обновить историю"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Введение",
+            "history": "История",
+            "newGuestNote": "Новая гостевая заметка",
+            "newNote": "Новая заметка"
+        },
+        "footer": {
+            "releases": "Релизы",
+            "poweredBy": "Powered by <0></0>",
+            "imprint": "Imprint",
+            "followUs": "Подпишитесь на нас в <0></0>, <1></1>, <2></2>, <3></3> и <4></4>.",
+            "privacy": "Безопасность",
+            "termsOfUse": "Условия использования"
+        },
+        "versionInfo": {
+            "sourceCode": "Исходный код"
+        }
+    },
+    "profile": {
+        "deleteUser": "Удалить пользователя",
+        "exportUserData": "Экспортировать данные пользователя",
+        "modal": {
+            "deleteUser": {
+                "title": "Удалить пользователя",
+                "message": "Вы точно хотите удалить свою учётную запись?",
+                "subMessage": "Это действие удалит вашу учётную запись, все ваши заметки и удалит все ссылки на вашу учетную запись из других заметок."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Контакты",
+                "community": "Присоединиться к сообществу",
+                "meetUsOn": "Познакомьтесь с нами в %s",
+                "helpTranslating": "Помочь с переводом",
+                "reportIssue": "Сообщить о проблеме"
+            },
+            "documents": {
+                "title": "Документы",
+                "yamlMetadata": "Метаданные YAML",
+                "slideExample": "Пример слайдера"
+            },
+            "cheatsheet": {
+                "title": "Шпаргалка",
+                "example": "Пример",
+                "syntax": "Синтаксис",
+                "underlinedText": "Подчеркнутый текст",
+                "highlightedText": "Выделенный текст",
+                "externalService": "Внешнее"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Эта заметка заблокирована",
+                "description": "К сожалению, только автор может редактировать эту заметку."
+            },
+            "limitReached": {
+                "title": "Вы достигли лимита",
+                "description": "К сожалению, вы достигли максимальной длины заметки.",
+                "advice": "Пожалуйста, уменьшите размер содержимого или разделите его на несколько заметок, спасибо!"
+            },
+            "incompatible": {
+                "title": "Вы используете несовместимую версию клиента.",
+                "advice": "Обновите страницу для обновления клиента."
+            },
+            "newVersion": {
+                "title": "Доступна новая версия!",
+                "linkText": "Смотрите подробности обновлений здесь",
+                "advice": "Обновите, чтобы наслаждаться новыми возможностями."
+            },
+            "userStateChanged": {
+                "title": "Ваш аккаунт изменен.",
+                "description": "Обновите, чтобы загрузить изменения аккаунта."
+            }
+        },
+        "viewMode": {
+            "view": "Посмотреть",
+            "both": "И то и другое"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Жирный шрифт",
+            "strikethrough": "Зачеркнутый",
+            "header": "Заголовок",
+            "code": "Код",
+            "blockquote": "Цитата",
+            "unorderedList": "Маркированный список",
+            "orderedList": "Нумерованный список",
+            "checkList": "Список дел",
+            "link": "Ссылка",
+            "image": "Изображение",
+            "uploadImage": "Загрузить изображение"
+        },
+        "menu": {
+            "menu": "Меню",
+            "new": "Новая",
+            "publish": "Опубликовать",
+            "extra": "Дополнительно",
+            "revision": "Изменения",
+            "slideMode": "Режим слайдера",
+            "download": "Скачать",
+            "help": "Помощь"
+        },
+        "export": {
+            "rawHtml": "Raw HTML"
+        },
+        "import": {
+            "clipboard": "Буфер обмена"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Импорт фрагмента кода",
+                "selectProject": "Выберите из доступных проектов",
+                "selectSnippet": "Выберите из доступных фрагментов кода"
+            },
+            "gistImport": {
+                "title": "Импорт из Gist",
+                "insertGistUrl": "Вставьте ссылку на ваш gist здесь..."
+            },
+            "snippetExport": {
+                "title": "Экспорт фрагмента кода",
+                "visibilityLevel": "Выберите уровень видимости"
+            },
+            "revision": {
+                "title": "Изменения",
+                "revertButton": "Отменить"
+            },
+            "clipboardImport": {
+                "title": "Импорт из буфера обмена",
+                "insertMarkdown": "Вставьте ваш markdown код или веб-страницу здесь..."
+            },
+            "deleteNote": {
+                "question": "Вы точно хотите удалить эту заметку?",
+                "warning": "Все пользователи потеряют соединение."
+            }
+        }
+    },
+    "common": {
+        "import": "Импорт",
+        "export": "Экспорт",
+        "refresh": "Обновить",
+        "cancel": "Отмена",
+        "ok": "OK",
+        "or": "или"
+    },
+    "login": {
+        "chooseMethod": "Выберите метод",
+        "signInVia": "Войти с помощью {{service}}",
+        "signIn": "Войти",
+        "signOut": "Выйти",
+        "register": "Регистрация",
+        "auth": {
+            "error": {}
+        }
+    }
 }

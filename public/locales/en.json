@@ -1,141 +1,230 @@
 {
-  "Collaborative markdown notes": "Collaborative markdown notes",
-  "Realtime collaborative markdown notes on all platforms.": "Collaborate on markdown notes on all platforms in realtime.",
-  "coverSlogan": "The best platform to write and share markdown.",
-  "intro": "Intro",
-  "history": "History",
-  "newGuestNote": "New guest note",
-  "featureCollaboration": "Real time collaboration",
-  "featureMathJax": "Works with charts and MathJax",
-  "featureSlides": "Supports slide mode",
-  "signIn": "Sign In",
-  "Below is the history from browser": "Below is history from this browser",
-  "Welcome!": "Welcome!",
-  "newNote": "New note",
-  "or": "or",
-  "signOut": "Sign Out",
-  "exploreFeatures": "Explore all features",
-  "selectTags": "Select tags…",
-  "tags": "Tags",
-  "searchKeywords": "Search keyword…",
-  "sortByTitle": "Sort by title",
-  "title": "Title",
-  "lastVisit": "Last Visit",
-  "actions": "Actions",
-  "sortByLastVisited": "Sort by time",
-  "exportHistory": "Export history",
-  "importHistory": "Import history",
-  "clearHistory": "Clear history",
-  "refreshHistory": "Refresh history",
-  "noHistory": "No history",
-  "Import from browser": "Import from browser",
-  "releases": "Releases",
-  "Are you sure?": "Are you sure?",
-  "Do you really want to delete this note?": "Do you really want to delete this note?",
-  "All users will lose their connection.": "All users will lose their connection.",
-  "Cancel": "Cancel",
-  "Yes, do it!": "Yes, do it!",
-  "chooseMethod": "Choose method",
-  "signInVia": "Sign in via {{service}}",
-  "new": "New",
-  "publish": "Publish",
-  "extra": "Extra",
-  "revision": "Revision",
-  "slideMode": "Slide Mode",
-  "export": "Export",
-  "import": "Import",
-  "clipboard": "Clipboard",
-  "download": "Download",
-  "Raw HTML": "Raw HTML",
-  "edit": "Edit",
-  "View": "View",
-  "Both": "Both",
-  "help": "Help",
-  "Upload Image": "Upload Image",
-  "menu": "Menu",
-  "This page need refresh": "This page needs to be refreshed",
-  "You have an incompatible client version.": "Your client's version is incompatible.",
-  "Refresh to update.": "Refresh to update.",
-  "New version available!": "New version available!",
-  "See releases notes here": "See releases notes here",
-  "Refresh to enjoy new features.": "Refresh to enjoy new features.",
-  "Your user state has changed.": "Your user state has changed.",
-  "Refresh to load new user state.": "Refresh to load new user state.",
-  "Refresh": "Refresh",
-  "Contacts": "Contacts",
-  "Report an issue": "Report an issue",
-  "Meet us on %s": "Meet us on %s",
-  "Send us email": "Send us email",
-  "Documents": "Documents",
-  "features": "Features",
-  "YAML Metadata": "YAML Metadata",
-  "Slide Example": "Slide Example",
-  "Cheatsheet": "Cheatsheet",
-  "Example": "Example",
-  "Syntax": "Syntax",
-  "Header": "Header",
-  "Unordered List": "Unordered List",
-  "Ordered List": "Ordered List",
-  "Todo List": "Checklist",
-  "Blockquote": "Blockquote",
-  "Bold font": "Bold",
-  "Italics font": "Italicize",
-  "Strikethrough": "Strikethrough",
-  "Inserted text": "Underlined text",
-  "Marked text": "Highlighted text",
-  "Link": "Link",
-  "Image": "Image",
-  "Code": "Code",
-  "Externals": "Externals",
-  "This is a alert area.": "This is an alert area.",
-  "Revert": "Revert",
-  "Import from clipboard": "Import from clipboard",
-  "Paste your markdown or webpage here...": "Paste your markdown or webpage here…",
-  "Clear": "Clear",
-  "This note is locked": "This note is locked",
-  "Sorry, only owner can edit this note.": "Sorry, only the owner can edit this note.",
-  "OK": "OK",
-  "Reach the limit": "Reach the limit",
-  "Sorry, you've reached the max length this note can be.": "Sorry, you've reached the maximum length this note can be.",
-  "Please reduce the content or divide it to more notes, thank you!": "Please shorten the note.",
-  "Import from Gist": "Import from Gist",
-  "Paste your gist url here...": "Paste your gist url here…",
-  "Import from Snippet": "Import from Snippet",
-  "Select From Available Projects": "Select From Available Projects",
-  "Select From Available Snippets": "Select From Available Snippets",
-  "OR": "OR",
-  "Export to Snippet": "Export to Snippet",
-  "Select Visibility Level": "Select Visibility Level",
-  "Night Theme": "Night Theme",
-  "followUs": "Follow us on <0></0>, <1></1>, <2></2>, <3></3>, and <4></4>.",
-  "privacy": "Privacy",
-  "termsOfUse": "Terms of Use",
-  "Do you really want to delete your user account?": "Do you really want to delete your user account?",
-  "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.": "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.",
-  "deleteUser": "Delete user",
-  "exportUserData": "Export user data",
-  "Help us translating on %s": "Help us translating on %s",
-  "sourceCode": "Read the source code",
-  "Register": "Register",
-  "poweredBy": "Powered by <0></0>",
-  "Help us translating": "Help us translating",
-  "Join the community": "Join the community",
-  "imprint": "Imprint",
-  "errorEmailLogin": "Invalid email or password",
-  "errorLdapLogin": "Invalid username or password",
-  "email": "Email",
-  "password": "Password",
-  "username": "Username",
-  "cards": "Cards",
-  "table": "Table",
-  "errorOpenIdLogin": "Invalid OpenID provided",
-  "versionInfo": "Version info",
-  "successfullyCopied": "Copied!",
-  "serverVersion": "Server version",
-  "clientVersion": "Client version",
-  "youAreUsing": "You are using",
-  "close": "Close",
-  "issueTracker": "Found a bug? Fill an issue!",
-  "clearHistoryQuestion": "Do you want to clear the history?",
-  "clearHistoryDisclaimer": "This won't delete any notes."
+    "app": {
+        "slogan": "The best platform to write and share markdown.",
+        "title": "Collaborative markdown notes"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Explore all features",
+            "features": {
+                "collaboration": "Real time collaboration",
+                "mathJax": "Works with charts and MathJax",
+                "slides": "Supports slide mode"
+            },
+            "screenShotAltText": "CodiMD Screenshot"
+        },
+        "history": {
+            "noHistory": "No history",
+            "localHistory": "Below is history from this browser",
+            "toolbar": {
+                "cards": "Cards",
+                "table": "Table",
+                "selectTags": "Select tags…",
+                "searchKeywords": "Search keyword…",
+                "sortByTitle": "Sort by title",
+                "sortByLastVisited": "Sort by time",
+                "export": "Export history",
+                "import": "Import history",
+                "clear": "Clear history",
+                "refresh": "Refresh history"
+            },
+            "modal": {
+                "clearHistory": {
+                    "title": "Delete history",
+                    "question": "Do you want to clear the history?",
+                    "disclaimer": "This won't delete any notes."
+                }
+            },
+            "tableHeader": {
+                "title": "Title",
+                "actions": "Actions",
+                "tags": "Tags",
+                "lastVisit": "Last Visit"
+            }
+        },
+        "navigation": {
+            "intro": "Intro",
+            "history": "History",
+            "newGuestNote": "New guest note",
+            "newNote": "New note"
+        },
+        "footer": {
+            "releases": "Releases",
+            "poweredBy": "Powered by <0></0>",
+            "imprint": "Imprint",
+            "followUs": "Follow us on <0></0>, <1></1>, <2></2>, <3></3>, and <4></4>.",
+            "privacy": "Privacy",
+            "termsOfUse": "Terms of Use"
+        },
+        "versionInfo": {
+            "issueTracker": "Found a bug? Fill an issue!",
+            "sourceCode": "Read the source code",
+            "versionInfo": "Version info",
+            "successfullyCopied": "Copied!",
+            "serverVersion": "Server version",
+            "clientVersion": "Client version",
+            "title": "You are using"
+        }
+    },
+    "profile": {
+        "deleteUser": "Delete user",
+        "exportUserData": "Export user data",
+        "modal": {
+            "deleteUser": {
+                "title": "Delete user",
+                "message": "Do you really want to delete your user account?",
+                "subMessage": "This will delete your account, all notes that are owned by you and remove all references to your account from other notes."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Contacts",
+                "community": "Join the community",
+                "meetUsOn": "Meet us on %s",
+                "helpTranslating": "Help us translating",
+                "reportIssue": "Report an issue"
+            },
+            "documents": {
+                "title": "Documents",
+                "features": "Features",
+                "yamlMetadata": "YAML Metadata",
+                "slideExample": "Slide Example"
+            },
+            "cheatsheet": {
+                "title": "Cheatsheet",
+                "example": "Example",
+                "syntax": "Syntax",
+                "exampleAlert": "This is an alert area.",
+                "underlinedText": "Underlined text",
+                "highlightedText": "Highlighted text",
+                "externalService": "Externals"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "This note is locked",
+                "description": "Sorry, only the owner can edit this note."
+            },
+            "limitReached": {
+                "title": "Reach the limit",
+                "description": "Sorry, you've reached the maximum length this note can be.",
+                "advice": "Please shorten the note."
+            },
+            "incompatible": {
+                "title": "Your client's version is incompatible.",
+                "description": "The server requires a newer version of the editor.",
+                "advice": "Refresh to update."
+            },
+            "newVersion": {
+                "title": "New version available!",
+                "description": "A new version of CodiMD is available",
+                "linkText": "See releases notes here",
+                "advice": "Refresh to enjoy new features."
+            },
+            "userStateChanged": {
+                "title": "Your user state has changed.",
+                "description": "Refresh to load new user state."
+            }
+        },
+        "viewMode": {
+            "edit": "Edit",
+            "view": "View",
+            "both": "Both"
+        },
+        "darkMode": {
+            "switchToDark": "Switch to Dark Mode",
+            "switchToLight": "Switch to Light Mode"
+        },
+        "editorToolbar": {
+            "bold": "Bold",
+            "italic": "Italic",
+            "strikethrough": "Strikethrough",
+            "header": "Header",
+            "code": "Code",
+            "blockquote": "Blockquote",
+            "unorderedList": "Unordered List",
+            "orderedList": "Ordered List",
+            "checkList": "Checklist",
+            "link": "Link",
+            "image": "Image",
+            "uploadImage": "Upload Image",
+            "table": "Table",
+            "line": "Line",
+            "comment": "Comment"
+        },
+        "menu": {
+            "menu": "Menu",
+            "new": "New",
+            "publish": "Publish",
+            "extra": "Extra",
+            "revision": "Revision",
+            "slideMode": "Slide Mode",
+            "download": "Download",
+            "help": "Help",
+            "deleteNote": "Delete note"
+        },
+        "export": {
+            "rawHtml": "Raw HTML"
+        },
+        "import": {
+            "clipboard": "Clipboard"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Import from Snippet",
+                "selectProject": "Select From Available Projects",
+                "selectSnippet": "Select From Available Snippets"
+            },
+            "gistImport": {
+                "title": "Import from Gist",
+                "insertGistUrl": "Paste your gist url here…"
+            },
+            "snippetExport": {
+                "title": "Export to Snippet",
+                "visibilityLevel": "Select Visibility Level"
+            },
+            "revision": {
+                "title": "Revision",
+                "revertButton": "Revert"
+            },
+            "clipboardImport": {
+                "title": "Import from clipboard",
+                "insertMarkdown": "Paste your markdown or webpage here…"
+            },
+            "deleteNote": {
+                "title": "Delete note",
+                "question": "Do you really want to delete this note?",
+                "warning": "All users will lose their connection."
+            }
+        }
+    },
+    "common":  {
+        "import": "Import",
+        "export": "Export",
+        "refresh": "Refresh",
+        "cancel": "Cancel",
+        "ok": "OK",
+        "close": "Close",
+        "or": "or",
+        "and": "and"
+    },
+    "login": {
+        "chooseMethod": "Choose method",
+        "signInVia": "Sign in via {{service}}",
+        "signIn": "Sign In",
+        "signOut": "Sign Out",
+        "register": "Register",
+        "auth": {
+            "email": "Email",
+            "password": "Password",
+            "username": "Username",
+            "error": {
+                "openIdLogin": "Invalid OpenID provided",
+                "emailLogin": "Invalid email or password",
+                "ldapLogin": "Invalid username or password"
+            } 
+        }
+    }
 }

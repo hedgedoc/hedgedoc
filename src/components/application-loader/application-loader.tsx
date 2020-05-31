@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
-import { setUp, InitTask } from '../../initializers'
+import { InitTask, setUp } from '../../initializers'
 import './application-loader.scss'
 
 import { LoadingScreen } from './loading-screen'
@@ -24,7 +24,7 @@ export const ApplicationLoader: React.FC = ({ children }) => {
       return
     }
     setTasksAlreadyTriggered(true)
-    const baseUrl:string = window.location.pathname.replace(pathname, '') + '/'
+    const baseUrl: string = window.location.pathname.replace(pathname, '') + '/'
     console.debug('Base URL is', baseUrl)
     setInitTasks(setUp(baseUrl))
   }, [tasksAlreadyTriggered, pathname])

@@ -19,10 +19,10 @@ const HeaderBar: React.FC = () => {
     <Navbar className="justify-content-between">
       <div className="nav header-nav">
         <HeaderNavLink to="/intro">
-          <Trans i18nKey="intro"/>
+          <Trans i18nKey="landing.navigation.intro"/>
         </HeaderNavLink>
         <HeaderNavLink to="/history">
-          <Trans i18nKey="history"/>
+          <Trans i18nKey="landing.navigation.history"/>
         </HeaderNavLink>
       </div>
       <div className="d-inline-flex">

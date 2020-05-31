@@ -23,9 +23,9 @@ export const VersionInfo: React.FC = () => {
       <h5>{title}</h5>
       <VersionInputField version={version}/>
       {sourceCodeLink
-        ? <TranslatedExternalLink i18nKey={'sourceCode'} className={'btn btn-sm btn-primary d-block mb-2'} href={sourceCodeLink}/> : null}
+        ? <TranslatedExternalLink i18nKey={'landing.versionInfo.sourceCode'} className={'btn btn-sm btn-primary d-block mb-2'} href={sourceCodeLink}/> : null}
       {issueTrackerLink
-        ? <TranslatedExternalLink i18nKey={'issueTracker'} className={'btn btn-sm btn-primary d-block mb-2'} href={issueTrackerLink}/> : null}
+        ? <TranslatedExternalLink i18nKey={'landing.versionInfo.issueTracker'} className={'btn btn-sm btn-primary d-block mb-2'} href={issueTrackerLink}/> : null}
     </Col>
   )
 
@@ -34,15 +34,15 @@ export const VersionInfo: React.FC = () => {
       <Link to={'#'} className={'text-light'} onClick={handleShow}><Trans i18nKey={'versionInfo'}/></Link>
       <Modal show={show} onHide={handleClose} animation={true}>
         <Modal.Body className="text-dark">
-          <h3><Trans i18nKey={'youAreUsing'}/></h3>
+          <h3><Trans i18nKey={'landing.versionInfo.title'}/></h3>
           <Row>
-            {column(t('serverVersion'), serverVersion.version, serverVersion.sourceCodeUrl, serverVersion.issueTrackerUrl)}
-            {column(t('clientVersion'), frontendVersion.version, frontendVersion.sourceCodeUrl, frontendVersion.issueTrackerUrl)}
+            {column(t('landing.versionInfo.serverVersion'), serverVersion.version, serverVersion.sourceCodeUrl, serverVersion.issueTrackerUrl)}
+            {column(t('landing.versionInfo.clientVersion'), frontendVersion.version, frontendVersion.sourceCodeUrl, frontendVersion.issueTrackerUrl)}
           </Row>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            <Trans i18nKey={'close'}/>
+            <Trans i18nKey={'common.close'}/>
           </Button>
         </Modal.Footer>
       </Modal>

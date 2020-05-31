@@ -23,12 +23,12 @@ export const CoverButtons: React.FC = () => {
           variant="success"
           size="lg"
         >
-          <Trans i18nKey="signIn"/>
+          <Trans i18nKey="login.signIn"/>
         </Button>
       </Link>
 
       <span className="m-2">
-        <Trans i18nKey="or"/>
+        <Trans i18nKey="common.or"/>
       </span>
 
       <Link to="/features">
@@ -37,7 +37,7 @@ export const CoverButtons: React.FC = () => {
           variant="primary"
           size="lg"
         >
-          <Trans i18nKey="exploreFeatures"/>
+          <Trans i18nKey="landing.intro.exploreFeatures"/>
         </Button>
       </Link>
     </div>

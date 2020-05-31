@@ -60,8 +60,8 @@ export const History: React.FC = () => {
 
   return (
     <Fragment>
-      <h1 className="mb-4"><Trans i18nKey="history"/></h1>
-      <Row className={'justify-content-center mb-3'}>
+      <h1 className="mb-4"><Trans i18nKey="landing.navigation.history"/></h1>
+      <Row className={'justify-content-center mt-5 mb-3'}>
         <HistoryToolbar
           onSettingsChange={setViewState}
           tags={tags}

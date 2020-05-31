@@ -74,52 +74,52 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
 
   return (
     <Form inline={true}>
-      <InputGroup className={'mr-1'}>
-        <Typeahead id={'tagsSelection'} options={tags} multiple={true} placeholder={t('selectTags')}
+      <InputGroup className={'mr-1 mb-1'}>
+        <Typeahead id={'tagsSelection'} options={tags} multiple={true} placeholder={t('landing.history.toolbar.selectTags')}
           onChange={selectedTagsChanged}/>
       </InputGroup>
-      <InputGroup className={'mr-1'}>
+      <InputGroup className={'mr-1 mb-1'}>
         <FormControl
-          placeholder={t('searchKeywords')}
-          aria-label={t('searchKeywords')}
+          placeholder={t('landing.history.toolbar.searchKeywords')}
+          aria-label={t('landing.history.toolbar.searchKeywords')}
           onChange={keywordSearchChanged}
         />
       </InputGroup>
-      <InputGroup className={'mr-1'}>
+      <InputGroup className={'mr-1 mb-1'}>
         <SortButton onChange={titleSortChanged} direction={state.titleSortDirection} variant={'light'}><Trans
-          i18nKey={'sortByTitle'}/></SortButton>
+          i18nKey={'landing.history.toolbar.sortByTitle'}/></SortButton>
       </InputGroup>
-      <InputGroup className={'mr-1'}>
+      <InputGroup className={'mr-1 mb-1'}>
         <SortButton onChange={lastVisitedSortChanged} direction={state.lastVisitedSortDirection}
-          variant={'light'}><Trans i18nKey={'sortByLastVisited'}/></SortButton>
+          variant={'light'}><Trans i18nKey={'landing.history.toolbar.sortByLastVisited'}/></SortButton>
       </InputGroup>
-      <InputGroup className={'mr-1'}>
-        <Button variant={'light'} title={t('exportHistory')}>
+      <InputGroup className={'mr-1 mb-1'}>
+        <Button variant={'light'} title={t('landing.history.toolbar.export')}>
           <FontAwesomeIcon icon={'download'}/>
         </Button>
       </InputGroup>
-      <InputGroup className={'mr-1'}>
-        <Button variant={'light'} title={t('importHistory')}>
+      <InputGroup className={'mr-1 mb-1'}>
+        <Button variant={'light'} title={t('landing.history.toolbar.import')}>
           <FontAwesomeIcon icon={'upload'}/>
         </Button>
       </InputGroup>
-      <InputGroup className={'mr-1'}>
+      <InputGroup className={'mr-1 mb-1'}>
         <ClearHistoryButton onClearHistory={onClearHistory}/>
       </InputGroup>
-      <InputGroup className={'mr-1'}>
-        <Button variant={'light'} title={t('refreshHistory')}>
+      <InputGroup className={'mr-1 mb-1'}>
+        <Button variant={'light'} title={t('landing.history.toolbar.refresh')}>
           <FontAwesomeIcon icon={'sync'}/>
         </Button>
       </InputGroup>
-      <InputGroup className={'mr-1'}>
+      <InputGroup className={'mr-1 mb-1'}>
         <ToggleButtonGroup type="radio" name="options" value={state.viewState}
           onChange={(newViewState: ViewStateEnum) => {
             toggleViewChanged(newViewState)
           }}>
           <ToggleButton className={'btn-light'} value={ViewStateEnum.CARD}><Trans
-            i18nKey={'cards'}/></ToggleButton>
+            i18nKey={'landing.history.toolbar.cards'}/></ToggleButton>
           <ToggleButton className={'btn-light'} value={ViewStateEnum.TABLE}><Trans
-            i18nKey={'table'}/></ToggleButton>
+            i18nKey={'landing.history.toolbar.table'}/></ToggleButton>
         </ToggleButtonGroup>
       </InputGroup>
     </Form>

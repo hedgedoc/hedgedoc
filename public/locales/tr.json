@@ -1,104 +1,169 @@
 {
-  "Collaborative markdown notes": "Ortak markdown notları",
-  "Realtime collaborative markdown notes on all platforms.": "Tüm platformlarda gerçek zamanlı markdown notları",
-  "coverSlogan": "Markdownda bilginizi paylaşmanın en kolay yolu.",
-  "intro": "Giriş",
-  "history": "Geçmiş",
-  "newGuestNote": "Yeni kullanıcı notu",
-  "featureCollaboration": "URL ile katkıda bulun",
-  "featureMathJax": "Grafikler ve MathJax'ı destekle",
-  "featureSlides": "Sunum modunu destekle",
-  "signIn": "Kaydol",
-  "Below is the history from browser": "Aşağıda tarayıcınızın geçmişi var",
-  "Welcome!": "Hoşgeldiniz!",
-  "newNote": "Yeni not",
-  "or": "veya",
-  "signOut": "Çıkış Yap",
-  "exploreFeatures": "Özellikleri keşfet",
-  "selectTags": "Etiketleri seçin...",
-  "searchKeywords": "Anahtar kelimeleri arayın...",
-  "sortByTitle": "Başlığa göre sırala",
-  "Title": "Başlık",
-  "sortByLastVisited": "Zamana göre sırala",
-  "Time": "Zaman",
-  "exportHistory": "Geçmişe dışa aktar",
-  "importHistory": "Geçmişi içe aktar",
-  "clearHistory": "Geçmişi temizle",
-  "refreshHistory": "Geçmişi yenile",
-  "noHistory": "Geçmiş yok",
-  "Import from browser": "Tarayıcıdan içe aktar",
-  "releases": "Sürümler",
-  "Are you sure?": "Emin misiniz?",
-  "Cancel": "İptal",
-  "Yes, do it!": "Evet, devam et!",
-  "chooseMethod": "Metot seçin",
-  "signInVia": "{{service}} ile giriş yapın",
-  "new": "Yeni",
-  "publish": "Yayınla",
-  "extra": "Ekstra",
-  "revision": "Sürüm",
-  "slideMode": "Slayt Modu",
-  "export": "Dışa Aktar",
-  "import": "İçe Aktar",
-  "clipboard": "Pano",
-  "download": "İndir",
-  "Raw HTML": "Kaynak HTML",
-  "edit": "Düzenle",
-  "View": "İncele",
-  "Both": "İkisi de",
-  "help": "Yardım",
-  "Upload Image": "Resim Yükle",
-  "menu": "Menü",
-  "This page need refresh": "Bu sayfayı yeniden yüklemek lazım",
-  "You have an incompatible client version.": "Yerel uygulamanız uyumlu olmayan bir sürümde.",
-  "Refresh to update.": "Güncellemek için yenileyin.",
-  "New version available!": "Yeni versiyon kullanıma hazır!",
-  "See releases notes here": "Değişikliklere burdan bakabilirsiniz",
-  "Refresh to enjoy new features.": "Yeni özelliklere yenileyerek erişebilirsiniz.",
-  "Your user state has changed.": "Kullanıcı durumunuz değişti.",
-  "Refresh to load new user state.": "Yeni kullanıcı durumunuzu yüklemek için yenileyin.",
-  "Refresh": "Yenile",
-  "Contacts": "Kişiler",
-  "Report an issue": "Hata bildir",
-  "Send us email": "Bize email gönderin",
-  "Documents": "Belgeler",
-  "features": "Özellikler",
-  "YAML Metadata": "YAML Özbilgisi",
-  "Slide Example": "Slayt Örneği",
-  "Cheatsheet": "Cheatsheet",
-  "Example": "Örnek",
-  "Syntax": "Sentaks",
-  "Header": "Başlık",
-  "Unordered List": "Sırasız Liste",
-  "Ordered List": "Sıralı Liste",
-  "Todo List": "Yapılacaklar Listesi",
-  "Blockquote": "Alıntı Bloğu",
-  "Bold font": "Kalın yazı",
-  "Italics font": "İtalik yazı",
-  "Strikethrough": "Üstüçizili",
-  "Inserted text": "Eklenmiş yazı",
-  "Marked text": "Seçili yazı",
-  "Link": "Link",
-  "Image": "Resim",
-  "Code": "Kod",
-  "Externals": "Dış veriler",
-  "This is a alert area.": "Burası bir uyarı bölgesi.",
-  "Revert": "Geri al",
-  "Import from clipboard": "Panodan içe aktar",
-  "Paste your markdown or webpage here...": "Markdown veya web sayfanızı buraya yapıştırın...",
-  "Clear": "Temizle",
-  "This note is locked": "Burası kilitli",
-  "Sorry, only owner can edit this note.": "Üzgünüm, bu not sadece sahibi tarafından düzenlenebilir.",
-  "OK": "Tamam",
-  "Reach the limit": "Limite eriş",
-  "Sorry, you've reached the max length this note can be.": "Üzgünüm, bu not için maksimum harf sayısına ulaştınız",
-  "Please reduce the content or divide it to more notes, thank you!": "Lütfen notu değiştirin veya birden fazla notlara bölün, teşekkürler!",
-  "Import from Gist": "Gist'ten içe aktar",
-  "Paste your gist url here...": "Gist URL'nizi buraya yapıştırın...",
-  "Import from Snippet": "Snippet'ten içe aktar",
-  "Select From Available Projects": "Uygun Projelerden Seçin",
-  "Select From Available Snippets": "Uygun Snippet'lerden Seçin",
-  "OR": "VEYA",
-  "Export to Snippet": "Snippet olarak dışa aktarın",
-  "Select Visibility Level": "Görünebilirlik seviyesini belirleyin"
+    "app": {
+        "slogan": "Markdownda bilginizi paylaşmanın en kolay yolu.",
+        "title": "Ortak markdown notları"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Özellikleri keşfet",
+            "features": {
+                "collaboration": "URL ile katkıda bulun",
+                "mathJax": "Grafikler ve MathJax'ı destekle",
+                "slides": "Sunum modunu destekle"
+            }
+        },
+        "history": {
+            "noHistory": "Geçmiş yok",
+            "localHistory": "Aşağıda tarayıcınızın geçmişi var",
+            "toolbar": {
+                "selectTags": "Etiketleri seçin...",
+                "searchKeywords": "Anahtar kelimeleri arayın...",
+                "sortByTitle": "Başlığa göre sırala",
+                "sortByLastVisited": "Zamana göre sırala",
+                "export": "Geçmişe dışa aktar",
+                "import": "Geçmişi içe aktar",
+                "clear": "Geçmişi temizle",
+                "refresh": "Geçmişi yenile"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Giriş",
+            "history": "Geçmiş",
+            "newGuestNote": "Yeni kullanıcı notu",
+            "newNote": "Yeni not"
+        },
+        "footer": {
+            "releases": "Sürümler"
+        },
+        "versionInfo": {}
+    },
+    "profile": {
+        "modal": {
+            "deleteUser": {}
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Kişiler",
+                "reportIssue": "Hata bildir"
+            },
+            "documents": {
+                "title": "Belgeler",
+                "yamlMetadata": "YAML Özbilgisi",
+                "slideExample": "Slayt Örneği"
+            },
+            "cheatsheet": {
+                "title": "Cheatsheet",
+                "example": "Örnek",
+                "syntax": "Sentaks",
+                "underlinedText": "Eklenmiş yazı",
+                "highlightedText": "Seçili yazı",
+                "externalService": "Dış veriler"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Burası kilitli",
+                "description": "Üzgünüm, bu not sadece sahibi tarafından düzenlenebilir."
+            },
+            "limitReached": {
+                "title": "Limite eriş",
+                "description": "Üzgünüm, bu not için maksimum harf sayısına ulaştınız",
+                "advice": "Lütfen notu değiştirin veya birden fazla notlara bölün, teşekkürler!"
+            },
+            "incompatible": {
+                "title": "Yerel uygulamanız uyumlu olmayan bir sürümde.",
+                "advice": "Güncellemek için yenileyin."
+            },
+            "newVersion": {
+                "title": "Yeni versiyon kullanıma hazır!",
+                "linkText": "Değişikliklere burdan bakabilirsiniz",
+                "advice": "Yeni özelliklere yenileyerek erişebilirsiniz."
+            },
+            "userStateChanged": {
+                "title": "Kullanıcı durumunuz değişti.",
+                "description": "Yeni kullanıcı durumunuzu yüklemek için yenileyin."
+            }
+        },
+        "viewMode": {
+            "view": "İncele",
+            "both": "İkisi de"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Kalın yazı",
+            "strikethrough": "Üstüçizili",
+            "header": "Başlık",
+            "code": "Kod",
+            "blockquote": "Alıntı Bloğu",
+            "unorderedList": "Sırasız Liste",
+            "orderedList": "Sıralı Liste",
+            "checkList": "Yapılacaklar Listesi",
+            "link": "Link",
+            "image": "Resim",
+            "uploadImage": "Resim Yükle"
+        },
+        "menu": {
+            "menu": "Menü",
+            "new": "Yeni",
+            "publish": "Yayınla",
+            "extra": "Ekstra",
+            "revision": "Sürüm",
+            "slideMode": "Slayt Modu",
+            "download": "İndir",
+            "help": "Yardım"
+        },
+        "export": {
+            "rawHtml": "Kaynak HTML"
+        },
+        "import": {
+            "clipboard": "Pano"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Snippet'ten içe aktar",
+                "selectProject": "Uygun Projelerden Seçin",
+                "selectSnippet": "Uygun Snippet'lerden Seçin"
+            },
+            "gistImport": {
+                "title": "Gist'ten içe aktar",
+                "insertGistUrl": "Gist URL'nizi buraya yapıştırın..."
+            },
+            "snippetExport": {
+                "title": "Snippet olarak dışa aktarın",
+                "visibilityLevel": "Görünebilirlik seviyesini belirleyin"
+            },
+            "revision": {
+                "title": "Sürüm",
+                "revertButton": "Geri al"
+            },
+            "clipboardImport": {
+                "title": "Panodan içe aktar",
+                "insertMarkdown": "Markdown veya web sayfanızı buraya yapıştırın..."
+            },
+            "deleteNote": {}
+        }
+    },
+    "common": {
+        "import": "İçe Aktar",
+        "export": "Dışa Aktar",
+        "refresh": "Yenile",
+        "cancel": "İptal",
+        "ok": "Tamam",
+        "or": "veya"
+    },
+    "login": {
+        "chooseMethod": "Metot seçin",
+        "signInVia": "{{service}} ile giriş yapın",
+        "signIn": "Kaydol",
+        "signOut": "Çıkış Yap",
+        "auth": {
+            "error": {}
+        }
+    }
 }

@@ -1,121 +1,188 @@
 {
-  "Collaborative markdown notes": "Cộng tác ghi chú markdown",
-  "Realtime collaborative markdown notes on all platforms.": "Cộng tác ghi chú markdown đa nền tảng thời gian thực",
-  "coverSlogan": "Nền tảng tốt nhất để viết và chia sẻ markdown",
-  "intro": "Giới thiệu",
-  "history": "Lịch sử",
-  "newGuestNote": "Khách mới",
-  "featureCollaboration": "Cộng tác thời gian thực",
-  "featureMathJax": "Làm việc với biểu đồ và MathJax",
-  "featureSlides": "Hỗ trợ chế độ slide",
-  "signIn": "Đăng nhập",
-  "Below is the history from browser": "Dưới đây là lịch sử của trình duyệt",
-  "Welcome!": "Chào mừng bạn!",
-  "newNote": "Tạo mới ghi chú",
-  "or": "hoặc",
-  "signOut": "Đăng xuất",
-  "exploreFeatures": "Khám phá tất cả tính năng",
-  "selectTags": "Chọn tag",
-  "searchKeywords": "Tìm kiếm",
-  "sortByTitle": "Sắp xếp theo tiêu đề",
-  "Title": "Tiêu đề",
-  "sortByLastVisited": "Sắp xếp theo thời gian",
-  "Time": "Thời gian",
-  "exportHistory": "Xuất lịch sử",
-  "importHistory": "Nhập lịch sử",
-  "clearHistory": "Xóa lịch sử",
-  "refreshHistory": "Làm mới lịch sử",
-  "noHistory": "Không có lịch sử",
-  "Import from browser": "Nhập từ trình duyệt",
-  "releases": "Xuất bản",
-  "Are you sure?": "Bạn có chắc chắn không ?",
-  "Do you really want to delete this note?": "Bạn có thực sự muốn xóa ghi chú này ?",
-  "All users will lose their connection.": "Tất cả người dùng sẽ mất liên kết này.",
-  "Cancel": "Hủy",
-  "Yes, do it!": "Đồng ý",
-  "chooseMethod": "Chọn phương thức",
-  "signInVia": "Đăng nhấp với {{service}}",
-  "new": "Mới",
-  "publish": "Xuất bản",
-  "extra": "Extra",
-  "revision": "Sửa đổi",
-  "slideMode": "Chế độ slide",
-  "export": "Xuất",
-  "import": "Nhập",
-  "clipboard": "Clipboard",
-  "download": "Tải xuống",
-  "Raw HTML": "Raw HTML",
-  "edit": "Sửa",
-  "View": "Hiện",
-  "Both": "Cả hai",
-  "help": "Trợ giúp",
-  "Upload Image": "Tải ảnh lên",
-  "menu": "Menu",
-  "This page need refresh": "Trang này cần được làm mới",
-  "You have an incompatible client version.": "Phiên bản của client không tương thích.",
-  "Refresh to update.": "Làm mới để cập nhập.",
-  "New version available!": "Phiên bản mới đã có sẵn.",
-  "See releases notes here": "Xem ghi chú xuất bản ở đây.",
-  "Refresh to enjoy new features.": "Làm mới để trải nghiệm tính năng mới.",
-  "Your user state has changed.": "Trạng thái người dùng bị thay đổi.",
-  "Refresh to load new user state.": "Làm mới để cập nhập trạng thái người dùng mới.",
-  "Refresh": "Làm mới",
-  "Contacts": "Liên Lạc",
-  "Report an issue": "Báo cáo vấn đề",
-  "Meet us on %s": "Gặp chúng tôi ở %s",
-  "Send us email": "Gửi email cho chúng tôi",
-  "Documents": "Tài liệu",
-  "features": "Tính năng",
-  "YAML Metadata": "YAML Metadata",
-  "Slide Example": "Slide ví dụ",
-  "Cheatsheet": "Cheetsheet",
-  "Example": "Ví dụ",
-  "Syntax": "Cú pháp",
-  "Header": "Đầu đề",
-  "Unordered List": "Danh sách chưa sắp xếp",
-  "Ordered List": "Danh sách đã sắp xếp",
-  "Todo List": "Checklist",
-  "Blockquote": "Blockquote",
-  "Bold font": "Bôi đậm",
-  "Italics font": "In nghiêng",
-  "Strikethrough": "Gạch ngang",
-  "Inserted text": "Gạch chân",
-  "Marked text": "Hightlight",
-  "Link": "Liên kết",
-  "Image": "Ảnh",
-  "Code": "Code",
-  "Externals": "Externals",
-  "This is a alert area.": "Đây là khu vực cảnh báo",
-  "Revert": "Trở lại như cũ",
-  "Import from clipboard": "Thêm từ clipboard",
-  "Paste your markdown or webpage here...": "Dán markdown hoặc webpage ở đây ...",
-  "Clear": "Xóa",
-  "This note is locked": "Ghi chú này bị khóa.",
-  "Sorry, only owner can edit this note.": "Xin lỗi, chỉ chủ sở hữu có thể xóa note.",
-  "OK": "Đồng ý",
-  "Reach the limit": "Đạt giới hạn",
-  "Sorry, you've reached the max length this note can be.": "Rất tiếc, bạn đã đạt tới độ dài tối đa ",
-  "Please reduce the content or divide it to more notes, thank you!": "Vui lòng rút ngắn ghi chú",
-  "Import from Gist": "Nhập từ Gist",
-  "Paste your gist url here...": "Dán liên kết gist vào đây ...",
-  "Import from Snippet": "Thêm từ Snippet",
-  "Select From Available Projects": "Chọn từ Project có sẵn",
-  "Select From Available Snippets": "Chọn từ Snippets có sẵn",
-  "OR": "HOẶC",
-  "Export to Snippet": "Xuất ra Snippet",
-  "Select Visibility Level": "Chọn cấp độ hiển thị",
-  "Night Theme": "Giao diện tối",
-  "followUs": "Cho phép chúng tôi <0></0>, <1></1>, <2></2>, <3></3>, và <4></4>.",
-  "privacy": "Quyền riêng tư.",
-  "termsOfUse": "Điều khoản sử dụng.",
-  "Do you really want to delete your user account?": "Bạn có thực sự muốn xóa tài khoản ?",
-  "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.": "Điều này sẽ xóa tài khoản của bạn, tất cả các ghi chú thuộc sở hữu của bạn và xóa tất cả các liên kết đến tài khoản của bạn khỏi các ghi chú khác.",
-  "deleteUser": "Xóa người dùng",
-  "exportUserData": "Xuất dữ liệu người dùng",
-  "Help us translating on %s": "Giúp chúng tôi dịch trên %s",
-  "sourceCode": "Mã nguồn",
-  "Register": "Đăng ký",
-  "poweredBy": "Cung cấp bởi <0></0>",
-  "Help us translating": "Giúp chúng tôi dịch",
-  "Join the community": "Tham gia vào cộng đồng"
+    "app": {
+        "slogan": "Nền tảng tốt nhất để viết và chia sẻ markdown",
+        "title": "Cộng tác ghi chú markdown"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Khám phá tất cả tính năng",
+            "features": {
+                "collaboration": "Cộng tác thời gian thực",
+                "mathJax": "Làm việc với biểu đồ và MathJax",
+                "slides": "Hỗ trợ chế độ slide"
+            }
+        },
+        "history": {
+            "noHistory": "Không có lịch sử",
+            "localHistory": "Dưới đây là lịch sử của trình duyệt",
+            "toolbar": {
+                "selectTags": "Chọn tag",
+                "searchKeywords": "Tìm kiếm",
+                "sortByTitle": "Sắp xếp theo tiêu đề",
+                "sortByLastVisited": "Sắp xếp theo thời gian",
+                "export": "Xuất lịch sử",
+                "import": "Nhập lịch sử",
+                "clear": "Xóa lịch sử",
+                "refresh": "Làm mới lịch sử"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Giới thiệu",
+            "history": "Lịch sử",
+            "newGuestNote": "Khách mới",
+            "newNote": "Tạo mới ghi chú"
+        },
+        "footer": {
+            "releases": "Xuất bản",
+            "poweredBy": "Cung cấp bởi <0></0>",
+            "followUs": "Cho phép chúng tôi <0></0>, <1></1>, <2></2>, <3></3>, và <4></4>.",
+            "privacy": "Quyền riêng tư.",
+            "termsOfUse": "Điều khoản sử dụng."
+        },
+        "versionInfo": {
+            "sourceCode": "Mã nguồn"
+        }
+    },
+    "profile": {
+        "deleteUser": "Xóa người dùng",
+        "exportUserData": "Xuất dữ liệu người dùng",
+        "modal": {
+            "deleteUser": {
+                "title": "Xóa người dùng",
+                "message": "Bạn có thực sự muốn xóa tài khoản ?",
+                "subMessage": "Điều này sẽ xóa tài khoản của bạn, tất cả các ghi chú thuộc sở hữu của bạn và xóa tất cả các liên kết đến tài khoản của bạn khỏi các ghi chú khác."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Liên Lạc",
+                "community": "Tham gia vào cộng đồng",
+                "meetUsOn": "Gặp chúng tôi ở %s",
+                "helpTranslating": "Giúp chúng tôi dịch",
+                "reportIssue": "Báo cáo vấn đề"
+            },
+            "documents": {
+                "title": "Tài liệu",
+                "yamlMetadata": "YAML Metadata",
+                "slideExample": "Slide ví dụ"
+            },
+            "cheatsheet": {
+                "title": "Cheetsheet",
+                "example": "Ví dụ",
+                "syntax": "Cú pháp",
+                "underlinedText": "Gạch chân",
+                "highlightedText": "Hightlight",
+                "externalService": "Externals"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Ghi chú này bị khóa.",
+                "description": "Xin lỗi, chỉ chủ sở hữu có thể xóa note."
+            },
+            "limitReached": {
+                "title": "Đạt giới hạn",
+                "description": "Rất tiếc, bạn đã đạt tới độ dài tối đa ",
+                "advice": "Vui lòng rút ngắn ghi chú"
+            },
+            "incompatible": {
+                "title": "Phiên bản của client không tương thích.",
+                "advice": "Làm mới để cập nhập."
+            },
+            "newVersion": {
+                "title": "Phiên bản mới đã có sẵn.",
+                "linkText": "Xem ghi chú xuất bản ở đây.",
+                "advice": "Làm mới để trải nghiệm tính năng mới."
+            },
+            "userStateChanged": {
+                "title": "Trạng thái người dùng bị thay đổi.",
+                "description": "Làm mới để cập nhập trạng thái người dùng mới."
+            }
+        },
+        "viewMode": {
+            "view": "Hiện",
+            "both": "Cả hai"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Bôi đậm",
+            "strikethrough": "Gạch ngang",
+            "header": "Đầu đề",
+            "code": "Code",
+            "blockquote": "Blockquote",
+            "unorderedList": "Danh sách chưa sắp xếp",
+            "orderedList": "Danh sách đã sắp xếp",
+            "checkList": "Checklist",
+            "link": "Liên kết",
+            "image": "Ảnh",
+            "uploadImage": "Tải ảnh lên"
+        },
+        "menu": {
+            "menu": "Menu",
+            "new": "Mới",
+            "publish": "Xuất bản",
+            "extra": "Extra",
+            "revision": "Sửa đổi",
+            "slideMode": "Chế độ slide",
+            "download": "Tải xuống",
+            "help": "Trợ giúp"
+        },
+        "export": {
+            "rawHtml": "Raw HTML"
+        },
+        "import": {
+            "clipboard": "Clipboard"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Thêm từ Snippet",
+                "selectProject": "Chọn từ Project có sẵn",
+                "selectSnippet": "Chọn từ Snippets có sẵn"
+            },
+            "gistImport": {
+                "title": "Nhập từ Gist",
+                "insertGistUrl": "Dán liên kết gist vào đây ..."
+            },
+            "snippetExport": {
+                "title": "Xuất ra Snippet",
+                "visibilityLevel": "Chọn cấp độ hiển thị"
+            },
+            "revision": {
+                "title": "Sửa đổi",
+                "revertButton": "Trở lại như cũ"
+            },
+            "clipboardImport": {
+                "title": "Thêm từ clipboard",
+                "insertMarkdown": "Dán markdown hoặc webpage ở đây ..."
+            },
+            "deleteNote": {
+                "question": "Bạn có thực sự muốn xóa ghi chú này ?",
+                "warning": "Tất cả người dùng sẽ mất liên kết này."
+            }
+        }
+    },
+    "common": {
+        "import": "Nhập",
+        "export": "Xuất",
+        "refresh": "Làm mới",
+        "cancel": "Hủy",
+        "ok": "Đồng ý",
+        "or": "hoặc"
+    },
+    "login": {
+        "chooseMethod": "Chọn phương thức",
+        "signInVia": "Đăng nhấp với {{service}}",
+        "signIn": "Đăng nhập",
+        "signOut": "Đăng xuất",
+        "register": "Đăng ký",
+        "auth": {
+            "error": {}
+        }
+    }
 }

@@ -1,13 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Fragment, useRef, useState } from 'react'
 import { Button, FormControl, InputGroup, Overlay, Tooltip } from 'react-bootstrap'
-import { Trans } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 
 export interface VersionInputFieldProps {
   version: string
 }
 
 export const VersionInputField: React.FC<VersionInputFieldProps> = ({ version }) => {
+  useTranslation();
   const inputField = useRef<HTMLInputElement>(null)
   const [showCopiedTooltip, setShowCopiedTooltip] = useState(false)
 
@@ -25,7 +26,7 @@ export const VersionInputField: React.FC<VersionInputFieldProps> = ({ version })
       <Overlay target={inputField} show={showCopiedTooltip} placement="top">
         {(props) => (
           <Tooltip id={'copied_' + version} {...props}>
-            <Trans i18nKey={'successfullyCopied'}/>
+            <Trans i18nKey={'landing.versionInfo.successfullyCopied'}/>
           </Tooltip>
         )}
       </Overlay>

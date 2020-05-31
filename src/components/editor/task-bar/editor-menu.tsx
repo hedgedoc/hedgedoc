@@ -8,36 +8,27 @@ const EditorMenu: React.FC = () => {
   return (
     <Dropdown className="small" alignRight={true}>
       <Dropdown.Toggle variant="light" size="sm" id="editor-menu" className="text-secondary">
-        <Trans i18nKey="menu"/>
+        <Trans i18nKey="editor.menu.menu"/>
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
         <Dropdown.Header>
-          <Trans i18nKey="extra"/>
+          <Trans i18nKey="editor.menu.extra"/>
         </Dropdown.Header>
         <Dropdown.Item className="small">
-          <FontAwesomeIcon icon="history"/> <Trans i18nKey="revision"/>
+          <FontAwesomeIcon icon="history"/> <Trans i18nKey="editor.menu.revision"/>
         </Dropdown.Item>
         <Dropdown.Item className="small">
-          <FontAwesomeIcon icon="tv"/> <Trans i18nKey="slideMode"/>
+          <FontAwesomeIcon icon="tv"/> <Trans i18nKey="editor.menu.slideMode"/>
+        </Dropdown.Item>
+        <Dropdown.Item className="small">
+          <FontAwesomeIcon icon="trash"/> <Trans i18nKey="editor.menu.deleteNote"/>
         </Dropdown.Item>
 
         <Dropdown.Divider/>
 
         <Dropdown.Header>
-          <Trans i18nKey="export"/>
-        </Dropdown.Header>
-        <Dropdown.Item className="small">
-          <FontAwesomeIcon icon={['fab', 'dropbox']}/> Dropbox
-        </Dropdown.Item>
-        <Dropdown.Item className="small">
-          <FontAwesomeIcon icon={['fab', 'github']}/> Gist
-        </Dropdown.Item>
-
-        <Dropdown.Divider/>
-
-        <Dropdown.Header>
-          <Trans i18nKey="import"/>
+          <Trans i18nKey="common.export"/>
         </Dropdown.Header>
         <Dropdown.Item className="small">
           <FontAwesomeIcon icon={['fab', 'dropbox']}/> Dropbox
@@ -45,14 +36,26 @@ const EditorMenu: React.FC = () => {
         <Dropdown.Item className="small">
           <FontAwesomeIcon icon={['fab', 'github']}/> Gist
         </Dropdown.Item>
+
+        <Dropdown.Divider/>
+
+        <Dropdown.Header>
+          <Trans i18nKey="common.import"/>
+        </Dropdown.Header>
         <Dropdown.Item className="small">
-          <FontAwesomeIcon icon="paste"/> <Trans i18nKey="clipboard"/>
+          <FontAwesomeIcon icon={['fab', 'dropbox']}/> Dropbox
+        </Dropdown.Item>
+        <Dropdown.Item className="small">
+          <FontAwesomeIcon icon={['fab', 'github']}/> Gist
+        </Dropdown.Item>
+        <Dropdown.Item className="small">
+          <FontAwesomeIcon icon="paste"/> <Trans i18nKey="editor.import.clipboard"/>
         </Dropdown.Item>
 
         <Dropdown.Divider/>
 
         <Dropdown.Header>
-          <Trans i18nKey="download"/>
+          <Trans i18nKey="editor.menu.download"/>
         </Dropdown.Header>
         <Dropdown.Item className="small">
           <FontAwesomeIcon icon="file-alt"/> Markdown
@@ -61,7 +64,7 @@ const EditorMenu: React.FC = () => {
           <FontAwesomeIcon icon="file-code"/> HTML
         </Dropdown.Item>
         <Dropdown.Item className="small">
-          <FontAwesomeIcon icon="file-code"/> Raw HTML
+          <FontAwesomeIcon icon="file-code"/> <Trans i18nKey='editor.export.rawHtml'/>
         </Dropdown.Item>
 
       </Dropdown.Menu>

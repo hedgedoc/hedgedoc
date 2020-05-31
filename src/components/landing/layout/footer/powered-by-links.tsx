@@ -18,14 +18,14 @@ export const PoweredByLinks: React.FC = () => {
 
   return (
     <p>
-      <Trans i18nKey="poweredBy">
+      <Trans i18nKey="landing.footer.poweredBy">
         <ExternalLink href="https://codimd.org" text="CodiMD"/>
       </Trans>
       {
         Object.entries({ ...defaultLinks, ...(config.specialLinks) }).map(([i18nKey, href]) =>
           <Fragment key={i18nKey}>
             &nbsp;|&nbsp;
-            <TranslatedExternalLink href={href} i18nKey={i18nKey}/>
+            <TranslatedExternalLink href={href} i18nKey={'landing.footer.' + i18nKey}/>
           </Fragment>
         )
       }

@@ -4,12 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { PinButton } from '../common/pin-button'
 import { CloseButton } from '../common/close-button'
 import moment from 'moment'
-import { useTranslation } from 'react-i18next'
 import { HistoryEntryProps } from '../history-content/history-content'
 import { formatHistoryDate } from '../../../../../utils/historyUtils'
 
 export const HistoryCard: React.FC<HistoryEntryProps> = ({ entry, onPinClick }) => {
-  useTranslation()
   return (
     <div className="p-2 col-xs-12 col-sm-6 col-md-6 col-lg-4">
       <Card className="p-0" text={'dark'} bg={'light'}>

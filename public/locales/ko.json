@@ -1,117 +1,184 @@
 {
-  "Collaborative markdown notes": "협동 마크다운 노트",
-  "Realtime collaborative markdown notes on all platforms.": "실시간으로 모든 플랫폼에서 마크다운 노트를 함께 작성해보세요.",
-  "coverSlogan": "마크다운을 쓰고 공유하는 최고의 플랫폼입니다.",
-  "intro": "소개",
-  "history": "기록",
-  "newGuestNote": "새 손님 노트",
-  "featureCollaboration": "URL을 통한 실시간 협업",
-  "featureMathJax": "차트와 MathJax 지원",
-  "featureSlides": "슬라이드 모드 지원",
-  "signIn": "로그인",
-  "Below is the history from browser": "아래는 이 브라우저에서 찾은 기록입니다.",
-  "Welcome!": "환영합니다!",
-  "newNote": "새 노트",
-  "or": "또는",
-  "signOut": "로그아웃",
-  "exploreFeatures": "모든 기능 둘러보기",
-  "selectTags": "태그 선택하기",
-  "searchKeywords": "키워드 검색하기",
-  "sortByTitle": "제목 기준 정렬",
-  "Title": "제목",
-  "sortByLastVisited": "시간 기준 정렬",
-  "Time": "시간",
-  "exportHistory": "기록 내보내기",
-  "importHistory": "기록 불러오기",
-  "clearHistory": "기록 초기화",
-  "refreshHistory": "기록 새로고침",
-  "noHistory": "기록 없음",
-  "Import from browser": "브라우저에서 불러오기",
-  "releases": "릴리즈",
-  "Are you sure?": "확실합니까?",
-  "Do you really want to delete this note?": "정말로 이 노트를 삭제하시겠습니까?",
-  "All users will lose their connection.": "모든 사용자의 연결이 끊어집니다.",
-  "Cancel": "취소",
-  "Yes, do it!": "네",
-  "chooseMethod": "방법 선택",
-  "signInVia": "{{service}}으로 로그인",
-  "new": "새",
-  "publish": "공개하기",
-  "extra": "추가",
-  "revision": "기록",
-  "slideMode": "슬라이드 모드",
-  "export": "내보내기",
-  "import": "들여오기",
-  "clipboard": "클립보드",
-  "download": "다운로드",
-  "Raw HTML": "순수 HTML",
-  "edit": "수정",
-  "View": "보기",
-  "Both": "한번에",
-  "help": "도움말",
-  "Upload Image": "이미지 업로드",
-  "menu": "메뉴",
-  "This page need refresh": "새로고침이 필요합니다",
-  "You have an incompatible client version.": "호환되지 않는 클라이언트입니다.",
-  "Refresh to update.": "새로고침하기",
-  "New version available!": "새로운 버전이 있습니다!",
-  "See releases notes here": "릴리즈 노트를 읽어보세요",
-  "Refresh to enjoy new features.": "새로운 기능을 즐기려면 새로고침하십시오",
-  "Your user state has changed.": "유저 상태가 변경되었습니다.",
-  "Refresh to load new user state.": "새로고침하여 새로운 유저 상태를 적용합니다.",
-  "Refresh": "새로고침",
-  "Contacts": "연락처",
-  "Report an issue": "이슈 보고하기",
-  "Meet us on %s": "%s에서 만나보세요",
-  "Send us email": "이메일 보내기",
-  "Documents": "문서",
-  "features": "기능",
-  "YAML Metadata": "YAML 속성",
-  "Slide Example": "슬라이드 예제",
-  "Cheatsheet": "치트시트",
-  "Example": "예시",
-  "Syntax": "문법",
-  "Header": "머리글",
-  "Unordered List": "순서 없는 목록",
-  "Ordered List": "순서 있는 목록",
-  "Todo List": "체크리스트",
-  "Blockquote": "인용문",
-  "Bold font": "굵게",
-  "Italics font": "기울임",
-  "Strikethrough": "취소선",
-  "Inserted text": "밑줄",
-  "Marked text": "강조",
-  "Link": "링크",
-  "Image": "이미지",
-  "Code": "코드",
-  "Externals": "외부 서비스 연동",
-  "This is a alert area.": "여기는 알림 공간입니다.",
-  "Revert": "되돌리기",
-  "Import from clipboard": "클립보드에서 불러오기",
-  "Paste your markdown or webpage here...": "마크다운이나 웹페이지 붙여넣기",
-  "Clear": "Clear",
-  "This note is locked": "이 노트는 잠겨있습니다.",
-  "Sorry, only owner can edit this note.": "죄송하지만 소유자만 이 노트를 수정할 수 있습니다.",
-  "OK": "확인",
-  "Reach the limit": "한계에 도달",
-  "Sorry, you've reached the max length this note can be.": "죄송합니다. 노트 최대 길이를 초과하였습니다.",
-  "Please reduce the content or divide it to more notes, thank you!": "노트 길이를 줄여주십시오.",
-  "Import from Gist": "Gist에서 불러오기",
-  "Paste your gist url here...": "Gist URL을 입력하세요",
-  "Import from Snippet": "Import from Snippet",
-  "Select From Available Projects": "가능한 프로젝트 중 선택",
-  "Select From Available Snippets": "Select From Available Snippets",
-  "OR": "또는",
-  "Export to Snippet": "Export to Snippet",
-  "Select Visibility Level": "Select Visibility Level",
-  "Night Theme": "다크 테마",
-  "followUs": "<0></0>, <1></1>, <2></2>, <3></3> 과 <4></4>에서 저희를 팔로우해보세요",
-  "privacy": "Privacy",
-  "termsOfUse": "Terms of Use",
-  "Do you really want to delete your user account?": "Do you really want to delete your user account?",
-  "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.": "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.",
-  "deleteUser": "Delete user",
-  "exportUserData": "Export user data",
-  "Help us translating on %s": "%s에서 번역으로 저희를 도와주세요",
-  "sourceCode": "Source Code"
+    "app": {
+        "slogan": "마크다운을 쓰고 공유하는 최고의 플랫폼입니다.",
+        "title": "협동 마크다운 노트"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "모든 기능 둘러보기",
+            "features": {
+                "collaboration": "URL을 통한 실시간 협업",
+                "mathJax": "차트와 MathJax 지원",
+                "slides": "슬라이드 모드 지원"
+            }
+        },
+        "history": {
+            "noHistory": "기록 없음",
+            "localHistory": "아래는 이 브라우저에서 찾은 기록입니다.",
+            "toolbar": {
+                "selectTags": "태그 선택하기",
+                "searchKeywords": "키워드 검색하기",
+                "sortByTitle": "제목 기준 정렬",
+                "sortByLastVisited": "시간 기준 정렬",
+                "export": "기록 내보내기",
+                "import": "기록 불러오기",
+                "clear": "기록 초기화",
+                "refresh": "기록 새로고침"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "소개",
+            "history": "기록",
+            "newGuestNote": "새 손님 노트",
+            "newNote": "새 노트"
+        },
+        "footer": {
+            "releases": "릴리즈",
+            "followUs": "<0></0>, <1></1>, <2></2>, <3></3> 과 <4></4>에서 저희를 팔로우해보세요",
+            "privacy": "Privacy",
+            "termsOfUse": "Terms of Use"
+        },
+        "versionInfo": {
+            "sourceCode": "Source Code"
+        }
+    },
+    "profile": {
+        "deleteUser": "Delete user",
+        "exportUserData": "Export user data",
+        "modal": {
+            "deleteUser": {
+                "title": "Delete user",
+                "message": "Do you really want to delete your user account?",
+                "subMessage": "This will delete your account, all notes that are owned by you and remove all references to your account from other notes."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "연락처",
+                "meetUsOn": "%s에서 만나보세요",
+                "reportIssue": "이슈 보고하기"
+            },
+            "documents": {
+                "title": "문서",
+                "yamlMetadata": "YAML 속성",
+                "slideExample": "슬라이드 예제"
+            },
+            "cheatsheet": {
+                "title": "치트시트",
+                "example": "예시",
+                "syntax": "문법",
+                "underlinedText": "밑줄",
+                "highlightedText": "강조",
+                "externalService": "외부 서비스 연동"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "이 노트는 잠겨있습니다.",
+                "description": "죄송하지만 소유자만 이 노트를 수정할 수 있습니다."
+            },
+            "limitReached": {
+                "title": "한계에 도달",
+                "description": "죄송합니다. 노트 최대 길이를 초과하였습니다.",
+                "advice": "노트 길이를 줄여주십시오."
+            },
+            "incompatible": {
+                "title": "호환되지 않는 클라이언트입니다.",
+                "advice": "새로고침하기"
+            },
+            "newVersion": {
+                "title": "새로운 버전이 있습니다!",
+                "linkText": "릴리즈 노트를 읽어보세요",
+                "advice": "새로운 기능을 즐기려면 새로고침하십시오"
+            },
+            "userStateChanged": {
+                "title": "유저 상태가 변경되었습니다.",
+                "description": "새로고침하여 새로운 유저 상태를 적용합니다."
+            }
+        },
+        "viewMode": {
+            "view": "보기",
+            "both": "한번에"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "굵게",
+            "strikethrough": "취소선",
+            "header": "머리글",
+            "code": "코드",
+            "blockquote": "인용문",
+            "unorderedList": "순서 없는 목록",
+            "orderedList": "순서 있는 목록",
+            "checkList": "체크리스트",
+            "link": "링크",
+            "image": "이미지",
+            "uploadImage": "이미지 업로드"
+        },
+        "menu": {
+            "menu": "메뉴",
+            "new": "새",
+            "publish": "공개하기",
+            "extra": "추가",
+            "revision": "기록",
+            "slideMode": "슬라이드 모드",
+            "download": "다운로드",
+            "help": "도움말"
+        },
+        "export": {
+            "rawHtml": "순수 HTML"
+        },
+        "import": {
+            "clipboard": "클립보드"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Import from Snippet",
+                "selectProject": "가능한 프로젝트 중 선택",
+                "selectSnippet": "Select From Available Snippets"
+            },
+            "gistImport": {
+                "title": "Gist에서 불러오기",
+                "insertGistUrl": "Gist URL을 입력하세요"
+            },
+            "snippetExport": {
+                "title": "Export to Snippet",
+                "visibilityLevel": "Select Visibility Level"
+            },
+            "revision": {
+                "title": "기록",
+                "revertButton": "되돌리기"
+            },
+            "clipboardImport": {
+                "title": "클립보드에서 불러오기",
+                "insertMarkdown": "마크다운이나 웹페이지 붙여넣기"
+            },
+            "deleteNote": {
+                "question": "정말로 이 노트를 삭제하시겠습니까?",
+                "warning": "모든 사용자의 연결이 끊어집니다."
+            }
+        }
+    },
+    "common": {
+        "import": "들여오기",
+        "export": "내보내기",
+        "refresh": "새로고침",
+        "cancel": "취소",
+        "ok": "확인",
+        "or": "또는"
+    },
+    "login": {
+        "chooseMethod": "방법 선택",
+        "signInVia": "{{service}}으로 로그인",
+        "signIn": "로그인",
+        "signOut": "로그아웃",
+        "auth": {
+            "error": {}
+        }
+    }
 }

@@ -1,122 +1,189 @@
 {
-  "Collaborative markdown notes": "Note collaborative in markdown",
-  "Realtime collaborative markdown notes on all platforms.": "Note markdown collaborative in tempo reale per tutte le piattaforme.",
-  "coverSlogan": "Miglior modo per scrivere e condividere le tue conoscenze in markdown.",
-  "intro": "Intro",
-  "history": "Cronologia",
-  "newGuestNote": "Nuova nota ospite",
-  "featureCollaboration": "Collabora tramite URL",
-  "featureMathJax": "Supporta grafici e MathJax",
-  "featureSlides": "Supporta modalità slide",
-  "signIn": "Entra",
-  "Below is the history from browser": "Qui sotto c'è la cronologia del browser",
-  "Welcome!": "Benvenuto!",
-  "newNote": "Nuova nota",
-  "or": "o",
-  "signOut": "Disconettiti",
-  "exploreFeatures": "Esplora tutte le funzioni",
-  "selectTags": "Seleziona tag...",
-  "searchKeywords": "Cerca...",
-  "sortByTitle": "Ordina per titolo",
-  "Title": "Titolo",
-  "sortByLastVisited": "Ordina per data",
-  "Time": "Data",
-  "exportHistory": "Esporta cronologia",
-  "importHistory": "Importa cronologia",
-  "clearHistory": "Cancella cronologia",
-  "refreshHistory": "Aggiorna cronologia",
-  "noHistory": "Nessuna cronologia",
-  "Import from browser": "Importa da browser",
-  "releases": "Versioni",
-  "Are you sure?": "Sei sicuro?",
-  "Do you really want to delete this note?": "Vuoi veramente eliminare questa nota?",
-  "All users will lose their connection.": "Tutti gli utenti perderanno la loro connessione.",
-  "Cancel": "Annulla",
-  "Yes, do it!": "SI, fallo!",
-  "chooseMethod": "Scegli metodo",
-  "signInVia": "Entra con {{service}}",
-  "new": "Nuovo",
-  "publish": "Pubblica",
-  "extra": "Extra",
-  "revision": "Revisione",
-  "slideMode": "Modalità slide",
-  "export": "Esporta",
-  "import": "Importa",
-  "clipboard": "Appunti",
-  "download": "Scarica",
-  "Raw HTML": "Raw HTML",
-  "edit": "Modifica",
-  "View": "Visualizza",
-  "Both": "Entrambi",
-  "help": "Aiuto",
-  "Upload Image": "Carica Immagine",
-  "menu": "Menu",
-  "This page need refresh": "Questa pagina deve essere aggiornata",
-  "You have an incompatible client version.": "La versione del tuo client è incompatibile.",
-  "Refresh to update.": "Ricarica per aggiornare.",
-  "New version available!": "Nuova versione disponibile!",
-  "See releases notes here": "Vedi note di rilascio qui",
-  "Refresh to enjoy new features.": "Ricarica per godere delle nuove funzioni.",
-  "Your user state has changed.": "Il tuo stato utente è cambiato.",
-  "Refresh to load new user state.": "Aggiorna per caricare il nuovo stato utente.",
-  "Refresh": "Ricarica",
-  "Contacts": "Contatti",
-  "Report an issue": "Segnala un problema",
-  "Meet us on %s": "Vieni a trovarci su %s",
-  "Send us email": "Inviaci una email",
-  "Documents": "Documenti",
-  "features": "Caratteristiche",
-  "YAML Metadata": "YAML Metadata",
-  "Slide Example": "Esempio Slide",
-  "Cheatsheet": "Cheatsheet",
-  "Example": "Esempio",
-  "Syntax": "Sintassi",
-  "Header": "Intestazione",
-  "Unordered List": "Lista non ordinata",
-  "Ordered List": "Lista ordinata",
-  "Todo List": "Elenco",
-  "Blockquote": "Citazione",
-  "Bold font": "Grassetto",
-  "Italics font": "Corsivo",
-  "Strikethrough": "Barrato",
-  "Inserted text": "Sottolineato",
-  "Marked text": "Evidenziato",
-  "Link": "Link",
-  "Image": "Immagine",
-  "Code": "Codice",
-  "Externals": "Esterni",
-  "This is a alert area.": "Questa è un area di avviso.",
-  "Revert": "Annulla",
-  "Import from clipboard": "Importa dagli appunti",
-  "Paste your markdown or webpage here...": "Incollare il markdown o una pagina web qui...",
-  "Clear": "Pulisci",
-  "This note is locked": "Questa nota è bloccata",
-  "Sorry, only owner can edit this note.": "Siamo spiacenti, solo il proprietario può modificare questa nota.",
-  "OK": "OK",
-  "Reach the limit": "Limite raggiunto",
-  "Sorry, you've reached the max length this note can be.": "Siamo spiacenti, hai raggiunto la lunghezza massima per questa nota.",
-  "Please reduce the content or divide it to more notes, thank you!": "Si prega di ridurre il contenuto o dividerlo in più note, grazie!",
-  "Import from Gist": "Importa da Gist",
-  "Paste your gist url here...": "Incolla il tuo link gist qui...",
-  "Import from Snippet": "Importa da Snippet",
-  "Select From Available Projects": "Seleziona da progetti disponibili",
-  "Select From Available Snippets": "Seleziona da snippets disponibili",
-  "OR": "O",
-  "Export to Snippet": "Esporta Snippet",
-  "Select Visibility Level": "Seleziona livello visibilità",
-  "Night Theme": "Tema Scuro",
-  "followUs": "Seguici su <0></0>, <1></1>, <2></2>, <3></3>, e <4></4>.",
-  "privacy": "Privacy",
-  "termsOfUse": "Termini di Utilizzo",
-  "Do you really want to delete your user account?": "Vuoi veramente cancellare il tuo account utente?",
-  "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.": "Questo cancellerà il tuo account, tutte le note di cui sei proprietario e rimuoverà i riferimenti al tuo account dalle altre note.",
-  "deleteUser": "Elimina utente",
-  "exportUserData": "Esporta dati utente",
-  "Help us translating on %s": "Aiutaci nella traduzione su %s",
-  "sourceCode": "Codice Sorgente",
-  "Register": "Registrati",
-  "poweredBy": "Alimentato da <0></0>",
-  "Help us translating": "Aiutaci nella traduzione",
-  "Join the community": "Unisciti alla comunità",
-  "imprint": "Imprint"
+    "app": {
+        "slogan": "Miglior modo per scrivere e condividere le tue conoscenze in markdown.",
+        "title": "Note collaborative in markdown"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Esplora tutte le funzioni",
+            "features": {
+                "collaboration": "Collabora tramite URL",
+                "mathJax": "Supporta grafici e MathJax",
+                "slides": "Supporta modalità slide"
+            }
+        },
+        "history": {
+            "noHistory": "Nessuna cronologia",
+            "localHistory": "Qui sotto c'è la cronologia del browser",
+            "toolbar": {
+                "selectTags": "Seleziona tag...",
+                "searchKeywords": "Cerca...",
+                "sortByTitle": "Ordina per titolo",
+                "sortByLastVisited": "Ordina per data",
+                "export": "Esporta cronologia",
+                "import": "Importa cronologia",
+                "clear": "Cancella cronologia",
+                "refresh": "Aggiorna cronologia"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Intro",
+            "history": "Cronologia",
+            "newGuestNote": "Nuova nota ospite",
+            "newNote": "Nuova nota"
+        },
+        "footer": {
+            "releases": "Versioni",
+            "poweredBy": "Alimentato da <0></0>",
+            "imprint": "Imprint",
+            "followUs": "Seguici su <0></0>, <1></1>, <2></2>, <3></3>, e <4></4>.",
+            "privacy": "Privacy",
+            "termsOfUse": "Termini di Utilizzo"
+        },
+        "versionInfo": {
+            "sourceCode": "Codice Sorgente"
+        }
+    },
+    "profile": {
+        "deleteUser": "Elimina utente",
+        "exportUserData": "Esporta dati utente",
+        "modal": {
+            "deleteUser": {
+                "title": "Elimina utente",
+                "message": "Vuoi veramente cancellare il tuo account utente?",
+                "subMessage": "Questo cancellerà il tuo account, tutte le note di cui sei proprietario e rimuoverà i riferimenti al tuo account dalle altre note."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Contatti",
+                "community": "Unisciti alla comunità",
+                "meetUsOn": "Vieni a trovarci su %s",
+                "helpTranslating": "Aiutaci nella traduzione",
+                "reportIssue": "Segnala un problema"
+            },
+            "documents": {
+                "title": "Documenti",
+                "yamlMetadata": "YAML Metadata",
+                "slideExample": "Esempio Slide"
+            },
+            "cheatsheet": {
+                "title": "Cheatsheet",
+                "example": "Esempio",
+                "syntax": "Sintassi",
+                "underlinedText": "Sottolineato",
+                "highlightedText": "Evidenziato",
+                "externalService": "Esterni"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Questa nota è bloccata",
+                "description": "Siamo spiacenti, solo il proprietario può modificare questa nota."
+            },
+            "limitReached": {
+                "title": "Limite raggiunto",
+                "description": "Siamo spiacenti, hai raggiunto la lunghezza massima per questa nota.",
+                "advice": "Si prega di ridurre il contenuto o dividerlo in più note, grazie!"
+            },
+            "incompatible": {
+                "title": "La versione del tuo client è incompatibile.",
+                "advice": "Ricarica per aggiornare."
+            },
+            "newVersion": {
+                "title": "Nuova versione disponibile!",
+                "linkText": "Vedi note di rilascio qui",
+                "advice": "Ricarica per godere delle nuove funzioni."
+            },
+            "userStateChanged": {
+                "title": "Il tuo stato utente è cambiato.",
+                "description": "Aggiorna per caricare il nuovo stato utente."
+            }
+        },
+        "viewMode": {
+            "view": "Visualizza",
+            "both": "Entrambi"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Grassetto",
+            "strikethrough": "Barrato",
+            "header": "Intestazione",
+            "code": "Codice",
+            "blockquote": "Citazione",
+            "unorderedList": "Lista non ordinata",
+            "orderedList": "Lista ordinata",
+            "checkList": "Elenco",
+            "link": "Link",
+            "image": "Immagine",
+            "uploadImage": "Carica Immagine"
+        },
+        "menu": {
+            "menu": "Menu",
+            "new": "Nuovo",
+            "publish": "Pubblica",
+            "extra": "Extra",
+            "revision": "Revisione",
+            "slideMode": "Modalità slide",
+            "download": "Scarica",
+            "help": "Aiuto"
+        },
+        "export": {
+            "rawHtml": "Raw HTML"
+        },
+        "import": {
+            "clipboard": "Appunti"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Importa da Snippet",
+                "selectProject": "Seleziona da progetti disponibili",
+                "selectSnippet": "Seleziona da snippets disponibili"
+            },
+            "gistImport": {
+                "title": "Importa da Gist",
+                "insertGistUrl": "Incolla il tuo link gist qui..."
+            },
+            "snippetExport": {
+                "title": "Esporta Snippet",
+                "visibilityLevel": "Seleziona livello visibilità"
+            },
+            "revision": {
+                "title": "Revisione",
+                "revertButton": "Annulla"
+            },
+            "clipboardImport": {
+                "title": "Importa dagli appunti",
+                "insertMarkdown": "Incollare il markdown o una pagina web qui..."
+            },
+            "deleteNote": {
+                "question": "Vuoi veramente eliminare questa nota?",
+                "warning": "Tutti gli utenti perderanno la loro connessione."
+            }
+        }
+    },
+    "common": {
+        "import": "Importa",
+        "export": "Esporta",
+        "refresh": "Ricarica",
+        "cancel": "Annulla",
+        "ok": "OK",
+        "or": "o"
+    },
+    "login": {
+        "chooseMethod": "Scegli metodo",
+        "signInVia": "Entra con {{service}}",
+        "signIn": "Entra",
+        "signOut": "Disconettiti",
+        "register": "Registrati",
+        "auth": {
+            "error": {}
+        }
+    }
 }

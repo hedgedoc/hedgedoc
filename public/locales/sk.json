@@ -1,122 +1,189 @@
 {
-  "Collaborative markdown notes": "Kolaboratívne markdown poznámky",
-  "Realtime collaborative markdown notes on all platforms.": "Spolupracujte na markdown poznámkach na všetkých platformách v reálnom čase.",
-  "coverSlogan": "Nejlepšia platforma pre tvorbu a zdieľanie vašich znalostí v markdown.",
-  "intro": "Intro",
-  "history": "História",
-  "newGuestNote": "Nová poznámka hosťa",
-  "featureCollaboration": "Spolupráca v reálnom čase",
-  "featureMathJax": "Funguje s grafmi a MathJax",
-  "featureSlides": "Podporuje prezentačný režim",
-  "signIn": "Prihlásiť sa",
-  "Below is the history from browser": "Nižšie je história z tohto prehliadača",
-  "Welcome!": "Vitajte!",
-  "newNote": "Nová poznámka",
-  "or": "alebo",
-  "signOut": "Odhlásiť sa",
-  "exploreFeatures": "Preskúmať všetky funkcie",
-  "selectTags": "Zvoliť štítky…",
-  "searchKeywords": "Vyhľadať klúčové slovo …",
-  "sortByTitle": "Zoradiť podľa názvu",
-  "Title": "Názov",
-  "sortByLastVisited": "Zoradiť podľa času",
-  "Time": "Čas",
-  "exportHistory": "Exportovať históriu",
-  "importHistory": "Importovať históriu",
-  "clearHistory": "Odstrániť históriu",
-  "refreshHistory": "Aktualizovať históriu",
-  "noHistory": "Žiadna história",
-  "Import from browser": "Importovať z prehliadača",
-  "releases": "Vydania",
-  "Are you sure?": "Ste si istý?",
-  "Do you really want to delete this note?": "Naozaj chcete odstrániť túto poznámku?",
-  "All users will lose their connection.": "Všetci používatelia stratia spojenie.",
-  "Cancel": "Späť",
-  "Yes, do it!": "Áno, pokračovať!",
-  "chooseMethod": "Zvoliť spôsob",
-  "signInVia": "Prihlásiť sa cez {{service}}",
-  "new": "Nová",
-  "publish": "Publikovať",
-  "extra": "Extra",
-  "revision": "Revízia",
-  "slideMode": "Prezentačný režim",
-  "export": "Export",
-  "import": "Import",
-  "clipboard": "Schránka",
-  "download": "Stiahnuť",
-  "Raw HTML": "Raw HTML",
-  "edit": "Editovať",
-  "View": "Zobraziť",
-  "Both": "Oboje",
-  "help": "Pomoc",
-  "Upload Image": "Nahrať obrázok",
-  "menu": "Menu",
-  "This page need refresh": "Túto stránku je potrebné znovu načítať",
-  "You have an incompatible client version.": "Verzia vášho klienta nie je kompatibilná.",
-  "Refresh to update.": "Znovu načítať a aktualizovať",
-  "New version available!": "Je dostupná nová verzia!",
-  "See releases notes here": "Pozrite si poznmáky k vydaniu tu",
-  "Refresh to enjoy new features.": "Znovu načítať a začať si uzívať nové funkcie.",
-  "Your user state has changed.": "Váš užívateľský stav sa zmenil.",
-  "Refresh to load new user state.": "Znovu načítať a nahrať užívateľský stav",
-  "Refresh": "Znovu načítať",
-  "Contacts": "Kontakty",
-  "Report an issue": "Nahlásiť problém",
-  "Meet us on %s": "Stretnite nás na %s",
-  "Send us email": "Pošlite nám email",
-  "Documents": "Dokumenty",
-  "features": "Funkcie",
-  "YAML Metadata": "YAML metadáta",
-  "Slide Example": "Príklad prezentácie",
-  "Cheatsheet": "Ťahák",
-  "Example": "Príklad",
-  "Syntax": "Syntax",
-  "Header": "Hlavička",
-  "Unordered List": "Nečíslovaný zoznam",
-  "Ordered List": "Číslovaný zoznam",
-  "Todo List": "Kontrolný zoznam",
-  "Blockquote": "Citácia",
-  "Bold font": "Tučne",
-  "Italics font": "Kurzíva",
-  "Strikethrough": "Preškrtnuté",
-  "Inserted text": "Vložený text",
-  "Marked text": "Zvýraznený text",
-  "Link": "Odkaz",
-  "Image": "Obrázok",
-  "Code": "Kód",
-  "Externals": "Externé",
-  "This is a alert area.": "Toto je oblasť upozornení.",
-  "Revert": "Vrátiť",
-  "Import from clipboard": "Importovať zo schránky",
-  "Paste your markdown or webpage here...": "Sem vložte váš markdown alebo webovú stránku…",
-  "Clear": "Vyčistiť",
-  "This note is locked": "Táto poznámka je zamknutá",
-  "Sorry, only owner can edit this note.": "Prepáčte, túto poznámku môže editovať iba vlastník.",
-  "OK": "OK",
-  "Reach the limit": "Dosiahnutie limitu",
-  "Sorry, you've reached the max length this note can be.": "Ospravedlňujeme sa, dosiahli ste maximálnu dĺžku poznámky.",
-  "Please reduce the content or divide it to more notes, thank you!": "Prosím skráťte poznámku.",
-  "Import from Gist": "Importovať z Gist",
-  "Paste your gist url here...": "Sem vložte vašu gist url…",
-  "Import from Snippet": "Importovať zo Snippet",
-  "Select From Available Projects": "Zvoliť z dostupných projektov",
-  "Select From Available Snippets": "Zvoliť z dostupných úryvkov",
-  "OR": "ALEBO",
-  "Export to Snippet": "Exportovať do úryvku",
-  "Select Visibility Level": "Zvoliť úroveň viditeľnosti",
-  "Night Theme": "Nočná téma",
-  "followUs": "Sledujte nás na <0></0>, <1></1>, <2></2>, <3></3>, a <4></4>.",
-  "privacy": "Súkromie",
-  "termsOfUse": "Podmienky použitia",
-  "Do you really want to delete your user account?": "Naozaj chcete zmazať váš používateľský účet?",
-  "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.": "Táto operácia odstráni váš účet, všetky poznámky, ktoré vlastníte, a tiež odstráni všetky odkazy na váš účet z iných poznámok.",
-  "deleteUser": "Zmazať používateľa",
-  "exportUserData": "Exportovať používateľské dáta",
-  "Help us translating on %s": "Help us translating on %s",
-  "sourceCode": "Zdrojový kód",
-  "Register": "Registrovať",
-  "poweredBy": "Powered by <0></0>",
-  "Help us translating": "Pomôžte nám s prekladom",
-  "Join the community": "Pripojiť sa ku komunite",
-  "imprint": "Odtlačok"
+    "app": {
+        "slogan": "Nejlepšia platforma pre tvorbu a zdieľanie vašich znalostí v markdown.",
+        "title": "Kolaboratívne markdown poznámky"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Preskúmať všetky funkcie",
+            "features": {
+                "collaboration": "Spolupráca v reálnom čase",
+                "mathJax": "Funguje s grafmi a MathJax",
+                "slides": "Podporuje prezentačný režim"
+            }
+        },
+        "history": {
+            "noHistory": "Žiadna história",
+            "localHistory": "Nižšie je história z tohto prehliadača",
+            "toolbar": {
+                "selectTags": "Zvoliť štítky…",
+                "searchKeywords": "Vyhľadať klúčové slovo …",
+                "sortByTitle": "Zoradiť podľa názvu",
+                "sortByLastVisited": "Zoradiť podľa času",
+                "export": "Exportovať históriu",
+                "import": "Importovať históriu",
+                "clear": "Odstrániť históriu",
+                "refresh": "Aktualizovať históriu"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Intro",
+            "history": "História",
+            "newGuestNote": "Nová poznámka hosťa",
+            "newNote": "Nová poznámka"
+        },
+        "footer": {
+            "releases": "Vydania",
+            "poweredBy": "Powered by <0></0>",
+            "imprint": "Odtlačok",
+            "followUs": "Sledujte nás na <0></0>, <1></1>, <2></2>, <3></3>, a <4></4>.",
+            "privacy": "Súkromie",
+            "termsOfUse": "Podmienky použitia"
+        },
+        "versionInfo": {
+            "sourceCode": "Zdrojový kód"
+        }
+    },
+    "profile": {
+        "deleteUser": "Zmazať používateľa",
+        "exportUserData": "Exportovať používateľské dáta",
+        "modal": {
+            "deleteUser": {
+                "title": "Zmazať používateľa",
+                "message": "Naozaj chcete zmazať váš používateľský účet?",
+                "subMessage": "Táto operácia odstráni váš účet, všetky poznámky, ktoré vlastníte, a tiež odstráni všetky odkazy na váš účet z iných poznámok."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Kontakty",
+                "community": "Pripojiť sa ku komunite",
+                "meetUsOn": "Stretnite nás na %s",
+                "helpTranslating": "Pomôžte nám s prekladom",
+                "reportIssue": "Nahlásiť problém"
+            },
+            "documents": {
+                "title": "Dokumenty",
+                "yamlMetadata": "YAML metadáta",
+                "slideExample": "Príklad prezentácie"
+            },
+            "cheatsheet": {
+                "title": "Ťahák",
+                "example": "Príklad",
+                "syntax": "Syntax",
+                "underlinedText": "Vložený text",
+                "highlightedText": "Zvýraznený text",
+                "externalService": "Externé"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Táto poznámka je zamknutá",
+                "description": "Prepáčte, túto poznámku môže editovať iba vlastník."
+            },
+            "limitReached": {
+                "title": "Dosiahnutie limitu",
+                "description": "Ospravedlňujeme sa, dosiahli ste maximálnu dĺžku poznámky.",
+                "advice": "Prosím skráťte poznámku."
+            },
+            "incompatible": {
+                "title": "Verzia vášho klienta nie je kompatibilná.",
+                "advice": "Znovu načítať a aktualizovať"
+            },
+            "newVersion": {
+                "title": "Je dostupná nová verzia!",
+                "linkText": "Pozrite si poznmáky k vydaniu tu",
+                "advice": "Znovu načítať a začať si uzívať nové funkcie."
+            },
+            "userStateChanged": {
+                "title": "Váš užívateľský stav sa zmenil.",
+                "description": "Znovu načítať a nahrať užívateľský stav"
+            }
+        },
+        "viewMode": {
+            "view": "Zobraziť",
+            "both": "Oboje"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Tučne",
+            "strikethrough": "Preškrtnuté",
+            "header": "Hlavička",
+            "code": "Kód",
+            "blockquote": "Citácia",
+            "unorderedList": "Nečíslovaný zoznam",
+            "orderedList": "Číslovaný zoznam",
+            "checkList": "Kontrolný zoznam",
+            "link": "Odkaz",
+            "image": "Obrázok",
+            "uploadImage": "Nahrať obrázok"
+        },
+        "menu": {
+            "menu": "Menu",
+            "new": "Nová",
+            "publish": "Publikovať",
+            "extra": "Extra",
+            "revision": "Revízia",
+            "slideMode": "Prezentačný režim",
+            "download": "Stiahnuť",
+            "help": "Pomoc"
+        },
+        "export": {
+            "rawHtml": "Raw HTML"
+        },
+        "import": {
+            "clipboard": "Schránka"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Importovať zo Snippet",
+                "selectProject": "Zvoliť z dostupných projektov",
+                "selectSnippet": "Zvoliť z dostupných úryvkov"
+            },
+            "gistImport": {
+                "title": "Importovať z Gist",
+                "insertGistUrl": "Sem vložte vašu gist url…"
+            },
+            "snippetExport": {
+                "title": "Exportovať do úryvku",
+                "visibilityLevel": "Zvoliť úroveň viditeľnosti"
+            },
+            "revision": {
+                "title": "Revízia",
+                "revertButton": "Vrátiť"
+            },
+            "clipboardImport": {
+                "title": "Importovať zo schránky",
+                "insertMarkdown": "Sem vložte váš markdown alebo webovú stránku…"
+            },
+            "deleteNote": {
+                "question": "Naozaj chcete odstrániť túto poznámku?",
+                "warning": "Všetci používatelia stratia spojenie."
+            }
+        }
+    },
+    "common": {
+        "import": "Import",
+        "export": "Export",
+        "refresh": "Znovu načítať",
+        "cancel": "Späť",
+        "ok": "OK",
+        "or": "alebo"
+    },
+    "login": {
+        "chooseMethod": "Zvoliť spôsob",
+        "signInVia": "Prihlásiť sa cez {{service}}",
+        "signIn": "Prihlásiť sa",
+        "signOut": "Odhlásiť sa",
+        "register": "Registrovať",
+        "auth": {
+            "error": {}
+        }
+    }
 }

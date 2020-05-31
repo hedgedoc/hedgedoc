@@ -1,122 +1,189 @@
 {
-  "Collaborative markdown notes": "Markdown 協作筆記",
-  "Realtime collaborative markdown notes on all platforms.": "使用 Markdown 的跨平台即時協作筆記",
-  "coverSlogan": "您使用 Markdown 寫作與分享知識的最佳方式",
-  "intro": "簡介",
-  "history": "紀錄",
-  "newGuestNote": "建立訪客筆記",
-  "featureCollaboration": "使用網址協作",
-  "featureMathJax": "支援圖表與 MathJax",
-  "featureSlides": "支援簡報模式",
-  "signIn": "登入",
-  "Below is the history from browser": "以下為來自瀏覽器的紀錄",
-  "Welcome!": "歡迎！",
-  "newNote": "建立筆記",
-  "or": "或",
-  "signOut": "登出",
-  "exploreFeatures": "探索所有功能",
-  "selectTags": "選擇標籤...",
-  "searchKeywords": "搜尋關鍵字...",
-  "sortByTitle": "用標題排序",
-  "Title": "標題",
-  "sortByLastVisited": "用時間排序",
-  "Time": "時間",
-  "exportHistory": "匯出紀錄",
-  "importHistory": "匯入紀錄",
-  "clearHistory": "清空紀錄",
-  "refreshHistory": "更新紀錄",
-  "noHistory": "沒有紀錄",
-  "Import from browser": "從瀏覽器匯入",
-  "releases": "版本",
-  "Are you sure?": "你確定嗎？",
-  "Do you really want to delete this note?": "確定要刪除這個文件嗎？",
-  "All users will lose their connection.": "所有使用者將會失去連線",
-  "Cancel": "取消",
-  "Yes, do it!": "沒錯，就這樣辦！",
-  "chooseMethod": "選擇方式",
-  "signInVia": "透過 {{service}} 登入",
-  "new": "新增",
-  "publish": "發表",
-  "extra": "增益",
-  "revision": "修訂版本",
-  "slideMode": "簡報模式",
-  "export": "匯出",
-  "import": "匯入",
-  "clipboard": "剪貼簿",
-  "download": "下載",
-  "Raw HTML": "純 HTML",
-  "edit": "編輯",
-  "View": "檢視",
-  "Both": "雙欄",
-  "help": "協助",
-  "Upload Image": "上傳圖片",
-  "menu": "選單",
-  "This page need refresh": "此頁面需要重新整理",
-  "You have an incompatible client version.": "您使用的是不相容的客戶端",
-  "Refresh to update.": "請重新整理來更新",
-  "New version available!": "新版本來了！",
-  "See releases notes here": "請由此查閱更新紀錄",
-  "Refresh to enjoy new features.": "請重新整理來享受最新功能",
-  "Your user state has changed.": "您的使用者狀態已變更",
-  "Refresh to load new user state.": "請重新整理來載入新的使用者狀態",
-  "Refresh": "重新整理",
-  "Contacts": "聯絡方式",
-  "Report an issue": "回報問題",
-  "Meet us on %s": "透過 %s 聯絡我們",
-  "Send us email": "寄信給我們",
-  "Documents": "文件",
-  "features": "功能簡介",
-  "YAML Metadata": "YAML Metadata",
-  "Slide Example": "簡報範例",
-  "Cheatsheet": "快速簡表",
-  "Example": "範例",
-  "Syntax": "語法",
-  "Header": "標題",
-  "Unordered List": "無序清單",
-  "Ordered List": "有序清單",
-  "Todo List": "待辦事項",
-  "Blockquote": "引用",
-  "Bold font": "粗體",
-  "Italics font": "斜體",
-  "Strikethrough": "刪除線",
-  "Inserted text": "插入文字",
-  "Marked text": "標記文字",
-  "Link": "連結",
-  "Image": "圖片",
-  "Code": "程式碼",
-  "Externals": "外部",
-  "This is a alert area.": "這是警告區塊",
-  "Revert": "還原",
-  "Import from clipboard": "從剪貼簿匯入",
-  "Paste your markdown or webpage here...": "在這裡貼上 Markdown 或是網頁內容...",
-  "Clear": "清除",
-  "This note is locked": "此份筆記已被鎖定",
-  "Sorry, only owner can edit this note.": "抱歉，只有擁有者可以編輯此筆記",
-  "OK": "好的",
-  "Reach the limit": "到達上限",
-  "Sorry, you've reached the max length this note can be.": "抱歉，您已使用到此份筆記可用的最大長度",
-  "Please reduce the content or divide it to more notes, thank you!": "請減少內容或是將內容切成更多筆記，謝謝！",
-  "Import from Gist": "從 Gist 匯入",
-  "Paste your gist url here...": "在這裡貼上 gist 網址...",
-  "Import from Snippet": "從 Snippet 匯入",
-  "Select From Available Projects": "從可用的專案中選擇",
-  "Select From Available Snippets": "從可用的 Snippets 中選擇",
-  "OR": "或是",
-  "Export to Snippet": "匯出到 Snippet",
-  "Select Visibility Level": "選擇可見層級",
-  "Night Theme": "夜間主題",
-  "followUs": "來 <0></0>, <1></1>, <2></2>, <3></3> 或 <4></4> 和我們互動吧！",
-  "privacy": "隱私權政策",
-  "termsOfUse": "使用條款",
-  "Do you really want to delete your user account?": "你確定真的想要刪除帳戶？",
-  "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.": "我們將會刪除你的帳戶、你所擁有的筆記、以及你在別人筆記裡的作者紀錄。",
-  "deleteUser": "刪除使用者",
-  "exportUserData": "匯出使用者資料",
-  "Help us translating on %s": "來 %s 幫我們翻譯",
-  "sourceCode": "原始碼",
-  "Register": "註冊",
-  "poweredBy": "由 <0></0> 強力驅動",
-  "Help us translating": "幫助我們改進翻譯",
-  "Join the community": "加入社群",
-  "imprint": "版本說明"
+    "app": {
+        "slogan": "您使用 Markdown 寫作與分享知識的最佳方式",
+        "title": "Markdown 協作筆記"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "探索所有功能",
+            "features": {
+                "collaboration": "使用網址協作",
+                "mathJax": "支援圖表與 MathJax",
+                "slides": "支援簡報模式"
+            }
+        },
+        "history": {
+            "noHistory": "沒有紀錄",
+            "localHistory": "以下為來自瀏覽器的紀錄",
+            "toolbar": {
+                "selectTags": "選擇標籤...",
+                "searchKeywords": "搜尋關鍵字...",
+                "sortByTitle": "用標題排序",
+                "sortByLastVisited": "用時間排序",
+                "export": "匯出紀錄",
+                "import": "匯入紀錄",
+                "clear": "清空紀錄",
+                "refresh": "更新紀錄"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "簡介",
+            "history": "紀錄",
+            "newGuestNote": "建立訪客筆記",
+            "newNote": "建立筆記"
+        },
+        "footer": {
+            "releases": "版本",
+            "poweredBy": "由 <0></0> 強力驅動",
+            "imprint": "版本說明",
+            "followUs": "來 <0></0>, <1></1>, <2></2>, <3></3> 或 <4></4> 和我們互動吧！",
+            "privacy": "隱私權政策",
+            "termsOfUse": "使用條款"
+        },
+        "versionInfo": {
+            "sourceCode": "原始碼"
+        }
+    },
+    "profile": {
+        "deleteUser": "刪除使用者",
+        "exportUserData": "匯出使用者資料",
+        "modal": {
+            "deleteUser": {
+                "title": "刪除使用者",
+                "message": "你確定真的想要刪除帳戶？",
+                "subMessage": "我們將會刪除你的帳戶、你所擁有的筆記、以及你在別人筆記裡的作者紀錄。"
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "聯絡方式",
+                "community": "加入社群",
+                "meetUsOn": "透過 %s 聯絡我們",
+                "helpTranslating": "幫助我們改進翻譯",
+                "reportIssue": "回報問題"
+            },
+            "documents": {
+                "title": "文件",
+                "yamlMetadata": "YAML Metadata",
+                "slideExample": "簡報範例"
+            },
+            "cheatsheet": {
+                "title": "快速簡表",
+                "example": "範例",
+                "syntax": "語法",
+                "underlinedText": "插入文字",
+                "highlightedText": "標記文字",
+                "externalService": "外部"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "此份筆記已被鎖定",
+                "description": "抱歉，只有擁有者可以編輯此筆記"
+            },
+            "limitReached": {
+                "title": "到達上限",
+                "description": "抱歉，您已使用到此份筆記可用的最大長度",
+                "advice": "請減少內容或是將內容切成更多筆記，謝謝！"
+            },
+            "incompatible": {
+                "title": "您使用的是不相容的客戶端",
+                "advice": "請重新整理來更新"
+            },
+            "newVersion": {
+                "title": "新版本來了！",
+                "linkText": "請由此查閱更新紀錄",
+                "advice": "請重新整理來享受最新功能"
+            },
+            "userStateChanged": {
+                "title": "您的使用者狀態已變更",
+                "description": "請重新整理來載入新的使用者狀態"
+            }
+        },
+        "viewMode": {
+            "view": "檢視",
+            "both": "雙欄"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "粗體",
+            "strikethrough": "刪除線",
+            "header": "標題",
+            "code": "程式碼",
+            "blockquote": "引用",
+            "unorderedList": "無序清單",
+            "orderedList": "有序清單",
+            "checkList": "待辦事項",
+            "link": "連結",
+            "image": "圖片",
+            "uploadImage": "上傳圖片"
+        },
+        "menu": {
+            "menu": "選單",
+            "new": "新增",
+            "publish": "發表",
+            "extra": "增益",
+            "revision": "修訂版本",
+            "slideMode": "簡報模式",
+            "download": "下載",
+            "help": "協助"
+        },
+        "export": {
+            "rawHtml": "純 HTML"
+        },
+        "import": {
+            "clipboard": "剪貼簿"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "從 Snippet 匯入",
+                "selectProject": "從可用的專案中選擇",
+                "selectSnippet": "從可用的 Snippets 中選擇"
+            },
+            "gistImport": {
+                "title": "從 Gist 匯入",
+                "insertGistUrl": "在這裡貼上 gist 網址..."
+            },
+            "snippetExport": {
+                "title": "匯出到 Snippet",
+                "visibilityLevel": "選擇可見層級"
+            },
+            "revision": {
+                "title": "修訂版本",
+                "revertButton": "還原"
+            },
+            "clipboardImport": {
+                "title": "從剪貼簿匯入",
+                "insertMarkdown": "在這裡貼上 Markdown 或是網頁內容..."
+            },
+            "deleteNote": {
+                "question": "確定要刪除這個文件嗎？",
+                "warning": "所有使用者將會失去連線"
+            }
+        }
+    },
+    "common": {
+        "import": "匯入",
+        "export": "匯出",
+        "refresh": "重新整理",
+        "cancel": "取消",
+        "ok": "好的",
+        "or": "或"
+    },
+    "login": {
+        "chooseMethod": "選擇方式",
+        "signInVia": "透過 {{service}} 登入",
+        "signIn": "登入",
+        "signOut": "登出",
+        "register": "註冊",
+        "auth": {
+            "error": {}
+        }
+    }
 }

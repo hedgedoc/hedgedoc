@@ -22,7 +22,7 @@ export const ViaOpenId: React.FC = () => {
     <Card className="bg-dark mb-4">
       <Card.Body>
         <Card.Title>
-          <Trans i18nKey="signInVia" values={{ service: 'OpenID' }}/>
+          <Trans i18nKey="login.signInVia" values={{ service: 'OpenID' }}/>
         </Card.Title>
 
         <Form onSubmit={onFormSubmit}>
@@ -38,13 +38,13 @@ export const ViaOpenId: React.FC = () => {
           </Form.Group>
 
           <Alert className="small" show={error} variant="danger">
-            <Trans i18nKey="errorOpenIdLogin"/>
+            <Trans i18nKey="login.auth.error.openIdLogin"/>
           </Alert>
 
           <Button
             type="submit"
             variant="primary">
-            <Trans i18nKey="signIn"/>
+            <Trans i18nKey="login.signIn"/>
           </Button>
         </Form>
       </Card.Body>
