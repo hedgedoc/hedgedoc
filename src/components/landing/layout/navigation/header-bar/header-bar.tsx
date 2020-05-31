@@ -1,15 +1,15 @@
 import React, { Fragment } from 'react'
 import { Navbar } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../../../../redux'
-import { NewUserNoteButton } from '../new-user-note-button'
-import { UserDropdown } from '../user-dropdown/user-dropdown'
-import { SignInButton } from '../sign-in-button'
-import { NewGuestNoteButton } from '../new-guest-note-button'
 import { LoginStatus } from '../../../../../redux/user/types'
 import { HeaderNavLink } from '../header-nav-link'
+import { NewGuestNoteButton } from '../new-guest-note-button'
+import { NewUserNoteButton } from '../new-user-note-button'
+import { SignInButton } from '../sign-in-button'
+import { UserDropdown } from '../user-dropdown/user-dropdown'
 import './header-bar.scss'
-import { Trans, useTranslation } from 'react-i18next'
 
 const HeaderBar: React.FC = () => {
   useTranslation()
@@ -28,13 +28,13 @@ const HeaderBar: React.FC = () => {
       <div className="d-inline-flex">
         {user.status === LoginStatus.forbidden
           ? <Fragment>
-            <span className={'mr-1'}>
+            <span className={'mr-1 d-flex'}>
               <NewGuestNoteButton/>
             </span>
             <SignInButton/>
           </Fragment>
           : <Fragment>
-            <span className={'mr-1'}>
+            <span className={'mr-1 d-flex'}>
               <NewUserNoteButton/>
             </span>
             <UserDropdown/>
