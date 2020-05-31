@@ -89,6 +89,21 @@ paths:
         '401':
           description: the user is not logged in
           content: {}
+    post:
+      tags:
+        - user
+      summary: Update information about the currently logged-in user
+      operationId: updateMe
+      responses:
+        '200':
+          description: The user information was changed successfully
+      requestBody:
+        required: true
+        description: The new user information
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserUpdate"
     delete:
       tags:
         - user
@@ -593,6 +608,12 @@ components:
       properties:
         token:
           type: string
+    UserUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The new display name of the user
     Config:
       type: object
       properties:
