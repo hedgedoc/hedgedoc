@@ -13,6 +13,7 @@ import { Author, Note, Revision, User } from './models'
 import { NoteAuthorship } from './models/note'
 import { PhotoProfile } from './models/user'
 import { EditorSocketIOServer } from './ot/editor-socketio-server'
+import { mapToObject } from './utils'
 
 export type SocketWithNoteId = Socket & { noteId: string }
 
@@ -77,7 +78,7 @@ function emitCheck (note: NoteSession): void {
     updatetime: note.updatetime,
     lastchangeuser: note.lastchangeuser,
     lastchangeuserprofile: note.lastchangeuserprofile,
-    authors: note.authors,
+    authors: mapToObject(note.authors),
     authorship: note.authorship
   }
   realtime.io.to(note.id).emit('check', out)
@@ -380,7 +381,7 @@ function emitRefresh (socket: SocketWithNoteId): void {
     ownerprofile: note.ownerprofile,
     lastchangeuser: note.lastchangeuser,
     lastchangeuserprofile: note.lastchangeuserprofile,
-    authors: note.authors,
+    authors: mapToObject(note.authors),
     authorship: note.authorship,
     permission: note.permission,
     createtime: note.createtime,
