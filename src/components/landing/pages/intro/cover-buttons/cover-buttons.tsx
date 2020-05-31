@@ -1,9 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
-import { LoginStatus } from '../../../../../redux/user/types'
 import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { ApplicationState } from '../../../../../redux'
 import './cover-buttons.scss'
 
@@ -11,7 +10,7 @@ export const CoverButtons: React.FC = () => {
   useTranslation()
   const user = useSelector((state: ApplicationState) => state.user)
 
-  if (user.status === LoginStatus.ok) {
+  if (user) {
     return null
   }
 

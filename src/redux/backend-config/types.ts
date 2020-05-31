@@ -1,52 +1,14 @@
 import { Action } from 'redux'
+import { BackendConfig } from '../../api/backend-config/types'
 
-export const SET_BACKEND_CONFIG_ACTION_TYPE = 'backend-config/set'
-
-export interface BackendConfigState {
-  allowAnonymous: boolean,
-  authProviders: AuthProvidersState,
-  customAuthNames: CustomAuthNames,
-  specialLinks: SpecialLinks,
-  version: BackendVersion,
+export enum BackendConfigActionType {
+  SET_BACKEND_CONFIG = 'backend-config/set'
 }
 
-export interface BackendVersion {
-  version: string,
-  sourceCodeUrl: string
-  issueTrackerUrl: string
+export interface BackendConfigActions extends Action<BackendConfigActionType>{
+  type: BackendConfigActionType;
 }
 
-export interface AuthProvidersState {
-  facebook: boolean,
-  github: boolean,
-  twitter: boolean,
-  gitlab: boolean,
-  dropbox: boolean,
-  ldap: boolean,
-  google: boolean,
-  saml: boolean,
-  oauth2: boolean,
-  email: boolean,
-  openid: boolean,
+export interface SetBackendConfigAction extends BackendConfigActions {
+  state: BackendConfig;
 }
-
-export interface CustomAuthNames {
-  ldap: string;
-  oauth2: string;
-  saml: string;
-}
-
-export interface SpecialLinks {
-  privacy: string,
-  termsOfUse: string,
-  imprint: string,
-}
-
-export interface SetBackendConfigAction extends Action {
-  type: string;
-  payload: {
-    state: BackendConfigState;
-  };
-}
-
-export type BackendConfigActions = SetBackendConfigAction;

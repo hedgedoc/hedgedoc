@@ -3,7 +3,6 @@ import { Navbar } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../../../../redux'
-import { LoginStatus } from '../../../../../redux/user/types'
 import { HeaderNavLink } from '../header-nav-link'
 import { NewGuestNoteButton } from '../new-guest-note-button'
 import { NewUserNoteButton } from '../new-user-note-button'
@@ -26,7 +25,7 @@ const HeaderBar: React.FC = () => {
         </HeaderNavLink>
       </div>
       <div className="d-inline-flex">
-        {user.status === LoginStatus.forbidden
+        {!user
           ? <Fragment>
             <span className={'mr-1 d-flex'}>
               <NewGuestNoteButton/>

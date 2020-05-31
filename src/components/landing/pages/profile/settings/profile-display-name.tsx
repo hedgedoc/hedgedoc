@@ -1,5 +1,5 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react'
-import { Button, Card, Form } from 'react-bootstrap'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { updateDisplayName } from '../../../../../api/me'
@@ -7,13 +7,22 @@ import { ApplicationState } from '../../../../../redux'
 import { getAndSetUser } from '../../../../../utils/apiUtils'
 
 export const ProfileDisplayName: React.FC = () => {
+  const regexInvalidDisplayName = /^\s*$/
   const { t } = useTranslation()
   const user = useSelector((state: ApplicationState) => state.user)
   const [submittable, setSubmittable] = useState(false)
   const [error, setError] = useState(false)
-  const [displayName, setDisplayName] = useState(user.name)
+  const [displayName, setDisplayName] = useState('')
 
-  const regexInvalidDisplayName = /^\s*$/
+  useEffect(() => {
+    if (user) {
+      setDisplayName(user.name)
+    }
+  }, [user])
+
+  if (!user) {
+    return <Alert variant={'danger'}>User not logged in</Alert>
+  }
 
   const changeNameField = (event: ChangeEvent<HTMLInputElement>) => {
     setSubmittable(!regexInvalidDisplayName.test(event.target.value))

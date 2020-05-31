@@ -1,12 +1,10 @@
 import { getMe } from '../api/me'
 import { setUser } from '../redux/user/methods'
-import { LoginStatus } from '../redux/user/types'
 import { store } from './store'
 
 export const getAndSetUser: () => (Promise<void>) = async () => {
   const me = await getMe()
   setUser({
-    status: LoginStatus.ok,
     id: me.id,
     name: me.name,
     photo: me.photo,

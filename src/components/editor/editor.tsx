@@ -2,9 +2,9 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { ApplicationState } from '../../redux'
-import { EditorMode } from '../../redux/editor/types'
 import { EditorWindow } from './editor-window/editor-window'
 import { MarkdownPreview } from './markdown-preview/markdown-preview'
+import { EditorMode } from './task-bar/editor-view-mode'
 import { TaskBar } from './task-bar/task-bar'
 
 interface RouteParameters {

@@ -1,28 +1,12 @@
 import { Reducer } from 'redux'
-import {
-  CLEAR_USER_ACTION_TYPE,
-  LoginProvider,
-  LoginStatus,
-  SET_USER_ACTION_TYPE,
-  SetUserAction,
-  UserActions,
-  UserState
-} from './types'
+import { MaybeUserState, SetUserAction, UserActions, UserActionType } from './types'
 
-export const initialState: UserState = {
-  id: '',
-  name: '',
-  photo: '',
-  status: LoginStatus.forbidden,
-  provider: LoginProvider.EMAIL
-}
-
-export const UserReducer: Reducer<UserState, UserActions> = (state: UserState = initialState, action: UserActions) => {
+export const UserReducer: Reducer<MaybeUserState, UserActions> = (state: MaybeUserState = null, action: UserActions) => {
   switch (action.type) {
-    case SET_USER_ACTION_TYPE:
-      return (action as SetUserAction).payload.state
-    case CLEAR_USER_ACTION_TYPE:
-      return initialState
+    case UserActionType.SET_USER:
+      return (action as SetUserAction).state
+    case UserActionType.CLEAR_USER:
+      return null
     default:
       return state
   }

@@ -1,14 +1,15 @@
 import { Reducer } from 'redux'
-import { FrontendConfigActions, FrontendConfigState, SET_FRONTEND_CONFIG_ACTION_TYPE } from './types'
+import { FrontendConfig } from '../../api/frontend-config/types'
+import { FrontendConfigActions, FrontendConfigActionType, SetFrontendConfigAction } from './types'
 
-export const initialState: FrontendConfigState = {
+const initialState: FrontendConfig = {
   backendUrl: ''
 }
 
-export const FrontendConfigReducer: Reducer<FrontendConfigState, FrontendConfigActions> = (state: FrontendConfigState = initialState, action: FrontendConfigActions) => {
+export const FrontendConfigReducer: Reducer<(FrontendConfig), FrontendConfigActions> = (state: (FrontendConfig) = initialState, action: FrontendConfigActions) => {
   switch (action.type) {
-    case SET_FRONTEND_CONFIG_ACTION_TYPE:
-      return action.payload.state
+    case FrontendConfigActionType.SET_FRONTEND_CONFIG:
+      return (action as SetFrontendConfigAction).state
     default:
       return state
   }

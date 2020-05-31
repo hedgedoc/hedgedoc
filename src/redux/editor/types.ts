@@ -1,20 +1,18 @@
 import { Action } from 'redux'
+import { EditorMode } from '../../components/editor/task-bar/editor-view-mode'
 
-export const SET_EDITOR_CONFIG_MODE_ACTION_TYPE = 'editor/mode/set'
-
-export interface EditorConfigState {
-    editorMode: EditorMode;
+export enum EditorConfigActionType {
+  SET_EDITOR_VIEW_MODE = 'editor/mode/set'
 }
 
-export enum EditorMode {
-    PREVIEW,
-    BOTH,
-    EDITOR,
+export interface EditorConfig {
+  editorMode: EditorMode;
 }
 
-export interface SetEditorConfigAction extends Action {
-    type: string;
-    payload: EditorMode;
+export interface EditorConfigActions extends Action<EditorConfigActionType> {
+  type: EditorConfigActionType;
 }
 
-export type EditorConfigActions = SetEditorConfigAction;
+export interface SetEditorConfigAction extends EditorConfigActions {
+  mode: EditorMode;
+}

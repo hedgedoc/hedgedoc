@@ -1,16 +1,14 @@
 import { Action } from 'redux'
+import { FrontendConfig } from '../../api/frontend-config/types'
 
-export const SET_FRONTEND_CONFIG_ACTION_TYPE = 'frontend-config/set'
-
-export interface SetFrontendConfigAction extends Action {
-    type: string;
-    payload: {
-        state: FrontendConfigState;
-    };
+export enum FrontendConfigActionType {
+  SET_FRONTEND_CONFIG = 'frontend-config/set'
 }
 
-export interface FrontendConfigState {
-    backendUrl: string,
+export interface FrontendConfigActions extends Action<FrontendConfigActionType> {
+  type: FrontendConfigActionType;
 }
 
-export type FrontendConfigActions = SetFrontendConfigAction;
+export interface SetFrontendConfigAction extends FrontendConfigActions {
+  state: FrontendConfig;
+}

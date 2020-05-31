@@ -1,20 +1,19 @@
 import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { ViaEMail } from './auth/via-email'
-import { OneClickType, ViaOneClick } from './auth/via-one-click'
-import { ViaLdap } from './auth/via-ldap'
 import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../../redux'
-import { ViaOpenId } from './auth/via-openid'
 import { Redirect } from 'react-router'
-import { LoginStatus } from '../../../../redux/user/types'
+import { ApplicationState } from '../../../../redux'
+import { ViaEMail } from './auth/via-email'
+import { ViaLdap } from './auth/via-ldap'
+import { OneClickType, ViaOneClick } from './auth/via-one-click'
+import { ViaOpenId } from './auth/via-openid'
 
 export const Login: React.FC = () => {
   useTranslation()
   const authProviders = useSelector((state: ApplicationState) => state.backendConfig.authProviders)
   const customAuthNames = useSelector((state: ApplicationState) => state.backendConfig.customAuthNames)
-  const userLoginState = useSelector((state: ApplicationState) => state.user.status)
+  const userLoginState = useSelector((state: ApplicationState) => state.user)
   const emailForm = authProviders.email ? <ViaEMail/> : null
   const ldapForm = authProviders.ldap ? <ViaLdap/> : null
   const openIdForm = authProviders.openid ? <ViaOpenId/> : null
@@ -30,7 +29,7 @@ export const Login: React.FC = () => {
     }
   }
 
-  if (userLoginState === LoginStatus.ok) {
+  if (userLoginState) {
     // TODO Redirect to previous page?
     return (
       <Redirect to='/history'/>

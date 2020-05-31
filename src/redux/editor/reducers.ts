@@ -1,21 +1,17 @@
 import { Reducer } from 'redux'
-import {
-  EditorConfigActions,
-  EditorConfigState,
-  EditorMode,
-  SET_EDITOR_CONFIG_MODE_ACTION_TYPE
-} from './types'
+import { EditorMode } from '../../components/editor/task-bar/editor-view-mode'
+import { EditorConfig, EditorConfigActions, EditorConfigActionType, SetEditorConfigAction } from './types'
 
-export const initialState: EditorConfigState = {
+export const initialState: EditorConfig = {
   editorMode: EditorMode.PREVIEW
 }
 
-export const EditorConfigReducer: Reducer<EditorConfigState, EditorConfigActions> = (state: EditorConfigState = initialState, action: EditorConfigActions) => {
+export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (state: EditorConfig = initialState, action: EditorConfigActions) => {
   switch (action.type) {
-    case SET_EDITOR_CONFIG_MODE_ACTION_TYPE:
+    case EditorConfigActionType.SET_EDITOR_VIEW_MODE:
       return {
         ...state,
-        editorMode: action.payload
+        editorMode: (action as SetEditorConfigAction).mode
       }
     default:
       return state

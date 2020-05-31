@@ -1,18 +1,18 @@
 import { combineReducers, Reducer } from 'redux'
-import { UserState } from './user/types'
-import { UserReducer } from './user/reducers'
-import { BackendConfigState } from './backend-config/types'
-import { FrontendConfigState } from './frontend-config/types'
+import { BackendConfig } from '../api/backend-config/types'
+import { FrontendConfig } from '../api/frontend-config/types'
 import { BackendConfigReducer } from './backend-config/reducers'
-import { FrontendConfigReducer } from './frontend-config/reducers'
-import { EditorConfigState } from './editor/types'
 import { EditorConfigReducer } from './editor/reducers'
+import { EditorConfig } from './editor/types'
+import { FrontendConfigReducer } from './frontend-config/reducers'
+import { UserReducer } from './user/reducers'
+import { MaybeUserState } from './user/types'
 
 export interface ApplicationState {
-    user: UserState;
-    backendConfig: BackendConfigState;
-    frontendConfig: FrontendConfigState;
-    editorConfig: EditorConfigState;
+    user: MaybeUserState;
+    backendConfig: BackendConfig;
+    frontendConfig: FrontendConfig;
+    editorConfig: EditorConfig;
 }
 
 export const allReducers: Reducer<ApplicationState> = combineReducers<ApplicationState>({
