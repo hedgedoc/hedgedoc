@@ -1,6 +1,6 @@
 import React from 'react'
 import { Badge, Card } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ForkAwesomeIcon } from '../../../../../fork-awesome/fork-awesome-icon'
 import { PinButton } from '../common/pin-button'
 import { CloseButton } from '../common/close-button'
 import moment from 'moment'
@@ -20,7 +20,7 @@ export const HistoryCard: React.FC<HistoryEntryProps> = ({ entry, onPinClick }) 
         </div>
         <Card.Body>
           <div className="text-black-50">
-            <FontAwesomeIcon icon="clock"/> {moment(entry.lastVisited).fromNow()}<br/>
+            <ForkAwesomeIcon icon="clock-o"/> {moment(entry.lastVisited).fromNow()}<br/>
             {formatHistoryDate(entry.lastVisited)}
             <div>
               {

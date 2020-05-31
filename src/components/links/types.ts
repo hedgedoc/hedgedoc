@@ -1,9 +1,9 @@
 import { StringMap, TOptionsBase } from 'i18next'
-import { IconProp } from '../../utils/iconProp'
+import { IconName } from '../../fork-awesome/fork-awesome-icon'
 
 export interface GeneralLinkProp {
   href: string;
-  icon?: IconProp;
+  icon?: IconName;
   className?: string
 }
 

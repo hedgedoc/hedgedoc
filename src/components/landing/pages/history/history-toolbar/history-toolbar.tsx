@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Button, Form, FormControl, InputGroup, ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { SortButton, SortModeEnum } from '../../../../sort-button/sort-button'
 import { Typeahead } from 'react-bootstrap-typeahead'
 import './typeahead-hacks.scss'
 import { ClearHistoryButton } from './clear-history-button'
+import { ForkAwesomeIcon } from '../../../../../fork-awesome/fork-awesome-icon'
 
 export type HistoryToolbarChange = (settings: HistoryToolbarState) => void;
 
@@ -95,12 +95,12 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
       </InputGroup>
       <InputGroup className={'mr-1 mb-1'}>
         <Button variant={'light'} title={t('landing.history.toolbar.export')}>
-          <FontAwesomeIcon icon={'download'}/>
+          <ForkAwesomeIcon icon='download'/>
         </Button>
       </InputGroup>
       <InputGroup className={'mr-1 mb-1'}>
         <Button variant={'light'} title={t('landing.history.toolbar.import')}>
-          <FontAwesomeIcon icon={'upload'}/>
+          <ForkAwesomeIcon icon='upload'/>
         </Button>
       </InputGroup>
       <InputGroup className={'mr-1 mb-1'}>
@@ -108,7 +108,7 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
       </InputGroup>
       <InputGroup className={'mr-1 mb-1'}>
         <Button variant={'light'} title={t('landing.history.toolbar.refresh')}>
-          <FontAwesomeIcon icon={'sync'}/>
+          <ForkAwesomeIcon icon='refresh'/>
         </Button>
       </InputGroup>
       <InputGroup className={'mr-1 mb-1'}>

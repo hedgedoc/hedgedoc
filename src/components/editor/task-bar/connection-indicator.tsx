@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
+import { ForkAwesomeIcon } from '../../../fork-awesome/fork-awesome-icon'
 import { ActiveIndicatorStatus } from './active-indicator'
 import './connection-indicator.scss'
 import { UserLine } from './user-line'
@@ -10,7 +10,7 @@ const ConnectionIndicator: React.FC = () => {
   return (
     <Dropdown className="small" alignRight>
       <Dropdown.Toggle id="connection-indicator" size="sm" variant="primary" className="upper-case">
-        <FontAwesomeIcon icon="users"/> {userOnline} Online
+        <ForkAwesomeIcon icon="users"/> {userOnline} Online
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item disabled={true} className="d-flex align-items-center p-0">

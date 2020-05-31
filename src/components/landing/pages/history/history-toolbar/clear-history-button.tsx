@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState, Fragment } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
+import { ForkAwesomeIcon } from '../../../../../fork-awesome/fork-awesome-icon'
 
 export interface ClearHistoryButtonProps {
   onClearHistory: () => void
@@ -17,7 +17,7 @@ export const ClearHistoryButton: React.FC<ClearHistoryButtonProps> = ({ onClearH
   return (
     <Fragment>
       <Button variant={'light'} title={t('landing.history.toolbar.clear')} onClick={handleShow}>
-        <FontAwesomeIcon icon={'trash'}/>
+        <ForkAwesomeIcon icon={'trash'}/>
       </Button>
       <Modal show={show} onHide={handleClose} animation={true} className="text-dark">
         <Modal.Header closeButton>
@@ -26,7 +26,7 @@ export const ClearHistoryButton: React.FC<ClearHistoryButtonProps> = ({ onClearH
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-dark">
-            <h5><Trans i18nKey={'landing.history.modal.clearHistory.question'}/></h5>
+          <h5><Trans i18nKey={'landing.history.modal.clearHistory.question'}/></h5>
           <h6><Trans i18nKey={'landing.history.modal.clearHistory.disclaimer'}/></h6>
         </Modal.Body>
         <Modal.Footer>

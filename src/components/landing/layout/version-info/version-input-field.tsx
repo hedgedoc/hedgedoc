@@ -1,14 +1,14 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Fragment, useRef, useState } from 'react'
 import { Button, FormControl, InputGroup, Overlay, Tooltip } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
+import { ForkAwesomeIcon } from '../../../../fork-awesome/fork-awesome-icon'
 
 export interface VersionInputFieldProps {
   version: string
 }
 
 export const VersionInputField: React.FC<VersionInputFieldProps> = ({ version }) => {
-  useTranslation();
+  useTranslation()
   const inputField = useRef<HTMLInputElement>(null)
   const [showCopiedTooltip, setShowCopiedTooltip] = useState(false)
 
@@ -35,7 +35,7 @@ export const VersionInputField: React.FC<VersionInputFieldProps> = ({ version })
         <FormControl readOnly={true} ref={inputField} className={'text-center'} value={version} />
         <InputGroup.Append>
           <Button variant="outline-secondary" onClick={() => copyToClipboard(version)} title={'Copy'}>
-            <FontAwesomeIcon icon={'copy'}/>
+            <ForkAwesomeIcon icon='files-o'/>
           </Button>
         </InputGroup.Append>
       </InputGroup>

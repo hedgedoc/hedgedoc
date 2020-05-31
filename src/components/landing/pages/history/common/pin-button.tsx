@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import './pin-button.scss'
 import { Button } from 'react-bootstrap'
+import { ForkAwesomeIcon } from '../../../../../fork-awesome/fork-awesome-icon'
 
 export interface PinButtonProps {
   isPinned: boolean;
@@ -13,8 +13,8 @@ export const PinButton: React.FC<PinButtonProps> = ({ isPinned, onPinClick, isDa
   return (
     <Button variant={isDark ? 'secondary' : 'light'}
       onClick={onPinClick}>
-      <FontAwesomeIcon
-        icon="thumbtack"
+      <ForkAwesomeIcon
+        icon="thumb-tack"
         className={`history-pin ${isPinned ? 'active' : ''}`}
       />
     </Button>

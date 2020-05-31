@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Fragment, useState } from 'react'
 import { Button, Card, Col, Modal, Row, Table } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
+import { ForkAwesomeIcon } from '../../../fork-awesome/fork-awesome-icon'
 import { TranslatedExternalLink } from '../../links/translated-external-link'
 
 export const HelpButton: React.FC = () => {
@@ -14,12 +14,12 @@ export const HelpButton: React.FC = () => {
     <Fragment>
       <Button title={t('editor.menu.help')} className="ml-2 text-secondary" size="sm" variant="outline-light"
         onClick={handleShow}>
-        <FontAwesomeIcon icon="question-circle"/>
+        <ForkAwesomeIcon icon="question-circle"/>
       </Button>
       <Modal show={show} onHide={handleClose} animation={true} className="text-dark" size='lg'>
         <Modal.Header closeButton>
           <Modal.Title>
-            <FontAwesomeIcon icon="question-circle"/> <Trans i18nKey={'editor.menu.help'}/>
+            <ForkAwesomeIcon icon="question-circle"/> <Trans i18nKey={'editor.menu.help'}/>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-dark">
@@ -76,7 +76,7 @@ export const HelpButton: React.FC = () => {
                         <TranslatedExternalLink
                           i18nKey='editor.help.documents.features'
                           href='/n/features'
-                          icon='dot-circle'
+                          icon='dot-circle-o'
                           className='text-primary'
                         />
                       </li>
@@ -84,7 +84,7 @@ export const HelpButton: React.FC = () => {
                         <TranslatedExternalLink
                           i18nKey='editor.help.documents.yamlMetadata'
                           href='/n/yaml-data'
-                          icon='dot-circle'
+                          icon='dot-circle-o'
                           className='text-primary'
                         />
                       </li>
@@ -92,7 +92,7 @@ export const HelpButton: React.FC = () => {
                         <TranslatedExternalLink
                           i18nKey='editor.help.documents.slideExample'
                           href='https://github.com/codimd/server/issues'
-                          icon='dot-circle'
+                          icon='dot-circle-o'
                           className='text-primary'
                         />
                       </li>

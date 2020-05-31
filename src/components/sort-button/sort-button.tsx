@@ -1,6 +1,6 @@
 import React from 'react'
 import { ButtonProps } from 'react-bootstrap'
-import { IconProp } from '../../utils/iconProp'
+import { IconName } from '../../fork-awesome/fork-awesome-icon'
 import { IconButton } from '../icon-button/icon-button'
 
 export enum SortModeEnum {
@@ -9,15 +9,15 @@ export enum SortModeEnum {
     no = 0
 }
 
-const getIcon = (direction: SortModeEnum): IconProp => {
+const getIcon = (direction: SortModeEnum): IconName => {
   switch (direction) {
     default:
     case SortModeEnum.no:
       return 'sort'
     case SortModeEnum.up:
-      return 'sort-up'
+      return 'sort-asc'
     case SortModeEnum.down:
-      return 'sort-down'
+      return 'sort-desc'
   }
 }
 

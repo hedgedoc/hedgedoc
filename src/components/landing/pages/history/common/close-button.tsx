@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './close-button.scss'
+import { ForkAwesomeIcon } from '../../../../../fork-awesome/fork-awesome-icon'
 
 export interface CloseButtonProps {
   isDark: boolean;
@@ -10,7 +10,7 @@ export interface CloseButtonProps {
 const CloseButton: React.FC<CloseButtonProps> = ({ isDark }) => {
   return (
     <Button variant={isDark ? 'secondary' : 'light'}>
-      <FontAwesomeIcon
+      <ForkAwesomeIcon
         className="history-close"
         icon="times"
       />

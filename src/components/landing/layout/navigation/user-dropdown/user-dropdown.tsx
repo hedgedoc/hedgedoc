@@ -1,7 +1,7 @@
 import { Dropdown } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { ForkAwesomeIcon } from '../../../../../fork-awesome/fork-awesome-icon'
 import { ApplicationState } from '../../../../../redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import { clearUser } from '../../../../../redux/user/methods'
@@ -21,13 +21,13 @@ export const UserDropdown: React.FC = () => {
       <Dropdown.Menu>
         <LinkContainer to={'/features'}>
           <Dropdown.Item>
-            <FontAwesomeIcon icon="bolt" fixedWidth={true} className="mr-2"/>
+            <ForkAwesomeIcon icon="bolt" fixedWidth={true} className="mr-2"/>
             <Trans i18nKey="editor.help.documents.features"/>
           </Dropdown.Item>
         </LinkContainer>
         <LinkContainer to={'/profile'}>
           <Dropdown.Item>
-            <FontAwesomeIcon icon="user" fixedWidth={true} className="mr-2"/>
+            <ForkAwesomeIcon icon="user" fixedWidth={true} className="mr-2"/>
             <Trans i18nKey="profile.userProfile"/>
           </Dropdown.Item>
         </LinkContainer>
@@ -35,7 +35,7 @@ export const UserDropdown: React.FC = () => {
           onClick={() => {
             clearUser()
           }}>
-          <FontAwesomeIcon icon="sign-out-alt" fixedWidth={true} className="mr-2"/>
+          <ForkAwesomeIcon icon="sign-out" fixedWidth={true} className="mr-2"/>
           <Trans i18nKey="login.signOut"/>
         </Dropdown.Item>
       </Dropdown.Menu>

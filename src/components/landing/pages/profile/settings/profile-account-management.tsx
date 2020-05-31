@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { Button, Card, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { deleteUser } from '../../../../../api/user'
+import { ForkAwesomeIcon } from '../../../../../fork-awesome/fork-awesome-icon'
 import { clearUser } from '../../../../../redux/user/methods'
 import { getBackendUrl } from '../../../../../utils/apiUtils'
 
@@ -58,11 +58,11 @@ export const ProfileAccountManagement: React.FC = () => {
         <Card.Body>
           <Card.Title><Trans i18nKey="profile.accountManagement"/></Card.Title>
           <Button variant="secondary" block href={getBackendUrl() + '/me/export'} className="mb-2">
-            <FontAwesomeIcon icon="cloud-download-alt" fixedWidth={true} className="mr-2"/>
+            <ForkAwesomeIcon icon="cloud-download" fixedWidth={true} className="mr-2"/>
             <Trans i18nKey="profile.exportUserData"/>
           </Button>
           <Button variant="danger" block onClick={handleModalOpen}>
-            <FontAwesomeIcon icon="trash" fixedWidth={true} className="mr-2"/>
+            <ForkAwesomeIcon icon="trash" fixedWidth={true} className="mr-2"/>
             <Trans i18nKey="profile.deleteUser"/>
           </Button>
         </Card.Body>

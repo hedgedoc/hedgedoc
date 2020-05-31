@@ -1,12 +1,11 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './social-link-button.scss'
-import { IconProp } from '../../../../../../utils/iconProp'
+import { ForkAwesomeIcon, IconName } from '../../../../../../fork-awesome/fork-awesome-icon'
 
 export interface SocialButtonProps {
   backgroundClass: string,
   href: string
-  icon: IconProp
+  icon: IconName
   title?: string
 }
 
@@ -15,7 +14,7 @@ export const SocialLinkButton: React.FC<SocialButtonProps> = ({ title, backgroun
     <a href={href} title={title}
       className={'btn social-link-button p-0 d-inline-flex align-items-stretch ' + backgroundClass}>
       <span className="icon-part d-flex align-items-center">
-        <FontAwesomeIcon icon={icon} className={'social-icon'} fixedWidth={true}/>
+        <ForkAwesomeIcon icon={icon} className={'social-icon'} fixedWidth={true}/>
       </span>
       <span className="text-part d-flex align-items-center mx-auto">
         {children}

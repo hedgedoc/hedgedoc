@@ -1,7 +1,7 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
 import { Button, Nav, Navbar } from 'react-bootstrap'
+import { ForkAwesomeIcon } from '../../../fork-awesome/fork-awesome-icon'
 import { DarkModeButton } from './dark-mode-button'
 import { EditorViewMode } from './editor-view-mode'
 import { Trans, useTranslation } from 'react-i18next'
@@ -16,7 +16,7 @@ const TaskBar: React.FC = () => {
       <Nav className="mr-auto d-flex align-items-center">
         <Navbar.Brand>
           <Link to="/intro" className="text-secondary">
-            <FontAwesomeIcon icon="file-alt"/> CodiMD
+            <ForkAwesomeIcon icon="file-text"/> CodiMD
           </Link>
         </Navbar.Brand>
         <EditorViewMode/>
@@ -25,10 +25,10 @@ const TaskBar: React.FC = () => {
       </Nav>
       <Nav className="d-flex align-items-center text-secondary">
         <Button className="ml-2 text-secondary" size="sm" variant="outline-light">
-          <FontAwesomeIcon icon="plus"/> <Trans i18nKey="editor.menu.new"/>
+          <ForkAwesomeIcon icon="plus"/> <Trans i18nKey="editor.menu.new"/>
         </Button>
         <Button className="ml-2 text-secondary" size="sm" variant="outline-light">
-          <FontAwesomeIcon icon="share-square"/> <Trans i18nKey="editor.menu.publish"/>
+          <ForkAwesomeIcon icon="share-square-o"/> <Trans i18nKey="editor.menu.publish"/>
         </Button>
         <div className="text-secondary">
           <EditorMenu/>

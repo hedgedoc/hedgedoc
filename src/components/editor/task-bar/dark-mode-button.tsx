@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
+import { ForkAwesomeIcon } from '../../../fork-awesome/fork-awesome-icon'
 
 const DarkModeButton: React.FC = () => {
   const { t } = useTranslation()
@@ -19,8 +19,8 @@ const DarkModeButton: React.FC = () => {
         onChange={buttonToggle} value={'dark'}
       >
         {buttonState
-          ? <FontAwesomeIcon icon="sun"/>
-          : <FontAwesomeIcon icon="moon"/>
+          ? <ForkAwesomeIcon icon="sun"/>
+          : <ForkAwesomeIcon icon="moon"/>
         }
       </ToggleButton>
     </ToggleButtonGroup>

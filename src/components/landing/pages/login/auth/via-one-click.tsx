@@ -1,5 +1,5 @@
 import React from 'react'
-import { IconProp } from '../../../../../utils/iconProp'
+import { IconName } from '../../../../../fork-awesome/fork-awesome-icon'
 import { SocialLinkButton } from './social-link-button/social-link-button'
 
 export enum OneClickType {
@@ -15,7 +15,7 @@ export enum OneClickType {
 
 type OneClick2Map = (oneClickType: OneClickType) => {
   name: string,
-  icon: IconProp,
+  icon: IconName,
   className: string,
   url: string
 };
@@ -29,35 +29,35 @@ const getMetadata: OneClick2Map = (oneClickType: OneClickType) => {
     case OneClickType.DROPBOX:
       return {
         name: 'Dropbox',
-        icon: ['fab', 'dropbox'],
+        icon: 'dropbox',
         className: 'btn-social-dropbox',
         url: buildBackendAuthUrl('dropbox')
       }
     case OneClickType.FACEBOOK:
       return {
         name: 'Facebook',
-        icon: ['fab', 'facebook'],
+        icon: 'facebook',
         className: 'btn-social-facebook',
         url: buildBackendAuthUrl('facebook')
       }
     case OneClickType.GITHUB:
       return {
         name: 'GitHub',
-        icon: ['fab', 'github'],
+        icon: 'github',
         className: 'btn-social-github',
         url: buildBackendAuthUrl('github')
       }
     case OneClickType.GITLAB:
       return {
         name: 'GitLab',
-        icon: ['fab', 'gitlab'],
+        icon: 'gitlab',
         className: 'btn-social-gitlab',
         url: buildBackendAuthUrl('gitlab')
       }
     case OneClickType.GOOGLE:
       return {
         name: 'Google',
-        icon: ['fab', 'google'],
+        icon: 'google',
         className: 'btn-social-google',
         url: buildBackendAuthUrl('google')
       }
@@ -78,7 +78,7 @@ const getMetadata: OneClick2Map = (oneClickType: OneClickType) => {
     case OneClickType.TWITTER:
       return {
         name: 'Twitter',
-        icon: ['fab', 'twitter'],
+        icon: 'twitter',
         className: 'btn-social-twitter',
         url: buildBackendAuthUrl('twitter')
       }
