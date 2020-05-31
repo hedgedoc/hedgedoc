@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 
 const DarkModeButton: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   const [buttonState, setButtonState] = useState(false)
   const buttonToggle = () => {
     setButtonState(prevState => !prevState)
@@ -13,12 +13,15 @@ const DarkModeButton: React.FC = () => {
   return (
     <ToggleButtonGroup type="checkbox" defaultValue={[]} name="dark-mode" className="ml-2" value={buttonState ? ['dark'] : ['']}>
       <ToggleButton
-        title={ buttonState ? t('editor.darkMode.switchToDark') : t('editor.darkMode.switchToLight')}
+        title={ buttonState ? t('editor.darkMode.switchToLight') : t('editor.darkMode.switchToDark')}
         variant={ buttonState ? 'secondary' : 'light' }
         className={ buttonState ? 'text-white' : 'text-secondary' }
         onChange={buttonToggle} value={'dark'}
       >
-        <FontAwesomeIcon icon="moon"/>
+        {buttonState
+          ? <FontAwesomeIcon icon="sun"/>
+          : <FontAwesomeIcon icon="moon"/>
+        }
       </ToggleButton>
     </ToggleButtonGroup>
   )

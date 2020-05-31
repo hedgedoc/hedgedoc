@@ -38,6 +38,7 @@ import {
   faSort,
   faSortDown,
   faSortUp,
+  faSun,
   faSync,
   faTag,
   faThumbtack,
@@ -55,5 +56,5 @@ export const setUpFontAwesome: (() => void) = () => {
     faDropbox, faTwitter, faUsers, faAddressCard, faEye, faPencilAlt, faColumns,
     faMoon, faQuestionCircle, faShareSquare, faHistory, faFileCode, faPaste,
     faCircle, faSort, faDownload, faUpload, faTrash, faSync, faSortUp, faSortDown, faCopy,
-    faHashtag, faLanguage, faTag, faDotCircle)
+    faHashtag, faLanguage, faTag, faDotCircle, faSun)
 }
