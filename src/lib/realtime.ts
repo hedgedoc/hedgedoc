@@ -467,16 +467,21 @@ function finishConnection (socket: SocketWithNoteId, noteId: string, socketId: s
     return failConnection(403, 'connection forbidden', socket)
   }
   const user = users.get(socketId)
-  if (!user || !user.userid) return
-  // update user color to author color
-  const author = note.authors.get(user.userid)
-  if (author) {
-    const socketIdUser = users.get(socket.id)
-    if (!socketIdUser) return
-    user.color = socketIdUser.color
-    users.set(socket.id, user)
+  if (!user) {
+    logger.warn('Could not find user for socketId ' + socketId)
+    return
   }
-
+  if (user.userid) {
+    // update user color to author color
+    const author = note.authors.get(user.userid)
+    if (author) {
+      const socketIdUser = users.get(socket.id)
+      if (!socketIdUser) return
+      user.color = author.color
+      socketIdUser.color = author.color
+      users.set(socket.id, user)
+    }
+  }
   note.users.set(socket.id, user)
   note.socks.push(socket)
   note.server.addClient(socket)
