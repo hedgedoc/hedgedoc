@@ -11,6 +11,7 @@ import { Login } from './components/landing/pages/login/login'
 import { setUpFontAwesome } from './initializers/fontAwesome'
 import * as serviceWorker from './service-worker'
 import { store } from './utils/store'
+import './style/index.scss'
 
 setUpFontAwesome()
 
