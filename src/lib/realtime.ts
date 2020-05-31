@@ -349,8 +349,7 @@ function emitOnlineUsers (socket: SocketWithNoteId): void {
   const note = notes.get(noteId)
   if (!note) return
   const users: UserSession[] = []
-  // Object.keys(note.users).forEach(function (key) {
-  for (const user of note.users.keys()) {
+  for (const user of note.users.values()) {
     if (user) {
       users.push(buildUserOutData(user))
     }
