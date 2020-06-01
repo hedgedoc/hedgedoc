@@ -1,12 +1,12 @@
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import { config } from '../../config'
 import { errors } from '../../errors'
 import { logger } from '../../logger'
-import { Note, User } from '../../models'
+import { Note } from '../../models'
 import * as ActionController from './actions'
 import * as NoteUtils from './util'
 
-export function publishNoteActions (req: any, res: Response, next: NextFunction) {
+export function publishNoteActions (req: Request, res: Response): void {
   NoteUtils.findNoteOrCreate(req, res, function (note) {
     const action = req.params.action
     switch (action) {
@@ -23,14 +23,7 @@ export function publishNoteActions (req: any, res: Response, next: NextFunction)
   })
 }
 
-export function showPublishNote (req: any, res: Response, next: NextFunction) {
-  const include = [{
-    model: User,
-    as: 'owner'
-  }, {
-    model: User,
-    as: 'lastchangeuser'
-  }]
+export function showPublishNote (req: Request, res: Response): void {
   NoteUtils.findNoteOrCreate(req, res, function (note) {
     // force to use short id
     const shortid = req.params.shortid
@@ -51,10 +44,10 @@ export function showPublishNote (req: any, res: Response, next: NextFunction) {
       logger.error(err)
       return errors.errorInternalError(res)
     })
-  }, include)
+  })
 }
 
-export function showNote (req: any, res: Response, next: NextFunction) {
+export function showNote (req: Request, res: Response): void {
   NoteUtils.findNoteOrCreate(req, res, function (note) {
     // force to use note id
     const noteId = req.params.noteId
@@ -79,7 +72,7 @@ export function showNote (req: any, res: Response, next: NextFunction) {
   })
 }
 
-export function createFromPOST (req: any, res: Response, next: NextFunction) {
+export function createFromPOST (req: Request, res: Response): void {
   let body = ''
   if (req.body && req.body.length > config.documentMaxLength) {
     return errors.errorTooLong(res)
@@ -90,7 +83,7 @@ export function createFromPOST (req: any, res: Response, next: NextFunction) {
   return NoteUtils.newNote(req, res, body)
 }
 
-export function doAction (req: any, res: Response, next: NextFunction) {
+export function doAction (req: Request, res: Response): void {
   const noteId = req.params.noteId
   NoteUtils.findNoteOrCreate(req, res, (note) => {
     const action = req.params.action
@@ -121,7 +114,7 @@ export function doAction (req: any, res: Response, next: NextFunction) {
   })
 }
 
-export function downloadMarkdown (req: Request, res: Response, note: any) {
+export function downloadMarkdown (req: Request, res: Response, note): void {
   const body = note.content
   let filename = Note.decodeTitle(note.title)
   filename = encodeURIComponent(filename)

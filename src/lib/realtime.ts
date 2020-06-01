@@ -1,24 +1,34 @@
-import async from 'async'
 import Chance from 'chance'
+import CodeMirror from 'codemirror'
 import cookie from 'cookie'
 import cookieParser from 'cookie-parser'
 import moment from 'moment'
 import randomcolor from 'randomcolor'
-import { Socket } from 'socket.io'
+import SocketIO, { Socket } from 'socket.io'
 import { config } from './config'
 
 import { History } from './history'
 import { logger } from './logger'
 import { Author, Note, Revision, User } from './models'
+import { NoteAuthorship } from './models/note'
+import { PhotoProfile } from './models/user'
 import { EditorSocketIOServer } from './ot/editor-socketio-server'
+import { mapToObject } from './utils'
 
 export type SocketWithNoteId = Socket & { noteId: string }
 
 const chance = new Chance()
 
 /* eslint-disable @typescript-eslint/no-use-before-define */
-const realtime: any = {
-  io: null,
+const realtime: {
+  onAuthorizeSuccess: (data, accept) => void;
+  onAuthorizeFail: (data, message, error, accept) => void;
+  io: SocketIO.Server; isReady: () => boolean;
+  connection: (socket: SocketWithNoteId) => void;
+  secure: (socket: SocketIO.Socket, next: (err?: Error) => void) => void;
+  getStatus: (callback) => void; maintenance: boolean;
+} = {
+  io: SocketIO(),
   onAuthorizeSuccess: onAuthorizeSuccess,
   onAuthorizeFail: onAuthorizeFail,
   secure: secure,
@@ -40,7 +50,7 @@ function onAuthorizeFail (data, message, error, accept): void {
 }
 
 // secure the origin by the cookie
-function secure (socket: Socket, next: (err?: any) => void): void {
+function secure (socket: Socket, next: (err?: Error) => void): void {
   try {
     const handshakeData = socket.request
     if (handshakeData.headers.cookie) {
@@ -62,25 +72,58 @@ function secure (socket: Socket, next: (err?: any) => void): void {
   }
 }
 
-function emitCheck (note): void {
+function emitCheck (note: NoteSession): void {
   const out = {
     title: note.title,
     updatetime: note.updatetime,
     lastchangeuser: note.lastchangeuser,
     lastchangeuserprofile: note.lastchangeuserprofile,
-    authors: note.authors,
+    authors: mapToObject(note.authors),
     authorship: note.authorship
   }
   realtime.io.to(note.id).emit('check', out)
 }
 
+class UserSession {
+  id?: string
+  address?: string
+  login?: boolean
+  userid: string | null
+  'user-agent'?
+  photo: string
+  color: string
+  cursor?: CodeMirror.Position
+  name: string | null
+  idle?: boolean
+  type?: string
+}
+
+class NoteSession {
+  id: string
+  alias: string
+  title: string
+  owner: string
+  ownerprofile: PhotoProfile | null
+  permission: string
+  lastchangeuser: string | null
+  lastchangeuserprofile: PhotoProfile | null
+  socks: SocketWithNoteId[]
+  users: Map<string, UserSession>
+  tempUsers: Map<string, number> // time value
+  createtime: number
+  updatetime: number
+  server: EditorSocketIOServer
+  authors: Map<string, UserSession>
+  authorship: NoteAuthorship[]
+}
+
 // actions
-const users = {}
-const notes = {}
+const users: Map<string, UserSession> = new Map<string, UserSession>()
+const notes: Map<string, NoteSession> = new Map<string, NoteSession>()
 
 let saverSleep = false
 
-function finishUpdateNote (note: any, _note: Note, callback: any) {
+function finishUpdateNote (note: NoteSession, _note: Note, callback: (err: Error | null, note: Note | null) => void): void {
   if (!note || !note.server) return callback(null, null)
   const body = note.server.document
   const title = note.title = Note.parseNoteTitle(body)
@@ -100,12 +143,12 @@ function finishUpdateNote (note: any, _note: Note, callback: any) {
   })
 }
 
-function updateHistory (userId, note, time?): void {
+function updateHistory (userId, note: NoteSession, time?): void {
   const noteId = note.alias ? note.alias : Note.encodeNoteId(note.id)
   if (note.server) History.updateHistory(userId, noteId, note.server.document, time)
 }
 
-function updateNote (note: any, callback: (err, note) => any): any {
+function updateNote (note: NoteSession, callback: (err, note) => void): void {
   Note.findOne({
     where: {
       id: note.id
@@ -113,11 +156,11 @@ function updateNote (note: any, callback: (err, note) => any): any {
   }).then(function (_note) {
     if (!_note) return callback(null, null)
     // update user note history
-    const tempUsers = Object.assign({}, note.tempUsers)
-    note.tempUsers = {}
-    Object.keys(tempUsers).forEach(function (key) {
-      updateHistory(key, note, tempUsers[key])
-    })
+    const tempUsers = new Map(note.tempUsers)
+    note.tempUsers = new Map<string, number>()
+    for (const [key, time] of tempUsers) {
+      updateHistory(key, note, time)
+    }
     if (note.lastchangeuser) {
       if (_note.lastchangeuserId !== note.lastchangeuser) {
         User.findOne({
@@ -147,14 +190,13 @@ function updateNote (note: any, callback: (err, note) => any): any {
 
 // update when the note is dirty
 setInterval(function () {
-  async.each(Object.keys(notes), function (key, callback) {
-    const note = notes[key]
+  for (const [key, note] of notes) {
     if (note.server.isDirty) {
       logger.debug(`updater found dirty note: ${key}`)
       note.server.isDirty = false
       updateNote(note, function (err, _note) {
         // handle when note already been clean up
-        if (!notes[key] || !notes[key].server) return callback(null, null)
+        if (!note || !note.server) return
         if (!_note) {
           realtime.io.to(note.id).emit('info', {
             code: 404
@@ -162,26 +204,22 @@ setInterval(function () {
           logger.error('note not found: ', note.id)
         }
         if (err || !_note) {
-          for (let i = 0, l = note.socks.length; i < l; i++) {
-            const sock = note.socks[i]
-            if (typeof sock !== 'undefined' && sock) {
+          for (const sock of note.socks) {
+            if (sock) {
               setTimeout(function () {
                 sock.disconnect()
               }, 0)
             }
           }
-          return callback(err, null)
+          return logger.error('updater error', err)
         }
         note.updatetime = moment(_note.lastchangeAt).valueOf()
         emitCheck(note)
-        return callback(null, null)
       })
     } else {
-      return callback(null, null)
+      return
     }
-  }, function (err) {
-    if (err) return logger.error('updater error', err)
-  })
+  }
 }, 1000)
 
 // save note revision in interval
@@ -200,26 +238,29 @@ let isDisconnectBusy: boolean
 
 const connectionSocketQueue: SocketWithNoteId[] = []
 
-function getStatus (callback) {
+function getStatus (callback): void {
   Note.count().then(function (notecount) {
     const distinctaddresses: string[] = []
     const regaddresses: string[] = []
     const distinctregaddresses: string[] = []
-    Object.keys(users).forEach(function (key) {
-      const user = users[key]
+    for (const user of users.values()) {
       if (!user) return
       let found = false
-      for (let i = 0; i < distinctaddresses.length; i++) {
-        if (user.address === distinctaddresses[i]) {
+      for (const distinctaddress of distinctaddresses) {
+        if (user.address === distinctaddress) {
           found = true
           break
         }
       }
       if (!found) {
-        distinctaddresses.push(user.address)
+        if (user.address != null) {
+          distinctaddresses.push(user.address)
+        }
       }
       if (user.login) {
-        regaddresses.push(user.address)
+        if (user.address != null) {
+          regaddresses.push(user.address)
+        }
         let found = false
         for (let i = 0; i < distinctregaddresses.length; i++) {
           if (user.address === distinctregaddresses[i]) {
@@ -228,10 +269,12 @@ function getStatus (callback) {
           }
         }
         if (!found) {
-          distinctregaddresses.push(user.address)
+          if (user.address != null) {
+            distinctregaddresses.push(user.address)
+          }
         }
       }
-    })
+    }
     User.count().then(function (regcount) {
       // eslint-disable-next-line standard/no-callback-literal
       return callback ? callback({
@@ -262,7 +305,7 @@ function isReady (): boolean {
     disconnectSocketQueue.length === 0 && !isDisconnectBusy
 }
 
-function extractNoteIdFromSocket (socket): string | boolean {
+function extractNoteIdFromSocket (socket: Socket): string | boolean {
   if (!socket || !socket.handshake) {
     return false
   }
@@ -273,7 +316,7 @@ function extractNoteIdFromSocket (socket): string | boolean {
   }
 }
 
-function parseNoteIdFromSocket (socket, callback: (err, noteId) => void): void {
+function parseNoteIdFromSocket (socket: Socket, callback: (err: string | null, noteId: string | null) => void): void {
   const noteId = extractNoteIdFromSocket(socket)
   if (!noteId) {
     return callback(null, null)
@@ -284,8 +327,8 @@ function parseNoteIdFromSocket (socket, callback: (err, noteId) => void): void {
   })
 }
 
-function buildUserOutData (user) {
-  const out = {
+function buildUserOutData (user): UserSession {
+  return {
     id: user.id,
     login: user.login,
     userid: user.userid,
@@ -296,19 +339,19 @@ function buildUserOutData (user) {
     idle: user.idle,
     type: user.type
   }
-  return out
 }
 
 function emitOnlineUsers (socket: SocketWithNoteId): void {
   const noteId = socket.noteId
-  if (!noteId || !notes[noteId]) return
-  const users: any[] = []
-  Object.keys(notes[noteId].users).forEach(function (key) {
-    const user = notes[noteId].users[key]
+  if (!noteId) return
+  const note = notes.get(noteId)
+  if (!note) return
+  const users: UserSession[] = []
+  for (const user of note.users.values()) {
     if (user) {
       users.push(buildUserOutData(user))
     }
-  })
+  }
   const out = {
     users: users
   }
@@ -317,16 +360,20 @@ function emitOnlineUsers (socket: SocketWithNoteId): void {
 
 function emitUserStatus (socket: SocketWithNoteId): void {
   const noteId = socket.noteId
-  const user = users[socket.id]
-  if (!noteId || !notes[noteId] || !user) return
+  if (!noteId) return
+  const note = notes.get(noteId)
+  if (!note) return
+  const user = users.get(socket.id)
+  if (!user) return
   const out = buildUserOutData(user)
   socket.broadcast.to(noteId).emit('user status', out)
 }
 
 function emitRefresh (socket: SocketWithNoteId): void {
   const noteId = socket.noteId
-  if (!noteId || !notes[noteId]) return
-  const note = notes[noteId]
+  if (!noteId) return
+  const note = notes.get(noteId)
+  if (!note) return
   const out = {
     title: note.title,
     docmaxlength: config.documentMaxLength,
@@ -334,7 +381,7 @@ function emitRefresh (socket: SocketWithNoteId): void {
     ownerprofile: note.ownerprofile,
     lastchangeuser: note.lastchangeuser,
     lastchangeuserprofile: note.lastchangeuserprofile,
-    authors: note.authors,
+    authors: mapToObject(note.authors),
     authorship: note.authorship,
     permission: note.permission,
     createtime: note.createtime,
@@ -344,8 +391,8 @@ function emitRefresh (socket: SocketWithNoteId): void {
 }
 
 function isDuplicatedInSocketQueue (queue: Socket[], socket: Socket): boolean {
-  for (let i = 0; i < queue.length; i++) {
-    if (queue[i] && queue[i].id === socket.id) {
+  for (const sock of queue) {
+    if (sock && sock.id === socket.id) {
       return true
     }
   }
@@ -385,8 +432,8 @@ function failConnection (errorCode: number, errorMessage: string, socket: Socket
 }
 
 function interruptConnection (socket: Socket, noteId: string, socketId): void {
-  if (notes[noteId]) delete notes[noteId]
-  if (users[socketId]) delete users[socketId]
+  notes.delete(noteId)
+  users.delete(socketId)
   if (socket) {
     clearSocketQueue(connectionSocketQueue, socket)
   } else {
@@ -395,7 +442,7 @@ function interruptConnection (socket: Socket, noteId: string, socketId): void {
   connectNextSocket()
 }
 
-function checkViewPermission (req, note): boolean {
+function checkViewPermission (req, note: NoteSession): boolean {
   if (note.permission === 'private') {
     return !!(req.user?.logged_in && req.user.id === note.owner)
   } else if (note.permission === 'limited' || note.permission === 'protected') {
@@ -407,21 +454,33 @@ function checkViewPermission (req, note): boolean {
 
 function finishConnection (socket: SocketWithNoteId, noteId: string, socketId: string): void {
   // if no valid info provided will drop the client
-  if (!socket || !notes[noteId] || !users[socketId]) {
+  if (!socket || !notes.get(noteId) || !users.get(socketId)) {
     return interruptConnection(socket, noteId, socketId)
   }
   // check view permission
-  if (!checkViewPermission(socket.request, notes[noteId])) {
+  const note = notes.get(noteId)
+  if (!note) return
+  if (!checkViewPermission(socket.request, note)) {
     interruptConnection(socket, noteId, socketId)
     return failConnection(403, 'connection forbidden', socket)
   }
-  const note = notes[noteId]
-  const user = users[socketId]
-  // update user color to author color
-  if (note.authors[user.userid]) {
-    user.color = users[socket.id].color = note.authors[user.userid].color
+  const user = users.get(socketId)
+  if (!user) {
+    logger.warn('Could not find user for socketId ' + socketId)
+    return
   }
-  note.users[socket.id] = user
+  if (user.userid) {
+    // update user color to author color
+    const author = note.authors.get(user.userid)
+    if (author) {
+      const socketIdUser = users.get(socket.id)
+      if (!socketIdUser) return
+      user.color = author.color
+      socketIdUser.color = author.color
+      users.set(socket.id, user)
+    }
+  }
+  note.users.set(socket.id, user)
   note.socks.push(socket)
   note.server.addClient(socket)
   note.server.setName(socket, user.name)
@@ -451,8 +510,9 @@ function finishConnection (socket: SocketWithNoteId, noteId: string, socketId: s
 
 function ifMayEdit (socket: SocketWithNoteId, originIsOperation: boolean, callback: (mayEdit: boolean) => void): void {
   const noteId = socket.noteId
-  if (!noteId || !notes[noteId]) return
-  const note = notes[noteId]
+  if (!noteId) return
+  const note = notes.get(noteId)
+  if (!note) return
   let mayEdit = true
   switch (note.permission) {
     case 'freely':
@@ -488,15 +548,18 @@ function ifMayEdit (socket: SocketWithNoteId, originIsOperation: boolean, callba
 
 function operationCallback (socket: SocketWithNoteId, operation): void {
   const noteId = socket.noteId
-  if (!noteId || !notes[noteId]) return
-  const note = notes[noteId]
-  let userId = null
+  if (!noteId) return
+  const note = notes.get(noteId)
+  if (!note) return
+  let userId: string | null = null
   // save authors
   if (socket.request.user && socket.request.user.logged_in) {
-    const user = users[socket.id]
+    const user = users.get(socket.id)
     if (!user) return
     userId = socket.request.user.id
-    if (!note.authors[userId]) {
+    if (!userId) return
+    const author = note.authors.get(userId)
+    if (!author) {
       Author.findOrCreate({
         where: {
           noteId: noteId,
@@ -507,20 +570,20 @@ function operationCallback (socket: SocketWithNoteId, operation): void {
           userId: userId,
           color: user.color
         }
-      }).then(function ([author, created]) {
+      }).then(function ([author, _]) {
         if (author) {
-          note.authors[author.userId] = {
+          note.authors.set(author.userId, {
             userid: author.userId,
             color: author.color,
             photo: user.photo,
             name: user.name
-          }
+          })
         }
       }).catch(function (err) {
         logger.error('operation callback failed: ' + err)
       })
     }
-    note.tempUsers[userId] = Date.now()
+    if (userId) note.tempUsers.set(userId, Date.now())
   }
   // save authorship - use timer here because it's an O(n) complexity algorithm
   setImmediate(function () {
@@ -537,7 +600,7 @@ function startConnection (socket: SocketWithNoteId): void {
     return failConnection(404, 'note id not found', socket)
   }
 
-  if (!notes[noteId]) {
+  if (!notes.get(noteId)) {
     const include = [{
       model: User,
       as: 'owner'
@@ -573,21 +636,20 @@ function startConnection (socket: SocketWithNoteId): void {
       const updatetime = note.lastchangeAt
       const server = new EditorSocketIOServer(body, [], noteId, ifMayEdit, operationCallback)
 
-      const authors = {}
-      for (let i = 0; i < note.authors.length; i++) {
-        const author = note.authors[i]
+      const authors = new Map<string, UserSession>()
+      for (const author of note.authors) {
         const profile = User.getProfile(author.user)
         if (profile) {
-          authors[author.userId] = {
+          authors.set(author.userId, {
             userid: author.userId,
             color: author.color,
             photo: profile.photo,
             name: profile.name
-          }
+          })
         }
       }
 
-      notes[noteId] = {
+      notes.set(noteId, {
         id: noteId,
         alias: note.alias,
         title: note.title,
@@ -597,14 +659,14 @@ function startConnection (socket: SocketWithNoteId): void {
         lastchangeuser: lastchangeuser,
         lastchangeuserprofile: lastchangeuserprofile,
         socks: [],
-        users: {},
-        tempUsers: {},
+        users: new Map<string, UserSession>(),
+        tempUsers: new Map<string, number>(),
         createtime: moment(createtime).valueOf(),
         updatetime: moment(updatetime).valueOf(),
         server: server,
         authors: authors,
         authorship: note.authorship
-      }
+      })
 
       return finishConnection(socket, noteId, socket.id)
     }).catch(function (err) {
@@ -623,17 +685,17 @@ function disconnect (socket: SocketWithNoteId): void {
   isDisconnectBusy = true
 
   logger.debug('SERVER disconnected a client')
-  logger.debug(JSON.stringify(users[socket.id]))
+  logger.debug(JSON.stringify(users.get(socket.id)))
 
-  if (users[socket.id]) {
-    delete users[socket.id]
+  if (users.get(socket.id)) {
+    users.delete(socket.id)
   }
   const noteId = socket.noteId
-  const note = notes[noteId]
+  const note = notes.get(noteId)
   if (note) {
     // delete user in users
-    if (note.users[socket.id]) {
-      delete note.users[socket.id]
+    if (note.users.get(socket.id)) {
+      note.users.delete(socket.id)
     }
     // remove sockets in the note socks
     let index
@@ -644,15 +706,15 @@ function disconnect (socket: SocketWithNoteId): void {
       }
     } while (index !== -1)
     // remove note in notes if no user inside
-    if (Object.keys(note.users).length <= 0) {
+    if (note.users.size <= 0) {
       if (note.server.isDirty) {
-        updateNote(note, function (err, _note) {
+        updateNote(note, function (err, _) {
           if (err) return logger.error('disconnect note failed: ' + err)
           // clear server before delete to avoid memory leaks
           note.server.document = ''
           note.server.operations = []
           delete note.server
-          delete notes[noteId]
+          notes.delete(noteId)
           if (config.debug) {
             logger.debug(notes)
             getStatus(function (data) {
@@ -662,7 +724,7 @@ function disconnect (socket: SocketWithNoteId): void {
         })
       } else {
         delete note.server
-        delete notes[noteId]
+        notes.delete(noteId)
       }
     }
   }
@@ -686,23 +748,20 @@ function disconnect (socket: SocketWithNoteId): void {
 
 // clean when user not in any rooms or user not in connected list
 setInterval(function () {
-  async.each(Object.keys(users), function (key, callback) {
-    let socket = realtime.io.sockets.connected[key]
-    if ((!socket && users[key]) ||
-      (socket && (!socket.rooms || socket.rooms.length <= 0))) {
+  for (const [key, user] of users) {
+    let socket = realtime.io.sockets.connected[key] as SocketWithNoteId
+    if ((!socket && user) ||
+      (socket && (!socket.rooms || Object.keys(socket.rooms).length <= 0))) {
       logger.debug(`cleaner found redundant user: ${key}`)
       if (!socket) {
         socket = {
           id: key
-        }
+        } as SocketWithNoteId
       }
       disconnectSocketQueue.push(socket)
       disconnect(socket)
     }
-    return callback(null, null)
-  }, function (err) {
-    if (err) return logger.error('cleaner error', err)
-  })
+  }
 }, 60000)
 
 function updateUserData (socket: Socket, user): void {
@@ -739,16 +798,17 @@ function connection (socket: SocketWithNoteId): void {
     // random color
     let color = randomcolor()
     // make sure color not duplicated or reach max random count
-    if (notes[noteId]) {
+    const note = notes.get(noteId)
+    if (note) {
       let randomcount = 0
       const maxrandomcount = 10
       let found = false
       do {
-        Object.keys(notes[noteId].users).forEach(function (userId) {
-          if (notes[noteId].users[userId].color === color) {
+        for (const user of note.users.values()) {
+          if (user.color === color) {
             found = true
           }
-        })
+        }
         if (found) {
           color = randomcolor()
           randomcount++
@@ -756,19 +816,20 @@ function connection (socket: SocketWithNoteId): void {
       } while (found && randomcount < maxrandomcount)
     }
     // create user data
-    users[socket.id] = {
+    users.set(socket.id, {
       id: socket.id,
       address: socket.handshake.headers['x-forwarded-for'] || socket.handshake.address,
       'user-agent': socket.handshake.headers['user-agent'],
       color: color,
-      cursor: null,
+      cursor: undefined,
       login: false,
       userid: null,
       name: null,
       idle: false,
-      type: null
-    }
-    updateUserData(socket, users[socket.id])
+      type: '',
+      photo: ''
+    })
+    updateUserData(socket, users.get(socket.id))
 
     // start connection
     connectionSocketQueue.push(socket)
@@ -783,8 +844,8 @@ function connection (socket: SocketWithNoteId): void {
   // received user status
   socket.on('user status', function (data) {
     const noteId = socket.noteId
-    const user = users[socket.id]
-    if (!noteId || !notes[noteId] || !user) return
+    const user = users.get(socket.id)
+    if (!noteId || !notes.get(noteId) || !user) return
     logger.debug(`SERVER received [${noteId}] user status from [${socket.id}]: ${JSON.stringify(data)}`)
     if (data) {
       user.idle = data.idle
@@ -798,8 +859,9 @@ function connection (socket: SocketWithNoteId): void {
     // need login to do more actions
     if (socket.request.user && socket.request.user.logged_in) {
       const noteId = socket.noteId
-      if (!noteId || !notes[noteId]) return
-      const note = notes[noteId]
+      if (!noteId) return
+      const note = notes.get(noteId)
+      if (!note) return
       // Only owner can change permission
       if (note.owner && note.owner === socket.request.user.id) {
         if (permission === 'freely' && !config.allowAnonymous && !config.allowAnonymousEdits) return
@@ -844,8 +906,9 @@ function connection (socket: SocketWithNoteId): void {
     // need login to do more actions
     if (socket.request.user && socket.request.user.logged_in) {
       const noteId = socket.noteId
-      if (!noteId || !notes[noteId]) return
-      const note = notes[noteId]
+      if (!noteId) return
+      const note = notes.get(noteId)
+      if (!note) return
       // Only owner can delete note
       if (note.owner && note.owner === socket.request.user.id) {
         Note.destroy({
@@ -874,8 +937,10 @@ function connection (socket: SocketWithNoteId): void {
   socket.on('user changed', function () {
     logger.info('user changed')
     const noteId = socket.noteId
-    if (!noteId || !notes[noteId]) return
-    const user = notes[noteId].users[socket.id]
+    if (!noteId) return
+    const note = notes.get(noteId)
+    if (!note) return
+    const user = note.users.get(socket.id)
     if (!user) return
     updateUserData(socket, user)
     emitOnlineUsers(socket)
@@ -884,14 +949,15 @@ function connection (socket: SocketWithNoteId): void {
   // received sync of online users request
   socket.on('online users', function () {
     const noteId = socket.noteId
-    if (!noteId || !notes[noteId]) return
-    const users: any = []
-    Object.keys(notes[noteId].users).forEach(function (key) {
-      const user = notes[noteId].users[key]
+    if (!noteId) return
+    const note = notes.get(noteId)
+    if (!note) return
+    const users: UserSession[] = []
+    for (const user of note.users.values()) {
       if (user) {
         users.push(buildUserOutData(user))
       }
-    })
+    }
     const out = {
       users: users
     }
@@ -909,18 +975,18 @@ function connection (socket: SocketWithNoteId): void {
   // received cursor focus
   socket.on('cursor focus', function (data) {
     const noteId = socket.noteId
-    const user = users[socket.id]
-    if (!noteId || !notes[noteId] || !user) return
+    const user = users.get(socket.id)
+    if (!noteId || !notes.get(noteId) || !user) return
     user.cursor = data
     const out = buildUserOutData(user)
     socket.broadcast.to(noteId).emit('cursor focus', out)
   })
 
   // received cursor activity
-  socket.on('cursor activity', function (data) {
+  socket.on('cursor activity', function (data: CodeMirror.Position) {
     const noteId = socket.noteId
-    const user = users[socket.id]
-    if (!noteId || !notes[noteId] || !user) return
+    const user = users.get(socket.id)
+    if (!noteId || !notes.get(noteId) || !user) return
     user.cursor = data
     const out = buildUserOutData(user)
     socket.broadcast.to(noteId).emit('cursor activity', out)
@@ -929,9 +995,9 @@ function connection (socket: SocketWithNoteId): void {
   // received cursor blur
   socket.on('cursor blur', function () {
     const noteId = socket.noteId
-    const user = users[socket.id]
-    if (!noteId || !notes[noteId] || !user) return
-    user.cursor = null
+    const user = users.get(socket.id)
+    if (!noteId || !notes.get(noteId) || !user) return
+    user.cursor = undefined
     const out = {
       id: socket.id
     }

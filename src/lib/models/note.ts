@@ -1,3 +1,15 @@
+import async from 'async'
+import base64url from 'base64url'
+import cheerio from 'cheerio'
+// eslint-disable-next-line @typescript-eslint/camelcase
+import { diff_match_patch, patch_obj } from 'diff-match-patch'
+import fs from 'fs'
+import LZString from 'lz-string'
+import markdownIt from 'markdown-it'
+import metaMarked from 'meta-marked'
+import moment from 'moment'
+import path from 'path'
+import Sequelize from 'sequelize'
 import {
   AfterCreate,
   AllowNull,
@@ -15,24 +27,12 @@ import {
 } from 'sequelize-typescript'
 
 import { generate as shortIdGenerate, isValid as shortIdIsValid } from 'shortid'
-import { Author, Revision, User } from './index'
-import { processData, stripNullByte } from '../utils'
-import Sequelize from 'sequelize'
-import fs from 'fs'
-import path from 'path'
-import LZString from 'lz-string'
-import base64url from 'base64url'
-import markdownIt from 'markdown-it'
-import metaMarked from 'meta-marked'
-import cheerio from 'cheerio'
-import async from 'async'
-import moment from 'moment'
-// eslint-disable-next-line @typescript-eslint/camelcase
-import { diff_match_patch, patch_obj } from 'diff-match-patch'
 import S from 'string'
 import { config } from '../config'
 import { logger } from '../logger'
 import ot from '../ot'
+import { processData, stripNullByte } from '../utils'
+import { Author, Revision, User } from './index'
 
 const md = markdownIt()
 // eslint-disable-next-line new-cap
@@ -48,15 +48,23 @@ enum PermissionEnum {
   private = 'private'
 }
 
+export class OpengraphMetadata {
+  title: string | number
+  description: string | number
+  type: string
+}
+
 export class NoteMetadata {
   title: string
   description: string
   robots: string
   GA: string
   disqus: string
-  slideOptions: any
-  opengraph: any
+  slideOptions
+  opengraph: OpengraphMetadata
 }
+
+export type NoteAuthorship = [string, number, number, number, number]
 
 @Table({ paranoid: false })
 export class Note extends Model<Note> {
@@ -130,17 +138,18 @@ export class Note extends Model<Note> {
   }
 
   @Column(DataType.TEXT({ length: 'long' }))
-  get authorship (): string {
+  get authorship (): NoteAuthorship[] {
     return processData(this.getDataValue('authorship'), [], JSON.parse)
   }
 
-  set authorship (value: string) {
-    this.setDataValue('authorship', JSON.stringify(value))
+  set authorship (value: NoteAuthorship[]) {
+    // Evil hack for TypeScript to accept saving a string in a NoteAuthorship DB-field
+    this.setDataValue('authorship', JSON.stringify(value) as unknown as NoteAuthorship[])
   }
 
   @BeforeCreate
   static async defaultContentAndPermissions (note: Note): Promise<Note> {
-    return await new Promise(function (resolve, reject) {
+    return await new Promise(function (resolve) {
       // if no content specified then use default note
       if (!note.content) {
         let filePath: string
@@ -430,7 +439,7 @@ export class Note extends Model<Note> {
     return tags
   }
 
-  static extractMeta (content): any {
+  static extractMeta (content): { markdown: string; meta: {} } {
     try {
       const obj = metaMarked(content)
       if (!obj.markdown) obj.markdown = ''
@@ -472,8 +481,8 @@ export class Note extends Model<Note> {
     return _meta
   }
 
-  static parseOpengraph (meta, title): any {
-    let _ogdata: any = {}
+  static parseOpengraph (meta, title: string): OpengraphMetadata {
+    let _ogdata = new OpengraphMetadata()
     if (meta.opengraph) {
       _ogdata = meta.opengraph
     }
@@ -489,7 +498,7 @@ export class Note extends Model<Note> {
     return _ogdata
   }
 
-  static updateAuthorshipByOperation (operation, userId: string|null, authorships): any {
+  static updateAuthorshipByOperation (operation, userId: string | null, authorships): NoteAuthorship[] {
     let index = 0
     const timestamp = Date.now()
     for (let i = 0; i < operation.length; i++) {

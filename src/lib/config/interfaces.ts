@@ -36,7 +36,7 @@ export interface Config {
   forbiddenNoteIDs: string[];
   defaultPermission: string;
   dbURL: string;
-  db: any;
+  db;
   sslKeyPath: string;
   sslCertPath: string;
   sslCAPath: string[];
@@ -153,5 +153,6 @@ export interface Config {
   linkifyHeaderStyle: string;
 
   // TODO: Remove escape hatch for dynamically added properties
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [propName: string]: any;
 }

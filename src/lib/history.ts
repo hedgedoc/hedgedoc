@@ -6,15 +6,16 @@ import LZString from 'lz-string'
 import { logger } from './logger'
 import { Note, User } from './models'
 import { errors } from './errors'
+import { LogEntry } from 'winston'
 
 // public
 
-type HistoryObject = {
-  id: string;
-  text: string;
-  time: number;
-  tags: string[];
-  pinned?: boolean;
+class HistoryObject {
+  id: string
+  text: string
+  time: number
+  tags: string[]
+  pinned?: boolean
 }
 
 function parseHistoryMapToArray (historyMap: Map<string, HistoryObject>): HistoryObject[] {
@@ -34,7 +35,7 @@ function parseHistoryArrayToMap (historyArray: HistoryObject[]): Map<string, His
   return historyMap
 }
 
-function getHistory (userId, callback: (err: any, history: any) => void): void {
+function getHistory (userId, callback: (err: unknown, history: Map<string, HistoryObject> | null) => void): void {
   User.findOne({
     where: {
       id: userId
@@ -44,7 +45,7 @@ function getHistory (userId, callback: (err: any, history: any) => void): void {
       return callback(null, null)
     }
     if (user.history) {
-      const history = JSON.parse(user.history)
+      const history: HistoryObject[] = JSON.parse(user.history)
       // migrate LZString encoded note id to base64url encoded note id
       for (let i = 0, l = history.length; i < l; i++) {
         // Calculate minimal string length for an UUID that is encoded
@@ -74,14 +75,14 @@ function getHistory (userId, callback: (err: any, history: any) => void): void {
       return callback(null, parseHistoryArrayToMap(history))
     }
     logger.debug(`read empty history: ${user.id}`)
-    return callback(null, [])
+    return callback(null, new Map<string, HistoryObject>())
   }).catch(function (err) {
     logger.error('read history failed: ' + err)
     return callback(err, null)
   })
 }
 
-function setHistory (userId: string, history: any[], callback: (err: any | null, count: [number, User[]] | null) => void): void {
+function setHistory (userId: string, history: HistoryObject[], callback: (err: LogEntry | null, count: [number, User[]] | null) => void): void {
   User.update({
     history: JSON.stringify(history)
   }, {
@@ -100,16 +101,14 @@ function updateHistory (userId: string, noteId: string, document, time): void {
   if (userId && noteId && typeof document !== 'undefined') {
     getHistory(userId, function (err, history) {
       if (err || !history) return
-      if (!history[noteId]) {
-        history[noteId] = {}
-      }
-      const noteHistory = history[noteId]
+      const noteHistory = history.get(noteId) || new HistoryObject()
       const noteInfo = Note.parseNoteInfo(document)
       noteHistory.id = noteId
       noteHistory.text = noteInfo.title
       noteHistory.time = time || Date.now()
       noteHistory.tags = noteInfo.tags
-      setHistory(userId, history, function (err, _) {
+      history.set(noteId, noteHistory)
+      setHistory(userId, parseHistoryMapToArray(history), function (err, _) {
         if (err) {
           logger.log(err)
         }
@@ -118,7 +117,7 @@ function updateHistory (userId: string, noteId: string, document, time): void {
   }
 }
 
-function historyGet (req, res): any {
+function historyGet (req, res): void {
   if (req.isAuthenticated()) {
     getHistory(req.user.id, function (err, history) {
       if (err) return errors.errorInternalError(res)
@@ -132,7 +131,7 @@ function historyGet (req, res): any {
   }
 }
 
-function historyPost (req, res): any {
+function historyPost (req, res): void {
   if (req.isAuthenticated()) {
     const noteId = req.params.noteId
     if (!noteId) {
@@ -157,10 +156,11 @@ function historyPost (req, res): any {
       getHistory(req.user.id, function (err, history) {
         if (err) return errors.errorInternalError(res)
         if (!history) return errors.errorNotFound(res)
-        if (!history[noteId]) return errors.errorNotFound(res)
+        const noteHistory = history.get(noteId)
+        if (!noteHistory) return errors.errorNotFound(res)
         if (req.body.pinned === 'true' || req.body.pinned === 'false') {
-          history[noteId].pinned = (req.body.pinned === 'true')
-          setHistory(req.user.id, history, function (err, _) {
+          noteHistory.pinned = (req.body.pinned === 'true')
+          setHistory(req.user.id, parseHistoryMapToArray(history), function (err, _) {
             if (err) return errors.errorInternalError(res)
             res.end()
           })
@@ -174,7 +174,7 @@ function historyPost (req, res): any {
   }
 }
 
-function historyDelete (req, res): any {
+function historyDelete (req, res): void {
   if (req.isAuthenticated()) {
     const noteId = req.params.noteId
     if (!noteId) {
@@ -186,8 +186,8 @@ function historyDelete (req, res): any {
       getHistory(req.user.id, function (err, history) {
         if (err) return errors.errorInternalError(res)
         if (!history) return errors.errorNotFound(res)
-        delete history[noteId]
-        setHistory(req.user.id, history, function (err, _) {
+        history.delete(noteId)
+        setHistory(req.user.id, parseHistoryMapToArray(history), function (err, _) {
           if (err) return errors.errorInternalError(res)
           res.end()
         })

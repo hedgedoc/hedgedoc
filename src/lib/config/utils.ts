@@ -8,7 +8,7 @@ export function toBooleanConfig (configValue: string | boolean | undefined): boo
   return configValue
 }
 
-export function toArrayConfig (configValue: string | undefined, separator = ',', fallback = []): any[] {
+export function toArrayConfig (configValue: string | undefined, separator = ',', fallback = []): string[] {
   if (configValue) {
     return (configValue.split(separator).map(arrayItem => arrayItem.trim()))
   }

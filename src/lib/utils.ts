@@ -4,6 +4,16 @@ import { logger } from './logger'
 import { Revision } from './models'
 import { realtime } from './realtime'
 
+/*
+Converts a map from string to something into a plain JS object for transmitting via a websocket
+ */
+export function mapToObject<T> (map: Map<string, T>): object {
+  return Array.from(map).reduce((obj, [key, value]) => {
+    obj[key] = value
+    return obj
+  }, {})
+}
+
 export function getImageMimeType (imagePath: string): string | undefined {
   const fileExtension = /[^.]+$/.exec(imagePath)
   switch (fileExtension?.[0]) {

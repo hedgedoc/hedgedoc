@@ -2,7 +2,7 @@ import { InternalOAuthError, Strategy as OAuth2Strategy } from 'passport-oauth2'
 import { config } from '../../../config'
 import { Profile, ProviderEnum } from '../../../models/user'
 
-function extractProfileAttribute (data, path: string): any {
+function extractProfileAttribute (data, path: string): string {
   // can handle stuff like `attrs[0].name`
   const pathArray = path.split('.')
   for (const segment of pathArray) {

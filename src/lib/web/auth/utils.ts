@@ -1,10 +1,11 @@
+import { Profile } from 'passport'
 import { User } from '../../models'
 import { logger } from '../../logger'
 
 export function passportGeneralCallback (
   accessToken: string,
   refreshToken: string,
-  profile: any,
+  profile: Profile,
   done: (err?: Error | null, user?: User) => void
 ): void {
   const stringifiedProfile = JSON.stringify(profile)
