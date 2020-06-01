@@ -109,13 +109,6 @@ paths:
         - user
       summary: "Deletes the currently logged-in user from the system and removes all it's notes"
       operationId: deleteMe
-      parameters:
-        - in: header
-          name: X-Token
-          schema:
-            type: string
-          required: true
-          description: Token to ensure that no accidental account deletions will be performed
       responses:
         '200':
           description: The user was deleted successfully
@@ -599,14 +592,6 @@ components:
       type: object
       properties:
         password:
-          type: string
-        token:
-          type: string
-          description: Token to avoid unwanted password change requests
-    UserDeleteToken:
-      type: object
-      properties:
-        token:
           type: string
     UserUpdate:
       type: object
