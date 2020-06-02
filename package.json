@@ -15,7 +15,7 @@
     "build": "yarn run build-backend && yarn run build-frontend",
     "build-backend": "tsc",
     "build-frontend": "webpack --config webpack.prod.js --progress --colors --bail",
-    "start": "sequelize db:migrate && node built/lib/app.js"
+    "start": "node built/lib/app.js"
   },
   "dependencies": {
     "@passport-next/passport-openid": "^1.0.0",
@@ -116,7 +116,6 @@
     "scrypt-kdf": "^2.0.1",
     "select2": "^3.5.2-browserify",
     "sequelize": "^5.21.1",
-    "sequelize-cli": "^5.5.1",
     "sequelize-typescript": "^1.1.0",
     "shortid": "2.2.8",
     "socket.io": "~2.1.1",
@@ -128,6 +127,7 @@
     "tedious": "^6.6.0",
     "toobusy-js": "^0.5.1",
     "turndown": "^5.0.1",
+    "umzug": "^2.3.0",
     "uuid": "^3.1.0",
     "validator": "^10.4.0",
     "velocity-animate": "^1.4.0",
@@ -221,6 +221,7 @@
     "mocha": "^5.2.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "script-loader": "^0.7.2",
+    "sequelize-cli": "^5.5.1",
     "sinon": "^9.0.2",
     "string-loader": "^0.0.1",
     "style-loader": "^1.0.0",

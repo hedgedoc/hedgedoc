@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = {
-  up: function (queryInterface, Sequelize) {
+  up: async function (queryInterface, Sequelize) {
     return queryInterface.changeColumn('Users', 'accessToken', {
       type: Sequelize.TEXT
     }).then(function () {
@@ -11,7 +11,7 @@ module.exports = {
     })
   },
 
-  down: function (queryInterface, Sequelize) {
+  down: async function (queryInterface, Sequelize) {
     return queryInterface.changeColumn('Users', 'accessToken', {
       type: Sequelize.STRING
     }).then(function () {

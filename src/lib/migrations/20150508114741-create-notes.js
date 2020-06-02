@@ -1,6 +1,6 @@
 'use strict'
 module.exports = {
-  up: function (queryInterface, Sequelize) {
+  up: async function (queryInterface, Sequelize) {
     return queryInterface.createTable('Notes', {
       id: {
         type: Sequelize.UUID,
@@ -15,7 +15,7 @@ module.exports = {
     })
   },
 
-  down: function (queryInterface, Sequelize) {
+  down: async function (queryInterface, Sequelize) {
     return queryInterface.dropTable('Notes')
   }
 }

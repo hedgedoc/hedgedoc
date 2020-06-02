@@ -1,6 +1,6 @@
 'use strict'
 module.exports = {
-  up: function (queryInterface, Sequelize) {
+  up: async function (queryInterface, Sequelize) {
     return queryInterface.addColumn('Notes', 'savedAt', Sequelize.DATE).then(function () {
       return queryInterface.createTable('Revisions', {
         id: {
@@ -25,7 +25,7 @@ module.exports = {
     })
   },
 
-  down: function (queryInterface, Sequelize) {
+  down: async function (queryInterface, Sequelize) {
     return queryInterface.dropTable('Revisions').then(function () {
       return queryInterface.removeColumn('Notes', 'savedAt')
     })
