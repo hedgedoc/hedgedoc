@@ -4,6 +4,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { ApplicationState } from '../../../../../redux'
+import { SignInButton } from '../../../layout/navigation/sign-in-button'
 import './cover-buttons.scss'
 
 export const CoverButtons: React.FC = () => {
@@ -16,15 +17,11 @@ export const CoverButtons: React.FC = () => {
 
   return (
     <div className="mb-5">
-      <Link to="/login">
-        <Button
-          className="cover-button"
-          variant="success"
-          size="lg"
-        >
-          <Trans i18nKey="login.signIn"/>
-        </Button>
-      </Link>
+      <SignInButton
+        className="cover-button"
+        variant="success"
+        size="lg"
+      />
 
       <span className="m-2">
         <Trans i18nKey="common.or"/>

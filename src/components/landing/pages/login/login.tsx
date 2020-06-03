@@ -57,19 +57,17 @@ export const Login: React.FC = () => {
               {
                 Object.values(OneClickType)
                   .filter((value) => authProviders[value])
-                  .map((value) => {
-                    return (
-                      <div
-                        className="p-2 d-flex flex-column social-button-container"
-                        key={value}
-                      >
-                        <ViaOneClick
-                          oneClickType={value}
-                          optionalName={oneClickCustomName(value)}
-                        />
-                      </div>
-                    )
-                  })
+                  .map((value) => (
+                    <div
+                      className="p-2 d-flex flex-column social-button-container"
+                      key={value}
+                    >
+                      <ViaOneClick
+                        oneClickType={value}
+                        optionalName={oneClickCustomName(value)}
+                      />
+                    </div>
+                  ))
               }
             </Card.Body>
           </Card>

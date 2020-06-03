@@ -30,7 +30,7 @@ const HeaderBar: React.FC = () => {
             <span className={'mr-1 d-flex'}>
               <NewGuestNoteButton/>
             </span>
-            <SignInButton/>
+            <SignInButton size="sm"/>
           </Fragment>
           : <Fragment>
             <span className={'mr-1 d-flex'}>
