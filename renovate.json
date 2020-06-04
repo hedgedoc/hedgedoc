@@ -1,5 +1,40 @@
 {
   "extends": [
     "config:base"
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "packageRules": [
+    {
+      "extends": "packages:linters",
+      "groupName": "linters"
+    },
+    {
+      "extends": "monorepo:typescript-eslint",
+      "groupName": "typescript-eslint monorepo"
+    },
+    {
+      "extends": "monorepo:react",
+      "groupName": "react monorepo"
+    },
+    {
+      "extends": "monorepo:reactrouter",
+      "groupName": "reactrouter monorepo"
+    },
+    {
+      "groupName": "definitelyTyped",
+      "packagePatterns": [
+        "^@types/"
+      ]
+    },
+    {
+      "extends": "packages:jsTest",
+      "groupName": "JS test packages"
+    }
+  ],
+  "schedule": [
+    "after 2am",
+    "before 8am"
   ]
 }
