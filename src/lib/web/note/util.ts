@@ -6,6 +6,7 @@ import { config } from '../../config'
 import { errors } from '../../errors'
 import { logger } from '../../logger'
 import { Note, User } from '../../models'
+import { PassportProfile, PhotoProfile } from '../../models/user'
 
 export function newNote (req, res: Response, body: string | null): void {
   let owner = null
@@ -96,9 +97,9 @@ export function getPublishData (req: Request, res: Response, note, callback: (da
     theme: meta.slideOptions && isRevealTheme(meta.slideOptions.theme),
     meta: JSON.stringify(extracted.meta),
     owner: note.owner ? note.owner.id : null,
-    ownerprofile: note.owner ? User.getProfile(note.owner) : null,
+    ownerprofile: note.owner ? PhotoProfile.fromUser(note.owner) : null,
     lastchangeuser: note.lastchangeuser ? note.lastchangeuser.id : null,
-    lastchangeuserprofile: note.lastchangeuser ? User.getProfile(note.lastchangeuser) : null,
+    lastchangeuserprofile: note.lastchangeuser ? PhotoProfile.fromUser(note.lastchangeuser) : null,
     robots: meta.robots || false, // default allow robots
     GA: meta.GA,
     disqus: meta.disqus,

@@ -11,7 +11,7 @@ import { History } from './history'
 import { logger } from './logger'
 import { Author, Note, Revision, User } from './models'
 import { NoteAuthorship } from './models/note'
-import { PhotoProfile } from './models/user'
+import { PhotoProfile, PassportProfile } from './models/user'
 import { EditorSocketIOServer } from './ot/editor-socketio-server'
 import { mapToObject } from './utils'
 
@@ -169,7 +169,7 @@ function updateNote (note: NoteSession, callback: (err, note) => void): void {
           }
         }).then(function (user) {
           if (!user) return callback(null, null)
-          note.lastchangeuserprofile = User.getProfile(user)
+          note.lastchangeuserprofile = PhotoProfile.fromUser(user)
           return finishUpdateNote(note, _note, callback)
         }).catch(function (err) {
           logger.error(err)
@@ -626,10 +626,10 @@ function startConnection (socket: SocketWithNoteId): void {
         return failConnection(404, 'note not found', socket)
       }
       const owner = note.ownerId
-      const ownerprofile = note.owner ? User.getProfile(note.owner) : null
+      const ownerprofile = note.owner ? PhotoProfile.fromUser(note.owner) : null
 
       const lastchangeuser = note.lastchangeuserId
-      const lastchangeuserprofile = note.lastchangeuser ? User.getProfile(note.lastchangeuser) : null
+      const lastchangeuserprofile = note.lastchangeuser ? PhotoProfile.fromUser(note.lastchangeuser) : null
 
       const body = note.content
       const createtime = note.createdAt
@@ -638,7 +638,7 @@ function startConnection (socket: SocketWithNoteId): void {
 
       const authors = new Map<string, UserSession>()
       for (const author of note.authors) {
-        const profile = User.getProfile(author.user)
+        const profile = PhotoProfile.fromUser(author.user)
         if (profile) {
           authors.set(author.userId, {
             userid: author.userId,
@@ -767,7 +767,7 @@ setInterval(function () {
 function updateUserData (socket: Socket, user): void {
   // retrieve user data from passport
   if (socket.request.user && socket.request.user.logged_in) {
-    const profile = User.getProfile(socket.request.user)
+    const profile = PhotoProfile.fromUser(socket.request.user)
     user.photo = profile?.photo
     user.name = profile?.name
     user.userid = socket.request.user.id

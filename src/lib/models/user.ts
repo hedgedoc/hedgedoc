@@ -1,4 +1,5 @@
-import { Note } from './note'
+import scrypt from 'scrypt-kdf'
+import { UUIDV4 } from 'sequelize'
 import {
   BeforeCreate,
   BeforeUpdate,
@@ -12,10 +13,9 @@ import {
   Table,
   Unique
 } from 'sequelize-typescript'
-import scrypt from 'scrypt-kdf'
 import { generateAvatarURL } from '../letter-avatars'
 import { logger } from '../logger'
-import { UUIDV4 } from 'sequelize'
+import { Note } from './note'
 
 // core
 
@@ -31,8 +31,7 @@ export enum ProviderEnum {
   saml = 'saml',
 }
 
-// ToDo Fix this 'any' mess
-export type Profile = {
+export type PassportProfile = {
   id: string;
   username: string;
   displayName: string;
@@ -43,49 +42,41 @@ export type Profile = {
   photos: { value: string }[];
 }
 
-export type PhotoProfile = {
-  name: string;
-  photo: string;
-  biggerphoto: string;
-}
+export class PhotoProfile {
+  name: string
+  photo: string
+  biggerphoto: string
 
-@Table
-export class User extends Model<User> {
-  @PrimaryKey
-  @Default(UUIDV4)
-  @Column(DataType.UUID)
-  id: string
+  static fromUser (user: User): PhotoProfile | null {
+    if (!user) return null
+    if (user.profile) return PhotoProfile.fromJSON(user.profile)
+    if (user.email) return PhotoProfile.fromEmail(user.email)
+    return null
+  }
 
-  @Unique
-  @Column(DataType.STRING)
-  profileid: string
+  private static fromJSON (jsonProfile: string): PhotoProfile | null {
+    try {
+      const parsedProfile: PassportProfile = JSON.parse(jsonProfile)
+      return {
+        name: parsedProfile.displayName || parsedProfile.username,
+        photo: PhotoProfile.generatePhotoURL(parsedProfile, false),
+        biggerphoto: PhotoProfile.generatePhotoURL(parsedProfile, true)
+      }
+    } catch (err) {
+      logger.error(err)
+      return null
+    }
+  }
 
-  @Column(DataType.TEXT)
-  profile: string
+  private static fromEmail (email: string): PhotoProfile {
+    return {
+      name: email.substring(0, email.lastIndexOf('@')),
+      photo: generateAvatarURL('', email, false),
+      biggerphoto: generateAvatarURL('', email, true)
+    }
+  }
 
-  @Column(DataType.TEXT)
-  history: string
-
-  @Column(DataType.TEXT)
-  accessToken: string
-
-  @Column(DataType.TEXT)
-  refreshToken: string
-
-  @Column(DataType.UUID)
-  deleteToken: string
-
-  @IsEmail
-  @Column(DataType.TEXT)
-  email: string
-
-  @Column(DataType.TEXT)
-  password: string
-
-  @HasMany(() => Note, { foreignKey: 'lastchangeuserId', constraints: false })
-  @HasMany(() => Note, { foreignKey: 'ownerId', constraints: false })
-
-  static parsePhotoByProfile (profile: Profile, bigger: boolean): string {
+  private static generatePhotoURL (profile: PassportProfile, bigger: boolean): string {
     let photo: string
     switch (profile.provider) {
       case ProviderEnum.facebook:
@@ -147,14 +138,43 @@ export class User extends Model<User> {
     }
     return photo
   }
+}
 
-  static parseProfileByEmail (email: string): PhotoProfile {
-    return {
-      name: email.substring(0, email.lastIndexOf('@')),
-      photo: generateAvatarURL('', email, false),
-      biggerphoto: generateAvatarURL('', email, true)
-    }
-  }
+@Table
+export class User extends Model<User> {
+  @PrimaryKey
+  @Default(UUIDV4)
+  @Column(DataType.UUID)
+  id: string
+
+  @Unique
+  @Column(DataType.STRING)
+  profileid: string
+
+  @Column(DataType.TEXT)
+  profile: string
+
+  @Column(DataType.TEXT)
+  history: string
+
+  @Column(DataType.TEXT)
+  accessToken: string
+
+  @Column(DataType.TEXT)
+  refreshToken: string
+
+  @Column(DataType.UUID)
+  deleteToken: string
+
+  @IsEmail
+  @Column(DataType.TEXT)
+  email: string
+
+  @Column(DataType.TEXT)
+  password: string
+
+  @HasMany(() => Note, { foreignKey: 'lastchangeuserId', constraints: false })
+  @HasMany(() => Note, { foreignKey: 'ownerId', constraints: false })
 
   @BeforeUpdate
   @BeforeCreate
@@ -173,37 +193,7 @@ export class User extends Model<User> {
       })
   }
 
-  static getProfile (user: User): PhotoProfile | null {
-    if (!user) {
-      return null
-    }
-
-    if (user.profile) {
-      return user.parseProfile(user.profile)
-    } else {
-      if (user.email) {
-        return User.parseProfileByEmail(user.email)
-      } else {
-        return null
-      }
-    }
-  }
-
   verifyPassword (attempt: string): Promise<boolean> {
     return scrypt.verify(Buffer.from(this.password, 'hex'), attempt)
-  }
-
-  parseProfile (profile: string): PhotoProfile | null {
-    try {
-      const parsedProfile: Profile = JSON.parse(profile)
-      return {
-        name: parsedProfile.displayName || parsedProfile.username,
-        photo: User.parsePhotoByProfile(parsedProfile, false),
-        biggerphoto: User.parsePhotoByProfile(parsedProfile, true)
-      }
-    } catch (err) {
-      logger.error(err)
-      return null
-    }
   }
 }

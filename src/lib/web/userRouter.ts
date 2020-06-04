@@ -6,6 +6,7 @@ import { Note, User } from '../models'
 import { logger } from '../logger'
 import { generateAvatar } from '../letter-avatars'
 import { config } from '../config'
+import { PassportProfile, PhotoProfile } from '../models/user'
 
 const UserRouter = Router()
 
@@ -21,7 +22,7 @@ UserRouter.get('/me', function (req: Request, res: Response) {
       }
     }).then(function (user) {
       if (!user) { return errors.errorNotFound(res) }
-      const profile = User.getProfile(user)
+      const profile = PhotoProfile.fromUser(user)
       if (profile == null) {
         return errors.errorInternalError(res)
       }
