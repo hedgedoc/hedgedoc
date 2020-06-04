@@ -29,7 +29,7 @@
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-standard": "4.0.1",
     "fork-awesome": "1.1.7",
-    "i18next": "19.4.4",
+    "i18next": "19.4.5",
     "i18next-browser-languagedetector": "4.1.1",
     "i18next-http-backend": "1.0.8",
     "moment": "2.25.3",
