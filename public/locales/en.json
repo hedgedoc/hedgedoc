@@ -33,6 +33,12 @@
                     "title": "Delete history",
                     "question": "Do you want to clear the history?",
                     "disclaimer": "This won't delete any notes."
+                },
+                "importHistoryError": {
+                    "title": "An error occurred",
+                    "textWithFile": "While trying to import history from '{{fileName}}' an error occurred.",
+                    "textWithoutFile": "You did not provide any files to upload the history from.",
+                    "tooNewVersion": "The file '{{fileName}}' comes from a newer client and can't be imported."
                 }
             },
             "tableHeader": {

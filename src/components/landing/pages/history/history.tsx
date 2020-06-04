@@ -1,7 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { loadHistoryFromLocalStore, setHistoryToLocalStore, sortAndFilterEntries } from '../../../../utils/historyUtils'
+import {
+  downloadHistory,
+  loadHistoryFromLocalStore,
+  setHistoryToLocalStore,
+  sortAndFilterEntries
+} from '../../../../utils/historyUtils'
 import { HistoryContent } from './history-content/history-content'
 import { HistoryToolbar, HistoryToolbarState, initState as toolbarInitState } from './history-toolbar/history-toolbar'
 
@@ -13,6 +18,11 @@ export interface HistoryEntry {
   pinned: boolean
 }
 
+export interface HistoryJson {
+  version: number,
+  entries: HistoryEntry[]
+}
+
 export type pinClick = (entryId: string) => void;
 
 export const History: React.FC = () => {
@@ -21,16 +31,33 @@ export const History: React.FC = () => {
   const [viewState, setViewState] = useState<HistoryToolbarState>(toolbarInitState)
 
   useEffect(() => {
-    const history = loadHistoryFromLocalStore()
-    setHistoryEntries(history)
+    refreshHistory()
   }, [])
 
   useEffect(() => {
-    if (historyEntries === []) {
+    if (!historyEntries || historyEntries === []) {
       return
     }
     setHistoryToLocalStore(historyEntries)
   }, [historyEntries])
+
+  const exportHistory = () => {
+    const dataObject: HistoryJson = {
+      version: 2,
+      entries: historyEntries
+    }
+    downloadHistory(dataObject)
+  }
+
+  const importHistory = (entries: HistoryEntry[]): void => {
+    setHistoryToLocalStore(entries)
+    setHistoryEntries(entries)
+  }
+
+  const refreshHistory = () => {
+    const history = loadHistoryFromLocalStore()
+    setHistoryEntries(history)
+  }
 
   const clearHistory = () => {
     setHistoryToLocalStore([])
@@ -66,6 +93,9 @@ export const History: React.FC = () => {
           onSettingsChange={setViewState}
           tags={tags}
           onClearHistory={clearHistory}
+          onRefreshHistory={refreshHistory}
+          onExportHistory={exportHistory}
+          onImportHistory={importHistory}
         />
       </Row>
       <HistoryContent viewState={viewState.viewState}
