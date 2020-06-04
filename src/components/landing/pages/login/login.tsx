@@ -4,6 +4,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
 import { ApplicationState } from '../../../../redux'
+import { ShowIf } from '../../../common/show-if'
 import { ViaEMail } from './auth/via-email'
 import { ViaLdap } from './auth/via-ldap'
 import { OneClickType, ViaOneClick } from './auth/via-one-click'
@@ -17,6 +18,9 @@ export const Login: React.FC = () => {
   const emailForm = authProviders.email ? <ViaEMail/> : null
   const ldapForm = authProviders.ldap ? <ViaLdap/> : null
   const openIdForm = authProviders.openid ? <ViaOpenId/> : null
+
+  const oneClickProviders = [authProviders.dropbox, authProviders.facebook, authProviders.github, authProviders.gitlab,
+    authProviders.google, authProviders.oauth2, authProviders.saml, authProviders.twitter]
 
   const oneClickCustomName: (type: OneClickType) => string | undefined = (type) => {
     switch (type) {
@@ -39,39 +43,39 @@ export const Login: React.FC = () => {
   return (
     <div className="my-3">
       <Row className="h-100 flex justify-content-center">
-        {
-          authProviders.email || authProviders.ldap || authProviders.openid
-            ? <Col xs={12} sm={10} lg={4}>
-              {emailForm}
-              {ldapForm}
-              {openIdForm}
-            </Col>
-            : null
-        }
-        <Col xs={12} sm={10} lg={4}>
-          <Card className="bg-dark mb-4">
-            <Card.Body>
-              <Card.Title>
-                <Trans i18nKey="login.signInVia" values={{ service: '' }}/>
-              </Card.Title>
-              {
-                Object.values(OneClickType)
-                  .filter((value) => authProviders[value])
-                  .map((value) => (
-                    <div
-                      className="p-2 d-flex flex-column social-button-container"
-                      key={value}
-                    >
-                      <ViaOneClick
-                        oneClickType={value}
-                        optionalName={oneClickCustomName(value)}
-                      />
-                    </div>
-                  ))
-              }
-            </Card.Body>
-          </Card>
-        </Col>
+        <ShowIf condition={authProviders.email || authProviders.ldap || authProviders.openid}>
+          <Col xs={12} sm={10} lg={4}>
+            {emailForm}
+            {ldapForm}
+            {openIdForm}
+          </Col>
+        </ShowIf>
+        <ShowIf condition={oneClickProviders.includes(true)}>
+          <Col xs={12} sm={10} lg={4}>
+            <Card className="bg-dark mb-4">
+              <Card.Body>
+                <Card.Title>
+                  <Trans i18nKey="login.signInVia" values={{ service: '' }}/>
+                </Card.Title>
+                {
+                  Object.values(OneClickType)
+                    .filter((value) => authProviders[value])
+                    .map((value) => (
+                      <div
+                        className="p-2 d-flex flex-column social-button-container"
+                        key={value}
+                      >
+                        <ViaOneClick
+                          oneClickType={value}
+                          optionalName={oneClickCustomName(value)}
+                        />
+                      </div>
+                    ))
+                }
+              </Card.Body>
+            </Card>
+          </Col>
+        </ShowIf>
       </Row>
     </div>
   )
