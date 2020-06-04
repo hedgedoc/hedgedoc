@@ -12,8 +12,10 @@
     "standard": "echo 'standard is no longer being used, use `npm run eslint` instead!' && exit 1",
     "dev": "webpack --config webpack.dev.js --progress --colors --watch",
     "heroku-prebuild": "bin/heroku",
-    "build": "webpack --config webpack.prod.js --progress --colors --bail",
-    "start": "tsc && sequelize db:migrate && node built/lib/app.js"
+    "build": "npm run-script build-backend && npm run-script build-frontend",
+    "build-backend": "tsc",
+    "build-frontend": "webpack --config webpack.prod.js --progress --colors --bail",
+    "start": "sequelize db:migrate && node built/lib/app.js"
   },
   "dependencies": {
     "@passport-next/passport-openid": "^1.0.0",
