@@ -159,7 +159,7 @@ export const HelpButton: React.FC = () => {
                             <blockquote><Trans i18nKey='editor.editorToolbar.blockquote'/></blockquote>
                           </td>
                           <td>
-                            <pre>> <Trans i18nKey='editor.editorToolbar.blockquote'/></pre>
+                            <pre>{'>'} <Trans i18nKey='editor.editorToolbar.blockquote'/></pre>
                           </td>
                         </tr>
                         <tr>
