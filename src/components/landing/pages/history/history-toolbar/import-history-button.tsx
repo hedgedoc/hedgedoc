@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react'
-import { Button, Modal } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../../../fork-awesome/fork-awesome-icon'
 import { convertV1History, V1HistoryEntry } from '../../../../../utils/historyUtils'
+import { ErrorModal } from '../../../../error-modal/error-modal'
 import { HistoryEntry, HistoryJson } from '../history'
 
 export interface ImportHistoryButtonProps {
@@ -67,27 +68,26 @@ export const ImportHistoryButton: React.FC<ImportHistoryButtonProps> = ({ onImpo
 
   return (
     <div>
-      <input type='file' className="d-none" accept=".json" onChange={handleUpload}
-        ref={uploadInput}/>
+      <input type='file' className="d-none" accept=".json" onChange={handleUpload} ref={uploadInput}/>
       <Button variant={'light'}
         title={t('landing.history.toolbar.import')}
         onClick={() => uploadInput.current?.click()}
       >
         <ForkAwesomeIcon icon='upload'/>
       </Button>
-      <Modal show={show} onHide={handleClose} animation={true} className="text-dark">
-        <Modal.Header closeButton>
-          <Modal.Title>
-            <ForkAwesomeIcon icon='exclamation-circle'/>&nbsp;<Trans i18nKey={'landing.history.modal.importHistoryError.title'}/>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="text-dark text-center">
-          {fileName !== ''
-            ? <h5><Trans i18nKey={i18nKey} values={{ fileName: fileName }}/></h5>
-            : <h5><Trans i18nKey={i18nKey}/></h5>
-          }
-        </Modal.Body>
-      </Modal>
+      <ErrorModal
+        show={show}
+        onHide={handleClose}
+        title='landing.history.modal.importHistoryError.title'
+        icon='exclamation-circle'
+      >
+        {fileName !== ''
+          ? <h5>
+            <Trans i18nKey={i18nKey} values={{ fileName: fileName }}/>
+          </h5>
+          : <h5><Trans i18nKey={i18nKey}/></h5>
+        }
+      </ErrorModal>
     </div>
   )
 }
