@@ -1267,6 +1267,14 @@
     lodash "^4.17.15"
     lodash-es "^4.17.15"
 
+"@restart/hooks@^0.3.22":
+  version "0.3.25"
+  resolved "https://registry.yarnpkg.com/@restart/hooks/-/hooks-0.3.25.tgz#11004139ad1c70d2f5965a8939dcb5aeb96aa652"
+  integrity sha512-m2v3N5pxTsIiSH74/sb1yW8D9RxkJidGW+5Mfwn/lHb2QzhZNlaU1su7abSyT9EGf0xS/0waLjrf7/XxQHUk7w==
+  dependencies:
+    lodash "^4.17.15"
+    lodash-es "^4.17.15"
+
 "@sheerun/mutationobserver-shim@^0.3.2":
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.3.tgz#5405ee8e444ed212db44e79351f0c70a582aae25"
@@ -9196,12 +9204,13 @@ react-app-polyfill@^1.0.6:
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
 
-react-bootstrap-typeahead@5.0.0-rc.1:
-  version "5.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/react-bootstrap-typeahead/-/react-bootstrap-typeahead-5.0.0-rc.1.tgz#f20b9d5a7a46783e886b1f79ed074e7e05582495"
-  integrity sha512-Crmguatcjaw9593MHBNQvsFSd0BFWsx74wC+txpLVpOCEB9JJ+pfkwGopbau3w1mYasZZ046ga7E6lAXmty7xA==
+react-bootstrap-typeahead@5.0.0-rc.3:
+  version "5.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/react-bootstrap-typeahead/-/react-bootstrap-typeahead-5.0.0-rc.3.tgz#5d329d6814cbf62bca37fd80592e2cdc68e5260f"
+  integrity sha512-kS67dP90iZQuhSw2lmmNqwQppOko2zGlbIoDNMR0dE+WrxoJNsviHAJo8gT12COpOwWFsQejD0G7UovclFv1SQ==
   dependencies:
     "@babel/runtime" "^7.3.4"
+    "@restart/hooks" "^0.3.22"
     classnames "^2.2.0"
     fast-deep-equal "^3.1.1"
     invariant "^2.2.1"
