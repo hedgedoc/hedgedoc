@@ -32,7 +32,7 @@
     "i18next": "19.4.5",
     "i18next-browser-languagedetector": "4.1.1",
     "i18next-http-backend": "1.0.8",
-    "moment": "2.25.3",
+    "moment": "2.26.0",
     "node-sass": "4.14.1",
     "react": "16.13.1",
     "react-bootstrap": "1.0.1",
