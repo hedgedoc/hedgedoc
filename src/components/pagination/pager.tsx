@@ -7,16 +7,18 @@ export interface PagerPageProps {
 }
 
 export const Pager: React.FC<PagerPageProps> = ({ children, numberOfElementsPerPage, pageIndex, onLastPageIndexChange }) => {
+  const maxPageIndex = Math.ceil(React.Children.count(children) / numberOfElementsPerPage) - 1
+  const correctedPageIndex = Math.min(maxPageIndex, Math.max(0, pageIndex))
+
   useEffect(() => {
-    const lastPageIndex = Math.ceil(React.Children.count(children) / numberOfElementsPerPage) - 1
-    onLastPageIndexChange(lastPageIndex)
-  }, [children, numberOfElementsPerPage, onLastPageIndexChange])
+    onLastPageIndexChange(maxPageIndex)
+  }, [children, maxPageIndex, numberOfElementsPerPage, onLastPageIndexChange])
 
   return <Fragment>
     {
       React.Children.toArray(children).filter((value, index) => {
         const pageOfElement = Math.floor((index) / numberOfElementsPerPage)
-        return (pageOfElement === pageIndex)
+        return (pageOfElement === correctedPageIndex)
       })
     }
   </Fragment>

@@ -37,7 +37,7 @@ export interface HistoryToolbarProps {
 export const initState: HistoryToolbarState = {
   viewState: ViewStateEnum.CARD,
   titleSortDirection: SortModeEnum.no,
-  lastVisitedSortDirection: SortModeEnum.no,
+  lastVisitedSortDirection: SortModeEnum.down,
   keywordSearch: '',
   selectedTags: []
 }
@@ -114,14 +114,16 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
         </Button>
       </InputGroup>
       <InputGroup className={'mr-1 mb-1'}>
-        <ToggleButtonGroup type="radio" name="options" value={state.viewState}
+        <ToggleButtonGroup type="radio" name="options" value={state.viewState} className={'button-height'}
           onChange={(newViewState: ViewStateEnum) => {
             toggleViewChanged(newViewState)
           }}>
-          <ToggleButton className={'btn-light'} value={ViewStateEnum.CARD}><Trans
-            i18nKey={'landing.history.toolbar.cards'}/></ToggleButton>
-          <ToggleButton className={'btn-light'} value={ViewStateEnum.TABLE}><Trans
-            i18nKey={'landing.history.toolbar.table'}/></ToggleButton>
+          <ToggleButton className={'btn-light'} value={ViewStateEnum.CARD} title={t('landing.history.toolbar.cards')}>
+            <ForkAwesomeIcon icon={'sticky-note'} className={'fa-fix-line-height'}/>
+          </ToggleButton>
+          <ToggleButton className={'btn-light'} value={ViewStateEnum.TABLE} title={t('landing.history.toolbar.table')}>
+            <ForkAwesomeIcon icon={'table'} className={'fa-fix-line-height'}/>
+          </ToggleButton>
         </ToggleButtonGroup>
       </InputGroup>
     </Form>

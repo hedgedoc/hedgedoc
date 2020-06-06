@@ -1,13 +1,39 @@
 import moment from 'moment'
-import { HistoryEntry, HistoryJson } from '../components/landing/pages/history/history'
+import { HistoryEntry, HistoryJson, LocatedHistoryEntry, Location } from '../components/landing/pages/history/history'
 import { HistoryToolbarState } from '../components/landing/pages/history/history-toolbar/history-toolbar'
 import { SortModeEnum } from '../components/sort-button/sort-button'
 
-export function sortAndFilterEntries (entries: HistoryEntry[], viewState: HistoryToolbarState): HistoryEntry[] {
-  return sortEntries(filterByKeywordSearch(filterBySelectedTags(entries, viewState.selectedTags), viewState.keywordSearch), viewState)
+export function collectEntries (localEntries: HistoryEntry[], remoteEntries: HistoryEntry[]): LocatedHistoryEntry[] {
+  const locatedLocalEntries = locateEntries(localEntries, Location.LOCAL)
+  const locatedRemoteEntries = locateEntries(remoteEntries, Location.REMOTE)
+  return mergeEntryArrays(locatedLocalEntries, locatedRemoteEntries)
 }
 
-function filterBySelectedTags (entries: HistoryEntry[], selectedTags: string[]): HistoryEntry[] {
+export function sortAndFilterEntries (entries: LocatedHistoryEntry[], toolbarState: HistoryToolbarState): LocatedHistoryEntry[] {
+  const filteredBySelectedTagsEntries = filterBySelectedTags(entries, toolbarState.selectedTags)
+  const filteredByKeywordSearchEntries = filterByKeywordSearch(filteredBySelectedTagsEntries, toolbarState.keywordSearch)
+  return sortEntries(filteredByKeywordSearchEntries, toolbarState)
+}
+
+function locateEntries (entries: HistoryEntry[], location: Location): LocatedHistoryEntry[] {
+  return entries.map(entry => {
+    return {
+      ...entry,
+      location: location
+    }
+  })
+}
+
+export function mergeEntryArrays<T extends HistoryEntry> (locatedLocalEntries: T[], locatedRemoteEntries: T[]): T[] {
+  const filteredLocalEntries = locatedLocalEntries.filter(localEntry => {
+    const entry = locatedRemoteEntries.find(remoteEntry => remoteEntry.id === localEntry.id)
+    return !entry
+  })
+
+  return filteredLocalEntries.concat(locatedRemoteEntries)
+}
+
+function filterBySelectedTags (entries: LocatedHistoryEntry[], selectedTags: string[]): LocatedHistoryEntry[] {
   return entries.filter(entry => {
     return (selectedTags.length === 0 || arrayCommonCheck(entry.tags, selectedTags))
   }
@@ -23,12 +49,12 @@ function arrayCommonCheck<T> (array1: T[], array2: T[]): boolean {
   return !!foundElement
 }
 
-function filterByKeywordSearch (entries: HistoryEntry[], keywords: string): HistoryEntry[] {
+function filterByKeywordSearch (entries: LocatedHistoryEntry[], keywords: string): LocatedHistoryEntry[] {
   const searchTerm = keywords.toLowerCase()
   return entries.filter(entry => entry.title.toLowerCase().indexOf(searchTerm) !== -1)
 }
 
-function sortEntries (entries: HistoryEntry[], viewState: HistoryToolbarState): HistoryEntry[] {
+function sortEntries (entries: LocatedHistoryEntry[], viewState: HistoryToolbarState): LocatedHistoryEntry[] {
   return entries.sort((firstEntry, secondEntry) => {
     if (firstEntry.pinned && !secondEntry.pinned) {
       return -1

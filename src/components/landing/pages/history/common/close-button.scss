@@ -1,7 +1,9 @@
 .history-close {
-  opacity: 0.5;
+  .fa {
+    opacity: 0.5;
+  }
 
-  &:hover {
+  &:hover .fa {
     opacity: 1;
   }
 }

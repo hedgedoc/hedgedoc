@@ -14,6 +14,20 @@
             "screenShotAltText": "CodiMD Screenshot"
         },
         "history": {
+            "error": {
+              "getHistory": {
+                "title": "Load History Error",
+                "text": "While trying to load the history form the server an error occurred"
+              },
+              "deleteHistory": {
+                "title": "Delete History Error",
+                "text": "While trying to delete the history on the server an error occurred"
+              },
+              "setHistory": {
+                "title": "Upload History Error",
+                "text": "While trying to upload the history to the server an error occurred"
+              }
+            },
             "noHistory": "No history",
             "localHistory": "Below is history from this browser",
             "toolbar": {
