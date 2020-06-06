@@ -498,7 +498,7 @@ paths:
         '200':
           description: Deleted the history
           content: {}
-  /history/{note}/:
+  /history/{note}:
     put:
       tags:
         - history
