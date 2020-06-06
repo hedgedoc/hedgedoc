@@ -528,7 +528,7 @@ paths:
     delete:
       tags:
         - history
-      summary: remove the history object of the note
+      summary: Remove the history object of the note
       operationId: deleteHistoryObject
       responses:
         '200':
