@@ -401,7 +401,7 @@ paths:
           content:
             text/plain:
               example: my-note
-  /notes/{note}/revision:
+  /notes/{note}/revisions:
     get:
       tags:
         - note
@@ -426,7 +426,7 @@ paths:
             text/plain:
               example: my-note
 
-  /notes/{note}/revision/{revision-id}:
+  /notes/{note}/revisions/{revision-id}:
     get:
       tags:
         - note
