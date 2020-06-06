@@ -16,6 +16,8 @@ export const getBackendUrl: (() => string) = () => {
   return store.getState().frontendConfig.backendUrl
 }
 
-export const expectResponseCode = (response: Response, code = 200): boolean => {
-  return response.status !== code
+export const expectResponseCode = (response: Response, code = 200): void => {
+  if (response.status !== code) {
+    throw new Error(`response code is not ${code}`)
+  }
 }
