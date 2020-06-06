@@ -107,7 +107,7 @@ paths:
     delete:
       tags:
         - user
-      summary: "Deletes the currently logged-in user from the system and removes all it's notes"
+      summary: "Deletes the currently logged-in user from the backend and removes all it's notes"
       operationId: deleteMe
       responses:
         '200':
@@ -545,7 +545,7 @@ paths:
     get:
       tags:
         - server
-      summary: Returns the current status of the CodiMD instance.
+      summary: Returns the current status of the backend.
       operationId: getStatus
       description: The data is returned as a JSON object containing the number of notes stored on the server, (distinct) online users and more.
       responses:
