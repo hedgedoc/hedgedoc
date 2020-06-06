@@ -136,20 +136,91 @@ paths:
       responses:
         '200':
           description: The password was changed
-  /status:
+  /me/history:
     get:
       tags:
-        - server
-      summary: Returns the current status of the CodiMD instance.
-      operationId: getStatus
-      description: The data is returned as a JSON object containing the number of notes stored on the server, (distinct) online users and more.
+        - history
+      summary: Returns a list of the last viewed notes.
+      operationId: getHistory
+      description: The list is returned as a JSON object with an array containing for each entry it's id, title, tags, last visit time and pinned status.
       responses:
         '200':
-          description: The server info
+          description: The list of recently viewed notes and pinned notes
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ServerStatus"
+                "$ref": "#/components/schemas/History"
+    post:
+      tags:
+        - history
+      summary: Sets the history if none is already set
+      operationId: updateHistory
+      requestBody:
+        description: The history to update
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/History"
+      responses:
+        '200':
+          description: The new history
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/History"
+    delete:
+      tags:
+        - history
+      summary: Clear the currently logged-in users history
+      operationId: deleteHistory
+      responses:
+        '200':
+          description: Deleted the history
+          content: {}
+  /me/history/{note}:
+    put:
+      tags:
+        - history
+      summary: Update the history object of the note (e.g change it's pin status)
+      operationId: updateHistoryObject
+      requestBody:
+        description: The updated history object
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/HistoryObject"
+      responses:
+        '200':
+          description: The new history
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HistoryObject"
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the revision should be shown
+          content:
+            text/plain:
+              example: my-note
+    delete:
+      tags:
+        - history
+      summary: Remove the note from the currently logged-in user's history
+      operationId: deleteHistoryObject
+      responses:
+        '200':
+          description: The new history
+          content: {}
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the revision should be shown
+          content:
+            text/plain:
+              example: my-note
   /notes:
     post:
       tags:
@@ -457,91 +528,6 @@ paths:
           content:
             text/plain:
               example: 1570921051959
-  /history:
-    get:
-      tags:
-        - history
-      summary: Returns a list of the last viewed notes.
-      operationId: getHistory
-      description: The list is returned as a JSON object with an array containing for each entry it's id, title, tags, last visit time and pinned status.
-      responses:
-        '200':
-          description: The list of recently viewed notes and pinned notes
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/History"
-    post:
-      tags:
-        - history
-      summary: Sets the history if none is already set
-      operationId: updateHistory
-      requestBody:
-        description: The history to update
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/History"
-      responses:
-        '200':
-          description: The new history
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/History"
-    delete:
-      tags:
-        - history
-      summary: Clear the currently logged-in users history
-      operationId: deleteHistory
-      responses:
-        '200':
-          description: Deleted the history
-          content: {}
-  /history/{note}:
-    put:
-      tags:
-        - history
-      summary: Update the history object of the note (e.g change it's pin status)
-      operationId: updateHistoryObject
-      requestBody:
-        description: The updated history object
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/HistoryObject"
-      responses:
-        '200':
-          description: The new history
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/HistoryObject"
-      parameters:
-        - name: note
-          in: path
-          required: true
-          description: The note for which the revision should be shown
-          content:
-            text/plain:
-              example: my-note
-    delete:
-      tags:
-        - history
-      summary: Remove the history object of the note
-      operationId: deleteHistoryObject
-      responses:
-        '200':
-          description: The new history
-          content: {}
-      parameters:
-        - name: note
-          in: path
-          required: true
-          description: The note for which the revision should be shown
-          content:
-            text/plain:
-              example: my-note
   /config:
     get:
       tags:
