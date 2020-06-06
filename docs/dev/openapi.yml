@@ -278,24 +278,6 @@ paths:
           content:
             text/plain:
               example: my-note
-  /notes/{note}/websocket:
-    get:
-      tags:
-        - note
-      summary: Returns the websocket of a note.
-      operationId: getNoteWebsocket
-      responses:
-        '200':
-          description: The websocket of the note
-          content: {}
-      parameters:
-        - name: note
-          in: path
-          required: true
-          description: The note for which the markdown should be exported
-          content:
-            text/plain:
-              example: my-note
   /notes/{note}/export/markdown:
     get:
       tags:
