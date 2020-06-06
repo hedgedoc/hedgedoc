@@ -125,7 +125,7 @@ paths:
     post:
       tags:
         - user
-      summary: Sets the new password of currently logged-in user
+      summary: Sets the new password of the currently logged-in user
       requestBody:
         required: true
         description: The new password of the user.
