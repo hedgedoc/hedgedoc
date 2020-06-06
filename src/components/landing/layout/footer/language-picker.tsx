@@ -1,7 +1,7 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next'
 import moment from 'moment'
+import React from 'react'
 import { Form } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 
 const LanguagePicker: React.FC = () => {
   const { i18n } = useTranslation()
@@ -11,12 +11,21 @@ const LanguagePicker: React.FC = () => {
     await i18n.changeLanguage(event.currentTarget.value)
   }
 
+  const shortenLanguageCode = (language: string): string => {
+    const languageWithoutArea = language.substr(0, 2)
+    if (languageWithoutArea === 'zh') {
+      return language
+    } else {
+      return languageWithoutArea
+    }
+  }
+
   return (
     <Form.Control
       as="select"
       size="sm"
       className="mb-2 mx-auto w-auto"
-      value={i18n.language}
+      value={shortenLanguageCode(i18n.language)}
       onChange={onChangeLang}
     >
       <option value="en">English</option>
