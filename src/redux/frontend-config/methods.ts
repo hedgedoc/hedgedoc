@@ -7,7 +7,7 @@ export const setFrontendConfig = (state: FrontendConfig): void => {
     type: FrontendConfigActionType.SET_FRONTEND_CONFIG,
     state: {
       ...state,
-      backendUrl: state.backendUrl + '/api/v2.0/'
+      backendUrl: state.backendUrl + '/api/v2'
     }
   }
   store.dispatch(action)
