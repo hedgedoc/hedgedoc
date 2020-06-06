@@ -9,6 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['10', '12', '14']
+    name: Test with NodeJS ${{ matrix.node }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -17,11 +21,11 @@ jobs:
         with:
           path: node_modules
           key: node_modules
+      - name: Set up NodeJS
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
       - name: Install dependencies
-        uses: borales/actions-yarn@v2.1.0
-        with:
-          cmd: install
-      - name: build project
-        uses: borales/actions-yarn@v2.1.0
-        with:
-          cmd: build
+        run: yarn install
+      - name: Build project
+        run: yarn build
