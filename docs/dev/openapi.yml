@@ -10,11 +10,11 @@ info:
     name: AGPLv3
     url: https://github.com/codimd/server/blob/master/LICENSE
 externalDocs:
-  description: CodiMD Documentation
+  description: The CodiMD Documentation.
   url: https://github.com/codimd/server/tree/master/docs
 servers:
-  - url: "/api/v2/"
-    description: "Base API Path"
+  - url: "/api/v2"
+    description: The base API Path.
 paths:
   /auth/email:
     post:
@@ -30,7 +30,7 @@ paths:
               $ref: '#/components/schemas/EmailLogin'
       responses:
         '200':
-          description: login succesful
+          description: The login was succesful.
           headers:
             Set-Cookie:
               schema:
@@ -49,7 +49,7 @@ paths:
               $ref: '#/components/schemas/LdapLogin'
       responses:
         '200':
-          description: login succesful
+          description: The login was succesful.
           headers:
             Set-Cookie:
               schema:
@@ -68,7 +68,7 @@ paths:
               $ref: '#/components/schemas/OpenIdLogin'
       responses:
         '200':
-          description: login succesful
+          description: The login was succesful.
           headers:
             Set-Cookie:
               schema:
@@ -81,13 +81,13 @@ paths:
       operationId: getMe
       responses:
         '200':
-          description: the user information
+          description: The user information.
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/UserInfo"
         '401':
-          description: the user is not logged in
+          description: The user is not logged in.
           content: {}
     post:
       tags:
@@ -96,10 +96,10 @@ paths:
       operationId: updateMe
       responses:
         '200':
-          description: The user information was changed successfully
+          description: The user information was changed successfully.
       requestBody:
         required: true
-        description: The new user information
+        description: The new user information.
         content:
           application/json:
             schema:
@@ -107,20 +107,20 @@ paths:
     delete:
       tags:
         - user
-      summary: "Deletes the currently logged-in user from the backend and removes all it's notes"
+      summary: Deletes the currently logged-in user from the backend and removes all their notes
       operationId: deleteMe
       responses:
         '200':
-          description: The user was deleted successfully
+          description: The user was deleted successfully.
   /me/export:
     get:
       tags:
         - user
         - export
-      summary: Exports a zip-archive with all notes of the currently logged-in user.
+      summary: Exports a zip-archive with all notes of the currently logged-in user
       responses:
         '200':
-          description: The zip-archive with all notes
+          description: The zip-archive with all notes.
   /me/password:
     post:
       tags:
@@ -128,24 +128,24 @@ paths:
       summary: Sets the new password of currently logged-in user
       requestBody:
         required: true
-        description: The new password of the user
+        description: The new password of the user.
         content:
           application/json:
             schema:
               "$ref": "#/components/schemas/UserPasswordChange"
       responses:
         '200':
-          description: The password was changed
+          description: The password was changed.
   /me/history:
     get:
       tags:
         - history
-      summary: Returns a list of the last viewed notes.
+      summary: Returns a list of the last viewed notes
       operationId: getHistory
       description: The list is returned as a JSON object with an array containing for each entry it's id, title, tags, last visit time and pinned status.
       responses:
         '200':
-          description: The list of recently viewed notes and pinned notes
+          description: The list of recently viewed notes and pinned notes.
           content:
             application/json:
               schema:
@@ -156,14 +156,14 @@ paths:
       summary: Sets the history if none is already set
       operationId: updateHistory
       requestBody:
-        description: The history to update
+        description: The history to update.
         content:
           application/json:
             schema:
               "$ref": "#/components/schemas/History"
       responses:
         '200':
-          description: The new history
+          description: The new history.
           content:
             application/json:
               schema:
@@ -175,7 +175,7 @@ paths:
       operationId: deleteHistory
       responses:
         '200':
-          description: Deleted the history
+          description: Deleted the history.
           content: {}
   /me/history/{note}:
     put:
@@ -184,14 +184,14 @@ paths:
       summary: Update the history object of the note (e.g change it's pin status)
       operationId: updateHistoryObject
       requestBody:
-        description: The updated history object
+        description: The updated history object.
         content:
           application/json:
             schema:
               "$ref": "#/components/schemas/HistoryObject"
       responses:
         '200':
-          description: The new history
+          description: The new history.
           content:
             application/json:
               schema:
@@ -200,7 +200,7 @@ paths:
         - name: note
           in: path
           required: true
-          description: The note for which the revision should be shown
+          description: The note for which the revision should be shown.
           content:
             text/plain:
               example: my-note
@@ -211,13 +211,13 @@ paths:
       operationId: deleteHistoryObject
       responses:
         '200':
-          description: The new history
+          description: The new history.
           content: {}
       parameters:
         - name: note
           in: path
           required: true
-          description: The note for which the revision should be shown
+          description: The note for which the revision should be shown.
           content:
             text/plain:
               example: my-note
@@ -225,12 +225,12 @@ paths:
     post:
       tags:
         - note
-      summary: Imports some markdown data into a new note.
+      summary: Imports some markdown data into a new note
       operationId: createNoteFromMarkdown
       description: A random id will be assigned and the content will equal to the body of the received HTTP-request.
       requestBody:
         required: false
-        description: The content of the note to be imported as markdown
+        description: The content of the note to be imported as markdown.
         content:
           'text/markdown':
             schema:
@@ -240,7 +240,7 @@ paths:
                 "$ref": '#/components/examples/markdownExample'
       responses:
         '200':
-          description: Get information about the newly created note
+          description: Get information about the newly created note.
           content:
             application/json:
               schema:
@@ -249,35 +249,35 @@ paths:
     get:
       tags:
         - note
-      summary: Returns the note.
+      summary: Returns the note
       operationId: getNote
       description: This includes all metadata and the content of the note.
       responses:
         '200':
-          description: All data of the note
+          description: All data of the note.
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Note"
         '404':
-          description: Note does not exist
+          description: Note does not exist.
       parameters:
         - name: note
           in: path
           required: true
-          description: The note for which the info should be shown
+          description: The note for which the info should be shown.
           content:
             text/plain:
               example: my-note
     post:
       tags:
         - note
-      summary: Imports some markdown data into a new note with a given alias.
+      summary: Imports some markdown data into a new note with a given alias
       operationId: createNoteWithAlias
-      description: 'This endpoint equals to the above one except that the alias from the url will be assigned to the note if [FreeURL-mode](https://github.com/codimd/server/tree/master/docs/configuration-env-vars.md#users-and-privileges) is enabled.'
+      description: This endpoint equals to the above one except that the alias from the url will be assigned to the note if [FreeURL-mode](https://github.com/codimd/server/tree/master/docs/configuration-env-vars.md#users-and-privileges) is enabled.
       requestBody:
         required: true
-        description: The content of the note to be imported as markdown
+        description: The content of the note to be imported as markdown.
         content:
           'text/markdown':
             schema:
@@ -287,18 +287,18 @@ paths:
                 "$ref": '#/components/examples/markdownExample'
       responses:
         '200':
-          description: Get information about the newly created note
+          description: Get information about the newly created note.
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Note"
         '409':
-          description: This alias is already in use
+          description: This alias is already in use.
       parameters:
         - name: note
           in: path
           required: true
-          description: The note for which the info should be shown
+          description: The note for which the info should be shown.
           content:
             text/plain:
               example: my-note
@@ -316,7 +316,7 @@ paths:
               "$ref": "#/components/schemas/NotePermissions"
       responses:
         '200':
-          description: The updated permissions of the note
+          description: The updated permissions of the note.
           content:
             application/json:
               schema:
@@ -325,7 +325,7 @@ paths:
         - name: note
           in: path
           required: true
-          description: The note for which the info should be shown
+          description: The note for which the info should be shown.
           content:
             text/plain:
               example: my-note
@@ -336,7 +336,7 @@ paths:
       operationId: getNotePermissions
       responses:
         '200':
-          description: The permissions of the note
+          description: The permissions of the note.
           content:
             application/json:
               schema:
@@ -345,7 +345,7 @@ paths:
         - name: note
           in: path
           required: true
-          description: The note for which the info should be shown
+          description: The note for which the info should be shown.
           content:
             text/plain:
               example: my-note
@@ -354,23 +354,23 @@ paths:
       tags:
         - note
         - export
-      summary: Returns the raw markdown content of a note.
+      summary: Returns the raw markdown content of a note
       operationId: getNoteContent
       responses:
         '200':
-          description: The raw markdown content of the note
+          description: The raw markdown content of the note.
           content:
             'text/markdown':
               schema:
                 type: string
                 format: binary
         '404':
-          description: Note does not exist
+          description: Note does not exist.
       parameters:
         - name: note
           in: path
           required: true
-          description: The note for which the markdown should be exported
+          description: The note for which the markdown should be exported.
           content:
             text/plain:
               example: my-note
@@ -379,23 +379,23 @@ paths:
       tags:
         - note
         - export
-      summary: Returns the content of a note as HTML.
+      summary: Returns the content of a note as HTML
       operationId: getNoteContentAsHTML
       responses:
         '200':
-          description: The raw html content of the note
+          description: The raw html content of the note.
           content:
             'text/html':
               schema:
                 type: string
                 format: binary
         '404':
-          description: Note does not exist
+          description: Note does not exist.
       parameters:
         - name: note
           in: path
           required: true
-          description: The note for which the html should be exported
+          description: The note for which the html should be exported.
           content:
             text/plain:
               example: my-note
@@ -404,22 +404,22 @@ paths:
       tags:
         - note
         - export
-      summary: Exports the content of a note to a gist.
+      summary: Exports the content of a note to a gist
       operationId: exportNoteToGist
       responses:
         '200':
-          description: The link to Gist of the note
+          description: The link to Gist of the note.
           content:
             application/json:
               schema:
                 "$ref": '#/components/schemas/GistLink'
         '404':
-          description: Note does not exist
+          description: Note does not exist.
       parameters:
         - name: note
           in: path
           required: true
-          description: The note which should be exported to gist
+          description: The note which should be exported to gist.
           content:
             text/plain:
               example: my-note
@@ -428,22 +428,22 @@ paths:
       tags:
         - note
         - export
-      summary: Exports the content of a note to dropbox.
+      summary: Exports the content of a note to dropbox
       operationId: exportNoteToDropbox
       responses:
         '200':
-          description: The dropbox link of the note
+          description: The dropbox link of the note.
           content:
             application/json:
               schema:
                 "$ref": '#/components/schemas/DropboxLink'
         '404':
-          description: Note does not exist
+          description: Note does not exist.
       parameters:
         - name: note
           in: path
           required: true
-          description: The note which should be exported to dropbox
+          description: The note which should be exported to dropbox.
           content:
             text/plain:
               example: my-note
@@ -452,23 +452,23 @@ paths:
       tags:
         - note
         - export
-      summary: Exports the content of a note as PDF.
+      summary: Exports the content of a note as PDF
       operationId: exportNoteToPDF
       responses:
         '200':
-          description: The note as an PDF
+          description: The note as an PDF.
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
         '404':
-          description: Note does not exist
+          description: Note does not exist.
       parameters:
         - name: note
           in: path
           required: true
-          description: The note which should be exported to dropbox
+          description: The note which should be exported to dropbox.
           content:
             text/plain:
               example: my-note
@@ -476,23 +476,23 @@ paths:
     get:
       tags:
         - note
-      summary: Returns a list of the available note revisions.
+      summary: Returns a list of the available note revisions
       operationId: getAllRevisionsOfNote
       description: The list is returned as a JSON object with an array of revision-id and length associations. The revision-id equals to the timestamp when the revision was saved.
       responses:
         '200':
-          description: Revisions of the note
+          description: Revisions of the note.
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/NoteRevisionsMetadata"
         '404':
-          description: Note does not exist
+          description: Note does not exist.
       parameters:
         - name: note
           in: path
           required: true
-          description: The note for which revisions should be shown
+          description: The note for which revisions should be shown.
           content:
             text/plain:
               example: my-note
@@ -501,30 +501,30 @@ paths:
     get:
       tags:
         - note
-      summary: Returns the revision of the note with some metadata.
+      summary: Returns the revision of the note with some metadata
       operationId: getSpecificRevisionOfNote
       description: The revision is returned as a JSON object with the content of the note and the authorship.
       responses:
         '200':
-          description: Revision of the note for the given timestamp
+          description: Revision of the note for the given timestamp.
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/NoteRevision"
         '404':
-          description: Note does not exist
+          description: Note does not exist.
       parameters:
         - name: note
           in: path
           required: true
-          description: The note for which the revision should be shown
+          description: The note for which the revision should be shown.
           content:
             text/plain:
               example: my-note
         - name: revision-id
           in: path
           required: true
-          description: The id (timestamp) of the revision to fetch
+          description: The id (timestamp) of the revision to fetch.
           content:
             text/plain:
               example: 1570921051959
@@ -536,7 +536,7 @@ paths:
       operationId: getConfig
       responses:
         '200':
-          description: The config
+          description: The config of the backend in JSON.
           content:
             application/json:
               schema:
@@ -545,12 +545,12 @@ paths:
     get:
       tags:
         - server
-      summary: Returns the current status of the backend.
+      summary: Returns the current status of the backend
       operationId: getStatus
       description: The data is returned as a JSON object containing the number of notes stored on the server, (distinct) online users and more.
       responses:
         '200':
-          description: The server info
+          description: The server info.
           content:
             application/json:
               schema:
@@ -581,63 +581,63 @@ components:
       properties:
         name:
           type: string
-          description: The new display name of the user
+          description: The new display name of the user.
     Config:
       type: object
       properties:
         allowAnonymous:
           type: boolean
-          description: Wether anonymous notes are allowed
+          description: Wether anonymous notes are allowed.
         authProviders:
           type: object
           properties:
             facebook:
               type: boolean
-              description: Wether Facebook login is possible
+              description: Wether Facebook login is possible.
             github:
               type: boolean
-              description: Wether GitHub login is possible
+              description: Wether GitHub login is possible.
             twitter:
               type: boolean
-              description: Wether Twitter login is possible
+              description: Wether Twitter login is possible.
             gitlab:
               type: boolean
-              description: Wether Gitlab login is possible
+              description: Wether Gitlab login is possible.
             dropbox:
               type: boolean
-              description: Wether Dropbox login is possible
+              description: Wether Dropbox login is possible.
             google:
               type: boolean
-              description: Wether Google login is possible
+              description: Wether Google login is possible.
             saml:
               type: boolean
-              description: Wether SAML login is possible
+              description: Wether SAML login is possible.
             oauth2:
               type: boolean
-              description: Wether OAuth2 login is possible
+              description: Wether OAuth2 login is possible.
             email:
               type: boolean
-              description: Wether E-Mail login is possible
+              description: Wether E-Mail login is possible.
             ldap:
               type: boolean
-              description: Wether LDAP login is possible
+              description: Wether LDAP login is possible.
             openid:
               type: boolean
-              description: Wether OpenID login is possible
+              description: Wether OpenID login is possible.
         customAuthNames:
           type: object
           properties:
             ldap:
               type: string
-              description: The custom name for the LDAP Login
+              description: The custom name for the LDAP Login.
               example: "FooBar LDAP"
             oauth2:
               type: string
-              description: The custom name for the OAuth2 Login
+              description: The custom name for the OAuth2 Login.
               example: "Olaf2"
             saml:
               type: string
-              description: The custom name for the SAML Login
+              description: The custom name for the SAML Login.
               example: "aufSAMLn.de"
         specialLinks:
           type: object
@@ -645,15 +645,15 @@ components:
             privacy:
               type: string
               format: uri
-              description: Link to the privacy notice
+              description: Link to the privacy notice.
             termsOfUse:
               type: string
               format: uri
-              description: Link to the terms of use
+              description: Link to the terms of use.
             imprint:
               type: string
               format: uri
-              description: Link to the imprint
+              description: Link to the imprint.
         version:
           type: object
           properties:
@@ -671,39 +671,39 @@ components:
         id:
           type: string
           format: UUIDv4
-          description: The id of the note
+          description: The id of the note.
         alias:
           type: string
-          description: The alias of the note
+          description: The alias of the note.
         lastChange:
           type: object
           properties:
             userId:
               type: string
               format: UUIDv4
-              description: The id of the user that last changed the note
+              description: The id of the user that last changed the note.
             user:
               type: string
-              description: The name of the user that last changed the note
+              description: The name of the user that last changed the note.
             timestamp:
               type: integer
               description: UNIX-timestamp of when the note was last changed.
         viewcount:
           type: integer
           minimum: 0
-          description: How often the published version of the note was viewed
+          description: How often the published version of the note was viewed.
         createtime:
           type: string
           description: The timestamp when the note was created in ISO 8601 format.
         content:
           type: string
-          description: The raw markdown content of the note revision
+          description: The raw markdown content of the note revision.
         authorship:
           type: array
-          description: Data which gives insights about who worked on the note
+          description: Data which gives insights about who worked on the note.
           items:
             type: integer
-            description: Unique user ids and additional data
+            description: Unique user ids and additional data.
     NotePermissions:
       type: object
       properties:
@@ -715,7 +715,7 @@ components:
       properties:
         revision:
           type: array
-          description: Array that holds all revision-info objects
+          description: Array that holds all revision-info objects.
           items:
             type: object
             properties:
@@ -724,22 +724,22 @@ components:
                 description: UNIX-timestamp of when the revision was saved. Is also the revision-id.
               length:
                 type: integer
-                description: Length of the document to the timepoint the revision was saved
+                description: Length of the document to the timepoint the revision was saved.
     NoteRevision:
       type: object
       properties:
         content:
           type: string
-          description: The raw markdown content of the note revision
+          description: The raw markdown content of the note revision.
         authorship:
           type: array
-          description: Data which gives insights about who worked on the note
+          description: Data which gives insights about who worked on the note.
           items:
             type: integer
-            description: Unique user ids and additional data
+            description: Unique user ids and additional data.
         patch:
           type: array
-          description: Data which gives insight about what changed in comparison to former revisions
+          description: Data which gives insight about what changed in comparison to former revisions.
           items:
             type: string
     GistLink:
@@ -748,14 +748,14 @@ components:
         link:
           type: string
           format: uri
-          description: A Gist link
+          description: A Gist link.
     DropboxLink:
       type: object
       properties:
         link:
           type: string
           format: uri
-          description: A Dropbox link
+          description: A Dropbox link.
     EmailLogin:
       type: object
       properties:
@@ -784,25 +784,25 @@ components:
       properties:
         onlineNotes:
           type: integer
-          description: How many notes are edited at the moment
+          description: How many notes are edited at the moment.
         onlineUsers:
           type: integer
-          description: How many users are online at the moment
+          description: How many users are online at the moment.
         distinctOnlineUsers:
           type: integer
-          description: How many distinct users (different machines) are online at the moment
+          description: How many distinct users (different machines) are online at the moment.
         notesCount:
           type: integer
-          description: How many notes are stored on the server
+          description: How many notes are stored on the server.
         registeredUsers:
           type: integer
-          description: How many users are registered on the server
+          description: How many users are registered on the server.
         onlineRegisteredUsers:
           type: integer
-          description: How many of the online users are registered on the server
+          description: How many of the online users are registered on the server.
         distinctOnlineRegisteredUsers:
           type: integer
-          description: How many of the distinct online users are registered on the server
+          description: How many of the distinct online users are registered on the server.
         isConnectionBusy:
           type: boolean
         connectionSocketQueueLength:
@@ -816,27 +816,27 @@ components:
       properties:
         id:
           type: string
-          description: The id or alias of the note
+          description: The id or alias of the note.
         title:
           type: string
-          description: The title of the note
+          description: The title of the note.
         lastVisited:
           type: integer
-          description: The UNIX-timestamp in milliseconds when the note was last accessed by the user
+          description: The UNIX-timestamp in milliseconds when the note was last accessed by the user.
         tags:
           type: array
-          description: The tags that were added by the user to the note
+          description: The tags that were added by the user to the note.
           items:
             type: string
         pinned:
           type: boolean
-          description: Whether the user has pinned this note
+          description: Whether the user has pinned this note.
     History:
       type: object
       properties:
         history:
           type: array
-          description: The array that contains history objects
+          description: The array that contains history objects.
           items:
             "$ref": "#/components/schemas/HistoryObject"
   examples:
