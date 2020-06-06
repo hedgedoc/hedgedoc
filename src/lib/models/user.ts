@@ -15,32 +15,8 @@ import {
 } from 'sequelize-typescript'
 import { generateAvatarURL } from '../letter-avatars'
 import { logger } from '../logger'
+import { PassportProfile, ProviderEnum } from '../web/auth/utils'
 import { Note } from './note'
-
-// core
-
-export enum ProviderEnum {
-  facebook = 'facebook',
-  twitter = 'twitter',
-  github = 'github',
-  gitlab = 'gitlab',
-  dropbox = 'dropbox',
-  google = 'google',
-  ldap = 'ldap',
-  oauth2 = 'oauth2',
-  saml = 'saml',
-}
-
-export type PassportProfile = {
-  id: string;
-  username: string;
-  displayName: string;
-  emails: string[];
-  avatarUrl: string;
-  profileUrl: string;
-  provider: ProviderEnum;
-  photos: { value: string }[];
-}
 
 export class PhotoProfile {
   name: string

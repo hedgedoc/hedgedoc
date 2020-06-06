@@ -1,6 +1,6 @@
 import { InternalOAuthError, Strategy as OAuth2Strategy } from 'passport-oauth2'
 import { config } from '../../../config'
-import { PassportProfile, ProviderEnum } from '../../../models/user'
+import { PassportProfile, ProviderEnum } from '../utils'
 
 function extractProfileAttribute (data, path: string): string {
   // can handle stuff like `attrs[0].name`

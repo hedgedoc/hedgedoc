@@ -1,6 +1,6 @@
 import { Profile } from 'passport'
-import { User } from '../../models'
 import { logger } from '../../logger'
+import { User } from '../../models'
 
 export function passportGeneralCallback (
   accessToken: string,
@@ -47,4 +47,27 @@ export function passportGeneralCallback (
     logger.error('auth callback failed: ' + err)
     return done(err, undefined)
   })
+}
+
+export enum ProviderEnum {
+  facebook = 'facebook',
+  twitter = 'twitter',
+  github = 'github',
+  gitlab = 'gitlab',
+  dropbox = 'dropbox',
+  google = 'google',
+  ldap = 'ldap',
+  oauth2 = 'oauth2',
+  saml = 'saml',
+}
+
+export type PassportProfile = {
+  id: string;
+  username: string;
+  displayName: string;
+  emails: string[];
+  avatarUrl: string;
+  profileUrl: string;
+  provider: ProviderEnum;
+  photos: { value: string }[];
 }

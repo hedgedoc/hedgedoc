@@ -5,8 +5,8 @@ import path from 'path'
 import { config } from '../../config'
 import { errors } from '../../errors'
 import { logger } from '../../logger'
-import { Note, User } from '../../models'
-import { PassportProfile, PhotoProfile } from '../../models/user'
+import { Note } from '../../models'
+import { PhotoProfile } from '../../models/user'
 
 export function newNote (req, res: Response, body: string | null): void {
   let owner = null
