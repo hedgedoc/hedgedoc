@@ -531,7 +531,7 @@ paths:
   /config:
     get:
       tags:
-        - config
+        - server
       summary: The config of the backend
       operationId: getConfig
       responses:
@@ -541,6 +541,20 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Config"
+  /status:
+    get:
+      tags:
+        - server
+      summary: Returns the current status of the CodiMD instance.
+      operationId: getStatus
+      description: The data is returned as a JSON object containing the number of notes stored on the server, (distinct) online users and more.
+      responses:
+        '200':
+          description: The server info
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ServerStatus"
 components:
   schemas:
     UserInfo:
