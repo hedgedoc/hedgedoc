@@ -13,7 +13,7 @@ externalDocs:
   description: CodiMD Documentation
   url: https://github.com/codimd/server/tree/master/docs
 servers:
-  - url: "/api/v2.0/"
+  - url: "/api/v2/"
     description: "Base API Path"
 paths:
   /auth/email:
