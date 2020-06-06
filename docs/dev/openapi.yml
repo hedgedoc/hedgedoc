@@ -77,7 +77,7 @@ paths:
     get:
       tags:
         - user
-      summary: Get the user information of the currently logged in user
+      summary: Get the user information of the currently logged-in user
       operationId: getMe
       responses:
         '200':
@@ -117,7 +117,7 @@ paths:
       tags:
         - user
         - export
-      summary: Exports a zip-archive with all notes of the current user.
+      summary: Exports a zip-archive with all notes of the currently logged-in user.
       responses:
         '200':
           description: The zip-archive with all notes
@@ -125,7 +125,7 @@ paths:
     post:
       tags:
         - user
-      summary: Sets the new password of a user
+      summary: Sets the new password of currently logged-in user
       requestBody:
         required: true
         description: The new password of the user
@@ -492,7 +492,7 @@ paths:
     delete:
       tags:
         - history
-      summary: Clear the users history
+      summary: Clear the currently logged-in users history
       operationId: deleteHistory
       responses:
         '200':
