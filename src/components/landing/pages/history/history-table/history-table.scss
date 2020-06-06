@@ -1,0 +1,20 @@
+.history-table tr {
+  th, td {
+
+    &:nth-child(1) {
+      width: 45%;
+    }
+
+    &:nth-child(2) {
+      width: 20%;
+    }
+
+    &:nth-child(3) {
+      width: 20%;
+    }
+
+    &:nth-child(4) {
+      width: 15%;
+    }
+  }
+}
