@@ -116,6 +116,7 @@ paths:
     get:
       tags:
         - user
+        - export
       summary: Exports a zip-archive with all notes of the current user.
       responses:
         '200':
