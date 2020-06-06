@@ -531,7 +531,7 @@ paths:
   /config:
     get:
       tags:
-        - server
+        - backend
       summary: The config of the backend
       operationId: getConfig
       responses:
@@ -544,7 +544,7 @@ paths:
   /status:
     get:
       tags:
-        - server
+        - backend
       summary: Returns the current status of the backend
       operationId: getStatus
       description: The data is returned as a JSON object containing the number of notes stored on the server, (distinct) online users and more.
