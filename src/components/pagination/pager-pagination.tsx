@@ -1,11 +1,12 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Pagination } from 'react-bootstrap'
+import { ShowIf } from '../common/show-if'
 import { PagerItem } from './pager-item'
 
 export interface PaginationProps {
-    numberOfPageButtonsToShowAfterAndBeforeCurrent: number
-    onPageChange: (pageIndex: number) => void
-    lastPageIndex: number
+  numberOfPageButtonsToShowAfterAndBeforeCurrent: number
+  onPageChange: (pageIndex: number) => void
+  lastPageIndex: number
 }
 
 export const PagerPagination: React.FC<PaginationProps> = ({ numberOfPageButtonsToShowAfterAndBeforeCurrent, onPageChange, lastPageIndex }) => {
@@ -23,28 +24,28 @@ export const PagerPagination: React.FC<PaginationProps> = ({ numberOfPageButtons
   }, [onPageChange, pageIndex])
 
   const correctedLowerPageIndex =
-      Math.min(
-        Math.max(
-          Math.min(
-            wantedLowerPageIndex,
-            wantedLowerPageIndex + lastPageIndex - wantedUpperPageIndex
-          ),
-          0
-        ),
-        lastPageIndex
-      )
-
-  const correctedUpperPageIndex =
+    Math.min(
       Math.max(
         Math.min(
-          Math.max(
-            wantedUpperPageIndex,
-            wantedUpperPageIndex - wantedLowerPageIndex
-          ),
-          lastPageIndex
+          wantedLowerPageIndex,
+          wantedLowerPageIndex + lastPageIndex - wantedUpperPageIndex
         ),
         0
-      )
+      ),
+      lastPageIndex
+    )
+
+  const correctedUpperPageIndex =
+    Math.max(
+      Math.min(
+        Math.max(
+          wantedUpperPageIndex,
+          wantedUpperPageIndex - wantedLowerPageIndex
+        ),
+        lastPageIndex
+      ),
+      0
+    )
 
   const paginationItemsBefore = Array.from(new Array(correctedPageIndex - correctedLowerPageIndex)).map((k, index) => {
     const itemIndex = correctedLowerPageIndex + index
@@ -58,25 +59,17 @@ export const PagerPagination: React.FC<PaginationProps> = ({ numberOfPageButtons
 
   return (
     <Pagination>
-      {
-        correctedLowerPageIndex > 0
-          ? <Fragment>
-            <PagerItem key={0} index={0} onClick={setPageIndex}/>
-            <Pagination.Ellipsis disabled/>
-          </Fragment>
-          : null
-      }
+      <ShowIf condition={correctedLowerPageIndex > 0}>
+        <PagerItem key={0} index={0} onClick={setPageIndex}/>
+        <Pagination.Ellipsis disabled/>
+      </ShowIf>
       {paginationItemsBefore}
       <Pagination.Item active>{correctedPageIndex + 1}</Pagination.Item>
       {paginationItemsAfter}
-      {
-        correctedUpperPageIndex < lastPageIndex
-          ? <Fragment>
-            <Pagination.Ellipsis disabled/>
-            <PagerItem key={lastPageIndex} index={lastPageIndex} onClick={setPageIndex}/>
-          </Fragment>
-          : null
-      }
+      <ShowIf condition={correctedUpperPageIndex < lastPageIndex}>
+        <Pagination.Ellipsis disabled/>
+        <PagerItem key={lastPageIndex} index={lastPageIndex} onClick={setPageIndex}/>
+      </ShowIf>
     </Pagination>
   )
 }

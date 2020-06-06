@@ -15,9 +15,6 @@ export const Login: React.FC = () => {
   const authProviders = useSelector((state: ApplicationState) => state.backendConfig.authProviders)
   const customAuthNames = useSelector((state: ApplicationState) => state.backendConfig.customAuthNames)
   const userLoginState = useSelector((state: ApplicationState) => state.user)
-  const emailForm = authProviders.email ? <ViaEMail/> : null
-  const ldapForm = authProviders.ldap ? <ViaLdap/> : null
-  const openIdForm = authProviders.openid ? <ViaOpenId/> : null
 
   const oneClickProviders = [authProviders.dropbox, authProviders.facebook, authProviders.github, authProviders.gitlab,
     authProviders.google, authProviders.oauth2, authProviders.saml, authProviders.twitter]
@@ -45,9 +42,9 @@ export const Login: React.FC = () => {
       <Row className="h-100 flex justify-content-center">
         <ShowIf condition={authProviders.email || authProviders.ldap || authProviders.openid}>
           <Col xs={12} sm={10} lg={4}>
-            {emailForm}
-            {ldapForm}
-            {openIdForm}
+            <ShowIf condition={authProviders.email}><ViaEMail/></ShowIf>
+            <ShowIf condition={authProviders.ldap}><ViaLdap/></ShowIf>
+            <ShowIf condition={authProviders.openid}><ViaOpenId/></ShowIf>
           </Col>
         </ShowIf>
         <ShowIf condition={oneClickProviders.includes(true)}>

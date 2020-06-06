@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
 import { ApplicationState } from '../../../../redux'
 import { LoginProvider } from '../../../../redux/user/types'
+import { ShowIf } from '../../../common/show-if'
 import { ProfileAccountManagement } from './settings/profile-account-management'
 import { ProfileChangePassword } from './settings/profile-change-password'
 import { ProfileDisplayName } from './settings/profile-display-name'
@@ -22,7 +23,9 @@ export const Profile: React.FC = () => {
       <Row className="h-100 flex justify-content-center">
         <Col lg={6}>
           <ProfileDisplayName/>
-          {user.provider === LoginProvider.EMAIL ? <ProfileChangePassword/> : null}
+          <ShowIf condition={user.provider === LoginProvider.EMAIL}>
+            <ProfileChangePassword/>
+          </ShowIf>
           <ProfileAccountManagement/>
         </Col>
       </Row>

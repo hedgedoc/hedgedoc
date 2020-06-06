@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { ShowIf } from '../common/show-if'
 
 export interface ElementSeparatorProps {
     separator: React.ReactElement
@@ -14,9 +15,9 @@ export const ElementSeparator: React.FC<ElementSeparatorProps> = ({ children, se
           .map((child, index) => {
             return (
               <Fragment>
-                {
-                  (index > 0) ? separator : null
-                }
+                <ShowIf condition={index > 0}>
+                  {separator}
+                </ShowIf>
                 {child}
               </Fragment>
             )

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Alert } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../../fork-awesome/fork-awesome-icon'
+import { ShowIf } from '../common/show-if'
 
 export interface LoadingScreenProps {
   failedTitle: string
@@ -13,16 +14,12 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ failedTitle }) => 
         <ForkAwesomeIcon icon="file-text" size="5x"
           className={failedTitle ? 'animation-shake' : 'animation-pulse'}/>
       </div>
-      {
-        failedTitle !== ''
-          ? (
-            <Alert variant={'danger'}>
-              The task '{failedTitle}' failed.<br/>
-              For further information look into the browser console.
-            </Alert>
-          )
-          : null
-      }
+      <ShowIf condition={ failedTitle !== ''}>
+        <Alert variant={'danger'}>
+          The task '{failedTitle}' failed.<br/>
+          For further information look into the browser console.
+        </Alert>
+      </ShowIf>
     </div>
   )
 }

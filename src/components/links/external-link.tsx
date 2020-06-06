@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react'
-import { ForkAwesomeIcon } from '../../fork-awesome/fork-awesome-icon'
+import React from 'react'
+import { ForkAwesomeIcon, IconName } from '../../fork-awesome/fork-awesome-icon'
+import { ShowIf } from '../common/show-if'
 import { LinkWithTextProps } from './types'
 
 export const ExternalLink: React.FC<LinkWithTextProps> = ({ href, text, icon, className = 'text-light' }) => {
@@ -8,13 +9,9 @@ export const ExternalLink: React.FC<LinkWithTextProps> = ({ href, text, icon, cl
       target="_blank"
       rel="noopener noreferrer"
       className={className}>
-      {
-        icon
-          ? <Fragment>
-            <ForkAwesomeIcon icon={icon} fixedWidth={true}/>&nbsp;
-          </Fragment>
-          : null
-      }
+      <ShowIf condition={!!icon}>
+        <ForkAwesomeIcon icon={icon as IconName} fixedWidth={true}/>&nbsp;
+      </ShowIf>
       {text}
     </a>
   )

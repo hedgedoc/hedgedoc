@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { ApplicationState } from '../../../../redux'
 import frontendVersion from '../../../../version.json'
+import { ShowIf } from '../../../common/show-if'
 import { TranslatedExternalLink } from '../../../links/translated-external-link'
 import { VersionInputField } from './version-input-field'
 
@@ -22,10 +23,12 @@ export const VersionInfo: React.FC = () => {
     <Col md={6} className={'flex-column'}>
       <h5>{title}</h5>
       <VersionInputField version={version}/>
-      {sourceCodeLink
-        ? <TranslatedExternalLink i18nKey={'landing.versionInfo.sourceCode'} className={'btn btn-sm btn-primary d-block mb-2'} href={sourceCodeLink}/> : null}
-      {issueTrackerLink
-        ? <TranslatedExternalLink i18nKey={'landing.versionInfo.issueTracker'} className={'btn btn-sm btn-primary d-block mb-2'} href={issueTrackerLink}/> : null}
+      <ShowIf condition={!!sourceCodeLink}>
+        <TranslatedExternalLink i18nKey={'landing.versionInfo.sourceCode'} className={'btn btn-sm btn-primary d-block mb-2'} href={sourceCodeLink}/>
+      </ShowIf>
+      <ShowIf condition={!!issueTrackerLink}>
+        <TranslatedExternalLink i18nKey={'landing.versionInfo.issueTracker'} className={'btn btn-sm btn-primary d-block mb-2'} href={issueTrackerLink}/>
+      </ShowIf>
     </Col>
   )
 
