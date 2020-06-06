@@ -89,7 +89,7 @@ paths:
         '401':
           description: The user is not logged in.
           content: {}
-    post:
+    put:
       tags:
         - user
       summary: Update information about the currently logged-in user
