@@ -20,6 +20,9 @@ export default class Editor {
       F10: function (cm) {
         cm.setOption('fullScreen', !cm.getOption('fullScreen'))
       },
+      Space: function (cm) {
+        cm.replaceSelection(' foo ')
+      },
       Esc: function (cm) {
         if (cm.getOption('fullScreen') && !(cm.getOption('keyMap').substr(0, 3) === 'vim')) {
           cm.setOption('fullScreen', false)
