@@ -1,6 +1,6 @@
 import React from 'react'
 import { Row } from 'react-bootstrap'
-import { Pager } from '../../../../pagination/pager'
+import { Pager } from '../../../../common/pagination/pager'
 import { HistoryEntriesProps } from '../history-content/history-content'
 import { HistoryCard } from './history-card'
 

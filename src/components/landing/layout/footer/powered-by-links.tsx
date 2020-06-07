@@ -2,9 +2,9 @@ import React, { Fragment } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../../../redux'
-import { ExternalLink } from '../../../links/external-link'
-import { TranslatedExternalLink } from '../../../links/translated-external-link'
-import { TranslatedInternalLink } from '../../../links/translated-internal-link'
+import { ExternalLink } from '../../../common/links/external-link'
+import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
+import { TranslatedInternalLink } from '../../../common/links/translated-internal-link'
 import { VersionInfo } from '../version-info/version-info'
 
 export const PoweredByLinks: React.FC = () => {

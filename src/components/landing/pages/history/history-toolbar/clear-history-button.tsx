@@ -1,7 +1,7 @@
-import React, { useState, Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../../../../../fork-awesome/fork-awesome-icon'
+import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
 
 export interface ClearHistoryButtonProps {
   onClearHistory: () => void

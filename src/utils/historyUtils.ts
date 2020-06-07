@@ -1,11 +1,16 @@
 import moment from 'moment'
-import { HistoryEntry, HistoryJson, LocatedHistoryEntry, Location } from '../components/landing/pages/history/history'
+import { SortModeEnum } from '../components/common/sort-button/sort-button'
+import {
+  HistoryEntry,
+  HistoryEntryOrigin,
+  HistoryJson,
+  LocatedHistoryEntry
+} from '../components/landing/pages/history/history'
 import { HistoryToolbarState } from '../components/landing/pages/history/history-toolbar/history-toolbar'
-import { SortModeEnum } from '../components/sort-button/sort-button'
 
 export function collectEntries (localEntries: HistoryEntry[], remoteEntries: HistoryEntry[]): LocatedHistoryEntry[] {
-  const locatedLocalEntries = locateEntries(localEntries, Location.LOCAL)
-  const locatedRemoteEntries = locateEntries(remoteEntries, Location.REMOTE)
+  const locatedLocalEntries = locateEntries(localEntries, HistoryEntryOrigin.LOCAL)
+  const locatedRemoteEntries = locateEntries(remoteEntries, HistoryEntryOrigin.REMOTE)
   return mergeEntryArrays(locatedLocalEntries, locatedRemoteEntries)
 }
 
@@ -15,7 +20,7 @@ export function sortAndFilterEntries (entries: LocatedHistoryEntry[], toolbarSta
   return sortEntries(filteredByKeywordSearchEntries, toolbarState)
 }
 
-function locateEntries (entries: HistoryEntry[], location: Location): LocatedHistoryEntry[] {
+function locateEntries (entries: HistoryEntry[], location: HistoryEntryOrigin): LocatedHistoryEntry[] {
   return entries.map(entry => {
     return {
       ...entry,

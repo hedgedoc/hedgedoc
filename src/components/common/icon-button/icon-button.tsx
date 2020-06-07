@@ -1,7 +1,7 @@
 import React from 'react'
-import './icon-button.scss'
 import { Button, ButtonProps } from 'react-bootstrap'
-import { ForkAwesomeIcon, IconName } from '../../fork-awesome/fork-awesome-icon'
+import { ForkAwesomeIcon, IconName } from '../fork-awesome/fork-awesome-icon'
+import './icon-button.scss'
 
 export interface SocialButtonProps extends ButtonProps {
   icon: IconName

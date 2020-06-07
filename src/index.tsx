@@ -9,9 +9,9 @@ import { History } from './components/landing/pages/history/history'
 import { Intro } from './components/landing/pages/intro/intro'
 import { Login } from './components/landing/pages/login/login'
 import { Profile } from './components/landing/pages/profile/profile'
+import './global-style/index.scss'
 import * as serviceWorker from './service-worker'
 import { store } from './utils/store'
-import './style/index.scss'
 
 ReactDOM.render(
   <Provider store={store}>

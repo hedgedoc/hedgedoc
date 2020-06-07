@@ -14,7 +14,7 @@ export interface InitTask {
   task: Promise<void>
 }
 
-export const setUp = (baseUrl: string): InitTask[] => {
+export const createSetUpTaskList = (baseUrl: string): InitTask[] => {
   return [{
     name: 'Load Translations',
     task: setUpI18n()

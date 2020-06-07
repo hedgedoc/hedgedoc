@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../../../fork-awesome/fork-awesome-icon'
+import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 
 const EditorMenu: React.FC = () => {
   useTranslation()

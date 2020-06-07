@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { Pager } from '../../../../pagination/pager'
+import { Pager } from '../../../../common/pagination/pager'
 import { HistoryEntriesProps } from '../history-content/history-content'
 import { HistoryTableRow } from './history-table-row'
 import './history-table.scss'

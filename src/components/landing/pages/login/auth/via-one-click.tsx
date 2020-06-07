@@ -1,5 +1,5 @@
 import React from 'react'
-import { IconName } from '../../../../../fork-awesome/fork-awesome-icon'
+import { IconName } from '../../../../common/fork-awesome/fork-awesome-icon'
 import { SocialLinkButton } from './social-link-button/social-link-button'
 
 export enum OneClickType {

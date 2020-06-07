@@ -12,7 +12,7 @@ import {
   setHistoryToLocalStore,
   sortAndFilterEntries
 } from '../../../../utils/historyUtils'
-import { ErrorModal } from '../../../error-modal/error-modal'
+import { ErrorModal } from '../../../common/error-modal/error-modal'
 import { HistoryContent } from './history-content/history-content'
 import { HistoryToolbar, HistoryToolbarState, initState as toolbarInitState } from './history-toolbar/history-toolbar'
 
@@ -32,10 +32,10 @@ export interface HistoryJson {
 export type LocatedHistoryEntry = HistoryEntry & HistoryEntryLocation
 
 export interface HistoryEntryLocation {
-  location: Location
+  location: HistoryEntryOrigin
 }
 
-export enum Location {
+export enum HistoryEntryOrigin {
   LOCAL = 'local',
   REMOTE = 'remote'
 }

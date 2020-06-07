@@ -1,8 +1,8 @@
-import { LinkContainer } from 'react-router-bootstrap'
-import { Button } from 'react-bootstrap'
 import React from 'react'
+import { Button } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../../../../fork-awesome/fork-awesome-icon'
+import { LinkContainer } from 'react-router-bootstrap'
+import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 
 export const NewUserNoteButton: React.FC = () => {
   const { t } = useTranslation()

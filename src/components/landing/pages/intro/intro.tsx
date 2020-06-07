@@ -1,9 +1,9 @@
 import React from 'react'
-import { ForkAwesomeIcon } from '../../../../fork-awesome/fork-awesome-icon'
-import screenshot from './img/screenshot.png'
 import { Trans, useTranslation } from 'react-i18next'
-import { FeatureLinks } from './feature-links'
+import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { CoverButtons } from './cover-buttons/cover-buttons'
+import { FeatureLinks } from './feature-links'
+import screenshot from './img/screenshot.png'
 
 const Intro: React.FC = () => {
   const { t } = useTranslation()

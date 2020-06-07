@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
-import { ForkAwesomeIcon } from '../../../../../fork-awesome/fork-awesome-icon'
+import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
 import './close-button.scss'
 
 export interface CloseButtonProps {

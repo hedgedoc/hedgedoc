@@ -3,9 +3,9 @@ import { Dropdown } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
-import { ForkAwesomeIcon } from '../../../../../fork-awesome/fork-awesome-icon'
 import { ApplicationState } from '../../../../../redux'
 import { clearUser } from '../../../../../redux/user/methods'
+import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
 import { UserAvatar } from '../../user-avatar/user-avatar'
 
 export const UserDropdown: React.FC = () => {

@@ -2,9 +2,9 @@ import React from 'react'
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { ForkAwesomeIcon } from '../../../fork-awesome/fork-awesome-icon'
 import { ApplicationState } from '../../../redux'
 import { setEditorModeConfig } from '../../../redux/editor/methods'
+import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 
 export enum EditorMode {
   PREVIEW,

@@ -4,7 +4,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { ApplicationState } from '../../../../../redux'
-import { ShowIf } from '../../../../common/show-if'
+import { ShowIf } from '../../../../common/show-if/show-if'
 import { SignInButton } from '../../../layout/navigation/sign-in-button'
 import './cover-buttons.scss'
 

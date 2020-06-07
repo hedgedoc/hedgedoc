@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { ShowIf } from '../common/show-if'
+import { ShowIf } from '../show-if/show-if'
 
 export interface ElementSeparatorProps {
     separator: React.ReactElement

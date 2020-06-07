@@ -2,9 +2,9 @@ import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { Button, Card, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { deleteUser } from '../../../../../api/me'
-import { ForkAwesomeIcon } from '../../../../../fork-awesome/fork-awesome-icon'
 import { clearUser } from '../../../../../redux/user/methods'
 import { getBackendUrl } from '../../../../../utils/apiUtils'
+import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
 
 export const ProfileAccountManagement: React.FC = () => {
   useTranslation()

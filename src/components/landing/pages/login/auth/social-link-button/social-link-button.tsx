@@ -1,6 +1,6 @@
 import React from 'react'
+import { ForkAwesomeIcon, IconName } from '../../../../../common/fork-awesome/fork-awesome-icon'
 import './social-link-button.scss'
-import { ForkAwesomeIcon, IconName } from '../../../../../../fork-awesome/fork-awesome-icon'
 
 export interface SocialButtonProps {
   backgroundClass: string,

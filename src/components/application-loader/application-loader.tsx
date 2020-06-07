@@ -1,33 +1,29 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
-import { InitTask, setUp } from '../../initializers'
 import './application-loader.scss'
+import { createSetUpTaskList, InitTask } from './initializers'
 
 import { LoadingScreen } from './loading-screen'
 
 export const ApplicationLoader: React.FC = ({ children }) => {
+  const { pathname } = useLocation()
+
+  const setUpTasks = useCallback(() => {
+    const baseUrl: string = window.location.pathname.replace(pathname, '') + '/'
+    console.debug('Base URL is', baseUrl)
+    return createSetUpTaskList(baseUrl)
+  }, [pathname])
+
   const [failedTitle, setFailedTitle] = useState<string>('')
   const [doneTasks, setDoneTasks] = useState<number>(0)
-  const [initTasks, setInitTasks] = useState<InitTask[]>([])
-  const { pathname } = useLocation()
-  const [tasksAlreadyTriggered, setTasksAlreadyTriggered] = useState<boolean>(false)
+  const [initTasks] = useState<InitTask[]>(setUpTasks)
 
-  const runTask = async (task: Promise<void>): Promise<void> => {
+  const runTask = useCallback(async (task: Promise<void>): Promise<void> => {
     await task
     setDoneTasks(prevDoneTasks => {
       return prevDoneTasks + 1
     })
-  }
-
-  useEffect(() => {
-    if (tasksAlreadyTriggered) {
-      return
-    }
-    setTasksAlreadyTriggered(true)
-    const baseUrl: string = window.location.pathname.replace(pathname, '') + '/'
-    console.debug('Base URL is', baseUrl)
-    setInitTasks(setUp(baseUrl))
-  }, [tasksAlreadyTriggered, pathname])
+  }, [])
 
   useEffect(() => {
     for (const task of initTasks) {
@@ -36,7 +32,7 @@ export const ApplicationLoader: React.FC = ({ children }) => {
         setFailedTitle(task.name)
       })
     }
-  }, [initTasks])
+  }, [initTasks, runTask])
 
   return (
     doneTasks < initTasks.length || initTasks.length === 0

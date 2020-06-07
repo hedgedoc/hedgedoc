@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
-import { ForkAwesomeIcon, IconName } from '../../fork-awesome/fork-awesome-icon'
+import { ForkAwesomeIcon, IconName } from '../fork-awesome/fork-awesome-icon'
 
 export interface ErrorModalProps {
   show: boolean

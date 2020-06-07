@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../../../fork-awesome/fork-awesome-icon'
+import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 
 const DarkModeButton: React.FC = () => {
   const { t } = useTranslation()

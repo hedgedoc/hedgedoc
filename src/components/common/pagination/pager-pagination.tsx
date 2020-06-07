@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Pagination } from 'react-bootstrap'
-import { ShowIf } from '../common/show-if'
+import { ShowIf } from '../show-if/show-if'
 import { PagerItem } from './pager-item'
 
 export interface PaginationProps {

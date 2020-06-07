@@ -1,12 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Button, Nav, Navbar } from 'react-bootstrap'
-import { ForkAwesomeIcon } from '../../../fork-awesome/fork-awesome-icon'
-import { DarkModeButton } from './dark-mode-button'
-import { EditorViewMode } from './editor-view-mode'
 import { Trans, useTranslation } from 'react-i18next'
-import { EditorMenu } from './editor-menu'
+import { Link } from 'react-router-dom'
+import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { ConnectionIndicator } from './connection-indicator'
+import { DarkModeButton } from './dark-mode-button'
+import { EditorMenu } from './editor-menu'
+import { EditorViewMode } from './editor-view-mode'
 import { HelpButton } from './help-button'
 
 const TaskBar: React.FC = () => {

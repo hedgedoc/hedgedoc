@@ -5,7 +5,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import { ApplicationState } from '../../../../redux'
-import { ShowIf } from '../../../common/show-if'
+import { ShowIf } from '../../../common/show-if/show-if'
 
 type SignInButtonProps = {
   className?: string

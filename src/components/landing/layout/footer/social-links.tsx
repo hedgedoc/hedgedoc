@@ -1,6 +1,6 @@
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { ExternalLink } from '../../../links/external-link'
+import { ExternalLink } from '../../../common/links/external-link'
 
 const SocialLink: React.FC = () => {
   useTranslation()

@@ -1,6 +1,6 @@
 import React from 'react'
 import { ButtonProps } from 'react-bootstrap'
-import { IconName } from '../../fork-awesome/fork-awesome-icon'
+import { IconName } from '../fork-awesome/fork-awesome-icon'
 import { IconButton } from '../icon-button/icon-button'
 
 export enum SortModeEnum {

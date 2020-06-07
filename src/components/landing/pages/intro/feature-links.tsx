@@ -1,8 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Col, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../../../../fork-awesome/fork-awesome-icon'
+import { Link } from 'react-router-dom'
+import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 
 export const FeatureLinks: React.FC = () => {
   useTranslation()

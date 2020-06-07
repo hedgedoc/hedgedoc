@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { ApplicationState } from '../../../../redux'
 import frontendVersion from '../../../../version.json'
-import { ShowIf } from '../../../common/show-if'
-import { TranslatedExternalLink } from '../../../links/translated-external-link'
+import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
+import { ShowIf } from '../../../common/show-if/show-if'
 import { VersionInputField } from './version-input-field'
 
 export const VersionInfo: React.FC = () => {

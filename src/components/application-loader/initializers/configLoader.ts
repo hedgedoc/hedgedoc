@@ -1,8 +1,8 @@
-import { getBackendConfig } from '../api/backend-config'
-import { getFrontendConfig } from '../api/frontend-config'
-import { setBackendConfig } from '../redux/backend-config/methods'
-import { setFrontendConfig } from '../redux/frontend-config/methods'
-import { getAndSetUser } from '../utils/apiUtils'
+import { getBackendConfig } from '../../../api/backend-config'
+import { getFrontendConfig } from '../../../api/frontend-config'
+import { setBackendConfig } from '../../../redux/backend-config/methods'
+import { setFrontendConfig } from '../../../redux/frontend-config/methods'
+import { getAndSetUser } from '../../../utils/apiUtils'
 
 export const loadAllConfig: (baseUrl: string) => Promise<void> = async (baseUrl) => {
   const frontendConfig = await getFrontendConfig(baseUrl)
