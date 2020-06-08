@@ -303,12 +303,14 @@ export default class Editor {
     const setType = () => {
       if (this.editor.getOption('indentWithTabs')) {
         Cookies.set('indent_type', 'tab', {
-          expires: 365
+          expires: 365,
+          sameSite: 'strict'
         })
         type.text('Tab Size:')
       } else {
         Cookies.set('indent_type', 'space', {
-          expires: 365
+          expires: 365,
+          sameSite: 'strict'
         })
         type.text('Spaces:')
       }
@@ -319,11 +321,13 @@ export default class Editor {
       var unit = this.editor.getOption('indentUnit')
       if (this.editor.getOption('indentWithTabs')) {
         Cookies.set('tab_size', unit, {
-          expires: 365
+          expires: 365,
+          sameSite: 'strict'
         })
       } else {
         Cookies.set('space_units', unit, {
-          expires: 365
+          expires: 365,
+          sameSite: 'strict'
         })
       }
       widthLabel.text(unit)
@@ -391,7 +395,8 @@ export default class Editor {
     const setKeymapLabel = () => {
       var keymap = this.editor.getOption('keyMap')
       Cookies.set('keymap', keymap, {
-        expires: 365
+        expires: 365,
+        sameSite: 'strict'
       })
       label.text(keymap)
       this.restoreOverrideEditorKeymap()
@@ -439,7 +444,8 @@ export default class Editor {
       }
       this.editor.setOption('theme', theme)
       Cookies.set('theme', theme, {
-        expires: 365
+        expires: 365,
+        sameSite: 'strict'
       })
 
       checkTheme()
@@ -484,7 +490,8 @@ export default class Editor {
         this.editor.setOption('mode', mode)
       }
       Cookies.set('spellcheck', mode === 'spell-checker', {
-        expires: 365
+        expires: 365,
+        sameSite: 'strict'
       })
 
       checkSpellcheck()
@@ -529,7 +536,8 @@ export default class Editor {
     )
     if (overrideBrowserKeymap.is(':checked')) {
       Cookies.set('preferences-override-browser-keymap', true, {
-        expires: 365
+        expires: 365,
+        sameSite: 'strict'
       })
       this.restoreOverrideEditorKeymap()
     } else {
