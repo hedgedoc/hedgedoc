@@ -57,7 +57,7 @@ app.use(morgan('combined', {
 }))
 
 // socket io
-var io = require('socket.io')(server)
+var io = require('socket.io')(server, { cookie: false })
 io.engine.ws = new (require('ws').Server)({
   noServer: true,
   perMessageDeflate: false
@@ -139,7 +139,8 @@ app.use(session({
   saveUninitialized: true, // always create session to ensure the origin
   rolling: true, // reset maxAge on every response
   cookie: {
-    maxAge: config.sessionLife
+    maxAge: config.sessionLife,
+    sameSite: 'strict'
   },
   store: sessionStore
 }))
