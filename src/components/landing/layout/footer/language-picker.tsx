@@ -7,8 +7,9 @@ const LanguagePicker: React.FC = () => {
   const { i18n } = useTranslation()
 
   const onChangeLang = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-    moment.locale(event.currentTarget.value)
-    await i18n.changeLanguage(event.currentTarget.value)
+    const language = event.currentTarget.value
+    moment.locale(language)
+    await i18n.changeLanguage(language)
   }
 
   const shortenLanguageCode = (language: string): string => {

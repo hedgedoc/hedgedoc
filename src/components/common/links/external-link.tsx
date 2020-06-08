@@ -8,7 +8,9 @@ export const ExternalLink: React.FC<LinkWithTextProps> = ({ href, text, icon, cl
     <a href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={className}>
+      className={className}
+      dir='auto'
+    >
       <ShowIf condition={!!icon}>
         <ForkAwesomeIcon icon={icon as IconName} fixedWidth={true}/>&nbsp;
       </ShowIf>

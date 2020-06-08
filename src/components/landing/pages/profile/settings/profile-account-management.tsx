@@ -58,11 +58,11 @@ export const ProfileAccountManagement: React.FC = () => {
         <Card.Body>
           <Card.Title><Trans i18nKey="profile.accountManagement"/></Card.Title>
           <Button variant="secondary" block href={getBackendUrl() + '/me/export'} className="mb-2">
-            <ForkAwesomeIcon icon="cloud-download" fixedWidth={true} className="mr-2"/>
+            <ForkAwesomeIcon icon="cloud-download" fixedWidth={true} className="mx-2"/>
             <Trans i18nKey="profile.exportUserData"/>
           </Button>
           <Button variant="danger" block onClick={handleModalOpen}>
-            <ForkAwesomeIcon icon="trash" fixedWidth={true} className="mr-2"/>
+            <ForkAwesomeIcon icon="trash" fixedWidth={true} className="mx-2"/>
             <Trans i18nKey="profile.deleteUser"/>
           </Button>
         </Card.Body>
@@ -70,7 +70,7 @@ export const ProfileAccountManagement: React.FC = () => {
 
       <Modal show={showDeleteModal} onHide={handleModalClose} animation={true}>
         <Modal.Body className="text-dark">
-          <h3><Trans i18nKey="profile.modal.deleteUser.message"/></h3>
+          <h3 dir="auto"><Trans i18nKey="profile.modal.deleteUser.message"/></h3>
           <Trans i18nKey="profile.modal.deleteUser.subMessage"/>
         </Modal.Body>
         <Modal.Footer>

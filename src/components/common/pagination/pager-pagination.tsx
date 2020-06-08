@@ -58,7 +58,7 @@ export const PagerPagination: React.FC<PaginationProps> = ({ numberOfPageButtons
   })
 
   return (
-    <Pagination>
+    <Pagination dir='ltr'>
       <ShowIf condition={correctedLowerPageIndex > 0}>
         <PagerItem key={0} index={0} onClick={setPageIndex}/>
         <Pagination.Ellipsis disabled/>

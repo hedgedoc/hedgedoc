@@ -12,7 +12,7 @@ export const NewUserNoteButton: React.FC = () => {
         variant="primary"
         size="sm"
         className="d-inline-flex align-items-center">
-        <ForkAwesomeIcon icon="plus" className="mr-1"/>
+        <ForkAwesomeIcon icon="plus" className="mx-1"/>
         <span>
           <Trans i18nKey='landing.navigation.newNote'/>
         </span>

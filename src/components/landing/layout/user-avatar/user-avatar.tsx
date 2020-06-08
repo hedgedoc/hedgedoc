@@ -16,7 +16,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({ name, photo, additionalClasses 
         className="user-avatar"
         alt={`Avatar of ${name}`}
       />
-      <span className="ml-1 user-name">{name}</span>
+      <span className="mx-1 user-name">{name}</span>
     </span>
   )
 }

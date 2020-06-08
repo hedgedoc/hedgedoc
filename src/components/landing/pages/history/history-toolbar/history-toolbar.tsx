@@ -114,7 +114,7 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
         </Button>
       </InputGroup>
       <InputGroup className={'mr-1 mb-1'}>
-        <ToggleButtonGroup type="radio" name="options" value={state.viewState} className={'button-height'}
+        <ToggleButtonGroup type="radio" name="options" dir='ltr' value={state.viewState} className={'button-height'}
           onChange={(newViewState: ViewStateEnum) => {
             toggleViewChanged(newViewState)
           }}>
