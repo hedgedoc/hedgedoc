@@ -64,7 +64,7 @@ if (config.useSSL) {
 }
 
 // socket io
-const io = SocketIO(server)
+const io = SocketIO(server, { cookie: false })
 io.engine.ws = new WebSocket.Server({
   noServer: true,
   perMessageDeflate: false
