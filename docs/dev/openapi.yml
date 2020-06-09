@@ -782,6 +782,20 @@ components:
     ServerStatus:
       type: object
       properties:
+        serverVersion:
+          type: object
+          properties:
+            major:
+              type: integer
+            minor:
+              type: integer
+            patch:
+              type: integer
+            preRelease:
+              type: string
+            commit:
+              type: string
+          description: Version of the server specified according to SemVer specification
         onlineNotes:
           type: integer
           description: How many notes are edited at the moment.
