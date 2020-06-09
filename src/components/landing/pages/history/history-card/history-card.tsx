@@ -3,21 +3,18 @@ import React from 'react'
 import { Badge, Card } from 'react-bootstrap'
 import { formatHistoryDate } from '../../../../../utils/historyUtils'
 import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
-import { CloseButton } from '../common/close-button'
+import { EntryMenu } from '../common/entry-menu'
 import { PinButton } from '../common/pin-button'
-import { SyncStatus } from '../common/sync-status'
 import { HistoryEntryProps } from '../history-content/history-content'
 import './history-card.scss'
 
-export const HistoryCard: React.FC<HistoryEntryProps> = ({ entry, onPinClick, onSyncClick }) => {
+export const HistoryCard: React.FC<HistoryEntryProps> = ({ entry, onPinClick, onRemoveClick }) => {
   return (
     <div className="p-2 col-xs-12 col-sm-6 col-md-6 col-lg-4">
       <Card className="card-min-height" text={'dark'} bg={'light'}>
         <Card.Body className="p-2 d-flex flex-row justify-content-between">
           <div className={'d-flex flex-column'}>
-            <PinButton isDark={false} isPinned={entry.pinned} onPinClick={() => onPinClick(entry.id)}/>
-            <SyncStatus isDark={false} location={entry.location} onSync={() => onSyncClick(entry.id)}
-              className={'mt-1'}/>
+            <PinButton isDark={false} isPinned={entry.pinned} onPinClick={() => onPinClick(entry.id, entry.location)}/>
           </div>
           <div className={'d-flex flex-column justify-content-between'}>
             <Card.Title className="m-0 mt-1dot5">{entry.title}</Card.Title>
@@ -34,7 +31,13 @@ export const HistoryCard: React.FC<HistoryEntryProps> = ({ entry, onPinClick, on
             </div>
           </div>
           <div className={'d-flex flex-column'}>
-            <CloseButton isDark={false}/>
+            <EntryMenu
+              id={entry.id}
+              location={entry.location}
+              isDark={false}
+              onRemove={() => onRemoveClick(entry.id, entry.location)}
+              onDelete={() => onRemoveClick(entry.id, entry.location)}
+            />
           </div>
         </Card.Body>
       </Card>

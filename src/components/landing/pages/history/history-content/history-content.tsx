@@ -1,34 +1,39 @@
 import React, { Fragment, useState } from 'react'
 import { Alert, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { LocatedHistoryEntry } from '../history'
 import { PagerPagination } from '../../../../common/pagination/pager-pagination'
+import { HistoryEntryOrigin, LocatedHistoryEntry } from '../history'
 import { HistoryCardList } from '../history-card/history-card-list'
 import { HistoryTable } from '../history-table/history-table'
 import { ViewStateEnum } from '../history-toolbar/history-toolbar'
 
+type OnEntryClick = (entryId: string, location: HistoryEntryOrigin) => void
+
 export interface HistoryContentProps {
   viewState: ViewStateEnum
   entries: LocatedHistoryEntry[]
-  onPinClick: (entryId: string) => void
-  onSyncClick: (entryId: string) => void
+  onPinClick: OnEntryClick
+  onRemoveClick: OnEntryClick
+  onDeleteClick: OnEntryClick
 }
 
 export interface HistoryEntryProps {
   entry: LocatedHistoryEntry,
-  onPinClick: (entryId: string) => void
-  onSyncClick: (entryId: string) => void
+  onPinClick: OnEntryClick
+  onRemoveClick: OnEntryClick
+  onDeleteClick: OnEntryClick
 }
 
 export interface HistoryEntriesProps {
     entries: LocatedHistoryEntry[]
-    onPinClick: (entryId: string) => void
-    onSyncClick: (entryId: string) => void
+    onPinClick: OnEntryClick
+    onRemoveClick: OnEntryClick
+    onDeleteClick: OnEntryClick
     pageIndex: number
     onLastPageIndexChange: (lastPageIndex: number) => void
 }
 
-export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entries, onPinClick, onSyncClick }) => {
+export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entries, onPinClick, onRemoveClick, onDeleteClick }) => {
   useTranslation()
   const [pageIndex, setPageIndex] = useState(0)
   const [lastPageIndex, setLastPageIndex] = useState(0)
@@ -49,11 +54,16 @@ export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entri
       case ViewStateEnum.CARD:
         return <HistoryCardList entries={entries}
           onPinClick={onPinClick}
-          onSyncClick={onSyncClick}
+          onRemoveClick={onRemoveClick}
+          onDeleteClick={onDeleteClick}
           pageIndex={pageIndex}
           onLastPageIndexChange={setLastPageIndex}/>
       case ViewStateEnum.TABLE:
-        return <HistoryTable entries={entries} onPinClick={onPinClick} onSyncClick={onSyncClick} pageIndex={pageIndex}
+        return <HistoryTable entries={entries}
+          onPinClick={onPinClick}
+          onRemoveClick={onRemoveClick}
+          onDeleteClick={onDeleteClick}
+          pageIndex={pageIndex}
           onLastPageIndexChange={setLastPageIndex}/>
     }
   }

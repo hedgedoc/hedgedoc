@@ -1,0 +1,10 @@
+.history-menu {
+
+  .fa, &::after {
+    opacity: 0.5;
+  }
+
+  &:hover .fa, &:hover::after {
+    opacity: 1;
+  }
+}

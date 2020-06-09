@@ -1,12 +1,11 @@
 import React from 'react'
 import { Badge } from 'react-bootstrap'
 import { formatHistoryDate } from '../../../../../utils/historyUtils'
-import { CloseButton } from '../common/close-button'
+import { EntryMenu } from '../common/entry-menu'
 import { PinButton } from '../common/pin-button'
-import { SyncStatus } from '../common/sync-status'
 import { HistoryEntryProps } from '../history-content/history-content'
 
-export const HistoryTableRow: React.FC<HistoryEntryProps> = ({ entry, onPinClick, onSyncClick }) => {
+export const HistoryTableRow: React.FC<HistoryEntryProps> = ({ entry, onPinClick, onRemoveClick }) => {
   return (
     <tr>
       <td>{entry.title}</td>
@@ -18,9 +17,14 @@ export const HistoryTableRow: React.FC<HistoryEntryProps> = ({ entry, onPinClick
         }
       </td>
       <td>
-        <SyncStatus isDark={true} location={entry.location} onSync={() => onSyncClick(entry.id)} className={'mb-1 mr-1'}/>
-        <PinButton isDark={true} isPinned={entry.pinned} onPinClick={() => onPinClick(entry.id)} className={'mb-1 mr-1'}/>
-        <CloseButton isDark={true} className={'mb-1 mr-1'}/>
+        <PinButton isDark={true} isPinned={entry.pinned} onPinClick={() => onPinClick(entry.id, entry.location)} className={'mb-1 mr-1'}/>
+        <EntryMenu
+          id={entry.id}
+          location={entry.location}
+          isDark={true}
+          onRemove={() => onRemoveClick(entry.id, entry.location)}
+          onDelete={() => onRemoveClick(entry.id, entry.location)}
+        />
       </td>
     </tr>
   )

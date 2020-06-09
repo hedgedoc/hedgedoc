@@ -29,13 +29,13 @@ function locateEntries (entries: HistoryEntry[], location: HistoryEntryOrigin): 
   })
 }
 
-export function mergeEntryArrays<T extends HistoryEntry> (locatedLocalEntries: T[], locatedRemoteEntries: T[]): T[] {
-  const filteredLocalEntries = locatedLocalEntries.filter(localEntry => {
-    const entry = locatedRemoteEntries.find(remoteEntry => remoteEntry.id === localEntry.id)
+export function mergeEntryArrays<T extends HistoryEntry> (localEntries: T[], remoteEntries: T[]): T[] {
+  const filteredLocalEntries = localEntries.filter(localEntry => {
+    const entry = remoteEntries.find(remoteEntry => remoteEntry.id === localEntry.id)
     return !entry
   })
 
-  return filteredLocalEntries.concat(locatedRemoteEntries)
+  return filteredLocalEntries.concat(remoteEntries)
 }
 
 function filterBySelectedTags (entries: LocatedHistoryEntry[], selectedTags: string[]): LocatedHistoryEntry[] {

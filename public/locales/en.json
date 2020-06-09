@@ -26,6 +26,22 @@
               "setHistory": {
                 "title": "Upload History Error",
                 "text": "While trying to upload the history to the server an error occurred"
+              },
+              "deleteNote": {
+                "title": "Delete Note Error",
+                "text": "While trying to delete a note on the server an error occurred"
+              },
+              "updateEntry": {
+                "title": "Update History Entry Error",
+                "text": "While trying to update a history entry on the server an error occurred"
+              },
+              "deleteEntry": {
+                "title": "Delete History Entry Error",
+                "text": "While trying to delete a history entry on the server an error occurred"
+              },
+              "notFoundEntry": {
+                "title": "History Entry not found",
+                "text": "We can't find the history entry you requested."
               }
             },
             "noHistory": "No history",
@@ -40,7 +56,8 @@
                 "export": "Export history",
                 "import": "Import history",
                 "clear": "Clear history",
-                "refresh": "Refresh history"
+                "refresh": "Refresh history",
+                "uploadAll": "Sync the complete history to the server"
             },
             "modal": {
                 "clearHistory": {
@@ -60,6 +77,13 @@
                 "actions": "Actions",
                 "tags": "Tags",
                 "lastVisit": "Last Visit"
+            },
+            "menu": {
+              "recentNotes": "Recent notes",
+              "entryLocal": "Saved in your browser history",
+              "entryRemote": "Saved in your user history",
+              "removeEntry": "Remove from history",
+              "deleteNote": "Delete note"
             }
         },
         "navigation": {
