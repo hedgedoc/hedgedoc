@@ -782,6 +782,9 @@ components:
     ServerStatus:
       type: object
       properties:
+        serverVersion:
+          type: string
+          description: Version of the server (commit or stable version number)
         onlineNotes:
           type: integer
           description: How many notes are edited at the moment.
