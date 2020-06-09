@@ -119,4 +119,10 @@
     "Help us translating": "Hilf uns beim Übersetzen",
     "Join the community": "Tritt der Community bei",
     "Imprint": "Impressum"
+    "Freely - Anyone can edit": "Frei - Jeder kann Bearbeiten",
+    "Editable - Signed-in people can edit": "Editierbar - Jeder Eingeloggte kann bearbeiten",
+    "Limited - Signed-in people can edit (forbid guests)": "Limitiert - Jeder Eingeloggte kann bearbeiten (verbietet Gäste)",
+    "Locked - Only owner can edit": "Gesperrt - Nur der Besitzer kann bearbeiten",
+    "Protected - Only owner can edit (forbid guests)": "Geschützt - Nur der Besitzer kann bearbeiten (verbietet Gäste",
+    "Private - Only owner can view & edit": "Privat - Nur der Besitzer kann anschauen & bearbeiten"
 }
