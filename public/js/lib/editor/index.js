@@ -28,7 +28,12 @@ export default class Editor {
           column: 80
         }
 
-        cm.wrapParagraph(cm.getCursor(), wrapOptions)
+        var cursor = cm.getCursor()
+        var startOfLine = {
+          line: cursor.line,
+          ch: 0
+        }
+        cm.wrapRange(startOfLine, cursor, wrapOptions)
       },
       Esc: function (cm) {
         if (cm.getOption('fullScreen') && !(cm.getOption('keyMap').substr(0, 3) === 'vim')) {
