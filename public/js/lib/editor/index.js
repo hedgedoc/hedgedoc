@@ -21,7 +21,14 @@ export default class Editor {
         cm.setOption('fullScreen', !cm.getOption('fullScreen'))
       },
       Space: function (cm) {
-        cm.replaceSelection(' foo ')
+        cm.replaceSelection(' ')
+
+        var wrapOptions = {
+          wrapOn: /\s\S/,
+          column: 80
+        }
+
+        cm.wrapParagraph(cm.getCursor(), wrapOptions)
       },
       Esc: function (cm) {
         if (cm.getOption('fullScreen') && !(cm.getOption('keyMap').substr(0, 3) === 'vim')) {
@@ -124,30 +131,6 @@ export default class Editor {
       },
       'Shift-Ctrl-Backspace': cm => {
         utils.wrapTextWith(this.editor, cm, 'Backspace')
-      },
-      'Ctrl-\\': cm => {
-        var wrapOptions = {
-          wrapOn: /\s\S/,
-          column: 80
-        }
-
-        if (cm.somethingSelected()) {
-          var sels = cm.listSelections()
-          for (var i = 0; i < sels.length; ++sels) {
-            var head = sels[i].head
-            var anchor = sels[i].anchor
-
-            if (head.line < anchor.line) {
-              var temp = head
-              head = anchor
-              anchor = temp
-            }
-
-            cm.wrapRange(anchor, head, wrapOptions)
-          }
-        } else {
-          cm.wrapParagraph(cm.getCursor(), wrapOptions)
-        }
       }
     }
     this.eventListeners = {}
