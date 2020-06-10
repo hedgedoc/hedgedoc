@@ -38,27 +38,10 @@ export default class Editor {
           }
 
           // TODO: Probably a do-nothing for tables
-          var unorderedListRegex = /^(\s*)([*+-])\s/
-          var orderedListRegex = /^(\s*)((\d+)([.)]))\s/
+          var listRegex = /^(\s*)([*+-]|((\d+)([.)])))\s/
           // var blockquoteRegex = /^(\s*)(>[> ]*)\s/
           var match
-          if ((match = unorderedListRegex.exec(line)) !== null) {
-            let indentLength = 2
-            let wrapOptions = {
-              wrapOn: /\s\S/,
-              column: hardWrapColumn - indentLength
-            }
-
-            cm.wrapRange(from, initCursor, wrapOptions)
-
-            for (let i = initCursor.line; i < cm.getCursor().line; i++) {
-              let from = {
-                line: i + 1,
-                ch: 0
-              }
-              cm.replaceRange(' '.repeat(indentLength), from, from)
-            }
-          } else if ((match = orderedListRegex.exec(line)) !== null) {
+          if ((match = listRegex.exec(line)) !== null) {
             let indentLength = match[2].length + 1
             let wrapOptions = {
               wrapOn: /\s\S/,
