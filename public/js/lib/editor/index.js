@@ -26,7 +26,7 @@ export default class Editor {
         var hardWrapColumn = 80
 
         if (!hardWrap) {
-          cm.execCommand('defaultSpace')
+          cm.replaceSelection(' ')
         } else {
           cm.replaceSelection(' ')
 
