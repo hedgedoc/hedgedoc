@@ -21,19 +21,53 @@ export default class Editor {
         cm.setOption('fullScreen', !cm.getOption('fullScreen'))
       },
       Space: function (cm) {
-        cm.replaceSelection(' ')
+        // FIXME: These params should be taken as config inputs
+        var hardWrap = true
+        var hardWrapColumn = 80
 
-        var wrapOptions = {
-          wrapOn: /\s\S/,
-          column: 80
-        }
+        if (!hardWrap) {
+          cm.execCommand('defaultSpace')
+        } else {
+          cm.replaceSelection(' ')
 
-        var cursor = cm.getCursor()
-        var startOfLine = {
-          line: cursor.line,
-          ch: 0
+          var initCursor = cm.getCursor()
+          var line = cm.getLine(initCursor.line)
+          var from = {
+            line: initCursor.line,
+            ch: 0
+          }
+
+          // TODO: Probably a do-nothing for tables
+          var unorderedListRegex = /^(\s*)([*+-])\s/
+          // var orderedListRegex = /^(\s*)((\d+)([.)]))\s/
+          // var blockquoteRegex = /^(\s*)(>[> ]*)\s/
+          var match
+          if ((match = unorderedListRegex.exec(line)) !== null) {
+            let indentUnit = match[0].length + 2
+
+            let wrapOptions = {
+              wrapOn: /\s\S/,
+              column: hardWrapColumn - indentUnit
+            }
+
+            cm.wrapRange(from, initCursor, wrapOptions)
+
+            for (let i = initCursor.line; i < cm.getCursor().line; i++) {
+              let from = {
+                line: i + 1,
+                ch: 0
+              }
+              cm.replaceRange(match[1] + '  ', from, from)
+            }
+          } else {
+            let wrapOptions = {
+              wrapOn: /\s\S/,
+              column: hardWrapColumn
+            }
+
+            cm.wrapRange(from, initCursor, wrapOptions)
+          }
         }
-        cm.wrapRange(startOfLine, cursor, wrapOptions)
       },
       Esc: function (cm) {
         if (cm.getOption('fullScreen') && !(cm.getOption('keyMap').substr(0, 3) === 'vim')) {
