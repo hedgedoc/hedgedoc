@@ -25,11 +25,9 @@ export default class Editor {
         var hardWrap = true
         var hardWrapColumn = 80
 
-        if (!hardWrap) {
-          cm.replaceSelection(' ')
-        } else {
-          cm.replaceSelection(' ')
+        cm.replaceSelection(' ')
 
+        if (hardWrap) {
           var initCursor = cm.getCursor()
           var line = cm.getLine(initCursor.line)
           var from = {
