@@ -39,7 +39,7 @@ export default class Editor {
 
           var listRegex = /^(\s*)([*+-]|((\d+)([.)])))\s/
           var blockquoteRegex = /^(\s*)(>[> ]*)\s/
-          var maybeTableRegex = /^(\s*)|/
+          var maybeTableRegex = /^(\s*)\|/
           var match
           if ((match = listRegex.exec(line)) !== null) {
             let indentLength = match[2].length + 1
@@ -69,7 +69,7 @@ export default class Editor {
             for (let i = initCursor.line; i < cm.getCursor().line; i++) {
               let from = {
                 line: i + 1,
-                ch: 0
+                ch: match[1].length
               }
               cm.replaceRange(match[2] + ' ', from, from)
             }
