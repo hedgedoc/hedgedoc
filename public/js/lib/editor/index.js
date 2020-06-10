@@ -37,9 +37,9 @@ export default class Editor {
             ch: 0
           }
 
-          // TODO: Probably a do-nothing for tables
           var listRegex = /^(\s*)([*+-]|((\d+)([.)])))\s/
-          // var blockquoteRegex = /^(\s*)(>[> ]*)\s/
+          var blockquoteRegex = /^(\s*)(>[> ]*)\s/
+          var maybeTableRegex = /^(\s*)|/
           var match
           if ((match = listRegex.exec(line)) !== null) {
             let indentLength = match[2].length + 1
@@ -57,12 +57,30 @@ export default class Editor {
               }
               cm.replaceRange(' '.repeat(indentLength), from, from)
             }
+          } else if ((match = blockquoteRegex.exec(line)) !== null) {
+            let indentLength = match[2].length + 1
+            let wrapOptions = {
+              wrapOn: /\s\S/,
+              column: hardWrapColumn - indentLength
+            }
+
+            cm.wrapRange(from, initCursor, wrapOptions)
+
+            for (let i = initCursor.line; i < cm.getCursor().line; i++) {
+              let from = {
+                line: i + 1,
+                ch: 0
+              }
+              cm.replaceRange(match[2] + ' ', from, from)
+            }
+          } else if ((match = maybeTableRegex.exec(line)) !== null) {
+            // do not indent any lines that begin with '|'
+            // so that tables aren't hard wrapped
           } else {
             let wrapOptions = {
               wrapOn: /\s\S/,
               column: hardWrapColumn
             }
-
             cm.wrapRange(from, initCursor, wrapOptions)
           }
         }
