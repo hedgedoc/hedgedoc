@@ -43,11 +43,9 @@ export default class Editor {
           // var blockquoteRegex = /^(\s*)(>[> ]*)\s/
           var match
           if ((match = unorderedListRegex.exec(line)) !== null) {
-            let indentUnit = match[0].length + 2
-
             let wrapOptions = {
               wrapOn: /\s\S/,
-              column: hardWrapColumn - indentUnit
+              column: hardWrapColumn - 2
             }
 
             cm.wrapRange(from, initCursor, wrapOptions)
@@ -57,7 +55,7 @@ export default class Editor {
                 line: i + 1,
                 ch: 0
               }
-              cm.replaceRange(match[1] + '  ', from, from)
+              cm.replaceRange('  ', from, from)
             }
           } else {
             let wrapOptions = {
