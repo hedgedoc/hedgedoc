@@ -51,6 +51,13 @@ if (config.useSSL) {
   server = require('http').createServer(app)
 }
 
+// if we manage to provide HTTPS domains, but don't provide TLS ourselves
+// obviously a proxy is involded. In order to make sure express is aware of
+// this, we provide the option to trust proxies here.
+if (!config.useSSL && config.protocolUseSSL) {
+  app.set('trust proxy', 1)
+}
+
 // logger
 app.use(morgan('combined', {
   'stream': logger.stream
