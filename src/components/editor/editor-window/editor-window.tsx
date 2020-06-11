@@ -13,9 +13,12 @@ import 'codemirror/keymap/sublime.js'
 import 'codemirror/mode/gfm/gfm.js'
 import React, { useState } from 'react'
 import { Controlled as ControlledCodeMirror } from 'react-codemirror2'
+import { useTranslation } from 'react-i18next'
 import './editor-window.scss'
 
 const EditorWindow: React.FC = () => {
+  const { t } = useTranslation()
+
   const [content, setContent] = useState<string>('')
   return (
     <ControlledCodeMirror
@@ -51,7 +54,7 @@ const EditorWindow: React.FC = () => {
         addModeClass: true,
         // autoRefresh: true,
         // otherCursors: true
-        placeholder: "← Start by entering a title here\n===\nVisit /features if you don't know what to do.\nHappy hacking :)"
+        placeholder: t('editor.placeholder')
       }
       }
       onBeforeChange={(editor, data, value) => {
