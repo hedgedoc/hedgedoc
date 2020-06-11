@@ -5,7 +5,7 @@ import { Footer } from './layout/footer/footer'
 
 export const LandingLayout: React.FC = ({ children }) => {
   return (
-    <Container className="text-center text-white">
+    <Container className="text-white text-center">
       <HeaderBar/>
       {children}
       <Footer/>

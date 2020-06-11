@@ -3,7 +3,7 @@ import { EditorMode } from '../../components/editor/task-bar/editor-view-mode'
 import { EditorConfig, EditorConfigActions, EditorConfigActionType, SetEditorConfigAction } from './types'
 
 export const initialState: EditorConfig = {
-  editorMode: EditorMode.PREVIEW
+  editorMode: EditorMode.EDITOR
 }
 
 export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (state: EditorConfig = initialState, action: EditorConfigActions) => {
