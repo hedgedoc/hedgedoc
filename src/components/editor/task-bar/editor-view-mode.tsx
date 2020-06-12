@@ -19,7 +19,7 @@ export const EditorViewMode: React.FC = () => {
     <ToggleButtonGroup
       type="radio"
       name="options"
-      defaultValue={editorConfig.editorMode}
+      value={editorConfig.editorMode}
       onChange={(value: EditorMode) => {
         setEditorModeConfig(value)
       }}>
