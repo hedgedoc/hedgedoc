@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import { ApplicationLoader } from './components/application-loader/application-loader'
 import { Editor } from './components/editor/editor'
+import { NotFound } from './components/error/not-found'
 import { LandingLayout } from './components/landing/landing-layout'
 import { History } from './components/landing/pages/history/history'
 import { Intro } from './components/landing/pages/intro/intro'
@@ -12,6 +13,7 @@ import { Profile } from './components/landing/pages/profile/profile'
 import './global-style/index.scss'
 import * as serviceWorker from './service-worker'
 import { store } from './utils/store'
+import { Redirector } from './components/redirector/redirector'
 
 ReactDOM.render(
   <Provider store={store}>
@@ -41,8 +43,14 @@ ReactDOM.render(
           <Route path="/n/:id">
             <Editor/>
           </Route>
+          <Route path="/:id">
+            <Redirector/>
+          </Route>
           <Route path="/">
             <Redirect to="/intro"/>
+          </Route>
+          <Route>
+            <NotFound/>
           </Route>
         </Switch>
       </ApplicationLoader>

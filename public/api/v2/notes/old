@@ -1,0 +1,14 @@
+{
+    "id": "ABC123",
+    "alias": "old",
+    "lastChange": {
+        "userId": "snskxnksnxksnxksnx",
+        "username": "testy",
+        "timestamp": 123456789
+    },
+    "viewcount": 0,
+    "createtime": "2020-05-22T20:46:08.962Z",
+    "content": "test123",
+    "authorship": [],
+    "preVersionTwoNote": true
+}
