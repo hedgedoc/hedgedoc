@@ -4,7 +4,7 @@ import Sequelize from 'sequelize'
 import { BelongsTo, Column, DataType, Default, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript'
 // core
 import { logger } from '../logger'
-import { processData, stripNullByte } from '../utils'
+import { processData, stripNullByte } from '../utils/functions'
 import { Note } from './note'
 import async = require('async')
 import childProcess = require('child_process')

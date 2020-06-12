@@ -13,7 +13,7 @@ import { Author, Note, Revision, User } from './models'
 import { NoteAuthorship } from './models/note'
 import { PhotoProfile } from './utils/PhotoProfile'
 import { EditorSocketIOServer } from './ot/editor-socketio-server'
-import { mapToObject } from './utils'
+import { mapToObject } from './utils/functions'
 
 export type SocketWithNoteId = Socket & { noteId: string }
 
