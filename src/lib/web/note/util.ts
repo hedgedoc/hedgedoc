@@ -6,7 +6,7 @@ import { config } from '../../config'
 import { errors } from '../../errors'
 import { logger } from '../../logger'
 import { Note } from '../../models'
-import { PhotoProfile } from '../../models/user'
+import { PhotoProfile } from '../../utils/PhotoProfile'
 
 export function newNote (req, res: Response, body: string | null): void {
   let owner = null

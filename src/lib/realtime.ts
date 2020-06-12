@@ -11,7 +11,7 @@ import { History } from './history'
 import { logger } from './logger'
 import { Author, Note, Revision, User } from './models'
 import { NoteAuthorship } from './models/note'
-import { PhotoProfile } from './models/user'
+import { PhotoProfile } from './utils/PhotoProfile'
 import { EditorSocketIOServer } from './ot/editor-socketio-server'
 import { mapToObject } from './utils'
 

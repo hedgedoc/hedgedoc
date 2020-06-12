@@ -6,7 +6,7 @@ import { Note, User } from '../models'
 import { logger } from '../logger'
 import { generateAvatar } from '../letter-avatars'
 import { config } from '../config'
-import { PhotoProfile } from '../models/user'
+import { PhotoProfile } from '../utils/PhotoProfile'
 
 const UserRouter = Router()
 
