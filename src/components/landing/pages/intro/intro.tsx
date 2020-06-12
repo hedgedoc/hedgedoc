@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { CoverButtons } from './cover-buttons/cover-buttons'
@@ -9,7 +9,7 @@ const Intro: React.FC = () => {
   const { t } = useTranslation()
 
   return (
-    <div>
+    <Fragment>
       <h1 dir='auto'>
         <ForkAwesomeIcon icon="file-text"/> CodiMD
       </h1>
@@ -21,7 +21,7 @@ const Intro: React.FC = () => {
 
       <img alt={t('landing.intro.screenShotAltText')} src={screenshot} className="img-fluid mb-5"/>
       <FeatureLinks/>
-    </div>
+    </Fragment>
   )
 }
 
