@@ -17,9 +17,9 @@ export interface EntryMenuProps {
 
 const EntryMenu: React.FC<EntryMenuProps> = ({ id, location, isDark, onRemove, onDelete, className }) => {
   return (
-    <Dropdown className={className || ''}>
-      <Dropdown.Toggle size="sm" variant={isDark ? 'secondary' : 'light'} id={`dropdown-card-${id}`} className='history-menu d-flex align-items-center'>
-        <ForkAwesomeIcon icon="ellipsis-h" className='history-menu'/>
+    <Dropdown className={`d-inline-flex ${className || ''}`}>
+      <Dropdown.Toggle variant={isDark ? 'secondary' : 'light'} id={`dropdown-card-${id}`} className='no-arrow history-menu d-inline-flex align-items-center'>
+        <ForkAwesomeIcon icon="bars" className=''/>
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
