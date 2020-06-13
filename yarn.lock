@@ -9285,10 +9285,10 @@ react-bootstrap@1.0.1:
     uncontrollable "^7.0.0"
     warning "^4.0.3"
 
-react-codemirror2@7.2.0:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/react-codemirror2/-/react-codemirror2-7.2.0.tgz#2f292f31b8ad1c4068220029b5099bf5fe5c7421"
-  integrity sha512-m2o9qugS83DqDowrRQ1OHoELek80LJZtgAkjQ2ociaj15eLQ5Fa7bPlKIbAtNhqOAxKkVkQ0oG3Y82wbNI2ptw==
+react-codemirror2@7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/react-codemirror2/-/react-codemirror2-7.2.1.tgz#38dab492fcbe5fb8ebf5630e5bb7922db8d3a10c"
+  integrity sha512-t7YFmz1AXdlImgHXA9Ja0T6AWuopilub24jRaQdPVbzUJVNKIYuy3uCFZYa7CE5S3UW6SrSa5nAqVQvtzRF9gw==
 
 react-dev-utils@^10.2.1:
   version "10.2.1"
