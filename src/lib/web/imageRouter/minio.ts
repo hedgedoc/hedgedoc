@@ -3,7 +3,7 @@ import fs from 'fs'
 import { Client } from 'minio'
 
 import { config } from '../../config'
-import { getImageMimeType } from '../../utils'
+import { getImageMimeType } from '../../utils/functions'
 import { logger } from '../../logger'
 import { UploadProvider } from './index'
 

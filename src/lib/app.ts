@@ -25,7 +25,7 @@ import { errors } from './errors'
 import { logger } from './logger'
 import { Revision, sequelize } from './models'
 import { realtime } from './realtime'
-import { handleTermSignals } from './utils'
+import { handleTermSignals } from './utils/functions'
 import { AuthRouter, BaseRouter, HistoryRouter, ImageRouter, NoteRouter, StatusRouter, UserRouter } from './web/'
 import { tooBusy, checkURI, redirectWithoutTrailingSlashes, codiMDVersion } from './web/middleware'
 

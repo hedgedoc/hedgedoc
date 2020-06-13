@@ -1,8 +1,8 @@
 import fs from 'fs'
-import { config } from './config'
-import { logger } from './logger'
-import { Revision } from './models'
-import { realtime } from './realtime'
+import { config } from '../config'
+import { logger } from '../logger'
+import { Revision } from '../models'
+import { realtime } from '../realtime'
 
 /*
 Converts a map from string to something into a plain JS object for transmitting via a websocket

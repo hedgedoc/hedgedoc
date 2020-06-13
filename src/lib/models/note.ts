@@ -31,7 +31,7 @@ import S from 'string'
 import { config } from '../config'
 import { logger } from '../logger'
 import ot from '../ot'
-import { processData, stripNullByte } from '../utils'
+import { processData, stripNullByte } from '../utils/functions'
 import { Author, Revision, User } from './index'
 
 const md = markdownIt()

@@ -1,6 +1,6 @@
 import { InternalOAuthError, Strategy as OAuth2Strategy } from 'passport-oauth2'
 import { config } from '../../../config'
-import { Profile, ProviderEnum } from '../../../models/user'
+import { PassportProfile, ProviderEnum } from '../utils'
 
 function extractProfileAttribute (data, path: string): string {
   // can handle stuff like `attrs[0].name`
@@ -13,7 +13,7 @@ function extractProfileAttribute (data, path: string): string {
   return data
 }
 
-function parseProfile (data): Partial<Profile> {
+function parseProfile (data): Partial<PassportProfile> {
   const username = extractProfileAttribute(data, config.oauth2.userProfileUsernameAttr)
   const displayName = extractProfileAttribute(data, config.oauth2.userProfileDisplayNameAttr)
   const email = extractProfileAttribute(data, config.oauth2.userProfileEmailAttr)
