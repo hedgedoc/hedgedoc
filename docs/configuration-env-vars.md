@@ -77,7 +77,7 @@ defaultNotePath can't be set from env-vars
 | variable | example value | description |
 | -------- | ------------- | ----------- |
 | `CMD_ALLOW_ANONYMOUS` | `true` or `false` | Set to allow anonymous usage (default is `true`). |
-| `CMD_ALLOW_ANONYMOUS_EDITS` | `true` or `false` | If `allowAnonymous` is `false`: allow users to select `freely` permission, allowing guests to edit existing notes (default is `true`). |
+| `CMD_ALLOW_ANONYMOUS_EDITS` | `true` or `false` | If `allowAnonymous` is `false`: allow users to select `freely` permission, allowing guests to edit existing notes (default is `false`). |
 | `CMD_ALLOW_FREEURL` | `true` or `false` | Set to allow new note creation by accessing a nonexistent note URL. This is the behavior familiar from [Etherpad](https://github.com/ether/etherpad-lite). |
 | `CMD_DEFAULT_PERMISSION` | `freely`, `editable`, `limited`, `locked`, `protected` or `private` | Set notes default permission (only applied on signed-in users). |
 | `CMD_SESSION_LIFE` | `1209600000` (14 days) | Cookie session life time in milliseconds. |
