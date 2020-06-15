@@ -228,6 +228,7 @@ you don't have to use either of these.
 |             | `CMD_S3_SECRET_ACCESS_KEY` | no example                                                                                                        | AWS secret key                                                                                                                             |
 |             | `CMD_S3_REGION`            | `ap-northeast-1`                                                                                                  | AWS S3 region                                                                                                                              |
 | `s3bucket`  | `CMD_S3_BUCKET`            | no example                                                                                                        | AWS S3 bucket name                                                                                                                         |
+|             | `CMD_S3_ENDPOINT ENV`      | no example                                                                                                        | S3 API endpoint if you don't use AWS name                                                                                                  |
 
 ### Azure Blob Storage
 
