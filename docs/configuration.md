@@ -1,5 +1,4 @@
-Configuration
-===
+# Configuration
 
 You can choose to configure CodiMD with either a config file or with environment variables.
 
@@ -15,7 +14,6 @@ to `config.json` before filling in your own details.
 | ----------- | ----------- | ----------------------------- | -------------------------------------------------------------------------------- |
 |             | `NODE_ENV`  | `production` or `development` | set current environment (will apply corresponding settings in the `config.json`) |
 | `debug`     | `DEBUG`     | `true` or `false`             | set debug mode, show more logs                                                   |
-
 
 ## CodiMD basics
 
@@ -35,7 +33,6 @@ to `config.json` before filling in your own details.
 | `heartbeatTimeout`  |                          | `10000`                                                            | socket.io heartbeat timeout                                                                                                                                                                                |
 | `documentMaxLength` |                          | `100000`                                                           | note max length                                                                                                                                                                                            |
 
-
 ## CodiMD paths stuff
 
 these are rarely used for various reasons.
@@ -52,7 +49,6 @@ these are rarely used for various reasons.
 | `viewPath`        |             | `./public/views`                     | template directory path<sup>1</sup>                                                              |
 | `uploadsPath`     |             | `./public/uploads`                   | uploads directory<sup>1</sup> - needs to be persistent when you use imageUploadType `filesystem` |
 
-
 ## CodiMD Location
 
 | config file      | environment           | example value                                              | description                                                                                                       |
@@ -67,7 +63,6 @@ these are rarely used for various reasons.
 | `urlAddPort`     | `CMD_URL_ADDPORT`     | `true` or `false`                                          | set to add port on callback URL (ports `80` or `443` won't be applied) (only applied when domain is set)          |
 | `allowOrigin`    | `CMD_ALLOW_ORIGIN`    | `['localhost']`, `['codimd.org']`, `localhost, codimd.org` | domain name whitelist (use comma to separate)                                                                     |
 
-
 ## CSP and HSTS
 
 | config file                   | environment                                       | example value                                                                                                                              | description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
@@ -81,14 +76,12 @@ these are rarely used for various reasons.
 |                               | `CMD_CSP_ENABLE`                                  | `true`                                                                                                                                     | whether to enable Content Security Policy (directives cannot be configured with environment variables)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `CMD_CSP_REPORTURI`           | `https://<someid>.report-uri.com/r/d/csp/enforce` | Allows to add a URL for CSP reports in case of violations                                                                                  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 
-
 ## Privacy and External Requests
 
 | config file     | environment          | example value     | description                                                                                                                                                                    |
 | --------------- | -------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `allowGravatar` | `CMD_ALLOW_GRAVATAR` | `true` or `false` | set to `false` to disable [Libravatar](https://www.libravatar.org/) as profile picture source on your instance. Libravatar is a federated open-source alternative to Gravatar. |
 | `useCDN`        | `CMD_USECDN`         | `true` or `false` | set to use CDN resources or not (default is `false`)                                                                                                                           |
-
 
 ## Users and Privileges
 
@@ -102,7 +95,6 @@ these are rarely used for various reasons.
 | `sessionLife`         | `CMD_SESSION_LIFE`          | `14 * 24 * 60 * 60 * 1000`, `1209600000` (14 days)                  | Cookie session life time in milliseconds.                                                                                                                      |
 | `sessionSecret`       | `CMD_SESSION_SECRET`        | `secret`                                                            | Cookie session secret used to sign the session cookie. If none is set, one will randomly generated on each startup, meaning all your users will be logged out. |
 
-
 ## Login methods
 
 ### Email (local account)
@@ -111,7 +103,6 @@ these are rarely used for various reasons.
 | -------------------- | -------------------------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `email`              | `CMD_EMAIL`                | `true` or `false` | Set to allow email sign-in. The default is `true`.                                                                                                                                                                                                                                                                                                                                                                            |
 | `allowEmailRegister` | `CMD_ALLOW_EMAIL_REGISTER` | `true` or `false` | Set to allow registration of new accounts using an email address. If set to `false`, you can still create accounts using the command line - see `bin/manage_users` for details (In production mode, remember to run it with `NODE_ENV` set as `production` in the enviroment). This setting has no effect if `email` or `CMD_EMAIL` is `false`. The default for `allowEmailRegister` or `CMD_ALLOW_EMAIL_REGISTER` is `true`. |
-
 
 ### Dropbox Login
 
@@ -129,7 +120,6 @@ these are rarely used for various reasons.
 |             | `CMD_FACEBOOK_CLIENTID`     | no example                           | Facebook API client id                                                                                                                |
 |             | `CMD_FACEBOOK_CLIENTSECRET` | no example                           | Facebook API client secret                                                                                                            |
 
-
 ### GitHub Login
 
 | config file | environment               | example value                        | description                                                                                                                                                                     |
@@ -137,7 +127,6 @@ these are rarely used for various reasons.
 | `github`    |                           | `{clientID: ..., clientSecret: ...}` | An object containing the client ID and the client secret obtained by the GitHub developer page. For more details have a look at the [GitHub auth guide](guides/auth/github.md). |
 |             | `CMD_GITHUB_CLIENTID`     | no example                           | GitHub API client id                                                                                                                                                            |
 |             | `CMD_GITHUB_CLIENTSECRET` | no example                           | GitHub API client secret                                                                                                                                                        |
-
 
 ### GitLab Login
 
@@ -150,7 +139,6 @@ these are rarely used for various reasons.
 |             | `CMD_GITLAB_CLIENTSECRET` | no example                                                                   | GitLab API client secret                                                                                                            |
 |             | `CMD_GITLAB_VERSION`      | no example                                                                   | GitLab API version (v3 or v4)                                                                                                       |
 
-
 ### Google Login
 
 | config file | environment               | example value                                           | description                                                                                                                          |
@@ -159,7 +147,6 @@ these are rarely used for various reasons.
 |             | `CMD_GOOGLE_CLIENTID`     | no example                                              | Google API client id                                                                                                                 |
 |             | `CMD_GOOGLE_CLIENTSECRET` | no example                                              | Google API client secret                                                                                                             |
 |             | `CMD_GOOGLE_HOSTEDDOMAIN` | `example.com`                                           | Provided only if the user belongs to a hosted domain. default is `undefined`                                                         |
-
 
 ### LDAP Login
 
@@ -177,7 +164,6 @@ these are rarely used for various reasons.
 |             | `CMD_LDAP_TLS_CA`           | `server-cert.pem, root.pem`                                                                                                                                                     | Root CA for LDAP TLS in PEM format (use comma to separate)                                                      |
 |             | `CMD_LDAP_PROVIDERNAME`     | `My institution`                                                                                                                                                                | Optional name to be displayed at login form indicating the LDAP provider                                        |
 
-
 ### Mattermost Login
 
 | config file  | environment                   | example value                                      | description                                                                                                                                                     |
@@ -186,7 +172,6 @@ these are rarely used for various reasons.
 |              | `CMD_MATTERMOST_BASEURL`      | no example                                         | Mattermost authentication endpoint for versions below 5.0. For Mattermost version 5.0 and above, see [guide](guides/auth/mattermost-self-hosted.md).            |
 |              | `CMD_MATTERMOST_CLIENTID`     | no example                                         | Mattermost API client id                                                                                                                                        |
 |              | `CMD_MATTERMOST_CLIENTSECRET` | no example                                         | Mattermost API client secret                                                                                                                                    |
-
 
 ### OAuth2 Login
 
@@ -202,7 +187,6 @@ these are rarely used for various reasons.
 |             | `CMD_OAUTH2_CLIENT_ID`                      | `afae02fckafd...`                                                                                                                                                                                       | you will get this from your OAuth2 provider when you register CodiMD as OAuth2-client, (no default value)                                                                                                                                                                              |
 |             | `CMD_OAUTH2_CLIENT_SECRET`                  | `afae02fckafd...`                                                                                                                                                                                       | you will get this from your OAuth2 provider when you register CodiMD as OAuth2-client, (no default value)                                                                                                                                                                              |
 |             | `CMD_OAUTH2_PROVIDERNAME`                   | `My institution`                                                                                                                                                                                        | Optional name to be displayed at login form indicating the oAuth2 provider                                                                                                                                                                                                             |
-
 
 ### SAML Login
 
@@ -221,7 +205,6 @@ these are rarely used for various reasons.
 |             | `CMD_SAML_ATTRIBUTE_USERNAME`           | `mailNickname`                                                                                                                                                                                                        | attribute map for `username` (optional, default: NameID of SAML response)                                                                              |
 |             | `CMD_SAML_ATTRIBUTE_EMAIL`              | `mail`                                                                                                                                                                                                                | attribute map for `email` (optional, default: NameID of SAML response if `CMD_SAML_IDENTIFIERFORMAT` is default)                                       |
 
-
 ### Twitter Login
 
 | config file | environment                  | example value                             | description                                                                                                                                                                                                      |
@@ -230,13 +213,11 @@ these are rarely used for various reasons.
 |             | `CMD_TWITTER_CONSUMERKEY`    | no example                                | Twitter API consumer key                                                                                                                                                                                         |
 |             | `CMD_TWITTER_CONSUMERSECRET` | no example                                | Twitter API consumer secret                                                                                                                                                                                      |
 
-
 ## Upload Storage
 
 These are only relevant when they are also configured in sync with their
 `CMD_IMAGE_UPLOAD_TYPE`. Also keep in mind, that `filesystem` is available, so
 you don't have to use either of these.
-
 
 ### Amazon S3
 
@@ -248,7 +229,6 @@ you don't have to use either of these.
 |             | `CMD_S3_REGION`            | `ap-northeast-1`                                                                                                  | AWS S3 region                                                                                                                              |
 | `s3bucket`  | `CMD_S3_BUCKET`            | no example                                                                                                        | AWS S3 bucket name                                                                                                                         |
 
-
 ### Azure Blob Storage
 
 | config file | environment                   | example value | description                                                               |
@@ -256,13 +236,11 @@ you don't have to use either of these.
 |             | `CMD_AZURE_CONNECTION_STRING` | no example    | Azure Blob Storage connection string                                      |
 |             | `CMD_AZURE_CONTAINER`         | no example    | Azure Blob Storage container name (automatically created if non existent) |
 
-
 ### imgur
 
 | config file | environment          | example value | description         |
 | ----------- | -------------------- | ------------- | ------------------- |
 |             | `CMD_IMGUR_CLIENTID` | no example    | Imgur API client id |
-
 
 ### Minio
 
@@ -274,7 +252,6 @@ you don't have to use either of these.
 |             | `CMD_MINIO_ENDPOINT`   | `minio.example.org`                                                                                                                       | Address of your Minio endpoint/instance                                                                                                         |
 |             | `CMD_MINIO_PORT`       | `9000`                                                                                                                                    | Port that is used for your Minio instance                                                                                                       |
 |             | `CMD_MINIO_SECURE`     | `true`                                                                                                                                    | If set to `true` HTTPS is used for Minio                                                                                                        |
-
 
 ### Lutim
 
