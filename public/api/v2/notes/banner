@@ -1,6 +1,6 @@
 {
     "id": "ABC123",
-    "alias": "old",
+    "alias": "banner",
     "lastChange": {
         "userId": "snskxnksnxksnxksnx",
         "username": "testy",
@@ -8,7 +8,7 @@
     },
     "viewcount": 0,
     "createtime": "2020-05-22T20:46:08.962Z",
-    "content": "test123",
+    "content": "This is the test banner text",
     "authorship": [],
-    "preVersionTwoNote": false
+    "preVersionTwoNote": true
 }

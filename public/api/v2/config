@@ -13,6 +13,10 @@
     "email": true,
     "openid": true
   },
+  "banner": {
+      "text": "This is the test banner text",
+      "timestamp": "2020-05-22T20:46:08.962Z"
+  },
   "customAuthNames": {
     "ldap": "FooBar",
     "oauth2": "Olaf2",

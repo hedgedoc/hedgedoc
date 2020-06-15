@@ -1,9 +1,15 @@
 export interface BackendConfig {
   allowAnonymous: boolean,
   authProviders: AuthProvidersState,
+  banner: BannerConfig,
   customAuthNames: CustomAuthNames,
   specialLinks: SpecialLinks,
   version: BackendVersion,
+}
+
+export interface BannerConfig {
+  text: string
+  timestamp: string
 }
 
 export interface BackendVersion {

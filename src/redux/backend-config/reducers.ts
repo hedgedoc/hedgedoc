@@ -17,6 +17,10 @@ export const initialState: BackendConfig = {
     email: false,
     openid: false
   },
+  banner: {
+    text: '',
+    timestamp: ''
+  },
   customAuthNames: {
     ldap: '',
     oauth2: '',
