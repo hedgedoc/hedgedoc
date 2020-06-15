@@ -50,10 +50,8 @@ similar project.
 
 ## Configuration
 
-Theres two main ways to configure your CodiMD instance:
-[Config file](docs/configuration-config-file.md) or
-[environment variables](docs/configuration-env-vars.md). You can choose what
-works best for you.
+Theres two main ways to [configure](docs/configuration.md) your CodiMD instance:
+config file or environment variables. You can choose what works best for you.
 
 CodiMD can integrate with
 
