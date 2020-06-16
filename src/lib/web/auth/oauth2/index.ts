@@ -17,7 +17,8 @@ export const OAuth2Middleware: AuthMiddleware = {
       clientSecret: config.oauth2.clientSecret,
       callbackURL: config.serverURL + '/auth/oauth2/callback',
       userProfileURL: config.oauth2.userProfileURL,
-      scope: config.oauth2.scope
+      scope: config.oauth2.scope,
+      state: true
     }, passportGeneralCallback))
 
     OAuth2Auth.get('/auth/oauth2', passport.authenticate('oauth2'))
