@@ -176,6 +176,8 @@ defaultNotePath can't be set from env-vars
 | `CMD_OAUTH2_CLIENT_ID` | `afae02fckafd...` | you will get this from your OAuth2 provider when you register CodiMD as OAuth2-client, (no default value) |
 | `CMD_OAUTH2_CLIENT_SECRET` | `afae02fckafd...` | you will get this from your OAuth2 provider when you register CodiMD as OAuth2-client, (no default value) |
 | `CMD_OAUTH2_PROVIDERNAME` | `My institution` | Optional name to be displayed at login form indicating the oAuth2 provider |
+| `CMD_OAUTH2_SCOPE` | `openid profile email` | Scopes to be requested from OAuth2 provider |
+| `CMD_OAUTH2_STATE` | `true` or `false` | `true` to use a randomly generated state parameter when authenticating |
 
 
 ### SAML Login
