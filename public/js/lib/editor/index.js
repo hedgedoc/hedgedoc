@@ -9,6 +9,7 @@ import '../../../css/ui/toolbar.css'
 const isMac = CodeMirror.keyMap.default === CodeMirror.keyMap.macDefault
 const defaultEditorMode = 'gfm'
 const viewportMargin = 20
+const hardWrapColumn = 80
 
 const jumpToAddressBarKeymapName = isMac ? 'Cmd-L' : 'Ctrl-L'
 
@@ -21,9 +22,7 @@ export default class Editor {
         cm.setOption('fullScreen', !cm.getOption('fullScreen'))
       },
       Space: function (cm) {
-        // FIXME: These params should be taken as config inputs
-        var hardWrap = true
-        var hardWrapColumn = 80
+        var hardWrap = cm.getOption('hardWrap')
 
         cm.replaceSelection(' ')
 
@@ -601,6 +600,22 @@ export default class Editor {
     }
   }
 
+  setHardWrap () {
+    var hardWrap = $(
+      '.ui-preferences-hard-wrap label > input[type="checkbox"]'
+    )
+    if (hardWrap.is(':checked')) {
+      Cookies.set('preferences-hard-wrap', true, {
+        expires: 365
+      })
+
+      this.editor.setOption('hardWrap', true)
+    } else {
+      Cookies.remove('preferences-hard-wrap')
+      this.editor.setOption('hardWrap', false)
+    }
+  }
+
   setPreferences () {
     var overrideBrowserKeymap = $(
       '.ui-preferences-override-browser-keymap label > input[type="checkbox"]'
@@ -617,6 +632,24 @@ export default class Editor {
 
     overrideBrowserKeymap.change(() => {
       this.setOverrideBrowserKeymap()
+    })
+
+    var hardWrap = $(
+      '.ui-preferences-hard-wrap label > input[type="checkbox"]'
+    )
+    var cookieHardWrap = Cookies.get(
+      'preferences-hard-wrap'
+    )
+    if (cookieHardWrap && cookieHardWrap === 'true') {
+      hardWrap.prop('checked', true)
+    } else {
+      hardWrap.prop('checked', false)
+    }
+
+    this.setHardWrap()
+
+    hardWrap.change(() => {
+      this.setHardWrap()
     })
   }
 
@@ -653,7 +686,8 @@ export default class Editor {
       readOnly: true,
       autoRefresh: true,
       otherCursors: true,
-      placeholder: "← Start by entering a title here\n===\nVisit /features if you don't know what to do.\nHappy hacking :)"
+      placeholder: "← Start by entering a title here\n===\nVisit /features if you don't know what to do.\nHappy hacking :)",
+      hardWrap: false
     })
 
     return this.editor
