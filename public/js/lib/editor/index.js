@@ -21,67 +21,6 @@ export default class Editor {
       F10: function (cm) {
         cm.setOption('fullScreen', !cm.getOption('fullScreen'))
       },
-      Space: function (cm) {
-        var hardWrap = cm.getOption('hardWrap')
-
-        cm.replaceSelection(' ')
-
-        if (hardWrap) {
-          var initCursor = cm.getCursor()
-          var line = cm.getLine(initCursor.line)
-          var from = {
-            line: initCursor.line,
-            ch: 0
-          }
-
-          var listRegex = /^(\s*)([*+-]|((\d+)([.)])))\s/
-          var blockquoteRegex = /^(\s*)(>[> ]*)\s/
-          var maybeTableRegex = /^(\s*)\|/
-          var match
-          if ((match = listRegex.exec(line)) !== null) {
-            let indentLength = match[2].length + 1
-            let wrapOptions = {
-              wrapOn: /\s\S/,
-              column: hardWrapColumn - indentLength
-            }
-
-            cm.wrapRange(from, initCursor, wrapOptions)
-
-            for (let i = initCursor.line; i < cm.getCursor().line; i++) {
-              let from = {
-                line: i + 1,
-                ch: 0
-              }
-              cm.replaceRange(' '.repeat(indentLength), from, from)
-            }
-          } else if ((match = blockquoteRegex.exec(line)) !== null) {
-            let indentLength = match[2].length + 1
-            let wrapOptions = {
-              wrapOn: /\s\S/,
-              column: hardWrapColumn - indentLength
-            }
-
-            cm.wrapRange(from, initCursor, wrapOptions)
-
-            for (let i = initCursor.line; i < cm.getCursor().line; i++) {
-              let from = {
-                line: i + 1,
-                ch: match[1].length
-              }
-              cm.replaceRange(match[2] + ' ', from, from)
-            }
-          } else if ((match = maybeTableRegex.exec(line)) !== null) {
-            // do not indent any lines that begin with '|'
-            // so that tables aren't hard wrapped
-          } else {
-            let wrapOptions = {
-              wrapOn: /\s\S/,
-              column: hardWrapColumn
-            }
-            cm.wrapRange(from, initCursor, wrapOptions)
-          }
-        }
-      },
       Esc: function (cm) {
         if (cm.getOption('fullScreen') && !(cm.getOption('keyMap').substr(0, 3) === 'vim')) {
           cm.setOption('fullScreen', false)
@@ -604,15 +543,78 @@ export default class Editor {
     var hardWrap = $(
       '.ui-preferences-hard-wrap label > input[type="checkbox"]'
     )
+
+    var extraKeys = this.editor.getOption('extraKeys')
+
     if (hardWrap.is(':checked')) {
       Cookies.set('preferences-hard-wrap', true, {
         expires: 365
       })
 
-      this.editor.setOption('hardWrap', true)
+      // {{{ override 'Space'
+
+      extraKeys.Space = function (cm) {
+        cm.replaceSelection(' ')
+
+        var initCursor = cm.getCursor()
+        var line = cm.getLine(initCursor.line)
+        var from = {
+          line: initCursor.line,
+          ch: 0
+        }
+
+        var listRegex = /^(\s*)([*+-]|((\d+)([.)])))\s/
+        var blockquoteRegex = /^(\s*)(>[> ]*)\s/
+        var maybeTableRegex = /^(\s*)\|/
+        var match
+        if ((match = listRegex.exec(line)) !== null) {
+          let indentLength = match[2].length + 1
+          let wrapOptions = {
+            wrapOn: /\s\S/,
+            column: hardWrapColumn - indentLength
+          }
+
+          cm.wrapRange(from, initCursor, wrapOptions)
+
+          for (let i = initCursor.line; i < cm.getCursor().line; i++) {
+            let from = {
+              line: i + 1,
+              ch: 0
+            }
+            cm.replaceRange(' '.repeat(indentLength), from, from)
+          }
+        } else if ((match = blockquoteRegex.exec(line)) !== null) {
+          let indentLength = match[2].length + 1
+          let wrapOptions = {
+            wrapOn: /\s\S/,
+            column: hardWrapColumn - indentLength
+          }
+
+          cm.wrapRange(from, initCursor, wrapOptions)
+
+          for (let i = initCursor.line; i < cm.getCursor().line; i++) {
+            let from = {
+              line: i + 1,
+              ch: match[1].length
+            }
+            cm.replaceRange(match[2] + ' ', from, from)
+          }
+        } else if ((match = maybeTableRegex.exec(line)) !== null) {
+          // do not indent any lines that begin with '|'
+          // so that tables aren't hard wrapped
+        } else {
+          let wrapOptions = {
+            wrapOn: /\s\S/,
+            column: hardWrapColumn
+          }
+          cm.wrapRange(from, initCursor, wrapOptions)
+        }
+      }
+
+      // }}}
     } else {
       Cookies.remove('preferences-hard-wrap')
-      this.editor.setOption('hardWrap', false)
+      delete extraKeys.Space
     }
   }
 
@@ -686,8 +688,7 @@ export default class Editor {
       readOnly: true,
       autoRefresh: true,
       otherCursors: true,
-      placeholder: "← Start by entering a title here\n===\nVisit /features if you don't know what to do.\nHappy hacking :)",
-      hardWrap: false
+      placeholder: "← Start by entering a title here\n===\nVisit /features if you don't know what to do.\nHappy hacking :)"
     })
 
     return this.editor
