@@ -1,0 +1,5 @@
+{
+  "plugins": [
+    "preset-lint-markdown-style-guide"
+  ]
+}
