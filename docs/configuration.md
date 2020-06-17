@@ -8,6 +8,8 @@ Environment variables take precedence over configurations from the config files.
 - The config file is processed in [`lib/config/index.js`](../lib/config/index.js) - so this is the first place to look if anything is missing not obvious from this document. The default values are defined in [`lib/config/default.js`](../lib/config/default.js), in case you wonder if you even need to override it. To get started, it is a good idea to take the `config.json.example` and copy it
 to `config.json` before filling in your own details.
 
+**Note:** *Due to the rename process we renamed all `HMD_`-prefix variables to be `CMD_`-prefixed. The old ones continue to work.*
+
 ## Node.JS
 
 | config file | environment | example value                 | description                                                                      |
@@ -48,6 +50,8 @@ these are rarely used for various reasons.
 | `docsPath`        |             | `./public/docs`                      | docs directory path<sup>1</sup>                                                                  |
 | `viewPath`        |             | `./public/views`                     | template directory path<sup>1</sup>                                                              |
 | `uploadsPath`     |             | `./public/uploads`                   | uploads directory<sup>1</sup> - needs to be persistent when you use imageUploadType `filesystem` |
+
+**Note:** *relative paths are based on CodiMD's base directory*
 
 ## CodiMD Location
 
@@ -260,7 +264,3 @@ you don't have to use either of these.
 | ----------- | --------------- | --------------------------- | --------------------------------------------------------------------------- |
 | `lutim`     |                 | `{"url": "YOUR_LUTIM_URL"}` | When `imageUploadType` is set to `lutim`, you can setup the lutim url       |
 |             | `CMD_LUTIM_URL` | `https://framapic.org/`     | When `CMD_IMAGE_UPLOAD_TYPE` is set to `lutim`, you can setup the lutim url |
-
-**Note:** *Due to the rename process we renamed all `HMD_`-prefix variables to be `CMD_`-prefixed. The old ones continue to work.*
-
-**Note:** *relative paths are based on CodiMD's base directory*
