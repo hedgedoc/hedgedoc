@@ -170,7 +170,7 @@ export class Note extends Model<Note> {
       }
       // if no permission specified and have owner then give default permission in config, else default permission is freely
       if (!note.permission) {
-        if (note.owner) {
+        if (note.ownerId) {
           // TODO: Might explode if the user-defined permission does not exist
           note.permission = PermissionEnum[config.defaultPermission]
         } else {
