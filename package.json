@@ -5,14 +5,14 @@
   "main": "lib/app.js",
   "license": "AGPL-3.0",
   "scripts": {
-    "test": "npm run-script eslint && npm run-script jsonlint && npm run-script mocha-suite",
+    "test": "yarn run eslint && yarn run jsonlint && yarn run mocha-suite",
     "eslint": "node_modules/.bin/eslint --ext .ts,.js --max-warnings 0 src",
     "jsonlint": "find . -not -path './node_modules/*' -type f -name '*.json' -o -type f -name '*.json.example' | while read json; do echo $json ; jq . $json; done",
     "mocha-suite": "tsc && NODE_ENV=test CMD_DB_URL=\"sqlite::memory:\" mocha --exit built/test/*.js",
     "standard": "echo 'standard is no longer being used, use `npm run eslint` instead!' && exit 1",
     "dev": "webpack --config webpack.dev.js --progress --colors --watch",
     "heroku-prebuild": "bin/heroku",
-    "build": "npm run-script build-backend && npm run-script build-frontend",
+    "build": "yarn run build-backend && yarn run build-frontend",
     "build-backend": "tsc",
     "build-frontend": "webpack --config webpack.prod.js --progress --colors --bail",
     "start": "sequelize db:migrate && node built/lib/app.js"
