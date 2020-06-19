@@ -11,18 +11,22 @@ import 'codemirror/addon/search/match-highlighter'
 import 'codemirror/addon/selection/active-line'
 import 'codemirror/keymap/sublime.js'
 import 'codemirror/mode/gfm/gfm.js'
-import React, { useState } from 'react'
+import React from 'react'
 import { Controlled as ControlledCodeMirror } from 'react-codemirror2'
 import { useTranslation } from 'react-i18next'
 import './editor-window.scss'
 
-const EditorWindow: React.FC = () => {
+export interface EditorWindowProps {
+  onContentChange: (content: string) => void
+  content: string
+}
+
+const EditorWindow: React.FC<EditorWindowProps> = ({ onContentChange, content }) => {
   const { t } = useTranslation()
 
-  const [content, setContent] = useState<string>('')
   return (
     <ControlledCodeMirror
-      className="h-100 w-100"
+      className="h-100 w-100 flex-fill"
       value={content}
       options={{
         mode: 'gfm',
@@ -58,10 +62,7 @@ const EditorWindow: React.FC = () => {
       }
       }
       onBeforeChange={(editor, data, value) => {
-        setContent(value)
-      }}
-      onChange={(editor, data, value) => {
-        console.log('change!')
+        onContentChange(value)
       }}
     />
   )

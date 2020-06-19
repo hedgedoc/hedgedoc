@@ -1,0 +1,30 @@
+.one-click-embedding {
+
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  overflow: hidden;
+
+  .one-click-embedding-icon {
+    display: inline;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+    text-shadow: #000000 0 0 5px;
+  }
+
+  &:hover > i {
+    opacity: 0.8;
+    text-shadow: #000000 0 0 10px;
+  }
+
+  .one-click-embedding-preview {
+    background: none;
+    height: 100%;
+    object-fit: contain;
+  }
+}

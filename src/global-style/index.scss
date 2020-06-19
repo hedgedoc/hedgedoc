@@ -31,3 +31,12 @@ body {
 .mvh-100 {
   min-height: 100vh;
 }
+
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
+@font-face {
+  font-family: "twemoji";
+  src: url("TwemojiMozilla.ttf") format("truetype");
+}
