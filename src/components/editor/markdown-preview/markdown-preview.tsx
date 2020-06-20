@@ -1,15 +1,16 @@
+import { DomElement } from 'domhandler'
 import MarkdownIt from 'markdown-it'
 import abbreviation from 'markdown-it-abbr'
 import markdownItContainer from 'markdown-it-container'
 import definitionList from 'markdown-it-deflist'
 import emoji from 'markdown-it-emoji'
+import footnote from 'markdown-it-footnote'
 import inserted from 'markdown-it-ins'
 import marked from 'markdown-it-mark'
 import markdownItRegex from 'markdown-it-regex'
 import subscript from 'markdown-it-sub'
 import superscript from 'markdown-it-sup'
 import taskList from 'markdown-it-task-lists'
-import footnote from 'markdown-it-footnote'
 import React, { ReactElement, useMemo } from 'react'
 import ReactHtmlParser, { convertNodeToElement, Transform } from 'react-html-parser'
 import { createRenderContainer, validAlertLevels } from './container-plugins/alert'
@@ -33,13 +34,25 @@ export interface MarkdownPreviewProps {
   content: string
 }
 
+export type ComponentReplacer = (node: DomElement, counterMap: Map<string, number>) => (ReactElement | undefined);
+const allComponentReplacers: ComponentReplacer[] = [getYouTubeReplacement, getVimeoReplacement, getGistReplacement, getPDFReplacement]
+type ComponentReplacer2Identifier2CounterMap = Map<ComponentReplacer, Map<string, number>>
+
+const tryToReplaceNode = (node: DomElement, componentReplacer2Identifier2CounterMap: ComponentReplacer2Identifier2CounterMap) => {
+  return allComponentReplacers
+    .map((componentReplacer) => {
+      const identifier2CounterMap = componentReplacer2Identifier2CounterMap.get(componentReplacer) || new Map<string, number>()
+      return componentReplacer(node, identifier2CounterMap)
+    })
+    .find((replacement) => !!replacement)
+}
+
 const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ content }) => {
   const markdownIt = useMemo(() => {
     const md = new MarkdownIt('default', {
       html: true,
       breaks: true,
       langPrefix: '',
-      linkify: false,
       typographer: true
     })
     md.use(taskList)
@@ -70,36 +83,12 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ content }) => {
   }, [])
 
   const result: ReactElement[] = useMemo(() => {
-    const youtubeIdCounterMap = new Map<string, number>()
-    const vimeoIdCounterMap = new Map<string, number>()
-    const gistIdCounterMap = new Map<string, number>()
-
+    const componentReplacer2Identifier2CounterMap = new Map<ComponentReplacer, Map<string, number>>()
     const html: string = markdownIt.render(content)
     const transform: Transform = (node, index) => {
-      const resultYT = getYouTubeReplacement(node, youtubeIdCounterMap)
-      if (resultYT) {
-        return resultYT
-      }
-
-      const resultVimeo = getVimeoReplacement(node, vimeoIdCounterMap)
-      if (resultVimeo) {
-        return resultVimeo
-      }
-
-      const resultGist = getGistReplacement(node, gistIdCounterMap)
-      if (resultGist) {
-        return resultGist
-      }
-
-      const resultPdf = getPDFReplacement(node, gistIdCounterMap)
-      if (resultPdf) {
-        return resultPdf
-      }
-
-      return convertNodeToElement(node, index, transform)
+      return tryToReplaceNode(node, componentReplacer2Identifier2CounterMap) || convertNodeToElement(node, index, transform)
     }
-    const ret: ReactElement[] = ReactHtmlParser(html, { transform: transform })
-    return ret
+    return ReactHtmlParser(html, { transform: transform })
   }, [content, markdownIt])
 
   return (

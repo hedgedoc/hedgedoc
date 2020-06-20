@@ -1,5 +1,5 @@
-import { DomElement } from 'domhandler'
-import React, { ReactElement, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { ComponentReplacer } from '../../markdown-preview'
 import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
 import { getIdFromCodiMdTag } from '../video-util'
 import './gist-frame.scss'
@@ -14,7 +14,7 @@ interface resizeEvent {
   id: string
 }
 
-const getElementReplacement = (node: DomElement, counterMap: Map<string, number>): (ReactElement | undefined) => {
+const getElementReplacement:ComponentReplacer = (node, counterMap) => {
   const gistId = getIdFromCodiMdTag(node, 'gist')
   if (gistId) {
     const count = (counterMap.get(gistId) || 0) + 1

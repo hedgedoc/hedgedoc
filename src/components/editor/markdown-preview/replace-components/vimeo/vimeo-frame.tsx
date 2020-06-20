@@ -1,9 +1,9 @@
-import { DomElement } from 'domhandler'
-import React, { ReactElement, useCallback } from 'react'
+import React, { useCallback } from 'react'
+import { ComponentReplacer } from '../../markdown-preview'
 import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
 import { getIdFromCodiMdTag, VideoFrameProps } from '../video-util'
 
-const getElementReplacement = (node: DomElement, counterMap: Map<string, number>): (ReactElement | undefined) => {
+const getElementReplacement:ComponentReplacer = (node, counterMap) => {
   const videoId = getIdFromCodiMdTag(node, 'vimeo')
   if (videoId) {
     const count = (counterMap.get(videoId) || 0) + 1
