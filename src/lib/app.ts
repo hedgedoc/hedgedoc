@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser'
 import ejs from 'ejs'
 import express from 'express'
 import session from 'express-session'
+import childProcess from 'child_process'
 import helmet from 'helmet'
 import http from 'http'
 import https from 'https'
@@ -255,10 +256,23 @@ function startListen (): void {
     realtime.maintenance = false
   }
 
+  const unixCallback = function (): void {
+    const throwErr = function (err): void { if (err) throw err }
+    if (config.socket.owner !== undefined) {
+      childProcess.spawn('chown', [config.socket.owner, config.path]).on('error', throwErr)
+    }
+    if (config.socket.group !== undefined) {
+      childProcess.spawn('chgrp', [config.socket.group, config.path]).on('error', throwErr)
+    }
+    if (config.socket.mode !== undefined) {
+      fs.chmod(config.path, config.socket.mode, throwErr)
+    }
+    listenCallback()
+  }
   // use unix domain socket if 'path' is specified
   if (config.path) {
     address = config.path
-    server.listen(config.path, listenCallback)
+    server.listen(config.path, unixCallback)
   } else {
     address = config.host + ':' + config.port
     server.listen(config.port, config.host, listenCallback)

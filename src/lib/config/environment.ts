@@ -7,6 +7,11 @@ export const environment = {
   host: process.env.CMD_HOST,
   port: toIntegerConfig(process.env.CMD_PORT),
   path: process.env.CMD_PATH,
+  socket: {
+    group: process.env.CMD_SOCKET_GROUP,
+    owner: process.env.CMD_SOCKET_OWNER,
+    mode: process.env.CMD_SOCKET_MODE
+  },
   loglevel: process.env.CMD_LOGLEVEL,
   urlAddPort: toBooleanConfig(process.env.CMD_URL_ADDPORT),
   useSSL: toBooleanConfig(process.env.CMD_USESSL),
