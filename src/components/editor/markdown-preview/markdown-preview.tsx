@@ -12,9 +12,11 @@ import { replaceLegacySlideshareShortCode } from './regex-plugins/replace-legacy
 import { replaceLegacySpeakerdeckShortCode } from './regex-plugins/replace-legacy-speakerdeck-short-code'
 import { replaceLegacyVimeoShortCode } from './regex-plugins/replace-legacy-vimeo-short-code'
 import { replaceLegacyYoutubeShortCode } from './regex-plugins/replace-legacy-youtube-short-code'
+import { replacePdfShortCode } from './regex-plugins/replace-pdf-short-code'
 import { replaceVimeoLink } from './regex-plugins/replace-vimeo-link'
 import { replaceYouTubeLink } from './regex-plugins/replace-youtube-link'
 import { getGistReplacement } from './replace-components/gist/gist-frame'
+import { getPDFReplacement } from './replace-components/pdf/pdf-frame'
 import { getVimeoReplacement } from './replace-components/vimeo/vimeo-frame'
 import { getYouTubeReplacement } from './replace-components/youtube/youtube-frame'
 
@@ -38,6 +40,7 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ content }) => {
     md.use(markdownItRegex, replaceLegacyGistShortCode)
     md.use(markdownItRegex, replaceLegacySlideshareShortCode)
     md.use(markdownItRegex, replaceLegacySpeakerdeckShortCode)
+    md.use(markdownItRegex, replacePdfShortCode)
     md.use(markdownItRegex, replaceYouTubeLink)
     md.use(markdownItRegex, replaceVimeoLink)
     md.use(markdownItRegex, replaceGistLink)
@@ -65,6 +68,11 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ content }) => {
       const resultGist = getGistReplacement(node, gistIdCounterMap)
       if (resultGist) {
         return resultGist
+      }
+
+      const resultPdf = getPDFReplacement(node, gistIdCounterMap)
+      if (resultPdf) {
+        return resultPdf
       }
 
       return convertNodeToElement(node, index, transform)
