@@ -1,15 +1,17 @@
 import MarkdownIt from 'markdown-it'
-import emoji from 'markdown-it-emoji'
-import markdownItRegex from 'markdown-it-regex'
-import taskList from 'markdown-it-task-lists'
 import abbreviation from 'markdown-it-abbr'
+import markdownItContainer from 'markdown-it-container'
 import definitionList from 'markdown-it-deflist'
-import subscript from 'markdown-it-sub'
-import superscript from 'markdown-it-sup'
+import emoji from 'markdown-it-emoji'
 import inserted from 'markdown-it-ins'
 import marked from 'markdown-it-mark'
+import markdownItRegex from 'markdown-it-regex'
+import subscript from 'markdown-it-sub'
+import superscript from 'markdown-it-sup'
+import taskList from 'markdown-it-task-lists'
 import React, { ReactElement, useMemo } from 'react'
 import ReactHtmlParser, { convertNodeToElement, Transform } from 'react-html-parser'
+import { createRenderContainer, validAlertLevels } from './container-plugins/alert'
 import { MarkdownItParserDebugger } from './markdown-it-plugins/parser-debugger'
 import './markdown-preview.scss'
 import { replaceGistLink } from './regex-plugins/replace-gist-link'
@@ -57,6 +59,11 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ content }) => {
     md.use(markdownItRegex, replaceVimeoLink)
     md.use(markdownItRegex, replaceGistLink)
     md.use(MarkdownItParserDebugger)
+
+    validAlertLevels.forEach(level => {
+      md.use(markdownItContainer, level, { render: createRenderContainer(level) })
+    })
+
     return md
   }, [])
 

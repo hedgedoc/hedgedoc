@@ -3,4 +3,8 @@
 .markdown-body {
   max-width: 758px;
   font-family: 'Source Sans Pro', "twemoji", sans-serif;
+
+  .alert > p, .alert > ul {
+    margin-bottom: 0;
+  }
 }
