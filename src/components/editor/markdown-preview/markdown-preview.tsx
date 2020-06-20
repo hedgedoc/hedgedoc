@@ -2,6 +2,7 @@ import MarkdownIt from 'markdown-it'
 import emoji from 'markdown-it-emoji'
 import markdownItRegex from 'markdown-it-regex'
 import taskList from 'markdown-it-task-lists'
+import definitionList from 'markdown-it-deflist'
 import subscript from 'markdown-it-sub'
 import superscript from 'markdown-it-sup'
 import inserted from 'markdown-it-ins'
@@ -39,6 +40,7 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ content }) => {
     })
     md.use(taskList)
     md.use(emoji)
+    md.use(definitionList)
     md.use(subscript)
     md.use(superscript)
     md.use(inserted)
