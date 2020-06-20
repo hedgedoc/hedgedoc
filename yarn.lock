@@ -5689,10 +5689,10 @@ https-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
   integrity sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=
 
-i18next-browser-languagedetector@4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/i18next-browser-languagedetector/-/i18next-browser-languagedetector-4.2.0.tgz#82e35d31f88a1d7c2b6d5913bf8c8481cd40aafb"
-  integrity sha512-qRSCBWgDUSqVQb3sTxkDC+ImYLhF+wB387Y1RpOcJvyex+V3abi+W83n4Awy+dx719AOBbKTy97FjrUGrAhbyw==
+i18next-browser-languagedetector@4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/i18next-browser-languagedetector/-/i18next-browser-languagedetector-4.3.1.tgz#005d2db6204b0a4af5f01c7987f5ccaf4ef97da5"
+  integrity sha512-KIToAzf8zwWvacgnRwJp63ase26o24AuNUlfNVJ5YZAFmdGhsJpmFClxXPuk9rv1FMI4lnc8zLSqgZPEZMrW4g==
   dependencies:
     "@babel/runtime" "^7.5.5"
 
