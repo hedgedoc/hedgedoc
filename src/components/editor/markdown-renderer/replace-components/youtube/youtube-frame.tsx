@@ -1,18 +1,23 @@
 import React from 'react'
-import { ComponentReplacer } from '../../markdown-preview'
+import { ComponentReplacer } from '../../markdown-renderer'
+import { getAttributesFromCodiMdTag } from '../codi-md-tag-utils'
 import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
-import { getIdFromCodiMdTag, VideoFrameProps } from '../video-util'
 
 const getElementReplacement: ComponentReplacer = (node, counterMap) => {
-  const videoId = getIdFromCodiMdTag(node, 'youtube')
-  if (videoId) {
+  const attributes = getAttributesFromCodiMdTag(node, 'youtube')
+  if (attributes && attributes.id) {
+    const videoId = attributes.id
     const count = (counterMap.get(videoId) || 0) + 1
     counterMap.set(videoId, count)
     return <YouTubeFrame key={`youtube_${videoId}_${count}`} id={videoId}/>
   }
 }
 
-export const YouTubeFrame: React.FC<VideoFrameProps> = ({ id }) => {
+export interface YouTubeFrameProps {
+  id: string
+}
+
+export const YouTubeFrame: React.FC<YouTubeFrameProps> = ({ id }) => {
   return (
     <OneClickEmbedding containerClassName={'embed-responsive embed-responsive-16by9'}
       previewContainerClassName={'embed-responsive-item'} hoverIcon={'youtube-play'}

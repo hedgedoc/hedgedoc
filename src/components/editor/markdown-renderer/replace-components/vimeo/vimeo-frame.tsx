@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react'
-import { ComponentReplacer } from '../../markdown-preview'
+import { ComponentReplacer } from '../../markdown-renderer'
+import { getAttributesFromCodiMdTag } from '../codi-md-tag-utils'
 import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
-import { getIdFromCodiMdTag, VideoFrameProps } from '../video-util'
 
 const getElementReplacement:ComponentReplacer = (node, counterMap) => {
-  const videoId = getIdFromCodiMdTag(node, 'vimeo')
-  if (videoId) {
+  const attributes = getAttributesFromCodiMdTag(node, 'vimeo')
+  if (attributes && attributes.id) {
+    const videoId = attributes.id
     const count = (counterMap.get(videoId) || 0) + 1
     counterMap.set(videoId, count)
     return <VimeoFrame key={`vimeo_${videoId}_${count}`} id={videoId}/>
@@ -18,7 +19,11 @@ interface VimeoApiResponse {
   thumbnail_large?: string
 }
 
-export const VimeoFrame: React.FC<VideoFrameProps> = ({ id }) => {
+export interface VimeoFrameProps {
+  id: string
+}
+
+export const VimeoFrame: React.FC<VimeoFrameProps> = ({ id }) => {
   const getPreviewImageLink = useCallback(async () => {
     const response = await fetch(`https://vimeo.com/api/v2/video/${id}.json`, {
       credentials: 'omit',

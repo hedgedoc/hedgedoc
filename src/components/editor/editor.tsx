@@ -6,7 +6,7 @@ import { setEditorModeConfig } from '../../redux/editor/methods'
 import { Splitter } from '../common/splitter/splitter'
 import { InfoBanner } from '../landing/layout/info-banner'
 import { EditorWindow } from './editor-window/editor-window'
-import { MarkdownPreview } from './markdown-preview/markdown-preview'
+import { MarkdownRenderer } from './markdown-renderer/markdown-renderer'
 import { EditorMode } from './task-bar/editor-view-mode'
 import { TaskBar } from './task-bar/task-bar'
 
@@ -50,7 +50,7 @@ https://vimeo.com/23237102
           showLeft={editorMode === EditorMode.EDITOR || editorMode === EditorMode.BOTH}
           left={<EditorWindow onContentChange={content => setMarkdownContent(content)} content={markdownContent}/>}
           showRight={editorMode === EditorMode.PREVIEW || (editorMode === EditorMode.BOTH)}
-          right={<MarkdownPreview content={markdownContent}/>}
+          right={<MarkdownRenderer content={markdownContent}/>}
           containerClassName={'overflow-hidden'}/>
       </div>
     </Fragment>

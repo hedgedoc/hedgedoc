@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { ComponentReplacer } from '../../markdown-preview'
+import { ComponentReplacer } from '../../markdown-renderer'
+import { getAttributesFromCodiMdTag } from '../codi-md-tag-utils'
 import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
-import { getIdFromCodiMdTag } from '../video-util'
 import './gist-frame.scss'
 import preview from './gist-preview.png'
 
@@ -15,8 +15,9 @@ interface resizeEvent {
 }
 
 const getElementReplacement:ComponentReplacer = (node, counterMap) => {
-  const gistId = getIdFromCodiMdTag(node, 'gist')
-  if (gistId) {
+  const attributes = getAttributesFromCodiMdTag(node, 'gist')
+  if (attributes && attributes.id) {
+    const gistId = attributes.id
     const count = (counterMap.get(gistId) || 0) + 1
     counterMap.set(gistId, count)
     return (
