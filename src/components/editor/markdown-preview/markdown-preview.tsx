@@ -9,6 +9,7 @@ import markdownItRegex from 'markdown-it-regex'
 import subscript from 'markdown-it-sub'
 import superscript from 'markdown-it-sup'
 import taskList from 'markdown-it-task-lists'
+import footnote from 'markdown-it-footnote'
 import React, { ReactElement, useMemo } from 'react'
 import ReactHtmlParser, { convertNodeToElement, Transform } from 'react-html-parser'
 import { createRenderContainer, validAlertLevels } from './container-plugins/alert'
@@ -49,6 +50,7 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ content }) => {
     md.use(superscript)
     md.use(inserted)
     md.use(marked)
+    md.use(footnote)
     md.use(markdownItRegex, replaceLegacyYoutubeShortCode)
     md.use(markdownItRegex, replaceLegacyVimeoShortCode)
     md.use(markdownItRegex, replaceLegacyGistShortCode)
