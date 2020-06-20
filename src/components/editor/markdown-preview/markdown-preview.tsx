@@ -2,6 +2,10 @@ import MarkdownIt from 'markdown-it'
 import emoji from 'markdown-it-emoji'
 import markdownItRegex from 'markdown-it-regex'
 import taskList from 'markdown-it-task-lists'
+import subscript from 'markdown-it-sub'
+import superscript from 'markdown-it-sup'
+import inserted from 'markdown-it-ins'
+import marked from 'markdown-it-mark'
 import React, { ReactElement, useMemo } from 'react'
 import ReactHtmlParser, { convertNodeToElement, Transform } from 'react-html-parser'
 import { MarkdownItParserDebugger } from './markdown-it-plugins/parser-debugger'
@@ -33,6 +37,10 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ content }) => {
     })
     md.use(taskList)
     md.use(emoji)
+    md.use(subscript)
+    md.use(superscript)
+    md.use(inserted)
+    md.use(marked)
     md.use(markdownItRegex, replaceLegacyYoutubeShortCode)
     md.use(markdownItRegex, replaceLegacyVimeoShortCode)
     md.use(markdownItRegex, replaceLegacyGistShortCode)
