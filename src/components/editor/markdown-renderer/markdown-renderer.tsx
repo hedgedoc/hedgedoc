@@ -34,15 +34,16 @@ export interface MarkdownPreviewProps {
   content: string
 }
 
-export type ComponentReplacer = (node: DomElement, counterMap: Map<string, number>) => (ReactElement | undefined);
+export type SubNodeConverter = (node: DomElement, index: number) => ReactElement
+export type ComponentReplacer = (node: DomElement, counterMap: Map<string, number>, nodeConverter: SubNodeConverter) => (ReactElement | undefined);
 const allComponentReplacers: ComponentReplacer[] = [getYouTubeReplacement, getVimeoReplacement, getGistReplacement, getPDFReplacement]
 type ComponentReplacer2Identifier2CounterMap = Map<ComponentReplacer, Map<string, number>>
 
-const tryToReplaceNode = (node: DomElement, componentReplacer2Identifier2CounterMap: ComponentReplacer2Identifier2CounterMap) => {
+const tryToReplaceNode = (node: DomElement, componentReplacer2Identifier2CounterMap: ComponentReplacer2Identifier2CounterMap, nodeConverter: SubNodeConverter) => {
   return allComponentReplacers
     .map((componentReplacer) => {
       const identifier2CounterMap = componentReplacer2Identifier2CounterMap.get(componentReplacer) || new Map<string, number>()
-      return componentReplacer(node, identifier2CounterMap)
+      return componentReplacer(node, identifier2CounterMap, nodeConverter)
     })
     .find((replacement) => !!replacement)
 }
@@ -86,7 +87,9 @@ const MarkdownRenderer: React.FC<MarkdownPreviewProps> = ({ content }) => {
     const componentReplacer2Identifier2CounterMap = new Map<ComponentReplacer, Map<string, number>>()
     const html: string = markdownIt.render(content)
     const transform: Transform = (node, index) => {
-      return tryToReplaceNode(node, componentReplacer2Identifier2CounterMap) || convertNodeToElement(node, index, transform)
+      const maybeReplacement = tryToReplaceNode(node, componentReplacer2Identifier2CounterMap,
+        (subNode, subIndex) => convertNodeToElement(subNode, subIndex, transform))
+      return maybeReplacement || convertNodeToElement(node, index, transform)
     }
     return ReactHtmlParser(html, { transform: transform })
   }, [content, markdownIt])
