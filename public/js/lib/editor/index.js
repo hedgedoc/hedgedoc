@@ -9,6 +9,7 @@ import '../../../css/ui/toolbar.css'
 const isMac = CodeMirror.keyMap.default === CodeMirror.keyMap.macDefault
 const defaultEditorMode = 'gfm'
 const viewportMargin = 20
+const hardWrapColumn = 80
 
 const jumpToAddressBarKeymapName = isMac ? 'Cmd-L' : 'Ctrl-L'
 
@@ -121,30 +122,6 @@ export default class Editor {
       },
       'Shift-Ctrl-Backspace': cm => {
         utils.wrapTextWith(this.editor, cm, 'Backspace')
-      },
-      'Ctrl-\\': cm => {
-        var wrapOptions = {
-          wrapOn: /\s\S/,
-          column: 80
-        }
-
-        if (cm.somethingSelected()) {
-          var sels = cm.listSelections()
-          for (var i = 0; i < sels.length; ++sels) {
-            var head = sels[i].head
-            var anchor = sels[i].anchor
-
-            if (head.line < anchor.line) {
-              var temp = head
-              head = anchor
-              anchor = temp
-            }
-
-            cm.wrapRange(anchor, head, wrapOptions)
-          }
-        } else {
-          cm.wrapParagraph(cm.getCursor(), wrapOptions)
-        }
       }
     }
     this.eventListeners = {}
@@ -562,6 +539,85 @@ export default class Editor {
     }
   }
 
+  setHardWrap () {
+    var hardWrap = $(
+      '.ui-preferences-hard-wrap label > input[type="checkbox"]'
+    )
+
+    var extraKeys = this.editor.getOption('extraKeys')
+
+    if (hardWrap.is(':checked')) {
+      Cookies.set('preferences-hard-wrap', true, {
+        expires: 365
+      })
+
+      // {{{ override 'Space'
+
+      extraKeys.Space = function (cm) {
+        cm.replaceSelection(' ')
+
+        var initCursor = cm.getCursor()
+        var line = cm.getLine(initCursor.line)
+        var from = {
+          line: initCursor.line,
+          ch: 0
+        }
+
+        var listRegex = /^(\s*)([*+-]|((\d+)([.)])))\s/
+        var blockquoteRegex = /^(\s*)(>[> ]*)\s/
+        var maybeTableRegex = /^(\s*)\|/
+        var match
+        if ((match = listRegex.exec(line)) !== null) {
+          let indentLength = match[2].length + 1
+          let wrapOptions = {
+            wrapOn: /\s\S/,
+            column: hardWrapColumn - indentLength
+          }
+
+          cm.wrapRange(from, initCursor, wrapOptions)
+
+          for (let i = initCursor.line; i < cm.getCursor().line; i++) {
+            let from = {
+              line: i + 1,
+              ch: 0
+            }
+            cm.replaceRange(' '.repeat(indentLength), from, from)
+          }
+        } else if ((match = blockquoteRegex.exec(line)) !== null) {
+          let indentLength = match[2].length + 1
+          let wrapOptions = {
+            wrapOn: /\s\S/,
+            column: hardWrapColumn - indentLength
+          }
+
+          cm.wrapRange(from, initCursor, wrapOptions)
+
+          for (let i = initCursor.line; i < cm.getCursor().line; i++) {
+            let from = {
+              line: i + 1,
+              ch: match[1].length
+            }
+            cm.replaceRange(match[2] + ' ', from, from)
+          }
+        } else if ((match = maybeTableRegex.exec(line)) !== null) {
+          // do not indent any lines that begin with '|'
+          // so that tables aren't hard wrapped
+        } else {
+          let wrapOptions = {
+            wrapOn: /\s\S/,
+            column: hardWrapColumn
+          }
+          cm.wrapRange(from, initCursor, wrapOptions)
+        }
+      }
+
+      // }}}
+    } else {
+      Cookies.remove('preferences-hard-wrap')
+      delete extraKeys.Space
+    }
+  }
+
   setPreferences () {
     var overrideBrowserKeymap = $(
       '.ui-preferences-override-browser-keymap label > input[type="checkbox"]'
@@ -578,6 +634,24 @@ export default class Editor {
 
     overrideBrowserKeymap.change(() => {
       this.setOverrideBrowserKeymap()
+    })
+
+    var hardWrap = $(
+      '.ui-preferences-hard-wrap label > input[type="checkbox"]'
+    )
+    var cookieHardWrap = Cookies.get(
+      'preferences-hard-wrap'
+    )
+    if (cookieHardWrap && cookieHardWrap === 'true') {
+      hardWrap.prop('checked', true)
+    } else {
+      hardWrap.prop('checked', false)
+    }
+
+    this.setHardWrap()
+
+    hardWrap.change(() => {
+      this.setHardWrap()
     })
   }
 
