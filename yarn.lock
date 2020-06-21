@@ -1587,6 +1587,13 @@
   resolved "https://registry.yarnpkg.com/@types/linkify-it/-/linkify-it-2.1.0.tgz#ea3dd64c4805597311790b61e872cbd1ed2cd806"
   integrity sha512-Q7DYAOi9O/+cLLhdaSvKdaumWyHbm7HAk/bFwwyTuU0arR5yyCeW5GOoqt4tJTpDRxhpx9Q8kQL6vMpuw9hDSw==
 
+"@types/markdown-it-anchor@4.0.4":
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/@types/markdown-it-anchor/-/markdown-it-anchor-4.0.4.tgz#f36b67608d238d15024fb6508efd7ad3990209f6"
+  integrity sha512-3CFeYzh8q7DaQboo1g+nnyXjPIvvtzoM+iBQU25sfcWVnjXckAvZIwAmPSVwHxnIblcTVcGq1XjEJjiBZFKkRA==
+  dependencies:
+    "@types/markdown-it" "*"
+
 "@types/markdown-it-container@2.0.3":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@types/markdown-it-container/-/markdown-it-container-2.0.3.tgz#436de4c019d7d71b60f759037fd4d03611569eb8"
@@ -7282,6 +7289,11 @@ markdown-it-abbr@1.0.4:
   resolved "https://registry.yarnpkg.com/markdown-it-abbr/-/markdown-it-abbr-1.0.4.tgz#d66b5364521cbb3dd8aa59dadfba2fb6865c8fd8"
   integrity sha1-1mtTZFIcuz3Yqlna37ovtoZcj9g=
 
+markdown-it-anchor@5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/markdown-it-anchor/-/markdown-it-anchor-5.3.0.tgz#d549acd64856a8ecd1bea58365ef385effbac744"
+  integrity sha512-/V1MnLL/rgJ3jkMWo84UR+K+jF1cxNG1a+KwqeXqTIJ+jtA8aWSHuigx8lTzauiIjBDbwF3NcWQMotd0Dm39jA==
+
 markdown-it-container@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/markdown-it-container/-/markdown-it-container-3.0.0.tgz#1d19b06040a020f9a827577bb7dbf67aa5de9a5b"
@@ -7326,6 +7338,11 @@ markdown-it-sup@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/markdown-it-sup/-/markdown-it-sup-1.0.0.tgz#cb9c9ff91a5255ac08f3fd3d63286e15df0a1fc3"
   integrity sha1-y5yf+RpSVawI8/09YyhuFd8KH8M=
+
+markdown-it-table-of-contents@0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/markdown-it-table-of-contents/-/markdown-it-table-of-contents-0.4.4.tgz#3dc7ce8b8fc17e5981c77cc398d1782319f37fbc"
+  integrity sha512-TAIHTHPwa9+ltKvKPWulm/beozQU41Ab+FIefRaQV1NRnpzwcV9QOe6wXQS5WLivm5Q/nlo0rl6laGkMDZE7Gw==
 
 markdown-it-task-lists@2.1.1:
   version "2.1.1"

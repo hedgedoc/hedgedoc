@@ -5,7 +5,7 @@ import { getAttributesFromCodiMdTag } from '../codi-md-tag-utils'
 import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
 import './pdf-frame.scss'
 
-const getElementReplacement = (node: DomElement, counterMap: Map<string, number>): (ReactElement | undefined) => {
+const getElementReplacement = (node: DomElement, index:number, counterMap: Map<string, number>): (ReactElement | undefined) => {
   const attributes = getAttributesFromCodiMdTag(node, 'pdf')
   if (attributes && attributes.url) {
     const pdfUrl = attributes.url

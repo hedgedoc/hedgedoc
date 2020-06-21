@@ -14,7 +14,7 @@ interface resizeEvent {
   id: string
 }
 
-const getElementReplacement:ComponentReplacer = (node, counterMap) => {
+const getElementReplacement:ComponentReplacer = (node, index:number, counterMap) => {
   const attributes = getAttributesFromCodiMdTag(node, 'gist')
   if (attributes && attributes.id) {
     const gistId = attributes.id

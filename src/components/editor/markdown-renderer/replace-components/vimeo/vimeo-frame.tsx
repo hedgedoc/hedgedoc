@@ -3,7 +3,7 @@ import { ComponentReplacer } from '../../markdown-renderer'
 import { getAttributesFromCodiMdTag } from '../codi-md-tag-utils'
 import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
 
-const getElementReplacement:ComponentReplacer = (node, counterMap) => {
+const getElementReplacement:ComponentReplacer = (node, index:number, counterMap) => {
   const attributes = getAttributesFromCodiMdTag(node, 'vimeo')
   if (attributes && attributes.id) {
     const videoId = attributes.id
