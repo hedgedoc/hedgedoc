@@ -18,4 +18,15 @@
       opacity: 1;
     }
   }
+
+  blockquote .quote-extra {
+    font-size: 0.85em;
+    margin-inline-start: 0.5em;
+
+    &:first-of-type {
+      &::before {
+        content: '\2014 \00A0'
+      }
+    }
+  }
 }

@@ -26,6 +26,9 @@ import { replaceLegacySpeakerdeckShortCode } from './regex-plugins/replace-legac
 import { replaceLegacyVimeoShortCode } from './regex-plugins/replace-legacy-vimeo-short-code'
 import { replaceLegacyYoutubeShortCode } from './regex-plugins/replace-legacy-youtube-short-code'
 import { replacePdfShortCode } from './regex-plugins/replace-pdf-short-code'
+import { replaceQuoteExtraAuthor } from './regex-plugins/replace-quote-extra-author'
+import { replaceQuoteExtraColor } from './regex-plugins/replace-quote-extra-color'
+import { replaceQuoteExtraTime } from './regex-plugins/replace-quote-extra-time'
 import { replaceVimeoLink } from './regex-plugins/replace-vimeo-link'
 import { replaceYouTubeLink } from './regex-plugins/replace-youtube-link'
 import { getGistReplacement } from './replace-components/gist/gist-frame'
@@ -33,6 +36,7 @@ import { getHighlightedCodeBlock } from './replace-components/highlighted-code/h
 import { getPDFReplacement } from './replace-components/pdf/pdf-frame'
 import { getTOCReplacement } from './replace-components/toc/toc-replacer'
 import { getVimeoReplacement } from './replace-components/vimeo/vimeo-frame'
+import { getQuoteOptionsReplacement } from './replace-components/quote-options/quote-options'
 import { getYouTubeReplacement } from './replace-components/youtube/youtube-frame'
 
 export interface MarkdownPreviewProps {
@@ -43,7 +47,7 @@ export type SubNodeConverter = (node: DomElement, index: number) => ReactElement
 export type ComponentReplacer = (node: DomElement, index: number, counterMap: Map<string, number>, nodeConverter: SubNodeConverter) => (ReactElement | undefined);
 type ComponentReplacer2Identifier2CounterMap = Map<ComponentReplacer, Map<string, number>>
 
-const allComponentReplacers: ComponentReplacer[] = [getYouTubeReplacement, getVimeoReplacement, getGistReplacement, getPDFReplacement, getTOCReplacement, getHighlightedCodeBlock]
+const allComponentReplacers: ComponentReplacer[] = [getYouTubeReplacement, getVimeoReplacement, getGistReplacement, getPDFReplacement, getTOCReplacement, getHighlightedCodeBlock, getQuoteOptionsReplacement]
 
 const tryToReplaceNode = (node: DomElement, index:number, componentReplacer2Identifier2CounterMap: ComponentReplacer2Identifier2CounterMap, nodeConverter: SubNodeConverter) => {
   return allComponentReplacers
@@ -90,6 +94,9 @@ const MarkdownRenderer: React.FC<MarkdownPreviewProps> = ({ content }) => {
     md.use(markdownItRegex, replaceVimeoLink)
     md.use(markdownItRegex, replaceGistLink)
     md.use(highlightedCode)
+    md.use(markdownItRegex, replaceQuoteExtraAuthor)
+    md.use(markdownItRegex, replaceQuoteExtraColor)
+    md.use(markdownItRegex, replaceQuoteExtraTime)
     md.use(MarkdownItParserDebugger)
 
     validAlertLevels.forEach(level => {

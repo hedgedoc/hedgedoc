@@ -34,6 +34,7 @@
 - The history shows both the entries saved in LocalStorage and the entries saved on the server together
 - The gist and pdf embeddings now use a one-click aproach similar to vimeo and youtube
 - Use [Twemoji](https://twemoji.twitter.com/) as icon font
+- The `[name=...]`, `[time=...]` and `[color=...]` tags may now be used anywhere in the document and not just inside of blockquotes and lists.
 
 ---
 
