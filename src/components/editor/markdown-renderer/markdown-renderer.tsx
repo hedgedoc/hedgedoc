@@ -16,6 +16,7 @@ import taskList from 'markdown-it-task-lists'
 import React, { ReactElement, useMemo } from 'react'
 import ReactHtmlParser, { convertNodeToElement, Transform } from 'react-html-parser'
 import { createRenderContainer, validAlertLevels } from './container-plugins/alert'
+import { highlightedCode } from './markdown-it-plugins/highlighted-code'
 import { MarkdownItParserDebugger } from './markdown-it-plugins/parser-debugger'
 import './markdown-renderer.scss'
 import { replaceGistLink } from './regex-plugins/replace-gist-link'
@@ -28,6 +29,7 @@ import { replacePdfShortCode } from './regex-plugins/replace-pdf-short-code'
 import { replaceVimeoLink } from './regex-plugins/replace-vimeo-link'
 import { replaceYouTubeLink } from './regex-plugins/replace-youtube-link'
 import { getGistReplacement } from './replace-components/gist/gist-frame'
+import { getHighlightedCodeBlock } from './replace-components/highlighted-code/highlighted-code'
 import { getPDFReplacement } from './replace-components/pdf/pdf-frame'
 import { getTOCReplacement } from './replace-components/toc/toc-replacer'
 import { getVimeoReplacement } from './replace-components/vimeo/vimeo-frame'
@@ -41,7 +43,7 @@ export type SubNodeConverter = (node: DomElement, index: number) => ReactElement
 export type ComponentReplacer = (node: DomElement, index: number, counterMap: Map<string, number>, nodeConverter: SubNodeConverter) => (ReactElement | undefined);
 type ComponentReplacer2Identifier2CounterMap = Map<ComponentReplacer, Map<string, number>>
 
-const allComponentReplacers: ComponentReplacer[] = [getYouTubeReplacement, getVimeoReplacement, getGistReplacement, getPDFReplacement, getTOCReplacement]
+const allComponentReplacers: ComponentReplacer[] = [getYouTubeReplacement, getVimeoReplacement, getGistReplacement, getPDFReplacement, getTOCReplacement, getHighlightedCodeBlock]
 
 const tryToReplaceNode = (node: DomElement, index:number, componentReplacer2Identifier2CounterMap: ComponentReplacer2Identifier2CounterMap, nodeConverter: SubNodeConverter) => {
   return allComponentReplacers
@@ -87,6 +89,7 @@ const MarkdownRenderer: React.FC<MarkdownPreviewProps> = ({ content }) => {
     md.use(markdownItRegex, replaceYouTubeLink)
     md.use(markdownItRegex, replaceVimeoLink)
     md.use(markdownItRegex, replaceGistLink)
+    md.use(highlightedCode)
     md.use(MarkdownItParserDebugger)
 
     validAlertLevels.forEach(level => {

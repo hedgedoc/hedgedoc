@@ -28,7 +28,14 @@ https://www.youtube.com/watch?v=KgMpKsp23yY
 https://vimeo.com/23237102
 
 ## PDF
-{%pdf https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf %}`)
+{%pdf https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf %}
+
+## Code highlighting
+\`\`\`javascript=
+let a = 1
+\`\`\`
+
+`)
   const isWide = useMedia({ minWidth: 576 })
   const [firstDraw, setFirstDraw] = useState(true)
 

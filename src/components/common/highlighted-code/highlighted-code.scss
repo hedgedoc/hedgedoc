@@ -1,0 +1,33 @@
+.markdown-body pre code {
+
+  &.hljs {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .linenumbers {
+    text-align: right;
+    position: relative;
+    cursor: default;
+    z-index: 4;
+    padding: 0 8px 0 0;
+    min-width: 20px;
+    box-sizing: content-box;
+    color: #afafaf;
+    border-right: 3px solid #6ce26c;
+    display: flex;
+    flex-direction: column;
+    float: left;
+    overflow: hidden;
+    user-select: none;
+
+    & > span:before {
+      content: attr(data-line-number);
+    }
+  }
+
+  .code {
+    float: left;
+    margin: 0 0 0 16px;
+  }
+}
