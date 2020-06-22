@@ -15,6 +15,21 @@ const Editor: React.FC = () => {
   const [markdownContent, setMarkdownContent] = useState(`# Embedding demo
 [TOC]
 
+## MathJax
+You can render *LaTeX* mathematical expressions using **MathJax**, as on [math.stackexchange.com](https://math.stackexchange.com/):
+
+The *Gamma function* satisfying $\\Gamma(n) = (n-1)!\\quad\\forall n\\in\\mathbb N$ is via the Euler integral
+
+$$
+x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.
+$$
+
+$$
+\\Gamma(z) = \\int_0^\\infty t^{z-1}e^{-t}dt\\,.
+$$
+
+> More information about **LaTeX** mathematical expressions [here](https://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference).
+
 ## Blockquote
 > Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
 > Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.

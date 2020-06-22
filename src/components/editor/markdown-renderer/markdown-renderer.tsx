@@ -13,7 +13,9 @@ import subscript from 'markdown-it-sub'
 import superscript from 'markdown-it-sup'
 import toc from 'markdown-it-table-of-contents'
 import taskList from 'markdown-it-task-lists'
+import mathJax from 'markdown-it-mathjax'
 import React, { ReactElement, useMemo } from 'react'
+import MathJaxReact from 'react-mathjax'
 import ReactHtmlParser, { convertNodeToElement, Transform } from 'react-html-parser'
 import { createRenderContainer, validAlertLevels } from './container-plugins/alert'
 import { highlightedCode } from './markdown-it-plugins/highlighted-code'
@@ -32,6 +34,7 @@ import { replaceQuoteExtraTime } from './regex-plugins/replace-quote-extra-time'
 import { replaceVimeoLink } from './regex-plugins/replace-vimeo-link'
 import { replaceYouTubeLink } from './regex-plugins/replace-youtube-link'
 import { getGistReplacement } from './replace-components/gist/gist-frame'
+import { getMathJaxReplacement } from './replace-components/mathjax/mathjax-replacer'
 import { getHighlightedCodeBlock } from './replace-components/highlighted-code/highlighted-code'
 import { getPDFReplacement } from './replace-components/pdf/pdf-frame'
 import { getTOCReplacement } from './replace-components/toc/toc-replacer'
@@ -47,7 +50,7 @@ export type SubNodeConverter = (node: DomElement, index: number) => ReactElement
 export type ComponentReplacer = (node: DomElement, index: number, counterMap: Map<string, number>, nodeConverter: SubNodeConverter) => (ReactElement | undefined);
 type ComponentReplacer2Identifier2CounterMap = Map<ComponentReplacer, Map<string, number>>
 
-const allComponentReplacers: ComponentReplacer[] = [getYouTubeReplacement, getVimeoReplacement, getGistReplacement, getPDFReplacement, getTOCReplacement, getHighlightedCodeBlock, getQuoteOptionsReplacement]
+const allComponentReplacers: ComponentReplacer[] = [getYouTubeReplacement, getVimeoReplacement, getGistReplacement, getPDFReplacement, getTOCReplacement, getHighlightedCodeBlock, getQuoteOptionsReplacement, getMathJaxReplacement]
 
 const tryToReplaceNode = (node: DomElement, index:number, componentReplacer2Identifier2CounterMap: ComponentReplacer2Identifier2CounterMap, nodeConverter: SubNodeConverter) => {
   return allComponentReplacers
@@ -75,6 +78,7 @@ const MarkdownRenderer: React.FC<MarkdownPreviewProps> = ({ content }) => {
     md.use(inserted)
     md.use(marked)
     md.use(footnote)
+    // noinspection CheckTagEmptyBody
     md.use(anchor, {
       permalink: true,
       permalinkBefore: true,
@@ -84,6 +88,14 @@ const MarkdownRenderer: React.FC<MarkdownPreviewProps> = ({ content }) => {
     md.use(toc, {
       markerPattern: /^\[TOC]$/i
     })
+    md.use(mathJax({
+      beforeMath: '<codimd-mathjax>',
+      afterMath: '</codimd-mathjax>',
+      beforeInlineMath: '<codimd-mathjax inline>',
+      afterInlineMath: '</codimd-mathjax>',
+      beforeDisplayMath: '<codimd-mathjax>',
+      afterDisplayMath: '</codimd-mathjax>'
+    }))
     md.use(markdownItRegex, replaceLegacyYoutubeShortCode)
     md.use(markdownItRegex, replaceLegacyVimeoShortCode)
     md.use(markdownItRegex, replaceLegacyGistShortCode)
@@ -119,7 +131,11 @@ const MarkdownRenderer: React.FC<MarkdownPreviewProps> = ({ content }) => {
 
   return (
     <div className={'bg-light container-fluid flex-fill h-100 overflow-y-scroll pb-5'}>
-      <div className={'markdown-body container-fluid'}>{result}</div>
+      <div className={'markdown-body container-fluid'}>
+        <MathJaxReact.Provider>
+          {result}
+        </MathJaxReact.Provider>
+      </div>
     </div>
   )
 }
