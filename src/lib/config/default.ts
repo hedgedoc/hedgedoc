@@ -8,6 +8,11 @@ export const defaultConfig: Config = {
   urlPath: '',
   host: '0.0.0.0',
   port: 3000,
+  socket: {
+    group: undefined,
+    owner: undefined,
+    mode: undefined
+  },
   loglevel: 'info',
   urlAddPort: false,
   allowOrigin: ['localhost'],
