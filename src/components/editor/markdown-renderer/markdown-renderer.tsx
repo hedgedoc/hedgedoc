@@ -86,6 +86,7 @@ const MarkdownRenderer: React.FC<MarkdownPreviewProps> = ({ content }) => {
       permalinkSymbol: '<i class="fa fa-link"></i>'
     })
     md.use(toc, {
+      includeLevel: [1, 2, 3],
       markerPattern: /^\[TOC]$/i
     })
     md.use(mathJax({
