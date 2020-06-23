@@ -9,15 +9,15 @@ import footnote from 'markdown-it-footnote'
 import imsize from 'markdown-it-imsize'
 import inserted from 'markdown-it-ins'
 import marked from 'markdown-it-mark'
+import mathJax from 'markdown-it-mathjax'
 import markdownItRegex from 'markdown-it-regex'
 import subscript from 'markdown-it-sub'
 import superscript from 'markdown-it-sup'
 import toc from 'markdown-it-table-of-contents'
 import taskList from 'markdown-it-task-lists'
-import mathJax from 'markdown-it-mathjax'
 import React, { ReactElement, useMemo } from 'react'
-import MathJaxReact from 'react-mathjax'
 import ReactHtmlParser, { convertNodeToElement, Transform } from 'react-html-parser'
+import MathJaxReact from 'react-mathjax'
 import { createRenderContainer, validAlertLevels } from './container-plugins/alert'
 import { highlightedCode } from './markdown-it-plugins/highlighted-code'
 import { MarkdownItParserDebugger } from './markdown-it-plugins/parser-debugger'
@@ -35,12 +35,12 @@ import { replaceQuoteExtraTime } from './regex-plugins/replace-quote-extra-time'
 import { replaceVimeoLink } from './regex-plugins/replace-vimeo-link'
 import { replaceYouTubeLink } from './regex-plugins/replace-youtube-link'
 import { getGistReplacement } from './replace-components/gist/gist-frame'
+import { getHighlightedFence } from './replace-components/highlighted-fence/highlighted-fence'
 import { getMathJaxReplacement } from './replace-components/mathjax/mathjax-replacer'
-import { getHighlightedCodeBlock } from './replace-components/highlighted-code/highlighted-code'
 import { getPDFReplacement } from './replace-components/pdf/pdf-frame'
+import { getQuoteOptionsReplacement } from './replace-components/quote-options/quote-options'
 import { getTOCReplacement } from './replace-components/toc/toc-replacer'
 import { getVimeoReplacement } from './replace-components/vimeo/vimeo-frame'
-import { getQuoteOptionsReplacement } from './replace-components/quote-options/quote-options'
 import { getYouTubeReplacement } from './replace-components/youtube/youtube-frame'
 
 export interface MarkdownPreviewProps {
@@ -51,7 +51,7 @@ export type SubNodeConverter = (node: DomElement, index: number) => ReactElement
 export type ComponentReplacer = (node: DomElement, index: number, counterMap: Map<string, number>, nodeConverter: SubNodeConverter) => (ReactElement | undefined);
 type ComponentReplacer2Identifier2CounterMap = Map<ComponentReplacer, Map<string, number>>
 
-const allComponentReplacers: ComponentReplacer[] = [getYouTubeReplacement, getVimeoReplacement, getGistReplacement, getPDFReplacement, getTOCReplacement, getHighlightedCodeBlock, getQuoteOptionsReplacement, getMathJaxReplacement]
+const allComponentReplacers: ComponentReplacer[] = [getYouTubeReplacement, getVimeoReplacement, getGistReplacement, getPDFReplacement, getTOCReplacement, getHighlightedFence, getQuoteOptionsReplacement, getMathJaxReplacement]
 
 const tryToReplaceNode = (node: DomElement, index:number, componentReplacer2Identifier2CounterMap: ComponentReplacer2Identifier2CounterMap, nodeConverter: SubNodeConverter) => {
   return allComponentReplacers

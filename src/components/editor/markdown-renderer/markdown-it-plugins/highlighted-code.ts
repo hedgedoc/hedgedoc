@@ -1,6 +1,6 @@
 import MarkdownIt from 'markdown-it/lib'
 
-const highlightRegex = /^(\w*)(=?)$/
+const highlightRegex = /^(\w*)(=?)(!?)$/
 
 export const highlightedCode: MarkdownIt.PluginSimple = (md: MarkdownIt) => {
   md.core.ruler.push('highlighted-code', (state) => {
@@ -15,6 +15,9 @@ export const highlightedCode: MarkdownIt.PluginSimple = (md: MarkdownIt) => {
         }
         if (highlightInfos[2]) {
           token.attrJoin('data-show-gutter', '')
+        }
+        if (highlightInfos[3]) {
+          token.attrJoin('data-wrap-lines', '')
         }
       }
     })

@@ -1,13 +1,13 @@
 import hljs from 'highlight.js'
-import React, { useMemo } from 'react'
+import React, { Fragment, useMemo } from 'react'
 import ReactHtmlParser from 'react-html-parser'
-import { ShowIf } from '../show-if/show-if'
 import './highlighted-code.scss'
 
 export interface HighlightedCodeProps {
   code: string,
   language?: string,
   showGutter: boolean
+  wrapLines: boolean
 }
 
 export const escapeHtml = (unsafe: string): string => {
@@ -19,11 +19,11 @@ export const escapeHtml = (unsafe: string): string => {
     .replace(/'/g, '&#039;')
 }
 
-const checkIfLanguageIsSupported = (language: string):boolean => {
+const checkIfLanguageIsSupported = (language: string): boolean => {
   return hljs.listLanguages().indexOf(language) > -1
 }
 
-const correctLanguage = (language: string|undefined): string|undefined => {
+const correctLanguage = (language: string | undefined): string | undefined => {
   switch (language) {
     case 'html':
       return 'xml'
@@ -32,7 +32,7 @@ const correctLanguage = (language: string|undefined): string|undefined => {
   }
 }
 
-export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language, showGutter }) => {
+export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language, showGutter, wrapLines }) => {
   const highlightedCode = useMemo(() => {
     const replacedLanguage = correctLanguage(language)
     return ((!!replacedLanguage && checkIfLanguageIsSupported(replacedLanguage)) ? hljs.highlight(replacedLanguage, code).value : escapeHtml(code))
@@ -42,25 +42,18 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
   }, [code, language])
 
   return (
-    <code className={'hljs'}>
-      <ShowIf condition={showGutter}>
-        <span className={'linenumbers'}>
-          {
-            highlightedCode
-              .map((line, index) => {
-                return <span key={index} data-line-number={index + 1}/>
-              })
-          }
-        </span>
-      </ShowIf>
-      <span className={'code'}>
-        {
-          highlightedCode
-            .map((line, index) =>
-              <div key={index} className={'line'}>
+    <code className={`hljs ${showGutter ? 'showGutter' : ''} ${wrapLines ? 'wrapLines' : ''}`}>
+      {
+        highlightedCode
+          .map((line, index) => {
+            return <Fragment key={index}>
+              <span className={'linenumber'} data-line-number={index + 1}/>
+              <div className={'line'}>
                 {line}
-              </div>)
-        }
-      </span>
+              </div>
+            </Fragment>
+          })
+      }
+
     </code>)
 }

@@ -1,33 +1,42 @@
-.markdown-body pre code {
+.markdown-body {
+  @import '../../../../node_modules/highlight.js/styles/github-gist';
+}
 
-  &.hljs {
-    display: flex;
-    flex-direction: row;
-  }
+.markdown-body pre code.hljs {
 
-  .linenumbers {
-    text-align: right;
-    position: relative;
-    cursor: default;
-    z-index: 4;
-    padding: 0 8px 0 0;
-    min-width: 20px;
-    box-sizing: content-box;
-    color: #afafaf;
-    border-right: 3px solid #6ce26c;
-    display: flex;
-    flex-direction: column;
-    float: left;
-    overflow: hidden;
-    user-select: none;
+  padding: 16px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
 
-    & > span:before {
-      content: attr(data-line-number);
+  &.showGutter {
+    .linenumber {
+      position: relative;
+      cursor: default;
+      z-index: 4;
+      padding: 0 8px 0 0;
+      min-width: 20px;
+      box-sizing: content-box;
+      color: #afafaf;
+      border-right: 3px solid #6ce26c;
+      flex-direction: column;
+      overflow: hidden;
+      user-select: none;
+
+      display: flex;
+      align-items: flex-end;
+
+
+      &:before {
+        content: attr(data-line-number);
+      }
     }
   }
 
-  .code {
-    float: left;
+  &.showGutter .line {
     margin: 0 0 0 16px;
   }
+  &.wrapLines .line {
+    white-space: pre-wrap;
+  }
+
 }
