@@ -1,9 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { ComponentReplacer } from '../../markdown-renderer'
-import { getAttributesFromCodiMdTag } from '../codi-md-tag-utils'
-import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
 import './gist-frame.scss'
-import preview from './gist-preview.png'
 
 export interface GistFrameProps {
   id: string
@@ -12,20 +8,6 @@ export interface GistFrameProps {
 interface resizeEvent {
   size: number
   id: string
-}
-
-const getElementReplacement:ComponentReplacer = (node, index:number, counterMap) => {
-  const attributes = getAttributesFromCodiMdTag(node, 'gist')
-  if (attributes && attributes.id) {
-    const gistId = attributes.id
-    const count = (counterMap.get(gistId) || 0) + 1
-    counterMap.set(gistId, count)
-    return (
-      <OneClickEmbedding previewContainerClassName={'gist-frame'} key={`gist_${gistId}_${count}`} loadingImageUrl={preview} hoverIcon={'github'} tooltip={'click to load gist'}>
-        <GistFrame id={gistId}/>
-      </OneClickEmbedding>
-    )
-  }
 }
 
 export const GistFrame: React.FC<GistFrameProps> = ({ id }) => {
@@ -85,5 +67,3 @@ export const GistFrame: React.FC<GistFrameProps> = ({ id }) => {
       src={`data:text/html;base64,${btoa(iframeHtml)}`}/>
   )
 }
-
-export { getElementReplacement as getGistReplacement }

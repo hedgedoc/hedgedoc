@@ -34,100 +34,102 @@ import { replaceQuoteExtraColor } from './regex-plugins/replace-quote-extra-colo
 import { replaceQuoteExtraTime } from './regex-plugins/replace-quote-extra-time'
 import { replaceVimeoLink } from './regex-plugins/replace-vimeo-link'
 import { replaceYouTubeLink } from './regex-plugins/replace-youtube-link'
-import { getGistReplacement } from './replace-components/gist/gist-frame'
-import { getHighlightedFence } from './replace-components/highlighted-fence/highlighted-fence'
-import { getMathJaxReplacement } from './replace-components/mathjax/mathjax-replacer'
-import { getPDFReplacement } from './replace-components/pdf/pdf-frame'
-import { getQuoteOptionsReplacement } from './replace-components/quote-options/quote-options'
-import { getTOCReplacement } from './replace-components/toc/toc-replacer'
-import { getVimeoReplacement } from './replace-components/vimeo/vimeo-frame'
-import { getYouTubeReplacement } from './replace-components/youtube/youtube-frame'
+import { ComponentReplacer, SubNodeConverter } from './replace-components/ComponentReplacer'
+import { GistReplacer } from './replace-components/gist/gist-replacer'
+import { HighlightedCodeReplacer } from './replace-components/highlighted-fence/highlighted-fence-replacer'
+import { MathjaxReplacer } from './replace-components/mathjax/mathjax-replacer'
+import { PdfReplacer } from './replace-components/pdf/pdf-replacer'
+import { QuoteOptionsReplacer } from './replace-components/quote-options/quote-options-replacer'
+import { TocReplacer } from './replace-components/toc/toc-replacer'
+import { VimeoReplacer } from './replace-components/vimeo/vimeo-replacer'
+import { YoutubeReplacer } from './replace-components/youtube/youtube-replacer'
 
 export interface MarkdownPreviewProps {
   content: string
 }
 
-export type SubNodeConverter = (node: DomElement, index: number) => ReactElement
-export type ComponentReplacer = (node: DomElement, index: number, counterMap: Map<string, number>, nodeConverter: SubNodeConverter) => (ReactElement | undefined);
-type ComponentReplacer2Identifier2CounterMap = Map<ComponentReplacer, Map<string, number>>
+const createMarkdownIt = ():MarkdownIt => {
+  const md = new MarkdownIt('default', {
+    html: true,
+    breaks: true,
+    langPrefix: '',
+    typographer: true
+  })
+  md.use(taskList)
+  md.use(emoji)
+  md.use(abbreviation)
+  md.use(definitionList)
+  md.use(subscript)
+  md.use(superscript)
+  md.use(inserted)
+  md.use(marked)
+  md.use(footnote)
+  md.use(imsize)
+  // noinspection CheckTagEmptyBody
+  md.use(anchor, {
+    permalink: true,
+    permalinkBefore: true,
+    permalinkClass: 'heading-anchor text-dark',
+    permalinkSymbol: '<i class="fa fa-link"></i>'
+  })
+  md.use(toc, {
+    includeLevel: [1, 2, 3],
+    markerPattern: /^\[TOC]$/i
+  })
+  md.use(mathJax({
+    beforeMath: '<codimd-mathjax>',
+    afterMath: '</codimd-mathjax>',
+    beforeInlineMath: '<codimd-mathjax inline>',
+    afterInlineMath: '</codimd-mathjax>',
+    beforeDisplayMath: '<codimd-mathjax>',
+    afterDisplayMath: '</codimd-mathjax>'
+  }))
+  md.use(markdownItRegex, replaceLegacyYoutubeShortCode)
+  md.use(markdownItRegex, replaceLegacyVimeoShortCode)
+  md.use(markdownItRegex, replaceLegacyGistShortCode)
+  md.use(markdownItRegex, replaceLegacySlideshareShortCode)
+  md.use(markdownItRegex, replaceLegacySpeakerdeckShortCode)
+  md.use(markdownItRegex, replacePdfShortCode)
+  md.use(markdownItRegex, replaceYouTubeLink)
+  md.use(markdownItRegex, replaceVimeoLink)
+  md.use(markdownItRegex, replaceGistLink)
+  md.use(highlightedCode)
+  md.use(markdownItRegex, replaceQuoteExtraAuthor)
+  md.use(markdownItRegex, replaceQuoteExtraColor)
+  md.use(markdownItRegex, replaceQuoteExtraTime)
+  md.use(MarkdownItParserDebugger)
 
-const allComponentReplacers: ComponentReplacer[] = [getYouTubeReplacement, getVimeoReplacement, getGistReplacement, getPDFReplacement, getTOCReplacement, getHighlightedFence, getQuoteOptionsReplacement, getMathJaxReplacement]
+  validAlertLevels.forEach(level => {
+    md.use(markdownItContainer, level, { render: createRenderContainer(level) })
+  })
 
-const tryToReplaceNode = (node: DomElement, index:number, componentReplacer2Identifier2CounterMap: ComponentReplacer2Identifier2CounterMap, nodeConverter: SubNodeConverter) => {
-  return allComponentReplacers
-    .map((componentReplacer) => {
-      const identifier2CounterMap = componentReplacer2Identifier2CounterMap.get(componentReplacer) || new Map<string, number>()
-      return componentReplacer(node, index, identifier2CounterMap, nodeConverter)
-    })
+  return md
+}
+
+const tryToReplaceNode = (node: DomElement, index: number, allReplacers: ComponentReplacer[], nodeConverter: SubNodeConverter) => {
+  return allReplacers
+    .map((componentReplacer) => componentReplacer.getReplacement(node, index, nodeConverter))
     .find((replacement) => !!replacement)
 }
 
 const MarkdownRenderer: React.FC<MarkdownPreviewProps> = ({ content }) => {
-  const markdownIt = useMemo(() => {
-    const md = new MarkdownIt('default', {
-      html: true,
-      breaks: true,
-      langPrefix: '',
-      typographer: true
-    })
-    md.use(taskList)
-    md.use(emoji)
-    md.use(abbreviation)
-    md.use(definitionList)
-    md.use(subscript)
-    md.use(superscript)
-    md.use(inserted)
-    md.use(marked)
-    md.use(footnote)
-    md.use(imsize)
-    // noinspection CheckTagEmptyBody
-    md.use(anchor, {
-      permalink: true,
-      permalinkBefore: true,
-      permalinkClass: 'heading-anchor text-dark',
-      permalinkSymbol: '<i class="fa fa-link"></i>'
-    })
-    md.use(toc, {
-      includeLevel: [1, 2, 3],
-      markerPattern: /^\[TOC]$/i
-    })
-    md.use(mathJax({
-      beforeMath: '<codimd-mathjax>',
-      afterMath: '</codimd-mathjax>',
-      beforeInlineMath: '<codimd-mathjax inline>',
-      afterInlineMath: '</codimd-mathjax>',
-      beforeDisplayMath: '<codimd-mathjax>',
-      afterDisplayMath: '</codimd-mathjax>'
-    }))
-    md.use(markdownItRegex, replaceLegacyYoutubeShortCode)
-    md.use(markdownItRegex, replaceLegacyVimeoShortCode)
-    md.use(markdownItRegex, replaceLegacyGistShortCode)
-    md.use(markdownItRegex, replaceLegacySlideshareShortCode)
-    md.use(markdownItRegex, replaceLegacySpeakerdeckShortCode)
-    md.use(markdownItRegex, replacePdfShortCode)
-    md.use(markdownItRegex, replaceYouTubeLink)
-    md.use(markdownItRegex, replaceVimeoLink)
-    md.use(markdownItRegex, replaceGistLink)
-    md.use(highlightedCode)
-    md.use(markdownItRegex, replaceQuoteExtraAuthor)
-    md.use(markdownItRegex, replaceQuoteExtraColor)
-    md.use(markdownItRegex, replaceQuoteExtraTime)
-    md.use(MarkdownItParserDebugger)
-
-    validAlertLevels.forEach(level => {
-      md.use(markdownItContainer, level, { render: createRenderContainer(level) })
-    })
-
-    return md
-  }, [])
+  const markdownIt = useMemo(createMarkdownIt, [])
 
   const result: ReactElement[] = useMemo(() => {
-    const componentReplacer2Identifier2CounterMap = new Map<ComponentReplacer, Map<string, number>>()
+    const allReplacers: ComponentReplacer[] = [
+      new GistReplacer(),
+      new YoutubeReplacer(),
+      new VimeoReplacer(),
+      new PdfReplacer(),
+      new TocReplacer(),
+      new HighlightedCodeReplacer(),
+      new QuoteOptionsReplacer(),
+      new MathjaxReplacer()
+    ]
     const html: string = markdownIt.render(content)
     const transform: Transform = (node, index) => {
-      const maybeReplacement = tryToReplaceNode(node, index, componentReplacer2Identifier2CounterMap,
-        (subNode, subIndex) => convertNodeToElement(subNode, subIndex, transform))
-      return maybeReplacement || convertNodeToElement(node, index, transform)
+      const subNodeConverter = (subNode: DomElement, subIndex: number) => convertNodeToElement(subNode, subIndex, transform)
+      return tryToReplaceNode(node, index, allReplacers, subNodeConverter) || convertNodeToElement(node, index, transform)
     }
     return ReactHtmlParser(html, { transform: transform })
   }, [content, markdownIt])

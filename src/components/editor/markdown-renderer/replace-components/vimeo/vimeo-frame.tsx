@@ -1,17 +1,5 @@
 import React, { useCallback } from 'react'
-import { ComponentReplacer } from '../../markdown-renderer'
-import { getAttributesFromCodiMdTag } from '../codi-md-tag-utils'
 import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
-
-const getElementReplacement:ComponentReplacer = (node, index:number, counterMap) => {
-  const attributes = getAttributesFromCodiMdTag(node, 'vimeo')
-  if (attributes && attributes.id) {
-    const videoId = attributes.id
-    const count = (counterMap.get(videoId) || 0) + 1
-    counterMap.set(videoId, count)
-    return <VimeoFrame key={`vimeo_${videoId}_${count}`} id={videoId}/>
-  }
-}
 
 interface VimeoApiResponse {
   // Vimeo uses strange names for their fields. ESLint doesn't like that.
@@ -50,5 +38,3 @@ export const VimeoFrame: React.FC<VimeoFrameProps> = ({ id }) => {
     </OneClickEmbedding>
   )
 }
-
-export { getElementReplacement as getVimeoReplacement }
