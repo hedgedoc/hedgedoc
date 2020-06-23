@@ -6,6 +6,7 @@ import markdownItContainer from 'markdown-it-container'
 import definitionList from 'markdown-it-deflist'
 import emoji from 'markdown-it-emoji'
 import footnote from 'markdown-it-footnote'
+import imsize from 'markdown-it-imsize'
 import inserted from 'markdown-it-ins'
 import marked from 'markdown-it-mark'
 import markdownItRegex from 'markdown-it-regex'
@@ -78,6 +79,7 @@ const MarkdownRenderer: React.FC<MarkdownPreviewProps> = ({ content }) => {
     md.use(inserted)
     md.use(marked)
     md.use(footnote)
+    md.use(imsize)
     // noinspection CheckTagEmptyBody
     md.use(anchor, {
       permalink: true,
