@@ -14,6 +14,7 @@ import { NoteAuthorship } from './models/note'
 import { PhotoProfile } from './utils/PhotoProfile'
 import { EditorSocketIOServer } from './ot/editor-socketio-server'
 import { mapToObject } from './utils/functions'
+import { getPermission, Permission } from './web/note/util'
 
 export type SocketWithNoteId = Socket & { noteId: string }
 
@@ -102,7 +103,7 @@ class NoteSession {
   id: string
   alias: string
   title: string
-  owner: string
+  ownerId: string
   ownerprofile: PhotoProfile | null
   permission: string
   lastchangeuser: string | null
@@ -377,7 +378,7 @@ function emitRefresh (socket: SocketWithNoteId): void {
   const out = {
     title: note.title,
     docmaxlength: config.documentMaxLength,
-    owner: note.owner,
+    owner: note.ownerId,
     ownerprofile: note.ownerprofile,
     lastchangeuser: note.lastchangeuser,
     lastchangeuserprofile: note.lastchangeuserprofile,
@@ -442,16 +443,6 @@ function interruptConnection (socket: Socket, noteId: string, socketId): void {
   connectNextSocket()
 }
 
-function checkViewPermission (req, note: NoteSession): boolean {
-  if (note.permission === 'private') {
-    return !!(req.user?.logged_in && req.user.id === note.owner)
-  } else if (note.permission === 'limited' || note.permission === 'protected') {
-    return !!(req.user?.logged_in)
-  } else {
-    return true
-  }
-}
-
 function finishConnection (socket: SocketWithNoteId, noteId: string, socketId: string): void {
   // if no valid info provided will drop the client
   if (!socket || !notes.get(noteId) || !users.get(socketId)) {
@@ -460,7 +451,7 @@ function finishConnection (socket: SocketWithNoteId, noteId: string, socketId: s
   // check view permission
   const note = notes.get(noteId)
   if (!note) return
-  if (!checkViewPermission(socket.request, note)) {
+  if (getPermission(socket.request.user, note) === Permission.None) {
     interruptConnection(socket, noteId, socketId)
     return failConnection(403, 'connection forbidden', socket)
   }
@@ -513,27 +504,7 @@ function ifMayEdit (socket: SocketWithNoteId, originIsOperation: boolean, callba
   if (!noteId) return
   const note = notes.get(noteId)
   if (!note) return
-  let mayEdit = true
-  switch (note.permission) {
-    case 'freely':
-      // not blocking anyone
-      break
-    case 'editable':
-    case 'limited':
-      // only login user can change
-      if (!socket.request.user || !socket.request.user.logged_in) {
-        mayEdit = false
-      }
-      break
-    case 'locked':
-    case 'private':
-    case 'protected':
-      // only owner can change
-      if (!note.owner || note.owner !== socket.request.user.id) {
-        mayEdit = false
-      }
-      break
-  }
+  const mayEdit = (getPermission(socket.request.user, note) >= Permission.Write)
   // if user may edit and this is a text operation
   if (originIsOperation && mayEdit) {
     // save for the last change user id
@@ -625,7 +596,7 @@ function startConnection (socket: SocketWithNoteId): void {
       if (!note) {
         return failConnection(404, 'note not found', socket)
       }
-      const owner = note.ownerId
+      const ownerId = note.ownerId
       const ownerprofile = note.owner ? PhotoProfile.fromUser(note.owner) : null
 
       const lastchangeuser = note.lastchangeuserId
@@ -653,7 +624,7 @@ function startConnection (socket: SocketWithNoteId): void {
         id: noteId,
         alias: note.alias,
         title: note.title,
-        owner: owner,
+        ownerId: ownerId,
         ownerprofile: ownerprofile,
         permission: note.permission,
         lastchangeuser: lastchangeuser,
@@ -863,7 +834,7 @@ function connection (socket: SocketWithNoteId): void {
       const note = notes.get(noteId)
       if (!note) return
       // Only owner can change permission
-      if (note.owner && note.owner === socket.request.user.id) {
+      if (getPermission(socket.request.user, note) === Permission.Owner) {
         if (permission === 'freely' && !config.allowAnonymous && !config.allowAnonymousEdits) return
         note.permission = permission
         Note.update({
@@ -884,7 +855,7 @@ function connection (socket: SocketWithNoteId): void {
             const sock = note.socks[i]
             if (typeof sock !== 'undefined' && sock) {
               // check view permission
-              if (!checkViewPermission(sock.request, note)) {
+              if (getPermission(sock.request.user, note) === Permission.None) {
                 sock.emit('info', {
                   code: 403
                 })
@@ -910,7 +881,7 @@ function connection (socket: SocketWithNoteId): void {
       const note = notes.get(noteId)
       if (!note) return
       // Only owner can delete note
-      if (note.owner && note.owner === socket.request.user.id) {
+      if (getPermission(socket.request.user, note) === Permission.Owner) {
         Note.destroy({
           where: {
             id: noteId

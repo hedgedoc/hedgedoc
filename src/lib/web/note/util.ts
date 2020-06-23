@@ -33,13 +33,51 @@ export function newNote (req, res: Response, body: string | null): void {
   })
 }
 
-export function checkViewPermission (req, note: Note): boolean {
-  if (note.permission === 'private') {
-    return req.isAuthenticated() && note.ownerId === req.user.id
-  } else if (note.permission === 'limited' || note.permission === 'protected') {
-    return req.isAuthenticated()
+export enum Permission {
+    None,
+    Read,
+    Write,
+    Owner
+}
+
+interface NoteObject {
+  ownerId?: string;
+  permission: string;
+}
+
+export function getPermission (user, note: NoteObject): Permission {
+  // There are two possible User objects we get passed. One is from socket.io
+  // and the other is from passport directly. The former sets the logged_in
+  // parameter to either true or false, whereas for the latter, the logged_in
+  // parameter is always undefined, and the existence of user itself means the
+  // user is logged in.
+  if (!user || user.logged_in === false) {
+    // Anonymous
+    switch (note.permission) {
+      case 'freely':
+        return Permission.Write
+      case 'editable':
+      case 'locked':
+        return Permission.Read
+      default:
+        return Permission.None
+    }
+  } else if (note.ownerId === user.id) {
+    // Owner
+    return Permission.Owner
   } else {
-    return true
+    // Registered user
+    switch (note.permission) {
+      case 'editable':
+      case 'limited':
+      case 'freely':
+        return Permission.Write
+      case 'locked':
+      case 'protected':
+        return Permission.Read
+      default:
+        return Permission.None
+    }
   }
 }
 
@@ -58,7 +96,7 @@ export function findNoteOrCreate (req: Request, res: Response, callback: (note: 
       if (!note) {
         return newNote(req, res, '')
       }
-      if (!checkViewPermission(req, note)) {
+      if (getPermission(req.user, note) === Permission.None) {
         return errors.errorForbidden(res)
       } else {
         return callback(note)
