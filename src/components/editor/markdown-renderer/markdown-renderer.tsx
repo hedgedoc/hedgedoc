@@ -20,6 +20,7 @@ import ReactHtmlParser, { convertNodeToElement, Transform } from 'react-html-par
 import MathJaxReact from 'react-mathjax'
 import { createRenderContainer, validAlertLevels } from './container-plugins/alert'
 import { highlightedCode } from './markdown-it-plugins/highlighted-code'
+import { linkifyExtra } from './markdown-it-plugins/linkify-extra'
 import { MarkdownItParserDebugger } from './markdown-it-plugins/parser-debugger'
 import './markdown-renderer.scss'
 import { replaceGistLink } from './regex-plugins/replace-gist-link'
@@ -97,6 +98,7 @@ const createMarkdownIt = ():MarkdownIt => {
   md.use(markdownItRegex, replaceQuoteExtraAuthor)
   md.use(markdownItRegex, replaceQuoteExtraColor)
   md.use(markdownItRegex, replaceQuoteExtraTime)
+  md.use(linkifyExtra)
   md.use(MarkdownItParserDebugger)
 
   validAlertLevels.forEach(level => {
