@@ -5,8 +5,8 @@
 .markdown-body pre code.hljs {
 
   padding: 16px;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
 
   &.showGutter {
     .linenumber {
@@ -25,17 +25,17 @@
       display: flex;
       align-items: flex-end;
 
-
       &:before {
         content: attr(data-line-number);
       }
     }
   }
 
-  &.showGutter .line {
+  &.showGutter .codeline {
     margin: 0 0 0 16px;
   }
-  &.wrapLines .line {
+
+  &.wrapLines .codeline {
     white-space: pre-wrap;
   }
 

@@ -6,7 +6,7 @@ import './highlighted-code.scss'
 export interface HighlightedCodeProps {
   code: string,
   language?: string,
-  showGutter: boolean
+  startLineNumber?: number
   wrapLines: boolean
 }
 
@@ -32,7 +32,7 @@ const correctLanguage = (language: string | undefined): string | undefined => {
   }
 }
 
-export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language, showGutter, wrapLines }) => {
+export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language, startLineNumber, wrapLines }) => {
   const highlightedCode = useMemo(() => {
     const replacedLanguage = correctLanguage(language)
     return ((!!replacedLanguage && checkIfLanguageIsSupported(replacedLanguage)) ? hljs.highlight(replacedLanguage, code).value : escapeHtml(code))
@@ -42,13 +42,13 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
   }, [code, language])
 
   return (
-    <code className={`hljs ${showGutter ? 'showGutter' : ''} ${wrapLines ? 'wrapLines' : ''}`}>
+    <code className={`hljs ${startLineNumber !== undefined ? 'showGutter' : ''} ${wrapLines ? 'wrapLines' : ''}`}>
       {
         highlightedCode
           .map((line, index) => {
             return <Fragment key={index}>
-              <span className={'linenumber'} data-line-number={index + 1}/>
-              <div className={'line'}>
+              <span className={'linenumber'} data-line-number={(startLineNumber || 1) + index}/>
+              <div className={'codeline'}>
                 {line}
               </div>
             </Fragment>
