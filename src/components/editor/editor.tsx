@@ -78,7 +78,7 @@ let a = 1
           showLeft={editorMode === EditorMode.EDITOR || editorMode === EditorMode.BOTH}
           left={<EditorWindow onContentChange={content => setMarkdownContent(content)} content={markdownContent}/>}
           showRight={editorMode === EditorMode.PREVIEW || (editorMode === EditorMode.BOTH)}
-          right={<MarkdownRenderer content={markdownContent}/>}
+          right={<MarkdownRenderer content={markdownContent} wide={editorMode === EditorMode.PREVIEW}/>}
           containerClassName={'overflow-hidden'}/>
       </div>
     </Fragment>

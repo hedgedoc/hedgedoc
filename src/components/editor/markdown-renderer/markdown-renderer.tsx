@@ -38,6 +38,7 @@ import { replaceYouTubeLink } from './regex-plugins/replace-youtube-link'
 import { ComponentReplacer, SubNodeConverter } from './replace-components/ComponentReplacer'
 import { GistReplacer } from './replace-components/gist/gist-replacer'
 import { HighlightedCodeReplacer } from './replace-components/highlighted-fence/highlighted-fence-replacer'
+import { PossibleWiderReplacer } from './replace-components/possible-wider/possible-wider-replacer'
 import { ImageReplacer } from './replace-components/image/image-replacer'
 import { MathjaxReplacer } from './replace-components/mathjax/mathjax-replacer'
 import { PdfReplacer } from './replace-components/pdf/pdf-replacer'
@@ -48,6 +49,7 @@ import { YoutubeReplacer } from './replace-components/youtube/youtube-replacer'
 
 export interface MarkdownPreviewProps {
   content: string
+  wide?: boolean
 }
 
 const createMarkdownIt = ():MarkdownIt => {
@@ -115,11 +117,12 @@ const tryToReplaceNode = (node: DomElement, index: number, allReplacers: Compone
     .find((replacement) => !!replacement)
 }
 
-const MarkdownRenderer: React.FC<MarkdownPreviewProps> = ({ content }) => {
+const MarkdownRenderer: React.FC<MarkdownPreviewProps> = ({ content, wide }) => {
   const markdownIt = useMemo(createMarkdownIt, [])
 
   const result: ReactElement[] = useMemo(() => {
     const allReplacers: ComponentReplacer[] = [
+      new PossibleWiderReplacer(),
       new GistReplacer(),
       new YoutubeReplacer(),
       new VimeoReplacer(),
@@ -140,7 +143,7 @@ const MarkdownRenderer: React.FC<MarkdownPreviewProps> = ({ content }) => {
 
   return (
     <div className={'bg-light container-fluid flex-fill h-100 overflow-y-scroll pb-5'}>
-      <div className={'markdown-body container-fluid'}>
+      <div className={`markdown-body d-flex flex-column align-items-center container-fluid ${wide ? 'wider' : ''}`}>
         <MathJaxReact.Provider>
           {result}
         </MathJaxReact.Provider>
