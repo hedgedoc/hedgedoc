@@ -52,7 +52,7 @@ export interface MarkdownPreviewProps {
   wide?: boolean
 }
 
-const createMarkdownIt = ():MarkdownIt => {
+const createMarkdownIt = (): MarkdownIt => {
   const md = new MarkdownIt('default', {
     html: true,
     breaks: true,
