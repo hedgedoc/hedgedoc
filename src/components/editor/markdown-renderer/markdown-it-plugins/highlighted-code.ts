@@ -1,6 +1,6 @@
 import MarkdownIt from 'markdown-it/lib'
 
-const highlightRegex = /^(\w*)(=(\d*|\+))?(!?)$/
+const highlightRegex = /^ *(\w*)(=(\d*|\+))?(!?)$/
 
 export const highlightedCode: MarkdownIt.PluginSimple = (md: MarkdownIt) => {
   md.core.ruler.push('highlighted-code', (state) => {
