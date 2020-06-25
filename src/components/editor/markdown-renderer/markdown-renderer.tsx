@@ -38,6 +38,7 @@ import { replaceYouTubeLink } from './regex-plugins/replace-youtube-link'
 import { ComponentReplacer, SubNodeConverter } from './replace-components/ComponentReplacer'
 import { GistReplacer } from './replace-components/gist/gist-replacer'
 import { HighlightedCodeReplacer } from './replace-components/highlighted-fence/highlighted-fence-replacer'
+import { ImageReplacer } from './replace-components/image/image-replacer'
 import { MathjaxReplacer } from './replace-components/mathjax/mathjax-replacer'
 import { PdfReplacer } from './replace-components/pdf/pdf-replacer'
 import { QuoteOptionsReplacer } from './replace-components/quote-options/quote-options-replacer'
@@ -123,6 +124,7 @@ const MarkdownRenderer: React.FC<MarkdownPreviewProps> = ({ content }) => {
       new YoutubeReplacer(),
       new VimeoReplacer(),
       new PdfReplacer(),
+      new ImageReplacer(),
       new TocReplacer(),
       new HighlightedCodeReplacer(),
       new QuoteOptionsReplacer(),
