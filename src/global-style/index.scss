@@ -1,6 +1,7 @@
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import '../../node_modules/react-bootstrap-typeahead/css/Typeahead';
-@import "font-pack";
+@import "fonts/source-code-pro/source-code-pro";
+@import "fonts/twemoji/twemoji";
 
 html {
   height: 100%;
@@ -34,9 +35,4 @@ body {
 
 .overflow-y-scroll {
   overflow-y: scroll;
-}
-
-@font-face {
-  font-family: "twemoji";
-  src: url("TwemojiMozilla.ttf") format("truetype");
 }
