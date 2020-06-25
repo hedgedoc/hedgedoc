@@ -254,6 +254,9 @@
                 "question": "Do you really want to delete this note?",
                 "warning": "All users will lose their connection."
             }
+        },
+        "embeddings": {
+          "clickToLoad": "Click to load"
         }
     },
     "common":  {
