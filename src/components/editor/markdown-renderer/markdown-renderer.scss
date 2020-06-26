@@ -7,7 +7,7 @@
     margin-bottom: 0;
   }
 
-  // I know this is bad :( sry
+  // This is necessary since we need to set this for all DOM Element that could be children of .markdown-body and since we support all of HTML that would literally be everything
   & > * {
     width: 100%;
     max-width: 900px;
