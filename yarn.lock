@@ -1514,7 +1514,7 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
-"@types/highlight.js@^9.12.4":
+"@types/highlight.js@9.12.4":
   version "9.12.4"
   resolved "https://registry.yarnpkg.com/@types/highlight.js/-/highlight.js-9.12.4.tgz#8c3496bd1b50cc04aeefd691140aa571d4dbfa34"
   integrity sha512-t2szdkwmg2JJyuCM20e8kR2X59WCE5Zkl4bzm1u1Oukjm79zpbiAv+QjnwLnuuV0WHEcX2NgUItu0pAMKuOPww==
@@ -1683,7 +1683,7 @@
     "@types/htmlparser2" "*"
     "@types/react" "*"
 
-"@types/react-mathjax@^1.0.0":
+"@types/react-mathjax@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/react-mathjax/-/react-mathjax-1.0.0.tgz#5e337ddc0fbee4d01513d960f81f85963a9ee482"
   integrity sha512-c3beW/LhRx/7LkwYGj7mIDphatRdih80Cpe4l2u3LFdyOgBloPaXq3H9QROC6GnhbGxVql7ByHLA70s+Q6ol1Q==
@@ -5514,7 +5514,7 @@ hex-color-regex@^1.1.0:
   resolved "https://registry.yarnpkg.com/hex-color-regex/-/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
   integrity sha512-l9sfDFsuqtOqKDsQdqrMRk0U85RZc0RtOR9yPI7mRVOa4FsR/BVnZ0shmQRM96Ji99kYZP/7hn1cedc1+ApsTQ==
 
-highlight.js@^10.1.1:
+highlight.js@10.1.1:
   version "10.1.1"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-10.1.1.tgz#691a2148a8d922bf12e52a294566a0d993b94c57"
   integrity sha512-b4L09127uVa+9vkMgPpdUQP78ickGbHEQTWeBrQFTJZ4/n2aihWOGS0ZoUqAwjVmfjhq/C76HRzkqwZhK4sBbg==
@@ -7336,7 +7336,7 @@ markdown-it-footnote@3.0.2:
   resolved "https://registry.yarnpkg.com/markdown-it-footnote/-/markdown-it-footnote-3.0.2.tgz#1575ee7a093648d4e096aa33386b058d92ac8bc1"
   integrity sha512-JVW6fCmZWjvMdDQSbOT3nnOQtd9iAXmw7hTSh26+v42BnvXeVyGMDBm5b/EZocMed2MbCAHiTX632vY0FyGB8A==
 
-markdown-it-imsize@^2.0.1:
+markdown-it-imsize@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/markdown-it-imsize/-/markdown-it-imsize-2.0.1.tgz#cca0427905d05338a247cb9ca9d968c5cddd5170"
   integrity sha1-zKBCeQXQUziiR8ucqdloxc3dUXA=
@@ -7351,7 +7351,7 @@ markdown-it-mark@3.0.0:
   resolved "https://registry.yarnpkg.com/markdown-it-mark/-/markdown-it-mark-3.0.0.tgz#27c3e39ef3cc310b2dde5375082c9fa912983cda"
   integrity sha512-HqMWeKfMMOu4zBO0emmxsoMWmbf2cPKZY1wP6FsTbKmicFfp5y4L3KXAsNeO1rM6NTJVOrNlLKMPjWzriBGspw==
 
-markdown-it-mathjax@^2.0.0:
+markdown-it-mathjax@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/markdown-it-mathjax/-/markdown-it-mathjax-2.0.0.tgz#ae2b4f4c5c719a03f9e475c664f7b2685231d9e9"
   integrity sha1-ritPTFxxmgP55HXGZPeyaFIx2ek=
@@ -7392,7 +7392,7 @@ markdown-it@11.0.0:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-mathjax@^3.0.5:
+mathjax@3.0.5:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/mathjax/-/mathjax-3.0.5.tgz#707e703a9c1d95f0790bbd404b895566f459d514"
   integrity sha512-9M7VulhltkD8sIebWutK/VfAD+m+6BIFqfpjDh9Pz/etoKUtjO6UMnOhUcDmNl6iApE8C9xrUmaMyNZkZAlrMw==
@@ -9619,7 +9619,7 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-mathjax@^1.0.1:
+react-mathjax@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-mathjax/-/react-mathjax-1.0.1.tgz#a8c282e75d277a201632dfd07edf41edda372b4b"
   integrity sha512-+mjFcciZY3GQoqiQm3aRTyDjgBKuoaXpY+SCONX00jScuPpTKwnASeFMS5+pbTIzDf5zPT2Y9ZZfQ9U/d4CKtQ==
