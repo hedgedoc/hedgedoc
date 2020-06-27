@@ -63,7 +63,7 @@
     "node-sass": "4.14.1",
     "react": "16.13.1",
     "react-bootstrap": "1.0.1",
-    "react-bootstrap-typeahead": "5.0.0-rc.3",
+    "react-bootstrap-typeahead": "5.1.0",
     "react-codemirror2": "7.2.1",
     "react-dom": "16.13.1",
     "react-html-parser": "2.0.2",
