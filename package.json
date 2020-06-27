@@ -3,9 +3,9 @@
   "license": "AGPL-3.0",
   "version": "0.1.0",
   "dependencies": {
-    "@testing-library/jest-dom": "5.10.1",
-    "@testing-library/react": "10.3.0",
-    "@testing-library/user-event": "12.0.2",
+    "@testing-library/jest-dom": "5.11.0",
+    "@testing-library/react": "10.4.3",
+    "@testing-library/user-event": "12.0.11",
     "@types/codemirror": "0.0.96",
     "@types/highlight.js": "9.12.4",
     "@types/jest": "26.0.3",
