@@ -10,6 +10,11 @@ jobs:
         - 10
       script:
         - yarn run eslint
+    - name: markdownlint
+      node_js:
+        - 10
+      script:
+        - yarn run markdownlint
     - name: ShellCheck
       script:
         - shellcheck bin/heroku bin/setup
