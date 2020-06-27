@@ -13,7 +13,7 @@ import {
   setHistoryToLocalStore,
   sortAndFilterEntries
 } from '../../../../utils/historyUtils'
-import { ErrorModal } from '../../../common/error-modal/error-modal'
+import { ErrorModal } from '../../../common/modals/error-modal'
 import { HistoryContent } from './history-content/history-content'
 import { HistoryToolbar, HistoryToolbarState, initState as toolbarInitState } from './history-toolbar/history-toolbar'
 
@@ -195,7 +195,7 @@ export const History: React.FC = () => {
   return (
     <Fragment>
       <ErrorModal show={error !== ''} onHide={resetError}
-        title={error !== '' ? `landing.history.error.${error}.title` : ''}>
+        titleI18nKey={error !== '' ? `landing.history.error.${error}.title` : ''}>
         <h5>
           <Trans i18nKey={error !== '' ? `landing.history.error.${error}.text` : ''}/>
         </h5>
