@@ -29,8 +29,10 @@
       ]
     },
     {
-      "extends": "packages:jsTest",
-      "groupName": "JS test packages"
+      "groupName": "JS test packages",
+      "packagePatterns": [
+        "^@testing-library/"
+      ]
     }
   ],
   "prHourlyLimit": 0,
