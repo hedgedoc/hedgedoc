@@ -2,7 +2,7 @@ import fs from 'fs'
 import { config } from '../config'
 import { logger } from '../logger'
 import { Revision } from '../models'
-import { realtime } from '../realtime'
+import { realtime, State } from '../realtime'
 
 /*
 Converts a map from string to something into a plain JS object for transmitting via a websocket
@@ -51,8 +51,15 @@ export function processData<T> (data: T, _default: T, process?: (T) => T): T | u
 }
 
 export function handleTermSignals (io): void {
+  if (realtime.state === State.Starting) {
+    process.exit(0)
+  }
+  if (realtime.state === State.Stopping) {
+    // The function is already running. Do nothing
+    return
+  }
   logger.info('CodiMD has been killed by signal, try to exit gracefully...')
-  realtime.maintenance = true
+  realtime.state = State.Stopping
   // disconnect all socket.io clients
   Object.keys(io.sockets.sockets).forEach(function (key) {
     const socket = io.sockets.sockets[key]
@@ -72,7 +79,7 @@ export function handleTermSignals (io): void {
     if (realtime.isReady()) {
       Revision.checkAllNotesRevision(function (err, notes) {
         if (err) {
-          return logger.error(err)
+          return logger.error('Error while writing changes to database. We will abort after trying for 30 seconds.\n' + err)
         }
         if (!notes || notes.length <= 0) {
           clearInterval(checkCleanTimer)
@@ -80,5 +87,10 @@ export function handleTermSignals (io): void {
         }
       })
     }
-  }, 100)
+  }, 500)
+  setTimeout(function () {
+    logger.error('Failed to write changes to database. Aborting')
+    clearInterval(checkCleanTimer)
+    process.exit(1)
+  }, 30000)
 }
