@@ -23,7 +23,7 @@ export const UserDropdown: React.FC = () => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu className='text-start'>
-        <LinkContainer to={'/features'}>
+        <LinkContainer to={'/n/features'}>
           <Dropdown.Item dir='auto'>
             <ForkAwesomeIcon icon="bolt" fixedWidth={true} className="mx-2"/>
             <Trans i18nKey="editor.help.documents.features"/>

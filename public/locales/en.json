@@ -133,7 +133,7 @@
         }
     },
     "editor": {
-        "placeholder": "← Start by entering a title here\n===\nVisit /features if you don't know what to do.\nHappy hacking :)",
+        "placeholder": "← Start by entering a title here\n===\nVisit the features page if you don't know what to do.\nHappy hacking :)",
         "help": {
             "contacts": {
                 "title": "Contacts",

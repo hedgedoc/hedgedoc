@@ -29,7 +29,7 @@ export const CoverButtons: React.FC = () => {
           <Trans i18nKey="common.or"/>
         </span>
       </ShowIf>
-      <Link to="/features">
+      <Link to="/n/features">
         <Button
           className="cover-button"
           variant="primary"

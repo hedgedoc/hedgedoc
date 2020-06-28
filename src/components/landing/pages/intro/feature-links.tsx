@@ -9,7 +9,7 @@ export const FeatureLinks: React.FC = () => {
   return (
     <Row className="mb-5">
       <Col md={4}>
-        <Link to={'/features#Share-Notes'} className="text-light">
+        <Link to={'/n/features#Share-Notes'} className="text-light">
           <ForkAwesomeIcon icon="bolt" size="3x"/>
           <h5>
             <Trans i18nKey="landing.intro.features.collaboration"/>
@@ -17,7 +17,7 @@ export const FeatureLinks: React.FC = () => {
         </Link>
       </Col>
       <Col md={4}>
-        <Link to={'/features#MathJax'} className="text-light">
+        <Link to={'/n/features#MathJax'} className="text-light">
           <ForkAwesomeIcon icon="bar-chart" size="3x"/>
           <h5>
             <Trans i18nKey="landing.intro.features.mathJax"/>
@@ -25,7 +25,7 @@ export const FeatureLinks: React.FC = () => {
         </Link>
       </Col>
       <Col md={4}>
-        <Link to={'/features#Slide-Mode'} className="text-light">
+        <Link to={'/n/features#Slide-Mode'} className="text-light">
           <ForkAwesomeIcon icon="television" size="3x"/>
           <h5>
             <Trans i18nKey="landing.intro.features.slides"/>
