@@ -25,7 +25,7 @@ import { addNonceToLocals, computeDirectives } from './csp'
 import { errors } from './errors'
 import { logger } from './logger'
 import { Revision, sequelize } from './models'
-import { realtime } from './realtime'
+import { realtime, State } from './realtime'
 import { handleTermSignals } from './utils/functions'
 import { AuthRouter, BaseRouter, HistoryRouter, ImageRouter, NoteRouter, StatusRouter, UserRouter } from './web/'
 import { tooBusy, checkURI, redirectWithoutTrailingSlashes, codiMDVersion } from './web/middleware'
@@ -253,7 +253,7 @@ function startListen (): void {
   const listenCallback = function (): void {
     const schema = config.useSSL ? 'HTTPS' : 'HTTP'
     logger.info('%s Server listening at %s', schema, address)
-    realtime.maintenance = false
+    realtime.state = State.Running
   }
 
   const unixCallback = function (): void {

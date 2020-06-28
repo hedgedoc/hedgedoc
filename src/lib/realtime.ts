@@ -20,6 +20,11 @@ export type SocketWithNoteId = Socket & { noteId: string }
 
 const chance = new Chance()
 
+export enum State {
+  Starting,
+  Running,
+  Stopping
+}
 /* eslint-disable @typescript-eslint/no-use-before-define */
 const realtime: {
   onAuthorizeSuccess: (data, accept) => void;
@@ -27,7 +32,7 @@ const realtime: {
   io: SocketIO.Server; isReady: () => boolean;
   connection: (socket: SocketWithNoteId) => void;
   secure: (socket: SocketIO.Socket, next: (err?: Error) => void) => void;
-  getStatus: (callback) => void; maintenance: boolean;
+  getStatus: (callback) => void; state: State;
 } = {
   io: SocketIO(),
   onAuthorizeSuccess: onAuthorizeSuccess,
@@ -36,7 +41,7 @@ const realtime: {
   connection: connection,
   getStatus: getStatus,
   isReady: isReady,
-  maintenance: true
+  state: State.Starting
 }
 /* eslint-enable @typescript-eslint/no-use-before-define */
 
@@ -751,7 +756,7 @@ function updateUserData (socket: Socket, user): void {
 }
 
 function connection (socket: SocketWithNoteId): void {
-  if (realtime.maintenance) return
+  if (realtime.state !== State.Running) return
   parseNoteIdFromSocket(socket, function (err, noteId) {
     if (err) {
       return failConnection(500, err, socket)
