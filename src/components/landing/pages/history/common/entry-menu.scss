@@ -13,6 +13,9 @@
   }
 }
 
-.dropdown-toggle.no-arrow::after {
-  content: initial;
+.dropup .dropdown-toggle, .dropdown-toggle {
+  &.no-arrow::after {
+    content: initial;
+  }
 }
+

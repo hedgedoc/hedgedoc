@@ -21,6 +21,7 @@
     - tiddlywiki
     - mediawiki
     - jsx
+- Alternative anchor URL formats
 
 ### Added
 

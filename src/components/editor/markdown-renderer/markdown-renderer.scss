@@ -1,6 +1,7 @@
 @import '../../../../node_modules/github-markdown-css/github-markdown.css';
 
 .markdown-body {
+  position: relative;
   font-family: 'Source Sans Pro', "twemoji", sans-serif;
 
   .alert > p, .alert > ul {
@@ -42,4 +43,5 @@
       }
     }
   }
+
 }

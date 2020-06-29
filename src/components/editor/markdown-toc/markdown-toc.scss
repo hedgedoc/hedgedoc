@@ -1,0 +1,67 @@
+.markdown-toc {
+  width: 100%;
+  max-width: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &.sticky {
+    position: sticky;
+    top: 0;
+    left: 0;
+  }
+
+  >ul>li {
+    >a {
+      padding: 4px 20px;
+    }
+    >ul>li {
+      > a {
+        padding: 1px 0 1px 30px;
+      }
+      >ul>li {
+        > a {
+          padding: 1px 0 1px 38px;
+        }
+      }
+    }
+  }
+
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-size: 0.9em;
+
+    a {
+      color: #767676;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: pre;
+      display: block;
+    }
+
+
+    li.active {
+      a {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        color: #000000;
+        font-weight: bold;
+      }
+    }
+  }
+}
+.markdown-toc-sidebar-button {
+  position: absolute;
+  height: 100%;
+  right: 20px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+
+  &>.dropup {
+    position: sticky;
+    bottom: 20px;
+    right: 0px;
+  }
+}
