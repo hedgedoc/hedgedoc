@@ -13,6 +13,10 @@
     "email": true,
     "openid": true
   },
+  "branding": {
+    "name": "ACME Corp",
+    "logo": "http://localhost:3000/acme.png"
+  },
   "banner": {
       "text": "This is the test banner text",
       "timestamp": "2020-05-22T20:46:08.962Z"

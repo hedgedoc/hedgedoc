@@ -1,10 +1,16 @@
 export interface BackendConfig {
   allowAnonymous: boolean,
   authProviders: AuthProvidersState,
+  branding: BrandingConfig,
   banner: BannerConfig,
   customAuthNames: CustomAuthNames,
   specialLinks: SpecialLinks,
   version: BackendVersion,
+}
+
+export interface BrandingConfig {
+  name: string,
+  logo: string,
 }
 
 export interface BannerConfig {

@@ -17,6 +17,10 @@ export const initialState: BackendConfig = {
     email: false,
     openid: false
   },
+  branding: {
+    name: '',
+    logo: ''
+  },
   banner: {
     text: '',
     timestamp: ''
