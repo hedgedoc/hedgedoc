@@ -1,5 +1,4 @@
-Authentication guide - Nextcloud (self-hosted)
-===
+# Authentication guide - Nextcloud (self-hosted)
 
 *This has been constructed using the [Nextcloud OAuth2 Documentation](https://docs.nextcloud.com/server/14/admin_manual/configuration_server/oauth2.html?highlight=oauth2) combined with [this issue comment on the nextcloud bugtracker](https://github.com/nextcloud/server/issues/5694#issuecomment-314761326).*
 
@@ -22,24 +21,25 @@ This guide uses the generic OAuth2 module for compatibility with Nextcloud 13 an
 5. That's it for Nextcloud, the rest is configured in your CodiMD `config.json` or via the `CMD_` environment variables!
 
 6. Add the Client ID and Client Secret to your `config.json` file or pass them as environment variables. Make sure you also replace `<your-nextcloud-domain>` with the right domain name.
-    * `config.json`:
-      ```javascript
-      {
-        "production": {
-          "oauth2": {
-              "clientID": "ii4p1u3jz7dXXXXXXXXXXXXXXX",
-              "clientSecret": "mqzzx6fydbXXXXXXXXXXXXXXXX",
-              "authorizationURL": "https://<your-nextcloud-domain>/apps/oauth2/authorize",
-              "tokenURL": "https://<your-nextcloud-domain>/apps/oauth2/api/v1/token",
-              "userProfileURL": "https://<your-nextcloud-domain>/ocs/v2.php/cloud/user?format=json",
-              "userProfileUsernameAttr": "ocs.data.id",
-              "userProfileDisplayNameAttr": "ocs.data.display-name",
-              "userProfileEmailAttr": "ocs.data.email"
-          }
+  - `config.json`:
+    ```javascript
+    {
+      "production": {
+        "oauth2": {
+          "clientID": "ii4p1u3jz7dXXXXXXXXXXXXXXX",
+          "clientSecret": "mqzzx6fydbXXXXXXXXXXXXXXXX",
+          "authorizationURL": "https://<your-nextcloud-domain>/apps/oauth2/authorize",
+          "tokenURL": "https://<your-nextcloud-domain>/apps/oauth2/api/v1/token",
+          "userProfileURL": "https://<your-nextcloud-domain>/ocs/v2.php/cloud/user?format=json",
+          "userProfileUsernameAttr": "ocs.data.id",
+          "userProfileDisplayNameAttr": "ocs.data.display-name",
+          "userProfileEmailAttr": "ocs.data.email"
         }
       }
-      ```
-    * environment variables:
+    }
+    ```
+
+    - environment variables:
       ```sh
       CMD_OAUTH2_CLIENT_ID=ii4p1u3jz7dXXXXXXXXXXXXXXX
       CMD_OAUTH2_CLIENT_SECRET=mqzzx6fydbXXXXXXXXXXXXXXXX

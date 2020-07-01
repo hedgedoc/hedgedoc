@@ -9,7 +9,7 @@ When you create a new note by clicking the "New note" button, your note is given
 
 | example URL                            | prefix | mode              | content updates |
 | -------------------------------------- | ------ | ----------------- | --------------- |
-| pad.example.com/Ndmv3oCyREKZMjSGR9uhnQ | _none_ | editor            | in realtime     |
+| pad.example.com/Ndmv3oCyREKZMjSGR9uhnQ | *none* | editor            | in realtime     |
 | pad.example.com/s/ByXF7k-YI            | s/     | read-only version | on reload       |
 | pad.example.com/p/ByXF7k-YI            | p/     | presentation mode | on reload       |
 
@@ -19,7 +19,7 @@ If the setting `CMD_ALLOW_FREEURL` is enabled, users may create notes with a cus
 
 | example URL                       | prefix | mode              | content updates |
 | --------------------------------- | ------ | ----------------- | --------------- |
-| pad.example.com/my-awesome-note   | _none_ | editor            | in realtime     |
+| pad.example.com/my-awesome-note   | *none* | editor            | in realtime     |
 | pad.example.com/s/my-awesome-note | s/     | read-only version | on reload       |
 | pad.example.com/p/my-awesome-note | p/     | presentation mode | on reload       |
 

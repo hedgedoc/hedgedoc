@@ -9,7 +9,7 @@ slideOptions:
 This feature still in beta, may have some issues.
 
 For details please visit:
-https://github.com/hakimel/reveal.js/
+<https://github.com/hakimel/reveal.js/>
 
 You can use `URL query` or `slideOptions` of the YAML metadata to customize your slides.
 
@@ -29,7 +29,7 @@ Is the divider of slides
 
 Is the divider of branches
 
-Use the _Space_ key to navigate through all slides.
+Use the *Space* key to navigate through all slides.
 
 ----
 
@@ -254,7 +254,7 @@ You can link between slides internally, [like this](#/1/3).
 
 There's a [speaker view](https://github.com/hakimel/reveal.js#speaker-notes). It includes a timer, preview of the upcoming slide as well as your speaker notes.
 
-Press the _S_ key to try it out.
+Press the *S* key to try it out.
 
 Note:
   Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit `s` on your keyboard).

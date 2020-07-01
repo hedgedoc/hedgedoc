@@ -1,5 +1,4 @@
-Pad migration guide from etherpad-lite
-===
+# Pad migration guide from etherpad-lite
 
 The goal of this migration is to do a "dumb" import from all the pads in Etherpad, to notes in
 CodiMD. In particular, the url locations of the pads in Etherpad will be lost. Furthermore, any
@@ -9,19 +8,14 @@ to CodiMD (only the plain text contents).
 Note that this guide is not really meant as a support guide. I migrated my own Etherpad to CodiMD,
 and it turned out to be quite easy in my opinion. In this guide I share my experience. Stuff may
 require some creativity to work properly in your case. When I wrote this guide, I was using
-[Etherpad 1.7.0] and [CodiMD 1.2.1]. Good luck!
-
-[Etherpad 1.7.0]: https://github.com/ether/etherpad-lite/tree/1.7.0
-[CodiMD 1.2.1]: https://github.com/codimd/server/tree/1.2.1
+[etherpad 1.7.0][] and [codimd 1.2.1][]. Good luck!
 
 ## 0. Requirements
 
 - `curl`
 - running Etherpad server
 - running CodiMD server
-- [codimd-cli]
-
-[codimd-cli]: https://github.com/codimd/cli/blob/master/bin/codimd
+- [codimd-cli][]
 
 ## 1. Retrieve the list of pads
 
@@ -32,7 +26,7 @@ database][howtolistallpads].
 
 You will end up with a file containing a pad name on each line:
 
-```
+```bash
 date-ideas
 groceries
 london
@@ -40,11 +34,9 @@ weddingchecklist
 (...)
 ```
 
-[howtolistallpads]: https://github.com/ether/etherpad-lite/wiki/How-to-list-all-pads/49701ecdcbe07aea7ad27ffa23aed0d99c2e17db
-
 ## 2. Run the migration
 
-Download [codimd-cli] and put the script in the same directory as the file containing the pad names.
+Download [codimd-cli][] and put the script in the same directory as the file containing the pad names.
 Add to this directory the file listed below, I called it `migrate-etherpad.sh`. Modify at least the
 configuration settings `ETHERPAD_SERVER` and `CODIMD_SERVER`.
 
@@ -102,7 +94,7 @@ etherpad using a `301 Permanent Redirect` status code (see the next section).
 
 I got a `redirects.txt` file that looked a bit like this:
 
-```
+```log
 date-ideas -> Found. Redirecting to https://codimd.example.com/mPt0KfiKSBOTQ3mNcdfn
 groceries -> Found. Redirecting to https://codimd.example.com/UukqgwLfhYyUUtARlcJ2_y
 london -> Found. Redirecting to https://codimd.example.com/_d3wa-BE8t4Swv5w7O2_9R
@@ -112,7 +104,7 @@ weddingchecklist -> Found. Redirecting to https://codimd.example.com/XcQGqlBjl0u
 
 Using some `sed` magic, I changed it to an nginx config snippet:
 
-```
+```nginx
 location = /p/date-ideas {
     return 301 https://codimd.example.com/mPt0M1KfiKSBOTQ3mNcdfn;
 }
@@ -129,3 +121,8 @@ location = /p/weddingchecklist {
 
 I put this file into my `etherpad.example.com` nginx config, such that all the users would be
 redirected accordingly.
+
+[etherpad 1.7.0]: https://github.com/ether/etherpad-lite/tree/1.7.0
+[codimd 1.2.1]: https://github.com/codimd/server/tree/1.2.1
+[codimd-cli]: https://github.com/codimd/cli/blob/master/bin/codimd
+[howtolistallpads]: https://github.com/ether/etherpad-lite/wiki/How-to-list-all-pads/49701ecdcbe07aea7ad27ffa23aed0d99c2e17db

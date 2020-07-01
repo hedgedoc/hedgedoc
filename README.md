@@ -1,5 +1,4 @@
-CodiMD
-===
+# CodiMD
 
 [![#CodiMD on matrix.org][matrix.org-image]][matrix.org-url]
 [![build status][travis-image]][travis-url]
@@ -16,7 +15,6 @@ into its own organisation. [A longer writeup can be read in the history doc](doc
 
 [![CodiMD 1.3.2 with its feature demonstration page open](docs/images/CodiMD-1.3.2-features.png)][codimd-demo-features]
 
-
 ## Community and Contributions
 
 We welcome contributions! There's a lot to do: If you would like to report bugs,
@@ -30,23 +28,21 @@ To stay up to date with our work or get support it's recommended to join our
 or subscribe to the [release feed][github-release-feed]. We also engage in
 regular [community calls][codimd-community-calls] ([RSS](https://community.codimd.org/t/codimd-community-call/19.rss)) which you are very welcome to join.
 
-
 ## Installation / Upgrading
 
 You can run CodiMD in a number of ways, and we created setup instructions for
 all of these:
 
-* [Docker](docs/setup/docker.md)
-* [Kubernetes](docs/setup/kubernetes.md)
-* [Cloudron](docs/setup/cloudron.md)
-* [LinuxServer.io (multi-arch docker)](docs/setup/docker-linuxserver.md)
-* [Heroku](docs/setup/heroku.md)
-* [Manual setup](docs/setup/manual-setup.md)
+- [Docker](docs/setup/docker.md)
+- [Kubernetes](docs/setup/kubernetes.md)
+- [Cloudron](docs/setup/cloudron.md)
+- [LinuxServer.io (multi-arch docker)](docs/setup/docker-linuxserver.md)
+- [Heroku](docs/setup/heroku.md)
+- [Manual setup](docs/setup/manual-setup.md)
 
 If you do not wish to run your own setup, you can find a commercial offering at
-https://hackmd.io. This is not the same codebase as this one, but it is a very
+<https://hackmd.io>. This is not the same codebase as this one, but it is a very
 similar project.
-
 
 ## Configuration
 
@@ -55,12 +51,11 @@ config file or environment variables. You can choose what works best for you.
 
 CodiMD can integrate with
 
-* facebook, twitter, github, gitlab, mattermost, dropbox, google, ldap, saml and [oauth2](docs/guides/auth/oauth.md) **for login**
-* imgur, s3, minio, azure **for image/attachment storage** (files can also be local!)
-* dropbox **for export and import**
+- facebook, twitter, github, gitlab, mattermost, dropbox, google, ldap, saml and [oauth2](docs/guides/auth/oauth.md) **for login**
+- imgur, s3, minio, azure **for image/attachment storage** (files can also be local!)
+- dropbox **for export and import**
 
 More info about that can be found in the configuration docs above.
-
 
 ## Browser support
 
@@ -73,14 +68,12 @@ To use CodiMD, your browser should match or exceed these versions:
 - ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/HEAD/src/opera/opera_24x24.png) Opera >= 34, ![Opera Mini](https://raw.githubusercontent.com/alrra/browser-logos/HEAD/src/opera-mini/opera-mini_24x24.png) Opera Mini not supported
 - ![Android Browser](https://raw.githubusercontent.com/alrra/browser-logos/HEAD/src/android-webview-beta/android-webview-beta_24x24.png) Android Browser >= 4.4
 
-
 ## Related Tools
 
 Our community has created related tools, we'd like to highlight [codimd-cli](https://github.com/codimd/cli)
 which lets you use CodiMD from the comfort of your command line.
 
-
-# License
+## License
 
 Licensed under AGPLv3. For our list of contributors, see [AUTHORS](AUTHORS).
 

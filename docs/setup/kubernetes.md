@@ -1,5 +1,4 @@
-Kubernetes
-===
+# Kubernetes
 
 To install use `helm install stable/hackmd`.
 
