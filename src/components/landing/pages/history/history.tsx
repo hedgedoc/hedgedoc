@@ -115,21 +115,7 @@ export const History: React.FC = () => {
     }
   }, [historyWrite, localHistoryEntries, remoteHistoryEntries, user])
 
-  const deleteClick = useCallback((entryId: string, location: HistoryEntryOrigin): void => {
-    if (user) {
-      deleteNote(entryId)
-        .then(() => {
-          if (location === HistoryEntryOrigin.LOCAL) {
-            setLocalHistoryEntries(entries => entries.filter(entry => entry.id !== entryId))
-          } else if (location === HistoryEntryOrigin.REMOTE) {
-            setRemoteHistoryEntries(entries => entries.filter(entry => entry.id !== entryId))
-          }
-        })
-        .catch(() => setError('deleteNote'))
-    }
-  }, [user])
-
-  const removeClick = useCallback((entryId: string, location: HistoryEntryOrigin): void => {
+  const removeFromHistoryClick = useCallback((entryId: string, location: HistoryEntryOrigin): void => {
     if (location === HistoryEntryOrigin.LOCAL) {
       setLocalHistoryEntries((entries) => entries.filter(entry => entry.id !== entryId))
     } else if (location === HistoryEntryOrigin.REMOTE) {
@@ -138,6 +124,16 @@ export const History: React.FC = () => {
         .catch(() => setError('deleteEntry'))
     }
   }, [])
+
+  const deleteNoteClick = useCallback((entryId: string, location: HistoryEntryOrigin): void => {
+    if (user) {
+      deleteNote(entryId)
+        .then(() => {
+          removeFromHistoryClick(entryId, location)
+        })
+        .catch(() => setError('deleteNote'))
+    }
+  }, [user, removeFromHistoryClick])
 
   const pinClick = useCallback((entryId: string, location: HistoryEntryOrigin): void => {
     if (location === HistoryEntryOrigin.LOCAL) {
@@ -216,8 +212,8 @@ export const History: React.FC = () => {
         viewState={toolbarState.viewState}
         entries={entriesToShow}
         onPinClick={pinClick}
-        onRemoveClick={removeClick}
-        onDeleteClick={deleteClick}
+        onRemoveClick={removeFromHistoryClick}
+        onDeleteClick={deleteNoteClick}
       />
     </Fragment>
   )

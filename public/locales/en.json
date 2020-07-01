@@ -70,6 +70,12 @@
                     "textWithFile": "While trying to import history from '{{fileName}}' an error occurred.",
                     "textWithoutFile": "You did not provide any files to upload the history from.",
                     "tooNewVersion": "The file '{{fileName}}' comes from a newer client and can't be imported."
+                },
+                "removeNote": {
+                  "title": "Remove note from history",
+                  "question": "Do you really want to remove this note from your history?",
+                  "warning": "This just removes the history entry and won't delete the note itself.",
+                  "button": "Remove note from history"
                 }
             },
             "tableHeader": {
@@ -252,7 +258,8 @@
             "deleteNote": {
                 "title": "Delete note",
                 "question": "Do you really want to delete this note?",
-                "warning": "All users will lose their connection."
+                "warning": "All users will lose their connection. This process is irreversible.",
+                "button": "Delete note"
             }
         },
         "embeddings": {

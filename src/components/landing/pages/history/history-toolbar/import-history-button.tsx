@@ -81,12 +81,9 @@ export const ImportHistoryButton: React.FC<ImportHistoryButtonProps> = ({ onImpo
         titleI18nKey='landing.history.modal.importHistoryError.title'
         icon='exclamation-circle'
       >
-        {fileName !== ''
-          ? <h5>
-            <Trans i18nKey={i18nKey} values={{ fileName: fileName }}/>
-          </h5>
-          : <h5><Trans i18nKey={i18nKey}/></h5>
-        }
+        <h5>
+          <Trans i18nKey={i18nKey} values={fileName !== '' ? { fileName: fileName } : {}}/>
+        </h5>
       </ErrorModal>
     </div>
   )
