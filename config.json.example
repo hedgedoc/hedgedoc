@@ -13,7 +13,7 @@
         },
         "db": {
             "dialect": "sqlite",
-            "storage": "./db.codimd.sqlite"
+            "storage": "./db.hedgedoc.sqlite"
         },
         "linkifyHeaderStyle": "gfm"
     },
@@ -39,7 +39,7 @@
         "db": {
             "username": "",
             "password": "",
-            "database": "codimd",
+            "database": "hedgedoc",
             "host": "localhost",
             "port": "5432",
             "dialect": "postgres"

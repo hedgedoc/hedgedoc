@@ -1,4 +1,4 @@
-# History of CodiMD
+# History of HedgeDoc
 
 ## It started with HackMD
 
@@ -34,4 +34,8 @@ move the repository, so we simply forked it. We still welcome the HackMD team
 as part of our community, especially since a large portion of this code base
 originated with them.
 
-*For the debate that lead to this step, please refer to the [governance debate](https://github.com/hackmdio/hackmd/issues/1170) and [the announcement of the new repository](https://github.com/codimd/server/issues/10).*
+*For the debate that lead to this step, please refer to the [governance debate](https://github.com/hackmdio/hackmd/issues/1170) and [the announcement of the new repository](https://github.com/hedgedoc/server/issues/10).*
+
+## CodiMD became HedgeDoc
+
+<to be filled>

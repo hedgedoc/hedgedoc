@@ -4,7 +4,7 @@
 
 **Notice:** *There's [specialised instructions for docker](../setup/docker.md) or [heroku](../setup/heroku.md), if you prefer running code this way!*
 
-1. Clone the repository with `git clone https://github.com/codimd/server.git codimd-server`
+1. Clone the repository with `git clone https://github.com/hedgedoc/server.git hedgedoc-server`
    (cloning is the preferred way, but you can also download and unzip a release)
 
 2. Enter the directory and run `bin/setup`, which will install npm dependencies
@@ -16,7 +16,7 @@
 
 ## Running the Code
 
-Now that everything is in place, we can start CodiMD:
+Now that everything is in place, we can start HedgeDoc:
 
 1. `yarn run build` will build the frontend bundle. It uses webpack to do that.
 2. Run the server with `node app.js`
@@ -43,7 +43,7 @@ The repository contains two parts: a server (backend) and a client (frontend).
 most of the server code is in `/lib` and most of the client code is in `public`.
 
 ```text
-codimd-server/
+hedgedoc-server/
 ├── docs/           --- documentation
 ├── lib/            --- server code
 ├── test/           --- test suite

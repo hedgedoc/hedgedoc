@@ -2,11 +2,11 @@
 
 ## Introduction
 
-<i class="fa fa-file-text"></i> **CodiMD** is a real-time, multi-platform collaborative markdown note editor.
+<i class="fa fa-file-text"></i> **HedgeDoc** is a real-time, multi-platform collaborative markdown note editor.
 This means that you can write notes with other people on your **desktop**, **tablet** or even on the **phone**.
 You can sign-in via multiple auth providers like **Facebook**, **Twitter**, **GitHub** and many more on the [*homepage*](/).
 
-If you experience any *issues*, feel free to report it on [**GitHub**](https://github.com/codimd/server/issues).
+If you experience any *issues*, feel free to report it on [**GitHub**](https://github.com/hedgedoc/hedgedoc/issues).
 Or meet us on [**Matrix.org**](https://matrix.to/#/#hedgedoc:matrix.org) for dev-talk and interactive help.
 **Thank you very much!**
 
@@ -27,7 +27,7 @@ Or meet us on [**Matrix.org**](https://matrix.to/#/#hedgedoc:matrix.org) for dev
 
 ### Night Mode
 
-When you are tired of a white screen and like a night mode, click on the little moon <i class="fa fa-moon-o"></i> and turn on the night view of CodiMD.
+When you are tired of a white screen and like a night mode, click on the little moon <i class="fa fa-moon-o"></i> and turn on the night view of HedgeDoc.
 
 The editor view, which is in night mode by default, can also be toggled between night and day view using the the little sun<i class="fa fa-sun-o fa-fw"></i>.
 
@@ -73,7 +73,7 @@ There are four possible options:
 Notes can be embedded as follows:
 
 ```xml
-<iframe width="100%" height="500" src="https://demo.codimd.io/features" frameborder="0"></iframe>
+<iframe width="100%" height="500" src="https://demo.hedgedoc.org/features" frameborder="0"></iframe>
 ```
 
 ### [Slide Mode](./slide-example)
@@ -524,7 +524,7 @@ Center aligned columns
 
 #### Links
 
-[link text](https://demo.codimd.org)
+[link text](https://demo.hedgedoc.org)
 [link with title](https://nodeca.github.io/pica/demo/ "title text!")
 Autoconverted link <https://github.com/nodeca/pica>
 
