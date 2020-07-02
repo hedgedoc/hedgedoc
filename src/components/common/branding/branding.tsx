@@ -10,9 +10,7 @@ export interface BrandingProps {
 
 export const Branding: React.FC<BrandingProps> = ({ inline = false }) => {
   const branding = useSelector((state: ApplicationState) => state.backendConfig.branding)
-  const showBranding = branding.name !== '' || branding.logo !== ''
-
-  console.log(branding.logo)
+  const showBranding = !!branding.name || !!branding.logo
 
   return (
     <ShowIf condition={showBranding}>
