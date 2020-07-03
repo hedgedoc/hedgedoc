@@ -26,7 +26,7 @@ StatusRouter.get('/temp', function (req, res) {
     errors.errorForbidden(res)
   } else {
     const tempid = req.query.tempid
-    if (!tempid) {
+    if (!tempid || typeof tempid !== 'string') {
       errors.errorForbidden(res)
     } else {
       Temp.findOne({
