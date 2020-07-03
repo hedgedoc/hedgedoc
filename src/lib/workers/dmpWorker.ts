@@ -1,7 +1,6 @@
 // external modules
 // eslint-disable-next-line @typescript-eslint/camelcase
 import { DIFF_DELETE, DIFF_INSERT, diff_match_patch, patch_obj } from 'diff-match-patch'
-import { logger } from '../logger'
 import { Revision } from '../models'
 
 // Function for suppressing TS2722
@@ -13,6 +12,17 @@ function processSend (options): boolean {
   return false
 }
 
+// We can't use the logger directly, because we are in a distinct nodejs
+// process and the global instance of logger is not the one of the parent. In
+// particular, it does not have the log level set correctly.
+function log (level: string, msg, ...splat): boolean {
+  return processSend({
+    msg: 'log',
+    level: level,
+    result: [msg, splat],
+    cacheKey: 1 // dummy value
+  })
+}
 // eslint-disable-next-line @typescript-eslint/camelcase,new-cap
 const dmp: diff_match_patch = new diff_match_patch()
 
@@ -80,7 +90,7 @@ function getRevision (revisions: Revision[], count: number): { content: string; 
     authorship: authorship
   }
   const msEnd = (new Date()).getTime()
-  logger.debug((msEnd - msStart) + 'ms')
+  log('debug', (msEnd - msStart) + 'ms')
   return data
 }
 
@@ -91,8 +101,8 @@ function createPatch (lastDoc: string, currDoc: string): string {
   const patch: patch_obj[] = dmp.patch_make(lastDoc, diff)
   const strPatch: string = dmp.patch_toText(patch)
   const msEnd = (new Date()).getTime()
-  logger.debug(strPatch)
-  logger.debug((msEnd - msStart) + 'ms')
+  log('debug', strPatch)
+  log('debug', (msEnd - msStart) + 'ms')
   return strPatch
 }
 
@@ -107,12 +117,12 @@ class Data {
 
 process.on('message', function (data: Data) {
   if (!data || !data.msg || !data.cacheKey) {
-    return logger.error('dmp worker error: not enough data')
+    return log('error', 'dmp worker error: not enough data')
   }
   switch (data.msg) {
     case 'create patch':
       if (data.lastDoc === undefined || data.currDoc === undefined) {
-        return logger.error('dmp worker error: not enough data on create patch')
+        return log('error', 'dmp worker error: not enough data on create patch')
       }
       try {
         const patch: string = createPatch(data.lastDoc, data.currDoc)
@@ -122,7 +132,7 @@ process.on('message', function (data: Data) {
           cacheKey: data.cacheKey
         })
       } catch (err) {
-        logger.error('create patch: dmp worker error', err)
+        log('error', 'create patch: dmp worker error', err)
         processSend({
           msg: 'error',
           error: err,
@@ -132,7 +142,7 @@ process.on('message', function (data: Data) {
       break
     case 'get revision':
       if (data.revisions === undefined || data.count === undefined) {
-        return logger.error('dmp worker error: not enough data on get revision')
+        return log('error', 'dmp worker error: not enough data on get revision')
       }
       try {
       // eslint-disable-next-line @typescript-eslint/camelcase
@@ -143,7 +153,7 @@ process.on('message', function (data: Data) {
           cacheKey: data.cacheKey
         })
       } catch (err) {
-        logger.error('get revision: dmp worker error', err)
+        log('error', 'get revision: dmp worker error', err)
         processSend({
           msg: 'error',
           error: err,
@@ -156,8 +166,8 @@ process.on('message', function (data: Data) {
 
 // log uncaught exception
 process.on('uncaughtException', function (err: Error) {
-  logger.error('An uncaught exception has occured.')
-  logger.error(err)
-  logger.error('Process will exit now.')
+  log('error', 'An uncaught exception has occured.')
+  log('error', err)
+  log('error', 'Process will exit now.')
   process.exit(1)
 })

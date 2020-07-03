@@ -21,6 +21,7 @@ class Data {
   cacheKey
   error
   result
+  level
 }
 
 function createDmpWorker (): ChildProcess {
@@ -33,6 +34,10 @@ function createDmpWorker (): ChildProcess {
     }
     const cacheKey = data.cacheKey
     switch (data.msg) {
+      case 'log':
+        logger.log(data.level, data.result[0], ...data.result[1])
+        // The cacheKey is a dummy value and we want to skip the delete line.
+        return
       case 'error':
         dmpCallbackCache[cacheKey](data.error, null)
         break
