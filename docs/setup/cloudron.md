@@ -1,5 +1,4 @@
-Cloudron
-===
+# Cloudron
 
 CodiMD is available as a 1-click install on [Cloudron](https://cloudron.io).  Cloudron makes it easy to run apps like CodiMD on your server and keep them up-to-date and secure.
 

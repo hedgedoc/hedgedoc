@@ -1,15 +1,12 @@
-CodiMD Docker Image
-===
+# CodiMD Docker Image
 
 [![Try in PWD](https://cdn.rawgit.com/play-with-docker/stacks/cff22438/assets/images/button.png)](http://play-with-docker.com?stack=https://github.com/codimd/container/raw/master/docker-compose.yml&stack_name=codimd)
 
-
-**Debian-based version:**
+## Debian-based version
 
 [![Docker Repository on Quay](https://quay.io/repository/codimd/server/status "Docker Repository on Quay")](https://quay.io/repository/codimd/server)
 
-
-**Alpine-based version:**
+## Alpine-based version
 
 [![Docker Repository on Quay](https://quay.io/repository/codimd/server/status "Docker Repository on Quay")](https://quay.io/repository/codimd/server)
 

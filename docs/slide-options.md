@@ -1,12 +1,12 @@
-Slide Separators
-===
+# Slide Separators
 
 If you're getting started with reveal.js slides, there are a few things you need to know.
 
 There are two types of slides, those that transition horizontally and those that transition vertically (subslides).
 
 The following separators are used for each in the CodiMD syntax:
-```
+
+```markdown
 # First Slide
 
 ---
@@ -23,7 +23,7 @@ as you can see, horizontal transitions are separated by `---` and vertical trans
 It's possible to customise the slide options using the YAML header in the slide markdown.
 
 eg:
-```
+```yaml
 ---
 title: Example Slide
 tags: presentation
@@ -38,7 +38,8 @@ make sure to have two spaces only at the start of the listed slide options.
 you can comment out options with a `#`
 
 ### Some other options
-```
+
+```markdown
 # Display controls in the bottom right corner
 controls: true
 
@@ -151,7 +152,8 @@ display: 'block'
 ## Customising individual slides
 
 custom background image:
-```
+
+```markdown
 ---
 
 <!-- .slide: data-background="https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg" -->

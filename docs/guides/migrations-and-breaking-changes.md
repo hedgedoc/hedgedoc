@@ -1,5 +1,4 @@
-Migrations and Notable Changes
-===
+# Migrations and Notable Changes
 
 ## Migrating to 1.4.0
 
@@ -12,11 +11,11 @@ repository, you may need to update a few urls. This is not a breaking change.
 
 See more at [issue #10](https://github.com/codimd/server/issues/10)
 
-**Native setup using git:**
+### Native setup using git
 
 Change the upstream remote using `git remote set-url origin https://github.com/codimd/server.git`.
 
-**Docker:**
+### Docker
 
 When you use our [container repository](https://github.com/codimd/container) 
 (which was previously `codimd-container`) all you can simply run `git pull` and
@@ -25,7 +24,7 @@ your `docker-compose.yml` will be updated.
 When you setup things yourself, make sure you use the new image:
 [`quay.io/codimd/server`](https://quay.io/repository/codimd/server?tab=tags).
 
-**Heroku:**
+### Heroku
 
 All you need to do is [disconnect GitHub](https://devcenter.heroku.com/articles/github-integration#disconnecting-from-github)
 and [reconnect it](https://devcenter.heroku.com/articles/github-integration#enabling-github-integration)

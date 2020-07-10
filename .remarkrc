@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    "preset-lint-markdown-style-guide",
+
+    ["lint-list-item-indent", "space"],
+    ["lint-maximum-line-length", false],
+    ["lint-ordered-list-marker-value", "ordered"]
+  ]
+}

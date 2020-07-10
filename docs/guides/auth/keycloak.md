@@ -1,5 +1,4 @@
-Keycloak/Red Hat SSO (self-hosted)
-===
+# Keycloak/Red Hat SSO (self-hosted)
 
 ## Prerequisites
 
@@ -9,7 +8,7 @@ Where HTTPS is specified throughout, use HTTP instead. You may also have to spec
 
 ## Steps
 
-1. Sign in to the administration portal for your Keycloak instance at https://keycloak.example.com/auth/admin/master/console
+1. Sign in to the administration portal for your Keycloak instance at <https://keycloak.example.com/auth/admin/master/console>
 
 You may note that a separate realm is specified throughout this tutorial. It is best practice not to use the master realm, as it normally contains the realm-management client that federates access using the policies and permissions you can create.
 
@@ -20,7 +19,7 @@ You may note that a separate realm is specified throughout this tutorial. It is 
 
 ---
 
-### Additional steps to circumvent generic OAuth2 issue:
+### Additional steps to circumvent generic OAuth2 issue
 
 1. Select Client Scopes from the sidebar, and begin to create a new client scope using the Create button.
 2. Ensure that the **Name** field is set to `id`.
@@ -29,9 +28,9 @@ You may note that a separate realm is specified throughout this tutorial. It is 
 
 ---
 
-6. In the `docker-compose.yml` add the following environment variables to `app:` `environment:`
+5. In the `docker-compose.yml` add the following environment variables to `app:` `environment:`
 
-```
+```Dockerfile
 CMD_OAUTH2_USER_PROFILE_URL=https://keycloak.example.com/auth/realms/your-realm/protocol/openid-connect/userinfo
 CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR=preferred_username
 CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR=name
@@ -46,5 +45,5 @@ CMD_PROTOCOL_USESSL=true
 CMD_URL_ADDPORT=false
 ```
 
-7. Run `docker-compose up -d` to apply your settings.
-8. Sign in to your CodiMD using your Keycloak ID
+6. Run `docker-compose up -d` to apply your settings.
+7. Sign in to your CodiMD using your Keycloak ID

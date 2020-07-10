@@ -5,11 +5,10 @@ dir: ltr
 breaks: true
 ---
 
-Supported YAML metadata
-===
+# Supported YAML metadata
 
 First you need to insert syntax like this at the **start** of the note:
-```
+```yaml
 ---
 YAML metas
 ---
@@ -18,8 +17,8 @@ YAML metas
 Replace the "YAML metas" in this section with any YAML options as below.
 You can also refer to this note's source code.
 
-title
----
+## title
+
 This option will set the note title which prior than content title.
 
 > default: not set
@@ -29,8 +28,8 @@ This option will set the note title which prior than content title.
 title: meta title
 ```
 
-description
----
+## description
+
 This option will set the note description as a `<meta name="description">` tag. This only affects the [Publish](../features#Share-Notes) function.
 
 > default: not set
@@ -40,8 +39,8 @@ This option will set the note description as a `<meta name="description">` tag. 
 description: meta description
 ```
 
-tags
----
+## tags
+
 This option will set the tags which prior than content tags.
 
 > default: not set
@@ -51,8 +50,8 @@ This option will set the tags which prior than content tags.
 tags: features, cool, updated
 ```
 
-robots
----
+## robots
+
 This option will give below meta in the note head meta:
 ```xml
 <meta name="robots" content="your_meta">
@@ -66,12 +65,12 @@ So you can prevent any search engine index your note by set `noindex, nofollow`.
 robots: noindex, nofollow
 ```
 
-lang
----
+## lang
+
 This option will set the language of the note.
 Setting the language helps the browser to apply rules such as typography correctly.
 You can find your the language code in ISO 639-1 standard:
-https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+<https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes>
 
 > default: not set (which will be en)
 
@@ -80,12 +79,12 @@ https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 lang: ja-jp
 ```
 
-dir
----
+## dir
+
 This option specifies the direction of the text in this note.
 You can only use whether `rtl` or `ltr`.
 Look more at here:
-http://www.w3.org/International/questions/qa-html-dir
+<http://www.w3.org/International/questions/qa-html-dir>
 
 > default: not set (which will be ltr)
 
@@ -94,8 +93,8 @@ http://www.w3.org/International/questions/qa-html-dir
 dir: rtl
 ```
 
-breaks
----
+## breaks
+
 This option means the hardbreaks in the note will be parsed or be ignore.
 The original markdown syntax breaks only if you put space twice, but CodiMD choose to breaks every time you enter a break.
 You can only use whether `true` or `false`.
@@ -107,8 +106,8 @@ You can only use whether `true` or `false`.
 breaks: false
 ```
 
-GA
----
+## GA
+
 This option allows you to enable Google Analytics with your ID.
 
 > default: not set (which won't enable)
@@ -118,8 +117,8 @@ This option allows you to enable Google Analytics with your ID.
 GA: UA-12345667-8
 ```
 
-disqus
----
+## disqus
+
 This option allows you to enable Disqus with your shortname.
 
 > default: not set (which won't enable)
@@ -129,8 +128,8 @@ This option allows you to enable Disqus with your shortname.
 disqus: codimd
 ```
 
-type
----
+## type
+
 This option allows you to switch the document view to the slide preview, to simplify live editing of presentations.
 
 > default: not set
@@ -140,14 +139,14 @@ This option allows you to switch the document view to the slide preview, to simp
 type: slide
 ```
 
-slideOptions
----
+## slideOptions
+
 This option allows you to provide custom options to slide mode.
 Please below document for more details:
-https://github.com/hakimel/reveal.js/#configuration
+<https://github.com/hakimel/reveal.js/#configuration>
 
 You could also set slide theme which named in below css files:
-https://github.com/hakimel/reveal.js/tree/master/css/theme
+<https://github.com/hakimel/reveal.js/tree/master/css/theme>
 
 **Notice: always use two spaces as indention in YAML metadata!**
 
@@ -160,8 +159,8 @@ slideOptions:
   theme: white
 ```
 
-opengraph
----
+## opengraph
+
 This option allows you to override the default generated opengraph metadata.  
 See the [OpenGraph protocol documentation](https://ogp.me) for more information.
 
