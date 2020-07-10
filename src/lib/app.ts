@@ -63,8 +63,15 @@ if (config.useSSL) {
   server = http.createServer(app)
 }
 
+// if we manage to provide HTTPS domains, but don't provide TLS ourselves
+// obviously a proxy is involded. In order to make sure express is aware of
+// this, we provide the option to trust proxies here.
+if (!config.useSSL && config.protocolUseSSL) {
+  app.set('trust proxy', 1)
+}
+
 // socket io
-const io = SocketIO(server)
+const io = SocketIO(server, { cookie: false })
 io.engine.ws = new WebSocket.Server({
   noServer: true,
   perMessageDeflate: false
@@ -181,7 +188,9 @@ app.use(session({
   saveUninitialized: true, // always create session to ensure the origin
   rolling: true, // reset maxAge on every response
   cookie: {
-    maxAge: config.sessionLife
+    maxAge: config.sessionLife,
+    sameSite: 'lax',
+    secure: config.useSSL || config.protocolUseSSL || false
   },
   store: sessionStore
 }))
