@@ -73,6 +73,27 @@ paths:
             Set-Cookie:
               schema:
                 type: string
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: Trying to register a new user via email
+      operationId: registerEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailLogin'
+      responses:
+        '200':
+          description: The user was successfully registered and logged-in afterwards.
+          headers:
+            Set-Cookies:
+              schema:
+              type: string
+        '409':
+          description: There is already a user account with the given email address.
   /me:
     get:
       tags:
@@ -528,6 +549,38 @@ paths:
           content:
             text/plain:
               example: 1570921051959
+  /media/proxy:
+    post:
+      tags:
+        - media
+      summary: Returns a proxied url for a given image url
+      description: Returns in exchange for an image-url the url for a proxied version of the image.
+      responses:
+        '200':
+          description: An object containing the proxied url
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ImageProxyResponse"
+      requestBody:
+        required: true
+        description: An object containing the original image url
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ImageProxyRequest"
+  /media/upload:
+    post:
+      tags:
+        - media
+      summary: Uploads an image to the backend storage
+      description: Uploads an image to be processed by the backend.
+      requestBody:
+        required: true
+        description: The binary image to upload.
+      responses:
+        '200':
+          description: The image was uploaded successfully.
   /config:
     get:
       tags:
@@ -582,6 +635,18 @@ components:
         name:
           type: string
           description: The new display name of the user.
+    ImageProxyRequest:
+      type: object
+      properties:
+        src:
+          type: string
+          description: The url of the image that should be processed by the image proxy.
+    ImageProxyResponse:
+      type: object
+      properties:
+        src:
+          type: string
+          description: The url of the provied version of the image.
     Config:
       type: object
       properties:
