@@ -24,7 +24,7 @@ import { config } from './config'
 import { addNonceToLocals, computeDirectives } from './csp'
 import { errors } from './errors'
 import { logger } from './logger'
-import { Revision, sequelize } from './models'
+import { Revision, sequelize, runMigrations } from './models'
 import { realtime, State } from './realtime'
 import { handleTermSignals } from './utils/functions'
 import { AuthRouter, BaseRouter, HistoryRouter, ImageRouter, NoteRouter, StatusRouter, UserRouter } from './web/'
@@ -289,7 +289,8 @@ function startListen (): void {
 }
 
 // sync db then start listen
-sequelize.authenticate().then(function () {
+sequelize.authenticate().then(async function () {
+  await runMigrations()
   sessionStore.sync()
   // check if realtime is ready
   if (realtime.isReady()) {

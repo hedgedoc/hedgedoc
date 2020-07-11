@@ -1,6 +1,6 @@
 'use strict'
 module.exports = {
-  up: function (queryInterface, Sequelize) {
+  up: async function (queryInterface, Sequelize) {
     return queryInterface.addColumn('Notes', 'authorship', Sequelize.TEXT).then(function () {
       return queryInterface.addColumn('Revisions', 'authorship', Sequelize.TEXT)
     }).then(function () {
@@ -26,7 +26,7 @@ module.exports = {
     })
   },
 
-  down: function (queryInterface, Sequelize) {
+  down: async function (queryInterface, Sequelize) {
     return queryInterface.dropTable('Authors').then(function () {
       return queryInterface.removeColumn('Revisions', 'authorship')
     }).then(function () {

@@ -1,6 +1,6 @@
 'use strict'
 module.exports = {
-  up: function (queryInterface, Sequelize) {
+  up: async function (queryInterface, Sequelize) {
     return queryInterface.addColumn('Notes', 'alias', {
       type: Sequelize.STRING
     }).then(function () {
@@ -17,7 +17,7 @@ module.exports = {
     })
   },
 
-  down: function (queryInterface, Sequelize) {
+  down: async function (queryInterface, Sequelize) {
     return queryInterface.removeColumn('Notes', 'alias').then(function () {
       return queryInterface.removeIndex('Notes', ['alias'])
     })
