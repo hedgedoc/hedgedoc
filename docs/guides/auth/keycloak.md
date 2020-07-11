@@ -1,4 +1,4 @@
-# Keycloak/Red Hat SSO (self-hosted)
+OAuth with Keycloak/Red Hat SSO (self-hosted)
 
 ## Prerequisites
 
