@@ -390,15 +390,15 @@ ___
 
 #### Typographic Replacements
 
-Enable typographer option to see result.
-
 (c) (C) (r) (R) (tm) (TM) (p) (P) +-
 
-test.. test... test..... test?..... test!....
+test.. test... test.... test..... test?..... test!....
 
 !!!!!! ???? ,,
 
-Remarkable -- awesome
+Remarkable---no, awesome!
+
+During 1980--1988.
 
 "Smartypants, double quotes"
 
