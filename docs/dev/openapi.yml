@@ -1,10 +1,10 @@
 openapi: 3.0.3
 info:
-  title: CodiMD
-  description: CodiMD is an open source collaborative note editor. Several tasks of CodiMD can be automated through this API.
+  title: HedgeDoc
+  description: HedgeDoc is an open source collaborative note editor. Several tasks of HedgeDoc can be automated through this API.
   version: 2.0.0
   contact:
-    name: CodiMD on GitHub
+    name: HedgeDoc on GitHub
     url: https://github.com/codimd/server
   license:
     name: AGPLv3
@@ -15,85 +15,9 @@ externalDocs:
 servers:
   - url: "/api/v2"
     description: The base API Path.
+security:
+  - bearerAuth: []
 paths:
-  /auth/email:
-    post:
-      tags:
-        - auth
-      summary: Trying to login via email
-      operationId: loginEmail
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmailLogin'
-      responses:
-        '200':
-          description: The login was succesful.
-          headers:
-            Set-Cookie:
-              schema:
-                type: string
-  /auth/ldap:
-    post:
-      tags:
-        - auth
-      summary: Trying to login via LDAP
-      operationId: loginLdap
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LdapLogin'
-      responses:
-        '200':
-          description: The login was succesful.
-          headers:
-            Set-Cookie:
-              schema:
-                type: string
-  /auth/openid:
-    post:
-      tags:
-        - auth
-      summary: Trying to login via OpenID
-      operationId: loginOpenId
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OpenIdLogin'
-      responses:
-        '200':
-          description: The login was succesful.
-          headers:
-            Set-Cookie:
-              schema:
-                type: string
-  /auth/register:
-    post:
-      tags:
-        - auth
-      summary: Trying to register a new user via email
-      operationId: registerEmail
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmailLogin'
-      responses:
-        '200':
-          description: The user was successfully registered and logged-in afterwards.
-          headers:
-            Set-Cookies:
-              schema:
-              type: string
-        '409':
-          description: There is already a user account with the given email address.
   /me:
     get:
       tags:
@@ -108,59 +32,12 @@ paths:
               schema:
                 "$ref": "#/components/schemas/UserInfo"
         '401':
-          description: The user is not logged in.
-          content: {}
-    put:
-      tags:
-        - user
-      summary: Update information about the currently logged-in user
-      operationId: updateMe
-      responses:
-        '200':
-          description: The user information was changed successfully.
-      requestBody:
-        required: true
-        description: The new user information.
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UserUpdate"
-    delete:
-      tags:
-        - user
-      summary: Deletes the currently logged-in user from the backend and removes all their notes
-      operationId: deleteMe
-      responses:
-        '200':
-          description: The user was deleted successfully.
-  /me/export:
-    get:
-      tags:
-        - user
-        - export
-      summary: Exports a zip-archive with all notes of the currently logged-in user
-      responses:
-        '200':
-          description: The zip-archive with all notes.
-  /me/password:
-    post:
-      tags:
-        - user
-      summary: Sets the new password of the currently logged-in user
-      requestBody:
-        required: true
-        description: The new password of the user.
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UserPasswordChange"
-      responses:
-        '200':
-          description: The password was changed.
+          "$ref": "#/components/responses/UnauthorizedError"
   /me/history:
     get:
       tags:
         - history
+        - user
       summary: Returns a list of the last viewed notes
       operationId: getHistory
       description: The list is returned as a JSON object with an array containing for each entry it's id, title, tags, last visit time and pinned status.
@@ -171,37 +48,13 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/History"
-    post:
-      tags:
-        - history
-      summary: Sets the history if none is already set
-      operationId: updateHistory
-      requestBody:
-        description: The history to update.
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/History"
-      responses:
-        '200':
-          description: The new history.
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/History"
-    delete:
-      tags:
-        - history
-      summary: Clear the currently logged-in users history
-      operationId: deleteHistory
-      responses:
-        '200':
-          description: Deleted the history.
-          content: {}
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
   /me/history/{note}:
     put:
       tags:
         - history
+        - user
       summary: Update the history object of the note (e.g change it's pin status)
       operationId: updateHistoryObject
       requestBody:
@@ -217,6 +70,10 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/HistoryObject"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '404':
+          "$ref": "#/components/responses/NotFoundError"
       parameters:
         - name: note
           in: path
@@ -228,12 +85,16 @@ paths:
     delete:
       tags:
         - history
+        - user
       summary: Remove the note from the currently logged-in user's history
       operationId: deleteHistoryObject
       responses:
-        '200':
-          description: The new history.
-          content: {}
+        '204':
+          "$ref": "#/components/responses/SuccesfullyDeleted"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '404':
+          "$ref": "#/components/responses/NotFoundError"
       parameters:
         - name: note
           in: path
@@ -242,6 +103,25 @@ paths:
           content:
             text/plain:
               example: my-note
+  /me/notes:
+    get:
+      tags:
+        - user
+      summary: Returns a list of the notes metadata the user owns
+      operationId: getOwnNotes
+      description: The list is returned as a JSON object with an array containing each notes metadata.
+      responses:
+        '200':
+          description: The list of notes owned by the currently logged in user.
+          content:
+            application/json:
+              schema:
+                type: array
+                description: The array that contains notes metadata.
+                items:
+                  "$ref": "#/components/schemas/NoteMetadata"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
   /notes:
     post:
       tags:
@@ -249,6 +129,9 @@ paths:
       summary: Imports some markdown data into a new note
       operationId: createNoteFromMarkdown
       description: A random id will be assigned and the content will equal to the body of the received HTTP-request.
+      security:
+        - bearerAuth: []
+        - {}
       requestBody:
         required: false
         description: The content of the note to be imported as markdown.
@@ -266,6 +149,10 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Note"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '403':
+          "$ref": "#/components/responses/ForbiddenError"
   /notes/{note}:
     get:
       tags:
@@ -280,8 +167,12 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Note"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '403':
+          "$ref": "#/components/responses/ForbiddenError"
         '404':
-          description: Note does not exist.
+          "$ref": "#/components/responses/NotFoundError"
       parameters:
         - name: note
           in: path
@@ -313,6 +204,10 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Note"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '403':
+          "$ref": "#/components/responses/ForbiddenError"
         '409':
           description: This alias is already in use.
       parameters:
@@ -323,25 +218,90 @@ paths:
           content:
             text/plain:
               example: my-note
-  /notes/{note}/permissions:
+    delete:
+      tags:
+        - note
+      summary: Remove the note 
+      operationId: deleteNote
+      responses:
+        '204':
+          "$ref": "#/components/responses/SuccesfullyDeleted"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '403':
+          "$ref": "#/components/responses/ForbiddenError"
+        '404':
+          "$ref": "#/components/responses/NotFoundError"
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the revision should be shown.
+          content:
+            text/plain:
+              example: my-note
+    put:
+      tags:
+        - note
+      summary: Imports some markdown data into an existing note, creating a new revision
+      operationId: createNewRevisionForNote
+      description: This endpoint equals to the above one except that the alias from the url will be assigned to the note if [FreeURL-mode](https://github.com/codimd/server/tree/master/docs/configuration-env-vars.md#users-and-privileges) is enabled.
+      requestBody:
+        required: true
+        description: The content of the note to be imported as markdown.
+        content:
+          'text/markdown':
+            schema:
+              type: string
+            examples:
+              markdownExample:
+                "$ref": '#/components/examples/markdownExample'
+      responses:
+        '200':
+          description: The new, changed note
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Note"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '403':
+          "$ref": "#/components/responses/ForbiddenError"
+        '404':
+          "$ref": "#/components/responses/NotFoundError"
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the info should be shown.
+          content:
+            text/plain:
+              example: my-note
+  /notes/{note}/metadata:
     put:
       tags:
         - note
       summary: Set the permissions of a note
-      operationId: updateNotePermissions
+      operationId: updateNoteMetadata
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/NotePermissions"
+              "$ref": "#/components/schemas/NoteMetadata"
       responses:
         '200':
           description: The updated permissions of the note.
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/NotePermissions"
+                "$ref": "#/components/schemas/NoteMetadata"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '403':
+          "$ref": "#/components/responses/ForbiddenError"
+        '404':
+          "$ref": "#/components/responses/NotFoundError"
       parameters:
         - name: note
           in: path
@@ -354,142 +314,25 @@ paths:
       tags:
         - note
       summary: Get the permissions of a note
-      operationId: getNotePermissions
+      operationId: getNoteMetadata
       responses:
         '200':
           description: The permissions of the note.
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/NotePermissions"
+                "$ref": "#/components/schemas/NoteMetadata"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '403':
+          "$ref": "#/components/responses/ForbiddenError"
+        '404':
+          "$ref": "#/components/responses/NotFoundError"
       parameters:
         - name: note
           in: path
           required: true
           description: The note for which the info should be shown.
-          content:
-            text/plain:
-              example: my-note
-  /notes/{note}/export/markdown:
-    get:
-      tags:
-        - note
-        - export
-      summary: Returns the raw markdown content of a note
-      operationId: getNoteContent
-      responses:
-        '200':
-          description: The raw markdown content of the note.
-          content:
-            'text/markdown':
-              schema:
-                type: string
-                format: binary
-        '404':
-          description: Note does not exist.
-      parameters:
-        - name: note
-          in: path
-          required: true
-          description: The note for which the markdown should be exported.
-          content:
-            text/plain:
-              example: my-note
-  /notes/{note}/export/html:
-    get:
-      tags:
-        - note
-        - export
-      summary: Returns the content of a note as HTML
-      operationId: getNoteContentAsHTML
-      responses:
-        '200':
-          description: The raw html content of the note.
-          content:
-            'text/html':
-              schema:
-                type: string
-                format: binary
-        '404':
-          description: Note does not exist.
-      parameters:
-        - name: note
-          in: path
-          required: true
-          description: The note for which the html should be exported.
-          content:
-            text/plain:
-              example: my-note
-  /notes/{note}/export/gist:
-    get:
-      tags:
-        - note
-        - export
-      summary: Exports the content of a note to a gist
-      operationId: exportNoteToGist
-      responses:
-        '200':
-          description: The link to Gist of the note.
-          content:
-            application/json:
-              schema:
-                "$ref": '#/components/schemas/GistLink'
-        '404':
-          description: Note does not exist.
-      parameters:
-        - name: note
-          in: path
-          required: true
-          description: The note which should be exported to gist.
-          content:
-            text/plain:
-              example: my-note
-  /notes/{note}/export/dropbox:
-    get:
-      tags:
-        - note
-        - export
-      summary: Exports the content of a note to dropbox
-      operationId: exportNoteToDropbox
-      responses:
-        '200':
-          description: The dropbox link of the note.
-          content:
-            application/json:
-              schema:
-                "$ref": '#/components/schemas/DropboxLink'
-        '404':
-          description: Note does not exist.
-      parameters:
-        - name: note
-          in: path
-          required: true
-          description: The note which should be exported to dropbox.
-          content:
-            text/plain:
-              example: my-note
-  /notes/{note}/export/pdf:
-    get:
-      tags:
-        - note
-        - export
-      summary: Exports the content of a note as PDF
-      operationId: exportNoteToPDF
-      responses:
-        '200':
-          description: The note as an PDF.
-          content:
-            application/pdf:
-              schema:
-                type: string
-                format: binary
-        '404':
-          description: Note does not exist.
-      parameters:
-        - name: note
-          in: path
-          required: true
-          description: The note which should be exported to dropbox.
           content:
             text/plain:
               example: my-note
@@ -507,8 +350,12 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/NoteRevisionsMetadata"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '403':
+          "$ref": "#/components/responses/ForbiddenError"
         '404':
-          description: Note does not exist.
+          "$ref": "#/components/responses/NotFoundError"
       parameters:
         - name: note
           in: path
@@ -517,7 +364,6 @@ paths:
           content:
             text/plain:
               example: my-note
-
   /notes/{note}/revisions/{revision-id}:
     get:
       tags:
@@ -532,8 +378,12 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/NoteRevision"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '403':
+          "$ref": "#/components/responses/ForbiddenError"
         '404':
-          description: Note does not exist.
+          "$ref": "#/components/responses/NotFoundError"
       parameters:
         - name: note
           in: path
@@ -549,26 +399,35 @@ paths:
           content:
             text/plain:
               example: 1570921051959
-  /media/proxy:
-    post:
+  /notes/{note}/content:
+    get:
       tags:
-        - media
-      summary: Returns a proxied url for a given image url
-      description: Returns in exchange for an image-url the url for a proxied version of the image.
+        - note
+        - export
+      summary: Returns the raw markdown content of a note
+      operationId: getNoteContent
       responses:
         '200':
-          description: An object containing the proxied url
+          description: The raw markdown content of the note.
           content:
-            application/json:
+            'text/markdown':
               schema:
-                "$ref": "#/components/schemas/ImageProxyResponse"
-      requestBody:
-        required: true
-        description: An object containing the original image url
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/ImageProxyRequest"
+                type: string
+                format: binary
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '403':
+          "$ref": "#/components/responses/ForbiddenError"
+        '404':
+          "$ref": "#/components/responses/NotFoundError"
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the markdown should be exported.
+          content:
+            text/plain:
+              example: my-note
   /media/upload:
     post:
       tags:
@@ -578,28 +437,24 @@ paths:
       requestBody:
         required: true
         description: The binary image to upload.
+        content:
+          image/*:
+            schema:
+              type: string
+              format: binary
       responses:
         '200':
           description: The image was uploaded successfully.
-  /config:
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '403':
+          "$ref": "#/components/responses/ForbiddenError"
+  /monitoring:
     get:
       tags:
-        - backend
-      summary: The config of the backend
-      operationId: getConfig
-      responses:
-        '200':
-          description: The config of the backend in JSON.
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/Config"
-  /status:
-    get:
-      tags:
-        - backend
+        - monitoring
       summary: Returns the current status of the backend
-      operationId: getStatus
+      operationId: getMonitoring
       description: The data is returned as a JSON object containing the number of notes stored on the server, (distinct) online users and more.
       responses:
         '200':
@@ -608,22 +463,42 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/ServerStatus"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '403':
+          "$ref": "#/components/responses/ForbiddenError"
+  /monitoring/prometheus:
+    get:
+      tags:
+        - monitoring
+      summary: Returns the current status of the backend for Prometheus.
+      operationId: getPrometheus
+      description: The data is returned in Prometheus Exposition Format
+      responses:
+        '200':
+          description: Prometheus compatible monitoring data.
+          content:
+            text/plain: {}
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '403':
+          "$ref": "#/components/responses/ForbiddenError"
 components:
   schemas:
     UserInfo:
       type: object
       properties:
-        id:
+        userName:
           type: string
           format: UUIDv4
-        name:
+        displayName:
           type: string
         photo:
           type: string
           format: uri
-        provider:
+        email:
           type: string
-          enum: ['facebook', 'github', 'twitter', 'gitlab', 'dropbox', 'google', 'saml', 'oauth2', 'email', 'ldap', 'openid']
+          format: email
     UserPasswordChange:
       type: object
       properties:
@@ -652,43 +527,43 @@ components:
       properties:
         allowAnonymous:
           type: boolean
-          description: Wether anonymous notes are allowed.
+          description: Whether anonymous notes are allowed.
         authProviders:
           type: object
           properties:
             facebook:
               type: boolean
-              description: Wether Facebook login is possible.
+              description: Whether Facebook login is possible.
             github:
               type: boolean
-              description: Wether GitHub login is possible.
+              description: Whether GitHub login is possible.
             twitter:
               type: boolean
-              description: Wether Twitter login is possible.
+              description: Whether Twitter login is possible.
             gitlab:
               type: boolean
-              description: Wether Gitlab login is possible.
+              description: Whether Gitlab login is possible.
             dropbox:
               type: boolean
-              description: Wether Dropbox login is possible.
+              description: Whether Dropbox login is possible.
             google:
               type: boolean
-              description: Wether Google login is possible.
+              description: Whether Google login is possible.
             saml:
               type: boolean
-              description: Wether SAML login is possible.
+              description: Whether SAML login is possible.
             oauth2:
               type: boolean
-              description: Wether OAuth2 login is possible.
+              description: Whether OAuth2 login is possible.
             email:
               type: boolean
-              description: Wether E-Mail login is possible.
+              description: Whether E-Mail login is possible.
             ldap:
               type: boolean
-              description: Wether LDAP login is possible.
+              description: Whether LDAP login is possible.
             openid:
               type: boolean
-              description: Wether OpenID login is possible.
+              description: Whether OpenID login is possible.
         customAuthNames:
           type: object
           properties:
@@ -733,6 +608,21 @@ components:
     Note:
       type: object
       properties:
+        content:
+          type: string
+          description: The markdown content of the note
+        metadata:
+          type: object
+          $ref: "#/components/schemas/NoteMetadata"
+        editedByAtPosition:
+          type: array
+          description: Data which gives insights about who worked where on the note.
+          items:
+            type: integer
+            description: Unique user ids and additional data  
+    NoteMetadata:
+      type: object
+      properties:
         id:
           type: string
           format: UUIDv4
@@ -740,41 +630,59 @@ components:
         alias:
           type: string
           description: The alias of the note.
-        lastChange:
+        title:
+          type: string
+          description: Title of the note
+        description:
+          type: string
+          description: Description of the note.
+        tags:
+          type: array
+          description: A list of tags attached to the note.
+          items:
+            type: string
+            description: A tag
+        updateTime:
           type: object
           properties:
-            userId:
-              type: string
-              format: UUIDv4
-              description: The id of the user that last changed the note.
-            user:
+            username:
               type: string
               description: The name of the user that last changed the note.
             timestamp:
               type: integer
               description: UNIX-timestamp of when the note was last changed.
-        viewcount:
+        viewCount:
           type: integer
           minimum: 0
           description: How often the published version of the note was viewed.
-        createtime:
+        createTime:
           type: string
           description: The timestamp when the note was created in ISO 8601 format.
-        content:
-          type: string
-          description: The raw markdown content of the note revision.
-        authorship:
+        editedBy:
           type: array
-          description: Data which gives insights about who worked on the note.
+          description: List of usernames who edited the note.
           items:
-            type: integer
-            description: Unique user ids and additional data.
+            type: string
+        permissions:
+          type: object
+          $ref: "#/components/schemas/NotePermissions"
     NotePermissions:
       type: object
       properties:
-        permission:
+        owner:
           type: string
-          enum: ['freely', 'editable', 'limited', 'locked', 'protected', 'private']
+          description: Username of the owner of the note
+        sharedTo:
+          type: array
+          description: Contains all usernames that can read the note and a boolean that denotes if they can also edit.
+          items:
+            type: object
+            properties:
+              username:
+                type: string
+              canEdit:
+                type: boolean
+
     NoteRevisionsMetadata:
       type: object
       properties:
@@ -879,20 +787,9 @@ components:
     HistoryObject:
       type: object
       properties:
-        id:
-          type: string
-          description: The id or alias of the note.
-        title:
-          type: string
-          description: The title of the note.
-        lastVisited:
-          type: integer
-          description: The UNIX-timestamp in milliseconds when the note was last accessed by the user.
-        tags:
-          type: array
-          description: The tags that were added by the user to the note.
-          items:
-            type: string
+        metadata:
+          type: object
+          $ref: "#/components/schemas/NoteMetadata"
         pinned:
           type: boolean
           description: Whether the user has pinned this note.
@@ -908,3 +805,16 @@ components:
     markdownExample:
       value: '# Some header\nSome normal text. **Some bold text**'
       summary: A sample markdown content
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  responses:
+    UnauthorizedError:
+      description: Authorization information is missing or invalid.
+    ForbiddenError:
+      description: Access to the requested resource is not permitted.
+    NotFoundError:
+      description: The requested resource was not found.
+    SuccesfullyDeleted:
+      description: The requested resource was sucessfully deleted.
