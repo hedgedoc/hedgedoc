@@ -97,11 +97,11 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
         />
       </InputGroup>
       <InputGroup className={'mr-1 mb-1'}>
-        <SortButton onChange={titleSortChanged} direction={state.titleSortDirection} variant={'light'}><Trans
+        <SortButton onDirectionChange={titleSortChanged} direction={state.titleSortDirection} variant={'light'}><Trans
           i18nKey={'landing.history.toolbar.sortByTitle'}/></SortButton>
       </InputGroup>
       <InputGroup className={'mr-1 mb-1'}>
-        <SortButton onChange={lastVisitedSortChanged} direction={state.lastVisitedSortDirection}
+        <SortButton onDirectionChange={lastVisitedSortChanged} direction={state.lastVisitedSortDirection}
           variant={'light'}><Trans i18nKey={'landing.history.toolbar.sortByLastVisited'}/></SortButton>
       </InputGroup>
       <InputGroup className={'mr-1 mb-1'}>

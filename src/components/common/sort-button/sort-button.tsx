@@ -22,7 +22,7 @@ const getIcon = (direction: SortModeEnum): IconName => {
 }
 
 export interface SortButtonProps extends ButtonProps {
-    onChange: (direction: SortModeEnum) => void
+    onDirectionChange: (direction: SortModeEnum) => void
     direction: SortModeEnum
 }
 
@@ -38,9 +38,9 @@ const toggleDirection = (direction: SortModeEnum) => {
   }
 }
 
-export const SortButton: React.FC<SortButtonProps> = ({ children, variant, onChange, direction }) => {
+export const SortButton: React.FC<SortButtonProps> = ({ children, variant, onDirectionChange, direction }) => {
   const toggleSort = () => {
-    onChange(toggleDirection(direction))
+    onDirectionChange(toggleDirection(direction))
   }
 
   return <IconButton onClick={toggleSort} variant={variant} icon={getIcon(direction)}>{children}</IconButton>
