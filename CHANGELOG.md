@@ -40,6 +40,7 @@
 - The gist and pdf embeddings now use a one-click aproach similar to vimeo and youtube
 - Use [Twemoji](https://twemoji.twitter.com/) as icon font
 - The `[name=...]`, `[time=...]` and `[color=...]` tags may now be used anywhere in the document and not just inside of blockquotes and lists.
+- The <i class="fa fa-picture-o"/> (add image) and <i class="fa fa-link"/> (add link) toolbar buttons, put selected links directly in the `()` instead of the `[]` part of the generated markdown
 
 ---
 

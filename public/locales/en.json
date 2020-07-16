@@ -203,7 +203,7 @@
             "bold": "Bold",
             "italic": "Italic",
             "strikethrough": "Strikethrough",
-            "header": "Header",
+            "header": "Heading",
             "code": "Code",
             "blockquote": "Blockquote",
             "unorderedList": "Unordered List",
@@ -213,7 +213,7 @@
             "image": "Image",
             "uploadImage": "Upload Image",
             "table": "Table",
-            "line": "Line",
+            "line": "Horizontal line",
             "comment": "Comment"
         },
         "menu": {
