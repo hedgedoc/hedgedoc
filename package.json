@@ -85,7 +85,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cy:open": "cypress open",
+    "cy:run:chrome": "cypress run --browser chrome",
+    "cy:run:firefox": "cypress run --browser firefox",
+    "e2e:chrome": "start-server-and-test start http-get://localhost:3000 cy:run:chrome",
+    "e2e:firefox": "start-server-and-test start http-get://localhost:3000 cy:run:firefox"
   },
   "eslintConfig": {
     "parserOptions": {
@@ -121,9 +126,17 @@
     ]
   },
   "devDependencies": {
+    "@cypress/webpack-preprocessor": "^5.4.1",
+    "@testing-library/cypress": "^6.0.0",
     "@types/redux-devtools": "3.0.47",
     "@types/redux-devtools-extension": "2.13.2",
+    "@types/testing-library__cypress": "^5.0.6",
+    "cypress": "^4.9.0",
+    "eslint-plugin-chai-friendly": "^0.6.0",
+    "eslint-plugin-cypress": "^2.11.1",
     "redux-devtools": "3.5.0",
-    "redux-devtools-extension": "2.13.8"
+    "redux-devtools-extension": "2.13.8",
+    "start-server-and-test": "^1.11.0",
+    "ts-loader": "^7.0.5"
   }
 }

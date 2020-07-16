@@ -27,9 +27,9 @@
     "saml": "aufSAMLn.de"
   },
   "specialLinks": {
-    "privacy": "test",
-    "termsOfUse": "test",
-    "imprint": "test"
+    "privacy": "https://example.com/privacy",
+    "termsOfUse": "https://example.com/termsOfUse",
+    "imprint": "https://example.com/imprint"
   },
   "version": {
     "version": "mock",

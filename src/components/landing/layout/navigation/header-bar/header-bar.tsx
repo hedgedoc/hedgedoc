@@ -17,10 +17,10 @@ const HeaderBar: React.FC = () => {
   return (
     <Navbar className="justify-content-between">
       <div className="nav header-nav">
-        <HeaderNavLink to="/intro">
+        <HeaderNavLink to="/intro" id='navLinkIntro'>
           <Trans i18nKey="landing.navigation.intro"/>
         </HeaderNavLink>
-        <HeaderNavLink to="/history">
+        <HeaderNavLink to="/history" id='navLinkHistory'>
           <Trans i18nKey="landing.navigation.history"/>
         </HeaderNavLink>
       </div>

@@ -1,0 +1,23 @@
+{
+  "parserOptions": {
+    "tsconfigRootDir": "",
+    "project": [
+      "./cypress/tsconfig.json"
+    ]
+  },
+  "plugins": [
+    "cypress",
+    "chai-friendly"
+  ],
+  "extends": [
+    "plugin:cypress/recommended"
+  ],
+  "rules": {
+    "@typescript-eslint/no-unused-expressions": 0,
+    "no-unused-expressions": 0,
+    "chai-friendly/no-unused-expressions": 2
+  },
+  "env": {
+    "cypress/globals": true
+  }
+}
