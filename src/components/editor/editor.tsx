@@ -47,6 +47,9 @@ https://www.youtube.com/watch?v=KgMpKsp23yY
 ## Vimeo
 https://vimeo.com/23237102
 
+## Asciinema
+https://asciinema.org/a/117928
+
 ## PDF
 {%pdf https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf %}
 

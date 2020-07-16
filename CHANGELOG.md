@@ -32,6 +32,7 @@
 - Images, videos, and other non-text content is now wider in View Mode
 - Notes may now be deleted directly from the history page
 - CodiMD instances can now be branded either with a '@ <custom string>' or '@ <custom logo>' after the CodiMD logo and text
+- Asciinema videos may now be embedded by pasting the URL of one video into a single line
 
 ### Changed
 

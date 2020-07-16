@@ -26,6 +26,7 @@ import { highlightedCode } from './markdown-it-plugins/highlighted-code'
 import { linkifyExtra } from './markdown-it-plugins/linkify-extra'
 import { MarkdownItParserDebugger } from './markdown-it-plugins/parser-debugger'
 import './markdown-renderer.scss'
+import { replaceAsciinemaLink } from './regex-plugins/replace-asciinema-link'
 import { replaceGistLink } from './regex-plugins/replace-gist-link'
 import { replaceLegacyGistShortCode } from './regex-plugins/replace-legacy-gist-short-code'
 import { replaceLegacySlideshareShortCode } from './regex-plugins/replace-legacy-slideshare-short-code'
@@ -39,6 +40,7 @@ import { replaceQuoteExtraTime } from './regex-plugins/replace-quote-extra-time'
 import { replaceVimeoLink } from './regex-plugins/replace-vimeo-link'
 import { replaceYouTubeLink } from './regex-plugins/replace-youtube-link'
 import { ComponentReplacer, SubNodeConverter } from './replace-components/ComponentReplacer'
+import { AsciinemaReplacer } from './replace-components/asciinema/asciinema-replacer'
 import { GistReplacer } from './replace-components/gist/gist-replacer'
 import { HighlightedCodeReplacer } from './replace-components/highlighted-fence/highlighted-fence-replacer'
 import { ImageReplacer } from './replace-components/image/image-replacer'
@@ -99,6 +101,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
     md.use(markdownItRegex, replaceLegacySlideshareShortCode)
     md.use(markdownItRegex, replaceLegacySpeakerdeckShortCode)
     md.use(markdownItRegex, replacePdfShortCode)
+    md.use(markdownItRegex, replaceAsciinemaLink)
     md.use(markdownItRegex, replaceYouTubeLink)
     md.use(markdownItRegex, replaceVimeoLink)
     md.use(markdownItRegex, replaceGistLink)
@@ -144,6 +147,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
       new GistReplacer(),
       new YoutubeReplacer(),
       new VimeoReplacer(),
+      new AsciinemaReplacer(),
       new PdfReplacer(),
       new ImageReplacer(),
       new TocReplacer(),
