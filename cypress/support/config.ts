@@ -3,6 +3,11 @@ export const banner = {
   timestamp: '2020-05-22T20:46:08.962Z'
 }
 
+export const branding = {
+  name: 'ACME Corp',
+  logo: 'http://localhost:3000/acme.png'
+}
+
 beforeEach(() => {
   cy.server()
   cy.route({
@@ -22,10 +27,7 @@ beforeEach(() => {
         email: true,
         openid: true
       },
-      branding: {
-        name: 'ACME Corp',
-        logo: 'http://localhost:3000/acme.png'
-      },
+      branding: branding,
       banner: banner,
       customAuthNames: {
         ldap: 'FooBar',

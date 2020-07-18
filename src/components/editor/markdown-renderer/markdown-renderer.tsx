@@ -1,5 +1,6 @@
 import equal from 'deep-equal'
 import { DomElement } from 'domhandler'
+import yaml from 'js-yaml'
 import MarkdownIt from 'markdown-it'
 import abbreviation from 'markdown-it-abbr'
 import anchor from 'markdown-it-anchor'
@@ -7,6 +8,7 @@ import markdownItContainer from 'markdown-it-container'
 import definitionList from 'markdown-it-deflist'
 import emoji from 'markdown-it-emoji'
 import footnote from 'markdown-it-footnote'
+import frontmatter from 'markdown-it-front-matter'
 import imsize from 'markdown-it-imsize'
 import inserted from 'markdown-it-ins'
 import marked from 'markdown-it-mark'
@@ -16,11 +18,16 @@ import subscript from 'markdown-it-sub'
 import superscript from 'markdown-it-sup'
 import taskList from 'markdown-it-task-lists'
 import toc from 'markdown-it-toc-done-right'
-import React, { ReactElement, useEffect, useMemo, useState } from 'react'
+import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react'
+import { Alert } from 'react-bootstrap'
 import ReactHtmlParser, { convertNodeToElement, Transform } from 'react-html-parser'
+import { Trans } from 'react-i18next'
 import MathJaxReact from 'react-mathjax'
 import { TocAst } from '../../../external-types/markdown-it-toc-done-right/interface'
 import { slugify } from '../../../utils/slugify'
+import { InternalLink } from '../../common/links/internal-link'
+import { ShowIf } from '../../common/show-if/show-if'
+import { RawYAMLMetadata, YAMLMetaData } from '../yaml-metadata/yaml-metadata'
 import { createRenderContainer, validAlertLevels } from './container-plugins/alert'
 import { highlightedCode } from './markdown-it-plugins/highlighted-code'
 import { linkifyExtra } from './markdown-it-plugins/linkify-extra'
@@ -57,11 +64,34 @@ export interface MarkdownRendererProps {
   wide?: boolean
   className?: string
   onTocChange?: (ast: TocAst) => void
+  onMetaDataChange?: (yamlMetaData: YAMLMetaData | undefined) => void
+  onFirstHeadingChange?: (firstHeading: string | undefined) => void
 }
 
-export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className, onTocChange, wide }) => {
+export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onMetaDataChange, onFirstHeadingChange, onTocChange, className, wide }) => {
   const [tocAst, setTocAst] = useState<TocAst>()
   const [lastTocAst, setLastTocAst] = useState<TocAst>()
+  const [yamlError, setYamlError] = useState(false)
+  const rawMetaRef = useRef<RawYAMLMetadata>()
+  const oldMetaRef = useRef<RawYAMLMetadata>()
+  const firstHeadingRef = useRef<string>()
+  const oldFirstHeadingRef = useRef<string>()
+
+  useEffect(() => {
+    if (onMetaDataChange && !equal(oldMetaRef.current, rawMetaRef.current)) {
+      if (rawMetaRef.current) {
+        const newMetaData = new YAMLMetaData(rawMetaRef.current)
+        onMetaDataChange(newMetaData)
+      } else {
+        onMetaDataChange(undefined)
+      }
+      oldMetaRef.current = rawMetaRef.current
+    }
+    if (onFirstHeadingChange && !equal(firstHeadingRef.current, oldFirstHeadingRef.current)) {
+      onFirstHeadingChange(firstHeadingRef.current || undefined)
+      oldFirstHeadingRef.current = firstHeadingRef.current
+    }
+  })
 
   const markdownIt = useMemo(() => {
     const md = new MarkdownIt('default', {
@@ -70,6 +100,32 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
       langPrefix: '',
       typographer: true
     })
+    if (onFirstHeadingChange) {
+      md.core.ruler.after('normalize', 'extract first L1 heading', (state) => {
+        const lines = state.src.split('\n')
+        const linkAltTextRegex = /!?\[([^\]]*)]\([^)]*\)/
+        for (const line of lines) {
+          if (line.startsWith('# ')) {
+            firstHeadingRef.current = line.replace('# ', '').replace(linkAltTextRegex, '$1')
+            return true
+          }
+        }
+        firstHeadingRef.current = undefined
+        return true
+      })
+    }
+    if (onMetaDataChange) {
+      md.use(frontmatter, (rawMeta: string) => {
+        try {
+          const meta: RawYAMLMetadata = yaml.safeLoad(rawMeta) as RawYAMLMetadata
+          setYamlError(false)
+          rawMetaRef.current = meta
+        } catch (e) {
+          console.error(e)
+          setYamlError(true)
+        }
+      })
+    }
     md.use(taskList)
     md.use(emoji)
     md.use(abbreviation)
@@ -79,6 +135,19 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
     md.use(inserted)
     md.use(marked)
     md.use(footnote)
+    if (onMetaDataChange) {
+      md.use(frontmatter, (rawMeta: string) => {
+        try {
+          const meta: RawYAMLMetadata = yaml.safeLoad(rawMeta) as RawYAMLMetadata
+          setYamlError(false)
+          rawMetaRef.current = meta
+        } catch (e) {
+          console.error(e)
+          setYamlError(true)
+          rawMetaRef.current = ({} as RawYAMLMetadata)
+        }
+      })
+    }
     md.use(imsize)
     // noinspection CheckTagEmptyBody
     md.use(anchor, {
@@ -126,7 +195,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
     })
 
     return md
-  }, [])
+  }, [onMetaDataChange, onFirstHeadingChange])
 
   useEffect(() => {
     if (onTocChange && tocAst && !equal(tocAst, lastTocAst)) {
@@ -155,6 +224,10 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
       new QuoteOptionsReplacer(),
       new MathjaxReplacer()
     ]
+    if (onMetaDataChange) {
+      // This is used if the front-matter callback is never called, because the user deleted everything regarding metadata from the document
+      rawMetaRef.current = undefined
+    }
     const html: string = markdownIt.render(content)
 
     const transform: Transform = (node, index) => {
@@ -162,10 +235,17 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
       return tryToReplaceNode(node, index, allReplacers, subNodeConverter) || convertNodeToElement(node, index, transform)
     }
     return ReactHtmlParser(html, { transform: transform })
-  }, [content, markdownIt])
+  }, [content, markdownIt, onMetaDataChange])
 
   return (
     <div className={`markdown-body ${className || ''} d-flex flex-column align-items-center ${wide ? 'wider' : ''}`}>
+      <ShowIf condition={yamlError}>
+        <Alert variant='warning' dir='auto'>
+          <Trans i18nKey='editor.invalidYaml'>
+            <InternalLink text='yaml-metadata' href='/n/yaml-metadata' className='text-dark'/>
+          </Trans>
+        </Alert>
+      </ShowIf>
       <MathJaxReact.Provider>
         {result}
       </MathJaxReact.Provider>
