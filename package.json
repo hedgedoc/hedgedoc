@@ -45,7 +45,7 @@
     "i18next": "19.6.2",
     "i18next-browser-languagedetector": "5.0.0",
     "i18next-http-backend": "1.0.17",
-    "js-yaml": "^3.14.0",
+    "js-yaml": "3.14.0",
     "markdown-it": "11.0.0",
     "markdown-it-abbr": "1.0.4",
     "markdown-it-anchor": "5.3.0",
