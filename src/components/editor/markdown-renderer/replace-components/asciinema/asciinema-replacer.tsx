@@ -14,7 +14,7 @@ export class AsciinemaReplacer implements ComponentReplacer {
       const count = (this.counterMap.get(asciinemaId) || 0) + 1
       this.counterMap.set(asciinemaId, count)
       return (
-        <AsciinemaFrame id={asciinemaId}/>
+        <AsciinemaFrame key={`asciinema_${asciinemaId}_${count}`} id={asciinemaId}/>
       )
     }
   }
