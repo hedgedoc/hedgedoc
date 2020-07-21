@@ -1,16 +1,15 @@
 {
   "compilerOptions": {
-    "outDir": "./built",
-    "allowJs": true,
-    "strictNullChecks": true,
-    "target": "es6",
     "module": "commonjs",
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
+    "declaration": true,
+    "removeComments": true,
     "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
     "sourceMap": true,
-    "lib": ["ES2019", "DOM"],
-    "alwaysStrict": true
-  },
-  "include":  ["src"]
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true
+  }
 }
