@@ -1,39 +1,26 @@
 module.exports = {
-  'root': true,
-  'parser': '@typescript-eslint/parser',
-  'parserOptions': {
-    'tsconfigRootDir': __dirname,
-    'project': ['./tsconfig.json'],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project: 'tsconfig.json',
+    sourceType: 'module',
   },
-  'plugins': [
-    '@typescript-eslint',
-  ],
-  'extends': [
-    'standard',
-    'eslint:recommended',
+  plugins: ['@typescript-eslint/eslint-plugin'],
+  extends: [
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'plugin:import/recommended',
-    'plugin:import/typescript'
+    'prettier',
+    'prettier/@typescript-eslint',
   ],
-  'env': {
-    'node': true
+  root: true,
+  env: {
+    node: true,
+    jest: true,
   },
-  'rules': {
-    // at some point all of these should return to their default "error" state
-    // but right now, this is not a good choice, because too many places are
-    // wrong.
-    'import/first': ['warn'],
-    'indent': ['warn'],
-    'no-console': ['warn'],
-    'no-multiple-empty-lines': ['warn'],
-    'no-multi-spaces': ['warn'],
-    'object-curly-spacing': ['warn'],
-    'one-var': ['warn'],
-    'quotes': ['warn'],
-    'space-infix-ops': ['warn'],
-    'import/no-default-export': ['error'],
+  rules: {
+    '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': ['warn', { "argsIgnorePattern": "^_+$" }],
-  }
-}
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+  },
+};
