@@ -1,6 +1,6 @@
 import path from 'path'
 import fs from 'fs'
-import { Client } from 'minio'
+import { Client } from 'old_src/lib/web/imageRouter/minio'
 
 import { config } from '../../config'
 import { getImageMimeType } from '../../utils/functions'

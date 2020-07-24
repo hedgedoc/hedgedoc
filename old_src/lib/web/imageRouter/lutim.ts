@@ -1,4 +1,4 @@
-import lutim from 'lutim'
+import lutim from 'old_src/lib/web/imageRouter/lutim'
 
 import { config } from '../../config'
 import { logger } from '../../logger'

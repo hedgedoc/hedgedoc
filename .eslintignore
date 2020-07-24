@@ -1,5 +1,5 @@
-src/lib/ot
-src/lib/migrations
+old_src/lib/ot
+old_src/lib/migrations
 public/vendor
 public/build
 node_modules

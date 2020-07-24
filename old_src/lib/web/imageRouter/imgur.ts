@@ -1,4 +1,4 @@
-import imgur from 'imgur'
+import imgur from 'old_src/lib/web/imageRouter/imgur'
 
 import { config } from '../../config'
 import { logger } from '../../logger'

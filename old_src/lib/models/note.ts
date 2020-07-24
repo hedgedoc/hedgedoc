@@ -30,7 +30,7 @@ import { generate as shortIdGenerate, isValid as shortIdIsValid } from 'shortid'
 import S from 'string'
 import { config } from '../config'
 import { logger } from '../logger'
-import ot from '../ot'
+import ot from '../ot/index'
 import { processData, stripNullByte } from '../utils/functions'
 import { Author, Revision, User } from './index'
 

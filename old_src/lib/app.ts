@@ -27,7 +27,7 @@ import { logger } from './logger'
 import { Revision, sequelize, runMigrations } from './models'
 import { realtime, State } from './realtime'
 import { handleTermSignals } from './utils/functions'
-import { AuthRouter, BaseRouter, HistoryRouter, ImageRouter, NoteRouter, StatusRouter, UserRouter } from './web/'
+import { AuthRouter, BaseRouter, HistoryRouter, ImageRouter, NoteRouter, StatusRouter, UserRouter } from './web'
 import { tooBusy, checkURI, redirectWithoutTrailingSlashes, codiMDVersion } from './web/middleware'
 
 const rootPath = path.join(__dirname, '..')
