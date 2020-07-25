@@ -26,6 +26,11 @@ public/views/build
 
 # ignore TypeScript built
 built/
+dist
+
+# Tests
+/coverage
+/.nyc_output
 
 public/uploads/*
 !public/uploads/.gitkeep
