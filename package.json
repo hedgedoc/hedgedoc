@@ -139,7 +139,7 @@
     "eslint-plugin-cypress": "2.11.1",
     "redux-devtools": "3.5.0",
     "redux-devtools-extension": "2.13.8",
-    "start-server-and-test": "1.11.0",
+    "start-server-and-test": "1.11.2",
     "ts-loader": "8.0.1"
   }
 }
