@@ -12,23 +12,10 @@ jobs:
     strategy:
       matrix:
         browser: ['chrome', 'firefox']
-    name: ${{ matrix.browser }}
+    name: e2e:${{ matrix.browser }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Cache node_modules
-        uses: actions/cache@v1.1.0
+      - uses: actions/checkout@v1
+      - uses: cypress-io/github-action@v2
         with:
-          path: node_modules
-          key: node_modules
-      - name: Cache ~/.cache
-        uses: actions/cache@v1.1.0
-        with:
-          path: ~/.cache
-          key: cache
-      - name: install cypress dependencies
-        run: sudo apt-get install libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-      - name: Install dependencies
-        run: yarn install
-      - name: Run e2e in ${{ matrix.browser }}
-        run: yarn e2e:${{ matrix.browser }}
+          browser: ${{ matrix.browser }}
+          start: npm start
