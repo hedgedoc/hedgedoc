@@ -5,7 +5,7 @@
   "dependencies": {
     "@testing-library/jest-dom": "5.11.1",
     "@testing-library/react": "10.4.7",
-    "@testing-library/user-event": "12.0.11",
+    "@testing-library/user-event": "12.0.15",
     "@types/codemirror": "0.0.97",
     "@types/deep-equal": "1.0.1",
     "@types/highlight.js": "9.12.4",
