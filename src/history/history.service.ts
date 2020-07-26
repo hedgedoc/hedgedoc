@@ -1,11 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { HistoryEntryUpdateDto } from './history-entry-update.dto';
 import { HistoryEntryDto } from './history-entry.dto';
 
 @Injectable()
 export class HistoryService {
+  private readonly logger = new Logger(HistoryService.name);
+
   getUserHistory(username: string): HistoryEntryDto[] {
     //TODO: Use the database
+    this.logger.warn('Using hardcoded data!');
     return [
       {
         metadata: {
@@ -44,6 +47,7 @@ export class HistoryService {
     updateDto: HistoryEntryUpdateDto,
   ): HistoryEntryDto {
     //TODO: Use the database
+    this.logger.warn('Using hardcoded data!');
     return {
       metadata: {
         alias: null,
