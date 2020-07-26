@@ -1,7 +1,7 @@
 import { IsArray, IsBoolean, IsString, ValidateNested } from 'class-validator';
 import { UserInfoDto } from '../users/user-info.dto';
 
-export class NotePermissionEntryDto {
+export class NoteUserPermissionEntryDto {
   @ValidateNested()
   user: UserInfoDto;
   @IsBoolean()
@@ -15,12 +15,29 @@ export class NotePermissionEntryUpdateDto {
   canEdit: boolean;
 }
 
+export class GroupInfoDto {
+  @IsString()
+  id: string
+  @IsString()
+  displayName: string
+}
+
+export class NoteGroupPermissionEntryDto {
+  @ValidateNested()
+  group: GroupInfoDto
+  @IsBoolean()
+  canEdit: boolean
+}
+
 export class NotePermissionsDto {
   @ValidateNested()
   owner: UserInfoDto;
   @ValidateNested()
   @IsArray()
-  sharedTo: NotePermissionEntryDto[];
+  sharedToUsers: NoteUserPermissionEntryDto[];
+  @ValidateNested()
+  @IsArray()
+  sharedToGroups: NoteGroupPermissionEntryDto[];
 }
 
 export class NotePermissionsUpdateDto {
