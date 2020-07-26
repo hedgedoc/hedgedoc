@@ -1,5 +1,10 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable, Logger } from '@nestjs/common';
 import { NoteMetadataDto } from './note-metadata.dto';
+import {
+  NotePermissionsDto,
+  NotePermissionsUpdateDto,
+} from './note-permissions.dto';
+import { NoteDto } from './note.dto';
 
 @Injectable()
 export class NotesService {
@@ -35,5 +40,159 @@ export class NotesService {
         viewCount: 42,
       },
     ];
+  }
+
+  createNote(noteContent: string, alias?: NoteMetadataDto['alias']): NoteDto {
+    this.logger.warn('Using hardcoded data!');
+    return {
+      content: noteContent,
+      metdata: {
+        alias: alias,
+        createTime: new Date(),
+        description: 'Very descriptive text.',
+        editedBy: [],
+        id: 'foobar-barfoo',
+        permission: {
+          owner: {
+            displayName: 'foo',
+            userName: 'fooUser',
+            email: 'foo@example.com',
+            photo: '',
+          },
+          sharedTo: [],
+        },
+        tags: [],
+        title: 'Title!',
+        updateTime: new Date(),
+        updateUser: {
+          displayName: 'foo',
+          userName: 'fooUser',
+          email: 'foo@example.com',
+          photo: '',
+        },
+        viewCount: 42,
+      },
+      editedByAtPosition: [],
+    };
+  }
+
+  getNoteByIdOrAlias(noteIdOrAlias: string) {
+    this.logger.warn('Using hardcoded data!');
+    return {
+      content: 'noteContent',
+      metdata: {
+        alias: null,
+        createTime: new Date(),
+        description: 'Very descriptive text.',
+        editedBy: [],
+        id: noteIdOrAlias,
+        permission: {
+          owner: {
+            displayName: 'foo',
+            userName: 'fooUser',
+            email: 'foo@example.com',
+            photo: '',
+          },
+          sharedTo: [],
+        },
+        tags: [],
+        title: 'Title!',
+        updateTime: new Date(),
+        updateUser: {
+          displayName: 'foo',
+          userName: 'fooUser',
+          email: 'foo@example.com',
+          photo: '',
+        },
+        viewCount: 42,
+      },
+      editedByAtPosition: [],
+    };
+  }
+
+  deleteNoteByIdOrAlias(noteIdOrAlias: string) {
+    return;
+  }
+
+  updateNoteByIdOrAlias(noteIdOrAlias: string, noteContent: string) {
+    this.logger.warn('Using hardcoded data!');
+    return {
+      content: noteContent,
+      metdata: {
+        alias: null,
+        createTime: new Date(),
+        description: 'Very descriptive text.',
+        editedBy: [],
+        id: noteIdOrAlias,
+        permission: {
+          owner: {
+            displayName: 'foo',
+            userName: 'fooUser',
+            email: 'foo@example.com',
+            photo: '',
+          },
+          sharedTo: [],
+        },
+        tags: [],
+        title: 'Title!',
+        updateTime: new Date(),
+        updateUser: {
+          displayName: 'foo',
+          userName: 'fooUser',
+          email: 'foo@example.com',
+          photo: '',
+        },
+        viewCount: 42,
+      },
+      editedByAtPosition: [],
+    };
+  }
+
+  getNoteMetadata(noteIdOrAlias: string): NoteMetadataDto {
+    return {
+      alias: null,
+      createTime: new Date(),
+      description: 'Very descriptive text.',
+      editedBy: [],
+      id: noteIdOrAlias,
+      permission: {
+        owner: {
+          displayName: 'foo',
+          userName: 'fooUser',
+          email: 'foo@example.com',
+          photo: '',
+        },
+        sharedTo: [],
+      },
+      tags: [],
+      title: 'Title!',
+      updateTime: new Date(),
+      updateUser: {
+        displayName: 'foo',
+        userName: 'fooUser',
+        email: 'foo@example.com',
+        photo: '',
+      },
+      viewCount: 42,
+    };
+  }
+
+  updateNotePermissions(
+    noteIdOrAlias: string,
+    newPermissions: NotePermissionsUpdateDto,
+  ): NotePermissionsDto {
+    return {
+      owner: {
+        displayName: 'foo',
+        userName: 'fooUser',
+        email: 'foo@example.com',
+        photo: '',
+      },
+      sharedTo: [],
+    };
+  }
+
+  getNoteContent(noteIdOrAlias: string) {
+    return '# Markdown';
   }
 }
