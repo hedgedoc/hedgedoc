@@ -24,6 +24,7 @@
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/swagger": "^4.5.12",
     "@nestjs/typeorm": "^7.1.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
@@ -32,6 +33,7 @@
     "rxjs": "^6.5.4",
     "shortid": "^2.2.15",
     "sqlite3": "^5.0.0",
+    "swagger-ui-express": "^4.1.4",
     "typeorm": "^0.2.25"
   },
   "devDependencies": {
