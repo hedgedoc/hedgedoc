@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { RevisionsModule } from './revisions/revisions.module';
 import { AuthorsModule } from './authors/authors.module';
 import { HistoryModule } from './history/history.module';
+import { MonitoringModule } from './monitoring/monitoring.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { HistoryModule } from './history/history.module';
     AuthorsModule,
     PublicApiModule,
     HistoryModule,
+    MonitoringModule,
   ],
   controllers: [],
   providers: [],
