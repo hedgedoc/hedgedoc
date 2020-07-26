@@ -12,6 +12,8 @@ import {
 import { HistoryEntryUpdateDto } from '../../../history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../../history/history-entry.dto';
 import { HistoryService } from '../../../history/history.service';
+import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
+import { NotesService } from '../../../notes/notes.service';
 import { UserInfoDto } from '../../../users/user-info.dto';
 import { UsersService } from '../../../users/users.service';
 
@@ -22,6 +24,7 @@ export class MeController {
   constructor(
     private usersService: UsersService,
     private historyService: HistoryService,
+    private notesService: NotesService,
   ) {}
 
   @Get()
@@ -50,5 +53,10 @@ export class MeController {
     } catch (e) {
       throw new NotFoundException(e.message);
     }
+  }
+
+  @Get('notes')
+  getMyNotes(): NoteMetadataDto[] {
+    return this.notesService.getUserNotes('someone');
   }
 }
