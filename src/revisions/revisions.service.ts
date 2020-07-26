@@ -1,10 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { RevisionMetadataDto } from './revision-metadata.dto';
 import { RevisionDto } from './revision.dto';
 
 @Injectable()
 export class RevisionsService {
+  private readonly logger = new Logger(RevisionsService.name);
   getNoteRevisionMetadatas(noteIdOrAlias: string): RevisionMetadataDto[] {
+    this.logger.warn('Using hardcoded data!');
     return [
       {
         id: 'some-uuid',
@@ -15,6 +17,7 @@ export class RevisionsService {
   }
 
   getNoteRevision(noteIdOrAlias: string, revisionId: string): RevisionDto {
+    this.logger.warn('Using hardcoded data!');
     return {
       id: revisionId,
       content: 'Foobar',
