@@ -1,4 +1,17 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { MonitoringService } from '../../../monitoring/monitoring.service';
 
 @Controller('monitoring')
-export class MonitoringController {}
+export class MonitoringController {
+  constructor(private monitoringService: MonitoringService) {}
+
+  @Get()
+  getStatus() {
+    return this.monitoringService.getServerStatus();
+  }
+
+  @Get('prometheus')
+  getPrometheusStatus() {
+    return '';
+  }
+}
