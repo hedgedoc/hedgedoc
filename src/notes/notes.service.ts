@@ -111,6 +111,7 @@ export class NotesService {
   }
 
   deleteNoteByIdOrAlias(noteIdOrAlias: string) {
+    this.logger.warn('Using hardcoded data!');
     return;
   }
 
@@ -149,6 +150,7 @@ export class NotesService {
   }
 
   getNoteMetadata(noteIdOrAlias: string): NoteMetadataDto {
+    this.logger.warn('Using hardcoded data!');
     return {
       alias: null,
       createTime: new Date(),
@@ -181,6 +183,7 @@ export class NotesService {
     noteIdOrAlias: string,
     newPermissions: NotePermissionsUpdateDto,
   ): NotePermissionsDto {
+    this.logger.warn('Using hardcoded data!');
     return {
       owner: {
         displayName: 'foo',
@@ -193,6 +196,7 @@ export class NotesService {
   }
 
   getNoteContent(noteIdOrAlias: string) {
+    this.logger.warn('Using hardcoded data!');
     return '# Markdown';
   }
 }
