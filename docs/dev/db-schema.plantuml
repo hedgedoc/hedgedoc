@@ -1,0 +1,87 @@
+@startuml
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "Note" as note {
+  *id : uuid <<generated>>
+  --
+  *shortid : text
+  *alias : text
+  *viewcount : number
+  *owner_id : uuid <<FK User>>
+}
+
+entity "User" as user {
+  *id : uuid <<generated>>
+  --
+  *e1_id : number <<FK>>
+  other_details : text
+}
+
+entity "Revision" as revision {
+  *id : uuid <<generated>>
+  --
+  *note_id : uuid <<FK Note>>
+  *content : text
+  *patch : text
+  *createdAt : date
+  *length : number
+  *authorship : text
+  
+}
+
+entity "Authorship" as authorship {
+  *id : uuid <<generated>>
+  --
+  *user_id : uuid <FK User>>
+  *startPos : number
+  *endPos : number
+  *createdAt : date
+  *updatedAt : date
+}
+
+entity "RevisionAuthorship" {
+  *revision_id : uuid <<FK Revision>>
+  *authorship_id : uuid <<FK Authorship>>
+}
+
+entity "NoteUserPermission" {
+  *user_id : uuid <<FK User>>
+  *note_id : uuid <<FK Note>>
+  --
+  *canEdit : boolean
+}
+
+entity "Group" {
+  *id : number <<generated>>
+  --
+  *name : text <<unique>>
+  *displayName : text
+  ' Is set to denote a special group
+  ' Special groups are used to map the old share settings like "everyone can edit"
+  ' or "logged in users can view" to the group permission system 
+  *special : boolean
+  }
+  
+ entity "NoteGroupPermission" {
+  *group_id : number <<FK Group>>
+  *note_id : uuid <<FK Note>>
+  --
+  *canEdit : boolean
+}
+
+revision -left[hidden]- note
+
+note "1" - "1..*" revision
+revision "0..*" - "0..*" authorship
+(revision, authorship) .. RevisionAuthorship
+authorship "1" - "1" user 
+note "1" - "0..*" user
+note "1" - "0..*" NoteUserPermission
+NoteUserPermission "1" - "1" user
+note "1" - "0..*" NoteGroupPermission
+NoteGroupPermission "1" - "1" Group
+@enduml
