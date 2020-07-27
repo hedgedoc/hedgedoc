@@ -17,16 +17,18 @@ export class NotePermissionEntryUpdateDto {
 
 export class GroupInfoDto {
   @IsString()
-  id: string
+  name: string;
   @IsString()
-  displayName: string
+  displayName: string;
+  @IsBoolean()
+  special: boolean;
 }
 
 export class NoteGroupPermissionEntryDto {
   @ValidateNested()
-  group: GroupInfoDto
+  group: GroupInfoDto;
   @IsBoolean()
-  canEdit: boolean
+  canEdit: boolean;
 }
 
 export class NotePermissionsDto {
