@@ -13,9 +13,11 @@ You'll need at least Node 10 (we recommend 12). We use [yarn](https://yarnpkg.co
 1. Clone this repo (e.g. `git clone https://github.com/codimd/react-client.git codimd-react-client`)
 2. Go inside the repo (e.g. `cd codimd-react-client`)
 3. run `yarn install`
-4. run `yarn start`
+4. Either run
+    - `yarn start:dev` (expects [a server](https://github.com/codimd/server/tree/develop) running under [http://localhost:3000](http://localhost:3000))
+    - `yarn start` (makes all api calls to the same domain the react-client runs on (normally [http://localhost:3001](http://localhost:3001) ))
 
-This should run the app in the development mode and open [http://localhost:3000](http://localhost:3000) in your browser.
+This should run the app in the development mode and open [http://localhost:3001](http://localhost:3001) in your browser.
 
 The page will reload if you make edits.
 You will also see any lint errors in the console.
@@ -26,7 +28,7 @@ You will also see any lint errors in the console.
 
 Unit testing is done via jest.
 
-1. `yarn test`
+1. run `yarn test`
 
 #### End2End
 

@@ -15,7 +15,7 @@
   },
   "branding": {
     "name": "ACME Corp",
-    "logo": "http://localhost:3000/acme.png"
+    "logo": "http://localhost:3001/acme.png"
   },
   "banner": {
       "text": "This is the test banner text",

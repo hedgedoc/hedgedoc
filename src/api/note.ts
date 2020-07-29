@@ -1,4 +1,4 @@
-import { expectResponseCode, getBackendUrl } from '../utils/apiUtils'
+import { expectResponseCode, getApiUrl } from '../utils/apiUtils'
 import { defaultFetchConfig } from './default'
 
 interface LastChange {
@@ -19,13 +19,13 @@ export interface Note {
 }
 
 export const getNote = async (noteId: string): Promise<Note> => {
-  const response = await fetch(getBackendUrl() + `/notes/${noteId}`)
+  const response = await fetch(getApiUrl() + `/notes/${noteId}`)
   expectResponseCode(response)
   return await response.json() as Promise<Note>
 }
 
 export const deleteNote = async (noteId: string): Promise<void> => {
-  const response = await fetch(getBackendUrl() + `/notes/${noteId}`, {
+  const response = await fetch(getApiUrl() + `/notes/${noteId}`, {
     ...defaultFetchConfig,
     method: 'DELETE'
   })

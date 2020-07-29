@@ -17,7 +17,7 @@ export const VersionInfo: React.FC = () => {
 
   const { t } = useTranslation()
 
-  const serverVersion = useSelector((state: ApplicationState) => state.backendConfig.version)
+  const serverVersion = useSelector((state: ApplicationState) => state.config.version)
 
   const column = (title: string, version: string, sourceCodeLink: string, issueTrackerLink: string) => (
     <Col md={6} className={'flex-column'}>

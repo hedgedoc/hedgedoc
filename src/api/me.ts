@@ -1,5 +1,5 @@
 import { LoginProvider } from '../redux/user/types'
-import { expectResponseCode, getBackendUrl } from '../utils/apiUtils'
+import { expectResponseCode, getApiUrl } from '../utils/apiUtils'
 import { defaultFetchConfig } from './default'
 
 export const getMe = async (): Promise<meResponse> => {
@@ -16,7 +16,7 @@ export interface meResponse {
 }
 
 export const updateDisplayName = async (displayName: string): Promise<void> => {
-  const response = await fetch(getBackendUrl() + '/me', {
+  const response = await fetch(getApiUrl() + '/me', {
     ...defaultFetchConfig,
     method: 'POST',
     body: JSON.stringify({
@@ -28,7 +28,7 @@ export const updateDisplayName = async (displayName: string): Promise<void> => {
 }
 
 export const changePassword = async (oldPassword: string, newPassword: string): Promise<void> => {
-  const response = await fetch(getBackendUrl() + '/me/password', {
+  const response = await fetch(getApiUrl() + '/me/password', {
     ...defaultFetchConfig,
     method: 'POST',
     body: JSON.stringify({
@@ -41,7 +41,7 @@ export const changePassword = async (oldPassword: string, newPassword: string): 
 }
 
 export const deleteUser = async (): Promise<void> => {
-  const response = await fetch(getBackendUrl() + '/me', {
+  const response = await fetch(getApiUrl() + '/me', {
     ...defaultFetchConfig,
     method: 'DELETE'
   })

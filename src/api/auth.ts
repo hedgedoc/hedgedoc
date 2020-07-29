@@ -1,8 +1,8 @@
-import { expectResponseCode, getBackendUrl } from '../utils/apiUtils'
+import { expectResponseCode, getApiUrl } from '../utils/apiUtils'
 import { defaultFetchConfig } from './default'
 
 export const doEmailLogin = async (email: string, password: string): Promise<void> => {
-  const response = await fetch(getBackendUrl() + '/auth/email', {
+  const response = await fetch(getApiUrl() + '/auth/email', {
     ...defaultFetchConfig,
     method: 'POST',
     body: JSON.stringify({
@@ -15,7 +15,7 @@ export const doEmailLogin = async (email: string, password: string): Promise<voi
 }
 
 export const doLdapLogin = async (username: string, password: string): Promise<void> => {
-  const response = await fetch(getBackendUrl() + '/auth/ldap', {
+  const response = await fetch(getApiUrl() + '/auth/ldap', {
     ...defaultFetchConfig,
     method: 'POST',
     body: JSON.stringify({
@@ -28,7 +28,7 @@ export const doLdapLogin = async (username: string, password: string): Promise<v
 }
 
 export const doOpenIdLogin = async (openId: string): Promise<void> => {
-  const response = await fetch(getBackendUrl() + '/auth/openid', {
+  const response = await fetch(getApiUrl() + '/auth/openid', {
     ...defaultFetchConfig,
     method: 'POST',
     body: JSON.stringify({

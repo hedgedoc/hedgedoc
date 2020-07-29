@@ -10,7 +10,7 @@ import { VersionInfo } from '../version-info/version-info'
 export const PoweredByLinks: React.FC = () => {
   useTranslation()
 
-  const config = useSelector((state: ApplicationState) => state.backendConfig)
+  const config = useSelector((state: ApplicationState) => state.config)
 
   return (
     <p>

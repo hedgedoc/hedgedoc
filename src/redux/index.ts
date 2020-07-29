@@ -1,27 +1,27 @@
 import { combineReducers, Reducer } from 'redux'
-import { BackendConfig } from '../api/backend-config/types'
-import { FrontendConfig } from '../api/frontend-config/types'
-import { BackendConfigReducer } from './backend-config/reducers'
+import { Config } from '../api/config/types'
+import { ApiUrlReducer } from './api-url/reducers'
+import { ApiUrlObject } from './api-url/types'
 import { BannerReducer } from './banner/reducers'
 import { BannerState } from './banner/types'
+import { ConfigReducer } from './config/reducers'
 import { EditorConfigReducer } from './editor/reducers'
 import { EditorConfig } from './editor/types'
-import { FrontendConfigReducer } from './frontend-config/reducers'
 import { UserReducer } from './user/reducers'
 import { MaybeUserState } from './user/types'
 
 export interface ApplicationState {
-    user: MaybeUserState;
-    backendConfig: BackendConfig;
-    banner: BannerState;
-    frontendConfig: FrontendConfig;
-    editorConfig: EditorConfig;
+  user: MaybeUserState;
+  config: Config;
+  banner: BannerState;
+  apiUrl: ApiUrlObject;
+  editorConfig: EditorConfig;
 }
 
 export const allReducers: Reducer<ApplicationState> = combineReducers<ApplicationState>({
   user: UserReducer,
-  backendConfig: BackendConfigReducer,
+  config: ConfigReducer,
   banner: BannerReducer,
-  frontendConfig: FrontendConfigReducer,
+  apiUrl: ApiUrlReducer,
   editorConfig: EditorConfigReducer
 })

@@ -11,7 +11,7 @@ import './cover-buttons.scss'
 export const CoverButtons: React.FC = () => {
   useTranslation()
   const user = useSelector((state: ApplicationState) => state.user)
-  const authProviders = useSelector((state: ApplicationState) => state.backendConfig.authProviders)
+  const authProviders = useSelector((state: ApplicationState) => state.config.authProviders)
 
   if (user) {
     return null

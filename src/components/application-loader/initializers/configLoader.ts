@@ -1,24 +1,21 @@
-import { getBackendConfig } from '../../../api/backend-config'
-import { getFrontendConfig } from '../../../api/frontend-config'
-import { setBackendConfig } from '../../../redux/backend-config/methods'
+import { getConfig } from '../../../api/config'
+import { setApiUrl } from '../../../redux/api-url/methods'
 import { setBanner } from '../../../redux/banner/methods'
-import { setFrontendConfig } from '../../../redux/frontend-config/methods'
+import { setConfig } from '../../../redux/config/methods'
 import { getAndSetUser } from '../../../utils/apiUtils'
 
 export const loadAllConfig: (baseUrl: string) => Promise<void> = async (baseUrl) => {
-  const frontendConfig = await getFrontendConfig(baseUrl)
-  if (!frontendConfig) {
-    return Promise.reject(new Error('Frontend config empty!'))
-  }
-  setFrontendConfig(frontendConfig)
+  setApiUrl({
+    apiUrl: (process.env.REACT_APP_BACKEND || baseUrl) + '/api/v2'
+  })
 
-  const backendConfig = await getBackendConfig()
-  if (!backendConfig) {
-    return Promise.reject(new Error('Backend config empty!'))
+  const config = await getConfig()
+  if (!config) {
+    return Promise.reject(new Error('Config empty!'))
   }
-  setBackendConfig(backendConfig)
+  setConfig(config)
 
-  const banner = backendConfig.banner
+  const banner = config.banner
   if (banner.text !== '') {
     const lastAcknowledgedTimestamp = window.localStorage.getItem('bannerTimeStamp') || ''
     setBanner({

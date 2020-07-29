@@ -13,7 +13,7 @@ type SignInButtonProps = {
 
 export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props }) => {
   const { t } = useTranslation()
-  const authProviders = useSelector((state: ApplicationState) => state.backendConfig.authProviders)
+  const authProviders = useSelector((state: ApplicationState) => state.config.authProviders)
   return (
     <ShowIf condition={Object.values(authProviders).includes(true)}>
       <LinkContainer to="/login" title={t('login.signIn')}>

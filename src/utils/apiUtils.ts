@@ -12,8 +12,8 @@ export const getAndSetUser: () => (Promise<void>) = async () => {
   })
 }
 
-export const getBackendUrl: (() => string) = () => {
-  return store.getState().frontendConfig.backendUrl
+export const getApiUrl = (): string => {
+  return store.getState().apiUrl.apiUrl
 }
 
 export const expectResponseCode = (response: Response, code = 200): void => {

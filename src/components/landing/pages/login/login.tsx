@@ -12,8 +12,8 @@ import { ViaOpenId } from './auth/via-openid'
 
 export const Login: React.FC = () => {
   useTranslation()
-  const authProviders = useSelector((state: ApplicationState) => state.backendConfig.authProviders)
-  const customAuthNames = useSelector((state: ApplicationState) => state.backendConfig.customAuthNames)
+  const authProviders = useSelector((state: ApplicationState) => state.config.authProviders)
+  const customAuthNames = useSelector((state: ApplicationState) => state.config.customAuthNames)
   const userLoginState = useSelector((state: ApplicationState) => state.user)
 
   const oneClickProviders = [authProviders.dropbox, authProviders.facebook, authProviders.github, authProviders.gitlab,

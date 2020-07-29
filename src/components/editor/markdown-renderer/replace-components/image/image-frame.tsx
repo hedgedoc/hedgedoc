@@ -5,7 +5,7 @@ import { ApplicationState } from '../../../../../redux'
 
 export const ImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ alt, src, ...props }) => {
   const [imageUrl, setImageUrl] = useState('')
-  const imageProxyEnabled = useSelector((state: ApplicationState) => state.backendConfig.useImageProxy)
+  const imageProxyEnabled = useSelector((state: ApplicationState) => state.config.useImageProxy)
 
   useEffect(() => {
     if (!imageProxyEnabled || !src) {

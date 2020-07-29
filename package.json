@@ -85,15 +85,16 @@
     "use-resize-observer": "6.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3001 react-scripts start",
+    "start:dev": "REACT_APP_BACKEND=http://localhost:3000 yarn start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cy:open": "cypress open",
     "cy:run:chrome": "cypress run --browser chrome",
     "cy:run:firefox": "cypress run --browser firefox",
-    "e2e:chrome": "start-server-and-test start http-get://localhost:3000 cy:run:chrome",
-    "e2e:firefox": "start-server-and-test start http-get://localhost:3000 cy:run:firefox"
+    "e2e:chrome": "start-server-and-test start http-get://localhost:3001 cy:run:chrome",
+    "e2e:firefox": "start-server-and-test start http-get://localhost:3001 cy:run:firefox"
   },
   "eslintConfig": {
     "parserOptions": {

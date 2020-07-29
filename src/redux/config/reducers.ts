@@ -1,8 +1,8 @@
 import { Reducer } from 'redux'
-import { BackendConfig } from '../../api/backend-config/types'
-import { BackendConfigActions, BackendConfigActionType, SetBackendConfigAction } from './types'
+import { Config } from '../../api/config/types'
+import { ConfigActions, ConfigActionType, SetConfigAction } from './types'
 
-export const initialState: BackendConfig = {
+export const initialState: Config = {
   allowAnonymous: true,
   authProviders: {
     facebook: false,
@@ -43,10 +43,10 @@ export const initialState: BackendConfig = {
   }
 }
 
-export const BackendConfigReducer: Reducer<(BackendConfig), BackendConfigActions> = (state: (BackendConfig) = initialState, action: BackendConfigActions) => {
+export const ConfigReducer: Reducer<Config, ConfigActions> = (state: Config = initialState, action: ConfigActions) => {
   switch (action.type) {
-    case BackendConfigActionType.SET_BACKEND_CONFIG:
-      return (action as SetBackendConfigAction).state
+    case ConfigActionType.SET_CONFIG:
+      return (action as SetConfigAction).state
     default:
       return state
   }

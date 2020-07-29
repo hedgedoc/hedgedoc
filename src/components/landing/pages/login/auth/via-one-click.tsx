@@ -1,4 +1,6 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { ApplicationState } from '../../../../../redux'
 import { IconName } from '../../../../common/fork-awesome/fork-awesome-icon'
 import { SocialLinkButton } from './social-link-button/social-link-button'
 
@@ -13,74 +15,75 @@ export enum OneClickType {
   'TWITTER' = 'twitter'
 }
 
-type OneClick2Map = (oneClickType: OneClickType) => {
+interface OneClickMetadata {
   name: string,
   icon: IconName,
   className: string,
   url: string
-};
-
-const buildBackendAuthUrl = (backendName: string) => {
-  return `https://localhost:3000/auth/${backendName}`
 }
 
-const getMetadata: OneClick2Map = (oneClickType: OneClickType) => {
+const buildBackendAuthUrl = (backendUrl: string, backendName: string): string => {
+  return `${backendUrl}/auth/${backendName}`
+}
+
+const getMetadata = (backendUrl: string, oneClickType: OneClickType): OneClickMetadata => {
+  const buildBackendAuthUrlWithFirstParameterSet = (backendName: string): string => buildBackendAuthUrl(backendUrl, backendName)
   switch (oneClickType) {
     case OneClickType.DROPBOX:
       return {
         name: 'Dropbox',
         icon: 'dropbox',
         className: 'btn-social-dropbox',
-        url: buildBackendAuthUrl('dropbox')
+        url: buildBackendAuthUrlWithFirstParameterSet('dropbox')
       }
     case OneClickType.FACEBOOK:
       return {
         name: 'Facebook',
         icon: 'facebook',
         className: 'btn-social-facebook',
-        url: buildBackendAuthUrl('facebook')
+        url: buildBackendAuthUrlWithFirstParameterSet('facebook')
       }
     case OneClickType.GITHUB:
       return {
         name: 'GitHub',
         icon: 'github',
         className: 'btn-social-github',
-        url: buildBackendAuthUrl('github')
+        url: buildBackendAuthUrlWithFirstParameterSet('github')
       }
     case OneClickType.GITLAB:
       return {
         name: 'GitLab',
         icon: 'gitlab',
         className: 'btn-social-gitlab',
-        url: buildBackendAuthUrl('gitlab')
+        url: buildBackendAuthUrlWithFirstParameterSet('gitlab')
       }
     case OneClickType.GOOGLE:
       return {
         name: 'Google',
         icon: 'google',
         className: 'btn-social-google',
-        url: buildBackendAuthUrl('google')
+        url: buildBackendAuthUrlWithFirstParameterSet('google')
       }
     case OneClickType.OAUTH2:
       return {
         name: 'OAuth2',
         icon: 'address-card',
         className: 'btn-primary',
-        url: buildBackendAuthUrl('oauth2')
+        url: buildBackendAuthUrlWithFirstParameterSet('oauth2')
       }
     case OneClickType.SAML:
       return {
         name: 'SAML',
         icon: 'users',
         className: 'btn-success',
-        url: buildBackendAuthUrl('saml')
+        url: buildBackendAuthUrlWithFirstParameterSet('saml')
       }
     case OneClickType.TWITTER:
       return {
         name: 'Twitter',
         icon: 'twitter',
         className: 'btn-social-twitter',
-        url: buildBackendAuthUrl('twitter')
+        url: buildBackendAuthUrlWithFirstParameterSet('twitter')
       }
     default:
       return {
@@ -98,8 +101,10 @@ export interface ViaOneClickProps {
 }
 
 const ViaOneClick: React.FC<ViaOneClickProps> = ({ oneClickType, optionalName }) => {
-  const { name, icon, className, url } = getMetadata(oneClickType)
+  const backendUrl = useSelector((state: ApplicationState) => state.apiUrl.apiUrl)
+  const { name, icon, className, url } = getMetadata(backendUrl, oneClickType)
   const text = optionalName || name
+
   return (
     <SocialLinkButton
       backgroundClass={className}

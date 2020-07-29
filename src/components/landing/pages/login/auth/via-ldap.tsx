@@ -9,7 +9,7 @@ import { getAndSetUser } from '../../../../../utils/apiUtils'
 
 export const ViaLdap: React.FC = () => {
   const { t } = useTranslation()
-  const ldapCustomName = useSelector((state: ApplicationState) => state.backendConfig.customAuthNames.ldap)
+  const ldapCustomName = useSelector((state: ApplicationState) => state.config.customAuthNames.ldap)
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')

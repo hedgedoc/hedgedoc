@@ -1,4 +1,4 @@
-export interface BackendConfig {
+export interface Config {
   allowAnonymous: boolean,
   authProviders: AuthProvidersState,
   branding: BrandingConfig,
