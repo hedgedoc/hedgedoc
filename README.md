@@ -9,6 +9,8 @@
 CodiMD lets you create real-time collaborative markdown notes. You can test-drive
 it by visiting our [CodiMD demo server][codimd-demo].
 
+**Note**: CodiMD is in the process of [changing its name to HedgeDoc](https://github.com/codimd/server/issues/452).
+
 It is inspired by Hackpad, Etherpad and similar collaborative editors. This
 project originated with the team at [HackMD](https://hackmd.io) and now forked
 into its own organisation. [A longer writeup can be read in the history doc](docs/history.md).
