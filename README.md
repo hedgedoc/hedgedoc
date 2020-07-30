@@ -40,10 +40,6 @@ all of these:
 - [Heroku](docs/setup/heroku.md)
 - [Manual setup](docs/setup/manual-setup.md)
 
-If you do not wish to run your own setup, you can find a commercial offering at
-<https://hackmd.io>. This is not the same codebase as this one, but it is a very
-similar project.
-
 ## Configuration
 
 Theres two main ways to [configure](docs/configuration.md) your CodiMD instance:
