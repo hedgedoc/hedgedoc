@@ -10706,10 +10706,10 @@ redux-devtools-instrument@^1.9.0:
     lodash "^4.2.0"
     symbol-observable "^1.0.2"
 
-redux-devtools@3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/redux-devtools/-/redux-devtools-3.5.0.tgz#d69ab76d4f0f8abdf6d24bcf5954d7a1aa2b6827"
-  integrity sha512-pGU8TZNvWxPaCCE432AGm6H6alQbAz80gQM5CzM3SjX9/oSNu/HPF17xFdPQJOXasqyih1Gv167kZDTRe7r0iQ==
+redux-devtools@3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/redux-devtools/-/redux-devtools-3.6.0.tgz#8fe434bbb743b622c7ef1a6f49b586c12721081c"
+  integrity sha512-tA/H0nhuD4NxNf2yX2gnd9uHclj7nWmMQKsgkCLSJohmb/IfaGIa6/kotLbTch1pfDuRzx1ojIIr0EoVi1QPuA==
   dependencies:
     lodash "^4.2.0"
     prop-types "^15.5.7"
