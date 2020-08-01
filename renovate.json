@@ -7,12 +7,18 @@
   ],
   "packageRules": [
     {
+      "updateTypes": ["pin"],
+      "automerge": true
+    },
+    {
       "extends": "packages:linters",
-      "groupName": "linters"
+      "groupName": "linters",
+      "automerge": true
     },
     {
       "extends": "monorepo:typescript-eslint",
-      "groupName": "typescript-eslint monorepo"
+      "groupName": "typescript-eslint monorepo",
+      "automerge": true
     },
     {
       "extends": "monorepo:react",
@@ -26,13 +32,15 @@
       "groupName": "definitelyTyped",
       "packagePatterns": [
         "^@types/"
-      ]
+      ],
+      "automerge": true
     },
     {
       "groupName": "JS test packages",
       "packagePatterns": [
         "^@testing-library/"
-      ]
+      ],
+      "automerge": true
     }
   ],
   "prHourlyLimit": 0,
