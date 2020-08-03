@@ -3,7 +3,9 @@ import { expectResponseCode, getApiUrl } from '../utils/apiUtils'
 import { defaultFetchConfig } from './default'
 
 export const getMe = async (): Promise<meResponse> => {
-  const response = await fetch('/me')
+  const response = await fetch(getApiUrl() + '/me', {
+    ...defaultFetchConfig
+  })
   expectResponseCode(response)
   return (await response.json()) as meResponse
 }
