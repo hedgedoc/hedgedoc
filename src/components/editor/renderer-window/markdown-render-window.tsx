@@ -23,7 +23,7 @@ export const MarkdownRenderWindow: React.FC<RenderWindowProps> = ({ content, onM
   const realWidth = width || 0
 
   return (
-    <div className={'bg-light flex-fill pb-5 flex-row d-flex min-h-100'} ref={renderer}>
+    <div className={'bg-light flex-fill pb-5 flex-row d-flex w-100 h-100 overflow-y-scroll'} ref={renderer}>
       <div className={'col-md'}/>
       <MarkdownRenderer
         className={'flex-fill'}
@@ -34,7 +34,7 @@ export const MarkdownRenderWindow: React.FC<RenderWindowProps> = ({ content, onM
         onFirstHeadingChange={onFirstHeadingChange}
       />
 
-      <div className={`col-md d-flex flex-column ${realWidth < 1280 ? 'justify-content-end' : ''}`}>
+      <div className={'col-md'}>
         <ShowIf condition={realWidth >= 1280 && !!tocAst}>
           <MarkdownToc ast={tocAst as TocAst} sticky={true}/>
         </ShowIf>

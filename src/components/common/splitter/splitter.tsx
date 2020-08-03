@@ -54,7 +54,7 @@ export const Splitter: React.FC<SplitterProps> = ({ containerClassName, left, ri
         </div>
       </ShowIf>
       <ShowIf condition={showRight}>
-        <div className='splitter right overflow-y-scroll'>
+        <div className='splitter right'>
           {right}
         </div>
       </ShowIf>

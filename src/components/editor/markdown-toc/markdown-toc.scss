@@ -4,9 +4,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   &.sticky {
-    position: sticky;
-    top: 0;
-    left: 0;
+    position: fixed;
   }
 
   >ul>li {
@@ -52,12 +50,9 @@
   }
 }
 .markdown-toc-sidebar-button {
-  position: absolute;
-  height: 100%;
-  right: 20px;
-  display: flex;
-  justify-content: flex-end;
-  flex-direction: column;
+  position: fixed;
+  right: 40px;
+  bottom: 20px;
 
   &>.dropup {
     position: sticky;
