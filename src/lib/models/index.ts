@@ -35,7 +35,7 @@ const umzug = new Umzug({
   },
   // Required wrapper function required to prevent winstion issue
   // https://github.com/winstonjs/winston/issues/1577
-  logging: message => {
+  logging: (message): void => {
     logger.info(message)
   },
   storage: 'sequelize',
@@ -44,7 +44,7 @@ const umzug = new Umzug({
   }
 })
 
-export async function runMigrations(): Promise<void> {
+export async function runMigrations (): Promise<void> {
   // checks migrations and run them if they are not already applied
   // exit in case of unsuccessful migrations
   await umzug.up().catch(error => {
