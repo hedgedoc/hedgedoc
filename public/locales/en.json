@@ -284,16 +284,25 @@
         "signInVia": "Sign in via {{service}}",
         "signIn": "Sign In",
         "signOut": "Sign Out",
-        "register": "Register",
         "auth": {
             "email": "Email",
             "password": "Password",
             "username": "Username",
             "error": {
                 "openIdLogin": "Invalid OpenID provided",
-                "emailLogin": "Invalid email or password",
-                "ldapLogin": "Invalid username or password"
+                "usernamePassword": "Invalid username or password"
             }
+        },
+        "register": {
+          "title": "Register",
+          "passwordAgain": "Password (again)",
+          "usernameInfo": "The username is your unique identifier for login.",
+          "passwordInfo": "Choose a unique and secure password. It must contain at least 8 characters.",
+          "infoTermsPrivacy": "With the registration of my user account I agree to the following terms:",
+          "error": {
+            "usernameExisting": "There is already an account with this username.",
+            "other": "There was an error while registering your account. Just try it again."
+          }
         }
     }
 }

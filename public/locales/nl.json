@@ -181,7 +181,9 @@
         "signInVia": "Log in via {{service}}",
         "signIn": "Inloggen",
         "signOut": "Uitloggen",
-        "register": "Registreren",
+        "register": {
+            "title": "Registreren"
+        },
         "auth": {
             "error": {}
         }

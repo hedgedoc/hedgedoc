@@ -181,7 +181,9 @@
         "signInVia": "透過 {{service}} 登入",
         "signIn": "登入",
         "signOut": "登出",
-        "register": "註冊",
+        "register": {
+            "title": "註冊"
+        },
         "auth": {
             "error": {}
         }

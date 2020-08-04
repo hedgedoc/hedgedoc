@@ -10,10 +10,11 @@ import { History } from './components/landing/pages/history/history'
 import { Intro } from './components/landing/pages/intro/intro'
 import { Login } from './components/landing/pages/login/login'
 import { Profile } from './components/landing/pages/profile/profile'
+import { Register } from './components/landing/pages/register/register'
+import { Redirector } from './components/redirector/redirector'
 import './global-style/index.scss'
 import * as serviceWorker from './service-worker'
 import { store } from './utils/store'
-import { Redirector } from './components/redirector/redirector'
 
 ReactDOM.render(
   <Provider store={store}>
@@ -33,6 +34,11 @@ ReactDOM.render(
           <Route path="/login">
             <LandingLayout>
               <Login/>
+            </LandingLayout>
+          </Route>
+          <Route path="/register">
+            <LandingLayout>
+              <Register/>
             </LandingLayout>
           </Route>
           <Route path="/profile">

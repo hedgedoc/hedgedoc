@@ -180,7 +180,9 @@
         "signInVia": "Đăng nhấp với {{service}}",
         "signIn": "Đăng nhập",
         "signOut": "Đăng xuất",
-        "register": "Đăng ký",
+        "register": {
+            "title": "Đăng ký"
+        },
         "auth": {
             "error": {}
         }

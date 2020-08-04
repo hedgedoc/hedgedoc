@@ -31,7 +31,7 @@ export enum LoginProvider {
   GOOGLE = 'google',
   SAML = 'saml',
   OAUTH2 = 'oauth2',
-  EMAIL = 'email',
+  INTERNAL = 'internal',
   LDAP = 'ldap',
   OPENID = 'openid'
 }

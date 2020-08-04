@@ -181,7 +181,9 @@
         "signInVia": "لِج عبر {{service}}",
         "signIn": "لِج",
         "signOut": "خروج",
-        "register": "انشئ حسابا",
+        "register": {
+          "title": "انشئ حسابا"
+        },
         "auth": {
             "error": {}
         }

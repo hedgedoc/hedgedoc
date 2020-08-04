@@ -1,15 +1,33 @@
+import { RegisterError } from '../components/landing/pages/register/register'
 import { expectResponseCode, getApiUrl } from '../utils/apiUtils'
 import { defaultFetchConfig } from './default'
 
-export const doEmailLogin = async (email: string, password: string): Promise<void> => {
-  const response = await fetch(getApiUrl() + '/auth/email', {
+export const doInternalLogin = async (username: string, password: string): Promise<void> => {
+  const response = await fetch(getApiUrl() + '/auth/internal', {
     ...defaultFetchConfig,
     method: 'POST',
     body: JSON.stringify({
-      email: email,
+      username: username,
       password: password
     })
   })
+
+  expectResponseCode(response)
+}
+
+export const doInternalRegister = async (username: string, password: string): Promise<void> => {
+  const response = await fetch(getApiUrl() + '/auth/register', {
+    ...defaultFetchConfig,
+    method: 'POST',
+    body: JSON.stringify({
+      username: username,
+      password: password
+    })
+  })
+
+  if (response.status === 409) {
+    throw new Error(RegisterError.USERNAME_EXISTING)
+  }
 
   expectResponseCode(response)
 }

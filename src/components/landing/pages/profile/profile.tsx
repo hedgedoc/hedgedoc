@@ -23,7 +23,7 @@ export const Profile: React.FC = () => {
       <Row className="h-100 flex justify-content-center">
         <Col lg={6}>
           <ProfileDisplayName/>
-          <ShowIf condition={user.provider === LoginProvider.EMAIL}>
+          <ShowIf condition={user.provider === LoginProvider.INTERNAL}>
             <ProfileChangePassword/>
           </ShowIf>
           <ProfileAccountManagement/>

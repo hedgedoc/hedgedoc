@@ -181,7 +181,9 @@
         "signInVia": "Prihlásiť sa cez {{service}}",
         "signIn": "Prihlásiť sa",
         "signOut": "Odhlásiť sa",
-        "register": "Registrovať",
+        "register": {
+            "title": "Registrovať"
+        },
         "auth": {
             "error": {}
         }

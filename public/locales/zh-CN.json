@@ -181,7 +181,9 @@
         "signInVia": "通过 {{service}} 登录",
         "signIn": "登录",
         "signOut": "登出",
-        "register": "注册",
+        "register": {
+            "title": "注册"
+        },
         "auth": {
             "error": {}
         }

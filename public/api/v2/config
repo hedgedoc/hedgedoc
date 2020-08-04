@@ -10,9 +10,10 @@
     "google": true,
     "saml": true,
     "oauth2": true,
-    "email": true,
+    "internal": true,
     "openid": true
   },
+  "allowRegister": true,
   "branding": {
     "name": "ACME Corp",
     "logo": "http://localhost:3001/acme.png"

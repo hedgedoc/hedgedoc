@@ -1,5 +1,6 @@
 export interface Config {
   allowAnonymous: boolean,
+  allowRegister: boolean,
   authProviders: AuthProvidersState,
   branding: BrandingConfig,
   banner: BannerConfig,
@@ -36,7 +37,7 @@ export interface AuthProvidersState {
   google: boolean,
   saml: boolean,
   oauth2: boolean,
-  email: boolean,
+  internal: boolean,
   openid: boolean,
 }
 

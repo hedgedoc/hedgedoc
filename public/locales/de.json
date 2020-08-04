@@ -181,15 +181,16 @@
         "signInVia": "Einloggen über {{service}}",
         "signIn": "Einloggen",
         "signOut": "Ausloggen",
-        "register": "Registrieren",
+        "register": {
+            "title": "Registrieren"
+        },
         "auth": {
             "email": "E-Mail",
             "password": "Passwort",
             "username": "Benutzername",
             "error": {
                 "openIdLogin": "OpenID nicht korrekt",
-                "emailLogin": "E-Mail oder Passwort nicht korrekt",
-                "ldapLogin": "Benutzername oder Passwort nicht korrekt"
+                "usernamePassword": "Benutzername oder Passwort nicht korrekt"
             }
         }
     }

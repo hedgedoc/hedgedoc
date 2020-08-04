@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
 import { ApplicationState } from '../../../../redux'
 import { ShowIf } from '../../../common/show-if/show-if'
-import { ViaEMail } from './auth/via-email'
+import { ViaInternal } from './auth/via-internal'
 import { ViaLdap } from './auth/via-ldap'
 import { OneClickType, ViaOneClick } from './auth/via-one-click'
 import { ViaOpenId } from './auth/via-openid'
@@ -40,9 +40,9 @@ export const Login: React.FC = () => {
   return (
     <div className="my-3">
       <Row className="h-100 flex justify-content-center">
-        <ShowIf condition={authProviders.email || authProviders.ldap || authProviders.openid}>
+        <ShowIf condition={authProviders.internal || authProviders.ldap || authProviders.openid}>
           <Col xs={12} sm={10} lg={4}>
-            <ShowIf condition={authProviders.email}><ViaEMail/></ShowIf>
+            <ShowIf condition={authProviders.internal}><ViaInternal/></ShowIf>
             <ShowIf condition={authProviders.ldap}><ViaLdap/></ShowIf>
             <ShowIf condition={authProviders.openid}><ViaOpenId/></ShowIf>
           </Col>

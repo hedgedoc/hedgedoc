@@ -181,7 +181,9 @@
         "signInVia": "Přihlásit se přes {{service}}",
         "signIn": "Přihlásit",
         "signOut": "Odhlásit",
-        "register": "Registrovat",
+        "register": {
+            "title": "Registrovat"
+        },
         "auth": {
             "error": {}
         }

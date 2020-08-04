@@ -181,7 +181,9 @@
         "signInVia": "Entra con {{service}}",
         "signIn": "Entra",
         "signOut": "Disconettiti",
-        "register": "Registrati",
+        "register": {
+            "title": "Registrati"
+        },
         "auth": {
             "error": {}
         }

@@ -180,7 +180,9 @@
         "signInVia": "Пријави се уз {{service}}",
         "signIn": "Пријави се",
         "signOut": "Одјави се",
-        "register": "Региструј се",
+        "register": {
+            "title": "Региструј се"
+        },
         "auth": {
             "error": {}
         }

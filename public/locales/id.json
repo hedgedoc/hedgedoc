@@ -181,7 +181,9 @@
         "signInVia": "Masuk menggunakan {{service}}",
         "signIn": "Masuk",
         "signOut": "Keluar",
-        "register": "Daftar",
+        "register": {
+            "title": "Daftar"
+        },
         "auth": {
             "error": {}
         }

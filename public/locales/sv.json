@@ -181,7 +181,9 @@
         "signInVia": "Logga in via {{service}}",
         "signIn": "Logga in",
         "signOut": "Logga ut",
-        "register": "Registrera",
+        "register": {
+            "title": "Registrera"
+        },
         "auth": {
             "error": {}
         }
