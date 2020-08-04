@@ -127,6 +127,7 @@ export interface Config {
     usernameField: string;
     useridField: string;
     tlsca: string;
+    starttls?: boolean;
     tlsOptions: {
       ca: string[];
     };
