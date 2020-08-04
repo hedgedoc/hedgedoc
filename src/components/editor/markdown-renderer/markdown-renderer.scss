@@ -14,6 +14,11 @@
     max-width: 900px;
   }
 
+  & > img {
+    width: unset;
+    background-color: unset;
+  }
+
   &.wider {
     max-width: 1500px;
 

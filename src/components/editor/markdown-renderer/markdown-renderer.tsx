@@ -14,6 +14,7 @@ import inserted from 'markdown-it-ins'
 import marked from 'markdown-it-mark'
 import mathJax from 'markdown-it-mathjax'
 import markdownItRegex from 'markdown-it-regex'
+import plantuml from 'markdown-it-plantuml'
 import subscript from 'markdown-it-sub'
 import superscript from 'markdown-it-sup'
 import taskList from 'markdown-it-task-lists'
@@ -23,7 +24,9 @@ import { Alert } from 'react-bootstrap'
 import ReactHtmlParser, { convertNodeToElement, Transform } from 'react-html-parser'
 import { Trans } from 'react-i18next'
 import MathJaxReact from 'react-mathjax'
+import { useSelector } from 'react-redux'
 import { TocAst } from '../../../external-types/markdown-it-toc-done-right/interface'
+import { ApplicationState } from '../../../redux'
 import { slugify } from '../../../utils/slugify'
 import { InternalLink } from '../../common/links/internal-link'
 import { ShowIf } from '../../common/show-if/show-if'
@@ -33,6 +36,7 @@ import { highlightedCode } from './markdown-it-plugins/highlighted-code'
 import { linkifyExtra } from './markdown-it-plugins/linkify-extra'
 import { MarkdownItParserDebugger } from './markdown-it-plugins/parser-debugger'
 import './markdown-renderer.scss'
+import { plantumlError } from './markdown-it-plugins/plantuml-error'
 import { replaceAsciinemaLink } from './regex-plugins/replace-asciinema-link'
 import { replaceGistLink } from './regex-plugins/replace-gist-link'
 import { replaceLegacyGistShortCode } from './regex-plugins/replace-legacy-gist-short-code'
@@ -93,6 +97,8 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
     }
   })
 
+  const plantumlServer = useSelector((state: ApplicationState) => state.config.plantumlServer)
+
   const markdownIt = useMemo(() => {
     const md = new MarkdownIt('default', {
       html: true,
@@ -127,6 +133,15 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
       })
     }
     md.use(taskList)
+    if (plantumlServer) {
+      md.use(plantuml, {
+        openMarker: '```plantuml',
+        closeMarker: '```',
+        server: plantumlServer
+      })
+    } else {
+      md.use(plantumlError)
+    }
     md.use(emoji)
     md.use(abbreviation)
     md.use(definitionList)
@@ -195,7 +210,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
     })
 
     return md
-  }, [onMetaDataChange, onFirstHeadingChange])
+  }, [onMetaDataChange, onFirstHeadingChange, plantumlServer])
 
   useEffect(() => {
     if (onTocChange && tocAst && !equal(tocAst, lastTocAst)) {
