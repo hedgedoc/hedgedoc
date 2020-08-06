@@ -1,104 +1,100 @@
-import CodeMirror from 'codemirror'
+import { Editor } from 'codemirror'
 
-export const replaceSelection = (content: string, startPosition: CodeMirror.Position, endPosition: CodeMirror.Position, onContentChange: (content: string) => void, replaceText: string): void => {
-  const contentLines = content.split('\n')
-  const replaceTextLines = replaceText.split('\n')
-  const numberOfExtraLines = replaceTextLines.length - 1 - (endPosition.line - startPosition.line)
-  const replaceTextIncludeNewline = replaceText.includes('\n')
-  if (!replaceTextIncludeNewline) {
-    contentLines[startPosition.line] = contentLines[startPosition.line].slice(0, startPosition.ch) + replaceText + contentLines[startPosition.line].slice(endPosition.ch)
-  } else {
-    const lastPart = contentLines[endPosition.line].slice(endPosition.ch)
-    contentLines.push(...contentLines.slice(endPosition.line + 1))
-    contentLines[startPosition.line] = contentLines[startPosition.line].slice(0, startPosition.ch) + replaceTextLines[0]
-    contentLines.splice(startPosition.line + 1, replaceTextLines.length - 1, ...replaceTextLines.slice(1))
-    contentLines[numberOfExtraLines + endPosition.line] += lastPart
-  }
-  onContentChange(contentLines.join('\n'))
-}
+export const makeSelectionBold = (editor: Editor): void => wrapTextWith(editor, '**')
+export const makeSelectionItalic = (editor: Editor): void => wrapTextWith(editor, '*')
+export const strikeThroughSelection = (editor: Editor): void => wrapTextWith(editor, '~~')
+export const underlineSelection = (editor: Editor): void => wrapTextWith(editor, '++')
+export const subscriptSelection = (editor: Editor): void => wrapTextWith(editor, '~')
+export const superscriptSelection = (editor: Editor): void => wrapTextWith(editor, '^')
+export const markSelection = (editor: Editor): void => wrapTextWith(editor, '==')
 
-export const extractSelection = (content: string, startPosition: CodeMirror.Position, endPosition: CodeMirror.Position): string => {
-  if (startPosition.line === endPosition.line && startPosition.ch === endPosition.ch) {
-    return ''
-  }
+export const addHeaderLevel = (editor: Editor): void => changeLines(editor, line => line.startsWith('#') ? `#${line}` : `# ${line}`)
+export const addCodeFences = (editor: Editor): void => wrapTextWith(editor, '```\n', '\n```')
+export const addQuotes = (editor: Editor): void => insertOnStartOfLines(editor, '> ')
 
-  const lines = content.split('\n')
+export const addList = (editor: Editor): void => createList(editor, () => '- ')
+export const addOrderedList = (editor: Editor): void => createList(editor, j => `${j}. `)
+export const addTaskList = (editor: Editor): void => createList(editor, () => '- [ ] ')
 
-  if (startPosition.line === endPosition.line) {
-    return removeLastNewLine(lines[startPosition.line].slice(startPosition.ch, endPosition.ch))
-  }
+export const addImage = (editor: Editor): void => addLink(editor, '!')
 
-  let multiLineSelection = lines[startPosition.line].slice(startPosition.ch) + '\n'
-  for (let i = startPosition.line + 1; i <= endPosition.line; i++) {
-    if (i === endPosition.line) {
-      multiLineSelection += lines[i].slice(0, endPosition.ch)
-    } else {
-      multiLineSelection += lines[i] + '\n'
-    }
-  }
-  return multiLineSelection
-}
+export const addLine = (editor: Editor): void => changeLines(editor, line => `${line}\n----`)
+export const addComment = (editor: Editor): void => changeLines(editor, line => `${line}\n> []`)
+export const addTable = (editor: Editor): void => changeLines(editor, line => `${line}\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text     | Text     |`)
 
-export const removeLastNewLine = (selection: string): string => {
-  if (selection.endsWith('\n')) {
-    selection = selection.slice(0, -1)
-  }
-  return selection
-}
-
-export const addMarkup = (content: string, startPosition: CodeMirror.Position, endPosition: CodeMirror.Position, onContentChange: (content: string) => void, markUp: string): void => {
-  const selection = extractSelection(content, startPosition, endPosition)
-  if (selection === '') {
+export const wrapTextWith = (editor: Editor, symbol: string, endSymbol?: string): void => {
+  if (!editor.getSelection()) {
     return
   }
-  replaceSelection(content, startPosition, endPosition, onContentChange, `${markUp}${selection}${markUp}`)
-}
-
-export const createList = (content: string, startPosition: CodeMirror.Position, endPosition: CodeMirror.Position, onContentChange: (content: string) => void, listMark: (j: number) => string): void => {
-  const lines = content.split('\n')
-  let j = 1
-  for (let i = startPosition.line; i <= endPosition.line; i++) {
-    lines[i] = `${listMark(j)} ${lines[i]}`
-    j++
-  }
-  onContentChange(lines.join('\n'))
-}
-
-export const addHeaderLevel = (content: string, startPosition: CodeMirror.Position, onContentChange: (content: string) => void): void => {
-  const lines = content.split('\n')
-  const startLine = lines[startPosition.line]
-  const isHeadingAlready = startLine.startsWith('#')
-  lines[startPosition.line] = `#${!isHeadingAlready ? ' ' : ''}${startLine}`
-  onContentChange(lines.join('\n'))
-}
-
-export const addLink = (content: string, startPosition: CodeMirror.Position, endPosition: CodeMirror.Position, onContentChange: (content: string) => void, prefix?: string): void => {
-  const selection = extractSelection(content, startPosition, endPosition)
-  const linkRegex = /^(?:https?|ftp|mailto):/
-  if (linkRegex.exec(selection)) {
-    replaceSelection(content, startPosition, endPosition, onContentChange, `${prefix || ''}[](${selection})`)
-  } else {
-    replaceSelection(content, startPosition, endPosition, onContentChange, `${prefix || ''}[${selection}](https://)`)
-  }
-}
-
-export const addQuotes = (content: string, startPosition: CodeMirror.Position, endPosition: CodeMirror.Position, onContentChange: (content: string) => void): void => {
-  const selection = extractSelection(content, startPosition, endPosition)
-  if (selection === '') {
-    replaceSelection(content, startPosition, endPosition, onContentChange, '> ')
-  } else if (!selection.includes('\n')) {
-    const lines = content.split('\n')
-    replaceSelection(content, startPosition, endPosition, onContentChange, '> ' + lines[startPosition.line])
-  } else {
-    const lines = content.split('\n')
-    for (let i = startPosition.line; i <= endPosition.line; i++) {
-      lines[i] = `> ${lines[i]}`
+  const ranges = editor.listSelections()
+  for (const range of ranges) {
+    if (range.empty()) {
+      continue
     }
-    onContentChange(lines.join('\n'))
+    const from = range.from()
+    const to = range.to()
+
+    const selection = editor.getRange(from, to)
+    editor.replaceRange(symbol + selection + (endSymbol || symbol), from, to, '+input')
+    range.head.ch += symbol.length
+    range.anchor.ch += endSymbol ? endSymbol.length : symbol.length
   }
+  editor.setSelections(ranges)
 }
 
-export const addCodeFences = (content: string, startPosition: CodeMirror.Position, endPosition: CodeMirror.Position, onContentChange: (content: string) => void): void => {
-  const selection = extractSelection(content, startPosition, endPosition)
-  replaceSelection(content, startPosition, endPosition, onContentChange, `\`\`\`\n${selection}\n\`\`\``)
+export const insertOnStartOfLines = (editor: Editor, symbol: string): void => {
+  const cursor = editor.getCursor()
+  const ranges = editor.listSelections()
+  for (const range of ranges) {
+    const from = range.empty() ? { line: cursor.line, ch: 0 } : range.from()
+    const to = range.empty() ? { line: cursor.line, ch: editor.getLine(cursor.line).length } : range.to()
+    const selection = editor.getRange(from, to)
+    const lines = selection.split('\n')
+    editor.replaceRange(lines.map(line => `${symbol}${line}`).join('\n'), from, to, '+input')
+  }
+  editor.setSelections(ranges)
+}
+
+export const changeLines = (editor: Editor, replaceFunction: (line: string) => string): void => {
+  const cursor = editor.getCursor()
+  const ranges = editor.listSelections()
+  for (const range of ranges) {
+    const lineNumber = range.empty() ? cursor.line : range.from().line
+    const line = editor.getLine(lineNumber)
+    editor.replaceRange(replaceFunction(line), { line: lineNumber, ch: 0 }, {
+      line: lineNumber,
+      ch: line.length
+    }, '+input')
+  }
+  editor.setSelections(ranges)
+}
+
+export const createList = (editor: Editor, listMark: (i: number) => string): void => {
+  const cursor = editor.getCursor()
+  const ranges = editor.listSelections()
+  for (const range of ranges) {
+    const from = range.empty() ? { line: cursor.line, ch: 0 } : range.from()
+    const to = range.empty() ? { line: cursor.line, ch: editor.getLine(cursor.line).length } : range.to()
+
+    const selection = editor.getRange(from, to)
+    const lines = selection.split('\n')
+    editor.replaceRange(lines.map((line, i) => `${listMark(i + 1)}${line}`).join('\n'), from, to, '+input')
+  }
+  editor.setSelections(ranges)
+}
+
+export const addLink = (editor: Editor, prefix?: string): void => {
+  const cursor = editor.getCursor()
+  const ranges = editor.listSelections()
+  for (const range of ranges) {
+    const from = range.empty() ? { line: cursor.line, ch: cursor.ch } : range.from()
+    const to = range.empty() ? { line: cursor.line, ch: cursor.ch } : range.to()
+    const selection = editor.getRange(from, to)
+    const linkRegex = /^(?:https?|ftp|mailto):/
+    if (linkRegex.exec(selection)) {
+      editor.replaceRange(`${prefix || ''}[](${selection})`, from, to, '+input')
+    } else {
+      editor.replaceRange(`${prefix || ''}[${selection}](https://)`, from, to, '+input')
+    }
+  }
 }

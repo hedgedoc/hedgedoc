@@ -1,4 +1,7 @@
+import { Editor } from 'codemirror'
 import 'codemirror/addon/comment/comment'
+import 'codemirror/addon/display/autorefresh'
+import 'codemirror/addon/display/fullscreen'
 import 'codemirror/addon/display/placeholder'
 import 'codemirror/addon/edit/closebrackets'
 import 'codemirror/addon/edit/closetag'
@@ -11,11 +14,11 @@ import 'codemirror/addon/search/match-highlighter'
 import 'codemirror/addon/selection/active-line'
 import 'codemirror/keymap/sublime.js'
 import 'codemirror/mode/gfm/gfm.js'
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { Controlled as ControlledCodeMirror } from 'react-codemirror2'
 import { useTranslation } from 'react-i18next'
 import './editor-window.scss'
-import { Positions, SelectionData } from './interfaces'
+import { defaultKeyMap } from './key-map'
 import { ToolBar } from './tool-bar/tool-bar'
 
 export interface EditorWindowProps {
@@ -25,39 +28,12 @@ export interface EditorWindowProps {
 
 export const EditorWindow: React.FC<EditorWindowProps> = ({ onContentChange, content }) => {
   const { t } = useTranslation()
-  const [positions, setPositions] = useState<Positions>({
-    startPosition: {
-      ch: 0,
-      line: 0
-    },
-    endPosition: {
-      ch: 0,
-      line: 0
-    }
-  })
-
-  const onSelection = useCallback((editor, data: SelectionData) => {
-    const { anchor, head } = data.ranges[0]
-    const headFirst = head.line < anchor.line || (head.line === anchor.line && head.ch < anchor.ch)
-
-    setPositions({
-      startPosition: {
-        line: headFirst ? head.line : anchor.line,
-        ch: headFirst ? head.ch : anchor.ch
-      },
-      endPosition: {
-        line: headFirst ? anchor.line : head.line,
-        ch: headFirst ? anchor.ch : head.ch
-      }
-    })
-  }, [])
+  const [editor, setEditor] = useState<Editor>()
 
   return (
     <div className={'d-flex flex-column h-100'}>
       <ToolBar
-        content={content}
-        onContentChange={onContentChange}
-        positions={positions}
+        editor={editor}
       />
       <ControlledCodeMirror
         className="overflow-hidden w-100 flex-fill"
@@ -73,7 +49,6 @@ export const EditorWindow: React.FC<EditorWindowProps> = ({ onContentChange, con
           showCursorWhenSelecting: true,
           highlightSelectionMatches: true,
           indentUnit: 4,
-          //    continueComments: 'Enter',
           inputStyle: 'textarea',
           matchBrackets: true,
           autoCloseBrackets: true,
@@ -87,18 +62,17 @@ export const EditorWindow: React.FC<EditorWindowProps> = ({ onContentChange, con
             'authorship-gutters',
             'CodeMirror-foldgutter'
           ],
-          // extraKeys: this.defaultExtraKeys,
+          extraKeys: defaultKeyMap,
           flattenSpans: true,
           addModeClass: true,
-          // autoRefresh: true,
-          // otherCursors: true
+          autoRefresh: true,
+          // otherCursors: true,
           placeholder: t('editor.placeholder')
         }}
+        editorDidMount={mountedEditor => setEditor(mountedEditor)}
         onBeforeChange={(editor, data, value) => {
           onContentChange(value)
         }}
-        onSelection={onSelection}
-      />
-    </div>
+      /></div>
   )
 }

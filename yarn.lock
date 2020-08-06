@@ -12254,6 +12254,11 @@ ts-loader@8.0.2:
     micromatch "^4.0.0"
     semver "^6.0.0"
 
+ts-mockery@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/ts-mockery/-/ts-mockery-1.2.0.tgz#aa76521653d729e99b3808836817f64e61a213dd"
+  integrity sha512-ArGPMUzO4H25KBYVTWmmE36y5bCOFAwC7XdW4CLTqYg+gQcvxJzKoj5URSc+luzwI8QdtwAkHtazBmrKepX81g==
+
 ts-pnp@1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.1.6.tgz#389a24396d425a0d3162e96d2b4638900fdc289a"
