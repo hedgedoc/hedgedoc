@@ -1,8 +1,10 @@
 import { Editor, Position, Range } from 'codemirror'
+import { EmojiData } from 'emoji-mart'
 import { Mock } from 'ts-mockery'
 import {
   addCodeFences,
   addComment,
+  addEmoji,
   addHeaderLevel,
   addImage,
   addLine,
@@ -1637,5 +1639,194 @@ describe('test addTable', () => {
       }
     })
     addTable(editor)
+  })
+})
+
+describe('test addEmoji with native emoji', () => {
+  const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
+  const textFirstLine = testContent.split('\n')[0]
+  const emoji = Mock.of<EmojiData>({
+    native: '👍'
+  })
+  it('just cursor', done => {
+    Mock.extend(editor).with({
+      listSelections: () => (
+        Mock.of<Range[]>([{
+          anchor: cursor.from,
+          head: cursor.to,
+          from: () => cursor.from,
+          to: () => cursor.to,
+          empty: () => true
+        }])
+      ),
+      getLine: (): string => (textFirstLine),
+      replaceRange: (replacement: string | string[]) => {
+        expect(replacement).toEqual('👍')
+        done()
+      }
+    })
+    addEmoji(emoji, editor)
+  })
+
+  it('1st line', done => {
+    Mock.extend(editor).with({
+      listSelections: () => (
+        Mock.of<Range[]>([{
+          anchor: firstLine.from,
+          head: firstLine.to,
+          from: () => firstLine.from,
+          to: () => firstLine.to,
+          empty: () => false
+        }])
+      ),
+      getLine: (): string => (textFirstLine),
+      replaceRange: (replacement: string | string[], from: CodeMirror.Position, to?: CodeMirror.Position) => {
+        expect(from).toEqual(firstLine.from)
+        expect(to).toEqual(firstLine.to)
+        expect(replacement).toEqual('👍')
+        done()
+      }
+    })
+    addEmoji(emoji, editor)
+  })
+
+  it('multiple lines', done => {
+    Mock.extend(editor).with({
+      listSelections: () => (
+        Mock.of<Range[]>([{
+          anchor: multiline.from,
+          head: multiline.to,
+          from: () => multiline.from,
+          to: () => multiline.to,
+          empty: () => false
+        }])
+      ),
+      getLine: (): string => '2nd line',
+      replaceRange: (replacement: string | string[], from: CodeMirror.Position, to?: CodeMirror.Position) => {
+        expect(from).toEqual(multiline.from)
+        expect(to).toEqual(multiline.to)
+        expect(replacement).toEqual('👍')
+        done()
+      }
+    })
+    addEmoji(emoji, editor)
+  })
+
+  it('multiple lines with offset', done => {
+    Mock.extend(editor).with({
+      listSelections: () => (
+        Mock.of<Range[]>([{
+          anchor: multilineOffset.from,
+          head: multilineOffset.to,
+          from: () => multilineOffset.from,
+          to: () => multilineOffset.to,
+          empty: () => false
+        }])
+      ),
+      getLine: (): string => '2nd line',
+      replaceRange: (replacement: string | string[], from: CodeMirror.Position, to?: CodeMirror.Position) => {
+        expect(from).toEqual(multilineOffset.from)
+        expect(to).toEqual(multilineOffset.to)
+        expect(replacement).toEqual('👍')
+        done()
+      }
+    })
+    addEmoji(emoji, editor)
+  })
+})
+
+describe('test addEmoji with native emoji', () => {
+  const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
+  const textFirstLine = testContent.split('\n')[0]
+  // noinspection CheckTagEmptyBody
+  const forkAwesomeIcon = '<i class="fa star"></i>'
+  const emoji = Mock.of<EmojiData>({
+    name: 'star',
+    imageUrl: '/img/forkawesome.png'
+  })
+  it('just cursor', done => {
+    Mock.extend(editor).with({
+      listSelections: () => (
+        Mock.of<Range[]>([{
+          anchor: cursor.from,
+          head: cursor.to,
+          from: () => cursor.from,
+          to: () => cursor.to,
+          empty: () => true
+        }])
+      ),
+      getLine: (): string => (textFirstLine),
+      replaceRange: (replacement: string | string[]) => {
+        expect(replacement).toEqual(forkAwesomeIcon)
+        done()
+      }
+    })
+    addEmoji(emoji, editor)
+  })
+
+  it('1st line', done => {
+    Mock.extend(editor).with({
+      listSelections: () => (
+        Mock.of<Range[]>([{
+          anchor: firstLine.from,
+          head: firstLine.to,
+          from: () => firstLine.from,
+          to: () => firstLine.to,
+          empty: () => false
+        }])
+      ),
+      getLine: (): string => (textFirstLine),
+      replaceRange: (replacement: string | string[], from: CodeMirror.Position, to?: CodeMirror.Position) => {
+        expect(from).toEqual(firstLine.from)
+        expect(to).toEqual(firstLine.to)
+        expect(replacement).toEqual(forkAwesomeIcon)
+        done()
+      }
+    })
+    addEmoji(emoji, editor)
+  })
+
+  it('multiple lines', done => {
+    Mock.extend(editor).with({
+      listSelections: () => (
+        Mock.of<Range[]>([{
+          anchor: multiline.from,
+          head: multiline.to,
+          from: () => multiline.from,
+          to: () => multiline.to,
+          empty: () => false
+        }])
+      ),
+      getLine: (): string => '2nd line',
+      replaceRange: (replacement: string | string[], from: CodeMirror.Position, to?: CodeMirror.Position) => {
+        expect(from).toEqual(multiline.from)
+        expect(to).toEqual(multiline.to)
+        expect(replacement).toEqual(forkAwesomeIcon)
+        done()
+      }
+    })
+    addEmoji(emoji, editor)
+  })
+
+  it('multiple lines with offset', done => {
+    Mock.extend(editor).with({
+      listSelections: () => (
+        Mock.of<Range[]>([{
+          anchor: multilineOffset.from,
+          head: multilineOffset.to,
+          from: () => multilineOffset.from,
+          to: () => multilineOffset.to,
+          empty: () => false
+        }])
+      ),
+      getLine: (): string => '2nd line',
+      replaceRange: (replacement: string | string[], from: CodeMirror.Position, to?: CodeMirror.Position) => {
+        expect(from).toEqual(multilineOffset.from)
+        expect(to).toEqual(multilineOffset.to)
+        expect(replacement).toEqual(forkAwesomeIcon)
+        done()
+      }
+    })
+    addEmoji(emoji, editor)
   })
 })

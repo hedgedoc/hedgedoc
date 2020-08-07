@@ -1,4 +1,5 @@
 import { Editor } from 'codemirror'
+import { BaseEmoji, CustomEmoji, EmojiData } from 'emoji-mart'
 
 export const makeSelectionBold = (editor: Editor): void => wrapTextWith(editor, '**')
 export const makeSelectionItalic = (editor: Editor): void => wrapTextWith(editor, '*')
@@ -21,6 +22,17 @@ export const addImage = (editor: Editor): void => addLink(editor, '!')
 export const addLine = (editor: Editor): void => changeLines(editor, line => `${line}\n----`)
 export const addComment = (editor: Editor): void => changeLines(editor, line => `${line}\n> []`)
 export const addTable = (editor: Editor): void => changeLines(editor, line => `${line}\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text     | Text     |`)
+
+export const addEmoji = (emoji: EmojiData, editor: Editor): void => {
+  let replacement = ''
+  if ((emoji as BaseEmoji).native) {
+    replacement = (emoji as BaseEmoji).native
+  } else if ((emoji as CustomEmoji).imageUrl) {
+    // noinspection CheckTagEmptyBody
+    replacement = `<i class="fa ${(emoji as CustomEmoji).name}"></i>`
+  }
+  insertAtCursor(editor, replacement)
+}
 
 export const wrapTextWith = (editor: Editor, symbol: string, endSymbol?: string): void => {
   if (!editor.getSelection()) {
@@ -96,5 +108,15 @@ export const addLink = (editor: Editor, prefix?: string): void => {
     } else {
       editor.replaceRange(`${prefix || ''}[${selection}](https://)`, from, to, '+input')
     }
+  }
+}
+
+export const insertAtCursor = (editor: Editor, text: string): void => {
+  const cursor = editor.getCursor()
+  const ranges = editor.listSelections()
+  for (const range of ranges) {
+    const from = range.empty() ? { line: cursor.line, ch: cursor.ch } : range.from()
+    const to = range.empty() ? { line: cursor.line, ch: cursor.ch } : range.to()
+    editor.replaceRange(`${text}`, from, to, '+input')
   }
 }
