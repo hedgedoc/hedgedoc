@@ -140,7 +140,7 @@
     "@types/redux-devtools": "3.0.47",
     "@types/redux-devtools-extension": "2.13.2",
     "@types/testing-library__cypress": "5.0.6",
-    "cypress": "4.11.0",
+    "cypress": "4.12.1",
     "eslint-plugin-chai-friendly": "0.6.0",
     "eslint-plugin-cypress": "2.11.1",
     "redux-devtools": "3.6.0",
