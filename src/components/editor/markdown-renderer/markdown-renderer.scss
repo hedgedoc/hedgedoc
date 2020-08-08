@@ -3,6 +3,7 @@
 .markdown-body {
   position: relative;
   font-family: 'Source Sans Pro', "twemoji", sans-serif;
+  word-break: break-word;
 
   .alert > p, .alert > ul {
     margin-bottom: 0;
