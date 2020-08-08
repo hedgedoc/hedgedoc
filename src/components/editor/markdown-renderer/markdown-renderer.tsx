@@ -203,7 +203,9 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
       slugify: slugify
     })
     md.use(linkifyExtra)
-    md.use(MarkdownItParserDebugger)
+    if (process.env.NODE_ENV !== 'production') {
+      md.use(MarkdownItParserDebugger)
+    }
 
     validAlertLevels.forEach(level => {
       md.use(markdownItContainer, level, { render: createRenderContainer(level) })
