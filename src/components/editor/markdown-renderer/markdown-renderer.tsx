@@ -1,5 +1,6 @@
 import equal from 'deep-equal'
 import { DomElement } from 'domhandler'
+import { Data } from 'emoji-mart/dist-es/utils/data'
 import yaml from 'js-yaml'
 import MarkdownIt from 'markdown-it'
 import abbreviation from 'markdown-it-abbr'
@@ -62,6 +63,7 @@ import { QuoteOptionsReplacer } from './replace-components/quote-options/quote-o
 import { TocReplacer } from './replace-components/toc/toc-replacer'
 import { VimeoReplacer } from './replace-components/vimeo/vimeo-replacer'
 import { YoutubeReplacer } from './replace-components/youtube/youtube-replacer'
+import emojiData from 'emoji-mart/data/twitter.json'
 
 export interface MarkdownRendererProps {
   content: string
@@ -71,6 +73,15 @@ export interface MarkdownRendererProps {
   onMetaDataChange?: (yamlMetaData: YAMLMetaData | undefined) => void
   onFirstHeadingChange?: (firstHeading: string | undefined) => void
 }
+
+const markdownItTwitterEmojis = Object.keys((emojiData as unknown as Data).emojis)
+  .reduce((reduceObject, emojiIdentifier) => {
+    const emoji = (emojiData as unknown as Data).emojis[emojiIdentifier]
+    if (emoji.b) {
+      reduceObject[emojiIdentifier] = `&#x${emoji.b};`
+    }
+    return reduceObject
+  }, {} as { [key: string]: string })
 
 export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onMetaDataChange, onFirstHeadingChange, onTocChange, className, wide }) => {
   const [tocAst, setTocAst] = useState<TocAst>()
@@ -142,7 +153,9 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
     } else {
       md.use(plantumlError)
     }
-    md.use(emoji)
+    md.use(emoji, {
+      defs: markdownItTwitterEmojis
+    })
     md.use(abbreviation)
     md.use(definitionList)
     md.use(subscript)
