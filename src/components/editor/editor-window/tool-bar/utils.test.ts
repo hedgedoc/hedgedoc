@@ -1646,7 +1646,7 @@ describe('test addEmoji with native emoji', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
   const textFirstLine = testContent.split('\n')[0]
   const emoji = Mock.of<EmojiData>({
-    native: '👍'
+    colons: ':+1:'
   })
   it('just cursor', done => {
     Mock.extend(editor).with({
@@ -1661,7 +1661,7 @@ describe('test addEmoji with native emoji', () => {
       ),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('👍')
+        expect(replacement).toEqual(':+1:')
         done()
       }
     })
@@ -1683,7 +1683,7 @@ describe('test addEmoji with native emoji', () => {
       replaceRange: (replacement: string | string[], from: CodeMirror.Position, to?: CodeMirror.Position) => {
         expect(from).toEqual(firstLine.from)
         expect(to).toEqual(firstLine.to)
-        expect(replacement).toEqual('👍')
+        expect(replacement).toEqual(':+1:')
         done()
       }
     })
@@ -1705,7 +1705,7 @@ describe('test addEmoji with native emoji', () => {
       replaceRange: (replacement: string | string[], from: CodeMirror.Position, to?: CodeMirror.Position) => {
         expect(from).toEqual(multiline.from)
         expect(to).toEqual(multiline.to)
-        expect(replacement).toEqual('👍')
+        expect(replacement).toEqual(':+1:')
         done()
       }
     })
@@ -1727,7 +1727,7 @@ describe('test addEmoji with native emoji', () => {
       replaceRange: (replacement: string | string[], from: CodeMirror.Position, to?: CodeMirror.Position) => {
         expect(from).toEqual(multilineOffset.from)
         expect(to).toEqual(multilineOffset.to)
-        expect(replacement).toEqual('👍')
+        expect(replacement).toEqual(':+1:')
         done()
       }
     })
