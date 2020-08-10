@@ -106,7 +106,7 @@
     "pdfobject": "^2.0.201604172",
     "pg": "^8.2.1",
     "pg-hstore": "^2.3.3",
-    "prismjs": "^1.6.0",
+    "prismjs": "^1.21.0",
     "randomcolor": "^0.5.3",
     "raphael": "git+https://github.com/dmitrybaranovskiy/raphael",
     "readline-sync": "^1.4.7",
