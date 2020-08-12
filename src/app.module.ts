@@ -7,6 +7,8 @@ import { RevisionsModule } from './revisions/revisions.module';
 import { AuthorsModule } from './authors/authors.module';
 import { HistoryModule } from './history/history.module';
 import { MonitoringModule } from './monitoring/monitoring.module';
+import { PermissionsModule } from './permissions/permissions.module';
+import { GroupsModule } from './groups/groups.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { MonitoringModule } from './monitoring/monitoring.module';
     PublicApiModule,
     HistoryModule,
     MonitoringModule,
+    PermissionsModule,
+    GroupsModule,
   ],
   controllers: [],
   providers: [],
