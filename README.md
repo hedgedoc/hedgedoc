@@ -1,5 +1,7 @@
-CodiMD
+HedgeDoc
 ===
+
+## **Warning**: The `develop` branch contains unstable code. Not suitable for production use! See [here](docs/dev/2.0.md) for development documentation. 
 
 [![#CodiMD on matrix.org][matrix.org-image]][matrix.org-url]
 [![build status][travis-image]][travis-url]
