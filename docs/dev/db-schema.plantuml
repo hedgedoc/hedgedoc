@@ -118,7 +118,7 @@ entity "Group" {
 Note "1" - "1..*" Revision
 Revision "0..*" - "0..*" Authorship
 (Revision, Authorship) .. RevisionAuthorship
-Authorship "1" - "1" User
+Authorship "0..*" - "1" User
 Note "1" - "0..*" User : owner
 Note "1" - "0..*" NoteUserPermission
 NoteUserPermission "1" - "1" User
