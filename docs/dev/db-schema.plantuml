@@ -65,8 +65,6 @@ entity "Revision" {
   *patch : text
   *createdAt : date
   *length : number
-  *authorship : text
-
 }
 
 entity "Authorship" {
