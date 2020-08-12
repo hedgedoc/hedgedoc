@@ -5,38 +5,74 @@ hide circle
 ' avoid problems with angled crows feet
 skinparam linetype ortho
 
-entity "Note" as note {
+entity "Note" {
   *id : uuid <<generated>>
   --
   *shortid : text
   *alias : text
   *viewcount : number
-  *owner_id : uuid <<FK User>>
+  *ownerId : uuid <<FK User>>
 }
 
-entity "User" as user {
+entity "User" {
   *id : uuid <<generated>>
   --
-  *e1_id : number <<FK>>
-  other_details : text
+  *userName : text
+  *displayName : text
+  *createdAt : date
+  *updatedAt : date
+  photo : text
+  email : text
 }
 
-entity "Revision" as revision {
+entity "AuthToken" as authToken{
+  *id : number <<generated>>
+  --
+  *userId : uuid
+  *accessToken : text
+}
+
+entity "Identity" {
+  *id : number
+  --
+  *userId : uuid <<FK User>>
+  ' Identifies the external login provider and is set in the config
+  *providerName : text
+  *syncSource : boolean
+  *createdAt : date
+  *updatedAt : date
+  ' The unique identifier of a user from the login provider
+  providerUserId : text
+  ' Token used to access the OAuth provider in the users name. Can be NULL
+  oauthAccessToken : text
+  ' Password hash. Can be NULL
+  passwordHash : text
+}
+
+entity "Session" as seesion {
+  *id : text
+  --
+  *expiredAt : number
+  *json : text
+}
+
+
+entity "Revision" {
   *id : uuid <<generated>>
   --
-  *note_id : uuid <<FK Note>>
+  *noteId : uuid <<FK Note>>
   *content : text
   *patch : text
   *createdAt : date
   *length : number
   *authorship : text
-  
+
 }
 
-entity "Authorship" as authorship {
+entity "Authorship" {
   *id : uuid <<generated>>
   --
-  *user_id : uuid <FK User>>
+  *userId : uuid <FK User>>
   *startPos : number
   *endPos : number
   *createdAt : date
@@ -44,13 +80,21 @@ entity "Authorship" as authorship {
 }
 
 entity "RevisionAuthorship" {
-  *revision_id : uuid <<FK Revision>>
-  *authorship_id : uuid <<FK Authorship>>
+  *revisionId : uuid <<FK Revision>>
+  *authorshipId : uuid <<FK Authorship>>
 }
 
+entity "AuthorColors" {
+  *noteId : uuid <<FK Note>>
+  *userId : uuid <<FK User>>
+  --
+  *color : text
+}
+
+
 entity "NoteUserPermission" {
-  *user_id : uuid <<FK User>>
-  *note_id : uuid <<FK Note>>
+  *userId : uuid <<FK User>>
+  *noteId : uuid <<FK Note>>
   --
   *canEdit : boolean
 }
@@ -62,26 +106,29 @@ entity "Group" {
   *displayName : text
   ' Is set to denote a special group
   ' Special groups are used to map the old share settings like "everyone can edit"
-  ' or "logged in users can view" to the group permission system 
+  ' or "logged in users can view" to the group permission system
   *special : boolean
   }
-  
+
  entity "NoteGroupPermission" {
-  *group_id : number <<FK Group>>
-  *note_id : uuid <<FK Note>>
+  *groupId : number <<FK Group>>
+  *noteId : uuid <<FK Note>>
   --
   *canEdit : boolean
 }
 
-revision -left[hidden]- note
-
-note "1" - "1..*" revision
-revision "0..*" - "0..*" authorship
-(revision, authorship) .. RevisionAuthorship
-authorship "1" - "1" user 
-note "1" - "0..*" user
-note "1" - "0..*" NoteUserPermission
-NoteUserPermission "1" - "1" user
-note "1" - "0..*" NoteGroupPermission
+Note "1" - "1..*" Revision
+Revision "0..*" - "0..*" Authorship
+(Revision, Authorship) .. RevisionAuthorship
+Authorship "1" - "1" User
+Note "1" - "0..*" User : owner
+Note "1" - "0..*" NoteUserPermission
+NoteUserPermission "1" - "1" User
+Note "1" - "0..*" NoteGroupPermission
 NoteGroupPermission "1" - "1" Group
+Identity "1..*" - "1" User
+authToken "1..*" - "1" User
+seesion "1..*" - "1" User
+Note "0..*" - "0..*" User : color
+(Note, User) .. AuthorColors
 @enduml
