@@ -36,7 +36,8 @@ const ui = getUIElements()
 window.createtime = null
 window.lastchangetime = null
 window.lastchangeui = {
-  status: $('.ui-status-lastchange'),
+  statusChanged: $('.ui-status-lastchange.changed'),
+  statusCreated: $('.ui-status-lastchange.created'),
   time: $('.ui-lastchange'),
   user: $('.ui-lastchangeuser'),
   nouser: $('.ui-no-lastchangeuser')
@@ -48,9 +49,11 @@ export function updateLastChange () {
   if (!window.lastchangeui) return
   if (window.createtime) {
     if (window.createtime && !window.lastchangetime) {
-      window.lastchangeui.status.text('created')
+      window.lastchangeui.statusChanged.hide()
+      window.lastchangeui.statusCreated.show()
     } else {
-      window.lastchangeui.status.text('changed')
+      window.lastchangeui.statusChanged.show()
+      window.lastchangeui.statusCreated.hide()
     }
     const time = window.lastchangetime || window.createtime
     window.lastchangeui.time.html(moment(time).fromNow())
