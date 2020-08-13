@@ -6,19 +6,11 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Author } from '../authors/author.entity';
+import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
+import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Revision } from '../revisions/revision.entity';
 import { User } from '../users/user.entity';
-
-// permission types
-enum PermissionEnum {
-  freely = 'freely',
-  editable = 'editable',
-  limited = 'limited',
-  locked = 'locked',
-  protected = 'protected',
-  private = 'private',
-}
+import { AuthorColor } from './author-color.entity';
 
 @Entity('Notes')
 export class Note {
@@ -37,10 +29,17 @@ export class Note {
   })
   alias: string;
 
-  @Column({
-    type: 'text',
-  })
-  permission: PermissionEnum;
+  @OneToMany(
+    _ => NoteGroupPermission,
+    groupPermission => groupPermission.note,
+  )
+  groupPermissions: NoteGroupPermission[];
+
+  @OneToMany(
+    _ => NoteUserPermission,
+    userPermission => userPermission.note,
+  )
+  userPermissions: NoteUserPermission[];
 
   @Column({
     nullable: false,
@@ -48,19 +47,12 @@ export class Note {
   })
   viewcount: number;
 
-  @Column({
-    nullable: true,
-  })
-  lastchangeAt: Date;
-
-  @Column()
-  savedAt: Date;
-
-  @ManyToOne(_ => User, { onDelete: 'CASCADE' })
+  @ManyToOne(
+    _ => User,
+    user => user.ownedNotes,
+    { onDelete: 'CASCADE' },
+  )
   owner: User;
-
-  @ManyToOne(_ => User)
-  lastchangeuser: User;
 
   @OneToMany(
     _ => Revision,
@@ -69,39 +61,12 @@ export class Note {
   revisions: Revision[];
 
   @OneToMany(
-    _ => Author,
-    author => author.note,
+    _ => AuthorColor,
+    authorColor => authorColor.note,
   )
-  authors: Author[];
+  authorColors: AuthorColor[];
 
-  @Column({
-    type: 'text',
-    nullable: true,
-  })
-  title: string;
-
-  @Column({
-    type: 'text',
-  })
-  content: string;
-
-  @Column({
-    type: 'text',
-    nullable: true,
-  })
-  authorship: string;
-
-  constructor(
-    shortid: string,
-    alias: string,
-    permission: PermissionEnum,
-    lastchangeAt: Date,
-    savedAt: Date,
-    owner: User,
-    title: string,
-    content: string,
-    authorship: string,
-  ) {
+  constructor(shortid: string, alias: string, owner: User) {
     if (shortid) {
       this.shortid = shortid;
     } else {
@@ -109,12 +74,6 @@ export class Note {
       this.shortid = shortIdGenerate() as string;
     }
     this.alias = alias;
-    this.permission = permission;
-    this.lastchangeAt = lastchangeAt;
-    this.savedAt = savedAt;
     this.owner = owner;
-    this.title = title;
-    this.content = content;
-    this.authorship = authorship;
   }
 }
