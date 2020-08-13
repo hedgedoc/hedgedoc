@@ -1,6 +1,6 @@
 /* eslint-env browser, jquery */
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-/* global moment, serverurl */
+/* global moment, serverurl, Cookies */
 
 import Prism from 'prismjs'
 import hljs from 'highlight.js'
@@ -30,6 +30,11 @@ require('./lib/common/login')
 require('../vendor/md-toc')
 var Viz = require('viz.js')
 const ui = getUIElements()
+
+if (Cookies.get('locale')) {
+  const lang = Cookies.get('locale')
+  moment.locale(lang)
+}
 
 // auto update last change
 window.createtime = null

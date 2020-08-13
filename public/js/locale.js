@@ -21,6 +21,7 @@ if (Cookies.get('locale')) {
 }
 
 locale.val(lang)
+window.moment.locale(lang)
 $('select.ui-locale option[value="' + lang + '"]').attr('selected', 'selected')
 
 locale.change(function () {
