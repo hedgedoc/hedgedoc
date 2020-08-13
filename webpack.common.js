@@ -129,52 +129,54 @@ module.exports = {
       filename: path.join(__dirname, 'public/views/build/slide-pack-scripts.ejs'),
       inject: false
     }),
-    new CopyWebpackPlugin([
-      {
-        context: path.join(__dirname, 'node_modules/mathjax/unpacked'),
-        from: {
-          glob: '**/*',
-          dot: false
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          context: path.join(__dirname, 'node_modules/mathjax/unpacked'),
+          from: '**/*',
+          globOptions: {
+            dot: false
+          },
+          to: 'MathJax/'
         },
-        to: 'MathJax/'
-      },
-      {
-        context: path.join(__dirname, 'node_modules/mathjax/fonts'),
-        from: {
-          glob: '**/*',
-          dot: false
+        {
+          context: path.join(__dirname, 'node_modules/mathjax/fonts'),
+          from: '**/*',
+          globOptions: {
+            dot: false
+          },
+          to: 'fonts/'
         },
-        to: 'fonts/'
-      },
-      {
-        context: path.join(__dirname, 'node_modules/emojify.js'),
-        from: {
-          glob: 'dist/**/*',
-          dot: false
+        {
+          context: path.join(__dirname, 'node_modules/emojify.js'),
+          from: 'dist/**/*',
+          globOptions: {
+            dot: false
+          },
+          to: 'emojify.js/'
         },
-        to: 'emojify.js/'
-      },
-      {
-        context: path.join(__dirname, 'node_modules/reveal.js'),
-        from: 'js',
-        to: 'reveal.js/js'
-      },
-      {
-        context: path.join(__dirname, 'node_modules/reveal.js'),
-        from: 'css',
-        to: 'reveal.js/css'
-      },
-      {
-        context: path.join(__dirname, 'node_modules/reveal.js'),
-        from: 'lib',
-        to: 'reveal.js/lib'
-      },
-      {
-        context: path.join(__dirname, 'node_modules/reveal.js'),
-        from: 'plugin',
-        to: 'reveal.js/plugin'
-      }
-    ]),
+        {
+          context: path.join(__dirname, 'node_modules/reveal.js'),
+          from: 'js',
+          to: 'reveal.js/js'
+        },
+        {
+          context: path.join(__dirname, 'node_modules/reveal.js'),
+          from: 'css',
+          to: 'reveal.js/css'
+        },
+        {
+          context: path.join(__dirname, 'node_modules/reveal.js'),
+          from: 'lib',
+          to: 'reveal.js/lib'
+        },
+        {
+          context: path.join(__dirname, 'node_modules/reveal.js'),
+          from: 'plugin',
+          to: 'reveal.js/plugin'
+        }
+      ]
+    }),
     new MiniCssExtractPlugin()
   ],
 
@@ -394,12 +396,12 @@ module.exports = {
     }, {
       test: /\.css$/,
       use: [
-      {
-        loader: MiniCssExtractPlugin.loader,
-        options: {
+        {
+          loader: MiniCssExtractPlugin.loader,
+          options: {
             publicPath: '',
-        }
-      },
+          }
+        },
         'css-loader'
       ]
     }, {
