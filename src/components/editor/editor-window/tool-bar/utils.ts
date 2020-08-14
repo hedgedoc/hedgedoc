@@ -22,7 +22,7 @@ export const addImage = (editor: Editor): void => addLink(editor, '!')
 
 export const addLine = (editor: Editor): void => changeLines(editor, line => `${line}\n----`)
 export const addComment = (editor: Editor): void => changeLines(editor, line => `${line}\n> []`)
-export const addTable = (editor: Editor): void => changeLines(editor, line => `${line}\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text     | Text     |`)
+export const addTable = (editor: Editor): void => changeLines(editor, line => `${line}\n| # 1  | # 2  | # 3  |\n| ---- | ---- | ---- |\n| Text | Text | Text |`)
 
 export const addEmoji = (emoji: EmojiData, editor: Editor): void => {
   insertAtCursor(editor, getEmojiShortCode(emoji))

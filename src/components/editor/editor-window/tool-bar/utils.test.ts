@@ -1558,7 +1558,7 @@ describe('test addComment', () => {
 describe('test addTable', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
   const textFirstLine = testContent.split('\n')[0]
-  const table = '| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text     | Text     |'
+  const table = '| # 1  | # 2  | # 3  |\n| ---- | ---- | ---- |\n| Text | Text | Text |'
   it('just cursor', done => {
     Mock.extend(editor).with({
       listSelections: () => (
