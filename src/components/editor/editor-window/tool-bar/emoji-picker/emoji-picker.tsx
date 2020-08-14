@@ -1,7 +1,7 @@
-import { Data, EmojiData, NimblePicker } from 'emoji-mart'
+import { CustomEmoji, Data, EmojiData, NimblePicker } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import emojiData from 'emoji-mart/data/twitter.json'
-import React, { useMemo, useRef } from 'react'
+import React, { useRef } from 'react'
 import { useClickAway } from 'react-use'
 import { ShowIf } from '../../../../common/show-if/show-if'
 import './emoji-picker.scss'
@@ -13,18 +13,18 @@ export interface EmojiPickerProps {
   onDismiss: () => void
 }
 
+export const customEmojis: CustomEmoji[] = Object.keys(ForkAwesomeIcons).map((name) => ({
+  name: `fa-${name}`,
+  short_names: [`fa-${name.toLowerCase()}`],
+  text: '',
+  emoticons: [],
+  keywords: ['fork awesome'],
+  imageUrl: '/img/forkawesome.png',
+  customCategory: 'ForkAwesome'
+}))
+
 export const EmojiPicker: React.FC<EmojiPickerProps> = ({ show, onEmojiSelected, onDismiss }) => {
   const pickerRef = useRef(null)
-  const customIcons = useMemo(() =>
-    Object.keys(ForkAwesomeIcons).map((name) => ({
-      name: `fa-${name}`,
-      short_names: [`fa-${name.toLowerCase()}`],
-      text: '',
-      emoticons: [],
-      keywords: ['fork awesome'],
-      imageUrl: '/img/forkawesome.png',
-      customCategory: 'ForkAwesome'
-    })), [])
 
   useClickAway(pickerRef, () => {
     onDismiss()
@@ -39,7 +39,7 @@ export const EmojiPicker: React.FC<EmojiPickerProps> = ({ show, onEmojiSelected,
           onSelect={onEmojiSelected}
           theme={'auto'}
           title=''
-          custom={customIcons}
+          custom={customEmojis}
         />
       </div>
     </ShowIf>

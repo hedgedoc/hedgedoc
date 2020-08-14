@@ -1,4 +1,4 @@
-import { Editor } from 'codemirror'
+import { Editor, EditorChange } from 'codemirror'
 import 'codemirror/addon/comment/comment'
 import 'codemirror/addon/display/autorefresh'
 import 'codemirror/addon/display/fullscreen'
@@ -10,14 +10,16 @@ import 'codemirror/addon/edit/matchbrackets'
 import 'codemirror/addon/edit/matchtags'
 import 'codemirror/addon/fold/foldcode'
 import 'codemirror/addon/fold/foldgutter'
+import 'codemirror/addon/hint/show-hint'
 import 'codemirror/addon/search/match-highlighter'
 import 'codemirror/addon/selection/active-line'
 import 'codemirror/keymap/sublime.js'
 import 'codemirror/mode/gfm/gfm.js'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Controlled as ControlledCodeMirror } from 'react-codemirror2'
 import { useTranslation } from 'react-i18next'
 import './editor-window.scss'
+import { emojiHints, emojiWordRegex, findWordAtCursor } from './hints/emoji'
 import { defaultKeyMap } from './key-map'
 import { ToolBar } from './tool-bar/tool-bar'
 
@@ -26,9 +28,27 @@ export interface EditorWindowProps {
   content: string
 }
 
+const hintOptions = {
+  hint: emojiHints,
+  completeSingle: false,
+  completeOnSingleClick: false,
+  alignWithWord: true
+}
+
+const onChange = (editor: Editor) => {
+  const searchTerm = findWordAtCursor(editor)
+  if (emojiWordRegex.test(searchTerm.text)) {
+    editor.showHint(hintOptions)
+  }
+}
+
 export const EditorWindow: React.FC<EditorWindowProps> = ({ onContentChange, content }) => {
   const { t } = useTranslation()
   const [editor, setEditor] = useState<Editor>()
+
+  const onBeforeChange = useCallback((editor: Editor, data: EditorChange, value: string) => {
+    onContentChange(value)
+  }, [onContentChange])
 
   return (
     <div className={'d-flex flex-column h-100'}>
@@ -67,12 +87,13 @@ export const EditorWindow: React.FC<EditorWindowProps> = ({ onContentChange, con
           addModeClass: true,
           autoRefresh: true,
           // otherCursors: true,
-          placeholder: t('editor.placeholder')
+          placeholder: t('editor.placeholder'),
+          showHint: false,
+          hintOptions: hintOptions
         }}
         editorDidMount={mountedEditor => setEditor(mountedEditor)}
-        onBeforeChange={(editor, data, value) => {
-          onContentChange(value)
-        }}
+        onBeforeChange={onBeforeChange}
+        onChange={onChange}
       /></div>
   )
 }
