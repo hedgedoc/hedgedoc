@@ -15,34 +15,34 @@
         },
         "history": {
             "error": {
-              "getHistory": {
-                  "title": "Load History Error",
-                  "text": "While trying to load the history form the server an error occurred"
-              },
-              "deleteHistory": {
-                  "title": "Delete History Error",
-                  "text": "While trying to delete the history on the server an error occurred"
-              },
-              "setHistory": {
-                  "title": "Upload History Error",
-                  "text": "While trying to upload the history to the server an error occurred"
-              },
-              "deleteNote": {
-                  "title": "Delete Note Error",
-                  "text": "While trying to delete a note on the server an error occurred"
-              },
-              "updateEntry": {
-                  "title": "Update History Entry Error",
-                  "text": "While trying to update a history entry on the server an error occurred"
-              },
-              "deleteEntry": {
-                  "title": "Delete History Entry Error",
-                  "text": "While trying to delete a history entry on the server an error occurred"
-              },
-              "notFoundEntry": {
-                  "title": "History Entry not found",
-                  "text": "We can't find the history entry you requested."
-              }
+                "getHistory": {
+                    "title": "Load History Error",
+                    "text": "While trying to load the history form the server an error occurred"
+                },
+                "deleteHistory": {
+                    "title": "Delete History Error",
+                    "text": "While trying to delete the history on the server an error occurred"
+                },
+                "setHistory": {
+                    "title": "Upload History Error",
+                    "text": "While trying to upload the history to the server an error occurred"
+                },
+                "deleteNote": {
+                    "title": "Delete Note Error",
+                    "text": "While trying to delete a note on the server an error occurred"
+                },
+                "updateEntry": {
+                    "title": "Update History Entry Error",
+                    "text": "While trying to update a history entry on the server an error occurred"
+                },
+                "deleteEntry": {
+                    "title": "Delete History Entry Error",
+                    "text": "While trying to delete a history entry on the server an error occurred"
+                },
+                "notFoundEntry": {
+                    "title": "History Entry not found",
+                    "text": "We can't find the history entry you requested."
+                }
             },
             "noHistory": "No history",
             "localHistory": "Below is history from this browser",
@@ -313,7 +313,7 @@
             "clickToLoad": "Click to load"
         }
     },
-    "common":  {
+    "common": {
         "import": "Import",
         "export": "Export",
         "refresh": "Refresh",

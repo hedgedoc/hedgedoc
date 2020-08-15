@@ -182,7 +182,7 @@
         "signIn": "Entrar",
         "signOut": "Sair",
         "register": {
-          "title": "Register"
+            "title": "Register"
         },
         "auth": {
             "error": {}

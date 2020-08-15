@@ -182,7 +182,7 @@
         "signIn": "لِج",
         "signOut": "خروج",
         "register": {
-          "title": "انشئ حسابا"
+            "title": "انشئ حسابا"
         },
         "auth": {
             "error": {}
