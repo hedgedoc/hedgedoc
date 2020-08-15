@@ -3,7 +3,7 @@
   "license": "AGPL-3.0",
   "version": "0.1.0",
   "dependencies": {
-    "@testing-library/jest-dom": "5.11.2",
+    "@testing-library/jest-dom": "5.11.3",
     "@testing-library/react": "10.4.8",
     "@testing-library/user-event": "12.1.1",
     "@types/codemirror": "0.0.97",
