@@ -8004,7 +8004,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@4.17.19, "lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.5, lodash@^4.2.0, lodash@~4.17.10:
+lodash@4.17.19, "lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.5, lodash@~4.17.10:
   version "4.17.19"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
   integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
@@ -10191,7 +10191,7 @@ prop-types-extra@^1.1.0:
     react-is "^16.3.2"
     warning "^4.0.0"
 
-prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -10812,22 +10812,22 @@ redux-devtools-extension@*, redux-devtools-extension@2.13.8:
   resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.8.tgz#37b982688626e5e4993ff87220c9bbb7cd2d96e1"
   integrity sha512-8qlpooP2QqPtZHQZRhx3x3OP5skEV1py/zUdMY28WNAocbafxdG2tRD1MWE7sp8obGMNYuLWanhhQ7EQvT1FBg==
 
-redux-devtools-instrument@^1.9.0:
-  version "1.9.6"
-  resolved "https://registry.yarnpkg.com/redux-devtools-instrument/-/redux-devtools-instrument-1.9.6.tgz#6b412595f74b9d48cfd4ecc13e585b1588ed6e7e"
-  integrity sha512-MwvY4cLEB2tIfWWBzrUR02UM9qRG2i7daNzywRvabOSVdvAY7s9BxSwMmVRH1Y/7QWjplNtOwgT0apKhHg2Qew==
+redux-devtools-instrument@^1.9.7:
+  version "1.9.7"
+  resolved "https://registry.yarnpkg.com/redux-devtools-instrument/-/redux-devtools-instrument-1.9.7.tgz#ea3103c27da3ad2d37e197a885430fa43a0c9580"
+  integrity sha512-QUc2GwRy7I1zhUVsrsRzopptOzT7kTYkLhKoO2Z1sNChVRrbzV0BKwyyQPShpsRrxvpl2ZF1qn93I688AWn4dg==
   dependencies:
-    lodash "^4.2.0"
-    symbol-observable "^1.0.2"
+    lodash "^4.17.19"
+    symbol-observable "^1.2.0"
 
-redux-devtools@3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/redux-devtools/-/redux-devtools-3.6.0.tgz#8fe434bbb743b622c7ef1a6f49b586c12721081c"
-  integrity sha512-tA/H0nhuD4NxNf2yX2gnd9uHclj7nWmMQKsgkCLSJohmb/IfaGIa6/kotLbTch1pfDuRzx1ojIIr0EoVi1QPuA==
+redux-devtools@3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/redux-devtools/-/redux-devtools-3.6.1.tgz#b9e11ed14b2dd9e9d492ab90fabd64f8476a7475"
+  integrity sha512-z0OFPb3WGmYgJ1KOAGVH3Ri7KLmH1HPax3ZelOzu2S3PqzXmLegaO6/LpvEiH6ZUQc07lHpSrHCFNKCRBRwEiQ==
   dependencies:
-    lodash "^4.2.0"
-    prop-types "^15.5.7"
-    redux-devtools-instrument "^1.9.0"
+    lodash "^4.17.19"
+    prop-types "^15.7.2"
+    redux-devtools-instrument "^1.9.7"
 
 redux@4.0.5, redux@^4.0.0, redux@^4.0.4:
   version "4.0.5"
@@ -12159,7 +12159,7 @@ svgo@^1.0.0, svgo@^1.2.2:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-symbol-observable@^1.0.2, symbol-observable@^1.1.0, symbol-observable@^1.2.0:
+symbol-observable@^1.1.0, symbol-observable@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
   integrity sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==
