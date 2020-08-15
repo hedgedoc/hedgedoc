@@ -7,7 +7,7 @@ import { ApplicationState } from '../../../../redux'
 import frontendVersion from '../../../../version.json'
 import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
 import { ShowIf } from '../../../common/show-if/show-if'
-import { VersionInputField } from './version-input-field'
+import { CopyableField } from '../../../common/copyable-field/copyable-field'
 
 export const VersionInfo: React.FC = () => {
   const [show, setShow] = useState(false)
@@ -22,7 +22,7 @@ export const VersionInfo: React.FC = () => {
   const column = (title: string, version: string, sourceCodeLink: string, issueTrackerLink: string) => (
     <Col md={6} className={'flex-column'}>
       <h5>{title}</h5>
-      <VersionInputField version={version}/>
+      <CopyableField content={version}/>
       <ShowIf condition={!!sourceCodeLink}>
         <TranslatedExternalLink i18nKey={'landing.versionInfo.sourceCode'} className={'btn btn-sm btn-primary d-block mb-2'} href={sourceCodeLink}/>
       </ShowIf>

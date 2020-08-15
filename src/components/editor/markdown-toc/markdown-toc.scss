@@ -52,11 +52,11 @@
 .markdown-toc-sidebar-button {
   position: fixed;
   right: 40px;
-  bottom: 20px;
+  bottom: 30px;
 
   &>.dropup {
     position: sticky;
     bottom: 20px;
-    right: 0px;
+    right: 0;
   }
 }

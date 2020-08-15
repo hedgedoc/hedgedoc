@@ -123,10 +123,10 @@
             "image": "Слика",
             "uploadImage": "Пошаљи слику"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Мени",
             "new": "Ново",
-            "publish": "Објави",
+            "shareLink": "",
             "extra": "Додатно",
             "revision": "Ревизија",
             "slideMode": "Презентациони мод",

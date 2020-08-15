@@ -123,10 +123,10 @@
             "image": "Ảnh",
             "uploadImage": "Tải ảnh lên"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Menu",
             "new": "Mới",
-            "publish": "Xuất bản",
+            "shareLink": "",
             "extra": "Extra",
             "revision": "Sửa đổi",
             "slideMode": "Chế độ slide",

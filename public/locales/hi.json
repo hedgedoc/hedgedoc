@@ -108,10 +108,10 @@
             "image": "तस्वीर",
             "uploadImage": "तस्वीर डालिये"
         },
-        "menu": {
+        "documentBar": {
             "menu": "मेन्यू",
             "new": "नया",
-            "publish": "प्रकाशित करें",
+            "shareLink": "",
             "extra": "अतिरिक्त",
             "revision": "संशोधन",
             "slideMode": "स्लाइड मोड",

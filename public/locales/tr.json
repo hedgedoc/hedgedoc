@@ -108,10 +108,10 @@
             "image": "Resim",
             "uploadImage": "Resim Yükle"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Menü",
             "new": "Yeni",
-            "publish": "Yayınla",
+            "shareLink": "",
             "extra": "Ekstra",
             "revision": "Sürüm",
             "slideMode": "Slayt Modu",

@@ -124,10 +124,10 @@
             "image": "Изображение",
             "uploadImage": "Загрузить изображение"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Меню",
             "new": "Новая",
-            "publish": "Опубликовать",
+            "shareLink": "",
             "extra": "Дополнительно",
             "revision": "Изменения",
             "slideMode": "Режим слайдера",

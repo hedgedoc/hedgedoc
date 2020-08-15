@@ -124,10 +124,10 @@
             "image": "Foto",
             "uploadImage": "Foto hochladen"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Menü",
             "new": "Neu",
-            "publish": "Veröffentlichen",
+            "shareLink": "Link teilen",
             "extra": "Extra",
             "revision": "Version",
             "slideMode": "Präsentationsmodus",

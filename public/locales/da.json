@@ -108,10 +108,10 @@
             "image": "Billede",
             "uploadImage": "Upload billede"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Menu",
             "new": "Ny",
-            "publish": "Publicér",
+            "shareLink": "",
             "extra": "Ekstra",
             "revision": "Revision",
             "slideMode": "Præsentationstilstand",

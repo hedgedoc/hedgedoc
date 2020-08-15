@@ -1,22 +1,28 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { ShowIf } from '../../../common/show-if/show-if'
 import './user-avatar.scss'
 
 export interface UserAvatarProps {
     name: string;
     photo: string;
     additionalClasses?: string;
+    showName?: boolean
 }
 
-const UserAvatar: React.FC<UserAvatarProps> = ({ name, photo, additionalClasses = '' }) => {
-  // ToDo: add Translation Key for Avatar of ${name}
+const UserAvatar: React.FC<UserAvatarProps> = ({ name, photo, additionalClasses = '', showName = true }) => {
+  const { t } = useTranslation()
+
   return (
     <span className={'d-inline-flex align-items-center ' + additionalClasses}>
       <img
         src={photo}
-        className="user-avatar"
-        alt={`Avatar of ${name}`}
+        className="user-avatar rounded"
+        alt={t('common.avatarOf', { name })}
       />
-      <span className="mx-1 user-name">{name}</span>
+      <ShowIf condition={showName}>
+        <span className="mx-1 user-name">{name}</span>
+      </ShowIf>
     </span>
   )
 }

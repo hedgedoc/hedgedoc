@@ -108,10 +108,10 @@
             "image": "Slika",
             "uploadImage": "Prenesi sliku"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Meni",
             "new": "Novo",
-            "publish": "Objavi",
+            "shareLink": "",
             "extra": "Dodatno",
             "revision": "Revizija",
             "slideMode": "Način slajda",

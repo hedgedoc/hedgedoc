@@ -108,10 +108,10 @@
             "image": "Bildo",
             "uploadImage": "Alŝutu bildon"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Menuo",
             "new": "Nova",
-            "publish": "Dissendu",
+            "shareLink": "",
             "extra": "Plia",
             "revision": "Versio",
             "slideMode": "Bildvica modo",

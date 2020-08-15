@@ -124,10 +124,10 @@
             "image": "Gambar",
             "uploadImage": "Unggah Gambar"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Menu",
             "new": "Baru",
-            "publish": "Terbitkan",
+            "shareLink": "",
             "extra": "Tambahan",
             "revision": "Revisi",
             "slideMode": "Mode Slide",

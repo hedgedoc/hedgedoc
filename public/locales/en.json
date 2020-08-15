@@ -16,32 +16,32 @@
         "history": {
             "error": {
               "getHistory": {
-                "title": "Load History Error",
-                "text": "While trying to load the history form the server an error occurred"
+                  "title": "Load History Error",
+                  "text": "While trying to load the history form the server an error occurred"
               },
               "deleteHistory": {
-                "title": "Delete History Error",
-                "text": "While trying to delete the history on the server an error occurred"
+                  "title": "Delete History Error",
+                  "text": "While trying to delete the history on the server an error occurred"
               },
               "setHistory": {
-                "title": "Upload History Error",
-                "text": "While trying to upload the history to the server an error occurred"
+                  "title": "Upload History Error",
+                  "text": "While trying to upload the history to the server an error occurred"
               },
               "deleteNote": {
-                "title": "Delete Note Error",
-                "text": "While trying to delete a note on the server an error occurred"
+                  "title": "Delete Note Error",
+                  "text": "While trying to delete a note on the server an error occurred"
               },
               "updateEntry": {
-                "title": "Update History Entry Error",
-                "text": "While trying to update a history entry on the server an error occurred"
+                  "title": "Update History Entry Error",
+                  "text": "While trying to update a history entry on the server an error occurred"
               },
               "deleteEntry": {
-                "title": "Delete History Entry Error",
-                "text": "While trying to delete a history entry on the server an error occurred"
+                  "title": "Delete History Entry Error",
+                  "text": "While trying to delete a history entry on the server an error occurred"
               },
               "notFoundEntry": {
-                "title": "History Entry not found",
-                "text": "We can't find the history entry you requested."
+                  "title": "History Entry not found",
+                  "text": "We can't find the history entry you requested."
               }
             },
             "noHistory": "No history",
@@ -72,10 +72,10 @@
                     "tooNewVersion": "The file '{{fileName}}' comes from a newer client and can't be imported."
                 },
                 "removeNote": {
-                  "title": "Remove note from history",
-                  "question": "Do you really want to remove this note from your history?",
-                  "warning": "This just removes the history entry and won't delete the note itself.",
-                  "button": "Remove note from history"
+                    "title": "Remove note from history",
+                    "question": "Do you really want to remove this note from your history?",
+                    "warning": "This just removes the history entry and won't delete the note itself.",
+                    "button": "Remove note from history"
                 }
             },
             "tableHeader": {
@@ -85,11 +85,11 @@
                 "lastVisit": "Last Visit"
             },
             "menu": {
-              "recentNotes": "Recent notes",
-              "entryLocal": "Saved in your browser history",
-              "entryRemote": "Saved in your user history",
-              "removeEntry": "Remove from history",
-              "deleteNote": "Delete note"
+                "recentNotes": "Recent notes",
+                "entryLocal": "Saved in your browser history",
+                "entryRemote": "Saved in your user history",
+                "removeEntry": "Remove from history",
+                "deleteNote": "Delete note"
             }
         },
         "navigation": {
@@ -219,21 +219,41 @@
             "uploadImage": "Upload Image",
             "table": "Table",
             "line": "Horizontal line",
-            "comment": "Comment"
+            "comment": "Comment",
+            "preferences": "Editor settings",
+            "emoji": "Open emoji picker"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Menu",
+            "import": "Import",
+            "export": "Export",
             "new": "New",
-            "publish": "Publish",
+            "shareLink": "Share link",
             "extra": "Extra",
             "revision": "Revision",
             "slideMode": "Slide Mode",
             "download": "Download",
             "help": "Help",
-            "deleteNote": "Delete note"
+            "deleteNote": "Delete note",
+            "permissions": "Permissions",
+            "documentInfo": "Document info",
+            "pinNoteToHistory": "Pin note to history",
+            "pinnedToHistory": "Pinned to history"
+        },
+        "statusBar": {
+            "cursor": "Line {{line}}, Columns {{columns}}",
+            "selection": {
+                "column": "Selected {{count}} columns",
+                "line": "Selected {{count}} lines"
+            },
+            "lines": "{{lines}} Lines",
+            "length": "Length {{length}}",
+            "lengthTooltip": "You can write up to 100000 characters in this document."
         },
         "export": {
-            "rawHtml": "Raw HTML"
+            "rawHtml": "Raw HTML",
+            "pdf": "PDF export is unavailable.",
+            "why": "Why?"
         },
         "import": {
             "clipboard": "Clipboard"
@@ -243,6 +263,13 @@
                 "title": "Import from Snippet",
                 "selectProject": "Select From Available Projects",
                 "selectSnippet": "Select From Available Snippets"
+            },
+            "documentInfo": {
+                "title": "Document info",
+                "created": "<0></0> created this note <1></1> ago",
+                "edited": "<0></0> was the last editor <1></1> ago",
+                "usersContributed": "<0></0> users contributed to this document",
+                "revisions": "<0></0> revisions are saved"
             },
             "gistImport": {
                 "title": "Import from Gist",
@@ -265,10 +292,25 @@
                 "question": "Do you really want to delete this note?",
                 "warning": "All users will lose their connection. This process is irreversible.",
                 "button": "Delete note"
+            },
+            "permissions": {
+                "title": "Permissions"
+            },
+            "shareLink": {
+                "title": "Share link",
+                "viewOnlyDescription": "This link points to a read-only version of this note. You can use this e.g. for feedback from friends and colleagues."
+            },
+            "preferences": {
+                "title": "Preferences",
+                "theme": "Editor theme",
+                "keyMap": "Keymap",
+                "indentWithTabs": "Tab character",
+                "indentUnit": "Tab size (when using spaces)",
+                "spellChecker": "Spell checking"
             }
         },
         "embeddings": {
-          "clickToLoad": "Click to load"
+            "clickToLoad": "Click to load"
         }
     },
     "common":  {
@@ -280,7 +322,8 @@
         "close": "Close",
         "save": "Save",
         "or": "or",
-        "and": "and"
+        "and": "and",
+        "avatarOf": "avatar of '{{name}}'"
     },
     "login": {
         "chooseMethod": "Choose method",
@@ -297,15 +340,15 @@
             }
         },
         "register": {
-          "title": "Register",
-          "passwordAgain": "Password (again)",
-          "usernameInfo": "The username is your unique identifier for login.",
-          "passwordInfo": "Choose a unique and secure password. It must contain at least 8 characters.",
-          "infoTermsPrivacy": "With the registration of my user account I agree to the following terms:",
-          "error": {
-            "usernameExisting": "There is already an account with this username.",
-            "other": "There was an error while registering your account. Just try it again."
-          }
+            "title": "Register",
+            "passwordAgain": "Password (again)",
+            "usernameInfo": "The username is your unique identifier for login.",
+            "passwordInfo": "Choose a unique and secure password. It must contain at least 8 characters.",
+            "infoTermsPrivacy": "With the registration of my user account I agree to the following terms:",
+            "error": {
+                "usernameExisting": "There is already an account with this username.",
+                "other": "There was an error while registering your account. Just try it again."
+            }
         }
     }
 }

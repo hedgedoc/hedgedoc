@@ -2,8 +2,8 @@ import React from 'react'
 import './active-indicator.scss'
 
 export enum ActiveIndicatorStatus {
-  ACTIVE ='active',
-  INACTIVE ='inactive'
+  ACTIVE = 'active',
+  INACTIVE = 'inactive'
 }
 
 export interface ActiveIndicatorProps {

@@ -120,10 +120,10 @@
             "image": "이미지",
             "uploadImage": "이미지 업로드"
         },
-        "menu": {
+        "documentBar": {
             "menu": "메뉴",
             "new": "새",
-            "publish": "공개하기",
+            "shareLink": "",
             "extra": "추가",
             "revision": "기록",
             "slideMode": "슬라이드 모드",

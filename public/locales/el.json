@@ -108,10 +108,10 @@
             "image": "Εικόνα",
             "uploadImage": "Ανέβασμα φωτογραφίας"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Μενού",
             "new": "Νέο",
-            "publish": "Δημοσίευση",
+            "shareLink": "",
             "extra": "Επιπλέον",
             "revision": "Αναθεώρηση",
             "slideMode": "Λειτουργία με σύρσιμο",

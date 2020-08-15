@@ -124,10 +124,10 @@
             "image": "Obrázek",
             "uploadImage": "Nahrát obrázek"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Menu",
             "new": "Nová",
-            "publish": "Publikovat",
+            "shareLink": "",
             "extra": "Extra",
             "revision": "Revize",
             "slideMode": "Režim prezentace",

@@ -124,10 +124,10 @@
             "image": "صورة",
             "uploadImage": "تحميل صورة"
         },
-        "menu": {
+        "documentBar": {
             "menu": "القائمة",
             "new": "جديد",
-            "publish": "انشر",
+            "shareLink": "",
             "extra": "إضافي",
             "revision": "مراجعة",
             "slideMode": "نمط الشرائح التقديمية",

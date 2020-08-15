@@ -124,10 +124,10 @@
             "image": "圖片",
             "uploadImage": "上傳圖片"
         },
-        "menu": {
+        "documentBar": {
             "menu": "選單",
             "new": "新增",
-            "publish": "發表",
+            "shareLink": "",
             "extra": "增益",
             "revision": "修訂版本",
             "slideMode": "簡報模式",

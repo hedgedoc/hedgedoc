@@ -124,10 +124,10 @@
             "image": "Imatge",
             "uploadImage": "Pujar imatge"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Menú",
             "new": "Nou",
-            "publish": "Publicar",
+            "shareLink": "",
             "extra": "Extra",
             "revision": "Revisió",
             "slideMode": "Mode presentació",

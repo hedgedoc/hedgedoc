@@ -124,10 +124,10 @@
             "image": "Bild",
             "uploadImage": "Ladda upp bilder"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Meny",
             "new": "Ny",
-            "publish": "Publicera",
+            "shareLink": "",
             "extra": "Extra",
             "revision": "Revision",
             "slideMode": "Slide Mode",

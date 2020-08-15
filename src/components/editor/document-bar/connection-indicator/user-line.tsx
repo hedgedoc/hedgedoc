@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { UserAvatar } from '../../landing/layout/user-avatar/user-avatar'
+import { UserAvatar } from '../../../landing/layout/user-avatar/user-avatar'
 import { ActiveIndicator, ActiveIndicatorStatus } from './active-indicator'
 import './user-line.scss'
 

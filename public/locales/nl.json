@@ -124,10 +124,10 @@
             "image": "Afbeelding",
             "uploadImage": "Afbeelding uploaden"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Menu",
             "new": "Nieuw",
-            "publish": "Publiceren",
+            "shareLink": "",
             "extra": "Extra",
             "revision": "Versie",
             "slideMode": "Presentatiemodus",

@@ -124,10 +124,10 @@
             "image": "图片",
             "uploadImage": "上传图片"
         },
-        "menu": {
+        "documentBar": {
             "menu": "菜单",
             "new": "新建",
-            "publish": "发表",
+            "shareLink": "",
             "extra": "附加功能",
             "revision": "修订版本",
             "slideMode": "幻灯模式",

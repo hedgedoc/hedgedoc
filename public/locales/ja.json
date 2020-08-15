@@ -124,10 +124,10 @@
             "image": "画像",
             "uploadImage": "画像をアップロード"
         },
-        "menu": {
+        "documentBar": {
             "menu": "メニュー",
             "new": "新規作成",
-            "publish": "公開する",
+            "shareLink": "",
             "extra": "その他",
             "revision": "編集履歴",
             "slideMode": "スライドモード",

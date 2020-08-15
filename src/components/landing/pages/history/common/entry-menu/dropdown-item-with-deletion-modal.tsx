@@ -13,19 +13,20 @@ export interface DropdownItemWithDeletionModalProps {
   modalQuestionI18nKey: string
   modalWarningI18nKey: string
   noteTitle: string
+  className?: string
 }
 
 export const DropdownItemWithDeletionModal: React.FC<DropdownItemWithDeletionModalProps> = ({
   onConfirm, noteTitle,
   modalTitleI18nKey, modalButtonI18nKey, itemI18nKey, modalIcon,
-  modalQuestionI18nKey, modalWarningI18nKey
+  modalQuestionI18nKey, modalWarningI18nKey, className
 }) => {
   useTranslation()
   const [showDialog, setShowDialog] = useState(false)
 
   return (
     <Fragment>
-      <Dropdown.Item onClick={() => setShowDialog(true)}>
+      <Dropdown.Item onClick={() => setShowDialog(true)} className={className}>
         <ForkAwesomeIcon icon={modalIcon} fixedWidth={true} className="mx-2"/>
         <Trans i18nKey={itemI18nKey}/>
       </Dropdown.Item>

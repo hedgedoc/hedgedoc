@@ -108,10 +108,10 @@
             "image": "Зображення",
             "uploadImage": "Завантажити зображення"
         },
-        "menu": {
+        "documentBar": {
             "menu": "Меню",
             "new": "Нова",
-            "publish": "Опублікувати",
+            "shareLink": "",
             "extra": "Дотатково",
             "revision": "Ревізія",
             "slideMode": "Режим слайдера",
