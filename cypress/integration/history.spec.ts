@@ -6,17 +6,21 @@ describe('History', () => {
   describe('History Mode', () => {
     it('Cards', () => {
       cy.get('div.card')
+        .should('be.visible')
     })
 
     it('Table', () => {
       cy.get('i.fa-table')
         .click()
       cy.get('table.history-table')
+        .should('be.visible')
     })
   })
 
   describe('Pinning', () => {
     it('Cards', () => {
+      cy.get('div.card')
+        .should('be.visible')
       cy.get('.fa-thumb-tack')
         .first()
         .click()
@@ -25,6 +29,8 @@ describe('History', () => {
     })
 
     it('Table', () => {
+      cy.get('i.fa-table')
+        .click()
       cy.get('.fa-thumb-tack')
         .first()
         .click()
