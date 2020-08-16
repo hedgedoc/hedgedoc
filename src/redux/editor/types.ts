@@ -1,5 +1,5 @@
 import { Action } from 'redux'
-import { EditorMode } from '../../components/editor/task-bar/editor-view-mode'
+import { EditorMode } from '../../components/editor/app-bar/editor-view-mode';
 
 export enum EditorConfigActionType {
   SET_EDITOR_VIEW_MODE = 'editor/mode/set'

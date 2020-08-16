@@ -1,6 +1,6 @@
 import { Reducer } from 'redux'
-import { EditorMode } from '../../components/editor/task-bar/editor-view-mode'
 import { EditorConfig, EditorConfigActions, EditorConfigActionType, SetEditorConfigAction } from './types'
+import { EditorMode } from '../../components/editor/app-bar/editor-view-mode'
 
 export const initialState: EditorConfig = {
   editorMode: EditorMode.BOTH

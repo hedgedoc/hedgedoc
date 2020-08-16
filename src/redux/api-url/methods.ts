@@ -1,4 +1,4 @@
-import { store } from '../../utils/store'
+import { store } from '..'
 import { ApiUrlActionType, ApiUrlObject, SetApiUrlAction } from './types'
 
 export const setApiUrl = (state: ApiUrlObject): void => {

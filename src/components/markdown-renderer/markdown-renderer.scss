@@ -1,0 +1,62 @@
+@import '../../../node_modules/github-markdown-css/github-markdown.css';
+
+.markdown-body {
+  position: relative;
+  font-family: 'Source Sans Pro', "twemoji", sans-serif;
+  word-break: break-word;
+
+  .alert > p, .alert > ul {
+    margin-bottom: 0;
+  }
+
+  // This is necessary since we need to set this for all DOM Element that could be children of .markdown-body and since we support all of HTML that would literally be everything
+  & > * {
+    width: 100%;
+    max-width: 900px;
+  }
+
+  & > img {
+    width: unset;
+    background-color: unset;
+  }
+
+  &.wider {
+    max-width: 1500px;
+
+    & > .wider-possible {
+      max-width: 1500px;
+    }
+  }
+
+  a.heading-anchor {
+    margin-left: -1.25em;
+    font-size: 0.75em;
+    margin-top: 0.25em;
+    opacity: 0;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  blockquote .quote-extra {
+    font-size: 0.85em;
+    margin-inline-start: 0.5em;
+
+    &:first-of-type {
+      &::before {
+        content: '\2014 \00A0'
+      }
+    }
+  }
+
+  pre {
+    overflow: visible;
+
+    code {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  }
+
+}

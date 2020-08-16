@@ -1,0 +1,15 @@
+.history-pin {
+  .fa {
+    opacity: 0.2;
+    transition: opacity 0.2s ease-in-out, color 0.2s ease-in-out;
+  }
+
+  &:hover .fa {
+    opacity: 1;
+  }
+
+  &.pinned .fa {
+    color: #d43f3a;
+    opacity: 1;
+  }
+}

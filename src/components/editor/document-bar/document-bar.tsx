@@ -1,14 +1,14 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { ConnectionIndicator } from './connection-indicator/connection-indicator'
-import { DocumentInfoButton } from './document-info-button'
-import { EditorMenu } from './editor-menu'
-import { ExportMenu } from './export-menu'
-import { ImportMenu } from './import-menu'
-import { PermissionButton } from './permission-button'
-import { PinToHistoryButton } from './pin-to-history-button'
-import { ShareLinkButton } from './share-link-button'
-import { RevisionButton } from './revision-button'
+import { DocumentInfoButton } from './document-info/document-info-button'
+import { EditorMenu } from './menus/editor-menu'
+import { ExportMenu } from './menus/export-menu'
+import { ImportMenu } from './menus/import-menu'
+import { PermissionButton } from './buttons/permission-button'
+import { PinToHistoryButton } from './buttons/pin-to-history-button'
+import { ShareLinkButton } from './buttons/share-link-button'
+import { RevisionButton } from './buttons/revision-button'
 
 export interface DocumentBarProps {
   title: string

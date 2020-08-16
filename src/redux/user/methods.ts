@@ -1,4 +1,4 @@
-import { store } from '../../utils/store'
+import { store } from '..'
 import { ClearUserAction, SetUserAction, UserActionType, UserState } from './types'
 
 export const setUser: (state: UserState) => void = (state: UserState) => {

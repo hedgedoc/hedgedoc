@@ -4,17 +4,17 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import { ApplicationLoader } from './components/application-loader/application-loader'
 import { Editor } from './components/editor/editor'
-import { NotFound } from './components/error/not-found'
-import { LandingLayout } from './components/landing/landing-layout'
-import { History } from './components/landing/pages/history/history'
-import { Intro } from './components/landing/pages/intro/intro'
-import { Login } from './components/landing/pages/login/login'
-import { Profile } from './components/landing/pages/profile/profile'
-import { Register } from './components/landing/pages/register/register'
-import { Redirector } from './components/redirector/redirector'
-import './global-style/index.scss'
+import { NotFoundErrorScreen } from './components/common/routing/not-found-error-screen'
+import { LandingLayout } from './components/landing-layout/landing-layout'
+import { HistoryPage } from './components/history-page/history-page'
+import { IntroPage } from './components/intro-page/intro-page'
+import { LoginPage } from './components/login-page/login-page'
+import { ProfilePage } from './components/profile-page/profile-page'
+import { RegisterPage } from './components/register-page/register-page'
+import { Redirector } from './components/common/routing/redirector'
+import './style/index.scss'
 import * as serviceWorker from './service-worker'
-import { store } from './utils/store'
+import { store } from './redux'
 
 ReactDOM.render(
   <Provider store={store}>
@@ -23,27 +23,27 @@ ReactDOM.render(
         <Switch>
           <Route path="/history">
             <LandingLayout>
-              <History/>
+              <HistoryPage/>
             </LandingLayout>
           </Route>
           <Route path="/intro">
             <LandingLayout>
-              <Intro/>
+              <IntroPage/>
             </LandingLayout>
           </Route>
           <Route path="/login">
             <LandingLayout>
-              <Login/>
+              <LoginPage/>
             </LandingLayout>
           </Route>
           <Route path="/register">
             <LandingLayout>
-              <Register/>
+              <RegisterPage/>
             </LandingLayout>
           </Route>
           <Route path="/profile">
             <LandingLayout>
-              <Profile/>
+              <ProfilePage/>
             </LandingLayout>
           </Route>
           <Route path="/n/:id">
@@ -56,7 +56,7 @@ ReactDOM.render(
             <Redirect to="/intro"/>
           </Route>
           <Route>
-            <NotFound/>
+            <NotFoundErrorScreen/>
           </Route>
         </Switch>
       </ApplicationLoader>

@@ -1,5 +1,4 @@
-import { expectResponseCode, getApiUrl } from '../../utils/apiUtils'
-import { defaultFetchConfig } from '../default'
+import { expectResponseCode, getApiUrl, defaultFetchConfig } from '../utils'
 import { Config } from './types'
 
 export const getConfig = async (): Promise<Config> => {

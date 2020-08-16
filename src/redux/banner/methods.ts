@@ -1,4 +1,4 @@
-import { store } from '../../utils/store'
+import { store } from '..'
 import { BannerActionType, BannerState, SetBannerAction } from './types'
 
 export const setBanner = (state: BannerState): void => {

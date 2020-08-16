@@ -1,11 +1,17 @@
 .btn-icon {
-  padding: 0.375rem 0.375rem;
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
-  display: flex;
+
+  &.with-border {
+    .icon-part {
+      border-right: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .text-part {
+      padding: 0.375rem 0.75rem;
+    }
+  }
 
   .icon-part {
     padding: 0.375rem 0.375rem;
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
     display: flex;
 
     .social-icon {
@@ -14,7 +20,7 @@
   }
 
   .text-part {
-    padding: 0.375rem 0.75rem;
+    padding: 0.375rem 0.75rem 0.375rem 0;
   }
 }
 

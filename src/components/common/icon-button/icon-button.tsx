@@ -3,15 +3,15 @@ import { Button, ButtonProps } from 'react-bootstrap'
 import { ForkAwesomeIcon, IconName } from '../fork-awesome/fork-awesome-icon'
 import './icon-button.scss'
 
-export interface SocialButtonProps extends ButtonProps {
+export interface IconButtonProps extends ButtonProps {
   icon: IconName
   onClick?: () => void
+  border?: boolean
 }
 
-export const IconButton: React.FC<SocialButtonProps> = ({ icon, children, variant, onClick }) => {
+export const IconButton: React.FC<IconButtonProps> = ({ icon, children, border = false, ...props }) => {
   return (
-    <Button variant={variant} className={'btn-icon p-0 d-inline-flex align-items-stretch'}
-      onClick={() => onClick?.()}>
+    <Button {...props} className={`btn-icon p-0 d-inline-flex align-items-stretch ${border ? 'with-border' : ''}`}>
       <span className="icon-part d-flex align-items-center">
         <ForkAwesomeIcon icon={icon} className={'icon'}/>
       </span>

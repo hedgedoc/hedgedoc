@@ -1,5 +1,5 @@
-import { EditorMode } from '../../components/editor/task-bar/editor-view-mode'
-import { store } from '../../utils/store'
+import { store } from '..'
+import { EditorMode } from '../../components/editor/app-bar/editor-view-mode'
 import { EditorConfigActionType, SetEditorConfigAction } from './types'
 
 export const setEditorModeConfig = (editorMode: EditorMode): void => {
