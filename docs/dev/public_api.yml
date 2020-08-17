@@ -529,12 +529,6 @@ components:
       properties:
         password:
           type: string
-    UserUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The new display name of the user.
     ImageProxyRequest:
       type: object
       properties:
@@ -547,89 +541,6 @@ components:
         src:
           type: string
           description: The url of the provied version of the image.
-    Config:
-      type: object
-      properties:
-        allowAnonymous:
-          type: boolean
-          description: Whether anonymous notes are allowed.
-        authProviders:
-          type: object
-          properties:
-            facebook:
-              type: boolean
-              description: Whether Facebook login is possible.
-            github:
-              type: boolean
-              description: Whether GitHub login is possible.
-            twitter:
-              type: boolean
-              description: Whether Twitter login is possible.
-            gitlab:
-              type: boolean
-              description: Whether Gitlab login is possible.
-            dropbox:
-              type: boolean
-              description: Whether Dropbox login is possible.
-            google:
-              type: boolean
-              description: Whether Google login is possible.
-            saml:
-              type: boolean
-              description: Whether SAML login is possible.
-            oauth2:
-              type: boolean
-              description: Whether OAuth2 login is possible.
-            email:
-              type: boolean
-              description: Whether E-Mail login is possible.
-            ldap:
-              type: boolean
-              description: Whether LDAP login is possible.
-            openid:
-              type: boolean
-              description: Whether OpenID login is possible.
-        customAuthNames:
-          type: object
-          properties:
-            ldap:
-              type: string
-              description: The custom name for the LDAP Login.
-              example: "FooBar LDAP"
-            oauth2:
-              type: string
-              description: The custom name for the OAuth2 Login.
-              example: "Olaf2"
-            saml:
-              type: string
-              description: The custom name for the SAML Login.
-              example: "aufSAMLn.de"
-        specialLinks:
-          type: object
-          properties:
-            privacy:
-              type: string
-              format: uri
-              description: Link to the privacy notice.
-            termsOfUse:
-              type: string
-              format: uri
-              description: Link to the terms of use.
-            imprint:
-              type: string
-              format: uri
-              description: Link to the imprint.
-        version:
-          type: object
-          properties:
-            version:
-              type: string
-            sourceCodeUrl:
-              type: string
-              format: uri
-            issueTrackerUrl:
-              type: string
-              format: uri
     Note:
       type: object
       properties:
@@ -667,14 +578,10 @@ components:
             type: string
             description: A tag
         updateTime:
-          type: object
-          properties:
-            username:
-              type: string
-              description: The name of the user that last changed the note.
-            timestamp:
-              type: integer
-              description: UNIX-timestamp of when the note was last changed.
+          type: integer
+          description: UNIX-timestamp of when the note was last changed.
+        updateUser:
+          $ref: "#/components/schemas/UserInfo"
         viewCount:
           type: integer
           minimum: 0
