@@ -51,6 +51,32 @@ paths:
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
   /me/history/{note}:
+    get:
+      tags:
+        - history
+        - user
+      summary: Returns History data for a note
+      operationId: getHistoryObject
+      description: JSON Object which contains id, title, tags, last visit time and pinned status
+      responses:
+        '200':
+          description: The list of recently viewed notes and pinned notes.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HistoryObject"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '404':
+          "$ref": "#/components/responses/NotFoundError"
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The name of the note which is used to address it.
+          content:
+            text/plain:
+              example: my-note
     put:
       tags:
         - history
