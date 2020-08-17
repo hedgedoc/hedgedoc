@@ -116,7 +116,7 @@ paths:
       operationId: deleteHistoryObject
       responses:
         '204':
-          "$ref": "#/components/responses/SuccesfullyDeleted"
+          "$ref": "#/components/responses/SuccessfullyDeleted"
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
         '404':
@@ -203,7 +203,7 @@ paths:
         - name: note
           in: path
           required: true
-          description: The note for which the info should be shown.
+          description: The name of the note which is used to address it.
           content:
             text/plain:
               example: my-note
@@ -240,18 +240,18 @@ paths:
         - name: note
           in: path
           required: true
-          description: The note for which the info should be shown.
+          description: The name of the note which is used to address it.
           content:
             text/plain:
               example: my-note
     delete:
       tags:
         - note
-      summary: Remove the note 
+      summary: Remove the note
       operationId: deleteNote
       responses:
         '204':
-          "$ref": "#/components/responses/SuccesfullyDeleted"
+          "$ref": "#/components/responses/SuccessfullyDeleted"
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
         '403':
@@ -516,7 +516,6 @@ components:
       properties:
         userName:
           type: string
-          format: UUIDv4
         displayName:
           type: string
         photo:
@@ -638,14 +637,13 @@ components:
           type: string
           description: The markdown content of the note
         metadata:
-          type: object
           $ref: "#/components/schemas/NoteMetadata"
         editedByAtPosition:
           type: array
           description: Data which gives insights about who worked where on the note.
           items:
             type: integer
-            description: Unique user ids and additional data  
+            description: Unique user ids and additional data
     NoteMetadata:
       type: object
       properties:
@@ -690,7 +688,6 @@ components:
           items:
             type: string
         permissions:
-          type: object
           $ref: "#/components/schemas/NotePermissions"
     NotePermissions:
       type: object
@@ -828,7 +825,6 @@ components:
       type: object
       properties:
         metadata:
-          type: object
           $ref: "#/components/schemas/NoteMetadata"
         pinned:
           type: boolean
@@ -856,5 +852,5 @@ components:
       description: Access to the requested resource is not permitted.
     NotFoundError:
       description: The requested resource was not found.
-    SuccesfullyDeleted:
+    SuccessfullyDeleted:
       description: The requested resource was sucessfully deleted.
