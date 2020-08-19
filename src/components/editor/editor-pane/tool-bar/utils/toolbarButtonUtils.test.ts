@@ -786,8 +786,9 @@ describe('test addHeaderLevel', () => {
 describe('test addCodeFences', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
 
-  it('just cursor', done => {
+  it('just cursor empty line', done => {
     Mock.extend(editor).with({
+      getSelection: () => '',
       listSelections: () => (
         Mock.of<Range[]>([{
           anchor: cursor.from,
@@ -796,14 +797,40 @@ describe('test addCodeFences', () => {
           to: () => cursor.to,
           empty: () => true
         }])
-      )
+      ),
+      getLine: (): string => '',
+      replaceRange: (replacement: string | string[]) => {
+        expect(replacement).toEqual('```\n\n```')
+        done()
+      }
     })
-    strikeThroughSelection(editor)
-    done()
+    addCodeFences(editor)
+  })
+
+  it('just cursor nonempty line', done => {
+    Mock.extend(editor).with({
+      getSelection: () => '',
+      listSelections: () => (
+        Mock.of<Range[]>([{
+          anchor: cursor.from,
+          head: cursor.to,
+          from: () => cursor.from,
+          to: () => cursor.to,
+          empty: () => true
+        }])
+      ),
+      getLine: (): string => '1st line',
+      replaceRange: (replacement: string | string[]) => {
+        expect(replacement).toEqual('```\n1st line\n```')
+        done()
+      }
+    })
+    addCodeFences(editor)
   })
 
   it('1st line', done => {
     Mock.extend(editor).with({
+      getSelection: () => testContent,
       listSelections: () => (
         Mock.of<Range[]>([{
           anchor: firstLine.from,
@@ -825,6 +852,7 @@ describe('test addCodeFences', () => {
 
   it('multiple lines', done => {
     Mock.extend(editor).with({
+      getSelection: () => testContent,
       listSelections: () => (
         Mock.of<Range[]>([{
           anchor: multiline.from,
@@ -846,6 +874,7 @@ describe('test addCodeFences', () => {
 
   it('multiple lines with offset', done => {
     Mock.extend(editor).with({
+      getSelection: () => testContent,
       listSelections: () => (
         Mock.of<Range[]>([{
           anchor: multilineOffset.from,

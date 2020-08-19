@@ -11,7 +11,7 @@ export const superscriptSelection = (editor: Editor): void => wrapTextWith(edito
 export const markSelection = (editor: Editor): void => wrapTextWith(editor, '==')
 
 export const addHeaderLevel = (editor: Editor): void => changeLines(editor, line => line.startsWith('#') ? `#${line}` : `# ${line}`)
-export const addCodeFences = (editor: Editor): void => wrapTextWith(editor, '```\n', '\n```')
+export const addCodeFences = (editor: Editor): void => wrapTextWithOrJustPut(editor, '```\n', '\n```')
 export const addQuotes = (editor: Editor): void => insertOnStartOfLines(editor, '> ')
 
 export const addList = (editor: Editor): void => createList(editor, () => '- ')
@@ -46,6 +46,20 @@ export const wrapTextWith = (editor: Editor, symbol: string, endSymbol?: string)
     range.anchor.ch += endSymbol ? endSymbol.length : symbol.length
   }
   editor.setSelections(ranges)
+}
+
+const wrapTextWithOrJustPut = (editor: Editor, symbol: string, endSymbol?: string): void => {
+  if (!editor.getSelection()) {
+    const cursor = editor.getCursor()
+    const lineNumber = cursor.line
+    const line = editor.getLine(lineNumber)
+    const replacement = /\s*\\n/.exec(line) ? `${symbol}${endSymbol ?? ''}` : `${symbol}${line}${endSymbol ?? ''}`
+    editor.replaceRange(replacement,
+      { line: cursor.line, ch: 0 },
+      { line: cursor.line, ch: line.length },
+      '+input')
+  }
+  wrapTextWith(editor, symbol, endSymbol ?? symbol)
 }
 
 export const insertOnStartOfLines = (editor: Editor, symbol: string): void => {
