@@ -6,7 +6,7 @@ import './table-of-contents.scss'
 export interface TableOfContentsProps {
   ast: TocAst
   maxDepth?: number
-  sticky?: boolean
+  className?: string
 }
 
 export const slugify = (content:string) => {
@@ -51,11 +51,11 @@ const convertLevel = (toc: TocAst, levelsToShowUnderThis: number, headerCounts: 
   }
 }
 
-export const TableOfContents: React.FC<TableOfContentsProps> = ({ ast, maxDepth = 3, sticky }) => {
+export const TableOfContents: React.FC<TableOfContentsProps> = ({ ast, maxDepth = 3, className }) => {
   const tocTree = useMemo(() => convertLevel(ast, maxDepth, new Map<string, number>(), false), [ast, maxDepth])
 
   return (
-    <div className={`markdown-toc ${sticky ? 'sticky' : ''}`}>
+    <div className={`markdown-toc ${className ?? ''}`}>
       {tocTree}
     </div>
   )

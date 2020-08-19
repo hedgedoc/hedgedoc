@@ -21,11 +21,12 @@ import subscript from 'markdown-it-sub'
 import superscript from 'markdown-it-sup'
 import taskList from 'markdown-it-task-lists'
 import toc from 'markdown-it-toc-done-right'
-import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react'
+import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import ReactHtmlParser, { convertNodeToElement, Transform } from 'react-html-parser'
 import { Trans } from 'react-i18next'
 import MathJaxReact from 'react-mathjax'
+import useResizeObserver from 'use-resize-observer'
 import { useSelector } from 'react-redux'
 import { TocAst } from '../../external-types/markdown-it-toc-done-right/interface'
 import { ApplicationState } from '../../redux'
@@ -65,6 +66,12 @@ import { QuoteOptionsReplacer } from './replace-components/quote-options/quote-o
 import { TocReplacer } from './replace-components/toc/toc-replacer'
 import { VimeoReplacer } from './replace-components/vimeo/vimeo-replacer'
 import { YoutubeReplacer } from './replace-components/youtube/youtube-replacer'
+import { lineNumberMarker } from '../editor/markdown-renderer/markdown-it-plugins/line-number-marker'
+
+export interface LineMarkerPosition {
+  line: number
+  position: number
+}
 
 export interface MarkdownRendererProps {
   content: string
@@ -73,6 +80,7 @@ export interface MarkdownRendererProps {
   onTocChange?: (ast: TocAst) => void
   onMetaDataChange?: (yamlMetaData: YAMLMetaData | undefined) => void
   onFirstHeadingChange?: (firstHeading: string | undefined) => void
+  onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void
 }
 
 const markdownItTwitterEmojis = Object.keys((emojiData as unknown as Data).emojis)
@@ -102,14 +110,41 @@ const forkAwesomeIconMap = Object.keys(ForkAwesomeIcons)
     return reduceObject
   }, {} as { [key: string]: string })
 
-export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onMetaDataChange, onFirstHeadingChange, onTocChange, className, wide }) => {
+export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onMetaDataChange, onFirstHeadingChange, onTocChange, className, wide, onLineMarkerPositionChanged }) => {
   const [tocAst, setTocAst] = useState<TocAst>()
-  const [lastTocAst, setLastTocAst] = useState<TocAst>()
+  const lastTocAst = useRef<TocAst>()
   const [yamlError, setYamlError] = useState(false)
   const rawMetaRef = useRef<RawYAMLMetadata>()
   const oldMetaRef = useRef<RawYAMLMetadata>()
   const firstHeadingRef = useRef<string>()
   const oldFirstHeadingRef = useRef<string>()
+  const documentElement = useRef<HTMLDivElement>(null)
+  const lastLineMarkerPositions = useRef<LineMarkerPosition[]>()
+
+  const calculateLineMarkerPositions = useCallback(() => {
+    if (documentElement.current && onLineMarkerPositionChanged) {
+      const lineMarkers: NodeListOf<HTMLDivElement> = documentElement.current.querySelectorAll('codimd-linemarker')
+      const lineMarkerPositions: LineMarkerPosition[] = Array.from(lineMarkers).map((marker) => {
+        return {
+          line: Number(marker.getAttribute('data-linenumber')),
+          position: marker.offsetTop
+        } as LineMarkerPosition
+      })
+      if (!equal(lineMarkerPositions, lastLineMarkerPositions.current)) {
+        lastLineMarkerPositions.current = lineMarkerPositions
+        onLineMarkerPositionChanged(lineMarkerPositions)
+      }
+    }
+  }, [onLineMarkerPositionChanged])
+
+  useEffect(() => {
+    calculateLineMarkerPositions()
+  }, [calculateLineMarkerPositions])
+
+  useResizeObserver({
+    ref: documentElement,
+    onResize: () => calculateLineMarkerPositions()
+  })
 
   useEffect(() => {
     if (onMetaDataChange && !equal(oldMetaRef.current, rawMetaRef.current)) {
@@ -239,6 +274,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
       slugify: slugify
     })
     md.use(linkifyExtra)
+    md.use(lineNumberMarker())
     if (process.env.NODE_ENV !== 'production') {
       md.use(MarkdownItParserDebugger)
     }
@@ -251,11 +287,11 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
   }, [onMetaDataChange, onFirstHeadingChange, plantumlServer])
 
   useEffect(() => {
-    if (onTocChange && tocAst && !equal(tocAst, lastTocAst)) {
+    if (onTocChange && tocAst && !equal(tocAst, lastTocAst.current)) {
+      lastTocAst.current = tocAst
       onTocChange(tocAst)
-      setLastTocAst(tocAst)
     }
-  }, [tocAst, onTocChange, lastTocAst])
+  }, [tocAst, onTocChange])
 
   const tryToReplaceNode = (node: DomElement, index: number, allReplacers: ComponentReplacer[], nodeConverter: SubNodeConverter) => {
     return allReplacers
@@ -291,17 +327,19 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
   }, [content, markdownIt, onMetaDataChange])
 
   return (
-    <div className={`markdown-body ${className || ''} d-flex flex-column align-items-center ${wide ? 'wider' : ''}`}>
-      <ShowIf condition={yamlError}>
-        <Alert variant='warning' dir='auto'>
-          <Trans i18nKey='editor.invalidYaml'>
-            <InternalLink text='yaml-metadata' href='/n/yaml-metadata' className='text-dark'/>
-          </Trans>
-        </Alert>
-      </ShowIf>
-      <MathJaxReact.Provider>
-        {result}
-      </MathJaxReact.Provider>
+    <div className={'bg-light flex-fill pb-5'}>
+      <div className={`markdown-body ${className || ''} d-flex flex-column align-items-center ${wide ? 'wider' : ''}`} ref={documentElement}>
+        <ShowIf condition={yamlError}>
+          <Alert variant='warning' dir='auto'>
+            <Trans i18nKey='editor.invalidYaml'>
+              <InternalLink text='yaml-metadata' href='/n/yaml-metadata' className='text-dark'/>
+            </Trans>
+          </Alert>
+        </ShowIf>
+        <MathJaxReact.Provider>
+          {result}
+        </MathJaxReact.Provider>
+      </div>
     </div>
   )
 }

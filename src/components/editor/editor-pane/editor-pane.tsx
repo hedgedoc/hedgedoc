@@ -1,4 +1,4 @@
-import { Editor, EditorChange, EditorConfiguration } from 'codemirror'
+import { Editor, EditorChange, EditorConfiguration, ScrollInfo } from 'codemirror'
 import 'codemirror/addon/comment/comment'
 import 'codemirror/addon/dialog/dialog'
 import 'codemirror/addon/display/autorefresh'
@@ -20,10 +20,11 @@ import 'codemirror/keymap/sublime'
 import 'codemirror/keymap/emacs'
 import 'codemirror/keymap/vim'
 import 'codemirror/mode/gfm/gfm'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Controlled as ControlledCodeMirror } from 'react-codemirror2'
 import { useTranslation } from 'react-i18next'
 import './editor-pane.scss'
+import { ScrollProps, ScrollState } from '../scroll/scroll-props'
 import { generateEmojiHints, emojiWordRegex, findWordAtCursor } from './hints/emoji'
 import { defaultKeyMap } from './key-map'
 import { createStatusInfo, defaultState, StatusBar, StatusBarInfo } from './status-bar/status-bar'
@@ -48,7 +49,7 @@ const onChange = (editor: Editor) => {
   }
 }
 
-export const EditorPane: React.FC<EditorPaneProps> = ({ onContentChange, content }) => {
+export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentChange, content, scrollState, onScroll, onMakeScrollSource }) => {
   const { t } = useTranslation()
   const [editor, setEditor] = useState<Editor>()
   const [statusBarInfo, setStatusBarInfo] = useState<StatusBarInfo>(defaultState)
@@ -58,6 +59,41 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ onContentChange, content
     indentUnit: 4,
     indentWithTabs: false
   })
+
+  const lastScrollPosition = useRef<number>()
+
+  const onEditorScroll = useCallback((editor: Editor, data: ScrollInfo) => {
+    if (!editor || !onScroll) {
+      return
+    }
+    const scrollEventValue = data.top as number
+    const line = editor.lineAtHeight(scrollEventValue, 'local')
+    const startYOfLine = editor.heightAtLine(line, 'local')
+    const lineInfo = editor.lineInfo(line)
+    if (lineInfo === null) {
+      return
+    }
+    const heightOfLine = (lineInfo.handle as { height: number }).height
+    const percentageRaw = (Math.max(scrollEventValue - startYOfLine, 0)) / heightOfLine
+    const percentage = Math.floor(percentageRaw * 100)
+
+    const newScrollState: ScrollState = { firstLineInView: line + 1, scrolledPercentage: percentage }
+    onScroll(newScrollState)
+  }, [onScroll])
+
+  useEffect(() => {
+    if (!editor || !scrollState) {
+      return
+    }
+    const startYOfLine = editor.heightAtLine(scrollState.firstLineInView - 1, 'div')
+    const heightOfLine = (editor.lineInfo(scrollState.firstLineInView - 1).handle as { height: number }).height
+    const newPositionRaw = startYOfLine + (heightOfLine * scrollState.scrolledPercentage / 100)
+    const newPosition = Math.floor(newPositionRaw)
+    if (newPosition !== lastScrollPosition.current) {
+      lastScrollPosition.current = newPosition
+      editor.scrollTo(0, newPosition)
+    }
+  }, [editor, scrollState])
 
   const onBeforeChange = useCallback((editor: Editor, data: EditorChange, value: string) => {
     onContentChange(value)
@@ -100,7 +136,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ onContentChange, content
   }), [t, editorPreferences])
 
   return (
-    <div className={'d-flex flex-column h-100'}>
+    <div className={'d-flex flex-column h-100'} onMouseEnter={onMakeScrollSource}>
       <ToolBar
         editor={editor}
         onPreferencesChange={config => setEditorPreferences(config)}
@@ -114,6 +150,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ onContentChange, content
         onCursorActivity={onCursorActivity}
         editorDidMount={onEditorDidMount}
         onBeforeChange={onBeforeChange}
+        onScroll={onEditorScroll}
       />
       <StatusBar {...statusBarInfo} />
     </div>

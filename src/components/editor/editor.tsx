@@ -11,12 +11,18 @@ import { Splitter } from './splitter/splitter'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
 import { DocumentBar } from './document-bar/document-bar'
 import { editorTestContent } from './editorTestContent'
+import { DualScrollState, ScrollState } from './scroll/scroll-props'
 import { YAMLMetaData } from './yaml-metadata/yaml-metadata'
 import { AppBar } from './app-bar/app-bar'
 import { EditorMode } from './app-bar/editor-view-mode'
 
 export interface EditorPathParams {
   id: string
+}
+
+export enum ScrollSource {
+  EDITOR,
+  RENDERER
 }
 
 export const Editor: React.FC = () => {
@@ -29,6 +35,12 @@ export const Editor: React.FC = () => {
   const [documentTitle, setDocumentTitle] = useState(untitledNote)
   const noteMetadata = useRef<YAMLMetaData>()
   const firstHeading = useRef<string>()
+  const scrollSource = useRef<ScrollSource>(ScrollSource.EDITOR)
+
+  const [scrollState, setScrollState] = useState<DualScrollState>(() => ({
+    editorScrollState: { firstLineInView: 1, scrolledPercentage: 0 },
+    rendererScrollState: { firstLineInView: 1, scrolledPercentage: 0 }
+  }))
 
   const updateDocumentTitle = useCallback(() => {
     if (noteMetadata.current?.title && noteMetadata.current?.title !== '') {
@@ -60,6 +72,18 @@ export const Editor: React.FC = () => {
     }
   }, [editorMode, firstDraw, isWide])
 
+  const onEditorScroll = useCallback((newScrollState: ScrollState) => {
+    if (scrollSource.current === ScrollSource.EDITOR) {
+      setScrollState((old) => ({ rendererScrollState: newScrollState, editorScrollState: old.editorScrollState }))
+    }
+  }, [])
+
+  const onMarkdownRendererScroll = useCallback((newScrollState: ScrollState) => {
+    if (scrollSource.current === ScrollSource.RENDERER) {
+      setScrollState((old) => ({ editorScrollState: newScrollState, rendererScrollState: old.rendererScrollState }))
+    }
+  }, [])
+
   return (
     <Fragment>
       <MotdBanner/>
@@ -72,16 +96,22 @@ export const Editor: React.FC = () => {
           left={
             <EditorPane
               onContentChange={content => setMarkdownContent(content)}
-              content={markdownContent}/>
+              content={markdownContent}
+              scrollState={scrollState.editorScrollState}
+              onScroll={onEditorScroll}
+              onMakeScrollSource={() => { scrollSource.current = ScrollSource.EDITOR }}
+            />
           }
           showRight={editorMode === EditorMode.PREVIEW || (editorMode === EditorMode.BOTH)}
           right={
             <DocumentRenderPane
               content={markdownContent}
               wide={editorMode === EditorMode.PREVIEW}
+              scrollState={scrollState.rendererScrollState}
+              onScroll={onMarkdownRendererScroll}
               onMetadataChange={onMetadataChange}
-              onFirstHeadingChange={onFirstHeadingChange}/>
-          }
+              onFirstHeadingChange={onFirstHeadingChange}
+              onMakeScrollSource={() => { scrollSource.current = ScrollSource.RENDERER }}/>}
           containerClassName={'overflow-hidden'}/>
       </div>
     </Fragment>
