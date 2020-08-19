@@ -7,7 +7,33 @@ on:
     branches: [main]
 
 jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+    name: build frontend
+    steps:
+      - uses: actions/checkout@v1
+      - name: Cache build
+        uses: actions/cache@v1.1.0
+        with:
+          path: build
+          key: build
+      - name: Cache node_modules
+        uses: actions/cache@v1.1.0
+        with:
+          path: node_modules
+          key: node_modules
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - run: yarn install
+      - run: yarn build
+      - uses: actions/upload-artifact@master
+        with:
+          name: build
+          path: build
+
   end2end:
+    needs: build-frontend
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -15,7 +41,11 @@ jobs:
     name: e2e:${{ matrix.browser }}
     steps:
       - uses: actions/checkout@v1
+      - uses: actions/download-artifact@master
+        with:
+          name: build
+          path: build
       - uses: cypress-io/github-action@v2
         with:
           browser: ${{ matrix.browser }}
-          start: npm start
+          start: 'yarn build:serve'

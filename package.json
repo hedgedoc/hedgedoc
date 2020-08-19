@@ -92,14 +92,13 @@
     "scripts": {
         "start": "PORT=3001 react-scripts start",
         "start:dev": "REACT_APP_BACKEND=http://localhost:3000 yarn start",
+        "build:serve": "http-server build/ -s -p 3001 -P \"http://127.0.0.1:3001?\"",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "cy:open": "cypress open",
         "cy:run:chrome": "cypress run --browser chrome",
-        "cy:run:firefox": "cypress run --browser firefox",
-        "e2e:chrome": "start-server-and-test start http-get://localhost:3001 cy:run:chrome",
-        "e2e:firefox": "start-server-and-test start http-get://localhost:3001 cy:run:firefox"
+        "cy:run:firefox": "cypress run --browser firefox"
     },
     "eslintConfig": {
         "parserOptions": {
@@ -145,7 +144,8 @@
         "eslint-plugin-cypress": "2.11.1",
         "redux-devtools": "3.6.1",
         "redux-devtools-extension": "2.13.8",
-        "ts-loader": "8.0.2"
+        "ts-loader": "8.0.2",
+        "http-server": "0.12.3"
     },
     "resolutions": {
         "cypress": "4.12.1"
