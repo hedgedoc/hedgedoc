@@ -124,5 +124,7 @@
     "Limited - Signed-in people can edit (forbid guests)": "Limited - Signed-in people can edit (forbid guests)",
     "Locked - Only owner can edit": "Locked - Only owner can edit",
     "Protected - Only owner can edit (forbid guests)": "Protected - Only owner can edit (forbid guests)",
-    "Private - Only owner can view & edit": "Private - Only owner can view & edit"
+    "Private - Only owner can view & edit": "Private - Only owner can view & edit",
+    "changed": "changed",
+    "created": "created"
 }

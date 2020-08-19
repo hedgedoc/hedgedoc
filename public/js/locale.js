@@ -1,32 +1,40 @@
 /* eslint-env browser, jquery */
 /* global Cookies */
 
-var lang = 'en'
-var userLang = navigator.language || navigator.userLanguage
-var userLangCode = userLang.split('-')[0]
-var locale = $('.ui-locale')
-var supportLangs = []
-$('.ui-locale option').each(function () {
-  supportLangs.push($(this).val())
-})
-if (Cookies.get('locale')) {
-  lang = Cookies.get('locale')
-  if (lang === 'zh') {
-    lang = 'zh-TW'
+const supported = ['en', 'zh-CN', 'zh-TW', 'fr', 'de', 'ja', 'es', 'ca', 'el', 'pt', 'it', 'tr', 'ru', 'nl', 'hr', 'pl', 'uk', 'hi', 'sv', 'eo', 'da', 'ko', 'id', 'sr', 'vi', 'ar', 'cs', 'sk']
+
+function detectLang () {
+  if (Cookies.get('locale')) {
+    let lang = Cookies.get('locale')
+    if (lang === 'zh') {
+      lang = 'zh-TW'
+    }
+    return lang
   }
-} else if (supportLangs.indexOf(userLang) !== -1) {
-  lang = supportLangs[supportLangs.indexOf(userLang)]
-} else if (supportLangs.indexOf(userLangCode) !== -1) {
-  lang = supportLangs[supportLangs.indexOf(userLangCode)]
+  const userLang = navigator.language || navigator.userLanguage
+  const userLangCode = userLang.split('-')[0]
+  if (supported.includes(userLangCode)) {
+    return userLangCode
+  } else if (supported.includes(userLang)) {
+    return userLang
+  }
+  return 'en'
 }
 
-locale.val(lang)
-$('select.ui-locale option[value="' + lang + '"]').attr('selected', 'selected')
+const lang = detectLang()
+const localeSelector = $('.ui-locale')
 
-locale.change(function () {
-  Cookies.set('locale', $(this).val(), {
-    expires: 365,
-    sameSite: 'strict'
+// the following condition is needed as the selector is only available in the intro/history page
+if (localeSelector.length > 0) {
+  localeSelector.val(lang)
+  $('select.ui-locale option[value="' + lang + '"]').attr('selected', 'selected')
+  localeSelector.change(function () {
+    Cookies.set('locale', $(this).val(), {
+      expires: 365,
+      sameSite: 'strict'
+    })
+    window.location.reload()
   })
-  window.location.reload()
-})
+}
+
+window.moment.locale(lang)
