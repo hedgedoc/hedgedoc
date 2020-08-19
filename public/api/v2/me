@@ -1,6 +1,6 @@
 {
     "id": "mockUser",
-    "photo": "https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp",
+    "photo": "/avatar.png",
     "name": "Test",
     "status": "ok",
     "provider": "internal"
