@@ -27,7 +27,10 @@ describe('Content security policies', function () {
         upgradeInsecureRequests: 'auto',
         reportURI: undefined
       },
-      useCDN: true
+      useCDN: true,
+      dropbox: {
+        appKey: undefined
+      }
     }
   })
 
