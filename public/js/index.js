@@ -996,7 +996,8 @@ ui.toolbar.export.snippet.click(function () {
     })
 })
 // import from dropbox
-ui.toolbar.import.dropbox.click(function () {
+ui.toolbar.import.dropbox.click(function (event) {
+  event.preventDefault()
   var options = {
     success: function (files) {
       ui.spinner.show()
