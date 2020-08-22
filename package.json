@@ -5,7 +5,7 @@
     "dependencies": {
         "@testing-library/jest-dom": "5.11.4",
         "@testing-library/react": "10.4.9",
-        "@testing-library/user-event": "12.1.1",
+        "@testing-library/user-event": "12.1.2",
         "@types/codemirror": "0.0.97",
         "@types/deep-equal": "1.0.1",
         "@types/emoji-mart": "3.0.2",
