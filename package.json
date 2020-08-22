@@ -45,7 +45,7 @@
         "github-markdown-css": "4.0.0",
         "highlight.js": "10.1.2",
         "i18next": "19.7.0",
-        "i18next-browser-languagedetector": "6.0.0",
+        "i18next-browser-languagedetector": "6.0.1",
         "i18next-http-backend": "1.0.18",
         "js-yaml": "3.14.0",
         "markdown-it": "11.0.0",
