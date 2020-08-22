@@ -81,6 +81,16 @@ describe('Content security policies', function () {
     assert(!csp.computeDirectives().fontSrc.includes('https://*.disquscdn.com'))
   })
 
+  it('Include dropbox if configured', function () {
+    let testconfig = defaultConfig
+    testconfig.dropbox.appKey = 'hedgedoc'
+    mock('../lib/config', testconfig)
+    csp = mock.reRequire('../lib/csp')
+
+    assert(csp.computeDirectives().scriptSrc.includes('https://www.dropbox.com'))
+    assert(csp.computeDirectives().scriptSrc.includes('\'unsafe-inline\''))
+  })
+
   it('Set ReportURI', function () {
     let testconfig = defaultConfig
     testconfig.csp.reportURI = 'https://example.com/reportURI'
