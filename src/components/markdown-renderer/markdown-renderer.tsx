@@ -66,7 +66,7 @@ import { QuoteOptionsReplacer } from './replace-components/quote-options/quote-o
 import { TocReplacer } from './replace-components/toc/toc-replacer'
 import { VimeoReplacer } from './replace-components/vimeo/vimeo-replacer'
 import { YoutubeReplacer } from './replace-components/youtube/youtube-replacer'
-import { lineNumberMarker } from '../editor/markdown-renderer/markdown-it-plugins/line-number-marker'
+import { lineNumberMarker } from './markdown-it-plugins/line-number-marker'
 
 export interface LineMarkerPosition {
   line: number
