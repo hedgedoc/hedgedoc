@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Trans } from 'react-i18next'
-import { IconName } from '../../../common/fork-awesome/fork-awesome-icon'
+import { IconName } from '../../../common/fork-awesome/types'
 import { ShowIf } from '../../../common/show-if/show-if'
 import './one-click-embedding.scss'
 

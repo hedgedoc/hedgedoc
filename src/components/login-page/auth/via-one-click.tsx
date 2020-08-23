@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../../redux'
-import { IconName } from '../../common/fork-awesome/fork-awesome-icon'
+import { IconName } from '../../common/fork-awesome/types'
 import { SocialLinkButton } from './social-link-button/social-link-button'
 
 export enum OneClickType {

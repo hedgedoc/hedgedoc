@@ -1,5 +1,6 @@
 import React from 'react'
-import { ForkAwesomeIcon, IconName } from '../../../common/fork-awesome/fork-awesome-icon'
+import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { IconName } from '../../../common/fork-awesome/types'
 
 export interface DocumentInfoLineProps {
   icon: IconName

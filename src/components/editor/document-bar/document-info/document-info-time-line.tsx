@@ -1,7 +1,7 @@
 import { Moment } from 'moment'
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { IconName } from '../../../common/fork-awesome/fork-awesome-icon'
+import { IconName } from '../../../common/fork-awesome/types'
 import { DocumentInfoLine } from './document-info-line'
 import './document-info-time-line.scss'
 import { TimeFromNow } from './time-from-now'

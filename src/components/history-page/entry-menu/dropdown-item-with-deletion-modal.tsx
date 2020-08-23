@@ -1,7 +1,8 @@
 import React, { Fragment, useState } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon, IconName } from '../../common/fork-awesome/fork-awesome-icon'
+import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { IconName } from '../../common/fork-awesome/types'
 import { DeletionModal } from '../../common/modals/deletion-modal'
 
 export interface DropdownItemWithDeletionModalProps {
