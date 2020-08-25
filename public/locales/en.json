@@ -201,6 +201,12 @@
             "switchToDark": "Switch to Dark Mode",
             "switchToLight": "Switch to Light Mode"
         },
+        "appBar": {
+            "syncScroll": {
+                "disable": "Disable sync scroll",
+                "enable": "Enable sync scroll"
+            }
+        },
         "editorToolbar": {
             "bold": "Bold",
             "italic": "Italic",

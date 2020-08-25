@@ -3,18 +3,18 @@ import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import useMedia from 'use-media'
 import { ApplicationState } from '../../redux'
-import { setEditorModeConfig } from '../../redux/editor/methods'
+import { setEditorMode } from '../../redux/editor/methods'
 import { DocumentTitle } from '../common/document-title/document-title'
-import { DocumentRenderPane } from './document-renderer-pane/document-render-pane'
-import { EditorPane } from './editor-pane/editor-pane'
-import { Splitter } from './splitter/splitter'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
-import { DocumentBar } from './document-bar/document-bar'
-import { editorTestContent } from './editorTestContent'
-import { DualScrollState, ScrollState } from './scroll/scroll-props'
-import { YAMLMetaData } from './yaml-metadata/yaml-metadata'
 import { AppBar } from './app-bar/app-bar'
 import { EditorMode } from './app-bar/editor-view-mode'
+import { DocumentBar } from './document-bar/document-bar'
+import { DocumentRenderPane } from './document-renderer-pane/document-render-pane'
+import { EditorPane } from './editor-pane/editor-pane'
+import { editorTestContent } from './editorTestContent'
+import { DualScrollState, ScrollState } from './scroll/scroll-props'
+import { Splitter } from './splitter/splitter'
+import { YAMLMetaData } from './yaml-metadata/yaml-metadata'
 
 export interface EditorPathParams {
   id: string
@@ -28,7 +28,6 @@ export enum ScrollSource {
 export const Editor: React.FC = () => {
   const { t } = useTranslation()
   const untitledNote = t('editor.untitledNote')
-  const editorMode: EditorMode = useSelector((state: ApplicationState) => state.editorConfig.editorMode)
   const [markdownContent, setMarkdownContent] = useState(editorTestContent)
   const isWide = useMedia({ minWidth: 576 })
   const [firstDraw, setFirstDraw] = useState(true)
@@ -36,6 +35,9 @@ export const Editor: React.FC = () => {
   const noteMetadata = useRef<YAMLMetaData>()
   const firstHeading = useRef<string>()
   const scrollSource = useRef<ScrollSource>(ScrollSource.EDITOR)
+
+  const editorMode: EditorMode = useSelector((state: ApplicationState) => state.editorConfig.editorMode)
+  const editorSyncScroll: boolean = useSelector((state: ApplicationState) => state.editorConfig.syncScroll)
 
   const [scrollState, setScrollState] = useState<DualScrollState>(() => ({
     editorScrollState: { firstLineInView: 1, scrolledPercentage: 0 },
@@ -68,21 +70,21 @@ export const Editor: React.FC = () => {
 
   useEffect(() => {
     if (!firstDraw && !isWide && editorMode === EditorMode.BOTH) {
-      setEditorModeConfig(EditorMode.PREVIEW)
+      setEditorMode(EditorMode.PREVIEW)
     }
   }, [editorMode, firstDraw, isWide])
 
-  const onEditorScroll = useCallback((newScrollState: ScrollState) => {
-    if (scrollSource.current === ScrollSource.EDITOR) {
-      setScrollState((old) => ({ rendererScrollState: newScrollState, editorScrollState: old.editorScrollState }))
-    }
-  }, [])
-
   const onMarkdownRendererScroll = useCallback((newScrollState: ScrollState) => {
-    if (scrollSource.current === ScrollSource.RENDERER) {
+    if (scrollSource.current === ScrollSource.RENDERER && editorSyncScroll) {
       setScrollState((old) => ({ editorScrollState: newScrollState, rendererScrollState: old.rendererScrollState }))
     }
-  }, [])
+  }, [editorSyncScroll])
+
+  const onEditorScroll = useCallback((newScrollState: ScrollState) => {
+    if (scrollSource.current === ScrollSource.EDITOR && editorSyncScroll) {
+      setScrollState((old) => ({ rendererScrollState: newScrollState, editorScrollState: old.editorScrollState }))
+    }
+  }, [editorSyncScroll])
 
   return (
     <Fragment>
@@ -99,7 +101,7 @@ export const Editor: React.FC = () => {
               content={markdownContent}
               scrollState={scrollState.editorScrollState}
               onScroll={onEditorScroll}
-              onMakeScrollSource={() => { scrollSource.current = ScrollSource.EDITOR }}
+              onMakeScrollSource={() => scrollSource.current = ScrollSource.EDITOR}
             />
           }
           showRight={editorMode === EditorMode.PREVIEW || (editorMode === EditorMode.BOTH)}
@@ -111,7 +113,9 @@ export const Editor: React.FC = () => {
               onScroll={onMarkdownRendererScroll}
               onMetadataChange={onMetadataChange}
               onFirstHeadingChange={onFirstHeadingChange}
-              onMakeScrollSource={() => { scrollSource.current = ScrollSource.RENDERER }}/>}
+              onMakeScrollSource={() => {
+                scrollSource.current = ScrollSource.RENDERER
+              }}/>}
           containerClassName={'overflow-hidden'}/>
       </div>
     </Fragment>

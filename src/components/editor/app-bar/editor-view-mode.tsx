@@ -3,7 +3,7 @@ import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../../redux'
-import { setEditorModeConfig } from '../../../redux/editor/methods'
+import { setEditorMode } from '../../../redux/editor/methods'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 
 export enum EditorMode {
@@ -21,7 +21,7 @@ export const EditorViewMode: React.FC = () => {
       name="options"
       value={editorConfig.editorMode}
       onChange={(value: EditorMode) => {
-        setEditorModeConfig(value)
+        setEditorMode(value)
       }}>
       <ToggleButton value={EditorMode.PREVIEW} variant="outline-secondary" title={t('editor.viewMode.view')}>
         <ForkAwesomeIcon icon="eye"/>

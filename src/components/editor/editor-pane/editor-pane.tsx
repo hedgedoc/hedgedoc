@@ -61,12 +61,14 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
   })
 
   const lastScrollPosition = useRef<number>()
+  const [editorScroll, setEditorScroll] = useState<ScrollInfo>()
+  const onEditorScroll = useCallback((editor: Editor, data: ScrollInfo) => setEditorScroll(data), [])
 
-  const onEditorScroll = useCallback((editor: Editor, data: ScrollInfo) => {
-    if (!editor || !onScroll) {
+  useEffect(() => {
+    if (!editor || !onScroll || !editorScroll) {
       return
     }
-    const scrollEventValue = data.top as number
+    const scrollEventValue = editorScroll.top as number
     const line = editor.lineAtHeight(scrollEventValue, 'local')
     const startYOfLine = editor.heightAtLine(line, 'local')
     const lineInfo = editor.lineInfo(line)
@@ -79,7 +81,7 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
 
     const newScrollState: ScrollState = { firstLineInView: line + 1, scrolledPercentage: percentage }
     onScroll(newScrollState)
-  }, [onScroll])
+  }, [editor, editorScroll, onScroll])
 
   useEffect(() => {
     if (!editor || !scrollState) {
