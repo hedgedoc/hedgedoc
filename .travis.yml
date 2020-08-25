@@ -9,6 +9,7 @@ stages:
 node_js:
   - 10
   - 12
+  - 14
 env:
   - TEST_SUITE=test
   - TEST_SUITE=test:e2e
@@ -18,8 +19,6 @@ jobs:
   include:
     - stage: Static Tests
       name: eslint
-      node_js:
-        - 10
       script:
         - yarn run lint
     - name: ShellCheck
