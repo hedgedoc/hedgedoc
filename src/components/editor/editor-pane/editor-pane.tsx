@@ -87,7 +87,7 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
     if (!editor || !scrollState) {
       return
     }
-    const startYOfLine = editor.heightAtLine(scrollState.firstLineInView - 1, 'div')
+    const startYOfLine = editor.heightAtLine(scrollState.firstLineInView - 1, 'local')
     const heightOfLine = (editor.lineInfo(scrollState.firstLineInView - 1).handle as { height: number }).height
     const newPositionRaw = startYOfLine + (heightOfLine * scrollState.scrolledPercentage / 100)
     const newPosition = Math.floor(newPositionRaw)
