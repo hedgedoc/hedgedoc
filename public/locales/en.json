@@ -143,6 +143,20 @@
         "placeholder": "← Start by entering a title here\n===\nVisit the features page if you don't know what to do.\nHappy hacking :)",
         "invalidYaml": "The yaml-header is invalid. See <0></0> for more information.",
         "help": {
+            "shortcuts": {
+                "title": "Shortcuts",
+                "bold": "Make selection bold",
+                "italic": "Make selection italic",
+                "underline": "Underline selection",
+                "strikethrough": "Strike selection through",
+                "mark": "Mark selection",
+                "view": "Show only View",
+                "both": "Show View and Edit",
+                "edit": "Show only Edit"
+            },
+            "links": {
+                "title": "Links"
+            },
             "contacts": {
                 "title": "Contacts",
                 "community": "Join the community",
@@ -161,9 +175,7 @@
                 "example": "Example",
                 "syntax": "Syntax",
                 "exampleAlert": "This is an alert area.",
-                "underlinedText": "Underlined text",
-                "highlightedText": "Highlighted text",
-                "externalService": "Externals"
+                "highlightedText": "Highlight"
             }
         },
         "error": {

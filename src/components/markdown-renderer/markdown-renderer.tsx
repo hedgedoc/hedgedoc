@@ -26,8 +26,8 @@ import { Alert } from 'react-bootstrap'
 import ReactHtmlParser, { convertNodeToElement, Transform } from 'react-html-parser'
 import { Trans } from 'react-i18next'
 import MathJaxReact from 'react-mathjax'
-import useResizeObserver from 'use-resize-observer'
 import { useSelector } from 'react-redux'
+import useResizeObserver from 'use-resize-observer'
 import { TocAst } from '../../external-types/markdown-it-toc-done-right/interface'
 import { ApplicationState } from '../../redux'
 import { InternalLink } from '../common/links/internal-link'
@@ -37,6 +37,7 @@ import { slugify } from '../editor/table-of-contents/table-of-contents'
 import { RawYAMLMetadata, YAMLMetaData } from '../editor/yaml-metadata/yaml-metadata'
 import { createRenderContainer, validAlertLevels } from './container-plugins/alert'
 import { highlightedCode } from './markdown-it-plugins/highlighted-code'
+import { lineNumberMarker } from './markdown-it-plugins/line-number-marker'
 import { linkifyExtra } from './markdown-it-plugins/linkify-extra'
 import { MarkdownItParserDebugger } from './markdown-it-plugins/parser-debugger'
 import { plantumlError } from './markdown-it-plugins/plantuml-error'
@@ -66,7 +67,6 @@ import { QuoteOptionsReplacer } from './replace-components/quote-options/quote-o
 import { TocReplacer } from './replace-components/toc/toc-replacer'
 import { VimeoReplacer } from './replace-components/vimeo/vimeo-replacer'
 import { YoutubeReplacer } from './replace-components/youtube/youtube-replacer'
-import { lineNumberMarker } from './markdown-it-plugins/line-number-marker'
 
 export interface LineMarkerPosition {
   line: number
@@ -123,6 +123,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
 
   const calculateLineMarkerPositions = useCallback(() => {
     if (documentElement.current && onLineMarkerPositionChanged) {
+      // noinspection CssInvalidHtmlTagReference
       const lineMarkers: NodeListOf<HTMLDivElement> = documentElement.current.querySelectorAll('codimd-linemarker')
       const lineMarkerPositions: LineMarkerPosition[] = Array.from(lineMarkers).map((marker) => {
         return {
@@ -327,7 +328,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
   }, [content, markdownIt, onMetaDataChange])
 
   return (
-    <div className={'bg-light flex-fill pb-5'}>
+    <div className={'bg-light flex-fill'}>
       <div className={`markdown-body ${className || ''} d-flex flex-column align-items-center ${wide ? 'wider' : ''}`} ref={documentElement}>
         <ShowIf condition={yamlError}>
           <Alert variant='warning' dir='auto'>

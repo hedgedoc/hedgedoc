@@ -1,4 +1,5 @@
 import CodeMirror, { Editor, KeyMap, Pass } from 'codemirror'
+import { isMac } from '../utils'
 import {
   makeSelectionBold,
   makeSelectionItalic,
@@ -6,8 +7,6 @@ import {
   strikeThroughSelection,
   underlineSelection
 } from './tool-bar/utils/toolbarButtonUtils'
-
-const isMac = navigator.platform.toLowerCase().includes('mac')
 
 const isVim = (keyMapName?: string) => (keyMapName?.substr(0, 3) === 'vim')
 

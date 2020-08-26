@@ -82,7 +82,7 @@ export const DocumentRenderPane: React.FC<DocumentRenderPaneProps & ScrollProps>
       ref={renderer} onScroll={userScroll} onMouseEnter={onMakeScrollSource} >
       <div className={'col-md'}/>
       <MarkdownRenderer
-        className={'flex-fill'}
+        className={'flex-fill mb-3'}
         content={content}
         wide={wide}
         onTocChange={(tocAst) => setTocAst(tocAst)}

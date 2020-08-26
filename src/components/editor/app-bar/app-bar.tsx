@@ -13,7 +13,7 @@ import { SyncScrollButton } from './sync-scroll-button/sync-scroll-button'
 import { EditorPathParams } from '../editor'
 import { DarkModeButton } from './dark-mode-button'
 import { EditorViewMode } from './editor-view-mode'
-import { HelpButton } from './help-button'
+import { HelpButton } from './help-button/help-button'
 import { NavbarBranding } from './navbar-branding'
 
 export const AppBar: React.FC = () => {
