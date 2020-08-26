@@ -2,7 +2,6 @@ import React from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
 
 const ExportMenu: React.FC = () => {
   useTranslation()
@@ -45,11 +44,13 @@ const ExportMenu: React.FC = () => {
 
         <Dropdown.Divider/>
 
-        <Dropdown.Item className='small text-muted' dir={'auto'}>
+        <Dropdown.Item className='small text-muted' dir={'auto'} href={'https://community.codimd.org/t/frequently-asked-questions/190'} target={'_blank'} rel='noopener noreferrer'>
           <ForkAwesomeIcon icon='file-pdf-o' className={'mx-2'}/>
           <Trans i18nKey={'editor.export.pdf'}/>
           &nbsp;
-          <TranslatedExternalLink i18nKey={'editor.export.why'} href={'https://community.codimd.org/t/frequently-asked-questions/190'} className={'text-primary'}/>
+          <span className={'text-primary'}>
+            <Trans i18nKey={'editor.export.why'}/>
+          </span>
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
