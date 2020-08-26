@@ -29,7 +29,7 @@ export const Shortcut: React.FC = () => {
             <ListGroup variant="flush">
               {Object.entries(shortcutMap[category]).map(([functionName, shortcut]) => {
                 return (
-                  <ListGroup.Item className={'d-flex justify-content-between'}>
+                  <ListGroup.Item key={functionName} className={'d-flex justify-content-between'}>
                     <span><Trans i18nKey={functionName}/></span>
                     <span>{shortcut}</span>
                   </ListGroup.Item>
