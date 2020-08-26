@@ -4,13 +4,14 @@ import { Trans } from 'react-i18next'
 import { isMac } from '../../utils'
 
 export const Shortcut: React.FC = () => {
-  const modifierKey = isMac ? <kbd>Cmd</kbd> : <kbd>Ctrl</kbd>
+  const modifierKey = isMac ? <kbd>⌘</kbd> : <kbd>Ctrl</kbd>
+  const altKey = isMac ? <kbd>⌥</kbd> : <kbd>Alt</kbd>
 
   const shortcutMap: {[category: string]: { [functionName: string]: JSX.Element[] }} = {
     'View Mode': {
-      'editor.help.shortcuts.view': [modifierKey, <> + </>, <kbd>Alt</kbd>, <> + </>, <kbd>V</kbd>],
-      'editor.help.shortcuts.both': [modifierKey, <> + </>, <kbd>Alt</kbd>, <> + </>, <kbd>B</kbd>],
-      'editor.help.shortcuts.edit': [modifierKey, <> + </>, <kbd>Alt</kbd>, <> + </>, <kbd>E</kbd>]
+      'editor.help.shortcuts.view': [<kbd>Ctrl</kbd>, <> + </>, altKey, <> + </>, <kbd>V</kbd>],
+      'editor.help.shortcuts.both': [<kbd>Ctrl</kbd>, <> + </>, altKey, <> + </>, <kbd>B</kbd>],
+      'editor.help.shortcuts.edit': [<kbd>Ctrl</kbd>, <> + </>, altKey, <> + </>, <kbd>E</kbd>]
     },
     Editor: {
       'editor.help.shortcuts.bold': [modifierKey, <> + </>, <kbd>B</kbd>],
