@@ -66,9 +66,9 @@ export const Editor: React.FC = () => {
   }, [updateDocumentTitle])
 
   useEffect(() => {
-    document.addEventListener('keyup', shortcutHandler, false)
+    document.addEventListener('keydown', shortcutHandler, false)
     return () => {
-      document.removeEventListener('keyup', shortcutHandler, false)
+      document.removeEventListener('keydown', shortcutHandler, false)
     }
   }, [])
 
