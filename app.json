@@ -56,6 +56,10 @@
             "description": "set to use ssl protocol for resources path (only applied when domain is set)",
             "required": false
         },
+        "CMD_COOKIE_POLICY": {
+            "description": "Set whether cookies should be sent cross-origin (SameSite value)",
+            "required": false
+        },
         "CMD_URL_ADDPORT": {
             "description": "set to add port on callback url (port 80 or 443 won't applied) (only applied when domain is set)",
             "required": false

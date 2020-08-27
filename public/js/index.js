@@ -1597,7 +1597,7 @@ function toggleNightMode () {
   } else {
     Cookies.set('nightMode', !isActive, {
       expires: 365,
-      sameSite: 'strict'
+      sameSite: window.cookiePolicy
     })
   }
 }
