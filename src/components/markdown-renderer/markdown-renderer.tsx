@@ -25,7 +25,6 @@ import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState 
 import { Alert } from 'react-bootstrap'
 import ReactHtmlParser, { convertNodeToElement, Transform } from 'react-html-parser'
 import { Trans } from 'react-i18next'
-import MathJaxReact from 'react-mathjax'
 import { useSelector } from 'react-redux'
 import useResizeObserver from 'use-resize-observer'
 import { TocAst } from '../../external-types/markdown-it-toc-done-right/interface'
@@ -60,7 +59,7 @@ import { ComponentReplacer, SubNodeConverter } from './replace-components/Compon
 import { GistReplacer } from './replace-components/gist/gist-replacer'
 import { HighlightedCodeReplacer } from './replace-components/highlighted-fence/highlighted-fence-replacer'
 import { ImageReplacer } from './replace-components/image/image-replacer'
-import { MathjaxReplacer } from './replace-components/mathjax/mathjax-replacer'
+import { KatexReplacer } from './replace-components/katex/katex-replacer'
 import { PdfReplacer } from './replace-components/pdf/pdf-replacer'
 import { PossibleWiderReplacer } from './replace-components/possible-wider/possible-wider-replacer'
 import { QuoteOptionsReplacer } from './replace-components/quote-options/quote-options-replacer'
@@ -244,12 +243,12 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
       permalinkSymbol: '<i class="fa fa-link"></i>'
     })
     md.use(mathJax({
-      beforeMath: '<codimd-mathjax>',
-      afterMath: '</codimd-mathjax>',
-      beforeInlineMath: '<codimd-mathjax inline>',
-      afterInlineMath: '</codimd-mathjax>',
-      beforeDisplayMath: '<codimd-mathjax>',
-      afterDisplayMath: '</codimd-mathjax>'
+      beforeMath: '<codimd-katex>',
+      afterMath: '</codimd-katex>',
+      beforeInlineMath: '<codimd-katex inline>',
+      afterInlineMath: '</codimd-katex>',
+      beforeDisplayMath: '<codimd-katex>',
+      afterDisplayMath: '</codimd-katex>'
     }))
     md.use(markdownItRegex, replaceLegacyYoutubeShortCode)
     md.use(markdownItRegex, replaceLegacyVimeoShortCode)
@@ -312,7 +311,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
       new TocReplacer(),
       new HighlightedCodeReplacer(),
       new QuoteOptionsReplacer(),
-      new MathjaxReplacer()
+      new KatexReplacer()
     ]
     if (onMetaDataChange) {
       // This is used if the front-matter callback is never called, because the user deleted everything regarding metadata from the document
@@ -337,9 +336,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
             </Trans>
           </Alert>
         </ShowIf>
-        <MathJaxReact.Provider>
-          {result}
-        </MathJaxReact.Provider>
+        {result}
       </div>
     </div>
   )

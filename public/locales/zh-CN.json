@@ -8,7 +8,7 @@
             "exploreFeatures": "探索所有功能",
             "features": {
                 "collaboration": "实时协作",
-                "mathJax": "支持图表与 MathJax",
+                "katex": "支持图表与 KaTeX",
                 "slides": "支持幻灯模式"
             }
         },

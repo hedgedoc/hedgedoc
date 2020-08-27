@@ -8,7 +8,7 @@
             "exploreFeatures": "Udforsk alle features",
             "features": {
                 "collaboration": "Samarbejd via URL",
-                "mathJax": "Mulighed for diagrammer og MathJax",
+                "katex": "Mulighed for diagrammer og KaTeX",
                 "slides": "Mulighed for præsentationer"
             }
         },

@@ -8,7 +8,7 @@
             "exploreFeatures": "Alle Funktionen",
             "features": {
                 "collaboration": "Zusammenarbeiten mit URL",
-                "mathJax": "Unterstützt Charts und MathJax",
+                "katex": "Unterstützt Charts und KaTeX",
                 "slides": "Unterstützt Präsentationsmodus"
             }
         },

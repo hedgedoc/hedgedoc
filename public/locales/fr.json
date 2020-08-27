@@ -8,7 +8,7 @@
             "exploreFeatures": "Explorer toutes les fonctionnalités",
             "features": {
                 "collaboration": "Collaborez avec l'URL",
-                "mathJax": "Gère les graphiques et MathJax",
+                "katex": "Gère les graphiques et KaTeX",
                 "slides": "Gère le mode présentation"
             }
         },

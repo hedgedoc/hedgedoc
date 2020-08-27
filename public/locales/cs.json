@@ -8,7 +8,7 @@
             "exploreFeatures": "Prozkoumat všechny funkce",
             "features": {
                 "collaboration": "Spolupráce v reálném čase",
-                "mathJax": "Funguje s grafy a MathJax",
+                "katex": "Funguje s grafy a KaTeX",
                 "slides": "Podporuje režim prezentace"
             }
         },

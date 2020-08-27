@@ -8,7 +8,7 @@
             "exploreFeatures": "सभी सुविधाओं का अन्वेषण करें",
             "features": {
                 "collaboration": "यूआरएल के साथ सहयोग करें",
-                "mathJax": "चार्ट और MathJax का समर्थन",
+                "katex": "चार्ट और KaTeX का समर्थन",
                 "slides": "स्लाइड मोड का समर्थन"
             }
         },

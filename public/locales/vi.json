@@ -8,7 +8,7 @@
             "exploreFeatures": "Khám phá tất cả tính năng",
             "features": {
                 "collaboration": "Cộng tác thời gian thực",
-                "mathJax": "Làm việc với biểu đồ và MathJax",
+                "katex": "Làm việc với biểu đồ và KaTeX",
                 "slides": "Hỗ trợ chế độ slide"
             }
         },

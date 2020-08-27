@@ -8,7 +8,7 @@
             "exploreFeatures": "Przeglądaj wszystkie funkcje",
             "features": {
                 "collaboration": "Kolaboracja w czasie rzeczywistym",
-                "mathJax": "Kompatybilne z wykresami oraz MathJax",
+                "katex": "Kompatybilne z wykresami oraz KaTeX",
                 "slides": "Obsługuje tryb slajdów"
             }
         },

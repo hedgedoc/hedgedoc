@@ -8,7 +8,7 @@
             "exploreFeatures": "すべての機能をチェック",
             "features": {
                 "collaboration": "URLで共同編集",
-                "mathJax": "グラフとMathJaxのサポート",
+                "katex": "グラフとKaTeXのサポート",
                 "slides": "スライドモードのサポート"
             }
         },

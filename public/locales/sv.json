@@ -8,7 +8,7 @@
             "exploreFeatures": "Upptäck alla funktioner",
             "features": {
                 "collaboration": "Samarbeta med URL",
-                "mathJax": "Stöd för diagram och MathJax",
+                "katex": "Stöd för diagram och KaTeX",
                 "slides": "Stöd för slide mode"
             }
         },

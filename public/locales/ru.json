@@ -8,7 +8,7 @@
             "exploreFeatures": "Изучите все возможности",
             "features": {
                 "collaboration": "Сотрудничество по ссылке",
-                "mathJax": "Поддержка графиков и MathJax",
+                "katex": "Поддержка графиков и KaTeX",
                 "slides": "Поддержка режима слайдера"
             }
         },

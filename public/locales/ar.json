@@ -8,7 +8,7 @@
             "exploreFeatures": "استكشف جميع الميزات",
             "features": {
                 "collaboration": "تعاون آني",
-                "mathJax": "دعم المنحنيات البيانية و MathJax",
+                "katex": "دعم المنحنيات البيانية و KaTeX",
                 "slides": "دعم الشرائح التقديمية"
             }
         },

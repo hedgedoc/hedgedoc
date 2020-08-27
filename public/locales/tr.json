@@ -8,7 +8,7 @@
             "exploreFeatures": "Özellikleri keşfet",
             "features": {
                 "collaboration": "URL ile katkıda bulun",
-                "mathJax": "Grafikler ve MathJax'ı destekle",
+                "katex": "Grafikler ve KaTeX'ı destekle",
                 "slides": "Sunum modunu destekle"
             }
         },

@@ -8,7 +8,7 @@
             "exploreFeatures": "Esploru ĉiujn eblecojn",
             "features": {
                 "collaboration": "Kunlaboru per URL",
-                "mathJax": "Ebleco por skemoj kaj MathJax",
+                "katex": "Ebleco por skemoj kaj KaTeX",
                 "slides": "Ebleco por bildvica modo"
             }
         },

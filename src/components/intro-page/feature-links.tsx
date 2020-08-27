@@ -20,7 +20,7 @@ export const FeatureLinks: React.FC = () => {
         <Link to={'/n/features#MathJax'} className="text-light">
           <ForkAwesomeIcon icon="bar-chart" size="3x"/>
           <h5>
-            <Trans i18nKey="landing.intro.features.mathJax"/>
+            <Trans i18nKey="landing.intro.features.katex"/>
           </h5>
         </Link>
       </Col>

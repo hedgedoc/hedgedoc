@@ -8,7 +8,7 @@
             "exploreFeatures": "Explore all features",
             "features": {
                 "collaboration": "Real time collaboration",
-                "mathJax": "Works with charts and MathJax",
+                "katex": "Works with charts and KaTeX",
                 "slides": "Supports slide mode"
             },
             "screenShotAltText": "CodiMD Screenshot"

@@ -92,7 +92,7 @@ describe('Links Intro', () => {
         .should('include', '/features#Share-Notes')
     })
 
-    it('MathJax', () => {
+    it('KaTeX', () => {
       cy.get('i.fa-bar-chart.fa-3x')
         .click()
       cy.url()

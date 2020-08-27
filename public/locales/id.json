@@ -8,7 +8,7 @@
             "exploreFeatures": "Jelajahi semua fitur",
             "features": {
                 "collaboration": "Kolaborasi real-time",
-                "mathJax": "Mendukung charts dan MathJax",
+                "katex": "Mendukung charts dan KaTeX",
                 "slides": "Mendukung mode slide"
             }
         },

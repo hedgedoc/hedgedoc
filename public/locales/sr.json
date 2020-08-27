@@ -8,7 +8,7 @@
             "exploreFeatures": "Истражи све могућности",
             "features": {
                 "collaboration": "Сарадња уз помоћ URL-а",
-                "mathJax": "Подршка за графиконе и MathJax",
+                "katex": "Подршка за графиконе и KaTeX",
                 "slides": "Подршка за слајдове и презентације"
             }
         },

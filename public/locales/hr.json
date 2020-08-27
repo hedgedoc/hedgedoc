@@ -8,7 +8,7 @@
             "exploreFeatures": "Istraži sve značajke",
             "features": {
                 "collaboration": "Kolaboracija sa URL-om",
-                "mathJax": "Support charts and MathJax",
+                "katex": "Support charts and KaTeX",
                 "slides": "Način podrške slajda"
             }
         },
