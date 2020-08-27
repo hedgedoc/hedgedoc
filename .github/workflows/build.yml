@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['10', '12', '14']
+        node: ['12', '14']
     name: Test with NodeJS ${{ matrix.node }}
     steps:
       - name: Checkout repository

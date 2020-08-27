@@ -7,7 +7,7 @@ This is the new, improved and better looking frontend for CodiMD 2.0.
 Our goal is to recreate the current frontend in react and to improve it.
 
 ## Preparation
-You'll need at least Node 10 (we recommend 12). We use [yarn](https://yarnpkg.com/) for our dependencies.
+You'll need at least Node 12. We use [yarn](https://yarnpkg.com/) for our dependencies.
 
 ## Development mode
 
