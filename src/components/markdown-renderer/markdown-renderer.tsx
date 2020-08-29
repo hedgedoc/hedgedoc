@@ -65,7 +65,6 @@ import { KatexReplacer } from './replace-components/katex/katex-replacer'
 import { PdfReplacer } from './replace-components/pdf/pdf-replacer'
 import { PossibleWiderReplacer } from './replace-components/possible-wider/possible-wider-replacer'
 import { QuoteOptionsReplacer } from './replace-components/quote-options/quote-options-replacer'
-import { TocReplacer } from './replace-components/toc/toc-replacer'
 import { VimeoReplacer } from './replace-components/vimeo/vimeo-replacer'
 import { YoutubeReplacer } from './replace-components/youtube/youtube-replacer'
 
@@ -310,7 +309,6 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
       new AsciinemaReplacer(),
       new PdfReplacer(),
       new ImageReplacer(),
-      new TocReplacer(),
       new CsvReplacer(),
       new FlowchartReplacer(),
       new HighlightedCodeReplacer(),
