@@ -3,6 +3,11 @@
         "slogan": "The best platform to write and share markdown.",
         "title": "Collaborative markdown notes"
     },
+    "renderer": {
+        "flowchart": {
+            "invalidSyntax": "Invalid flowchart.js syntax!"
+        }
+    },
     "landing": {
         "intro": {
             "exploreFeatures": "Explore all features",
