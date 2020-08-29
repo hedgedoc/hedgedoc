@@ -1,6 +1,6 @@
 import MarkdownIt from 'markdown-it/lib'
 
-const highlightRegex = /^ *(\w*)(=(\d*|\+))?(!?)$/
+const highlightRegex = /^ *(\w*)(.*)$/
 
 export const highlightedCode: MarkdownIt.PluginSimple = (md: MarkdownIt) => {
   md.core.ruler.push('highlighted-code', (state) => {
@@ -14,13 +14,7 @@ export const highlightedCode: MarkdownIt.PluginSimple = (md: MarkdownIt) => {
           token.attrJoin('data-highlight-language', highlightInfos[1])
         }
         if (highlightInfos[2]) {
-          token.attrJoin('data-show-line-numbers', '')
-        }
-        if (highlightInfos[3]) {
-          token.attrJoin('data-start-line-number', highlightInfos[3])
-        }
-        if (highlightInfos[4]) {
-          token.attrJoin('data-wrap-lines', '')
+          token.attrJoin('data-extra', highlightInfos[2])
         }
       }
     })

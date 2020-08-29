@@ -9,6 +9,17 @@ opengraph:
 # Embedding demo
 [TOC]
 
+## CSV
+
+\`\`\`csv delimiter=; header
+Username; Identifier;First name;Last name
+"booker12; rbooker";9012;Rachel;Booker
+grey07;2070;Laura;Grey
+johnson81;4081;Craig;Johnson
+jenkins46;9346;Mary;Jenkins
+smith79;5079;Jamie;Smith
+\`\`\`
+
 ## some plain text
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.

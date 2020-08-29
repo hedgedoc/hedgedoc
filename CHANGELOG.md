@@ -37,6 +37,7 @@
 - The Toolbar includes an EmojiPicker
 - Added shortcodes for [fork-awesome icons](https://forkaweso.me/Fork-Awesome/icons/) (e.g. `:fa-picture-o:`)
 - The code button now adds code fences even if the user selected nothing beforehand
+- Code blocks with 'csv' as language render as tables.
 
 ### Changed
 

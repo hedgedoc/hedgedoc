@@ -56,6 +56,7 @@ import { replaceVimeoLink } from './regex-plugins/replace-vimeo-link'
 import { replaceYouTubeLink } from './regex-plugins/replace-youtube-link'
 import { AsciinemaReplacer } from './replace-components/asciinema/asciinema-replacer'
 import { ComponentReplacer, SubNodeConverter } from './replace-components/ComponentReplacer'
+import { CsvReplacer } from './replace-components/csv/csv-replacer'
 import { GistReplacer } from './replace-components/gist/gist-replacer'
 import { HighlightedCodeReplacer } from './replace-components/highlighted-fence/highlighted-fence-replacer'
 import { ImageReplacer } from './replace-components/image/image-replacer'
@@ -309,6 +310,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
       new PdfReplacer(),
       new ImageReplacer(),
       new TocReplacer(),
+      new CsvReplacer(),
       new HighlightedCodeReplacer(),
       new QuoteOptionsReplacer(),
       new KatexReplacer()
