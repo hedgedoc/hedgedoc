@@ -115,18 +115,18 @@ entity "Group" {
   *canEdit : boolean
 }
 
-Note "1" - "1..*" Revision
-Revision "0..*" - "0..*" Authorship
+Note "1" -- "1..*" Revision
+Revision "0..*" -- "0..*" Authorship
 (Revision, Authorship) .. RevisionAuthorship
-Authorship "0..*" - "1" User
-Note "1" - "0..*" User : owner
-Note "1" - "0..*" NoteUserPermission
-NoteUserPermission "1" - "1" User
-Note "1" - "0..*" NoteGroupPermission
-NoteGroupPermission "0..*" - "1" Group
-Identity "1..*" - "1" User
-authToken "1..*" - "1" User
-seesion "1..*" - "1" User
-Note "0..*" - "0..*" User : color
+Authorship "0..*" -- "1" User
+Note "1" -- "0..*" User : owner
+Note "1" -- "0..*" NoteUserPermission
+NoteUserPermission "1" -- "1" User
+Note "1" -- "0..*" NoteGroupPermission
+NoteGroupPermission "0..*" -- "1" Group
+Identity "1..*" -- "1" User
+authToken "1..*" -- "1" User
+seesion "1..*" -- "1" User
+Note "0..*" -- "0..*" User : color
 (Note, User) .. AuthorColors
 @enduml
