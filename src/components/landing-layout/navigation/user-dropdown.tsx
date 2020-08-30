@@ -7,10 +7,11 @@ import { ApplicationState } from '../../../redux'
 import { clearUser } from '../../../redux/user/methods'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { UserAvatar } from '../../common/user-avatar/user-avatar'
+import equal from 'fast-deep-equal'
 
 export const UserDropdown: React.FC = () => {
   useTranslation()
-  const user = useSelector((state: ApplicationState) => state.user)
+  const user = useSelector((state: ApplicationState) => state.user, equal)
 
   if (!user) {
     return null

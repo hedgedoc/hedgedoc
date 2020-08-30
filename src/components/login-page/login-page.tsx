@@ -9,12 +9,13 @@ import { ViaInternal } from './auth/via-internal'
 import { ViaLdap } from './auth/via-ldap'
 import { OneClickType, ViaOneClick } from './auth/via-one-click'
 import { ViaOpenId } from './auth/via-openid'
-
+import equal from 'fast-deep-equal'
 export const LoginPage: React.FC = () => {
   useTranslation()
-  const authProviders = useSelector((state: ApplicationState) => state.config.authProviders)
-  const customAuthNames = useSelector((state: ApplicationState) => state.config.customAuthNames)
-  const userLoginState = useSelector((state: ApplicationState) => state.user)
+  const authProviders = useSelector((state: ApplicationState) => state.config.authProviders, equal)
+  const customSamlAuthName = useSelector((state: ApplicationState) => state.config.customAuthNames.saml)
+  const customOauthAuthName = useSelector((state: ApplicationState) => state.config.customAuthNames.oauth2)
+  const userLoggedIn = useSelector((state: ApplicationState) => !!state.user)
 
   const oneClickProviders = [authProviders.dropbox, authProviders.facebook, authProviders.github, authProviders.gitlab,
     authProviders.google, authProviders.oauth2, authProviders.saml, authProviders.twitter]
@@ -22,15 +23,15 @@ export const LoginPage: React.FC = () => {
   const oneClickCustomName: (type: OneClickType) => string | undefined = (type) => {
     switch (type) {
       case OneClickType.SAML:
-        return customAuthNames.saml
+        return customSamlAuthName
       case OneClickType.OAUTH2:
-        return customAuthNames.oauth2
+        return customOauthAuthName
       default:
         return undefined
     }
   }
 
-  if (userLoginState) {
+  if (userLoggedIn) {
     // TODO Redirect to previous page?
     return (
       <Redirect to='/history'/>

@@ -1,4 +1,4 @@
-import equal from 'deep-equal'
+import equal from 'fast-deep-equal'
 import { DomElement } from 'domhandler'
 import emojiData from 'emoji-mart/data/twitter.json'
 import { Data } from 'emoji-mart/dist-es/utils/data'

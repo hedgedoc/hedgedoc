@@ -49,7 +49,7 @@ export const initState: HistoryToolbarState = {
 export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange, tags, onClearHistory, onRefreshHistory, onExportHistory, onImportHistory, onUploadAll }) => {
   const [t] = useTranslation()
   const [state, setState] = useState<HistoryToolbarState>(initState)
-  const user = useSelector((state: ApplicationState) => state.user)
+  const userExists = useSelector((state: ApplicationState) => !!state.user)
 
   const titleSortChanged = (direction: SortModeEnum) => {
     setState(prevState => ({
@@ -118,7 +118,7 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
           <ForkAwesomeIcon icon='refresh'/>
         </Button>
       </InputGroup>
-      <ShowIf condition={!!user}>
+      <ShowIf condition={userExists}>
         <InputGroup className={'mr-1 mb-1'}>
           <Button variant={'light'} title={t('landing.history.toolbar.uploadAll')} onClick={onUploadAll}>
             <ForkAwesomeIcon icon='cloud-upload'/>

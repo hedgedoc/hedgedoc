@@ -10,7 +10,7 @@ import { VersionInfo } from './version-info'
 export const PoweredByLinks: React.FC = () => {
   useTranslation()
 
-  const config = useSelector((state: ApplicationState) => state.config)
+  const specialLinks = useSelector((state: ApplicationState) => Object.entries(state.config.specialLinks) as [string, string][])
 
   return (
     <p>
@@ -20,7 +20,7 @@ export const PoweredByLinks: React.FC = () => {
       &nbsp;|&nbsp;
       <TranslatedInternalLink href='/n/release-notes' i18nKey='landing.footer.releases'/>
       {
-        Object.entries({ ...config.specialLinks }).map(([i18nKey, href]) =>
+        specialLinks.map(([i18nKey, href]) =>
           <Fragment key={i18nKey}>
             &nbsp;|&nbsp;
             <TranslatedExternalLink href={href} i18nKey={'landing.footer.' + i18nKey}/>

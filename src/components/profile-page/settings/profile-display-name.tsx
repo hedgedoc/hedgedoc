@@ -9,18 +9,18 @@ import { getAndSetUser } from '../../login-page/auth/utils'
 export const ProfileDisplayName: React.FC = () => {
   const regexInvalidDisplayName = /^\s*$/
   const { t } = useTranslation()
-  const user = useSelector((state: ApplicationState) => state.user)
+  const userName = useSelector((state: ApplicationState) => state.user?.name)
   const [submittable, setSubmittable] = useState(false)
   const [error, setError] = useState(false)
   const [displayName, setDisplayName] = useState('')
 
   useEffect(() => {
-    if (user) {
-      setDisplayName(user.name)
+    if (userName !== undefined) {
+      setDisplayName(userName)
     }
-  }, [user])
+  }, [userName])
 
-  if (!user) {
+  if (!userName) {
     return <Alert variant={'danger'}>User not logged in</Alert>
   }
 

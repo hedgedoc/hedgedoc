@@ -12,7 +12,7 @@ import './header-bar.scss'
 
 const HeaderBar: React.FC = () => {
   useTranslation()
-  const user = useSelector((state: ApplicationState) => state.user)
+  const userExists = useSelector((state: ApplicationState) => !!state.user)
 
   return (
     <Navbar className="justify-content-between">
@@ -25,7 +25,7 @@ const HeaderBar: React.FC = () => {
         </HeaderNavLink>
       </div>
       <div className="d-inline-flex">
-        {!user
+        {!userExists
           ? <Fragment>
             <span className={'mx-1 d-flex'}>
               <NewGuestNoteButton/>

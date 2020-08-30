@@ -1,3 +1,4 @@
+import equal from 'fast-deep-equal'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -8,7 +9,7 @@ import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../show-if/show-if'
 
 export const MotdBanner: React.FC = () => {
-  const bannerState = useSelector((state: ApplicationState) => state.banner)
+  const bannerState = useSelector((state: ApplicationState) => state.banner, equal)
 
   const dismissBanner = () => {
     setBanner({ ...bannerState, show: false })

@@ -8,6 +8,7 @@ import frontendVersion from '../../../version.json'
 import { TranslatedExternalLink } from '../../common/links/translated-external-link'
 import { ShowIf } from '../../common/show-if/show-if'
 import { CopyableField } from '../../common/copyable-field/copyable-field'
+import equal from 'fast-deep-equal'
 
 export const VersionInfo: React.FC = () => {
   const [show, setShow] = useState(false)
@@ -17,7 +18,7 @@ export const VersionInfo: React.FC = () => {
 
   const { t } = useTranslation()
 
-  const serverVersion = useSelector((state: ApplicationState) => state.config.version)
+  const serverVersion = useSelector((state: ApplicationState) => state.config.version, equal)
 
   const column = (title: string, version: string, sourceCodeLink: string, issueTrackerLink: string) => (
     <Col md={6} className={'flex-column'}>

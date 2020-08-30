@@ -14,12 +14,12 @@ export enum EditorMode {
 
 export const EditorViewMode: React.FC = () => {
   const { t } = useTranslation()
-  const editorConfig = useSelector((state: ApplicationState) => state.editorConfig)
+  const editorMode = useSelector((state: ApplicationState) => state.editorConfig.editorMode)
   return (
     <ToggleButtonGroup
       type="radio"
       name="options"
-      value={editorConfig.editorMode}
+      value={editorMode}
       onChange={(value: EditorMode) => {
         setEditorMode(value)
       }}>

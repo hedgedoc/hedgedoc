@@ -7,11 +7,11 @@ export interface DocumentTitleProps {
 }
 
 export const DocumentTitle: React.FC<DocumentTitleProps> = ({ title }) => {
-  const branding = useSelector((state: ApplicationState) => state.config.branding)
+  const brandingName = useSelector((state: ApplicationState) => state.config.branding.name)
 
   useEffect(() => {
-    document.title = `${title ? title + ' - ' : ''}CodiMD ${branding.name ? ` @ ${branding.name}` : ''}`
-  }, [branding, title])
+    document.title = `${title ? title + ' - ' : ''}CodiMD ${brandingName ? ` @ ${brandingName}` : ''}`
+  }, [brandingName, title])
 
   return null
 }

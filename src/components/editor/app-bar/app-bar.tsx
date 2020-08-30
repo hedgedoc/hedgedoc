@@ -19,7 +19,7 @@ import { NavbarBranding } from './navbar-branding'
 export const AppBar: React.FC = () => {
   const { t } = useTranslation()
   const { id } = useParams<EditorPathParams>()
-  const user = useSelector((state: ApplicationState) => state.user)
+  const userExists = useSelector((state: ApplicationState) => !!state.user)
 
   return (
     <Navbar bg={'light'}>
@@ -39,10 +39,10 @@ export const AppBar: React.FC = () => {
         <Button className="mx-2" size="sm" variant="primary">
           <ForkAwesomeIcon icon="plus"/> <Trans i18nKey="editor.documentBar.new"/>
         </Button>
-        <ShowIf condition={!user}>
+        <ShowIf condition={!userExists}>
           <SignInButton size={'sm'} />
         </ShowIf>
-        <ShowIf condition={!!user}>
+        <ShowIf condition={userExists}>
           <UserDropdown />
         </ShowIf>
       </Nav>

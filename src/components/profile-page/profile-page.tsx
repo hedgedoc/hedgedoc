@@ -10,9 +10,9 @@ import { ProfileChangePassword } from './settings/profile-change-password'
 import { ProfileDisplayName } from './settings/profile-display-name'
 
 export const ProfilePage: React.FC = () => {
-  const user = useSelector((state: ApplicationState) => state.user)
+  const userProvider = useSelector((state: ApplicationState) => state.user?.provider)
 
-  if (!user) {
+  if (!userProvider) {
     return (
       <Redirect to={'/login'}/>
     )
@@ -23,7 +23,7 @@ export const ProfilePage: React.FC = () => {
       <Row className="h-100 flex justify-content-center">
         <Col lg={6}>
           <ProfileDisplayName/>
-          <ShowIf condition={user.provider === LoginProvider.INTERNAL}>
+          <ShowIf condition={userProvider === LoginProvider.INTERNAL}>
             <ProfileChangePassword/>
           </ShowIf>
           <ProfileAccountManagement/>

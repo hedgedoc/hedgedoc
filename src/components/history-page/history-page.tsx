@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { deleteHistory, deleteHistoryEntry, getHistory, setHistory, updateHistoryEntry } from '../../api/history'
 import { deleteNote } from '../../api/notes'
 import { ApplicationState } from '../../redux'
+
 import {
   collectEntries,
   downloadHistory,
@@ -46,7 +47,7 @@ export const HistoryPage: React.FC = () => {
   const [localHistoryEntries, setLocalHistoryEntries] = useState<HistoryEntry[]>(loadHistoryFromLocalStore)
   const [remoteHistoryEntries, setRemoteHistoryEntries] = useState<HistoryEntry[]>([])
   const [toolbarState, setToolbarState] = useState<HistoryToolbarState>(toolbarInitState)
-  const user = useSelector((state: ApplicationState) => state.user)
+  const userExists = useSelector((state: ApplicationState) => !!state.user)
   const [error, setError] = useState('')
 
   const historyWrite = useCallback((entries: HistoryEntry[]) => {
@@ -61,24 +62,24 @@ export const HistoryPage: React.FC = () => {
   }, [historyWrite, localHistoryEntries])
 
   const importHistory = useCallback((entries: HistoryEntry[]): void => {
-    if (user) {
+    if (userExists) {
       setHistory(entries)
         .then(() => setRemoteHistoryEntries(entries))
         .catch(() => setError('setHistory'))
     } else {
       setLocalHistoryEntries(entries)
     }
-  }, [user])
+  }, [userExists])
 
   const refreshHistory = useCallback(() => {
     const localHistory = loadHistoryFromLocalStore()
     setLocalHistoryEntries(localHistory)
-    if (user) {
+    if (userExists) {
       getHistory()
         .then((remoteHistory) => setRemoteHistoryEntries(remoteHistory))
         .catch(() => setError('getHistory'))
     }
-  }, [user])
+  }, [userExists])
 
   useEffect(() => {
     refreshHistory()
@@ -94,17 +95,17 @@ export const HistoryPage: React.FC = () => {
 
   const clearHistory = useCallback(() => {
     setLocalHistoryEntries([])
-    if (user) {
+    if (userExists) {
       deleteHistory()
         .then(() => setRemoteHistoryEntries([]))
         .catch(() => setError('deleteHistory'))
     }
     historyWrite([])
-  }, [historyWrite, user])
+  }, [historyWrite, userExists])
 
   const uploadAll = useCallback((): void => {
     const newHistory = mergeEntryArrays(localHistoryEntries, remoteHistoryEntries)
-    if (user) {
+    if (userExists) {
       setHistory(newHistory)
         .then(() => {
           setRemoteHistoryEntries(newHistory)
@@ -113,7 +114,7 @@ export const HistoryPage: React.FC = () => {
         })
         .catch(() => setError('setHistory'))
     }
-  }, [historyWrite, localHistoryEntries, remoteHistoryEntries, user])
+  }, [historyWrite, localHistoryEntries, remoteHistoryEntries, userExists])
 
   const removeFromHistoryClick = useCallback((entryId: string, location: HistoryEntryOrigin): void => {
     if (location === HistoryEntryOrigin.LOCAL) {
@@ -126,14 +127,14 @@ export const HistoryPage: React.FC = () => {
   }, [])
 
   const deleteNoteClick = useCallback((entryId: string, location: HistoryEntryOrigin): void => {
-    if (user) {
+    if (userExists) {
       deleteNote(entryId)
         .then(() => {
           removeFromHistoryClick(entryId, location)
         })
         .catch(() => setError('deleteNote'))
     }
-  }, [user, removeFromHistoryClick])
+  }, [userExists, removeFromHistoryClick])
 
   const pinClick = useCallback((entryId: string, location: HistoryEntryOrigin): void => {
     if (location === HistoryEntryOrigin.LOCAL) {

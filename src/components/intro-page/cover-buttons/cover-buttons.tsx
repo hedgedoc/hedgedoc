@@ -10,10 +10,10 @@ import { SignInButton } from '../../landing-layout/navigation/sign-in-button'
 
 export const CoverButtons: React.FC = () => {
   useTranslation()
-  const user = useSelector((state: ApplicationState) => state.user)
-  const authProviders = useSelector((state: ApplicationState) => state.config.authProviders)
+  const userExists = useSelector((state: ApplicationState) => !!state.user)
+  const anyAuthProviderActivated = useSelector((state: ApplicationState) => Object.values(state.config.authProviders).includes(true))
 
-  if (user) {
+  if (userExists) {
     return null
   }
 
@@ -24,7 +24,7 @@ export const CoverButtons: React.FC = () => {
         variant="success"
         size="lg"
       />
-      <ShowIf condition={Object.values(authProviders).includes(true)}>
+      <ShowIf condition={anyAuthProviderActivated}>
         <span className="m-2">
           <Trans i18nKey="common.or"/>
         </span>

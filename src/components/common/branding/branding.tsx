@@ -1,3 +1,5 @@
+
+import equal from 'fast-deep-equal'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../../redux'
@@ -9,7 +11,7 @@ export interface BrandingProps {
 }
 
 export const Branding: React.FC<BrandingProps> = ({ inline = false }) => {
-  const branding = useSelector((state: ApplicationState) => state.config.branding)
+  const branding = useSelector((state: ApplicationState) => state.config.branding, equal)
   const showBranding = !!branding.name || !!branding.logo
 
   return (
