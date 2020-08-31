@@ -93,6 +93,7 @@
         "build:serve": "http-server build/ -s -p 3001 -P \"http://127.0.0.1:3001?\"",
         "build": "react-scripts build",
         "test": "react-scripts test",
+        "lint": "eslint --ext .ts,.tsx src",
         "eject": "react-scripts eject",
         "cy:open": "cypress open",
         "cy:run:chrome": "cypress run --browser chrome",
