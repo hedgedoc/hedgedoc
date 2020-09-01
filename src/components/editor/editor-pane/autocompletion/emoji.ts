@@ -1,64 +1,40 @@
 import { Editor, Hint, Hints, Pos } from 'codemirror'
 import { Data, EmojiData, NimbleEmojiIndex } from 'emoji-mart'
 import data from 'emoji-mart/data/twitter.json'
-import { getEmojiIcon, getEmojiShortCode } from '../tool-bar/utils/emojiUtils'
 import { customEmojis } from '../tool-bar/emoji-picker/emoji-picker'
+import { getEmojiIcon, getEmojiShortCode } from '../tool-bar/utils/emojiUtils'
+import { findWordAtCursor, Hinter } from './index'
 
-interface findWordAtCursorResponse {
-  start: number,
-  end: number,
-  text: string
-}
-
-const allowedCharsInEmojiCodeRegex = /(:|\w|-|_|\+)/
+const allowedCharsInEmojiCodeRegex = /[:\w-_+]/
 const emojiIndex = new NimbleEmojiIndex(data as unknown as Data)
-export const emojiWordRegex = /^:((\w|-|_|\+)+)$/
+const emojiWordRegex = /^:([\w-_+]*)$/
 
-export const findWordAtCursor = (editor: Editor): findWordAtCursorResponse => {
-  const cursor = editor.getCursor()
-  const line = editor.getLine(cursor.line)
-  let start = cursor.ch
-  let end = cursor.ch
-  while (start && allowedCharsInEmojiCodeRegex.test(line.charAt(start - 1))) {
-    --start
-  }
-  while (end < line.length && allowedCharsInEmojiCodeRegex.test(line.charAt(end))) {
-    ++end
-  }
-
-  return {
-    text: line.slice(start, end).toLowerCase(),
-    start: start,
-    end: end
-  }
-}
-
-export const generateEmojiHints = (editor: Editor): Promise< Hints| null > => {
+const generateEmojiHints = (editor: Editor): Promise< Hints| null > => {
   return new Promise((resolve) => {
-    const searchTerm = findWordAtCursor(editor)
+    const searchTerm = findWordAtCursor(editor, allowedCharsInEmojiCodeRegex)
     const searchResult = emojiWordRegex.exec(searchTerm.text)
     if (searchResult === null) {
       resolve(null)
       return
     }
     const term = searchResult[1]
-    if (!term) {
-      resolve(null)
-      return
-    }
-    const search = emojiIndex.search(term, {
+    let search: EmojiData[] | null = emojiIndex.search(term, {
       emojisToShowFilter: () => true,
-      maxResults: 5,
+      maxResults: 7,
       include: [],
       exclude: [],
       custom: customEmojis as EmojiData[]
     })
+    if (search === null) {
+      // set search to the first seven emojis in data
+      search = Object.values(emojiIndex.emojis).slice(0, 7)
+    }
     const cursor = editor.getCursor()
     if (!search) {
       resolve(null)
     } else {
       resolve({
-        list: search.map((emojiData: EmojiData): Hint => ({
+        list: search.map((emojiData): Hint => ({
           text: getEmojiShortCode(emojiData),
           render: (parent: HTMLLIElement) => {
             const wrapper = document.createElement('div')
@@ -71,4 +47,10 @@ export const generateEmojiHints = (editor: Editor): Promise< Hints| null > => {
       })
     }
   })
+}
+
+export const EmojiHinter: Hinter = {
+  allowedChars: allowedCharsInEmojiCodeRegex,
+  wordRegExp: emojiWordRegex,
+  hint: generateEmojiHints
 }

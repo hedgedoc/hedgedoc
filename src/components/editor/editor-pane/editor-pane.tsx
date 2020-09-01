@@ -12,20 +12,20 @@ import 'codemirror/addon/edit/matchtags'
 import 'codemirror/addon/fold/foldcode'
 import 'codemirror/addon/fold/foldgutter'
 import 'codemirror/addon/hint/show-hint'
-import 'codemirror/addon/search/search'
 import 'codemirror/addon/search/jump-to-line'
 import 'codemirror/addon/search/match-highlighter'
+import 'codemirror/addon/search/search'
 import 'codemirror/addon/selection/active-line'
-import 'codemirror/keymap/sublime'
 import 'codemirror/keymap/emacs'
+import 'codemirror/keymap/sublime'
 import 'codemirror/keymap/vim'
 import 'codemirror/mode/gfm/gfm'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Controlled as ControlledCodeMirror } from 'react-codemirror2'
 import { useTranslation } from 'react-i18next'
-import './editor-pane.scss'
 import { ScrollProps, ScrollState } from '../scroll/scroll-props'
-import { generateEmojiHints, emojiWordRegex, findWordAtCursor } from './hints/emoji'
+import { allHinters, findWordAtCursor } from './autocompletion'
+import './editor-pane.scss'
 import { defaultKeyMap } from './key-map'
 import { createStatusInfo, defaultState, StatusBar, StatusBarInfo } from './status-bar/status-bar'
 import { ToolBar } from './tool-bar/tool-bar'
@@ -35,17 +35,18 @@ export interface EditorPaneProps {
   content: string
 }
 
-const hintOptions = {
-  hint: generateEmojiHints,
-  completeSingle: false,
-  completeOnSingleClick: false,
-  alignWithWord: true
-}
-
 const onChange = (editor: Editor) => {
-  const searchTerm = findWordAtCursor(editor)
-  if (emojiWordRegex.test(searchTerm.text)) {
-    editor.showHint(hintOptions)
+  for (const hinter of allHinters) {
+    const searchTerm = findWordAtCursor(editor, hinter.allowedChars)
+    if (hinter.wordRegExp.test(searchTerm.text)) {
+      editor.showHint({
+        hint: hinter.hint,
+        completeSingle: false,
+        completeOnSingleClick: false,
+        alignWithWord: true
+      })
+      return
+    }
   }
 }
 

@@ -15,3 +15,7 @@ export const clearUser: () => void = () => {
   }
   store.dispatch(action)
 }
+
+export const getUser = (): UserState | null => {
+  return store.getState().user
+}
