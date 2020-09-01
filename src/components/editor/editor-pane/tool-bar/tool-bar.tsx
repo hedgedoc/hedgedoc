@@ -65,7 +65,6 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor, onPreferencesChange, e
           <ForkAwesomeIcon icon="superscript"/>
         </Button>
       </ButtonGroup>
-      <span className={'divider'}>&nbsp;</span>
       <ButtonGroup className={'mx-1 flex-wrap'}>
         <Button variant='light' onClick={() => addHeaderLevel(editor)} title={t('editor.editorToolbar.header')}>
           <ForkAwesomeIcon icon="header"/>
@@ -86,7 +85,6 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor, onPreferencesChange, e
           <ForkAwesomeIcon icon="check-square"/>
         </Button>
       </ButtonGroup>
-      <span className={'divider'}>&nbsp;</span>
       <ButtonGroup className={'mx-1 flex-wrap'}>
         <Button variant='light' onClick={() => addLink(editor)} title={t('editor.editorToolbar.link')}>
           <ForkAwesomeIcon icon="link"/>
@@ -98,7 +96,6 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor, onPreferencesChange, e
           <ForkAwesomeIcon icon="upload"/>
         </Button>
       </ButtonGroup>
-      <span className={'divider'}>&nbsp;</span>
       <ButtonGroup className={'mx-1 flex-wrap'}>
         <Button variant='light' onClick={() => addTable(editor)} title={t('editor.editorToolbar.table')}>
           <ForkAwesomeIcon icon="table"/>
@@ -111,7 +108,6 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor, onPreferencesChange, e
         </Button>
         <EmojiPickerButton editor={editor}/>
       </ButtonGroup>
-      <span className={'divider'}>&nbsp;</span>
       <ButtonGroup className={'mx-1 flex-wrap'}>
         <EditorPreferences onPreferencesChange={onPreferencesChange} preferences={editorPreferences}/>
       </ButtonGroup>
