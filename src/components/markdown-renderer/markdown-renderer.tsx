@@ -325,7 +325,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
       new HighlightedCodeReplacer(),
       new QuoteOptionsReplacer(),
       new KatexReplacer(),
-      new TaskListReplacer(content, onTaskCheckedChange)
+      new TaskListReplacer(onTaskCheckedChange)
     ]
     if (onMetaDataChange) {
       // This is used if the front-matter callback is never called, because the user deleted everything regarding metadata from the document
