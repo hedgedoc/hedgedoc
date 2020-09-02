@@ -944,7 +944,8 @@ ui.toolbar.download.rawhtml.click(function (e) {
 // pdf
 ui.toolbar.download.pdf.attr('download', '').attr('href', noteurl + '/pdf')
 // export to dropbox
-ui.toolbar.export.dropbox.click(function () {
+ui.toolbar.export.dropbox.click(function (event) {
+  event.preventDefault()
   var filename = renderFilename(ui.area.markdown) + '.md'
   var options = {
     files: [
@@ -996,7 +997,8 @@ ui.toolbar.export.snippet.click(function () {
     })
 })
 // import from dropbox
-ui.toolbar.import.dropbox.click(function () {
+ui.toolbar.import.dropbox.click(function (event) {
+  event.preventDefault()
   var options = {
     success: function (files) {
       ui.spinner.show()
