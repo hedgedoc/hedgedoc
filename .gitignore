@@ -13,7 +13,7 @@
 
 # ide
 .idea
-!.idea/dictionaries/codimd.xml
+!.idea/dictionaries/hedgedoc.xml
 
 # misc
 .DS_Store
