@@ -8,13 +8,14 @@ import { ImportMenu } from './menus/import-menu'
 import { PermissionButton } from './buttons/permission-button'
 import { PinToHistoryButton } from './buttons/pin-to-history-button'
 import { ShareLinkButton } from './buttons/share-link-button'
-import { RevisionButton } from './buttons/revision-button'
+import { RevisionButton } from './revisions/revision-button'
 
 export interface DocumentBarProps {
   title: string
+  noteContent: string
 }
 
-export const DocumentBar: React.FC<DocumentBarProps> = ({ title }) => {
+export const DocumentBar: React.FC<DocumentBarProps> = ({ title, noteContent }) => {
   useTranslation()
 
   return (
@@ -22,7 +23,7 @@ export const DocumentBar: React.FC<DocumentBarProps> = ({ title }) => {
       <div className="navbar-nav">
         <ShareLinkButton/>
         <DocumentInfoButton/>
-        <RevisionButton/>
+        <RevisionButton noteContent={noteContent}/>
         <PinToHistoryButton/>
         <PermissionButton/>
       </div>

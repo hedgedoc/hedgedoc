@@ -11,13 +11,15 @@ export interface CommonModalProps {
   titleI18nKey: string
   closeButton?: boolean
   icon?: IconName
+  size?: 'lg' | 'sm' | 'xl'
+  additionalClasses?: string
 }
 
-export const CommonModal: React.FC<CommonModalProps> = ({ show, onHide, titleI18nKey, closeButton, icon, children }) => {
+export const CommonModal: React.FC<CommonModalProps> = ({ show, onHide, titleI18nKey, closeButton, icon, additionalClasses, size, children }) => {
   useTranslation()
 
   return (
-    <Modal show={show} onHide={onHide} animation={true} className="text-dark">
+    <Modal show={show} onHide={onHide} animation={true} dialogClassName={`text-dark ${additionalClasses ?? ''}`} size={size}>
       <Modal.Header closeButton={!!closeButton}>
         <Modal.Title>
           <ShowIf condition={!!icon}>

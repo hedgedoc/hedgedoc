@@ -113,7 +113,7 @@ export const Editor: React.FC = () => {
       <DocumentTitle title={documentTitle}/>
       <div className={'d-flex flex-column vh-100'}>
         <AppBar/>
-        <DocumentBar title={documentTitle}/>
+        <DocumentBar title={documentTitle} noteContent={markdownContent}/>
         <Splitter
           showLeft={editorMode === EditorMode.EDITOR || editorMode === EditorMode.BOTH}
           left={

@@ -303,8 +303,11 @@
                 "visibilityLevel": "Select Visibility Level"
             },
             "revision": {
-                "title": "Revision",
-                "revertButton": "Revert"
+                "title": "Revisions",
+                "revertButton": "Revert",
+                "error": "An error occurred while fetching the revisions of this note.",
+                "length": "Length",
+                "download": "Download selected revision"
             },
             "clipboardImport": {
                 "title": "Import from clipboard",

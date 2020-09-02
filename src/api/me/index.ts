@@ -1,19 +1,12 @@
-import { LoginProvider } from '../../redux/user/types'
+import { UserResponse } from '../users/types'
 import { expectResponseCode, getApiUrl, defaultFetchConfig } from '../utils'
 
-export const getMe = async (): Promise<meResponse> => {
+export const getMe = async (): Promise<UserResponse> => {
   const response = await fetch(getApiUrl() + '/me', {
     ...defaultFetchConfig
   })
   expectResponseCode(response)
-  return (await response.json()) as meResponse
-}
-
-export interface meResponse {
-  id: string
-  name: string
-  photo: string
-  provider: LoginProvider
+  return (await response.json()) as UserResponse
 }
 
 export const updateDisplayName = async (displayName: string): Promise<void> => {

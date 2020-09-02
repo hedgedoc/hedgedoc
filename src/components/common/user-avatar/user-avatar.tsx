@@ -19,6 +19,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({ name, photo, additionalClasses 
         src={photo}
         className="user-avatar rounded"
         alt={t('common.avatarOf', { name })}
+        title={name}
       />
       <ShowIf condition={showName}>
         <span className="mx-1 user-name">{name}</span>
