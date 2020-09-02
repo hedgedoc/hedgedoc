@@ -66,6 +66,16 @@ To use CodiMD, your browser should match or exceed these versions:
 - ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/HEAD/src/opera/opera_24x24.png) Opera >= 34, ![Opera Mini](https://raw.githubusercontent.com/alrra/browser-logos/HEAD/src/opera-mini/opera-mini_24x24.png) Opera Mini not supported
 - ![Android Browser](https://raw.githubusercontent.com/alrra/browser-logos/HEAD/src/android-webview-beta/android-webview-beta_24x24.png) Android Browser >= 4.4
 
+## Backup/restore your instance
+
+To backup codimd, you should:
+
+- backup your database
+- backup your custom config file if you have one
+- backup the upload folder (see the [uploadsPath](./docs/configuration.md#codimd-paths-stuff) config directive) 
+
+Restoring an existing instance of codimd is then just a matter of restoring these elements.
+
 ## Related Tools
 
 Our community has created related tools, we'd like to highlight [codimd-cli](https://github.com/codimd/cli)
