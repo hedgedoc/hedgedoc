@@ -1,5 +1,6 @@
 import { DomElement } from 'domhandler'
-import { ComponentReplacer, SubNodeConverter } from '../ComponentReplacer'
+import { ReactElement } from 'react'
+import { ComponentReplacer, NativeRenderer, SubNodeTransform } from '../ComponentReplacer'
 
 const isColorExtraElement = (node: DomElement | undefined): boolean => {
   if (!node || !node.attribs || !node.attribs.class || !node.attribs['data-color']) {
@@ -17,8 +18,8 @@ const findQuoteOptionsParent = (nodes: DomElement[]): DomElement | undefined => 
   })
 }
 
-export class QuoteOptionsReplacer implements ComponentReplacer {
-  getReplacement (node: DomElement, index: number, subNodeConverter: SubNodeConverter): React.ReactElement | undefined {
+export class QuoteOptionsReplacer extends ComponentReplacer {
+  public getReplacement (node: DomElement, index: number, subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer):ReactElement|undefined {
     if (node.name !== 'blockquote' || !node.children || node.children.length < 1) {
       return
     }
@@ -37,6 +38,6 @@ export class QuoteOptionsReplacer implements ComponentReplacer {
       return
     }
     node.attribs = Object.assign(node.attribs || {}, { style: `border-left-color: ${attributes['data-color']};` })
-    return subNodeConverter(node, index)
+    return nativeRenderer(node, index)
   }
 }

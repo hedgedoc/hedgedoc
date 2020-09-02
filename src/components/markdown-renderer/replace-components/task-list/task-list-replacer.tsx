@@ -1,11 +1,12 @@
 import React, { ReactElement } from 'react'
 import { DomElement } from 'domhandler'
-import { ComponentReplacer, SubNodeConverter } from '../ComponentReplacer'
+import { ComponentReplacer } from '../ComponentReplacer'
 
-export class TaskListReplacer implements ComponentReplacer {
+export class TaskListReplacer extends ComponentReplacer {
   onTaskCheckedChange: (lineInMarkdown: number, checked: boolean) => void
 
   constructor (onTaskCheckedChange: (lineInMarkdown: number, checked: boolean) => void) {
+    super()
     this.onTaskCheckedChange = onTaskCheckedChange
   }
 
@@ -14,7 +15,7 @@ export class TaskListReplacer implements ComponentReplacer {
     this.onTaskCheckedChange(lineNum, event.currentTarget.checked)
   }
 
-  getReplacement (node: DomElement, index:number, subNodeConverter: SubNodeConverter): (ReactElement|undefined) {
+  public getReplacement (node: DomElement, index:number): (ReactElement|undefined) {
     if (node.attribs?.class === 'task-list-item-checkbox') {
       return (
         <input

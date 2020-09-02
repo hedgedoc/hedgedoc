@@ -36,12 +36,30 @@ export const DocumentRenderPane: React.FC<DocumentRenderPaneProps & ScrollProps>
 
   const realWidth = width || 0
 
+  const scrollTo = useCallback((targetPosition:number):void => {
+    if (!renderer.current || targetPosition === lastScrollPosition.current) {
+      return
+    }
+    lastScrollPosition.current = targetPosition
+    renderer.current.scrollTo({
+      top: targetPosition
+    })
+  }, [])
+
   useEffect(() => {
-    if (!renderer.current || !lineMarks || !scrollState) {
+    if (!renderer.current || !lineMarks || lineMarks.length === 0 || !scrollState) {
+      return
+    }
+    if (scrollState.firstLineInView < lineMarks[0].line) {
+      scrollTo(0)
+      return
+    }
+    if (scrollState.firstLineInView > lineMarks[lineMarks.length - 1].line) {
+      scrollTo(renderer.current.offsetHeight)
       return
     }
     const { lastMarkBefore, firstMarkAfter } = findLineMarks(lineMarks, scrollState.firstLineInView)
-    const positionBefore = lastMarkBefore ? lastMarkBefore.position : 0
+    const positionBefore = lastMarkBefore ? lastMarkBefore.position : lineMarks[0].position
     const positionAfter = firstMarkAfter ? firstMarkAfter.position : renderer.current.offsetHeight
     const lastMarkBeforeLine = lastMarkBefore ? lastMarkBefore.line : 1
     const firstMarkAfterLine = firstMarkAfter ? firstMarkAfter.line : content.split('\n').length
@@ -50,16 +68,11 @@ export const DocumentRenderPane: React.FC<DocumentRenderPaneProps & ScrollProps>
     const lineHeight = blockHeight / lineCount
     const position = positionBefore + (scrollState.firstLineInView - lastMarkBeforeLine) * lineHeight + scrollState.scrolledPercentage / 100 * lineHeight
     const correctedPosition = Math.floor(position)
-    if (correctedPosition !== lastScrollPosition.current) {
-      lastScrollPosition.current = correctedPosition
-      renderer.current.scrollTo({
-        top: correctedPosition
-      })
-    }
-  }, [content, lineMarks, scrollState])
+    scrollTo(correctedPosition)
+  }, [content, lineMarks, scrollState, scrollTo])
 
   const userScroll = useCallback(() => {
-    if (!renderer.current || !lineMarks || !onScroll) {
+    if (!renderer.current || !lineMarks || lineMarks.length === 0 || !onScroll) {
       return
     }
 

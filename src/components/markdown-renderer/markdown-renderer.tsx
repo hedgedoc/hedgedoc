@@ -1,7 +1,6 @@
-import equal from 'fast-deep-equal'
-import { DomElement } from 'domhandler'
 import emojiData from 'emoji-mart/data/twitter.json'
 import { Data } from 'emoji-mart/dist-es/utils/data'
+import equal from 'fast-deep-equal'
 import yaml from 'js-yaml'
 import MarkdownIt from 'markdown-it'
 import abbreviation from 'markdown-it-abbr'
@@ -23,7 +22,7 @@ import toc from 'markdown-it-toc-done-right'
 import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import markdownItTaskLists from '@hedgedoc/markdown-it-task-lists'
 import { Alert } from 'react-bootstrap'
-import ReactHtmlParser, { convertNodeToElement, Transform } from 'react-html-parser'
+import ReactHtmlParser from 'react-html-parser'
 import { Trans } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import useResizeObserver from 'use-resize-observer'
@@ -36,7 +35,7 @@ import { slugify } from '../editor/table-of-contents/table-of-contents'
 import { RawYAMLMetadata, YAMLMetaData } from '../editor/yaml-metadata/yaml-metadata'
 import { createRenderContainer, validAlertLevels } from './markdown-it-plugins/alert-container'
 import { highlightedCode } from './markdown-it-plugins/highlighted-code'
-import { lineNumberMarker } from './markdown-it-plugins/line-number-marker'
+import { LineMarkers, lineNumberMarker } from './markdown-it-plugins/line-number-marker'
 import { linkifyExtra } from './markdown-it-plugins/linkify-extra'
 import { MarkdownItParserDebugger } from './markdown-it-plugins/parser-debugger'
 import { plantumlError } from './markdown-it-plugins/plantuml-error'
@@ -53,8 +52,10 @@ import { replaceQuoteExtraColor } from './regex-plugins/replace-quote-extra-colo
 import { replaceQuoteExtraTime } from './regex-plugins/replace-quote-extra-time'
 import { replaceVimeoLink } from './regex-plugins/replace-vimeo-link'
 import { replaceYouTubeLink } from './regex-plugins/replace-youtube-link'
+import { buildTransformer, calculateNewLineNumberMapping, LineKeys } from './renderer-utils'
 import { AsciinemaReplacer } from './replace-components/asciinema/asciinema-replacer'
-import { ComponentReplacer, SubNodeConverter } from './replace-components/ComponentReplacer'
+import { CodimdLinemarkerReplacer } from './replace-components/codimd-linemarker/codimd-linemarker-replacer'
+import { ComponentReplacer } from './replace-components/ComponentReplacer'
 import { CsvReplacer } from './replace-components/csv/csv-replacer'
 import { FlowchartReplacer } from './replace-components/flow/flowchart-replacer'
 import { GistReplacer } from './replace-components/gist/gist-replacer'
@@ -131,27 +132,52 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
   const oldFirstHeadingRef = useRef<string>()
   const documentElement = useRef<HTMLDivElement>(null)
   const lastLineMarkerPositions = useRef<LineMarkerPosition[]>()
+  const currentLineMarkers = useRef<LineMarkers[]>()
 
   const calculateLineMarkerPositions = useCallback(() => {
-    if (documentElement.current && onLineMarkerPositionChanged) {
-      // noinspection CssInvalidHtmlTagReference
-      const lineMarkers: NodeListOf<HTMLDivElement> = documentElement.current.querySelectorAll('codimd-linemarker')
-      const lineMarkerPositions: LineMarkerPosition[] = Array.from(lineMarkers).map((marker) => {
-        return {
-          line: Number(marker.getAttribute('data-linenumber')),
-          position: marker.offsetTop
-        } as LineMarkerPosition
-      })
-      if (!equal(lineMarkerPositions, lastLineMarkerPositions.current)) {
-        lastLineMarkerPositions.current = lineMarkerPositions
-        onLineMarkerPositionChanged(lineMarkerPositions)
+    if (!(documentElement.current && onLineMarkerPositionChanged)) {
+      return
+    }
+    if (currentLineMarkers.current === undefined) {
+      return
+    }
+    const lineMarkers = currentLineMarkers.current
+    const children: HTMLCollection = documentElement.current.children
+    const lineMarkerPositions:LineMarkerPosition[] = []
+
+    Array.from(children).forEach((child, childIndex) => {
+      const htmlChild = (child as HTMLElement)
+      if (htmlChild.offsetTop === undefined) {
+        return
       }
+      const currentLineMarker = lineMarkers[childIndex]
+      if (currentLineMarker === undefined) {
+        return
+      }
+
+      const lastPosition = lineMarkerPositions[lineMarkerPositions.length - 1]
+      if (!lastPosition || lastPosition.line !== currentLineMarker.startLine) {
+        lineMarkerPositions.push({
+          line: currentLineMarker.startLine,
+          position: htmlChild.offsetTop
+        })
+      }
+
+      lineMarkerPositions.push({
+        line: currentLineMarker.endLine,
+        position: htmlChild.offsetTop + htmlChild.offsetHeight
+      })
+    })
+
+    if (!equal(lineMarkerPositions, lastLineMarkerPositions.current)) {
+      lastLineMarkerPositions.current = lineMarkerPositions
+      onLineMarkerPositionChanged(lineMarkerPositions)
     }
   }, [onLineMarkerPositionChanged])
 
   useEffect(() => {
     calculateLineMarkerPositions()
-  }, [calculateLineMarkerPositions])
+  }, [calculateLineMarkerPositions, content])
 
   useResizeObserver({
     ref: documentElement,
@@ -286,14 +312,17 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
       slugify: slugify
     })
     md.use(linkifyExtra)
-    md.use(lineNumberMarker())
-    if (process.env.NODE_ENV !== 'production') {
-      md.use(MarkdownItParserDebugger)
-    }
-
     validAlertLevels.forEach(level => {
       md.use(markdownItContainer, level, { render: createRenderContainer(level) })
     })
+    md.use(lineNumberMarker(), {
+      postLineMarkers: (lineMarkers) => {
+        currentLineMarkers.current = lineMarkers
+      }
+    })
+    if (process.env.NODE_ENV !== 'production') {
+      md.use(MarkdownItParserDebugger)
+    }
 
     return md
   }, [onMetaDataChange, onFirstHeadingChange, plantumlServer])
@@ -305,14 +334,12 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
     }
   }, [tocAst, onTocChange])
 
-  const tryToReplaceNode = (node: DomElement, index: number, allReplacers: ComponentReplacer[], nodeConverter: SubNodeConverter) => {
-    return allReplacers
-      .map((componentReplacer) => componentReplacer.getReplacement(node, index, nodeConverter))
-      .find((replacement) => !!replacement)
-  }
+  const oldMarkdownLineKeys = useRef<LineKeys[]>()
+  const lastUsedLineId = useRef<number>(0)
 
-  const result: ReactElement[] = useMemo(() => {
+  const markdownReactDom: ReactElement[] = useMemo(() => {
     const allReplacers: ComponentReplacer[] = [
+      new CodimdLinemarkerReplacer(),
       new PossibleWiderReplacer(),
       new GistReplacer(),
       new YoutubeReplacer(),
@@ -332,17 +359,16 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
       rawMetaRef.current = undefined
     }
     const html: string = markdownIt.render(content)
-
-    const transform: Transform = (node, index) => {
-      const subNodeConverter = (subNode: DomElement, subIndex: number) => convertNodeToElement(subNode, subIndex, transform)
-      return tryToReplaceNode(node, index, allReplacers, subNodeConverter) || convertNodeToElement(node, index, transform)
-    }
-    return ReactHtmlParser(html, { transform: transform })
+    const contentLines = content.split('\n')
+    const { lines: newLines, lastUsedLineId: newLastUsedLineId } = calculateNewLineNumberMapping(contentLines, oldMarkdownLineKeys.current ?? [], lastUsedLineId.current)
+    oldMarkdownLineKeys.current = newLines
+    lastUsedLineId.current = newLastUsedLineId
+    return ReactHtmlParser(html, { transform: buildTransformer(newLines, allReplacers) })
   }, [content, markdownIt, onMetaDataChange, onTaskCheckedChange])
 
   return (
     <div className={'bg-light flex-fill'}>
-      <div className={`markdown-body ${className || ''} d-flex flex-column align-items-center ${wide ? 'wider' : ''}`} ref={documentElement}>
+      <div className={`${className || ''} d-flex flex-column align-items-center ${wide ? 'wider' : ''}`} >
         <ShowIf condition={yamlError}>
           <Alert variant='warning' dir='auto'>
             <Trans i18nKey='editor.invalidYaml'>
@@ -350,7 +376,9 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
             </Trans>
           </Alert>
         </ShowIf>
-        {result}
+        <div ref={documentElement} className={'markdown-body d-flex flex-column align-items-center'}>
+          {markdownReactDom}
+        </div>
       </div>
     </div>
   )

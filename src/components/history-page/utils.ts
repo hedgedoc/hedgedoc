@@ -56,7 +56,7 @@ function arrayCommonCheck<T> (array1: T[], array2: T[]): boolean {
 
 function filterByKeywordSearch (entries: LocatedHistoryEntry[], keywords: string): LocatedHistoryEntry[] {
   const searchTerm = keywords.toLowerCase()
-  return entries.filter(entry => entry.title.toLowerCase().indexOf(searchTerm) !== -1)
+  return entries.filter(entry => entry.title.toLowerCase().includes(searchTerm))
 }
 
 function sortEntries (entries: LocatedHistoryEntry[], viewState: HistoryToolbarState): LocatedHistoryEntry[] {

@@ -3,10 +3,10 @@ import React from 'react'
 import { ComponentReplacer } from '../ComponentReplacer'
 import { HighlightedCode } from './highlighted-code/highlighted-code'
 
-export class HighlightedCodeReplacer implements ComponentReplacer {
+export class HighlightedCodeReplacer extends ComponentReplacer {
   private lastLineNumber = 0;
 
-  getReplacement (codeNode: DomElement, index: number): React.ReactElement | undefined {
+  public getReplacement (codeNode: DomElement, index: number): React.ReactElement | undefined {
     if (codeNode.name !== 'code' || !codeNode.attribs || !codeNode.attribs['data-highlight-language'] || !codeNode.children || !codeNode.children[0]) {
       return
     }

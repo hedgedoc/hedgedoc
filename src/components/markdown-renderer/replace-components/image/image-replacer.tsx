@@ -3,8 +3,8 @@ import React from 'react'
 import { ComponentReplacer } from '../ComponentReplacer'
 import { ImageFrame } from './image-frame'
 
-export class ImageReplacer implements ComponentReplacer {
-  getReplacement (node: DomElement, index: number): React.ReactElement | undefined {
+export class ImageReplacer extends ComponentReplacer {
+  public getReplacement (node: DomElement, index: number): React.ReactElement | undefined {
     if (node.name === 'img' && node.attribs) {
       return <ImageFrame
         key={index}

@@ -270,18 +270,18 @@ describe('Toolbar', () => {
 
   describe('emoji', () => {
     it('picker is show when clicked', () => {
-      cy.get('.emoji-mart.emoji-mart-light')
+      cy.get('.emoji-mart')
         .should('not.exist')
       cy.get('.fa-smile-o')
         .click()
-      cy.get('.emoji-mart.emoji-mart-light')
+      cy.get('.emoji-mart')
         .should('exist')
     })
 
     it('picker is show when clicked', () => {
       cy.get('.fa-smile-o')
         .click()
-      cy.get('.emoji-mart.emoji-mart-light')
+      cy.get('.emoji-mart')
         .should('exist')
       cy.get('.emoji-mart-emoji-native')
         .first()

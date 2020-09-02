@@ -5,19 +5,20 @@ import TeX from '@matejmazur/react-katex'
 import { ComponentReplacer } from '../ComponentReplacer'
 
 const getNodeIfKatexBlock = (node: DomElement): (DomElement|undefined) => {
-  if (node.name !== 'p' || !node.children || node.children.length !== 1) {
+  if (node.name !== 'p' || !node.children || node.children.length === 0) {
     return
   }
-  const katexNode = node.children[0]
-  return (katexNode.name === 'codimd-katex' && katexNode.attribs?.inline === undefined) ? katexNode : undefined
+  return node.children.find((subnode) => {
+    return (subnode.name === 'codimd-katex' && subnode.attribs?.inline === undefined)
+  })
 }
 
 const getNodeIfInlineKatex = (node: DomElement): (DomElement|undefined) => {
   return (node.name === 'codimd-katex' && node.attribs?.inline !== undefined) ? node : undefined
 }
 
-export class KatexReplacer implements ComponentReplacer {
-  getReplacement (node: DomElement, index: number): React.ReactElement | undefined {
+export class KatexReplacer extends ComponentReplacer {
+  public getReplacement (node: DomElement, index: number): React.ReactElement | undefined {
     const katex = getNodeIfKatexBlock(node) || getNodeIfInlineKatex(node)
     if (katex?.children && katex.children[0]) {
       const mathJaxContent = katex.children[0]?.data as string

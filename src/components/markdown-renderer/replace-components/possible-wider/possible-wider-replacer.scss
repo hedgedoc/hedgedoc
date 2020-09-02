@@ -1,0 +1,8 @@
+.wider .markdown-body {
+    max-width: 1500px;
+    width: 100%;
+
+    &>.wider-possible {
+      max-width: 1500px;
+    }
+  }

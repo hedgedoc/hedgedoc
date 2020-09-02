@@ -1,8 +1,10 @@
 import { DomElement } from 'domhandler'
 import { ReactElement } from 'react'
 
-export type SubNodeConverter = (node: DomElement, index: number) => ReactElement
+export type SubNodeTransform = (node: DomElement, index: number) => ReactElement | void | null
 
-export interface ComponentReplacer {
-  getReplacement: (node: DomElement, index:number, subNodeConverter: SubNodeConverter) => (ReactElement|undefined)
+export type NativeRenderer = (node: DomElement, key: number) => ReactElement
+
+export abstract class ComponentReplacer {
+  public abstract getReplacement(node: DomElement, index: number, subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer): (ReactElement | null | undefined);
 }

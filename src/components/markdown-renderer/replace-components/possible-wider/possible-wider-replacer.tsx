@@ -1,26 +1,29 @@
 import { DomElement } from 'domhandler'
-import React from 'react'
-import { ComponentReplacer, SubNodeConverter } from '../ComponentReplacer'
+import { ComponentReplacer, NativeRenderer, SubNodeTransform } from '../ComponentReplacer'
+import './possible-wider-replacer.scss'
 
-export class PossibleWiderReplacer implements ComponentReplacer {
-  getReplacement (node: DomElement, index: number, subNodeConverter: SubNodeConverter): React.ReactElement | undefined {
+const enabledTags = ['img', 'codimd-youtube', 'codimd-vimeo', 'codimd-asciinema', 'codimd-pdf']
+
+/**
+ * This replacer doesn't actually replace something.
+ * It just uses the ComponentReplacer-Class to get access to the DOM and
+ * appends the "wider-possible" class to paragraphs with special content.
+ */
+export class PossibleWiderReplacer extends ComponentReplacer {
+  public getReplacement (node: DomElement, index: number, subNodeTransformer: SubNodeTransform, nativeRenderer: NativeRenderer): (undefined) {
     if (node.name !== 'p') {
       return
     }
-    if (!node.children || node.children.length !== 1) {
-      return
-    }
-    const childIsImage = node.children[0].name === 'img'
-    const childIsYoutube = node.children[0].name === 'codimd-youtube'
-    const childIsVimeo = node.children[0].name === 'codimd-vimeo'
-    const childIsAsciinema = node.children[0].name === 'codimd-asciinema'
-    const childIsPDF = node.children[0].name === 'codimd-pdf'
-    if (!(childIsImage || childIsYoutube || childIsVimeo || childIsAsciinema || childIsPDF)) {
+    if (!node.children || node.children.length === 0) {
       return
     }
 
-    // This appends the 'wider-possible' class to the node for a wider view in view-mode
-    node.attribs = Object.assign(node.attribs || {}, { class: `wider-possible ${node.attribs?.class || ''}` })
-    return subNodeConverter(node, index)
+    if (node.children.find((subNode) => subNode.name && enabledTags.includes(subNode.name))) {
+      if (!node.attribs) {
+        node.attribs = {}
+      }
+
+      node.attribs.class = `${node.attribs.class ?? ''} wider-possible`
+    }
   }
 }

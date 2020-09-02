@@ -20,7 +20,7 @@ export const escapeHtml = (unsafe: string): string => {
 }
 
 const checkIfLanguageIsSupported = (language: string): boolean => {
-  return hljs.listLanguages().indexOf(language) > -1
+  return hljs.listLanguages().includes(language)
 }
 
 const correctLanguage = (language: string | undefined): string | undefined => {

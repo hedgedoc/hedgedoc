@@ -20,14 +20,6 @@
     background-color: unset;
   }
 
-  &.wider {
-    max-width: 1500px;
-
-    & > .wider-possible {
-      max-width: 1500px;
-    }
-  }
-
   a.heading-anchor {
     margin-left: -1.25em;
     font-size: 0.75em;

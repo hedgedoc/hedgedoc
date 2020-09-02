@@ -3,8 +3,8 @@ import React from 'react'
 import { ComponentReplacer } from '../ComponentReplacer'
 import { CsvTable } from './csv-table'
 
-export class CsvReplacer implements ComponentReplacer {
-  getReplacement (codeNode: DomElement, index: number): React.ReactElement | undefined {
+export class CsvReplacer extends ComponentReplacer {
+  public getReplacement (codeNode: DomElement, index: number): React.ReactElement | undefined {
     if (codeNode.name !== 'code' || !codeNode.attribs || !codeNode.attribs['data-highlight-language'] || codeNode.attribs['data-highlight-language'] !== 'csv' || !codeNode.children || !codeNode.children[0]) {
       return
     }
