@@ -16,7 +16,7 @@ export interface LineNumberMarkerOptions {
  */
 export const lineNumberMarker: () => MarkdownIt.PluginWithOptions<LineNumberMarkerOptions> = () => {
   return (md: MarkdownIt, options) => {
-    // add codimd_linemarker token before each opening or self-closing level-0 tag
+    // add app_linemarker token before each opening or self-closing level-0 tag
     md.core.ruler.push('line_number_marker', (state) => {
       const lineMarkers: LineMarkers[] = []
       tagTokens(state.tokens, lineMarkers)
@@ -26,7 +26,7 @@ export const lineNumberMarker: () => MarkdownIt.PluginWithOptions<LineNumberMark
       return true
     })
 
-    md.renderer.rules.codimd_linemarker = (tokens: Token[], index: number): string => {
+    md.renderer.rules.app_linemarker = (tokens: Token[], index: number): string => {
       const startLineNumber = tokens[index].attrGet('data-start-line')
       const endLineNumber = tokens[index].attrGet('data-end-line')
 
@@ -35,11 +35,11 @@ export const lineNumberMarker: () => MarkdownIt.PluginWithOptions<LineNumberMark
         return ''
       }
       // noinspection CheckTagEmptyBody
-      return `<codimd-linemarker data-start-line='${startLineNumber}' data-end-line='${endLineNumber}'></codimd-linemarker>`
+      return `<app-linemarker data-start-line='${startLineNumber}' data-end-line='${endLineNumber}'></app-linemarker>`
     }
 
     const insertNewLineMarker = (startLineNumber: number, endLineNumber: number, tokenPosition: number, level: number, tokens: Token[]) => {
-      const startToken = new Token('codimd_linemarker', 'codimd-linemarker', 0)
+      const startToken = new Token('app_linemarker', 'app-linemarker', 0)
       startToken.level = level
       startToken.attrPush(['data-start-line', `${startLineNumber}`])
       startToken.attrPush(['data-end-line', `${endLineNumber}`])

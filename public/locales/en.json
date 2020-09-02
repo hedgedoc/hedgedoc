@@ -16,7 +16,7 @@
                 "katex": "Works with charts and KaTeX",
                 "slides": "Supports slide mode"
             },
-            "screenShotAltText": "CodiMD Screenshot"
+            "screenShotAltText": "HedgeDoc Screenshot"
         },
         "history": {
             "error": {
@@ -200,7 +200,7 @@
             },
             "newVersion": {
                 "title": "New version available!",
-                "description": "A new version of CodiMD is available",
+                "description": "A new version of HedgeDoc is available",
                 "linkText": "See releases notes here",
                 "advice": "Refresh to enjoy new features."
             },

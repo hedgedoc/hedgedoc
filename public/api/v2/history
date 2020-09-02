@@ -1,10 +1,10 @@
 [
     {
         "id": "29QLD0AmT-adevdOPECtqg",
-        "title": "CodiMD community call 2020-04-26",
+        "title": "HedgeDoc community call 2020-04-26",
         "lastVisited": "2020-05-16T22:26:56.547Z",
         "tags": [
-            "CodiMD",
+            "HedgeDoc",
             "Community Call"
         ]
     },
@@ -20,7 +20,7 @@
     },
     {
         "id": "ODakLc2MQkyyFc_Xmb53sg",
-        "title": "CodiMD V2 API",
+        "title": "HedgeDoc V2 API",
         "lastVisited": "2020-05-25T19:48:14.025Z",
         "tags": []
     },
@@ -30,7 +30,7 @@
         "lastVisited": "2020-05-24T16:04:36.433Z",
         "tags": [
             "agenda",
-            "CodiMD community",
+            "HedgeDoc community",
             "community call"
         ]
     }

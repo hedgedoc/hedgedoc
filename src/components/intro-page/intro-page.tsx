@@ -13,7 +13,7 @@ const IntroPage: React.FC = () => {
     <Fragment>
       <h1 dir='auto' className={'align-items-center d-flex justify-content-center'}>
         <ForkAwesomeIcon icon="file-text" className={'mr-2'}/>
-        <span>CodiMD</span>
+        <span>HedgeDoc</span>
         <Branding/>
       </h1>
       <p className="lead mb-5">

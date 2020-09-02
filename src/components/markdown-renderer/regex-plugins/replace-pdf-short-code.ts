@@ -6,6 +6,6 @@ export const replacePdfShortCode: RegexOptions = {
   replace: (match) => {
     // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
     // noinspection CheckTagEmptyBody
-    return `<codimd-pdf url="${match}"></codimd-pdf>`
+    return `<app-pdf url="${match}"></app-pdf>`
   }
 }

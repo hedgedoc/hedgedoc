@@ -54,7 +54,7 @@ import { replaceVimeoLink } from './regex-plugins/replace-vimeo-link'
 import { replaceYouTubeLink } from './regex-plugins/replace-youtube-link'
 import { buildTransformer, calculateNewLineNumberMapping, LineKeys } from './renderer-utils'
 import { AsciinemaReplacer } from './replace-components/asciinema/asciinema-replacer'
-import { CodimdLinemarkerReplacer } from './replace-components/codimd-linemarker/codimd-linemarker-replacer'
+import { LinemarkerReplacer } from './replace-components/linemarker/linemarker-replacer'
 import { ComponentReplacer } from './replace-components/ComponentReplacer'
 import { CsvReplacer } from './replace-components/csv/csv-replacer'
 import { FlowchartReplacer } from './replace-components/flow/flowchart-replacer'
@@ -281,12 +281,12 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
       permalinkSymbol: '<i class="fa fa-link"></i>'
     })
     md.use(mathJax({
-      beforeMath: '<codimd-katex>',
-      afterMath: '</codimd-katex>',
-      beforeInlineMath: '<codimd-katex inline>',
-      afterInlineMath: '</codimd-katex>',
-      beforeDisplayMath: '<codimd-katex>',
-      afterDisplayMath: '</codimd-katex>'
+      beforeMath: '<app-katex>',
+      afterMath: '</app-katex>',
+      beforeInlineMath: '<app-katex inline>',
+      afterInlineMath: '</app-katex>',
+      beforeDisplayMath: '<app-katex>',
+      afterDisplayMath: '</app-katex>'
     }))
     md.use(markdownItRegex, replaceLegacyYoutubeShortCode)
     md.use(markdownItRegex, replaceLegacyVimeoShortCode)
@@ -339,7 +339,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
 
   const markdownReactDom: ReactElement[] = useMemo(() => {
     const allReplacers: ComponentReplacer[] = [
-      new CodimdLinemarkerReplacer(),
+      new LinemarkerReplacer(),
       new PossibleWiderReplacer(),
       new GistReplacer(),
       new YoutubeReplacer(),

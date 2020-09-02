@@ -10,7 +10,7 @@ export const DocumentTitle: React.FC<DocumentTitleProps> = ({ title }) => {
   const brandingName = useSelector((state: ApplicationState) => state.config.branding.name)
 
   useEffect(() => {
-    document.title = `${title ? title + ' - ' : ''}CodiMD ${brandingName ? ` @ ${brandingName}` : ''}`
+    document.title = `${title ? title + ' - ' : ''}HedgeDoc ${brandingName ? ` @ ${brandingName}` : ''}`
   }, [brandingName, title])
 
   return null

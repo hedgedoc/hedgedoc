@@ -9,7 +9,7 @@ const SocialLink: React.FC = () => {
       <Trans i18nKey="landing.footer.followUs" components={[
         <ExternalLink href="https://github.com/codimd/server" icon='github' text="GitHub"/>,
         <ExternalLink href="https://community.codimd.org" icon='users' text="Discourse"/>,
-        <ExternalLink href="https://riot.im/app/#/room/#codimd:matrix.org" icon="comment" text="Riot"/>,
+        <ExternalLink href="https://riot.im/app/#/room/#hedgedoc:matrix.org" icon="comment" text="Riot"/>,
         <ExternalLink href="https://social.codimd.org/mastodon" icon='mastodon' text="Mastodon"/>,
         <ExternalLink href="https://translate.codimd.org" icon="globe" text="POEditor"/>
       ]}/>

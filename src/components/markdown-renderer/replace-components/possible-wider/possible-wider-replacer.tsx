@@ -2,7 +2,7 @@ import { DomElement } from 'domhandler'
 import { ComponentReplacer, NativeRenderer, SubNodeTransform } from '../ComponentReplacer'
 import './possible-wider-replacer.scss'
 
-const enabledTags = ['img', 'codimd-youtube', 'codimd-vimeo', 'codimd-asciinema', 'codimd-pdf']
+const enabledTags = ['img', 'app-youtube', 'app-vimeo', 'app-asciinema', 'app-pdf']
 
 /**
  * This replacer doesn't actually replace something.

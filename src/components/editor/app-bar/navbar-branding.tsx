@@ -9,7 +9,7 @@ export const NavbarBranding: React.FC = () => {
     <Navbar.Brand>
       <Link to="/intro" className="text-secondary text-decoration-none d-flex align-items-center">
         <ForkAwesomeIcon icon="file-text" className={'mr-2'}/>
-        <span>CodiMD</span>
+        <span>HedgeDoc</span>
         <Branding inline={true}/>
       </Link>
     </Navbar.Brand>

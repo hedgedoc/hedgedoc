@@ -1,5 +1,5 @@
 const testText = 'textText'
-const testLink = 'http://hedgedoc.org'
+const testLink = 'http://codimd.org'
 
 describe('Toolbar', () => {
   beforeEach(() => {

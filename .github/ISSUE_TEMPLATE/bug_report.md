@@ -30,7 +30,7 @@ assignees: ''
  - OS: [e.g. iOS 13, Ubuntu 20.04, Windows 10]
  - Browser with version [e.g. Chrome 81, Safari 13.1]
    - [Check your Browser Version](https://www.whatismybrowser.com/)
- - CodiMD version (Click "Version info" in the footer)
+ - HedgeDoc version (Click "Version info" in the footer)
      - server [e.g. 2.0]
      - client [e.g. 2.0]
 

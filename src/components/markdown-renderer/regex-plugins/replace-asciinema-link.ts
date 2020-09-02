@@ -13,6 +13,6 @@ export const replaceAsciinemaLink: RegexOptions = {
   replace: (match) => {
     // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
     // noinspection CheckTagEmptyBody
-    return `<codimd-asciinema id="${match}"></codimd-asciinema>`
+    return `<app-asciinema id="${match}"></app-asciinema>`
   }
 }

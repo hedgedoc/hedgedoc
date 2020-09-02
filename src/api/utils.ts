@@ -8,7 +8,8 @@ export const defaultFetchConfig: Partial<RequestInit> = {
     'Content-Type': 'application/json'
   },
   redirect: 'follow',
-  referrerPolicy: 'no-referrer'
+  referrerPolicy: 'no-referrer',
+  method: 'GET'
 }
 
 export const getApiUrl = (): string => {

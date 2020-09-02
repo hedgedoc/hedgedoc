@@ -9,12 +9,12 @@ const getNodeIfKatexBlock = (node: DomElement): (DomElement|undefined) => {
     return
   }
   return node.children.find((subnode) => {
-    return (subnode.name === 'codimd-katex' && subnode.attribs?.inline === undefined)
+    return (subnode.name === 'app-katex' && subnode.attribs?.inline === undefined)
   })
 }
 
 const getNodeIfInlineKatex = (node: DomElement): (DomElement|undefined) => {
-  return (node.name === 'codimd-katex' && node.attribs?.inline !== undefined) ? node : undefined
+  return (node.name === 'app-katex' && node.attribs?.inline !== undefined) ? node : undefined
 }
 
 export class KatexReplacer extends ComponentReplacer {

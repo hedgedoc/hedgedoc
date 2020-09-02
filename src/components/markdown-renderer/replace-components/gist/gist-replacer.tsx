@@ -1,6 +1,6 @@
 import { DomElement } from 'domhandler'
 import React from 'react'
-import { getAttributesFromCodiMdTag } from '../codi-md-tag-utils'
+import { getAttributesFromHedgeDocTag } from '../utils'
 import { ComponentReplacer } from '../ComponentReplacer'
 import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
 import { GistFrame } from './gist-frame'
@@ -10,7 +10,7 @@ export class GistReplacer extends ComponentReplacer {
   private counterMap: Map<string, number> = new Map<string, number>()
 
   public getReplacement (node: DomElement, index: number): React.ReactElement | undefined {
-    const attributes = getAttributesFromCodiMdTag(node, 'gist')
+    const attributes = getAttributesFromHedgeDocTag(node, 'gist')
     if (attributes && attributes.id) {
       const gistId = attributes.id
       const count = (this.counterMap.get(gistId) || 0) + 1

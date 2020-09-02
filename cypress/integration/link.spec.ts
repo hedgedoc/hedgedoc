@@ -108,7 +108,7 @@ describe('Links Intro', () => {
   })
 
   describe('Powered By Links', () => {
-    it('CodiMD', () => {
+    it('HedgeDoc', () => {
       cy.get('a[href="https://codimd.org"]')
         .checkExternalLink('https://codimd.org')
     })
@@ -148,8 +148,8 @@ describe('Links Intro', () => {
     })
 
     it('Matrix', () => {
-      cy.get('a[href="https://riot.im/app/#/room/#codimd:matrix.org"]')
-        .checkExternalLink('https://riot.im/app/#/room/#codimd:matrix.org')
+      cy.get('a[href="https://riot.im/app/#/room/#hedgedoc:matrix.org"]')
+        .checkExternalLink('https://riot.im/app/#/room/#hedgedoc:matrix.org')
     })
 
     it('Mastodon', () => {

@@ -2,7 +2,7 @@ export const editorTestContent = `---
 title: Features
 description: Many features, such wow!
 robots: noindex
-tags: codimd, demo, react
+tags: hedgedoc, demo, react
 opengraph:
   title: Features
 ---

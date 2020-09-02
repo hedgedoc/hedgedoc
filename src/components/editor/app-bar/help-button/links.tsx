@@ -24,7 +24,7 @@ export const Links: React.FC = () => {
               <TranslatedExternalLink
                 i18nKey='editor.help.contacts.meetUsOn'
                 i18nOption={{ service: 'Matrix' }}
-                href='https://riot.im/app/#/room/#codimd:matrix.org'
+                href='https://riot.im/app/#/room/#hedgedoc:matrix.org'
                 icon='hashtag'
                 className='text-primary'
               />

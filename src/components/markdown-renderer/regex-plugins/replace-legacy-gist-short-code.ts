@@ -8,6 +8,6 @@ export const replaceLegacyGistShortCode: RegexOptions = {
   replace: (match) => {
     // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
     // noinspection CheckTagEmptyBody
-    return `<codimd-gist id="${match}"></codimd-gist>`
+    return `<app-gist id="${match}"></app-gist>`
   }
 }

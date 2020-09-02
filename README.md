@@ -1,9 +1,9 @@
-# CodiMD - React Client
+# HedgeDoc - React Client
 
 ![lint and build](https://github.com/codimd/react-client/workflows/lint%20and%20build/badge.svg)
 ![e2e](https://github.com/codimd/react-client/workflows/e2e/badge.svg)
 
-This is the new, improved and better looking frontend for CodiMD 2.0.
+This is the new, improved and better looking frontend for HedgeDoc 2.0.
 Our goal is to recreate the current frontend in react and to improve it.
 
 ## Preparation
@@ -11,8 +11,8 @@ You'll need at least Node 12. We use [yarn](https://yarnpkg.com/) for our depend
 
 ## Development mode
 
-1. Clone this repo (e.g. `git clone https://github.com/codimd/react-client.git codimd-react-client`)
-2. Go inside the repo (e.g. `cd codimd-react-client`)
+1. Clone this repo (e.g. `git clone https://github.com/codimd/react-client.git hedgedoc-react-client`)
+2. Go inside the repo (e.g. `cd hedgedoc-react-client`)
 3. Run `yarn install`
 4. Either run
     - `yarn start:dev` (expects [a server](https://github.com/codimd/server/tree/develop) running under [http://localhost:3000](http://localhost:3000))
@@ -42,8 +42,8 @@ We use [cypress](https://cypress.io) for e2e tests.
 
 ## Production mode
 
-1. Clone this repo (e.g. `git clone https://github.com/codimd/react-client.git codimd-react-client`)
-2. Go inside the repo (e.g. `cd codimd-react-client`)
+1. Clone this repo (e.g. `git clone https://github.com/codimd/react-client.git hedgedoc-react-client`)
+2. Go inside the repo (e.g. `cd hedgedoc-react-client`)
 3. Run `yarn install`
 4. Run `yarn build`
 

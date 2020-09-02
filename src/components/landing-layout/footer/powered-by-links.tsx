@@ -15,7 +15,7 @@ export const PoweredByLinks: React.FC = () => {
   return (
     <p>
       <Trans i18nKey="landing.footer.poweredBy">
-        <ExternalLink href="https://codimd.org" text="CodiMD"/>
+        <ExternalLink href="https://codimd.org" text="HedgeDoc"/>
       </Trans>
       &nbsp;|&nbsp;
       <TranslatedInternalLink href='/n/release-notes' i18nKey='landing.footer.releases'/>
