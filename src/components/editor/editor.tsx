@@ -26,6 +26,8 @@ export enum ScrollSource {
   RENDERER
 }
 
+const TASK_REGEX = /(\s*[-*] )(\[[ xX]])( .*)/
+
 export const Editor: React.FC = () => {
   const { t } = useTranslation()
   const untitledNote = t('editor.untitledNote')
@@ -55,15 +57,26 @@ export const Editor: React.FC = () => {
     }
   }, [untitledNote])
 
+  const onFirstHeadingChange = useCallback((newFirstHeading: string | undefined) => {
+    firstHeading.current = newFirstHeading
+    updateDocumentTitle()
+  }, [updateDocumentTitle])
+
   const onMetadataChange = useCallback((metaData: YAMLMetaData | undefined) => {
     noteMetadata.current = metaData
     updateDocumentTitle()
   }, [updateDocumentTitle])
 
-  const onFirstHeadingChange = useCallback((newFirstHeading: string | undefined) => {
-    firstHeading.current = newFirstHeading
-    updateDocumentTitle()
-  }, [updateDocumentTitle])
+  const onTaskCheckedChange = useCallback((lineInMarkdown: number, checked: boolean) => {
+    const lines = markdownContent.split('\n')
+    const results = TASK_REGEX.exec(lines[lineInMarkdown])
+    if (results) {
+      const before = results[1]
+      const after = results[3]
+      lines[lineInMarkdown] = `${before}[${checked ? 'x' : ' '}]${after}`
+      setMarkdownContent(lines.join('\n'))
+    }
+  }, [markdownContent, setMarkdownContent])
 
   useEffect(() => {
     document.addEventListener('keydown', shortcutHandler, false)
@@ -116,14 +129,15 @@ export const Editor: React.FC = () => {
           right={
             <DocumentRenderPane
               content={markdownContent}
-              wide={editorMode === EditorMode.PREVIEW}
-              scrollState={scrollState.rendererScrollState}
-              onScroll={onMarkdownRendererScroll}
-              onMetadataChange={onMetadataChange}
               onFirstHeadingChange={onFirstHeadingChange}
-              onMakeScrollSource={() => {
-                scrollSource.current = ScrollSource.RENDERER
-              }}/>}
+              onMakeScrollSource={() => { scrollSource.current = ScrollSource.RENDERER }}
+              onMetadataChange={onMetadataChange}
+              onScroll={onMarkdownRendererScroll}
+              onTaskCheckedChange={onTaskCheckedChange}
+              scrollState={scrollState.rendererScrollState}
+              wide={editorMode === EditorMode.PREVIEW}
+            />
+          }
           containerClassName={'overflow-hidden'}/>
       </div>
     </Fragment>

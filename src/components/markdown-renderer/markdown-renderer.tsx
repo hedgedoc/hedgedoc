@@ -19,9 +19,9 @@ import plantuml from 'markdown-it-plantuml'
 import markdownItRegex from 'markdown-it-regex'
 import subscript from 'markdown-it-sub'
 import superscript from 'markdown-it-sup'
-import taskList from 'markdown-it-task-lists'
 import toc from 'markdown-it-toc-done-right'
 import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import markdownItTaskLists from '@hedgedoc/markdown-it-task-lists'
 import { Alert } from 'react-bootstrap'
 import ReactHtmlParser, { convertNodeToElement, Transform } from 'react-html-parser'
 import { Trans } from 'react-i18next'
@@ -40,7 +40,6 @@ import { lineNumberMarker } from './markdown-it-plugins/line-number-marker'
 import { linkifyExtra } from './markdown-it-plugins/linkify-extra'
 import { MarkdownItParserDebugger } from './markdown-it-plugins/parser-debugger'
 import { plantumlError } from './markdown-it-plugins/plantuml-error'
-import './markdown-renderer.scss'
 import { replaceAsciinemaLink } from './regex-plugins/replace-asciinema-link'
 import { replaceGistLink } from './regex-plugins/replace-gist-link'
 import { replaceLegacyGistShortCode } from './regex-plugins/replace-legacy-gist-short-code'
@@ -65,8 +64,10 @@ import { KatexReplacer } from './replace-components/katex/katex-replacer'
 import { PdfReplacer } from './replace-components/pdf/pdf-replacer'
 import { PossibleWiderReplacer } from './replace-components/possible-wider/possible-wider-replacer'
 import { QuoteOptionsReplacer } from './replace-components/quote-options/quote-options-replacer'
+import { TaskListReplacer } from './replace-components/task-list/task-list-replacer'
 import { VimeoReplacer } from './replace-components/vimeo/vimeo-replacer'
 import { YoutubeReplacer } from './replace-components/youtube/youtube-replacer'
+import './markdown-renderer.scss'
 
 export interface LineMarkerPosition {
   line: number
@@ -74,13 +75,14 @@ export interface LineMarkerPosition {
 }
 
 export interface MarkdownRendererProps {
-  content: string
-  wide?: boolean
   className?: string
-  onTocChange?: (ast: TocAst) => void
-  onMetaDataChange?: (yamlMetaData: YAMLMetaData | undefined) => void
+  content: string
   onFirstHeadingChange?: (firstHeading: string | undefined) => void
   onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void
+  onMetaDataChange?: (yamlMetaData: YAMLMetaData | undefined) => void
+  onTaskCheckedChange: (lineInMarkdown: number, checked: boolean) => void
+  onTocChange?: (ast: TocAst) => void
+  wide?: boolean
 }
 
 const markdownItTwitterEmojis = Object.keys((emojiData as unknown as Data).emojis)
@@ -110,7 +112,16 @@ const forkAwesomeIconMap = Object.keys(ForkAwesomeIcons)
     return reduceObject
   }, {} as { [key: string]: string })
 
-export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onMetaDataChange, onFirstHeadingChange, onTocChange, className, wide, onLineMarkerPositionChanged }) => {
+export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
+  className,
+  content,
+  onFirstHeadingChange,
+  onLineMarkerPositionChanged,
+  onMetaDataChange,
+  onTaskCheckedChange,
+  onTocChange,
+  wide
+}) => {
   const [tocAst, setTocAst] = useState<TocAst>()
   const lastTocAst = useRef<TocAst>()
   const [yamlError, setYamlError] = useState(false)
@@ -198,7 +209,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
         }
       })
     }
-    md.use(taskList)
+    md.use(markdownItTaskLists, { lineNumber: true })
     if (plantumlServer) {
       md.use(plantuml, {
         openMarker: '```plantuml',
@@ -313,7 +324,8 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
       new FlowchartReplacer(),
       new HighlightedCodeReplacer(),
       new QuoteOptionsReplacer(),
-      new KatexReplacer()
+      new KatexReplacer(),
+      new TaskListReplacer(content, onTaskCheckedChange)
     ]
     if (onMetaDataChange) {
       // This is used if the front-matter callback is never called, because the user deleted everything regarding metadata from the document
@@ -326,7 +338,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onM
       return tryToReplaceNode(node, index, allReplacers, subNodeConverter) || convertNodeToElement(node, index, transform)
     }
     return ReactHtmlParser(html, { transform: transform })
-  }, [content, markdownIt, onMetaDataChange])
+  }, [content, markdownIt, onMetaDataChange, onTaskCheckedChange])
 
   return (
     <div className={'bg-light flex-fill'}>

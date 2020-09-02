@@ -115,4 +115,12 @@ end note
 @enduml
 \`\`\`
 
+## ToDo List
+
+- [ ] ToDos
+  - [X] Buy some salad
+  - [ ] Brush teeth
+  - [x] Drink some water
+  - [ ] **Click my box** and see the source code, if you're allowed to edit!
+
 `

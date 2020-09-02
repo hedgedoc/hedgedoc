@@ -12,12 +12,22 @@ import { YAMLMetaData } from '../yaml-metadata/yaml-metadata'
 
 interface DocumentRenderPaneProps {
   content: string
-  onMetadataChange: (metaData: YAMLMetaData | undefined) => void
   onFirstHeadingChange: (firstHeading: string | undefined) => void
+  onMetadataChange: (metaData: YAMLMetaData | undefined) => void
+  onTaskCheckedChange: (lineInMarkdown: number, checked: boolean) => void
   wide?: boolean
 }
 
-export const DocumentRenderPane: React.FC<DocumentRenderPaneProps & ScrollProps> = ({ content, onMetadataChange, onFirstHeadingChange, wide, scrollState, onScroll, onMakeScrollSource }) => {
+export const DocumentRenderPane: React.FC<DocumentRenderPaneProps & ScrollProps> = ({
+  content,
+  onFirstHeadingChange,
+  onMakeScrollSource,
+  onMetadataChange,
+  onScroll,
+  onTaskCheckedChange,
+  scrollState,
+  wide
+}) => {
   const [tocAst, setTocAst] = useState<TocAst>()
   const renderer = useRef<HTMLDivElement>(null)
   const { width } = useResizeObserver({ ref: renderer })
@@ -88,11 +98,12 @@ export const DocumentRenderPane: React.FC<DocumentRenderPaneProps & ScrollProps>
       <MarkdownRenderer
         className={'flex-fill mb-3'}
         content={content}
-        wide={wide}
-        onTocChange={(tocAst) => setTocAst(tocAst)}
-        onMetaDataChange={onMetadataChange}
         onFirstHeadingChange={onFirstHeadingChange}
         onLineMarkerPositionChanged={setLineMarks}
+        onMetaDataChange={onMetadataChange}
+        onTaskCheckedChange={onTaskCheckedChange}
+        onTocChange={(tocAst) => setTocAst(tocAst)}
+        wide={wide}
       />
 
       <div className={'col-md'}>
