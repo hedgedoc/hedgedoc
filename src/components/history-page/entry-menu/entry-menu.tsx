@@ -24,7 +24,7 @@ const EntryMenu: React.FC<EntryMenuProps> = ({ id, title, location, isDark, onRe
   return (
     <Dropdown className={`d-inline-flex ${className || ''}`}>
       <Dropdown.Toggle variant={isDark ? 'secondary' : 'light'} id={`dropdown-card-${id}`} className='no-arrow history-menu d-inline-flex align-items-center'>
-        <ForkAwesomeIcon icon="bars" className=''/>
+        <ForkAwesomeIcon icon="ellipsis-v" fixedWidth={true}/>
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
