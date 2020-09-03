@@ -50,7 +50,7 @@ export const Cheatsheet: React.FC = () => {
                   onLineMarkerPositionChanged={() => false}
                 />
               </td>
-              <td>
+              <td className={'markdown-body'}>
                 <HighlightedCode code={code} wrapLines={true} startLineNumber={1} language={'markdown'}/>
               </td>
             </tr>
