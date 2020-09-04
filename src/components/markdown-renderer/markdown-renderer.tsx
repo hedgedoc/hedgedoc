@@ -62,6 +62,7 @@ import { GistReplacer } from './replace-components/gist/gist-replacer'
 import { HighlightedCodeReplacer } from './replace-components/highlighted-fence/highlighted-fence-replacer'
 import { ImageReplacer } from './replace-components/image/image-replacer'
 import { KatexReplacer } from './replace-components/katex/katex-replacer'
+import { MermaidReplacer } from './replace-components/mermaid/mermaid-replacer'
 import { PdfReplacer } from './replace-components/pdf/pdf-replacer'
 import { PossibleWiderReplacer } from './replace-components/possible-wider/possible-wider-replacer'
 import { QuoteOptionsReplacer } from './replace-components/quote-options/quote-options-replacer'
@@ -349,6 +350,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
       new ImageReplacer(),
       new CsvReplacer(),
       new FlowchartReplacer(),
+      new MermaidReplacer(),
       new HighlightedCodeReplacer(),
       new QuoteOptionsReplacer(),
       new KatexReplacer(),

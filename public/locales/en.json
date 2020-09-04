@@ -6,6 +6,9 @@
     "renderer": {
         "flowchart": {
             "invalidSyntax": "Invalid flowchart.js syntax!"
+        },
+        "mermaid": {
+            "unknownError": "Unknown rendering error. Please check your browser console."
         }
     },
     "landing": {
