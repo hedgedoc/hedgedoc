@@ -147,7 +147,7 @@
         "@types/redux-devtools": "3.0.47",
         "@types/redux-devtools-extension": "2.13.2",
         "@types/testing-library__cypress": "5.0.6",
-        "cypress": "5.0.0",
+        "cypress": "5.1.0",
         "eslint-plugin-chai-friendly": "0.6.0",
         "eslint-plugin-cypress": "2.11.1",
         "http-server": "0.12.3",
@@ -156,6 +156,6 @@
         "ts-loader": "8.0.3"
     },
     "resolutions": {
-        "cypress": "5.0.0"
+        "cypress": "5.1.0"
     }
 }
