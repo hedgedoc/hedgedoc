@@ -15,7 +15,7 @@ export class TaskListReplacer extends ComponentReplacer {
     this.onTaskCheckedChange(lineNum, event.currentTarget.checked)
   }
 
-  public getReplacement (node: DomElement, index:number): (ReactElement|undefined) {
+  public getReplacement (node: DomElement): (ReactElement|undefined) {
     if (node.attribs?.class === 'task-list-item-checkbox') {
       return (
         <input
@@ -24,7 +24,6 @@ export class TaskListReplacer extends ComponentReplacer {
           checked={node.attribs.checked !== undefined}
           onChange={this.handleCheckboxChange}
           data-line={node.attribs['data-line']}
-          key={`task-list-item-checkbox${node.attribs['data-line']}`}
         />
       )
     }

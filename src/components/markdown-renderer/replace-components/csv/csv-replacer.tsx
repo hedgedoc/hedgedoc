@@ -4,7 +4,7 @@ import { ComponentReplacer } from '../ComponentReplacer'
 import { CsvTable } from './csv-table'
 
 export class CsvReplacer extends ComponentReplacer {
-  public getReplacement (codeNode: DomElement, index: number): React.ReactElement | undefined {
+  public getReplacement (codeNode: DomElement): React.ReactElement | undefined {
     if (codeNode.name !== 'code' || !codeNode.attribs || !codeNode.attribs['data-highlight-language'] || codeNode.attribs['data-highlight-language'] !== 'csv' || !codeNode.children || !codeNode.children[0]) {
       return
     }
@@ -23,6 +23,6 @@ export class CsvReplacer extends ComponentReplacer {
       showHeader = extraInfos[3] !== undefined
     }
 
-    return <CsvTable key={`csv-${index}`} code={code} delimiter={delimiter} showHeader={showHeader}/>
+    return <CsvTable code={code} delimiter={delimiter} showHeader={showHeader}/>
   }
 }

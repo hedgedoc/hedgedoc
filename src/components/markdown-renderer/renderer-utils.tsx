@@ -1,10 +1,9 @@
 import { diffArrays } from 'diff'
 import { DomElement } from 'domhandler'
-import { ReactElement } from 'react'
+import React, { Fragment, ReactElement } from 'react'
 import { convertNodeToElement, Transform } from 'react-html-parser'
 import {
   ComponentReplacer,
-  NativeRenderer,
   SubNodeTransform
 } from './replace-components/ComponentReplacer'
 
@@ -75,9 +74,9 @@ export const calculateKeyFromLineMarker = (node: DomElement, lineKeys?: LineKeys
   return lineKeys[line].id
 }
 
-export const findNodeReplacement = (node: DomElement, index: number, allReplacers: ComponentReplacer[], transform: SubNodeTransform, nativeRenderer: NativeRenderer): ReactElement|null|undefined => {
+export const findNodeReplacement = (node: DomElement, index: number, allReplacers: ComponentReplacer[], subNodeTransform: SubNodeTransform): ReactElement|null|undefined => {
   return allReplacers
-    .map((componentReplacer) => componentReplacer.getReplacement(node, index, transform, nativeRenderer))
+    .map((componentReplacer) => componentReplacer.getReplacement(node, subNodeTransform))
     .find((replacement) => replacement !== undefined)
 }
 
@@ -96,13 +95,13 @@ export const buildTransformer = (lineKeys: (LineKeys[] | undefined), allReplacer
     const subNodeTransform:SubNodeTransform = (subNode, subIndex) => transform(subNode, subIndex, transform)
 
     const key = calculateKeyFromLineMarker(node, lineKeys) ?? -index
-    const tryReplacement = findNodeReplacement(node, key, allReplacers, subNodeTransform, nativeRenderer)
+    const tryReplacement = findNodeReplacement(node, key, allReplacers, subNodeTransform)
     if (tryReplacement === null) {
       return null
     } else if (tryReplacement === undefined) {
       return nativeRenderer(node, key)
     } else {
-      return tryReplacement
+      return <Fragment key={key}>{tryReplacement}</Fragment>
     }
   }
   return transform

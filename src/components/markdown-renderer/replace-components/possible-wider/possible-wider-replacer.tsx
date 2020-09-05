@@ -1,5 +1,5 @@
 import { DomElement } from 'domhandler'
-import { ComponentReplacer, NativeRenderer, SubNodeTransform } from '../ComponentReplacer'
+import { ComponentReplacer } from '../ComponentReplacer'
 import './possible-wider-replacer.scss'
 
 const enabledTags = ['img', 'app-youtube', 'app-vimeo', 'app-asciinema', 'app-pdf']
@@ -10,7 +10,7 @@ const enabledTags = ['img', 'app-youtube', 'app-vimeo', 'app-asciinema', 'app-pd
  * appends the "wider-possible" class to paragraphs with special content.
  */
 export class PossibleWiderReplacer extends ComponentReplacer {
-  public getReplacement (node: DomElement, index: number, subNodeTransformer: SubNodeTransform, nativeRenderer: NativeRenderer): (undefined) {
+  public getReplacement (node: DomElement): (undefined) {
     if (node.name !== 'p') {
       return
     }

@@ -18,12 +18,12 @@ const getNodeIfInlineKatex = (node: DomElement): (DomElement|undefined) => {
 }
 
 export class KatexReplacer extends ComponentReplacer {
-  public getReplacement (node: DomElement, index: number): React.ReactElement | undefined {
+  public getReplacement (node: DomElement): React.ReactElement | undefined {
     const katex = getNodeIfKatexBlock(node) || getNodeIfInlineKatex(node)
     if (katex?.children && katex.children[0]) {
       const mathJaxContent = katex.children[0]?.data as string
       const isInline = (katex.attribs?.inline) !== undefined
-      return <TeX key={index} block={!isInline} math={mathJaxContent} errorColor={'#cc0000'}/>
+      return <TeX block={!isInline} math={mathJaxContent} errorColor={'#cc0000'}/>
     }
   }
 }
