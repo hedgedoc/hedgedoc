@@ -27,6 +27,7 @@
     "oauth2": "Olaf2",
     "saml": "aufSAMLn.de"
   },
+  "maxDocumentLength": 100000,
   "useImageProxy": false,
   "plantumlServer": "http://www.plantuml.com/plantuml",
   "specialLinks": {

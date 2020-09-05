@@ -34,6 +34,7 @@ beforeEach(() => {
         oauth2: 'Olaf2',
         saml: 'aufSAMLn.de'
       },
+      maxDocumentLength: 200,
       specialLinks: {
         privacy: 'https://example.com/privacy',
         termsOfUse: 'https://example.com/termsOfUse',

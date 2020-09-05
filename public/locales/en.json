@@ -195,8 +195,8 @@
                 "description": "Sorry, only the owner can edit this note."
             },
             "limitReached": {
-                "title": "Reach the limit",
-                "description": "Sorry, you've reached the maximum length this note can be.",
+                "title": "Reached the limit",
+                "description": "Sorry, this note reached its maximum length. Notes can be up to {{maxLength}} characters long.",
                 "advice": "Please shorten the note."
             },
             "incompatible": {
@@ -277,7 +277,11 @@
             },
             "lines": "{{lines}} Lines",
             "length": "Length {{length}}",
-            "lengthTooltip": "You can write up to 100000 characters in this document."
+            "lengthTooltip": {
+                "maximumReached": "You've reached the maximum length of this note.",
+                "remaining": "You may still write {{remaining}} characters until you reach the limit for this note.",
+                "exceeded": "You've exceeded the maximum length of this note by {{exceeded}} characters. Consider shortening it."
+            }
         },
         "export": {
             "rawHtml": "Raw HTML",

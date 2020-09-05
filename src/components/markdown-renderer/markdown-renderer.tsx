@@ -127,6 +127,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
   wide
 }) => {
   const [tocAst, setTocAst] = useState<TocAst>()
+  const maxLength = useSelector((state: ApplicationState) => state.config.maxDocumentLength)
   const lastTocAst = useRef<TocAst>()
   const [yamlError, setYamlError] = useState(false)
   const rawMetaRef = useRef<RawYAMLMetadata>()
@@ -364,13 +365,14 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
       // This is used if the front-matter callback is never called, because the user deleted everything regarding metadata from the document
       rawMetaRef.current = undefined
     }
-    const html: string = markdownIt.render(content)
-    const contentLines = content.split('\n')
+    const trimmedContent = content.substr(0, maxLength)
+    const html: string = markdownIt.render(trimmedContent)
+    const contentLines = trimmedContent.split('\n')
     const { lines: newLines, lastUsedLineId: newLastUsedLineId } = calculateNewLineNumberMapping(contentLines, oldMarkdownLineKeys.current ?? [], lastUsedLineId.current)
     oldMarkdownLineKeys.current = newLines
     lastUsedLineId.current = newLastUsedLineId
     return ReactHtmlParser(html, { transform: buildTransformer(newLines, allReplacers) })
-  }, [content, markdownIt, onMetaDataChange, onTaskCheckedChange])
+  }, [content, markdownIt, onMetaDataChange, onTaskCheckedChange, maxLength])
 
   return (
     <div className={'bg-light flex-fill'}>
@@ -380,6 +382,11 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
             <Trans i18nKey='editor.invalidYaml'>
               <InternalLink text='yaml-metadata' href='/n/yaml-metadata' className='text-dark'/>
             </Trans>
+          </Alert>
+        </ShowIf>
+        <ShowIf condition={content.length > maxLength}>
+          <Alert variant='danger' dir={'auto'}>
+            <Trans i18nKey={'editor.error.limitReached.description'} values={{ maxLength }}/>
           </Alert>
         </ShowIf>
         <div ref={documentElement} className={'markdown-body w-100 d-flex flex-column align-items-center'}>

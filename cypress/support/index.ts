@@ -13,6 +13,7 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
+import 'cypress-commands'
 import './checkLinks'
 import './config'
 import './login'

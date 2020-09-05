@@ -9,6 +9,7 @@ export interface Config {
   specialLinks: SpecialLinks,
   version: BackendVersion,
   plantumlServer: string | null,
+  maxDocumentLength: number,
 }
 
 export interface BrandingConfig {

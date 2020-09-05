@@ -31,6 +31,7 @@ export const initialState: Config = {
     oauth2: '',
     saml: ''
   },
+  maxDocumentLength: 0,
   useImageProxy: false,
   plantumlServer: null,
   specialLinks: {
