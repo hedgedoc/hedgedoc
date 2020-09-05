@@ -9,6 +9,18 @@ opengraph:
 # Embedding demo
 [TOC]
 
+## Sequence Diagram (deprecated)
+
+\`\`\`sequence
+Title: Here is a title
+note over A: asdd
+A->B: Normal line
+B-->C: Dashed line
+C->>D: Open arrow
+D-->>A: Dashed open arrow
+participant IOOO
+\`\`\`
+
 ## Mermaid
 
 \`\`\`mermaid

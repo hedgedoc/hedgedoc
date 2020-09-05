@@ -9,6 +9,9 @@
         },
         "mermaid": {
             "unknownError": "Unknown rendering error. Please check your browser console."
+        },
+        "sequence": {
+            "deprecationWarning": "The use of 'sequence' as code block language is deprecated."
         }
     },
     "landing": {
@@ -278,8 +281,7 @@
         },
         "export": {
             "rawHtml": "Raw HTML",
-            "pdf": "PDF export is unavailable.",
-            "why": "Why?"
+            "pdf": "PDF export is unavailable."
         },
         "import": {
             "clipboard": "Clipboard"
@@ -352,7 +354,8 @@
         "save": "Save",
         "or": "or",
         "and": "and",
-        "avatarOf": "avatar of '{{name}}'"
+        "avatarOf": "avatar of '{{name}}'",
+        "why": "Why?"
     },
     "login": {
         "chooseMethod": "Choose method",

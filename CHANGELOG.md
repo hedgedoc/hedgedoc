@@ -9,6 +9,7 @@
     - `{%gist user/12345 %}` -> https://gist.github.com/user/12345
     - `{%slideshare user/my-awesome-presentation %}` -> Embedding removed
     - `{%speakerdeck foobar %}` -> Embedding removed
+- The use of `sequence` as code block language ([Why?](https://community.codimd.org/t/frequently-asked-questions/190))
 
 ### Removed
 

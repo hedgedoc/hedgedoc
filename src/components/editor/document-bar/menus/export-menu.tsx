@@ -49,7 +49,7 @@ const ExportMenu: React.FC = () => {
           <Trans i18nKey={'editor.export.pdf'}/>
           &nbsp;
           <span className={'text-primary'}>
-            <Trans i18nKey={'editor.export.why'}/>
+            <Trans i18nKey={'common.why'}/>
           </span>
         </Dropdown.Item>
       </Dropdown.Menu>
