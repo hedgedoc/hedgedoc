@@ -53,6 +53,7 @@ import { replaceQuoteExtraTime } from './regex-plugins/replace-quote-extra-time'
 import { replaceVimeoLink } from './regex-plugins/replace-vimeo-link'
 import { replaceYouTubeLink } from './regex-plugins/replace-youtube-link'
 import { buildTransformer, calculateNewLineNumberMapping, LineKeys } from './renderer-utils'
+import { AbcReplacer } from './replace-components/abc/abc-replacer'
 import { AsciinemaReplacer } from './replace-components/asciinema/asciinema-replacer'
 import { LinemarkerReplacer } from './replace-components/linemarker/linemarker-replacer'
 import { ComponentReplacer } from './replace-components/ComponentReplacer'
@@ -346,6 +347,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
       new YoutubeReplacer(),
       new VimeoReplacer(),
       new AsciinemaReplacer(),
+      new AbcReplacer(),
       new PdfReplacer(),
       new ImageReplacer(),
       new CsvReplacer(),
