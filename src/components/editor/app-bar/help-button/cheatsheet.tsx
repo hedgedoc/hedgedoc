@@ -1,7 +1,10 @@
-import React from 'react'
+import MarkdownIt from 'markdown-it'
+import markdownItContainer from 'markdown-it-container'
+import React, { useCallback } from 'react'
 import { Table } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { MarkdownRenderer } from '../../../markdown-renderer/markdown-renderer'
+import { BasicMarkdownRenderer } from '../../../markdown-renderer/basic-markdown-renderer'
+import { createRenderContainer, validAlertLevels } from '../../../markdown-renderer/markdown-it-plugins/alert-container'
 import { HighlightedCode } from '../../../markdown-renderer/replace-components/highlighted-fence/highlighted-code/highlighted-code'
 import './cheatsheet.scss'
 
@@ -27,6 +30,13 @@ export const Cheatsheet: React.FC = () => {
     ':smile:',
     `:::info\n${t('editor.help.cheatsheet.exampleAlert')}\n:::`
   ]
+
+  const markdownItPlugins = useCallback((md: MarkdownIt) => {
+    validAlertLevels.forEach(level => {
+      md.use(markdownItContainer, level, { render: createRenderContainer(level) })
+    })
+  }, [])
+
   return (
     <Table className="table-condensed table-cheatsheet">
       <thead>
@@ -40,14 +50,10 @@ export const Cheatsheet: React.FC = () => {
           return (
             <tr key={key}>
               <td>
-                <MarkdownRenderer
+                <BasicMarkdownRenderer
                   content={code}
                   wide={false}
-                  onTaskCheckedChange={(_) => null}
-                  onTocChange={() => false}
-                  onMetaDataChange={() => false}
-                  onFirstHeadingChange={() => false}
-                  onLineMarkerPositionChanged={() => false}
+                  onConfigureMarkdownIt={markdownItPlugins}
                 />
               </td>
               <td className={'markdown-body'}>

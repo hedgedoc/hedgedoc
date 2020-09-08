@@ -4,7 +4,8 @@ import useResizeObserver from 'use-resize-observer'
 import { TocAst } from '../../../external-types/markdown-it-toc-done-right/interface'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../../common/show-if/show-if'
-import { LineMarkerPosition, MarkdownRenderer } from '../../markdown-renderer/markdown-renderer'
+import { LineMarkerPosition } from '../../markdown-renderer/types'
+import { FullMarkdownRenderer } from '../../markdown-renderer/full-markdown-renderer'
 import { ScrollProps, ScrollState } from '../scroll/scroll-props'
 import { findLineMarks } from '../scroll/utils'
 import { TableOfContents } from '../table-of-contents/table-of-contents'
@@ -108,16 +109,18 @@ export const DocumentRenderPane: React.FC<DocumentRenderPaneProps & ScrollProps>
     <div className={'bg-light flex-fill pb-5 flex-row d-flex w-100 h-100 overflow-y-scroll'}
       ref={renderer} onScroll={userScroll} onMouseEnter={onMakeScrollSource}>
       <div className={'col-md'}/>
-      <MarkdownRenderer
-        className={'flex-fill mb-3'}
-        content={content}
-        onFirstHeadingChange={onFirstHeadingChange}
-        onLineMarkerPositionChanged={setLineMarks}
-        onMetaDataChange={onMetadataChange}
-        onTaskCheckedChange={onTaskCheckedChange}
-        onTocChange={(tocAst) => setTocAst(tocAst)}
-        wide={wide}
-      />
+      <div className={'bg-light flex-fill'}>
+        <FullMarkdownRenderer
+          className={'flex-fill mb-3'}
+          content={content}
+          onFirstHeadingChange={onFirstHeadingChange}
+          onLineMarkerPositionChanged={setLineMarks}
+          onMetaDataChange={onMetadataChange}
+          onTaskCheckedChange={onTaskCheckedChange}
+          onTocChange={(tocAst) => setTocAst(tocAst)}
+          wide={wide}
+        />
+      </div>
 
       <div className={'col-md'}>
         <ShowIf condition={realWidth >= 1280 && !!tocAst}>

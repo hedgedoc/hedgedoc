@@ -6,7 +6,7 @@ import { Cheatsheet } from './cheatsheet'
 import { Links } from './links'
 import { Shortcut } from './shortcuts'
 
-enum HelpTabStatus {
+export enum HelpTabStatus {
   Cheatsheet='cheatsheet.title',
   Shortcuts='shortcuts.title',
   Links='links.title'
