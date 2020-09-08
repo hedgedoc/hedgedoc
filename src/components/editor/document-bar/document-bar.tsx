@@ -1,13 +1,13 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { PinToHistoryButton } from './buttons/pin-to-history-button'
+import { ShareLinkButton } from './buttons/share-link-button'
 import { ConnectionIndicator } from './connection-indicator/connection-indicator'
 import { DocumentInfoButton } from './document-info/document-info-button'
 import { EditorMenu } from './menus/editor-menu'
 import { ExportMenu } from './menus/export-menu'
 import { ImportMenu } from './menus/import-menu'
-import { PermissionButton } from './buttons/permission-button'
-import { PinToHistoryButton } from './buttons/pin-to-history-button'
-import { ShareLinkButton } from './buttons/share-link-button'
+import { PermissionButton } from './permissions/permission-button'
 import { RevisionButton } from './revisions/revision-button'
 
 export interface DocumentBarProps {

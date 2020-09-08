@@ -329,7 +329,21 @@
                 "button": "Delete note"
             },
             "permissions": {
-                "title": "Permissions"
+                "title": "Permissions",
+                "owner": "Owner",
+                "sharedWithUsers": "Shared with users",
+                "sharedWithGroups": "Also share with…",
+                "editUser": "Change {{name}}'s permissions to view and edit",
+                "viewOnlyUser": "Change {{name}}'s permissions to view only",
+                "removeUser": "Remove {{name}}'s permissions",
+                "addUser": "Add user",
+                "editGroup": "Change permissions of group \"{{name}}\" to view & edit",
+                "viewOnlyGroup": "Change permissions of group \"{{name}}\" to view only",
+                "denyGroup": "Deny access to group \"{{name}}\"",
+                "addGroup": "Add group",
+                "allUser": "Everyone",
+                "allLoggedInUser": "All logged-in users",
+                "error": "An error occurred while fetching the user information of this note."
             },
             "shareLink": {
                 "title": "Share link",
