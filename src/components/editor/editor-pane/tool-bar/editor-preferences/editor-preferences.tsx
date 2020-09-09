@@ -1,23 +1,23 @@
 import { EditorConfiguration } from 'codemirror'
+import equal from 'fast-deep-equal'
 import React, { Fragment, useCallback, useState } from 'react'
 import { Button, Form, ListGroup } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { ApplicationState } from '../../../../../redux'
+import { setEditorPreferences } from '../../../../../redux/editor/methods'
 import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
 import { CommonModal } from '../../../../common/modals/common-modal'
 import { EditorPreferenceProperty, EditorPreferenceSelect } from './editor-preference-select'
 
-export interface EditorSettingsButtonProps {
-  preferences: EditorConfiguration
-  onPreferencesChange: (config: EditorConfiguration) => void
-}
-
-export const EditorPreferences: React.FC<EditorSettingsButtonProps> = ({ onPreferencesChange, preferences }) => {
+export const EditorPreferences: React.FC = () => {
   const { t } = useTranslation()
   const [showModal, setShowModal] = useState(false)
+  const preferences = useSelector((state: ApplicationState) => state.editorConfig.preferences, equal)
 
   const sendPreferences = useCallback((newPreferences: EditorConfiguration) => {
-    onPreferencesChange(newPreferences)
-  }, [onPreferencesChange])
+    setEditorPreferences(newPreferences)
+  }, [])
 
   return (
     <Fragment>

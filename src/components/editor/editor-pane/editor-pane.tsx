@@ -20,6 +20,7 @@ import 'codemirror/keymap/emacs'
 import 'codemirror/keymap/sublime'
 import 'codemirror/keymap/vim'
 import 'codemirror/mode/gfm/gfm'
+import equal from 'fast-deep-equal'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Controlled as ControlledCodeMirror } from 'react-codemirror2'
 import { useTranslation } from 'react-i18next'
@@ -60,12 +61,7 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
   const maxLengthWarningAlreadyShown = useRef(false)
   const [editor, setEditor] = useState<Editor>()
   const [statusBarInfo, setStatusBarInfo] = useState<StatusBarInfo>(defaultState)
-  const [editorPreferences, setEditorPreferences] = useState<EditorConfiguration>({
-    theme: 'one-dark',
-    keyMap: 'sublime',
-    indentUnit: 4,
-    indentWithTabs: false
-  })
+  const editorPreferences = useSelector((state: ApplicationState) => state.editorConfig.preferences, equal)
 
   const lastScrollPosition = useRef<number>()
   const [editorScroll, setEditorScroll] = useState<ScrollInfo>()
@@ -158,8 +154,6 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
       <MaxLengthWarningModal show={showMaxLengthWarning} onHide={() => setShowMaxLengthWarning(false)} maxLength={maxLength}/>
       <ToolBar
         editor={editor}
-        onPreferencesChange={config => setEditorPreferences(config)}
-        editorPreferences={editorPreferences}
       />
       <ControlledCodeMirror
         className="overflow-hidden w-100 flex-fill"

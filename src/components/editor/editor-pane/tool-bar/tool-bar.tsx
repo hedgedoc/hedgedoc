@@ -1,4 +1,4 @@
-import { Editor, EditorConfiguration } from 'codemirror'
+import { Editor } from 'codemirror'
 import React from 'react'
 import { Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
@@ -28,11 +28,9 @@ import {
 
 export interface ToolBarProps {
   editor: Editor | undefined
-  onPreferencesChange: (config: EditorConfiguration) => void
-  editorPreferences: EditorConfiguration
 }
 
-export const ToolBar: React.FC<ToolBarProps> = ({ editor, onPreferencesChange, editorPreferences }) => {
+export const ToolBar: React.FC<ToolBarProps> = ({ editor }) => {
   const { t } = useTranslation()
 
   const notImplemented = () => {
@@ -109,7 +107,7 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor, onPreferencesChange, e
         <EmojiPickerButton editor={editor}/>
       </ButtonGroup>
       <ButtonGroup className={'mx-1 flex-wrap'}>
-        <EditorPreferences onPreferencesChange={onPreferencesChange} preferences={editorPreferences}/>
+        <EditorPreferences/>
       </ButtonGroup>
     </ButtonToolbar>
   )
