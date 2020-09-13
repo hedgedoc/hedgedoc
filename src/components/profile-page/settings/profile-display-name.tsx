@@ -53,7 +53,7 @@ export const ProfileDisplayName: React.FC = () => {
               size="sm"
               placeholder={t('profile.displayName')}
               value={displayName}
-              className="bg-dark text-white"
+              className="bg-dark text-light"
               onChange={changeNameField}
               isValid={submittable}
               isInvalid={error}

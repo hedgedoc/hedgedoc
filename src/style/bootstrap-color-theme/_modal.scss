@@ -1,0 +1,35 @@
+&.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+// Actual modal
+.modal-content {
+  background-color: $modal-content-bg;
+  border-color: $modal-content-border-color;
+  @include box-shadow($modal-content-box-shadow-xs);
+}
+
+// Modal background
+.modal-backdrop {
+  background-color: $modal-backdrop-bg;
+}
+
+// Modal header
+// Top section of the modal w/ title and dismiss
+.modal-header {
+  border-bottom: $modal-header-border-width solid $modal-header-border-color;
+}
+
+
+// Footer (for actions)
+.modal-footer {
+  border-top: $modal-footer-border-width solid $modal-footer-border-color;
+}
+
+// Scale up the modal
+@include media-breakpoint-up(sm) {
+  .modal-content {
+    @include box-shadow($modal-content-box-shadow-sm-up);
+  }
+}

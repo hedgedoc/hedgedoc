@@ -40,30 +40,24 @@ export const HelpButton: React.FC = () => {
             <ForkAwesomeIcon icon="question-circle"/> <Trans i18nKey={'editor.documentBar.help'}/> – <Trans i18nKey={`editor.help.${tab}`}/>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="text-dark">
-          <ul className='nav nav-tabs'>
-            <li className='nav-item'>
-              <button className={`nav-link ${tab === HelpTabStatus.Cheatsheet ? 'active' : ''}`}
-                onClick={() => setTab(HelpTabStatus.Cheatsheet)}
-              >
-                <Trans i18nKey={'editor.help.cheatsheet.title'}/>
-              </button>
-            </li>
-            <li className='nav-item'>
-              <button className={`nav-link ${tab === HelpTabStatus.Shortcuts ? 'active' : ''}`}
-                onClick={() => setTab(HelpTabStatus.Shortcuts)}
-              >
-                <Trans i18nKey={'editor.help.shortcuts.title'}/>
-              </button>
-            </li>
-            <li className='nav-item'>
-              <button className={`nav-link ${tab === HelpTabStatus.Links ? 'active' : ''}`}
-                onClick={() => setTab(HelpTabStatus.Links)}
-              >
-                <Trans i18nKey={'editor.help.links.title'}/>
-              </button>
-            </li>
-          </ul>
+        <Modal.Body>
+          <nav className='nav nav-tabs'>
+            <Button variant={'light'} className={`nav-link nav-item ${tab === HelpTabStatus.Cheatsheet ? 'active' : ''}`}
+              onClick={() => setTab(HelpTabStatus.Cheatsheet)}
+            >
+              <Trans i18nKey={'editor.help.cheatsheet.title'}/>
+            </Button>
+            <Button variant={'light'} className={`nav-link nav-item ${tab === HelpTabStatus.Shortcuts ? 'active' : ''}`}
+              onClick={() => setTab(HelpTabStatus.Shortcuts)}
+            >
+              <Trans i18nKey={'editor.help.shortcuts.title'}/>
+            </Button>
+            <Button variant={'light'} className={`nav-link nav-item ${tab === HelpTabStatus.Links ? 'active' : ''}`}
+              onClick={() => setTab(HelpTabStatus.Links)}
+            >
+              <Trans i18nKey={'editor.help.links.title'}/>
+            </Button>
+          </nav>
           {tabContent()}
         </Modal.Body>
       </Modal>

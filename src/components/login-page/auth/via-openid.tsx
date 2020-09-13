@@ -33,7 +33,7 @@ export const ViaOpenId: React.FC = () => {
               size="sm"
               placeholder={'OpenID'}
               onChange={(event) => setOpenId(event.currentTarget.value)}
-              className="bg-dark text-white"
+              className="bg-dark text-light"
             />
           </Form.Group>
 

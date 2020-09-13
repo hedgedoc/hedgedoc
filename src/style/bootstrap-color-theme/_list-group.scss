@@ -1,0 +1,41 @@
+.list-group-item-action {
+  color: $list-group-action-color;
+
+  @include hover-focus() {
+    color: $list-group-action-hover-color;
+    background-color: $list-group-hover-bg;
+  }
+
+  &:active {
+    color: $list-group-action-active-color;
+    background-color: $list-group-action-active-bg;
+  }
+}
+
+.list-group-item {
+  color: $list-group-color;
+  background-color: $list-group-bg;
+  border-color: $list-group-border-color;
+
+  &.disabled,
+  &:disabled {
+    color: $list-group-disabled-color;
+    background-color: $list-group-disabled-bg;
+  }
+
+  // Include both here for `<a>`s and `<button>`s
+  &.active {
+    color: $list-group-active-color;
+    background-color: $list-group-active-bg;
+    border-color: $list-group-active-border-color;
+  }
+}
+
+// Contextual variants
+//
+// Add modifier classes to change text and background color on individual items.
+// Organizationally, this must come after the `:hover` states.
+
+@each $color, $value in $theme-colors {
+  @include list-group-item-variant($color, theme-color-level($color, -9), theme-color-level($color, 6));
+}

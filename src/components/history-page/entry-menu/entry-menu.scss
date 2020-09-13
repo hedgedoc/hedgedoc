@@ -14,8 +14,7 @@
 }
 
 .dropup .dropdown-toggle, .dropdown-toggle {
-  &.no-arrow::after {
-    content: initial;
-  }
+    &.no-arrow::after {
+      content: initial;
+    }
 }
-

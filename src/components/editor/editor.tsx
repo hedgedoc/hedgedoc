@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import useMedia from 'use-media'
 import { ApplicationState } from '../../redux'
 import { setEditorMode } from '../../redux/editor/methods'
+import { ApplyDarkMode } from '../common/apply-dark-mode/apply-dark-mode'
 import { DocumentTitle } from '../common/document-title/document-title'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
 import { AppBar } from './app-bar/app-bar'
@@ -109,6 +110,7 @@ export const Editor: React.FC = () => {
 
   return (
     <Fragment>
+      <ApplyDarkMode/>
       <MotdBanner/>
       <DocumentTitle title={documentTitle}/>
       <div className={'d-flex flex-column vh-100'}>

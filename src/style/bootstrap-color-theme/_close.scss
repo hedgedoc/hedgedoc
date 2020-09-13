@@ -1,0 +1,12 @@
+.close {
+  color: $close-color;
+  text-shadow: $close-text-shadow;
+
+  @include hover() {
+    color: $close-color;
+  }
+}
+
+button.close {
+  background-color: transparent;
+}

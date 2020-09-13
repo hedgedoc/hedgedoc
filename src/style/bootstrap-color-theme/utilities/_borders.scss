@@ -1,0 +1,21 @@
+// stylelint-disable property-blacklist, declaration-no-important
+
+//
+// Border
+//
+
+.border         { border-color: $border-color !important; }
+.border-top     { border-top-color: $border-color !important; }
+.border-right   { border-right-color: $border-color !important; }
+.border-bottom  { border-bottom-color: $border-color !important; }
+.border-left    { border-left-color: $border-color !important; }
+
+@each $color, $value in $theme-colors {
+  .border-#{$color} {
+    border-color: $value !important;
+  }
+}
+
+.border-white {
+  border-color: $white !important;
+}

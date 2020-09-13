@@ -5,7 +5,7 @@ import { SocialLink } from './social-links'
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="text-white-50 small">
+    <footer className="text-light-50 small">
       <LanguagePicker/>
       <PoweredByLinks/>
       <SocialLink/>

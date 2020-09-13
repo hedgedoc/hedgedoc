@@ -7,7 +7,7 @@ import { HeaderBar } from './navigation/header-bar/header-bar'
 
 export const LandingLayout: React.FC = ({ children }) => {
   return (
-    <Container className="text-white d-flex flex-column mvh-100">
+    <Container className="text-light d-flex flex-column mvh-100">
       <DocumentTitle/>
       <MotdBanner/>
       <HeaderBar/>

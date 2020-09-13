@@ -1,0 +1,29 @@
+//
+// Base styles
+//
+
+.card {
+  background-color: $card-bg;
+  border-color: $card-border-color;
+}
+
+.card-body {
+  color: $card-color;
+}
+
+
+//
+// Optional textual caps
+//
+
+.card-header {
+   color: $card-cap-color;
+  background-color: $card-cap-bg;
+  border-bottom-color: $card-border-color;
+}
+
+.card-footer {
+  color: $card-cap-color;
+  background-color: $card-cap-bg;
+  border-top-color: $card-border-color;
+}

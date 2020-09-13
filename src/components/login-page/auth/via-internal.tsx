@@ -35,7 +35,7 @@ export const ViaInternal: React.FC = () => {
               type="text"
               size="sm"
               placeholder={t('login.auth.username')}
-              onChange={(event) => setUsername(event.currentTarget.value)} className="bg-dark text-white"
+              onChange={(event) => setUsername(event.currentTarget.value)} className="bg-dark text-light"
               autoComplete='username'
             />
           </Form.Group>
@@ -47,7 +47,7 @@ export const ViaInternal: React.FC = () => {
               size="sm"
               placeholder={t('login.auth.password')}
               onChange={(event) => setPassword(event.currentTarget.value)}
-              className="bg-dark text-white"
+              className="bg-dark text-light"
               autoComplete='current-password'
             />
           </Form.Group>

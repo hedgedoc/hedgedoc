@@ -35,7 +35,9 @@ export const VersionInfo: React.FC = () => {
 
   return (
     <Fragment>
-      <Link id='version' to={'#'} className={'text-light'} onClick={handleShow}><Trans i18nKey={'landing.versionInfo.versionInfo'}/></Link>
+      <Link id='version' to={'#'} className={'text-light'} onClick={handleShow}>
+        <Trans i18nKey={'landing.versionInfo.versionInfo'}/>
+      </Link>
       <Modal id='versionModal' show={show} onHide={handleClose} animation={true}>
         <Modal.Body className="text-dark">
           <h3><Trans i18nKey={'landing.versionInfo.title'}/></h3>

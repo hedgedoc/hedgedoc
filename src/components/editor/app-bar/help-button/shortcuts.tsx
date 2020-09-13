@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Card, ListGroup, Row } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
 import { isMac } from '../../utils'
@@ -25,14 +25,19 @@ export const Shortcut: React.FC = () => {
     <Row className={'justify-content-center pt-4'}>
       {Object.keys(shortcutMap).map(category => {
         return (
-          <Card className={'m-2 w-50'}>
+          <Card key={category} className={'m-2 w-50'}>
             <Card.Header>{category}</Card.Header>
             <ListGroup variant="flush">
-              {Object.entries(shortcutMap[category]).map(([functionName, shortcut]) => {
+              {Object.entries(shortcutMap[category]).map(([functionName, shortcuts]) => {
                 return (
                   <ListGroup.Item key={functionName} className={'d-flex justify-content-between'}>
                     <span><Trans i18nKey={functionName}/></span>
-                    <span>{shortcut}</span>
+                    <span>
+                      {
+                        shortcuts.map((shortcut, shortcutIndex) =>
+                          <Fragment key={shortcutIndex}>{shortcut}</Fragment>)
+                      }
+                    </span>
                   </ListGroup.Item>
                 )
               })}

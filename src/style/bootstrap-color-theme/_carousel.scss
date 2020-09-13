@@ -1,0 +1,24 @@
+.carousel-control-prev,
+.carousel-control-next {
+  color: $carousel-control-color;
+
+  // Hover/focus state
+  @include hover-focus() {
+    color: $carousel-control-color;
+  }
+}
+
+.carousel-indicators {
+  li {
+    background-color: $carousel-indicator-active-bg;
+  }
+}
+
+
+// Optional captions
+//
+//
+
+.carousel-caption {
+  color: $carousel-caption-color;
+}

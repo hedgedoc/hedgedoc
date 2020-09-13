@@ -1,5 +1,11 @@
 .btn-toolbar {
-  border: 1px solid #ededed;
+  border-bottom: 1px solid #ededed;
+  border-top: 1px solid #ededed;
+
+  .btn {
+    padding: 0.1875rem 0.5rem;
+    min-width: 30px;
+  }
 
   .btn-group:not(:last-of-type)::after {
     background-color: #e2e6ea;

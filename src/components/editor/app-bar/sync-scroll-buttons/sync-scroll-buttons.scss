@@ -1,0 +1,33 @@
+.sync-scroll-buttons {
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+  .btn {
+    svg g {
+      @import "../../../../style/light.scss";
+      fill: $secondary;
+    }
+
+    &.active, &:hover {
+      svg g {
+        @import "../../../../style/light.scss";
+        fill: $light;
+      }
+    }
+
+    body.dark & {
+      svg g {
+        @import "../../../../style/dark.scss";
+        fill: $secondary;
+      }
+
+      &.active, &:hover {
+        svg g {
+          @import "../../../../style/dark.scss";
+          fill: $light;
+        }
+      }
+    }
+  }
+}

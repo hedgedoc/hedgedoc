@@ -63,7 +63,7 @@ export const CsvTable: React.FC<CsvTableProps> = ({ code, delimiter, showHeader,
   }
 
   return (
-    <table className={'csv-html-table'}>
+    <table className={'csv-html-table table-striped'}>
       {renderTableHeader(headerRow)}
       {renderTableBody(rowsWithColumns)}
     </table>

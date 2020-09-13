@@ -32,8 +32,8 @@ export class ErrorBoundary extends Component {
   render (): ReactElement | undefined | null | string | number | boolean | Record<string, unknown> | ReactNodeArray {
     if (this.state.hasError) {
       return (
-        <Container className="text-white d-flex flex-column mvh-100">
-          <div className='text-white d-flex flex-column align-items-center justify-content-center my-5'>
+        <Container className="text-light d-flex flex-column mvh-100">
+          <div className='text-light d-flex flex-column align-items-center justify-content-center my-5'>
             <h1>An unknown error occurred</h1>
             <p>Don't worry, this happens sometimes. If this is the first time you see this page then try reloading the app.</p>
             If you can reproduce this error, then we would be glad if you&#32;

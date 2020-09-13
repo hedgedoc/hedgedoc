@@ -1,0 +1,15 @@
+.breadcrumb {
+  background-color: $breadcrumb-bg;
+}
+
+.breadcrumb-item {
+  + .breadcrumb-item {
+    &::before {
+      color: $breadcrumb-divider-color;
+    }
+  }
+
+  &.active {
+    color: $breadcrumb-active-color;
+  }
+}

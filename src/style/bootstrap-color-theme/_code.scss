@@ -1,0 +1,18 @@
+// Inline code
+code {
+  color: $code-color;
+}
+
+kbd {
+  color: $kbd-color;
+  background-color: $kbd-bg;
+  @include box-shadow($kbd-box-shadow);
+}
+
+// Blocks of code
+pre {
+  color: $pre-color;
+  code {
+    color: inherit;
+  }
+}

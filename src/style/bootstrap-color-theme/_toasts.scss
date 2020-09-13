@@ -1,0 +1,11 @@
+.toast {
+  color: $toast-color;
+  background-color: $toast-background-color;
+  border-color: $toast-border-color;
+}
+
+.toast-header {
+  color: $toast-header-color;
+  background-color: $toast-header-background-color;
+  border-bottom-color: $toast-header-border-color;
+}

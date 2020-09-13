@@ -1,27 +1,29 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { ApplicationState } from '../../../redux'
+import { setDarkMode } from '../../../redux/dark-mode/methods'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 
 const DarkModeButton: React.FC = () => {
   const { t } = useTranslation()
-  const [buttonState, setButtonState] = useState(false)
-  const buttonToggle = () => {
-    setButtonState(prevState => !prevState)
-  }
+  const darkModeEnabled = useSelector((state: ApplicationState) => state.darkMode.darkMode)
 
   return (
-    <ToggleButtonGroup type="checkbox" defaultValue={[]} name="dark-mode" className="ml-2" value={buttonState ? ['dark'] : ['']}>
-      <ToggleButton
-        title={ buttonState ? t('editor.darkMode.switchToLight') : t('editor.darkMode.switchToDark')}
-        variant={ buttonState ? 'secondary' : 'light' }
-        className={ buttonState ? 'text-white' : 'text-secondary' }
-        onChange={buttonToggle} value={'dark'}
-      >
-        {buttonState
-          ? <ForkAwesomeIcon icon="sun"/>
-          : <ForkAwesomeIcon icon="moon"/>
-        }
+    <ToggleButtonGroup
+      type="radio"
+      name="dark-mode"
+      value={darkModeEnabled}
+      className="ml-2"
+      onChange={(value: boolean) => {
+        setDarkMode(value)
+      }}>
+      <ToggleButton value={true} variant="outline-secondary" title={t('editor.darkMode.switchToDark')}>
+        <ForkAwesomeIcon icon="moon"/>
+      </ToggleButton>
+      <ToggleButton value={false} variant="outline-secondary" title={t('editor.darkMode.switchToLight')}>
+        <ForkAwesomeIcon icon="sun-o"/>
       </ToggleButton>
     </ToggleButtonGroup>
   )

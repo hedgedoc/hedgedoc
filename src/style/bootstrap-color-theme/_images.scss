@@ -1,0 +1,10 @@
+// Image thumbnails
+.img-thumbnail {
+  background-color: $thumbnail-bg;
+  border-color: $thumbnail-border-color;
+  @include box-shadow($thumbnail-box-shadow);
+}
+
+.figure-caption {
+  color: $figure-caption-color;
+}

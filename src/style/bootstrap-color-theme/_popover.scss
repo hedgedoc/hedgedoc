@@ -1,0 +1,80 @@
+.popover {
+  background-color: $popover-bg;
+  border: $popover-border-width solid $popover-border-color;
+  @include box-shadow($popover-box-shadow);
+}
+
+.bs-popover-top {
+  > .arrow {
+    &::before {
+      border-top-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      border-top-color: $popover-arrow-color;
+    }
+  }
+}
+
+.bs-popover-right {
+  > .arrow {
+    &::before {
+      border-right-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      border-right-color: $popover-arrow-color;
+    }
+  }
+}
+
+.bs-popover-bottom {
+  > .arrow {
+    &::before {
+      border-bottom-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      border-bottom-color: $popover-arrow-color;
+    }
+  }
+}
+
+.bs-popover-left {
+  > .arrow {
+    &::before {
+      border-left-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      border-left-color: $popover-arrow-color;
+    }
+  }
+}
+
+.bs-popover-auto {
+  &[x-placement^="top"] {
+    @extend .bs-popover-top;
+  }
+  &[x-placement^="right"] {
+    @extend .bs-popover-right;
+  }
+  &[x-placement^="bottom"] {
+    @extend .bs-popover-bottom;
+  }
+  &[x-placement^="left"] {
+    @extend .bs-popover-left;
+  }
+}
+
+
+// Offset the popover to account for the popover arrow
+.popover-header {
+  color: $popover-header-color;
+  background-color: $popover-header-bg;
+  border-bottom-color: darken($popover-header-bg, 5%);
+}
+
+.popover-body {
+  color: $popover-body-color;
+}

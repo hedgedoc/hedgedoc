@@ -70,7 +70,7 @@ export const RegisterPage: React.FC = () => {
                     isValid={username !== ''}
                     onChange={(event) => setUsername(event.target.value)}
                     placeholder={t('login.auth.username')}
-                    className='bg-dark text-white'
+                    className='bg-dark text-light'
                     autoComplete='username'
                     autoFocus={true}
                     required
@@ -85,7 +85,7 @@ export const RegisterPage: React.FC = () => {
                     isValid={password !== '' && password.length >= 8}
                     onChange={(event) => setPassword(event.target.value)}
                     placeholder={t('login.auth.password')}
-                    className='bg-dark text-white'
+                    className='bg-dark text-light'
                     minLength={8}
                     autoComplete='new-password'
                     required
@@ -101,7 +101,7 @@ export const RegisterPage: React.FC = () => {
                     isValid={passwordAgain !== '' && password === passwordAgain}
                     onChange={(event) => setPasswordAgain(event.target.value)}
                     placeholder={t('login.register.passwordAgain')}
-                    className='bg-dark text-white'
+                    className='bg-dark text-light'
                     autoComplete='new-password'
                     required
                   />

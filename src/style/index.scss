@@ -1,7 +1,16 @@
+@import './light';
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import '../../node_modules/react-bootstrap-typeahead/css/Typeahead';
 @import "fonts/source-code-pro/source-code-pro";
 @import "fonts/twemoji/twemoji";
+
+.text-black, body.dark .text-black {
+  color: $black;
+}
+
+body {
+  background-color: darken($dark, 8%);
+}
 
 html {
   height: 100%;
@@ -9,7 +18,6 @@ html {
 
 body {
   min-height: 100%;
-  background-color: darken($dark, 8%);
   font-family: "Source Sans Pro", Helvetica, Arial, twemoji, sans-serif;
 }
 

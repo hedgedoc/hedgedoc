@@ -1,0 +1,43 @@
+.dropdown-menu {
+  color: $dropdown-color;
+  background-color: $dropdown-bg;
+  border-color: $dropdown-border-color;
+
+  @include box-shadow($dropdown-box-shadow);
+}
+
+// Dividers (basically an `<hr>`) within the dropdown
+.dropdown-divider {
+  @include nav-divider($dropdown-divider-bg, $dropdown-divider-margin-y, true);
+}
+
+.dropdown-item {
+  color: $dropdown-link-color;
+
+  @include hover-focus() {
+    color: $dropdown-link-hover-color;
+    @include gradient-bg($dropdown-link-hover-bg);
+  }
+
+  &.active,
+  &:active {
+    color: $dropdown-link-active-color;
+    @include gradient-bg($dropdown-link-active-bg);
+  }
+
+  &.disabled,
+  &:disabled {
+    color: $dropdown-link-disabled-color;
+    background-color: transparent;
+  }
+}
+
+// Dropdown section headers
+.dropdown-header {
+  color: $dropdown-header-color;
+}
+
+// Dropdown text
+.dropdown-item-text {
+  color: $dropdown-link-color;
+}

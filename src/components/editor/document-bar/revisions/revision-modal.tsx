@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Alert, Col, ListGroup, Modal, Row, Button } from 'react-bootstrap'
 import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 import { Trans, useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { getAllRevisions, getRevision, Revision, RevisionListEntry } from '../../../../api/revisions'
 import { UserResponse } from '../../../../api/users/types'
+import { ApplicationState } from '../../../../redux'
 import { CommonModal, CommonModalProps } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { RevisionButtonProps } from './revision-button'
@@ -20,6 +22,7 @@ export const RevisionModal: React.FC<CommonModalProps & RevisionButtonProps> = (
   const [error, setError] = useState(false)
   const revisionAuthorListMap = useRef(new Map<number, UserResponse[]>())
   const revisionCacheMap = useRef(new Map<number, Revision>())
+  const darkModeEnabled = useSelector((state: ApplicationState) => state.darkMode.darkMode)
   const { id } = useParams<{ id: string }>()
 
   useEffect(() => {
@@ -81,7 +84,7 @@ export const RevisionModal: React.FC<CommonModalProps & RevisionButtonProps> = (
                 newValue={noteContent}
                 splitView={false}
                 compareMethod={DiffMethod.WORDS}
-                useDarkTheme={false}
+                useDarkTheme={darkModeEnabled}
               />
             </ShowIf>
           </Col>

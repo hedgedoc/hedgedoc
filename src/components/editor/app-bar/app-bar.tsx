@@ -9,7 +9,7 @@ import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SignInButton } from '../../landing-layout/navigation/sign-in-button'
 import { UserDropdown } from '../../landing-layout/navigation/user-dropdown'
-import { SyncScrollButton } from './sync-scroll-button/sync-scroll-button'
+import { SyncScrollButtons } from './sync-scroll-buttons/sync-scroll-buttons'
 import { EditorPathParams } from '../editor'
 import { DarkModeButton } from './dark-mode-button'
 import { EditorViewMode } from './editor-view-mode'
@@ -26,7 +26,7 @@ export const AppBar: React.FC = () => {
       <Nav className="mr-auto d-flex align-items-center">
         <NavbarBranding/>
         <EditorViewMode/>
-        <SyncScrollButton/>
+        <SyncScrollButtons/>
         <DarkModeButton/>
         <Link to={`/p/${id}`} target='_blank'>
           <Button title={t('editor.documentBar.slideMode')} className="ml-2 text-secondary" size="sm" variant="outline-light">

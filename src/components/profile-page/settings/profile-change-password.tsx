@@ -39,7 +39,7 @@ export const ProfileChangePassword: React.FC = () => {
             <Form.Control
               type="password"
               size="sm"
-              className="bg-dark text-white"
+              className="bg-dark text-light"
               required
               onChange={(event) => setOldPassword(event.target.value)}
             />
@@ -49,7 +49,7 @@ export const ProfileChangePassword: React.FC = () => {
             <Form.Control
               type="password"
               size="sm"
-              className="bg-dark text-white"
+              className="bg-dark text-light"
               required
               onChange={onChangeNewPassword}
               isValid={newPasswordValid}
@@ -61,7 +61,7 @@ export const ProfileChangePassword: React.FC = () => {
             <Form.Control
               type="password"
               size="sm"
-              className="bg-dark text-white"
+              className="bg-dark text-light"
               required
               onChange={onChangeNewPasswordAgain}
               isValid={newPasswordAgainValid}

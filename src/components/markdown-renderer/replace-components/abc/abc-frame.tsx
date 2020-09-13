@@ -14,6 +14,6 @@ export const AbcFrame: React.FC<AbcFrameProps> = ({ code }) => {
   }, [code])
 
   return (
-    <div ref={container}/>
+    <div ref={container} className={'bg-white text-center'}/>
   )
 }

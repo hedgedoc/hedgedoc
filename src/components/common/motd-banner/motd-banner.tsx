@@ -19,7 +19,7 @@ export const MotdBanner: React.FC = () => {
   return (
     <ShowIf condition={bannerState.show}>
       <Alert variant='primary' dir='auto' className='mb-0 text-center d-flex flex-row justify-content-center'>
-        <Link to='/s/banner' className='flex-grow-1 align-self-center'>
+        <Link to='/s/banner' className='flex-grow-1 align-self-center text-black'>
           {bannerState.text}
         </Link>
         <Button

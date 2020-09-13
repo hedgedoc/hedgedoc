@@ -3,19 +3,22 @@
   max-width: 200px;
   overflow-y: auto;
   overflow-x: hidden;
+
   &.sticky {
     position: fixed;
   }
 
-  >ul>li {
-    >a {
+  > ul > li {
+    > a {
       padding: 4px 20px;
     }
-    >ul>li {
+
+    > ul > li {
       > a {
         padding: 1px 0 1px 30px;
       }
-      >ul>li {
+
+      > ul > li {
         > a {
           padding: 1px 0 1px 38px;
         }
@@ -49,14 +52,15 @@
     }
   }
 }
-.markdown-toc-sidebar-button {
-  position: fixed;
-  right: 40px;
-  bottom: 30px;
 
-  &>.dropup {
-    position: sticky;
-    bottom: 20px;
-    right: 0;
-  }
+.markdown-toc-sidebar-button {
+    position: fixed;
+    right: 40px;
+    bottom: 30px;
+
+    & > .dropup {
+      position: sticky;
+      bottom: 20px;
+      right: 0;
+    }
 }

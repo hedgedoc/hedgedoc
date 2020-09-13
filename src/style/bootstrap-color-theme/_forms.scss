@@ -1,0 +1,59 @@
+// stylelint-disable selector-no-qualifying-type
+
+//
+// Textual form controls
+//
+
+.form-control {
+  color: $input-color;
+  background-color: $input-bg;
+  border-color: $input-border-color;
+
+  @include box-shadow($input-box-shadow);
+
+  &:-moz-focusring {
+    text-shadow: 0 0 0 $input-color;
+  }
+
+  // Customize the `:focus` state to imitate native WebKit styles.
+  @include form-control-focus($ignore-warning: true);
+
+  // Placeholder
+  &::placeholder {
+    color: $input-placeholder-color;
+  }
+
+  &:disabled,
+  &[readonly] {
+    background-color: $input-disabled-bg;
+  }
+}
+
+select.form-control {
+  &:focus::-ms-value {
+    // Suppress the nested default white text on blue background highlight given to
+    // the selected option text when the (still closed) <select> receives focus
+    // in IE and (under certain conditions) Edge, as it looks bad and cannot be made to
+    // match the appearance of the native widget.
+    // See https://github.com/twbs/bootstrap/issues/19398.
+    color: $input-color;
+    background-color: $input-bg;
+  }
+}
+
+.form-control-plaintext {
+  color: $input-plaintext-color;
+  background-color: transparent;
+}
+
+
+.form-check-input {
+  &[disabled] ~ .form-check-label,
+  &:disabled ~ .form-check-label {
+    color: $text-muted;
+  }
+}
+
+@each $state, $data in $form-validation-states {
+  @include form-validation-state($state, map-get($data, color), map-get($data, icon));
+}

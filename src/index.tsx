@@ -16,6 +16,7 @@ import { RegisterPage } from './components/register-page/register-page'
 import { store } from './redux'
 import * as serviceWorker from './service-worker'
 import './style/index.scss'
+import './style/dark.scss'
 
 ReactDOM.render(
   <Provider store={store}>

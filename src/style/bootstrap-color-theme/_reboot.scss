@@ -1,0 +1,22 @@
+& {
+  color: $body-color;
+  background-color: $body-bg; // 2
+}
+
+a {
+  color: $link-color;
+  background-color: transparent; // Remove the gray background on active links in IE 10.
+
+  @include hover() {
+    color: $link-hover-color;
+  }
+}
+
+caption {
+  color: $table-caption-color;
+}
+
+button:focus {
+  outline: 1px dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+}
