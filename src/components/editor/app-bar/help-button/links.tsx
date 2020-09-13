@@ -1,11 +1,16 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { ApplicationState } from '../../../../redux'
 import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
 import { TranslatedInternalLink } from '../../../common/links/translated-internal-link'
+import links from '../../../../links.json'
 
 export const Links: React.FC = () => {
   useTranslation()
+
+  const backendIssueTracker = useSelector((state: ApplicationState) => state.config.version.issueTrackerUrl)
   return (
     <Row className={'justify-content-center pt-4'}>
       <Col lg={4}>
@@ -15,7 +20,7 @@ export const Links: React.FC = () => {
             <li>
               <TranslatedExternalLink
                 i18nKey='editor.help.contacts.community'
-                href='https://community.codimd.org/'
+                href={links.community}
                 icon='users'
                 className='text-primary'
               />
@@ -24,7 +29,7 @@ export const Links: React.FC = () => {
               <TranslatedExternalLink
                 i18nKey='editor.help.contacts.meetUsOn'
                 i18nOption={{ service: 'Matrix' }}
-                href='https://riot.im/app/#/room/#hedgedoc:matrix.org'
+                href={links.chatElement}
                 icon='hashtag'
                 className='text-primary'
               />
@@ -32,7 +37,7 @@ export const Links: React.FC = () => {
             <li>
               <TranslatedExternalLink
                 i18nKey='editor.help.contacts.reportIssue'
-                href='https://github.com/codimd/server/issues'
+                href={backendIssueTracker}
                 icon='tag'
                 className='text-primary'
               />
@@ -40,7 +45,7 @@ export const Links: React.FC = () => {
             <li>
               <TranslatedExternalLink
                 i18nKey='editor.help.contacts.helpTranslating'
-                href='https://translate.codimd.org/'
+                href={links.translate}
                 icon='language'
                 className='text-primary'
               />
@@ -63,15 +68,15 @@ export const Links: React.FC = () => {
             <li>
               <TranslatedInternalLink
                 i18nKey='editor.help.documents.yamlMetadata'
-                href='/n/yaml-data'
+                href='/n/yaml-metadata'
                 icon='dot-circle-o'
                 className='text-primary'
               />
             </li>
             <li>
-              <TranslatedExternalLink
+              <TranslatedInternalLink
                 i18nKey='editor.help.documents.slideExample'
-                href='https://github.com/codimd/server/issues'
+                href='/n/slide-example'
                 icon='dot-circle-o'
                 className='text-primary'
               />

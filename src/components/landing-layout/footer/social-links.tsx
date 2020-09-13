@@ -1,17 +1,18 @@
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ExternalLink } from '../../common/links/external-link'
+import links from '../../../links.json'
 
 const SocialLink: React.FC = () => {
   useTranslation()
   return (
     <p>
       <Trans i18nKey="landing.footer.followUs" components={[
-        <ExternalLink href="https://github.com/codimd/server" icon='github' text="GitHub"/>,
-        <ExternalLink href="https://community.codimd.org" icon='users' text="Discourse"/>,
-        <ExternalLink href="https://riot.im/app/#/room/#hedgedoc:matrix.org" icon="comment" text="Riot"/>,
-        <ExternalLink href="https://social.codimd.org/mastodon" icon='mastodon' text="Mastodon"/>,
-        <ExternalLink href="https://translate.codimd.org" icon="globe" text="POEditor"/>
+        <ExternalLink href={links.githubOrg} icon='github' text="GitHub"/>,
+        <ExternalLink href={links.community} icon='users' text="Discourse"/>,
+        <ExternalLink href={links.chatElement} icon="comment" text="Element"/>,
+        <ExternalLink href={links.mastodon} icon='mastodon' text="Mastodon"/>,
+        <ExternalLink href={links.translate} icon="globe" text="POEditor"/>
       ]}/>
     </p>
   )

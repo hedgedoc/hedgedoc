@@ -6,6 +6,7 @@ import { ExternalLink } from '../../common/links/external-link'
 import { TranslatedExternalLink } from '../../common/links/translated-external-link'
 import { TranslatedInternalLink } from '../../common/links/translated-internal-link'
 import { VersionInfo } from './version-info'
+import links from '../../../links.json'
 
 export const PoweredByLinks: React.FC = () => {
   useTranslation()
@@ -15,7 +16,7 @@ export const PoweredByLinks: React.FC = () => {
   return (
     <p>
       <Trans i18nKey="landing.footer.poweredBy">
-        <ExternalLink href="https://codimd.org" text="HedgeDoc"/>
+        <ExternalLink href={links.webpage} text="HedgeDoc"/>
       </Trans>
       &nbsp;|&nbsp;
       <TranslatedInternalLink href='/n/release-notes' i18nKey='landing.footer.releases'/>
