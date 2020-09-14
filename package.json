@@ -10,6 +10,7 @@
         "@testing-library/user-event": "12.1.4",
         "@types/codemirror": "0.0.98",
         "@types/diff": "4.0.2",
+        "@types/domhandler": "^2.4.1",
         "@types/emoji-mart": "3.0.2",
         "@types/highlight.js": "9.12.4",
         "@types/jest": "26.0.13",
