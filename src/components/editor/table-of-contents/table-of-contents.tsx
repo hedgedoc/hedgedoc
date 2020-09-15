@@ -1,4 +1,5 @@
 import React, { Fragment, ReactElement, useMemo } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 import { TocAst } from '../../../external-types/markdown-it-toc-done-right/interface'
 import { ShowIf } from '../../common/show-if/show-if'
 import './table-of-contents.scss'
@@ -9,7 +10,7 @@ export interface TableOfContentsProps {
   className?: string
 }
 
-export const slugify = (content:string): string => {
+export const slugify = (content: string): string => {
   return encodeURIComponent(String(content).trim().toLowerCase().replace(/\s+/g, '-'))
 }
 
@@ -52,11 +53,15 @@ const convertLevel = (toc: TocAst, levelsToShowUnderThis: number, headerCounts: 
 }
 
 export const TableOfContents: React.FC<TableOfContentsProps> = ({ ast, maxDepth = 3, className }) => {
+  useTranslation()
   const tocTree = useMemo(() => convertLevel(ast, maxDepth, new Map<string, number>(), false), [ast, maxDepth])
 
   return (
     <div className={`markdown-toc ${className ?? ''}`}>
-      {tocTree}
+      <ShowIf condition={ast.c.length === 0}>
+        <Trans i18nKey={'editor.infoToc'}/>
+      </ShowIf>
+      { tocTree }
     </div>
   )
 }
