@@ -9,6 +9,54 @@ opengraph:
 # Embedding demo
 [TOC]
 
+## GraphViz
+
+\`\`\`graphviz
+graph {
+  a -- b
+  a -- b
+  b -- a [color=blue]
+}
+\`\`\`
+
+\`\`\`graphviz
+digraph structs {
+  node [shape=record];
+  struct1 [label="<f0> left|<f1> mid&#92; dle|<f2> right"];
+  struct2 [label="<f0> one|<f1> two"];
+  struct3 [label="hello&#92;nworld |{ b |{c|<here> d|e}| f}| g | h"];
+  struct1:f1 -> struct2:f0;
+  struct1:f2 -> struct3:here;
+}
+\`\`\`
+
+\`\`\`graphviz
+digraph G {
+  main -> parse -> execute;
+  main -> init;
+  main -> cleanup;
+  execute -> make_string;
+  execute -> printf
+  init -> make_string;
+  main -> printf;
+  execute -> compare;
+}
+\`\`\`
+
+\`\`\`graphviz
+digraph D {
+    node [fontname="Arial"];
+    node_A [shape=record    label="shape=record|{above|middle|below}|right"];
+    node_B [shape=plaintext label="shape=plaintext|{curly|braces and|bars without}|effect"];
+}
+\`\`\`
+
+\`\`\`graphviz
+digraph D {
+  A -> {B, C, D} -> {F}
+}
+\`\`\`
+
 ## Sequence Diagram (deprecated)
 
 \`\`\`sequence
