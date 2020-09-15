@@ -12,14 +12,14 @@ export interface TextDifferenceResult {
   lastUsedLineId: number
 }
 
-export const calculateKeyFromLineMarker = (node: DomElement, lineKeys?: LineKeys[]): number|undefined => {
+export const calculateKeyFromLineMarker = (node: DomElement, lineKeys?: LineKeys[]): string|undefined => {
   if (!node.attribs || lineKeys === undefined) {
     return
   }
 
   const key = node.attribs['data-key']
   if (key) {
-    return Number(key)
+    return key
   }
 
   const lineMarker = node.prev
@@ -27,40 +27,42 @@ export const calculateKeyFromLineMarker = (node: DomElement, lineKeys?: LineKeys
     return
   }
 
-  const lineInMarkdown = lineMarker.attribs['data-start-line']
-  if (lineInMarkdown === undefined) {
+  const startLineInMarkdown = lineMarker.attribs['data-start-line']
+  const endLineInMarkdown = lineMarker.attribs['data-end-line']
+  if (startLineInMarkdown === undefined || endLineInMarkdown === undefined) {
     return
   }
 
-  const line = Number(lineInMarkdown)
-  if (lineKeys[line] === undefined) {
+  const startLine = Number(startLineInMarkdown)
+  const endLine = Number(endLineInMarkdown)
+  if (lineKeys[startLine] === undefined || lineKeys[endLine] === undefined) {
     return
   }
 
-  return lineKeys[line].id
+  return `${lineKeys[startLine].id}_${lineKeys[endLine].id}`
 }
 
-export const findNodeReplacement = (node: DomElement, index: number, allReplacers: ComponentReplacer[], subNodeTransform: SubNodeTransform): ReactElement|null|undefined => {
+export const findNodeReplacement = (node: DomElement, key: string, allReplacers: ComponentReplacer[], subNodeTransform: SubNodeTransform): ReactElement|null|undefined => {
   return allReplacers
     .map((componentReplacer) => componentReplacer.getReplacement(node, subNodeTransform))
     .find((replacement) => replacement !== undefined)
 }
 
-export const renderNativeNode = (node: DomElement, key: number, transform: Transform): ReactElement => {
+export const renderNativeNode = (node: DomElement, key: string, transform: Transform): ReactElement => {
   if (node.attribs === undefined) {
     node.attribs = {}
   }
 
   delete node.attribs['data-key']
-  return convertNodeToElement(node, key, transform)
+  return convertNodeToElement(node, key as unknown as number, transform)
 }
 
 export const buildTransformer = (lineKeys: (LineKeys[] | undefined), allReplacers: ComponentReplacer[]):Transform => {
   const transform: Transform = (node, index) => {
-    const nativeRenderer = (subNode: DomElement, subKey: number) => renderNativeNode(subNode, subKey, transform)
+    const nativeRenderer = (subNode: DomElement, subKey: string) => renderNativeNode(subNode, subKey, transform)
     const subNodeTransform:SubNodeTransform = (subNode, subIndex) => transform(subNode, subIndex, transform)
 
-    const key = calculateKeyFromLineMarker(node, lineKeys) ?? -index
+    const key = calculateKeyFromLineMarker(node, lineKeys) ?? (-index).toString()
     const tryReplacement = findNodeReplacement(node, key, allReplacers, subNodeTransform)
     if (tryReplacement === null) {
       return null
