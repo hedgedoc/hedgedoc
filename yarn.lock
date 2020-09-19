@@ -13691,7 +13691,7 @@ vega-dataflow@^5.7.2, vega-dataflow@~5.7.2:
     vega-loader "^4.3.2"
     vega-util "^1.15.1"
 
-vega-embed@^6.12.2:
+vega-embed@6.12.2:
   version "6.12.2"
   resolved "https://registry.yarnpkg.com/vega-embed/-/vega-embed-6.12.2.tgz#0b23b62a324c54340f25afe12ae9b6e62e27ea31"
   integrity sha512-oYRnadLq9PgKL6I5uVTa4hiEXujv8EYqhy2eb9Afb5GrdHNOHsWOVIyiin0gSYa16hLM/Av0uRcsJdDk8vi9vA==
@@ -13786,7 +13786,7 @@ vega-hierarchy@~4.0.8:
     vega-dataflow "^5.7.2"
     vega-util "^1.15.1"
 
-vega-lite@^4.15.0:
+vega-lite@4.15.0:
   version "4.15.0"
   resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-4.15.0.tgz#8dc7f4c3eb3f30ff3cd0063ae7d193f58cfabbed"
   integrity sha512-381Kszxei5Rhg8WkcUE7yPHafLndBbdR8nBSJi4zFsn8iAfCVjn7h7QL9DphNix5V7Ko1nhOadxqNaxGsiD71w==
@@ -13982,7 +13982,7 @@ vega-wordcloud@~4.1.2:
     vega-statistics "^1.7.8"
     vega-util "^1.15.1"
 
-vega@^5.15.0:
+vega@5.15.0:
   version "5.15.0"
   resolved "https://registry.yarnpkg.com/vega/-/vega-5.15.0.tgz#9a813c5699f0a4b2a2be385d44c356ab87b19394"
   integrity sha512-uygUtkZJm3/HNvNGLQSugZld4qvaiOMtH34tOGuS/MSGj7MaP0CLoFrthlas30lyMPQ42UfzX8tk5X+I91dFKQ==
