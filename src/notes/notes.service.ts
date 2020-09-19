@@ -82,7 +82,7 @@ export class NotesService {
     this.logger.warn('Using hardcoded data!');
     return {
       content: 'noteContent',
-      metdata: {
+      metadata: {
         alias: null,
         createTime: new Date(),
         description: 'Very descriptive text.',

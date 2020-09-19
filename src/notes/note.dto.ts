@@ -7,7 +7,7 @@ export class NoteDto {
   content: string;
 
   @ValidateNested()
-  metdata: NoteMetadataDto;
+  metadata: NoteMetadataDto;
 
   @IsArray()
   @ValidateNested({ each: true })
