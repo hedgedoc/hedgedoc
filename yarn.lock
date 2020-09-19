@@ -1161,7 +1161,7 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@craco/craco@^5.6.4":
+"@craco/craco@5.6.4":
   version "5.6.4"
   resolved "https://registry.yarnpkg.com/@craco/craco/-/craco-5.6.4.tgz#de7a707c727864f39e6afc192fb6732c3ca45f90"
   integrity sha512-/Qi6yPMOBC7SEZJEDI5vYaPiGFs7HzO4AAZkGB0W3MX2OCw4u4FZC+ZO6TBptGzM3QLrF7WFt5AyQnXhNBcn3A==
@@ -1787,7 +1787,7 @@
   resolved "https://registry.yarnpkg.com/@types/d3-color/-/d3-color-1.2.2.tgz#80cf7cfff7401587b8f89307ba36fe4a576bc7cf"
   integrity sha512-6pBxzJ8ZP3dYEQ4YjQ+NVbQaOflfgXq/JbDiS99oLobM2o72uAST4q6yPxHv6FOTCRC/n35ktuo8pvw/S4M7sw==
 
-"@types/d3-graphviz@^2.6.3":
+"@types/d3-graphviz@2.6.3":
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/@types/d3-graphviz/-/d3-graphviz-2.6.3.tgz#68a57f0aab6d8e549dab04e5c82124052f68bd1e"
   integrity sha512-K8q9ZBmE2Xbqh+eRbNhjN7NNUWtnoIHzFnPZ+ulHonvgnv5qL2Hzppx/fg2ZFa9V2OUUbzoOS0H28FtVCVsQ5w==
@@ -1828,7 +1828,7 @@
   resolved "https://registry.yarnpkg.com/@types/diff/-/diff-4.0.2.tgz#2e9bb89f9acc3ab0108f0f3dc4dbdcf2fff8a99c"
   integrity sha512-mIenTfsIe586/yzsyfql69KRnA75S8SVXQbTLpDejRrjH0QSJcpu3AUOi/Vjnt9IOsXKxPhJfGpQUNMueIU1fQ==
 
-"@types/domhandler@^2.4.1":
+"@types/domhandler@2.4.1":
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@types/domhandler/-/domhandler-2.4.1.tgz#7b3b347f7762180fbcb1ece1ce3dd0ebbb8c64cf"
   integrity sha512-cfBw6q6tT5sa1gSPFSRKzF/xxYrrmeiut7E0TxNBObiLSBTuFEHibcfEe3waQPEDbqBsq+ql/TOniw65EyDFMA==
@@ -4033,7 +4033,7 @@ copy-to-clipboard@^3.2.0:
   dependencies:
     toggle-selection "^1.0.6"
 
-copy-webpack-plugin@^6.1.0:
+copy-webpack-plugin@6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/copy-webpack-plugin/-/copy-webpack-plugin-6.1.0.tgz#5bde7f826d87e716d8d5e761ddd34bb675448458"
   integrity sha512-aWjIuLt1OVQxaDVffnt3bnGmLA8zGgAJaFwPA+a+QYVPh1vhIKjVfh3SbOFLV0kRPvGBITbw17n5CsmiBS4LQQ==
@@ -4623,7 +4623,7 @@ d3-geo@1:
   dependencies:
     d3-array "1"
 
-d3-graphviz@^3.1.0:
+d3-graphviz@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/d3-graphviz/-/d3-graphviz-3.1.0.tgz#aab17e453c084330503fd679e197520785e2f800"
   integrity sha512-OcVBBvpj2QR1waw+rhQitZshUrS4I/zScsm+LWXowg96hGccsjWF6YGaU3p9pnZQu45yxpji2Zt9y2Zne4wE9Q==
