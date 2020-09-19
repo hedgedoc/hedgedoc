@@ -8792,18 +8792,7 @@ markdown-it-toc-done-right@4.1.0:
   resolved "https://registry.yarnpkg.com/markdown-it-toc-done-right/-/markdown-it-toc-done-right-4.1.0.tgz#0f73ed531dda427c43c27716a2fc2208daa90605"
   integrity sha512-UhD2Oj6cZV3ycYPoelt4hTkwKIK3zbPP1wjjdpCq7UGtWQOFalDFDv1s2zBYV6aR2gMs/X8kpJcOYsQmUbiXDw==
 
-markdown-it@11.0.0:
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-11.0.0.tgz#dbfc30363e43d756ebc52c38586b91b90046b876"
-  integrity sha512-+CvOnmbSubmQFSA9dKz1BRiaSMV7rhexl3sngKqFyXSagoA3fBdJQ8oZWtRy2knXdpDXaBw44euz37DeJQ9asg==
-  dependencies:
-    argparse "^1.0.7"
-    entities "~2.0.0"
-    linkify-it "^3.0.1"
-    mdurl "^1.0.1"
-    uc.micro "^1.0.5"
-
-markdown-it@^11.0.0:
+markdown-it@11.0.1, markdown-it@^11.0.0:
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-11.0.1.tgz#b54f15ec2a2193efa66dda1eb4173baea08993d6"
   integrity sha512-aU1TzmBKcWNNYvH9pjq6u92BML+Hz3h5S/QpfTFwiQF852pLT+9qHsrhM9JYipkOXZxGn+sGH8oyJE9FD9WezQ==

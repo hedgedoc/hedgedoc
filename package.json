@@ -57,7 +57,7 @@
         "i18next-http-backend": "1.0.20",
         "js-yaml": "3.14.0",
         "katex": "0.12.0",
-        "markdown-it": "11.0.0",
+        "markdown-it": "11.0.1",
         "markdown-it-abbr": "1.0.4",
         "markdown-it-anchor": "5.3.0",
         "markdown-it-container": "3.0.0",
