@@ -1,6 +1,8 @@
 import hljs from 'highlight.js'
 import React, { Fragment, useMemo } from 'react'
 import ReactHtmlParser from 'react-html-parser'
+import { CopyToClipboardButton } from '../../../../common/copyable/copy-to-clipboard-button/copy-to-clipboard-button'
+import '../../../utils/button-inside.scss'
 import './highlighted-code.scss'
 
 export interface HighlightedCodeProps {
@@ -42,18 +44,22 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
   }, [code, language])
 
   return (
-    <code className={`hljs ${startLineNumber !== undefined ? 'showGutter' : ''} ${wrapLines ? 'wrapLines' : ''}`}>
-      {
-        highlightedCode
-          .map((line, index) => {
-            return <Fragment key={index}>
-              <span className={'linenumber'} data-line-number={(startLineNumber || 1) + index}/>
-              <div className={'codeline'}>
-                {line}
-              </div>
-            </Fragment>
-          })
-      }
-
-    </code>)
+    <Fragment>
+      <code className={`hljs ${startLineNumber !== undefined ? 'showGutter' : ''} ${wrapLines ? 'wrapLines' : ''}`}>
+        {
+          highlightedCode
+            .map((line, index) => (
+              <Fragment key={index}>
+                <span className={'linenumber'} data-line-number={(startLineNumber || 1) + index}/>
+                <div className={'codeline'}>
+                  {line}
+                </div>
+              </Fragment>
+            ))
+        }
+      </code>
+      <div className={'text-right button-inside'}>
+        <CopyToClipboardButton content={code}/>
+      </div>
+    </Fragment>)
 }

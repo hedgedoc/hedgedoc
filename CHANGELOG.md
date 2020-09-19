@@ -41,6 +41,7 @@
 - Code blocks with 'csv' as language render as tables.
 - Code blocks with 'markmap' are rendered as a mind map (see [the projects website](https://markmap.js.org/repl)).
 - All images can be clicked to show them in full screen.
+- Code blocks have a 'Copy code to clipboard' button.
 - Code blocks with 'vega-lite' as language are rendered as [vega-lite diagrams](https://vega.github.io/vega-lite/examples/).
 
 ### Changed

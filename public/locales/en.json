@@ -4,6 +4,9 @@
         "title": "Collaborative markdown notes"
     },
     "renderer": {
+        "highlightCode": {
+            "copyCode": "Copy code to clipboard"
+        },
         "flowchart": {
             "invalidSyntax": "Invalid flowchart.js syntax!"
         },
@@ -126,7 +129,6 @@
             "issueTracker": "Found a bug? Fill an issue!",
             "sourceCode": "Read the source code",
             "versionInfo": "Version info",
-            "successfullyCopied": "Copied!",
             "serverVersion": "Server version",
             "clientVersion": "Client version",
             "title": "You are using"
@@ -379,7 +381,9 @@
         "or": "or",
         "and": "and",
         "avatarOf": "avatar of '{{name}}'",
-        "why": "Why?"
+        "why": "Why?",
+        "successfullyCopied": "Copied!",
+        "copyError": "Error while copying!"
     },
     "login": {
         "chooseMethod": "Choose method",

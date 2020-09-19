@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
-import { CopyableField } from '../../../common/copyable-field/copyable-field'
-import { CommonModal } from '../../../common/modals/common-modal'
+import { CopyableField } from '../../../common/copyable/copyable-field/copyable-field'
 import { TranslatedIconButton } from '../../../common/icon-button/translated-icon-button'
+import { CommonModal } from '../../../common/modals/common-modal'
 
 export const ShareLinkButton: React.FC = () => {
   const [showReadOnly, setShowReadOnly] = useState(false)

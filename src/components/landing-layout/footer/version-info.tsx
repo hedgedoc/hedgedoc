@@ -1,3 +1,4 @@
+import equal from 'fast-deep-equal'
 import React, { Fragment, useState } from 'react'
 import { Button, Col, Modal, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
@@ -5,10 +6,9 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { ApplicationState } from '../../../redux'
 import frontendVersion from '../../../version.json'
+import { CopyableField } from '../../common/copyable/copyable-field/copyable-field'
 import { TranslatedExternalLink } from '../../common/links/translated-external-link'
 import { ShowIf } from '../../common/show-if/show-if'
-import { CopyableField } from '../../common/copyable-field/copyable-field'
-import equal from 'fast-deep-equal'
 
 export const VersionInfo: React.FC = () => {
   const [show, setShow] = useState(false)
