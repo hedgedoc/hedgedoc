@@ -1,8 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Revision } from '../revisions/revision.entity';
 import { User } from '../users/user.entity';
+import { UsersService } from '../users/users.service';
 import { NoteMetadataDto } from './note-metadata.dto';
 import {
   NotePermissionsDto,
@@ -10,6 +11,7 @@ import {
 } from './note-permissions.dto';
 import { NoteDto } from './note.dto';
 import { Note } from './note.entity';
+import { NoteUtils } from './note.utils';
 
 @Injectable()
 export class NotesService {
@@ -17,6 +19,7 @@ export class NotesService {
 
   constructor(
     @InjectRepository(Note) private noteRepository: Repository<Note>,
+    @Inject(UsersService) private usersService: UsersService,
   ) {}
 
   getUserNotes(username: string): NoteMetadataDto[] {
@@ -75,32 +78,41 @@ export class NotesService {
   }
 
   getCurrentContent(note: Note) {
-    return note.revisions[note.revisions.length - 1].content;
+    return this.getLastRevision(note).content;
   }
 
-  getMetadata(note: Note) {
+  getLastRevision(note: Note) {
+    return note.revisions[note.revisions.length - 1];
+  }
+
+  getMetadata(note: Note): NoteMetadataDto {
     return {
-      alias: note.alias,
-      createTime: new Date(),
-      description: 'Very descriptive text.',
-      editedBy: [],
+      // TODO: Convert DB UUID to base64
       id: note.id,
+      alias: note.alias,
+      title: NoteUtils.parseTitle(note),
+      // TODO: Get actual createTime
+      createTime: new Date(),
+      description: NoteUtils.parseDescription(note),
+      editedBy: note.authorColors.map(authorColor => authorColor.user.userName),
+      // TODO: Extract into method
       permission: {
-        owner: {
-          displayName: 'foo',
-          userName: 'fooUser',
-          email: 'foo@example.com',
-          photo: '',
-        },
-        sharedToUsers: [],
-        sharedToGroups: [],
+        owner: this.usersService.toUserDto(note.owner),
+        sharedToUsers: note.userPermissions.map(noteUserPermission => ({
+          user: this.usersService.toUserDto(noteUserPermission.user),
+          canEdit: noteUserPermission.canEdit,
+        })),
+        sharedToGroups: note.groupPermissions.map(noteGroupPermission => ({
+          group: noteGroupPermission.group,
+          canEdit: noteGroupPermission.canEdit,
+        })),
       },
-      tags: [],
-      title: 'Title!',
-      updateTime: new Date(),
+      tags: NoteUtils.parseTags(note),
+      updateTime: this.getLastRevision(note).createdAt,
+      // TODO: Get actual updateUser
       updateUser: {
-        displayName: 'foo',
-        userName: 'fooUser',
+        displayName: 'Hardcoded User',
+        userName: 'hardcoded',
         email: 'foo@example.com',
         photo: '',
       },
