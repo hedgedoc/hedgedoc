@@ -36,7 +36,7 @@
         "abcjs": "5.12.0",
         "bootstrap": "4.5.2",
         "codemirror": "5.57.0",
-        "copy-webpack-plugin": "6.1.0",
+        "copy-webpack-plugin": "6.1.1",
         "d3-graphviz": "3.1.0",
         "diff": "4.0.2",
         "emoji-mart": "3.0.0",
