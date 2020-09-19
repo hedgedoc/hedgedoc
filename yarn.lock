@@ -6986,10 +6986,10 @@ i18next-browser-languagedetector@6.0.1:
   dependencies:
     "@babel/runtime" "^7.5.5"
 
-i18next-http-backend@1.0.19:
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/i18next-http-backend/-/i18next-http-backend-1.0.19.tgz#76b7739297d3a38736a84b91a4a80a893ba7304b"
-  integrity sha512-ouxq5iospZw2j4gnngNzCqDUPdMhkNeV5ROm1rKWaWJWR/dBt+LMYnta/AAOX1LmopaCxgiYQXUcTSpimyYYWw==
+i18next-http-backend@1.0.20:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/i18next-http-backend/-/i18next-http-backend-1.0.20.tgz#d3360b00ad298aab34700affebecba39ff02be1c"
+  integrity sha512-2GXbO/J+Mip8k4UymghGv1Xoq+FDNg/15ZCjTWHn7xazKRjV0jFkR0BMCoVQTWkweULmSJb+Rr+sF1y3jGgWxw==
   dependencies:
     node-fetch "2.6.1"
 
