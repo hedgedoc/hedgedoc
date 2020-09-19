@@ -16,51 +16,43 @@ import { AuthorColor } from './author-color.entity';
 export class Note {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
   @Column({
     nullable: false,
     unique: true,
   })
   shortid: string;
-
   @Column({
     unique: true,
     nullable: true,
   })
   alias: string;
-
   @OneToMany(
     _ => NoteGroupPermission,
     groupPermission => groupPermission.note,
   )
   groupPermissions: NoteGroupPermission[];
-
   @OneToMany(
     _ => NoteUserPermission,
     userPermission => userPermission.note,
   )
   userPermissions: NoteUserPermission[];
-
   @Column({
     nullable: false,
     default: 0,
   })
   viewcount: number;
-
   @ManyToOne(
     _ => User,
     user => user.ownedNotes,
     { onDelete: 'CASCADE' },
   )
   owner: User;
-
   @OneToMany(
     _ => Revision,
     revision => revision.note,
     { cascade: true },
   )
   revisions: Revision[];
-
   @OneToMany(
     _ => AuthorColor,
     authorColor => authorColor.note,
