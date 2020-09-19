@@ -71,6 +71,9 @@ export class Note {
     newNote.alias = alias;
     newNote.viewcount = 0;
     newNote.owner = owner;
+    newNote.authorColors = [];
+    newNote.userPermissions = [];
+    newNote.groupPermissions = [];
     return newNote;
   }
 }
