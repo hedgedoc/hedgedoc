@@ -47,6 +47,7 @@ import { HighlightedCodeReplacer } from './replace-components/highlighted-fence/
 import { ImageReplacer } from './replace-components/image/image-replacer'
 import { KatexReplacer } from './replace-components/katex/katex-replacer'
 import { LinemarkerReplacer } from './replace-components/linemarker/linemarker-replacer'
+import { MarkmapReplacer } from './replace-components/markmap/markmap-replacer'
 import { MermaidReplacer } from './replace-components/mermaid/mermaid-replacer'
 import { PdfReplacer } from './replace-components/pdf/pdf-replacer'
 import { PossibleWiderReplacer } from './replace-components/possible-wider/possible-wider-replacer'
@@ -95,6 +96,7 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
       new FlowchartReplacer(),
       new MermaidReplacer(),
       new GraphvizReplacer(),
+      new MarkmapReplacer(),
       new VegaReplacer(),
       new HighlightedCodeReplacer(),
       new QuoteOptionsReplacer(),
