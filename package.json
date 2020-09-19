@@ -15,7 +15,7 @@
         "@types/domhandler": "2.4.1",
         "@types/emoji-mart": "3.0.2",
         "@types/highlight.js": "9.12.4",
-        "@types/jest": "26.0.13",
+        "@types/jest": "26.0.14",
         "@types/js-yaml": "3.12.5",
         "@types/markdown-it": "10.0.2",
         "@types/markdown-it-anchor": "4.0.4",
