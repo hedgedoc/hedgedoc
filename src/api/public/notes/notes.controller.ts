@@ -32,7 +32,6 @@ export class NotesController {
    * Implementation inspired by https://stackoverflow.com/questions/52283713/how-do-i-pass-plain-text-as-my-request-body-using-nestjs
    */
   @Post()
-  @Header('content-type', 'text/markdown')
   async createNote(@Req() req: Request) {
     // we have to check req.readable because of raw-body issue #57
     // https://github.com/stream-utils/raw-body/issues/57
