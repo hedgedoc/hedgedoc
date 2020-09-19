@@ -57,6 +57,7 @@ export class Note {
   @OneToMany(
     _ => Revision,
     revision => revision.note,
+    { cascade: true },
   )
   revisions: Revision[];
 
