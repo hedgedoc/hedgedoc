@@ -7,7 +7,6 @@ export class ImageReplacer extends ComponentReplacer {
   public getReplacement (node: DomElement): React.ReactElement | undefined {
     if (node.name === 'img' && node.attribs) {
       return <ImageFrame
-
         id={node.attribs.id}
         className={node.attribs.class}
         src={node.attribs.src}

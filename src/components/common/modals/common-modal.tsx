@@ -8,14 +8,15 @@ import { ShowIf } from '../show-if/show-if'
 export interface CommonModalProps {
   show: boolean
   onHide: () => void
-  titleI18nKey: string
+  titleI18nKey?: string
+  title?: string
   closeButton?: boolean
   icon?: IconName
   size?: 'lg' | 'sm' | 'xl'
   additionalClasses?: string
 }
 
-export const CommonModal: React.FC<CommonModalProps> = ({ show, onHide, titleI18nKey, closeButton, icon, additionalClasses, size, children }) => {
+export const CommonModal: React.FC<CommonModalProps> = ({ show, onHide, titleI18nKey, title, closeButton, icon, additionalClasses, size, children }) => {
   useTranslation()
 
   return (
@@ -25,7 +26,10 @@ export const CommonModal: React.FC<CommonModalProps> = ({ show, onHide, titleI18
           <ShowIf condition={!!icon}>
             <ForkAwesomeIcon icon={icon as IconName}/>&nbsp;
           </ShowIf>
-          <Trans i18nKey={titleI18nKey}/>
+          { titleI18nKey
+            ? <Trans i18nKey={titleI18nKey}/>
+            : <span>{title}</span>
+          }
         </Modal.Title>
       </Modal.Header>
       { children }

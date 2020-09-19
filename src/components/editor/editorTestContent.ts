@@ -103,6 +103,10 @@ digraph D {
 }
 \`\`\`
 
+## High Res Image
+
+![Wheat Field with Cypresses](/highres.jpg)
+
 ## Sequence Diagram (deprecated)
 
 \`\`\`sequence
