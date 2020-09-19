@@ -59,14 +59,18 @@ export class Note {
   )
   authorColors: AuthorColor[];
 
-  constructor(shortid: string, alias: string, owner: User) {
-    if (shortid) {
-      this.shortid = shortid;
-    } else {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      this.shortid = shortIdGenerate() as string;
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private constructor() {}
+
+  public static create(owner?: User, alias?: string, shortid?: string) {
+    if (!shortid) {
+      shortid = shortIdGenerate();
     }
-    this.alias = alias;
-    this.owner = owner;
+    const newNote = new Note();
+    newNote.shortid = shortid;
+    newNote.alias = alias;
+    newNote.viewcount = 0;
+    newNote.owner = owner;
+    return newNote;
   }
 }
