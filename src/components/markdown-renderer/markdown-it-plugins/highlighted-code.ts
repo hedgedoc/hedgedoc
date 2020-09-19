@@ -1,6 +1,6 @@
 import MarkdownIt from 'markdown-it/lib'
 
-const highlightRegex = /^ *(\w*)(.*)$/
+const highlightRegex = /^ *([\w-]*)(.*)$/
 
 export const highlightedCode: MarkdownIt.PluginSimple = (md: MarkdownIt) => {
   md.core.ruler.push('highlighted-code', (state) => {

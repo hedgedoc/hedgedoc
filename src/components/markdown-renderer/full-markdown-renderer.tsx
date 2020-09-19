@@ -53,6 +53,7 @@ import { PossibleWiderReplacer } from './replace-components/possible-wider/possi
 import { QuoteOptionsReplacer } from './replace-components/quote-options/quote-options-replacer'
 import { SequenceDiagramReplacer } from './replace-components/sequence-diagram/sequence-diagram-replacer'
 import { TaskListReplacer } from './replace-components/task-list/task-list-replacer'
+import { VegaReplacer } from './replace-components/vega-lite/vega-replacer'
 import { VimeoReplacer } from './replace-components/vimeo/vimeo-replacer'
 import { YoutubeReplacer } from './replace-components/youtube/youtube-replacer'
 import { AdditionalMarkdownRendererProps, LineMarkerPosition } from './types'
@@ -94,6 +95,7 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
       new FlowchartReplacer(),
       new MermaidReplacer(),
       new GraphvizReplacer(),
+      new VegaReplacer(),
       new HighlightedCodeReplacer(),
       new QuoteOptionsReplacer(),
       new KatexReplacer(),

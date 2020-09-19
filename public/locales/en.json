@@ -12,6 +12,11 @@
         },
         "sequence": {
             "deprecationWarning": "The use of 'sequence' as code block language is deprecated."
+        },
+        "vega-lite": {
+            "png": "Save as PNG",
+            "svg": "Save as SVG",
+            "errorJson": "Error parsing the JSON"
         }
     },
     "landing": {
