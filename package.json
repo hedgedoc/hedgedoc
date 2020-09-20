@@ -109,6 +109,7 @@
         "start:dev": "REACT_APP_BACKEND=http://localhost:3000 yarn start",
         "build:serve": "http-server build/ -s -p 3001 -P \"http://127.0.0.1:3001?\"",
         "build": "craco build",
+        "analyze": "cross-env ANALYZE=true craco build",
         "test": "craco test",
         "lint": "eslint --ext .ts,.tsx src",
         "eject": "react-scripts eject",
@@ -154,6 +155,7 @@
         "@testing-library/cypress": "7.0.0",
         "@types/redux-devtools": "3.0.47",
         "@types/redux-devtools-extension": "2.13.2",
+        "cross-env": "7.0.2",
         "cypress": "5.2.0",
         "cypress-commands": "1.1.0",
         "eslint-plugin-chai-friendly": "0.6.0",
@@ -161,7 +163,8 @@
         "http-server": "0.12.3",
         "redux-devtools": "3.7.0",
         "redux-devtools-extension": "2.13.8",
-        "ts-loader": "8.0.4"
+        "ts-loader": "8.0.4",
+        "webpack-bundle-analyzer": "^3.9.0"
     },
     "resolutions": {
         "cypress": "5.2.0"

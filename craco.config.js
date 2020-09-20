@@ -1,4 +1,6 @@
 const CopyPlugin = require('copy-webpack-plugin');
+const { when } = require('@craco/craco');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
   webpack: {
@@ -9,6 +11,12 @@ module.exports = {
           { from: 'node_modules/@hpcc-js/wasm/dist/expatlib.wasm', to: 'static/js' }
         ],
       }),
+      ...when(Boolean(process.env.ANALYZE), () => [
+        new BundleAnalyzerPlugin({
+          analyzerMode: "static",
+          generateStatsFile: true
+        })
+      ], [])
     ],
   },
 }

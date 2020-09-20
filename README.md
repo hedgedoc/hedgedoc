@@ -41,6 +41,12 @@ We use [cypress](https://cypress.io) for e2e tests.
 3. Choose your browser and test
 4. Let the tests run
 
+### Bundle analysis
+You can inspect the generated production-bundle files to look for optimization issues.
+
+1. Run `yarn analyze`
+2. Open the generated `build/report.html` in your favourite browser
+
 ## Production mode
 
 1. Clone this repo (e.g. `git clone https://github.com/codimd/react-client.git hedgedoc-react-client`)
