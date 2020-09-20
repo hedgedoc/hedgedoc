@@ -14,7 +14,6 @@ export const Frame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ alt
         dialogClassName={'text-dark'}
         show={showFullscreenImage}
         onHide={() => setShowFullscreenImage(false)}
-        closeButton={true}
         size={'xl'}
       >
         <Modal.Header closeButton={true}>
