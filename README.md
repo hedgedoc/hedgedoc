@@ -1,7 +1,8 @@
 # HedgeDoc - React Client
 
-![lint and build](https://github.com/codimd/react-client/workflows/lint%20and%20build/badge.svg)
+![test, build](https://github.com/codimd/react-client/workflows/test,%20build/badge.svg)
 ![e2e](https://github.com/codimd/react-client/workflows/e2e/badge.svg)
+![lint](https://github.com/codimd/react-client/workflows/lint/badge.svg)
 
 This is the new, improved and better looking frontend for HedgeDoc 2.0.
 Our goal is to recreate the current frontend in react and to improve it.
