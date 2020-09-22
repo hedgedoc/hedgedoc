@@ -20,9 +20,9 @@ export class HighlightedCodeReplacer extends ComponentReplacer {
     let wrapLines = false
 
     if (extraInfos) {
-      showLineNumbers = extraInfos[0] !== undefined
-      startLineNumberAttribute = extraInfos[1]
-      wrapLines = extraInfos[2] !== undefined
+      showLineNumbers = extraInfos[1]?.startsWith('=') || false
+      startLineNumberAttribute = extraInfos[2]
+      wrapLines = extraInfos[3] === '!'
     }
 
     const startLineNumber = startLineNumberAttribute === '+' ? this.lastLineNumber : (parseInt(startLineNumberAttribute) || 1)
