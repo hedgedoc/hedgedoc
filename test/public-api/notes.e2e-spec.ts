@@ -51,7 +51,7 @@ describe('Notes', () => {
   });
 
   it(`GET /notes/{note}`, async () => {
-    notesService.createNote('This is a test note.', 'test1');
+    await notesService.createNote('This is a test note.', 'test1');
     const response = await request(app.getHttpServer())
       .get('/notes/test1')
       .expect('Content-Type', /json/)
@@ -75,15 +75,17 @@ describe('Notes', () => {
   });
 
   it(`DELETE /notes/{note}`, async () => {
-    notesService.createNote('This is a test note.', 'test3');
+    await notesService.createNote('This is a test note.', 'test3');
     await request(app.getHttpServer())
       .delete('/notes/test3')
       .expect(200);
-    return expect(notesService.getNoteByIdOrAlias('test3')).toBeNull();
+    return expect(notesService.getNoteByIdOrAlias('test3')).rejects.toEqual(
+      Error('Note not found'),
+    );
   });
 
   it(`PUT /notes/{note}`, async () => {
-    notesService.createNote('This is a test note.', 'test4');
+    await notesService.createNote('This is a test note.', 'test4');
     await request(app.getHttpServer())
       .put('/notes/test4')
       .set('Content-Type', 'text/markdown')
@@ -111,7 +113,7 @@ describe('Notes', () => {
   });
 
   it(`GET /notes/{note}/revisions`, async () => {
-    notesService.createNote('This is a test note.', 'test7');
+    await notesService.createNote('This is a test note.', 'test7');
     const response = await request(app.getHttpServer())
       .get('/notes/test7/revisions')
       .expect('Content-Type', /json/)
@@ -120,7 +122,7 @@ describe('Notes', () => {
   });
 
   it(`GET /notes/{note}/revisions/{revision-id}`, async () => {
-    notesService.createNote('This is a test note.', 'test8');
+    await notesService.createNote('This is a test note.', 'test8');
     const response = await request(app.getHttpServer())
       .get('/notes/test8/revisions/1')
       .expect('Content-Type', /json/)
@@ -129,7 +131,7 @@ describe('Notes', () => {
   });
 
   it(`GET /notes/{note}/content`, async () => {
-    notesService.createNote('This is a test note.', 'test9');
+    await notesService.createNote('This is a test note.', 'test9');
     const response = await request(app.getHttpServer())
       .get('/notes/test9/content')
       .expect(200);
