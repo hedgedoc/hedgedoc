@@ -52,7 +52,7 @@ export class Note {
     revision => revision.note,
     { cascade: true },
   )
-  revisions: Revision[];
+  revisions: Promise<Revision[]>;
   @OneToMany(
     _ => AuthorColor,
     authorColor => authorColor.note,
