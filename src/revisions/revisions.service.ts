@@ -1,6 +1,7 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { NotesService } from '../notes/notes.service';
 import { RevisionMetadataDto } from './revision-metadata.dto';
 import { RevisionDto } from './revision.dto';
 import { Revision } from './revision.entity';
@@ -10,17 +11,19 @@ export class RevisionsService {
   constructor(
     @InjectRepository(Revision)
     private revisionRepository: Repository<Revision>,
+    @Inject(NotesService) private notesService: NotesService,
   ) {}
   private readonly logger = new Logger(RevisionsService.name);
-  getNoteRevisionMetadatas(noteIdOrAlias: string): RevisionMetadataDto[] {
-    this.logger.warn('Using hardcoded data!');
-    return [
-      {
-        id: 42,
-        updatedAt: new Date(),
-        length: 42,
+  async getNoteRevisionMetadatas(
+    noteIdOrAlias: string,
+  ): Promise<RevisionMetadataDto[]> {
+    const note = await this.notesService.getNoteByIdOrAlias(noteIdOrAlias);
+    const revisions = await this.revisionRepository.find({
+      where: {
+        note: note.id,
       },
-    ];
+    });
+    return revisions.map(revision => this.toMetadataDto(revision));
   }
 
   getNoteRevision(noteIdOrAlias: string, revisionId: number): RevisionDto {
@@ -42,6 +45,14 @@ export class RevisionsService {
         id: 'DESC',
       },
     });
+  }
+
+  toMetadataDto(revision: Revision): RevisionMetadataDto {
+    return {
+      id: revision.id,
+      length: revision.length,
+      createdAt: revision.createdAt,
+    };
   }
 
   createRevision(content: string) {

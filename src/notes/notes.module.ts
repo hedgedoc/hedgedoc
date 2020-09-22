@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RevisionsModule } from '../revisions/revisions.module';
 import { UsersModule } from '../users/users.module';
@@ -9,7 +9,7 @@ import { NotesService } from './notes.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Note, AuthorColor]),
-    RevisionsModule,
+    forwardRef(() => RevisionsModule),
     UsersModule,
   ],
   controllers: [],
