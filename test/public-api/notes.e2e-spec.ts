@@ -1,8 +1,12 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import * as request from 'supertest';
-import { AppModule } from '../../src/app.module';
+import { PublicApiModule } from '../../src/api/public/public-api.module';
+import { GroupsModule } from '../../src/groups/groups.module';
+import { NotesModule } from '../../src/notes/notes.module';
 import { NotesService } from '../../src/notes/notes.service';
+import { PermissionsModule } from '../../src/permissions/permissions.module';
 
 describe('Notes', () => {
   let app: INestApplication;
@@ -10,12 +14,23 @@ describe('Notes', () => {
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [
+        PublicApiModule,
+        NotesModule,
+        PermissionsModule,
+        GroupsModule,
+        TypeOrmModule.forRoot({
+          type: 'sqlite',
+          database: ':memory:',
+          autoLoadEntities: true,
+          synchronize: true,
+        }),
+      ],
     }).compile();
 
     app = moduleRef.createNestApplication();
-    notesService = moduleRef.get(NotesService);
     await app.init();
+    notesService = moduleRef.get(NotesService);
   });
 
   it(`POST /notes`, async () => {
