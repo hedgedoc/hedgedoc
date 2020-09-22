@@ -37,6 +37,7 @@ describe('Notes', () => {
     const newNote = 'This is a test note.';
     const response = await request(app.getHttpServer())
       .post('/notes')
+      .set('Content-Type', 'text/markdown')
       .send(newNote)
       .expect('Content-Type', /json/)
       .expect(201);
@@ -60,6 +61,7 @@ describe('Notes', () => {
     const newNote = 'This is a test note.';
     const response = await request(app.getHttpServer())
       .post('/notes/test2')
+      .set('Content-Type', 'text/markdown')
       .send(newNote)
       .expect('Content-Type', /json/)
       .expect(201);
@@ -82,6 +84,7 @@ describe('Notes', () => {
     notesService.createNote('This is a test note.', 'test4');
     await request(app.getHttpServer())
       .put('/notes/test4')
+      .set('Content-Type', 'text/markdown')
       .send('New note text')
       .expect(200);
     return expect(
@@ -93,6 +96,7 @@ describe('Notes', () => {
     // TODO
     return request(app.getHttpServer())
       .post('/notes/test5/metadata')
+      .set('Content-Type', 'text/markdown')
       .expect(200);
   });
 
