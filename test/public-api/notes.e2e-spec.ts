@@ -21,7 +21,7 @@ describe('Notes', () => {
         GroupsModule,
         TypeOrmModule.forRoot({
           type: 'sqlite',
-          database: ':memory:',
+          database: './hedgedoc-e2e.sqlite',
           autoLoadEntities: true,
           synchronize: true,
         }),
@@ -31,6 +31,8 @@ describe('Notes', () => {
     app = moduleRef.createNestApplication();
     await app.init();
     notesService = moduleRef.get(NotesService);
+    const noteRepository = moduleRef.get('NoteRepository');
+    noteRepository.clear();
   });
 
   it(`POST /notes`, async () => {
