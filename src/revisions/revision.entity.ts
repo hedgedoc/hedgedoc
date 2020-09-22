@@ -16,8 +16,8 @@ import { Authorship } from './authorship.entity';
  */
 @Entity()
 export class Revision {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   /**
    * The patch from the previous revision to this one.
