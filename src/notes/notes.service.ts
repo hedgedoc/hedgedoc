@@ -2,6 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Revision } from '../revisions/revision.entity';
+import { RevisionsService } from '../revisions/revisions.service';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { NoteMetadataDto } from './note-metadata.dto';
@@ -20,6 +21,7 @@ export class NotesService {
   constructor(
     @InjectRepository(Note) private noteRepository: Repository<Note>,
     @Inject(UsersService) private usersService: UsersService,
+    @Inject(RevisionsService) private revisionsService: RevisionsService,
   ) {}
 
   getUserNotes(username: string): NoteMetadataDto[] {
@@ -121,39 +123,26 @@ export class NotesService {
     };
   }
 
-  getNoteByIdOrAlias(noteIdOrAlias: string) {
-    this.logger.warn('Using hardcoded data!');
-    return {
-      content: 'noteContent',
-      metadata: {
-        alias: null,
-        createTime: new Date(),
-        description: 'Very descriptive text.',
-        editedBy: [],
-        id: noteIdOrAlias,
-        permission: {
-          owner: {
-            displayName: 'foo',
-            userName: 'fooUser',
-            email: 'foo@example.com',
-            photo: '',
-          },
-          sharedToUsers: [],
-          sharedToGroups: [],
-        },
-        tags: [],
-        title: 'Title!',
-        updateTime: new Date(),
-        updateUser: {
-          displayName: 'foo',
-          userName: 'fooUser',
-          email: 'foo@example.com',
-          photo: '',
-        },
-        viewCount: 42,
-      },
-      editedByAtPosition: [],
-    };
+  async getNoteByIdOrAlias(noteIdOrAlias: string): Promise<Note> {
+    const note = await this.noteRepository.findOne({
+      where: [{ id: noteIdOrAlias }, { alias: noteIdOrAlias }],
+      relations: [
+        'authorColors',
+        'owner',
+        'groupPermissions',
+        'userPermissions',
+      ],
+    });
+    if (note === undefined) {
+      //TODO: Improve error handling
+      throw new Error('Note not found');
+    }
+    return note;
+  }
+
+  async getNoteDtoByIdOrAlias(noteIdOrAlias: string): Promise<NoteDto> {
+    const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
+    return this.toNoteDto(note);
   }
 
   deleteNoteByIdOrAlias(noteIdOrAlias: string) {
@@ -247,5 +236,13 @@ export class NotesService {
   getNoteContent(noteIdOrAlias: string) {
     this.logger.warn('Using hardcoded data!');
     return '# Markdown';
+  }
+
+  async toNoteDto(note: Note): Promise<NoteDto> {
+    return {
+      content: await this.getCurrentContent(note),
+      metadata: await this.getMetadata(note),
+      editedByAtPosition: [],
+    };
   }
 }
