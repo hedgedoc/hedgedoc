@@ -164,35 +164,9 @@ export class NotesService {
     await this.noteRepository.save(note);
   }
 
-  getNoteMetadata(noteIdOrAlias: string): NoteMetadataDto {
-    this.logger.warn('Using hardcoded data!');
-    return {
-      alias: null,
-      createTime: new Date(),
-      description: 'Very descriptive text.',
-      editedBy: [],
-      id: noteIdOrAlias,
-      permission: {
-        owner: {
-          displayName: 'foo',
-          userName: 'fooUser',
-          email: 'foo@example.com',
-          photo: '',
-        },
-        sharedToUsers: [],
-        sharedToGroups: [],
-      },
-      tags: [],
-      title: 'Title!',
-      updateTime: new Date(),
-      updateUser: {
-        displayName: 'foo',
-        userName: 'fooUser',
-        email: 'foo@example.com',
-        photo: '',
-      },
-      viewCount: 42,
-    };
+  async getNoteMetadata(noteIdOrAlias: string): Promise<NoteMetadataDto> {
+    const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
+    return this.getMetadata(note);
   }
 
   updateNotePermissions(
@@ -212,9 +186,9 @@ export class NotesService {
     };
   }
 
-  getNoteContent(noteIdOrAlias: string) {
-    this.logger.warn('Using hardcoded data!');
-    return '# Markdown';
+  async getNoteContent(noteIdOrAlias: string): Promise<string> {
+    const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
+    return this.getCurrentContent(note);
   }
 
   async toNoteDto(note: Note): Promise<NoteDto> {
