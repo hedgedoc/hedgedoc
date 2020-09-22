@@ -122,7 +122,7 @@ export class NotesController {
   @Get(':noteIdOrAlias/revisions/:revisionId')
   getNoteRevision(
     @Param('noteIdOrAlias') noteIdOrAlias: string,
-    @Param('revisionId') revisionId: string,
+    @Param('revisionId') revisionId: number,
   ) {
     return this.revisionsService.getNoteRevision(noteIdOrAlias, revisionId);
   }
