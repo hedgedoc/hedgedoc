@@ -145,44 +145,18 @@ export class NotesService {
     return this.toNoteDto(note);
   }
 
-  deleteNoteByIdOrAlias(noteIdOrAlias: string) {
-    this.logger.warn('Using hardcoded data!');
-    return;
+  async deleteNoteByIdOrAlias(noteIdOrAlias: string) {
+    const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
+    return await this.noteRepository.remove(note);
   }
 
-  updateNoteByIdOrAlias(noteIdOrAlias: string, noteContent: string) {
-    this.logger.warn('Using hardcoded data!');
-    return {
-      content: noteContent,
-      metdata: {
-        alias: null,
-        createTime: new Date(),
-        description: 'Very descriptive text.',
-        editedBy: [],
-        id: noteIdOrAlias,
-        permission: {
-          owner: {
-            displayName: 'foo',
-            userName: 'fooUser',
-            email: 'foo@example.com',
-            photo: '',
-          },
-          sharedToUsers: [],
-          sharedToGroups: [],
-        },
-        tags: [],
-        title: 'Title!',
-        updateTime: new Date(),
-        updateUser: {
-          displayName: 'foo',
-          userName: 'fooUser',
-          email: 'foo@example.com',
-          photo: '',
-        },
-        viewCount: 42,
-      },
-      editedByAtPosition: [],
-    };
+  async updateNoteByIdOrAlias(noteIdOrAlias: string, noteContent: string) {
+    const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
+    const revisions = await note.revisions;
+    //TODO: Calculate patch
+    revisions.push(Revision.create(noteContent, noteContent));
+    note.revisions = Promise.resolve(revisions);
+    await this.noteRepository.save(note);
   }
 
   getNoteMetadata(noteIdOrAlias: string): NoteMetadataDto {
