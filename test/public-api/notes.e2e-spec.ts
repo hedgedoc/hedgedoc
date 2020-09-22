@@ -118,7 +118,7 @@ describe('Notes', () => {
       .get('/notes/test7/revisions')
       .expect('Content-Type', /json/)
       .expect(200);
-    expect(response.body.revisions).toHaveLength(1);
+    expect(response.body).toHaveLength(1);
   });
 
   it(`GET /notes/{note}/revisions/{revision-id}`, async () => {
