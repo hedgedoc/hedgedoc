@@ -70,16 +70,29 @@ export class NotesController {
   }
 
   @Delete(':noteIdOrAlias')
-  deleteNote(@Param('noteIdOrAlias') noteIdOrAlias: string) {
-    return this.noteService.deleteNoteByIdOrAlias(noteIdOrAlias);
+  async deleteNote(@Param('noteIdOrAlias') noteIdOrAlias: string) {
+    this.logger.debug('Deleting note: ' + noteIdOrAlias);
+    await this.noteService.deleteNoteByIdOrAlias(noteIdOrAlias);
+    this.logger.debug('Successfully deleted ' + noteIdOrAlias);
+    return;
   }
 
   @Put(':noteIdOrAlias')
-  updateNote(
+  async updateNote(
     @Param('noteIdOrAlias') noteIdOrAlias: string,
-    @Body() noteContent: string,
+    @Req() req: Request,
   ) {
-    return this.noteService.updateNoteByIdOrAlias(noteIdOrAlias, noteContent);
+    // we have to check req.readable because of raw-body issue #57
+    // https://github.com/stream-utils/raw-body/issues/57
+    if (req.readable) {
+      let bodyText: string = await getRawBody(req, 'utf-8');
+      bodyText = bodyText.trim();
+      this.logger.debug('Got raw markdown:\n' + bodyText);
+      return this.noteService.updateNoteByIdOrAlias(noteIdOrAlias, bodyText);
+    } else {
+      // TODO: Better error message
+      throw new BadRequestException('Invalid body');
+    }
   }
 
   @Get(':noteIdOrAlias/content')
