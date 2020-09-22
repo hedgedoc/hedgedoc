@@ -368,7 +368,7 @@ paths:
         - note
       summary: Returns a list of the available note revisions
       operationId: getAllRevisionsOfNote
-      description: The list is returned as a JSON object with an array of revision-id and length associations. The revision-id equals to the timestamp when the revision was saved.
+      description: The list contains the revision-id, the length and a ISO-timestamp of the creation date.
       responses:
         '200':
           description: Revisions of the note.
@@ -399,7 +399,7 @@ paths:
       description: The revision is returned as a JSON object with the content of the note and the authorship.
       responses:
         '200':
-          description: Revision of the note for the given timestamp.
+          description: Revision of the note for the given id.
           content:
             application/json:
               schema:
@@ -421,7 +421,7 @@ paths:
         - name: revision-id
           in: path
           required: true
-          description: The id (timestamp) of the revision to fetch.
+          description: The id of the revision to fetch.
           content:
             text/plain:
               example: 1570921051959
@@ -579,7 +579,7 @@ components:
             description: A tag
         updateTime:
           type: integer
-          description: UNIX-timestamp of when the note was last changed.
+          description: ISO-timestamp of when the note was last changed.
         updateUser:
           $ref: "#/components/schemas/UserInfo"
         viewCount:
@@ -588,7 +588,7 @@ components:
           description: How often the published version of the note was viewed.
         createTime:
           type: string
-          description: The timestamp when the note was created in ISO 8601 format.
+          description: The ISO-timestamp when the note was created in ISO 8601 format.
         editedBy:
           type: array
           description: List of usernames who edited the note.
@@ -614,20 +614,19 @@ components:
                 type: boolean
 
     NoteRevisionsMetadata:
-      type: object
-      properties:
-        revision:
-          type: array
-          description: Array that holds all revision-info objects.
-          items:
-            type: object
-            properties:
-              time:
-                type: integer
-                description: UNIX-timestamp of when the revision was saved. Is also the revision-id.
-              length:
-                type: integer
-                description: Length of the document to the timepoint the revision was saved.
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: The id of the revision
+          createdAt:
+            type: integer
+            description: ISO-timestamp of when the revision was saved. Is also the revision-id.
+          length:
+            type: integer
+            description: Length of the document to the timepoint the revision was saved.
     NoteRevision:
       type: object
       properties:
