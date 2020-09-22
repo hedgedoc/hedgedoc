@@ -31,6 +31,10 @@ export class UsersService {
       this.logger.warn('toUserDto recieved undefined argument!');
       return null;
     }
+    if (user === null) {
+      this.logger.warn('toUserDto recieved null argument!');
+      return null;
+    }
     return {
       userName: user.userName,
       displayName: user.displayName,
