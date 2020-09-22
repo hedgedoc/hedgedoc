@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Revision } from '../revisions/revision.entity';
@@ -21,7 +21,8 @@ export class NotesService {
   constructor(
     @InjectRepository(Note) private noteRepository: Repository<Note>,
     @Inject(UsersService) private usersService: UsersService,
-    @Inject(RevisionsService) private revisionsService: RevisionsService,
+    @Inject(forwardRef(() => RevisionsService))
+    private revisionsService: RevisionsService,
   ) {}
 
   getUserNotes(username: string): NoteMetadataDto[] {
