@@ -27,7 +27,8 @@ describe('Notes', () => {
       .expect(201);
     expect(response.body.metadata?.id).toBeDefined();
     expect(
-      notesService.getNoteByIdOrAlias(response.body.metadata.id).content,
+      (await notesService.getNoteDtoByIdOrAlias(response.body.metadata.id))
+        .content,
     ).toEqual(newNote);
   });
 
@@ -49,7 +50,8 @@ describe('Notes', () => {
       .expect(201);
     expect(response.body.metadata?.id).toBeDefined();
     return expect(
-      notesService.getNoteByIdOrAlias(response.body.metadata.id).content,
+      (await notesService.getNoteDtoByIdOrAlias(response.body.metadata.id))
+        .content,
     ).toEqual(newNote);
   });
 
@@ -67,9 +69,9 @@ describe('Notes', () => {
       .put('/notes/test4')
       .send('New note text')
       .expect(200);
-    return expect(notesService.getNoteByIdOrAlias('test4').content).toEqual(
-      'New note text',
-    );
+    return expect(
+      (await notesService.getNoteDtoByIdOrAlias('test4')).content,
+    ).toEqual('New note text');
   });
 
   it.skip(`PUT /notes/{note}/metadata`, () => {
