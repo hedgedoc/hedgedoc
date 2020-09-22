@@ -8,12 +8,14 @@ import { Revision } from './revision.entity';
 
 @Injectable()
 export class RevisionsService {
+  private readonly logger = new Logger(RevisionsService.name);
+
   constructor(
     @InjectRepository(Revision)
     private revisionRepository: Repository<Revision>,
     @Inject(NotesService) private notesService: NotesService,
   ) {}
-  private readonly logger = new Logger(RevisionsService.name);
+
   async getNoteRevisionMetadatas(
     noteIdOrAlias: string,
   ): Promise<RevisionMetadataDto[]> {
@@ -26,13 +28,18 @@ export class RevisionsService {
     return revisions.map(revision => this.toMetadataDto(revision));
   }
 
-  getNoteRevision(noteIdOrAlias: string, revisionId: number): RevisionDto {
-    this.logger.warn('Using hardcoded data!');
-    return {
-      id: revisionId,
-      content: 'Foobar',
-      patch: 'barfoo',
-    };
+  async getNoteRevision(
+    noteIdOrAlias: string,
+    revisionId: number,
+  ): Promise<RevisionDto> {
+    const note = await this.notesService.getNoteByIdOrAlias(noteIdOrAlias);
+    const revision = await this.revisionRepository.findOne({
+      where: {
+        id: revisionId,
+        note: note,
+      },
+    });
+    return this.toDto(revision);
   }
 
   getLatestRevision(noteId: string): Promise<Revision> {
@@ -52,6 +59,15 @@ export class RevisionsService {
       id: revision.id,
       length: revision.length,
       createdAt: revision.createdAt,
+    };
+  }
+
+  toDto(revision: Revision): RevisionDto {
+    return {
+      id: revision.id,
+      content: revision.content,
+      createdAt: revision.createdAt,
+      patch: revision.patch,
     };
   }
 
