@@ -6,7 +6,7 @@ export class RevisionMetadataDto {
   id: Revision['id'];
 
   @IsDate()
-  updatedAt: Date;
+  createdAt: Date;
 
   @IsNumber()
   length: number;
