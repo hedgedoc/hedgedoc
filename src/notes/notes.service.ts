@@ -58,11 +58,20 @@ export class NotesService {
     ];
   }
 
-  async createNote(
+  async createNoteDto(
     noteContent: string,
     alias?: NoteMetadataDto['alias'],
     owner?: User,
   ): Promise<NoteDto> {
+    const note = await this.createNote(noteContent, alias, owner);
+    return this.toNoteDto(note);
+  }
+
+  async createNote(
+    noteContent: string,
+    alias?: NoteMetadataDto['alias'],
+    owner?: User,
+  ): Promise<Note> {
     const newNote = Note.create();
     newNote.revisions = Promise.resolve([
       Revision.create(noteContent, noteContent),
@@ -73,12 +82,7 @@ export class NotesService {
     if (owner) {
       newNote.owner = owner;
     }
-    const savedNote = await this.noteRepository.save(newNote);
-    return {
-      content: await this.getCurrentContent(savedNote),
-      metadata: await this.getMetadata(savedNote),
-      editedByAtPosition: [],
-    };
+    return this.noteRepository.save(newNote);
   }
 
   async getCurrentContent(note: Note) {

@@ -39,7 +39,7 @@ export class NotesController {
       let bodyText: string = await getRawBody(req, 'utf-8');
       bodyText = bodyText.trim();
       this.logger.debug('Got raw markdown:\n' + bodyText);
-      return this.noteService.createNote(bodyText);
+      return this.noteService.createNoteDto(bodyText);
     } else {
       // TODO: Better error message
       throw new BadRequestException('Invalid body');
@@ -62,7 +62,7 @@ export class NotesController {
       let bodyText: string = await getRawBody(req, 'utf-8');
       bodyText = bodyText.trim();
       this.logger.debug('Got raw markdown:\n' + bodyText);
-      return this.noteService.createNote(bodyText, noteAlias);
+      return this.noteService.createNoteDto(bodyText, noteAlias);
     } else {
       // TODO: Better error message
       throw new BadRequestException('Invalid body');
