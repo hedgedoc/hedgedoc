@@ -122,9 +122,10 @@ describe('Notes', () => {
   });
 
   it(`GET /notes/{note}/revisions/{revision-id}`, async () => {
-    await notesService.createNote('This is a test note.', 'test8');
+    const note = await notesService.createNote('This is a test note.', 'test8');
+    const revision = await notesService.getLastRevision(note);
     const response = await request(app.getHttpServer())
-      .get('/notes/test8/revisions/1')
+      .get('/notes/test8/revisions/' + revision.id)
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body.content).toEqual('This is a test note.');
