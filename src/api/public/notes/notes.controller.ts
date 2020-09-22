@@ -48,7 +48,7 @@ export class NotesController {
 
   @Get(':noteIdOrAlias')
   getNote(@Param('noteIdOrAlias') noteIdOrAlias: string) {
-    return this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
+    return this.noteService.getNoteDtoByIdOrAlias(noteIdOrAlias);
   }
 
   @Post(':noteAlias')
