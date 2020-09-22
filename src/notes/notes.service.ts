@@ -60,9 +60,10 @@ export class NotesService {
     alias?: NoteMetadataDto['alias'],
     owner?: User,
   ): Promise<NoteDto> {
-    this.logger.warn('Using hardcoded data!');
     const newNote = Note.create();
-    newNote.revisions = [Revision.create(noteContent, noteContent)];
+    newNote.revisions = Promise.resolve([
+      Revision.create(noteContent, noteContent),
+    ]);
     if (alias) {
       newNote.alias = alias;
     }
@@ -71,21 +72,21 @@ export class NotesService {
     }
     const savedNote = await this.noteRepository.save(newNote);
     return {
-      content: this.getCurrentContent(savedNote),
-      metadata: this.getMetadata(savedNote),
+      content: await this.getCurrentContent(savedNote),
+      metadata: await this.getMetadata(savedNote),
       editedByAtPosition: [],
     };
   }
 
-  getCurrentContent(note: Note) {
-    return this.getLastRevision(note).content;
+  async getCurrentContent(note: Note) {
+    return (await this.getLastRevision(note)).content;
   }
 
-  getLastRevision(note: Note) {
-    return note.revisions[note.revisions.length - 1];
+  async getLastRevision(note: Note): Promise<Revision> {
+    return this.revisionsService.getLatestRevision(note.id);
   }
 
-  getMetadata(note: Note): NoteMetadataDto {
+  async getMetadata(note: Note): Promise<NoteMetadataDto> {
     return {
       // TODO: Convert DB UUID to base64
       id: note.id,
@@ -108,7 +109,7 @@ export class NotesService {
         })),
       },
       tags: NoteUtils.parseTags(note),
-      updateTime: this.getLastRevision(note).createdAt,
+      updateTime: (await this.getLastRevision(note)).createdAt,
       // TODO: Get actual updateUser
       updateUser: {
         displayName: 'Hardcoded User',
