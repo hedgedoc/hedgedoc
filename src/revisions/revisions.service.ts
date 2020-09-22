@@ -16,14 +16,14 @@ export class RevisionsService {
     this.logger.warn('Using hardcoded data!');
     return [
       {
-        id: 'some-uuid',
+        id: 42,
         updatedAt: new Date(),
         length: 42,
       },
     ];
   }
 
-  getNoteRevision(noteIdOrAlias: string, revisionId: string): RevisionDto {
+  getNoteRevision(noteIdOrAlias: string, revisionId: number): RevisionDto {
     this.logger.warn('Using hardcoded data!');
     return {
       id: revisionId,
@@ -39,6 +39,7 @@ export class RevisionsService {
       },
       order: {
         createdAt: 'DESC',
+        id: 'DESC',
       },
     });
   }

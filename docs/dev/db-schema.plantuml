@@ -58,7 +58,7 @@ entity "Session" as seesion {
 
 
 entity "Revision" {
-  *id : uuid <<generated>>
+  *id : number <<generated>>
   --
   *noteId : uuid <<FK Note>>
   *content : text
@@ -78,7 +78,7 @@ entity "Authorship" {
 }
 
 entity "RevisionAuthorship" {
-  *revisionId : uuid <<FK Revision>>
+  *revisionId : number <<FK Revision>>
   *authorshipId : uuid <<FK Authorship>>
 }
 
