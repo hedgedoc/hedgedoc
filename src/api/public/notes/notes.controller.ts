@@ -52,11 +52,21 @@ export class NotesController {
   }
 
   @Post(':noteAlias')
-  createNamedNote(
+  async createNamedNote(
     @Param('noteAlias') noteAlias: string,
-    @Body() noteContent: string,
+    @Req() req: Request,
   ) {
-    return this.noteService.createNote(noteContent, noteAlias);
+    // we have to check req.readable because of raw-body issue #57
+    // https://github.com/stream-utils/raw-body/issues/57
+    if (req.readable) {
+      let bodyText: string = await getRawBody(req, 'utf-8');
+      bodyText = bodyText.trim();
+      this.logger.debug('Got raw markdown:\n' + bodyText);
+      return this.noteService.createNote(bodyText, noteAlias);
+    } else {
+      // TODO: Better error message
+      throw new BadRequestException('Invalid body');
+    }
   }
 
   @Delete(':noteIdOrAlias')
