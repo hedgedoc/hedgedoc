@@ -1,0 +1,79 @@
+#!/usr/bin/env node
+
+const { cloneDeep } = require('lodash');
+const config = require('../lib/config');
+const dbconfig = cloneDeep(config.db);
+const fs = require('fs');
+const { getImageMimeType } = require('../lib/utils');
+const Minio = require('minio');
+const path = require('path');
+const Sequelize = require('sequelize');
+
+if (config.dbURL) {
+  sequelize = new Sequelize(config.dbURL, dbconfig)
+} else {
+  sequelize = new Sequelize(dbconfig.database, dbconfig.username, dbconfig.password, dbconfig)
+}
+
+const minioClient = new Minio.Client({
+  endPoint: config.minio.endPoint,
+  port: config.minio.port,
+  secure: config.minio.secure,
+  accessKey: config.minio.accessKey,
+  secretKey: config.minio.secretKey
+});
+
+const minioProtocol = config.minio.secure ? 'https' : 'http';
+const minioHidePort = [80, 443].includes(config.minio.port);
+const minioUrlPort = minioHidePort ? '' : `:${config.minio.port}`;
+
+const minioUrl = `${minioProtocol}://${config.minio.endPoint}${minioUrlPort}/${config.s3bucket}`;
+
+console.log(`Make sure to stop your server before starting the procedure.`);
+
+if (config.db.dialect !== 'postgres') {
+  console.log('This procedure was only tested against postgres, aborting...');
+  process.exit();
+} else if (config.serverURL === '' || minioUrl === '' ) {
+  console.log('You need your server URL AND the minio URL to be defined, aborting...');
+  process.exit();
+} else {
+  console.log(`We'll migrate URLs and files from ${config.serverURL} to ${minioUrl}, proceeding with the file upload...`);
+  console.log();
+}
+
+var key;
+var filePath;
+var metadata;
+fs.readdir(config.uploadsPath, function (err, files) {
+  if (err) {
+    console.log('Unable to scan directory: ' + err);
+    process.exit();
+  } 
+  files.forEach(function (file) {
+    key = path.join('uploads', file)
+    filePath = path.join(config.uploadsPath, file)
+    console.log(`Uploading ${filePath} to ${key}...`);
+    metadata = {
+      'Content-Type': getImageMimeType(filePath),
+    }
+    minioClient.fPutObject(config.s3bucket, key, filePath, metadata, function(err) {
+      if (err) {
+        console.log(err);
+        process.exit();
+      }
+      console.log('File uploaded successfully.');
+    });
+  });
+});
+
+// You can only select to see what it will do
+// sequelize.query(`SELECT regexp_replace(content, '${minioUrl}/uploads/', '${config.serverURL}/uploads/', 'g') FROM "Notes"`).then(([results, metadata]) => {
+//   console.log(metadata);
+// })
+
+sequelize.query(`UPDATE "Notes" SET content = regexp_replace(content, '${config.serverURL}/uploads/', '${minioUrl}/uploads/', 'g')`); // if something goes wrong, then revert '${config.serverURL}', '${minioUrl}' by swapping their place in the query.
+
+const updateStatement = String.raw`UPDATE "Notes" SET content = regexp_replace(content, '\(/uploads/', '(${minioUrl}/uploads/', 'g')`
+
+sequelize.query(updateStatement)
