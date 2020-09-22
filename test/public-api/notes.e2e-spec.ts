@@ -136,7 +136,7 @@ describe('Notes', () => {
     const response = await request(app.getHttpServer())
       .get('/notes/test9/content')
       .expect(200);
-    expect(response.body).toEqual('This is a test note.');
+    expect(response.text).toEqual('This is a test note.');
   });
 
   afterAll(async () => {
