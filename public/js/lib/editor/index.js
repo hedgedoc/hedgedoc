@@ -304,13 +304,13 @@ export default class Editor {
       if (this.editor.getOption('indentWithTabs')) {
         Cookies.set('indent_type', 'tab', {
           expires: 365,
-          sameSite: 'strict'
+          sameSite: window.cookiePolicy
         })
         type.text('Tab Size:')
       } else {
         Cookies.set('indent_type', 'space', {
           expires: 365,
-          sameSite: 'strict'
+          sameSite: window.cookiePolicy
         })
         type.text('Spaces:')
       }
@@ -322,12 +322,12 @@ export default class Editor {
       if (this.editor.getOption('indentWithTabs')) {
         Cookies.set('tab_size', unit, {
           expires: 365,
-          sameSite: 'strict'
+          sameSite: window.cookiePolicy
         })
       } else {
         Cookies.set('space_units', unit, {
           expires: 365,
-          sameSite: 'strict'
+          sameSite: window.cookiePolicy
         })
       }
       widthLabel.text(unit)
@@ -396,7 +396,7 @@ export default class Editor {
       var keymap = this.editor.getOption('keyMap')
       Cookies.set('keymap', keymap, {
         expires: 365,
-        sameSite: 'strict'
+        sameSite: window.cookiePolicy
       })
       label.text(keymap)
       this.restoreOverrideEditorKeymap()
@@ -445,7 +445,7 @@ export default class Editor {
       this.editor.setOption('theme', theme)
       Cookies.set('theme', theme, {
         expires: 365,
-        sameSite: 'strict'
+        sameSite: window.cookiePolicy
       })
 
       checkTheme()
@@ -491,7 +491,7 @@ export default class Editor {
       }
       Cookies.set('spellcheck', mode === 'spell-checker', {
         expires: 365,
-        sameSite: 'strict'
+        sameSite: window.cookiePolicy
       })
 
       checkSpellcheck()
@@ -537,7 +537,7 @@ export default class Editor {
     if (overrideBrowserKeymap.is(':checked')) {
       Cookies.set('preferences-override-browser-keymap', true, {
         expires: 365,
-        sameSite: 'strict'
+        sameSite: window.cookiePolicy
       })
       this.restoreOverrideEditorKeymap()
     } else {
