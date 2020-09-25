@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { NotesService } from '../notes/notes.service';
@@ -13,7 +13,7 @@ export class RevisionsService {
   constructor(
     @InjectRepository(Revision)
     private revisionRepository: Repository<Revision>,
-    @Inject(NotesService) private notesService: NotesService,
+    @Inject(forwardRef(() => NotesService)) private notesService: NotesService,
   ) {}
 
   async getNoteRevisionMetadatas(
