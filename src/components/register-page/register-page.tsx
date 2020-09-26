@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useEffect, useState } from 'react'
+import React, { FormEvent, Fragment, useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
 import { doInternalRegister } from '../../api/auth'
@@ -53,7 +53,7 @@ export const RegisterPage: React.FC = () => {
     )
   }
 
-  return (
+  return <Fragment>
     <div className='my-3'>
       <h1 className='mb-4'><Trans i18nKey='login.register.title'/></h1>
       <Row className='h-100 d-flex justify-content-center'>
@@ -138,5 +138,5 @@ export const RegisterPage: React.FC = () => {
         </Col>
       </Row>
     </div>
-  )
+  </Fragment>
 }

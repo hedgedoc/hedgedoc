@@ -3,6 +3,7 @@
 @import '../../node_modules/react-bootstrap-typeahead/css/Typeahead';
 @import "fonts/source-code-pro/source-code-pro";
 @import "fonts/twemoji/twemoji";
+@import '../../node_modules/fork-awesome/css/fork-awesome.min';
 
 .text-black, body.dark .text-black {
   color: $black;
@@ -55,4 +56,20 @@ body {
 
 .cursor-zoom-out {
   cursor: zoom-out;
+}
+
+.faded-fa {
+  .fa, &::after {
+    opacity: 0.5;
+  }
+
+  &:hover .fa, &:hover::after {
+    opacity: 1;
+  }
+}
+
+.dropup .dropdown-toggle, .dropdown-toggle {
+  &.no-arrow::after {
+    content: initial;
+  }
 }

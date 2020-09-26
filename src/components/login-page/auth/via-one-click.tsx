@@ -100,7 +100,7 @@ export interface ViaOneClickProps {
   optionalName?: string;
 }
 
-const ViaOneClick: React.FC<ViaOneClickProps> = ({ oneClickType, optionalName }) => {
+export const ViaOneClick: React.FC<ViaOneClickProps> = ({ oneClickType, optionalName }) => {
   const backendUrl = useSelector((state: ApplicationState) => state.apiUrl.apiUrl)
   const { name, icon, className, url } = getMetadata(backendUrl, oneClickType)
   const text = optionalName || name
@@ -116,5 +116,3 @@ const ViaOneClick: React.FC<ViaOneClickProps> = ({ oneClickType, optionalName })
     </SocialLinkButton>
   )
 }
-
-export { ViaOneClick }

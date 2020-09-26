@@ -1,7 +1,5 @@
-import { graphviz } from 'd3-graphviz'
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
-import '@hpcc-js/wasm'
 import { ShowIf } from '../../../common/show-if/show-if'
 
 export interface GraphvizFrameProps {
@@ -25,14 +23,18 @@ export const GraphvizFrame: React.FC<GraphvizFrameProps> = ({ code }) => {
     if (!container.current) {
       return
     }
-    try {
-      setError(undefined)
-      graphviz(container.current, { useWorker: false, zoom: false })
-        .onerror(showError)
-        .renderDot(code)
-    } catch (error) {
-      showError(error)
-    }
+    const actualContainer = container.current
+
+    Promise.all([import(/* webpackChunkName: "d3-graphviz" */ 'd3-graphviz'), import('@hpcc-js/wasm')]).then(([imp]) => {
+      try {
+        setError(undefined)
+        imp.graphviz(actualContainer, { useWorker: false, zoom: false })
+          .onerror(showError)
+          .renderDot(code)
+      } catch (error) {
+        showError(error)
+      }
+    }).catch(() => { console.error('error while loading graphviz') })
   }, [code, error, showError])
 
   return <Fragment>
@@ -42,3 +44,5 @@ export const GraphvizFrame: React.FC<GraphvizFrameProps> = ({ code }) => {
     <div className={'text-center'} ref={container} />
   </Fragment>
 }
+
+export default GraphvizFrame

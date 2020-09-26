@@ -1,4 +1,3 @@
-import 'fork-awesome/css/fork-awesome.min.css'
 import React from 'react'
 import { IconName, IconSize } from './types'
 

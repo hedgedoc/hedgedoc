@@ -1,10 +1,5 @@
 import { Reducer } from 'redux'
-import {
-  BannerActions,
-  BannerActionType,
-  BannerState,
-  SetBannerAction
-} from './types'
+import { BannerActions, BannerActionType, BannerState, SetBannerAction } from './types'
 
 export const initialState: BannerState = {
   show: true,

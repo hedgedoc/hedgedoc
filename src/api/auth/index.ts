@@ -1,5 +1,5 @@
 import { RegisterError } from '../../components/register-page/register-page'
-import { expectResponseCode, getApiUrl, defaultFetchConfig } from '../utils'
+import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 
 export const doInternalLogin = async (username: string, password: string): Promise<void> => {
   const response = await fetch(getApiUrl() + '/auth/internal', {

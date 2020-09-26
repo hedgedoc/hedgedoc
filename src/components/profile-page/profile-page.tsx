@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
@@ -18,7 +18,7 @@ export const ProfilePage: React.FC = () => {
     )
   }
 
-  return (
+  return <Fragment>
     <div className="my-3">
       <Row className="h-100 flex justify-content-center">
         <Col lg={6}>
@@ -30,5 +30,5 @@ export const ProfilePage: React.FC = () => {
         </Col>
       </Row>
     </div>
-  )
+  </Fragment>
 }

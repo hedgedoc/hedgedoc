@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import { ApplicationLoader } from './components/application-loader/application-loader'
 import { NotFoundErrorScreen } from './components/common/routing/not-found-error-screen'
 import { Redirector } from './components/common/routing/redirector'
-import { Editor } from './components/editor/editor'
 import { ErrorBoundary } from './components/error-boundary/error-boundary'
 import { HistoryPage } from './components/history-page/history-page'
 import { IntroPage } from './components/intro-page/intro-page'
@@ -15,8 +14,10 @@ import { ProfilePage } from './components/profile-page/profile-page'
 import { RegisterPage } from './components/register-page/register-page'
 import { store } from './redux'
 import * as serviceWorker from './service-worker'
-import './style/index.scss'
 import './style/dark.scss'
+import './style/index.scss'
+
+const Editor = React.lazy(() => import(/* webpackPrefetch: true */ './components/editor/editor'))
 
 ReactDOM.render(
   <Provider store={store}>

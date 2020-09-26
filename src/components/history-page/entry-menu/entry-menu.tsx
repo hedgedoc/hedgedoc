@@ -18,7 +18,7 @@ export interface EntryMenuProps {
   className?: string
 }
 
-const EntryMenu: React.FC<EntryMenuProps> = ({ id, title, location, isDark, onRemove, onDelete, className }) => {
+export const EntryMenu: React.FC<EntryMenuProps> = ({ id, title, location, isDark, onRemove, onDelete, className }) => {
   useTranslation()
 
   return (
@@ -54,5 +54,3 @@ const EntryMenu: React.FC<EntryMenuProps> = ({ id, title, location, isDark, onRe
     </Dropdown>
   )
 }
-
-export { EntryMenu }

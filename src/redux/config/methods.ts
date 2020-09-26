@@ -1,5 +1,5 @@
-import { Config } from '../../api/config/types'
 import { store } from '..'
+import { Config } from '../../api/config/types'
 import { ConfigActionType, SetConfigAction } from './types'
 
 export const setConfig = (state: Config): void => {

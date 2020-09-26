@@ -1,8 +1,8 @@
-@import '../../../../node_modules/codemirror/lib/codemirror.css';
-@import '../../../../node_modules/codemirror/addon/display/fullscreen.css';
-@import '../../../../node_modules/codemirror/addon/dialog/dialog.css';
-@import '../../../../node_modules/codemirror/theme/neat.css';
-@import './one-dark.css';
+@import '../../../../node_modules/codemirror/lib/codemirror';
+@import '../../../../node_modules/codemirror/addon/display/fullscreen';
+@import '../../../../node_modules/codemirror/addon/dialog/dialog';
+@import '../../../../node_modules/codemirror/theme/neat';
+@import './one-dark';
 @import 'hints';
 
 .CodeMirror {

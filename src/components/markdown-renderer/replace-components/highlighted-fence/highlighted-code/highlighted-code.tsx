@@ -1,5 +1,4 @@
-import hljs from 'highlight.js'
-import React, { Fragment, useMemo } from 'react'
+import React, { Fragment, ReactElement, useEffect, useState } from 'react'
 import ReactHtmlParser from 'react-html-parser'
 import { CopyToClipboardButton } from '../../../../common/copyable/copy-to-clipboard-button/copy-to-clipboard-button'
 import '../../../utils/button-inside.scss'
@@ -21,10 +20,6 @@ export const escapeHtml = (unsafe: string): string => {
     .replace(/'/g, '&#039;')
 }
 
-const checkIfLanguageIsSupported = (language: string): boolean => {
-  return hljs.listLanguages().includes(language)
-}
-
 const correctLanguage = (language: string | undefined): string | undefined => {
   switch (language) {
     case 'html':
@@ -34,29 +29,36 @@ const correctLanguage = (language: string | undefined): string | undefined => {
   }
 }
 
+const replaceCode = (code: string): ReactElement[][] => {
+  return code.split('\n')
+    .filter(line => !!line)
+    .map(line => ReactHtmlParser(line))
+}
+
 export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language, startLineNumber, wrapLines }) => {
-  const highlightedCode = useMemo(() => {
-    const replacedLanguage = correctLanguage(language)
-    return ((!!replacedLanguage && checkIfLanguageIsSupported(replacedLanguage)) ? hljs.highlight(replacedLanguage, code).value : escapeHtml(code))
-      .split('\n')
-      .filter(line => !!line)
-      .map(line => ReactHtmlParser(line))
-  }, [code, language])
+  const [dom, setDom] = useState<ReactElement[]>()
+
+  useEffect(() => {
+    import(/* webpackChunkName: "highlight.js" */ 'highlight.js').then((hljs) => {
+      const correctedLanguage = correctLanguage(language)
+      const languageSupported = (lang: string) => hljs.listLanguages().includes(lang)
+      const unreplacedCode = !!correctedLanguage && languageSupported(correctedLanguage) ? hljs.highlight(correctedLanguage, code).value : escapeHtml(code)
+      const replacedDom = replaceCode(unreplacedCode).map((line, index) => (
+        <Fragment key={index}>
+          <span className={'linenumber'} data-line-number={(startLineNumber || 1) + index}/>
+          <div className={'codeline'}>
+            {line}
+          </div>
+        </Fragment>
+      ))
+      setDom(replacedDom)
+    }).catch(() => { console.error('error while loading highlight.js') })
+  }, [code, language, startLineNumber])
 
   return (
     <Fragment>
       <code className={`hljs ${startLineNumber !== undefined ? 'showGutter' : ''} ${wrapLines ? 'wrapLines' : ''}`}>
-        {
-          highlightedCode
-            .map((line, index) => (
-              <Fragment key={index}>
-                <span className={'linenumber'} data-line-number={(startLineNumber || 1) + index}/>
-                <div className={'codeline'}>
-                  {line}
-                </div>
-              </Fragment>
-            ))
-        }
+        { dom }
       </code>
       <div className={'text-right button-inside'}>
         <CopyToClipboardButton content={code}/>

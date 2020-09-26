@@ -1,5 +1,3 @@
-import { transform } from 'markmap-lib/dist/transform'
-import { Markmap } from 'markmap-lib/dist/view'
 import React, { useEffect, useRef } from 'react'
 
 export interface MarkmapFrameProps {
@@ -13,12 +11,16 @@ export const MarkmapFrame: React.FC<MarkmapFrameProps> = ({ code }) => {
     if (!diagramContainer.current) {
       return
     }
-    const svg: SVGSVGElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
-    svg.setAttribute('width', '100%')
-    diagramContainer.current.querySelectorAll('svg').forEach(child => child.remove())
-    diagramContainer.current.appendChild(svg)
-    const data = transform(code)
-    Markmap.create(svg, {}, data)
+    const actualContainer = diagramContainer.current
+    Promise.all([import(/* webpackChunkName: "markmap" */ 'markmap-lib/dist/transform'), import(/* webpackChunkName: "markmap" */ 'markmap-lib/dist/view')])
+      .then(([transform, view]) => {
+        const svg: SVGSVGElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+        svg.setAttribute('width', '100%')
+        actualContainer.querySelectorAll('svg').forEach(child => child.remove())
+        actualContainer.appendChild(svg)
+        const data = transform.transform(code)
+        view.Markmap.create(svg, {}, data)
+      }).catch(() => { console.error('error while loading markmap') })
   }, [code])
 
   return <div className={'text-center'} ref={diagramContainer}/>

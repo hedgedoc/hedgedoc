@@ -1,5 +1,5 @@
 import { DomElement } from 'domhandler'
-import React, { Fragment, ReactElement } from 'react'
+import React, { ReactElement, Suspense } from 'react'
 import { convertNodeToElement, Transform } from 'react-html-parser'
 import {
   ComponentReplacer,
@@ -69,7 +69,9 @@ export const buildTransformer = (lineKeys: (LineKeys[] | undefined), allReplacer
     } else if (tryReplacement === undefined) {
       return nativeRenderer(node, key)
     } else {
-      return <Fragment key={key}>{tryReplacement}</Fragment>
+      return <Suspense key={key} fallback={<span>Loading...</span>}>
+        { tryReplacement }
+      </Suspense>
     }
   }
   return transform

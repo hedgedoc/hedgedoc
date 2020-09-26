@@ -1,8 +1,7 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react'
+import React, { Suspense, useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import './application-loader.scss'
 import { createSetUpTaskList, InitTask } from './initializers'
-
 import { LoadingScreen } from './loading-screen'
 
 export const ApplicationLoader: React.FC = ({ children }) => {
@@ -33,9 +32,13 @@ export const ApplicationLoader: React.FC = ({ children }) => {
     }
   }, [initTasks, runTask])
 
-  return (
-    doneTasks < initTasks.length || initTasks.length === 0
-      ? <LoadingScreen failedTitle={failedTitle}/>
-      : <Fragment>{children}</Fragment>
-  )
+  const tasksAreRunning = doneTasks < initTasks.length || initTasks.length === 0
+
+  if (tasksAreRunning) {
+    return <LoadingScreen failedTitle={failedTitle}/>
+  } else {
+    return <Suspense fallback={(<LoadingScreen/>)}>
+      {children}
+    </Suspense>
+  }
 }

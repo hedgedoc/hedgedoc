@@ -1,5 +1,5 @@
 import { UserResponse } from '../users/types'
-import { expectResponseCode, getApiUrl, defaultFetchConfig } from '../utils'
+import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 
 export const getMe = async (): Promise<UserResponse> => {
   const response = await fetch(getApiUrl() + '/me', {

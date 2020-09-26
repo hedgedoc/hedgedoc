@@ -145,3 +145,5 @@ export const Editor: React.FC = () => {
     </Fragment>
   )
 }
+
+export default Editor

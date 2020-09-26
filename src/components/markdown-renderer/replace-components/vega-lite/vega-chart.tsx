@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import embed, { VisualizationSpec } from 'vega-embed'
+import { VisualizationSpec } from 'vega-embed'
 import { ShowIf } from '../../../common/show-if/show-if'
 
 export interface VegaChartProps {
@@ -25,27 +25,31 @@ export const VegaChart: React.FC<VegaChartProps> = ({ code }) => {
     if (!diagramContainer.current) {
       return
     }
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const spec: VisualizationSpec = JSON.parse(code)
-      showError('')
-      embed(diagramContainer.current, spec, {
-        actions: {
-          export: true,
-          source: false,
-          compiled: false,
-          editor: false
-        },
-        i18n: {
-          PNG_ACTION: t('renderer.vega-lite.png'),
-          SVG_ACTION: t('renderer.vega-lite.svg')
+    import(/* webpackChunkName: "vega" */ 'vega-embed').then((embed) => {
+      try {
+        if (!diagramContainer.current) {
+          return
         }
-      })
-        .then(result => console.log(result))
-        .catch(err => showError(err))
-    } catch (err) {
-      showError(t('renderer.vega-lite.errorJson'))
-    }
+
+        const spec = JSON.parse(code) as VisualizationSpec
+        embed.default(diagramContainer.current, spec, {
+          actions: {
+            export: true,
+            source: false,
+            compiled: false,
+            editor: false
+          },
+          i18n: {
+            PNG_ACTION: t('renderer.vega-lite.png'),
+            SVG_ACTION: t('renderer.vega-lite.svg')
+          }
+        })
+          .then(() => showError(''))
+          .catch(err => showError(err))
+      } catch (err) {
+        showError(t('renderer.vega-lite.errorJson'))
+      }
+    }).catch(() => { console.error('error while loading vega-light') })
   }, [code, showError, t])
 
   return <Fragment>

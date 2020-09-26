@@ -1,20 +1,5 @@
 .history-menu {
-
-  .fa, &::after {
-    opacity: 0.5;
-  }
-
-  &:hover .fa, &:hover::after {
-    opacity: 1;
-  }
-
   &.btn {
     padding: 0.6rem 0.65rem;
   }
-}
-
-.dropup .dropdown-toggle, .dropdown-toggle {
-    &.no-arrow::after {
-      content: initial;
-    }
 }

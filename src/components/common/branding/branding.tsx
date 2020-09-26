@@ -1,4 +1,3 @@
-
 import equal from 'fast-deep-equal'
 import React from 'react'
 import { useSelector } from 'react-redux'

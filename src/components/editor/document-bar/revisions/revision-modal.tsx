@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Alert, Col, ListGroup, Modal, Row, Button } from 'react-bootstrap'
+import { Alert, Button, Col, ListGroup, Modal, Row } from 'react-bootstrap'
 import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'

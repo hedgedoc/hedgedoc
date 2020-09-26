@@ -2,10 +2,10 @@ import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
+import links from '../../../../links.json'
 import { ApplicationState } from '../../../../redux'
 import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
 import { TranslatedInternalLink } from '../../../common/links/translated-internal-link'
-import links from '../../../../links.json'
 
 export const Links: React.FC = () => {
   useTranslation()

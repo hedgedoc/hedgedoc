@@ -1,6 +1,5 @@
 import React from 'react'
 import { Trans } from 'react-i18next'
-import './icon-button.scss'
 import { IconButton, IconButtonProps } from './icon-button'
 
 export interface TranslatedIconButton extends IconButtonProps {
