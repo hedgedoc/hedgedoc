@@ -16,8 +16,8 @@ import { Authorship } from './authorship.entity';
  */
 @Entity()
 export class Revision {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   /**
    * The patch from the previous revision to this one.
@@ -65,4 +65,15 @@ export class Revision {
   )
   @JoinTable()
   authorships: Authorship[];
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private constructor() {}
+
+  static create(content: string, patch: string): Revision {
+    const newRevision = new Revision();
+    newRevision.patch = patch;
+    newRevision.content = content;
+    newRevision.length = content.length;
+    return newRevision;
+  }
 }

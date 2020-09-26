@@ -1,53 +1,98 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
   Header,
+  Logger,
   Param,
   Post,
   Put,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
+import * as getRawBody from 'raw-body';
 import { NotePermissionsUpdateDto } from '../../../notes/note-permissions.dto';
 import { NotesService } from '../../../notes/notes.service';
 import { RevisionsService } from '../../../revisions/revisions.service';
 
 @Controller('notes')
 export class NotesController {
+  private readonly logger = new Logger(NotesController.name);
+
   constructor(
     private noteService: NotesService,
     private revisionsService: RevisionsService,
   ) {}
 
+  /**
+   * Extract the raw markdown from the request body and create a new note with it
+   *
+   * Implementation inspired by https://stackoverflow.com/questions/52283713/how-do-i-pass-plain-text-as-my-request-body-using-nestjs
+   */
   @Post()
-  createNote(@Body() noteContent: string) {
-    return this.noteService.createNote(noteContent);
+  async createNote(@Req() req: Request) {
+    // we have to check req.readable because of raw-body issue #57
+    // https://github.com/stream-utils/raw-body/issues/57
+    if (req.readable) {
+      let bodyText: string = await getRawBody(req, 'utf-8');
+      bodyText = bodyText.trim();
+      this.logger.debug('Got raw markdown:\n' + bodyText);
+      return this.noteService.createNoteDto(bodyText);
+    } else {
+      // TODO: Better error message
+      throw new BadRequestException('Invalid body');
+    }
   }
 
   @Get(':noteIdOrAlias')
   getNote(@Param('noteIdOrAlias') noteIdOrAlias: string) {
-    return this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
+    return this.noteService.getNoteDtoByIdOrAlias(noteIdOrAlias);
   }
 
   @Post(':noteAlias')
-  createNamedNote(
+  async createNamedNote(
     @Param('noteAlias') noteAlias: string,
-    @Body() noteContent: string,
+    @Req() req: Request,
   ) {
-    return this.noteService.createNote(noteContent, noteAlias);
+    // we have to check req.readable because of raw-body issue #57
+    // https://github.com/stream-utils/raw-body/issues/57
+    if (req.readable) {
+      let bodyText: string = await getRawBody(req, 'utf-8');
+      bodyText = bodyText.trim();
+      this.logger.debug('Got raw markdown:\n' + bodyText);
+      return this.noteService.createNoteDto(bodyText, noteAlias);
+    } else {
+      // TODO: Better error message
+      throw new BadRequestException('Invalid body');
+    }
   }
 
   @Delete(':noteIdOrAlias')
-  deleteNote(@Param('noteIdOrAlias') noteIdOrAlias: string) {
-    return this.noteService.deleteNoteByIdOrAlias(noteIdOrAlias);
+  async deleteNote(@Param('noteIdOrAlias') noteIdOrAlias: string) {
+    this.logger.debug('Deleting note: ' + noteIdOrAlias);
+    await this.noteService.deleteNoteByIdOrAlias(noteIdOrAlias);
+    this.logger.debug('Successfully deleted ' + noteIdOrAlias);
+    return;
   }
 
   @Put(':noteIdOrAlias')
-  updateNote(
+  async updateNote(
     @Param('noteIdOrAlias') noteIdOrAlias: string,
-    @Body() noteContent: string,
+    @Req() req: Request,
   ) {
-    return this.noteService.updateNoteByIdOrAlias(noteIdOrAlias, noteContent);
+    // we have to check req.readable because of raw-body issue #57
+    // https://github.com/stream-utils/raw-body/issues/57
+    if (req.readable) {
+      let bodyText: string = await getRawBody(req, 'utf-8');
+      bodyText = bodyText.trim();
+      this.logger.debug('Got raw markdown:\n' + bodyText);
+      return this.noteService.updateNoteByIdOrAlias(noteIdOrAlias, bodyText);
+    } else {
+      // TODO: Better error message
+      throw new BadRequestException('Invalid body');
+    }
   }
 
   @Get(':noteIdOrAlias/content')
@@ -77,7 +122,7 @@ export class NotesController {
   @Get(':noteIdOrAlias/revisions/:revisionId')
   getNoteRevision(
     @Param('noteIdOrAlias') noteIdOrAlias: string,
-    @Param('revisionId') revisionId: string,
+    @Param('revisionId') revisionId: number,
   ) {
     return this.revisionsService.getNoteRevision(noteIdOrAlias, revisionId);
   }

@@ -1,11 +1,13 @@
-import { IsString } from 'class-validator';
+import { IsDate, IsNumber, IsString } from 'class-validator';
 import { Revision } from './revision.entity';
 
 export class RevisionDto {
-  @IsString()
+  @IsNumber()
   id: Revision['id'];
   @IsString()
   content: string;
   @IsString()
   patch: string;
+  @IsDate()
+  createdAt: Date;
 }
