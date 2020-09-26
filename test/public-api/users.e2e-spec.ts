@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../../src/app.module';
-import { UsersService } from '../../src/users/users.service';
+//import { UsersService } from '../../src/users/users.service';
 import { UserInfoDto } from '../../src/users/user-info.dto';
 import { HistoryService } from '../../src/history/history.service';
 import { NotesService } from '../../src/notes/notes.service';
@@ -13,7 +13,7 @@ import { HistoryEntryDto } from '../../src/history/history-entry.dto';
 
 describe('Notes', () => {
   let app: INestApplication;
-  let usersService: UsersService;
+  //let usersService: UsersService;
   let historyService: HistoryService;
   let notesService: NotesService;
 
@@ -23,13 +23,13 @@ describe('Notes', () => {
     }).compile();
     // TODO Create User and generateAPI Token or other Auth
     app = moduleRef.createNestApplication();
-    usersService = moduleRef.get(UsersService);
+    //usersService = moduleRef.get(UsersService);
     await app.init();
   });
 
   it.skip(`GET /me`, async () => {
     // TODO Get user from beforeAll
-    let userInfo = new UserInfoDto();
+    const userInfo = new UserInfoDto();
     const response = await request(app.getHttpServer())
       .post('/me')
       .expect('Content-Type', /json/)
@@ -48,7 +48,7 @@ describe('Notes', () => {
       .expect('Content-Type', /json/)
       .expect(200);
     let historyEntry: HistoryEntryDto;
-    for (let e of <any[]>response.body.content) {
+    for (const e of <any[]>response.body.content) {
       if ((<HistoryEntryDto>e).metadata.alias === 'testGetHistory') {
         historyEntry = e;
       }
@@ -82,7 +82,7 @@ describe('Notes', () => {
     expect(response.body.content).toBeNull();
     const history = historyService.getUserHistory('testuser');
     let historyEntry: HistoryEntryDto = null;
-    for (let e of history) {
+    for (const e of history) {
       if (e.metadata.alias === noteName) {
         historyEntry = e;
       }
@@ -94,23 +94,23 @@ describe('Notes', () => {
     const noteName = 'testPutNoteHistory';
     // TODO use function from HistoryService to add an History Entry
     await notesService.createNote('', noteName);
-    let historyEntryUpdateDto = new HistoryEntryUpdateDto();
+    const historyEntryUpdateDto = new HistoryEntryUpdateDto();
     historyEntryUpdateDto.pinStatus = true;
-    let response = await request(app.getHttpServer())
+    const response = await request(app.getHttpServer())
       .put('/me/history/' + noteName)
       .send(historyEntryUpdateDto)
       .expect(200);
     // TODO parameter is not used for now
     const history = historyService.getUserHistory('testuser');
     let historyEntry: HistoryEntryDto;
-    for (let e of <any[]>response.body.content) {
+    for (const e of <any[]>response.body.content) {
       if ((<HistoryEntryDto>e).metadata.alias === noteName) {
         historyEntry = e;
       }
     }
     expect(historyEntry.pinStatus).toEqual(true);
     historyEntry = null;
-    for (let e of history) {
+    for (const e of history) {
       if (e.metadata.alias === noteName) {
         historyEntry = e;
       }
