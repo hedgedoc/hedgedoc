@@ -26,13 +26,9 @@ export class UsersService {
     }
   }
 
-  toUserDto(user: User): UserInfoDto {
-    if (user === undefined) {
-      this.logger.warn('toUserDto recieved undefined argument!');
-      return null;
-    }
-    if (user === null) {
-      this.logger.warn('toUserDto recieved null argument!');
+  toUserDto(user: User | null | undefined): UserInfoDto | null {
+    if (!user) {
+      this.logger.warn(`toUserDto recieved ${user} argument!`);
       return null;
     }
     return {
