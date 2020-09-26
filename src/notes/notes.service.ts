@@ -99,10 +99,10 @@ export class NotesService {
       // TODO: Convert DB UUID to base64
       id: note.id,
       alias: note.alias,
-      title: NoteUtils.parseTitle(note),
+      title: NoteUtils.parseTitle((await this.getLastRevision(note)).content),
       // TODO: Get actual createTime
       createTime: new Date(),
-      description: NoteUtils.parseDescription(note),
+      description: NoteUtils.parseDescription((await this.getLastRevision(note)).content),
       editedBy: note.authorColors.map(authorColor => authorColor.user.userName),
       // TODO: Extract into method
       permission: {
@@ -116,7 +116,7 @@ export class NotesService {
           canEdit: noteGroupPermission.canEdit,
         })),
       },
-      tags: NoteUtils.parseTags(note),
+      tags: NoteUtils.parseTags((await this.getLastRevision(note)).content),
       updateTime: (await this.getLastRevision(note)).createdAt,
       // TODO: Get actual updateUser
       updateUser: {
