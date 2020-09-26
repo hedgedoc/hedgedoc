@@ -102,7 +102,7 @@
         "uuid": "8.3.0",
         "vega": "5.16.1",
         "vega-embed": "6.12.2",
-        "vega-lite": "4.16.2"
+        "vega-lite": "4.16.7"
     },
     "scripts": {
         "start": "PORT=3001 craco start",
