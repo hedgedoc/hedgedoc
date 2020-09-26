@@ -42,7 +42,7 @@ describe('Notes', () => {
     /* TODO Note maybe not added to history by createNote,
         use function from HistoryService instead
      */
-    notesService.createNote('', 'testGetHistory');
+    await notesService.createNote('', 'testGetHistory');
     const response = await request(app.getHttpServer())
       .get('/me/history')
       .expect('Content-Type', /json/)
@@ -61,7 +61,7 @@ describe('Notes', () => {
     /* TODO Note maybe not added to history by createNote,
         use function from HistoryService instead
      */
-    notesService.createNote('', noteName);
+    await notesService.createNote('', noteName);
     const response = await request(app.getHttpServer())
       .get('/me/history/' + noteName)
       .expect('Content-Type', /json/)
@@ -75,7 +75,7 @@ describe('Notes', () => {
     /* TODO Note maybe not added to history by createNote,
         use function from HistoryService instead
      */
-    notesService.createNote('This is a test note.', noteName);
+    await notesService.createNote('This is a test note.', noteName);
     const response = await request(app.getHttpServer())
       .delete('/me/history/test3')
       .expect(204);
@@ -93,7 +93,7 @@ describe('Notes', () => {
   it.skip(`PUT /me/history/{note}`, async () => {
     const noteName = 'testPutNoteHistory';
     // TODO use function from HistoryService to add an History Entry
-    notesService.createNote('', noteName);
+    await notesService.createNote('', noteName);
     let historyEntryUpdateDto = new HistoryEntryUpdateDto();
     historyEntryUpdateDto.pinStatus = true;
     let response = await request(app.getHttpServer())
@@ -120,7 +120,8 @@ describe('Notes', () => {
 
 
   it.skip(`GET /me/notes/`, async () => {
-    notesService.createNote('This is a test note.', 'test7');
+    // TODO use function from HistoryService to add an History Entry
+    await notesService.createNote('This is a test note.', 'test7');
     // usersService.getALLNotesOwnedByUser() TODO Implement function
     const response = await request(app.getHttpServer())
       .get('/me/notes/')
