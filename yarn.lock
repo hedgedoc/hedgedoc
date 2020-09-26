@@ -1677,10 +1677,10 @@
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
 
-"@testing-library/cypress@7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/cypress/-/cypress-7.0.0.tgz#c71d95618e20129246dd42b8cbcad01926ce9c3c"
-  integrity sha512-sbH3U5yZ7RbN35Lwu/vgA2+XjSbtTSLpp+xFi/c19sdojG82jSYA/gNOCf8/jUKda6W3XwkBHciye7AFTP+qIQ==
+"@testing-library/cypress@7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@testing-library/cypress/-/cypress-7.0.1.tgz#2843033acaefe96cb4cf789f16e98d957383e59d"
+  integrity sha512-LtggqG/7Hdc1EiKdmqXQwxWOO3ET1dkZtq0S8mIe8o+xaOtaVLrdCn0dE8Bi4Aj7z3w51w6wN9STdYymnUPlnQ==
   dependencies:
     "@babel/runtime" "^7.11.2"
     "@testing-library/dom" "^7.22.2"
@@ -1720,10 +1720,10 @@
     "@babel/runtime" "^7.11.2"
     "@testing-library/dom" "^7.24.2"
 
-"@testing-library/user-event@12.1.5":
-  version "12.1.5"
-  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-12.1.5.tgz#b2a94b8b3c1a908cc1c425623b11de63b20bb837"
-  integrity sha512-FzTnKvb0KC4T84G6uTx971ja8OOqLlsprzWbeRyd8f1MDwbcLIFgx0Hyr56izY9m9y2KwHGVKeVEkTPslw32lw==
+"@testing-library/user-event@12.1.6":
+  version "12.1.6"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-12.1.6.tgz#f550b138dfdc20387b89cbe3e9f3d969ab10c2bd"
+  integrity sha512-BdSe6cmzDEapTBH3s1NKbzu+GyX5bJKraKwVpM2vZF1+EEWxZr0EiA0z9bA5Nux8P+6nKMOZKsXQrj5q/kicfQ==
   dependencies:
     "@babel/runtime" "^7.10.2"
 
