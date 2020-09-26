@@ -74,6 +74,7 @@ export class NotesService {
   ): Promise<Note> {
     const newNote = Note.create();
     newNote.revisions = Promise.resolve([
+      //TODO: Calculate patch
       Revision.create(noteContent, noteContent),
     ]);
     if (alias) {
