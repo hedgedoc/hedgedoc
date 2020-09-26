@@ -151,7 +151,7 @@
         ]
     },
     "devDependencies": {
-        "@cypress/webpack-preprocessor": "5.4.5",
+        "@cypress/webpack-preprocessor": "5.4.6",
         "@testing-library/cypress": "7.0.1",
         "@types/redux-devtools": "3.0.47",
         "@types/redux-devtools-extension": "2.13.2",
