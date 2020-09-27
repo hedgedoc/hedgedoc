@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { HistoryModule } from '../../../history/history.module';
+import { LoggerModule } from '../../../logger/logger.module';
 import { AuthorColor } from '../../../notes/author-color.entity';
 import { Note } from '../../../notes/note.entity';
 import { NotesModule } from '../../../notes/notes.module';
@@ -18,7 +19,7 @@ describe('Me Controller', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [MeController],
-      imports: [UsersModule, HistoryModule, NotesModule],
+      imports: [UsersModule, HistoryModule, NotesModule, LoggerModule],
     })
       .overrideProvider(getRepositoryToken(User))
       .useValue({})

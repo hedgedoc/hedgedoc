@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PublicApiModule } from './api/public/public-api.module';
-import { NotesModule } from './notes/notes.module';
-import { UsersModule } from './users/users.module';
-import { RevisionsModule } from './revisions/revisions.module';
 import { AuthorsModule } from './authors/authors.module';
-import { HistoryModule } from './history/history.module';
-import { MonitoringModule } from './monitoring/monitoring.module';
-import { PermissionsModule } from './permissions/permissions.module';
 import { GroupsModule } from './groups/groups.module';
+import { HistoryModule } from './history/history.module';
+import { LoggerModule } from './logger/logger.module';
+import { MonitoringModule } from './monitoring/monitoring.module';
+import { NotesModule } from './notes/notes.module';
+import { PermissionsModule } from './permissions/permissions.module';
+import { RevisionsModule } from './revisions/revisions.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { GroupsModule } from './groups/groups.module';
     MonitoringModule,
     PermissionsModule,
     GroupsModule,
+    LoggerModule,
   ],
   controllers: [],
   providers: [],

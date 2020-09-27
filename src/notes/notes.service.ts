@@ -1,6 +1,7 @@
-import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Revision } from '../revisions/revision.entity';
 import { RevisionsService } from '../revisions/revisions.service';
 import { User } from '../users/user.entity';
@@ -16,14 +17,15 @@ import { NoteUtils } from './note.utils';
 
 @Injectable()
 export class NotesService {
-  private readonly logger = new Logger(NotesService.name);
-
   constructor(
+    private readonly logger: ConsoleLoggerService,
     @InjectRepository(Note) private noteRepository: Repository<Note>,
     @Inject(UsersService) private usersService: UsersService,
     @Inject(forwardRef(() => RevisionsService))
     private revisionsService: RevisionsService,
-  ) {}
+  ) {
+    this.logger.setContext(NotesService.name);
+  }
 
   getUserNotes(username: string): NoteMetadataDto[] {
     this.logger.warn('Using hardcoded data!');

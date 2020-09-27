@@ -1,15 +1,17 @@
 import {
   Controller,
-  Logger,
   Post,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 
 @Controller('media')
 export class MediaController {
-  private readonly logger = new Logger(MediaController.name);
+  constructor(private readonly logger: ConsoleLoggerService) {
+    this.logger.setContext(MediaController.name);
+  }
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))

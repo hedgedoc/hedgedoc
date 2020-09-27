@@ -1,10 +1,13 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { HistoryEntryUpdateDto } from './history-entry-update.dto';
 import { HistoryEntryDto } from './history-entry.dto';
 
 @Injectable()
 export class HistoryService {
-  private readonly logger = new Logger(HistoryService.name);
+  constructor(private readonly logger: ConsoleLoggerService) {
+    this.logger.setContext(HistoryService.name);
+  }
 
   getUserHistory(username: string): HistoryEntryDto[] {
     //TODO: Use the database
