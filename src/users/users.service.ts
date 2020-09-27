@@ -1,10 +1,13 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { UserInfoDto } from './user-info.dto';
 import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
-  private readonly logger = new Logger(UsersService.name);
+  constructor(private readonly logger: ConsoleLoggerService) {
+    this.logger.setContext(UsersService.name);
+  }
 
   getUserInfo(): UserInfoDto {
     //TODO: Use the database
@@ -28,7 +31,7 @@ export class UsersService {
 
   toUserDto(user: User | null | undefined): UserInfoDto | null {
     if (!user) {
-      this.logger.warn(`toUserDto recieved ${user} argument!`);
+      this.logger.warn(`Recieved ${user} argument!`, 'toUserDto');
       return null;
     }
     return {

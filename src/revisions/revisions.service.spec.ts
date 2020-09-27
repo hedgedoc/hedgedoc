@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { LoggerModule } from '../logger/logger.module';
 import { AuthorColor } from '../notes/author-color.entity';
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
@@ -22,7 +23,7 @@ describe('RevisionsService', () => {
           useValue: {},
         },
       ],
-      imports: [NotesModule],
+      imports: [NotesModule, LoggerModule],
     })
       .overrideProvider(getRepositoryToken(Authorship))
       .useValue({})

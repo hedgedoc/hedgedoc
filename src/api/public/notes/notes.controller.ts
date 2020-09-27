@@ -5,7 +5,6 @@ import {
   Delete,
   Get,
   Header,
-  Logger,
   Param,
   Post,
   Put,
@@ -13,18 +12,20 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import * as getRawBody from 'raw-body';
+import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { NotePermissionsUpdateDto } from '../../../notes/note-permissions.dto';
 import { NotesService } from '../../../notes/notes.service';
 import { RevisionsService } from '../../../revisions/revisions.service';
 
 @Controller('notes')
 export class NotesController {
-  private readonly logger = new Logger(NotesController.name);
-
   constructor(
+    private readonly logger: ConsoleLoggerService,
     private noteService: NotesService,
     private revisionsService: RevisionsService,
-  ) {}
+  ) {
+    this.logger.setContext(NotesController.name);
+  }
 
   /**
    * Extract the raw markdown from the request body and create a new note with it
