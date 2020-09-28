@@ -16,7 +16,7 @@ which will take care of the encryption for you.
 
 We'll get back to you as soon as possible. You can expect an answer within
 3 days, in rare cases within a month. If you don't get a reply within a month,
-please reach out for other contact addresses in the [community chat](https://app.element.io/#/room/#hedgedoc:matrix.org).
+please reach out for other contact addresses in the [community chat](https://matrix.to/#/#hedgedoc:matrix.org).
 
 When your findings are accepted as a security issue, we'll work an a fix or
 at least a workaround for the next release. With the release that contained
@@ -29,4 +29,4 @@ a fix yourself and contribute it to CodiMD, as well as publish them as you
 like and allow people to make in informed decision about using CodiMD.
 
 If you have any further questions, feel free to reach out to the
-[community chat](https://app.element.io/#/room/#hedgedoc:matrix.org) or the mentioned contacts above.
+[community chat](https://matrix.to/#/#hedgedoc:matrix.org) or the mentioned contacts above.
