@@ -85,8 +85,8 @@ which lets you use CodiMD from the comfort of your command line.
 
 Licensed under AGPLv3. For our list of contributors, see [AUTHORS](AUTHORS).
 
-[matrix.org-image]: https://img.shields.io/matrix/codimd:matrix.org?logo=matrix&server_fqdn=matrix.org
-[matrix.org-url]: https://riot.im/app/#/room/#codimd:matrix.org
+[matrix.org-image]: https://img.shields.io/matrix/hedgedoc:matrix.org?logo=matrix&server_fqdn=matrix.org
+[matrix.org-url]: https://matrix.to/#/#hedgedoc:matrix.org
 [travis-image]: https://travis-ci.org/codimd/server.svg?branch=master
 [travis-url]: https://travis-ci.org/codimd/server
 [github-version-badge]: https://img.shields.io/github/release/codimd/server.svg
