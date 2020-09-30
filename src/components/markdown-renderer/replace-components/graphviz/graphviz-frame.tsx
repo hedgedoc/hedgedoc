@@ -25,16 +25,24 @@ export const GraphvizFrame: React.FC<GraphvizFrameProps> = ({ code }) => {
     }
     const actualContainer = container.current
 
-    Promise.all([import(/* webpackChunkName: "d3-graphviz" */ 'd3-graphviz'), import('@hpcc-js/wasm')]).then(([imp]) => {
-      try {
-        setError(undefined)
-        imp.graphviz(actualContainer, { useWorker: false, zoom: false })
-          .onerror(showError)
-          .renderDot(code)
-      } catch (error) {
-        showError(error)
-      }
-    }).catch(() => { console.error('error while loading graphviz') })
+    import('@hpcc-js/wasm')
+      .then((wasmPlugin) => {
+        wasmPlugin.wasmFolder('/static/js')
+      })
+      .then(() => import(/* webpackChunkName: "d3-graphviz" */ 'd3-graphviz'))
+      .then((graphvizImport) => {
+        try {
+          setError(undefined)
+          graphvizImport.graphviz(actualContainer, {
+            useWorker: false,
+            zoom: false
+          })
+            .onerror(showError)
+            .renderDot(code)
+        } catch (error) {
+          showError(error)
+        }
+      }).catch(() => { console.error('error while loading graphviz') })
   }, [code, error, showError])
 
   return <Fragment>
