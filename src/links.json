@@ -1,5 +1,5 @@
 {
-    "chatElement": "https://app.element.io/#/room/#hedgedoc:matrix.org",
+    "chat": "https://matrix.to/#/#hedgedoc:matrix.org",
     "community": "https://community.codimd.org",
     "faq": "https://community.codimd.org/t/frequently-asked-questions/190",
     "githubOrg": "https://github.com/codimd/",

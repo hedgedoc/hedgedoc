@@ -29,7 +29,7 @@ export const Links: React.FC = () => {
               <TranslatedExternalLink
                 i18nKey='editor.help.contacts.meetUsOn'
                 i18nOption={{ service: 'Matrix' }}
-                href={links.chatElement}
+                href={links.chat}
                 icon='hashtag'
                 className='text-primary'
               />

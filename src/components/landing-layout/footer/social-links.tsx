@@ -10,7 +10,7 @@ const SocialLink: React.FC = () => {
       <Trans i18nKey="landing.footer.followUs" components={[
         <ExternalLink href={links.githubOrg} icon='github' text="GitHub"/>,
         <ExternalLink href={links.community} icon='users' text="Discourse"/>,
-        <ExternalLink href={links.chatElement} icon="comment" text="Element"/>,
+        <ExternalLink href={links.chat} icon="comment" text="Matrix"/>,
         <ExternalLink href={links.mastodon} icon='mastodon' text="Mastodon"/>,
         <ExternalLink href={links.translate} icon="globe" text="POEditor"/>
       ]}/>

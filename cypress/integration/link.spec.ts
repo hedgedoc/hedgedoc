@@ -148,8 +148,8 @@ describe('Links Intro', () => {
     })
 
     it('Matrix', () => {
-      cy.get('a[href="https://app.element.io/#/room/#hedgedoc:matrix.org"]')
-        .checkExternalLink('https://app.element.io/#/room/#hedgedoc:matrix.org')
+      cy.get('a[href="https://matrix.to/#/#hedgedoc:matrix.org"]')
+        .checkExternalLink('https://matrix.to/#/#hedgedoc:matrix.org')
     })
 
     it('Mastodon', () => {

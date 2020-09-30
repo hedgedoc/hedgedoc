@@ -38,7 +38,7 @@ export class ErrorBoundary extends Component {
             <p>Don't worry, this happens sometimes. If this is the first time you see this page then try reloading the app.</p>
             If you can reproduce this error, then we would be glad if you&#32;
             <ExternalLink text={'open an issue on github'} href={frontendVersion.issueTrackerUrl} className={'text-primary'}/>&#32;
-            or <ExternalLink text={'contact us on matrix.'} href={links.chatElement} className={'text-primary'}/>
+            or <ExternalLink text={'contact us on matrix.'} href={links.chat} className={'text-primary'}/>
             <Button onClick={() => this.refreshPage()} title={'Reload App'} className={'mt-4'}>
               <ForkAwesomeIcon icon={'refresh'}/>&nbsp;Reload App
             </Button>
