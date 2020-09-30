@@ -1,23 +1,21 @@
+import { Cache } from '../../components/common/cache/cache'
 import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
+import { Revision, RevisionListEntry } from './types'
 
-export interface Revision {
-  content: string
-  timestamp: number
-  authors: string[]
-}
-
-export interface RevisionListEntry {
-  timestamp: number
-  length: number
-  authors: string[]
-}
+const revisionCache = new Cache<string, Revision>(3600)
 
 export const getRevision = async (noteId: string, timestamp: number): Promise<Revision> => {
+  const cacheKey = `${noteId}:${timestamp}`
+  if (revisionCache.has(cacheKey)) {
+    return revisionCache.get(cacheKey)
+  }
   const response = await fetch(getApiUrl() + `/notes/${noteId}/revisions/${timestamp}`, {
     ...defaultFetchConfig
   })
   expectResponseCode(response)
-  return await response.json() as Promise<Revision>
+  const revisionData = await response.json() as Revision
+  revisionCache.put(cacheKey, revisionData)
+  return revisionData
 }
 
 export const getAllRevisions = async (noteId: string): Promise<RevisionListEntry[]> => {

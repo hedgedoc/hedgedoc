@@ -4,7 +4,8 @@ import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
-import { getAllRevisions, getRevision, Revision, RevisionListEntry } from '../../../../api/revisions'
+import { getAllRevisions, getRevision } from '../../../../api/revisions'
+import { Revision, RevisionListEntry } from '../../../../api/revisions/types'
 import { UserResponse } from '../../../../api/users/types'
 import { ApplicationState } from '../../../../redux'
 import { CommonModal, CommonModalProps } from '../../../common/modals/common-modal'
@@ -21,7 +22,6 @@ export const RevisionModal: React.FC<CommonModalProps & RevisionButtonProps> = (
   const [selectedRevision, setSelectedRevision] = useState<Revision | null>(null)
   const [error, setError] = useState(false)
   const revisionAuthorListMap = useRef(new Map<number, UserResponse[]>())
-  const revisionCacheMap = useRef(new Map<number, Revision>())
   const darkModeEnabled = useSelector((state: ApplicationState) => state.darkMode.darkMode)
   const { id } = useParams<{ id: string }>()
 
@@ -42,14 +42,8 @@ export const RevisionModal: React.FC<CommonModalProps & RevisionButtonProps> = (
     if (selectedRevisionTimestamp === null) {
       return
     }
-    const cacheEntry = revisionCacheMap.current.get(selectedRevisionTimestamp)
-    if (cacheEntry) {
-      setSelectedRevision(cacheEntry)
-      return
-    }
     getRevision(id, selectedRevisionTimestamp).then(fetchedRevision => {
       setSelectedRevision(fetchedRevision)
-      revisionCacheMap.current.set(selectedRevisionTimestamp, fetchedRevision)
     }).catch(() => setError(true))
   }, [selectedRevisionTimestamp, id])
 
