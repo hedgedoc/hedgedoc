@@ -3,6 +3,7 @@ import { EmojiData } from 'emoji-mart'
 import { Mock } from 'ts-mockery'
 import {
   addCodeFences,
+  addCollapsableBlock,
   addComment,
   addEmoji,
   addHeaderLevel,
@@ -1499,6 +1500,93 @@ describe('test addLine', () => {
     addLine(editor)
   })
 })
+
+describe('test collapsable block', () => {
+  const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
+  const textFirstLine = testContent.split('\n')[0]
+  it('just cursor', done => {
+    Mock.extend(editor).with({
+      listSelections: () => (
+        Mock.of<Range[]>([{
+          anchor: cursor.from,
+          head: cursor.to,
+          from: () => cursor.from,
+          to: () => cursor.to,
+          empty: () => true
+        }])
+      ),
+      getLine: (): string => (textFirstLine),
+      replaceRange: (replacement: string | string[]) => {
+        expect(replacement).toEqual(`${textFirstLine}\n<details>\n  <summary>Toggle label</summary>\n  Toggled content\n</details>`)
+        done()
+      }
+    })
+    addCollapsableBlock(editor)
+  })
+
+  it('1st line', done => {
+    Mock.extend(editor).with({
+      listSelections: () => (
+        Mock.of<Range[]>([{
+          anchor: firstLine.from,
+          head: firstLine.to,
+          from: () => firstLine.from,
+          to: () => firstLine.to,
+          empty: () => false
+        }])
+      ),
+      getLine: (): string => (textFirstLine),
+      replaceRange: (replacement: string | string[], from: CodeMirror.Position, to?: CodeMirror.Position) => {
+        expect(from).toEqual(firstLine.from)
+        expect(to).toEqual(firstLine.to)
+        expect(replacement).toEqual(`${textFirstLine}\n<details>\n  <summary>Toggle label</summary>\n  Toggled content\n</details>`)
+        done()
+      }
+    })
+    addCollapsableBlock(editor)
+  })
+
+  it('multiple lines', done => {
+    Mock.extend(editor).with({
+      listSelections: () => (
+        Mock.of<Range[]>([{
+          anchor: multiline.from,
+          head: multiline.to,
+          from: () => multiline.from,
+          to: () => multiline.to,
+          empty: () => false
+        }])
+      ),
+      getLine: (): string => '2nd line',
+      replaceRange: (replacement: string | string[]) => {
+        expect(replacement).toEqual('2nd line\n<details>\n  <summary>Toggle label</summary>\n  Toggled content\n</details>')
+        done()
+      }
+    })
+    addCollapsableBlock(editor)
+  })
+
+  it('multiple lines with offset', done => {
+    Mock.extend(editor).with({
+      listSelections: () => (
+        Mock.of<Range[]>([{
+          anchor: multilineOffset.from,
+          head: multilineOffset.to,
+          from: () => multilineOffset.from,
+          to: () => multilineOffset.to,
+          empty: () => false
+        }])
+      ),
+      getLine: (): string => '2nd line',
+      replaceRange: (replacement: string | string[]) => {
+        expect(replacement).toEqual('2nd line\n<details>\n  <summary>Toggle label</summary>\n  Toggled content\n</details>')
+        done()
+      }
+    })
+    addCollapsableBlock(editor)
+  })
+})
+
 describe('test addComment', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
   const textFirstLine = testContent.split('\n')[0]

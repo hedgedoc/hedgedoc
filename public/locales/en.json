@@ -256,6 +256,7 @@
             "uploadImage": "Upload Image",
             "table": "Table",
             "line": "Horizontal line",
+            "collapsableBlock": "Collapsable block",
             "comment": "Comment",
             "preferences": "Editor settings",
             "emoji": "Open emoji picker"

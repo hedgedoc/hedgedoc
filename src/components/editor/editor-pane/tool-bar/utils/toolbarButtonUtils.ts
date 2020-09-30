@@ -21,6 +21,7 @@ export const addTaskList = (editor: Editor): void => createList(editor, () => '-
 export const addImage = (editor: Editor): void => addLink(editor, '!')
 
 export const addLine = (editor: Editor): void => changeLines(editor, line => `${line}\n----`)
+export const addCollapsableBlock = (editor: Editor): void => changeLines(editor, line => `${line}\n<details>\n  <summary>Toggle label</summary>\n  Toggled content\n</details>`)
 export const addComment = (editor: Editor): void => changeLines(editor, line => `${line}\n> []`)
 export const addTable = (editor: Editor): void => changeLines(editor, line => `${line}\n| # 1  | # 2  | # 3  |\n| ---- | ---- | ---- |\n| Text | Text | Text |`)
 

@@ -8,6 +8,7 @@ import { EmojiPickerButton } from './emoji-picker/emoji-picker-button'
 import './tool-bar.scss'
 import {
   addCodeFences,
+  addCollapsableBlock,
   addComment,
   addHeaderLevel,
   addImage,
@@ -100,6 +101,9 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor }) => {
         </Button>
         <Button variant='light' onClick={() => addLine(editor)} title={t('editor.editorToolbar.line')}>
           <ForkAwesomeIcon icon="minus"/>
+        </Button>
+        <Button variant='light' onClick={() => addCollapsableBlock(editor)} title={t('editor.editorToolbar.collapsableBlock')}>
+          <ForkAwesomeIcon icon="caret-square-o-down"/>
         </Button>
         <Button variant='light' onClick={() => addComment(editor)} title={t('editor.editorToolbar.comment')}>
           <ForkAwesomeIcon icon="comment"/>
