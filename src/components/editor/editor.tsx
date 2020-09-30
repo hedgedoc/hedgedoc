@@ -54,7 +54,7 @@ export const Editor: React.FC = () => {
     } else if (noteMetadata.current?.opengraph && noteMetadata.current?.opengraph.get('title') && noteMetadata.current?.opengraph.get('title') !== '') {
       setDocumentTitle(noteMetadata.current.opengraph.get('title') ?? untitledNote)
     } else {
-      setDocumentTitle(firstHeading.current ?? untitledNote)
+      setDocumentTitle((firstHeading.current ?? untitledNote).trim())
     }
   }, [untitledNote])
 

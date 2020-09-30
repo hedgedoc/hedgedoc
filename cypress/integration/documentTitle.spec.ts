@@ -63,5 +63,23 @@ describe('Document Title', () => {
         .type(`# ${title} [link](https://codimd.org)`)
       cy.title().should('eq', `${title} link - HedgeDoc @ ${branding.name}`)
     })
+
+    it('markdown syntax removed first', () => {
+      cy.get('.CodeMirror textarea')
+        .type(`# ${title} 1*2*3 4*5**`)
+      cy.title().should('eq', `${title} 123 4*5** - HedgeDoc @ ${branding.name}`)
+    })
+
+    it('markdown syntax removed second', () => {
+      cy.get('.CodeMirror textarea')
+        .type(`# ${title} **1 2*`)
+      cy.title().should('eq', `${title} *1 2 - HedgeDoc @ ${branding.name}`)
+    })
+
+    it('markdown syntax removed third', () => {
+      cy.get('.CodeMirror textarea')
+      .type(`# ${title} _asd_`)
+      cy.title().should('eq', `${title} asd - HedgeDoc @ ${branding.name}`)
+    })
   })
 })

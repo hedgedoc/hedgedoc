@@ -43,21 +43,17 @@ export const Splitter: React.FC<SplitterProps> = ({ containerClassName, left, ri
         }
       }}
     >
-      <ShowIf condition={showLeft}>
-        <div className={'splitter left'} style={{ flexBasis: `calc(${realSplit}% - 5px)` }}>
-          {left}
-        </div>
-      </ShowIf>
+      <div className={`splitter left ${!showLeft ? 'd-none' : ''}`} style={{ flexBasis: `calc(${realSplit}% - 5px)` }}>
+        {left}
+      </div>
       <ShowIf condition={showLeft && showRight}>
         <div className='splitter separator'>
           <SplitDivider onGrab={() => setDoResizing(true)}/>
         </div>
       </ShowIf>
-      <ShowIf condition={showRight}>
-        <div className={'splitter right'}>
-          {right}
-        </div>
-      </ShowIf>
+      <div className={`splitter right ${!showRight ? 'd-none' : ''}`}>
+        {right}
+      </div>
     </div>
   )
 }
