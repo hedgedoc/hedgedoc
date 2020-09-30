@@ -97,11 +97,15 @@ export const DocumentRenderPane: React.FC<DocumentRenderPaneProps & ScrollProps>
       .reduce((prevLineMark, currentLineMark) =>
         prevLineMark.line < currentLineMark.line ? prevLineMark : currentLineMark)
 
-    const blockHeight = afterLineMark.position - beforeLineMark.position
+    const componentHeight = afterLineMark.position - beforeLineMark.position
     const distanceToBefore = scrollTop - beforeLineMark.position
-    const percentageRaw = (distanceToBefore / blockHeight)
-    const percentage = Math.floor(percentageRaw * 100)
-    const newScrollState: ScrollState = { firstLineInView: beforeLineMark.line, scrolledPercentage: percentage }
+    const percentageRaw = (distanceToBefore / componentHeight)
+    const lineCount = afterLineMark.line - beforeLineMark.line
+    const line = Math.floor(lineCount * percentageRaw + beforeLineMark.line)
+    const lineHeight = componentHeight / lineCount
+    const innerScrolling = Math.floor((distanceToBefore % lineHeight) / lineHeight * 100)
+
+    const newScrollState: ScrollState = { firstLineInView: line, scrolledPercentage: innerScrolling }
     onScroll(newScrollState)
   }, [lineMarks, onScroll])
 
