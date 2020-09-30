@@ -1,14 +1,13 @@
 import { Editor, Hint, Hints, Pos } from 'codemirror'
 import { findWordAtCursor, Hinter, search } from './index'
 
-const allowedChars = /[`\w-_+]/
 const wordRegExp = /^```((\w|-|_|\+)*)$/
 let allSupportedLanguages: string[] = []
 
 const codeBlockHint = (editor: Editor): Promise< Hints| null > => {
   return import(/* webpackChunkName: "highlight.js" */ 'highlight.js').then(hljs =>
     new Promise((resolve) => {
-      const searchTerm = findWordAtCursor(editor, allowedChars)
+      const searchTerm = findWordAtCursor(editor)
       const searchResult = wordRegExp.exec(searchTerm.text)
       if (searchResult === null) {
         resolve(null)
@@ -36,7 +35,6 @@ const codeBlockHint = (editor: Editor): Promise< Hints| null > => {
 }
 
 export const CodeBlockHinter: Hinter = {
-  allowedChars,
   wordRegExp,
   hint: codeBlockHint
 }

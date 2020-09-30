@@ -5,13 +5,12 @@ import { customEmojis } from '../tool-bar/emoji-picker/emoji-picker'
 import { getEmojiIcon, getEmojiShortCode } from '../tool-bar/utils/emojiUtils'
 import { findWordAtCursor, Hinter } from './index'
 
-const allowedCharsInEmojiCodeRegex = /[:\w-_+]/
 const emojiIndex = new NimbleEmojiIndex(data as unknown as Data)
 const emojiWordRegex = /^:([\w-_+]*)$/
 
 const generateEmojiHints = (editor: Editor): Promise< Hints| null > => {
   return new Promise((resolve) => {
-    const searchTerm = findWordAtCursor(editor, allowedCharsInEmojiCodeRegex)
+    const searchTerm = findWordAtCursor(editor)
     const searchResult = emojiWordRegex.exec(searchTerm.text)
     if (searchResult === null) {
       resolve(null)
@@ -50,7 +49,6 @@ const generateEmojiHints = (editor: Editor): Promise< Hints| null > => {
 }
 
 export const EmojiHinter: Hinter = {
-  allowedChars: allowedCharsInEmojiCodeRegex,
   wordRegExp: emojiWordRegex,
   hint: generateEmojiHints
 }

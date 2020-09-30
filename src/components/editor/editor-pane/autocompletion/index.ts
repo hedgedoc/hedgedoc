@@ -15,12 +15,13 @@ interface findWordAtCursorResponse {
 }
 
 export interface Hinter {
-  allowedChars: RegExp,
   wordRegExp: RegExp,
   hint: (editor: Editor) => Promise< Hints| null >
 }
 
-export const findWordAtCursor = (editor: Editor, allowedChars: RegExp): findWordAtCursorResponse => {
+const allowedChars = /[^\s]/
+
+export const findWordAtCursor = (editor: Editor): findWordAtCursorResponse => {
   const cursor = editor.getCursor()
   const line = editor.getLine(cursor.line)
   let start = cursor.ch

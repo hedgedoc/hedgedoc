@@ -3,7 +3,6 @@ import moment from 'moment'
 import { getUser } from '../../../../redux/user/methods'
 import { findWordAtCursor, Hinter } from './index'
 
-const allowedChars = /[[\]\w]/
 const wordRegExp = /^(\[(.*])?)$/
 const allSupportedLinks = [
   '[link text](https:// "title")',
@@ -22,7 +21,7 @@ const allSupportedLinks = [
 
 const linkAndExtraTagHint = (editor: Editor): Promise< Hints| null > => {
   return new Promise((resolve) => {
-    const searchTerm = findWordAtCursor(editor, allowedChars)
+    const searchTerm = findWordAtCursor(editor)
     const searchResult = wordRegExp.exec(searchTerm.text)
     if (searchResult === null) {
       resolve(null)
@@ -63,7 +62,6 @@ const linkAndExtraTagHint = (editor: Editor): Promise< Hints| null > => {
 }
 
 export const LinkAndExtraTagHinter: Hinter = {
-  allowedChars,
   wordRegExp,
   hint: linkAndExtraTagHint
 }
