@@ -44,7 +44,7 @@ export const VegaChart: React.FC<VegaChartProps> = ({ code }) => {
             SVG_ACTION: t('renderer.vega-lite.svg')
           }
         })
-          .then(() => showError(''))
+          .then(() => setError(undefined))
           .catch(err => showError(err))
       } catch (err) {
         showError(t('renderer.vega-lite.errorJson'))
