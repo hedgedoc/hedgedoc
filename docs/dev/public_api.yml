@@ -578,7 +578,7 @@ components:
             type: string
             description: A tag
         updateTime:
-          type: integer
+          type: string
           description: ISO-timestamp of when the note was last changed.
         updateUser:
           $ref: "#/components/schemas/UserInfo"
@@ -621,8 +621,8 @@ components:
           id:
             type: integer
             description: The id of the revision
-          createdAt:
-            type: integer
+          createdTime:
+            type: string
             description: ISO-timestamp of when the revision was saved. Is also the revision-id.
           length:
             type: integer
