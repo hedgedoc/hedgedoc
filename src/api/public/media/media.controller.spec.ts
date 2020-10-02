@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { LoggerModule } from '../../../logger/logger.module';
 import { MediaController } from './media.controller';
 
 describe('Media Controller', () => {
@@ -7,6 +8,7 @@ describe('Media Controller', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [MediaController],
+      imports: [LoggerModule],
     }).compile();
 
     controller = module.get<MediaController>(MediaController);

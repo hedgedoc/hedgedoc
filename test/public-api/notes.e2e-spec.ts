@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as request from 'supertest';
 import { PublicApiModule } from '../../src/api/public/public-api.module';
 import { GroupsModule } from '../../src/groups/groups.module';
+import { LoggerModule } from '../../src/logger/logger.module';
 import { NotesModule } from '../../src/notes/notes.module';
 import { NotesService } from '../../src/notes/notes.service';
 import { PermissionsModule } from '../../src/permissions/permissions.module';
@@ -25,6 +26,7 @@ describe('Notes', () => {
           autoLoadEntities: true,
           synchronize: true,
         }),
+        LoggerModule,
       ],
     }).compile();
 

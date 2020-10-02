@@ -4,7 +4,6 @@ import {
   Delete,
   Get,
   HttpCode,
-  Logger,
   NotFoundException,
   Param,
   Put,
@@ -12,6 +11,7 @@ import {
 import { HistoryEntryUpdateDto } from '../../../history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../../history/history-entry.dto';
 import { HistoryService } from '../../../history/history.service';
+import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
 import { NotesService } from '../../../notes/notes.service';
 import { UserInfoDto } from '../../../users/user-info.dto';
@@ -19,13 +19,14 @@ import { UsersService } from '../../../users/users.service';
 
 @Controller('me')
 export class MeController {
-  private readonly logger = new Logger(MeController.name);
-
   constructor(
+    private readonly logger: ConsoleLoggerService,
     private usersService: UsersService,
     private historyService: HistoryService,
     private notesService: NotesService,
-  ) {}
+  ) {
+    this.logger.setContext(MeController.name);
+  }
 
   @Get()
   getMe(): UserInfoDto {

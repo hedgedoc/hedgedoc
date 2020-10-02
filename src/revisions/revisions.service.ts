@@ -1,6 +1,7 @@
-import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { NotesService } from '../notes/notes.service';
 import { RevisionMetadataDto } from './revision-metadata.dto';
 import { RevisionDto } from './revision.dto';
@@ -8,13 +9,14 @@ import { Revision } from './revision.entity';
 
 @Injectable()
 export class RevisionsService {
-  private readonly logger = new Logger(RevisionsService.name);
-
   constructor(
+    private readonly logger: ConsoleLoggerService,
     @InjectRepository(Revision)
     private revisionRepository: Repository<Revision>,
     @Inject(forwardRef(() => NotesService)) private notesService: NotesService,
-  ) {}
+  ) {
+    this.logger.setContext(RevisionsService.name);
+  }
 
   async getNoteRevisionMetadatas(
     noteIdOrAlias: string,
