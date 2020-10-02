@@ -1,4 +1,4 @@
-import { Moment } from 'moment'
+import { DateTime } from 'luxon'
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { IconName } from '../../../common/fork-awesome/types'
@@ -8,7 +8,7 @@ import { TimeFromNow } from './time-from-now'
 import { UserAvatar } from '../../../common/user-avatar/user-avatar'
 
 export interface DocumentInfoLineWithTimeProps {
-  time: Moment,
+  time: DateTime,
   mode: DocumentInfoLineWithTimeMode
   userName: string
   profileImageSrc: string

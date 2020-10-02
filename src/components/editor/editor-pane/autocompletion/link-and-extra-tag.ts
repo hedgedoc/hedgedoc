@@ -1,5 +1,5 @@
 import { Editor, Hint, Hints, Pos } from 'codemirror'
-import moment from 'moment'
+import { DateTime } from 'luxon'
 import { getUser } from '../../../../redux/user/methods'
 import { findWordAtCursor, Hinter } from './index'
 
@@ -45,7 +45,7 @@ const linkAndExtraTagHint = (editor: Editor): Promise< Hints| null > => {
             case 'time':
               // show the current time when the autocompletion is opened and not when the function is loaded
               return {
-                text: `[time=${moment(new Date()).format('llll')}]`
+                text: `[time=${DateTime.local().toFormat('DDDD T')}]`
               }
             default:
               return {

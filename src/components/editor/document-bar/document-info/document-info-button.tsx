@@ -1,5 +1,5 @@
-import moment from 'moment'
 import React, { Fragment, useState } from 'react'
+import { DateTime } from 'luxon'
 import { ListGroup, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { CommonModal } from '../../../common/modals/common-modal'
@@ -25,14 +25,14 @@ export const DocumentInfoButton: React.FC = () => {
             <ListGroup.Item>
               <DocumentInfoTimeLine
                 mode={DocumentInfoLineWithTimeMode.CREATED}
-                time={ moment().subtract(11, 'days') }
+                time={DateTime.local().minus({ days: 11 })}
                 userName={'Tilman'}
                 profileImageSrc={'/avatar.png'}/>
             </ListGroup.Item>
             <ListGroup.Item>
               <DocumentInfoTimeLine
                 mode={DocumentInfoLineWithTimeMode.EDITED}
-                time={ moment().subtract(3, 'minutes') }
+                time={DateTime.local().minus({ minutes: 3 })}
                 userName={'Philip'}
                 profileImageSrc={'/avatar.png'}/>
             </ListGroup.Item>

@@ -1,4 +1,4 @@
-import moment from 'moment'
+import { Settings } from 'luxon'
 import React, { useCallback } from 'react'
 import { Form } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
@@ -47,7 +47,7 @@ const LanguagePicker: React.FC = () => {
 
   const onChangeLang = useCallback(() => async (event: React.ChangeEvent<HTMLSelectElement>) => {
     const language = event.currentTarget.value
-    moment.locale(language)
+    Settings.defaultLocale = language
     await i18n.changeLanguage(language)
   }, [i18n])
 

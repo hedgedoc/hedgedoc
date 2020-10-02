@@ -1,12 +1,13 @@
-import { Moment } from 'moment'
+import { DateTime } from 'luxon'
+
 import React from 'react'
 
 export interface TimeFromNowProps {
-  time: Moment
+  time: DateTime
 }
 
 export const TimeFromNow: React.FC<TimeFromNowProps> = ({ time }) => {
   return (
-    <time className={'mx-1'} title={time.format('LLLL')} dateTime={time.format()}>{time.fromNow(true)}</time>
+    <time className={'mx-1'} title={time.toFormat('DDDD T')} dateTime={time.toString()}>{time.toRelative()}</time>
   )
 }

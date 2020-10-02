@@ -1,4 +1,4 @@
-import moment from 'moment'
+import { DateTime } from 'luxon'
 import { SortModeEnum } from './sort-button/sort-button'
 import {
   HistoryEntry,
@@ -85,8 +85,8 @@ function sortEntries (entries: LocatedHistoryEntry[], viewState: HistoryToolbarS
   })
 }
 
-export function formatHistoryDate (date: Date): string {
-  return moment(date).format('llll')
+export function formatHistoryDate (date: string): string {
+  return DateTime.fromISO(date).toFormat('DDDD T')
 }
 
 export interface V1HistoryEntry {
@@ -102,7 +102,7 @@ export function convertV1History (oldHistory: V1HistoryEntry[]): HistoryEntry[] 
     return {
       id: entry.id,
       title: entry.text,
-      lastVisited: moment(entry.time).toDate(),
+      lastVisited: DateTime.fromMillis(entry.time).toISO(),
       tags: entry.tags,
       pinned: entry.pinned
     }

@@ -21,7 +21,7 @@ import { HistoryToolbar, HistoryToolbarState, initState as toolbarInitState } fr
 export interface HistoryEntry {
   id: string,
   title: string,
-  lastVisited: Date,
+  lastVisited: string,
   tags: string[],
   pinned: boolean
 }

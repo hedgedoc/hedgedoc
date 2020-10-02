@@ -1,5 +1,5 @@
-import moment from 'moment'
 import React from 'react'
+import { DateTime } from 'luxon'
 import { ListGroup } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
 import { RevisionListEntry } from '../../../../api/revisions/types'
@@ -23,7 +23,7 @@ export const RevisionModalListEntry: React.FC<RevisionModalListEntryProps> = ({ 
   >
     <span>
       <ForkAwesomeIcon icon={'clock-o'} className='mx-2'/>
-      {moment(revision.timestamp * 1000).format('LLLL')}
+      {DateTime.fromMillis(revision.timestamp * 1000).toFormat('DDDD T')}
     </span>
     <span>
       <ForkAwesomeIcon icon={'file-text-o'} className='mx-2'/>

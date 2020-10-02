@@ -1,5 +1,5 @@
-import moment from 'moment'
 import React from 'react'
+import { DateTime } from 'luxon'
 import { Badge, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { formatHistoryDate } from '../utils'
@@ -22,7 +22,7 @@ export const HistoryCard: React.FC<HistoryEntryProps> = ({ entry, onPinClick, on
               <Card.Title className="m-0 mt-1dot5">{entry.title}</Card.Title>
               <div>
                 <div className="text-black-50 mt-2">
-                  <ForkAwesomeIcon icon="clock-o"/> {moment(entry.lastVisited).fromNow()}<br/>
+                  <ForkAwesomeIcon icon="clock-o"/> {DateTime.fromISO(entry.lastVisited).toRelative()}<br/>
                   {formatHistoryDate(entry.lastVisited)}
                 </div>
                 <div className={'card-footer-min-height p-0'}>
