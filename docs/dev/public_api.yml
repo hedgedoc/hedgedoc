@@ -379,7 +379,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/NotePermissionsUpdate"
+                "$ref": "#/components/schemas/NotePermissions"
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
         '403':
