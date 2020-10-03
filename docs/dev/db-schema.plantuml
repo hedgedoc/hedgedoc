@@ -9,7 +9,7 @@ entity "Note" {
   *id : uuid <<generated>>
   --
   *shortid : text
-  *alias : text
+  alias : text
   *viewcount : number
   *ownerId : uuid <<FK User>>
   description: text
