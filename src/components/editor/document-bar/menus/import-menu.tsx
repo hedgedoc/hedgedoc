@@ -20,6 +20,10 @@ export const ImportMenu: React.FC = () => {
           Gist
         </Dropdown.Item>
         <Dropdown.Item className='small'>
+          <ForkAwesomeIcon icon='gitlab' className={'mx-2'}/>
+          Gitlab Snippet
+        </Dropdown.Item>
+        <Dropdown.Item className='small'>
           <ForkAwesomeIcon icon='clipboard' className={'mx-2'}/>
           <Trans i18nKey='editor.import.clipboard'/>
         </Dropdown.Item>

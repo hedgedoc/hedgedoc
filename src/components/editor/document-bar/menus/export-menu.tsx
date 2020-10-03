@@ -24,6 +24,10 @@ const ExportMenu: React.FC = () => {
           <ForkAwesomeIcon icon='github' className={'mx-2'}/>
           Gist
         </Dropdown.Item>
+        <Dropdown.Item className='small'>
+          <ForkAwesomeIcon icon='gitlab' className={'mx-2'}/>
+          Gitlab Snippet
+        </Dropdown.Item>
 
         <Dropdown.Divider/>
 
