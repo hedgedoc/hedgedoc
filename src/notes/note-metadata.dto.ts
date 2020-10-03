@@ -34,3 +34,13 @@ export class NoteMetadataDto {
   @ValidateNested()
   permissions: NotePermissionsDto;
 }
+
+export class NoteMetadataUpdateDto {
+  @IsString()
+  title: string;
+  @IsString()
+  description: string;
+  @IsArray()
+  @IsString({ each: true })
+  tags: string[];
+}

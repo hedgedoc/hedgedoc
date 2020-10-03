@@ -7,20 +7,21 @@ import { Revision } from '../revisions/revision.entity';
 import { RevisionsService } from '../revisions/revisions.service';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
-import { NoteMetadataDto } from './note-metadata.dto';
+import { NoteMetadataDto, NoteMetadataUpdateDto } from './note-metadata.dto';
 import {
   NotePermissionsDto,
   NotePermissionsUpdateDto,
 } from './note-permissions.dto';
 import { NoteDto } from './note.dto';
 import { Note } from './note.entity';
-import { NoteUtils } from './note.utils';
+import { Tag } from './tag.entity';
 
 @Injectable()
 export class NotesService {
   constructor(
     private readonly logger: ConsoleLoggerService,
     @InjectRepository(Note) private noteRepository: Repository<Note>,
+    @InjectRepository(Tag) private tagRepository: Repository<Tag>,
     @Inject(UsersService) private usersService: UsersService,
     @Inject(forwardRef(() => RevisionsService))
     private revisionsService: RevisionsService,
@@ -218,5 +219,24 @@ export class NotesService {
       metadata: await this.getMetadata(note),
       editedByAtPosition: [],
     };
+  }
+
+  async updateNoteMetadata(
+    noteIdOrAlias: string,
+    updateDto: NoteMetadataUpdateDto,
+  ) {
+    const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
+    note.title = updateDto.title;
+    note.description = updateDto.description;
+    note.tags = await Promise.all(
+      updateDto.tags.map(async tag => {
+        let dbTag = await this.tagRepository.findOne({ where: { name: tag } });
+        if (!dbTag) {
+          dbTag = await this.tagRepository.create({ name: tag });
+        }
+        return dbTag;
+      }),
+    );
+    await this.noteRepository.save(note);
   }
 }
