@@ -321,17 +321,43 @@ paths:
     put:
       tags:
         - note
-      summary: Set the permissions of a note
+      summary: Set the metadata (title, description, tags) of a note
       operationId: updateNoteMetadata
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/NoteMetadata"
+              "$ref": "#/components/schemas/NoteMetadataUpdate"
       responses:
         '200':
-          description: The updated permissions of the note.
+          description: The updated metadata of the note.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NoteMetadataUpdate"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '403':
+          "$ref": "#/components/responses/ForbiddenError"
+        '404':
+          "$ref": "#/components/responses/NotFoundError"
+      parameters:
+        - name: note
+          in: path
+          required: true
+          description: The note for which the info should be shown.
+          content:
+            text/plain:
+              example: my-note
+    get:
+      tags:
+        - note
+      summary: Get the metadata of a note
+      operationId: getNoteMetadata
+      responses:
+        '200':
+          description: The metadata of the note.
           content:
             application/json:
               schema:
@@ -350,18 +376,24 @@ paths:
           content:
             text/plain:
               example: my-note
-    get:
-      tags:
-        - note
-      summary: Get the permissions of a note
-      operationId: getNoteMetadata
+  /notes/{note}/permissions:
+    put:
+      tags: [ note ]
+      summary: Set permissions of a note
+      operationId: updateNotePermissions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/NotePermissionsUpdate"
       responses:
         '200':
-          description: The permissions of the note.
+          description: The updated permissions of the note.
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/NoteMetadata"
+                "$ref": "#/components/schemas/NotePermissionsUpdate"
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
         '403':
@@ -642,6 +674,15 @@ components:
       properties:
         password:
           type: string
+    GroupInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        special:
+          type: boolean
     ImageProxyRequest:
       type: object
       properties:
@@ -709,13 +750,51 @@ components:
             type: string
         permissions:
           $ref: "#/components/schemas/NotePermissions"
+    NoteMetadataUpdate:
+      type: object
+      description: Contains only title, description and tags of a note.
+      properties:
+        title:
+          type: string
+          description: Title of the note
+        description:
+          type: string
+          description: Description of the note.
+        tags:
+          type: array
+          description: A list of tags attached to the note.
+          items:
+            type: string
     NotePermissions:
       type: object
       properties:
         owner:
-          type: string
-          description: Username of the owner of the note
-        sharedTo:
+          $ref: "#/components/schemas/UserInfo"
+        sharedToUsers:
+          type: array
+          description: Contains all users that can read the note and a boolean that denotes if they can also edit.
+          items:
+            type: object
+            properties:
+              user:
+                $ref: "#/components/schemas/UserInfo"
+              canEdit:
+                type: boolean
+        sharedToGroups:
+          type: array
+          description: Contains all groups that can read the note and a boolean that denotes if they can also edit.
+          items:
+            type: object
+            properties:
+              group:
+                $ref: "#/components/schemas/GroupInfo"
+              canEdit:
+                type: boolean
+    NotePermissionsUpdate:
+      type: object
+      description: Contains only title, description and tags of a note.
+      properties:
+        sharedToUsers:
           type: array
           description: Contains all usernames that can read the note and a boolean that denotes if they can also edit.
           items:
@@ -725,7 +804,16 @@ components:
                 type: string
               canEdit:
                 type: boolean
-
+        sharedToGroups:
+          type: array
+          description: Contains all groups that can read the note and a boolean that denotes if they can also edit.
+          items:
+            type: object
+            properties:
+              groupname:
+                type: string
+              canEdit:
+                type: boolean
     NoteRevisionsMetadata:
       type: array
       items:
