@@ -74,6 +74,7 @@ export class Note {
   @ManyToMany(
     _ => Tag,
     tag => tag.notes,
+    { eager: true, cascade: true },
   )
   @JoinTable()
   tags: Tag[];
