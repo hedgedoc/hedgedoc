@@ -14248,10 +14248,10 @@ vega-label@~1.0.0:
     vega-scenegraph "^4.9.2"
     vega-util "^1.15.2"
 
-vega-lite@4.16.7:
-  version "4.16.7"
-  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-4.16.7.tgz#216a55e1a90aa740b68a197a1ae96dbae005b427"
-  integrity sha512-b2B8faFsVjVzs/6hAnJ/pd//kuN1MdeKCy1VGuIy8cxmRwj//M+uRa02csZvtv8z4y6oMwo/4gR8ES213uFbUw==
+vega-lite@4.16.8:
+  version "4.16.8"
+  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-4.16.8.tgz#23a91f9b87a97c7ffc6d754d0ec8f6a3b04d6976"
+  integrity sha512-WB9OOHbFyIaLvx5k9m8XGEaB2p0sTC9Srtsm9ETQ6EoOksdLQtVesxCalgT+cGaUVtHAiqBNmLh/nQGxZXml7w==
   dependencies:
     "@types/clone" "~2.1.0"
     "@types/fast-json-stable-stringify" "^2.0.0"
