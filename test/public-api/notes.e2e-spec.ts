@@ -98,20 +98,48 @@ describe('Notes', () => {
     ).toEqual('New note text');
   });
 
-  it.skip(`PUT /notes/{note}/metadata`, () => {
-    // TODO
-    return request(app.getHttpServer())
-      .post('/notes/test5/metadata')
-      .set('Content-Type', 'text/markdown')
+  it(`PUT /notes/{note}/metadata`, async () => {
+    await notesService.createNote('This is a test note.', 'test5');
+    await request(app.getHttpServer())
+      .put('/notes/test5/metadata')
+      .send({
+        title: 'test title',
+        description: 'test description',
+        tags: ['test1', 'test2', 'test3'],
+      })
       .expect(200);
+    const note5 = await notesService.getNoteByIdOrAlias('test5');
+    expect(note5.title).toEqual('test title');
+    expect(note5.description).toEqual('test description');
+    expect(note5.tags.map(tag => tag.name)).toEqual([
+      'test1',
+      'test2',
+      'test3',
+    ]);
   });
 
-  it.skip(`GET /notes/{note}/metadata`, () => {
-    notesService.createNote('This is a test note.', 'test6');
-    return request(app.getHttpServer())
+  it(`GET /notes/{note}/metadata`, async () => {
+    await notesService.createNote('This is a test note.', 'test6');
+    const metadata = await request(app.getHttpServer())
       .get('/notes/test6/metadata')
       .expect(200);
-    // TODO: Find out how to check the structure of the returned JSON
+    expect(typeof metadata.body.id).toEqual('string');
+    expect(metadata.body.alias).toEqual('test6');
+    expect(metadata.body.title).toBeNull();
+    expect(metadata.body.description).toBeNull();
+    expect(typeof metadata.body.createTime).toEqual('string');
+    expect(metadata.body.editedBy).toEqual([]);
+    expect(metadata.body.permissions.owner).toBeNull();
+    expect(metadata.body.permissions.sharedToUsers).toEqual([]);
+    expect(metadata.body.permissions.sharedToUsers).toEqual([]);
+    expect(metadata.body.tags).toEqual([]);
+    expect(typeof metadata.body.updateTime).toEqual('string');
+    expect(typeof metadata.body.updateUser.displayName).toEqual('string');
+    expect(typeof metadata.body.updateUser.userName).toEqual('string');
+    expect(typeof metadata.body.updateUser.email).toEqual('string');
+    expect(typeof metadata.body.updateUser.photo).toEqual('string');
+    expect(typeof metadata.body.viewCount).toEqual('number');
+    expect(metadata.body.editedBy).toEqual([]);
   });
 
   it(`GET /notes/{note}/revisions`, async () => {
@@ -139,6 +167,53 @@ describe('Notes', () => {
       .get('/notes/test9/content')
       .expect(200);
     expect(response.text).toEqual('This is a test note.');
+  });
+
+  it(`2 notes with tags`, async () => {
+    //Create first nore
+    const content10 = 'This is the first test note.';
+    const note10 = await request(app.getHttpServer())
+      .post('/notes/test10')
+      .set('Content-Type', 'text/markdown')
+      .send(content10)
+      .expect('Content-Type', /json/)
+      .expect(201);
+    expect(note10.body.metadata?.id).toBeDefined();
+    //Create second note
+    const content11 = 'This is the second test note.';
+    const note11 = await request(app.getHttpServer())
+      .post('/notes/test11')
+      .set('Content-Type', 'text/markdown')
+      .send(content11)
+      .expect('Content-Type', /json/)
+      .expect(201);
+    expect(note11.body.metadata?.id).toBeDefined();
+    //Add tags to both notes
+    await request(app.getHttpServer())
+      .put('/notes/test10/metadata')
+      .send({
+        title: 'Test Note 10',
+        description: 'test description',
+        tags: ['test1', 'test2', 'test3'],
+      })
+      .expect(200);
+    await request(app.getHttpServer())
+      .put('/notes/test11/metadata')
+      .send({
+        title: 'Test Note 11',
+        description: 'test description',
+        tags: ['test1', 'test2', 'test4'],
+      })
+      .expect(200);
+    //Delete first note
+    await request(app.getHttpServer())
+      .delete('/notes/test10')
+      .expect(200);
+    //Check if all tags are still present
+    const metadata11 = await request(app.getHttpServer())
+      .get('/notes/test11/metadata')
+      .expect(200);
+    expect(metadata11.body.tags).toEqual(['test1', 'test2', 'test4']);
   });
 
   afterAll(async () => {
