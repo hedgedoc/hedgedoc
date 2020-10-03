@@ -88,7 +88,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/HistoryObject"
+              "$ref": "#/components/schemas/HistoryUpdateObject"
       responses:
         '200':
           description: The new history.
@@ -933,6 +933,12 @@ components:
       properties:
         metadata:
           $ref: "#/components/schemas/NoteMetadata"
+        pinned:
+          type: boolean
+          description: Whether the user has pinned this note.
+    HistoryUpdateObject:
+      type: object
+      properties:
         pinned:
           type: boolean
           description: Whether the user has pinned this note.
