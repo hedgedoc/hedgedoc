@@ -226,7 +226,7 @@ paths:
         - note
       summary: Imports some markdown data into a new note with a given alias
       operationId: createNoteWithAlias
-      description: This endpoint equals to the above one except that the alias from the url will be assigned to the note if [FreeURL-mode](https://github.com/codimd/server/tree/master/docs/configuration-env-vars.md#users-and-privileges) is enabled.
+      description: This endpoint creates a new note with the content of the HTTP request body and the alias from the URL parameter.
       requestBody:
         required: true
         description: The content of the note to be imported as markdown.
@@ -285,7 +285,7 @@ paths:
         - note
       summary: Imports some markdown data into an existing note, creating a new revision
       operationId: createNewRevisionForNote
-      description: This endpoint equals to the above one except that the alias from the url will be assigned to the note if [FreeURL-mode](https://github.com/codimd/server/tree/master/docs/configuration-env-vars.md#users-and-privileges) is enabled.
+      description: This endpoint updates the note content of an existing note. The old content is completely replaced and a new revision is created.
       requestBody:
         required: true
         description: The content of the note to be imported as markdown.
