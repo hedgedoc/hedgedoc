@@ -2,6 +2,8 @@ import { generate as shortIdGenerate } from 'shortid';
 import {
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -11,6 +13,7 @@ import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Revision } from '../revisions/revision.entity';
 import { User } from '../users/user.entity';
 import { AuthorColor } from './author-color.entity';
+import { Tag } from './tag.entity';
 
 @Entity('Notes')
 export class Note {
@@ -25,7 +28,7 @@ export class Note {
     unique: true,
     nullable: true,
   })
-  alias: string;
+  alias?: string;
   @OneToMany(
     _ => NoteGroupPermission,
     groupPermission => groupPermission.note,
@@ -59,10 +62,26 @@ export class Note {
   )
   authorColors: AuthorColor[];
 
+  @Column({
+    nullable: true,
+  })
+  description?: string;
+  @Column({
+    nullable: true,
+  })
+  title?: string;
+
+  @ManyToMany(
+    _ => Tag,
+    tag => tag.notes,
+  )
+  @JoinTable()
+  tags: Tag[];
+
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  public static create(owner?: User, alias?: string, shortid?: string) {
+  public static create(owner?: User, alias?: string, shortid?: string): Note {
     if (!shortid) {
       shortid = shortIdGenerate();
     }
@@ -74,6 +93,10 @@ export class Note {
     newNote.authorColors = [];
     newNote.userPermissions = [];
     newNote.groupPermissions = [];
+    newNote.revisions = Promise.resolve([]);
+    newNote.description = null;
+    newNote.title = null;
+    newNote.tags = [];
     return newNote;
   }
 }
