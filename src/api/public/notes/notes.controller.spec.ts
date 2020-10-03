@@ -4,6 +4,7 @@ import { LoggerModule } from '../../../logger/logger.module';
 import { AuthorColor } from '../../../notes/author-color.entity';
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
+import { Tag } from '../../../notes/tag.entity';
 import { Authorship } from '../../../revisions/authorship.entity';
 import { Revision } from '../../../revisions/revision.entity';
 import { RevisionsModule } from '../../../revisions/revisions.module';
@@ -25,6 +26,10 @@ describe('Notes Controller', () => {
           provide: getRepositoryToken(Note),
           useValue: {},
         },
+        {
+          provide: getRepositoryToken(Tag),
+          useValue: {},
+        },
       ],
       imports: [RevisionsModule, UsersModule, LoggerModule],
     })
@@ -43,6 +48,8 @@ describe('Notes Controller', () => {
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
       .overrideProvider(getRepositoryToken(Note))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Tag))
       .useValue({})
       .compile();
 
