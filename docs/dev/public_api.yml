@@ -183,7 +183,7 @@ paths:
               markdownExample:
                 "$ref": '#/components/examples/markdownExample'
       responses:
-        '200':
+        '201':
           description: Get information about the newly created note.
           content:
             application/json:
@@ -238,7 +238,7 @@ paths:
               markdownExample:
                 "$ref": '#/components/examples/markdownExample'
       responses:
-        '200':
+        '201':
           description: Get information about the newly created note.
           content:
             application/json:
@@ -584,7 +584,7 @@ paths:
           required: true
           description: ID or alias of the parent note
       responses:
-        '200':
+        '201':
           description: The file was uploaded successfully.
           content:
             application/json:
