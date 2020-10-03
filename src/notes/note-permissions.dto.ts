@@ -8,7 +8,7 @@ export class NoteUserPermissionEntryDto {
   canEdit: boolean;
 }
 
-export class NotePermissionEntryUpdateDto {
+export class NoteUserPermissionUpdateDto {
   @IsString()
   username: string;
   @IsBoolean()
@@ -31,6 +31,13 @@ export class NoteGroupPermissionEntryDto {
   canEdit: boolean;
 }
 
+export class NoteGroupPermissionUpdateDto {
+  @IsString()
+  groupname: string;
+  @IsBoolean()
+  canEdit: boolean;
+}
+
 export class NotePermissionsDto {
   @ValidateNested()
   owner: UserInfoDto;
@@ -45,5 +52,8 @@ export class NotePermissionsDto {
 export class NotePermissionsUpdateDto {
   @IsArray()
   @ValidateNested()
-  sharedTo: NotePermissionEntryUpdateDto[];
+  sharedToUsers: NoteUserPermissionUpdateDto[];
+  @IsArray()
+  @ValidateNested()
+  sharedToGroups: NoteGroupPermissionUpdateDto[];
 }
