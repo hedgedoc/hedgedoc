@@ -5,10 +5,10 @@ import { useSelector } from 'react-redux'
 import { deleteHistory, deleteHistoryEntry, getHistory, setHistory, updateHistoryEntry } from '../../api/history'
 import { deleteNote } from '../../api/notes'
 import { ApplicationState } from '../../redux'
+import { download } from '../common/download/download'
 
 import {
   collectEntries,
-  downloadHistory,
   loadHistoryFromLocalStore,
   mergeEntryArrays,
   setHistoryToLocalStore,
@@ -90,7 +90,7 @@ export const HistoryPage: React.FC = () => {
       version: 2,
       entries: mergeEntryArrays(localHistoryEntries, remoteHistoryEntries)
     }
-    downloadHistory(dataObject)
+    download(JSON.stringify(dataObject), `history_${(new Date()).getTime()}.json`, 'application/json')
   }, [localHistoryEntries, remoteHistoryEntries])
 
   const clearHistory = useCallback(() => {

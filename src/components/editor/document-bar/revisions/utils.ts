@@ -1,18 +1,13 @@
 import { Revision } from '../../../../api/revisions/types'
 import { getUserById } from '../../../../api/users'
 import { UserResponse } from '../../../../api/users/types'
+import { download } from '../../../common/download/download'
 
 export const downloadRevision = (noteId: string, revision: Revision | null): void => {
   if (!revision) {
     return
   }
-  const encoded = Buffer.from(revision.content).toString('base64')
-  const wrapper = document.createElement('a')
-  wrapper.download = `${noteId}-${revision.timestamp}.md`
-  wrapper.href = `data:text/markdown;charset=utf-8;base64,${encoded}`
-  document.body.appendChild(wrapper)
-  wrapper.click()
-  document.body.removeChild(wrapper)
+  download(revision.content, `${noteId}-${revision.timestamp}.md`, 'text/markdown')
 }
 
 export const getUserDataForRevision = (authors: string[]): UserResponse[] => {
