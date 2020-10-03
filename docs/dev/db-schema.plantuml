@@ -12,6 +12,8 @@ entity "Note" {
   *alias : text
   *viewcount : number
   *ownerId : uuid <<FK User>>
+  description: text
+  title: text
 }
 
 entity "User" {
@@ -49,7 +51,7 @@ entity "Identity" {
   passwordHash : text
 }
 
-entity "Session" as seesion {
+entity "Session" {
   *id : text
   --
   *expiredAt : number
@@ -108,11 +110,16 @@ entity "Group" {
   *special : boolean
   }
 
- entity "NoteGroupPermission" {
+entity "NoteGroupPermission" {
   *groupId : number <<FK Group>>
   *noteId : uuid <<FK Note>>
   --
   *canEdit : boolean
+}
+
+entity "Tag" {
+  *id: number <<generated>>
+  *name: text
 }
 
 entity "MediaUpload" {
@@ -136,9 +143,10 @@ Note "1" -- "0..*" NoteGroupPermission
 NoteGroupPermission "0..*" -- "1" Group
 Identity "1..*" -- "1" User
 authToken "1..*" -- "1" User
-seesion "1..*" -- "1" User
+Session "1..*" -- "1" User
 Note "0..*" -- "0..*" User : color
 (Note, User) .. AuthorColors
+Note "0..*" -- "0..*" Tag : tags
 MediaUpload "0..*" -- "1" Note
 MediaUpload "0..*" -- "1" User
 @enduml
