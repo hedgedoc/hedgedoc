@@ -584,3 +584,11 @@ This is an HTML abbreviation example.
 It converts "HTML", but keeps intact partial entries like "xxxHTMLyyy" and so on.
 
 *[HTML]: Hyper Text Markup Language
+
+## Revisions
+
+When changes are made to a file previous versions of the file are stored as `Revisions`, if you ever need to return to a previous save of the file you can find all the file revisions by going to `Menu` -> `Revision`.
+
+There is file history on the left that displays each revision with a timestamp allowing you to quickly select a revision for the desired date and time. Selecting a revision on the left will display the revised document to the right, the revised document will display the changes made with colorization to indicate additions/removals.
+
+In addition to browsing the revisions, you can download a selected revision or revert the current file to the selected revision.
