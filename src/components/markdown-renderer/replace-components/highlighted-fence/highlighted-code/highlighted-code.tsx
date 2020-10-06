@@ -24,6 +24,8 @@ const correctLanguage = (language: string | undefined): string | undefined => {
   switch (language) {
     case 'html':
       return 'xml'
+    case 'js':
+      return 'javascript'
     default:
       return language
   }

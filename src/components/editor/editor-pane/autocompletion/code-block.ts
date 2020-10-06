@@ -15,7 +15,7 @@ const codeBlockHint = (editor: Editor): Promise< Hints| null > => {
       }
       const term = searchResult[1]
       if (allSupportedLanguages.length === 0) {
-        allSupportedLanguages = hljs.listLanguages().concat('csv', 'flow', 'html')
+        allSupportedLanguages = hljs.listLanguages().concat('csv', 'flow', 'html', 'js', 'markmap', 'abc', 'graphviz', 'mermaid', 'vega-lite')
       }
       const suggestions = search(term, allSupportedLanguages)
       const cursor = editor.getCursor()

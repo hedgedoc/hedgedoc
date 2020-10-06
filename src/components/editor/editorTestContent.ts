@@ -230,7 +230,7 @@ https://asciinema.org/a/117928
 {%pdf https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf %}
 
 ## Code highlighting
-\`\`\`javascript=
+\`\`\`js=
 var s = "JavaScript syntax highlighting";
 alert(s);
 function $initHighlight(block, cls) {
