@@ -5,5 +5,5 @@ export const download = (data: BlobPart, fileName: string, mimeType: string): vo
   helperElement.download = fileName
   document.body.appendChild(helperElement)
   helperElement.click()
-  helperElement.remove()
+  setTimeout(() => helperElement.remove(), 2000)
 }

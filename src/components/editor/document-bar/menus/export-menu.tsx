@@ -3,8 +3,14 @@ import { Dropdown } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import links from '../../../../links.json'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { MarkdownExportDropdownItem } from './export/markdown'
 
-const ExportMenu: React.FC = () => {
+export interface ExportMenuProps {
+  title: string
+  noteContent: string
+}
+
+export const ExportMenu: React.FC<ExportMenuProps> = ({ title, noteContent }) => {
   useTranslation()
   return (
     <Dropdown className='small mx-1' alignRight={true}>
@@ -34,10 +40,10 @@ const ExportMenu: React.FC = () => {
         <Dropdown.Header>
           <Trans i18nKey='editor.documentBar.download'/>
         </Dropdown.Header>
-        <Dropdown.Item className='small'>
-          <ForkAwesomeIcon icon='file-text' className={'mx-2'}/>
-          Markdown
-        </Dropdown.Item>
+        <MarkdownExportDropdownItem
+          title={title}
+          noteContent={noteContent}
+        />
         <Dropdown.Item className='small'>
           <ForkAwesomeIcon icon='file-code-o' className={'mx-2'}/>
           HTML
@@ -61,5 +67,3 @@ const ExportMenu: React.FC = () => {
     </Dropdown>
   )
 }
-
-export { ExportMenu }

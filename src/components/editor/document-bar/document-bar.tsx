@@ -29,7 +29,7 @@ export const DocumentBar: React.FC<DocumentBarProps> = ({ title, noteContent }) 
       </div>
       <div className="ml-auto navbar-nav">
         <ImportMenu/>
-        <ExportMenu/>
+        <ExportMenu title={title} noteContent={noteContent}/>
         <EditorMenu noteTitle={title}/>
         <ConnectionIndicator/>
       </div>
