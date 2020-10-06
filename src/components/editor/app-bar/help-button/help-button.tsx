@@ -30,14 +30,14 @@ export const HelpButton: React.FC = () => {
 
   return (
     <Fragment>
-      <Button title={t('editor.documentBar.help')} className="ml-2 text-secondary" size="sm" variant="outline-light"
+      <Button title={t('editor.documentBar.help')} className='ml-2 text-secondary' size='sm' variant='outline-light'
         onClick={() => setShow(true)}>
         <ForkAwesomeIcon icon="question-circle"/>
       </Button>
-      <Modal show={show} onHide={() => setShow(false)} animation={true} className="text-dark" size='xl'>
+      <Modal show={show} onHide={() => setShow(false)} animation={true} className='text-dark' size='lg'>
         <Modal.Header closeButton>
           <Modal.Title>
-            <ForkAwesomeIcon icon="question-circle"/> <Trans i18nKey={'editor.documentBar.help'}/> – <Trans i18nKey={`editor.help.${tab}`}/>
+            <ForkAwesomeIcon icon='question-circle'/> <Trans i18nKey={'editor.documentBar.help'}/> – <Trans i18nKey={`editor.help.${tab}`}/>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
