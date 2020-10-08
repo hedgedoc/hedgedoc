@@ -2,7 +2,7 @@ import equal from 'fast-deep-equal'
 import { RefObject, useCallback, useEffect, useRef } from 'react'
 import useResizeObserver from 'use-resize-observer'
 import { LineMarkerPosition } from '../types'
-import { LineMarkers } from '../markdown-it-plugins/line-number-marker'
+import { LineMarkers } from '../replace-components/linemarker/line-number-marker'
 
 export const calculateLineMarkerPositions = (documentElement: HTMLDivElement, currentLineMarkers: LineMarkers[], offset?: number): LineMarkerPosition[] => {
   const lineMarkers = currentLineMarkers

@@ -1,7 +1,11 @@
 import { DomElement } from 'domhandler'
+import MarkdownIt from 'markdown-it'
+import markdownItRegex from 'markdown-it-regex'
 import React from 'react'
-import { getAttributesFromHedgeDocTag } from '../utils'
 import { ComponentReplacer } from '../ComponentReplacer'
+import { getAttributesFromHedgeDocTag } from '../utils'
+import { replaceLegacyYoutubeShortCode } from './replace-legacy-youtube-short-code'
+import { replaceYouTubeLink } from './replace-youtube-link'
 import { YouTubeFrame } from './youtube-frame'
 
 export class YoutubeReplacer extends ComponentReplacer {
@@ -15,5 +19,10 @@ export class YoutubeReplacer extends ComponentReplacer {
       this.counterMap.set(videoId, count)
       return <YouTubeFrame id={videoId}/>
     }
+  }
+
+  public static readonly markdownItPlugin: MarkdownIt.PluginSimple = (markdownIt) => {
+    markdownItRegex(markdownIt, replaceYouTubeLink)
+    markdownItRegex(markdownIt, replaceLegacyYoutubeShortCode)
   }
 }

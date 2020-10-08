@@ -1,4 +1,4 @@
-import { RegexOptions } from '../../../external-types/markdown-it-regex/interface'
+import { RegexOptions } from '../../../../external-types/markdown-it-regex/interface'
 
 const finalRegex = /^{%gist (\w+\/\w+) ?%}$/
 

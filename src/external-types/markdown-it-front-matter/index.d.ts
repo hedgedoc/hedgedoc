@@ -1,5 +1,7 @@
+
 declare module 'markdown-it-front-matter' {
   import MarkdownIt from 'markdown-it/lib'
-  const markdownItFrontMatter: MarkdownIt.PluginSimple
+  export type FrontMatterPluginOptions = (rawMeta: string) => void
+  const markdownItFrontMatter: MarkdownIt.PluginWithOptions<FrontMatterPluginOptions>
   export = markdownItFrontMatter
 }

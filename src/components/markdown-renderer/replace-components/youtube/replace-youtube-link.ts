@@ -1,4 +1,4 @@
-import { RegexOptions } from '../../../external-types/markdown-it-regex/interface'
+import { RegexOptions } from '../../../../external-types/markdown-it-regex/interface'
 
 const protocolRegex = /(?:http(?:s)?:\/\/)?/
 const subdomainRegex = /(?:www.)?/

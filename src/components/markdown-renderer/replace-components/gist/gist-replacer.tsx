@@ -1,5 +1,9 @@
 import { DomElement } from 'domhandler'
+import MarkdownIt from 'markdown-it'
+import markdownItRegex from 'markdown-it-regex'
 import React from 'react'
+import { replaceGistLink } from './replace-gist-link'
+import { replaceLegacyGistShortCode } from './replace-legacy-gist-short-code'
 import { getAttributesFromHedgeDocTag } from '../utils'
 import { ComponentReplacer } from '../ComponentReplacer'
 import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
@@ -21,5 +25,10 @@ export class GistReplacer extends ComponentReplacer {
         </OneClickEmbedding>
       )
     }
+  }
+
+  public static readonly markdownItPlugin: MarkdownIt.PluginSimple = (markdownIt) => {
+    markdownItRegex(markdownIt, replaceGistLink)
+    markdownItRegex(markdownIt, replaceLegacyGistShortCode)
   }
 }
