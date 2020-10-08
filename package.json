@@ -112,7 +112,7 @@
         "build": "craco build",
         "analyze": "cross-env ANALYZE=true craco build",
         "test": "craco test",
-        "lint": "eslint --ext .ts,.tsx src",
+        "lint": "eslint --max-warnings=0 --ext .ts,.tsx src",
         "eject": "react-scripts eject",
         "cy:open": "cypress open",
         "cy:run:chrome": "cypress run --browser chrome",
