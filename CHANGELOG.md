@@ -44,6 +44,7 @@
 - All images can be clicked to show them in full screen.
 - Code blocks have a 'Copy code to clipboard' button.
 - Code blocks with 'vega-lite' as language are rendered as [vega-lite diagrams](https://vega.github.io/vega-lite/examples/).
+- Markdown files can be imported into an existing note directly from the editor.
 
 ### Changed
 

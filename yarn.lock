@@ -4802,6 +4802,13 @@ cypress-commands@1.1.0:
   resolved "https://registry.yarnpkg.com/cypress-commands/-/cypress-commands-1.1.0.tgz#9248190168783deb8ab27ae7c722e3e01d172c97"
   integrity sha512-Q8Jr25pHJQFXwln6Hp8O+Hgs8Z506Y2wA9F1Te2cTajjc5L9gtt9WPOcw1Ogh+OgyqaMHF+uq31vdfImRTio5Q==
 
+cypress-file-upload@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/cypress-file-upload/-/cypress-file-upload-4.1.1.tgz#952713c8104ab7008de99c65bd63f74b244fe4df"
+  integrity sha512-tX6UhuJ63rNgjdzxglpX+ZYf/bM6PDhFMtt1qCBljLtAgdearqyfD1AHqyh59rOHCjfM+bf6FA3o9b/mdaX6pw==
+  dependencies:
+    mime "^2.4.4"
+
 cypress@5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/cypress/-/cypress-5.3.0.tgz#91122219ae66ab910058970dbf36619ab0fbde6c"

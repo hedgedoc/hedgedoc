@@ -301,7 +301,8 @@
             "pdf": "PDF export is unavailable."
         },
         "import": {
-            "clipboard": "Clipboard"
+            "clipboard": "Clipboard",
+            "file": "Markdown file"
         },
         "modal": {
             "snippetImport": {

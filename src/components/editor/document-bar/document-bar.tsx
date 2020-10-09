@@ -6,16 +6,15 @@ import { ConnectionIndicator } from './connection-indicator/connection-indicator
 import { DocumentInfoButton } from './document-info/document-info-button'
 import { EditorMenu } from './menus/editor-menu'
 import { ExportMenu } from './menus/export-menu'
-import { ImportMenu } from './menus/import-menu'
+import { ImportMenu, ImportProps } from './menus/import-menu'
 import { PermissionButton } from './permissions/permission-button'
 import { RevisionButton } from './revisions/revision-button'
 
 export interface DocumentBarProps {
   title: string
-  noteContent: string
 }
 
-export const DocumentBar: React.FC<DocumentBarProps> = ({ title, noteContent }) => {
+export const DocumentBar: React.FC<DocumentBarProps & ImportProps> = ({ title, noteContent, updateNoteContent }) => {
   useTranslation()
 
   return (
@@ -28,7 +27,7 @@ export const DocumentBar: React.FC<DocumentBarProps> = ({ title, noteContent }) 
         <PermissionButton/>
       </div>
       <div className="ml-auto navbar-nav">
-        <ImportMenu/>
+        <ImportMenu updateNoteContent={updateNoteContent} noteContent={noteContent}/>
         <ExportMenu title={title} noteContent={noteContent}/>
         <EditorMenu noteTitle={title}/>
         <ConnectionIndicator/>

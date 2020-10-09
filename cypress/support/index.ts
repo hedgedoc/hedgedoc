@@ -14,6 +14,7 @@
 // ***********************************************************
 
 import 'cypress-commands'
+import 'cypress-file-upload'
 import './checkLinks'
 import './config'
 import './login'
