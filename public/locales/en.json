@@ -7,6 +7,10 @@
         "highlightCode": {
             "copyCode": "Copy code to clipboard"
         },
+        "markmap": {
+            "locked": "Mouse input locked",
+            "unlocked": "Mouse input unlocked"
+        },
         "flowchart": {
             "invalidSyntax": "Invalid flowchart.js syntax!"
         },

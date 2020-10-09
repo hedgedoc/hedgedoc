@@ -1,11 +1,37 @@
-import React, { useEffect, useRef } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { LockButton } from '../../../common/lock-button/lock-button'
 
 export interface MarkmapFrameProps {
   code: string
 }
 
+const blockHandler = (event: Event): void => {
+  event.stopPropagation()
+}
+
 export const MarkmapFrame: React.FC<MarkmapFrameProps> = ({ code }) => {
+  const { t } = useTranslation()
   const diagramContainer = useRef<HTMLDivElement>(null)
+  const [disablePanAndZoom, setDisablePanAndZoom] = useState(true)
+
+  useEffect(() => {
+    if (diagramContainer.current) {
+      if (disablePanAndZoom) {
+        diagramContainer.current.addEventListener('wheel', blockHandler, true)
+        diagramContainer.current.addEventListener('mousedown', blockHandler, true)
+        diagramContainer.current.addEventListener('click', blockHandler, true)
+        diagramContainer.current.addEventListener('dblclick', blockHandler, true)
+        diagramContainer.current.addEventListener('touchstart', blockHandler, true)
+      } else {
+        diagramContainer.current.removeEventListener('wheel', blockHandler, true)
+        diagramContainer.current.removeEventListener('mousedown', blockHandler, true)
+        diagramContainer.current.removeEventListener('click', blockHandler, true)
+        diagramContainer.current.removeEventListener('dblclick', blockHandler, true)
+        diagramContainer.current.removeEventListener('touchstart', blockHandler, true)
+      }
+    }
+  }, [diagramContainer, disablePanAndZoom])
 
   useEffect(() => {
     if (!diagramContainer.current) {
@@ -33,5 +59,12 @@ export const MarkmapFrame: React.FC<MarkmapFrameProps> = ({ code }) => {
       }).catch(() => { console.error('error while loading markmap') })
   }, [code])
 
-  return <div className={'text-center'} ref={diagramContainer}/>
+  return (
+    <Fragment>
+      <div className={'text-center'} ref={diagramContainer}/>
+      <div className={'text-right button-inside'}>
+        <LockButton locked={disablePanAndZoom} onLockedChanged={(newState => setDisablePanAndZoom(newState))} title={ disablePanAndZoom ? t('renderer.markmap.locked') : t('renderer.markmap.unlocked')}/>
+      </div>
+    </Fragment>
+  )
 }
