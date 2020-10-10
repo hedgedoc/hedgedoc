@@ -5748,7 +5748,7 @@ elliptic@^6.5.3:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
-emoji-picker-element@^1.2.1:
+emoji-picker-element@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/emoji-picker-element/-/emoji-picker-element-1.2.1.tgz#a8eb99035e07f970c16e202a6e0588dce15dda02"
   integrity sha512-gk0NBg7G/S6ClfIUjRKchXLrl4o1dcvKmEamFT9GERHfCeAyi+afUeMhwVY168I65RiqjGCJkGpoTV2CVa2QNA==
@@ -5768,7 +5768,7 @@ emoji-regex@^9.0.0:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.0.0.tgz#48a2309cc8a1d2e9d23bc6a67c39b63032e76ea4"
   integrity sha512-6p1NII1Vm62wni/VR/cUMauVQoxmLVb9csqQlvLz+hO2gk8U2UYDfXHQSUYIBKmZwAKz867IDqG7B+u0mj+M6w==
 
-emojibase-data@5:
+emojibase-data@5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/emojibase-data/-/emojibase-data-5.1.1.tgz#0a0d63dd07ce1376b3d27642f28cafa46f651de6"
   integrity sha512-za/ma5SfogHjwUmGFnDbTvSfm8GGFvFaPS27GPti16YZSp5EPgz+UDsZCATXvJGit+oRNBbG/FtybXHKi2UQgQ==
