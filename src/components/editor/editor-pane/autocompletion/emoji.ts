@@ -1,11 +1,14 @@
 import { Editor, Hint, Hints, Pos } from 'codemirror'
-import { Data, EmojiData, NimbleEmojiIndex } from 'emoji-mart'
-import data from 'emoji-mart/data/twitter.json'
+import Database from 'emoji-picker-element/database'
+import { Emoji, EmojiClickEventDetail, NativeEmoji } from 'emoji-picker-element/shared'
 import { customEmojis } from '../tool-bar/emoji-picker/emoji-picker'
 import { getEmojiIcon, getEmojiShortCode } from '../tool-bar/utils/emojiUtils'
 import { findWordAtCursor, Hinter } from './index'
 
-const emojiIndex = new NimbleEmojiIndex(data as unknown as Data)
+const emojiIndex = new Database({
+  customEmoji: customEmojis,
+  dataSource: '/static/js/emoji-data.json'
+})
 const emojiWordRegex = /^:([\w-_+]*)$/
 
 const generateEmojiHints = (editor: Editor): Promise< Hints| null > => {
@@ -17,34 +20,40 @@ const generateEmojiHints = (editor: Editor): Promise< Hints| null > => {
       return
     }
     const term = searchResult[1]
-    let search: EmojiData[] | null = emojiIndex.search(term, {
-      emojisToShowFilter: () => true,
-      maxResults: 7,
-      include: [],
-      exclude: [],
-      custom: customEmojis as EmojiData[]
-    })
-    if (search === null) {
-      // set search to the first seven emojis in data
-      search = Object.values(emojiIndex.emojis).slice(0, 7)
-    }
-    const cursor = editor.getCursor()
-    if (!search) {
-      resolve(null)
-    } else {
-      resolve({
-        list: search.map((emojiData): Hint => ({
-          text: getEmojiShortCode(emojiData),
-          render: (parent: HTMLLIElement) => {
-            const wrapper = document.createElement('div')
-            wrapper.innerHTML = `${getEmojiIcon(emojiData)}   ${getEmojiShortCode(emojiData)}`
-            parent.appendChild(wrapper)
+    let suggestionList: Emoji[]
+    emojiIndex.getEmojiBySearchQuery(term)
+      .then(async (result) => {
+        suggestionList = result
+        if (result.length === 0) {
+          suggestionList = await emojiIndex.getTopFavoriteEmoji(7)
+        }
+        const cursor = editor.getCursor()
+        const skinTone = await emojiIndex.getPreferredSkinTone()
+        const emojiEventDetails: EmojiClickEventDetail[] = suggestionList.map((emoji) => {
+          return {
+            emoji,
+            skinTone: skinTone,
+            unicode: ((emoji as NativeEmoji).unicode ? (emoji as NativeEmoji).unicode : undefined),
+            name: emoji.name
           }
-        })),
-        from: Pos(cursor.line, searchTerm.start),
-        to: Pos(cursor.line, searchTerm.end)
+        })
+        resolve({
+          list: emojiEventDetails.map((emojiData): Hint => ({
+            text: getEmojiShortCode(emojiData),
+            render: (parent: HTMLLIElement) => {
+              const wrapper = document.createElement('div')
+              wrapper.innerHTML = `${getEmojiIcon(emojiData)}   ${getEmojiShortCode(emojiData)}`
+              parent.appendChild(wrapper)
+            }
+          })),
+          from: Pos(cursor.line, searchTerm.start),
+          to: Pos(cursor.line, searchTerm.end)
+        })
       })
-    }
+      .catch(error => {
+        console.error(error)
+        resolve(null)
+      })
   })
 }
 

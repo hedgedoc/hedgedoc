@@ -1,5 +1,5 @@
 import { Editor } from 'codemirror'
-import { EmojiData } from 'emoji-mart'
+import { EmojiClickEventDetail } from 'emoji-picker-element/shared'
 import { getEmojiShortCode } from './emojiUtils'
 
 export const makeSelectionBold = (editor: Editor): void => wrapTextWith(editor, '**')
@@ -25,7 +25,7 @@ export const addCollapsableBlock = (editor: Editor): void => changeLines(editor,
 export const addComment = (editor: Editor): void => changeLines(editor, line => `${line}\n> []`)
 export const addTable = (editor: Editor): void => changeLines(editor, line => `${line}\n| # 1  | # 2  | # 3  |\n| ---- | ---- | ---- |\n| Text | Text | Text |`)
 
-export const addEmoji = (emoji: EmojiData, editor: Editor): void => {
+export const addEmoji = (emoji: EmojiClickEventDetail, editor: Editor): void => {
   insertAtCursor(editor, getEmojiShortCode(emoji))
 }
 

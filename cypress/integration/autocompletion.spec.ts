@@ -80,7 +80,7 @@ describe('Autocompletion', () => {
     describe('normal emoji', () => {
       it('via Enter', () => {
         cy.get('.CodeMirror textarea')
-          .type(':book')
+          .type(':hedg')
         cy.get('.CodeMirror-hints')
           .should('exist')
         cy.get('.CodeMirror textarea')
@@ -88,29 +88,29 @@ describe('Autocompletion', () => {
         cy.get('.CodeMirror-hints')
           .should('not.exist')
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', ':book:')
+          .should('have.text', ':hedgehog:')
         cy.get('.markdown-body')
-          .should('have.text', '📖')
+          .should('have.text', '🦔')
       })
       it('via doubleclick', () => {
         cy.get('.CodeMirror textarea')
-          .type(':book')
+          .type(':hedg')
         cy.get('.CodeMirror-hints > li')
           .first()
           .dblclick()
         cy.get('.CodeMirror-hints')
           .should('not.exist')
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', ':book:')
+          .should('have.text', ':hedgehog:')
         cy.get('.markdown-body')
-          .should('have.text', '📖')
+          .should('have.text', '🦔')
       })
     })
 
     describe('fork-awesome-icon', () => {
       it('via Enter', () => {
         cy.get('.CodeMirror textarea')
-          .type(':facebook')
+          .type(':fa-face')
         cy.get('.CodeMirror-hints')
           .should('exist')
         cy.get('.CodeMirror textarea')
@@ -124,7 +124,7 @@ describe('Autocompletion', () => {
       })
       it('via doubleclick', () => {
         cy.get('.CodeMirror textarea')
-          .type(':facebook')
+          .type(':fa-face')
         cy.get('.CodeMirror-hints > li')
           .first()
           .dblclick()

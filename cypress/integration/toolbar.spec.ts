@@ -275,28 +275,14 @@ describe('Toolbar', () => {
       .should('have.text', '> []')
   })
 
-  describe('emoji', () => {
-    it('picker is show when clicked', () => {
-      cy.get('.emoji-mart')
-        .should('not.exist')
+  describe('emoji-picker', () => {
+    it('show when clicked', () => {
+      cy.get('emoji-picker')
+        .should('not.be.visible')
       cy.get('.fa-smile-o')
         .click()
-      cy.get('.emoji-mart')
-        .should('exist')
-    })
-
-    it('picker is show when clicked', () => {
-      cy.get('.fa-smile-o')
-        .click()
-      cy.get('.emoji-mart')
-        .should('exist')
-      cy.get('.emoji-mart-emoji-native')
-        .first()
-        .click()
-      cy.get('.markdown-body')
-        .should('have.text', '👍')
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span ')
-        .should('have.text', ':+1:')
+      cy.get('emoji-picker')
+        .should('be.visible')
     })
   })
 
