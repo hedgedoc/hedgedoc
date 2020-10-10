@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LockButton } from '../../../common/lock-button/lock-button'
+import '../../utils/button-inside.scss'
 
 export interface MarkmapFrameProps {
   code: string
