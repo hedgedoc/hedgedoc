@@ -57,6 +57,7 @@
 - The <i class="fa fa-picture-o"/> (add image) and <i class="fa fa-link"/> (add link) toolbar buttons, put selected links directly in the `()` instead of the `[]` part of the generated markdown
 - The help dialog has multiple tabs, and is a bit more organized.
 - Use KaTeX instead of MathJax. ([Why?](https://community.codimd.org/t/frequently-asked-questions/190))
+- The access tokens for the CLI and 3rd-party-clients can be managed in the user profile.
 
 ---
 

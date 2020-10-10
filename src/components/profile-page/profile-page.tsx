@@ -5,6 +5,7 @@ import { Redirect } from 'react-router'
 import { ApplicationState } from '../../redux'
 import { LoginProvider } from '../../redux/user/types'
 import { ShowIf } from '../common/show-if/show-if'
+import { ProfileAccessTokens } from './access-tokens/profile-access-tokens'
 import { ProfileAccountManagement } from './settings/profile-account-management'
 import { ProfileChangePassword } from './settings/profile-change-password'
 import { ProfileDisplayName } from './settings/profile-display-name'
@@ -26,6 +27,7 @@ export const ProfilePage: React.FC = () => {
           <ShowIf condition={userProvider === LoginProvider.INTERNAL}>
             <ProfileChangePassword/>
           </ShowIf>
+          <ProfileAccessTokens/>
           <ProfileAccountManagement/>
         </Col>
       </Row>

@@ -3,6 +3,7 @@ import { Button, ButtonProps } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
 import { IconName } from '../fork-awesome/types'
 import './icon-button.scss'
+import { ShowIf } from '../show-if/show-if'
 
 export interface IconButtonProps extends ButtonProps {
   icon: IconName
@@ -16,9 +17,11 @@ export const IconButton: React.FC<IconButtonProps> = ({ icon, children, border =
       <span className="icon-part d-flex align-items-center">
         <ForkAwesomeIcon icon={icon} className={'icon'}/>
       </span>
-      <span className="text-part d-flex align-items-center">
-        {children}
-      </span>
+      <ShowIf condition={!!children}>
+        <span className="text-part d-flex align-items-center">
+          {children}
+        </span>
+      </ShowIf>
     </Button>
   )
 }

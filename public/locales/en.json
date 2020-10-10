@@ -152,11 +152,28 @@
         "accountManagement": "Account management",
         "deleteUser": "Delete user",
         "exportUserData": "Export user data",
+        "accessTokens": {
+            "title": "Access tokens",
+            "info": "Access tokens are an password-less authentication method for the CLI or third-party applications.",
+            "infoDev": "Developers can use these to access the public API.",
+            "noTokens": "You don't have any tokens generated yet.",
+            "createToken": "Create token",
+            "label": "Token label",
+            "created": "created {{time}}"
+        },
         "modal": {
             "deleteUser": {
                 "title": "Delete user",
                 "message": "Do you really want to delete your user account?",
                 "subMessage": "This will delete your account, all notes that are owned by you and remove all references to your account from other notes."
+            },
+            "addedAccessToken": {
+                "title": "Token added",
+                "message": "An access token was created. Copy it from the field below now, as you won't be able to view it again."
+            },
+            "deleteAccessToken": {
+                "title": "Really delete token?",
+                "message": "When deleting an access token, the applications that used it won't have access to your account anymore. You eventually need a new token to continue using those applications."
             }
         }
     },
@@ -384,12 +401,14 @@
         "ok": "OK",
         "close": "Close",
         "save": "Save",
+        "delete": "Delete",
         "or": "or",
         "and": "and",
         "avatarOf": "avatar of '{{name}}'",
         "why": "Why?",
         "successfullyCopied": "Copied!",
-        "copyError": "Error while copying!"
+        "copyError": "Error while copying!",
+        "errorOccurred": "An error occurred"
     },
     "login": {
         "chooseMethod": "Choose method",
