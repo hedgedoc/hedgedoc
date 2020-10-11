@@ -24,7 +24,7 @@ export const FlowChart: React.FC<FlowChartProps> = ({ code }) => {
           'line-width': 2,
           fill: 'none',
           'font-size': '16px',
-          'font-family': 'Source Code Pro, twemoji, monospace'
+          'font-family': 'Source Code Pro, "Twemoji Mozilla", monospace'
         })
         setError(false)
       } catch (error) {

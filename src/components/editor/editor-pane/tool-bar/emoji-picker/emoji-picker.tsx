@@ -36,7 +36,7 @@ export const EmojiPicker: React.FC<EmojiPickerProps> = ({ show, onEmojiSelected,
 
   const twemojiStyle = useMemo(() => {
     const style = document.createElement('style')
-    style.textContent = 'section.picker { --font-family: "twemoji" !important; }'
+    style.textContent = 'section.picker { --font-family: "Twemoji Mozilla" !important; }'
     return style
   }, [])
 
