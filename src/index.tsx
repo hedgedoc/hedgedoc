@@ -10,6 +10,7 @@ import { HistoryPage } from './components/history-page/history-page'
 import { IntroPage } from './components/intro-page/intro-page'
 import { LandingLayout } from './components/landing-layout/landing-layout'
 import { LoginPage } from './components/login-page/login-page'
+import { PadViewOnly } from './components/pad-view-only/pad-view-only'
 import { ProfilePage } from './components/profile-page/profile-page'
 import { RegisterPage } from './components/register-page/register-page'
 import { store } from './redux'
@@ -52,6 +53,9 @@ ReactDOM.render(
             </Route>
             <Route path="/n/:id">
               <Editor/>
+            </Route>
+            <Route path="/s/:id">
+              <PadViewOnly/>
             </Route>
             <Route path="/:id">
               <Redirector/>

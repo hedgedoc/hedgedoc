@@ -1,8 +1,15 @@
 .user-avatar {
   width: 20px;
   height: 20px;
-}
 
-.user-name {
-  font-size: 1rem;
+  &.lg {
+    width: 30px;
+    height: 30px;
+  }
+
+  &.sm {
+    width: 16px;
+    height: 16px;
+  }
+
 }

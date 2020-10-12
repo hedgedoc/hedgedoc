@@ -393,6 +393,18 @@
             "clickToLoad": "Click to load"
         }
     },
+    "views": {
+        "presentation": {},
+        "readOnly": {
+            "viewCount": "views",
+            "editNote": "Edit this note",
+            "loading": "Loading note contents ...",
+            "error": {
+                "title": "Error while loading note",
+                "description": "Probably the requested note does not exist or was deleted."
+            }
+        }
+    },
     "common": {
         "import": "Import",
         "export": "Export",

@@ -2,12 +2,11 @@
     "id": "ABC123",
     "alias": "old",
     "lastChange": {
-        "userId": "snskxnksnxksnxksnx",
-        "username": "testy",
-        "timestamp": 123456789
+        "userId": "test",
+        "timestamp": 1600033920
     },
     "viewcount": 0,
-    "createtime": "2020-05-22T20:46:08.962Z",
+    "createtime": 1600033920,
     "content": "test123",
     "authorship": [],
     "preVersionTwoNote": false

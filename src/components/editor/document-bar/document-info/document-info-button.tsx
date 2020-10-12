@@ -24,6 +24,7 @@ export const DocumentInfoButton: React.FC = () => {
           <ListGroup>
             <ListGroup.Item>
               <DocumentInfoTimeLine
+                size={'2x'}
                 mode={DocumentInfoLineWithTimeMode.CREATED}
                 time={DateTime.local().minus({ days: 11 })}
                 userName={'Tilman'}
@@ -31,20 +32,21 @@ export const DocumentInfoButton: React.FC = () => {
             </ListGroup.Item>
             <ListGroup.Item>
               <DocumentInfoTimeLine
+                size={'2x'}
                 mode={DocumentInfoLineWithTimeMode.EDITED}
                 time={DateTime.local().minus({ minutes: 3 })}
                 userName={'Philip'}
                 profileImageSrc={'/avatar.png'}/>
             </ListGroup.Item>
             <ListGroup.Item>
-              <DocumentInfoLine icon={'users'}>
+              <DocumentInfoLine icon={'users'} size={'2x'}>
                 <Trans i18nKey='editor.modal.documentInfo.usersContributed'>
                   <UnitalicBoldText text={'42'}/>
                 </Trans>
               </DocumentInfoLine>
             </ListGroup.Item>
             <ListGroup.Item>
-              <DocumentInfoLine icon={'history'}>
+              <DocumentInfoLine icon={'history'} size={'2x'}>
                 <Trans i18nKey='editor.modal.documentInfo.revisions'>
                   <UnitalicBoldText text={'192'}/>
                 </Trans>

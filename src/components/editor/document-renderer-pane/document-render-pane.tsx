@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { RefObject, useState } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import useResizeObserver from 'use-resize-observer'
 import { TocAst } from '../../../external-types/markdown-it-toc-done-right/interface'
@@ -6,119 +6,48 @@ import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../../common/show-if/show-if'
 import { LineMarkerPosition } from '../../markdown-renderer/types'
 import { FullMarkdownRenderer } from '../../markdown-renderer/full-markdown-renderer'
-import { ScrollProps, ScrollState } from '../scroll/scroll-props'
-import { findLineMarks } from '../scroll/utils'
 import { TableOfContents } from '../table-of-contents/table-of-contents'
 import { YAMLMetaData } from '../yaml-metadata/yaml-metadata'
 
-interface DocumentRenderPaneProps {
+export interface DocumentRenderPaneProps {
   content: string
+  extraClasses?: string
   onFirstHeadingChange: (firstHeading: string | undefined) => void
+  onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void
   onMetadataChange: (metaData: YAMLMetaData | undefined) => void
+  onMouseEnterRenderer?: () => void
+  onScrollRenderer?: () => void
   onTaskCheckedChange: (lineInMarkdown: number, checked: boolean) => void
+  rendererReference?: RefObject<HTMLDivElement>
   wide?: boolean
 }
 
-export const DocumentRenderPane: React.FC<DocumentRenderPaneProps & ScrollProps> = ({
+export const DocumentRenderPane: React.FC<DocumentRenderPaneProps> = ({
   content,
+  extraClasses,
   onFirstHeadingChange,
-  onMakeScrollSource,
+  onLineMarkerPositionChanged,
   onMetadataChange,
-  onScroll,
+  onMouseEnterRenderer,
+  onScrollRenderer,
   onTaskCheckedChange,
-  scrollState,
+  rendererReference,
   wide
 }) => {
   const [tocAst, setTocAst] = useState<TocAst>()
-  const renderer = useRef<HTMLDivElement>(null)
-  const { width } = useResizeObserver({ ref: renderer })
-  const lastScrollPosition = useRef<number>()
-  const [lineMarks, setLineMarks] = useState<LineMarkerPosition[]>()
-
+  const { width } = useResizeObserver(rendererReference ? { ref: rendererReference } : undefined)
   const realWidth = width || 0
 
-  const scrollTo = useCallback((targetPosition:number):void => {
-    if (!renderer.current || targetPosition === lastScrollPosition.current) {
-      return
-    }
-    lastScrollPosition.current = targetPosition
-    renderer.current.scrollTo({
-      top: targetPosition
-    })
-  }, [])
-
-  useEffect(() => {
-    if (!renderer.current || !lineMarks || lineMarks.length === 0 || !scrollState) {
-      return
-    }
-    if (scrollState.firstLineInView < lineMarks[0].line) {
-      scrollTo(0)
-      return
-    }
-    if (scrollState.firstLineInView > lineMarks[lineMarks.length - 1].line) {
-      scrollTo(renderer.current.offsetHeight)
-      return
-    }
-    const { lastMarkBefore, firstMarkAfter } = findLineMarks(lineMarks, scrollState.firstLineInView)
-    const positionBefore = lastMarkBefore ? lastMarkBefore.position : lineMarks[0].position
-    const positionAfter = firstMarkAfter ? firstMarkAfter.position : renderer.current.offsetHeight
-    const lastMarkBeforeLine = lastMarkBefore ? lastMarkBefore.line : 1
-    const firstMarkAfterLine = firstMarkAfter ? firstMarkAfter.line : content.split('\n').length
-    const lineCount = firstMarkAfterLine - lastMarkBeforeLine
-    const blockHeight = positionAfter - positionBefore
-    const lineHeight = blockHeight / lineCount
-    const position = positionBefore + (scrollState.firstLineInView - lastMarkBeforeLine) * lineHeight + scrollState.scrolledPercentage / 100 * lineHeight
-    const correctedPosition = Math.floor(position)
-    scrollTo(correctedPosition)
-  }, [content, lineMarks, scrollState, scrollTo])
-
-  const userScroll = useCallback(() => {
-    if (!renderer.current || !lineMarks || lineMarks.length === 0 || !onScroll) {
-      return
-    }
-
-    const scrollTop = renderer.current.scrollTop
-
-    const lineMarksBeforeScrollTop = lineMarks.filter(lineMark => lineMark.position <= scrollTop)
-    if (lineMarksBeforeScrollTop.length === 0) {
-      return
-    }
-
-    const lineMarksAfterScrollTop = lineMarks.filter(lineMark => lineMark.position > scrollTop)
-    if (lineMarksAfterScrollTop.length === 0) {
-      return
-    }
-
-    const beforeLineMark = lineMarksBeforeScrollTop
-      .reduce((prevLineMark, currentLineMark) =>
-        prevLineMark.line >= currentLineMark.line ? prevLineMark : currentLineMark)
-
-    const afterLineMark = lineMarksAfterScrollTop
-      .reduce((prevLineMark, currentLineMark) =>
-        prevLineMark.line < currentLineMark.line ? prevLineMark : currentLineMark)
-
-    const componentHeight = afterLineMark.position - beforeLineMark.position
-    const distanceToBefore = scrollTop - beforeLineMark.position
-    const percentageRaw = (distanceToBefore / componentHeight)
-    const lineCount = afterLineMark.line - beforeLineMark.line
-    const line = Math.floor(lineCount * percentageRaw + beforeLineMark.line)
-    const lineHeight = componentHeight / lineCount
-    const innerScrolling = Math.floor((distanceToBefore % lineHeight) / lineHeight * 100)
-
-    const newScrollState: ScrollState = { firstLineInView: line, scrolledPercentage: innerScrolling }
-    onScroll(newScrollState)
-  }, [lineMarks, onScroll])
-
   return (
-    <div className={'bg-light flex-fill pb-5 flex-row d-flex w-100 h-100 overflow-y-scroll'}
-      ref={renderer} onScroll={userScroll} onMouseEnter={onMakeScrollSource}>
+    <div className={`bg-light flex-fill pb-5 flex-row d-flex w-100 h-100 ${extraClasses ?? ''}`}
+      ref={rendererReference} onScroll={onScrollRenderer} onMouseEnter={onMouseEnterRenderer}>
       <div className={'col-md'}/>
       <div className={'bg-light flex-fill'}>
         <FullMarkdownRenderer
           className={'flex-fill mb-3'}
           content={content}
           onFirstHeadingChange={onFirstHeadingChange}
-          onLineMarkerPositionChanged={setLineMarks}
+          onLineMarkerPositionChanged={onLineMarkerPositionChanged}
           onMetaDataChange={onMetadataChange}
           onTaskCheckedChange={onTaskCheckedChange}
           onTocChange={(tocAst) => setTocAst(tocAst)}

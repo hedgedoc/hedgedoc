@@ -2,7 +2,6 @@ import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 
 interface LastChange {
   userId: string
-  username: string
   timestamp: number
 }
 
@@ -11,14 +10,16 @@ export interface Note {
   alias: string
   lastChange: LastChange
   viewcount: number
-  createtime: string
+  createtime: number
   content: string
   authorship: number[]
   preVersionTwoNote: boolean
 }
 
 export const getNote = async (noteId: string): Promise<Note> => {
-  const response = await fetch(getApiUrl() + `/notes/${noteId}`)
+  const response = await fetch(getApiUrl() + `/notes/${noteId}`, {
+    ...defaultFetchConfig
+  })
   expectResponseCode(response)
   return await response.json() as Promise<Note>
 }

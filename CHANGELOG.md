@@ -32,9 +32,9 @@
 - Highlighted code blocks can now use line wrapping and line numbers at once
 - Images, videos, and other non-text content is now wider in View Mode
 - Notes may now be deleted directly from the history page
-- HedgeDoc instances can now be branded either with a '@ <custom string>' or '@ <custom logo>' after the HedgeDoc logo and text
+- HedgeDoc instances can be branded either with a '@ \<custom string\>' or '@ \<custom logo\>' after the HedgeDoc logo and text
 - Images will be loaded via proxy if an image proxy is configured in the backend
-- Asciinema videos may now be embedded by pasting the URL of one video into a single line
+- Asciinema videos may be embedded by pasting the URL of one video into a single line
 - The toolbar includes an emoji and fork-awesome icon picker.
 - Collapsable blocks can be added via a toolbar button or via autocompletion of "<details"
 - Added shortcodes for [fork-awesome icons](https://forkaweso.me/Fork-Awesome/icons/) (e.g. `:fa-picture-o:`)
@@ -54,10 +54,11 @@
 - The gist and pdf embeddings now use a one-click aproach similar to vimeo and youtube
 - Use [Twemoji](https://twemoji.twitter.com/) as icon font
 - The `[name=...]`, `[time=...]` and `[color=...]` tags may now be used anywhere in the document and not just inside of blockquotes and lists.
-- The <i class="fa fa-picture-o"/> (add image) and <i class="fa fa-link"/> (add link) toolbar buttons, put selected links directly in the `()` instead of the `[]` part of the generated markdown
+- The <i class="fa fa-picture-o"/> (add image) and <i class="fa fa-link"/> (add link) toolbar buttons put selected links directly in the `()` instead of the `[]` part of the generated markdown.
 - The help dialog has multiple tabs, and is a bit more organized.
 - Use KaTeX instead of MathJax. ([Why?](https://community.codimd.org/t/frequently-asked-questions/190))
-- The access tokens for the CLI and 3rd-party-clients can be managed in the user profile.
+- The dark-mode is also applied to the read-only-view and can be toggled from there.
+- Access tokens for the CLI and 3rd-party-clients can be managed in the user profile.
 
 ---
 
