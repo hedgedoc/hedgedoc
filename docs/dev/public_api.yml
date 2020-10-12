@@ -471,6 +471,13 @@ paths:
       responses:
         '200':
           description: The image was uploaded successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  link:
+                    type: string
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
         '403':
