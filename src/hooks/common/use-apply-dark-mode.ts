@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../redux'
+import { ApplicationState } from '../../redux'
 
-export const ApplyDarkMode: React.FC = () => {
+export const useApplyDarkMode = ():void => {
   const darkModeActivated = useSelector((state: ApplicationState) => state.darkMode.darkMode)
 
   useEffect(() => {
@@ -15,6 +15,4 @@ export const ApplyDarkMode: React.FC = () => {
       window.document.body.classList.remove('dark')
     }
   }, [darkModeActivated])
-
-  return null
 }

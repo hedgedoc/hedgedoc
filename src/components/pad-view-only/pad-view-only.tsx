@@ -3,8 +3,8 @@ import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { getNote, Note } from '../../api/notes'
-import { ApplyDarkMode } from '../common/apply-dark-mode/apply-dark-mode'
-import { DocumentTitle } from '../common/document-title/document-title'
+import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
+import { useDocumentTitle } from '../../hooks/common/use-document-title'
 import { extractNoteTitle } from '../common/document-title/note-title-extractor'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
 import { ShowIf } from '../common/show-if/show-if'
@@ -47,10 +47,11 @@ export const PadViewOnly: React.FC = () => {
       .finally(() => setLoading(false))
   }, [id])
 
+  useApplyDarkMode()
+  useDocumentTitle(documentTitle)
+
   return (
     <div className={'d-flex flex-column mvh-100 bg-light'}>
-      <ApplyDarkMode/>
-      <DocumentTitle title={documentTitle}/>
       <MotdBanner/>
       <AppBar mode={AppBarMode.BASIC}/>
       <div className={'container'}>

@@ -2,10 +2,10 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import useMedia from 'use-media'
+import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
+import { useDocumentTitle } from '../../hooks/common/use-document-title'
 import { ApplicationState } from '../../redux'
 import { setEditorMode } from '../../redux/editor/methods'
-import { ApplyDarkMode } from '../common/apply-dark-mode/apply-dark-mode'
-import { DocumentTitle } from '../common/document-title/document-title'
 import { extractNoteTitle } from '../common/document-title/note-title-extractor'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
 import { AppBar, AppBarMode } from './app-bar/app-bar'
@@ -104,11 +104,12 @@ export const Editor: React.FC = () => {
     }
   }, [editorSyncScroll])
 
+  useApplyDarkMode()
+  useDocumentTitle(documentTitle)
+
   return (
     <Fragment>
-      <ApplyDarkMode/>
       <MotdBanner/>
-      <DocumentTitle title={documentTitle}/>
       <div className={'d-flex flex-column vh-100'}>
         <AppBar mode={AppBarMode.EDITOR}/>
         <DocumentBar title={documentTitle} noteContent={markdownContent} updateNoteContent={(newContent) => setMarkdownContent(newContent)}/>
