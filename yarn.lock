@@ -6739,10 +6739,10 @@ flatten@^1.0.2:
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.3.tgz#c1283ac9f27b368abc1e36d1ff7b04501a30356b"
   integrity sha512-dVsPA/UwQ8+2uoFe5GHtiBMu48dWLTdsuEd7CKGlZlD78r1TTWBvDuFaFGKCo/ZfEr95Uk56vZoX86OsHkUeIg==
 
-flowchart.js@1.14.2:
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/flowchart.js/-/flowchart.js-1.14.2.tgz#d9d25cd0c1acf393897e4a8ca36262368fc4d479"
-  integrity sha512-kKQjuXjfAOdK0IGq1Q8czgQlQtEHaafSdP3gNMRRbvm9ziiC/KCLnt61HoT2e73rqPRVhfFRzB/8CR6UNM1bZw==
+flowchart.js@1.14.3:
+  version "1.14.3"
+  resolved "https://registry.yarnpkg.com/flowchart.js/-/flowchart.js-1.14.3.tgz#b203df7621871eed11d0caffce931d1b6b01b300"
+  integrity sha512-PluLllc7xeMoowH0xOFXpfehEpJeToSb1iMZZ8vUu5vgMC5+Ft3K6NRPZ+4Wp1pa8aJy38aiDRAHdMOqW6HG/g==
   dependencies:
     raphael "2.3.0"
 
