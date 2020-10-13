@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { ApplicationState } from '../../../../../redux'
 
 export interface FlowChartProps {
   code: string
@@ -9,6 +11,8 @@ export interface FlowChartProps {
 export const FlowChart: React.FC<FlowChartProps> = ({ code }) => {
   const diagramRef = useRef<HTMLDivElement>(null)
   const [error, setError] = useState(false)
+
+  const darkModeActivated = useSelector((state: ApplicationState) => state.darkMode.darkMode)
 
   useTranslation()
 
@@ -24,6 +28,8 @@ export const FlowChart: React.FC<FlowChartProps> = ({ code }) => {
           'line-width': 2,
           fill: 'none',
           'font-size': '16px',
+          'line-color': darkModeActivated ? '#ffffff' : '#000000',
+          'element-color': darkModeActivated ? '#ffffff' : '#000000',
           'font-family': 'Source Code Pro, "Twemoji Mozilla", monospace'
         })
         setError(false)
@@ -35,7 +41,7 @@ export const FlowChart: React.FC<FlowChartProps> = ({ code }) => {
     return () => {
       Array.from(currentDiagramRef.children).forEach(value => value.remove())
     }
-  }, [code])
+  }, [code, darkModeActivated])
 
   if (error) {
     return (

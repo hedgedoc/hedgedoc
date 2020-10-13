@@ -3,6 +3,7 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import { Alert } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ShowIf } from '../../../common/show-if/show-if'
+import './mermaid.scss'
 
 export interface MermaidChartProps {
   code: string
@@ -55,6 +56,6 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ code }) => {
     <ShowIf condition={!!error}>
       <Alert variant={'warning'}>{error}</Alert>
     </ShowIf>
-    <div className={'text-center mermaid'} ref={diagramContainer}/>
+    <div className={'text-center mermaid text-black'} ref={diagramContainer}/>
   </Fragment>
 }
