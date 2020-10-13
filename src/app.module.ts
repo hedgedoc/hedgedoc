@@ -10,6 +10,7 @@ import { NotesModule } from './notes/notes.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { RevisionsModule } from './revisions/revisions.module';
 import { UsersModule } from './users/users.module';
+import { MediaModule } from './media/media.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { UsersModule } from './users/users.module';
     PermissionsModule,
     GroupsModule,
     LoggerModule,
+    MediaModule,
   ],
   controllers: [],
   providers: [],
