@@ -8,6 +8,9 @@ import {
 } from 'typeorm';
 import { Note } from '../notes/note.entity';
 import { User } from '../users/user.entity';
+import { BackendType } from './backends/backend-type.enum';
+
+export type BackendData = string | null;
 
 @Entity()
 export class MediaUpload {
@@ -23,17 +26,12 @@ export class MediaUpload {
   @Column({
     nullable: false,
   })
-  extension: string;
-
-  @Column({
-    nullable: false,
-  })
   backendType: string;
 
   @Column({
     nullable: true,
   })
-  backendData: string | null;
+  backendData: BackendData;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -45,15 +43,14 @@ export class MediaUpload {
     note: Note,
     user: User,
     extension: string,
-    backendType: string,
+    backendType: BackendType,
     backendData?: string,
   ): MediaUpload {
     const upload = new MediaUpload();
     const randomBytes = crypto.randomBytes(16);
-    upload.id = randomBytes.toString('hex');
+    upload.id = randomBytes.toString('hex') + '.' + extension;
     upload.note = note;
     upload.user = user;
-    upload.extension = extension;
     upload.backendType = backendType;
     if (backendData) {
       upload.backendData = backendData;
