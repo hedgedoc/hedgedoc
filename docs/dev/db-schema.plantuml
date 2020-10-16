@@ -120,7 +120,6 @@ entity "MediaUpload" {
   --
   *noteId : uuid <<FK Note>>
   *userId : uuid <<FK User>>
-  *extension : text
   *backendType: text
   backendData: text
   *createdAt : date
