@@ -454,7 +454,7 @@ paths:
           content:
             text/plain:
               example: my-note
-  /media/upload:
+  /media:
     post:
       tags:
         - media

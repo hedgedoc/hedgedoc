@@ -23,7 +23,7 @@ export class MediaController {
     this.logger.setContext(MediaController.name);
   }
 
-  @Post('upload')
+  @Post()
   @UseInterceptors(FileInterceptor('file'))
   async uploadImage(
     @UploadedFile() file: MulterFile,
