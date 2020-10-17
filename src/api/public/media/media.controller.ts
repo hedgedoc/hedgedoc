@@ -1,13 +1,21 @@
 import {
   BadRequestException,
   Controller,
+  Delete,
   Headers,
+  NotFoundException,
+  Param,
   Post,
+  UnauthorizedException,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ClientError, NotInDBError } from '../../../errors/errors';
+import {
+  ClientError,
+  NotInDBError,
+  PermissionError,
+} from '../../../errors/errors';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
 import { MulterFile } from '../../../media/multer-file.interface';
@@ -25,7 +33,7 @@ export class MediaController {
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
-  async uploadImage(
+  async uploadMedia(
     @UploadedFile() file: MulterFile,
     @Headers('HedgeDoc-Note') noteId: string,
   ) {
@@ -43,6 +51,23 @@ export class MediaController {
     } catch (e) {
       if (e instanceof ClientError || e instanceof NotInDBError) {
         throw new BadRequestException(e.message);
+      }
+      throw e;
+    }
+  }
+
+  @Delete(':filename')
+  async deleteMedia(@Param('filename') filename: string) {
+    //TODO: Get user from request
+    const username = 'hardcoded';
+    try {
+      await this.mediaService.deleteFile(filename, username);
+    } catch (e) {
+      if (e instanceof PermissionError) {
+        throw new UnauthorizedException(e.message);
+      }
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
       }
       throw e;
     }
