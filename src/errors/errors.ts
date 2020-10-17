@@ -5,3 +5,7 @@ export class NotInDBError extends Error {
 export class ClientError extends Error {
   name = 'ClientError';
 }
+
+export class PermissionError extends Error {
+  name = 'PermissionError';
+}
