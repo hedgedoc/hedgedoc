@@ -1,5 +1,5 @@
 import MarkdownIt from 'markdown-it'
-import emoji from 'markdown-it-emoji'
+import emoji from 'markdown-it-emoji/bare'
 import { combinedEmojiData } from './emoji/mapping'
 
 export const twitterEmojis: MarkdownIt.PluginSimple = (markdownIt) => {
