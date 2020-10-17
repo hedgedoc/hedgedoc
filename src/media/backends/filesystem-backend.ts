@@ -21,11 +21,11 @@ export class FilesystemBackend implements MediaBackend {
     return ['/' + filePath, null];
   }
 
-  async deleteFile(fileName: string, backendData: BackendData): Promise<void> {
+  async deleteFile(fileName: string, _: BackendData): Promise<void> {
     return fs.unlink(FilesystemBackend.getFilePath(fileName));
   }
 
-  getFileURL(fileName: string, backendData: BackendData): Promise<string> {
+  getFileURL(fileName: string, _: BackendData): Promise<string> {
     const filePath = FilesystemBackend.getFilePath(fileName);
     // TODO: Add server address to url
     return Promise.resolve('/' + filePath);
