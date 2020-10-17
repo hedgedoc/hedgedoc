@@ -3,7 +3,7 @@ import { ModuleRef } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as FileType from 'file-type';
 import { Repository } from 'typeorm';
-import { ClientError } from '../errors/errors';
+import { ClientError, NotInDBError, PermissionError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { NotesService } from '../notes/notes.service';
 import { UsersService } from '../users/users.service';
@@ -74,5 +74,37 @@ export class MediaService {
     mediaUpload.backendData = backendData;
     await this.mediaUploadRepository.save(mediaUpload);
     return url;
+  }
+
+  public async deleteFile(filename: string, username: string) {
+    this.logger.debug(
+      `Deleting '${filename}' for user '${username}'`,
+      'deleteFile',
+    );
+    const mediaUpload = await this.findUploadByFilename(filename);
+    if (mediaUpload.user.userName !== username) {
+      this.logger.warn(
+        `${username} tried to delete '${filename}', but is not the owner`,
+        'deleteFile',
+      );
+      throw new PermissionError(
+        `File '${filename}' is not owned by '${username}'`,
+      );
+    }
+    const backend = this.moduleRef.get(FilesystemBackend);
+    await backend.deleteFile(filename, mediaUpload.backendData);
+    await this.mediaUploadRepository.remove(mediaUpload);
+  }
+
+  public async findUploadByFilename(filename: string): Promise<MediaUpload> {
+    const mediaUpload = await this.mediaUploadRepository.findOne(filename, {
+      relations: ['user'],
+    });
+    if (mediaUpload === undefined) {
+      throw new NotInDBError(
+        `MediaUpload with filename '${filename}' not found`,
+      );
+    }
+    return mediaUpload;
   }
 }
