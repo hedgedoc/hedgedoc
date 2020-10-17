@@ -458,19 +458,74 @@ paths:
     post:
       tags:
         - media
-      summary: Uploads an image to the backend storage
-      description: Uploads an image to be processed by the backend.
+      summary: Uploads a media file to the backend storage
+      description: Uploads a file to be processed by the backend.
       requestBody:
         required: true
-        description: The binary image to upload.
+        description: The binary file to upload.
         content:
-          image/*:
+          application/pdf:
             schema:
               type: string
               format: binary
+          image/apng:
+            schema:
+              type: string
+              format: binary
+          image/bmp:
+            schema:
+              type: string
+              format: binary
+          image/gif:
+            schema:
+              type: string
+              format: binary
+          image/heif:
+            schema:
+              type: string
+              format: binary
+          image/heic:
+            schema:
+              type: string
+              format: binary
+          image/heif-sequence:
+            schema:
+              type: string
+              format: binary
+          image/heic-sequence:
+            schema:
+              type: string
+              format: binary
+          image/jpeg:
+            schema:
+              type: string
+              format: binary
+          image/png:
+            schema:
+              type: string
+              format: binary
+          image/svg+xml:
+            schema:
+              type: string
+              format: binary
+          image/tiff:
+            schema:
+              type: string
+              format: binary
+          image/webp:
+            schema:
+              type: string
+              format: binary
+      parameters:
+        - in: header
+          name: HedgeDoc-Note
+          schema:
+            type: string
+          required: true
+          description: ID or alias of the parent note
       responses:
         '200':
-          description: The image was uploaded successfully.
+          description: The file was uploaded successfully.
           content:
             application/json:
               schema:
