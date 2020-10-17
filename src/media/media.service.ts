@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ModuleRef } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as FileType from 'file-type';
 import { Repository } from 'typeorm';
@@ -16,6 +17,7 @@ export class MediaService {
     private mediaUploadRepository: Repository<MediaUpload>,
     private notesService: NotesService,
     private usersService: UsersService,
+    private moduleRef: ModuleRef,
   ) {}
 
   public async saveFile(file: MulterFile, username: string, noteId: string) {
@@ -35,7 +37,7 @@ export class MediaService {
       fileTypeResult.ext,
       BackendType.FILEYSTEM,
     );
-    const backend = new FilesystemBackend();
+    const backend = this.moduleRef.get(FilesystemBackend);
     const [url, backendData] = await backend.saveFile(
       file.buffer,
       mediaUpload.id,
