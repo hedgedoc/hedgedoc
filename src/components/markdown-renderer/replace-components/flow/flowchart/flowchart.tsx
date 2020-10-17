@@ -27,7 +27,7 @@ export const FlowChart: React.FC<FlowChartProps> = ({ code }) => {
         parserOutput.drawSVG(currentDiagramRef, {
           'line-width': 2,
           fill: 'none',
-          'font-size': '16px',
+          'font-size': 16,
           'line-color': darkModeActivated ? '#ffffff' : '#000000',
           'element-color': darkModeActivated ? '#ffffff' : '#000000',
           'font-family': 'Source Code Pro, "Twemoji Mozilla", monospace'
