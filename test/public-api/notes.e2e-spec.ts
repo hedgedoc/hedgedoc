@@ -3,6 +3,7 @@ import { Test } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as request from 'supertest';
 import { PublicApiModule } from '../../src/api/public/public-api.module';
+import { NotInDBError } from '../../src/errors/errors';
 import { GroupsModule } from '../../src/groups/groups.module';
 import { LoggerModule } from '../../src/logger/logger.module';
 import { NotesModule } from '../../src/notes/notes.module';
@@ -82,7 +83,7 @@ describe('Notes', () => {
       .delete('/notes/test3')
       .expect(200);
     return expect(notesService.getNoteByIdOrAlias('test3')).rejects.toEqual(
-      Error('Note not found'),
+      new NotInDBError("Note with id/alias 'test3' not found."),
     );
   });
 
