@@ -26,8 +26,22 @@ export class MediaService {
   }
 
   private static isAllowedMimeType(mimeType: string): boolean {
-    //TODO: Which mimetypes are allowed?
-    return true;
+    const allowedTypes = [
+      'application/pdf',
+      'image/apng',
+      'image/bmp',
+      'image/gif',
+      'image/heif',
+      'image/heic',
+      'image/heif-sequence',
+      'image/heic-sequence',
+      'image/jpeg',
+      'image/png',
+      'image/svg+xml',
+      'image/tiff',
+      'image/webp',
+    ];
+    return allowedTypes.includes(mimeType);
   }
 
   public async saveFile(file: MulterFile, username: string, noteId: string) {
