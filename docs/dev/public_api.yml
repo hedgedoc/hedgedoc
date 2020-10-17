@@ -537,6 +537,29 @@ paths:
           "$ref": "#/components/responses/UnauthorizedError"
         '403':
           "$ref": "#/components/responses/ForbiddenError"
+  /media/{filename}:
+    delete:
+      tags:
+        - media
+      summary: Delete the specified file
+      operationId: deleteMedia
+      parameters:
+        - name: filename
+          in: path
+          required: true
+          description: The name of the file to be deleted.
+          content:
+            text/plain:
+              example: e18d1b83e1821128615bad849ad0655a.jpg
+      responses:
+        '204':
+          "$ref": "#/components/responses/SuccessfullyDeleted"
+        '401':
+          "$ref": "#/components/responses/UnauthorizedError"
+        '403':
+          "$ref": "#/components/responses/ForbiddenError"
+        '404':
+          "$ref": "#/components/responses/NotFoundError"
   /monitoring:
     get:
       tags:
