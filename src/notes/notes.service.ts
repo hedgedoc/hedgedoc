@@ -1,6 +1,7 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Revision } from '../revisions/revision.entity';
 import { RevisionsService } from '../revisions/revisions.service';
@@ -132,8 +133,19 @@ export class NotesService {
   }
 
   async getNoteByIdOrAlias(noteIdOrAlias: string): Promise<Note> {
+    this.logger.debug(
+      `Trying to find note '${noteIdOrAlias}'`,
+      'getNoteByIdOrAlias',
+    );
     const note = await this.noteRepository.findOne({
-      where: [{ id: noteIdOrAlias }, { alias: noteIdOrAlias }],
+      where: [
+        {
+          id: noteIdOrAlias,
+        },
+        {
+          alias: noteIdOrAlias,
+        },
+      ],
       relations: [
         'authorColors',
         'owner',
@@ -142,8 +154,9 @@ export class NotesService {
       ],
     });
     if (note === undefined) {
-      //TODO: Improve error handling
-      throw new Error('Note not found');
+      throw new NotInDBError(
+        `Note with id/alias '${noteIdOrAlias}' not found.`,
+      );
     }
     return note;
   }
