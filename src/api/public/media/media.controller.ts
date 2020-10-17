@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Controller,
   Headers,
   Post,
@@ -6,6 +7,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ClientError, NotInDBError } from '../../../errors/errors';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
 import { MulterFile } from '../../../media/multer-file.interface';
@@ -33,10 +35,16 @@ export class MediaController {
       `Recieved filename '${file.originalname}' for note '${noteId}' from user '${username}'`,
       'uploadImage',
     );
-    const note = await this.notesService.getNoteByIdOrAlias(noteId);
-    const url = await this.mediaService.saveFile(file, username, note.id);
-    return {
-      link: url,
-    };
+    try {
+      const url = await this.mediaService.saveFile(file, username, noteId);
+      return {
+        link: url,
+      };
+    } catch (e) {
+      if (e instanceof ClientError || e instanceof NotInDBError) {
+        throw new BadRequestException(e.message);
+      }
+      throw e;
+    }
   }
 }
