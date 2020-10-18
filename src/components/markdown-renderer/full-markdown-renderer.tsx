@@ -19,7 +19,7 @@ export interface FullMarkdownRendererProps {
   onFirstHeadingChange?: (firstHeading: string | undefined) => void
   onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void
   onMetaDataChange?: (yamlMetaData: YAMLMetaData | undefined) => void
-  onTaskCheckedChange: (lineInMarkdown: number, checked: boolean) => void
+  onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
   onTocChange?: (ast: TocAst) => void
 }
 

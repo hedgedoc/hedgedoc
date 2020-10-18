@@ -21,7 +21,7 @@ import { VegaReplacer } from '../replace-components/vega-lite/vega-replacer'
 import { VimeoReplacer } from '../replace-components/vimeo/vimeo-replacer'
 import { YoutubeReplacer } from '../replace-components/youtube/youtube-replacer'
 
-export const useReplacerInstanceListCreator = (onTaskCheckedChange: (lineInMarkdown: number, checked: boolean) => void): ()=>ComponentReplacer[] => {
+export const useReplacerInstanceListCreator = (onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void): () => ComponentReplacer[] => {
   return useMemo(() => () => [
     new LinemarkerReplacer(),
     new PossibleWiderReplacer(),
