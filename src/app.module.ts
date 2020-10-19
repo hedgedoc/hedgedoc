@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { join } from 'path';
 import { PublicApiModule } from './api/public/public-api.module';
 import { AuthorsModule } from './authors/authors.module';
 import { GroupsModule } from './groups/groups.module';
 import { HistoryModule } from './history/history.module';
 import { LoggerModule } from './logger/logger.module';
+import { MediaModule } from './media/media.module';
 import { MonitoringModule } from './monitoring/monitoring.module';
 import { NotesModule } from './notes/notes.module';
 import { PermissionsModule } from './permissions/permissions.module';
@@ -19,6 +22,11 @@ import { UsersModule } from './users/users.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..'),
+      // TODO: Get uploads directory from config
+      renderPath: 'uploads',
+    }),
     NotesModule,
     UsersModule,
     RevisionsModule,
@@ -29,6 +37,7 @@ import { UsersModule } from './users/users.module';
     PermissionsModule,
     GroupsModule,
     LoggerModule,
+    MediaModule,
   ],
   controllers: [],
   providers: [],

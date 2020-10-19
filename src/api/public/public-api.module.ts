@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { HistoryModule } from '../../history/history.module';
 import { LoggerModule } from '../../logger/logger.module';
+import { MediaModule } from '../../media/media.module';
 import { MonitoringModule } from '../../monitoring/monitoring.module';
 import { NotesModule } from '../../notes/notes.module';
 import { RevisionsModule } from '../../revisions/revisions.module';
@@ -18,6 +19,7 @@ import { MonitoringController } from './monitoring/monitoring.controller';
     RevisionsModule,
     MonitoringModule,
     LoggerModule,
+    MediaModule,
   ],
   controllers: [
     MeController,

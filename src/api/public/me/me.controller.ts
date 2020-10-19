@@ -29,8 +29,10 @@ export class MeController {
   }
 
   @Get()
-  getMe(): UserInfoDto {
-    return this.usersService.getUserInfo();
+  async getMe(): Promise<UserInfoDto> {
+    return this.usersService.toUserDto(
+      await this.usersService.getUserByUsername('hardcoded'),
+    );
   }
 
   @Get('history')

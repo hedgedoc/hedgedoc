@@ -48,4 +48,20 @@ export class User {
     identity => identity.user,
   )
   identities: Identity[];
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private constructor() {}
+
+  public static create(
+    userName: string,
+    displayName: string,
+  ): Pick<
+    User,
+    'userName' | 'displayName' | 'ownedNotes' | 'authToken' | 'identities'
+  > {
+    const newUser = new User();
+    newUser.userName = userName;
+    newUser.displayName = displayName;
+    return newUser;
+  }
 }
