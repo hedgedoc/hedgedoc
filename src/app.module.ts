@@ -22,11 +22,6 @@ import { UsersModule } from './users/users.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..'),
-      // TODO: Get uploads directory from config
-      renderPath: 'uploads',
-    }),
     NotesModule,
     UsersModule,
     RevisionsModule,
