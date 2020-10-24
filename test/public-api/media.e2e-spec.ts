@@ -25,7 +25,7 @@ describe('Notes', () => {
         MediaModule,
         TypeOrmModule.forRoot({
           type: 'sqlite',
-          database: './hedgedoc-e2e.sqlite',
+          database: './hedgedoc-e2e-media.sqlite',
           autoLoadEntities: true,
           dropSchema: true,
           synchronize: true,
