@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { join } from 'path';
 import { PublicApiModule } from './api/public/public-api.module';
 import { AuthorsModule } from './authors/authors.module';
 import { GroupsModule } from './groups/groups.module';
