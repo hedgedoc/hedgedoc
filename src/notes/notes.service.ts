@@ -220,23 +220,4 @@ export class NotesService {
       editedByAtPosition: [],
     };
   }
-
-  async updateNoteMetadata(
-    noteIdOrAlias: string,
-    updateDto: NoteMetadataUpdateDto,
-  ) {
-    const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
-    note.title = updateDto.title;
-    note.description = updateDto.description;
-    note.tags = await Promise.all(
-      updateDto.tags.map(async tag => {
-        let dbTag = await this.tagRepository.findOne({ where: { name: tag } });
-        if (!dbTag) {
-          dbTag = await this.tagRepository.create({ name: tag });
-        }
-        return dbTag;
-      }),
-    );
-    await this.noteRepository.save(note);
-  }
 }

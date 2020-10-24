@@ -73,14 +73,6 @@ export class NotesController {
     return this.noteService.getNoteMetadata(noteIdOrAlias);
   }
 
-  @Put(':noteIdOrAlias/metadata')
-  updateNoteMetadata(
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
-    @Body() updateDto: NoteMetadataUpdateDto,
-  ) {
-    return this.noteService.updateNoteMetadata(noteIdOrAlias, updateDto);
-  }
-
   @Put(':noteIdOrAlias/permissions')
   updateNotePermissions(
     @Param('noteIdOrAlias') noteIdOrAlias: string,
