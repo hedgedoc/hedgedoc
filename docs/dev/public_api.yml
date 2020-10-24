@@ -375,7 +375,9 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/NoteRevisionsMetadata"
+                type: array
+                items:
+                  "$ref": "#/components/schemas/NoteRevisionsMetadata"
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
         '403':
@@ -740,19 +742,17 @@ components:
               canEdit:
                 type: boolean
     NoteRevisionsMetadata:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: integer
-            description: The id of the revision
-          createdTime:
-            type: string
-            description: ISO-timestamp of when the revision was saved. Is also the revision-id.
-          length:
-            type: integer
-            description: Length of the document to the timepoint the revision was saved.
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The id of the revision
+        createdTime:
+          type: string
+          description: ISO-timestamp of when the revision was saved. Is also the revision-id.
+        length:
+          type: integer
+          description: Length of the document to the timepoint the revision was saved.
     NoteRevision:
       type: object
       properties:
