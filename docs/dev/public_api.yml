@@ -47,7 +47,9 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/History"
+                type: array
+                items:
+                  "$ref": "#/components/schemas/History"
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
   /me/history/{note}:
@@ -60,11 +62,11 @@ paths:
       description: JSON Object which contains id, title, tags, last visit time and pinned status
       responses:
         '200':
-          description: The list of recently viewed notes and pinned notes.
+          description: Information about the history entry
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/HistoryObject"
+                "$ref": "#/components/schemas/History"
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
         '404':
@@ -88,7 +90,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/HistoryUpdateObject"
+              "$ref": "#/components/schemas/HistoryUpdate"
       responses:
         '200':
           description: The new history.
@@ -853,7 +855,7 @@ components:
           type: boolean
         disconnectSocketQueueLength:
           type: integer
-    HistoryObject:
+    History:
       type: object
       properties:
         metadata:
@@ -861,20 +863,12 @@ components:
         pinned:
           type: boolean
           description: Whether the user has pinned this note.
-    HistoryUpdateObject:
+    HistoryUpdate:
       type: object
       properties:
         pinned:
           type: boolean
           description: Whether the user has pinned this note.
-    History:
-      type: object
-      properties:
-        history:
-          type: array
-          description: The array that contains history objects.
-          items:
-            "$ref": "#/components/schemas/HistoryObject"
   examples:
     markdownExample:
       value: '# Some header\nSome normal text. **Some bold text**'
