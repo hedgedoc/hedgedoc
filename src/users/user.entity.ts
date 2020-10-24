@@ -1,4 +1,9 @@
-import { Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Column, OneToMany } from 'typeorm/index';
 import { Note } from '../notes/note.entity';
 import { AuthToken } from './auth-token.entity';
@@ -15,10 +20,10 @@ export class User {
   @Column()
   displayName: string;
 
-  @Column()
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
+  @UpdateDateColumn()
   updatedAt: Date;
 
   @Column({
