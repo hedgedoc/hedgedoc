@@ -304,38 +304,6 @@ paths:
             text/plain:
               example: my-note
   /notes/{note}/metadata:
-    put:
-      tags:
-        - note
-      summary: Set the metadata (title, description, tags) of a note
-      operationId: updateNoteMetadata
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/NoteMetadataUpdate"
-      responses:
-        '200':
-          description: The updated metadata of the note.
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/NoteMetadataUpdate"
-        '401':
-          "$ref": "#/components/responses/UnauthorizedError"
-        '403':
-          "$ref": "#/components/responses/ForbiddenError"
-        '404':
-          "$ref": "#/components/responses/NotFoundError"
-      parameters:
-        - name: note
-          in: path
-          required: true
-          description: The note for which the info should be shown.
-          content:
-            text/plain:
-              example: my-note
     get:
       tags:
         - note
@@ -722,21 +690,6 @@ components:
             type: string
         permissions:
           $ref: "#/components/schemas/NotePermissions"
-    NoteMetadataUpdate:
-      type: object
-      description: Contains only title, description and tags of a note.
-      properties:
-        title:
-          type: string
-          description: Title of the note
-        description:
-          type: string
-          description: Description of the note.
-        tags:
-          type: array
-          description: A list of tags attached to the note.
-          items:
-            type: string
     NotePermissions:
       type: object
       properties:
