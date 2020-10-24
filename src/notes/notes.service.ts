@@ -154,10 +154,15 @@ export class NotesService {
       ],
     });
     if (note === undefined) {
+      this.logger.debug(
+        `Could not find note '${noteIdOrAlias}'`,
+        'getNoteByIdOrAlias',
+      );
       throw new NotInDBError(
         `Note with id/alias '${noteIdOrAlias}' not found.`,
       );
     }
+    this.logger.debug(`Found note '${noteIdOrAlias}'`, 'getNoteByIdOrAlias');
     return note;
   }
 
