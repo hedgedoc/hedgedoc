@@ -19,14 +19,12 @@ import {
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
 import { MulterFile } from '../../../media/multer-file.interface';
-import { NotesService } from '../../../notes/notes.service';
 
 @Controller('media')
 export class MediaController {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private mediaService: MediaService,
-    private notesService: NotesService,
   ) {
     this.logger.setContext(MediaController.name);
   }
@@ -44,7 +42,11 @@ export class MediaController {
       'uploadImage',
     );
     try {
-      const url = await this.mediaService.saveFile(file, username, noteId);
+      const url = await this.mediaService.saveFile(
+        file.buffer,
+        username,
+        noteId,
+      );
       return {
         link: url,
       };

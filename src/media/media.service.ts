@@ -10,7 +10,6 @@ import { UsersService } from '../users/users.service';
 import { BackendType } from './backends/backend-type.enum';
 import { FilesystemBackend } from './backends/filesystem-backend';
 import { MediaUpload } from './media-upload.entity';
-import { MulterFile } from './multer-file.interface';
 
 @Injectable()
 export class MediaService {
@@ -44,14 +43,14 @@ export class MediaService {
     return allowedTypes.includes(mimeType);
   }
 
-  public async saveFile(file: MulterFile, username: string, noteId: string) {
+  public async saveFile(fileBuffer: Buffer, username: string, noteId: string) {
     this.logger.debug(
-      `Saving '${file.originalname}' for note '${noteId}' and user '${username}'`,
+      `Saving file for note '${noteId}' and user '${username}'`,
       'saveFile',
     );
     const note = await this.notesService.getNoteByIdOrAlias(noteId);
     const user = await this.usersService.getUserByUsername(username);
-    const fileTypeResult = await FileType.fromBuffer(file.buffer);
+    const fileTypeResult = await FileType.fromBuffer(fileBuffer);
     if (!fileTypeResult) {
       throw new ClientError('Could not detect file type.');
     }
@@ -68,7 +67,7 @@ export class MediaService {
     this.logger.debug(`Generated filename: '${mediaUpload.id}'`, 'saveFile');
     const backend = this.moduleRef.get(FilesystemBackend);
     const [url, backendData] = await backend.saveFile(
-      file.buffer,
+      fileBuffer,
       mediaUpload.id,
     );
     mediaUpload.backendData = backendData;
