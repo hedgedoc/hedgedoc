@@ -76,6 +76,7 @@ export class RevisionsService {
   createRevision(content: string) {
     // TODO: Add previous revision
     // TODO: Calculate patch
+    // TODO: Save metadata
     return this.revisionRepository.create({
       content: content,
       length: content.length,
