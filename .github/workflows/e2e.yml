@@ -13,12 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Cache build
-        uses: actions/cache@v1.1.0
+        uses: actions/cache@v2.1.2
         with:
           path: build
           key: build
       - name: Cache node_modules
-        uses: actions/cache@v1.1.0
+        uses: actions/cache@v2.1.2
         with:
           path: node_modules
           key: node_modules
