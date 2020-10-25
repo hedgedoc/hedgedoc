@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     name: build frontend
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Cache build
         uses: actions/cache@v2.1.2
         with:
@@ -40,7 +40,7 @@ jobs:
         browser: ['chrome', 'firefox']
     name: e2e:${{ matrix.browser }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/download-artifact@master
         with:
           name: build
