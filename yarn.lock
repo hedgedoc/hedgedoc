@@ -1712,10 +1712,10 @@
     lz-string "^1.4.4"
     pretty-format "^26.4.2"
 
-"@testing-library/jest-dom@5.11.4":
-  version "5.11.4"
-  resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-5.11.4.tgz#f325c600db352afb92995c2576022b35621ddc99"
-  integrity sha512-6RRn3epuweBODDIv3dAlWjOEHQLpGJHB2i912VS3JQtsD22+ENInhdDNl4ZZQiViLlIfFinkSET/J736ytV9sw==
+"@testing-library/jest-dom@5.11.5":
+  version "5.11.5"
+  resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-5.11.5.tgz#44010f37f4b1e15f9d433963b515db0b05182fc8"
+  integrity sha512-XI+ClHR864i6p2kRCEyhvpVejuer+ObVUF4cjCvRSF88eOMIfqw7RoS9+qoRhyigGswMfT64L6Nt0Ufotxbwtg==
   dependencies:
     "@babel/runtime" "^7.9.2"
     "@types/testing-library__jest-dom" "^5.9.1"
@@ -1734,10 +1734,10 @@
     "@babel/runtime" "^7.11.2"
     "@testing-library/dom" "^7.26.0"
 
-"@testing-library/user-event@12.1.8":
-  version "12.1.8"
-  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-12.1.8.tgz#52b419455a3da2ac7ac17b77f8fd621c3700ec12"
-  integrity sha512-UUcTuT8HyDwGaRXgNgvMS1uOlreLv9+WsXi1FNj3mmumnB2d3hv2cov0RAd99lx8QI2CtAAOELxoihGj8x/nWg==
+"@testing-library/user-event@12.1.10":
+  version "12.1.10"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-12.1.10.tgz#e043ef5aa10e4b3e56b434e383d2fbfef1fcfb7f"
+  integrity sha512-StlNdKHp2Rpb7yrny/5/CGpz8bR3jLa1Ge59ODGU6TmAhkrxSpvR6tCD1gaMFkkjEUWkmmye8BaXsZPcaiJ6Ug==
   dependencies:
     "@babel/runtime" "^7.10.2"
 
