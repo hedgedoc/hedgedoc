@@ -9477,10 +9477,10 @@ markdown-it@^11.0.0:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-markmap-lib@0.9.1:
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/markmap-lib/-/markmap-lib-0.9.1.tgz#c239a75c75491e11dbfa4dea80ed55e1960e8782"
-  integrity sha512-R6DnnOQRIWP577vD8Q7zoSu1+GpH0eHn6PZ2VkIVVhiRNFlEPtv1vBIfVwFxvu5SqnukkcQNqnbakYnMaDKcdw==
+markmap-lib@0.9.2:
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/markmap-lib/-/markmap-lib-0.9.2.tgz#cc253312f184419ed40237d6ad6ba199282677e4"
+  integrity sha512-7PKnqBCzZZoNwppafYWqzkCGInHQrFEGEjqY6mFYgcp5v9AssRo2Cm6OYRjanC49Swwdv1p94ibuQO170AOxuw==
   dependencies:
     "@babel/runtime" "^7.9.6"
     "@types/d3" "^5.7.2"

@@ -45,17 +45,20 @@ export const MarkmapFrame: React.FC<MarkmapFrameProps> = ({ code }) => {
         svg.setAttribute('width', '100%')
         actualContainer.querySelectorAll('svg').forEach(child => child.remove())
         actualContainer.appendChild(svg)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call
         const { root, features } = transform.transform(code)
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
         const { styles, scripts } = transform.getUsedAssets(features)
         if (styles) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
           loader.loadCSS(styles)
         }
         if (scripts) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-member-access
           loader.loadJS(scripts, { getMarkmap: () => view.Markmap })
             .catch(err => console.error(err))
         }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
         view.Markmap.create(svg, {}, root)
       }).catch(() => { console.error('error while loading markmap') })
   }, [code])
