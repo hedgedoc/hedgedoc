@@ -36,7 +36,7 @@
         "@typescript-eslint/parser": "3.10.1",
         "abcjs": "5.12.0",
         "bootstrap": "4.5.3",
-        "codemirror": "5.58.1",
+        "codemirror": "5.58.2",
         "copy-webpack-plugin": "6.2.1",
         "d3-graphviz": "3.1.0",
         "diff": "4.0.2",
