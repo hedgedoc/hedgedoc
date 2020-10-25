@@ -9455,10 +9455,10 @@ markdown-it-toc-done-right@4.1.0:
   resolved "https://registry.yarnpkg.com/markdown-it-toc-done-right/-/markdown-it-toc-done-right-4.1.0.tgz#0f73ed531dda427c43c27716a2fc2208daa90605"
   integrity sha512-UhD2Oj6cZV3ycYPoelt4hTkwKIK3zbPP1wjjdpCq7UGtWQOFalDFDv1s2zBYV6aR2gMs/X8kpJcOYsQmUbiXDw==
 
-markdown-it@12.0.0:
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-12.0.0.tgz#c93a4faba84c2a1425944699d641ea47288e547b"
-  integrity sha512-zPq5nGY5L8FXVwffjbXwPqzh9TgkrZ4NDTWuiX5wUP0l/wvmlnJR+6ebbNlLqYzB7erhlAwxQusgXa1VqojTQg==
+markdown-it@12.0.2:
+  version "12.0.2"
+  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-12.0.2.tgz#4401beae8df8aa2221fc6565a7188e60a06ef0ed"
+  integrity sha512-4Lkvjbv2kK+moL9TbeV+6/NHx+1Q+R/NIdUlFlkqkkzUcTod4uiyTJRiBidKR9qXSdkNFkgv+AELY8KN9vSgVA==
   dependencies:
     argparse "^2.0.1"
     entities "~2.0.0"
