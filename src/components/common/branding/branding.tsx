@@ -15,15 +15,15 @@ export const Branding: React.FC<BrandingProps> = ({ inline = false }) => {
 
   return (
     <ShowIf condition={showBranding}>
-      <strong className={`mx-1 ${inline ? 'inline-size' : 'regular-size'}`} >@</strong>
+      <strong className={`mx-1 ${inline ? 'inline-size' : 'regular-size'}`}>@</strong>
       {
         branding.logo
           ? <img
-            src={branding.logo}
-            alt={branding.name}
-            title={branding.name}
-            className={inline ? 'inline-size' : 'regular-size'}
-          />
+              src={branding.logo}
+              alt={branding.name}
+              title={branding.name}
+              className={inline ? 'inline-size' : 'regular-size'}
+            />
           : branding.name
       }
     </ShowIf>

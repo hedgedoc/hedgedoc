@@ -11,13 +11,14 @@ export enum SortModeEnum {
 
 const getIcon = (direction: SortModeEnum): IconName => {
   switch (direction) {
-    default:
     case SortModeEnum.no:
       return 'sort'
     case SortModeEnum.up:
       return 'sort-asc'
     case SortModeEnum.down:
       return 'sort-desc'
+    default:
+      return 'sort'
   }
 }
 
@@ -32,8 +33,8 @@ const toggleDirection = (direction: SortModeEnum) => {
       return SortModeEnum.up
     case SortModeEnum.up:
       return SortModeEnum.down
-    default:
     case SortModeEnum.down:
+    default:
       return SortModeEnum.no
   }
 }

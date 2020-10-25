@@ -14,7 +14,7 @@ import { PadViewOnly } from './components/pad-view-only/pad-view-only'
 import { ProfilePage } from './components/profile-page/profile-page'
 import { RegisterPage } from './components/register-page/register-page'
 import { store } from './redux'
-import * as serviceWorker from './service-worker'
+import * as serviceWorkerRegistration from './service-worker-registration'
 import './style/dark.scss'
 import './style/index.scss'
 
@@ -77,4 +77,4 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister()
+serviceWorkerRegistration.unregister()

@@ -50,16 +50,16 @@ export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entri
 
   const mapViewStateToComponent = (viewState: ViewStateEnum) => {
     switch (viewState) {
-      default:
-      case ViewStateEnum.CARD:
-        return <HistoryCardList entries={entries}
+      case ViewStateEnum.TABLE:
+        return <HistoryTable entries={entries}
           onPinClick={onPinClick}
           onRemoveClick={onRemoveClick}
           onDeleteClick={onDeleteClick}
           pageIndex={pageIndex}
           onLastPageIndexChange={setLastPageIndex}/>
-      case ViewStateEnum.TABLE:
-        return <HistoryTable entries={entries}
+      case ViewStateEnum.CARD:
+      default:
+        return <HistoryCardList entries={entries}
           onPinClick={onPinClick}
           onRemoveClick={onRemoveClick}
           onDeleteClick={onDeleteClick}

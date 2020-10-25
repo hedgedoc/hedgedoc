@@ -27,17 +27,17 @@ const HeaderBar: React.FC = () => {
       <div className="d-inline-flex">
         {!userExists
           ? <Fragment>
-            <span className={'mx-1 d-flex'}>
-              <NewGuestNoteButton/>
-            </span>
-            <SignInButton size="sm"/>
-          </Fragment>
+              <span className={'mx-1 d-flex'}>
+                <NewGuestNoteButton/>
+              </span>
+              <SignInButton size="sm"/>
+            </Fragment>
           : <Fragment>
-            <span className={'mx-1 d-flex'}>
-              <NewUserNoteButton/>
-            </span>
-            <UserDropdown/>
-          </Fragment>
+              <span className={'mx-1 d-flex'}>
+                <NewUserNoteButton/>
+              </span>
+              <UserDropdown/>
+            </Fragment>
         }
       </div>
     </Navbar>

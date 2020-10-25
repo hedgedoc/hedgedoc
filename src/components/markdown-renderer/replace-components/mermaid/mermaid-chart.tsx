@@ -1,4 +1,3 @@
-import mermaid from 'mermaid'
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
@@ -22,30 +21,37 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ code }) => {
 
   useEffect(() => {
     if (!mermaidInitialized) {
-      mermaid.initialize({ startOnLoad: false })
-      mermaidInitialized = true
+      import('mermaid').then((mermaid) => {
+        mermaid.default.initialize({ startOnLoad: false })
+        mermaidInitialized = true
+      }).catch(() => { console.error('error while loading mermaid') })
     }
   }, [])
 
   const showError = useCallback((error: string) => {
+    setError(error)
+    console.error(error)
     if (!diagramContainer.current) {
       return
     }
-    setError(error)
-    console.error(error)
     diagramContainer.current.querySelectorAll('svg').forEach(child => child.remove())
-  }, [])
+  }, [setError])
 
   useEffect(() => {
     if (!diagramContainer.current) {
       return
     }
     try {
-      mermaid.parse(code)
-      delete diagramContainer.current.dataset.processed
-      diagramContainer.current.textContent = code
-      mermaid.init(diagramContainer.current)
-      setError(undefined)
+      import('mermaid').then((mermaid) => {
+        if (!diagramContainer.current) {
+          return
+        }
+        mermaid.default.parse(code)
+        delete diagramContainer.current.dataset.processed
+        diagramContainer.current.textContent = code
+        mermaid.default.init(diagramContainer.current)
+        setError(undefined)
+      }).catch(() => showError('Error while loading mermaid'))
     } catch (error) {
       const message = (error as MermaidParseError).str
       showError(message || t('renderer.mermaid.unknownError'))

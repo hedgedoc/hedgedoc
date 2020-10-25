@@ -61,32 +61,34 @@ const tab = (editor: Editor) => {
   }
 }
 
-export const defaultKeyMap: KeyMap = !isMac ? {
-  F10: f10,
-  Esc: esc,
-  'Ctrl-S': suppressSave,
-  Enter: 'newlineAndIndentContinueMarkdownList',
-  Tab: tab,
-  Home: 'goLineLeftSmart',
-  End: 'goLineRight',
-  'Ctrl-I': makeSelectionItalic,
-  'Ctrl-B': makeSelectionBold,
-  'Ctrl-U': underlineSelection,
-  'Ctrl-D': strikeThroughSelection,
-  'Ctrl-M': markSelection
-} : {
-  F10: f10,
-  Esc: esc,
-  'Cmd-S': suppressSave,
-  Enter: 'newlineAndIndentContinueMarkdownList',
-  Tab: tab,
-  'Cmd-Left': 'goLineLeftSmart',
-  'Cmd-Right': 'goLineRight',
-  Home: 'goLineLeftSmart',
-  End: 'goLineRight',
-  'Cmd-I': makeSelectionItalic,
-  'Cmd-B': makeSelectionBold,
-  'Cmd-U': underlineSelection,
-  'Cmd-D': strikeThroughSelection,
-  'Cmd-M': markSelection
-}
+export const defaultKeyMap: KeyMap = !isMac
+  ? {
+      F10: f10,
+      Esc: esc,
+      'Ctrl-S': suppressSave,
+      Enter: 'newlineAndIndentContinueMarkdownList',
+      Tab: tab,
+      Home: 'goLineLeftSmart',
+      End: 'goLineRight',
+      'Ctrl-I': makeSelectionItalic,
+      'Ctrl-B': makeSelectionBold,
+      'Ctrl-U': underlineSelection,
+      'Ctrl-D': strikeThroughSelection,
+      'Ctrl-M': markSelection
+    }
+  : {
+      F10: f10,
+      Esc: esc,
+      'Cmd-S': suppressSave,
+      Enter: 'newlineAndIndentContinueMarkdownList',
+      Tab: tab,
+      'Cmd-Left': 'goLineLeftSmart',
+      'Cmd-Right': 'goLineRight',
+      Home: 'goLineLeftSmart',
+      End: 'goLineRight',
+      'Cmd-I': makeSelectionItalic,
+      'Cmd-B': makeSelectionBold,
+      'Cmd-U': underlineSelection,
+      'Cmd-D': strikeThroughSelection,
+      'Cmd-M': markSelection
+    }

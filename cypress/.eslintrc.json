@@ -2,7 +2,7 @@
   "parserOptions": {
     "tsconfigRootDir": "",
     "project": [
-      "./cypress/tsconfig.json"
+      "./tsconfig.json"
     ]
   },
   "plugins": [

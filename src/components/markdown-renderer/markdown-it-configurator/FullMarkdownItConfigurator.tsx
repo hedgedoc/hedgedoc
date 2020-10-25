@@ -39,10 +39,12 @@ export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
       tasksLists,
       (markdownIt) => {
         frontmatterExtract(markdownIt,
-          !this.useFrontmatter ? undefined : {
-            onYamlError: (error: boolean) => this.onYamlError(error),
-            onRawMeta: (rawMeta: RawYAMLMetadata) => this.onRawMeta(rawMeta)
-          })
+          !this.useFrontmatter
+            ? undefined
+            : {
+                onYamlError: (error: boolean) => this.onYamlError(error),
+                onRawMeta: (rawMeta: RawYAMLMetadata) => this.onRawMeta(rawMeta)
+              })
       },
       headlineAnchors,
       KatexReplacer.markdownItPlugin,

@@ -14,7 +14,7 @@ export interface RawYAMLMetadata {
   disqus: string | undefined
   type: string | undefined
   slideOptions: unknown
-  opengraph: { [key: string]:string }
+  opengraph: { [key: string]:string } | null
 }
 
 export class YAMLMetaData {
