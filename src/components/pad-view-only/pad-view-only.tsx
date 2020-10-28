@@ -5,6 +5,7 @@ import { useParams } from 'react-router'
 import { getNote, Note } from '../../api/notes'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { useDocumentTitle } from '../../hooks/common/use-document-title'
+import { setDocumentContent } from '../../redux/document-content/methods'
 import { extractNoteTitle } from '../common/document-title/note-title-extractor'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
 import { ShowIf } from '../common/show-if/show-if'
@@ -42,7 +43,10 @@ export const PadViewOnly: React.FC = () => {
 
   useEffect(() => {
     getNote(id)
-      .then(note => setNoteData(note))
+      .then(note => {
+        setNoteData(note)
+        setDocumentContent(note.content)
+      })
       .catch(() => setError(true))
       .finally(() => setLoading(false))
   }, [id])
@@ -80,7 +84,6 @@ export const PadViewOnly: React.FC = () => {
           viewCount={noteData?.viewcount ?? 0}
         />
         <DocumentRenderPane
-          content={noteData?.content ?? ''}
           onFirstHeadingChange={onFirstHeadingChange}
           onMetadataChange={onMetadataChange}
           onTaskCheckedChange={() => false}

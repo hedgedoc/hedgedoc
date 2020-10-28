@@ -10,12 +10,11 @@ import { UserResponse } from '../../../../api/users/types'
 import { ApplicationState } from '../../../../redux'
 import { CommonModal, CommonModalProps } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
-import { RevisionButtonProps } from './revision-button'
 import { RevisionModalListEntry } from './revision-modal-list-entry'
 import './revision-modal.scss'
 import { downloadRevision, getUserDataForRevision } from './utils'
 
-export const RevisionModal: React.FC<CommonModalProps & RevisionButtonProps> = ({ show, onHide, icon, titleI18nKey, noteContent }) => {
+export const RevisionModal: React.FC<CommonModalProps> = ({ show, onHide, icon, titleI18nKey }) => {
   useTranslation()
   const [revisions, setRevisions] = useState<RevisionListEntry[]>([])
   const [selectedRevisionTimestamp, setSelectedRevisionTimestamp] = useState<number | null>(null)
@@ -47,6 +46,8 @@ export const RevisionModal: React.FC<CommonModalProps & RevisionButtonProps> = (
     }).catch(() => setError(true))
   }, [selectedRevisionTimestamp, id])
 
+  const markdownContent = useSelector((state: ApplicationState) => state.documentContent.content)
+
   return (
     <CommonModal show={show} onHide={onHide} titleI18nKey={titleI18nKey} icon={icon} closeButton={true} size={'xl'} additionalClasses='revision-modal'>
       <Modal.Body>
@@ -75,7 +76,7 @@ export const RevisionModal: React.FC<CommonModalProps & RevisionButtonProps> = (
             <ShowIf condition={!error && !!selectedRevision}>
               <ReactDiffViewer
                 oldValue={selectedRevision?.content}
-                newValue={noteContent}
+                newValue={markdownContent}
                 splitView={false}
                 compareMethod={DiffMethod.WORDS}
                 useDarkTheme={darkModeEnabled}

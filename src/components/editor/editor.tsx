@@ -5,6 +5,7 @@ import useMedia from 'use-media'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { useDocumentTitle } from '../../hooks/common/use-document-title'
 import { ApplicationState } from '../../redux'
+import { setDocumentContent } from '../../redux/document-content/methods'
 import { setEditorMode } from '../../redux/editor/methods'
 import { extractNoteTitle } from '../common/document-title/note-title-extractor'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
@@ -34,7 +35,7 @@ const TASK_REGEX = /(\s*[-*] )(\[[ xX]])( .*)/
 export const Editor: React.FC = () => {
   const { t } = useTranslation()
   const untitledNote = t('editor.untitledNote')
-  const [markdownContent, setMarkdownContent] = useState(editorTestContent)
+  const markdownContent = useSelector((state: ApplicationState) => state.documentContent.content)
   const isWide = useMedia({ minWidth: 576 })
   const [documentTitle, setDocumentTitle] = useState(untitledNote)
   const noteMetadata = useRef<YAMLMetaData>()
@@ -48,6 +49,10 @@ export const Editor: React.FC = () => {
     editorScrollState: { firstLineInView: 1, scrolledPercentage: 0 },
     rendererScrollState: { firstLineInView: 1, scrolledPercentage: 0 }
   }))
+
+  useEffect(() => {
+    setDocumentContent(editorTestContent)
+  }, [])
 
   const updateDocumentTitle = useCallback(() => {
     const noteTitle = extractNoteTitle(untitledNote, noteMetadata.current, firstHeading.current)
@@ -71,9 +76,9 @@ export const Editor: React.FC = () => {
       const before = results[1]
       const after = results[3]
       lines[lineInMarkdown] = `${before}[${checked ? 'x' : ' '}]${after}`
-      setMarkdownContent(lines.join('\n'))
+      setDocumentContent(lines.join('\n'))
     }
-  }, [markdownContent, setMarkdownContent])
+  }, [markdownContent])
 
   useViewModeShortcuts()
 
@@ -105,12 +110,12 @@ export const Editor: React.FC = () => {
       <MotdBanner/>
       <div className={'d-flex flex-column vh-100'}>
         <AppBar mode={AppBarMode.EDITOR}/>
-        <DocumentBar title={documentTitle} noteContent={markdownContent} updateNoteContent={(newContent) => setMarkdownContent(newContent)}/>
+        <DocumentBar title={documentTitle}/>
         <Splitter
           showLeft={editorMode === EditorMode.EDITOR || editorMode === EditorMode.BOTH}
           left={
             <EditorPane
-              onContentChange={content => setMarkdownContent(content)}
+              onContentChange={setDocumentContent}
               content={markdownContent}
               scrollState={scrollState.editorScrollState}
               onScroll={onEditorScroll}
@@ -120,7 +125,6 @@ export const Editor: React.FC = () => {
           showRight={editorMode === EditorMode.PREVIEW || (editorMode === EditorMode.BOTH)}
           right={
             <ScrollingDocumentRenderPane
-              content={markdownContent}
               onFirstHeadingChange={onFirstHeadingChange}
               onMakeScrollSource={() => {
                 scrollSource.current = ScrollSource.RENDERER

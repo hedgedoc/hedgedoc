@@ -4,12 +4,7 @@ import { Trans } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { ImportFile } from '../import/import-file'
 
-export interface ImportProps {
-  noteContent: string
-  updateNoteContent: (content: string) => void
-}
-
-export const ImportMenu: React.FC<ImportProps> = ({ updateNoteContent, noteContent }) => {
+export const ImportMenu: React.FC = () => {
   return (
     <Dropdown className='small mx-1' alignRight={true}>
       <Dropdown.Toggle variant='light' size='sm' id='editor-menu-import' className=''>
@@ -33,7 +28,7 @@ export const ImportMenu: React.FC<ImportProps> = ({ updateNoteContent, noteConte
           <ForkAwesomeIcon icon='clipboard' className={'mx-2'}/>
           <Trans i18nKey='editor.import.clipboard'/>
         </Dropdown.Item>
-        <ImportFile updateNoteContent={updateNoteContent} noteContent={noteContent}/>
+        <ImportFile/>
       </Dropdown.Menu>
     </Dropdown>
   )

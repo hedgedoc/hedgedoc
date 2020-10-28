@@ -1,4 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { ApplicationState } from '../../../redux'
 import { LineMarkerPosition } from '../../markdown-renderer/types'
 import { useScrollToLineMark } from '../scroll/hooks/use-scroll-to-line-mark'
 import { useUserScroll } from '../scroll/hooks/use-user-scroll'
@@ -6,7 +8,6 @@ import { ScrollProps } from '../scroll/scroll-props'
 import { DocumentRenderPane, DocumentRenderPaneProps } from './document-render-pane'
 
 export const ScrollingDocumentRenderPane: React.FC<DocumentRenderPaneProps & ScrollProps> = ({
-  content,
   scrollState,
   wide,
   onFirstHeadingChange,
@@ -15,16 +16,16 @@ export const ScrollingDocumentRenderPane: React.FC<DocumentRenderPaneProps & Scr
   onScroll,
   onTaskCheckedChange
 }) => {
+  const markdownContent = useSelector((state: ApplicationState) => state.documentContent.content)
   const renderer = useRef<HTMLDivElement>(null)
   const [lineMarks, setLineMarks] = useState<LineMarkerPosition[]>()
 
-  const contentLineCount = useMemo(() => content.split('\n').length, [content])
+  const contentLineCount = useMemo(() => markdownContent.split('\n').length, [markdownContent])
   useScrollToLineMark(scrollState, lineMarks, contentLineCount, renderer)
   const userScroll = useUserScroll(lineMarks, renderer, onScroll)
 
   return (
     <DocumentRenderPane
-      content={content}
       extraClasses={'overflow-y-scroll'}
       rendererReference={renderer}
       wide={wide}

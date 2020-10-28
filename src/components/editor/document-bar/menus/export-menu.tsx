@@ -7,10 +7,9 @@ import { MarkdownExportDropdownItem } from './export/markdown'
 
 export interface ExportMenuProps {
   title: string
-  noteContent: string
 }
 
-export const ExportMenu: React.FC<ExportMenuProps> = ({ title, noteContent }) => {
+export const ExportMenu: React.FC<ExportMenuProps> = ({ title }) => {
   useTranslation()
   return (
     <Dropdown className='small mx-1' alignRight={true}>
@@ -40,10 +39,7 @@ export const ExportMenu: React.FC<ExportMenuProps> = ({ title, noteContent }) =>
         <Dropdown.Header>
           <Trans i18nKey='editor.documentBar.download'/>
         </Dropdown.Header>
-        <MarkdownExportDropdownItem
-          title={title}
-          noteContent={noteContent}
-        />
+        <MarkdownExportDropdownItem title={title} />
         <Dropdown.Item className='small'>
           <ForkAwesomeIcon icon='file-code-o' className={'mx-2'}/>
           HTML

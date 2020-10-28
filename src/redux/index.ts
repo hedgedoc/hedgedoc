@@ -7,6 +7,8 @@ import { BannerState } from './banner/types'
 import { ConfigReducer } from './config/reducers'
 import { DarkModeConfigReducer } from './dark-mode/reducers'
 import { DarkModeConfig } from './dark-mode/types'
+import { DocumentContentReducer } from './document-content/reducers'
+import { DocumentContent } from './document-content/types'
 import { EditorConfigReducer } from './editor/reducers'
 import { EditorConfig } from './editor/types'
 import { UserReducer } from './user/reducers'
@@ -19,6 +21,7 @@ export interface ApplicationState {
   apiUrl: ApiUrlObject;
   editorConfig: EditorConfig;
   darkMode: DarkModeConfig;
+  documentContent: DocumentContent;
 }
 
 export const allReducers: Reducer<ApplicationState> = combineReducers<ApplicationState>({
@@ -27,7 +30,8 @@ export const allReducers: Reducer<ApplicationState> = combineReducers<Applicatio
   banner: BannerReducer,
   apiUrl: ApiUrlReducer,
   editorConfig: EditorConfigReducer,
-  darkMode: DarkModeConfigReducer
+  darkMode: DarkModeConfigReducer,
+  documentContent: DocumentContentReducer
 })
 
 export const store = createStore(allReducers)

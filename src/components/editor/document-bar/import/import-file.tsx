@@ -1,10 +1,14 @@
 import React, { Fragment, useCallback, useRef } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { ApplicationState } from '../../../../redux'
+import { setDocumentContent } from '../../../../redux/document-content/methods'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import { ImportProps } from '../menus/import-menu'
 
-export const ImportFile: React.FC<ImportProps> = ({ noteContent, updateNoteContent }) => {
+export const ImportFile: React.FC = () => {
+  const markdownContent = useSelector((state: ApplicationState) => state.documentContent.content)
+
   const fileInputReference = useRef<HTMLInputElement>(null)
   const doImport = useCallback(() => {
     const fileInput = fileInputReference.current
@@ -19,10 +23,10 @@ export const ImportFile: React.FC<ImportProps> = ({ noteContent, updateNoteConte
       const fileReader = new FileReader()
       fileReader.addEventListener('load', () => {
         const newContent = fileReader.result as string
-        if (noteContent.length === 0) {
-          updateNoteContent(newContent)
+        if (markdownContent.length === 0) {
+          setDocumentContent(newContent)
         } else {
-          updateNoteContent(noteContent + '\n' + newContent)
+          setDocumentContent(markdownContent + '\n' + newContent)
         }
       })
       fileReader.addEventListener('loadend', () => {
@@ -31,7 +35,7 @@ export const ImportFile: React.FC<ImportProps> = ({ noteContent, updateNoteConte
       fileReader.readAsText(file)
     })
     fileInput.click()
-  }, [fileInputReference, noteContent, updateNoteContent])
+  }, [markdownContent])
 
   return (
     <Fragment>
