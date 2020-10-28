@@ -7,7 +7,8 @@ export enum EditorPreferenceProperty {
   KEYMAP = 'keyMap',
   THEME = 'theme',
   INDENT_WITH_TABS = 'indentWithTabs',
-  INDENT_UNIT = 'indentUnit'
+  INDENT_UNIT = 'indentUnit',
+  SPELL_CHECK= 'spellcheck'
 }
 
 export interface EditorPreferenceSelectProps {

@@ -386,7 +386,7 @@
                 "keyMap": "Keymap",
                 "indentWithTabs": "Tab character",
                 "indentUnit": "Tab size (when using spaces)",
-                "spellChecker": "Spell checking"
+                "spellcheck": "Spell checking"
             }
         },
         "embeddings": {
