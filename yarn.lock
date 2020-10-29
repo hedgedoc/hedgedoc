@@ -5436,8 +5436,8 @@ image-size@~0.5.0:
   integrity sha1-Cd/Uq50g4p6xw+gLiZA3jfnjy5w=
 
 "imgur@git+https://github.com/hackmdio/node-imgur.git":
-  version "0.3.1"
-  resolved "git+https://github.com/hackmdio/node-imgur.git#4fe9cfa3893505c34c49067483d85d3ad4376cd6"
+  version "0.5.0"
+  resolved "git+https://github.com/hackmdio/node-imgur.git#de0a7a1f1eb2cb6628385fedb990ad396a190573"
   dependencies:
     commander "^2.13.0"
     glob "^7.1.2"
