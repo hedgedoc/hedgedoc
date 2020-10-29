@@ -6051,7 +6051,7 @@ js-tokens@^3.0.2:
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
   integrity sha1-mGbfOVECEw449/mWvOtlRDIJwls=
 
-js-yaml@^3.13.0, js-yaml@~3.13.1:
+js-yaml@^3.13.0:
   version "3.13.1"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.13.1.tgz#aff151b30bfdfa8e49e05da22e7415e9dfa37847"
   integrity sha512-YfbcO7jXDdyj0DGxYVSlSeQNHbD7XPWvrVWeVUujrQEoZzWJIRrCPoyk6kL6IAjAG2IolMK4T0hNUe0HOUs5Jw==
@@ -6059,7 +6059,7 @@ js-yaml@^3.13.0, js-yaml@~3.13.1:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
-js-yaml@^3.13.1, js-yaml@^3.6.1:
+js-yaml@^3.13.1, js-yaml@^3.6.1, js-yaml@~3.14.0:
   version "3.14.0"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.14.0.tgz#a7a34170f26a21bb162424d8adacb4113a69e482"
   integrity sha512-/4IbIeHcD9VMHFqDR/gQ7EdZdLimOvW2DdcxFjdyyZ9NsbS+ccrXqVWDtab/lRl5AlUqmpBx8EhPaWR+OtY17A==
@@ -6835,10 +6835,10 @@ markdown-table@^2.0.0:
   dependencies:
     repeat-string "^1.0.0"
 
-marked@~0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-0.8.0.tgz#ec5c0c9b93878dc52dd54be8d0e524097bd81a99"
-  integrity sha512-MyUe+T/Pw4TZufHkzAfDj6HarCBWia2y27/bhuYkTaiUnfDYFnCP3KUN+9oM7Wi6JA2rymtVYbQu3spE0GCmxQ==
+marked@~1.2.0:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-1.2.2.tgz#5d77ffb789c4cb0ae828bfe76250f7140b123f70"
+  integrity sha512-5jjKHVl/FPo0Z6ocP3zYhKiJLzkwJAw4CZoLjv57FkvbUuwOX4LIBBGGcXjAY6ATcd1q9B8UTj5T9Umauj0QYQ==
 
 math-interval-parser@^2.0.1:
   version "2.0.1"
@@ -6998,12 +6998,12 @@ messageformat@^2.3.0:
     messageformat-formatters "^2.0.1"
     messageformat-parser "^4.1.2"
 
-"meta-marked@git+https://github.com/codimd/meta-marked#semver:^0.4.5":
+"meta-marked@git+https://github.com/codimd/meta-marked":
   version "0.4.5"
-  resolved "git+https://github.com/codimd/meta-marked#a7b45a287465f79656134ff7142d1d74c8fcacfd"
+  resolved "git+https://github.com/codimd/meta-marked#4fb5cb5a204969cc91e66eee92c0211188e69a2b"
   dependencies:
-    js-yaml "~3.13.1"
-    marked "~0.8.0"
+    js-yaml "~3.14.0"
+    marked "~1.2.0"
 
 method-override@^2.3.7:
   version "2.3.10"
