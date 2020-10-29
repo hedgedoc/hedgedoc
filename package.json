@@ -19,7 +19,7 @@
   "dependencies": {
     "@passport-next/passport-openid": "^1.0.0",
     "Idle.Js": "git+https://github.com/shawnmclean/Idle.js",
-    "archiver": "^2.1.1",
+    "archiver": "^5.0.2",
     "async": "^2.1.4",
     "aws-sdk": "^2.345.0",
     "azure-storage": "^2.7.0",
