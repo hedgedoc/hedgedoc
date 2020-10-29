@@ -3525,7 +3525,7 @@ detect-libc@^1.0.2:
 
 "diff-match-patch@git+https://github.com/hackmdio/diff-match-patch.git":
   version "1.1.1"
-  resolved "git+https://github.com/hackmdio/diff-match-patch.git#5b73bb82454a81ecdbdb81afb4bea4c36132fbaa"
+  resolved "git+https://github.com/hackmdio/diff-match-patch.git#c2f8fb9d69aa9490b764850aa86ba442c93ccf78"
 
 diff@3.5.0:
   version "3.5.0"
