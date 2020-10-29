@@ -32,5 +32,5 @@ export class NoteMetadataDto {
   @ValidateNested()
   editedBy: UserInfoDto['userName'][];
   @ValidateNested()
-  permission: NotePermissionsDto;
+  permissions: NotePermissionsDto;
 }

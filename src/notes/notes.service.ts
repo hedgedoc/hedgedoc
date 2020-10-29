@@ -37,7 +37,7 @@ export class NotesService {
         description: 'Very descriptive text.',
         editedBy: [],
         id: 'foobar-barfoo',
-        permission: {
+        permissions: {
           owner: {
             displayName: 'foo',
             userName: 'fooUser',
@@ -108,7 +108,7 @@ export class NotesService {
       description: NoteUtils.parseDescription(note),
       editedBy: note.authorColors.map(authorColor => authorColor.user.userName),
       // TODO: Extract into method
-      permission: {
+      permissions: {
         owner: this.usersService.toUserDto(note.owner),
         sharedToUsers: note.userPermissions.map(noteUserPermission => ({
           user: this.usersService.toUserDto(noteUserPermission.user),
