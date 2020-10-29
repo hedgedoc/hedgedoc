@@ -7420,10 +7420,10 @@ nocache@2.1.0:
   resolved "https://registry.yarnpkg.com/nocache/-/nocache-2.1.0.tgz#120c9ffec43b5729b1d5de88cd71aa75a0ba491f"
   integrity sha512-0L9FvHG3nfnnmaEQPjT9xhfN4ISk0A8/2j4M37Np4mcDesJjHgEUfgPhdCyZuFI954tjokaIj/A3NdpFNdEh4Q==
 
-node-forge@^0.7.0:
-  version "0.7.6"
-  resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.7.6.tgz#fdf3b418aee1f94f0ef642cd63486c77ca9724ac"
-  integrity sha512-sol30LUpz1jQFBjOKwbjxijiE3b6pjd74YwfD0fJOKPjF+fONKb2Yg8rYgS6+bK6VDl+/wfr4IYpC7jDzLUIfw==
+node-forge@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.10.0.tgz#32dea2afb3e9926f02ee5ce8794902691a676bf3"
+  integrity sha512-PPmu8eEeG9saEUvI97fm4OYxXVB6bFvyNTyiUOBichBpFG8A1Ljw3bY62+5oOjDEMHRnd0Y7HQ+x7uzxOzC6JA==
 
 node-gyp-build@~3.7.0:
   version "3.7.0"
@@ -8075,16 +8075,16 @@ passport-oauth@^1.0.0:
     passport-oauth1 "1.x.x"
     passport-oauth2 "1.x.x"
 
-passport-saml@^1.0.0:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/passport-saml/-/passport-saml-1.3.2.tgz#6cd7e747d7fd0283877d9f48b84c55908ab4182b"
-  integrity sha512-oRtv1lF0AeOVGPD/UJMJnOO7AIc/Wgw7qfMxgejm2bjBo85a26LQfP+XnOD5gW7fxRdYKXDAIOvqPhFeGJmyBw==
+passport-saml@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/passport-saml/-/passport-saml-1.4.0.tgz#b49c9ed525818b331589b289b73a41984a5dba23"
+  integrity sha512-N9uEvZ54J/qpOsuuocKlPYfC0cgzSvvfz3eY2sTgRNh68hcSUBQJPwbEVd93mkELFoeygt3m1/n62vEwSM2OPw==
   dependencies:
     debug "^3.1.0"
     passport-strategy "*"
     q "^1.5.0"
-    xml-crypto "^1.4.0"
-    xml-encryption "^1.0.0"
+    xml-crypto "^2.0.0"
+    xml-encryption "1.2.1"
     xml2js "0.4.x"
     xmlbuilder "^11.0.0"
     xmldom "0.1.x"
@@ -12150,21 +12150,21 @@ x-xss-protection@1.3.0:
   resolved "https://registry.yarnpkg.com/x-xss-protection/-/x-xss-protection-1.3.0.tgz#3e3a8dd638da80421b0e9fff11a2dbe168f6d52c"
   integrity sha512-kpyBI9TlVipZO4diReZMAHWtS0MMa/7Kgx8hwG/EuZLiA6sg4Ah/4TRdASHhRRN3boobzcYgFRUFSgHRge6Qhg==
 
-xml-crypto@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/xml-crypto/-/xml-crypto-1.4.0.tgz#de1cec8cd31cbd689cd90d3d6e8a27d4ae807de7"
-  integrity sha512-K8FRdRxICVulK4WhiTUcJrRyAIJFPVOqxfurA3x/JlmXBTxy+SkEENF6GeRt7p/rB6WSOUS9g0gXNQw5n+407g==
+xml-crypto@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/xml-crypto/-/xml-crypto-2.0.0.tgz#54cd268ad9d31930afcf7092cbb664258ca9e826"
+  integrity sha512-/a04qr7RpONRZHOxROZ6iIHItdsQQjN3sj8lJkYDDss8tAkEaAs0VrFjb3tlhmS5snQru5lTs9/5ISSMdPDHlg==
   dependencies:
     xmldom "0.1.27"
     xpath "0.0.27"
 
-xml-encryption@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/xml-encryption/-/xml-encryption-1.0.0.tgz#fe50d3bbbe2ae06876d6aa95aa3bf958284e1612"
-  integrity sha512-xTqcgKPN3XOswvDPXrhtyvWZ96IFcO9Azv3vS060kOpBsK5T7OxbQDxb59bPLl4b4c2IgmSZC3kJB0n5WPr2Mw==
+xml-encryption@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/xml-encryption/-/xml-encryption-1.2.1.tgz#e6d18817c4309fd07ca7793cca93c3fd06745baa"
+  integrity sha512-hn5w3l5p2+nGjlmM0CAhMChDzVGhW+M37jH35Z+GJIipXbn9PUlAIRZ6I5Wm7ynlqZjFrMAr83d/CIp9VZJMTA==
   dependencies:
     escape-html "^1.0.3"
-    node-forge "^0.7.0"
+    node-forge "^0.10.0"
     xmldom "~0.1.15"
     xpath "0.0.27"
 
