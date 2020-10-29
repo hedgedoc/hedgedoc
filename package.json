@@ -198,7 +198,6 @@
     "remark-preset-lint-markdown-style-guide": "^3.0.0",
     "script-loader": "^0.7.2",
     "string-loader": "^0.0.1",
-    "style-loader": "^1.0.0",
     "url-loader": "^2.3.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
