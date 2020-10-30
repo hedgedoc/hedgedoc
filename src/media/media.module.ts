@@ -5,6 +5,7 @@
  */
 
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from '../logger/logger.module';
 import { NotesModule } from '../notes/notes.module';
@@ -19,6 +20,7 @@ import { MediaService } from './media.service';
     NotesModule,
     UsersModule,
     LoggerModule,
+    ConfigModule,
   ],
   providers: [MediaService, FilesystemBackend],
   exports: [MediaService],
