@@ -20,7 +20,7 @@ export class HistoryService {
           description: 'Very descriptive text.',
           editedBy: [],
           id: 'foobar-barfoo',
-          permission: {
+          permissions: {
             owner: {
               displayName: 'foo',
               userName: 'fooUser',
@@ -59,7 +59,7 @@ export class HistoryService {
         description: 'Very descriptive text.',
         editedBy: [],
         id: 'foobar-barfoo',
-        permission: {
+        permissions: {
           owner: {
             displayName: 'foo',
             userName: 'fooUser',

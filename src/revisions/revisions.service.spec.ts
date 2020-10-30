@@ -10,6 +10,7 @@ import { User } from '../users/user.entity';
 import { Authorship } from './authorship.entity';
 import { Revision } from './revision.entity';
 import { RevisionsService } from './revisions.service';
+import { Tag } from '../notes/tag.entity';
 
 describe('RevisionsService', () => {
   let service: RevisionsService;
@@ -38,6 +39,8 @@ describe('RevisionsService', () => {
       .overrideProvider(getRepositoryToken(Note))
       .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Tag))
       .useValue({})
       .compile();
 

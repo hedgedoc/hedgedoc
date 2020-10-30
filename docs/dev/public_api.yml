@@ -47,7 +47,9 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/History"
+                type: array
+                items:
+                  "$ref": "#/components/schemas/History"
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
   /me/history/{note}:
@@ -60,11 +62,11 @@ paths:
       description: JSON Object which contains id, title, tags, last visit time and pinned status
       responses:
         '200':
-          description: The list of recently viewed notes and pinned notes.
+          description: Information about the history entry
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/HistoryObject"
+                "$ref": "#/components/schemas/History"
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
         '404':
@@ -88,14 +90,14 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/HistoryObject"
+              "$ref": "#/components/schemas/HistoryUpdate"
       responses:
         '200':
-          description: The new history.
+          description: The new history object.
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/HistoryObject"
+                "$ref": "#/components/schemas/History"
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
         '404':
@@ -183,7 +185,7 @@ paths:
               markdownExample:
                 "$ref": '#/components/examples/markdownExample'
       responses:
-        '200':
+        '201':
           description: Get information about the newly created note.
           content:
             application/json:
@@ -226,7 +228,7 @@ paths:
         - note
       summary: Imports some markdown data into a new note with a given alias
       operationId: createNoteWithAlias
-      description: This endpoint equals to the above one except that the alias from the url will be assigned to the note if [FreeURL-mode](https://github.com/codimd/server/tree/master/docs/configuration-env-vars.md#users-and-privileges) is enabled.
+      description: This endpoint creates a new note with the content of the HTTP request body and the alias from the URL parameter.
       requestBody:
         required: true
         description: The content of the note to be imported as markdown.
@@ -238,7 +240,7 @@ paths:
               markdownExample:
                 "$ref": '#/components/examples/markdownExample'
       responses:
-        '200':
+        '201':
           description: Get information about the newly created note.
           content:
             application/json:
@@ -285,7 +287,7 @@ paths:
         - note
       summary: Imports some markdown data into an existing note, creating a new revision
       operationId: createNewRevisionForNote
-      description: This endpoint equals to the above one except that the alias from the url will be assigned to the note if [FreeURL-mode](https://github.com/codimd/server/tree/master/docs/configuration-env-vars.md#users-and-privileges) is enabled.
+      description: This endpoint updates the note content of an existing note. The old content is completely replaced and a new revision is created.
       requestBody:
         required: true
         description: The content of the note to be imported as markdown.
@@ -318,20 +320,14 @@ paths:
             text/plain:
               example: my-note
   /notes/{note}/metadata:
-    put:
+    get:
       tags:
         - note
-      summary: Set the permissions of a note
-      operationId: updateNoteMetadata
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/NoteMetadata"
+      summary: Get the metadata of a note
+      operationId: getNoteMetadata
       responses:
         '200':
-          description: The updated permissions of the note.
+          description: The metadata of the note.
           content:
             application/json:
               schema:
@@ -350,18 +346,24 @@ paths:
           content:
             text/plain:
               example: my-note
-    get:
-      tags:
-        - note
-      summary: Get the permissions of a note
-      operationId: getNoteMetadata
+  /notes/{note}/permissions:
+    put:
+      tags: [ note ]
+      summary: Set permissions of a note
+      operationId: updateNotePermissions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/NotePermissionsUpdate"
       responses:
         '200':
-          description: The permissions of the note.
+          description: The updated permissions of the note.
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/NoteMetadata"
+                "$ref": "#/components/schemas/NotePermissions"
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
         '403':
@@ -389,7 +391,9 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/NoteRevisionsMetadata"
+                type: array
+                items:
+                  "$ref": "#/components/schemas/NoteRevisionsMetadata"
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
         '403':
@@ -552,7 +556,7 @@ paths:
           required: true
           description: ID or alias of the parent note
       responses:
-        '200':
+        '201':
           description: The file was uploaded successfully.
           content:
             application/json:
@@ -642,6 +646,15 @@ components:
       properties:
         password:
           type: string
+    GroupInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        special:
+          type: boolean
     ImageProxyRequest:
       type: object
       properties:
@@ -713,9 +726,32 @@ components:
       type: object
       properties:
         owner:
-          type: string
-          description: Username of the owner of the note
-        sharedTo:
+          $ref: "#/components/schemas/UserInfo"
+        sharedToUsers:
+          type: array
+          description: Contains all users that can read the note and a boolean that denotes if they can also edit.
+          items:
+            type: object
+            properties:
+              user:
+                $ref: "#/components/schemas/UserInfo"
+              canEdit:
+                type: boolean
+        sharedToGroups:
+          type: array
+          description: Contains all groups that can read the note and a boolean that denotes if they can also edit.
+          items:
+            type: object
+            properties:
+              group:
+                $ref: "#/components/schemas/GroupInfo"
+              canEdit:
+                type: boolean
+    NotePermissionsUpdate:
+      type: object
+      description: Contains only title, description and tags of a note.
+      properties:
+        sharedToUsers:
           type: array
           description: Contains all usernames that can read the note and a boolean that denotes if they can also edit.
           items:
@@ -725,21 +761,28 @@ components:
                 type: string
               canEdit:
                 type: boolean
-
+        sharedToGroups:
+          type: array
+          description: Contains all groups that can read the note and a boolean that denotes if they can also edit.
+          items:
+            type: object
+            properties:
+              groupname:
+                type: string
+              canEdit:
+                type: boolean
     NoteRevisionsMetadata:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: integer
-            description: The id of the revision
-          createdTime:
-            type: string
-            description: ISO-timestamp of when the revision was saved. Is also the revision-id.
-          length:
-            type: integer
-            description: Length of the document to the timepoint the revision was saved.
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The id of the revision
+        createdTime:
+          type: string
+          description: ISO-timestamp of when the revision was saved. Is also the revision-id.
+        length:
+          type: integer
+          description: Length of the document to the timepoint the revision was saved.
     NoteRevision:
       type: object
       properties:
@@ -840,7 +883,7 @@ components:
           type: boolean
         disconnectSocketQueueLength:
           type: integer
-    HistoryObject:
+    History:
       type: object
       properties:
         metadata:
@@ -848,14 +891,12 @@ components:
         pinned:
           type: boolean
           description: Whether the user has pinned this note.
-    History:
+    HistoryUpdate:
       type: object
       properties:
-        history:
-          type: array
-          description: The array that contains history objects.
-          items:
-            "$ref": "#/components/schemas/HistoryObject"
+        pinned:
+          type: boolean
+          description: Whether the user has pinned this note.
     MediaUpload:
       type: object
       properties:

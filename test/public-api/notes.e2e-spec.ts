@@ -98,20 +98,28 @@ describe('Notes', () => {
     ).toEqual('New note text');
   });
 
-  it.skip(`PUT /notes/{note}/metadata`, () => {
-    // TODO
-    return request(app.getHttpServer())
-      .post('/notes/test5/metadata')
-      .set('Content-Type', 'text/markdown')
-      .expect(200);
-  });
-
-  it.skip(`GET /notes/{note}/metadata`, () => {
-    notesService.createNote('This is a test note.', 'test6');
-    return request(app.getHttpServer())
+  it(`GET /notes/{note}/metadata`, async () => {
+    await notesService.createNote('This is a test note.', 'test6');
+    const metadata = await request(app.getHttpServer())
       .get('/notes/test6/metadata')
       .expect(200);
-    // TODO: Find out how to check the structure of the returned JSON
+    expect(typeof metadata.body.id).toEqual('string');
+    expect(metadata.body.alias).toEqual('test6');
+    expect(metadata.body.title).toBeNull();
+    expect(metadata.body.description).toBeNull();
+    expect(typeof metadata.body.createTime).toEqual('string');
+    expect(metadata.body.editedBy).toEqual([]);
+    expect(metadata.body.permissions.owner).toBeNull();
+    expect(metadata.body.permissions.sharedToUsers).toEqual([]);
+    expect(metadata.body.permissions.sharedToUsers).toEqual([]);
+    expect(metadata.body.tags).toEqual([]);
+    expect(typeof metadata.body.updateTime).toEqual('string');
+    expect(typeof metadata.body.updateUser.displayName).toEqual('string');
+    expect(typeof metadata.body.updateUser.userName).toEqual('string');
+    expect(typeof metadata.body.updateUser.email).toEqual('string');
+    expect(typeof metadata.body.updateUser.photo).toEqual('string');
+    expect(typeof metadata.body.viewCount).toEqual('number');
+    expect(metadata.body.editedBy).toEqual([]);
   });
 
   it(`GET /notes/{note}/revisions`, async () => {
