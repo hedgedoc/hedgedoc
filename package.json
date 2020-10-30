@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@nestjs/common": "7.6.5",
+    "@nestjs/config": "^0.6.1",
     "@nestjs/core": "7.6.5",
     "@nestjs/platform-express": "7.6.5",
     "@nestjs/swagger": "4.7.10",
@@ -34,6 +35,7 @@
     "cli-color": "2.0.0",
     "connect-typeorm": "1.1.4",
     "file-type": "16.2.0",
+    "joi": "^17.3.0",
     "raw-body": "2.4.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
