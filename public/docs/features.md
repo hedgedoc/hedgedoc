@@ -246,7 +246,7 @@ When you’re a carpenter making a beautiful chest of drawers, you’re not goin
 #### PDF
 
 **Caution: this might be blocked by your browser if not using an `https` URL.**
-{%pdf <https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf> %}
+{%pdf https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf %}
 
 ### MathJax
 
