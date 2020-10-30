@@ -329,8 +329,8 @@
             },
             "documentInfo": {
                 "title": "Document info",
-                "created": "<0></0> created this note <1></1> ago",
-                "edited": "<0></0> was the last editor <1></1> ago",
+                "created": "<0></0> created this note <1></1>",
+                "edited": "<0></0> was the last editor <1></1>",
                 "usersContributed": "<0></0> users contributed to this document",
                 "revisions": "<0></0> revisions are saved"
             },
