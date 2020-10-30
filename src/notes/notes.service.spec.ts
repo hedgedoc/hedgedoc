@@ -11,6 +11,7 @@ import { UsersModule } from '../users/users.module';
 import { AuthorColor } from './author-color.entity';
 import { Note } from './note.entity';
 import { NotesService } from './notes.service';
+import { Tag } from './tag.entity';
 
 describe('NotesService', () => {
   let service: NotesService;
@@ -21,6 +22,10 @@ describe('NotesService', () => {
         NotesService,
         {
           provide: getRepositoryToken(Note),
+          useValue: {},
+        },
+        {
+          provide: getRepositoryToken(Tag),
           useValue: {},
         },
       ],
@@ -39,6 +44,8 @@ describe('NotesService', () => {
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})
       .overrideProvider(getRepositoryToken(Note))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Tag))
       .useValue({})
       .compile();
     service = module.get<NotesService>(NotesService);

@@ -7,20 +7,21 @@ import { Revision } from '../revisions/revision.entity';
 import { RevisionsService } from '../revisions/revisions.service';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
-import { NoteMetadataDto } from './note-metadata.dto';
+import { NoteMetadataDto, NoteMetadataUpdateDto } from './note-metadata.dto';
 import {
   NotePermissionsDto,
   NotePermissionsUpdateDto,
 } from './note-permissions.dto';
 import { NoteDto } from './note.dto';
 import { Note } from './note.entity';
-import { NoteUtils } from './note.utils';
+import { Tag } from './tag.entity';
 
 @Injectable()
 export class NotesService {
   constructor(
     private readonly logger: ConsoleLoggerService,
     @InjectRepository(Note) private noteRepository: Repository<Note>,
+    @InjectRepository(Tag) private tagRepository: Repository<Tag>,
     @Inject(UsersService) private usersService: UsersService,
     @Inject(forwardRef(() => RevisionsService))
     private revisionsService: RevisionsService,
@@ -102,10 +103,10 @@ export class NotesService {
       // TODO: Convert DB UUID to base64
       id: note.id,
       alias: note.alias,
-      title: NoteUtils.parseTitle(note),
+      title: note.title,
       // TODO: Get actual createTime
       createTime: new Date(),
-      description: NoteUtils.parseDescription(note),
+      description: note.description,
       editedBy: note.authorColors.map(authorColor => authorColor.user.userName),
       // TODO: Extract into method
       permissions: {
@@ -119,7 +120,7 @@ export class NotesService {
           canEdit: noteGroupPermission.canEdit,
         })),
       },
-      tags: NoteUtils.parseTags(note),
+      tags: note.tags.map(tag => tag.name),
       updateTime: (await this.getLastRevision(note)).createdAt,
       // TODO: Get actual updateUser
       updateUser: {

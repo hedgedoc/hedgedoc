@@ -9,6 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
+import { NoteMetadataUpdateDto } from '../../../notes/note-metadata.dto';
 import { NotePermissionsUpdateDto } from '../../../notes/note-permissions.dto';
 import { NotesService } from '../../../notes/notes.service';
 import { RevisionsService } from '../../../revisions/revisions.service';
@@ -21,7 +22,7 @@ export class NotesController {
     private noteService: NotesService,
     private revisionsService: RevisionsService,
   ) {
-  this.logger.setContext(NotesController.name);
+    this.logger.setContext(NotesController.name);
   }
 
   @Post()

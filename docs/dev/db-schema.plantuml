@@ -1,17 +1,16 @@
 @startuml
-' hide the spot
 hide circle
-
-' avoid problems with angled crows feet
-skinparam linetype ortho
+skinparam nodesep 60
 
 entity "Note" {
   *id : uuid <<generated>>
   --
   *shortid : text
-  *alias : text
+  alias : text
   *viewcount : number
   *ownerId : uuid <<FK User>>
+  description: text
+  title: text
 }
 
 entity "User" {
@@ -49,7 +48,7 @@ entity "Identity" {
   passwordHash : text
 }
 
-entity "Session" as seesion {
+entity "Session" {
   *id : text
   --
   *expiredAt : number
@@ -108,11 +107,16 @@ entity "Group" {
   *special : boolean
   }
 
- entity "NoteGroupPermission" {
+entity "NoteGroupPermission" {
   *groupId : number <<FK Group>>
   *noteId : uuid <<FK Note>>
   --
   *canEdit : boolean
+}
+
+entity "Tag" {
+  *id: number <<generated>>
+  *name: text
 }
 
 entity "MediaUpload" {
@@ -125,20 +129,26 @@ entity "MediaUpload" {
   *createdAt : date
 }
 
-Note "1" - "1..*" Revision
+User "1" -- "0..*" Note: owner
+User "1" -u- "1..*" Identity
+User "1" - "1..*" authToken
+User "1" -l- "1..*" Session
+User "1" - "0..*" MediaUpload
+User "0..*" -- "0..*" Note
+User "1" - "0..*" Authorship
+
+(User, Note) . AuthorColors
+
 Revision "0..*" - "0..*" Authorship
 (Revision, Authorship) .. RevisionAuthorship
-Authorship "0..*" -- "1" User
-Note "0..*" -- "1" User : owner
-Note "1" -- "0..*" NoteUserPermission
-NoteUserPermission "1" -- "1" User
-Note "1" -- "0..*" NoteGroupPermission
-NoteGroupPermission "0..*" -- "1" Group
-Identity "1..*" -- "1" User
-authToken "1..*" -- "1" User
-seesion "1..*" -- "1" User
-Note "0..*" -- "0..*" User : color
-(Note, User) .. AuthorColors
-MediaUpload "0..*" -- "1" Note
-MediaUpload "0..*" -- "1" User
+
+MediaUpload "0..*"  -- "1" Note
+Note "1" - "1..*" Revision
+Note "0..*" -l- "0..*" Tag
+Note "0..*" -- "0..*" Group
+
+User "0..*" -- "0..*" Note
+(User, Note) . NoteUserPermission
+(Note, Group) . NoteGroupPermission
+
 @enduml

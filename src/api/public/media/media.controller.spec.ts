@@ -6,6 +6,7 @@ import { MediaModule } from '../../../media/media.module';
 import { AuthorColor } from '../../../notes/author-color.entity';
 import { Note } from '../../../notes/note.entity';
 import { NotesModule } from '../../../notes/notes.module';
+import { Tag } from '../../../notes/tag.entity';
 import { Authorship } from '../../../revisions/authorship.entity';
 import { Revision } from '../../../revisions/revision.entity';
 import { AuthToken } from '../../../users/auth-token.entity';
@@ -36,6 +37,8 @@ describe('Media Controller', () => {
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})
       .overrideProvider(getRepositoryToken(User))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Tag))
       .useValue({})
       .compile();
 
