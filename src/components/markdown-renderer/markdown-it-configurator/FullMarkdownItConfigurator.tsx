@@ -1,7 +1,6 @@
 import MarkdownIt from 'markdown-it'
 import { TocAst } from '../../../external-types/markdown-it-toc-done-right/interface'
 import { RawYAMLMetadata } from '../../editor/yaml-metadata/yaml-metadata'
-import { alertContainer } from '../markdown-it-plugins/alert-container'
 import { documentToc } from '../markdown-it-plugins/document-toc'
 import { frontmatterExtract } from '../markdown-it-plugins/frontmatter'
 import { headlineAnchors } from '../markdown-it-plugins/headline-anchors'
@@ -58,7 +57,6 @@ export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
       highlightedCode,
       quoteExtra,
       (markdownIt) => documentToc(markdownIt, this.onToc),
-      alertContainer,
       (markdownIt) => lineNumberMarker(markdownIt, (lineMarkers) => this.onLineMarkers(lineMarkers))
     )
   }
