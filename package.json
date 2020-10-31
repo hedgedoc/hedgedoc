@@ -43,7 +43,7 @@
         "emoji-picker-element": "1.2.1",
         "emojibase-data": "5.1.1",
         "eslint-config-react-app": "6.0.0",
-        "eslint-config-standard": "15.0.0",
+        "eslint-config-standard": "16.0.1",
         "eslint-plugin-flowtype": "5.2.0",
         "eslint-plugin-import": "2.22.1",
         "eslint-plugin-jsx-a11y": "6.4.1",
@@ -126,7 +126,8 @@
             ]
         },
         "rules": {
-            "no-use-before-define": "off"
+            "no-use-before-define": "off",
+            "default-param-last": "off"
         },
         "plugins": [
             "@typescript-eslint"
