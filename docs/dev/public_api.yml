@@ -93,11 +93,11 @@ paths:
               "$ref": "#/components/schemas/HistoryUpdate"
       responses:
         '200':
-          description: The new history.
+          description: The new history object.
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/HistoryObject"
+                "$ref": "#/components/schemas/History"
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
         '404':
@@ -150,6 +150,20 @@ paths:
                   "$ref": "#/components/schemas/NoteMetadata"
         '401':
           "$ref": "#/components/responses/UnauthorizedError"
+  /me/media:
+    get:
+      tags: [ user, media ]
+      summary: Get list of uploaded files owned by the current user
+      operationId: getOwnMedia
+      responses:
+        '200':
+          description:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MediaUpload"
   /notes:
     post:
       tags:
@@ -158,8 +172,8 @@ paths:
       operationId: createNoteFromMarkdown
       description: A random id will be assigned and the content will equal to the body of the received HTTP-request.
       security:
-        - bearerAuth: []
-        - {}
+        - bearerAuth: [ ]
+        - { }
       requestBody:
         required: false
         description: The content of the note to be imported as markdown.
@@ -458,6 +472,20 @@ paths:
           content:
             text/plain:
               example: my-note
+  /notes/{note}/media:
+    get:
+      tags: [ note, media ]
+      summary: Get list of files uploaded to the note
+      operationId: getOwnMedia
+      responses:
+        '200':
+          description:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MediaUpload"
   /media:
     post:
       tags:
@@ -869,6 +897,22 @@ components:
         pinned:
           type: boolean
           description: Whether the user has pinned this note.
+    MediaUpload:
+      type: object
+      properties:
+        note:
+          type: string
+          description: ID of the note the file was uploaded to
+        user:
+          type: string
+          description: username of the user who uploaded the file
+        url:
+          type: string
+          description: URL of the file
+        createdAt:
+          type: string
+          format: date-time
+          description: Date when the file was upladed
   examples:
     markdownExample:
       value: '# Some header\nSome normal text. **Some bold text**'
