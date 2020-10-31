@@ -46,7 +46,7 @@
         "eslint-config-standard": "15.0.0",
         "eslint-plugin-flowtype": "5.2.0",
         "eslint-plugin-import": "2.22.1",
-        "eslint-plugin-jsx-a11y": "6.3.1",
+        "eslint-plugin-jsx-a11y": "6.4.1",
         "eslint-plugin-node": "11.1.0",
         "eslint-plugin-promise": "4.2.1",
         "eslint-plugin-standard": "4.0.2",
