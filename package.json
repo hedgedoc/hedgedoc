@@ -160,7 +160,7 @@
         "@types/redux-devtools": "3.0.47",
         "@types/redux-devtools-extension": "2.13.2",
         "cross-env": "7.0.2",
-        "cypress": "5.4.0",
+        "cypress": "5.5.0",
         "cypress-commands": "1.1.0",
         "cypress-file-upload": "4.1.1",
         "eslint-plugin-chai-friendly": "0.6.0",
@@ -172,6 +172,6 @@
         "webpack-bundle-analyzer": "3.9.0"
     },
     "resolutions": {
-        "cypress": "5.4.0"
+        "cypress": "5.5.0"
     }
 }
