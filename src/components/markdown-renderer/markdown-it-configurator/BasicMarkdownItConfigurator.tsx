@@ -10,6 +10,7 @@ import superscript from 'markdown-it-sup'
 import { alertContainer } from '../markdown-it-plugins/alert-container'
 import { linkifyExtra } from '../markdown-it-plugins/linkify-extra'
 import { MarkdownItParserDebugger } from '../markdown-it-plugins/parser-debugger'
+import { tasksLists } from '../markdown-it-plugins/tasks-lists'
 import { twitterEmojis } from '../markdown-it-plugins/twitter-emojis'
 import { MarkdownItConfigurator } from './MarkdownItConfigurator'
 
@@ -25,6 +26,7 @@ export class BasicMarkdownItConfigurator extends MarkdownItConfigurator {
       marked,
       footnote,
       imsize,
+      tasksLists,
       alertContainer
     )
     this.postConfigurations.push(

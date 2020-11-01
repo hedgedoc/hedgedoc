@@ -7,7 +7,6 @@ import { headlineAnchors } from '../markdown-it-plugins/headline-anchors'
 import { highlightedCode } from '../markdown-it-plugins/highlighted-code'
 import { plantumlWithError } from '../markdown-it-plugins/plantuml'
 import { quoteExtra } from '../markdown-it-plugins/quote-extra'
-import { tasksLists } from '../markdown-it-plugins/tasks-lists'
 import { legacySlideshareShortCode } from '../regex-plugins/replace-legacy-slideshare-short-code'
 import { legacySpeakerdeckShortCode } from '../regex-plugins/replace-legacy-speakerdeck-short-code'
 import { AsciinemaReplacer } from '../replace-components/asciinema/asciinema-replacer'
@@ -35,7 +34,6 @@ export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
 
     this.configurations.push(
       plantumlWithError,
-      tasksLists,
       (markdownIt) => {
         frontmatterExtract(markdownIt,
           !this.useFrontmatter

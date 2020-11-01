@@ -9,16 +9,16 @@ describe('Code', () => {
   })
 
   describe('without = doesn\'t show gutter', () => {
-    it("without wrapLines active", () => {
+    it('without wrapLines active', () => {
       cy.get('.CodeMirror textarea')
-        .type(`\`\`\`javascript \nlet x = 0\n\`\`\``)
+        .type('```javascript \nlet x = 0\n```')
       cy.get('.markdown-body > pre > code')
         .should('have.class', 'hljs')
     })
 
-    it("with wrapLines active", () => {
+    it('with wrapLines active', () => {
       cy.get('.CodeMirror textarea')
-        .type(`\`\`\`javascript!\nlet x = 0\n\`\`\``)
+        .type('```javascript!\nlet x = 0\n```')
       cy.get('.markdown-body > pre > code')
         .should('have.class', 'hljs')
         .should('have.class', 'wrapLines')
@@ -26,9 +26,9 @@ describe('Code', () => {
   })
 
   describe('with = shows gutter', () => {
-    it("without wrapLines active", () => {
+    it('without wrapLines active', () => {
       cy.get('.CodeMirror textarea')
-        .type(`\`\`\`javascript=\nlet x = 0\n\`\`\``)
+        .type('```javascript=\nlet x = 0\n```')
       cy.get('.markdown-body > pre > code')
         .should('have.class', 'hljs')
         .should('have.class', 'showGutter')
@@ -37,9 +37,9 @@ describe('Code', () => {
         .should('have.attr', 'data-line-number', '1')
     })
 
-    it("with wrapLines active", () => {
+    it('with wrapLines active', () => {
       cy.get('.CodeMirror textarea')
-        .type(`\`\`\`javascript=! \nlet x = 0\n\`\`\``)
+        .type('```javascript=! \nlet x = 0\n```')
       cy.get('.markdown-body > pre > code')
         .should('have.class', 'hljs')
         .should('have.class', 'showGutter')
@@ -51,9 +51,9 @@ describe('Code', () => {
   })
 
   describe('with = shows gutter and number is used as startline', () => {
-    it("without wrapLines active", () => {
+    it('without wrapLines active', () => {
       cy.get('.CodeMirror textarea')
-        .type(`\`\`\`javascript=100\nlet x = 0\n\`\`\``)
+        .type('```javascript=100\nlet x = 0\n```')
       cy.get('.markdown-body > pre > code')
         .should('have.class', 'hljs')
         .should('have.class', 'showGutter')
@@ -62,9 +62,9 @@ describe('Code', () => {
         .should('have.attr', 'data-line-number', '100')
     })
 
-    it("with wrapLines active", () => {
+    it('with wrapLines active', () => {
       cy.get('.CodeMirror textarea')
-        .type(`\`\`\`javascript=100! \nlet x = 0\n\`\`\``)
+        .type('```javascript=100! \nlet x = 0\n```')
       cy.get('.markdown-body > pre > code')
         .should('have.class', 'hljs')
         .should('have.class', 'showGutter')
@@ -77,7 +77,7 @@ describe('Code', () => {
 
   it('has a button', () => {
     cy.get('.CodeMirror textarea')
-      .type(`\`\`\`javascript \nlet x = 0\n\`\`\``)
+      .type('```javascript \nlet x = 0\n```')
     cy.get('.markdown-body > pre > div > button > i')
       .should('have.class', 'fa-files-o')
       .click()
@@ -86,5 +86,4 @@ describe('Code', () => {
     // uncomment cypress plugin
     // cy.task('getClipboard').should('contain', 'let x = 0\n');
   })
-
 })
