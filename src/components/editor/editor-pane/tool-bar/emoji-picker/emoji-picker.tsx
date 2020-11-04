@@ -1,6 +1,6 @@
 import { Picker } from 'emoji-picker-element'
 import { CustomEmoji, EmojiClickEvent, EmojiClickEventDetail } from 'emoji-picker-element/shared'
-import React, { useCallback, useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { useClickAway } from 'react-use'
 import { ApplicationState } from '../../../../../redux'
@@ -21,61 +21,72 @@ export const customEmojis: CustomEmoji[] = Object.keys(ForkAwesomeIcons).map((na
   category: 'ForkAwesome'
 }))
 
+export const EMOJI_DATA_PATH = '/static/js/emoji-data.json'
+
+export const emojiPickerConfig = {
+  customEmoji: customEmojis,
+  dataSource: EMOJI_DATA_PATH
+}
+
+const twemojiStyle = (): HTMLStyleElement => {
+  const style = document.createElement('style')
+  style.textContent = 'section.picker { --font-family: "Twemoji Mozilla" !important; }'
+  return style
+}
+
 export const EmojiPicker: React.FC<EmojiPickerProps> = ({ show, onEmojiSelected, onDismiss }) => {
   const darkModeEnabled = useSelector((state: ApplicationState) => state.darkMode.darkMode)
   const pickerContainerRef = useRef<HTMLDivElement>(null)
-  const firstOpened = useRef(false)
+  const pickerRef = useRef<Picker>()
 
   useClickAway(pickerContainerRef, () => {
     onDismiss()
   })
 
-  const emojiClickListener = useCallback((event) => {
-    onEmojiSelected((event as EmojiClickEvent).detail)
-  }, [onEmojiSelected])
-
-  const twemojiStyle = useMemo(() => {
-    const style = document.createElement('style')
-    style.textContent = 'section.picker { --font-family: "Twemoji Mozilla" !important; }'
-    return style
-  }, [])
-
-  useEffect(() => {
-    if (!pickerContainerRef.current || firstOpened.current) {
-      return
-    }
-    const picker = new Picker({
-      customEmoji: customEmojis,
-      dataSource: '/static/js/emoji-data.json'
-    })
-    const container = pickerContainerRef.current
-    picker.addEventListener('emoji-click', emojiClickListener)
-    if (picker.shadowRoot) {
-      picker.shadowRoot.appendChild(twemojiStyle)
-    }
-    container.appendChild(picker)
-    firstOpened.current = true
-  }, [pickerContainerRef, emojiClickListener, darkModeEnabled, twemojiStyle])
-
   useEffect(() => {
     if (!pickerContainerRef.current) {
       return
     }
-    const pickerDomList = pickerContainerRef.current.getElementsByTagName('emoji-picker')
-    if (pickerDomList.length === 0) {
+    const picker = new Picker(emojiPickerConfig)
+    if (picker.shadowRoot) {
+      picker.shadowRoot.appendChild(twemojiStyle())
+    }
+    pickerContainerRef.current.appendChild(picker)
+
+    pickerRef.current = picker
+    return () => {
+      picker.remove()
+      pickerRef.current = undefined
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!pickerRef.current) {
       return
     }
-    const picker = pickerDomList[0]
-    picker.setAttribute('class', darkModeEnabled ? 'dark' : 'light')
-    if (darkModeEnabled) {
-      picker.removeAttribute('style')
-    } else {
-      picker.setAttribute('style', '--background: #f8f9fa')
+    const emojiClick = (event: EmojiClickEvent): void => {
+      onEmojiSelected(event.detail)
     }
-  }, [darkModeEnabled, pickerContainerRef, firstOpened])
+    const picker = pickerRef.current
+    picker.addEventListener('emoji-click', emojiClick, true)
+    return () => {
+      picker.removeEventListener('emoji-click', emojiClick, true)
+    }
+  }, [onEmojiSelected])
 
-  // noinspection CheckTagEmptyBody
+  useEffect(() => {
+    if (!pickerRef.current) {
+      return
+    }
+    pickerRef.current.setAttribute('class', darkModeEnabled ? 'dark' : 'light')
+    if (darkModeEnabled) {
+      pickerRef.current.removeAttribute('style')
+    } else {
+      pickerRef.current.setAttribute('style', '--background: #f8f9fa')
+    }
+  }, [darkModeEnabled])
+
   return (
-    <div className={`position-absolute emoji-picker-container ${!show ? 'd-none' : ''}`} ref={pickerContainerRef}></div>
+    <div className={`position-absolute emoji-picker-container ${!show ? 'd-none' : ''}`} ref={pickerContainerRef}/>
   )
 }

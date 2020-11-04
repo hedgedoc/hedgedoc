@@ -40,7 +40,7 @@
         "copy-webpack-plugin": "6.2.1",
         "d3-graphviz": "3.1.0",
         "diff": "4.0.2",
-        "emoji-picker-element": "1.2.1",
+        "emoji-picker-element": "1.2.2",
         "emojibase-data": "5.1.1",
         "eslint-config-react-app": "6.0.0",
         "eslint-config-standard": "16.0.1",
@@ -127,6 +127,7 @@
         },
         "rules": {
             "no-use-before-define": "off",
+            "no-debugger": "warn",
             "default-param-last": "off"
         },
         "plugins": [
