@@ -9522,7 +9522,7 @@ markmap-lib@0.10.1:
     remarkable "^2.0.0"
     remarkable-katex "^1.1.6"
 
-markmap-view@^0.1.1:
+markmap-view@0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/markmap-view/-/markmap-view-0.1.1.tgz#2bf7fe0163c2cfd324ac8643a4a2dfab5529cb10"
   integrity sha512-KXiBavp5AtfKDcw/Q709oY4MIq1DpQ7kNhtvD4CouJ36Y/2xPoNf2JUl7wZ5TaBz42Wfbh7B2vDzFhZaaq2jEg==
