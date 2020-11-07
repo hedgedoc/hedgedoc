@@ -39,35 +39,25 @@ export const MarkmapFrame: React.FC<MarkmapFrameProps> = ({ code }) => {
       return
     }
     const actualContainer = diagramContainer.current
-    Promise.all([import(/* webpackChunkName: "markmap" */ 'markmap-lib/dist/transform'), import(/* webpackChunkName: "markmap" */ 'markmap-lib/dist/view'), import(/* webpackChunkName: "markmap" */ 'markmap-lib/dist/util/loader')])
-      .then(([transform, view, loader]) => {
+    Promise.all([import(/* webpackChunkName: "markmap" */ 'markmap-lib'), import(/* webpackChunkName: "markmap" */ 'markmap-view')])
+      .then(([{ transform }, { Markmap }]) => {
         const svg: SVGSVGElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
         svg.setAttribute('width', '100%')
         actualContainer.querySelectorAll('svg').forEach(child => child.remove())
         actualContainer.appendChild(svg)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call
-        const { root, features } = transform.transform(code)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
-        const { styles, scripts } = transform.getUsedAssets(features)
-        if (styles) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-          loader.loadCSS(styles)
-        }
-        if (scripts) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-member-access
-          loader.loadJS(scripts, { getMarkmap: () => view.Markmap })
-            .catch(err => console.error(err))
-        }
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-        view.Markmap.create(svg, {}, root)
-      }).catch(() => { console.error('error while loading markmap') })
+        const { root } = transform(code)
+        Markmap.create(svg, {}, root)
+      }).catch(() => {
+        console.error('error while loading markmap')
+      })
   }, [code])
 
   return (
     <Fragment>
       <div className={'text-center'} ref={diagramContainer}/>
       <div className={'text-right button-inside'}>
-        <LockButton locked={disablePanAndZoom} onLockedChanged={(newState => setDisablePanAndZoom(newState))} title={ disablePanAndZoom ? t('renderer.markmap.locked') : t('renderer.markmap.unlocked')}/>
+        <LockButton locked={disablePanAndZoom} onLockedChanged={(newState => setDisablePanAndZoom(newState))}
+                    title={disablePanAndZoom ? t('renderer.markmap.locked') : t('renderer.markmap.unlocked')}/>
       </div>
     </Fragment>
   )
