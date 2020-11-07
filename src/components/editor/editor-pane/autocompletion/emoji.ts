@@ -25,6 +25,21 @@ const findEmojiInDatabase = async (emojiIndex: Database, term: string): Promise<
   }
 }
 
+const convertEmojiEventToHint = (emojiData:EmojiClickEventDetail): Hint | undefined => {
+  const shortCode = getEmojiShortCode(emojiData)
+  if (!shortCode) {
+    return undefined
+  }
+  return {
+    text: shortCode,
+    render: (parent: HTMLLIElement) => {
+      const wrapper = document.createElement('div')
+      wrapper.innerHTML = `${getEmojiIcon(emojiData)}   ${shortCode}`
+      parent.appendChild(wrapper)
+    }
+  }
+}
+
 const generateEmojiHints = async (editor: Editor): Promise<Hints | null> => {
   const searchTerm = findWordAtCursor(editor)
   const searchResult = emojiWordRegex.exec(searchTerm.text)
@@ -34,21 +49,20 @@ const generateEmojiHints = async (editor: Editor): Promise<Hints | null> => {
   const suggestionList: Emoji[] = await findEmojiInDatabase(emojiIndex, searchResult[1])
   const cursor = editor.getCursor()
   const skinTone = await emojiIndex.getPreferredSkinTone()
-  const emojiEventDetails: EmojiClickEventDetail[] = suggestionList.map((emoji) => ({
-    emoji,
-    skinTone: skinTone,
-    unicode: ((emoji as NativeEmoji).unicode ? (emoji as NativeEmoji).unicode : undefined),
-    name: emoji.name
-  }))
+  const emojiEventDetails: EmojiClickEventDetail[] = suggestionList
+    .filter(emoji => !!emoji.shortcodes)
+    .map((emoji) => ({
+      emoji,
+      skinTone: skinTone,
+      unicode: ((emoji as NativeEmoji).unicode ? (emoji as NativeEmoji).unicode : undefined),
+      name: emoji.name
+    }))
+
+  const hints = emojiEventDetails
+    .map(convertEmojiEventToHint)
+    .filter(o => !!o) as Hint[]
   return {
-    list: emojiEventDetails.map((emojiData): Hint => ({
-      text: getEmojiShortCode(emojiData),
-      render: (parent: HTMLLIElement) => {
-        const wrapper = document.createElement('div')
-        wrapper.innerHTML = `${getEmojiIcon(emojiData)}   ${getEmojiShortCode(emojiData)}`
-        parent.appendChild(wrapper)
-      }
-    })),
+    list: hints,
     from: Pos(cursor.line, searchTerm.start),
     to: Pos(cursor.line, searchTerm.end)
   }

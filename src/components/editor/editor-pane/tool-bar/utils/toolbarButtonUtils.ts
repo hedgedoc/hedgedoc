@@ -26,7 +26,10 @@ export const addComment = (editor: Editor): void => changeLines(editor, line => 
 export const addTable = (editor: Editor): void => changeLines(editor, line => `${line}\n| # 1  | # 2  | # 3  |\n| ---- | ---- | ---- |\n| Text | Text | Text |`)
 
 export const addEmoji = (emoji: EmojiClickEventDetail, editor: Editor): void => {
-  insertAtCursor(editor, getEmojiShortCode(emoji))
+  const shortCode = getEmojiShortCode(emoji)
+  if (shortCode) {
+    insertAtCursor(editor, shortCode)
+  }
 }
 
 export const wrapTextWith = (editor: Editor, symbol: string, endSymbol?: string): void => {
