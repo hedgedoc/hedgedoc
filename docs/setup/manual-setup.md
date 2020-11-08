@@ -14,7 +14,7 @@
 
 - Bash (for the setup script)
 
-- For **building** CodiMD we recommend to use a machine with at least **2GB** RAM
+- For **building** HedgeDoc we recommend to use a machine with at least **2GB** RAM
 
 ## Instructions
 
@@ -24,14 +24,14 @@
 
 3. Enter the directory and type `bin/setup`, which will install npm dependencies and create configs.
 
-4. Modify `config.json` or configure CodiMD through environment variables which will
+4. Modify `config.json` or configure HedgeDoc through environment variables which will
    overwrite the configs, see docs [here](https://github.com/codimd/server/blob/master/docs/configuration.md).
 
 5. Build front-end bundle by `yarn run build` (use `yarn run dev` if you are in development)
 
 6. Modify the file named `.sequelizerc`, change the value of the variable `url` with your db connection string. For example:
-   - `postgres://username:password@localhost:5432/codimd`
-   - `mysql://username:password@localhost:3306/codimd`
+   - `postgres://username:password@localhost:5432/hedgedoc`
+   - `mysql://username:password@localhost:3306/hedgedoc`
    - `sqlite://:memory:`
 
 7. It is recommended to start your server manually once: `npm start --production`, this way it's easier to see warnings or errors that might occur (leave out `--production` for development).
@@ -40,13 +40,13 @@
 
 ## How to upgrade your installation
 
-If you are upgrading CodiMD from an older version, follow these steps:
+If you are upgrading HedgeDoc from an older version, follow these steps:
 
 1. Check if you meet the [requirements at the top of this document](#requirements-on-your-server).
 2. Verify which version you were running before and take a look at [migrations and breaking changes](../guides/migrations-and-breaking-changes.md) to see if additional steps, or configuration changes are necessary!
-3. Fully stop your old CodiMD server.
+3. Fully stop your old HedgeDoc server.
 4. `git pull` or unzip a new release in the directory.
 5. Run `bin/setup`. This will take care of installing dependencies. It is safe to run on an existing installation.
 6. Build front-end bundle by `yarn run build` (use `yarn run dev` if you are in development).
 7. It is recommended to start your server manually once: `npm start --production`, this way it's easier to see warnings or errors that might occur (leave out `--production` for development).
-8. You can now restart the CodiMD server!
+8. You can now restart the HedgeDoc server!

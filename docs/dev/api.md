@@ -1,5 +1,5 @@
 # API documentation
-Several tasks of CodiMD can be automated through HTTP requests.
+Several tasks of HedgeDoc can be automated through HTTP requests.
 The available endpoints for this api are described in this document.
 For code-autogeneration there is an OpenAPIv3-compatible description available [here](openapi.yml).
 
@@ -34,9 +34,9 @@ These endpoints return information about the current logged-in user and it's not
 | `/history/<NOTE>` | `POST`      | **Toggles the pinned status in the history for a note.**<br>The body must be form-encoded and contain a field `pinned` that is either `true` or `false`.                                          |
 | `/history/<NOTE>` | `DELETE`    | **Deletes a note from the user's history.**                                                                                                                                                       |
 
-## CodiMD-server
-These endpoints return information about the running CodiMD instance.
+## HedgeDoc-server
+These endpoints return information about the running HedgeDoc instance.
 
 | Endpoint  | HTTP-Method | Description                                                                                                                                                                            |
 | --------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/status` | `GET`       | **Returns the current status of the CodiMD instance.**<br>The data is returned as a JSON object containing the number of notes stored on the server, (distinct) online users and more. |
+| `/status` | `GET`       | **Returns the current status of the HedgeDoc instance.**<br>The data is returned as a JSON object containing the number of notes stored on the server, (distinct) online users and more. |

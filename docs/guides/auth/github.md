@@ -1,6 +1,6 @@
 # Authentication guide - GitHub
 
-*Note:* This guide was written before the renaming. Just replace `HackMD` with `CodiMD` in your mind :smile: thanks!
+*Note:* This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind :smile: thanks!
 
 1. Sign-in or sign-up for a GitHub account
 
@@ -12,7 +12,7 @@
 4. Fill out the new OAuth application registration form, and click **Register Application**  
    ![register-oauth-application-form](../../images/auth/register-oauth-application-form.png)
 
-   **Note:** *The callback URL is <your-codimd-url>/auth/github/callback*
+   **Note:** *The callback URL is <your-hedgedoc-url>/auth/github/callback*
 
 5. After successfully registering the application, you'll receive the Client ID and Client Secret for the application  
    ![application-page](../../images/auth/application-page.png)

@@ -1,11 +1,11 @@
 openapi: 3.0.1
 
 info:
-  title: CodiMD
-  description: CodiMD is an open source collaborative note editor. Several tasks of CodiMD can be automated through this API.
+  title: HedgeDoc
+  description: HedgeDoc is an open source collaborative note editor. Several tasks of HedgeDoc can be automated through this API.
   version: 1.6.0
   contact:
-    name: CodiMD on GitHub
+    name: HedgeDoc on GitHub
     url: https://github.com/codimd/server
   license:
     name: AGPLv3
@@ -432,7 +432,7 @@ paths:
     get:
       tags:
         - server
-      summary: Returns the current status of the CodiMD instance.
+      summary: Returns the current status of the HedgeDoc instance.
       description: The data is returned as a JSON object containing the number of notes stored on the server, (distinct) online users and more.
       responses:
         200:
@@ -478,4 +478,4 @@ tags:
   - name: user
     description: These endpoints return information about the current logged-in user and it's note history. If no user is logged-in, the most of this requests will fail with either a HTTP 403 or a JSON object containing `{"status":"forbidden"}`.
   - name: server
-    description: These endpoints return information about the running CodiMD instance.
+    description: These endpoints return information about the running HedgeDoc instance.

@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Only the latest release of CodiMD is supported. We don't have the
+Only the latest release of HedgeDoc is supported. We don't have the
 ressources to maintain multiple versions.
 
 ## Reporting a Vulnerability
@@ -25,8 +25,8 @@ the fix, we want to encurage you to publish your findings as you like.
 We'll also credit you in the release notes.
 
 When your findings are not accepted as a security issue, feel free to write
-a fix yourself and contribute it to CodiMD, as well as publish them as you
-like and allow people to make in informed decision about using CodiMD.
+a fix yourself and contribute it to HedgeDoc, as well as publish them as you
+like and allow people to make in informed decision about using HedgeDoc.
 
 If you have any further questions, feel free to reach out to the
 [community chat](https://matrix.to/#/#hedgedoc:matrix.org) or the mentioned contacts above.

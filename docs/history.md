@@ -1,4 +1,4 @@
-# History of CodiMD
+# History of HedgeDoc
 
 ## It started with HackMD
 
@@ -13,18 +13,18 @@ while referred to as "HackMD community edition".
 
 *For more on the splitting of the projects, please refer to [A note to our community (2017-10-11)](https://hackmd.io/c/community-news/https%3A%2F%2Fhackmd.io%2Fs%2Fr1_4j9_hZ).*
 
-## HackMD CE became CodiMD
+## HackMD CE became HedgeDoc
 
-In June 2018, CodiMD was renamed from its former name "HackMD" and continued to
+In June 2018, HedgeDoc was renamed from its former name "HackMD" and continued to
 be developed under AGPLv3 by the community. We decided to change the name to
-break the confusion between HackMD (enterprise offering) and CodiMD (community
+break the confusion between HackMD (enterprise offering) and HedgeDoc (community
 project), as people mistook it for an open core development model.
 
 *For the whole renaming story, see the [issue where the renaming was discussed](https://github.com/hackmdio/hackmd/issues/720).*
 
-## CodiMD went independent
+## HedgeDoc went independent
 
-In March 2019, a discussion over licensing, governance and the future of CodiMD
+In March 2019, a discussion over licensing, governance and the future of HedgeDoc
 lead to the formation of a distinct GitHub organization. Up to that point, the
 community project resided in the organization of hackmdio but was for the most
 part self-organized.

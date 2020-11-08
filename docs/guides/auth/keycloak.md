@@ -13,7 +13,7 @@ Where HTTPS is specified throughout, use HTTP instead. You may also have to spec
 You may note that a separate realm is specified throughout this tutorial. It is best practice not to use the master realm, as it normally contains the realm-management client that federates access using the policies and permissions you can create.
 
 2. Navigate to the client management page at `https://keycloak.example.com/auth/admin/master/console/#/realms/your-realm/clients` (admin permissions required)
-3. Click **Create** to create a new client and fill out the registration form. You should set the Root URL to the fully qualified public URL of your CodiMD instance.
+3. Click **Create** to create a new client and fill out the registration form. You should set the Root URL to the fully qualified public URL of your HedgeDoc instance.
 4. Click **Save**
 5. Set the **Access Type** of the client to `confidential`. This will make your client require a client secret upon authentication.
 
@@ -40,10 +40,10 @@ CMD_OAUTH2_AUTHORIZATION_URL=https://keycloak.example.com/auth/realms/your-realm
 CMD_OAUTH2_CLIENT_ID=<your client ID>
 CMD_OAUTH2_CLIENT_SECRET=<your client secret, which you can find under the Credentials tab for your client>
 CMD_OAUTH2_PROVIDERNAME=Keycloak
-CMD_DOMAIN=<codimd.example.com>
+CMD_DOMAIN=<hedgedoc.example.com>
 CMD_PROTOCOL_USESSL=true 
 CMD_URL_ADDPORT=false
 ```
 
 6. Run `docker-compose up -d` to apply your settings.
-7. Sign in to your CodiMD using your Keycloak ID
+7. Sign in to your HedgeDoc using your Keycloak ID

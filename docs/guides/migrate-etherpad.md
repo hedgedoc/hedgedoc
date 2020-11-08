@@ -1,11 +1,11 @@
 # Pad migration guide from etherpad-lite
 
 The goal of this migration is to do a "dumb" import from all the pads in Etherpad, to notes in
-CodiMD. In particular, the url locations of the pads in Etherpad will be lost. Furthermore, any
+HedgeDoc. In particular, the url locations of the pads in Etherpad will be lost. Furthermore, any
 metadata in Etherpad, such as revisions, author data and also formatted text will not be migrated
-to CodiMD (only the plain text contents).
+to HedgeDoc (only the plain text contents).
 
-Note that this guide is not really meant as a support guide. I migrated my own Etherpad to CodiMD,
+Note that this guide is not really meant as a support guide. I migrated my own Etherpad to HedgeDoc,
 and it turned out to be quite easy in my opinion. In this guide I share my experience. Stuff may
 require some creativity to work properly in your case. When I wrote this guide, I was using
 [etherpad 1.7.0][] and [codimd 1.2.1][]. Good luck!
@@ -14,7 +14,7 @@ require some creativity to work properly in your case. When I wrote this guide, 
 
 - `curl`
 - running Etherpad server
-- running CodiMD server
+- running HedgeDoc server
 - [codimd-cli][]
 
 ## 1. Retrieve the list of pads
@@ -54,8 +54,8 @@ configuration settings `ETHERPAD_SERVER` and `CODIMD_SERVER`.
 # The base url to where etherpad is hosted
 ETHERPAD_SERVER="https://etherpad.example.com"
 
-# The base url where codimd is hosted
-CODIMD_SERVER="https://codimd.example.com"
+# The base url where hedgedoc is hosted
+CODIMD_SERVER="https://hedgedoc.example.com"
 
 # Write a list of pads and the urls which they were migrated to
 REDIRECTS_FILE="redirects.txt"
@@ -85,7 +85,7 @@ Call this file like this:
 ./migrate-etherpad.sh pad_names.txt
 ```
 
-This will download all the pads in `pad_names.txt` and put them on CodiMD. They will get assigned
+This will download all the pads in `pad_names.txt` and put them on HedgeDoc. They will get assigned
 random ids, so you won't be able to find them. The script will save the mappings to a file though
 (in my case `redirects.txt`). You can use this file to redirect your users when they visit your
 etherpad using a `301 Permanent Redirect` status code (see the next section).
@@ -95,10 +95,10 @@ etherpad using a `301 Permanent Redirect` status code (see the next section).
 I got a `redirects.txt` file that looked a bit like this:
 
 ```log
-date-ideas -> Found. Redirecting to https://codimd.example.com/mPt0KfiKSBOTQ3mNcdfn
-groceries -> Found. Redirecting to https://codimd.example.com/UukqgwLfhYyUUtARlcJ2_y
-london -> Found. Redirecting to https://codimd.example.com/_d3wa-BE8t4Swv5w7O2_9R
-weddingchecklist -> Found. Redirecting to https://codimd.example.com/XcQGqlBjl0u40wfT0N8TzQ
+date-ideas -> Found. Redirecting to https://hedgedoc.example.com/mPt0KfiKSBOTQ3mNcdfn
+groceries -> Found. Redirecting to https://hedgedoc.example.com/UukqgwLfhYyUUtARlcJ2_y
+london -> Found. Redirecting to https://hedgedoc.example.com/_d3wa-BE8t4Swv5w7O2_9R
+weddingchecklist -> Found. Redirecting to https://hedgedoc.example.com/XcQGqlBjl0u40wfT0N8TzQ
 (...)
 ```
 
@@ -106,16 +106,16 @@ Using some `sed` magic, I changed it to an nginx config snippet:
 
 ```nginx
 location = /p/date-ideas {
-    return 301 https://codimd.example.com/mPt0M1KfiKSBOTQ3mNcdfn;
+    return 301 https://hedgedoc.example.com/mPt0M1KfiKSBOTQ3mNcdfn;
 }
 location = /p/groceries {
-    return 301 https://codimd.example.com/UukqgwLfhYyUUtARlcJ2_y;
+    return 301 https://hedgedoc.example.com/UukqgwLfhYyUUtARlcJ2_y;
 }
 location = /p/london {
-    return 301 https://codimd.example.com/_d3wa-BE8t4Swv5w7O2_9R;
+    return 301 https://hedgedoc.example.com/_d3wa-BE8t4Swv5w7O2_9R;
 }
 location = /p/weddingchecklist {
-    return 301 https://codimd.example.com/XcQGqlBjl0u40wfT0N8TzQ;
+    return 301 https://hedgedoc.example.com/XcQGqlBjl0u40wfT0N8TzQ;
 }
 ```
 

@@ -1,6 +1,6 @@
-# Minio Guide for CodiMD
+# Minio Guide for HedgeDoc
 
-*Note:* This guide was written before the renaming. Just replace `HackMD` with `CodiMD` in your mind :smile: thanks!
+*Note:* This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind :smile: thanks!
 
 1. First of all you need to setup Minio itself.
 
@@ -27,7 +27,7 @@
 
    ![minio default view](../images/minio-image-upload/default-view.png)
 
-4. Create a bucket for CodiMD
+4. Create a bucket for HedgeDoc
 
    ![minio create bucket](../images/minio-image-upload/create-bucket.png)
 
@@ -39,7 +39,7 @@
    ![minio policy adding](../images/minio-image-upload/create-policy.png)
    *Add policy for uploads*
 
-6. Set credentials and configs for Minio in CodiMD's `config.json`
+6. Set credentials and configs for Minio in HedgeDoc's `config.json`
 
    ```JSON
    "minio": {
@@ -57,7 +57,7 @@
 7. Set bucket name
 
    ```JSON
-   "s3bucket": "codimd"
+   "s3bucket": "hedgedoc"
    ```
 
 8. Set upload type.
@@ -78,7 +78,7 @@
        "port": 9000,
        "secure": false
      },
-     "s3bucket": "codimd",
+     "s3bucket": "hedgedoc",
      "imageuploadtype": "minio"
    }
    ```

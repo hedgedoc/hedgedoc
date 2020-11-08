@@ -1,5 +1,5 @@
 {
-  "name": "CodiMD",
+  "name": "HedgeDoc",
   "version": "1.6.0",
   "description": "Realtime collaborative markdown notes on all platforms.",
   "main": "app.js",
@@ -151,7 +151,7 @@
     "Markdown",
     "Notes"
   ],
-  "homepage": "https://codimd.org",
+  "homepage": "https://hedgedoc.org",
   "maintainers": [
     {
       "name": "Claudius Coenen",

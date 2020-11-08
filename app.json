@@ -1,14 +1,14 @@
 {
-    "name": "CodiMD",
+    "name": "HedgeDoc",
     "description": "Realtime collaborative markdown notes on all platforms",
     "keywords": [
         "Collaborative",
         "Markdown",
         "Notes"
     ],
-    "website": "https://codimd.org",
+    "website": "https://hedgedoc.org",
     "repository": "https://github.com/codimd/server",
-    "logo": "https://github.com/codimd/server/raw/master/public/codimd-icon-1024.png",
+    "logo": "https://github.com/codimd/hedgedoc-logo/raw/main/LOGOTYPE/PNG/HedgeDoc-Logo%201.png",
     "success_url": "/",
     "env": {
         "NPM_CONFIG_PRODUCTION": {

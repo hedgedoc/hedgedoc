@@ -96,7 +96,7 @@ dir: rtl
 ## breaks
 
 This option means the hardbreaks in the note will be parsed or be ignore.
-The original markdown syntax breaks only if you put space twice, but CodiMD choose to breaks every time you enter a break.
+The original markdown syntax breaks only if you put space twice, but HedgeDoc choose to breaks every time you enter a break.
 You can only use whether `true` or `false`.
 
 > default: not set (which will be true)

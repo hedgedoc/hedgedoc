@@ -18,8 +18,8 @@
     <% if (opengraph.hasOwnProperty(og) && opengraph[og].trim() !== '') { %>
     <meta property="og:<%= og %>" content="<%= opengraph[og] %>">
     <% }} if (!opengraph.hasOwnProperty('image')) { %>
-    <meta property="og:image" content="<%- serverURL %>/codimd-icon-1024.png">
-    <meta property="og:image:alt" content="CodiMD logo">
+    <meta property="og:image" content="<%- serverURL %>/icons/android-chrome-512x512">
+    <meta property="og:image:alt" content="HedgeDoc logo">
     <meta property="og:image:type" content="image/png">
     <% } %>
     <base href="<%- serverURL %>/">

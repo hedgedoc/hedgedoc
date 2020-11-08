@@ -1,6 +1,6 @@
 # AD LDAP auth
 
-To setup your CodiMD instance with Active Directory you need the following configs:
+To setup your HedgeDoc instance with Active Directory you need the following configs:
 
 ```env
 CMD_LDAP_URL=ldap://internal.example.com
