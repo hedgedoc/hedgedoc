@@ -85,6 +85,8 @@ which lets you use HedgeDoc from the comfort of your command line.
 
 Licensed under AGPLv3. For our list of contributors, see [AUTHORS](AUTHORS).
 
+The license does not include the hedgedoc logo, whose terms of usage can be found in the [github repository](https://github.com/codimd/hedgedoc-logo).
+
 [matrix.org-image]: https://img.shields.io/matrix/hedgedoc:matrix.org?logo=matrix&server_fqdn=matrix.org
 [matrix.org-url]: https://matrix.to/#/#hedgedoc:matrix.org
 [travis-image]: https://travis-ci.org/codimd/server.svg?branch=master
