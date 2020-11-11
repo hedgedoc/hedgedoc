@@ -2363,7 +2363,7 @@ code-point-at@^1.0.0:
 
 "codemirror@git+https://github.com/codimd/CodeMirror.git":
   version "5.58.2"
-  resolved "git+https://github.com/codimd/CodeMirror.git#14d7274d417005fbce00f94c8e56a9568c7fb012"
+  resolved "git+https://github.com/codimd/CodeMirror.git#f780b569b3717cdff4c8507538cc63101bfa02e1"
 
 collapse-white-space@^1.0.2:
   version "1.0.6"
