@@ -513,7 +513,7 @@ module.exports = {
     modules: ['node_modules'],
     extensions: ['.js'],
     alias: {
-      'codemirror-lib-codemirror': path.join(__dirname, 'node_modules/codemirror/lib/codemirror.js'),
+      'codemirror-lib-codemirror': path.join(__dirname, 'node_modules/codemirror/src/codemirror.js'),
       'codemirror-addon-mode-overlay': path.join(__dirname, 'node_modules/codemirror/addon/mode/overlay.js'),
       'codemirror-addon-mode-simple': path.join(__dirname, 'node_modules/codemirror/addon/mode/simple.js'),
       'codemirror-addon-mode-multiplex': path.join(__dirname, 'node_modules/codemirror/addon/mode/multiplex.js'),
