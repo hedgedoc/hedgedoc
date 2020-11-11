@@ -20,13 +20,14 @@ jobs:
         - shellcheck bin/heroku bin/setup
       language: generic
     - name: json-lint
+      node_js:
+        - 10
       addons:
         apt:
           packages:
           - jq
       script:
         - yarn run jsonlint
-      language: generic
     - stage: Dynamic Tests
       name: Node.js 10
       node_js:
