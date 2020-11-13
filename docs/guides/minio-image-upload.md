@@ -82,3 +82,13 @@
      "imageuploadtype": "minio"
    }
    ```
+
+10. If you were using filesystem before
+
+and you want to migrate assets to minio.
+
+You could use a convenience script located in `bin/migrate_from_fs_to_minio`.
+
+Be careful, read carefully what it does, it was not tested in all environments.
+
+Take it as an inspiration to make your own migration script.
