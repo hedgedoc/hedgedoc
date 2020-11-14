@@ -1,7 +1,7 @@
 {
   "name": "HedgeDoc",
   "version": "1.6.0",
-  "description": "Realtime collaborative markdown notes on all platforms.",
+  "description": "The best platform to write and share markdown.",
   "main": "app.js",
   "license": "AGPL-3.0",
   "scripts": {
@@ -29,7 +29,7 @@
     "bootstrap-validator": "^0.11.8",
     "chance": "^1.0.4",
     "cheerio": "^0.22.0",
-    "codemirror": "git+https://github.com/codimd/CodeMirror.git",
+    "codemirror": "git+https://github.com/hedgedoc/CodeMirror.git",
     "compression": "^1.6.2",
     "connect-flash": "^0.1.1",
     "connect-session-sequelize": "^6.0.0",

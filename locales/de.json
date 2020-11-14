@@ -1,6 +1,5 @@
 {
     "Collaborative markdown notes": "Gemeinschaftliche Markdown Notizen",
-    "Realtime collaborative markdown notes on all platforms.": "Gemeinschaftliche Notizen in Echtzeit auf allen Plattformen.",
     "Best way to write and share your knowledge in markdown.": "Der beste Weg, Notizen zu schreiben und teilen.",
     "Intro": "Einleitung",
     "History": "Verlauf",
@@ -118,5 +117,13 @@
     "Powered by %s": "Betrieben mit %s",
     "Help us translating": "Hilf uns beim Übersetzen",
     "Join the community": "Tritt der Community bei",
-    "Imprint": "Impressum"
+    "Imprint": "Impressum",
+    "changed": "changed",
+    "created": "created",
+    "Freely - Anyone can edit": "Freely - Anyone can edit",
+    "Editable - Signed-in people can edit": "Editable - Signed-in people can edit",
+    "Limited - Signed-in people can edit (forbid guests)": "Limited - Signed-in people can edit (forbid guests)",
+    "Locked - Only owner can edit": "Locked - Only owner can edit",
+    "Protected - Only owner can edit (forbid guests)": "Protected - Only owner can edit (forbid guests)",
+    "Private - Only owner can view & edit": "Private - Only owner can view & edit"
 }

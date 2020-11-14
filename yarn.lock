@@ -2337,9 +2337,9 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
-"codemirror@git+https://github.com/codimd/CodeMirror.git":
+"codemirror@git+https://github.com/hedgedoc/CodeMirror.git":
   version "5.58.2"
-  resolved "git+https://github.com/codimd/CodeMirror.git#f780b569b3717cdff4c8507538cc63101bfa02e1"
+  resolved "git+https://github.com/hedgedoc/CodeMirror.git#f780b569b3717cdff4c8507538cc63101bfa02e1"
 
 collapse-white-space@^1.0.2:
   version "1.0.6"
