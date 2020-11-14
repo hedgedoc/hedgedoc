@@ -34,8 +34,11 @@ move the repository, so we simply forked it. We still welcome the HackMD team
 as part of our community, especially since a large portion of this code base
 originated with them.
 
-*For the debate that lead to this step, please refer to the [governance debate](https://github.com/hackmdio/hackmd/issues/1170) and [the announcement of the new repository](https://github.com/hedgedoc/server/issues/10).*
+*For the debate that lead to this step, please refer to the [governance debate](https://github.com/hackmdio/hackmd/issues/1170) and [the announcement of the new repository](https://github.com/hedgedoc/hedgedoc/issues/10).*
 
 ## CodiMD became HedgeDoc
 
-<to be filled>
+Many people were confused about the differences between the hackmd codimd and our codimd.
+They asked us about features and bugs, that they found in the HackMD version. 
+That's why we decided, that we need a unique, new name and in March 2020 we started a [call to participation](https://community.codimd.org/t/renaming-yet-another-time/102).
+

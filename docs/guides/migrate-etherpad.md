@@ -123,6 +123,6 @@ I put this file into my `etherpad.example.com` nginx config, such that all the u
 redirected accordingly.
 
 [etherpad 1.7.0]: https://github.com/ether/etherpad-lite/tree/1.7.0
-[codimd 1.2.1]: https://github.com/hedgedoc/server/tree/1.2.1
+[codimd 1.2.1]: https://github.com/hedgedoc/hedgedoc/tree/1.2.1
 [hedgedoc-cli]: https://github.com/hedgedoc/cli/blob/master/bin/hedgedoc
 [howtolistallpads]: https://github.com/ether/etherpad-lite/wiki/How-to-list-all-pads/49701ecdcbe07aea7ad27ffa23aed0d99c2e17db

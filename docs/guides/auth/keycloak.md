@@ -24,7 +24,7 @@ You may note that a separate realm is specified throughout this tutorial. It is 
 1. Select Client Scopes from the sidebar, and begin to create a new client scope using the Create button.
 2. Ensure that the **Name** field is set to `id`.
 3. Create a new mapper under the Mappers tab. This should reference the User Property `id`. `Claim JSON Type` should be String and all switches below should be enabled. Save the mapper.
-4. Go to the client you set up in the previous steps using the Clients page, then choose the Client Scopes tab. Apply the scope you've created. This should mitigate errors as seen in [hedgedoc/server#56](https://github.com/hedgedoc/server/issues/56), as the `/userinfo` endpoint should now bring back the user's ID under the `id` key as well as `sub`.
+4. Go to the client you set up in the previous steps using the Clients page, then choose the Client Scopes tab. Apply the scope you've created. This should mitigate errors as seen in [hedgedoc/server#56](https://github.com/hedgedoc/hedgedoc/issues/56), as the `/userinfo` endpoint should now bring back the user's ID under the `id` key as well as `sub`.
 
 ---
 

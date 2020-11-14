@@ -6,13 +6,13 @@ info:
   version: 1.6.0
   contact:
     name: HedgeDoc on GitHub
-    url: https://github.com/hedgedoc/server
+    url: https://github.com/hedgedoc/hedgedoc
   license:
     name: AGPLv3
-    url: https://github.com/hedgedoc/server/blob/master/LICENSE
+    url: https://github.com/hedgedoc/hedgedoc/blob/master/LICENSE
 
 externalDocs:
-  url: https://github.com/hedgedoc/server/blob/master/docs/dev/api.md
+  url: https://github.com/hedgedoc/hedgedoc/blob/master/docs/dev/api.md
 
 
 paths:
@@ -281,7 +281,7 @@ paths:
       tags:
         - note
       summary: Creates a new GitHub Gist with the note's content.
-      description: 'If [GitHub integration](https://github.com/hedgedoc/server/blob/master/docs/configuration-env-vars.md#github-login) is configured, the user will be redirected to GitHub and a new Gist with the content of the note will be created.'
+      description: 'If [GitHub integration](https://github.com/hedgedoc/hedgedoc/blob/master/docs/configuration-env-vars.md#github-login) is configured, the user will be redirected to GitHub and a new Gist with the content of the note will be created.'
       responses:
         default:
           description: Redirect to the created gist (or the GitHub authentication before)

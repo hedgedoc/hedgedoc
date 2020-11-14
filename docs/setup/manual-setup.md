@@ -27,7 +27,7 @@
 
 3. Enter the directory and type `bin/setup`, which will install npm dependencies and create configs.
 
-4. Modify the file named `config.json` or configure HedgeDoc through environment variables which will overwrite the configs, see docs [here](https://github.com/hedgedoc/server/blob/master/docs/configuration.md).
+4. Modify the file named `config.json` or configure HedgeDoc through environment variables which will overwrite the configs, see docs [here](https://github.com/hedgedoc/hedgedoc/blob/master/docs/configuration.md).
 
 5. Build front-end bundle by `yarn run build` (use `yarn run dev` if you are in development)
 

@@ -3,4 +3,4 @@
 You can quickly setup a sample Heroku HedgeDoc application by clicking the button
 below.
 
-[![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/hedgedoc/server/tree/master)
+[![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/hedgedoc/hedgedoc/tree/master)

@@ -9,11 +9,11 @@ We dropped support for node 6 with this version. If you have any trouble running
 This is not a breaking change, but to stay up to date with the community
 repository, you may need to update a few urls. This is not a breaking change.
 
-See more at [issue #10](https://github.com/hedgedoc/server/issues/10)
+See more at [issue #10](https://github.com/hedgedoc/hedgedoc/issues/10)
 
 ### Native setup using git
 
-Change the upstream remote using `git remote set-url origin https://github.com/hedgedoc/server.git`.
+Change the upstream remote using `git remote set-url origin https://github.com/hedgedoc/hedgedoc.git`.
 
 ### Docker
 
