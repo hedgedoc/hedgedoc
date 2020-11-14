@@ -38,4 +38,8 @@ originated with them.
 
 ## CodiMD became HedgeDoc
 
-<to be filled>
+Many people opened issues in our server repository for bugs and features, which they saw at the HackMD codimd.
+The fact, that there have been two projects with the same purpose and the same name was very confusing.
+That's why we decided, that we need a unique, new name and in April 2020 we started a [call to participation](https://community.codimd.org/t/renaming-yet-another-time/102).
+It took some time, but in [July 2020 we agreed on the name "HedgeDoc"](https://community.codimd.org/t/codimd-becomes-hedgedoc/170) and some months later [we found our logo](https://community.codimd.org/t/time-to-find-the-hedgedoc-logo/171/4).
+Finally, in November 2020 version 1.7 was released under the Name "HedgeDoc".
