@@ -38,7 +38,4 @@ originated with them.
 
 ## CodiMD became HedgeDoc
 
-Many people were confused about the differences between the hackmd codimd and our codimd.
-They asked us about features and bugs, that they found in the HackMD version. 
-That's why we decided, that we need a unique, new name and in March 2020 we started a [call to participation](https://community.codimd.org/t/renaming-yet-another-time/102).
-
+<to be filled>
