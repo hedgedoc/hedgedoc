@@ -14,7 +14,7 @@ It is inspired by Hackpad, Etherpad and similar collaborative editors. This
 project originated with the team at [HackMD](https://hackmd.io) and now forked
 into its own organisation. [A longer writeup can be read in the history doc](docs/history.md).
 
-[![HedgeDoc 1.3.2 with its feature demonstration page open](docs/images/CodiMD-1.3.2-features.png)][hedgedoc-demo-features]
+[![HedgeDoc 1.3.2 with its feature demonstration page open](docs/images/HedgeDoc-1.7.0-features.png)][hedgedoc-demo-features]
 
 ## Community and Contributions
 
