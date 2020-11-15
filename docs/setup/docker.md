@@ -4,7 +4,7 @@
 
 ## Debian-based version
 
-[![Docker Repository on Quay](https://quay.io/repository/hedgedoc/server/status "Docker Repository on Quay")](https://quay.io/repository/hedgedoc/server)
+[![Docker Repository on Quay](https://quay.io/repository/hedgedoc/hedgedoc/status "Docker Repository on Quay")](https://quay.io/repository/hedgedoc/hedgedoc)
 
 ## Alpine-based version
 
