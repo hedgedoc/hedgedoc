@@ -1,15 +1,24 @@
 import React from 'react'
 import { Navbar } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { ApplicationState } from '../../../redux'
 import { Branding } from '../../common/branding/branding'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import {
+  HedgeDocLogoSize,
+  HedgeDocLogoType,
+  HedgeDocLogoWithText
+} from '../../common/hedge-doc-logo/hedge-doc-logo-with-text'
 
 export const NavbarBranding: React.FC = () => {
+  const darkModeActivated = useSelector((state: ApplicationState) => state.darkMode.darkMode)
+
   return (
     <Navbar.Brand>
       <Link to="/intro" className="text-secondary text-decoration-none d-flex align-items-center">
-        <ForkAwesomeIcon icon="file-text" className={'mr-2'}/>
-        <span>HedgeDoc</span>
+        <HedgeDocLogoWithText
+          logoType={darkModeActivated ? HedgeDocLogoType.WB_HORIZONTAL : HedgeDocLogoType.BW_HORIZONTAL}
+          size={HedgeDocLogoSize.SMALL}/>
         <Branding inline={true}/>
       </Link>
     </Navbar.Brand>

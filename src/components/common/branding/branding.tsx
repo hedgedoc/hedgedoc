@@ -7,15 +7,18 @@ import './branding.scss'
 
 export interface BrandingProps {
   inline?: boolean
+  delimiter?: boolean
 }
 
-export const Branding: React.FC<BrandingProps> = ({ inline = false }) => {
+export const Branding: React.FC<BrandingProps> = ({ inline = false, delimiter = true }) => {
   const branding = useSelector((state: ApplicationState) => state.config.branding, equal)
   const showBranding = !!branding.name || !!branding.logo
 
   return (
     <ShowIf condition={showBranding}>
-      <strong className={`mx-1 ${inline ? 'inline-size' : 'regular-size'}`}>@</strong>
+      <ShowIf condition={delimiter}>
+        <strong className={`mx-1 ${inline ? 'inline-size' : 'regular-size'}`}>@</strong>
+      </ShowIf>
       {
         branding.logo
           ? <img
