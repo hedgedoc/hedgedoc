@@ -67,7 +67,7 @@ these are rarely used for various reasons.
 | `protocolUseSSL` | `CMD_PROTOCOL_USESSL` | **`false`** or `true`                                            | set to use SSL protocol for resources path (only applied when domain is set)                                      |
 | `useSSL`         |                       | **`false`** or `true`                                            | set to use SSL server (if `true`, will auto turn on `protocolUseSSL`)                                             |
 | `urlAddPort`     | `CMD_URL_ADDPORT`     | **`false`** or `true`                                            | set to add port on callback URL (ports `80` or `443` won't be applied) (only applied when domain is set)          |
-| `allowOrigin`    | `CMD_ALLOW_ORIGIN`    | **`['localhost']`**, `['hedgedoc.org']`, `[localhost, hedgedoc.org]` | domain name whitelist (use comma to separate)                                                                     |
+| `allowOrigin`    | `CMD_ALLOW_ORIGIN`    | **`['localhost']`**, `['hedgedoc.org']`, `['localhost', 'hedgedoc.org']` | domain name whitelist (use comma to separate)                                                                     |
 
 ## Web security aspects
 
