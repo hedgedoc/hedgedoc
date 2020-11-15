@@ -11,6 +11,5 @@ assignees: ''
 <!-- If you're requesting a new feature, that isn't part of this project yet, then please consider filling out a "feature request" instead! -->
 <!-- If you want to report a bug or an error, then please consider filling out a "bug report" instead! -->
 
-**What is your question?**
+**Please use [the community forum](https://community.hedgedoc.org) to ask questions!**
 
-<!-- Please be precise and make it possible to understand your question. -->
