@@ -25,7 +25,7 @@ interactions with the project.
 ## Sign your work
 
 We use the Developer Certificate of Origin (DCO) as a additional safeguard
-for the CodiMD project. This is a well established and widely used
+for the HedgeDoc project. This is a well established and widely used
 mechanism to assure contributors have confirmed their right to license
 their contribution under the project's license.
 Please read [docs/legal/developer-certificate-of-origin.txt][dcofile].

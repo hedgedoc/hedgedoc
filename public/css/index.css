@@ -20,6 +20,21 @@ body.night{
     background: #333 !important;
 }
 
+body.night .no-night {
+  display: none;
+}
+
+body:not(.night) .night {
+  display: none;
+}
+
+.h-100 {
+  height: 100%;
+}
+.header-brand {
+  padding: 6px;
+}
+
 .CodeMirror {
     font-family: "Source Code Pro", Consolas, monaco, monospace;
     letter-spacing: 0.025em;

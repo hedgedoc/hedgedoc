@@ -1,6 +1,6 @@
 # URL scheme
 
-CodiMD has three different modes for viewing a stored note. Each mode has a slightly different URL for accessing it. This document gives an overview about these URLs.  
+HedgeDoc has three different modes for viewing a stored note. Each mode has a slightly different URL for accessing it. This document gives an overview about these URLs.  
 We assume that you replace `pad.example.com` with the domain of your instance.
 
 ## Default (random)

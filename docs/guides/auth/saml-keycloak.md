@@ -1,34 +1,34 @@
-# How to setup CodiMD SAML with Keycloak
+# How to setup HedgeDoc SAML with Keycloak
 ## Configuring Keycloak
 ### Get the public certificate
-1. Select the Realm you want to use for your CodiMD SAML
+1. Select the Realm you want to use for your HedgeDoc SAML
 2. Select "Realm Settings" in left sidebar
 3. Select the "Keys" tab
 4. Click the button "Certificate" at `RS256` algorithm
 ![keycloak_idp_cert](../../images/auth/keycloak_idp_cert.png)
-5. Copy this key and save it to the file specified in `saml.idpCert` property of the CodiMD configuration or `CMD_SAML_IDPCERT` environment variable
+5. Copy this key and save it to the file specified in `saml.idpCert` property of the HedgeDoc configuration or `CMD_SAML_IDPCERT` environment variable
 
 ### Create a new client
 1. Select "Client" in left sidebar
 ![keycloak_clients_overview](../../images/auth/keycloak_clients_overview.png)
 2. Click on the "Create" button
-3. Set a Client ID and specify this in `saml.issuer` property of the CodiMD configuration or `CMD_SAML_ISSUER` environment variable
+3. Set a Client ID and specify this in `saml.issuer` property of the HedgeDoc configuration or `CMD_SAML_ISSUER` environment variable
 4. Select `SAML` as Client Protocol
-5. Set Client SAML Endpoint to `https://codimd.example.com/auth/saml` (replace `https://codimd.example.com` with the base URL of your CodiMD installation)
+5. Set Client SAML Endpoint to `https://hedgedoc.example.com/auth/saml` (replace `https://hedgedoc.example.com` with the base URL of your HedgeDoc installation)
 ![keycloak_add_client](../../images/auth/keycloak_add_client.png)
 6. Leave "Client Signature Required" enabled
-7. Set Root URL to `https://codimd.example.com` (replace it here also with the base URL of your CodiMD installation)
-8. Set Valid Redirect URIs to `https://codimd.example.com/auth/saml/callback` (you should also define all other domains of your CodiMD installtion with the suffix `/auth/saml/callback`)
+7. Set Root URL to `https://hedgedoc.example.com` (replace it here also with the base URL of your HedgeDoc installation)
+8. Set Valid Redirect URIs to `https://hedgedoc.example.com/auth/saml/callback` (you should also define all other domains of your HedgeDoc installtion with the suffix `/auth/saml/callback`)
 9. Set Base URL to `/`
 ![keycloak_client_overview](../../images/auth/keycloak_client_overview.png)
 10. _(optional)_ You can set which Name ID Format should be used
 
-## Configure CodiMD
+## Configure HedgeDoc
 ### Config file
 You have to put the following block inside your `config.json`:
 ```json
 "saml": {
-  "issuer": "codimd", // Change to the "Client ID" specified in the Keycloak Client
+  "issuer": "hedgedoc", // Change to the "Client ID" specified in the Keycloak Client
   "identifierFormat": "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified",
   "idpSsoUrl": "https://keycloak.example.org/auth/realms/test/protocol/saml", // replace keycloak.example.org with the url of your keycloak server
   "idpCert": "/path/to/the/cert.pem",
@@ -40,12 +40,12 @@ You have to put the following block inside your `config.json`:
 - `CMD_SAML_IDPSSOURL`: `https://keycloak.example.org/auth/realms/test/protocol/saml` (replace keycloak.example.org with the url of your keycloak server)
 - `CMD_SAML_IDPCERT`: `/path/to/the/cert.pem`
 - *(optional, see below)* `CMD_SAML_CLIENTCERT`: `/path/to/the/key.pem`
-- `CMD_SAML_ISSUER`: `codimd` (Change to the "Client ID" specified in the Keycloak Client)
+- `CMD_SAML_ISSUER`: `hedgedoc` (Change to the "Client ID" specified in the Keycloak Client)
 - `CMD_SAML_IDENTIFIERFORMAT`: `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified`
 
 
 ## Client certificate *(optional)*
-If you want keycloak to be able to verify CodiMD, you hava to create a client certificate. There are two options for this:
+If you want keycloak to be able to verify HedgeDoc, you hava to create a client certificate. There are two options for this:
 
 ### Create Private Keys for Signing
 1. Generate the private key and certificate with the following commands:
@@ -56,7 +56,7 @@ openssl req -new -x509 -key priv.pem -out cert.pem
 *execute the following steps in keycloak*
 
 2. Select "Client" in left sidebar
-3. Go to your CodiMD-Client
+3. Go to your HedgeDoc-Client
 4. Select the "SAML Keys" tab
 ![keycloak_saml_import_cert](../../images/auth/keycloak_saml_import_cert.png)
 5. Click on "Import"
@@ -64,14 +64,14 @@ openssl req -new -x509 -key priv.pem -out cert.pem
 7. Now upload the generated cert.pem (in this case named `cert.pem`)
 ![keycloak_saml_import_cert_details](../../images/auth/keycloak_saml_import_cert_details.png)
 8. Click on "Import"
-9. Move or copy this key (in this case named `key.pem`) and save it to the file specified in `saml.clientCert` property of the CodiMD configuration or in the enviroment-variable `CMD_SAML_CLIENTCERT`
+9. Move or copy this key (in this case named `key.pem`) and save it to the file specified in `saml.clientCert` property of the HedgeDoc configuration or in the enviroment-variable `CMD_SAML_CLIENTCERT`
 
 
 ### Convert Private Certificate generated by KeyCloak
 Instead if generating you own certificate, you can also use the one generated by keycloak.
 
 1. Select "Client" in left sidebar
-2. Go to your CodiMD-Client
+2. Go to your HedgeDoc-Client
 3. Select the "SAML Keys" tab
 ![keycloak_saml_export_cert](../../images/auth/keycloak_saml_export_cert.png)
 
@@ -83,14 +83,14 @@ Instead if generating you own certificate, you can also use the one generated by
 ```shell
 openssl pkcs12 -in keystore.p12 -out key.pem -nocerts -nodes
 ```
-8. Move or copy this key (in this case named `key.pem`) and save it to the file specified in `saml.idpCert` property of the CodiMD configuration or in the enviroment-variable `CMD_SAML_CLIENTCERT`
+8. Move or copy this key (in this case named `key.pem`) and save it to the file specified in `saml.idpCert` property of the HedgeDoc configuration or in the enviroment-variable `CMD_SAML_CLIENTCERT`
 
 ## Use Persistent Identifiers
-Instead of using the username as the owner-key in the CodiMD database, you can also use a persistent identifier. This allows to change the username, without them loosing access to their notes.
+Instead of using the username as the owner-key in the HedgeDoc database, you can also use a persistent identifier. This allows to change the username, without them loosing access to their notes.
 
-1. Go to the CodiMD-Client in keycloak. Now enable the option "Force Name ID Format" and select "persistent" as the "Name ID Format".
+1. Go to the HedgeDoc-Client in keycloak. Now enable the option "Force Name ID Format" and select "persistent" as the "Name ID Format".
 ![keycloak_force_idformat](../../images/auth/keycloak_force_idformat.png)
-2. For codimd to be able to use the username and email configured in keycloak, you have to create the following SAML protocol mappers:
+2. For HedgeDoc to be able to use the username and email configured in keycloak, you have to create the following SAML protocol mappers:
     2.1. Create a mapper with the type `User Property`. Set the Name, Property and SAML Attribute Name to `username`. Now you can specify a friendly name (for example `Username`)
 ![keycloak_mapper_username](../../images/auth/keycloak_mapper_username.png)
     2.2 Create a mapper with the type `User Property`. Set the Name, Property and SAML Attribute Name to `email`. Now you can specify a friendly name (for example `E-Mail`)
@@ -106,7 +106,7 @@ The configured mappers should look like this:
       "email": "email",
 }
 ```
-It you configure CodiMD with enviroment variables, these are the ones you have to set:
+It you configure HedgeDoc with enviroment variables, these are the ones you have to set:
 ```bash
 CMD_SAML_ATTRIBUTE_USERNAME=username
 CMD_SAML_ATTRIBUTE_EMAIL=email

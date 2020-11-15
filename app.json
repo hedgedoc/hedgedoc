@@ -1,14 +1,14 @@
 {
-    "name": "CodiMD",
-    "description": "Realtime collaborative markdown notes on all platforms",
+    "name": "HedgeDoc",
+    "description": "The best platform to write and share markdown.",
     "keywords": [
         "Collaborative",
         "Markdown",
         "Notes"
     ],
-    "website": "https://codimd.org",
-    "repository": "https://github.com/codimd/server",
-    "logo": "https://github.com/codimd/server/raw/master/public/codimd-icon-1024.png",
+    "website": "https://hedgedoc.org",
+    "repository": "https://github.com/hedgedoc/hedgedoc",
+    "logo": "https://github.com/hedgedoc/hedgedoc/raw/master/public/hedgedoc-icon-1024.png",
     "success_url": "/",
     "env": {
         "NPM_CONFIG_PRODUCTION": {

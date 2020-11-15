@@ -629,12 +629,12 @@ to attach them to the start of each source file to most effectively
 state the exclusion of warranty; and each file should have at least
 the "copyright" line and a pointer to where the full notice is found.
 
-    CodiMD - Realtime collaborative markdown notes on all platforms.
+    HedgeDoc - The best platform to write and share markdown.
     Copyright (C) 2019  Christoph (Sheogorath) Kern
     Copyright (C) 2019  Claudius Coenen
     Copyright (C) 2019  Max Wu
     Copyright (C) 2017  Yukai Huang
-    And more can be found on https://github.com/codimd/server/graphs/contributors
+    And more can be found on https://github.com/hedgedoc/hedgedoc/graphs/contributors
     Or in the local AUTHORS file
 
 

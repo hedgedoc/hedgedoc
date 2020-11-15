@@ -4,7 +4,7 @@ If you're getting started with reveal.js slides, there are a few things you need
 
 There are two types of slides, those that transition horizontally and those that transition vertically (subslides).
 
-The following separators are used for each in the CodiMD syntax:
+The following separators are used for each in the HedgeDoc syntax:
 
 ```markdown
 # First Slide

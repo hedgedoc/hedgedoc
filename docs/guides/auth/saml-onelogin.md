@@ -1,6 +1,6 @@
 # Authentication guide - SAML (OneLogin)
 
-**Note:** *This guide was written before the renaming. Just replace `HackMD` with `CodiMD` in your mind :smile: thanks!*
+**Note:** *This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind :smile: thanks!*
 
 1. Sign-in or sign-up for an OneLogin account. (available free trial for 2 weeks)
 
@@ -16,9 +16,9 @@
    ![onelogin-edit-app-name](../../images/auth/onelogin-edit-app-name.png)
 
 6. After that other tabs will appear, click the **Configuration**, and fill out the below items, and click **SAVE**.
-  - RelayState: The base URL of your CodiMD, which is issuer. (last slash is not needed)
+  - RelayState: The base URL of your HedgeDoc, which is issuer. (last slash is not needed)
 
-  - ACS (Consumer) URL Validator: The callback URL of your CodiMD. (serverurl + /auth/saml/callback)
+  - ACS (Consumer) URL Validator: The callback URL of your HedgeDoc. (serverurl + /auth/saml/callback)
 
   - ACS (Consumer) URL: same as above.
 
@@ -31,7 +31,7 @@
   - SAML 2.0 Endpoint (HTTP): Copy the URL ....(B)  
     ![onelogin-copy-idp-metadata](../../images/auth/onelogin-copy-idp-metadata.png)
 
-8. In your CodiMD server, create IdP certificate file from (A)
+8. In your HedgeDoc server, create IdP certificate file from (A)
 9. Add the IdP URL (B) and the Idp certificate file path to your config.json file or pass them as environment variables.
   - `config.json`:
     ```javascript
@@ -51,5 +51,5 @@
       CMD_SAML_IDPCERT=/path/to/idp_cert.pem
       ```
 
-10. Try sign-in with SAML from your CodiMD sign-in button or OneLogin dashboard (like the screenshot below).  
+10. Try sign-in with SAML from your HedgeDoc sign-in button or OneLogin dashboard (like the screenshot below).  
    ![onelogin-use-dashboard](../../images/auth/onelogin-use-dashboard.png)
