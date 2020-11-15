@@ -1,4 +1,4 @@
-![HedgeDoc Logo](https://raw.githubusercontent.com/hedgedoc/hedgedoc-logo/main/LOGOTYPE/SVG/HedgeDoc-Logo%204b.svg =1000x)
+![HedgeDoc Logo](docs/images/hedgedoc_logo_vertical.png)
 
 # HedgeDoc
 
