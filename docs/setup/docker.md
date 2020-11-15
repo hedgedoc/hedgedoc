@@ -8,7 +8,7 @@
 
 ## Alpine-based version
 
-[![Docker Repository on Quay](https://quay.io/repository/hedgedoc/server/status "Docker Repository on Quay")](https://quay.io/repository/hedgedoc/server)
+[![Docker Repository on Quay](https://quay.io/repository/hedgedoc/hedgedoc/status "Docker Repository on Quay")](https://quay.io/repository/hedgedoc/hedgedoc)
 
 The easiest way to setup HedgeDoc using docker are using the following three commands:
 
