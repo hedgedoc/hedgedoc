@@ -38,8 +38,17 @@ originated with them.
 
 ## CodiMD became HedgeDoc
 
-Many people opened issues in the codimd server repository for bugs and features, which they saw at the HackMD codimd.
-The fact, that there have been two projects with the same purpose and the same name was very confusing.
-The solution was to find a unique, new name. This process started in April 2020 with a [call to participation](https://community.codimd.org/t/renaming-yet-another-time/102).
-It took some time, but in [July 2020 the community agreed on the name "HedgeDoc"](https://community.codimd.org/t/codimd-becomes-hedgedoc/170) and some months later [a new logo was found](https://community.codimd.org/t/time-to-find-the-hedgedoc-logo/171/4).
-Finally, in November 2020 version 1.7 was released. Even if the renaming was originally planned for version 2.0, the dev team decided to release 1.7 under the new name to create a smooth transition.
+With two actively named forks, sharing the same name. Both [insisting on being
+the original/actual owner of the name CodiMD](https://github.com/hackmdio/codimd/issues/1219),
+people became rightfully confused about the projects sharing the same name.
+
+After roughly a year of being stuck on the name issue, the HedgeDoc community
+decided to take action and started a [renaming process in April 2020](https://community.codimd.org/t/renaming-yet-another-time/102).
+With a good head start in the amount of names, it was decided that an entire
+rebranding should take place and therefore, after a [name was agreed on in July
+2020](https://community.codimd.org/t/codimd-becomes-hedgedoc/170), the next step
+was to [find a logo](https://community.codimd.org/t/time-to-find-the-hedgedoc-logo/171).
+
+In November of 2020, roughly 7 months after the initive was started, a logo was
+found, the rebranding of the application as well as all community pages took place
+and the time of name conficts was over. (hopefully.)
