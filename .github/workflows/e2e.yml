@@ -49,3 +49,7 @@ jobs:
         with:
           browser: ${{ matrix.browser }}
           start: 'yarn build:serve'
+      - uses: actions/upload-artifact@master
+        with:
+          name: screenshots
+          path: cypress/screenshots
