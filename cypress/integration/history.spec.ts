@@ -18,6 +18,15 @@ describe('History', () => {
   })
 
   describe('Pinning', () => {
+    beforeEach(() => {
+      cy.route({
+        method: 'PUT',
+        url: '/api/v2/history/**',
+        status: 401,
+        response: {}
+      })
+    })
+
     it('Cards', () => {
       cy.get('div.card')
         .should('be.visible')
