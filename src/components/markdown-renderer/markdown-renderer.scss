@@ -19,13 +19,18 @@
     width: unset;
   }
 
-  a.heading-anchor {
-    margin-left: -1.25em;
-    font-size: 0.75em;
-    margin-top: 0.25em;
-    opacity: 0;
+  h1, h2, h3, h4, h5, h6 {
+    a.heading-anchor {
+      margin-left: -1.25em;
+      font-size: 0.75em;
+      margin-top: 0.25em;
+      opacity: 0;
 
-    &:hover {
+      &:hover {
+        opacity: 1;
+      }
+    }
+    &:hover a.heading-anchor {
       opacity: 1;
     }
   }
