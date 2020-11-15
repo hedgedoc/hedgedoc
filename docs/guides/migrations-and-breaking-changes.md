@@ -22,7 +22,7 @@ When you use our [container repository](https://github.com/hedgedoc/container)
 your `docker-compose.yml` will be updated.
 
 When you setup things yourself, make sure you use the new image:
-[`quay.io/hedgedoc/server`](https://quay.io/repository/hedgedoc/server?tab=tags).
+[`quay.io/hedgedoc/hedgedoc`](https://quay.io/repository/hedgedoc/hedgedoc?tab=tags).
 
 ### Heroku
 
