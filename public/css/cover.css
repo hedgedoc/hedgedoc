@@ -372,3 +372,7 @@ select {
         max-width: 100%;
     }
 }
+
+.cover-heading img {
+    max-width: 100%;
+}
