@@ -33,7 +33,7 @@
     "compression": "^1.6.2",
     "connect-flash": "^0.1.1",
     "connect-session-sequelize": "^6.0.0",
-    "cookie": "^0.3.1",
+    "cookie": "^0.4.0",
     "cookie-parser": "^1.4.3",
     "deep-freeze": "^0.0.1",
     "diff-match-patch": "git+https://github.com/hackmdio/diff-match-patch.git",
