@@ -107,7 +107,7 @@
     "pg": "^8.2.1",
     "pg-hstore": "^2.3.3",
     "prismjs": "^1.21.0",
-    "randomcolor": "^0.5.3",
+    "randomcolor": "^0.6.0",
     "raphael": "^2.3.0",
     "readline-sync": "^1.4.7",
     "request": "^2.88.0",
