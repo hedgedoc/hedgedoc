@@ -10,8 +10,7 @@ if [ -d .git ]; then
   cd "$(git rev-parse --show-toplevel)"
 fi
 
-if ! type yarn > /dev/null
-then
+if ! type yarn > /dev/null; then
   cat << EOF
 FATAL: Yarn could not be found.
 
@@ -23,7 +22,7 @@ EOF
 fi
 
 if version_lt "$(yarn --version)" '1.22.0'; then
-  cat <<EOF
+  cat << EOF
 FATAL: Your Yarn version is outdated.
 
 Please upgrade to version 1.22.0 or higher and try again.
@@ -33,7 +32,7 @@ EOF
 fi
 
 if version_lt "$(node --version)" 'v10.13.0'; then
-  cat <<EOF
+  cat << EOF
 FATAL: Your Node.js version is outdated.
 
 Please upgrade to version 10.13 or higher and try again.
@@ -63,7 +62,6 @@ Read more info at https://github.com/hedgedoc/hedgedoc#configuration-files
 
 * config.json           -- HedgeDoc config
 * .sequelizerc          -- db config
-
 EOF
 
 # change directory back
