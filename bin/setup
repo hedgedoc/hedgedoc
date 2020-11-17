@@ -2,7 +2,7 @@
 
 set -e
 
-version_lt() { test "$(printf '%s\n' "$@" | { [ "$(uname)" = "Linux" ] && sort -V || sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n; } | tail -n 1)" != "$1"; }
+version_lt() { test "$(printf '%s\n' "$@" | { [ "$(uname)" = "Linux" ] && (sort -V || sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n;) } | tail -n 1)" != "$1"; }
 
 # run command at repo root
 CURRENT_PATH=$PWD
