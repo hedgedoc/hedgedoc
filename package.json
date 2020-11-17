@@ -117,7 +117,7 @@
     "select2": "^3.5.2-browserify",
     "sequelize": "^5.21.1",
     "sequelize-cli": "^5.5.1",
-    "shortid": "2.2.8",
+    "shortid": "2.2.16",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
     "spin.js": "^2.3.2",
