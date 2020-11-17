@@ -21,18 +21,22 @@ EOF
   exit 1
 fi
 
-if version_lt "$(yarn --version)" '1.3.2'; then
+if version_lt "$(yarn --version)" '1.22.0'; then
   cat <<EOF
-Your yarn version is outdated. Please upgrade to a version
-newer than 1.3.2.
+FATAL: Your Yarn version is outdated.
+
+Please upgrade to a version newer than 1.22.0.
+See https://classic.yarnpkg.com/en/docs/install for instructions.
 EOF
   exit 1
 fi
 
-if version_lt "$(node --version)" 'v6.0.0'; then
+if version_lt "$(node --version)" 'v10.13.0'; then
   cat <<EOF
-Your node version is outdated. Please upgrade to version 6
-or higher. (Version 8 or higher is recommended)
+FATAL: Your Node.js version is outdated.
+
+Please upgrade to version 10.13 or higher.
+We recommend running the latest LTS release.
 EOF
   exit 1
 fi
