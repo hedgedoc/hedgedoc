@@ -6,7 +6,8 @@
     "group:linters",
     "group:test",
     "group:nextjsMonorepo",
-    ":disableMajorUpdates"
+    ":disableMajorUpdates",
+    ":gitSignOff"
   ],
   "labels": [
     "dependencies"
