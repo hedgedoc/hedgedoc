@@ -78,5 +78,11 @@ jobs:
             ${{ runner.os }}-yarn-
       - run: yarn --frozen-lockfile --prefer-offline
       - run: yarn run build
-
-
+      - uses: actions/upload-artifact@v2
+        if: github.ref == 'refs/heads/master' && matrix.node-version == '14.x'
+        with:
+          name: Prebuild with Node.js ${{ matrix.node-version }}
+          path: |
+            **
+            !.git
+            !node_modules
