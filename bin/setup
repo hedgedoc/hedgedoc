@@ -13,10 +13,11 @@ fi
 if ! type yarn > /dev/null
 then
   cat << EOF
-yarn is not installed, please install Node.js, npm and yarn.
-Read more on Node.js official website: https://nodejs.org
-And for yarn package manager at: https://yarnpkg.com/en/
-Setup will not be run
+FATAL: Yarn could not be found.
+
+Please follow the official installation instructions at
+https://classic.yarnpkg.com/en/docs/install
+and try again.
 EOF
   exit 1
 fi
@@ -25,7 +26,7 @@ if version_lt "$(yarn --version)" '1.22.0'; then
   cat <<EOF
 FATAL: Your Yarn version is outdated.
 
-Please upgrade to a version newer than 1.22.0.
+Please upgrade to a version newer than 1.22.0 and try again.
 See https://classic.yarnpkg.com/en/docs/install for instructions.
 EOF
   exit 1
@@ -35,13 +36,13 @@ if version_lt "$(node --version)" 'v10.13.0'; then
   cat <<EOF
 FATAL: Your Node.js version is outdated.
 
-Please upgrade to version 10.13 or higher.
-We recommend running the latest LTS release.
+Please upgrade to version 10.13 or higher and try again.
+We recommend running the latest LTS release, see https://nodejs.org/en/about/releases/ for details.
 EOF
   exit 1
 fi
 
-echo "copy config files"
+echo "Copying config files..."
 if [ ! -f config.json ]; then
   cp config.json.example config.json
 fi
@@ -50,7 +51,7 @@ if [ ! -f .sequelizerc ]; then
   cp .sequelizerc.example .sequelizerc
 fi
 
-echo "install packages"
+echo "Installing packages..."
 yarn install --pure-lockfile
 yarn install --production=false --pure-lockfile
 
