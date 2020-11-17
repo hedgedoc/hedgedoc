@@ -26,7 +26,7 @@ if version_lt "$(yarn --version)" '1.22.0'; then
   cat <<EOF
 FATAL: Your Yarn version is outdated.
 
-Please upgrade to a version newer than 1.22.0 and try again.
+Please upgrade to version 1.22.0 or higher and try again.
 See https://classic.yarnpkg.com/en/docs/install for instructions.
 EOF
   exit 1
