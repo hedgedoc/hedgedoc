@@ -5,7 +5,8 @@
     "group:socketio",
     "group:linters",
     "group:test",
-    "group:nextjsMonorepo"
+    "group:nextjsMonorepo",
+    ":disableMajorUpdates"
   ],
   "labels": [
     "dependencies"
