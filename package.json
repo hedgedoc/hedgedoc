@@ -138,7 +138,7 @@
     "xss": "^1.0.3"
   },
   "resolutions": {
-    "**/tough-cookie": "~2.4.0",
+    "**/tough-cookie": "~2.5.0",
     "**/minimatch": "^3.0.2",
     "**/request": "^2.88.0"
   },
