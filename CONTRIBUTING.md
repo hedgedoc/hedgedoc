@@ -3,7 +3,7 @@
 HedgeDoc is a volunteer effort.
 We encourage you to pitch in and to help us making this project even better!
 
-Please note we have a [code of conduct][code-of-conduct], please follow it in all your
+Please note we have a [code of conduct][code-of-conduct], please respect it in all your
 interactions with the project.
 
 ## Ways of contributing
@@ -42,7 +42,7 @@ The DCO is a legally binding statement, please [read it carefully](docs/legal/de
 If you can certify it, then just add a line to every git commit message:
 
 ```
-  Signed-off-by: Random J Developer <random@developer.example.org>
+  Signed-off-by: Jane Doe <jane.doe@example.org>
 ```
 
 Use your real name (sorry, no pseudonyms or anonymous contributions).
@@ -54,7 +54,7 @@ Now you can commit with `git ci` and the commit will be signed.
 ## Submitting a Pull Request
 
 1. Submit an issue describing your proposed change.
-   We will try to respond to your issue promptly.
+   We will try to respond to your issue as soon as possible.
 2. Fork this repo, develop and test your code changes. Ensure you signed all your commits (see above for details).
 3. Submit a pull request against this repo's `master` branch.
 4. Your branch may be merged once all configured checks pass.
