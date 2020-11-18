@@ -29,9 +29,9 @@ The reverse proxy must allow websocket `Upgrade` requests at path `/sockets.io/`
 
 It must pass through the scheme used by the client (http or https).
 
-### nGinx
+### Nginx
 
-Here is an example configuration for nGinx.
+Here is an example configuration for Nginx.
 
 ```
 map $http_upgrade $connection_upgrade {
