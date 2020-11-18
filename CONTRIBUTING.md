@@ -61,7 +61,7 @@ Now you can commit with `git ci` and the commit will be signed.
 
 [code-of-conduct]: ./CODE-OF-CONDUCT.md
 [community-forum]: https://community.hedgedoc.org
-[matrix-support]: https://matrix.to/#/#hedgedoc:matrix.org
+[matrix-support]: https://chat.hedgedoc.org
 [issues]: https://github.com/hedgedoc/hedgedoc/issues
 [new_issue]: https://github.com/hedgedoc/hedgedoc/issues/new/choose
 [poeditor]: https://translate.hedgedoc.org
