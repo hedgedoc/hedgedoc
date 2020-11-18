@@ -1,6 +1,7 @@
 # Contributing to HedgeDoc
 
-Thanks for your help in improving the HedgeDoc project!
+HedgeDoc is a volunteer effort.
+We encourage you to pitch in and to help us making this project even better!
 
 Please note we have a [code of conduct][code-of-conduct], please follow it in all your
 interactions with the project.
@@ -29,8 +30,6 @@ interactions with the project.
 ### Do you want to work on translations?
 
 * If you want to improve a translation or add a new translation altogether, we handle those via [POEditor](poeditor).
-
-HedgeDoc is a volunteer effort. We encourage you to pitch in and to help us making this project even better.
 
 ## Certificate of Origin
 
