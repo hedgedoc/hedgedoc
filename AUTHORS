@@ -1,5 +1,5 @@
 # This file lists all individuals having contributed content to the repository.
-# For how it is generated, see `hack/generate-authors.sh`.
+# To regenerate, use `git log --format='%aN <%aE>' | LC_ALL=C.UTF-8 sort -uf`.
 
 Adam Hoka <hoka.adam@nexogen.hu>
 Adam Worley <28906234+AdamWorley@users.noreply.github.com>
@@ -21,8 +21,8 @@ chbmb <chbmb@linuxserver.io>
 Christian Bläul <blaeul@quodata.de>
 Christian Bläul <christian@blaeul.de>
 Christian Schuhmann <madebyherzblut@users.noreply.github.com>
+Christoph (Sheogorath) Kern <sheogorath@shivering-isles.com>
 Christoph Witzany <christoph@web.crofting.com>
-Claudius <opensource@amenthes.de>
 Claudius Coenen <github@amenthes.de>
 CloudYu <cloudyu322@gmail.com>
 Colin Maudry <colin@maudry.com>
@@ -31,8 +31,6 @@ Cédric Couralet <cedric.couralet@gmail.com>
 Daan Sprenkels <hello@dsprenkels.com>
 Daniel Lublin <daniel@lublin.se>
 Dario Ernst <daddel9@nebuk.de>
-David Mehren <davidmehren@users.noreply.github.com>
-David Mehren <dmehren1@gmail.com>
 David Mehren <git@herrmehren.de>
 David Sawatzke <d-git@sawatzke.dev>
 Devon Jue <djue129@gmail.com>
@@ -45,7 +43,6 @@ Edoardo Odorico <edoubuntu@gmail.com>
 Emmanuel Ormancey <emmanuel.ormancey@cern.ch>
 Enrico Guiraud <enrico.guiraud@cern.ch>
 ericgaspar <junk.eg@free.fr>
-Erik Michelson <erik@liltv.de>
 Erik Michelson <github@erik.michelson.eu>
 Erona <erona@loli.bz>
 Fabien Meghazi <agr@amigrave.com>
@@ -75,6 +72,7 @@ James Stephenson <c4p7.fl1n7@gmail.com>
 Jan Kunzmann <jan-github@phobia.de>
 Jannik Lorenz <dev@janniklorenz.de>
 Jason Croft <jcroft@velocity.org>
+Joachim Mathes <jmathes@contargo.net>
 Johannes Weißl <jargon@molb.org>
 Jonas Thelemann <e-mail@jonas-thelemann.de>
 Jonas Zohren <jonas.zohren@tu-dortmund.de>
@@ -107,12 +105,12 @@ Mauricio Robayo <rfmajo@gmail.com>
 Max Wu <jackymaxj@gmail.com>
 Maxence Ahlouche <maxence.ahlouche@gmail.com>
 mcnesium <git@mcnesium.com>
-mcnesium <mcnesium@users.noreply.github.com>
 Mike <mike@sloppy.io>
 Miranda Kastemaa <miranda@foldplop.com>
 naimo <naimo@users.noreply.github.com>
 neopostmodern <clemens@neopostmodern.com>
 Nick Hahn <nick.hahn@posteo.de>
+Nils VAN ZUIJLEN <nils.van-zuijlen@mailo.com>
 Norihito Nakae <norihito.n@gmail.com>
 NV <nvsofts@gmail.com>
 Oliver Herrmann <oliver@monoxane.com>
@@ -127,21 +125,22 @@ Pedro Ferreira <pedro.ferreira@cern.ch>
 Pedro Ferreira <pedro@dete.st>
 Peter Dave Hello <hsu@peterdavehello.org>
 PetrTodorov <info@petrtodorov.cz>
+Philip Molares <philip.molares@udo.edu>
 Philipp Zumstein <zuphilip@users.noreply.github.com>
 pierreozoux <pierre@ozoux.net>
 Raccoon <raccoon@hackmd.io>
 Ralph Krimmel <rkrimme1@gwdg.de>
+Renan Rodrigues <renan.rodrigues@emnify.com>
+Renovate Bot <bot@renovateapp.com>
 robert <ahmerov.rt@molodost.bz>
 Robin Naundorf <r.naundorf@fh-muenster.de>
 Rwing <rwing@rwing.cn>
 RyotaK <49341894+Ry0taK@users.noreply.github.com>
 S.Noda <noda@fenrir.co.jp>
 Salim B <salim@posteo.de>
-Sandro <sandro.jaeckel@gmail.com>
 Sandro Jäckel <sandro.jaeckel@gmail.com>
 schneems <richard.schneeman@gmail.com>
 Sergio Valverde <svg153@users.noreply.github.com>
-Sheogorath <sheogorath@shivering-isles.com>
 Simeon Keske <git@n0emis.eu>
 Simon Fish <si@mon.fish>
 Simon Joda Stößer <SimJoSt@users.noreply.github.com>
