@@ -9,7 +9,7 @@ This PR fixes/adds/improves/...
 <!-- Please tick all steps this PR performs (if something is not necessary, please remove it) -->
 
 - [ ] Added implementation
-- [ ] added / updated tests
+- [ ] Added / updated tests
 - [ ] added / updated documentation
 - [ ] extended changelog
 - [ ] I read the `CONTRIBUTING.md` and signed-off my commits to accept the DCO.
