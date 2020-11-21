@@ -8,7 +8,7 @@ This PR fixes/adds/improves/...
 
 <!-- Please tick all steps this PR performs (if something is not necessary, please remove it) -->
 
-- [ ] added implementation
+- [ ] Added implementation
 - [ ] added / updated tests
 - [ ] added / updated documentation
 - [ ] extended changelog
