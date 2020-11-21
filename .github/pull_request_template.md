@@ -11,7 +11,7 @@ This PR fixes/adds/improves/...
 - [ ] Added implementation
 - [ ] Added / updated tests
 - [ ] Added / updated documentation
-- [ ] I read the `CONTRIBUTING.md` and signed-off my commits to accept the DCO.
+- [ ] I read the [contribution documentation](https://github.com/hedgedoc/hedgedoc/blob/master/CONTRIBUTING.md) and signed-off my commits to accept the DCO.
 
 ### Related Issue(s)
 <!-- e.g #123 -->
