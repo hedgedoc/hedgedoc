@@ -11,7 +11,6 @@ This PR fixes/adds/improves/...
 - [ ] Added implementation
 - [ ] Added / updated tests
 - [ ] Added / updated documentation
-- [ ] extended changelog
 - [ ] I read the `CONTRIBUTING.md` and signed-off my commits to accept the DCO.
 
 ### Related Issue(s)
