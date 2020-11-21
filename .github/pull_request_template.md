@@ -6,7 +6,7 @@ This PR fixes/adds/improves/...
 
 ### Steps
 
-<!--please tick steps this PR performs (if something is not necessary, please remove it) -->
+<!-- Please tick all steps this PR performs (if something is not necessary, please remove it) -->
 
 - [ ] added implementation
 - [ ] added / updated tests
