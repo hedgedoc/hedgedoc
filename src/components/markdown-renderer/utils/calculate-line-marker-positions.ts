@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import equal from 'fast-deep-equal'
 import { RefObject, useCallback, useEffect, useRef } from 'react'
 import useResizeObserver from 'use-resize-observer'

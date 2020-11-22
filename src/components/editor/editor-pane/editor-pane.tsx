@@ -1,3 +1,9 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import { Editor, EditorChange, EditorConfiguration, ScrollInfo } from 'codemirror'
 import 'codemirror/addon/comment/comment'
 import 'codemirror/addon/dialog/dialog'
@@ -9,9 +15,9 @@ import 'codemirror/addon/edit/closetag'
 import 'codemirror/addon/edit/continuelist'
 import 'codemirror/addon/edit/matchbrackets'
 import 'codemirror/addon/edit/matchtags'
-import 'codemirror/addon/fold/markdown-fold'
 import 'codemirror/addon/fold/foldcode'
 import 'codemirror/addon/fold/foldgutter'
+import 'codemirror/addon/fold/markdown-fold'
 import 'codemirror/addon/hint/show-hint'
 import 'codemirror/addon/search/jump-to-line'
 import 'codemirror/addon/search/match-highlighter'

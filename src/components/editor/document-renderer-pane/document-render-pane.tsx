@@ -1,3 +1,9 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import React, { RefObject, useState } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
@@ -6,8 +12,8 @@ import { TocAst } from '../../../external-types/markdown-it-toc-done-right/inter
 import { ApplicationState } from '../../../redux'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../../common/show-if/show-if'
-import { LineMarkerPosition } from '../../markdown-renderer/types'
 import { FullMarkdownRenderer } from '../../markdown-renderer/full-markdown-renderer'
+import { LineMarkerPosition } from '../../markdown-renderer/types'
 import { TableOfContents } from '../table-of-contents/table-of-contents'
 import { YAMLMetaData } from '../yaml-metadata/yaml-metadata'
 

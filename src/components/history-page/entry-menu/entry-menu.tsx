@@ -1,11 +1,17 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../../common/show-if/show-if'
 import { HistoryEntryOrigin } from '../history-page'
-import './entry-menu.scss'
 import { DeleteNoteItem } from './delete-note-item'
+import './entry-menu.scss'
 import { RemoveNoteEntryItem } from './remove-note-entry-item'
 
 export interface EntryMenuProps {

@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 export const download = (data: BlobPart, fileName: string, mimeType: string): void => {
   const file = new Blob([data], { type: mimeType })
   const helperElement = document.createElement('a')

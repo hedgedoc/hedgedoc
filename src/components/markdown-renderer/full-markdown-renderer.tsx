@@ -1,3 +1,9 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
@@ -6,14 +12,14 @@ import { InternalLink } from '../common/links/internal-link'
 import { ShowIf } from '../common/show-if/show-if'
 import { RawYAMLMetadata, YAMLMetaData } from '../editor/yaml-metadata/yaml-metadata'
 import { BasicMarkdownRenderer } from './basic-markdown-renderer'
+import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
+import { usePostMetaDataOnChange } from './hooks/use-post-meta-data-on-change'
+import { usePostTocAstOnChange } from './hooks/use-post-toc-ast-on-change'
+import { useReplacerInstanceListCreator } from './hooks/use-replacer-instance-list-creator'
 import { FullMarkdownItConfigurator } from './markdown-it-configurator/FullMarkdownItConfigurator'
 import { LineMarkers } from './replace-components/linemarker/line-number-marker'
 import { AdditionalMarkdownRendererProps, LineMarkerPosition } from './types'
 import { useCalculateLineMarkerPosition } from './utils/calculate-line-marker-positions'
-import { useReplacerInstanceListCreator } from './hooks/use-replacer-instance-list-creator'
-import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
-import { usePostMetaDataOnChange } from './hooks/use-post-meta-data-on-change'
-import { usePostTocAstOnChange } from './hooks/use-post-toc-ast-on-change'
 
 export interface FullMarkdownRendererProps {
   onFirstHeadingChange?: (firstHeading: string | undefined) => void

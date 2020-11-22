@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import { Revision } from '../../../../api/revisions/types'
 import { getUserById } from '../../../../api/users'
 import { UserResponse } from '../../../../api/users/types'

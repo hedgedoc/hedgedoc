@@ -1,10 +1,16 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import React, { FormEvent, Fragment, useCallback, useEffect, useState } from 'react'
+import { Alert, Button, Card, Col, Form, Row } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
 import { doInternalRegister } from '../../api/auth'
 import { ApplicationState } from '../../redux'
-import { Row, Col, Card, Form, Button, Alert } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
 import { TranslatedExternalLink } from '../common/links/translated-external-link'
 import { ShowIf } from '../common/show-if/show-if'
 import { getAndSetUser } from '../login-page/auth/utils'

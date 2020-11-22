@@ -1,12 +1,18 @@
-import React from 'react'
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import { DateTime } from 'luxon'
+import React from 'react'
 import { Badge, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { formatHistoryDate } from '../utils'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { EntryMenu } from '../entry-menu/entry-menu'
-import { PinButton } from '../pin-button/pin-button'
 import { HistoryEntryProps } from '../history-content/history-content'
+import { PinButton } from '../pin-button/pin-button'
+import { formatHistoryDate } from '../utils'
 import './history-card.scss'
 
 export const HistoryCard: React.FC<HistoryEntryProps> = ({ entry, onPinClick, onRemoveClick, onDeleteClick }) => {

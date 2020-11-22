@@ -1,13 +1,19 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import { DateTime } from 'luxon'
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { InternalLink } from '../common/links/internal-link'
 import { ShowIf } from '../common/show-if/show-if'
-import './document-infobar.scss'
 import {
   DocumentInfoLineWithTimeMode,
   DocumentInfoTimeLine
 } from '../editor/document-bar/document-info/document-info-time-line'
+import './document-infobar.scss'
 
 export interface DocumentInfobarProps {
   changedAuthor: string

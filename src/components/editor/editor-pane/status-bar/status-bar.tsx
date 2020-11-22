@@ -1,3 +1,9 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import { Editor, Position } from 'codemirror'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'

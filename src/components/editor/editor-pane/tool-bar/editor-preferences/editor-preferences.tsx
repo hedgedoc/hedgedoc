@@ -1,3 +1,9 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import { EditorConfiguration } from 'codemirror'
 import equal from 'fast-deep-equal'
 import React, { Fragment, useCallback, useState } from 'react'

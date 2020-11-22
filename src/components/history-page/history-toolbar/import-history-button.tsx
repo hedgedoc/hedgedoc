@@ -1,10 +1,16 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import React, { useRef, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { convertV1History, V1HistoryEntry } from '../utils'
-import { ErrorModal } from '../../common/modals/error-modal'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { ErrorModal } from '../../common/modals/error-modal'
 import { HistoryEntry, HistoryJson } from '../history-page'
+import { convertV1History, V1HistoryEntry } from '../utils'
 
 export interface ImportHistoryButtonProps {
   onImportHistory: (entries: HistoryEntry[]) => void

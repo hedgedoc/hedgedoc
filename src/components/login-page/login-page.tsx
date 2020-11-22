@@ -1,3 +1,10 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
+import equal from 'fast-deep-equal'
 import React, { Fragment } from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
@@ -9,7 +16,6 @@ import { ViaInternal } from './auth/via-internal'
 import { ViaLdap } from './auth/via-ldap'
 import { OneClickType, ViaOneClick } from './auth/via-one-click'
 import { ViaOpenId } from './auth/via-openid'
-import equal from 'fast-deep-equal'
 
 export const LoginPage: React.FC = () => {
   useTranslation()

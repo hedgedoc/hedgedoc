@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import { EmojiClickEventDetail, NativeEmoji } from 'emoji-picker-element/shared'
 
 export const getEmojiIcon = (emoji: EmojiClickEventDetail): string => {

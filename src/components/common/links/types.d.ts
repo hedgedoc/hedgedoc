@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import { StringMap, TOptionsBase } from 'i18next'
 import { IconName } from '../fork-awesome/fork-awesome-icon'
 

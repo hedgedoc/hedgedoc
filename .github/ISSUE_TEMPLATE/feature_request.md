@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 ---
 name: Feature request
 about: Suggest a new feature for this project, which isn't existing yet.

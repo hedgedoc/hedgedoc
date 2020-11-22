@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import { Editor, Hint, Hints, Pos } from 'codemirror'
 import Database from 'emoji-picker-element/database'
 import { Emoji, EmojiClickEventDetail, NativeEmoji } from 'emoji-picker-element/shared'

@@ -1,3 +1,10 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
+import equal from 'fast-deep-equal'
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
@@ -7,7 +14,6 @@ import { ApplicationState } from '../../../redux'
 import { clearUser } from '../../../redux/user/methods'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { UserAvatar } from '../../common/user-avatar/user-avatar'
-import equal from 'fast-deep-equal'
 
 export const UserDropdown: React.FC = () => {
   useTranslation()

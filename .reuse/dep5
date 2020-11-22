@@ -1,0 +1,34 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: react-client
+Upstream-Contact: The HedgeDoc developers <license@hedgedoc.org>
+Source: https://github.com/hedgedoc/react-client
+
+Files: public/api/*
+Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: public/icons/*
+Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+License: LicenseRef-HedgeDoc-Icon-Usgae-Guidelines
+
+Files: public/locales/*
+Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+License: AGPL-3.0-only
+
+Files: public/img/*
+Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: public/highres.jpg
+Copyright: Vincent van Gogh
+License: CC0-1.0
+
+Files: public/index.html
+Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: public/robots.txt
+Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+

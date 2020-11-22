@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 ### Component/Part
 <!-- e.g markdown editor -->
 
@@ -12,7 +18,7 @@ This PR fixes/adds/improves/...
 - [ ] Added / updated tests
 - [ ] Added / updated documentation
 - [ ] Extended changelog
-- [ ] I read the [contribution documentation](https://github.com/hedgedoc/react-client/blob/master/CONTRIBUTING.md) and signed-off my commits to accept the DCO.
+- [ ] I read the [contribution documentation](https://github.com/hedgedoc/react-client/blob/main/CONTRIBUTING.md) and signed-off my commits to accept the DCO.
 
 ### Related Issue(s)
 <!-- e.g #123 -->

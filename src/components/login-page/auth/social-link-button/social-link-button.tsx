@@ -1,7 +1,13 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import React from 'react'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import './social-link-button.scss'
 import { IconName } from '../../../common/fork-awesome/types'
+import './social-link-button.scss'
 
 export interface SocialButtonProps {
   backgroundClass: string,

@@ -1,12 +1,18 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import React, { Fragment } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
+import links from '../../../links.json'
 import { ApplicationState } from '../../../redux'
 import { ExternalLink } from '../../common/links/external-link'
 import { TranslatedExternalLink } from '../../common/links/translated-external-link'
 import { TranslatedInternalLink } from '../../common/links/translated-internal-link'
 import { VersionInfo } from './version-info'
-import links from '../../../links.json'
 
 export const PoweredByLinks: React.FC = () => {
   useTranslation()

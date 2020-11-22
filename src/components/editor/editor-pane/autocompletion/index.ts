@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import { Editor, Hints } from 'codemirror'
 import { CodeBlockHinter } from './code-block'
 import { CollapsableBlockHinter } from './collapsable-block'

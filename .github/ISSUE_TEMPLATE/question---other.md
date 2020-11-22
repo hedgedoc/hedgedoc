@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 ---
 name: Question / Other
 about: Questions about the project, features, or organziational issues

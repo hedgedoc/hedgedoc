@@ -1,9 +1,15 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import React, { Fragment, useState } from 'react'
 import { Alert, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { PagerPagination } from '../../common/pagination/pager-pagination'
-import { HistoryEntryOrigin, LocatedHistoryEntry } from '../history-page'
 import { HistoryCardList } from '../history-card/history-card-list'
+import { HistoryEntryOrigin, LocatedHistoryEntry } from '../history-page'
 import { HistoryTable } from '../history-table/history-table'
 import { ViewStateEnum } from '../history-toolbar/history-toolbar'
 

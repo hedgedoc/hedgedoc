@@ -1,3 +1,9 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import equal from 'fast-deep-equal'
 import React, { Fragment, useState } from 'react'
 import { Button, Col, Modal, Row } from 'react-bootstrap'

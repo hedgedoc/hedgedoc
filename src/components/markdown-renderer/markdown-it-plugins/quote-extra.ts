@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import MarkdownIt from 'markdown-it'
 import markdownItRegex from 'markdown-it-regex'
 import { RegexOptions } from '../../../external-types/markdown-it-regex/interface'

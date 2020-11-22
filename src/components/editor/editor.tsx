@@ -1,3 +1,9 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
@@ -16,8 +22,8 @@ import { ScrollingDocumentRenderPane } from './document-renderer-pane/scrolling-
 import { EditorPane } from './editor-pane/editor-pane'
 import { editorTestContent } from './editorTestContent'
 import { useFirstDraw } from './hooks/useFirstDraw'
-import { DualScrollState, ScrollState } from './scroll/scroll-props'
 import { useViewModeShortcuts } from './hooks/useViewModeShortcuts'
+import { DualScrollState, ScrollState } from './scroll/scroll-props'
 import { Splitter } from './splitter/splitter'
 import { YAMLMetaData } from './yaml-metadata/yaml-metadata'
 

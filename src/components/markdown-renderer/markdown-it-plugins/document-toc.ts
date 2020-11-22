@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import MarkdownIt from 'markdown-it'
 import toc from 'markdown-it-toc-done-right'
 import { TocAst } from '../../../external-types/markdown-it-toc-done-right/interface'

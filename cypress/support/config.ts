@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 export const banner = {
   text: 'This is the mock banner call',
   timestamp: '2020-05-22T20:46:08.962Z'

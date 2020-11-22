@@ -1,6 +1,12 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import React from 'react'
-import { ReactComponent as LogoColorVertical } from './logo_text_color_vertical.svg'
 import { ReactComponent as LogoBwHorizontal } from './logo_text_bw_horizontal.svg'
+import { ReactComponent as LogoColorVertical } from './logo_text_color_vertical.svg'
 import { ReactComponent as LogoWbHorizontal } from './logo_text_wb_horizontal.svg'
 
 export enum HedgeDocLogoSize {

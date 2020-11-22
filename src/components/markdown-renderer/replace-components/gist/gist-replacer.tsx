@@ -1,14 +1,20 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import { DomElement } from 'domhandler'
 import MarkdownIt from 'markdown-it'
 import markdownItRegex from 'markdown-it-regex'
 import React from 'react'
-import { replaceGistLink } from './replace-gist-link'
-import { replaceLegacyGistShortCode } from './replace-legacy-gist-short-code'
-import { getAttributesFromHedgeDocTag } from '../utils'
 import { ComponentReplacer } from '../ComponentReplacer'
 import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
+import { getAttributesFromHedgeDocTag } from '../utils'
 import { GistFrame } from './gist-frame'
 import preview from './gist-preview.png'
+import { replaceGistLink } from './replace-gist-link'
+import { replaceLegacyGistShortCode } from './replace-legacy-gist-short-code'
 
 export class GistReplacer extends ComponentReplacer {
   private counterMap: Map<string, number> = new Map<string, number>()

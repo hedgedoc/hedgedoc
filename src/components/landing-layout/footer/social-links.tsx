@@ -1,7 +1,13 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { ExternalLink } from '../../common/links/external-link'
 import links from '../../../links.json'
+import { ExternalLink } from '../../common/links/external-link'
 
 const SocialLink: React.FC = () => {
   useTranslation()

@@ -1,9 +1,15 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import React, { Component, ErrorInfo, ReactElement, ReactNodeArray } from 'react'
 import { Button, Container } from 'react-bootstrap'
+import links from '../../links.json'
 import frontendVersion from '../../version.json'
 import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
 import { ExternalLink } from '../common/links/external-link'
-import links from '../../links.json'
 
 export class ErrorBoundary extends Component {
   state: {

@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import plantuml from 'markdown-it-plantuml'
 import MarkdownIt, { Options } from 'markdown-it/lib'
 import Renderer, { RenderRule } from 'markdown-it/lib/renderer'

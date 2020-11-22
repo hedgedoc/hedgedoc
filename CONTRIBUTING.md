@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 ## How to contribute to HedgeDoc react-client
 
 Thanks for your interest in contributing. Here are some common scenarios for what you may want to contribute to.

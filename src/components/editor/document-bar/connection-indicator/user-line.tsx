@@ -1,3 +1,9 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import React, { Fragment } from 'react'
 import { UserAvatar } from '../../../common/user-avatar/user-avatar'
 import { ActiveIndicator, ActiveIndicatorStatus } from './active-indicator'

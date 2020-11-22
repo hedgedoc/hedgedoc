@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import { getConfig } from '../../../api/config'
 import { setApiUrl } from '../../../redux/api-url/methods'
 import { setBanner } from '../../../redux/banner/methods'

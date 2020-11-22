@@ -1,3 +1,9 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import MarkdownIt from 'markdown-it'
 import abbreviation from 'markdown-it-abbr'
 import definitionList from 'markdown-it-deflist'

@@ -1,3 +1,9 @@
+/*
+SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: AGPL-3.0-only
+*/
+
 import React, { Fragment, useState } from 'react'
 import { TranslatedIconButton } from '../../../common/icon-button/translated-icon-button'
 import { RevisionModal } from './revision-modal'
