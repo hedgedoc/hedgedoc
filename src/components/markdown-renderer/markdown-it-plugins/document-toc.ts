@@ -5,13 +5,12 @@
  */
 
 import MarkdownIt from 'markdown-it'
-import toc from 'markdown-it-toc-done-right'
-import { TocAst } from '../../../external-types/markdown-it-toc-done-right/interface'
+import toc, { TocAst } from 'markdown-it-toc-done-right'
 import { slugify } from '../../editor/table-of-contents/table-of-contents'
 
 export type DocumentTocPluginOptions = (ast: TocAst) => void
 
-export const documentToc:MarkdownIt.PluginWithOptions<DocumentTocPluginOptions> = (markdownIt, onToc) => {
+export const documentToc: MarkdownIt.PluginWithOptions<DocumentTocPluginOptions> = (markdownIt, onToc) => {
   if (!onToc) {
     return
   }

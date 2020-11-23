@@ -5,7 +5,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 */
 
 import MarkdownIt from 'markdown-it'
-import { TocAst } from '../../../external-types/markdown-it-toc-done-right/interface'
+import { TocAst } from 'markdown-it-toc-done-right'
 import { RawYAMLMetadata } from '../../editor/yaml-metadata/yaml-metadata'
 import { documentToc } from '../markdown-it-plugins/document-toc'
 import { frontmatterExtract } from '../markdown-it-plugins/frontmatter'

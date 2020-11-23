@@ -6,7 +6,7 @@
 
 import equal from 'fast-deep-equal'
 import { RefObject, useEffect, useRef } from 'react'
-import { TocAst } from '../../../external-types/markdown-it-toc-done-right/interface'
+import { TocAst } from 'markdown-it-toc-done-right'
 
 export const usePostTocAstOnChange = (tocAst: RefObject<TocAst|undefined>, onTocChange?: (ast: TocAst) => void): void => {
   const lastTocAst = useRef<TocAst>()
