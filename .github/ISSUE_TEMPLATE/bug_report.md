@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: CC-BY-SA-4.0
--->
-
 ---
 name: Bug report
 about: Create a report to help us improve
