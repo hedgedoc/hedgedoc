@@ -114,7 +114,7 @@ export const PermissionModal: React.FC<PermissionsModalProps> = ({ show, onChang
   const addUser = (name: Principal['name']) => {
     setUserList(list => list.concat({
       id: name,
-      photo: '/avatar.png',
+      photo: '/img/avatar.png',
       name: name,
       canEdit: false
     }))

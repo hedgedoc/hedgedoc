@@ -19,10 +19,10 @@ const ConnectionIndicator: React.FC = () => {
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item disabled={true} className="d-flex align-items-center p-0">
-          <UserLine name="Philip Molares" photo="/avatar.png" color="red" status={ActiveIndicatorStatus.INACTIVE}/>
+          <UserLine name="Philip Molares" photo="/img/avatar.png" color="red" status={ActiveIndicatorStatus.INACTIVE}/>
         </Dropdown.Item>
         <Dropdown.Item disabled={true} className="d-flex align-items-center p-0">
-          <UserLine name="Philip Molares" photo="/avatar.png" color="blue" status={ActiveIndicatorStatus.ACTIVE}/>
+          <UserLine name="Philip Molares" photo="/img/avatar.png" color="blue" status={ActiveIndicatorStatus.ACTIVE}/>
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

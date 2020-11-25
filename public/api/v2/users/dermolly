@@ -1,6 +1,6 @@
 {
   "id": "dermolly",
-  "photo": "/avatar.png",
+  "photo": "/img/avatar.png",
   "name": "Philip",
   "status": "ok",
   "provider": "internal"

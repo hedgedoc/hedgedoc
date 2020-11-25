@@ -1,6 +1,6 @@
 {
   "id": "emcrx",
-  "photo": "/avatar.png",
+  "photo": "/img/avatar.png",
   "name": "Erik",
   "status": "ok",
   "provider": "internal"

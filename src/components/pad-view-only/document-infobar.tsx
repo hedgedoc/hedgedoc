@@ -45,12 +45,12 @@ export const DocumentInfobar: React.FC<DocumentInfobarProps> = ({
             mode={DocumentInfoLineWithTimeMode.CREATED}
             time={ DateTime.fromSeconds(createdTime) }
             userName={createdAuthor}
-            profileImageSrc={'/avatar.png'}/>
+            profileImageSrc={'/img/avatar.png'}/>
           <DocumentInfoTimeLine
             mode={DocumentInfoLineWithTimeMode.EDITED}
             time={ DateTime.fromSeconds(changedTime) }
             userName={changedAuthor}
-            profileImageSrc={'/avatar.png'}/>
+            profileImageSrc={'/img/avatar.png'}/>
           <hr/>
         </div>
         <span className={'ml-auto'}>

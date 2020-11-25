@@ -1,6 +1,6 @@
 {
     "id": "mockUser",
-    "photo": "/avatar.png",
+    "photo": "/img/avatar.png",
     "name": "Test",
     "status": "ok",
     "provider": "internal"

@@ -34,7 +34,7 @@ export const DocumentInfoButton: React.FC = () => {
                 mode={DocumentInfoLineWithTimeMode.CREATED}
                 time={DateTime.local().minus({ days: 11 })}
                 userName={'Tilman'}
-                profileImageSrc={'/avatar.png'}/>
+                profileImageSrc={'/img/avatar.png'}/>
             </ListGroup.Item>
             <ListGroup.Item>
               <DocumentInfoTimeLine
@@ -42,7 +42,7 @@ export const DocumentInfoButton: React.FC = () => {
                 mode={DocumentInfoLineWithTimeMode.EDITED}
                 time={DateTime.local().minus({ minutes: 3 })}
                 userName={'Philip'}
-                profileImageSrc={'/avatar.png'}/>
+                profileImageSrc={'/img/avatar.png'}/>
             </ListGroup.Item>
             <ListGroup.Item>
               <DocumentInfoLine icon={'users'} size={'2x'}>
