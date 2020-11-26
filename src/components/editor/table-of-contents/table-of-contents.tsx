@@ -26,8 +26,8 @@ const convertLevel = (toc: TocAst, levelsToShowUnderThis: number, headerCounts: 
   }
 
   const rawName = toc.n.trim()
-  const nameCount = (headerCounts.get(rawName) ?? 0) + 1
-  const slug = `#${slugify(rawName)}${nameCount > 1 ? `-${nameCount}` : ''}`
+  const nameCount = (headerCounts.get(rawName) ?? -1) + 1
+  const slug = `#${slugify(rawName)}${nameCount > 0 ? `-${nameCount}` : ''}`
 
   headerCounts.set(rawName, nameCount)
 
