@@ -80,7 +80,6 @@
     "markdown-it-regexp": "^0.4.0",
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
-    "markdown-pdf": "^10.0.0",
     "mathjax": "^2.7.6",
     "mattermost": "^3.4.0",
     "mermaid": "^8.5.1",
