@@ -1,5 +1,6 @@
 {
     "Collaborative markdown notes": "Notes col·laboratives a Markdown",
+    "Realtime collaborative markdown notes on all platforms.": "Notes col·laboratives a Markdown per a totes les plataformes.",
     "Best way to write and share your knowledge in markdown.": "La millor forma d'escriure i compartir el teu coneixement a Markdown.",
     "Intro": "Introducció",
     "History": "Història",
@@ -117,5 +118,13 @@
     "Powered by %s": "Impulsat per %s",
     "Help us translating": "Ajuda'ns traduïnt",
     "Join the community": "Unir-se a la comunitat",
-    "Imprint": "Emprenta"
+    "Imprint": "Emprenta",
+    "Freely - Anyone can edit": "Freely - Anyone can edit",
+    "Editable - Signed-in people can edit": "Editable - Signed-in people can edit",
+    "Limited - Signed-in people can edit (forbid guests)": "Limited - Signed-in people can edit (forbid guests)",
+    "Locked - Only owner can edit": "Locked - Only owner can edit",
+    "Protected - Only owner can edit (forbid guests)": "Protected - Only owner can edit (forbid guests)",
+    "Private - Only owner can view & edit": "Private - Only owner can view & edit",
+    "changed": "changed",
+    "created": "created"
 }
