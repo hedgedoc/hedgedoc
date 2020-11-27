@@ -26,7 +26,7 @@
 6. Modify the file named `.sequelizerc`, change the value of the variable `url` to your db connection string. For example:
    - `postgres://username:password@localhost:5432/hedgedoc`
    - `mysql://username:password@localhost:3306/hedgedoc`
-   - `sqlite://:memory:`
+   - `sqlite:///opt/hedgedoc/hedgedoc.sqlite` (note that you need to use an absolute path to the SQLite file)
 7. It is recommended to start your server manually once: `NODE_ENV=production yarn start`, this way it's easier to see warnings or errors that might occur (leave out `NODE_ENV=production` for development).
 8. Run the server as you like (node, forever, pm2, SystemD, Init-Scripts)
 
