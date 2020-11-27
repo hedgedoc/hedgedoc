@@ -1,5 +1,6 @@
 {
     "Collaborative markdown notes": "Cộng tác ghi chú markdown",
+    "Realtime collaborative markdown notes on all platforms.": "Cộng tác ghi chú markdown đa nền tảng thời gian thực",
     "Best way to write and share your knowledge in markdown.": "Nền tảng tốt nhất để viết và chia sẻ markdown",
     "Intro": "Giới thiệu",
     "History": "Lịch sử",
@@ -116,5 +117,14 @@
     "Register": "Đăng ký",
     "Powered by %s": "Cung cấp bởi %s",
     "Help us translating": "Giúp chúng tôi dịch",
-    "Join the community": "Tham gia vào cộng đồng"
+    "Join the community": "Tham gia vào cộng đồng",
+    "Imprint": "Imprint",
+    "Freely - Anyone can edit": "Freely - Anyone can edit",
+    "Editable - Signed-in people can edit": "Editable - Signed-in people can edit",
+    "Limited - Signed-in people can edit (forbid guests)": "Limited - Signed-in people can edit (forbid guests)",
+    "Locked - Only owner can edit": "Locked - Only owner can edit",
+    "Protected - Only owner can edit (forbid guests)": "Protected - Only owner can edit (forbid guests)",
+    "Private - Only owner can view & edit": "Private - Only owner can view & edit",
+    "changed": "changed",
+    "created": "created"
 }
