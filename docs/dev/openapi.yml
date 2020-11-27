@@ -89,29 +89,6 @@ paths:
             'text/plain':
               example: my-note
 
-  /{note}/pdf:
-    get:
-      tags:
-        - note
-      summary: Returns a generated pdf version of the note.
-      description: 'If pdf-support is disabled, a HTTP 403 will be returned.<br>_Please note: Currently pdf export is disabled generally because of a security problem with it._'
-      responses:
-        200:
-          description: The generated pdf version of the note
-          content:
-            'application/pdf':
-              example: binary
-        404:
-          description: Note does not exist
-      parameters:
-        - name: note
-          in: path
-          required: true
-          description: The note which should be exported as pdf
-          content:
-            'text/plain':
-              example: my-note
-
   /{note}/publish:
     get:
       tags:
