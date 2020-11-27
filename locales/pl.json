@@ -1,5 +1,6 @@
 {
-    "Collaborative markdown notes": "Wspólne markdown notatki",
+    "Collaborative markdown notes": "Wspólne notatki markdown",
+    "Realtime collaborative markdown notes on all platforms.": "Rzeczywiste wspólne notatki markdown dla wszystkich platform",
     "Best way to write and share your knowledge in markdown.": "Najlepszy sposób na pisanie i dzielenie się swoją wiedzą w markdown.",
     "Intro": "Intro",
     "History": "Historia",
@@ -28,7 +29,7 @@
     "Import from browser": "Importuj z przeglądarki",
     "Releases": "Wydania",
     "Are you sure?": "Jesteś pewny?",
-    "Do you really want to delete this note?": "Czy chcesz usunąć tą notatkę?",
+    "Do you really want to delete this note?": "Czy chcesz usunąć tę notatkę?",
     "All users will lose their connection.": "Wszyscy użytkownicy stracą swoje połączenie.",
     "Cancel": "Anuluj",
     "Yes, do it!": "Tak, zrób to!",
@@ -117,5 +118,13 @@
     "Powered by %s": "Wspierany przez %s",
     "Help us translating": "Pomóż nam w tłumaczeniu",
     "Join the community": "Dołącz do społeczności",
-    "Imprint": "Impressum"
+    "Imprint": "Impressum",
+    "Freely - Anyone can edit": "Otwarty - Każdy może edytować",
+    "Editable - Signed-in people can edit": "Do edycji - Zalogowani użytkownicy mogą edytować",
+    "Limited - Signed-in people can edit (forbid guests)": "Ograniczony - Zalogowani użytkownicy mogą edytować (bez gości)",
+    "Locked - Only owner can edit": "Zablokowany - Tylko właściciel może edytować",
+    "Protected - Only owner can edit (forbid guests)": "Chroniony - Tylko właściciel może edytować (bez gości)",
+    "Private - Only owner can view & edit": "Prywatny - Tylko właściciel może przeglądać i edytować",
+    "changed": "zmieniono",
+    "created": "utworzono"
 }
