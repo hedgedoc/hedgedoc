@@ -1,5 +1,6 @@
 {
     "Collaborative markdown notes": "Kolaboratívne markdown poznámky",
+    "Realtime collaborative markdown notes on all platforms.": "Spolupracujte na markdown poznámkach na všetkých platformách v reálnom čase.",
     "Best way to write and share your knowledge in markdown.": "Nejlepšia platforma pre tvorbu a zdieľanie vašich znalostí v markdown.",
     "Intro": "Intro",
     "History": "História",
@@ -117,5 +118,13 @@
     "Powered by %s": "Powered by %s",
     "Help us translating": "Pomôžte nám s prekladom",
     "Join the community": "Pripojiť sa ku komunite",
-    "Imprint": "Odtlačok"
+    "Imprint": "Odtlačok",
+    "Freely - Anyone can edit": "Freely - Anyone can edit",
+    "Editable - Signed-in people can edit": "Editable - Signed-in people can edit",
+    "Limited - Signed-in people can edit (forbid guests)": "Limited - Signed-in people can edit (forbid guests)",
+    "Locked - Only owner can edit": "Locked - Only owner can edit",
+    "Protected - Only owner can edit (forbid guests)": "Protected - Only owner can edit (forbid guests)",
+    "Private - Only owner can view & edit": "Private - Only owner can view & edit",
+    "changed": "changed",
+    "created": "created"
 }
