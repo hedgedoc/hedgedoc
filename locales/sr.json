@@ -1,5 +1,6 @@
 {
     "Collaborative markdown notes": "Дељене белешке у Markdown формату",
+    "Realtime collaborative markdown notes on all platforms.": "Заједнички рад на markdown тексту у реалном времену, на свим платформама",
     "Best way to write and share your knowledge in markdown.": "Савршен начин за писање и дељење знања у markdown формату",
     "Intro": "Увод",
     "History": "Историја",
@@ -116,5 +117,14 @@
     "Register": "Региструј се",
     "Powered by %s": "Покреће %s",
     "Help us translating": "Помозите око превода",
-    "Join the community": "Приступите заједници"
+    "Join the community": "Приступите заједници",
+    "Imprint": "Imprint",
+    "Freely - Anyone can edit": "Freely - Anyone can edit",
+    "Editable - Signed-in people can edit": "Editable - Signed-in people can edit",
+    "Limited - Signed-in people can edit (forbid guests)": "Limited - Signed-in people can edit (forbid guests)",
+    "Locked - Only owner can edit": "Locked - Only owner can edit",
+    "Protected - Only owner can edit (forbid guests)": "Protected - Only owner can edit (forbid guests)",
+    "Private - Only owner can view & edit": "Private - Only owner can view & edit",
+    "changed": "changed",
+    "created": "created"
 }
