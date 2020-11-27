@@ -1,5 +1,6 @@
 {
     "Collaborative markdown notes": "Markdown 協作筆記",
+    "Realtime collaborative markdown notes on all platforms.": "使用 Markdown 的跨平台即時協作筆記",
     "Best way to write and share your knowledge in markdown.": "您使用 Markdown 寫作與分享知識的最佳方式",
     "Intro": "簡介",
     "History": "紀錄",
@@ -117,5 +118,13 @@
     "Powered by %s": "由 %s 強力驅動",
     "Help us translating": "幫助我們改進翻譯",
     "Join the community": "加入社群",
-    "Imprint": "版本說明"
+    "Imprint": "版本說明",
+    "Freely - Anyone can edit": "Freely - Anyone can edit",
+    "Editable - Signed-in people can edit": "Editable - Signed-in people can edit",
+    "Limited - Signed-in people can edit (forbid guests)": "Limited - Signed-in people can edit (forbid guests)",
+    "Locked - Only owner can edit": "Locked - Only owner can edit",
+    "Protected - Only owner can edit (forbid guests)": "Protected - Only owner can edit (forbid guests)",
+    "Private - Only owner can view & edit": "Private - Only owner can view & edit",
+    "changed": "changed",
+    "created": "created"
 }
