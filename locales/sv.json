@@ -1,5 +1,6 @@
 {
     "Collaborative markdown notes": "Kollaborativa markdownanteckningar",
+    "Realtime collaborative markdown notes on all platforms.": "Kollaborativa markdownantackningar på alla plattformar.",
     "Best way to write and share your knowledge in markdown.": "Bästa sättet att skriva och dela din kunskap i markdown.",
     "Intro": "Intro",
     "History": "Historik",
@@ -117,5 +118,13 @@
     "Powered by %s": "Drivs av %s",
     "Help us translating": "Hjälp oss att översätta",
     "Join the community": "Gå med i samhället",
-    "Imprint": "Avtryck"
+    "Imprint": "Avtryck",
+    "Freely - Anyone can edit": "Fritt - Vem som helst kan redigera",
+    "Editable - Signed-in people can edit": "Redigerbar - Inloggade personer kan redigera",
+    "Limited - Signed-in people can edit (forbid guests)": "Begränsad - Inloggade personer kan redigera (förbjud gäster)",
+    "Locked - Only owner can edit": "Låst - Endast ägaren kan redigera",
+    "Protected - Only owner can edit (forbid guests)": "Skyddad - Endast ägaren kan redigera (förbjud gäster)",
+    "Private - Only owner can view & edit": "Privat - Endast ägaren kan se & redigera",
+    "changed": "ändrad",
+    "created": "skapad"
 }
