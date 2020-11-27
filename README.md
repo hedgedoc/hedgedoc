@@ -87,7 +87,7 @@ Licensed under AGPLv3. For our list of contributors, see [AUTHORS](AUTHORS).
 The license does not include the HedgeDoc logo, whose terms of usage can be found in the [github repository](https://github.com/hedgedoc/hedgedoc-logo).
 
 [matrix.org-image]: https://img.shields.io/matrix/hedgedoc:matrix.org?logo=matrix&server_fqdn=matrix.org
-[matrix.org-url]: https://matrix.to/#/#hedgedoc:matrix.org
+[matrix.org-url]: https://chat.hedgedoc.org
 [github-version-badge]: https://img.shields.io/github/release/hedgedoc/hedgedoc.svg
 [github-release-page]: https://github.com/hedgedoc/hedgedoc/releases
 [github-release-feed]: https://github.com/hedgedoc/hedgedoc/releases.atom
