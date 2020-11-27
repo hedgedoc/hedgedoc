@@ -1,5 +1,6 @@
 {
     "Collaborative markdown notes": "共同編集できるMarkdownノート",
+    "Realtime collaborative markdown notes on all platforms.": "マルチプラットフォーム、リアルタイムで共同編集できるMarkdownノート",
     "Best way to write and share your knowledge in markdown.": "Markdownでナレッジを蓄積・共有できるベストツール",
     "Intro": "サービスの紹介",
     "History": "履歴",
@@ -117,5 +118,13 @@
     "Powered by %s": "Powered by %s",
     "Help us translating": "翻訳のお手伝いをお願いします",
     "Join the community": "コミュニティに参加しましょう",
-    "Imprint": "インプリント"
+    "Imprint": "インプリント",
+    "Freely - Anyone can edit": "Freely - Anyone can edit",
+    "Editable - Signed-in people can edit": "Editable - Signed-in people can edit",
+    "Limited - Signed-in people can edit (forbid guests)": "Limited - Signed-in people can edit (forbid guests)",
+    "Locked - Only owner can edit": "Locked - Only owner can edit",
+    "Protected - Only owner can edit (forbid guests)": "Protected - Only owner can edit (forbid guests)",
+    "Private - Only owner can view & edit": "Private - Only owner can view & edit",
+    "changed": "changed",
+    "created": "created"
 }
