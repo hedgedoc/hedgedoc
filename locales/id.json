@@ -1,5 +1,6 @@
 {
     "Collaborative markdown notes": "Catatan markdown kolaboratif",
+    "Realtime collaborative markdown notes on all platforms.": "Berkolaborasi di catatan markdown di semua platform secara realtime",
     "Best way to write and share your knowledge in markdown.": "Platform terbaik untuk menulis dan membagikan markdown",
     "Intro": "Perkenalan",
     "History": "Riwayat",
@@ -117,5 +118,13 @@
     "Powered by %s": "Ditenagai oleh %s",
     "Help us translating": "Bantu kami menerjemahkan",
     "Join the community": "Bergabung dengan komunitas",
-    "Imprint": "Jejak"
+    "Imprint": "Jejak",
+    "Freely - Anyone can edit": "Freely - Anyone can edit",
+    "Editable - Signed-in people can edit": "Editable - Signed-in people can edit",
+    "Limited - Signed-in people can edit (forbid guests)": "Limited - Signed-in people can edit (forbid guests)",
+    "Locked - Only owner can edit": "Locked - Only owner can edit",
+    "Protected - Only owner can edit (forbid guests)": "Protected - Only owner can edit (forbid guests)",
+    "Private - Only owner can view & edit": "Private - Only owner can view & edit",
+    "changed": "changed",
+    "created": "created"
 }
