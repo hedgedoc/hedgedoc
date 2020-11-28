@@ -11,26 +11,26 @@
   }
   .btn {
     svg g {
-      @import "../../../../style/light.scss";
+      @import "../../../../style/variables.light";
       fill: $secondary;
     }
 
     &.active, &:hover {
       svg g {
-        @import "../../../../style/light.scss";
+        @import "../../../../style/variables.light";
         fill: $light;
       }
     }
 
     body.dark & {
       svg g {
-        @import "../../../../style/dark.scss";
+        @import "../../../../style/variables.dark";
         fill: $secondary;
       }
 
       &.active, &:hover {
         svg g {
-          @import "../../../../style/dark.scss";
+          @import "../../../../style/variables.dark";
           fill: $light;
         }
       }
