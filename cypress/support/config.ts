@@ -11,7 +11,7 @@ export const banner = {
 
 export const branding = {
   name: 'ACME Corp',
-  logo: 'http://localhost:3001/acme.png'
+  logo: 'http://localhost:3001/img/acme.png'
 }
 
 beforeEach(() => {
