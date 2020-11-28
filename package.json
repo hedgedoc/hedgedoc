@@ -9,7 +9,7 @@
         "@testing-library/jest-dom": "5.11.6",
         "@testing-library/react": "11.2.2",
         "@testing-library/user-event": "12.2.2",
-        "@types/codemirror": "0.0.98",
+        "@types/codemirror": "0.0.100",
         "@types/d3-graphviz": "2.6.6",
         "@types/diff": "4.0.2",
         "@types/domhandler": "2.4.1",
