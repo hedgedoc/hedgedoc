@@ -9480,10 +9480,10 @@ markmap-common@^0.1.0:
   dependencies:
     "@babel/runtime" "^7.12.1"
 
-markmap-lib@0.10.1:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/markmap-lib/-/markmap-lib-0.10.1.tgz#a68eb6d6a3ce4c2313fd187b926755fcc6ccfa1c"
-  integrity sha512-uzhRf8TV1pQuedtkxX8Tqg1DVHOgPtQcStIrdsFgVcK6+LoPKuUv3Dr4EgEHz0+Z+wqXSfIJjl1Kmuu04K809Q==
+markmap-lib@0.10.2:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/markmap-lib/-/markmap-lib-0.10.2.tgz#68c855021f5e43068fd2a47f398bb4daa52044a3"
+  integrity sha512-IKtYn3gZMB0wgG3D4N56HlwpQTI+adK03JpzEwe+05h7RlJhuIq466W8hTGRs7JE8r0gL8Q/8J5xoulkabKPFQ==
   dependencies:
     "@babel/runtime" "^7.12.5"
     katex "^0.12.0"
