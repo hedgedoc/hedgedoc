@@ -9492,10 +9492,10 @@ markmap-lib@0.10.2:
     remarkable "^2.0.0"
     remarkable-katex "^1.1.6"
 
-markmap-view@0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/markmap-view/-/markmap-view-0.1.1.tgz#2bf7fe0163c2cfd324ac8643a4a2dfab5529cb10"
-  integrity sha512-KXiBavp5AtfKDcw/Q709oY4MIq1DpQ7kNhtvD4CouJ36Y/2xPoNf2JUl7wZ5TaBz42Wfbh7B2vDzFhZaaq2jEg==
+markmap-view@0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/markmap-view/-/markmap-view-0.1.2.tgz#818ebed4f5f03f20b7e214a2b1663285397bec13"
+  integrity sha512-d0iD+fa47BuzrfQsVf4GZ/u5SCLH/kYltQbw76h/sDHMgVA2FNI+dPKhKmTJe8z5rudCGd2yEDJ3dx0QLntibw==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@types/d3" "^6.0.0"

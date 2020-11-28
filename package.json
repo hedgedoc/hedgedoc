@@ -79,7 +79,7 @@
         "markdown-it-task-lists": "2.1.1",
         "markdown-it-toc-done-right": "4.2.0",
         "markmap-lib": "0.10.2",
-        "markmap-view": "0.1.1",
+        "markmap-view": "0.1.2",
         "mermaid": "8.8.3",
         "node-sass": "4.14.1",
         "react": "17.0.1",
