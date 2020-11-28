@@ -6,7 +6,11 @@
 
 describe('Code', () => {
   beforeEach(() => {
-    cy.visit('/n/test')
+    cy.visit('/n/test', {
+      onBeforeLoad (win: Window): void {
+        cy.spy(win.navigator.clipboard, 'writeText').as('copy')
+      }
+    })
     cy.get('.btn.active.btn-outline-secondary > i.fa-columns')
       .should('exist')
     cy.get('.CodeMirror textarea')
@@ -87,9 +91,6 @@ describe('Code', () => {
     cy.get('.markdown-body > pre > div > button > i')
       .should('have.class', 'fa-files-o')
       .click()
-    // This line can be activated if cypress supports copy to clipboard in firefox, too.
-    // Please run `yarn add --dev clipboardy`
-    // uncomment cypress plugin
-    // cy.task('getClipboard').should('contain', 'let x = 0\n');
+    cy.get('@copy').should('be.calledWithExactly', 'let x = 0\n');
   })
 })
