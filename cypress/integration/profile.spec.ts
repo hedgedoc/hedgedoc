@@ -40,6 +40,8 @@ describe('profile page', () => {
     })
 
     it('delete token', () => {
+      cy.get('.modal-dialog')
+        .should('not.exist')
       cy.get('.card.access-tokens .list-group-item .btn-danger')
         .click()
       cy.get('.modal-dialog')
@@ -47,7 +49,7 @@ describe('profile page', () => {
         .get('.modal-footer .btn-danger')
         .click()
       cy.get('.modal-dialog')
-        .should('not.be.visible')
+        .should('not.exist')
     })
 
     it('add token', () => {
@@ -55,6 +57,8 @@ describe('profile page', () => {
         .should('be.disabled')
       cy.get('.card.access-tokens input[type=text]')
         .type('cypress')
+      cy.get('.modal-dialog')
+        .should('not.exist')
       cy.get('.card.access-tokens .btn-primary')
         .should('not.be.disabled')
         .click()
