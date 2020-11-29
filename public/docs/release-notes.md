@@ -1,5 +1,91 @@
 # Release Notes
 
+## <i class="fa fa-tag"></i> 1.7.0-rc1 <i class="fa fa-calendar-o"></i> 2020-11-29
+
+We have renamed to HedgeDoc!
+Many thanks to [Éric Gaspar](https://github.com/ericgaspar/) who designed our new logo!
+Have a look at our new website (which also explains the reasoning behind the renaming) at https://hedgedoc.org
+
+This is probably the last release in the 1.x series. Stay tuned for 2.0, scheduled for release next year.
+
+**Please note:** This release dropped support for Node 8, which is end-of-life since January 2020. You now need at least Node 10.13 to run HedgeDoc, but we recommend running [the latest LTS release](https://nodejs.org/en/about/releases/).
+
+### Enhancements
+- Our release tarballs now contain the frontend bundle. This saves users from building the frontend themselves, which was an issue on memory-constrained systems.
+- Add OIDC scopes for email & profile retrieval ([#278](https://github.com/hedgedoc/hedgedoc/pull/278) & [#419](https://github.com/hedgedoc/hedgedoc/pull/419) by [@elespike](https://github.com/elespike) & [@vberger](https://github.com/vberger))
+- Allow to set a SAML client certificate ([#350](https://github.com/hedgedoc/hedgedoc/pull/350) by [@n0emis](https://github.com/n0emis) & [@em0lar](https://github.com/em0lar))
+- Add YunoHost docs ([#431](https://github.com/hedgedoc/hedgedoc/pull/431) by [@ericgaspar](https://github.com/ericgaspar))
+- Set OAuth2 `state` parameter ([#407](https://github.com/hedgedoc/hedgedoc/pull/407) & [#541](https://github.com/hedgedoc/hedgedoc/pull/541) by [@dalcde](https://github.com/dalcde) & [@haslersn](https://github.com/haslersn))
+- Various documentation improvements (by [@oupala](https://github.com/oupala), [@autra](https://github.com/autra) & [@AdamWorley](https://github.com/AdamWorley))
+- Add migration script for minio ([#499](https://github.com/hedgedoc/hedgedoc/pull/499) by [@pierreozoux](https://github.com/pierreozoux))
+- Add authorization for OAuth ([#595](https://github.com/hedgedoc/hedgedoc/pull/595) by [@joachimmathes](https://github.com/joachimmathes))
+- Improvements to our cookie handling
+- Compatibility with Node 14
+- Translation updates
+- Various dependency updates
+
+### Bugfixes
+- Fix compatibility with upper-case MIME-types ([#509](https://github.com/hedgedoc/hedgedoc/pull/509) by [@pierreozoux](https://github.com/pierreozoux))
+- Add fix for missing deletion of notes on user-deletion request
+- Fix relative path for fetching the style when set 
+- Fix broken redirect on login
+- CSS fixes for slide mode
+- Do not create new notes with `null` as content
+
+### Contributors
+- [Adam Worley](https://github.com/AdamWorley)
+- andreas koidis (translator)
+- [Augustin Trancart](https://github.com/autra)
+- Benjamin Bett (translator)
+- Butterflyoffire (translator)
+- civic john (translator)
+- [Daniel Lublin](https://github.com/quite)
+- [Davod Mehren](github.com/davidmehren)
+- [david-sawatzke](https://github.com/david-sawatzke)
+- deluxghost (translator)
+- [Dexter Chua](https://github.com/dalcde)
+- Dimitri (translator)
+- [em0lar](https://github.com/em0lar)
+- [Éric Gaspar](https://github.com/ericgaspar)
+- [Erik Michelson](https://github.com/ErikMichelson)
+- Giacomo lanza (translator)
+- [Girish Ramakrishnan](https://github.com/gramakri)
+- Grzegorz (translator)
+- [haslersn](https://github.com/haslersn)
+- Igor Kerstges (translator)
+- Info (translator)
+- Jleeothon (translator)
+- Johannes Nilsso (translator)
+- Jolly Jumper (translator)
+- [Jonas Zohren](https://github.com/jfowl)
+- Jothish (translator)
+- Julien lebranch (translator)
+- [Marvin Gaube](https://github.com/margau)
+- Mdhm (translator)
+- Mostafa Ahangarha (translator)
+- [Nick Hahn](https://github.com/codingHahn)
+- [Nils van Zuijlen](https://github.com/nils-van-zuijlen)
+- Nithin Prabhakaran (translator)
+- numéro6 (translator)
+- [n0emis](https://github.com/n0emis)
+- [oupala](https://github.com/oupala)
+- [Philip Molares](https://github.com/DerMolly)
+- [Pierre Ozoux](https://github.com/pierreozoux)
+- Quentin Pages (translator)
+- [Renan Rodrigues](https://github.com/renanqts)
+- Renne (translator)
+- [Sandro](https://github.com/SuperSandro2000)
+- Smaran (translator)
+- Sooraj Kenoth (translator)
+- themedleb (translator)
+- [Tilman Vatteroth](https://github.com/mrdrogdrog)
+- Tomasz (translator)
+- [Victor Berger](https://github.com/vberger)
+- XoseM (translator)
+- [Yannick Bungers](https://github.com/InnayTool)
+- zgroska (translator)
+
+
 ## <i class="fa fa-tag"></i> 1.6.0 <i class="fa fa-calendar-o"></i> 2020-02-17
 
 ### Announcements
