@@ -6923,6 +6923,16 @@ follow-redirects@^1.0.0:
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
   integrity sha512-aq6gF1BEKje4a9i9+5jimNFIpq4Q1WiwBToeRK5NvZBd/TRsmW8BsJfOEGkr76TbOyPVD3OVDN910EcUNtRYEA==
 
+fontsource-source-code-pro@3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/fontsource-source-code-pro/-/fontsource-source-code-pro-3.0.9.tgz#29a6075fd5ca0f3aaf3b12f602389e11cb4a318b"
+  integrity sha512-3fioofpq4P7rLY7JaxIQ5sAfuu9oSo1YIpgm3G8H9ZFUj+ZYr8T3sR35hb/4V6FKV+sR/oWHYidaaCAAKpTXaw==
+
+fontsource-source-sans-pro@3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/fontsource-source-sans-pro/-/fontsource-source-sans-pro-3.0.9.tgz#793f426a598564961b21b913d6d32480a3484213"
+  integrity sha512-kBwOSHXR/P+oTGCdemcJM9Z7jYK1O0h+aeqq60fajP/HvhYJWTVBA1ZmKlOX+rHPARLRgfwCv6B4m1UC7bHsoA==
+
 for-in@^0.1.3:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-0.1.8.tgz#d8773908e31256109952b1fdb9b3fa867d2775e1"
@@ -9650,7 +9660,6 @@ micromatch@^4.0.0, micromatch@^4.0.2:
 
 "midi@https://github.com/paulrosen/MIDI.js.git#abcjs":
   version "0.4.2"
-  uid e593ffef81a0350f99448e3ab8111957145ff6b2
   resolved "https://github.com/paulrosen/MIDI.js.git#e593ffef81a0350f99448e3ab8111957145ff6b2"
 
 miller-rabin@^4.0.0:
