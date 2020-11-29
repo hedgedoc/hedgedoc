@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { EditorPreferences } from './editor-preferences/editor-preferences'
 import { EmojiPickerButton } from './emoji-picker/emoji-picker-button'
+import { TablePickerButton } from './table-picker/table-picker-button'
 import './tool-bar.scss'
 import {
   addCodeFences,
@@ -23,7 +24,6 @@ import {
   addList,
   addOrderedList,
   addQuotes,
-  addTable,
   addTaskList,
   makeSelectionBold,
   makeSelectionItalic,
@@ -102,9 +102,7 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor }) => {
         </Button>
       </ButtonGroup>
       <ButtonGroup className={'mx-1 flex-wrap'}>
-        <Button variant='light' onClick={() => addTable(editor)} title={t('editor.editorToolbar.table')}>
-          <ForkAwesomeIcon icon="table"/>
-        </Button>
+        <TablePickerButton editor={editor}/>
         <Button variant='light' onClick={() => addLine(editor)} title={t('editor.editorToolbar.line')}>
           <ForkAwesomeIcon icon="minus"/>
         </Button>

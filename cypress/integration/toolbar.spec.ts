@@ -249,15 +249,58 @@ describe('Toolbar', () => {
     })
   })
 
-  it('table', () => {
-    cy.get('.fa-table')
-      .click()
-    cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span')
-      .should('have.text', '| # 1  | # 2  | # 3  |')
-    cy.get('.CodeMirror-code > div:nth-of-type(3) > .CodeMirror-line > span  span')
-      .should('have.text', '| ---- | ---- | ---- |')
-    cy.get('.CodeMirror-activeline > .CodeMirror-line > span ')
-      .should('have.text', '| Text | Text | Text |')
+  describe('table', () => {
+    beforeEach(() => {
+      cy.get('.table-picker-container')
+        .should('not.be.visible')
+      cy.get('.fa-table')
+        .last()
+        .click()
+      cy.get('.table-picker-container')
+        .should('be.visible')
+    })
+
+    it('overlay', () => {
+      cy.get('.table-container > div:nth-of-type(25)')
+        .trigger('mouseover')
+      cy.get('.table-cell.bg-primary')
+        .should('have.length', 15)
+      cy.get('.table-picker-container > p')
+        .contains('5x3')
+      cy.get('.table-container > div:nth-of-type(25)')
+        .click()
+    })
+
+    it('custom', () => {
+      cy.get('.modal-dialog')
+        .should('not.exist')
+      cy.get('.fa-table')
+        .first()
+        .click()
+      cy.get('.modal-dialog')
+        .should('be.visible')
+      cy.get('.modal-content > .d-flex > input')
+        .first()
+        .type('5')
+      cy.get('.modal-content > .d-flex > input')
+        .last()
+        .type('3')
+      cy.get('.modal-footer > button')
+        .click()
+    })
+
+    afterEach(() => {
+      cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span')
+        .should('have.text', '|  # 1 |  # 2 |  # 3 |  # 4 |  # 5 |')
+      cy.get('.CodeMirror-code > div:nth-of-type(3) > .CodeMirror-line > span  span')
+        .should('have.text', '| ---- | ---- | ---- | ---- | ---- |')
+      cy.get('.CodeMirror-code > div:nth-of-type(4) > .CodeMirror-line > span  span')
+        .should('have.text', '| Text | Text | Text | Text | Text |')
+      cy.get('.CodeMirror-code > div:nth-of-type(5) > .CodeMirror-line > span  span')
+        .should('have.text', '| Text | Text | Text | Text | Text |')
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span ')
+        .should('have.text', '| Text | Text | Text | Text | Text |')
+    })
   })
 
   it('line', () => {
@@ -269,9 +312,9 @@ describe('Toolbar', () => {
 
   it('collapsable block', () => {
     cy.get('.fa-caret-square-o-down')
-    .click()
+     .click()
     cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span')
-    .should('have.text', '<details>')
+     .should('have.text', '<details>')
   })
 
   it('comment', () => {

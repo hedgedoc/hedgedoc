@@ -275,7 +275,14 @@
             "link": "Link",
             "image": "Image",
             "uploadImage": "Upload Image",
-            "table": "Table",
+            "table": {
+                "title": "Table",
+                "size": "{{cols}}x{{rows}} Table",
+                "customSize": "Custom Size",
+                "cols": "Cols",
+                "rows": "Rows",
+                "create": "Create Custom Table"
+            },
             "line": "Horizontal line",
             "collapsableBlock": "Collapsable block",
             "comment": "Comment",
