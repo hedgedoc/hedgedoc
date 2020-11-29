@@ -3,7 +3,7 @@ openapi: 3.0.1
 info:
   title: HedgeDoc
   description: HedgeDoc is an open source collaborative note editor. Several tasks of HedgeDoc can be automated through this API.
-  version: 1.6.0
+  version: 1.7.0-rc1
   contact:
     name: HedgeDoc on GitHub
     url: https://github.com/hedgedoc/hedgedoc
