@@ -1,5 +1,4 @@
-History of CodiMD
-===
+# History of HedgeDoc
 
 ## It started with HackMD
 
@@ -27,14 +26,29 @@ project), as people mistook it for an open core development model.
 
 ## CodiMD went independent
 
-In March 2019, a discussion over licensing, governance and the future of CodiMD
-lead to the formation of a distinct GitHub organization. Up to that point, the
-community project resided in the organization of hackmdio but was for the most
-part self-organized.
+In March 2019, a discussion over licensing, governance and the future of CodiMD lead to the formation of a distinct
+GitHub organization. Up to that point, the community project resided in the organization of hackmdio but was for the
+most part self-organized.
 
-During that debate, we did not reach an agreement that would have allowed us to
-move the repository, so we simply forked it. We still welcome the HackMD team
-as part of our community, especially since a large portion of this code base
+During that debate, we did not reach an agreement that would have allowed us to move the repository, so we simply forked
+it. We still welcome the HackMD team as part of our community, especially since a large portion of this code base
 originated with them.
 
-*For the debate that lead to this step, please refer to the [governance debate](https://github.com/hackmdio/hackmd/issues/1170) and [the announcement of the new repository](https://github.com/codimd/server/issues/10).*
+*For the debate that lead to this step, please refer to
+the [governance debate](https://github.com/hackmdio/hackmd/issues/1170)
+and [the announcement of the new repository](https://github.com/hedgedoc/hedgedoc/issues/10).*
+
+## CodiMD became HedgeDoc
+
+With two actively named forks sharing the same name,
+both [insisting on being the original/actual owner of the name CodiMD](https://github.com/hackmdio/codimd/issues/1219),
+people became rightfully confused about the projects sharing the same name.
+
+After roughly a year of being stuck on the name issue, the HedgeDoc community decided to take action and started
+a [renaming process in April 2020](https://community.codimd.org/t/renaming-yet-another-time/102). With a good head start
+in the amount of names, it was decided that an entire rebranding should take place and therefore, after
+a [name was agreed on in July 2020](https://community.codimd.org/t/codimd-becomes-hedgedoc/170), the next step was
+to [find a logo](https://community.codimd.org/t/time-to-find-the-hedgedoc-logo/171).
+
+In November of 2020, roughly 7 months after the initiative was started, a logo was found, the rebranding of the
+application as well as all community pages took place and the time of name conflicts was over. (hopefully.)
