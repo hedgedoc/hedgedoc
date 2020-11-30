@@ -5,18 +5,17 @@ SPDX-License-Identifier: AGPL-3.0-only
 */
 
 import React, { Suspense, useCallback, useEffect, useState } from 'react'
-import { useLocation } from 'react-router'
+import { useFrontendBaseUrl } from '../../hooks/common/use-frontend-base-url'
 import './application-loader.scss'
 import { createSetUpTaskList, InitTask } from './initializers'
 import { LoadingScreen } from './loading-screen'
 
 export const ApplicationLoader: React.FC = ({ children }) => {
-  const { pathname } = useLocation()
+  const frontendUrl = useFrontendBaseUrl()
 
   const setUpTasks = useCallback(() => {
-    const baseUrl: string = window.location.pathname.replace(pathname, '')
-    return createSetUpTaskList(baseUrl)
-  }, [pathname])
+    return createSetUpTaskList(frontendUrl)
+  }, [frontendUrl])
 
   const [failedTitle, setFailedTitle] = useState<string>('')
   const [doneTasks, setDoneTasks] = useState<number>(0)
