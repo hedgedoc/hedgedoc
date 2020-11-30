@@ -10,6 +10,6 @@
     ":gitSignOff"
   ],
   "labels": [
-    "dependencies"
+    "type: maintenance"
   ]
 }
