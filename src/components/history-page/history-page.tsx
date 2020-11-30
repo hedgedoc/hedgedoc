@@ -153,21 +153,25 @@ export const HistoryPage: React.FC = () => {
         })
       })
     } else if (location === HistoryEntryOrigin.REMOTE) {
-      const entry = remoteHistoryEntries.find(entry => entry.id === entryId)
-      if (!entry) {
+      const foundEntry = remoteHistoryEntries.find(entry => entry.id === entryId)
+      if (!foundEntry) {
         setError('notFoundEntry')
         return
       }
-      entry.pinned = !entry.pinned
-      updateHistoryEntry(entryId, entry)
-        .then(() => setRemoteHistoryEntries((entries) => {
-          return entries.map((entry) => {
-            if (entry.id === entryId) {
-              entry.pinned = !entry.pinned
-            }
-            return entry
-          })
-        }))
+      const changedEntry = {
+        ...foundEntry,
+        pinned: !foundEntry.pinned
+      }
+      updateHistoryEntry(entryId, changedEntry)
+        .then(() => setRemoteHistoryEntries((entries) => (
+          entries.map((entry) => {
+              if (entry.id === entryId) {
+                entry.pinned = !entry.pinned
+              }
+              return entry
+            })
+          )
+        ))
         .catch(() => setError('updateEntry'))
     }
   }, [remoteHistoryEntries])

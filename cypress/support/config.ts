@@ -15,10 +15,9 @@ export const branding = {
 }
 
 beforeEach(() => {
-  cy.server()
-  cy.route({
-    url: '/api/v2/config',
-    response: {
+  cy.intercept('/api/v2/config', {
+    statusCode: 200,
+    body: {
       allowAnonymous: true,
       authProviders: {
         facebook: true,

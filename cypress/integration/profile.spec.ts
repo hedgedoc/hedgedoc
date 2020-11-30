@@ -6,29 +6,32 @@
 
 describe('profile page', () => {
   beforeEach(() => {
-    cy.route({
+    cy.intercept({
       url: '/api/v2/tokens',
-      method: 'GET',
-      response: [
+      method: 'GET'
+    }, {
+      body: [
         {
           label: "cypress-App",
           created: 1601991518
         }
       ]
     })
-    cy.route({
+    cy.intercept({
       url: '/api/v2/tokens',
-      method: 'POST',
-      response: {
+      method: 'POST'
+    }, {
+      body: {
         label: 'cypress',
         secret: 'c-y-p-r-e-s-s',
         created: Date.now()
       }
     })
-    cy.route({
+    cy.intercept({
       url: '/api/v2/tokens/1601991518',
-      method: 'DELETE',
-      response: []
+      method: 'DELETE'
+    }, {
+      body: []
     })
     cy.visit('/profile')
   })
