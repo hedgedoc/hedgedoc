@@ -2,7 +2,7 @@
 name: Question / Other
 about: Questions about the project, features, or organziational issues
 title: ''
-labels: question
+labels: 'type: question'
 assignees: ''
 
 ---
