@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve HedgeDoc.
 title: ''
-labels: 'bug'
+labels: 'type: bug'
 assignees: ''
 
 ---
