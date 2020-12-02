@@ -31,6 +31,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - Alternative anchor URL formats
 - Import HTML and convert to Markdown
 - Import content from a url
+- F9 shortcut to sort lines
 
 ### Added
 

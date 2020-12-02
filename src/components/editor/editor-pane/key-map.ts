@@ -24,7 +24,7 @@ const esc = (editor: Editor): void | typeof Pass => {
     return CodeMirror.Pass
   }
 }
-const suppressSave = (): undefined => undefined
+const suppressKey = (): undefined => undefined
 const tab = (editor: Editor) => {
   const tab = '\t'
 
@@ -69,9 +69,10 @@ const tab = (editor: Editor) => {
 
 export const defaultKeyMap: KeyMap = !isMac
   ? {
+      F9: suppressKey,
       F10: f10,
       Esc: esc,
-      'Ctrl-S': suppressSave,
+      'Ctrl-S': suppressKey,
       Enter: 'newlineAndIndentContinueMarkdownList',
       Tab: tab,
       Home: 'goLineLeftSmart',
@@ -83,9 +84,10 @@ export const defaultKeyMap: KeyMap = !isMac
       'Ctrl-M': markSelection
     }
   : {
+      F9: suppressKey,
       F10: f10,
       Esc: esc,
-      'Cmd-S': suppressSave,
+      'Cmd-S': suppressKey,
       Enter: 'newlineAndIndentContinueMarkdownList',
       Tab: tab,
       'Cmd-Left': 'goLineLeftSmart',
