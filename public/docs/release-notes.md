@@ -1,5 +1,13 @@
 # Release Notes
 
+## <i class="fa fa-tag"></i> 1.7.0-rc2 <i class="fa fa-calendar-o"></i> 2020-12-02
+Changes since 1.7.0-rc1:
+
+### Bugfixes
+- Fix crash when OAuth2 config parameters are missing (thanks to [@vberger](https://github.com/vberger) for reporting!)
+- Handle broken `SequelizeMeta` table on MySQL/MariaDB (thanks to [@titulebolide](https://github.com/titulebolide) for reporting!)
+
+
 ## <i class="fa fa-tag"></i> 1.7.0-rc1 <i class="fa fa-calendar-o"></i> 2020-11-29
 
 We have renamed to HedgeDoc!
