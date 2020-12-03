@@ -38,7 +38,7 @@ originated with them.
 
 ## CodiMD became HedgeDoc
 
-With two actively named forks, sharing the same name. Both [insisting on being
+With two actively named forks sharing the same name, both [insisting on being
 the original/actual owner of the name CodiMD](https://github.com/hackmdio/codimd/issues/1219),
 people became rightfully confused about the projects sharing the same name.
 
@@ -49,6 +49,6 @@ rebranding should take place and therefore, after a [name was agreed on in July
 2020](https://community.codimd.org/t/codimd-becomes-hedgedoc/170), the next step
 was to [find a logo](https://community.codimd.org/t/time-to-find-the-hedgedoc-logo/171).
 
-In November of 2020, roughly 7 months after the initive was started, a logo was
+In November of 2020, roughly 7 months after the initiative was started, a logo was
 found, the rebranding of the application as well as all community pages took place
-and the time of name conficts was over. (hopefully.)
+and the time of name conflicts was over. (hopefully.)
