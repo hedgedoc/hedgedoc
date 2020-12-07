@@ -1742,10 +1742,10 @@
   resolved "https://registry.yarnpkg.com/@types/clone/-/clone-2.1.0.tgz#cb888a3fe5319275b566ae3a9bc606e310c533d4"
   integrity sha512-d/aS/lPOnUSruPhgNtT8jW39fHRVTLQy9sodysP1kkG8EdAtdZu1vt8NJaYA8w/6Z9j8izkAsx1A/yJhcYR1CA==
 
-"@types/codemirror@0.0.100":
-  version "0.0.100"
-  resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-0.0.100.tgz#3ebdf1514208d73f38c25925d9cf9399a42a7471"
-  integrity sha512-4jGmu1T8vpQrJCe8cbe3KveiJmK2UAt3rZO2qE2sPoMhGLuwW0cMzFYJLyXebbRJg5G3RbuUXLip1IHPUESkFA==
+"@types/codemirror@0.0.102":
+  version "0.0.102"
+  resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-0.0.102.tgz#56049f14a85e170fc5b71bd76517089ca74a4036"
+  integrity sha512-WZZW8VL8BAzzAZWkiYnM5VsYz1qWYieRqHPPtC/BB015QXd3LPXtBlbRYA8lauKgM10qWYeLH8p5LsIn2SLXfA==
   dependencies:
     "@types/tern" "*"
 
@@ -2121,10 +2121,18 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@*", "@types/jest@26.0.15":
+"@types/jest@*":
   version "26.0.15"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.15.tgz#12e02c0372ad0548e07b9f4e19132b834cb1effe"
   integrity sha512-s2VMReFXRg9XXxV+CW9e5Nz8fH2K1aEhwgjUqPPbQd7g95T0laAcvLv032EhFHIa5GHsZ8W7iJEQVaJq6k3Gog==
+  dependencies:
+    jest-diff "^26.0.0"
+    pretty-format "^26.0.0"
+
+"@types/jest@26.0.16":
+  version "26.0.16"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.16.tgz#b47abd50f6ed0503f589db8e126fc8eb470cf87c"
+  integrity sha512-Gp12+7tmKCgv9JjtltxUXokohCAEZfpJaEW5tn871SGRp8I+bRWBonQO7vW5NHwnAHe5dd50+Q4zyKuN35i09g==
   dependencies:
     jest-diff "^26.0.0"
     pretty-format "^26.0.0"
