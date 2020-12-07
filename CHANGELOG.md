@@ -32,6 +32,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - Import HTML and convert to Markdown
 - Import content from a url
 - F9 shortcut to sort lines
+- Highlight.JS language support for `1c` was removed.
 
 ### Added
 

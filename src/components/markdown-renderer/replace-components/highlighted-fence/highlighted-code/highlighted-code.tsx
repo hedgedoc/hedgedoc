@@ -26,17 +26,6 @@ export const escapeHtml = (unsafe: string): string => {
     .replace(/'/g, '&#039;')
 }
 
-const correctLanguage = (language: string | undefined): string | undefined => {
-  switch (language) {
-    case 'html':
-      return 'xml'
-    case 'js':
-      return 'javascript'
-    default:
-      return language
-  }
-}
-
 const replaceCode = (code: string): ReactElement[][] => {
   return code.split('\n')
     .filter(line => !!line)
@@ -47,10 +36,9 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
   const [dom, setDom] = useState<ReactElement[]>()
 
   useEffect(() => {
-    import(/* webpackChunkName: "highlight.js" */ 'highlight.js').then((hljs) => {
-      const correctedLanguage = correctLanguage(language)
-      const languageSupported = (lang: string) => hljs.listLanguages().includes(lang)
-      const unreplacedCode = !!correctedLanguage && languageSupported(correctedLanguage) ? hljs.highlight(correctedLanguage, code).value : escapeHtml(code)
+    import(/* webpackChunkName: "highlight.js" */ '../../../../common/hljs/hljs').then(( hljs)  => {
+      const languageSupported = (lang: string) => hljs.default.listLanguages().includes(lang)
+      const unreplacedCode = !!language && languageSupported(language) ? hljs.default.highlight(language, code).value : escapeHtml(code)
       const replacedDom = replaceCode(unreplacedCode).map((line, index) => (
         <Fragment key={index}>
           <span className={'linenumber'} data-line-number={(startLineNumber || 1) + index}/>

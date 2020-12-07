@@ -11,7 +11,7 @@ const wordRegExp = /^```((\w|-|_|\+)*)$/
 let allSupportedLanguages: string[] = []
 
 const codeBlockHint = (editor: Editor): Promise< Hints| null > => {
-  return import(/* webpackChunkName: "highlight.js" */ 'highlight.js').then(hljs =>
+  return import(/* webpackChunkName: "highlight.js" */ '../../../common/hljs/hljs').then((hljs) =>
     new Promise((resolve) => {
       const searchTerm = findWordAtCursor(editor)
       const searchResult = wordRegExp.exec(searchTerm.text)
@@ -21,7 +21,7 @@ const codeBlockHint = (editor: Editor): Promise< Hints| null > => {
       }
       const term = searchResult[1]
       if (allSupportedLanguages.length === 0) {
-        allSupportedLanguages = hljs.listLanguages().concat('csv', 'flow', 'html', 'js', 'markmap', 'abc', 'graphviz', 'mermaid', 'vega-lite')
+        allSupportedLanguages = hljs.default.listLanguages().concat('csv', 'flow', 'html', 'js', 'markmap', 'abc', 'graphviz', 'mermaid', 'vega-lite')
       }
       const suggestions = search(term, allSupportedLanguages)
       const cursor = editor.getCursor()
