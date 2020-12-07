@@ -161,7 +161,7 @@
         "@testing-library/cypress": "7.0.2",
         "@types/redux-devtools": "3.0.47",
         "@types/redux-devtools-extension": "2.13.2",
-        "cross-env": "7.0.2",
+        "cross-env": "7.0.3",
         "cypress": "6.0.1",
         "cypress-commands": "1.1.0",
         "cypress-file-upload": "4.1.1",
