@@ -37,6 +37,13 @@
       "automerge": true
     },
     {
+      "groupName": "markmap",
+      "packagePatterns": [
+        "markmap-view",
+        "markmap-lib"
+      ]
+    },
+    {
       "groupName": "JS test packages",
       "packagePatterns": [
         "^@testing-library/"
