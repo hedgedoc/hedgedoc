@@ -89,7 +89,7 @@
         "react-diff-viewer": "3.1.1",
         "react-dom": "17.0.1",
         "react-html-parser": "2.0.2",
-        "react-i18next": "11.7.3",
+        "react-i18next": "11.8.0",
         "react-redux": "7.2.2",
         "react-router": "5.2.0",
         "react-router-bootstrap": "0.25.0",
