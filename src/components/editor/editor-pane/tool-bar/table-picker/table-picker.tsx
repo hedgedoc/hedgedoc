@@ -56,6 +56,7 @@ export const TablePicker: React.FC<TablePickerProps> = ({ show, onDismiss, onTab
         {createNumberRangeArray(8).map((row: number) => (
           createNumberRangeArray(10).map((col: number) => (
             <div
+              key={`${row}_${col}`}
               className={`table-cell ${tableSize && row < tableSize.rows && col < tableSize.columns ? 'bg-primary' : ''}`}
               onMouseEnter={() => {
                 setTableSize({
