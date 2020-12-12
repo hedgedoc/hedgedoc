@@ -9473,35 +9473,35 @@ markdown-it@^11.0.0:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-markmap-common@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/markmap-common/-/markmap-common-0.1.0.tgz#0577825d030245ad4fe69cf5243e794c4e814bb4"
-  integrity sha512-J8j0cl4ua31NYADQfxJpBjfYe4GUtm5okWbab8Z25R274+cfezXIlrlnIATSI4HZi/qxiurGiEpXwbTB1rV+Bw==
+markmap-common@0.1.2, markmap-common@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/markmap-common/-/markmap-common-0.1.2.tgz#2ffdfbcd9a7d27765d326c253174e606216c6762"
+  integrity sha512-2HcqhhXogGvofOJMfqCBU5ZGSgUxluz81f7uCSKu9iTQFirFp4xGlRn8VXhuRv5O7TONfnA9a/6g1++EPstjag==
   dependencies:
     "@babel/runtime" "^7.12.1"
 
-markmap-lib@0.10.2:
-  version "0.10.2"
-  resolved "https://registry.yarnpkg.com/markmap-lib/-/markmap-lib-0.10.2.tgz#68c855021f5e43068fd2a47f398bb4daa52044a3"
-  integrity sha512-IKtYn3gZMB0wgG3D4N56HlwpQTI+adK03JpzEwe+05h7RlJhuIq466W8hTGRs7JE8r0gL8Q/8J5xoulkabKPFQ==
+markmap-lib@0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/markmap-lib/-/markmap-lib-0.11.1.tgz#08118d394b564218a660111d755b3316ca044695"
+  integrity sha512-oUJOy3EE/+0irnIsL+hb2+dnhdT4t7L0vUGSwtlX0I9F5nkuPmd0pInVAwzN2iasRg/qyuYo4NOb+yDw3vWjjA==
   dependencies:
     "@babel/runtime" "^7.12.5"
     katex "^0.12.0"
-    markmap-common "^0.1.0"
+    markmap-common "^0.1.2"
     prismjs "^1.21.0"
     remarkable "^2.0.0"
     remarkable-katex "^1.1.6"
 
-markmap-view@0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/markmap-view/-/markmap-view-0.1.2.tgz#818ebed4f5f03f20b7e214a2b1663285397bec13"
-  integrity sha512-d0iD+fa47BuzrfQsVf4GZ/u5SCLH/kYltQbw76h/sDHMgVA2FNI+dPKhKmTJe8z5rudCGd2yEDJ3dx0QLntibw==
+markmap-view@0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/markmap-view/-/markmap-view-0.2.1.tgz#012f42286785621a3025414da37d5daf267e1954"
+  integrity sha512-Z+ylQlWZA+SUQVpzJTJZyF50fNTpmm0bAAC/7Jf4Rp0mmSGJu8ROlqmTE6fNVl66xW9Yx6T8wiS5caqhTvlNgw==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@types/d3" "^6.0.0"
     d3 "^6.2.0"
     d3-flextree "^2.1.1"
-    markmap-common "^0.1.0"
+    markmap-common "^0.1.2"
 
 md5.js@^1.3.4:
   version "1.3.5"

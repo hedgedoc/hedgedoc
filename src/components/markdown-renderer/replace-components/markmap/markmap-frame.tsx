@@ -45,17 +45,15 @@ export const MarkmapFrame: React.FC<MarkmapFrameProps> = ({ code }) => {
       return
     }
     const actualContainer = diagramContainer.current
-    Promise.all([import(/* webpackChunkName: "markmap" */ 'markmap-lib'), import(/* webpackChunkName: "markmap" */ 'markmap-view')])
-      .then(([{ transform }, { Markmap }]) => {
-        const svg: SVGSVGElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
-        svg.setAttribute('width', '100%')
-        actualContainer.querySelectorAll('svg').forEach(child => child.remove())
-        actualContainer.appendChild(svg)
-        const { root } = transform(code)
-        Markmap.create(svg, {}, root)
-      }).catch(() => {
-        console.error('error while loading markmap')
-      })
+    import('./markmap-loader').then(({ markmapLoader }) => {
+      const svg: SVGSVGElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+      svg.setAttribute('width', '100%')
+      actualContainer.querySelectorAll('svg').forEach(child => child.remove())
+      actualContainer.appendChild(svg)
+      markmapLoader(svg, code)
+    }).catch(() => {
+      console.error('error while loading markmap')
+    })
   }, [code])
 
   return (
