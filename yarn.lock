@@ -11833,10 +11833,10 @@ react-html-parser@2.0.2:
   dependencies:
     htmlparser2 "^3.9.0"
 
-react-i18next@11.8.0:
-  version "11.8.0"
-  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.8.0.tgz#5e018953271dd409255b65e10f1d6d87394fb709"
-  integrity sha512-O1EWv1B7biJV8twrOw0JIuSlBi1lMv+BBt5GckhYprqFsZ3iAelZ7sDD9jKN3Nqu7vs4tPKgIBlWNwkUAXkgCw==
+react-i18next@11.8.3:
+  version "11.8.3"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.8.3.tgz#d365586a537f759a1bff75e01054f6a5fc71e4f5"
+  integrity sha512-E5LjGmM3Kgje4M0oSkHFNAxiU1BM+P1J9QPfF7+Agm4sa1YS18GhQNJCZD3o9ofZLjq8ocQfGUuYweYGfrj0RQ==
   dependencies:
     "@babel/runtime" "^7.3.1"
     html-parse-stringify2 "2.0.1"
