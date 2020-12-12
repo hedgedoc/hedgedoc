@@ -98,7 +98,7 @@
         "react-use": "15.3.4",
         "redux": "4.0.5",
         "ts-mockery": "1.2.0",
-        "typescript": "4.0.5",
+        "typescript": "4.1.3",
         "use-media": "1.4.0",
         "use-resize-observer": "7.0.0",
         "uuid": "8.3.2",
