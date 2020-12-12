@@ -28,7 +28,7 @@ import { md } from './extra'
    * Retrieves the markdown contents of a slide section
    * element. Normalizes leading tabs/whitespace.
    */
-  function getMarkdownFromSlide (section) {
+  function getMarkdownFromSlide(section) {
     var template = section.querySelector('script')
 
     // strip leading whitespace so it isn't evaluated as code
@@ -55,7 +55,7 @@ import { md } from './extra'
    * parsing. Used to forward any other user-defined arguments
    * to the output markdown slide.
    */
-  function getForwardedAttributes (section) {
+  function getForwardedAttributes(section) {
     var attributes = section.attributes
     var result = []
 
@@ -66,13 +66,8 @@ import { md } from './extra'
       // disregard attributes that are used for markdown loading/parsing
       if (/data-(markdown|separator|vertical|notes)/gi.test(name)) continue
 
-      if (value) {
-        result.push(name + '="' + value + '"')
-      } else {
-        result.push(name)
-      }
+      (value) ? result.push(name + '="' + value + '"') : result.push(name)
     }
-
     return result.join(' ')
   }
 
@@ -80,7 +75,7 @@ import { md } from './extra'
    * Inspects the given options and fills out default
    * values for what's not defined.
    */
-  function getSlidifyOptions (options) {
+  function getSlidifyOptions(options) {
     options = options || {}
     options.separator = options.separator || DEFAULT_SLIDE_SEPARATOR
     options.notesSeparator = options.notesSeparator || DEFAULT_NOTES_SEPARATOR
@@ -92,7 +87,7 @@ import { md } from './extra'
   /**
    * Helper function for constructing a markdown slide.
    */
-  function createMarkdownSlide (content, options) {
+  function createMarkdownSlide(content, options) {
     options = getSlidifyOptions(options)
 
     var notesMatch = content.split(new RegExp(options.notesSeparator, 'mgi'))
@@ -112,7 +107,7 @@ import { md } from './extra'
    * Parses a data string into multiple slides based
    * on the passed in separator arguments.
    */
-  function slidify (markdown, options) {
+  function slidify(markdown, options) {
     options = getSlidifyOptions(options)
 
     var separatorRegex = new RegExp(options.separator + (options.verticalSeparator ? '|' + options.verticalSeparator : ''), 'mg')
@@ -179,7 +174,7 @@ import { md } from './extra'
    * multi-slide markdown into separate sections and
    * handles loading of external markdown.
    */
-  function processSlides () {
+  function processSlides() {
     var sections = document.querySelectorAll('[data-markdown]')
     var section
 
@@ -209,10 +204,10 @@ import { md } from './extra'
               })
             } else {
               section.outerHTML = '<section data-state="alert">' +
-              'ERROR: The attempt to fetch ' + url + ' failed with HTTP status ' + xhr.status + '.' +
-              'Check your browser\'s JavaScript console for more details.' +
-              '<p>Remember that you need to serve the presentation HTML from a HTTP server.</p>' +
-              '</section>'
+                'ERROR: The attempt to fetch ' + url + ' failed with HTTP status ' + xhr.status + '.' +
+                'Check your browser\'s JavaScript console for more details.' +
+                '<p>Remember that you need to serve the presentation HTML from a HTTP server.</p>' +
+                '</section>'
             }
           }
         }
@@ -246,7 +241,7 @@ import { md } from './extra'
    * directly on refresh (F5)
    * http://stackoverflow.com/questions/5690269/disabling-chrome-cache-for-website-development/7000899#answer-11786277
    */
-  function addAttributeInElement (node, elementTarget, separator) {
+  function addAttributeInElement(node, elementTarget, separator) {
     var mardownClassesInElementsRegex = new RegExp(separator, 'mg')
     var mardownClassRegex = new RegExp('([^"= ]+?)="([^"=]+?)"', 'mg')
     var nodeValue = node.nodeValue
@@ -270,7 +265,7 @@ import { md } from './extra'
    * Add attributes to the parent element of a text node,
    * or the element of an attribute node.
    */
-  function addAttributes (section, element, previousElement, separatorElementAttributes, separatorSectionAttributes) {
+  function addAttributes(section, element, previousElement, separatorElementAttributes, separatorSectionAttributes) {
     if (element != null && element.childNodes !== undefined && element.childNodes.length > 0) {
       var previousParentElement = element
       for (var i = 0; i < element.childNodes.length; i++) {
@@ -308,7 +303,7 @@ import { md } from './extra'
    * Converts any current data-markdown slides in the
    * DOM to HTML.
    */
-  function convertSlides () {
+  function convertSlides() {
     var sections = document.querySelectorAll('[data-markdown]')
 
     for (var i = 0, len = sections.length; i < len; i++) {
@@ -326,11 +321,11 @@ import { md } from './extra'
         var result = window.postProcess(rendered)
         section.innerHTML = result[0].outerHTML
         addAttributes(section, section, null, section.getAttribute('data-element-attributes') ||
-        section.parentNode.getAttribute('data-element-attributes') ||
-        DEFAULT_ELEMENT_ATTRIBUTES_SEPARATOR,
-        section.getAttribute('data-attributes') ||
-        section.parentNode.getAttribute('data-attributes') ||
-        DEFAULT_SLIDE_ATTRIBUTES_SEPARATOR)
+          section.parentNode.getAttribute('data-element-attributes') ||
+          DEFAULT_ELEMENT_ATTRIBUTES_SEPARATOR,
+          section.getAttribute('data-attributes') ||
+          section.parentNode.getAttribute('data-attributes') ||
+          DEFAULT_SLIDE_ATTRIBUTES_SEPARATOR)
 
         // If there were notes, we need to re-add them after
         // having overwritten the section's HTML

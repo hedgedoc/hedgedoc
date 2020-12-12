@@ -3,12 +3,11 @@
 
 const supported = ['en', 'zh-CN', 'zh-TW', 'fr', 'de', 'ja', 'es', 'ca', 'el', 'pt', 'it', 'tr', 'ru', 'nl', 'hr', 'pl', 'uk', 'hi', 'sv', 'eo', 'da', 'ko', 'id', 'sr', 'vi', 'ar', 'cs', 'sk']
 
-function detectLang () {
+function detectLang() {
   if (Cookies.get('locale')) {
     let lang = Cookies.get('locale')
-    if (lang === 'zh') {
-      lang = 'zh-TW'
-    }
+    lang = (lang === 'zh') ? 'zh-TW' : lang
+
     return lang
   }
   const userLang = navigator.language || navigator.userLanguage
