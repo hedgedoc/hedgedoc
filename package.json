@@ -170,7 +170,7 @@
         "http-server": "0.12.3",
         "redux-devtools": "3.7.0",
         "redux-devtools-extension": "2.13.8",
-        "ts-loader": "8.0.11",
+        "ts-loader": "8.0.12",
         "webpack-bundle-analyzer": "4.2.0"
     },
     "resolutions": {
