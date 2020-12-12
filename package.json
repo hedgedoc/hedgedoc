@@ -101,7 +101,7 @@
         "typescript": "4.0.5",
         "use-media": "1.4.0",
         "use-resize-observer": "7.0.0",
-        "uuid": "8.3.1",
+        "uuid": "8.3.2",
         "vega": "5.17.0",
         "vega-embed": "6.14.0",
         "vega-lite": "4.17.0"
