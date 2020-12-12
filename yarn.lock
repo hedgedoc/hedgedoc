@@ -6913,10 +6913,10 @@ fontsource-source-code-pro@3.1.5:
   resolved "https://registry.yarnpkg.com/fontsource-source-code-pro/-/fontsource-source-code-pro-3.1.5.tgz#0f000f06dfa7220f62c64f572e5d9ee1fd087a8e"
   integrity sha512-eoYyrTaNcgrWc62w0pImfualDr2JE4SKpeGlEqV+Y34tHYbuD5jTIkzx3GrDH4eDw9KDS5wQdlnSVOj+SVy0Zw==
 
-fontsource-source-sans-pro@3.0.9:
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/fontsource-source-sans-pro/-/fontsource-source-sans-pro-3.0.9.tgz#793f426a598564961b21b913d6d32480a3484213"
-  integrity sha512-kBwOSHXR/P+oTGCdemcJM9Z7jYK1O0h+aeqq60fajP/HvhYJWTVBA1ZmKlOX+rHPARLRgfwCv6B4m1UC7bHsoA==
+fontsource-source-sans-pro@3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/fontsource-source-sans-pro/-/fontsource-source-sans-pro-3.1.5.tgz#575edceadf0e68603c1c74b087f4423738cce2f9"
+  integrity sha512-DQDvGj/txs8wcXoym1Ji4EropFphA9mfAP4CgYPOIGvZ3OieP8QQjUlZv9Razy7CmWVvAa6GbOXKbahYfjVs+w==
 
 for-in@^0.1.3:
   version "0.1.8"
