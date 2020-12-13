@@ -125,7 +125,7 @@ digraph D {
 
 ## High Res Image
 
-![Wheat Field with Cypresses](/highres.jpg)
+![Wheat Field with Cypresses](/img/highres.jpg)
 
 ## Sequence Diagram (deprecated)
 
