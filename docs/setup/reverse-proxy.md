@@ -7,7 +7,7 @@ This documentation will cover HTTPS setup, with comments for HTTP setup.
 
 ## HedgeDoc config
 
-[Full explaination of the configuration options](../configuration.md)
+[Full explanation of the configuration options](../configuration.md)
 
 | `config.json` parameter | Environment variable | Value | Example |
 |-------------------------|----------------------|-------|---------|
