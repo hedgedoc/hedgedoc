@@ -7,7 +7,7 @@ This documentation will cover HTTPS setup, with comments for HTTP setup.
 
 ## HedgeDoc config
 
-[Full explaination of the configuration options](../configuration.md)
+[Full explanation of the configuration options](../configuration.md)
 
 | `config.json` parameter | Environment variable | Value | Example |
 |-------------------------|----------------------|-------|---------|
@@ -67,3 +67,29 @@ server {
     ssl_dhparam ssl-dhparams.pem;
 }
 ```
+### Apache
+You will need these modules enabled: `proxy`, `proxy_http` and `proxy_wstunnel`.  
+Here is an example config snippet:
+```
+<VirtualHost *:443>
+  ServerName hedgedoc.example.com
+
+  RewriteEngine on
+  RewriteCond %{REQUEST_URI} ^/socket.io             [NC]
+  RewriteCond %{HTTP:Upgrade} =websocket [NC]
+  RewriteRule /(.*)  ws://127.0.0.1:3000/$1          [P,L]
+
+  ProxyPass / http://127.0.0.1:3000/
+  ProxyPassReverse / http://127.0.0.1:3000/
+
+  RequestHeader set "X-Forwarded-Proto" expr=%{REQUEST_SCHEME}
+        
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+  SSLCertificateFile /etc/letsencrypt/live/hedgedoc.example.com/fullchain.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/hedgedoc.example.com/privkey.pem
+  Include /etc/letsencrypt/options-ssl-apache.conf
+</VirtualHost>
+```
+
