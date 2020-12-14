@@ -31,6 +31,10 @@ Files: public/robots.txt
 Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
 License: CC0-1.0
 
+Files: .idea/**
+Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
 Files: .github/ISSUE_TEMPLATE/*.md
 Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
 License: CC-BY-SA-4.0
