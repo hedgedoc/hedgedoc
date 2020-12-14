@@ -6869,6 +6869,11 @@ find-up@^3.0.0:
   dependencies:
     locate-path "^3.0.0"
 
+firacode@5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/firacode/-/firacode-5.2.0.tgz#2eab5b4f59e3197d5e84f15a25485a88f0cd3180"
+  integrity sha512-Q1SO7vibzYcT+KaohGK0ypGS58zLtO2o2UuiLvngTEhBbHQoZmZ4DAiugj0MNNpeM4jG9gM9NyusVDM3MxYP7A==
+
 flat-cache@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-2.0.1.tgz#5d296d6f04bda44a4630a301413bdbc2ec085ec0"
@@ -6907,11 +6912,6 @@ follow-redirects@^1.0.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
   integrity sha512-aq6gF1BEKje4a9i9+5jimNFIpq4Q1WiwBToeRK5NvZBd/TRsmW8BsJfOEGkr76TbOyPVD3OVDN910EcUNtRYEA==
-
-fontsource-source-code-pro@3.1.5:
-  version "3.1.5"
-  resolved "https://registry.yarnpkg.com/fontsource-source-code-pro/-/fontsource-source-code-pro-3.1.5.tgz#0f000f06dfa7220f62c64f572e5d9ee1fd087a8e"
-  integrity sha512-eoYyrTaNcgrWc62w0pImfualDr2JE4SKpeGlEqV+Y34tHYbuD5jTIkzx3GrDH4eDw9KDS5wQdlnSVOj+SVy0Zw==
 
 fontsource-source-sans-pro@3.1.5:
   version "3.1.5"

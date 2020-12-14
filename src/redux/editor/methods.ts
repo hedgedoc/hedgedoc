@@ -11,6 +11,7 @@ import {
   EditorConfig,
   EditorConfigActionType,
   SetEditorConfigAction,
+  SetEditorLigaturesAction,
   SetEditorPreferencesAction,
   SetEditorSyncScrollAction
 } from './types'
@@ -52,12 +53,18 @@ export const setEditorSyncScroll = (syncScroll: boolean): void => {
   store.dispatch(action)
 }
 
-export const setEditorPreferences = (preferences: EditorConfiguration): void => {
+export const setEditorLigatures = (ligatures: boolean): void => {
+  const action: SetEditorLigaturesAction = {
+    type: EditorConfigActionType.SET_LIGATURES,
+    ligatures: ligatures
+  }
+  store.dispatch(action);
+}
+
+export const mergeEditorPreferences = (preferences: EditorConfiguration): void => {
   const action: SetEditorPreferencesAction = {
-    type: EditorConfigActionType.SET_EDITOR_PREFERENCES,
-    preferences: {
-      ...preferences
-    }
+    type: EditorConfigActionType.MERGE_EDITOR_PREFERENCES,
+    preferences: preferences
   }
   store.dispatch(action)
 }

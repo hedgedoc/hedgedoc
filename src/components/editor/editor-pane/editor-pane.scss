@@ -11,11 +11,23 @@
 @import '../../../../node_modules/codemirror/theme/neat';
 @import './one-dark';
 @import 'hints';
+@import '../../../../node_modules/firacode/distr/fira_code.css';
 
 .CodeMirror {
-  font-family: "Source Code Pro", "Twemoji Mozilla", Consolas, monaco, monospace;
+  font-family: "Fira Code", "Twemoji Mozilla", Consolas, monaco, monospace;
   letter-spacing: 0.025em;
   line-height: 1.25;
   font-size: 18px;
   height: 100%;
 }
+
+.no-ligatures .CodeMirror {
+  //These two properties must be set separately because otherwise node-scss breaks.
+  .CodeMirror-line, .CodeMirror-line-like {
+    font-feature-settings: inherit;
+  }
+  .CodeMirror-line, .CodeMirror-line-like {
+    font-variant-ligatures: none;
+  }
+}
+

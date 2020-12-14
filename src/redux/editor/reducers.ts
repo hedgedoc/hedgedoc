@@ -12,12 +12,14 @@ import {
   EditorConfigActions,
   EditorConfigActionType,
   SetEditorConfigAction,
+  SetEditorLigaturesAction,
   SetEditorPreferencesAction,
   SetEditorSyncScrollAction
 } from './types'
 
 const initialState: EditorConfig = {
   editorMode: EditorMode.BOTH,
+  ligatures: true,
   syncScroll: true,
   preferences: {
     theme: 'one-dark',
@@ -28,7 +30,7 @@ const initialState: EditorConfig = {
 }
 
 const getInitialState = (): EditorConfig => {
-  return loadFromLocalStorage() ?? initialState
+  return { ...initialState, ...loadFromLocalStorage() }
 }
 
 export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (state: EditorConfig = getInitialState(), action: EditorConfigActions) => {
@@ -48,10 +50,19 @@ export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (
       }
       saveToLocalStorage(newState)
       return newState
-    case EditorConfigActionType.SET_EDITOR_PREFERENCES:
+    case EditorConfigActionType.SET_LIGATURES:
       newState = {
         ...state,
-        preferences: (action as SetEditorPreferencesAction).preferences
+        ligatures: (action as SetEditorLigaturesAction).ligatures
+      }
+      saveToLocalStorage(newState)
+      return newState
+    case EditorConfigActionType.MERGE_EDITOR_PREFERENCES:
+      newState = {
+        ...state,
+        preferences: {
+          ...state.preferences, ...(action as SetEditorPreferencesAction).preferences
+        }
       }
       saveToLocalStorage(newState)
       return newState

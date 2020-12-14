@@ -37,7 +37,7 @@ export const FlowChart: React.FC<FlowChartProps> = ({ code }) => {
           'line-color': darkModeActivated ? '#ffffff' : '#000000',
           'element-color': darkModeActivated ? '#ffffff' : '#000000',
           'font-color': darkModeActivated ? '#ffffff' : '#000000',
-          'font-family': 'Source Code Pro, "Twemoji Mozilla", monospace'
+          'font-family': 'Source Sans Pro, "Twemoji Mozilla", monospace'
         })
         setError(false)
       } catch (error) {

@@ -4,26 +4,26 @@ SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
 SPDX-License-Identifier: AGPL-3.0-only
 */
 
-import { EditorConfiguration } from 'codemirror'
-import equal from 'fast-deep-equal'
-import React, { Fragment, useCallback, useState } from 'react'
+import equal from "fast-deep-equal"
+import React, { Fragment, useState } from 'react'
 import { Button, Form, ListGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../../../../redux'
-import { setEditorPreferences } from '../../../../../redux/editor/methods'
 import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
 import { CommonModal } from '../../../../common/modals/common-modal'
-import { EditorPreferenceProperty, EditorPreferenceSelect } from './editor-preference-select'
+import { ShowIf } from '../../../../common/show-if/show-if'
+import { EditorPreferenceBooleanProperty } from './editor-preference-boolean-property'
+import { EditorPreferenceInput, EditorPreferenceInputType } from './editor-preference-input'
+import { EditorPreferenceLigaturesSelect } from './editor-preference-ligatures-select'
+import { EditorPreferenceNumberProperty } from './editor-preference-number-property'
+import { EditorPreferenceProperty } from "./editor-preference-property"
+import { EditorPreferenceSelectProperty } from "./editor-preference-select-property"
 
 export const EditorPreferences: React.FC = () => {
   const { t } = useTranslation()
   const [showModal, setShowModal] = useState(false)
-  const preferences = useSelector((state: ApplicationState) => state.editorConfig.preferences, equal)
-
-  const sendPreferences = useCallback((newPreferences: EditorConfiguration) => {
-    setEditorPreferences(newPreferences)
-  }, [])
+  const indentWithTabs = useSelector((state: ApplicationState) => state.editorConfig.preferences.indentWithTabs ?? false, equal)
 
   return (
     <Fragment>
@@ -39,32 +39,27 @@ export const EditorPreferences: React.FC = () => {
         <Form>
           <ListGroup>
             <ListGroup.Item>
-              <EditorPreferenceSelect onChange={sendPreferences} preferences={preferences} property={EditorPreferenceProperty.THEME}>
-                <option value='one-dark'>Dark</option>
-                <option value='neat'>Light</option>
-              </EditorPreferenceSelect>
+              <EditorPreferenceSelectProperty property={EditorPreferenceProperty.THEME} selections={['one-dark', 'neat']}/>
             </ListGroup.Item>
             <ListGroup.Item>
-              <EditorPreferenceSelect onChange={sendPreferences} preferences={preferences} property={EditorPreferenceProperty.KEYMAP}>
-                <option value='sublime'>Sublime</option>
-                <option value='emacs'>Emacs</option>
-                <option value='vim'>Vim</option>
-              </EditorPreferenceSelect>
+              <EditorPreferenceSelectProperty property={EditorPreferenceProperty.KEYMAP} selections={['sublime', 'emacs', 'vim']}/>
             </ListGroup.Item>
             <ListGroup.Item>
-              <EditorPreferenceSelect onChange={sendPreferences} preferences={preferences} property={EditorPreferenceProperty.INDENT_WITH_TABS}>
-                <option value='false'>Spaces</option>
-                <option value='true'>Tab</option>
-              </EditorPreferenceSelect>
+              <EditorPreferenceBooleanProperty property={EditorPreferenceProperty.INDENT_WITH_TABS}/>
+            </ListGroup.Item>
+            <ShowIf condition={!indentWithTabs}>
+              <ListGroup.Item>
+                <EditorPreferenceNumberProperty property={EditorPreferenceProperty.INDENT_UNIT}/>
+              </ListGroup.Item>
+            </ShowIf>
+            <ListGroup.Item>
+              <EditorPreferenceLigaturesSelect/>
             </ListGroup.Item>
             <ListGroup.Item>
-              <EditorPreferenceSelect onChange={sendPreferences} preferences={preferences} property={EditorPreferenceProperty.INDENT_UNIT}/>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <EditorPreferenceSelect onChange={() => alert('This feature is not yet implemented.')} preferences={preferences} property={EditorPreferenceProperty.SPELL_CHECK}>
-                <option value='off'>off</option>
+              <EditorPreferenceInput onChange={() => alert('This feature is not yet implemented.')} property={EditorPreferenceProperty.SPELL_CHECK} type={EditorPreferenceInputType.SELECT}>
+                <option value='off'>Off</option>
                 <option value='en'>English</option>
-              </EditorPreferenceSelect>
+              </EditorPreferenceInput>
             </ListGroup.Item>
           </ListGroup>
         </Form>

@@ -69,6 +69,7 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
   const [editor, setEditor] = useState<Editor>()
   const [statusBarInfo, setStatusBarInfo] = useState<StatusBarInfo>(defaultState)
   const editorPreferences = useSelector((state: ApplicationState) => state.editorConfig.preferences, equal)
+  const ligaturesEnabled = useSelector((state: ApplicationState) => state.editorConfig.ligatures, equal)
 
   const lastScrollPosition = useRef<number>()
   const [editorScroll, setEditorScroll] = useState<ScrollInfo>()
@@ -163,7 +164,7 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
         editor={editor}
       />
       <ControlledCodeMirror
-        className="overflow-hidden w-100 flex-fill"
+        className={`overflow-hidden w-100 flex-fill ${ligaturesEnabled ? '' : 'no-ligatures'}`}
         value={content}
         options={codeMirrorOptions}
         onChange={onChange}

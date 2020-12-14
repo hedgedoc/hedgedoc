@@ -56,6 +56,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - Code blocks with 'vega-lite' as language are rendered as [vega-lite diagrams](https://vega.github.io/vega-lite/examples/).
 - Markdown files can be imported into an existing note directly from the editor.
 - The table button in the toolbar opens an overlay where the user can choose the number of columns and rows
+- A toggle in the editor preferences for turning ligatures on and off.
 
 ### Changed
 
@@ -70,6 +71,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - Use KaTeX instead of MathJax. ([Why?](https://community.codimd.org/t/frequently-asked-questions/190))
 - The dark-mode is also applied to the read-only-view and can be toggled from there.
 - Access tokens for the CLI and 3rd-party-clients can be managed in the user profile.
+- Change editor font to "Fira Code"
 
 ---
 
