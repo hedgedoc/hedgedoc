@@ -38,7 +38,7 @@ describe('Intro', () => {
     })
   })
 
-  it('Versioncan be opened and closed', () => {
+  it('Version can be opened and closed', () => {
     cy.get('#versionModal')
       .should('not.exist')
     cy.get('#version')

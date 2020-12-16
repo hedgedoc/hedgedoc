@@ -8,10 +8,12 @@ import { Action } from 'redux'
 
 export enum DocumentContentActionType {
   SET_DOCUMENT_CONTENT = 'document-content/set',
+  SET_NOTE_ID = 'document-content/noteid/set'
 }
 
 export interface DocumentContent {
   content: string
+  noteId: string
 }
 
 export interface DocumentContentAction extends Action<DocumentContentActionType> {
@@ -20,4 +22,8 @@ export interface DocumentContentAction extends Action<DocumentContentActionType>
 
 export interface SetDocumentContentAction extends DocumentContentAction {
   content: string
+}
+
+export interface SetNoteIdAction extends DocumentContentAction {
+  noteId: string
 }

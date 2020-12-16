@@ -18,3 +18,21 @@ export const getProxiedUrl = async (imageUrl: string): Promise<ImageProxyRespons
   expectResponseCode(response)
   return await response.json() as Promise<ImageProxyResponse>
 }
+
+export interface UploadedMedia {
+  link: string
+}
+
+export const uploadFile = async (noteId: string, contentType: string, media: Blob): Promise<UploadedMedia> => {
+  const response = await fetch(getApiUrl() + '/media/upload', {
+    ...defaultFetchConfig,
+    headers: {
+      'Content-Type': contentType,
+      'HedgeDoc-Note': noteId
+    },
+    method: 'POST',
+    body: media
+  })
+  expectResponseCode(response, 201)
+  return await response.json() as Promise<UploadedMedia>
+}

@@ -9649,6 +9649,7 @@ micromatch@^4.0.0, micromatch@^4.0.2:
 
 "midi@https://github.com/paulrosen/MIDI.js.git#abcjs":
   version "0.4.2"
+  uid e593ffef81a0350f99448e3ab8111957145ff6b2
   resolved "https://github.com/paulrosen/MIDI.js.git#e593ffef81a0350f99448e3ab8111957145ff6b2"
 
 miller-rabin@^4.0.0:

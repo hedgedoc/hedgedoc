@@ -5,16 +5,31 @@
  */
 
 import { Reducer } from 'redux'
-import { DocumentContent, DocumentContentAction, DocumentContentActionType, SetDocumentContentAction } from './types'
+import {
+  DocumentContent,
+  DocumentContentAction,
+  DocumentContentActionType,
+  SetDocumentContentAction,
+  SetNoteIdAction
+} from './types'
 
 export const initialState: DocumentContent = {
-  content: ''
+  content: '',
+  noteId: ''
 }
 
 export const DocumentContentReducer: Reducer<DocumentContent, DocumentContentAction> = (state: DocumentContent = initialState, action: DocumentContentAction) => {
   switch (action.type) {
     case DocumentContentActionType.SET_DOCUMENT_CONTENT:
-      return { content: (action as SetDocumentContentAction).content }
+      return {
+        ...state,
+        content: (action as SetDocumentContentAction).content
+      }
+    case DocumentContentActionType.SET_NOTE_ID:
+      return {
+        ...state,
+        noteId: (action as SetNoteIdAction).noteId
+      }
     default:
       return state
   }

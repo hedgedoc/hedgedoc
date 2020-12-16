@@ -40,6 +40,7 @@ import './editor-pane.scss'
 import { defaultKeyMap } from './key-map'
 import { createStatusInfo, defaultState, StatusBar, StatusBarInfo } from './status-bar/status-bar'
 import { ToolBar } from './tool-bar/tool-bar'
+import { handleUpload } from './upload-handler'
 
 export interface EditorPaneProps {
   onContentChange: (content: string) => void
@@ -59,6 +60,33 @@ const onChange = (editor: Editor) => {
       return
     }
   }
+}
+
+interface PasteEvent {
+  clipboardData: {
+    files: FileList
+  },
+  preventDefault: () => void
+}
+
+const onPaste = (pasteEditor: Editor, event: PasteEvent) => {
+  if (event && event.clipboardData && event.clipboardData.files) {
+    event.preventDefault()
+    const files: FileList = event.clipboardData.files
+    if (files && files.length >= 1) {
+      handleUpload(files[0], pasteEditor)
+    }
+  }
+}
+
+interface DropEvent {
+  pageX: number,
+  pageY: number,
+  dataTransfer: {
+    files: FileList
+    effectAllowed: string
+  } | null
+  preventDefault: () => void
 }
 
 export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentChange, content, scrollState, onScroll, onMakeScrollSource }) => {
@@ -127,6 +155,21 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
     setStatusBarInfo(createStatusInfo(editorWithActivity, maxLength))
   }, [maxLength])
 
+  const onDrop = useCallback((dropEditor: Editor, event: DropEvent) => {
+    if (event && dropEditor && event.pageX && event.pageY && event.dataTransfer &&
+      event.dataTransfer.files && event.dataTransfer.files.length >= 1) {
+      event.preventDefault()
+      const top: number = event.pageY
+      const left: number = event.pageX
+      const newCursor = dropEditor.coordsChar({ top, left }, 'page')
+      dropEditor.setCursor(newCursor)
+      const files: FileList = event.dataTransfer.files
+      handleUpload(files[0], dropEditor)
+    }
+  }, [])
+
+  const onMaxLengthHide = useCallback(() => setShowMaxLengthWarning(false), [])
+
   const codeMirrorOptions: EditorConfiguration = useMemo<EditorConfiguration>(() => ({
     ...editorPreferences,
     mode: 'gfm',
@@ -158,8 +201,8 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
   }), [t, editorPreferences])
 
   return (
-    <div className={'d-flex flex-column h-100'} onMouseEnter={onMakeScrollSource}>
-      <MaxLengthWarningModal show={showMaxLengthWarning} onHide={() => setShowMaxLengthWarning(false)} maxLength={maxLength}/>
+    <div className={'d-flex flex-column h-100 position-relative'} onMouseEnter={onMakeScrollSource}>
+      <MaxLengthWarningModal show={showMaxLengthWarning} onHide={onMaxLengthHide} maxLength={maxLength}/>
       <ToolBar
         editor={editor}
       />
@@ -168,6 +211,8 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
         value={content}
         options={codeMirrorOptions}
         onChange={onChange}
+        onPaste={onPaste}
+        onDrop={onDrop}
         onCursorActivity={onCursorActivity}
         editorDidMount={onEditorDidMount}
         onBeforeChange={onBeforeChange}

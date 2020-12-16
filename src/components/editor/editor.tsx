@@ -7,11 +7,12 @@ SPDX-License-Identifier: AGPL-3.0-only
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
+import { useParams } from 'react-router'
 import useMedia from 'use-media'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { useDocumentTitle } from '../../hooks/common/use-document-title'
 import { ApplicationState } from '../../redux'
-import { setDocumentContent } from '../../redux/document-content/methods'
+import { setDocumentContent, setNoteId } from '../../redux/document-content/methods'
 import { setEditorMode } from '../../redux/editor/methods'
 import { extractNoteTitle } from '../common/document-title/note-title-extractor'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
@@ -40,6 +41,7 @@ const TASK_REGEX = /(\s*[-*] )(\[[ xX]])( .*)/
 
 export const Editor: React.FC = () => {
   const { t } = useTranslation()
+  const { id } = useParams<EditorPathParams>()
   const untitledNote = t('editor.untitledNote')
   const markdownContent = useSelector((state: ApplicationState) => state.documentContent.content)
   const isWide = useMedia({ minWidth: 576 })
@@ -89,6 +91,10 @@ export const Editor: React.FC = () => {
   useViewModeShortcuts()
 
   const isFirstDraw = useFirstDraw()
+
+  useEffect(() => {
+    setNoteId(id)
+  }, [id])
 
   useEffect(() => {
     if (!isFirstDraw && !isWide && editorMode === EditorMode.BOTH) {

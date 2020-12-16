@@ -21,6 +21,10 @@
   height: 100%;
 }
 
+.react-codemirror2.file-drag .CodeMirror-cursors {
+  visibility: visible;
+}
+
 .no-ligatures .CodeMirror {
   //These two properties must be set separately because otherwise node-scss breaks.
   .CodeMirror-line, .CodeMirror-line-like {

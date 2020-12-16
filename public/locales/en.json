@@ -178,6 +178,10 @@
         }
     },
     "editor": {
+        "upload": {
+            "uploadFile": "Uploading file...{{fileName}}",
+            "dropImage": "Drop Image to insert"
+        },
         "untitledNote": "Untitled",
         "placeholder": "← Start by entering a title here\n===\nVisit the features page if you don't know what to do.\nHappy hacking :)",
         "invalidYaml": "The yaml-header is invalid. See <0></0> for more information.",
