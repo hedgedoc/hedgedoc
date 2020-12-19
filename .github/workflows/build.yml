@@ -32,7 +32,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Set up NodeJS
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
       - name: Install dependencies
