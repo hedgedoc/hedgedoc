@@ -95,4 +95,16 @@ describe('Upload', () => {
     cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
       .should('have.text', 'not empty')
   })
+
+  it('text paste still works', () => {
+    const testText = 'a long test text'
+    const pasteEvent = {
+      clipboardData: {
+        getData: (type = 'text') => testText
+      }
+    }
+    cy.get('.CodeMirror-scroll').trigger('paste', pasteEvent)
+    cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
+      .should('have.text', `${testText}`)
+  })
 })

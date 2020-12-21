@@ -70,7 +70,7 @@ interface PasteEvent {
 }
 
 const onPaste = (pasteEditor: Editor, event: PasteEvent) => {
-  if (event && event.clipboardData && event.clipboardData.files) {
+  if (event && event.clipboardData && event.clipboardData.files && event.clipboardData.files.length > 0) {
     event.preventDefault()
     const files: FileList = event.clipboardData.files
     if (files && files.length >= 1) {
