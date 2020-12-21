@@ -1,14 +1,6 @@
 # Release Notes
 
-## <i class="fa fa-tag"></i> 1.7.0-rc2 <i class="fa fa-calendar-o"></i> 2020-12-02
-Changes since 1.7.0-rc1:
-
-### Bugfixes
-- Fix crash when OAuth2 config parameters are missing (thanks to [@vberger](https://github.com/vberger) for reporting!)
-- Handle broken `SequelizeMeta` table on MySQL/MariaDB (thanks to [@titulebolide](https://github.com/titulebolide) for reporting!)
-
-
-## <i class="fa fa-tag"></i> 1.7.0-rc1 <i class="fa fa-calendar-o"></i> 2020-11-29
+## <i class="fa fa-tag"></i> 1.7.0 <i class="fa fa-calendar-o"></i> 2020-12-21
 
 We have renamed to HedgeDoc!
 Many thanks to [Éric Gaspar](https://github.com/ericgaspar/) who designed our new logo!
@@ -39,6 +31,8 @@ This is probably the last release in the 1.x series. Stay tuned for 2.0, schedul
 - Fix broken redirect on login
 - CSS fixes for slide mode
 - Do not create new notes with `null` as content
+- Fix crash when OAuth2 config parameters are missing (thanks to [@vberger](https://github.com/vberger) for reporting!)
+- Handle broken `SequelizeMeta` table on MySQL/MariaDB (thanks to [@titulebolide](https://github.com/titulebolide) for reporting!)
 
 ### Contributors
 - [Adam Worley](https://github.com/AdamWorley)
