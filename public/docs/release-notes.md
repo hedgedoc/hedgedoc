@@ -1,14 +1,6 @@
 # Release Notes
 
-## <i class="fa fa-tag"></i> 1.7.0-rc2 <i class="fa fa-calendar-o"></i> 2020-12-02
-Changes since 1.7.0-rc1:
-
-### Bugfixes
-- Fix crash when OAuth2 config parameters are missing (thanks to [@vberger](https://github.com/vberger) for reporting!)
-- Handle broken `SequelizeMeta` table on MySQL/MariaDB (thanks to [@titulebolide](https://github.com/titulebolide) for reporting!)
-
-
-## <i class="fa fa-tag"></i> 1.7.0-rc1 <i class="fa fa-calendar-o"></i> 2020-11-29
+## <i class="fa fa-tag"></i> 1.7.0 <i class="fa fa-calendar-o"></i> 2020-12-21
 
 We have renamed to HedgeDoc!
 Many thanks to [Éric Gaspar](https://github.com/ericgaspar/) who designed our new logo!
@@ -17,6 +9,10 @@ Have a look at our new website (which also explains the reasoning behind the ren
 This is probably the last release in the 1.x series. Stay tuned for 2.0, scheduled for release next year.
 
 **Please note:** This release dropped support for Node 8, which is end-of-life since January 2020. You now need at least Node 10.13 to run HedgeDoc, but we recommend running [the latest LTS release](https://nodejs.org/en/about/releases/).
+
+**Please note:** If you use a reverse proxy and TLS, make sure it sets the `X-Forwarded-Proto` header correctly,
+otherwise you will encounter login-issues.
+[Our docs](https://github.com/hedgedoc/hedgedoc/blob/72734690225bb431908b0d4bd8edf38576a95f2f/docs/setup/reverse-proxy.md#reverse-proxy-config) have example configs for common reverse proxies. 
 
 ### Enhancements
 - Our release tarballs now contain the frontend bundle. This saves users from building the frontend themselves, which was an issue on memory-constrained systems.
@@ -39,6 +35,8 @@ This is probably the last release in the 1.x series. Stay tuned for 2.0, schedul
 - Fix broken redirect on login
 - CSS fixes for slide mode
 - Do not create new notes with `null` as content
+- Fix crash when OAuth2 config parameters are missing (thanks to [@vberger](https://github.com/vberger) for reporting!)
+- Handle broken `SequelizeMeta` table on MySQL/MariaDB (thanks to [@titulebolide](https://github.com/titulebolide) for reporting!)
 
 ### Contributors
 - [Adam Worley](https://github.com/AdamWorley)
