@@ -57,6 +57,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - Markdown files can be imported into an existing note directly from the editor.
 - The table button in the toolbar opens an overlay where the user can choose the number of columns and rows
 - A toggle in the editor preferences for turning ligatures on and off.
+- Easier possibility to share notes via native share-buttons on supported devices.
 
 ### Changed
 

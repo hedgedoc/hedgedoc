@@ -12,7 +12,7 @@ import useMedia from 'use-media'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { useDocumentTitle } from '../../hooks/common/use-document-title'
 import { ApplicationState } from '../../redux'
-import { setDocumentContent, setNoteId } from '../../redux/document-content/methods'
+import { setDocumentContent, setDocumentMetadata, setNoteId } from '../../redux/document-content/methods'
 import { setEditorMode } from '../../redux/editor/methods'
 import { extractNoteTitle } from '../common/document-title/note-title-extractor'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
@@ -74,6 +74,7 @@ export const Editor: React.FC = () => {
 
   const onMetadataChange = useCallback((metaData: YAMLMetaData | undefined) => {
     noteMetadata.current = metaData
+    setDocumentMetadata(metaData)
     updateDocumentTitle()
   }, [updateDocumentTitle])
 

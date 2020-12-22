@@ -11,7 +11,7 @@ import { useParams } from 'react-router'
 import { getNote, Note } from '../../api/notes'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { useDocumentTitle } from '../../hooks/common/use-document-title'
-import { setDocumentContent } from '../../redux/document-content/methods'
+import { setDocumentContent, setDocumentMetadata } from '../../redux/document-content/methods'
 import { extractNoteTitle } from '../common/document-title/note-title-extractor'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
 import { ShowIf } from '../common/show-if/show-if'
@@ -44,6 +44,7 @@ export const PadViewOnly: React.FC = () => {
 
   const onMetadataChange = useCallback((metaData: YAMLMetaData | undefined) => {
     noteMetadata.current = metaData
+    setDocumentMetadata(metaData)
     updateDocumentTitle()
   }, [updateDocumentTitle])
 

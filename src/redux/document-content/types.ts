@@ -5,15 +5,18 @@
  */
 
 import { Action } from 'redux'
+import { YAMLMetaData } from '../../components/editor/yaml-metadata/yaml-metadata'
 
 export enum DocumentContentActionType {
   SET_DOCUMENT_CONTENT = 'document-content/set',
-  SET_NOTE_ID = 'document-content/noteid/set'
+  SET_NOTE_ID = 'document-content/noteid/set',
+  SET_DOCUMENT_METADATA = 'document-content/metadata/set'
 }
 
 export interface DocumentContent {
   content: string
-  noteId: string
+  noteId: string,
+  metadata: YAMLMetaData
 }
 
 export interface DocumentContentAction extends Action<DocumentContentActionType> {
@@ -26,4 +29,8 @@ export interface SetDocumentContentAction extends DocumentContentAction {
 
 export interface SetNoteIdAction extends DocumentContentAction {
   noteId: string
+}
+
+export interface SetDocumentMetadataAction extends DocumentContentAction {
+  metadata: YAMLMetaData
 }

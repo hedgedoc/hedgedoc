@@ -13,9 +13,9 @@ import { setEditorMode } from '../../../redux/editor/methods'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 
 export enum EditorMode {
-  PREVIEW,
-  BOTH,
-  EDITOR,
+  PREVIEW = 'view',
+  BOTH = 'both',
+  EDITOR = 'edit',
 }
 
 export const EditorViewMode: React.FC = () => {

@@ -9,13 +9,26 @@ import {
   DocumentContent,
   DocumentContentAction,
   DocumentContentActionType,
-  SetDocumentContentAction,
+  SetDocumentContentAction, SetDocumentMetadataAction,
   SetNoteIdAction
 } from './types'
 
 export const initialState: DocumentContent = {
   content: '',
-  noteId: ''
+  noteId: '',
+  metadata: {
+    title: '',
+    description: '',
+    tags: [],
+    robots: '',
+    lang: 'en',
+    dir: 'ltr',
+    breaks: true,
+    GA: '',
+    disqus: '',
+    type: '',
+    opengraph: new Map<string, string>()
+  }
 }
 
 export const DocumentContentReducer: Reducer<DocumentContent, DocumentContentAction> = (state: DocumentContent = initialState, action: DocumentContentAction) => {
@@ -29,6 +42,11 @@ export const DocumentContentReducer: Reducer<DocumentContent, DocumentContentAct
       return {
         ...state,
         noteId: (action as SetNoteIdAction).noteId
+      }
+    case DocumentContentActionType.SET_DOCUMENT_METADATA:
+      return {
+        ...state,
+        metadata: (action as SetDocumentMetadataAction).metadata
       }
     default:
       return state

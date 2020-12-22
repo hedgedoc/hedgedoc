@@ -389,7 +389,9 @@
             },
             "shareLink": {
                 "title": "Share link",
-                "viewOnlyDescription": "This link points to a read-only version of this note. You can use this e.g. for feedback from friends and colleagues."
+                "editorDescription": "This link points to this note in the editor as you currently see it.",
+                "viewOnlyDescription": "This link points to a read-only version of this note. You can use this e.g. for feedback from friends and colleagues.",
+                "slidesDescription": "This link points to the presentation view of the slides."
             },
             "preferences": {
                 "title": "Preferences",
