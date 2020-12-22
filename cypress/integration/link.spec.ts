@@ -115,8 +115,8 @@ describe('Links Intro', () => {
 
   describe('Powered By Links', () => {
     it('HedgeDoc', () => {
-      cy.get('a[href="https://codimd.org"]')
-        .checkExternalLink('https://codimd.org')
+      cy.get('a[href="https://hedgedoc.org"]')
+        .checkExternalLink('https://hedgedoc.org')
     })
 
     it('Releases', () => {
@@ -144,13 +144,13 @@ describe('Links Intro', () => {
 
   describe('Follow us Links', () => {
     it('Github', () => {
-      cy.get('a[href="https://github.com/codimd/"]')
-        .checkExternalLink('https://github.com/codimd/')
+      cy.get('a[href="https://github.com/hedgedoc/"]')
+        .checkExternalLink('https://github.com/hedgedoc/')
     })
 
     it('Discourse', () => {
-      cy.get('a[href="https://community.codimd.org"]')
-        .checkExternalLink('https://community.codimd.org')
+      cy.get('a[href="https://community.hedgedoc.org"]')
+        .checkExternalLink('https://community.hedgedoc.org')
     })
 
     it('Matrix', () => {
@@ -159,13 +159,13 @@ describe('Links Intro', () => {
     })
 
     it('Mastodon', () => {
-      cy.get('a[href="https://social.codimd.org"]')
-        .checkExternalLink('https://social.codimd.org')
+      cy.get('a[href="https://social.hedgedoc.org"]')
+        .checkExternalLink('https://social.hedgedoc.org')
     })
 
     it('POEditor', () => {
-      cy.get('a[href="https://translate.codimd.org"]')
-        .checkExternalLink('https://translate.codimd.org')
+      cy.get('a[href="https://translate.hedgedoc.org"]')
+        .checkExternalLink('https://translate.hedgedoc.org')
     })
   })
 })

@@ -66,7 +66,7 @@ describe('Document Title', () => {
 
     it('just first heading without link syntax', () => {
       cy.get('.CodeMirror textarea')
-        .type(`# ${title} [link](https://codimd.org)`)
+        .type(`# ${title} [link](https://hedgedoc.org)`)
       cy.title().should('eq', `${title} link - HedgeDoc @ ${branding.name}`)
     })
 

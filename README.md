@@ -6,9 +6,9 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # HedgeDoc - React Client
 
-![test, build](https://github.com/codimd/react-client/workflows/test,%20build/badge.svg)
-![e2e](https://github.com/codimd/react-client/workflows/e2e/badge.svg)
-![lint](https://github.com/codimd/react-client/workflows/lint/badge.svg)
+![test, build](https://github.com/hedgedoc/react-client/workflows/test,%20build/badge.svg)
+![e2e](https://github.com/hedgedoc/react-client/workflows/e2e/badge.svg)
+![lint](https://github.com/hedgedoc/react-client/workflows/lint/badge.svg)
 
 This is the new, improved and better looking frontend for HedgeDoc 2.0.
 Our goal is to recreate the current frontend in react and to improve it.
@@ -18,11 +18,11 @@ You'll need at least Node 12. We use [yarn](https://yarnpkg.com/) for our depend
 
 ## Development mode
 
-1. Clone this repo (e.g. `git clone https://github.com/codimd/react-client.git hedgedoc-react-client`)
+1. Clone this repo (e.g. `git clone https://github.com/hedgedoc/react-client.git hedgedoc-react-client`)
 2. Go inside the repo (e.g. `cd hedgedoc-react-client`)
 3. Run `yarn install`
 4. Either run
-    - `yarn start:dev` (expects [a server](https://github.com/codimd/server/tree/develop) running under [http://localhost:3000](http://localhost:3000))
+    - `yarn start:dev` (expects [a server](https://github.com/hedgedoc/hedgedoc/tree/develop) running under [http://localhost:3000](http://localhost:3000))
     - `yarn start` (makes all api calls to the same domain the react-client runs on (normally [http://localhost:3001](http://localhost:3001) ))
 
 This should run the app in the development mode and open [http://localhost:3001](http://localhost:3001) in your browser.
@@ -55,7 +55,7 @@ You can inspect the generated production-bundle files to look for optimization i
 
 ## Production mode
 
-1. Clone this repo (e.g. `git clone https://github.com/codimd/react-client.git hedgedoc-react-client`)
+1. Clone this repo (e.g. `git clone https://github.com/hedgedoc/react-client.git hedgedoc-react-client`)
 2. Go inside the repo (e.g. `cd hedgedoc-react-client`)
 3. Run `yarn install`
 4. Run `yarn build`

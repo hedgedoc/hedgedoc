@@ -56,9 +56,9 @@ If you set your `user.name` and `user.email` git configs, you can sign your comm
 You can also use git [aliases](https://git-scm.com/book/tr/v2/Git-Basics-Git-Aliases) like `git config --global alias.ci 'commit -s'`.
 Now you can commit with `git ci` and the commit will be signed.
 
-[issues]: https://github.com/codimd/react-client/issues
-[new_issue]: https://github.com/codimd/react-client/issues/new/choose
+[issues]: https://github.com/hedgedoc/react-client/issues
+[new_issue]: https://github.com/hedgedoc/react-client/issues/new/choose
 [matrix-support]: https://matrix.to/#/#hedgedoc:matrix.org
 [matrix-dev]: https://matrix.to/#/#hedgedoc-dev:matrix.org
-[discourse]: https://community.codimd.org/
-[poeditor]: https://translate.codimd.org/
+[discourse]: https://community.hedgedoc.org/
+[poeditor]: https://translate.hedgedoc.org/

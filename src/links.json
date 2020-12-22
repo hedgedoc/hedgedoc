@@ -1,9 +1,9 @@
 {
     "chat": "https://matrix.to/#/#hedgedoc:matrix.org",
-    "community": "https://community.codimd.org",
-    "faq": "https://community.codimd.org/t/frequently-asked-questions/190",
-    "githubOrg": "https://github.com/codimd/",
-    "mastodon": "https://social.codimd.org",
-    "translate": "https://translate.codimd.org",
-    "webpage": "https://codimd.org"
+    "community": "https://community.hedgedoc.org",
+    "faq": "https://hedgedoc.org/faq/",
+    "githubOrg": "https://github.com/hedgedoc/",
+    "mastodon": "https://social.hedgedoc.org",
+    "translate": "https://translate.hedgedoc.org",
+    "webpage": "https://hedgedoc.org"
 }

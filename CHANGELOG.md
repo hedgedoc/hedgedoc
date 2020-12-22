@@ -15,7 +15,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
     - `{%gist user/12345 %}` -> https://gist.github.com/user/12345
     - `{%slideshare user/my-awesome-presentation %}` -> Embedding removed
     - `{%speakerdeck foobar %}` -> Embedding removed
-- The use of `sequence` as code block language ([Why?](https://community.codimd.org/t/frequently-asked-questions/190))
+- The use of `sequence` as code block language ([Why?](https://hedgedoc.org/faq/))
 
 ### Removed
 
@@ -68,7 +68,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - The `[name=...]`, `[time=...]` and `[color=...]` tags may now be used anywhere in the document and not just inside of blockquotes and lists.
 - The <i class="fa fa-picture-o"/> (add image) and <i class="fa fa-link"/> (add link) toolbar buttons put selected links directly in the `()` instead of the `[]` part of the generated markdown.
 - The help dialog has multiple tabs, and is a bit more organized.
-- Use KaTeX instead of MathJax. ([Why?](https://community.codimd.org/t/frequently-asked-questions/190))
+- Use KaTeX instead of MathJax. ([Why?](https://hedgedoc.org/faq/))
 - The dark-mode is also applied to the read-only-view and can be toggled from there.
 - Access tokens for the CLI and 3rd-party-clients can be managed in the user profile.
 - Change editor font to "Fira Code"
