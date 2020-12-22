@@ -1,0 +1,24 @@
+/*
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+describe('Editor mode from URL parameter is used', () => {
+  it('mode view', () => {
+    cy.visit('/n/features?view')
+    cy.get('.splitter.left').should('have.class', 'd-none')
+    cy.get('.splitter.right').should('not.have.class', 'd-none')
+  })
+  it('mode both', () => {
+    cy.visit('/n/features?both')
+    cy.get('.splitter.left').should('not.have.class', 'd-none')
+    cy.get('.splitter.separator').should('exist')
+    cy.get('.splitter.right').should('not.have.class', 'd-none')
+  })
+  it('mode edit', () => {
+    cy.visit('/n/features?edit')
+    cy.get('.splitter.left').should('not.have.class', 'd-none')
+    cy.get('.splitter.right').should('have.class', 'd-none')
+  })
+})

@@ -15,7 +15,7 @@ import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 export enum EditorMode {
   PREVIEW = 'view',
   BOTH = 'both',
-  EDITOR = 'edit',
+  EDITOR = 'edit'
 }
 
 export const EditorViewMode: React.FC = () => {
