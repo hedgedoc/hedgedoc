@@ -22,7 +22,6 @@ import { DocumentBar } from './document-bar/document-bar'
 import { ScrollingDocumentRenderPane } from './document-renderer-pane/scrolling-document-render-pane'
 import { EditorPane } from './editor-pane/editor-pane'
 import { editorTestContent } from './editorTestContent'
-import { useFirstDraw } from './hooks/useFirstDraw'
 import { useViewModeShortcuts } from './hooks/useViewModeShortcuts'
 import { DualScrollState, ScrollState } from './scroll/scroll-props'
 import { Splitter } from './splitter/splitter'
@@ -45,7 +44,7 @@ export const Editor: React.FC = () => {
   const { search } = useLocation()
   const untitledNote = t('editor.untitledNote')
   const markdownContent = useSelector((state: ApplicationState) => state.documentContent.content)
-  const isWide = useMedia({ minWidth: 576 })
+  const isWide = useMedia({ minWidth: 576 }, true)
   const [documentTitle, setDocumentTitle] = useState(untitledNote)
   const noteMetadata = useRef<YAMLMetaData>()
   const firstHeading = useRef<string>()
@@ -97,17 +96,15 @@ export const Editor: React.FC = () => {
 
   useViewModeShortcuts()
 
-  const isFirstDraw = useFirstDraw()
-
   useEffect(() => {
     setNoteId(id)
   }, [id])
 
   useEffect(() => {
-    if (!isFirstDraw && !isWide && editorMode === EditorMode.BOTH) {
+    if (!isWide && editorMode === EditorMode.BOTH) {
       setEditorMode(EditorMode.PREVIEW)
     }
-  }, [editorMode, isFirstDraw, isWide])
+  }, [editorMode, isWide])
 
   const onMarkdownRendererScroll = useCallback((newScrollState: ScrollState) => {
     if (scrollSource.current === ScrollSource.RENDERER && editorSyncScroll) {
