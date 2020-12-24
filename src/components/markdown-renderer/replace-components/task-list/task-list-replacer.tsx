@@ -34,6 +34,7 @@ export class TaskListReplacer extends ComponentReplacer {
         type="checkbox"
         checked={node.attribs.checked !== undefined}
         onChange={this.handleCheckboxChange}
+        id={node.attribs.id}
         data-line={node.attribs['data-line']}
       />
     )

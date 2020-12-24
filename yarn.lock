@@ -1205,13 +1205,10 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@hedgedoc/markdown-it-task-lists@0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@hedgedoc/markdown-it-task-lists/-/markdown-it-task-lists-0.0.1.tgz#73eff59c236ea474691377d66900daffb1ebaec2"
-  integrity sha512-wzht4gm2Pdbd7izjlZD/KV/Rsd2LkI5Le2I4x1pwtT1F58z5BFY9yl1SjneIlxT8Xa5Zm3IkEsH4MCPuBml9Ug==
-  dependencies:
-    "@types/markdown-it" "^10.0.2"
-    markdown-it "^11.0.0"
+"@hedgedoc/markdown-it-task-lists@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@hedgedoc/markdown-it-task-lists/-/markdown-it-task-lists-1.0.0.tgz#6514c411fb582d3de58ded393a3c4f69ba762028"
+  integrity sha512-MylwOQHrSak6hLa7WsHWN4kEUwCW5Wkfj6tKlbpo0uX4e1DkslA/XijX3jy3lwga1T60Htljh8WXu70Wz4je4A==
 
 "@hpcc-js/wasm@0.3.13":
   version "0.3.13"
@@ -2192,7 +2189,7 @@
   dependencies:
     "@types/markdown-it" "*"
 
-"@types/markdown-it@*", "@types/markdown-it@^10.0.2":
+"@types/markdown-it@*":
   version "10.0.2"
   resolved "https://registry.yarnpkg.com/@types/markdown-it/-/markdown-it-10.0.2.tgz#f93334b9c7821ddb19865dfd91ecf688094c2626"
   integrity sha512-FGKiVW1UgeIEAChYAuHcfCd0W4LsMEyrSyTVaZiuJhwR4BwSVUD8JKnzmWAMK2FHNLZSPGUaEkpa/dkZj2uq1w==
@@ -6025,11 +6022,6 @@ entities@^2.0.0, entities@~2.1.0:
   resolved "https://registry.yarnpkg.com/entities/-/entities-2.1.0.tgz#992d3129cf7df6870b96c57858c249a120f8b8b5"
   integrity sha512-hCx1oky9PFrJ611mf0ifBLBRW8lUUVRlFolb5gWRfIELabBlbp9xZvrqZLZAs+NxFnbfQoeGd8wDkygjg7U85w==
 
-entities@~2.0.0:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/entities/-/entities-2.0.3.tgz#5c487e5742ab93c15abb5da22759b8590ec03b7f"
-  integrity sha512-MyoZ0jgnLvB2X3Lg5HqpFmn1kybDiIfEQmKzTb5apr51Rb+T3KdmMiqa70T+bhGnyv7bQ6WMj2QMHpGMmlrUYQ==
-
 entity-decode@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/entity-decode/-/entity-decode-2.0.2.tgz#e4f807e52c3294246e9347d1f2b02b07fd5f92e7"
@@ -9463,17 +9455,6 @@ markdown-it@12.0.3:
   dependencies:
     argparse "^2.0.1"
     entities "~2.1.0"
-    linkify-it "^3.0.1"
-    mdurl "^1.0.1"
-    uc.micro "^1.0.5"
-
-markdown-it@^11.0.0:
-  version "11.0.1"
-  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-11.0.1.tgz#b54f15ec2a2193efa66dda1eb4173baea08993d6"
-  integrity sha512-aU1TzmBKcWNNYvH9pjq6u92BML+Hz3h5S/QpfTFwiQF852pLT+9qHsrhM9JYipkOXZxGn+sGH8oyJE9FD9WezQ==
-  dependencies:
-    argparse "^1.0.7"
-    entities "~2.0.0"
     linkify-it "^3.0.1"
     mdurl "^1.0.1"
     uc.micro "^1.0.5"

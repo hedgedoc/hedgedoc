@@ -11,7 +11,6 @@ export const tasksLists: MarkdownIt.PluginSimple = (markdownIt) => {
   markdownItTaskLists(markdownIt, {
     enabled: true,
     label: true,
-    labelAfter: true,
     lineNumber: true
   })
 }
