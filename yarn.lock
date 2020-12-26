@@ -5941,10 +5941,10 @@ emittery@^0.7.1:
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.7.2.tgz#25595908e13af0f5674ab419396e2fb394cdfa82"
   integrity sha512-A8OG5SR/ij3SsJdWDJdkkSYUjQdCUx6APQXem0SaEePBSRg4eymGYwBkKo1Y6DU+af/Jn2dBQqDBvjnr9Vi8nQ==
 
-emoji-picker-element@1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/emoji-picker-element/-/emoji-picker-element-1.3.1.tgz#844e1ed261b6cda431423a1652da977202cb2090"
-  integrity sha512-+WtNPw28snGd5ZXVS5mAAKsAJ1+hJVRdXNQ9ZCdWSLVCK1mtJjcHl2dMxtB1LxSpX6m79DAAHMmDJRjqbRA+5w==
+emoji-picker-element@1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/emoji-picker-element/-/emoji-picker-element-1.3.3.tgz#f707ef6c1b80356560eca88bd2514c4adab72a93"
+  integrity sha512-nz9AYM+i9GdybkW7TiB8jXcQHe3bdtBrQRqDObYRi/Ph7ety7dWLJQvmrJOVa7DsZ3dqXrNgSgh6f80BueeOFg==
 
 emoji-regex@^7.0.1:
   version "7.0.3"
