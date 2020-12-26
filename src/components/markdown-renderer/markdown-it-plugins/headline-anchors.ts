@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import anchor from '@mrdrogdrog/markdown-it-anchor'
 import MarkdownIt from 'markdown-it'
-import anchor from 'markdown-it-anchor'
 
 export const headlineAnchors: MarkdownIt.PluginSimple = (markdownIt) => {
   // noinspection CheckTagEmptyBody
