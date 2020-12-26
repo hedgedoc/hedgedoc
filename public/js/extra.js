@@ -386,7 +386,7 @@ export function finishView (view) {
 
       window.mermaid.mermaidAPI.parse($value.text())
       $ele.addClass('mermaid')
-      $ele.html($value.text())
+      $ele.text($value.text())
       window.mermaid.init(undefined, $ele)
     } catch (err) {
       var errormessage = err
