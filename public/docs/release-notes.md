@@ -54,7 +54,7 @@ otherwise you will encounter login-issues.
 - Butterflyoffire (translator)
 - civic john (translator)
 - [Daniel Lublin](https://github.com/quite)
-- [Davod Mehren](github.com/davidmehren)
+- [David Mehren](github.com/davidmehren)
 - [david-sawatzke](https://github.com/david-sawatzke)
 - deluxghost (translator)
 - [Dexter Chua](https://github.com/dalcde)
