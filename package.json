@@ -43,6 +43,7 @@
     "express": ">=4.14",
     "express-session": "^1.14.2",
     "file-saver": "^1.3.3",
+    "file-type": "^16.1.0",
     "flowchart.js": "^1.6.4",
     "fork-awesome": "^1.1.3",
     "formidable": "^1.0.17",
