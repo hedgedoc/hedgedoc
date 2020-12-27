@@ -112,6 +112,7 @@
     "readline-sync": "^1.4.7",
     "request": "^2.88.0",
     "reveal.js": "^3.9.2",
+    "rimraf": "^3.0.2",
     "scrypt-async": "^2.0.1",
     "scrypt-kdf": "^2.0.1",
     "select2": "^3.5.2-browserify",
