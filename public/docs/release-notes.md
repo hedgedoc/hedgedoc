@@ -1,4 +1,12 @@
 # Release Notes
+## <i class="fa fa-tag"></i> 1.7.1 <i class="fa fa-calendar-o"></i> 2020-12-27
+This release fixes two security issues. We recommend upgrading as soon as possible.
+### Security Fixes
+- [CVE-2020-26286: Arbitrary file upload](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-wcr3-xhv7-8gxc)  
+  An unauthenticated attacker can upload arbitrary files to the upload storage backend.
+- [CVE-2020-26287: Stored XSS in mermaid diagrams](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-g6w6-7xf9-m95p)  
+  An attacker can inject arbitrary script tags in HedgeDoc notes using mermaid diagrams.
+
 
 ## <i class="fa fa-tag"></i> 1.7.0 <i class="fa fa-calendar-o"></i> 2020-12-21
 
