@@ -108,7 +108,7 @@
     },
     "scripts": {
         "start": "PORT=3001 craco start",
-        "start:dev": "REACT_APP_BACKEND=http://localhost:3000 yarn start",
+        "start:for-real-backend": "REACT_APP_BACKEND=http://localhost:3000 yarn start",
         "build:serve": "http-server build/ -s -p 3001 -P \"http://127.0.0.1:3001?\"",
         "build": "craco build",
         "analyze": "cross-env ANALYZE=true craco build",
