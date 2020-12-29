@@ -42,7 +42,8 @@ Unit testing is done via jest.
 
 We use [cypress](https://cypress.io) for e2e tests.
 
-1. Start the frontend with `yarn start`
+1. Start the frontend with `yarn start:test` in dev test mode or build a test build with `yarn build:test` which you can serve with `yarn serve:build`
+   Don't use the regular start/build command, or the tests will fail!
 2. Run `yarn cy:open` to open the cypress test loader
 3. Choose your browser and test
 4. Let the tests run

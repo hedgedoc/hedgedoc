@@ -42,7 +42,7 @@ jobs:
           node-version: 14
 
       - run: yarn install --frozen-lockfile --prefer-offline
-      - run: yarn build
+      - run: yarn build:test
       - uses: actions/upload-artifact@master
         with:
           name: build
@@ -64,7 +64,7 @@ jobs:
       - uses: cypress-io/github-action@v2
         with:
           browser: ${{ matrix.browser }}
-          start: 'yarn build:serve'
+          start: 'yarn serve:build'
       - uses: actions/upload-artifact@master
         if: always()
         with:

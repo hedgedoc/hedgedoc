@@ -107,11 +107,13 @@
         "vega-lite": "4.17.0"
     },
     "scripts": {
-        "start": "PORT=3001 craco start",
-        "start:for-real-backend": "REACT_APP_BACKEND=http://localhost:3000 yarn start",
-        "build:serve": "http-server build/ -s -p 3001 -P \"http://127.0.0.1:3001?\"",
-        "build": "craco build",
-        "analyze": "cross-env ANALYZE=true craco build",
+        "start": "cross-env PORT=3001 craco start",
+        "start:test": "cross-env PORT=3001 REACT_APP_TEST_MODE=true craco start",
+        "start:for-real-backend": "cross-env REACT_APP_BACKEND=http://localhost:3000 yarn start",
+        "serve:build": "http-server build/ -s -p 3001 -P \"http://127.0.0.1:3001?\"",
+        "build:test": "cross-env REACT_APP_TEST_MODE=true craco build",
+        "build:production": "craco build",
+        "analyze": "cross-env ANALYZE=true craco build:production",
         "test": "craco test",
         "lint": "eslint --max-warnings=0 --ext .ts,.tsx src",
         "eject": "react-scripts eject",

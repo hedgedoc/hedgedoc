@@ -23,6 +23,7 @@ import { store } from './redux'
 import * as serviceWorkerRegistration from './service-worker-registration'
 import './style/dark.scss'
 import './style/index.scss'
+import { isTestMode } from './utils/is-test-mode'
 
 const Editor = React.lazy(() => import(/* webpackPrefetch: true */ './components/editor/editor'))
 
@@ -79,6 +80,10 @@ ReactDOM.render(
   </Provider>
   , document.getElementById('root')
 )
+
+if (isTestMode()) {
+  console.log("This build runs in test mode")
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
