@@ -122,13 +122,13 @@ export class MediaService {
   private chooseBackendType(): BackendType {
     switch (this.appConfig.media.backend.use) {
       case 'filesystem':
-        return BackendType.FILEYSTEM;
+        return BackendType.FILESYSTEM;
     }
   }
 
   private getBackendFromType(type: BackendType): MediaBackend {
     switch (type) {
-      case BackendType.FILEYSTEM:
+      case BackendType.FILESYSTEM:
         return this.moduleRef.get(FilesystemBackend);
     }
   }
