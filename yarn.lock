@@ -1274,10 +1274,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fontsource/source-sans-pro@4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@fontsource/source-sans-pro/-/source-sans-pro-4.0.1.tgz#12b99fa5fd3605a31512921c897053868011cf91"
-  integrity sha512-TepgEYwAmhPnGIaC2oJjZ8rPyms/NY2tyiWMP7b1VsA6y8Yayxk/ahjj3sDTKvrTOtBjxy/WCTeVAoeEedNzPA==
+"@fontsource/source-sans-pro@4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/source-sans-pro/-/source-sans-pro-4.1.0.tgz#a4e564fb876259c293bb4af8372f1d9b5d1eb5ca"
+  integrity sha512-kybYq6GRXjKeTIJyhvHAcUxn2tpSCqSqmpRClIe8HpXhv6TcT1TkBsxWDnPy8V47KHbkuXWO2C4ZsD9NR9aHMg==
 
 "@hapi/address@2.x.x":
   version "2.1.4"
