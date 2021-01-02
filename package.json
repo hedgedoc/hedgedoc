@@ -113,7 +113,7 @@
         "serve:build": "http-server build/ -s -p 3001 -P \"http://127.0.0.1:3001?\"",
         "build:test": "cross-env REACT_APP_TEST_MODE=true craco build",
         "build:production": "craco build",
-        "analyze": "cross-env ANALYZE=true craco build:production",
+        "analyze": "cross-env ANALYZE=true craco build",
         "test": "craco test",
         "lint": "eslint --max-warnings=0 --ext .ts,.tsx src",
         "eject": "react-scripts eject",
