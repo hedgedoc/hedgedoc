@@ -16,7 +16,7 @@
   "allowRegister": true,
   "branding": {
     "name": "ACME Corp",
-    "logo": "http://localhost:3001/img/acme.png"
+    "logo": "/img/acme.png"
   },
   "banner": {
       "text": "This is the test banner text",

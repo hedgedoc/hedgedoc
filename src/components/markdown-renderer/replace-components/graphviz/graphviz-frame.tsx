@@ -55,7 +55,7 @@ export const GraphvizFrame: React.FC<GraphvizFrameProps> = ({ code }) => {
     <ShowIf condition={!!error}>
       <Alert variant={'warning'}>{error}</Alert>
     </ShowIf>
-    <div className={'text-center'} ref={container} />
+    <div className={'text-center overflow-x-auto'} ref={container} />
   </Fragment>
 }
 

@@ -7,7 +7,7 @@
 @import "variables.light";
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import '../../node_modules/react-bootstrap-typeahead/css/Typeahead';
-@import "~@fontsource/source-sans-pro/index.css";
+@import "~@fontsource/source-sans-pro/index";
 @import "fonts/twemoji/twemoji";
 @import '../../node_modules/fork-awesome/css/fork-awesome.min';
 
@@ -78,4 +78,8 @@ body {
   &.no-arrow::after {
     content: initial;
   }
+}
+
+.overflow-x-auto {
+  overflow-x: auto !important;
 }

@@ -6,9 +6,8 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 import React from 'react'
 import { Navbar } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { ApplicationState } from '../../../redux'
+import { useIsDarkModeActivated } from '../../../hooks/common/use-is-dark-mode-activated'
 import { Branding } from '../../common/branding/branding'
 import {
   HedgeDocLogoSize,
@@ -17,7 +16,7 @@ import {
 } from '../../common/hedge-doc-logo/hedge-doc-logo-with-text'
 
 export const NavbarBranding: React.FC = () => {
-  const darkModeActivated = useSelector((state: ApplicationState) => state.darkMode.darkMode)
+  const darkModeActivated = useIsDarkModeActivated()
 
   return (
     <Navbar.Brand>

@@ -13,6 +13,7 @@ import { useParams } from 'react-router'
 import { getAllRevisions, getRevision } from '../../../../api/revisions'
 import { Revision, RevisionListEntry } from '../../../../api/revisions/types'
 import { UserResponse } from '../../../../api/users/types'
+import { useIsDarkModeActivated } from '../../../../hooks/common/use-is-dark-mode-activated'
 import { ApplicationState } from '../../../../redux'
 import { CommonModal, CommonModalProps } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
@@ -27,7 +28,7 @@ export const RevisionModal: React.FC<CommonModalProps> = ({ show, onHide, icon, 
   const [selectedRevision, setSelectedRevision] = useState<Revision | null>(null)
   const [error, setError] = useState(false)
   const revisionAuthorListMap = useRef(new Map<number, UserResponse[]>())
-  const darkModeEnabled = useSelector((state: ApplicationState) => state.darkMode.darkMode)
+  const darkModeEnabled = useIsDarkModeActivated()
   const { id } = useParams<{ id: string }>()
 
   useEffect(() => {

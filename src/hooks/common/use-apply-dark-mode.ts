@@ -5,11 +5,10 @@
  */
 
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../redux'
+import { useIsDarkModeActivated } from './use-is-dark-mode-activated'
 
 export const useApplyDarkMode = ():void => {
-  const darkModeActivated = useSelector((state: ApplicationState) => state.darkMode.darkMode)
+  const darkModeActivated = useIsDarkModeActivated()
 
   useEffect(() => {
     if (darkModeActivated) {

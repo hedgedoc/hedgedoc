@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getProxiedUrl } from '../../../../api/media'
 import { ApplicationState } from '../../../../redux'
-import { Frame } from './frame'
+import { LightboxedImageFrame } from './lightboxedImageFrame'
 
 export const ImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ src, title, alt, ...props }) => {
   const [imageUrl, setImageUrl] = useState('')
@@ -25,11 +25,11 @@ export const ImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = (
 
   if (imageProxyEnabled) {
     return (
-      <Frame src={imageUrl} title={title ?? alt ?? ''} alt={alt} {...props}/>
+      <LightboxedImageFrame src={imageUrl} title={title ?? alt ?? ''} alt={alt} {...props}/>
     )
   }
 
   return (
-    <Frame src={src ?? ''} title={title ?? alt ?? ''} alt={alt} {...props}/>
+    <LightboxedImageFrame src={src ?? ''} title={title ?? alt ?? ''} alt={alt} {...props}/>
   )
 }

@@ -7,9 +7,8 @@ SPDX-License-Identifier: AGPL-3.0-only
 import { Picker } from 'emoji-picker-element'
 import { CustomEmoji, EmojiClickEvent, EmojiClickEventDetail } from 'emoji-picker-element/shared'
 import React, { useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
 import { useClickAway } from 'react-use'
-import { ApplicationState } from '../../../../../redux'
+import { useIsDarkModeActivated } from '../../../../../hooks/common/use-is-dark-mode-activated'
 import './emoji-picker.scss'
 import forkawesomeIcon from './forkawesome.png'
 import { ForkAwesomeIcons } from './icon-names'
@@ -41,7 +40,7 @@ const twemojiStyle = (): HTMLStyleElement => {
 }
 
 export const EmojiPicker: React.FC<EmojiPickerProps> = ({ show, onEmojiSelected, onDismiss }) => {
-  const darkModeEnabled = useSelector((state: ApplicationState) => state.darkMode.darkMode)
+  const darkModeEnabled = useIsDarkModeActivated()
   const pickerContainerRef = useRef<HTMLDivElement>(null)
   const pickerRef = useRef<Picker>()
 

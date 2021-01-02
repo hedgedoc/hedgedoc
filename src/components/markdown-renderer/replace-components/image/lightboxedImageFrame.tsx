@@ -8,7 +8,7 @@ import React, { Fragment, useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 
-export const Frame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ alt, ...props }) => {
+export const LightboxedImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ alt, ...props }) => {
   const [showFullscreenImage, setShowFullscreenImage] = useState(false)
 
   return (
@@ -20,8 +20,7 @@ export const Frame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ alt
         dialogClassName={'text-dark'}
         show={showFullscreenImage}
         onHide={() => setShowFullscreenImage(false)}
-        size={'xl'}
-      >
+        size={'xl'}>
         <Modal.Header closeButton={true}>
           <Modal.Title className={'h6'}>
             <ForkAwesomeIcon icon={'picture-o'}/>

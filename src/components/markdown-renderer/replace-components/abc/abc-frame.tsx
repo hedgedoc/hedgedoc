@@ -23,5 +23,5 @@ export const AbcFrame: React.FC<AbcFrameProps> = ({ code }) => {
     }).catch(() => { console.error('error while loading abcjs') })
   }, [code])
 
-  return <div ref={container} className={'bg-white text-center'}/>
+  return <div ref={container} className={'bg-white text-center overflow-x-auto'}/>
 }
