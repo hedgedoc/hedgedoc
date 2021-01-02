@@ -9,6 +9,7 @@ import { AbcReplacer } from '../replace-components/abc/abc-replacer'
 import { AsciinemaReplacer } from '../replace-components/asciinema/asciinema-replacer'
 import { ComponentReplacer } from '../replace-components/ComponentReplacer'
 import { CsvReplacer } from '../replace-components/csv/csv-replacer'
+import { LinkInNewTabReplacer } from '../replace-components/external-links-in-new-tabs/external-links-in-new-tabs'
 import { FlowchartReplacer } from '../replace-components/flow/flowchart-replacer'
 import { GistReplacer } from '../replace-components/gist/gist-replacer'
 import { GraphvizReplacer } from '../replace-components/graphviz/graphviz-replacer'
@@ -29,6 +30,7 @@ import { YoutubeReplacer } from '../replace-components/youtube/youtube-replacer'
 
 export const useReplacerInstanceListCreator = (onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void): () => ComponentReplacer[] => {
   return useMemo(() => () => [
+    new LinkInNewTabReplacer(),
     new LinemarkerReplacer(),
     new PossibleWiderReplacer(),
     new GistReplacer(),
