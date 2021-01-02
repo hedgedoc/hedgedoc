@@ -22,8 +22,8 @@ You'll need at least Node 12. We use [yarn](https://yarnpkg.com/) for our depend
 2. Go inside the repo (e.g. `cd hedgedoc-react-client`)
 3. Run `yarn install`
 4. Either run
-    - `yarn start:dev` (expects [a server](https://github.com/hedgedoc/hedgedoc/tree/develop) running under [http://localhost:3000](http://localhost:3000))
-    - `yarn start` (makes all api calls to the same domain the react-client runs on (normally [http://localhost:3001](http://localhost:3001) ))
+    - `yarn start` - Calls only mocked version of the api. Doesn't need a HedgeDoc backend.
+    - `yarn start:for-real-backend` - Expects [a HedgeDoc backend server](https://github.com/hedgedoc/hedgedoc/tree/develop) running under [http://localhost:3000](http://localhost:3000))
 
 This should run the app in the development mode and open [http://localhost:3001](http://localhost:3001) in your browser.
 
@@ -61,7 +61,6 @@ You can inspect the generated production-bundle files to look for optimization i
 3. Run `yarn install`
 4. Run `yarn build`
 
-Builds the app for production to the `build` folder.
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include a hash value of the content.
+This will build the app in production mode and save it into the `build` folder.
+The production build is optimized for best performance, minimized
+ and the filenames include a hash value of the content. Don't edit them by hand!
