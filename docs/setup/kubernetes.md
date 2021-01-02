@@ -2,7 +2,7 @@
 
 HedgeDoc currently does not support any deployment via Kubernetes.
 
-We would love help with that, so if you want to write this, please feel free to chat us up on [Matrix](https://chat.hedgedoc.org/), so we can provide you with a repo.
+If you want to help us creating a helm chart, then feel free to contact us on [Matrix](https://chat.hedgedoc.org/) or [Discourse](https://community.hedgedoc.org/).
 
 ~~To install use `helm install stable/hackmd`.~~
 
