@@ -60,6 +60,19 @@ export interface AppConfig {
       clientSecret: string,
       scope: GitlabScope,
       version: GitlabVersion
+    }],
+    // ToDo: tlsOptions exist in config.json.example. See https://nodejs.org/api/tls.html#tls_tls_connect_options_callback
+    ldap: [{
+      providerName: string,
+      url: string,
+      bindDn: string,
+      bindCredentials: string,
+      searchBase: string,
+      searchFilter: string,
+      searchAttributes: string[],
+      usernameField: string,
+      useridField: string,
+      tlsCa: string[]
     }]
   };
 }
@@ -117,6 +130,19 @@ const schema = Joi.object({
       clientSecret: Joi.string(),
       scope: Joi.string().valid(...Object.values(GitlabScope)).default(GitlabScope.READ_USER),
       version: Joi.string().valid(...Object.values(GitlabVersion)).default(GitlabVersion.V4)
+    })).optional(),
+    // ToDo: should searchfilter have a default?
+    ldap: Joi.array().items(Joi.object({
+      providerName: Joi.string().default('LDAP'),
+      url: Joi.string(),
+      bindDn: Joi.string().optional(),
+      bindCredentials: Joi.string().optional(),
+      searchBase: Joi.string(),
+      searchFilter: Joi.string().optional().default('(uid={{username}})'),
+      searchAttributes: Joi.array().items(Joi.string()),
+      usernameField: Joi.string().optional().default('userid'),
+      useridField: Joi.string().optional(),
+      tlsCa: Joi.array().items(Joi.string()).optional(),
     })).optional()
   }
 });
@@ -196,6 +222,62 @@ export default registerAs('appConfig', async () => {
           clientSecret: process.env.HD_AUTH_GITLAB_CLIENT_SECRET_4,
           scope: process.env.HD_AUTH_GITLAB_SCOPE_4,
           version: process.env.HD_AUTH_GITLAB_VERSION_4,
+        }],
+        ldap: [{
+          providerName: process.env.HD_AUTH_LDAP_PROVIDER_NAME_0,
+          url: process.env.HD_AUTH_LDAP_URL_0,
+          bindDn: process.env.HD_AUTH_LDAP_BIND_DN_0,
+          bindCredentials: process.env.HD_AUTH_LDAP_BIND_CREDENTIALS_0,
+          searchBase: process.env.HD_AUTH_LDAP_SEARCH_BASE_0,
+          searchFilter: process.env.HD_AUTH_LDAP_SEARCH_FILTER_0,
+          searchAttributes: process.env.HD_AUTH_LDAP_SEARCH_ATTRIBUTES_0.split(',').map(attribute => attribute.trim()),
+          usernameField: process.env.HD_AUTH_LDAP_USERNAME_FIELD_0,
+          useridField: process.env.HD_AUTH_LDAP_USERID_FIELD_0,
+          tlsCa: process.env.HD_AUTH_LDAP_TLS_CA_0.split(',').map(attribute => attribute.trim()),
+        }, {
+          providerName: process.env.HD_AUTH_LDAP_PROVIDER_NAME_1,
+          url: process.env.HD_AUTH_LDAP_URL_1,
+          bindDn: process.env.HD_AUTH_LDAP_BIND_DN_1,
+          bindCredentials: process.env.HD_AUTH_LDAP_BIND_CREDENTIALS_1,
+          searchBase: process.env.HD_AUTH_LDAP_SEARCH_BASE_1,
+          searchFilter: process.env.HD_AUTH_LDAP_SEARCH_FILTER_1,
+          searchAttributes: process.env.HD_AUTH_LDAP_SEARCH_ATTRIBUTES_1.split(',').map(attribute => attribute.trim()),
+          usernameField: process.env.HD_AUTH_LDAP_USERNAME_FIELD_1,
+          useridField: process.env.HD_AUTH_LDAP_USERID_FIELD_1,
+          tlsCa: process.env.HD_AUTH_LDAP_TLS_CA_1.split(',').map(attribute => attribute.trim()),
+        }, {
+          providerName: process.env.HD_AUTH_LDAP_PROVIDER_NAME_2,
+          url: process.env.HD_AUTH_LDAP_URL_2,
+          bindDn: process.env.HD_AUTH_LDAP_BIND_DN_2,
+          bindCredentials: process.env.HD_AUTH_LDAP_BIND_CREDENTIALS_2,
+          searchBase: process.env.HD_AUTH_LDAP_SEARCH_BASE_2,
+          searchFilter: process.env.HD_AUTH_LDAP_SEARCH_FILTER_2,
+          searchAttributes: process.env.HD_AUTH_LDAP_SEARCH_ATTRIBUTES_2.split(',').map(attribute => attribute.trim()),
+          usernameField: process.env.HD_AUTH_LDAP_USERNAME_FIELD_2,
+          useridField: process.env.HD_AUTH_LDAP_USERID_FIELD_2,
+          tlsCa: process.env.HD_AUTH_LDAP_TLS_CA_2.split(',').map(attribute => attribute.trim()),
+        }, {
+          providerName: process.env.HD_AUTH_LDAP_PROVIDER_NAME_3,
+          url: process.env.HD_AUTH_LDAP_URL_3,
+          bindDn: process.env.HD_AUTH_LDAP_BIND_DN_3,
+          bindCredentials: process.env.HD_AUTH_LDAP_BIND_CREDENTIALS_3,
+          searchBase: process.env.HD_AUTH_LDAP_SEARCH_BASE_3,
+          searchFilter: process.env.HD_AUTH_LDAP_SEARCH_FILTER_3,
+          searchAttributes: process.env.HD_AUTH_LDAP_SEARCH_ATTRIBUTES_3.split(',').map(attribute => attribute.trim()),
+          usernameField: process.env.HD_AUTH_LDAP_USERNAME_FIELD_3,
+          useridField: process.env.HD_AUTH_LDAP_USERID_FIELD_3,
+          tlsCa: process.env.HD_AUTH_LDAP_TLS_CA_3.split(',').map(attribute => attribute.trim()),
+        }, {
+          providerName: process.env.HD_AUTH_LDAP_PROVIDER_NAME_4,
+          url: process.env.HD_AUTH_LDAP_URL_4,
+          bindDn: process.env.HD_AUTH_LDAP_BIND_DN_4,
+          bindCredentials: process.env.HD_AUTH_LDAP_BIND_CREDENTIALS_4,
+          searchBase: process.env.HD_AUTH_LDAP_SEARCH_BASE_4,
+          searchFilter: process.env.HD_AUTH_LDAP_SEARCH_FILTER_4,
+          searchAttributes: process.env.HD_AUTH_LDAP_SEARCH_ATTRIBUTES_4.split(',').map(attribute => attribute.trim()),
+          usernameField: process.env.HD_AUTH_LDAP_USERNAME_FIELD_4,
+          useridField: process.env.HD_AUTH_LDAP_USERID_FIELD_4,
+          tlsCa: process.env.HD_AUTH_LDAP_TLS_CA_4.split(',').map(attribute => attribute.trim()),
         }]
       },
     },
