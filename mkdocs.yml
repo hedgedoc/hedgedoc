@@ -1,8 +1,11 @@
 site_name: HedgeDoc
 site_url: https://docs.hedgedoc.org
+repo_url: https://github.com/hedgedoc/hedgedoc
+site_description: 'HedgeDoc Documentation'
+site_author: 'HedgeDoc Developers'
 nav:
   - Home: index.md
-  - Setup:
+  - Installation:
       - 'Manual Installation': setup/manual-setup.md
       - 'Reverse Proxy': setup/reverse-proxy.md
       - Docker: setup/docker.md
@@ -35,4 +38,20 @@ nav:
       - 'Developer Notes': dev/getting-started.md
       - 'Operational Transformation': dev/ot.md
       - Webpack: dev/webpack.md
-theme: readthedocs
+  - FAQ: https://hedgedoc.org/faq
+markdown_extensions:
+  - toc:
+      permalink: true
+theme:
+  name: 'material'
+  language: en
+  favicon: images/favicon.png
+  logo: images/logo.png
+  palette:
+    scheme: preference
+    primary: 'red'
+    accent: 'red'
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
