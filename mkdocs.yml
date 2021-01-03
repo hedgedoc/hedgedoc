@@ -1,0 +1,38 @@
+site_name: HedgeDoc
+site_url: https://docs.hedgedoc.org
+nav:
+  - Home: index.md
+  - Setup:
+      - 'Manual Installation': setup/manual-setup.md
+      - 'Reverse Proxy': setup/reverse-proxy.md
+      - Docker: setup/docker.md
+      - Kubernetes: setup/kubernetes.md
+      - Cloudron: setup/cloudron.md
+      - Heroku: setup/heroku.md
+      - LinuxServer: setup/docker-linuxserver.md
+      - Yunohost: setup/yunohost.md
+  - Guides:
+      - Authentication:
+          - LDAP: guides/auth/ldap-ad.md
+          - OAuth: guides/auth/oauth.md
+          - SAML : guides/auth/saml.md
+          - SAML Keycloak : guides/auth/saml-keycloak.md
+          - SAML Onelogin : guides/auth/saml-onelogin.md
+          - GitHub: guides/auth/github.md
+          - GitLab: guides/auth/gitlab-self-hosted.md
+          - Keycloak: guides/auth/keycloak.md
+          - NextCloud: guides/auth/nextcloud.md
+          - Twitter: guides/auth/twitter.md
+      - Migrate from Etherpad: guides/migrate-etherpad.md
+      - Breaking Changes: guides/migrations-and-breaking-changes.md
+      - Media Backend:
+          - Minion: guides/minio-image-upload.md
+          - S3: guides/s3-image-upload.md
+      - Setting Terms: guides/providing-terms.md
+  - Configuration: configuration.md
+  - Developer:
+      - API: dev/api.md
+      - 'Developer Notes': dev/getting-started.md
+      - 'Operational Transformation': dev/ot.md
+      - Webpack: dev/webpack.md
+theme: readthedocs
