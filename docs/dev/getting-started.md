@@ -1,4 +1,4 @@
-# Developer Notes
+# Getting started
 
 ## Preparing for running the code
 

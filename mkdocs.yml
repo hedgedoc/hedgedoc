@@ -33,10 +33,11 @@ nav:
       - Setting Terms: guides/providing-terms.md
   - Configuration: configuration.md
   - Developer:
+      - 'Getting Started': dev/getting-started.md
       - API: dev/api.md
-      - 'Developer Notes': dev/getting-started.md
       - 'Operational Transformation': dev/ot.md
       - Webpack: dev/webpack.md
+      - 'Documentation': dev/documentation.md
   - FAQ: https://hedgedoc.org/faq
 markdown_extensions:
   - toc:
