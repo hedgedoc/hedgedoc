@@ -26,6 +26,9 @@ Please note we have a [code of conduct][code-of-conduct], please follow it in al
 * Ensure the PR description is precise about the problem and your solution. Just fill out our template. That should
   cover the most important information.
 
+* Please note that we only accept PRs for the 1.x releases if they fix critical issues. If you are unsure if your fix is
+  critical, it's best to ask us before you start coding.
+
 ### Do you intend to add a new feature or change an existing one?
 
 * Suggest your idea via a new GitHub issue. After a confirmation about your idea, you can start writing code. Our
@@ -36,7 +39,7 @@ Please note we have a [code of conduct][code-of-conduct], please follow it in al
 
 * If you want to improve a translation or add a new translation altogether, we handle those via [POEditor](poeditor).
 
-HedgeDoc is a volunteer effort. We encourage you to pitch in and to help us making this project even better.
+HedgeDoc is a volunteer effort. We encourage you to pitch in and help us to make this project even better.
 
 ## Certificate of Origin
 
@@ -62,7 +65,7 @@ like `git config --global alias.ci 'commit -s'`. Now you can commit with `git ci
 
 1. Submit an issue describing your proposed change. We will try to respond to your issue promptly.
 2. Fork this repo, develop and test your code changes. Ensure you signed all your commits (see above for details).
-3. Submit a pull request against this repo's `master` branch.
+3. Submit a pull request against this repo's `develop` branch.
 4. Your branch may be merged once all configured checks pass.
 
 [code-of-conduct]: ./CODE-OF-CONDUCT.md
