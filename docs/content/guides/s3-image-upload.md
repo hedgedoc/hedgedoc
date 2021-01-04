@@ -77,7 +77,7 @@ Guide - Setup CodiMD S3 image upload
     }
     ```
 
-9. In additional to edit `config.json` directly, you could also try [environment variables](../configuration-env-vars.md).
+9. In additional to edit `config.json` directly, you could also try [environment variables](../configuration.md).
 
 ## Related Tools
 
