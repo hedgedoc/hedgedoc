@@ -1,9 +1,8 @@
-AD LDAP auth
-===
+# AD LDAP auth
 
-To setup your CodiMD instance with Active Directory you need the following configs:
+To setup your HedgeDoc instance with Active Directory you need the following configs:
 
-```
+```env
 CMD_LDAP_URL=ldap://internal.example.com
 CMD_LDAP_BINDDN=cn=binduser,cn=Users,dc=internal,dc=example,dc=com
 CMD_LDAP_BINDCREDENTIALS=<super secret password>
@@ -12,7 +11,6 @@ CMD_LDAP_SEARCHFILTER=(&(objectcategory=person)(objectclass=user)(|(sAMAccountNa
 CMD_LDAP_USERIDFIELD=sAMAccountName
 CMD_LDAP_PROVIDERNAME=Example Inc AD
 ```
-
 
 `CMD_LDAP_BINDDN` is either the `distinguishedName` or the `userPrincipalName`. *This can cause "username/password is invalid" when either this value or the password from `CMD_LDAP_BINDCREDENTIALS` are incorrect.*
 
@@ -23,7 +21,6 @@ CMD_LDAP_PROVIDERNAME=Example Inc AD
 `CMD_LDAP_USERIDFIELD` says we want to use `sAMAccountName` as unique identifier for the account itself.
 
 `CMD_LDAP_PROVIDERNAME` just the name written above the username and password field on the login page.
-
 
 Same in json:
 
@@ -38,4 +35,4 @@ Same in json:
 },
 ```
 
-More details and example: https://www.npmjs.com/package/passport-ldapauth
+More details and example: <https://www.npmjs.com/package/passport-ldapauth>
