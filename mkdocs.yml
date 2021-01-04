@@ -9,7 +9,6 @@ nav:
       - 'Manual Installation': setup/manual-setup.md
       - 'Reverse Proxy': setup/reverse-proxy.md
       - Docker: setup/docker.md
-      - Kubernetes: setup/kubernetes.md
       - Cloudron: setup/cloudron.md
       - Heroku: setup/heroku.md
       - LinuxServer: setup/docker-linuxserver.md
