@@ -11,7 +11,7 @@ type iso6391 = 'aa' | 'ab' | 'af' | 'am' | 'ar' | 'ar-ae' | 'ar-bh' | 'ar-dz' | 
 export interface RawYAMLMetadata {
   title: string | undefined
   description: string | undefined
-  tags: string | undefined
+  tags: string | string[] | undefined
   robots: string | undefined
   lang: string | undefined
   dir: string | undefined
@@ -27,6 +27,7 @@ export class YAMLMetaData {
   title: string
   description: string
   tags: string[]
+  deprecatedTagsSyntax: boolean
   robots: string
   lang: iso6391
   dir: 'ltr' | 'rtl'
@@ -53,7 +54,16 @@ export class YAMLMetaData {
       transition: 'none',
       theme: 'white'
     } */
-    this.tags = rawData?.tags?.split(',').map(entry => entry.trim()) ?? []
+    if (typeof rawData?.tags === 'string') {
+      this.tags = rawData?.tags?.split(',').map(entry => entry.trim()) ?? []
+      this.deprecatedTagsSyntax = true
+    } else if (typeof rawData?.tags === 'object') {
+      this.tags = rawData?.tags?.filter(tag => tag !== null) ?? []
+      this.deprecatedTagsSyntax = false
+    } else {
+      this.tags = []
+      this.deprecatedTagsSyntax = false
+    }
     this.opengraph = rawData?.opengraph ? new Map<string, string>(Object.entries(rawData.opengraph)) : new Map<string, string>()
   }
 }

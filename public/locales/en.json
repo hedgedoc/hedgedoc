@@ -185,6 +185,7 @@
         "untitledNote": "Untitled",
         "placeholder": "← Start by entering a title here\n===\nVisit the features page if you don't know what to do.\nHappy hacking :)",
         "invalidYaml": "The yaml-header is invalid. See <0></0> for more information.",
+        "deprecatedTags": "The comma-separated definition of tags in the yaml-metadata is deprecated. Use a yaml-array instead.",
         "infoToc": "Structure your note with headings to see a table-of-contents here.",
         "help": {
             "shortcuts": {
@@ -453,7 +454,8 @@
         "why": "Why?",
         "successfullyCopied": "Copied!",
         "copyError": "Error while copying!",
-        "errorOccurred": "An error occurred"
+        "errorOccurred": "An error occurred",
+        "readForMoreInfo": "Read here for more information"
     },
     "login": {
         "chooseMethod": "Choose method",

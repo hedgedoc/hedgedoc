@@ -6,9 +6,13 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
-import { Trans } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { TocAst } from 'markdown-it-toc-done-right'
+import { useSelector } from 'react-redux'
+import { ApplicationState } from '../../redux'
 import { InternalLink } from '../common/links/internal-link'
+import links from '../../links.json'
+import { TranslatedExternalLink } from '../common/links/translated-external-link'
 import { ShowIf } from '../common/show-if/show-if'
 import { RawYAMLMetadata, YAMLMetaData } from '../editor/yaml-metadata/yaml-metadata'
 import { BasicMarkdownRenderer } from './basic-markdown-renderer'
@@ -40,8 +44,10 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
   wide
 }) => {
   const allReplacers = useReplacerInstanceListCreator(onTaskCheckedChange)
+  useTranslation()
 
   const [yamlError, setYamlError] = useState(false)
+  const yamlDeprecatedTags = useSelector((state: ApplicationState) => state.documentContent.metadata.deprecatedTagsSyntax)
 
   const rawMetaRef = useRef<RawYAMLMetadata>()
   const firstHeadingRef = useRef<string>()
@@ -79,8 +85,15 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
       <ShowIf condition={yamlError}>
         <Alert variant='warning' dir='auto'>
           <Trans i18nKey='editor.invalidYaml'>
-            <InternalLink text='yaml-metadata' href='/n/yaml-metadata' className='text-dark'/>
+            <InternalLink text='yaml-metadata' href='/n/yaml-metadata' className='text-primary'/>
           </Trans>
+        </Alert>
+      </ShowIf>
+      <ShowIf condition={yamlDeprecatedTags}>
+        <Alert variant='warning' dir='auto'>
+          <Trans i18nKey='editor.deprecatedTags' />
+          <br/>
+          <TranslatedExternalLink i18nKey={'common.readForMoreInfo'} href={links.faq} className={'text-primary'}/>
         </Alert>
       </ShowIf>
       <BasicMarkdownRenderer className={className} wide={wide} content={content} componentReplacers={allReplacers}

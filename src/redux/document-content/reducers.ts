@@ -9,7 +9,8 @@ import {
   DocumentContent,
   DocumentContentAction,
   DocumentContentActionType,
-  SetDocumentContentAction, SetDocumentMetadataAction,
+  SetDocumentContentAction,
+  SetDocumentMetadataAction,
   SetNoteIdAction
 } from './types'
 
@@ -20,6 +21,7 @@ export const initialState: DocumentContent = {
     title: '',
     description: '',
     tags: [],
+    deprecatedTagsSyntax: false,
     robots: '',
     lang: 'en',
     dir: 'ltr',
