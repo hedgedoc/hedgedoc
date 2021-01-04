@@ -1,0 +1,14 @@
+[data-md-color-primary=hedgedoc] {
+    --md-primary-fg-color: #b51f08;
+    --md-primary-fg-color--light: #b51f08;
+    --md-primary-fg-color--dark: #b51f08;
+    --md-primary-bg-color: hsla(0, 0%, 100%, 1);
+    --md-primary-bg-color--light: hsla(0, 0%, 100%, 0.7);
+}
+
+[data-md-color-accent=hedgedoc] {
+    --md-accent-fg-color: #b51f08;
+    --md-accent-fg-color--transparent: hsla(348, 100%, 55%, 0.1);
+    --md-accent-bg-color: hsla(0, 0%, 100%, 1);
+    --md-accent-bg-color--light: hsla(0, 0%, 100%, 0.7);
+}

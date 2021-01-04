@@ -11,8 +11,8 @@
    and create configs. The setup script is written in Bash, you would need bash
    as a prerequisite.
 
-3. Setup the [config file](../configuration-config-file.md) or set up
-   [environment variables](../configuration-env-vars.md).
+3. Setup the [config file](../configuration.md) or set up
+   [environment variables](../configuration.md).
 
 ## Running the Code
 
