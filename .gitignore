@@ -10,6 +10,7 @@ composer.lock
 .env.php
 .DS_Store
 .idea/
+!.idea/copyright/
 Thumbs.db
 npm-debug.log
 newrelic_agent.log

@@ -1,0 +1,7 @@
+<component name="CopyrightManager">
+  <settings default="hedgedoc">
+    <module2copyright>
+      <element module="All" copyright="hedgedoc" />
+    </module2copyright>
+  </settings>
+</component>
