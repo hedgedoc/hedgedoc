@@ -11,13 +11,13 @@ import {DatabaseDialect} from "./database_dialect";
 import {MediaBackend} from "./media_backend";
 import {GitlabScope, GitlabVersion} from "./gitlab";
 import { toArrayConfig } from './utils';
-import { LinkifyHeaderStyle } from './linkify-header-style';
+// import { LinkifyHeaderStyle } from './linkify-header-style';
 
 export interface AppConfig {
   domain: string;
   port: number;
   loglevel: LogLevel;
-  linkifyHeaderStyle: LinkifyHeaderStyle;
+  /*linkifyHeaderStyle: LinkifyHeaderStyle;
   sourceURL: string;
   urlPath: string;
   host: string;
@@ -35,7 +35,7 @@ export interface AppConfig {
   sessionSecret: string;
   sessionLife: number;
   tooBusyLag: number;
-  enableGravatar: boolean;
+  enableGravatar: boolean;*/
   hsts: {
     enable: boolean;
     maxAgeSeconds: number;
@@ -169,7 +169,7 @@ const schema = Joi.object({
   domain: Joi.string(),
   port: Joi.number().default(3000),
   loglevel: Joi.string().valid(...Object.values(LogLevel)).default(LogLevel.WARN),
-  linkifyHeaderStyle: Joi.string().valid(...Object.values(LinkifyHeaderStyle)).default(LinkifyHeaderStyle.GFM),
+  /*linkifyHeaderStyle: Joi.string().valid(...Object.values(LinkifyHeaderStyle)).default(LinkifyHeaderStyle.GFM),
   sourceURL: Joi.string(),
   urlPath: Joi.string(),
   host: Joi.string().default('::'),
@@ -187,7 +187,7 @@ const schema = Joi.object({
   sessionSecret: Joi.string(),
   sessionLife: Joi.number().default(14 * 24 * 60 * 60 * 1000),
   tooBusyLag: Joi.number().default(70),
-  enableGravatar: Joi.boolean().default(true),
+  enableGravatar: Joi.boolean().default(true),*/
   hsts: {
     enable: Joi.boolean().default(true),
     maxAgeSeconds: Joi.number().default(60 * 60 * 24 * 365),
@@ -344,7 +344,7 @@ export default registerAs('appConfig', async () => {
       domain: process.env.HD_DOMAIN,
       port: parseInt(process.env.PORT) || undefined,
       loglevel: process.env.HD_LOGLEVEL,
-      linkifyHeaderStyle: process.env.HD_LINKIFY_HEADER_STYLE,
+      /*linkifyHeaderStyle: process.env.HD_LINKIFY_HEADER_STYLE,
       sourceURL: process.env.HD_SOURCE_URL,
       urlPath: process.env.HD_URL_PATH,
       host: process.env.HD_HOST,
@@ -362,7 +362,7 @@ export default registerAs('appConfig', async () => {
       sessionSecret: process.env.HD_SESSION_SECRET,
       sessionLife: process.env.HD_SESSION_LIFE,
       tooBusyLag: process.env.HD_TOOBUSY_LAG,
-      enableGravatar: process.env.HD_ENABLE_GRAVATAR,
+      enableGravatar: process.env.HD_ENABLE_GRAVATAR,*/
       hsts: {
         enable: process.env.HD_HSTS_ENABLE,
         maxAgeSeconds: process.env.HD_HSTS_MAX_AGE,
