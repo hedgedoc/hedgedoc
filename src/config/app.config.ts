@@ -18,6 +18,24 @@ export interface AppConfig {
   port: number;
   loglevel: LogLevel;
   linkifyHeaderStyle: LinkifyHeaderStyle;
+  sourceURL: string;
+  urlPath: string;
+  host: string;
+  path: string;
+  urlAddPort: boolean;
+  cookiePolicy: string;
+  protocolUseSSL: boolean;
+  allowOrigin: string[];
+  useCDN: boolean;
+  allowAnonymous: boolean;
+  allowAnonymousEdits: boolean;
+  allowFreeURL: boolean;
+  forbiddenNoteIDs: string[];
+  defaultPermission: string;
+  sessionSecret: string;
+  sessionLife: number;
+  tooBusyLag: number;
+  allowGravatar: boolean;
   hsts: {
     enable: boolean;
     maxAgeSeconds: number;
@@ -149,9 +167,27 @@ export interface AppConfig {
 
 const schema = Joi.object({
   domain: Joi.string(),
-  port: Joi.number(),
+  port: Joi.number().default(3000),
   loglevel: Joi.string().valid(...Object.values(LogLevel)).default(LogLevel.WARN),
   linkifyHeaderStyle: Joi.string().valid(...Object.values(LinkifyHeaderStyle)).default(LinkifyHeaderStyle.GFM),
+  sourceURL: Joi.string(),
+  urlPath: Joi.string(),
+  host: Joi.string().default('::'),
+  path: Joi.string(),
+  urlAddPort: Joi.boolean().default(false),
+  cookiePolicy: Joi.string(),
+  protocolUseSSL: Joi.boolean().default(true),
+  allowOrigin: Joi.array().items(Joi.string()),
+  useCDN: Joi.boolean().default(false),
+  allowAnonymous: Joi.boolean().default(true),
+  allowAnonymousEdits: Joi.boolean().default(false),
+  allowFreeURL: Joi.boolean().default(false),
+  forbiddenNoteIDs: Joi.array().items(Joi.string()),
+  defaultPermission: Joi.string(),
+  sessionSecret: Joi.string(),
+  sessionLife: Joi.number().default(14 * 24 * 60 * 60 * 1000),
+  tooBusyLag: Joi.number().default(70),
+  allowGravatar: Joi.boolean().default(true),
   hsts: {
     enable: Joi.boolean().default(true),
     maxAgeSeconds: Joi.number().default(60 * 60 * 24 * 365),
@@ -309,6 +345,24 @@ export default registerAs('appConfig', async () => {
       port: parseInt(process.env.PORT) || undefined,
       loglevel: process.env.HD_LOGLEVEL,
       linkifyHeaderStyle: process.env.HD_LINKIFY_HEADER_STYLE,
+      sourceURL: process.env.HD_SOURCE_URL,
+      urlPath: process.env.HD_URL_PATH,
+      host: process.env.HD_HOST,
+      path: process.env.HD_PATH,
+      urlAddPort: process.env.HD_URL_ADDPORT,
+      cookiePolicy: process.env.HD_COOKIE_POLICY,
+      protocolUseSSL: process.env.HD_PROTOCOL_USESSL,
+      allowOrigin: toArrayConfig(process.env.HD_ALLOW_ORIGIN),
+      useCDN: process.env.HD_USECDN,
+      allowAnonymous: process.env.HD_ALLOW_ANONYMOUS,
+      allowAnonymousEdits: process.env.HD_ALLOW_ANONYMOUS_EDITS,
+      allowFreeURL: process.env.HD_ALLOW_FREEURL,
+      forbiddenNoteIDs: toArrayConfig(process.env.HD_FORBIDDEN_NOTE_IDS),
+      defaultPermission: process.env.HD_DEFAULT_PERMISSION,
+      sessionSecret: process.env.HD_SESSION_SECRET,
+      sessionLife: process.env.HD_SESSION_LIFE,
+      tooBusyLag: process.env.HD_TOOBUSY_LAG,
+      allowGravatar: process.env.HD_ALLOW_GRAVATAR,
       hsts: {
         enable: process.env.HD_HSTS_ENABLE,
         maxAgeSeconds: process.env.HD_HSTS_MAX_AGE,
