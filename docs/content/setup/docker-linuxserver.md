@@ -12,7 +12,7 @@
 
 [LinuxServer.io](https://linuxserver.io) have created an Ubuntu-based multi-arch container image for x86-64, arm64 and armhf.
 
-- It supports all the environment variables detailed in the [configuration documentation](../configuration-env-vars.md) to modify it according to your needs.
+- It supports all the environment variables detailed in the [configuration documentation](../configuration.md) to modify it according to your needs.
 - It gets rebuilt on new releases from HedgeDoc and also weekly if necessary to update any other package changes in the underlying container, making it easy to keep your HedgeDoc instance up to date.
 - It also details how to easily [utilize Docker networking to reverse proxy](https://github.com/linuxserver/docker-hedgedoc/#application-setup) HedgeDoc using their [SWAG docker image](https://github.com/linuxserver/docker-swag)
 

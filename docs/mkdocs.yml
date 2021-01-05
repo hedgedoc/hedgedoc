@@ -3,6 +3,7 @@ site_url: https://docs.hedgedoc.org
 repo_url: https://github.com/hedgedoc/hedgedoc
 site_description: 'HedgeDoc Documentation'
 site_author: 'HedgeDoc Developers'
+docs_dir: content
 nav:
   - Home: index.md
   - Installation:
@@ -46,12 +47,15 @@ theme:
   name: 'material'
   language: en
   favicon: images/favicon.png
-  logo: images/logo.png
+  logo: images/logo.svg
   palette:
-    scheme: preference
-    primary: 'red'
-    accent: 'red'
+    scheme: light
+    primary: 'hedgedoc'
+    accent: 'hedgedoc'
   features:
     - navigation.tabs
     - navigation.sections
     - toc.integrate
+
+extra_css:
+  - theme/styles/hedgedoc-color.css

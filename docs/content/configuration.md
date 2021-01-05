@@ -4,9 +4,9 @@ You can choose to configure HedgeDoc with either a config file or with environme
 
 Environment variables take precedence over configurations from the config files. They generally start with `CMD_` for our own options, but we also list node-specific options you can configure this way.
 
-- Environment variables are processed in [`lib/config/environment.js`](../lib/config/environment.js) - so this is the first place to look if anything is missing not obvious from this document. The default values are defined in [`lib/config/default.js`](../lib/config/default.js), in case you wonder if you even need to override it.
+- Environment variables are processed in [`lib/config/environment.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/environment.js) - so this is the first place to look if anything is missing not obvious from this document. The default values are defined in [`lib/config/default.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/default.js), in case you wonder if you even need to override it.
 
-- The config file is processed in [`lib/config/index.js`](../lib/config/index.js) - so this is the first place to look if anything is missing not obvious from this document. The default values are defined in [`lib/config/default.js`](../lib/config/default.js), in case you wonder if you even need to override it. To get started, it is a good idea to take the `config.json.example` and copy it
+- The config file is processed in [`lib/config/index.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/index.js) - so this is the first place to look if anything is missing not obvious from this document. The default values are defined in [`lib/config/default.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/default.js), in case you wonder if you even need to override it. To get started, it is a good idea to take the `config.json.example` and copy it
 to `config.json` before filling in your own details.
 
 **Note:** *Due to the rename process we renamed all `HMD_`-prefix variables to be `CMD_`-prefixed. The old ones continue to work.*
