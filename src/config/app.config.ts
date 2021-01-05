@@ -10,6 +10,8 @@ import {LogLevel} from "./loglevel";
 import {DatabaseDialect} from "./database_dialect";
 import {MediaBackend} from "./media_backend";
 import {GitlabScope, GitlabVersion} from "./gitlab";
+import { toArrayConfig } from './utils';
+import { processData } from 'old_src/lib/utils/functions';
 
 export interface AppConfig {
   domain: string;
@@ -73,7 +75,23 @@ export interface AppConfig {
       usernameField: string,
       useridField: string,
       tlsCa: string[]
-    }]
+    }],
+    saml: [{
+      idpSsoUrl: string,
+      idpCert: string,
+      clientCert: string,
+      issuer: string,
+      identifierFormat: string,
+      disableRequestedAuthnContext: string,
+      groupAttribute: string,
+      requiredGroups: string[],
+      externalGroups: string,
+      attribute: {
+         id: string,
+         username: string,
+         email: string,
+      }
+    }],
   };
 }
 
@@ -143,7 +161,24 @@ const schema = Joi.object({
       usernameField: Joi.string().optional().default('userid'),
       useridField: Joi.string().optional(),
       tlsCa: Joi.array().items(Joi.string()).optional(),
-    })).optional()
+    })).optional(),
+    saml: Joi.array().items(Joi.object({
+      idpSsoUrl: Joi.string(),
+      idpCert: Joi.string(),
+      clientCert: Joi.string().optional(),
+      // ToDo: (default: config.serverURL) will be build on-the-fly in the config/index.js from domain, urlAddPort and urlPath.
+      issuer: Joi.string(), //.default(),
+      identifierFormat: Joi.string().default('urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'),
+      disableRequestedAuthnContext: Joi.boolean().default(false),
+      groupAttribute: Joi.string().optional(),
+      requiredGroups: Joi.array().items(Joi.string()),
+      externalGroups: Joi.array().items(Joi.string()),
+      attribute: {
+         id: Joi.string().default('NameId'),
+         username: Joi.string().default('NameId'),
+         email: Joi.string().default('NameId'),
+      }
+    })).optional(),
   }
 });
 
@@ -230,10 +265,10 @@ export default registerAs('appConfig', async () => {
           bindCredentials: process.env.HD_AUTH_LDAP_BIND_CREDENTIALS_0,
           searchBase: process.env.HD_AUTH_LDAP_SEARCH_BASE_0,
           searchFilter: process.env.HD_AUTH_LDAP_SEARCH_FILTER_0,
-          searchAttributes: process.env.HD_AUTH_LDAP_SEARCH_ATTRIBUTES_0.split(',').map(attribute => attribute.trim()),
+          searchAttributes: toArrayConfig(process.env.HD_AUTH_LDAP_SEARCH_ATTRIBUTES_0, ','),
           usernameField: process.env.HD_AUTH_LDAP_USERNAME_FIELD_0,
           useridField: process.env.HD_AUTH_LDAP_USERID_FIELD_0,
-          tlsCa: process.env.HD_AUTH_LDAP_TLS_CA_0.split(',').map(attribute => attribute.trim()),
+          tlsCa: toArrayConfig(process.env.HD_AUTH_LDAP_TLS_CA_0, ','),
         }, {
           providerName: process.env.HD_AUTH_LDAP_PROVIDER_NAME_1,
           url: process.env.HD_AUTH_LDAP_URL_1,
@@ -241,10 +276,10 @@ export default registerAs('appConfig', async () => {
           bindCredentials: process.env.HD_AUTH_LDAP_BIND_CREDENTIALS_1,
           searchBase: process.env.HD_AUTH_LDAP_SEARCH_BASE_1,
           searchFilter: process.env.HD_AUTH_LDAP_SEARCH_FILTER_1,
-          searchAttributes: process.env.HD_AUTH_LDAP_SEARCH_ATTRIBUTES_1.split(',').map(attribute => attribute.trim()),
+          searchAttributes: toArrayConfig(process.env.HD_AUTH_LDAP_SEARCH_ATTRIBUTES_1, ','),
           usernameField: process.env.HD_AUTH_LDAP_USERNAME_FIELD_1,
           useridField: process.env.HD_AUTH_LDAP_USERID_FIELD_1,
-          tlsCa: process.env.HD_AUTH_LDAP_TLS_CA_1.split(',').map(attribute => attribute.trim()),
+          tlsCa: toArrayConfig(process.env.HD_AUTH_LDAP_TLS_CA_1, ','),
         }, {
           providerName: process.env.HD_AUTH_LDAP_PROVIDER_NAME_2,
           url: process.env.HD_AUTH_LDAP_URL_2,
@@ -252,10 +287,10 @@ export default registerAs('appConfig', async () => {
           bindCredentials: process.env.HD_AUTH_LDAP_BIND_CREDENTIALS_2,
           searchBase: process.env.HD_AUTH_LDAP_SEARCH_BASE_2,
           searchFilter: process.env.HD_AUTH_LDAP_SEARCH_FILTER_2,
-          searchAttributes: process.env.HD_AUTH_LDAP_SEARCH_ATTRIBUTES_2.split(',').map(attribute => attribute.trim()),
+          searchAttributes: toArrayConfig(process.env.HD_AUTH_LDAP_SEARCH_ATTRIBUTES_2, ','),
           usernameField: process.env.HD_AUTH_LDAP_USERNAME_FIELD_2,
           useridField: process.env.HD_AUTH_LDAP_USERID_FIELD_2,
-          tlsCa: process.env.HD_AUTH_LDAP_TLS_CA_2.split(',').map(attribute => attribute.trim()),
+          tlsCa: toArrayConfig(process.env.HD_AUTH_LDAP_TLS_CA_2, ','),
         }, {
           providerName: process.env.HD_AUTH_LDAP_PROVIDER_NAME_3,
           url: process.env.HD_AUTH_LDAP_URL_3,
@@ -263,10 +298,10 @@ export default registerAs('appConfig', async () => {
           bindCredentials: process.env.HD_AUTH_LDAP_BIND_CREDENTIALS_3,
           searchBase: process.env.HD_AUTH_LDAP_SEARCH_BASE_3,
           searchFilter: process.env.HD_AUTH_LDAP_SEARCH_FILTER_3,
-          searchAttributes: process.env.HD_AUTH_LDAP_SEARCH_ATTRIBUTES_3.split(',').map(attribute => attribute.trim()),
+          searchAttributes: toArrayConfig(process.env.HD_AUTH_LDAP_SEARCH_ATTRIBUTES_3, ','),
           usernameField: process.env.HD_AUTH_LDAP_USERNAME_FIELD_3,
           useridField: process.env.HD_AUTH_LDAP_USERID_FIELD_3,
-          tlsCa: process.env.HD_AUTH_LDAP_TLS_CA_3.split(',').map(attribute => attribute.trim()),
+          tlsCa: toArrayConfig(process.env.HD_AUTH_LDAP_TLS_CA_3, ','),
         }, {
           providerName: process.env.HD_AUTH_LDAP_PROVIDER_NAME_4,
           url: process.env.HD_AUTH_LDAP_URL_4,
@@ -274,10 +309,86 @@ export default registerAs('appConfig', async () => {
           bindCredentials: process.env.HD_AUTH_LDAP_BIND_CREDENTIALS_4,
           searchBase: process.env.HD_AUTH_LDAP_SEARCH_BASE_4,
           searchFilter: process.env.HD_AUTH_LDAP_SEARCH_FILTER_4,
-          searchAttributes: process.env.HD_AUTH_LDAP_SEARCH_ATTRIBUTES_4.split(',').map(attribute => attribute.trim()),
+          searchAttributes: toArrayConfig(process.env.HD_AUTH_LDAP_SEARCH_ATTRIBUTES_4, ','),
           usernameField: process.env.HD_AUTH_LDAP_USERNAME_FIELD_4,
           useridField: process.env.HD_AUTH_LDAP_USERID_FIELD_4,
-          tlsCa: process.env.HD_AUTH_LDAP_TLS_CA_4.split(',').map(attribute => attribute.trim()),
+          tlsCa: toArrayConfig(process.env.HD_AUTH_LDAP_TLS_CA_4, ','),
+        }],
+        saml: [{
+          idpSsoUrl: process.env.HD_AUTH_SAML_IDPSSOURL_0,
+          idpCert: process.env.HD_AUTH_SAML_IDPCERT_0,
+          clientCert: process.env.HD_AUTH_SAML_CLIENTCERT_0,
+          issuer: process.env.HD_AUTH_SAML_ISSUER_0,
+          identifierFormat: process.env.HD_AUTH_SAML_IDENTIFIERFORMAT_0,
+          disableRequestedAuthnContext: process.env.HD_AUTH_SAML_DISABLEREQUESTEDAUTHNCONTEXT_0,
+          groupAttribute: process.env.HD_AUTH_SAML_GROUPATTRIBUTE_0,
+          requiredGroups: toArrayConfig(process.env.HD_AUTH_SAML_REQUIREDGROUPS_0, '|'),
+          externalGroups: toArrayConfig(process.env.HD_AUTH_SAML_EXTERNALGROUPS_0, '|'),
+          attribute: {
+             id: process.env.HD_AUTH_SAML_ATTRIBUTE_ID_0,
+             username: process.env.HD_AUTH_SAML_ATTRIBUTE_USERNAME_0,
+             email: process.env.HD_AUTH_SAML_ATTRIBUTE_USERNAME_0,
+          }
+        }, {
+          idpSsoUrl: process.env.HD_AUTH_SAML_IDPSSOURL_1,
+          idpCert: process.env.HD_AUTH_SAML_IDPCERT_1,
+          clientCert: process.env.HD_AUTH_SAML_CLIENTCERT_1,
+          issuer: process.env.HD_AUTH_SAML_ISSUER_1,
+          identifierFormat: process.env.HD_AUTH_SAML_IDENTIFIERFORMAT_1,
+          disableRequestedAuthnContext: process.env.HD_AUTH_SAML_DISABLEREQUESTEDAUTHNCONTEXT_1,
+          groupAttribute: process.env.HD_AUTH_SAML_GROUPATTRIBUTE_1,
+          requiredGroups: toArrayConfig(process.env.HD_AUTH_SAML_REQUIREDGROUPS_1, '|'),
+          externalGroups: toArrayConfig(process.env.HD_AUTH_SAML_EXTERNALGROUPS_1, '|'),
+          attribute: {
+             id: process.env.HD_AUTH_SAML_ATTRIBUTE_ID_1,
+             username: process.env.HD_AUTH_SAML_ATTRIBUTE_USERNAME_1,
+             email: process.env.HD_AUTH_SAML_ATTRIBUTE_USERNAME_1,
+          }
+        }, {
+          idpSsoUrl: process.env.HD_AUTH_SAML_IDPSSOURL_2,
+          idpCert: process.env.HD_AUTH_SAML_IDPCERT_2,
+          clientCert: process.env.HD_AUTH_SAML_CLIENTCERT_2,
+          issuer: process.env.HD_AUTH_SAML_ISSUER_2,
+          identifierFormat: process.env.HD_AUTH_SAML_IDENTIFIERFORMAT_2,
+          disableRequestedAuthnContext: process.env.HD_AUTH_SAML_DISABLEREQUESTEDAUTHNCONTEXT_2,
+          groupAttribute: process.env.HD_AUTH_SAML_GROUPATTRIBUTE_2,
+          requiredGroups: toArrayConfig(process.env.HD_AUTH_SAML_REQUIREDGROUPS_2, '|'),
+          externalGroups: toArrayConfig(process.env.HD_AUTH_SAML_EXTERNALGROUPS_2, '|'),
+          attribute: {
+             id: process.env.HD_AUTH_SAML_ATTRIBUTE_ID_2,
+             username: process.env.HD_AUTH_SAML_ATTRIBUTE_USERNAME_2,
+             email: process.env.HD_AUTH_SAML_ATTRIBUTE_USERNAME_2,
+          }
+        }, {
+          idpSsoUrl: process.env.HD_AUTH_SAML_IDPSSOURL_3,
+          idpCert: process.env.HD_AUTH_SAML_IDPCERT_3,
+          clientCert: process.env.HD_AUTH_SAML_CLIENTCERT_3,
+          issuer: process.env.HD_AUTH_SAML_ISSUER_3,
+          identifierFormat: process.env.HD_AUTH_SAML_IDENTIFIERFORMAT_3,
+          disableRequestedAuthnContext: process.env.HD_AUTH_SAML_DISABLEREQUESTEDAUTHNCONTEXT_3,
+          groupAttribute: process.env.HD_AUTH_SAML_GROUPATTRIBUTE_3,
+          requiredGroups: toArrayConfig(process.env.HD_AUTH_SAML_REQUIREDGROUPS_3, '|'),
+          externalGroups: toArrayConfig(process.env.HD_AUTH_SAML_EXTERNALGROUPS_3, '|'),
+          attribute: {
+             id: process.env.HD_AUTH_SAML_ATTRIBUTE_ID_3,
+             username: process.env.HD_AUTH_SAML_ATTRIBUTE_USERNAME_3,
+             email: process.env.HD_AUTH_SAML_ATTRIBUTE_USERNAME_3,
+          }
+        }, {
+          idpSsoUrl: process.env.HD_AUTH_SAML_IDPSSOURL_4,
+          idpCert: process.env.HD_AUTH_SAML_IDPCERT_4,
+          clientCert: process.env.HD_AUTH_SAML_CLIENTCERT_4,
+          issuer: process.env.HD_AUTH_SAML_ISSUER_4,
+          identifierFormat: process.env.HD_AUTH_SAML_IDENTIFIERFORMAT_4,
+          disableRequestedAuthnContext: process.env.HD_AUTH_SAML_DISABLEREQUESTEDAUTHNCONTEXT_4,
+          groupAttribute: process.env.HD_AUTH_SAML_GROUPATTRIBUTE_4,
+          requiredGroups: toArrayConfig(process.env.HD_AUTH_SAML_REQUIREDGROUPS_4, '|'),
+          externalGroups: toArrayConfig(process.env.HD_AUTH_SAML_EXTERNALGROUPS_4, '|'),
+          attribute: {
+             id: process.env.HD_AUTH_SAML_ATTRIBUTE_ID_4,
+             username: process.env.HD_AUTH_SAML_ATTRIBUTE_USERNAME_4,
+             email: process.env.HD_AUTH_SAML_ATTRIBUTE_USERNAME_4,
+          }
         }]
       },
     },
