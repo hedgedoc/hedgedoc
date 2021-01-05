@@ -29,7 +29,7 @@ License: CC0-1.0
 
 Files: docs/**/*.png
 Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
-License: CC0-1.0
+License: CC-BY-SA-4.0
 
 Files: docs/content/dev/db-schema.plantuml
 Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
