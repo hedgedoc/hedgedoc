@@ -27,15 +27,15 @@ export interface AppConfig {
   protocolUseSSL: boolean;
   allowOrigin: string[];
   useCDN: boolean;
-  allowAnonymous: boolean;
-  allowAnonymousEdits: boolean;
-  allowFreeURL: boolean;
+  enableAnonymous: boolean;
+  enableAnonymousEdits: boolean;
+  enableFreeURL: boolean;
   forbiddenNoteIDs: string[];
   defaultPermission: string;
   sessionSecret: string;
   sessionLife: number;
   tooBusyLag: number;
-  allowGravatar: boolean;
+  enableGravatar: boolean;
   hsts: {
     enable: boolean;
     maxAgeSeconds: number;
@@ -85,8 +85,8 @@ export interface AppConfig {
   };
   auth: {
     email: {
-      allowLogin: boolean;
-      allowRegister: boolean;
+      enableLogin: boolean;
+      enableRegister: boolean;
     };
     facebook: {
       clientID: string;
@@ -179,15 +179,15 @@ const schema = Joi.object({
   protocolUseSSL: Joi.boolean().default(true),
   allowOrigin: Joi.array().items(Joi.string()),
   useCDN: Joi.boolean().default(false),
-  allowAnonymous: Joi.boolean().default(true),
-  allowAnonymousEdits: Joi.boolean().default(false),
-  allowFreeURL: Joi.boolean().default(false),
+  enableAnonymous: Joi.boolean().default(true),
+  enableAnonymousEdits: Joi.boolean().default(false),
+  enableFreeURL: Joi.boolean().default(false),
   forbiddenNoteIDs: Joi.array().items(Joi.string()),
   defaultPermission: Joi.string(),
   sessionSecret: Joi.string(),
   sessionLife: Joi.number().default(14 * 24 * 60 * 60 * 1000),
   tooBusyLag: Joi.number().default(70),
-  allowGravatar: Joi.boolean().default(true),
+  enableGravatar: Joi.boolean().default(true),
   hsts: {
     enable: Joi.boolean().default(true),
     maxAgeSeconds: Joi.number().default(60 * 60 * 24 * 365),
@@ -257,8 +257,8 @@ const schema = Joi.object({
   },
   auth: {
     email: {
-      allowLogin: Joi.boolean().default(false),
-      allowRegister: Joi.boolean().default(false),
+      enableLogin: Joi.boolean().default(false),
+      enableRegister: Joi.boolean().default(false),
     },
     facebook: {
       clientID: Joi.string(),
@@ -354,15 +354,15 @@ export default registerAs('appConfig', async () => {
       protocolUseSSL: process.env.HD_PROTOCOL_USESSL,
       allowOrigin: toArrayConfig(process.env.HD_ALLOW_ORIGIN),
       useCDN: process.env.HD_USECDN,
-      allowAnonymous: process.env.HD_ALLOW_ANONYMOUS,
-      allowAnonymousEdits: process.env.HD_ALLOW_ANONYMOUS_EDITS,
-      allowFreeURL: process.env.HD_ALLOW_FREEURL,
+      enableAnonymous: process.env.HD_ENABLE_ANONYMOUS,
+      enableAnonymousEdits: process.env.HD_ENABLE_ANONYMOUS_EDITS,
+      enableFreeURL: process.env.HD_ENABLE_FREEURL,
       forbiddenNoteIDs: toArrayConfig(process.env.HD_FORBIDDEN_NOTE_IDS),
       defaultPermission: process.env.HD_DEFAULT_PERMISSION,
       sessionSecret: process.env.HD_SESSION_SECRET,
       sessionLife: process.env.HD_SESSION_LIFE,
       tooBusyLag: process.env.HD_TOOBUSY_LAG,
-      allowGravatar: process.env.HD_ALLOW_GRAVATAR,
+      enableGravatar: process.env.HD_ENABLE_GRAVATAR,
       hsts: {
         enable: process.env.HD_HSTS_ENABLE,
         maxAgeSeconds: process.env.HD_HSTS_MAX_AGE,
@@ -412,8 +412,8 @@ export default registerAs('appConfig', async () => {
       },
       auth: {
         email: {
-          allowLogin: process.env.HD_AUTH_EMAIL_ALLOW_LOGIN,
-          allowRegister: process.env.HD_AUTH_EMAIL_ALLOW_REGISTER,
+          enableLogin: process.env.HD_AUTH_EMAIL_ENABLE_LOGIN,
+          enableRegister: process.env.HD_AUTH_EMAIL_ENABLE_REGISTER,
         },
         facebook: {
           clientID: process.env.HD_AUTH_FACEBOOK_CLIENT_ID,
