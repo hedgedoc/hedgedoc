@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "config:base",
+    "group:definitelyTyped",
+    "group:socketio",
+    "group:linters",
+    "group:test",
+    "group:nextjsMonorepo",
+    ":disableMajorUpdates",
+    ":gitSignOff"
+  ],
+  "labels": [
+    "type: maintenance"
+  ]
+}
