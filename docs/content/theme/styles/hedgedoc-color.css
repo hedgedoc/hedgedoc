@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 [data-md-color-primary=hedgedoc] {
   --md-primary-fg-color: #b51f08;
   --md-primary-fg-color--light: #b51f08;

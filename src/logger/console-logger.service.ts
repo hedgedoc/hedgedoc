@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import { Injectable, Optional, Scope } from '@nestjs/common';
 import { isObject } from '@nestjs/common/utils/shared.utils';
 import * as clc from 'cli-color';
