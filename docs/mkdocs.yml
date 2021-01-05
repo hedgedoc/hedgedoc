@@ -4,6 +4,7 @@ repo_url: https://github.com/hedgedoc/hedgedoc
 site_description: 'HedgeDoc Documentation'
 site_author: 'HedgeDoc Developers'
 docs_dir: content
+edit_uri: https://github.com/hedgedoc/hedgedoc/edit/master/docs/content/
 nav:
   - Home: index.md
   - Installation:
@@ -58,4 +59,4 @@ theme:
     - toc.integrate
 
 extra_css:
-  - theme/styles/hedgedoc-color.css
+  - theme/styles/hedgedoc-custom.css
