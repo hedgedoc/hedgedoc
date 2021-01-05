@@ -1,0 +1,28 @@
+
+body, input {
+    font-family: "Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+}
+
+code, kbd, pre {
+    font-family: "Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Roboto'),
+         url('./Roboto/roboto-latin-regular.woff2') format('woff2'),
+         url('./Roboto/roboto-latin-regular.woff') format('woff'),
+}
+
+@font-face {
+    font-family: 'Roboto Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Roboto Mono'),
+         url('./Roboto/roboto-mono-latin-regular.woff2') format('woff2'),
+         url('./Roboto/roboto-mono-latin-regular.woff') format('woff'),
+}
