@@ -96,7 +96,7 @@ The license does not include the HedgeDoc logo, whose terms of usage can be foun
 [setup-heroku]: https://docs.hedgedoc.org/setup/heroku/
 [setup-manual]: https://docs.hedgedoc.org/setup/manual-setup/
 [developer-documentation]: https://docs.hedgedoc.org/dev/getting-started/
-[history]: https://hedgedoc.org/history
+[history]: https://docs.hedgedoc.org/history/
 [matrix.org-image]: https://img.shields.io/matrix/hedgedoc:matrix.org?logo=matrix&server_fqdn=matrix.org
 [matrix.org-url]: https://chat.hedgedoc.org
 [github-version-badge]: https://img.shields.io/github/release/hedgedoc/hedgedoc.svg
