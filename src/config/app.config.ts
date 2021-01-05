@@ -11,7 +11,6 @@ import {DatabaseDialect} from "./database_dialect";
 import {MediaBackend} from "./media_backend";
 import {GitlabScope, GitlabVersion} from "./gitlab";
 import { toArrayConfig } from './utils';
-import { processData } from 'old_src/lib/utils/functions';
 
 export interface AppConfig {
   domain: string;
@@ -22,6 +21,27 @@ export interface AppConfig {
       use: MediaBackend;
       filesystem: {
         uploadPath: string;
+      };
+      s3: {
+        accessKeyId: string;
+        secretAccessKey: string;
+        region: string;
+        bucket: string;
+        endPoint: string;
+      };
+      azure: {
+        connectionString: string;
+        container: string;
+      };
+      minio: {
+        accessKey: string;
+        secretKey: string;
+        endPoint: string;
+        secure: boolean;
+        port: number;
+      };
+      imgur: {
+        clientID: string;
       };
     };
   };
@@ -37,76 +57,76 @@ export interface AppConfig {
     facebook: {
       clientID: string;
       clientSecret: string;
-    },
+    };
     twitter: {
       consumerKey: string;
       consumerSecret: string;
-    },
+    };
     github: {
-      clientID: string,
-      clientSecret: string,
-    },
+      clientID: string;
+      clientSecret: string;
+    };
     dropbox: {
-      clientID: string,
-      clientSecret: string,
-      appKey: string,
-    },
+      clientID: string;
+      clientSecret: string;
+      appKey: string;
+    };
     google: {
-      clientID: string,
-      clientSecret: string,
-      apiKey: string,
-    },
+      clientID: string;
+      clientSecret: string;
+      apiKey: string;
+    };
     gitlab: [{
-      baseURL: string,
-      clientID: string,
-      clientSecret: string,
-      scope: GitlabScope,
-      version: GitlabVersion
-    }],
+      baseURL: string;
+      clientID: string;
+      clientSecret: string;
+      scope: GitlabScope;
+      version: GitlabVersion;
+    }];
     // ToDo: tlsOptions exist in config.json.example. See https://nodejs.org/api/tls.html#tls_tls_connect_options_callback
     ldap: [{
-      providerName: string,
-      url: string,
-      bindDn: string,
-      bindCredentials: string,
-      searchBase: string,
-      searchFilter: string,
-      searchAttributes: string[],
-      usernameField: string,
-      useridField: string,
-      tlsCa: string[]
-    }],
+      providerName: string;
+      url: string;
+      bindDn: string;
+      bindCredentials: string;
+      searchBase: string;
+      searchFilter: string;
+      searchAttributes: string[];
+      usernameField: string;
+      useridField: string;
+      tlsCa: string[];
+    }];
     saml: [{
-      idpSsoUrl: string,
-      idpCert: string,
-      clientCert: string,
-      issuer: string,
-      identifierFormat: string,
-      disableRequestedAuthnContext: string,
-      groupAttribute: string,
-      requiredGroups: string[],
-      externalGroups: string,
+      idpSsoUrl: string;
+      idpCert: string;
+      clientCert: string;
+      issuer: string;
+      identifierFormat: string;
+      disableRequestedAuthnContext: string;
+      groupAttribute: string;
+      requiredGroups: string[];
+      externalGroups: string;
       attribute: {
-         id: string,
-         username: string,
-         email: string,
+         id: string;
+         username: string;
+         email: string;
       }
-    }],
+    }];
     oauth2: [{
-      providerName: string,
-      baseURL: string,
-      userProfileURL: string,
-      userProfileIdAttr: string,
-      userProfileUsernameAttr: string,
-      userProfileDisplayNameAttr: string,
-      userProfileEmailAttr: string,
-      tokenURL: string,
-      authorizationURL: string,
-      clientID: string,
-      clientSecret: string,
-      scope: string,
-      rolesClaim: string,
-      accessRole: string
+      providerName: string;
+      baseURL: string;
+      userProfileURL: string;
+      userProfileIdAttr: string;
+      userProfileUsernameAttr: string;
+      userProfileDisplayNameAttr: string;
+      userProfileEmailAttr: string;
+      tokenURL: string;
+      authorizationURL: string;
+      clientID: string;
+      clientSecret: string;
+      scope: string;
+      rolesClaim: string;
+      accessRole: string;
     }]
   };
 }
@@ -125,6 +145,43 @@ const schema = Joi.object({
           otherwise: Joi.optional(),
         }),
       },
+      s3: Joi.when('...use', {
+        is: Joi.valid(MediaBackend.S3),
+        then: Joi.object({
+          accessKeyId: Joi.string(),
+          secretAccessKey: Joi.string(),
+          region: Joi.string(),
+          bucket: Joi.string(),
+          endPoint: Joi.string(),
+        }),
+        otherwise: Joi.optional(),
+      }),
+      azure: Joi.when('...use', {
+        is: Joi.valid(MediaBackend.AZURE),
+        then: Joi.object({
+          connectionString: Joi.string(),
+          container: Joi.string(),
+        }),
+        otherwise: Joi.optional(),
+      }),
+      imgur: Joi.when('...use', {
+        is: Joi.valid(MediaBackend.IMGUR),
+        then: Joi.object({
+          clientID: Joi.string(),
+        }),
+        otherwise: Joi.optional(),
+      }),
+      minio: Joi.when('...use', {
+        is: Joi.valid(MediaBackend.MINIO),
+        then: Joi.object({
+          accessKey: Joi.string(),
+          secretKey: Joi.string(),
+          endPoint: Joi.string(),
+          secure: Joi.boolean(),
+          port: Joi.number(),
+        }),
+        otherwise: Joi.optional(),
+      }),
     },
   },
   database: {
@@ -225,6 +282,27 @@ export default registerAs('appConfig', async () => {
           use: process.env.HD_MEDIA_BACKEND,
           filesystem: {
             uploadPath: process.env.HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH,
+          },
+          s3: {
+            accessKeyId: process.env.HD_MEDIA_BACKEND_S3_ACCESS_KEY_ID,
+            secretAccessKey: process.env.HD_MEDIA_BACKEND_S3_SECRET_ACCESS_KEY,
+            region: process.env.HD_MEDIA_BACKEND_S3_REGION,
+            bucket: process.env.HD_MEDIA_BACKEND_S3_BUCKET,
+            endPoint: process.env.HD_MEDIA_BACKEND_S3_ENDPOINT,
+          },
+          azure: {
+            connectionString: process.env.HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING,
+            container: process.env.HD_MEDIA_BACKEND_AZURE_CONTAINER,
+          },
+          minio: {
+            accessKey: process.env.HD_MEDIA_BACKEND_MINIO_ACCESS_KEY,
+            secretKey: process.env.HD_MEDIA_BACKEND_MINIO_ACCESS_KEY,
+            endPoint: process.env.HD_MEDIA_BACKEND_MINIO_ENDPOINT,
+            secure: process.env.HD_MEDIA_BACKEND_MINIO_SECURE,
+            port: process.env.HD_MEDIA_BACKEND_MINIO_PORT,
+          },
+          imgur: {
+            clientID: process.env.HD_MEDIA_BACKEND_IMGUR_CLIENTID,
           },
         },
       },
