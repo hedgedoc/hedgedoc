@@ -57,6 +57,8 @@ theme:
     - navigation.tabs
     - navigation.sections
     - toc.integrate
+  font: false
 
 extra_css:
   - theme/styles/hedgedoc-custom.css
+  - theme/styles/roboto.css
