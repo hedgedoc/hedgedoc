@@ -11,6 +11,7 @@ code, kbd, pre {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
+    font-display: swap;
     src: local('Roboto'),
          url('./Roboto/roboto-latin-regular.woff2') format('woff2'),
          url('./Roboto/roboto-latin-regular.woff') format('woff'),
@@ -20,6 +21,7 @@ code, kbd, pre {
     font-family: 'Roboto Mono';
     font-style: normal;
     font-weight: 400;
+    font-display: swap;
     src: local('Roboto Mono'),
          url('./Roboto/roboto-mono-latin-regular.woff2') format('woff2'),
          url('./Roboto/roboto-mono-latin-regular.woff') format('woff'),
