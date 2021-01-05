@@ -92,6 +92,22 @@ export interface AppConfig {
          email: string,
       }
     }],
+    oauth2: [{
+      providerName: string,
+      baseURL: string,
+      userProfileURL: string,
+      userProfileIdAttr: string,
+      userProfileUsernameAttr: string,
+      userProfileDisplayNameAttr: string,
+      userProfileEmailAttr: string,
+      tokenURL: string,
+      authorizationURL: string,
+      clientID: string,
+      clientSecret: string,
+      scope: string,
+      rolesClaim: string,
+      accessRole: string
+    }]
   };
 }
 
@@ -179,6 +195,22 @@ const schema = Joi.object({
          email: Joi.string().default('NameId'),
       }
     })).optional(),
+    oauth2: Joi.array().items(Joi.object({
+      providerName: Joi.string(),
+      baseURL: Joi.string(),
+      userProfileURL: Joi.string(),
+      userProfileIdAttr: Joi.string(),
+      userProfileUsernameAttr: Joi.string(),
+      userProfileDisplayNameAttr: Joi.string(),
+      userProfileEmailAttr: Joi.string(),
+      tokenURL: Joi.string(),
+      authorizationURL: Joi.string(),
+      clientID: Joi.string(),
+      clientSecret: Joi.string(),
+      scope: Joi.string(),
+      rolesClaim: Joi.string(),
+      accessRole: Joi.string()
+    })).optional()
   }
 });
 
@@ -389,6 +421,82 @@ export default registerAs('appConfig', async () => {
              username: process.env.HD_AUTH_SAML_ATTRIBUTE_USERNAME_4,
              email: process.env.HD_AUTH_SAML_ATTRIBUTE_USERNAME_4,
           }
+        }],
+        oauth2: [{
+          providerName: process.env.HD_AUTH_OAUTH2_PROVIDERNAME_0,
+          baseURL: process.env.HD_AUTH_OAUTH2_BASEURL_0,
+          userProfileURL: process.env.HD_AUTH_OAUTH2_USER_PROFILE_URL_0,
+          userProfileIdAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_ID_ATTR_0,
+          userProfileUsernameAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_USERNAME_ATTR_0,
+          userProfileDisplayNameAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR_0,
+          userProfileEmailAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_EMAIL_ATTR_0,
+          tokenURL: process.env.HD_AUTH_OAUTH2_TOKEN_URL_0,
+          authorizationURL: process.env.HD_AUTH_OAUTH2_AUTHORIZATION_URL_0,
+          clientID: process.env.HD_AUTH_OAUTH2_CLIENT_ID_0,
+          clientSecret: process.env.HD_AUTH_OAUTH2_CLIENT_SECRET_0,
+          scope: process.env.HD_AUTH_OAUTH2_SCOPE_0,
+          rolesClaim: process.env.HD_AUTH_OAUTH2_ROLES_CLAIM_0,
+          accessRole: process.env.HD_AUTH_OAUTH2_ACCESS_ROLE_0
+        }, {
+          providerName: process.env.HD_AUTH_OAUTH2_PROVIDERNAME_1,
+          baseURL: process.env.HD_AUTH_OAUTH2_BASEURL_1,
+          userProfileURL: process.env.HD_AUTH_OAUTH2_USER_PROFILE_URL_1,
+          userProfileIdAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_ID_ATTR_1,
+          userProfileUsernameAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_USERNAME_ATTR_1,
+          userProfileDisplayNameAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR_1,
+          userProfileEmailAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_EMAIL_ATTR_1,
+          tokenURL: process.env.HD_AUTH_OAUTH2_TOKEN_URL_1,
+          authorizationURL: process.env.HD_AUTH_OAUTH2_AUTHORIZATION_URL_1,
+          clientID: process.env.HD_AUTH_OAUTH2_CLIENT_ID_1,
+          clientSecret: process.env.HD_AUTH_OAUTH2_CLIENT_SECRET_1,
+          scope: process.env.HD_AUTH_OAUTH2_SCOPE_1,
+          rolesClaim: process.env.HD_AUTH_OAUTH2_ROLES_CLAIM_1,
+          accessRole: process.env.HD_AUTH_OAUTH2_ACCESS_ROLE_1
+        }, {
+          providerName: process.env.HD_AUTH_OAUTH2_PROVIDERNAME_2,
+          baseURL: process.env.HD_AUTH_OAUTH2_BASEURL_2,
+          userProfileURL: process.env.HD_AUTH_OAUTH2_USER_PROFILE_URL_2,
+          userProfileIdAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_ID_ATTR_2,
+          userProfileUsernameAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_USERNAME_ATTR_2,
+          userProfileDisplayNameAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR_2,
+          userProfileEmailAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_EMAIL_ATTR_2,
+          tokenURL: process.env.HD_AUTH_OAUTH2_TOKEN_URL_2,
+          authorizationURL: process.env.HD_AUTH_OAUTH2_AUTHORIZATION_URL_2,
+          clientID: process.env.HD_AUTH_OAUTH2_CLIENT_ID_2,
+          clientSecret: process.env.HD_AUTH_OAUTH2_CLIENT_SECRET_2,
+          scope: process.env.HD_AUTH_OAUTH2_SCOPE_2,
+          rolesClaim: process.env.HD_AUTH_OAUTH2_ROLES_CLAIM_2,
+          accessRole: process.env.HD_AUTH_OAUTH2_ACCESS_ROLE_2
+        }, {
+          providerName: process.env.HD_AUTH_OAUTH2_PROVIDERNAME_3,
+          baseURL: process.env.HD_AUTH_OAUTH2_BASEURL_3,
+          userProfileURL: process.env.HD_AUTH_OAUTH2_USER_PROFILE_URL_3,
+          userProfileIdAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_ID_ATTR_3,
+          userProfileUsernameAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_USERNAME_ATTR_3,
+          userProfileDisplayNameAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR_3,
+          userProfileEmailAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_EMAIL_ATTR_3,
+          tokenURL: process.env.HD_AUTH_OAUTH2_TOKEN_URL_3,
+          authorizationURL: process.env.HD_AUTH_OAUTH2_AUTHORIZATION_URL_3,
+          clientID: process.env.HD_AUTH_OAUTH2_CLIENT_ID_3,
+          clientSecret: process.env.HD_AUTH_OAUTH2_CLIENT_SECRET_3,
+          scope: process.env.HD_AUTH_OAUTH2_SCOPE_3,
+          rolesClaim: process.env.HD_AUTH_OAUTH2_ROLES_CLAIM_3,
+          accessRole: process.env.HD_AUTH_OAUTH2_ACCESS_ROLE_3
+        }, {
+          providerName: process.env.HD_AUTH_OAUTH2_PROVIDERNAME_4,
+          baseURL: process.env.HD_AUTH_OAUTH2_BASEURL_4,
+          userProfileURL: process.env.HD_AUTH_OAUTH2_USER_PROFILE_URL_4,
+          userProfileIdAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_ID_ATTR_4,
+          userProfileUsernameAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_USERNAME_ATTR_4,
+          userProfileDisplayNameAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR_4,
+          userProfileEmailAttr: process.env.HD_AUTH_OAUTH2_USER_PROFILE_EMAIL_ATTR_4,
+          tokenURL: process.env.HD_AUTH_OAUTH2_TOKEN_URL_4,
+          authorizationURL: process.env.HD_AUTH_OAUTH2_AUTHORIZATION_URL_4,
+          clientID: process.env.HD_AUTH_OAUTH2_CLIENT_ID_4,
+          clientSecret: process.env.HD_AUTH_OAUTH2_CLIENT_SECRET_4,
+          scope: process.env.HD_AUTH_OAUTH2_SCOPE_4,
+          rolesClaim: process.env.HD_AUTH_OAUTH2_ROLES_CLAIM_4,
+          accessRole: process.env.HD_AUTH_OAUTH2_ACCESS_ROLE_4
         }]
       },
     },
@@ -398,7 +506,7 @@ export default registerAs('appConfig', async () => {
     },
   );
   if (appConfig.error) {
-    throw new Error(appConfig.error.toString());
+    throw new Error(appConfig.error.toJoi.string());
   }
   return appConfig.value;
 });
