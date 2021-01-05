@@ -54,6 +54,10 @@ export interface AppConfig {
     dialect: DatabaseDialect;
   };
   auth: {
+    email: {
+      allowLogin: boolean;
+      allowRegister: boolean;
+    };
     facebook: {
       clientID: string;
       clientSecret: string;
@@ -193,6 +197,10 @@ const schema = Joi.object({
     dialect: Joi.string().valid(...Object.values(DatabaseDialect)),
   },
   auth: {
+    email: {
+      allowLogin: Joi.boolean().default(false),
+      allowRegister: Joi.boolean().default(false),
+    },
     facebook: {
       clientID: Joi.string(),
       clientSecret: Joi.string(),
@@ -315,6 +323,10 @@ export default registerAs('appConfig', async () => {
         dialect: process.env.HD_DATABASE_DIALECT,
       },
       auth: {
+        email: {
+          allowLogin: process.env.HD_AUTH_EMAIL_ALLOW_LOGIN,
+          allowRegister: process.env.HD_AUTH_EMAIL_ALLOW_REGISTER,
+        },
         facebook: {
           clientID: process.env.HD_AUTH_FACEBOOK_CLIENT_ID,
           clientSecret: process.env.HD_AUTH_FACEBOOK_CLIENT_SECRET,
