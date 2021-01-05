@@ -11,11 +11,13 @@ import {DatabaseDialect} from "./database_dialect";
 import {MediaBackend} from "./media_backend";
 import {GitlabScope, GitlabVersion} from "./gitlab";
 import { toArrayConfig } from './utils';
+import { LinkifyHeaderStyle } from './linkify-header-style';
 
 export interface AppConfig {
   domain: string;
   port: number;
   loglevel: LogLevel;
+  linkifyHeaderStyle: LinkifyHeaderStyle;
   media: {
     backend: {
       use: MediaBackend;
@@ -139,6 +141,7 @@ const schema = Joi.object({
   domain: Joi.string(),
   port: Joi.number(),
   loglevel: Joi.string().valid(...Object.values(LogLevel)).default(LogLevel.WARN),
+  linkifyHeaderStyle: Joi.string().valid(...Object.values(LinkifyHeaderStyle)).default(LinkifyHeaderStyle.GFM),
   media: {
     backend: {
       use: Joi.string().valid(...Object.values(MediaBackend)),
@@ -285,6 +288,7 @@ export default registerAs('appConfig', async () => {
       domain: process.env.HD_DOMAIN,
       port: parseInt(process.env.PORT) || undefined,
       loglevel: process.env.HD_LOGLEVEL,
+      linkifyHeaderStyle: process.env.HD_LINKIFY_HEADER_STYLE,
       media: {
         backend: {
           use: process.env.HD_MEDIA_BACKEND,
