@@ -50,3 +50,7 @@ License: LicenseRef-HedgeDoc-Icon-Usgae-Guidelines
 Files: docs/content/legal/developer-certificate-of-origin.txt
 Copyright: 2004, 2006 The Linux Foundation and its contributors.
 License: LicenseRef-DCO
+
+Files: docs/content/theme/styles/Roboto/*
+Copyright: 2011 Christian Robertson
+License: Apache-2.0
