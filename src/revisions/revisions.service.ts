@@ -33,7 +33,7 @@ export class RevisionsService {
         note: note.id,
       },
     });
-    return revisions.map(revision => this.toMetadataDto(revision));
+    return revisions.map((revision) => this.toMetadataDto(revision));
   }
 
   async getNoteRevision(

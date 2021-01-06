@@ -10,16 +10,12 @@ import { Note } from './note.entity';
 
 @Entity()
 export class AuthorColor {
-  @ManyToOne(
-    _ => Note,
-    note => note.authorColors,
-    {
-      primary: true,
-    },
-  )
+  @ManyToOne((_) => Note, (note) => note.authorColors, {
+    primary: true,
+  })
   note: Note;
 
-  @ManyToOne(_ => User, {
+  @ManyToOne((_) => User, {
     primary: true,
   })
   user: User;
