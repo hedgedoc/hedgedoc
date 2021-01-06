@@ -6761,10 +6761,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typeorm@0.2.28:
-  version "0.2.28"
-  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.2.28.tgz#828df288d01ca75b38e990fa1628a7cd5a29f39f"
-  integrity sha512-BTtUBGwsFzODvHY+AlWL9pvJ2uEj8qpHwmo03z43RvZkG8BAryQJQ3lZ7HlGvI9IQU8y1IYGWe97HsVr8kXB9g==
+typeorm@0.2.29:
+  version "0.2.29"
+  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.2.29.tgz#401289dc91900d72eccb26e31cdb7f0591a2272e"
+  integrity sha512-ih1vrTe3gEAGKRcWlcsTRxTL7gNjacQE498wVGuJ3ZRujtMqPZlbAWuC7xDzWCRjQnkZYNwZQeG9UgKfxSHB5g==
   dependencies:
     "@sqltools/formatter" "1.2.2"
     app-root-path "^3.0.0"
