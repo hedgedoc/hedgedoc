@@ -19,10 +19,7 @@ export class Identity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(
-    _ => User,
-    user => user.identities,
-  )
+  @ManyToOne((_) => User, (user) => user.identities)
   user: User;
 
   @Column()

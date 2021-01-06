@@ -56,19 +56,12 @@ export class Revision {
   /**
    * Note this revision belongs to.
    */
-  @ManyToOne(
-    _ => Note,
-    note => note.revisions,
-    { onDelete: 'CASCADE' },
-  )
+  @ManyToOne((_) => Note, (note) => note.revisions, { onDelete: 'CASCADE' })
   note: Note;
   /**
    * All authorship objects which are used in the revision.
    */
-  @ManyToMany(
-    _ => Authorship,
-    authorship => authorship.revisions,
-  )
+  @ManyToMany((_) => Authorship, (authorship) => authorship.revisions)
   @JoinTable()
   authorships: Authorship[];
 

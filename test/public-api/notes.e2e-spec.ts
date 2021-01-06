@@ -84,9 +84,7 @@ describe('Notes', () => {
 
   it(`DELETE /notes/{note}`, async () => {
     await notesService.createNote('This is a test note.', 'test3');
-    await request(app.getHttpServer())
-      .delete('/notes/test3')
-      .expect(200);
+    await request(app.getHttpServer()).delete('/notes/test3').expect(200);
     return expect(notesService.getNoteByIdOrAlias('test3')).rejects.toEqual(
       new NotInDBError("Note with id/alias 'test3' not found."),
     );

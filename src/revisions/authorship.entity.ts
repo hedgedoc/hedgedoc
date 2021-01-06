@@ -27,16 +27,13 @@ export class Authorship {
   /**
    * Revisions this authorship appears in
    */
-  @ManyToMany(
-    _ => Revision,
-    revision => revision.authorships,
-  )
+  @ManyToMany((_) => Revision, (revision) => revision.authorships)
   revisions: Revision[];
 
   /**
    * User this authorship represents
    */
-  @ManyToOne(_ => User)
+  @ManyToOne((_) => User)
   user: User;
 
   @Column()
