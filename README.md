@@ -11,6 +11,9 @@ HedgeDoc 2
 [![version][github-version-badge]][github-release-page]
 [![POEditor][poeditor-image]][poeditor-url]
 [![Mastodon][social-mastodon-image]][social-mastodon]
+![REUSE Compliance Check][reuse-workflow-badge]
+![Nest.JS CI][nestjs-workflow-badge]
+[![codecov][codecov-badge]][codecov-url]
 
 HedgeDoc lets you create real-time collaborative markdown notes. Have a look at [our website](https://hedgedoc.org) for
 more details.
@@ -60,9 +63,23 @@ the [github repository](https://github.com/hedgedoc/hedgedoc-logo).
 [poeditor-image]: https://img.shields.io/badge/POEditor-translate-blue.svg
 
 [poeditor-url]: https://poeditor.com/join/project/1OpGjF2Jir
+
 [hedgedoc-demo]: https://demo.hedgedoc.org
+
 [hedgedoc-demo-features]: https://demo.hedgedoc.org/features
+
 [hedgedoc-community]: https://community.hedgedoc.org
+
 [hedgedoc-community-calls]: https://community.hedgedoc.org/t/codimd-community-call/19
+
 [social-mastodon]: https://social.hedgedoc.org/mastodon
+
 [social-mastodon-image]: https://img.shields.io/mastodon/follow/49593?domain=https%3A%2F%2Fsocial.snopyta.org&style=social
+
+[reuse-workflow-badge]: https://github.com/hedgedoc/hedgedoc/workflows/REUSE%20Compliance%20Check/badge.svg
+
+[nestjs-workflow-badge]: https://github.com/hedgedoc/hedgedoc/workflows/Nest.JS%20CI/badge.svg
+
+[codecov-badge]: https://codecov.io/gh/hedgedoc/hedgedoc/branch/develop/graph/badge.svg?token=pdaRF4qjNQ
+
+[codecov-url]: https://codecov.io/gh/hedgedoc/hedgedoc
