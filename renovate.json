@@ -12,5 +12,13 @@
   ],
   "labels": [
     "type: maintenance"
+  ],
+  "packageRules": [
+    {
+      "groupName": "NestJS packages",
+      "packagePatterns": [
+        "^@nestjs/"
+      ]
+    }
   ]
 }
