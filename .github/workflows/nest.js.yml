@@ -80,7 +80,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn --frozen-lockfile --prefer-offline
-      - run: yarn run test
+      - run: yarn run test:cov
+      - uses: codecov/codecov-action@v1
+        with:
+          directory: coverage
+          flags: integration-tests
 
   e2e-tests:
     runs-on: ubuntu-latest
@@ -101,4 +105,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn --frozen-lockfile --prefer-offline
-      - run: yarn run test:e2e
+      - run: yarn run test:e2e:cov
+      - uses: codecov/codecov-action@v1
+        with:
+          directory: coverage-e2e
+          flags: e2e-tests
