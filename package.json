@@ -31,6 +31,7 @@
     "@nestjs/typeorm": "7.1.5",
     "class-transformer": "^0.3.0",
     "class-validator": "0.12.2",
+    "cli-color": "2.0.0",
     "connect-typeorm": "1.1.4",
     "file-type": "15.0.1",
     "raw-body": "2.4.1",
