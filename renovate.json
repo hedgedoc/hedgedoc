@@ -5,9 +5,10 @@
     "group:socketio",
     "group:linters",
     "group:test",
-    "group:nextjsMonorepo",
-    ":disableMajorUpdates",
-    ":gitSignOff"
+    ":gitSignOff",
+    ":prHourlyLimitNone",
+    ":dependencyDashboard",
+    ":rebaseStalePrs"
   ],
   "labels": [
     "type: maintenance"
