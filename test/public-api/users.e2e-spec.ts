@@ -124,7 +124,6 @@ describe('Notes', () => {
     expect(historyEntry.pinStatus).toEqual(true);
   });
 
-
   it.skip(`GET /me/notes/`, async () => {
     // TODO use function from HistoryService to add an History Entry
     await notesService.createNote('This is a test note.', 'test7');
