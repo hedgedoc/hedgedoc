@@ -35,7 +35,9 @@ dist
 
 # Tests
 /coverage
+/coverage-e2e
 /.nyc_output
 
 public/uploads/*
 !public/uploads/.gitkeep
+uploads
