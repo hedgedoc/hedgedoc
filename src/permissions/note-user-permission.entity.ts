@@ -10,14 +10,10 @@ import { User } from '../users/user.entity';
 
 @Entity()
 export class NoteUserPermission {
-  @ManyToOne(_ => User, { primary: true })
+  @ManyToOne((_) => User, { primary: true })
   user: User;
 
-  @ManyToOne(
-    _ => Note,
-    note => note.userPermissions,
-    { primary: true },
-  )
+  @ManyToOne((_) => Note, (note) => note.userPermissions, { primary: true })
   note: Note;
 
   @Column()

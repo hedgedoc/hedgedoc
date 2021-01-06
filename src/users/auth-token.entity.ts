@@ -17,10 +17,7 @@ export class AuthToken {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(
-    _ => User,
-    user => user.authToken,
-  )
+  @ManyToOne((_) => User, (user) => user.authToken)
   user: User;
 
   @Column()

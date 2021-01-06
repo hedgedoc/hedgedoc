@@ -25,7 +25,7 @@ async function getServerVersionFromPackageJson() {
     const packageInfo: { version: string } = JSON.parse(rawFileContent);
     const versionParts: number[] = packageInfo.version
       .split('.')
-      .map(x => parseInt(x, 10));
+      .map((x) => parseInt(x, 10));
     versionCache = {
       major: versionParts[0],
       minor: versionParts[1],
