@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-const tenChars: string = '0123456789'
+const tenChars = '0123456789'
 
 describe('status-bar text-length info', () => {
   beforeEach(() => {
@@ -22,14 +22,14 @@ describe('status-bar text-length info', () => {
 
   it('color is warning on <= 100 chars remaining', () => {
     cy.get('.CodeMirror textarea')
-    .type(`${tenChars.repeat(10)}`)
+    .fill(tenChars.repeat(10))
     cy.get('.status-bar div:nth-child(2) span:nth-child(2)')
       .should('have.class', 'text-warning')
   })
 
   it('color is danger on <= 0 chars remaining', () => {
     cy.get('.CodeMirror textarea')
-    .type(`${tenChars.repeat(20)}`)
+    .fill(tenChars.repeat(20))
     cy.get('.status-bar div:nth-child(2) span:nth-child(2)')
     .should('have.class', 'text-danger')
   })
@@ -41,7 +41,7 @@ describe('show warning if content length > configured max length', () => {
     cy.get('.CodeMirror textarea')
     .type('{ctrl}a', { force: true })
     .type('{backspace}')
-    .type(`${tenChars.repeat(20)}`)
+    .fill(tenChars.repeat(20))
   })
 
   it('show warning alert in renderer and as modal', () => {

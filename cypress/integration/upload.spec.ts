@@ -41,9 +41,6 @@ describe('Upload', () => {
           link: imageUrl
         }
       })
-      cy.fixture('acme.png').then(image => {
-        this.image = image
-      })
     })
     it('via button', () => {
       cy.get('.fa-upload')
@@ -55,27 +52,31 @@ describe('Upload', () => {
     })
 
     it('via paste', () => {
-      const pasteEvent = {
-        clipboardData: {
-          files: [Cypress.Blob.base64StringToBlob(this.image, 'image/png')]
+      cy.fixture('acme.png').then((image: string) => {
+        const pasteEvent = {
+          clipboardData: {
+            files: [Cypress.Blob.base64StringToBlob(image, 'image/png')]
+          }
         }
-      }
-      cy.get('.CodeMirror-scroll').trigger('paste', pasteEvent)
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
+        cy.get('.CodeMirror-scroll').trigger('paste', pasteEvent)
+        cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `![](${imageUrl})`)
+      })
     })
 
     it('via drag and drop', () => {
-      const dropEvent = {
-        dataTransfer: {
-          files: [Cypress.Blob.base64StringToBlob(this.image, 'image/png')],
-          effectAllowed: 'uninitialized'
+      cy.fixture('acme.png').then((image: string) => {
+        const dropEvent = {
+          dataTransfer: {
+            files: [Cypress.Blob.base64StringToBlob(image, 'image/png')],
+            effectAllowed: 'uninitialized'
+          }
         }
-      }
-      cy.get('.CodeMirror-scroll').trigger('dragenter', dropEvent)
-      cy.get('.CodeMirror-scroll').trigger('drop', dropEvent)
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
+        cy.get('.CodeMirror-scroll').trigger('dragenter', dropEvent)
+        cy.get('.CodeMirror-scroll').trigger('drop', dropEvent)
+        cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `![](${imageUrl})`)
+      })
     })
   })
 

@@ -11,21 +11,16 @@ on:
     branches: [main]
 
 jobs:
-  build-frontend:
+  e2e:
     runs-on: ubuntu-latest
-    name: build frontend
+    name: Perform E2E Tests on BrowserStack
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out repo
+        uses: actions/checkout@v2
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Cache build
-        uses: actions/cache@v2.1.3
-        with:
-          path: build
-          key: build
 
       - name: Cache node_modules
         uses: actions/cache@v2
@@ -41,32 +36,36 @@ jobs:
         with:
           node-version: 14
 
-      - run: yarn install --frozen-lockfile --prefer-offline
-      - run: yarn build:test
-      - uses: actions/upload-artifact@master
-        with:
-          name: build
-          path: build
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
 
-  end2end:
-    needs: build-frontend
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        browser: ['chrome', 'firefox']
-    name: e2e:${{ matrix.browser }}
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/download-artifact@master
+      - name: Build test production build
+        run: yarn build:test
+
+      - name: Start http server
+        run: yarn serve:build &
+
+      - name: Set up BrowserStack environment
+        uses: 'browserstack/github-actions/setup-env@master'
         with:
-          name: build
-          path: build
-      - uses: cypress-io/github-action@v2
+          username: ${{ secrets.BROWSERSTACK_USERNAME }}
+          access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+      - name: Set up BrowserStack local connection
+        uses: 'browserstack/github-actions/setup-local@master'
         with:
-          browser: ${{ matrix.browser }}
-          start: 'yarn serve:build'
-      - uses: actions/upload-artifact@master
-        if: always()
+          local-testing: start
+          local-identifier: random
+
+      - name: enable cypress videos
+        run: |
+          sudo apt-get install moreutils -yqq
+          jq '.video = true' cypress.json | sponge cypress.json
+
+      - name: Run BrowserStack Tests
+        run: yarn run cy:browserstack
+
+      - name: Stop BrowserStack local connection
+        uses: 'browserstack/github-actions/setup-local@master'
         with:
-          name: screenshots
-          path: cypress/screenshots
+          local-testing: stop

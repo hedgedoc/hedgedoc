@@ -47,21 +47,21 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ code }) => {
     if (!diagramContainer.current) {
       return
     }
-    try {
-      import('mermaid').then((mermaid) => {
-        if (!diagramContainer.current) {
-          return
-        }
-        mermaid.default.parse(code)
-        delete diagramContainer.current.dataset.processed
-        diagramContainer.current.textContent = code
-        mermaid.default.init(diagramContainer.current)
-        setError(undefined)
-      }).catch(() => showError('Error while loading mermaid'))
-    } catch (error) {
-      const message = (error as MermaidParseError).str
-      showError(message || t('renderer.mermaid.unknownError'))
-    }
+    import('mermaid').then((mermaid) => {
+      try {
+          if (!diagramContainer.current) {
+            return
+          }
+          mermaid.default.parse(code)
+          delete diagramContainer.current.dataset.processed
+          diagramContainer.current.textContent = code
+          mermaid.default.init(diagramContainer.current)
+          setError(undefined)
+      } catch (error) {
+        const message = (error as MermaidParseError).str
+        showError(message || t('renderer.mermaid.unknownError'))
+      }
+    }).catch(() => showError('Error while loading mermaid'))
   }, [code, showError, t])
 
   return <Fragment>

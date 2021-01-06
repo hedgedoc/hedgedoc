@@ -4,7 +4,7 @@
     "baseUrl": "../node_modules",
     "target": "es6",
     "lib": ["es6", "dom"],
-    "types": ["cypress-commands", "cypress"]
+    "types": ["cypress" ,"cypress-commands", "cypress-file-upload"]
   },
   "include": [
     "**/*.ts"

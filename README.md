@@ -9,6 +9,8 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 ![test, build](https://github.com/hedgedoc/react-client/workflows/test,%20build/badge.svg)
 ![e2e](https://github.com/hedgedoc/react-client/workflows/e2e/badge.svg)
 ![lint](https://github.com/hedgedoc/react-client/workflows/lint/badge.svg)
+![lint](https://github.com/hedgedoc/react-client/workflows/lint/badge.svg)
+[![BrowserStack Status](https://automate.browserstack.com/badge.svg?badge_key=UFp1ZTdJdHVMZTF2UEZCcmdZR1QwQzJSSVQyZHJMNFZQcVovRm5XbVVBWT0tLTNpWlFPV0hhai9vSzFTQ2xha3JzbVE9PQ==--b54f8953f94b792980183a46a302ebc15647f0ef)](https://automate.browserstack.com/public-build/UFp1ZTdJdHVMZTF2UEZCcmdZR1QwQzJSSVQyZHJMNFZQcVovRm5XbVVBWT0tLTNpWlFPV0hhai9vSzFTQ2xha3JzbVE9PQ==--b54f8953f94b792980183a46a302ebc15647f0ef)
 
 This is the new, improved and better looking frontend for HedgeDoc 2.0.
 Our goal is to recreate the current frontend in react and to improve it.

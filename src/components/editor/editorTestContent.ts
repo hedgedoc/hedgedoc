@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export const editorTestContent = `---
+import { isTestMode } from '../../utils/is-test-mode'
+
+export const editorTestContent = isTestMode() ? '' : `---
 title: Features
 description: Many features, such wow!
 robots: noindex
