@@ -29,7 +29,7 @@
     "@nestjs/platform-express": "7.4.4",
     "@nestjs/swagger": "4.6.1",
     "@nestjs/typeorm": "7.1.4",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.0",
     "class-validator": "0.12.2",
     "connect-typeorm": "1.1.4",
     "file-type": "15.0.1",
