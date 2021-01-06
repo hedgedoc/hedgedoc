@@ -4,47 +4,47 @@ Upstream-Contact: The HedgeDoc developers <license@hedgedoc.org>
 Source: https://github.com/hedgedoc/hedgedoc
 
 Files: .idea/**
-Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC0-1.0
 
 Files: .github/ISSUE_TEMPLATE/*.md
-Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC-BY-SA-4.0
 
 Files: .github/pull_request_template.md
-Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC-BY-SA-4.0
 
 Files: docs/**/*.md
-Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC-BY-SA-4.0
 
 Files: docs/mkdocs.yml
-Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC0-1.0
 
 Files: docs/requirements.txt
-Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC0-1.0
 
 Files: docs/**/*.png
-Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC-BY-SA-4.0
 
 Files: docs/content/dev/db-schema.plantuml
-Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC-BY-SA-4.0
 
 Files: docs/content/dev/*api.yml
-Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC-BY-SA-4.0
 
 Files: docs/content/images/logo.svg
-Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: LicenseRef-HedgeDoc-Icon-Usgae-Guidelines
 
 Files: docs/content/images/hedgedoc_logo_horizontal.svg
-Copyright: 2020 The HedgeDoc developers (see AUTHORS file)
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: LicenseRef-HedgeDoc-Icon-Usgae-Guidelines
 
 Files: docs/content/legal/developer-certificate-of-origin.txt
