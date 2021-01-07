@@ -195,6 +195,7 @@
                 "underline": "Underline selection",
                 "strikethrough": "Strike selection through",
                 "mark": "Mark selection",
+                "link": "Add link around selection",
                 "view": "Show only View",
                 "both": "Show View and Edit",
                 "edit": "Show only Edit"

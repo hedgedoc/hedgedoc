@@ -7,6 +7,7 @@
 import CodeMirror, { Editor, KeyMap, Pass } from 'codemirror'
 import { isMac } from '../utils'
 import {
+  addLink,
   makeSelectionBold,
   makeSelectionItalic,
   markSelection,
@@ -81,7 +82,8 @@ export const defaultKeyMap: KeyMap = !isMac
       'Ctrl-B': makeSelectionBold,
       'Ctrl-U': underlineSelection,
       'Ctrl-D': strikeThroughSelection,
-      'Ctrl-M': markSelection
+      'Ctrl-M': markSelection,
+      'Ctrl-K': addLink
     }
   : {
       F9: suppressKey,

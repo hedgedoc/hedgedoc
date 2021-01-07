@@ -57,9 +57,10 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - Code blocks have a 'Copy code to clipboard' button.
 - Code blocks with 'vega-lite' as language are rendered as [vega-lite diagrams](https://vega.github.io/vega-lite/examples/).
 - Markdown files can be imported into an existing note directly from the editor.
-- The table button in the toolbar opens an overlay where the user can choose the number of columns and rows
+- The table button in the toolbar opens an overlay where the user can choose the number of columns and rows.
 - A toggle in the editor preferences for turning ligatures on and off.
 - Easier possibility to share notes via native share-buttons on supported devices.
+- Surround selected text with a link via shortcut (ctrl+k or cmd+k).
 
 ### Changed
 

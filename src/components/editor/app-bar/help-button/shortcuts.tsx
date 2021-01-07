@@ -24,7 +24,8 @@ export const Shortcut: React.FC = () => {
       'editor.help.shortcuts.italic': [modifierKey, <> + </>, <kbd>I</kbd>],
       'editor.help.shortcuts.underline': [modifierKey, <> + </>, <kbd>U</kbd>],
       'editor.help.shortcuts.strikethrough': [modifierKey, <> + </>, <kbd>D</kbd>],
-      'editor.help.shortcuts.mark': [modifierKey, <> + </>, <kbd>M</kbd>]
+      'editor.help.shortcuts.mark': [modifierKey, <> + </>, <kbd>M</kbd>],
+      'editor.help.shortcuts.link': [modifierKey, <> + </>, <kbd>K</kbd>]
     }
   }
   return (
