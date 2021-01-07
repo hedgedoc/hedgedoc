@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import anchor from '@mrdrogdrog/markdown-it-anchor'
 import MarkdownIt from 'markdown-it'
+import anchor from 'markdown-it-anchor'
 
 export const headlineAnchors: MarkdownIt.PluginSimple = (markdownIt) => {
   const options: anchor.AnchorOptions = {
@@ -13,7 +13,7 @@ export const headlineAnchors: MarkdownIt.PluginSimple = (markdownIt) => {
     permalinkBefore: true,
     permalinkClass: 'heading-anchor text-dark',
     permalinkSymbol: '<i class="fa fa-link"></i>',
-    permalinkHref: (slug: string): string => slug
+    permalinkHref: (slug: string): string => `#${slug}`
   }
 
   anchor(markdownIt, options)
