@@ -10,7 +10,10 @@ export const editorTestContent = isTestMode() ? '' : `---
 title: Features
 description: Many features, such wow!
 robots: noindex
-tags: hedgedoc, demo, react
+tags:
+  - hedgedoc
+  - demo
+  - react
 opengraph:
   title: Features
 ---
