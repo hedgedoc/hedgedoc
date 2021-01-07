@@ -24,6 +24,8 @@ export const useExtractFirstHeadline = (documentElement: React.RefObject<HTMLDiv
       const firstHeading = documentElement.current.getElementsByTagName('h1').item(0)
       if (firstHeading) {
         onFirstHeadingChange(extractInnerText(firstHeading))
+      } else {
+        onFirstHeadingChange(undefined)
       }
     }
   }, [documentElement, extractInnerText, onFirstHeadingChange, content])

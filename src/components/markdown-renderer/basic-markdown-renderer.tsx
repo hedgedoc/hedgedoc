@@ -23,6 +23,7 @@ export interface BasicMarkdownRendererProps {
   markdownIt: MarkdownIt,
   documentReference?: RefObject<HTMLDivElement>
   onBeforeRendering?: () => void
+  onPostRendering?: () => void
 }
 
 export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & AdditionalMarkdownRendererProps> = ({
@@ -32,7 +33,8 @@ export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & Additi
   componentReplacers,
   markdownIt,
   documentReference,
-  onBeforeRendering
+  onBeforeRendering,
+  onPostRendering
 }) => {
   const maxLength = useSelector((state: ApplicationState) => state.config.maxDocumentLength)
 
@@ -50,8 +52,12 @@ export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & Additi
     oldMarkdownLineKeys.current = newLines
     lastUsedLineId.current = newLastUsedLineId
     const transformer = componentReplacers ? buildTransformer(newLines, componentReplacers()) : undefined
-    return ReactHtmlParser(html, { transform: transformer })
-  }, [onBeforeRendering, content, maxLength, markdownIt, componentReplacers])
+    const rendering = ReactHtmlParser(html, { transform: transformer })
+    if (onPostRendering) {
+      onPostRendering()
+    }
+    return rendering
+  }, [onBeforeRendering, onPostRendering, content, maxLength, markdownIt, componentReplacers])
 
   return (
     <div className={`${className || ''} d-flex flex-column align-items-center ${wide ? 'wider' : ''}`}>

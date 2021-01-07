@@ -6,6 +6,7 @@
 
 import { store } from '..'
 import { YAMLMetaData } from '../../components/editor/yaml-metadata/yaml-metadata'
+import { initialState } from './reducers'
 import {
   DocumentContentActionType,
   SetDocumentContentAction,
@@ -31,7 +32,7 @@ export const setNoteId = (noteId: string): void => {
 
 export const setDocumentMetadata = (metadata: YAMLMetaData | undefined): void => {
   if (!metadata) {
-    return
+    metadata = initialState.metadata
   }
   const action: SetDocumentMetadataAction = {
     type: DocumentContentActionType.SET_DOCUMENT_METADATA,

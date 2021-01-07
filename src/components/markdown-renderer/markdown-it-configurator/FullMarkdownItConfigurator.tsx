@@ -27,7 +27,7 @@ import { BasicMarkdownItConfigurator } from './BasicMarkdownItConfigurator'
 export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
   constructor (
     private useFrontmatter: boolean,
-    private onYamlError: (error: boolean) => void,
+    private passYamlErrorState: (error: boolean) => void,
     private onRawMeta: (rawMeta: RawYAMLMetadata) => void,
     private onToc: (toc: TocAst) => void,
     private onLineMarkers: (lineMarkers: LineMarkers[]) => void
@@ -45,7 +45,7 @@ export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
           !this.useFrontmatter
             ? undefined
             : {
-                onYamlError: (error: boolean) => this.onYamlError(error),
+                onYamlError: (hasError: boolean) => this.passYamlErrorState(hasError),
                 onRawMeta: (rawMeta: RawYAMLMetadata) => this.onRawMeta(rawMeta)
               })
       },

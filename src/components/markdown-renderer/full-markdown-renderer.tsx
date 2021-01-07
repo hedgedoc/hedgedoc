@@ -44,7 +44,8 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
   const allReplacers = useReplacerInstanceListCreator(onTaskCheckedChange)
   useTranslation()
 
-  const [yamlError, setYamlError] = useState(false)
+  const [showYamlError, setShowYamlError] = useState(false)
+  const hasNewYamlError = useRef(false)
 
   const rawMetaRef = useRef<RawYAMLMetadata>()
   const firstHeadingRef = useRef<string>()
@@ -60,7 +61,7 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
   const markdownIt = useMemo(() => {
     return (new FullMarkdownItConfigurator(
       !!onMetaDataChange,
-      error => setYamlError(error),
+      errorState => hasNewYamlError.current = errorState,
       rawMeta => {
         rawMetaRef.current = rawMeta
       },
@@ -74,21 +75,35 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
   }, [onMetaDataChange])
 
   const clearMetadata = useCallback(() => {
+    hasNewYamlError.current = false
     rawMetaRef.current = undefined
   }, [])
 
+  const checkYamlErrorState = useCallback(() => {
+    if (hasNewYamlError.current !== showYamlError) {
+      setShowYamlError(hasNewYamlError.current)
+    }
+  }, [setShowYamlError, showYamlError])
+
   return (
     <div ref={rendererRef} className={'position-relative'}>
-      <ShowIf condition={yamlError}>
+      <ShowIf condition={showYamlError}>
         <Alert variant='warning' dir='auto'>
           <Trans i18nKey='editor.invalidYaml'>
             <InternalLink text='yaml-metadata' href='/n/yaml-metadata' className='text-primary'/>
           </Trans>
         </Alert>
       </ShowIf>
-      <BasicMarkdownRenderer className={className} wide={wide} content={content} componentReplacers={allReplacers}
-        markdownIt={markdownIt} documentReference={documentElement}
-        onBeforeRendering={clearMetadata}/>
+      <BasicMarkdownRenderer
+        className={className}
+        wide={wide}
+        content={content}
+        componentReplacers={allReplacers}
+        markdownIt={markdownIt}
+        documentReference={documentElement}
+        onBeforeRendering={clearMetadata}
+        onPostRendering={checkYamlErrorState}
+      />
     </div>
   )
 }
