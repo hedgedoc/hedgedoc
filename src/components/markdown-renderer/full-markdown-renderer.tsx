@@ -4,15 +4,11 @@ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 SPDX-License-Identifier: AGPL-3.0-only
 */
 
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import { TocAst } from 'markdown-it-toc-done-right'
+import React, { RefObject, useCallback, useMemo, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { TocAst } from 'markdown-it-toc-done-right'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../redux'
 import { InternalLink } from '../common/links/internal-link'
-import links from '../../links.json'
-import { TranslatedExternalLink } from '../common/links/translated-external-link'
 import { ShowIf } from '../common/show-if/show-if'
 import { RawYAMLMetadata, YAMLMetaData } from '../editor/yaml-metadata/yaml-metadata'
 import { BasicMarkdownRenderer } from './basic-markdown-renderer'
@@ -31,6 +27,7 @@ export interface FullMarkdownRendererProps {
   onMetaDataChange?: (yamlMetaData: YAMLMetaData | undefined) => void
   onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
   onTocChange?: (ast: TocAst) => void
+  rendererRef?: RefObject<HTMLDivElement>
 }
 
 export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & AdditionalMarkdownRendererProps> = ({
@@ -41,13 +38,13 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
   onTocChange,
   content,
   className,
-  wide
+  wide,
+  rendererRef
 }) => {
   const allReplacers = useReplacerInstanceListCreator(onTaskCheckedChange)
   useTranslation()
 
   const [yamlError, setYamlError] = useState(false)
-  const yamlDeprecatedTags = useSelector((state: ApplicationState) => state.documentContent.metadata.deprecatedTagsSyntax)
 
   const rawMetaRef = useRef<RawYAMLMetadata>()
   const firstHeadingRef = useRef<string>()
@@ -81,19 +78,12 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
   }, [])
 
   return (
-    <div className={'position-relative'}>
+    <div ref={rendererRef} className={'position-relative'}>
       <ShowIf condition={yamlError}>
         <Alert variant='warning' dir='auto'>
           <Trans i18nKey='editor.invalidYaml'>
             <InternalLink text='yaml-metadata' href='/n/yaml-metadata' className='text-primary'/>
           </Trans>
-        </Alert>
-      </ShowIf>
-      <ShowIf condition={yamlDeprecatedTags}>
-        <Alert variant='warning' dir='auto'>
-          <Trans i18nKey='editor.deprecatedTags' />
-          <br/>
-          <TranslatedExternalLink i18nKey={'common.readForMoreInfo'} href={links.faq} className={'text-primary'}/>
         </Alert>
       </ShowIf>
       <BasicMarkdownRenderer className={className} wide={wide} content={content} componentReplacers={allReplacers}

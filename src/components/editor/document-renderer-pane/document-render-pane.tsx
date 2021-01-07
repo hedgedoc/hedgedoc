@@ -4,18 +4,22 @@ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 SPDX-License-Identifier: AGPL-3.0-only
 */
 
-import React, { RefObject, useState } from 'react'
-import { Dropdown } from 'react-bootstrap'
+import { TocAst } from 'markdown-it-toc-done-right'
+import React, { RefObject, useRef, useState } from 'react'
+import { Alert, Dropdown } from 'react-bootstrap'
+import { Trans } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import useResizeObserver from 'use-resize-observer'
-import { TocAst } from 'markdown-it-toc-done-right'
+import links from '../../../links.json'
 import { ApplicationState } from '../../../redux'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { TranslatedExternalLink } from '../../common/links/translated-external-link'
 import { ShowIf } from '../../common/show-if/show-if'
 import { FullMarkdownRenderer } from '../../markdown-renderer/full-markdown-renderer'
 import { LineMarkerPosition } from '../../markdown-renderer/types'
 import { TableOfContents } from '../table-of-contents/table-of-contents'
 import { YAMLMetaData } from '../yaml-metadata/yaml-metadata'
+import { useAdaptedLineMarkerCallback } from './use-adapted-line-markers-callback'
 
 export interface DocumentRenderPaneProps {
   extraClasses?: string
@@ -25,7 +29,7 @@ export interface DocumentRenderPaneProps {
   onMouseEnterRenderer?: () => void
   onScrollRenderer?: () => void
   onTaskCheckedChange: (lineInMarkdown: number, checked: boolean) => void
-  rendererReference?: RefObject<HTMLDivElement>
+  documentRenderPaneRef?: RefObject<HTMLDivElement>
   wide?: boolean
 }
 
@@ -37,29 +41,42 @@ export const DocumentRenderPane: React.FC<DocumentRenderPaneProps> = ({
   onMouseEnterRenderer,
   onScrollRenderer,
   onTaskCheckedChange,
-  rendererReference,
+  documentRenderPaneRef,
   wide
 }) => {
   const [tocAst, setTocAst] = useState<TocAst>()
-  const { width } = useResizeObserver(rendererReference ? { ref: rendererReference } : undefined)
+  const { width } = useResizeObserver(documentRenderPaneRef ? { ref: documentRenderPaneRef } : undefined)
   const realWidth = width || 0
+  const rendererRef = useRef<HTMLDivElement|null>(null)
   const markdownContent = useSelector((state: ApplicationState) => state.documentContent.content)
+  const yamlDeprecatedTags = useSelector((state: ApplicationState) => state.documentContent.metadata.deprecatedTagsSyntax)
+  const changeLineMarker = useAdaptedLineMarkerCallback(documentRenderPaneRef, rendererRef, onLineMarkerPositionChanged)
 
   return (
     <div className={`bg-light flex-fill pb-5 flex-row d-flex w-100 h-100 ${extraClasses ?? ''}`}
-      ref={rendererReference} onScroll={onScrollRenderer} onMouseEnter={onMouseEnterRenderer}>
+         ref={documentRenderPaneRef} onScroll={onScrollRenderer} onMouseEnter={onMouseEnterRenderer}>
       <div className={'col-md'}/>
       <div className={'bg-light flex-fill'}>
+        <ShowIf condition={yamlDeprecatedTags}>
+          <Alert variant='warning' dir='auto'>
+            <Trans i18nKey='editor.deprecatedTags' />
+            <br/>
+            <TranslatedExternalLink i18nKey={'common.readForMoreInfo'} href={links.faq} className={'text-primary'}/>
+          </Alert>
+        </ShowIf>
+        <div >
         <FullMarkdownRenderer
+          rendererRef={rendererRef}
           className={'flex-fill mb-3'}
           content={markdownContent}
           onFirstHeadingChange={onFirstHeadingChange}
-          onLineMarkerPositionChanged={onLineMarkerPositionChanged}
+          onLineMarkerPositionChanged={changeLineMarker}
           onMetaDataChange={onMetadataChange}
           onTaskCheckedChange={onTaskCheckedChange}
           onTocChange={(tocAst) => setTocAst(tocAst)}
           wide={wide}
         />
+        </div>
       </div>
 
       <div className={'col-md'}>

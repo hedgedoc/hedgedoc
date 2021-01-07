@@ -33,7 +33,7 @@ export const ScrollingDocumentRenderPane: React.FC<DocumentRenderPaneProps & Scr
   return (
     <DocumentRenderPane
       extraClasses={'overflow-y-scroll'}
-      rendererReference={renderer}
+      documentRenderPaneRef={renderer}
       wide={wide}
       onFirstHeadingChange={onFirstHeadingChange}
       onLineMarkerPositionChanged={setLineMarks}
