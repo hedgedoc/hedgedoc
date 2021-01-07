@@ -34,23 +34,6 @@ Mock.configure('jest')
 
 const testContent = '1st line\n2nd line\n3rd line'
 
-const baseEditor = Mock.of<Editor>({
-  getSelection: () => testContent,
-  getRange: (from: Position, to: Position) => {
-    const lines = testContent.split('\n')
-    if (from.line === to.line) {
-      return lines[from.line].slice(from.ch, to.ch)
-    }
-    let output = lines[from.line].slice(from.ch)
-    for (let i = from.line + 1; i < to.line; i++) {
-      output += lines[from.line]
-    }
-    output += lines[to.line].slice(0, to.ch)
-    return output
-  },
-  setSelections: () => undefined
-})
-
 interface FromTo {
   to: CodeMirror.Position,
   from: CodeMirror.Position
@@ -103,6 +86,27 @@ const buildRanges = () => {
   return { cursor, firstLine, multiline, multilineOffset }
 }
 
+const buildEditor = (functions: Record<string, unknown>) => {
+  return Mock.of<Editor>({
+    getSelection: () => testContent,
+    getRange: (from: Position, to: Position) => {
+      const lines = testContent.split('\n')
+      if (from.line === to.line) {
+        return lines[from.line].slice(from.ch, to.ch)
+      }
+      let output = lines[from.line].slice(from.ch)
+      for (let i = from.line + 1; i < to.line; i++) {
+        output += lines[from.line]
+      }
+      output += lines[to.line].slice(0, to.ch)
+      return output
+    },
+    setSelections: () => undefined,
+    ...functions
+  })
+}
+
+
 const mockListSelections = (positions: FromTo, empty: boolean): (() => CodeMirror.Range[]) => {
   return () => Mock.of<Range[]>([{
     anchor: positions.from,
@@ -113,23 +117,21 @@ const mockListSelections = (positions: FromTo, empty: boolean): (() => CodeMirro
   }])
 }
 
-const expectFromToReplacement = (position: FromTo, replacement: string, done: () => void): ((replacement: string | string[], from: CodeMirror.Position, to?: CodeMirror.Position) => void) => {
+const expectFromToReplacement = (position: FromTo, expectedReplacement: string, done: () => void): ((replacement: string | string[], from: CodeMirror.Position, to?: CodeMirror.Position) => void) => {
   return (replacement: string | string[], from: CodeMirror.Position, to?: CodeMirror.Position) => {
     expect(from).toEqual(position.from)
     expect(to).toEqual(position.to)
-    expect(replacement).toEqual('```\nline3rd \n```')
+    expect(replacement).toEqual(expectedReplacement)
     done()
   }
 }
 
 describe('test makeSelectionBold', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
 
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true)
     })
     makeSelectionBold(editor)
@@ -137,7 +139,8 @@ describe('test makeSelectionBold', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       replaceRange: expectFromToReplacement(firstLine, '**1st line**', done)
     })
@@ -145,7 +148,8 @@ describe('test makeSelectionBold', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       replaceRange: expectFromToReplacement(multiline, '**2nd line3rd line**', done)
     })
@@ -153,7 +157,8 @@ describe('test makeSelectionBold', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       replaceRange: expectFromToReplacement(multilineOffset, '**line3rd **', done)
     })
@@ -163,11 +168,10 @@ describe('test makeSelectionBold', () => {
 
 describe('test makeSelectionItalic', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true)
     })
     makeSelectionItalic(editor)
@@ -175,7 +179,8 @@ describe('test makeSelectionItalic', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       replaceRange: expectFromToReplacement(firstLine, '*1st line*', done)
     })
@@ -183,7 +188,8 @@ describe('test makeSelectionItalic', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       replaceRange: expectFromToReplacement(multiline, '*2nd line3rd line*', done)
     })
@@ -191,7 +197,8 @@ describe('test makeSelectionItalic', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       replaceRange: expectFromToReplacement(multilineOffset, '*line3rd *', done)
     })
@@ -201,11 +208,10 @@ describe('test makeSelectionItalic', () => {
 
 describe('test underlineSelection', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true)
     })
     underlineSelection(editor)
@@ -213,7 +219,8 @@ describe('test underlineSelection', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       replaceRange: expectFromToReplacement(firstLine, '++1st line++', done)
     })
@@ -221,7 +228,8 @@ describe('test underlineSelection', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       replaceRange: expectFromToReplacement(multiline, '++2nd line3rd line++', done)
     })
@@ -229,7 +237,8 @@ describe('test underlineSelection', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       replaceRange: expectFromToReplacement(multilineOffset, '++line3rd ++', done)
     })
@@ -239,11 +248,10 @@ describe('test underlineSelection', () => {
 
 describe('test strikeThroughSelection', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true)
     })
     strikeThroughSelection(editor)
@@ -251,7 +259,8 @@ describe('test strikeThroughSelection', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       replaceRange: expectFromToReplacement(firstLine, '~~1st line~~', done)
     })
@@ -259,7 +268,8 @@ describe('test strikeThroughSelection', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       replaceRange: expectFromToReplacement(multiline, '~~2nd line3rd line~~', done)
     })
@@ -267,7 +277,8 @@ describe('test strikeThroughSelection', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       replaceRange: expectFromToReplacement(multilineOffset, '~~line3rd ~~', done)
     })
@@ -277,11 +288,10 @@ describe('test strikeThroughSelection', () => {
 
 describe('test subscriptSelection', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true)
     })
     subscriptSelection(editor)
@@ -289,7 +299,8 @@ describe('test subscriptSelection', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       replaceRange: expectFromToReplacement(firstLine, '~1st line~', done)
     })
@@ -297,7 +308,8 @@ describe('test subscriptSelection', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       replaceRange: expectFromToReplacement(multiline, '~2nd line3rd line~', done)
     })
@@ -305,7 +317,8 @@ describe('test subscriptSelection', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       replaceRange: expectFromToReplacement(multilineOffset, '~line3rd ~', done)
     })
@@ -315,11 +328,10 @@ describe('test subscriptSelection', () => {
 
 describe('test superscriptSelection', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true)
     })
     superscriptSelection(editor)
@@ -327,7 +339,8 @@ describe('test superscriptSelection', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       replaceRange: expectFromToReplacement(firstLine, '^1st line^', done)
     })
@@ -335,7 +348,8 @@ describe('test superscriptSelection', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       replaceRange: expectFromToReplacement(multiline, '^2nd line3rd line^', done)
     })
@@ -343,7 +357,8 @@ describe('test superscriptSelection', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       replaceRange: expectFromToReplacement(multilineOffset, '^line3rd ^', done)
     })
@@ -353,11 +368,10 @@ describe('test superscriptSelection', () => {
 
 describe('test markSelection', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true)
     })
     markSelection(editor)
@@ -365,7 +379,8 @@ describe('test markSelection', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       replaceRange: expectFromToReplacement(firstLine, '==1st line==', done)
     })
@@ -373,7 +388,8 @@ describe('test markSelection', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       replaceRange: expectFromToReplacement(multiline, '==2nd line3rd line==', done)
     })
@@ -381,7 +397,8 @@ describe('test markSelection', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       replaceRange: expectFromToReplacement(multilineOffset, '==line3rd ==', done)
     })
@@ -391,12 +408,6 @@ describe('test markSelection', () => {
 
 describe('test addHeaderLevel', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
-  Mock.extend(editor).with({
-    getCursor: () => (cursor.from)
-  })
 
   const noHeading = testContent.split('\n')[0]
   const firstHeading = `# ${noHeading}`
@@ -406,7 +417,8 @@ describe('test addHeaderLevel', () => {
   const firstLineFirstHeading = `# ${firstLineNoHeading}`
 
   it('no heading before', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       replaceRange: (replacement: string | string[]) => {
         expect(replacement).toEqual(firstHeading)
@@ -418,7 +430,8 @@ describe('test addHeaderLevel', () => {
   })
 
   it('level one heading before', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       replaceRange: (replacement: string | string[]) => {
         expect(replacement).toEqual(secondHeading)
@@ -430,7 +443,8 @@ describe('test addHeaderLevel', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       replaceRange: (replacement: string | string[]) => {
         expect(replacement).toEqual(firstLineFirstHeading)
@@ -442,7 +456,8 @@ describe('test addHeaderLevel', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       replaceRange: (replacement: string | string[]) => {
         expect(replacement).toEqual(firstLineFirstHeading)
@@ -454,7 +469,8 @@ describe('test addHeaderLevel', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       replaceRange: (replacement: string | string[]) => {
         expect(replacement).toEqual(firstLineFirstHeading)
@@ -468,11 +484,10 @@ describe('test addHeaderLevel', () => {
 
 describe('test addCodeFences', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   it('just cursor empty line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       getSelection: () => '',
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => '',
@@ -485,7 +500,8 @@ describe('test addCodeFences', () => {
   })
 
   it('just cursor nonempty line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       getSelection: () => '',
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => '1st line',
@@ -498,7 +514,8 @@ describe('test addCodeFences', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       getSelection: () => testContent,
       listSelections: mockListSelections(firstLine, false),
       replaceRange: expectFromToReplacement(firstLine, '```\n1st line\n```', done)
@@ -507,7 +524,8 @@ describe('test addCodeFences', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       getSelection: () => testContent,
       listSelections: mockListSelections(multiline, false),
       replaceRange: expectFromToReplacement(multiline, '```\n2nd line3rd line\n```', done)
@@ -516,7 +534,8 @@ describe('test addCodeFences', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       getSelection: () => testContent,
       listSelections: mockListSelections(multilineOffset, false),
       replaceRange: expectFromToReplacement(multilineOffset, '```\nline3rd \n```', done)
@@ -527,13 +546,12 @@ describe('test addCodeFences', () => {
 
 describe('test addQuotes', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   const textFirstLine = testContent.split('\n')[0]
 
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -546,7 +564,8 @@ describe('test addQuotes', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
       replaceRange: expectFromToReplacement(firstLine, `> ${textFirstLine}`, done)
@@ -555,7 +574,8 @@ describe('test addQuotes', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       replaceRange: expectFromToReplacement(multiline, '> 2nd line3rd line', done)
     })
@@ -563,7 +583,8 @@ describe('test addQuotes', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       replaceRange: expectFromToReplacement(multilineOffset, '> line3rd ', done)
     })
@@ -573,12 +594,11 @@ describe('test addQuotes', () => {
 
 describe('test unordered list', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   const textFirstLine = testContent.split('\n')[0]
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -590,7 +610,8 @@ describe('test unordered list', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
       replaceRange: expectFromToReplacement(firstLine, `- ${textFirstLine}`, done)
@@ -599,7 +620,8 @@ describe('test unordered list', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -611,7 +633,8 @@ describe('test unordered list', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -624,12 +647,11 @@ describe('test unordered list', () => {
 })
 describe('test ordered list', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   const textFirstLine = testContent.split('\n')[0]
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -641,7 +663,8 @@ describe('test ordered list', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
       replaceRange: expectFromToReplacement(firstLine, `1. ${textFirstLine}`, done)
@@ -650,7 +673,8 @@ describe('test ordered list', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -662,7 +686,8 @@ describe('test ordered list', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -675,12 +700,12 @@ describe('test ordered list', () => {
 })
 describe('test todo list', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   const textFirstLine = testContent.split('\n')[0]
+
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -692,7 +717,8 @@ describe('test todo list', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
       replaceRange: expectFromToReplacement(firstLine, `- [ ] ${textFirstLine}`, done)
@@ -701,7 +727,8 @@ describe('test todo list', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -713,7 +740,8 @@ describe('test todo list', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -727,12 +755,12 @@ describe('test todo list', () => {
 
 describe('test addLink', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   const textFirstLine = testContent.split('\n')[0]
+
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -744,7 +772,8 @@ describe('test addLink', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
       replaceRange: expectFromToReplacement(firstLine, `[${textFirstLine}](https://)`, done)
@@ -753,7 +782,8 @@ describe('test addLink', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -765,7 +795,8 @@ describe('test addLink', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -779,12 +810,12 @@ describe('test addLink', () => {
 
 describe('test addImage', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   const textFirstLine = testContent.split('\n')[0]
+
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -796,7 +827,8 @@ describe('test addImage', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
       replaceRange: expectFromToReplacement(firstLine, `![${textFirstLine}](https://)`, done)
@@ -805,7 +837,8 @@ describe('test addImage', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -817,7 +850,8 @@ describe('test addImage', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -832,13 +866,11 @@ describe('test addImage', () => {
 describe('test addLine', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
 
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
-
   const textFirstLine = testContent.split('\n')[0]
+
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -850,7 +882,8 @@ describe('test addLine', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
       replaceRange: expectFromToReplacement(firstLine, `${textFirstLine}\n----`, done)
@@ -859,7 +892,8 @@ describe('test addLine', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
@@ -871,7 +905,8 @@ describe('test addLine', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
@@ -885,12 +920,12 @@ describe('test addLine', () => {
 
 describe('test collapsable block', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   const textFirstLine = testContent.split('\n')[0]
+
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -902,7 +937,8 @@ describe('test collapsable block', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
       replaceRange: expectFromToReplacement(firstLine, `${textFirstLine}\n<details>\n  <summary>Toggle label</summary>\n  Toggled content\n</details>`, done)
@@ -911,7 +947,8 @@ describe('test collapsable block', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
@@ -923,7 +960,8 @@ describe('test collapsable block', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
@@ -937,12 +975,12 @@ describe('test collapsable block', () => {
 
 describe('test addComment', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   const textFirstLine = testContent.split('\n')[0]
+
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -954,7 +992,8 @@ describe('test addComment', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
       replaceRange: expectFromToReplacement(firstLine, `${textFirstLine}\n> []`, done)
@@ -963,7 +1002,8 @@ describe('test addComment', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
@@ -975,7 +1015,8 @@ describe('test addComment', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
@@ -988,13 +1029,13 @@ describe('test addComment', () => {
 })
 describe('test addTable', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   const textFirstLine = testContent.split('\n')[0]
-  const table = '| # 1  | # 2  | # 3  |\n| ---- | ---- | ---- |\n| Text | Text | Text |'
+  const table = '|  # 1 |  # 2 |  # 3 |\n| ---- | ---- | ---- |\n| Text | Text | Text |'
+
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -1002,20 +1043,22 @@ describe('test addTable', () => {
         done()
       }
     })
-    addTable(editor)
+    addTable(editor, 1, 3)
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
       replaceRange: expectFromToReplacement(firstLine, `${textFirstLine}\n${table}`, done)
     })
-    addTable(editor)
+    addTable(editor, 1, 3)
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
@@ -1023,11 +1066,12 @@ describe('test addTable', () => {
         done()
       }
     })
-    addTable(editor)
+    addTable(editor, 1, 3)
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
@@ -1035,15 +1079,13 @@ describe('test addTable', () => {
         done()
       }
     })
-    addTable(editor)
+    addTable(editor, 1, 3)
   })
 })
 
 describe('test addEmoji with native emoji', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   const textFirstLine = testContent.split('\n')[0]
   const emoji = Mock.of<EmojiClickEventDetail>({
     emoji: {
@@ -1063,8 +1105,10 @@ describe('test addEmoji with native emoji', () => {
     },
     unicode: '🔢'
   })
+
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -1076,7 +1120,8 @@ describe('test addEmoji with native emoji', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
       replaceRange: expectFromToReplacement(firstLine, ':1234:', done)
@@ -1085,7 +1130,8 @@ describe('test addEmoji with native emoji', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => '2nd line',
       replaceRange: expectFromToReplacement(multiline, ':1234:', done)
@@ -1094,7 +1140,8 @@ describe('test addEmoji with native emoji', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => '2nd line',
       replaceRange: expectFromToReplacement(multilineOffset, ':1234:', done)
@@ -1105,9 +1152,7 @@ describe('test addEmoji with native emoji', () => {
 
 describe('test addEmoji with native emoji', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
-  const editor = Mock.extend(baseEditor).with({
-    getCursor: () => cursor.from
-  })
+
   const textFirstLine = testContent.split('\n')[0]
   const forkAwesomeIcon = ':fa-star:'
   const emoji = Mock.of<EmojiClickEventDetail>({
@@ -1121,8 +1166,10 @@ describe('test addEmoji with native emoji', () => {
     skinTone: 0,
     name: 'fa-star'
   })
+
   it('just cursor', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
@@ -1134,7 +1181,8 @@ describe('test addEmoji with native emoji', () => {
   })
 
   it('1st line', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
       replaceRange: expectFromToReplacement(firstLine, forkAwesomeIcon, done)
@@ -1143,7 +1191,8 @@ describe('test addEmoji with native emoji', () => {
   })
 
   it('multiple lines', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => '2nd line',
       replaceRange: expectFromToReplacement(multiline, forkAwesomeIcon, done)
@@ -1152,7 +1201,8 @@ describe('test addEmoji with native emoji', () => {
   })
 
   it('multiple lines with offset', done => {
-    Mock.extend(editor).with({
+    const editor = buildEditor({
+      getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => '2nd line',
       replaceRange: expectFromToReplacement(multilineOffset, forkAwesomeIcon, done)
@@ -1160,3 +1210,4 @@ describe('test addEmoji with native emoji', () => {
     addEmoji(emoji, editor)
   })
 })
+
