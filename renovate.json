@@ -8,7 +8,8 @@
     ":gitSignOff",
     ":prHourlyLimitNone",
     ":dependencyDashboard",
-    ":rebaseStalePrs"
+    ":rebaseStalePrs",
+    ":maintainLockFilesWeekly"
   ],
   "labels": [
     "type: maintenance"
