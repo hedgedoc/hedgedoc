@@ -63,13 +63,6 @@ export interface AppConfig {
         connectionString: string;
         container: string;
       };
-      minio: {
-        accessKey: string;
-        secretKey: string;
-        endPoint: string;
-        secure: boolean;
-        port: number;
-      };
       imgur: {
         clientID: string;
       };
@@ -406,12 +399,12 @@ export default registerAs('appConfig', async () => {
             uploadPath: process.env.HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH,
           },
           s3: {
-            accessKey: process.env.HD_MEDIA_BACKEND_MINIO_ACCESS_KEY,
-            secretKey: process.env.HD_MEDIA_BACKEND_MINIO_ACCESS_KEY,
-            endPoint: process.env.HD_MEDIA_BACKEND_MINIO_ENDPOINT,
-            secure: process.env.HD_MEDIA_BACKEND_MINIO_SECURE,
+            accessKey: process.env.HD_MEDIA_BACKEND_S3_ACCESS_KEY,
+            secretKey: process.env.HD_MEDIA_BACKEND_S3_ACCESS_KEY,
+            endPoint: process.env.HD_MEDIA_BACKEND_S3_ENDPOINT,
+            secure: process.env.HD_MEDIA_BACKEND_S3_SECURE,
             port:
-              parseInt(process.env.HD_MEDIA_BACKEND_MINIO_PORT) || undefined,
+              parseInt(process.env.HD_MEDIA_BACKEND_S3_PORT) || undefined,
           },
           azure: {
             connectionString:
