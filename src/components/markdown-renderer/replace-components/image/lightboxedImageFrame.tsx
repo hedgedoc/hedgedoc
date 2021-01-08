@@ -7,6 +7,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 import React, { Fragment, useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import "./lightbox.scss"
 
 export const LightboxedImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ alt, ...props }) => {
   const [showFullscreenImage, setShowFullscreenImage] = useState(false)
@@ -17,7 +18,7 @@ export const LightboxedImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageEle
       <Modal
         animation={true}
         centered={true}
-        dialogClassName={'text-dark'}
+        dialogClassName={'text-dark lightbox'}
         show={showFullscreenImage}
         onHide={() => setShowFullscreenImage(false)}
         size={'xl'}>
