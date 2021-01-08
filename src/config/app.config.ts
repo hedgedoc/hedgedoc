@@ -8,9 +8,9 @@ import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
 import { LogLevel } from './loglevel';
 import { DatabaseDialect } from './database_dialect';
-import { MediaBackend } from './media_backend';
 import { GitlabScope, GitlabVersion } from './gitlab';
 import { toArrayConfig } from './utils';
+import { BackendType } from '../media/backends/backend-type.enum';
 // import { LinkifyHeaderStyle } from './linkify-header-style';
 
 export interface AppConfig {
@@ -48,7 +48,7 @@ export interface AppConfig {
   };
   media: {
     backend: {
-      use: MediaBackend;
+      use: BackendType;
       filesystem: {
         uploadPath: string;
       };
@@ -212,27 +212,27 @@ const schema = Joi.object({
   },
   media: {
     backend: {
-      use: Joi.string().valid(...Object.values(MediaBackend)),
+      use: Joi.string().valid(...Object.values(BackendType)),
       filesystem: {
         uploadPath: Joi.when('...use', {
-          is: Joi.valid(MediaBackend.FILESYSTEM),
+          is: Joi.valid(BackendType.FILESYSTEM),
           then: Joi.string(),
           otherwise: Joi.optional(),
         }),
       },
       s3: Joi.when('...use', {
-        is: Joi.valid(MediaBackend.S3),
+        is: Joi.valid(BackendType.S3),
         then: Joi.object({
-          accessKeyId: Joi.string(),
-          secretAccessKey: Joi.string(),
-          region: Joi.string(),
-          bucket: Joi.string(),
+          accessKey: Joi.string(),
+          secretKey: Joi.string(),
           endPoint: Joi.string(),
+          secure: Joi.boolean(),
+          port: Joi.number(),
         }),
         otherwise: Joi.optional(),
       }),
       azure: Joi.when('...use', {
-        is: Joi.valid(MediaBackend.AZURE),
+        is: Joi.valid(BackendType.AZURE),
         then: Joi.object({
           connectionString: Joi.string(),
           container: Joi.string(),
@@ -240,20 +240,9 @@ const schema = Joi.object({
         otherwise: Joi.optional(),
       }),
       imgur: Joi.when('...use', {
-        is: Joi.valid(MediaBackend.IMGUR),
+        is: Joi.valid(BackendType.IMGUR),
         then: Joi.object({
           clientID: Joi.string(),
-        }),
-        otherwise: Joi.optional(),
-      }),
-      minio: Joi.when('...use', {
-        is: Joi.valid(MediaBackend.MINIO),
-        then: Joi.object({
-          accessKey: Joi.string(),
-          secretKey: Joi.string(),
-          endPoint: Joi.string(),
-          secure: Joi.boolean(),
-          port: Joi.number(),
         }),
         otherwise: Joi.optional(),
       }),
@@ -417,24 +406,17 @@ export default registerAs('appConfig', async () => {
             uploadPath: process.env.HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH,
           },
           s3: {
-            accessKeyId: process.env.HD_MEDIA_BACKEND_S3_ACCESS_KEY_ID,
-            secretAccessKey: process.env.HD_MEDIA_BACKEND_S3_SECRET_ACCESS_KEY,
-            region: process.env.HD_MEDIA_BACKEND_S3_REGION,
-            bucket: process.env.HD_MEDIA_BACKEND_S3_BUCKET,
-            endPoint: process.env.HD_MEDIA_BACKEND_S3_ENDPOINT,
-          },
-          azure: {
-            connectionString:
-              process.env.HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING,
-            container: process.env.HD_MEDIA_BACKEND_AZURE_CONTAINER,
-          },
-          minio: {
             accessKey: process.env.HD_MEDIA_BACKEND_MINIO_ACCESS_KEY,
             secretKey: process.env.HD_MEDIA_BACKEND_MINIO_ACCESS_KEY,
             endPoint: process.env.HD_MEDIA_BACKEND_MINIO_ENDPOINT,
             secure: process.env.HD_MEDIA_BACKEND_MINIO_SECURE,
             port:
               parseInt(process.env.HD_MEDIA_BACKEND_MINIO_PORT) || undefined,
+          },
+          azure: {
+            connectionString:
+              process.env.HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING,
+            container: process.env.HD_MEDIA_BACKEND_AZURE_CONTAINER,
           },
           imgur: {
             clientID: process.env.HD_MEDIA_BACKEND_IMGUR_CLIENTID,

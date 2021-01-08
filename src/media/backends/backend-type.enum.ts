@@ -5,7 +5,7 @@
  */
 
 export enum BackendType {
-  FILEYSTEM = 'filesystem',
+  FILESYSTEM = 'filesystem',
   S3 = 's3',
   IMGUR = 'imgur',
   AZURE = 'azure',
