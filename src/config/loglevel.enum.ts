@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export enum LogLevel {
+export enum Loglevel {
   TRACE = 'trace',
   DEBUG = 'debug',
   INFO = 'info',

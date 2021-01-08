@@ -6,9 +6,9 @@
 
 import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
-import { LogLevel } from './loglevel';
-import { DatabaseDialect } from './database_dialect';
-import { GitlabScope, GitlabVersion } from './gitlab';
+import { Loglevel } from './loglevel.enum';
+import { DatabaseDialect } from './database-dialect.enum';
+import { GitlabScope, GitlabVersion } from './gitlab.enum';
 import { toArrayConfig } from './utils';
 import { BackendType } from '../media/backends/backend-type.enum';
 // import { LinkifyHeaderStyle } from './linkify-header-style';
@@ -16,7 +16,7 @@ import { BackendType } from '../media/backends/backend-type.enum';
 export interface AppConfig {
   domain: string;
   port: number;
-  loglevel: LogLevel;
+  loglevel: Loglevel;
   /*linkifyHeaderStyle: LinkifyHeaderStyle;
   sourceURL: string;
   urlPath: string;
@@ -172,8 +172,8 @@ const schema = Joi.object({
   domain: Joi.string(),
   port: Joi.number().default(3000),
   loglevel: Joi.string()
-    .valid(...Object.values(LogLevel))
-    .default(LogLevel.WARN),
+    .valid(...Object.values(Loglevel))
+    .default(Loglevel.WARN),
   /*linkifyHeaderStyle: Joi.string().valid(...Object.values(LinkifyHeaderStyle)).default(LinkifyHeaderStyle.GFM),
   sourceURL: Joi.string(),
   urlPath: Joi.string(),
@@ -361,7 +361,7 @@ export default registerAs('appConfig', async () => {
     {
       domain: process.env.HD_DOMAIN,
       port: parseInt(process.env.PORT) || 3000,
-      loglevel: process.env.HD_LOGLEVEL || LogLevel.WARN,
+      loglevel: process.env.HD_LOGLEVEL || Loglevel.WARN,
       /*linkifyHeaderStyle: process.env.HD_LINKIFY_HEADER_STYLE,
       sourceURL: process.env.HD_SOURCE_URL,
       urlPath: process.env.HD_URL_PATH,
