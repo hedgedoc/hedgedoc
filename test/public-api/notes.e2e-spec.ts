@@ -5,10 +5,12 @@
  */
 
 import { INestApplication } from '@nestjs/common';
+import { ConfigModule, registerAs } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as request from 'supertest';
 import { PublicApiModule } from '../../src/api/public/public-api.module';
+import appConfigMock from '../../src/config/app.config.mock';
 import { NotInDBError } from '../../src/errors/errors';
 import { GroupsModule } from '../../src/groups/groups.module';
 import { LoggerModule } from '../../src/logger/logger.module';
@@ -23,6 +25,10 @@ describe('Notes', () => {
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock],
+        }),
         PublicApiModule,
         NotesModule,
         PermissionsModule,

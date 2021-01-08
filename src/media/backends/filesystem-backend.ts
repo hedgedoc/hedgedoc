@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Inject, Injectable } from '@nestjs/common';
 import { promises as fs } from 'fs';
 import { join } from 'path';
+import applicationConfig, { AppConfig } from '../../config/app.config';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
 import { BackendData } from '../media-upload.entity';
@@ -18,24 +18,11 @@ export class FilesystemBackend implements MediaBackend {
 
   constructor(
     private readonly logger: ConsoleLoggerService,
-    private configService: ConfigService,
+    @Inject(applicationConfig.KEY)
+    private appConfig: AppConfig,
   ) {
     this.logger.setContext(FilesystemBackend.name);
-    this.uploadDirectory = configService.get<string>(
-      'media.backend.filesystem.uploadPath',
-    );
-  }
-
-  private getFilePath(fileName: string): string {
-    return join(this.uploadDirectory, fileName);
-  }
-
-  private async ensureDirectory() {
-    try {
-      await fs.access(this.uploadDirectory);
-    } catch (e) {
-      await fs.mkdir(this.uploadDirectory);
-    }
+    this.uploadDirectory = appConfig.media.backend.filesystem.uploadPath;
   }
 
   async saveFile(
@@ -57,5 +44,17 @@ export class FilesystemBackend implements MediaBackend {
     const filePath = this.getFilePath(fileName);
     // TODO: Add server address to url
     return Promise.resolve('/' + filePath);
+  }
+
+  private getFilePath(fileName: string): string {
+    return join(this.uploadDirectory, fileName);
+  }
+
+  private async ensureDirectory() {
+    try {
+      await fs.access(this.uploadDirectory);
+    } catch (e) {
+      await fs.mkdir(this.uploadDirectory);
+    }
   }
 }
