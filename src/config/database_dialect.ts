@@ -5,8 +5,8 @@
  */
 
 export enum DatabaseDialect {
-  POSTGRES = 'Postgres',
-  MYSQL = 'MySQL',
-  MARIADB = 'MariaDB',
-  SQLITE = 'Sqlite',
+  POSTGRES = 'postgres',
+  MYSQL = 'mysql',
+  MARIADB = 'mariadb',
+  SQLITE = 'sqlite',
 }
