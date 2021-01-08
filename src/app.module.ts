@@ -30,6 +30,7 @@ import appConfig from './config/app.config';
     }),
     ConfigModule.forRoot({
       load: [appConfig],
+      isGlobal: true,
     }),
     NotesModule,
     UsersModule,
