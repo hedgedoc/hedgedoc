@@ -3,7 +3,7 @@ Authentication guide - Nextcloud (self-hosted)
 
 *This has been constructed using the [Nextcloud OAuth2 Documentation](https://docs.nextcloud.com/server/14/admin_manual/configuration_server/oauth2.html?highlight=oauth2) combined with [this issue comment on the nextcloud bugtracker](https://github.com/nextcloud/server/issues/5694#issuecomment-314761326).*
 
-This guide uses the generic OAuth2 module for compatibility with Nextcloud 13 and above (this guide has been tested successfully with Nextcloud 14).
+This guide uses the generic OAuth2 module for compatibility with Nextcloud 13 and above (this guide has been tested successfully with Nextcloud 14 and Nextcloud 20).
 
 1. Sign-in with an administrator account to your Nextcloud server
 
@@ -23,6 +23,7 @@ This guide uses the generic OAuth2 module for compatibility with Nextcloud 13 an
 
 6. Add the Client ID and Client Secret to your `config.json` file or pass them as environment variables. Make sure you also replace `<your-nextcloud-domain>` with the right domain name.
     * `config.json`:
+
       ```javascript
       {
         "production": {
@@ -39,7 +40,9 @@ This guide uses the generic OAuth2 module for compatibility with Nextcloud 13 an
         }
       }
       ```
+
     * environment variables:
+
       ```sh
       CMD_OAUTH2_CLIENT_ID=ii4p1u3jz7dXXXXXXXXXXXXXXX
       CMD_OAUTH2_CLIENT_SECRET=mqzzx6fydbXXXXXXXXXXXXXXXX
