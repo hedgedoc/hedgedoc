@@ -74,6 +74,7 @@ export interface AppConfig {
     database: string;
     host: string;
     port: number;
+    storage: string;
     dialect: DatabaseDialect;
   };
   auth: {
@@ -247,6 +248,11 @@ const schema = Joi.object({
     database: Joi.string(),
     host: Joi.string(),
     port: Joi.number(),
+    storage: Joi.when('...dialect', {
+      is: Joi.valid(DatabaseDialect.SQLITE),
+      then: Joi.string(),
+      otherwise: Joi.optional(),
+    }),
     dialect: Joi.string().valid(...Object.values(DatabaseDialect)),
   },
   auth: {
@@ -422,6 +428,7 @@ export default registerAs('appConfig', async () => {
         database: process.env.HD_DATABASE_NAME,
         host: process.env.HD_DATABASE_HOST,
         port: parseInt(process.env.HD_DATABASE_PORT) || undefined,
+        storage: process.env.HD_DATABASE_STORAGE,
         dialect: process.env.HD_DATABASE_DIALECT,
       },
       auth: {
