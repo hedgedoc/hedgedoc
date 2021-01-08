@@ -5,7 +5,7 @@
  */
 
 export enum LinkifyHeaderStyle {
-    KEEP_CASE = "keep-case",
-    LOWER_CASE = "lower-case",
-    GFM = "gfm",
+  KEEP_CASE = 'keep-case',
+  LOWER_CASE = 'lower-case',
+  GFM = 'gfm',
 }
