@@ -14,24 +14,31 @@ import { ReactComponent as DisabledScrollIcon } from './disabledScroll.svg'
 import { ReactComponent as EnabledScrollIcon } from './enabledScroll.svg'
 import './sync-scroll-buttons.scss'
 
+enum SyncScrollState {
+  SYNCED,
+  UNSYNCED
+}
+
 export const SyncScrollButtons: React.FC = () => {
-  const syncScroll: boolean = useSelector((state: ApplicationState) => state.editorConfig.syncScroll)
+  const syncScrollEnabled = useSelector((state: ApplicationState) => state.editorConfig.syncScroll) ? SyncScrollState.SYNCED : SyncScrollState.UNSYNCED
   const { t } = useTranslation()
 
   return (
     <ToggleButtonGroup type="radio" defaultValue={[]} name="sync-scroll" className={'ml-2 sync-scroll-buttons'}
-      value={[syncScroll]}>
+      value={syncScrollEnabled}>
       <ToggleButton
         variant={'outline-secondary'}
         title={t('editor.appBar.syncScroll.enable')}
-        onChange={() => setEditorSyncScroll(true)} value={true}
+        onChange={() => setEditorSyncScroll(true)}
+        value={SyncScrollState.SYNCED}
       >
         <EnabledScrollIcon/>
       </ToggleButton>
       <ToggleButton
         variant={'outline-secondary'}
         title={t('editor.appBar.syncScroll.disable')}
-        onChange={() => setEditorSyncScroll(false)} value={false}
+        onChange={() => setEditorSyncScroll(false)}
+        value={SyncScrollState.UNSYNCED}
       >
         <DisabledScrollIcon/>
       </ToggleButton>

@@ -11,9 +11,14 @@ import { useIsDarkModeActivated } from '../../../hooks/common/use-is-dark-mode-a
 import { setDarkMode } from '../../../redux/dark-mode/methods'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 
+enum DarkModeState {
+  DARK,
+  LIGHT
+}
+
 const DarkModeButton: React.FC = () => {
   const { t } = useTranslation()
-  const darkModeEnabled = useIsDarkModeActivated()
+  const darkModeEnabled = useIsDarkModeActivated() ? DarkModeState.DARK : DarkModeState.LIGHT
 
   return (
     <ToggleButtonGroup
@@ -21,13 +26,21 @@ const DarkModeButton: React.FC = () => {
       name="dark-mode"
       value={darkModeEnabled}
       className="ml-2"
-      onChange={(value: boolean) => {
-        setDarkMode(value)
-      }}>
-      <ToggleButton value={true} variant="outline-secondary" title={t('editor.darkMode.switchToDark')}>
+    >
+      <ToggleButton
+        value={DarkModeState.DARK}
+        variant="outline-secondary"
+        title={t('editor.darkMode.switchToDark')}
+        onChange={() => setDarkMode(true)}
+      >
         <ForkAwesomeIcon icon="moon"/>
       </ToggleButton>
-      <ToggleButton value={false} variant="outline-secondary" title={t('editor.darkMode.switchToLight')}>
+      <ToggleButton
+        value={DarkModeState.LIGHT}
+        variant="outline-secondary"
+        title={t('editor.darkMode.switchToLight')}
+        onChange={() => setDarkMode(false)}
+      >
         <ForkAwesomeIcon icon="sun-o"/>
       </ToggleButton>
     </ToggleButtonGroup>
