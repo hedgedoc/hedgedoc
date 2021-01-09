@@ -20,7 +20,7 @@ export const frontmatterExtract: MarkdownIt.PluginWithOptions<FrontmatterPluginO
   }
   frontmatter(markdownIt, (rawMeta: string) => {
     try {
-      const meta: RawYAMLMetadata = yaml.safeLoad(rawMeta) as RawYAMLMetadata
+      const meta: RawYAMLMetadata = yaml.load(rawMeta) as RawYAMLMetadata
       options.onYamlError(false)
       options.onRawMeta(meta)
     } catch (e) {

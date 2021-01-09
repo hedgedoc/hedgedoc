@@ -19,7 +19,7 @@ describe('yaml tests', () => {
     typographer: true
   })
   md.use(frontmatter, (rawMeta: string) => {
-    raw = yaml.safeLoad(rawMeta) as RawYAMLMetadata
+    raw = yaml.load(rawMeta) as RawYAMLMetadata
     finished = new YAMLMetaData(raw)
   })
 
