@@ -59,12 +59,19 @@ describe('Notes', () => {
   });
 
   it(`GET /notes/{note}`, async () => {
+    // check if we can succefully get a note that exists
     await notesService.createNote('This is a test note.', 'test1');
     const response = await request(app.getHttpServer())
       .get('/notes/test1')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body.content).toEqual('This is a test note.');
+
+    // check if a missing note correctly returns 404
+    await request(app.getHttpServer())
+      .get('/notes/i_dont_exist')
+      .expect('Content-Type', /json/)
+      .expect(404);
   });
 
   it(`POST /notes/{note}`, async () => {
@@ -85,9 +92,13 @@ describe('Notes', () => {
   it(`DELETE /notes/{note}`, async () => {
     await notesService.createNote('This is a test note.', 'test3');
     await request(app.getHttpServer()).delete('/notes/test3').expect(200);
-    return expect(notesService.getNoteByIdOrAlias('test3')).rejects.toEqual(
+    await expect(notesService.getNoteByIdOrAlias('test3')).rejects.toEqual(
       new NotInDBError("Note with id/alias 'test3' not found."),
     );
+    // check if a missing note correctly returns 404
+    await request(app.getHttpServer())
+      .delete('/notes/i_dont_exist')
+      .expect(404);
   });
 
   it(`PUT /notes/{note}`, async () => {
@@ -97,9 +108,16 @@ describe('Notes', () => {
       .set('Content-Type', 'text/markdown')
       .send('New note text')
       .expect(200);
-    return expect(
+    await expect(
       (await notesService.getNoteDtoByIdOrAlias('test4')).content,
     ).toEqual('New note text');
+
+    // check if a missing note correctly returns 404
+    await request(app.getHttpServer())
+      .put('/notes/i_dont_exist')
+      .set('Content-Type', 'text/markdown')
+      .expect('Content-Type', /json/)
+      .expect(404);
   });
 
   it(`GET /notes/{note}/metadata`, async () => {
@@ -124,6 +142,12 @@ describe('Notes', () => {
     expect(typeof metadata.body.updateUser.photo).toEqual('string');
     expect(typeof metadata.body.viewCount).toEqual('number');
     expect(metadata.body.editedBy).toEqual([]);
+
+    // check if a missing note correctly returns 404
+    await request(app.getHttpServer())
+      .get('/notes/i_dont_exist/metadata')
+      .expect('Content-Type', /json/)
+      .expect(404);
   });
 
   it(`GET /notes/{note}/revisions`, async () => {
@@ -133,6 +157,12 @@ describe('Notes', () => {
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body).toHaveLength(1);
+
+    // check if a missing note correctly returns 404
+    await request(app.getHttpServer())
+      .get('/notes/i_dont_exist/revisions')
+      .expect('Content-Type', /json/)
+      .expect(404);
   });
 
   it(`GET /notes/{note}/revisions/{revision-id}`, async () => {
@@ -143,6 +173,12 @@ describe('Notes', () => {
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body.content).toEqual('This is a test note.');
+
+    // check if a missing note correctly returns 404
+    await request(app.getHttpServer())
+      .get('/notes/i_dont_exist/revisions/1')
+      .expect('Content-Type', /json/)
+      .expect(404);
   });
 
   it(`GET /notes/{note}/content`, async () => {
@@ -151,6 +187,11 @@ describe('Notes', () => {
       .get('/notes/test9/content')
       .expect(200);
     expect(response.text).toEqual('This is a test note.');
+
+    // check if a missing note correctly returns 404
+    await request(app.getHttpServer())
+      .get('/notes/i_dont_exist/content')
+      .expect(404);
   });
 
   afterAll(async () => {
