@@ -10,12 +10,13 @@ import {
   Delete,
   Get,
   Header,
+  NotFoundException,
   Param,
   Post,
   Put,
 } from '@nestjs/common';
+import { NotInDBError } from '../../../errors/errors';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { NoteMetadataUpdateDto } from '../../../notes/note-metadata.dto';
 import { NotePermissionsUpdateDto } from '../../../notes/note-permissions.dto';
 import { NotesService } from '../../../notes/notes.service';
 import { RevisionsService } from '../../../revisions/revisions.service';
@@ -38,8 +39,15 @@ export class NotesController {
   }
 
   @Get(':noteIdOrAlias')
-  getNote(@Param('noteIdOrAlias') noteIdOrAlias: string) {
-    return this.noteService.getNoteDtoByIdOrAlias(noteIdOrAlias);
+  async getNote(@Param('noteIdOrAlias') noteIdOrAlias: string) {
+    try {
+      return await this.noteService.getNoteDtoByIdOrAlias(noteIdOrAlias);
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      throw e;
+    }
   }
 
   @Post(':noteAlias')
@@ -54,7 +62,14 @@ export class NotesController {
   @Delete(':noteIdOrAlias')
   async deleteNote(@Param('noteIdOrAlias') noteIdOrAlias: string) {
     this.logger.debug('Deleting note: ' + noteIdOrAlias);
-    await this.noteService.deleteNoteByIdOrAlias(noteIdOrAlias);
+    try {
+      await this.noteService.deleteNoteByIdOrAlias(noteIdOrAlias);
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      throw e;
+    }
     this.logger.debug('Successfully deleted ' + noteIdOrAlias);
     return;
   }
@@ -65,38 +80,88 @@ export class NotesController {
     @MarkdownBody() text: string,
   ) {
     this.logger.debug('Got raw markdown:\n' + text);
-    return this.noteService.updateNoteByIdOrAlias(noteIdOrAlias, text);
+    try {
+      return await this.noteService.updateNoteByIdOrAlias(noteIdOrAlias, text);
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      throw e;
+    }
   }
 
   @Get(':noteIdOrAlias/content')
   @Header('content-type', 'text/markdown')
-  getNoteContent(@Param('noteIdOrAlias') noteIdOrAlias: string) {
-    return this.noteService.getNoteContent(noteIdOrAlias);
+  async getNoteContent(@Param('noteIdOrAlias') noteIdOrAlias: string) {
+    try {
+      return await this.noteService.getNoteContent(noteIdOrAlias);
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      throw e;
+    }
   }
 
   @Get(':noteIdOrAlias/metadata')
-  getNoteMetadata(@Param('noteIdOrAlias') noteIdOrAlias: string) {
-    return this.noteService.getNoteMetadata(noteIdOrAlias);
+  async getNoteMetadata(@Param('noteIdOrAlias') noteIdOrAlias: string) {
+    try {
+      return await this.noteService.getNoteMetadata(noteIdOrAlias);
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      throw e;
+    }
   }
 
   @Put(':noteIdOrAlias/permissions')
-  updateNotePermissions(
+  async updateNotePermissions(
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @Body() updateDto: NotePermissionsUpdateDto,
   ) {
-    return this.noteService.updateNotePermissions(noteIdOrAlias, updateDto);
+    try {
+      return await this.noteService.updateNotePermissions(
+        noteIdOrAlias,
+        updateDto,
+      );
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      throw e;
+    }
   }
 
   @Get(':noteIdOrAlias/revisions')
-  getNoteRevisions(@Param('noteIdOrAlias') noteIdOrAlias: string) {
-    return this.revisionsService.getNoteRevisionMetadatas(noteIdOrAlias);
+  async getNoteRevisions(@Param('noteIdOrAlias') noteIdOrAlias: string) {
+    try {
+      return await this.revisionsService.getNoteRevisionMetadatas(
+        noteIdOrAlias,
+      );
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      throw e;
+    }
   }
 
   @Get(':noteIdOrAlias/revisions/:revisionId')
-  getNoteRevision(
+  async getNoteRevision(
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @Param('revisionId') revisionId: number,
   ) {
-    return this.revisionsService.getNoteRevision(noteIdOrAlias, revisionId);
+    try {
+      return await this.revisionsService.getNoteRevision(
+        noteIdOrAlias,
+        revisionId,
+      );
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      throw e;
+    }
   }
 }
