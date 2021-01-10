@@ -10,6 +10,7 @@ import {
   ExecutionContext,
   InternalServerErrorException,
 } from '@nestjs/common';
+import { ApiBody, ApiConsumes } from '@nestjs/swagger';
 import * as getRawBody from 'raw-body';
 
 /**
@@ -37,4 +38,17 @@ export const MarkdownBody = createParamDecorator(
       );
     }
   },
+  [
+    (target, key) => {
+      ApiConsumes('text/markdown')(
+        target,
+        key,
+        Object.getOwnPropertyDescriptor(target, key),
+      );
+      ApiBody({
+        required: true,
+        schema: { example: '# Markdown Body' },
+      })(target, key, Object.getOwnPropertyDescriptor(target, key));
+    },
+  ],
 );
