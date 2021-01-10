@@ -5,11 +5,21 @@
     "group:socketio",
     "group:linters",
     "group:test",
-    "group:nextjsMonorepo",
-    ":disableMajorUpdates",
-    ":gitSignOff"
+    ":gitSignOff",
+    ":prHourlyLimitNone",
+    ":dependencyDashboard",
+    ":rebaseStalePrs",
+    ":maintainLockFilesWeekly"
   ],
   "labels": [
     "type: maintenance"
+  ],
+  "packageRules": [
+    {
+      "groupName": "NestJS packages",
+      "packagePatterns": [
+        "^@nestjs/"
+      ]
+    }
   ]
 }

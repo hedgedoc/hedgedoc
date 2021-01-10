@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -23,10 +23,10 @@ export class MediaUpload {
   @PrimaryColumn()
   id: string;
 
-  @ManyToOne(_ => Note, { nullable: false })
+  @ManyToOne((_) => Note, { nullable: false })
   note: Note;
 
-  @ManyToOne(_ => User, { nullable: false })
+  @ManyToOne((_) => User, { nullable: false })
   user: User;
 
   @Column({

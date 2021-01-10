@@ -12,5 +12,7 @@
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
-  "coverageDirectory": "./coverage-e2e"
+  "coverageDirectory": "./coverage-e2e",
+  "testTimeout": 10000,
+  "maxConcurrency": 1
 }

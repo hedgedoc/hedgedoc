@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -113,20 +113,22 @@ export class NotesService {
       // TODO: Get actual createTime
       createTime: new Date(),
       description: note.description,
-      editedBy: note.authorColors.map(authorColor => authorColor.user.userName),
+      editedBy: note.authorColors.map(
+        (authorColor) => authorColor.user.userName,
+      ),
       // TODO: Extract into method
       permissions: {
         owner: this.usersService.toUserDto(note.owner),
-        sharedToUsers: note.userPermissions.map(noteUserPermission => ({
+        sharedToUsers: note.userPermissions.map((noteUserPermission) => ({
           user: this.usersService.toUserDto(noteUserPermission.user),
           canEdit: noteUserPermission.canEdit,
         })),
-        sharedToGroups: note.groupPermissions.map(noteGroupPermission => ({
+        sharedToGroups: note.groupPermissions.map((noteGroupPermission) => ({
           group: noteGroupPermission.group,
           canEdit: noteGroupPermission.canEdit,
         })),
       },
-      tags: note.tags.map(tag => tag.name),
+      tags: note.tags.map((tag) => tag.name),
       updateTime: (await this.getLastRevision(note)).createdAt,
       // TODO: Get actual updateUser
       updateUser: {

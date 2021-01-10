@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -123,7 +123,6 @@ describe('Notes', () => {
     }
     expect(historyEntry.pinStatus).toEqual(true);
   });
-
 
   it.skip(`GET /me/notes/`, async () => {
     // TODO use function from HistoryService to add an History Entry

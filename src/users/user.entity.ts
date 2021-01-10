@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -42,22 +42,13 @@ export class User {
   })
   email?: string;
 
-  @OneToMany(
-    _ => Note,
-    note => note.owner,
-  )
+  @OneToMany((_) => Note, (note) => note.owner)
   ownedNotes: Note[];
 
-  @OneToMany(
-    _ => AuthToken,
-    authToken => authToken.user,
-  )
+  @OneToMany((_) => AuthToken, (authToken) => authToken.user)
   authToken: AuthToken[];
 
-  @OneToMany(
-    _ => Identity,
-    identity => identity.user,
-  )
+  @OneToMany((_) => Identity, (identity) => identity.user)
   identities: Identity[];
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -56,19 +56,12 @@ export class Revision {
   /**
    * Note this revision belongs to.
    */
-  @ManyToOne(
-    _ => Note,
-    note => note.revisions,
-    { onDelete: 'CASCADE' },
-  )
+  @ManyToOne((_) => Note, (note) => note.revisions, { onDelete: 'CASCADE' })
   note: Note;
   /**
    * All authorship objects which are used in the revision.
    */
-  @ManyToMany(
-    _ => Authorship,
-    authorship => authorship.revisions,
-  )
+  @ManyToMany((_) => Authorship, (authorship) => authorship.revisions)
   @JoinTable()
   authorships: Authorship[];
 

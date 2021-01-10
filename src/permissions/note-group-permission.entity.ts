@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,14 +10,10 @@ import { Note } from '../notes/note.entity';
 
 @Entity()
 export class NoteGroupPermission {
-  @ManyToOne(_ => Group, { primary: true })
+  @ManyToOne((_) => Group, { primary: true })
   group: Group;
 
-  @ManyToOne(
-    _ => Note,
-    note => note.groupPermissions,
-    { primary: true },
-  )
+  @ManyToOne((_) => Note, (note) => note.groupPermissions, { primary: true })
   note: Note;
 
   @Column()

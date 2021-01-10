@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,10 +17,7 @@ export class AuthToken {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(
-    _ => User,
-    user => user.authToken,
-  )
+  @ManyToOne((_) => User, (user) => user.authToken)
   user: User;
 
   @Column()

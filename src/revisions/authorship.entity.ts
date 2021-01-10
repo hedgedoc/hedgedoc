@@ -1,15 +1,17 @@
 /*
- * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import {
-  Column, CreateDateColumn,
+  Column,
+  CreateDateColumn,
   Entity,
   ManyToMany,
   ManyToOne,
-  PrimaryGeneratedColumn, UpdateDateColumn,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm/index';
 import { User } from '../users/user.entity';
 import { Revision } from './revision.entity';
@@ -25,27 +27,24 @@ export class Authorship {
   /**
    * Revisions this authorship appears in
    */
-  @ManyToMany(
-    _ => Revision,
-    revision => revision.authorships,
-  )
+  @ManyToMany((_) => Revision, (revision) => revision.authorships)
   revisions: Revision[];
 
   /**
    * User this authorship represents
    */
-  @ManyToOne(_ => User)
+  @ManyToOne((_) => User)
   user: User;
 
   @Column()
-  startPos: number
+  startPos: number;
 
   @Column()
-  endPos: number
+  endPos: number;
 
   @CreateDateColumn()
-  createdAt: Date
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date
+  updatedAt: Date;
 }

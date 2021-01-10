@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -36,36 +36,22 @@ export class Note {
   })
   alias?: string;
   @OneToMany(
-    _ => NoteGroupPermission,
-    groupPermission => groupPermission.note,
+    (_) => NoteGroupPermission,
+    (groupPermission) => groupPermission.note,
   )
   groupPermissions: NoteGroupPermission[];
-  @OneToMany(
-    _ => NoteUserPermission,
-    userPermission => userPermission.note,
-  )
+  @OneToMany((_) => NoteUserPermission, (userPermission) => userPermission.note)
   userPermissions: NoteUserPermission[];
   @Column({
     nullable: false,
     default: 0,
   })
   viewcount: number;
-  @ManyToOne(
-    _ => User,
-    user => user.ownedNotes,
-    { onDelete: 'CASCADE' },
-  )
+  @ManyToOne((_) => User, (user) => user.ownedNotes, { onDelete: 'CASCADE' })
   owner: User;
-  @OneToMany(
-    _ => Revision,
-    revision => revision.note,
-    { cascade: true },
-  )
+  @OneToMany((_) => Revision, (revision) => revision.note, { cascade: true })
   revisions: Promise<Revision[]>;
-  @OneToMany(
-    _ => AuthorColor,
-    authorColor => authorColor.note,
-  )
+  @OneToMany((_) => AuthorColor, (authorColor) => authorColor.note)
   authorColors: AuthorColor[];
 
   @Column({
@@ -77,11 +63,7 @@ export class Note {
   })
   title?: string;
 
-  @ManyToMany(
-    _ => Tag,
-    tag => tag.notes,
-    { eager: true, cascade: true },
-  )
+  @ManyToMany((_) => Tag, (tag) => tag.notes, { eager: true, cascade: true })
   @JoinTable()
   tags: Tag[];
 
