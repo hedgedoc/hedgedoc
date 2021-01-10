@@ -115,7 +115,7 @@ export class NotesController {
     }
   }
 
-  @Put(':noteIdOrAlias/permissions')
+  @Put(':noteIdOrAlias/metadata/permissions')
   async updateNotePermissions(
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @Body() updateDto: NotePermissionsUpdateDto,

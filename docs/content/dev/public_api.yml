@@ -346,7 +346,7 @@ paths:
           content:
             text/plain:
               example: my-note
-  /notes/{note}/permissions:
+  /notes/{note}/metadata/permissions:
     put:
       tags: [ note ]
       summary: Set permissions of a note
