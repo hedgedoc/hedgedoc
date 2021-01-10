@@ -167,7 +167,7 @@ describe('Notes', () => {
 
   it(`GET /notes/{note}/revisions/{revision-id}`, async () => {
     const note = await notesService.createNote('This is a test note.', 'test8');
-    const revision = await notesService.getLastRevision(note);
+    const revision = await notesService.getLatestRevision(note);
     const response = await request(app.getHttpServer())
       .get('/notes/test8/revisions/' + revision.id)
       .expect('Content-Type', /json/)

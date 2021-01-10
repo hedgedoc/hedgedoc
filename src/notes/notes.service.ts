@@ -97,10 +97,10 @@ export class NotesService {
   }
 
   async getCurrentContent(note: Note) {
-    return (await this.getLastRevision(note)).content;
+    return (await this.getLatestRevision(note)).content;
   }
 
-  async getLastRevision(note: Note): Promise<Revision> {
+  async getLatestRevision(note: Note): Promise<Revision> {
     return this.revisionsService.getLatestRevision(note.id);
   }
 
@@ -129,7 +129,7 @@ export class NotesService {
         })),
       },
       tags: note.tags.map((tag) => tag.name),
-      updateTime: (await this.getLastRevision(note)).createdAt,
+      updateTime: (await this.getLatestRevision(note)).createdAt,
       // TODO: Get actual updateUser
       updateUser: {
         displayName: 'Hardcoded User',
