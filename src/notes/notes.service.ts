@@ -13,7 +13,7 @@ import { Revision } from '../revisions/revision.entity';
 import { RevisionsService } from '../revisions/revisions.service';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
-import { NoteMetadataDto, NoteMetadataUpdateDto } from './note-metadata.dto';
+import { NoteMetadataDto } from './note-metadata.dto';
 import {
   NotePermissionsDto,
   NotePermissionsUpdateDto,
@@ -192,6 +192,7 @@ export class NotesService {
     revisions.push(Revision.create(noteContent, noteContent));
     note.revisions = Promise.resolve(revisions);
     await this.noteRepository.save(note);
+    return this.toNoteDto(note);
   }
 
   async getNoteMetadata(noteIdOrAlias: string): Promise<NoteMetadataDto> {
