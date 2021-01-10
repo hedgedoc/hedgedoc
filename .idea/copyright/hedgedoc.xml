@@ -1,6 +1,6 @@
 <component name="CopyrightManager">
   <copyright>
-    <option name="notice" value="SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)&#10;&#10;&#83;PDX-License-Identifier: AGPL-3.0-only" />
+    <option name="notice" value="SPDX-FileCopyrightText: ${today.year} The HedgeDoc developers (see AUTHORS file)&#10;&#10;&#83;PDX-License-Identifier: AGPL-3.0-only" />
     <option name="myName" value="hedgedoc" />
   </copyright>
 </component>
