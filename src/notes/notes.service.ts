@@ -195,6 +195,7 @@ export class NotesService {
     revisions.push(Revision.create(noteContent, noteContent));
     note.revisions = Promise.resolve(revisions);
     await this.noteRepository.save(note);
+    return this.toNoteDto(note);
   }
 
   async getNoteMetadata(noteIdOrAlias: string): Promise<NoteMetadataDto> {

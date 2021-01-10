@@ -109,7 +109,7 @@ describe('Notes', () => {
 
   it(`PUT /notes/{note}`, async () => {
     await notesService.createNote('This is a test note.', 'test4');
-    await request(app.getHttpServer())
+    const response = await request(app.getHttpServer())
       .put('/notes/test4')
       .set('Content-Type', 'text/markdown')
       .send('New note text')
@@ -117,6 +117,7 @@ describe('Notes', () => {
     await expect(
       (await notesService.getNoteDtoByIdOrAlias('test4')).content,
     ).toEqual('New note text');
+    expect(response.body.content).toEqual('New note text');
 
     // check if a missing note correctly returns 404
     await request(app.getHttpServer())
