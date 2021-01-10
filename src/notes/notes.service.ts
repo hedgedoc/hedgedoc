@@ -13,7 +13,7 @@ import { Revision } from '../revisions/revision.entity';
 import { RevisionsService } from '../revisions/revisions.service';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
-import { NoteMetadataDto, NoteMetadataUpdateDto } from './note-metadata.dto';
+import { NoteMetadataDto } from './note-metadata.dto';
 import {
   NotePermissionsDto,
   NotePermissionsUpdateDto,
@@ -104,14 +104,17 @@ export class NotesService {
     return this.revisionsService.getLatestRevision(note.id);
   }
 
+  async getFirstRevision(note: Note): Promise<Revision> {
+    return this.revisionsService.getFirstRevision(note.id);
+  }
+
   async getMetadata(note: Note): Promise<NoteMetadataDto> {
     return {
       // TODO: Convert DB UUID to base64
       id: note.id,
       alias: note.alias,
       title: note.title,
-      // TODO: Get actual createTime
-      createTime: new Date(),
+      createTime: (await this.getFirstRevision(note)).createdAt,
       description: note.description,
       editedBy: note.authorColors.map(
         (authorColor) => authorColor.user.userName,
