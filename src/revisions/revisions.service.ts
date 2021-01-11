@@ -62,6 +62,17 @@ export class RevisionsService {
     });
   }
 
+  getFirstRevision(noteId: string): Promise<Revision> {
+    return this.revisionRepository.findOne({
+      where: {
+        note: noteId,
+      },
+      order: {
+        createdAt: 'ASC',
+      },
+    });
+  }
+
   toMetadataDto(revision: Revision): RevisionMetadataDto {
     return {
       id: revision.id,

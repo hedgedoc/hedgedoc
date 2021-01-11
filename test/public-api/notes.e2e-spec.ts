@@ -120,34 +120,55 @@ describe('Notes', () => {
       .expect(404);
   });
 
-  it(`GET /notes/{note}/metadata`, async () => {
-    await notesService.createNote('This is a test note.', 'test6');
-    const metadata = await request(app.getHttpServer())
-      .get('/notes/test6/metadata')
-      .expect(200);
-    expect(typeof metadata.body.id).toEqual('string');
-    expect(metadata.body.alias).toEqual('test6');
-    expect(metadata.body.title).toBeNull();
-    expect(metadata.body.description).toBeNull();
-    expect(typeof metadata.body.createTime).toEqual('string');
-    expect(metadata.body.editedBy).toEqual([]);
-    expect(metadata.body.permissions.owner).toBeNull();
-    expect(metadata.body.permissions.sharedToUsers).toEqual([]);
-    expect(metadata.body.permissions.sharedToUsers).toEqual([]);
-    expect(metadata.body.tags).toEqual([]);
-    expect(typeof metadata.body.updateTime).toEqual('string');
-    expect(typeof metadata.body.updateUser.displayName).toEqual('string');
-    expect(typeof metadata.body.updateUser.userName).toEqual('string');
-    expect(typeof metadata.body.updateUser.email).toEqual('string');
-    expect(typeof metadata.body.updateUser.photo).toEqual('string');
-    expect(typeof metadata.body.viewCount).toEqual('number');
-    expect(metadata.body.editedBy).toEqual([]);
+  describe('GET /notes/{note}/metadata', () => {
+    it(`returns complete metadata object`, async () => {
+      await notesService.createNote('This is a test note.', 'test6');
+      const metadata = await request(app.getHttpServer())
+        .get('/notes/test6/metadata')
+        .expect(200);
+      expect(typeof metadata.body.id).toEqual('string');
+      expect(metadata.body.alias).toEqual('test6');
+      expect(metadata.body.title).toBeNull();
+      expect(metadata.body.description).toBeNull();
+      expect(typeof metadata.body.createTime).toEqual('string');
+      expect(metadata.body.editedBy).toEqual([]);
+      expect(metadata.body.permissions.owner).toBeNull();
+      expect(metadata.body.permissions.sharedToUsers).toEqual([]);
+      expect(metadata.body.permissions.sharedToUsers).toEqual([]);
+      expect(metadata.body.tags).toEqual([]);
+      expect(typeof metadata.body.updateTime).toEqual('string');
+      expect(typeof metadata.body.updateUser.displayName).toEqual('string');
+      expect(typeof metadata.body.updateUser.userName).toEqual('string');
+      expect(typeof metadata.body.updateUser.email).toEqual('string');
+      expect(typeof metadata.body.updateUser.photo).toEqual('string');
+      expect(typeof metadata.body.viewCount).toEqual('number');
+      expect(metadata.body.editedBy).toEqual([]);
 
-    // check if a missing note correctly returns 404
-    await request(app.getHttpServer())
-      .get('/notes/i_dont_exist/metadata')
-      .expect('Content-Type', /json/)
-      .expect(404);
+      // check if a missing note correctly returns 404
+      await request(app.getHttpServer())
+        .get('/notes/i_dont_exist/metadata')
+        .expect('Content-Type', /json/)
+        .expect(404);
+    });
+
+    it('has the correct update/create dates', async () => {
+      // create a note
+      const note = await notesService.createNote(
+        'This is a test note.',
+        'test6a',
+      );
+      // save the creation time
+      const createDate = (await note.revisions)[0].createdAt;
+      // wait one second
+      await new Promise((r) => setTimeout(r, 1000));
+      // update the note
+      await notesService.updateNoteByIdOrAlias('test6a', 'More test content');
+      const metadata = await request(app.getHttpServer())
+        .get('/notes/test6a/metadata')
+        .expect(200);
+      expect(metadata.body.createTime).toEqual(createDate.toISOString());
+      expect(metadata.body.updateTime).not.toEqual(createDate.toISOString());
+    });
   });
 
   it(`GET /notes/{note}/revisions`, async () => {
@@ -167,7 +188,7 @@ describe('Notes', () => {
 
   it(`GET /notes/{note}/revisions/{revision-id}`, async () => {
     const note = await notesService.createNote('This is a test note.', 'test8');
-    const revision = await notesService.getLastRevision(note);
+    const revision = await notesService.getLatestRevision(note);
     const response = await request(app.getHttpServer())
       .get('/notes/test8/revisions/' + revision.id)
       .expect('Content-Type', /json/)

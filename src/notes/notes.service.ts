@@ -13,7 +13,7 @@ import { Revision } from '../revisions/revision.entity';
 import { RevisionsService } from '../revisions/revisions.service';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
-import { NoteMetadataDto, NoteMetadataUpdateDto } from './note-metadata.dto';
+import { NoteMetadataDto } from './note-metadata.dto';
 import {
   NotePermissionsDto,
   NotePermissionsUpdateDto,
@@ -97,11 +97,15 @@ export class NotesService {
   }
 
   async getCurrentContent(note: Note) {
-    return (await this.getLastRevision(note)).content;
+    return (await this.getLatestRevision(note)).content;
   }
 
-  async getLastRevision(note: Note): Promise<Revision> {
+  async getLatestRevision(note: Note): Promise<Revision> {
     return this.revisionsService.getLatestRevision(note.id);
+  }
+
+  async getFirstRevision(note: Note): Promise<Revision> {
+    return this.revisionsService.getFirstRevision(note.id);
   }
 
   async getMetadata(note: Note): Promise<NoteMetadataDto> {
@@ -110,8 +114,7 @@ export class NotesService {
       id: note.id,
       alias: note.alias,
       title: note.title,
-      // TODO: Get actual createTime
-      createTime: new Date(),
+      createTime: (await this.getFirstRevision(note)).createdAt,
       description: note.description,
       editedBy: note.authorColors.map(
         (authorColor) => authorColor.user.userName,
@@ -129,7 +132,7 @@ export class NotesService {
         })),
       },
       tags: note.tags.map((tag) => tag.name),
-      updateTime: (await this.getLastRevision(note)).createdAt,
+      updateTime: (await this.getLatestRevision(note)).createdAt,
       // TODO: Get actual updateUser
       updateUser: {
         displayName: 'Hardcoded User',
