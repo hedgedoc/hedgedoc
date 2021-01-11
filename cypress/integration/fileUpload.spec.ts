@@ -6,28 +6,30 @@
 
 const imageUrl = 'http://example.com/non-existing.png'
 
-describe('Upload', () => {
+describe('File upload', () => {
   beforeEach(() => {
     cy.visit('/n/test')
-    cy.get('.btn.active.btn-outline-secondary > i.fa-columns')
-      .should('exist')
-    cy.get('.CodeMirror textarea')
-      .type('{ctrl}a', { force: true })
-      .type('{backspace}')
+    cy.get('.CodeMirror')
+      .click()
+      .get('textarea')
+      .as('codeinput')
   })
 
-  it('check that text drag\'n\'drop still works', () => {
+  it('doesn\'t prevent drag\'n\'drop of plain text', () => {
     const dataTransfer = new DataTransfer()
-    cy.get('.CodeMirror textarea')
-      .type('line 1\nline 2\nline3')
-    cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
+    cy.get('@codeinput')
+      .fill('line 1\nline 2\ndragline')
+    cy.get('.CodeMirror')
+      .click()
+    cy.get('.CodeMirror-line > span')
+      .last()
       .dblclick()
     cy.get('.CodeMirror-line > span > .cm-matchhighlight')
       .trigger('dragstart', { dataTransfer })
     cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span  span')
       .trigger('drop', { dataTransfer })
     cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span  span')
-      .should('have.text', 'linline3e 1')
+      .should('have.text', 'lindraglinee 1')
   })
 
   describe('upload works', () => {
@@ -60,7 +62,7 @@ describe('Upload', () => {
         }
         cy.get('.CodeMirror-scroll').trigger('paste', pasteEvent)
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `![](${imageUrl})`)
+          .should('have.text', `![](${imageUrl})`)
       })
     })
 
@@ -75,13 +77,13 @@ describe('Upload', () => {
         cy.get('.CodeMirror-scroll').trigger('dragenter', dropEvent)
         cy.get('.CodeMirror-scroll').trigger('drop', dropEvent)
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `![](${imageUrl})`)
+          .should('have.text', `![](${imageUrl})`)
       })
     })
   })
 
   it('upload fails', () => {
-    cy.get('.CodeMirror textarea')
+    cy.get('@codeinput')
       .type('not empty')
     cy.intercept({
       method: 'POST',
@@ -91,8 +93,10 @@ describe('Upload', () => {
     })
     cy.get('.fa-upload')
       .click()
-    cy.get('input[type=file]')
-      .attachFile({ filePath: 'acme.png', mimeType: 'image/png' })
+    cy.fixture('acme.png').then(() => {
+      cy.get('input[type=file]')
+        .attachFile({ filePath: 'acme.png', mimeType: 'image/png' })
+    })
     cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
       .should('have.text', 'not empty')
   })

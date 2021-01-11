@@ -14,7 +14,7 @@ export const DeprecationWarning: React.FC = () => {
   useTranslation()
 
   return (
-    <Alert className={'mt-2'} variant={'warning'}>
+    <Alert data-cy={'yaml'} className={'mt-2'} variant={'warning'}>
       <Trans i18nKey={'renderer.sequence.deprecationWarning'}/>
       &nbsp;
       <TranslatedExternalLink i18nKey={'common.readForMoreInfo'} className={'text-primary'} href={links.faq}/>

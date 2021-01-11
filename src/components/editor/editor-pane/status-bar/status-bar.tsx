@@ -67,6 +67,7 @@ export const StatusBar: React.FC<StatusBarInfo> = ({ position, selectedColumns, 
         <span>{t('editor.statusBar.lines', { lines: linesInDocument })}</span>
         &nbsp;–&nbsp;
         <span
+          data-cy={'remainingCharacters'}
           title={getLengthTooltip}
           className={remainingCharacters <= 0 ? 'text-danger' : remainingCharacters <= 100 ? 'text-warning' : ''}
         >

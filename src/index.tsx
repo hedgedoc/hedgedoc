@@ -82,7 +82,7 @@ ReactDOM.render(
 )
 
 if (isTestMode()) {
-  console.log("This build runs in test mode")
+  console.log("This build runs in test mode. This means:\n - No default content in the editor")
 }
 
 // If you want your app to work offline and load faster, you can change

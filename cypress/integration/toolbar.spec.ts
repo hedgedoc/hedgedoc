@@ -4,23 +4,38 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-const testText = 'textText'
-const testLink = 'http://hedgedoc.org'
-
 describe('Toolbar', () => {
+  const testText = 'textText'
+  const testLink = 'http://hedgedoc.org'
+
   beforeEach(() => {
     cy.visit('/n/test')
-    cy.get('.btn.active.btn-outline-secondary > i.fa-columns')
-      .should('exist')
-    cy.get('.CodeMirror textarea')
-      .type('{ctrl}a', { force: true })
-      .type('{backspace}')
-    cy.viewport(1920, 1080)
+
+    cy.get('.CodeMirror')
+      .click()
+      .get('textarea')
+      .as('codeinput')
   })
 
+  const fillTestText = () => {
+    cy.get('@codeinput')
+      .fill(testText)
+    cy.get('.CodeMirror-line > span')
+      .should("exist")
+      .should('have.text', testText)
+  }
+
+  const fillTestLink = () => {
+    cy.get('@codeinput')
+      .fill(testLink)
+    cy.get('.CodeMirror-line > span')
+      .should("exist")
+      .should('have.text', testLink)
+  }
+
   it('bold', () => {
-    cy.get('.CodeMirror textarea')
-      .type(`${testText}`)
+    fillTestText()
+    cy.get('@codeinput')
       .type('{ctrl}a')
     cy.get('.fa-bold')
       .click()
@@ -29,8 +44,8 @@ describe('Toolbar', () => {
   })
 
   it('italic', () => {
-    cy.get('.CodeMirror textarea')
-      .type(`${testText}`)
+    fillTestText()
+    cy.get('@codeinput')
       .type('{ctrl}a')
     cy.get('.fa-italic')
       .click()
@@ -39,8 +54,8 @@ describe('Toolbar', () => {
   })
 
   it('underline', () => {
-    cy.get('.CodeMirror textarea')
-      .type(`${testText}`)
+    fillTestText()
+    cy.get('@codeinput')
       .type('{ctrl}a')
     cy.get('.fa-underline')
       .click()
@@ -49,8 +64,8 @@ describe('Toolbar', () => {
   })
 
   it('strikethrough', () => {
-    cy.get('.CodeMirror textarea')
-      .type(`${testText}`)
+    fillTestText()
+    cy.get('@codeinput')
       .type('{ctrl}a')
     cy.get('.fa-strikethrough')
       .click()
@@ -59,8 +74,8 @@ describe('Toolbar', () => {
   })
 
   it('subscript', () => {
-    cy.get('.CodeMirror textarea')
-      .type(`${testText}`)
+    fillTestText()
+    cy.get('@codeinput')
       .type('{ctrl}a')
     cy.get('.fa-subscript')
       .click()
@@ -69,8 +84,8 @@ describe('Toolbar', () => {
   })
 
   it('superscript', () => {
-    cy.get('.CodeMirror textarea')
-      .type(`${testText}`)
+    fillTestText()
+    cy.get('@codeinput')
       .type('{ctrl}a')
     cy.get('.fa-superscript')
       .click()
@@ -79,8 +94,7 @@ describe('Toolbar', () => {
   })
 
   it('heading', () => {
-    cy.get('.CodeMirror textarea')
-      .type(`${testText}`)
+    fillTestText()
     cy.get('.fa-header')
       .click()
     cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
@@ -93,8 +107,8 @@ describe('Toolbar', () => {
 
   describe('code', () => {
     it('nothing selected empty line', () => {
-      cy.get('.CodeMirror textarea')
-        .type(`${testText}`)
+      fillTestText()
+      cy.get('@codeinput')
         .type('{ctrl}a')
         .type('{backspace}')
       cy.get('.fa-code')
@@ -106,8 +120,8 @@ describe('Toolbar', () => {
     })
 
     it('nothing selected non line', () => {
-      cy.get('.CodeMirror textarea')
-        .type(`${testText}`)
+      fillTestText()
+      cy.get('@codeinput')
         .type('{ctrl}a')
         .type('{leftArrow}')
       cy.get('.fa-code')
@@ -121,8 +135,8 @@ describe('Toolbar', () => {
     })
 
     it('line selected', () => {
-      cy.get('.CodeMirror textarea')
-        .type(`${testText}`)
+      fillTestText()
+      cy.get('@codeinput')
         .type('{ctrl}a')
       cy.get('.fa-code')
         .click()
@@ -136,8 +150,7 @@ describe('Toolbar', () => {
   })
 
   it('quote', () => {
-    cy.get('.CodeMirror textarea')
-      .type(`${testText}`)
+    fillTestText()
     cy.get('.fa-quote-right')
       .click()
     cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
@@ -149,8 +162,7 @@ describe('Toolbar', () => {
   })
 
   it('unordered list', () => {
-    cy.get('.CodeMirror textarea')
-      .type(`${testText}`)
+    fillTestText()
     cy.get('.fa-list')
       .click()
     cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
@@ -162,8 +174,7 @@ describe('Toolbar', () => {
   })
 
   it('ordered list', () => {
-    cy.get('.CodeMirror textarea')
-      .type(`${testText}`)
+    fillTestText()
     cy.get('.fa-list-ol')
       .click()
     cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
@@ -175,8 +186,7 @@ describe('Toolbar', () => {
   })
 
   it('todo list', () => {
-    cy.get('.CodeMirror textarea')
-      .type(`${testText}`)
+    fillTestText()
     cy.get('.fa-check-square')
       .click()
     cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
@@ -189,8 +199,8 @@ describe('Toolbar', () => {
 
   describe('link', () => {
     it('with selection text', () => {
-      cy.get('.CodeMirror textarea')
-        .type(`${testText}`)
+      fillTestText()
+      cy.get('@codeinput')
         .type('{ctrl}a')
       cy.get('.fa-link')
         .click()
@@ -199,8 +209,7 @@ describe('Toolbar', () => {
     })
 
     it('without selection', () => {
-      cy.get('.CodeMirror textarea')
-        .type(`${testText}`)
+      fillTestText()
       cy.get('.fa-link')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
@@ -208,8 +217,8 @@ describe('Toolbar', () => {
     })
 
     it('with selection link', () => {
-      cy.get('.CodeMirror textarea')
-        .type(`${testLink}`)
+      fillTestLink()
+      cy.get('@codeinput')
         .type('{ctrl}a')
       cy.get('.fa-link')
         .click()
@@ -220,8 +229,8 @@ describe('Toolbar', () => {
 
   describe('image', () => {
     it('with selection', () => {
-      cy.get('.CodeMirror textarea')
-        .type(`${testText}`)
+      fillTestText()
+      cy.get('@codeinput')
         .type('{ctrl}a')
       cy.get('.fa-picture-o')
         .click()
@@ -230,8 +239,7 @@ describe('Toolbar', () => {
     })
 
     it('without selection', () => {
-      cy.get('.CodeMirror textarea')
-        .type(`${testText}`)
+      fillTestText()
       cy.get('.fa-picture-o')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
@@ -239,8 +247,8 @@ describe('Toolbar', () => {
     })
 
     it('with selection link', () => {
-      cy.get('.CodeMirror textarea')
-        .type(`${testLink}`)
+      fillTestLink()
+      cy.get('@codeinput')
         .type('{ctrl}a')
       cy.get('.fa-picture-o')
         .click()
@@ -312,9 +320,9 @@ describe('Toolbar', () => {
 
   it('collapsable block', () => {
     cy.get('.fa-caret-square-o-down')
-     .click()
+      .click()
     cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span')
-     .should('have.text', '<details>')
+      .should('have.text', '<details>')
   })
 
   it('comment', () => {

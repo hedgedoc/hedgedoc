@@ -62,7 +62,7 @@ export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & Additi
   return (
     <div className={`${className || ''} d-flex flex-column align-items-center ${wide ? 'wider' : ''}`}>
       <ShowIf condition={content.length > maxLength}>
-        <Alert variant='danger' dir={'auto'}>
+        <Alert variant='danger' dir={'auto'} data-cy={'limitReachedMessage'}>
           <Trans i18nKey={'editor.error.limitReached.description'} values={{ maxLength }}/>
         </Alert>
       </ShowIf>

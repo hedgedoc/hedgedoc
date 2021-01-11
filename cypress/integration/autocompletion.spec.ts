@@ -8,19 +8,21 @@ describe('Autocompletion', () => {
   beforeEach(() => {
     cy.visit('/n/test')
     cy.get('.btn.active.btn-outline-secondary > i.fa-columns')
-    .should('exist')
-    cy.get('.CodeMirror textarea')
-      .type('{ctrl}a', { force: true })
-      .type('{backspace}')
+      .should('exist')
+
+    cy.get('.CodeMirror')
+      .click()
+      .get('textarea')
+      .as('codeinput')
   })
 
   describe('code block', () => {
     it('via Enter', () => {
-      cy.get('.CodeMirror textarea')
-        .type('```')
+      cy.get('@codeinput')
+        .fill('```')
       cy.get('.CodeMirror-hints')
         .should('exist')
-      cy.get('.CodeMirror textarea')
+      cy.get('@codeinput')
         .type('{enter}')
       cy.get('.CodeMirror-hints')
         .should('not.exist')
@@ -32,8 +34,8 @@ describe('Autocompletion', () => {
         .should('exist')
     })
     it('via doubleclick', () => {
-      cy.get('.CodeMirror textarea')
-        .type('```')
+      cy.get('@codeinput')
+        .fill('```')
       cy.get('.CodeMirror-hints > li')
         .first()
         .dblclick()
@@ -50,11 +52,11 @@ describe('Autocompletion', () => {
 
   describe('container', () => {
     it('via Enter', () => {
-      cy.get('.CodeMirror textarea')
-        .type(':::')
+      cy.get('@codeinput')
+        .fill(':::')
       cy.get('.CodeMirror-hints')
         .should('exist')
-      cy.get('.CodeMirror textarea')
+      cy.get('@codeinput')
         .type('{enter}')
       cy.get('.CodeMirror-hints')
         .should('not.exist')
@@ -66,8 +68,8 @@ describe('Autocompletion', () => {
         .should('exist')
     })
     it('via doubleclick', () => {
-      cy.get('.CodeMirror textarea')
-        .type(':::')
+      cy.get('@codeinput')
+        .fill(':::')
       cy.get('.CodeMirror-hints > li')
         .first()
         .dblclick()
@@ -85,11 +87,11 @@ describe('Autocompletion', () => {
   describe('emoji', () => {
     describe('normal emoji', () => {
       it('via Enter', () => {
-        cy.get('.CodeMirror textarea')
-          .type(':hedg')
+        cy.get('@codeinput')
+          .fill(':hedg')
         cy.get('.CodeMirror-hints')
           .should('exist')
-        cy.get('.CodeMirror textarea')
+        cy.get('@codeinput')
           .type('{enter}')
         cy.get('.CodeMirror-hints')
           .should('not.exist')
@@ -99,8 +101,8 @@ describe('Autocompletion', () => {
           .should('have.text', '🦔')
       })
       it('via doubleclick', () => {
-        cy.get('.CodeMirror textarea')
-          .type(':hedg')
+        cy.get('@codeinput')
+          .fill(':hedg')
         cy.get('.CodeMirror-hints > li')
           .first()
           .dblclick()
@@ -115,11 +117,11 @@ describe('Autocompletion', () => {
 
     describe('fork-awesome-icon', () => {
       it('via Enter', () => {
-        cy.get('.CodeMirror textarea')
-          .type(':fa-face')
+        cy.get('@codeinput')
+          .fill(':fa-face')
         cy.get('.CodeMirror-hints')
           .should('exist')
-        cy.get('.CodeMirror textarea')
+        cy.get('@codeinput')
           .type('{enter}')
         cy.get('.CodeMirror-hints')
           .should('not.exist')
@@ -129,8 +131,8 @@ describe('Autocompletion', () => {
           .should('exist')
       })
       it('via doubleclick', () => {
-        cy.get('.CodeMirror textarea')
-          .type(':fa-face')
+        cy.get('@codeinput')
+          .fill(':fa-face')
         cy.get('.CodeMirror-hints > li')
           .first()
           .dblclick()
@@ -146,11 +148,11 @@ describe('Autocompletion', () => {
 
   describe('header', () => {
     it('via Enter', () => {
-      cy.get('.CodeMirror textarea')
-        .type('#')
+      cy.get('@codeinput')
+        .fill('#')
       cy.get('.CodeMirror-hints')
         .should('exist')
-      cy.get('.CodeMirror textarea')
+      cy.get('@codeinput')
         .type('{enter}')
       cy.get('.CodeMirror-hints')
         .should('not.exist')
@@ -160,8 +162,8 @@ describe('Autocompletion', () => {
         .should('have.text', ' ')
     })
     it('via doubleclick', () => {
-      cy.get('.CodeMirror textarea')
-        .type('#')
+      cy.get('@codeinput')
+        .fill('#')
       cy.get('.CodeMirror-hints > li')
         .first()
         .dblclick()
@@ -176,11 +178,11 @@ describe('Autocompletion', () => {
 
   describe('images', () => {
     it('via Enter', () => {
-      cy.get('.CodeMirror textarea')
-        .type('!')
+      cy.get('@codeinput')
+        .fill('!')
       cy.get('.CodeMirror-hints')
         .should('exist')
-      cy.get('.CodeMirror textarea')
+      cy.get('@codeinput')
         .type('{enter}')
       cy.get('.CodeMirror-hints')
         .should('not.exist')
@@ -192,8 +194,8 @@ describe('Autocompletion', () => {
         .should('have.attr', 'title', 'title')
     })
     it('via doubleclick', () => {
-      cy.get('.CodeMirror textarea')
-        .type('!')
+      cy.get('@codeinput')
+        .fill('!')
       cy.get('.CodeMirror-hints > li')
         .first()
         .dblclick()
@@ -210,11 +212,11 @@ describe('Autocompletion', () => {
 
   describe('links', () => {
     it('via Enter', () => {
-      cy.get('.CodeMirror textarea')
-        .type('[')
+      cy.get('@codeinput')
+        .fill('[')
       cy.get('.CodeMirror-hints')
         .should('exist')
-      cy.get('.CodeMirror textarea')
+      cy.get('@codeinput')
         .type('{enter}')
       cy.get('.CodeMirror-hints')
         .should('not.exist')
@@ -226,8 +228,8 @@ describe('Autocompletion', () => {
         .should('have.attr', 'title', 'title')
     })
     it('via doubleclick', () => {
-      cy.get('.CodeMirror textarea')
-        .type('[')
+      cy.get('@codeinput')
+        .fill('[')
       cy.get('.CodeMirror-hints > li')
         .first()
         .dblclick()
@@ -244,11 +246,11 @@ describe('Autocompletion', () => {
 
   describe('pdf', () => {
     it('via Enter', () => {
-      cy.get('.CodeMirror textarea')
-        .type('{')
+      cy.get('@codeinput')
+        .fill('{')
       cy.get('.CodeMirror-hints')
         .should('exist')
-      cy.get('.CodeMirror textarea')
+      cy.get('@codeinput')
         .type('{enter}')
       cy.get('.CodeMirror-hints')
         .should('not.exist')
@@ -258,8 +260,8 @@ describe('Autocompletion', () => {
         .should('exist')
     })
     it('via doubleclick', () => {
-      cy.get('.CodeMirror textarea')
-        .type('{')
+      cy.get('@codeinput')
+        .fill('{')
       cy.get('.CodeMirror-hints > li')
         .first()
         .dblclick()
@@ -274,31 +276,31 @@ describe('Autocompletion', () => {
 
   describe('collapsable blocks', () => {
     it('via Enter', () => {
-      cy.get('.CodeMirror textarea')
-      .type('<d')
+      cy.get('@codeinput')
+        .fill('<d')
       cy.get('.CodeMirror-hints')
-      .should('exist')
-      cy.get('.CodeMirror textarea')
-      .type('{enter}')
+        .should('exist')
+      cy.get('@codeinput')
+        .type('{enter}')
       cy.get('.CodeMirror-hints')
-      .should('not.exist')
+        .should('not.exist')
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-      .should('have.text', '</details>') // after selecting the hint, the last line of the inserted suggestion is active
+        .should('have.text', '</details>') // after selecting the hint, the last line of the inserted suggestion is active
       cy.get('.markdown-body > details')
-      .should('exist')
+        .should('exist')
     })
     it('via doubleclick', () => {
-      cy.get('.CodeMirror textarea')
-      .type('<d')
+      cy.get('@codeinput')
+        .fill('<d')
       cy.get('.CodeMirror-hints > li')
-      .first()
-      .dblclick()
+        .first()
+        .dblclick()
       cy.get('.CodeMirror-hints')
-      .should('not.exist')
+        .should('not.exist')
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-      .should('have.text', '</details>')
+        .should('have.text', '</details>')
       cy.get('.markdown-body > details')
-      .should('exist')
+        .should('exist')
     })
   })
 })

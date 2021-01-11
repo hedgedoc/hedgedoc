@@ -26,7 +26,7 @@ export const CommonModal: React.FC<CommonModalProps> = ({ show, onHide, titleI18
   useTranslation()
 
   return (
-    <Modal show={show} onHide={onHide} animation={true} dialogClassName={`text-dark ${additionalClasses ?? ''}`} size={size}>
+    <Modal data-cy={'limitReachedModal'} show={show} onHide={onHide} animation={true} dialogClassName={`text-dark ${additionalClasses ?? ''}`} size={size}>
       <Modal.Header closeButton={!!closeButton}>
         <Modal.Title>
           <ShowIf condition={!!icon}>

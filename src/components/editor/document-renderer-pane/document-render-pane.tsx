@@ -6,20 +6,18 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 import { TocAst } from 'markdown-it-toc-done-right'
 import React, { RefObject, useRef, useState } from 'react'
-import { Alert, Dropdown } from 'react-bootstrap'
-import { Trans } from 'react-i18next'
+import { Dropdown } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import useResizeObserver from 'use-resize-observer'
-import links from '../../../links.json'
 import { ApplicationState } from '../../../redux'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
-import { TranslatedExternalLink } from '../../common/links/translated-external-link'
 import { ShowIf } from '../../common/show-if/show-if'
 import { FullMarkdownRenderer } from '../../markdown-renderer/full-markdown-renderer'
 import { LineMarkerPosition } from '../../markdown-renderer/types'
 import { TableOfContents } from '../table-of-contents/table-of-contents'
 import { YAMLMetaData } from '../yaml-metadata/yaml-metadata'
 import { useAdaptedLineMarkerCallback } from './use-adapted-line-markers-callback'
+import { YamlArrayDeprecationAlert } from './yaml-array-deprecation-alert'
 
 export interface DocumentRenderPaneProps {
   extraClasses?: string
@@ -58,11 +56,7 @@ export const DocumentRenderPane: React.FC<DocumentRenderPaneProps> = ({
       <div className={'col-md'}/>
       <div className={'bg-light flex-fill'}>
         <ShowIf condition={yamlDeprecatedTags}>
-          <Alert variant='warning' dir='auto'>
-            <Trans i18nKey='editor.deprecatedTags' />
-            <br/>
-            <TranslatedExternalLink i18nKey={'common.readForMoreInfo'} href={links.faq} className={'text-primary'}/>
-          </Alert>
+          <YamlArrayDeprecationAlert/>
         </ShowIf>
         <div >
         <FullMarkdownRenderer
