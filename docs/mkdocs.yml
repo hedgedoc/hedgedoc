@@ -21,11 +21,11 @@ nav:
           - OAuth: guides/auth/oauth.md
           - SAML : guides/auth/saml.md
           - SAML Keycloak : guides/auth/saml-keycloak.md
-          - SAML Onelogin : guides/auth/saml-onelogin.md
+          - SAML OneLogin: guides/auth/saml-onelogin.md
           - GitHub: guides/auth/github.md
           - GitLab: guides/auth/gitlab-self-hosted.md
           - Keycloak: guides/auth/keycloak.md
-          - NextCloud: guides/auth/nextcloud.md
+          - Nextcloud: guides/auth/nextcloud.md
           - Twitter: guides/auth/twitter.md
       - Migrate from Etherpad: guides/migrate-etherpad.md
       - Breaking Changes: guides/migrations-and-breaking-changes.md
