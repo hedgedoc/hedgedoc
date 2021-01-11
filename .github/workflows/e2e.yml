@@ -18,6 +18,14 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v2
 
+      - name: Get branch and commit
+        id: gitinfo
+        run: |
+          if [ -n "${{ github.event.pull_request.head.sha }}" ]; \
+          then echo "::set-output name=shapr::$(echo ${{ github.event.pull_request.head.sha }} | cut -c -7) - #${{ github.event.pull_request.number }}"; \
+          else echo "::set-output name=shapr::$(echo ${{ github.sha }} | cut -c -7)"; fi
+          echo "::set-output name=branch::${GITHUB_HEAD_REF:-main}"
+
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -36,6 +44,9 @@ jobs:
         with:
           node-version: 14
 
+      - name: Install sponge utility
+        run: sudo apt-get install -yqq moreutils
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
 
@@ -44,6 +55,9 @@ jobs:
 
       - name: Start http server
         run: yarn serve:build &
+
+      - name: Set BrowserStack config values
+        run: jq '.run_settings.build_name = "${{ steps.gitinfo.outputs.shapr }} - ${{ steps.gitinfo.outputs.branch }}"' browserstack.json | sponge browserstack.json
 
       - name: Set up BrowserStack environment
         uses: 'browserstack/github-actions/setup-env@master'
@@ -57,10 +71,8 @@ jobs:
           local-testing: start
           local-identifier: random
 
-      - name: enable cypress videos
-        run: |
-          sudo apt-get install moreutils -yqq
-          jq '.video = true' cypress.json | sponge cypress.json
+      - name: Enable cypress videos
+        run: jq '.video = true' cypress.json | sponge cypress.json
 
       - name: Run BrowserStack Tests
         run: yarn run cy:browserstack

@@ -18,8 +18,8 @@
     "run_settings": {
         "cypress_version": "6.2.0",
         "cypress_config_file": "./cypress.json",
-        "project_name": "HedgeDoc",
-        "build_name": "build-name",
+        "build_name": "",
+        "project_name": "hedgedoc/react-client",
         "exclude": [],
         "parallels": "5",
         "npm_dependencies": {
