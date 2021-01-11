@@ -1,8 +1,9 @@
 # Authentication guide - SAML
 
-*Note:* This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind :smile: thanks!
+*Note:* This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind 😃 thanks!
 
-The basic procedure is the same as the case of OneLogin which is mentioned in [OneLogin-Guide](./saml-onelogin.md). If you want to match your IdP, you can use more configurations as below.
+The basic procedure is the same as the case of OneLogin which is mentioned in [OneLogin-Guide](./saml-onelogin.md). If
+you want to match your IdP, you can use more configurations as below.
 
 - If your IdP accepts metadata XML of the service provider to ease configuration, use this url to download metadata XML.
     - {{your-serverurl}}/auth/saml/metadata

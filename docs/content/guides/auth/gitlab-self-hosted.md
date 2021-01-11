@@ -1,6 +1,6 @@
 # GitLab (self-hosted)
 
-*Note:* This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind :smile: thanks!
+*Note:* This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind 😃 thanks!
 
 1. Sign in to your GitLab
 2. Navigate to the application management page at `https://your.gitlab.domain/admin/applications` (admin permissions required)

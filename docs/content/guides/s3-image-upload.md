@@ -1,6 +1,6 @@
 # Guide - Setup HedgeDoc S3 image upload
 
-**Note:** *This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind :smile: thanks!*
+**Note:** *This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind 😃 thanks!*
 
 1. Go to [AWS S3 console](https://console.aws.amazon.com/s3/home) and create a new bucket.
    ![create-bucket](../images/s3-image-upload/create-bucket.png)

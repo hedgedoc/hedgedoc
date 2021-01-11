@@ -1,6 +1,6 @@
 # Authentication guide - SAML (OneLogin)
 
-**Note:** *This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind :smile: thanks!*
+**Note:** *This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind 😃 thanks!*
 
 1. Sign-in or sign-up for an OneLogin account. (available free trial for 2 weeks)
 
