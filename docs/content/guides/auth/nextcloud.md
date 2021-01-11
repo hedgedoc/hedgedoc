@@ -30,7 +30,7 @@ successfully with Nextcloud 14 and Nextcloud 20).
    also replace `<your-nextcloud-domain>` with the right domain name.
   - `config.json`:
 
-    ```javascript
+    ```json
     {
       "production": {
         "oauth2": {

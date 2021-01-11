@@ -15,7 +15,7 @@
 
 6. In the `docker-compose.yml` add the following environment variables to `app:` `environment:`
 
-```Dockerfile
+```yaml
 - CMD_DOMAIN=your.hedgedoc.domain
 - CMD_URL_ADDPORT=true
 - CMD_PROTOCOL_USESSL=true

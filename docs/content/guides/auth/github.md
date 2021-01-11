@@ -17,7 +17,7 @@
 
 6. Add the Client ID and Client Secret to your config.json file or pass them as environment variables
   - `config.json`:
-    ```js
+    ```json
     {
       "production": {
         "github": {
@@ -29,7 +29,7 @@
     ```
 
   - environment variables:
-    ```sh
+    ```shell
     CMD_GITHUB_CLIENTID=3747d30eaccXXXXXXXXX
     CMD_GITHUB_CLIENTSECRET=2a8e682948eee0c580XXXXXXXXXXXXXXXXXXXXXX
-    ````
+    ```

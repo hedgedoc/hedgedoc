@@ -24,7 +24,7 @@ This guide uses the generic OAuth2 module for compatibility with Mattermost vers
 
 7. Add the Client ID and Client Secret to your config.json file or pass them as environment variables
   - `config.json`:
-    ```javascript
+    ```json
     {
       "production": {
         "oauth2": {

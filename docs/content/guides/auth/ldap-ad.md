@@ -2,14 +2,14 @@
 
 To setup your HedgeDoc instance with Active Directory you need the following configs:
 
-```env
+```shell
 CMD_LDAP_URL=ldap://internal.example.com
 CMD_LDAP_BINDDN=cn=binduser,cn=Users,dc=internal,dc=example,dc=com
-CMD_LDAP_BINDCREDENTIALS=<super secret password>
+CMD_LDAP_BINDCREDENTIALS="<super secret password>"
 CMD_LDAP_SEARCHBASE=dc=internal,dc=example,dc=com
 CMD_LDAP_SEARCHFILTER=(&(objectcategory=person)(objectclass=user)(|(sAMAccountName={{username}})(mail={{username}})))
 CMD_LDAP_USERIDFIELD=sAMAccountName
-CMD_LDAP_PROVIDERNAME=Example Inc AD
+CMD_LDAP_PROVIDERNAME="Example Inc AD"
 ```
 
 `CMD_LDAP_BINDDN` is either the `distinguishedName` or the `userPrincipalName`. *This can cause "username/password is invalid" when either this value or the password from `CMD_LDAP_BINDCREDENTIALS` are incorrect.*

@@ -30,7 +30,7 @@ you want to match your IdP, you can use more configurations as below.
     ```
 
   - environment variables
-    ```env
+    ```shell
     CMD_SAML_ISSUER=myhedgedoc
     CMD_SAML_IDENTIFIERFORMAT=urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
     ```
@@ -46,7 +46,7 @@ you want to match your IdP, you can use more configurations as below.
     - *Note:* Default value of all attributes is NameID of SAML response, which is email address if `identifierFormat` is default.
 
   - `config.json`:
-    ```javascript
+    ```json
     {
       "production": {
         "saml": {
@@ -62,7 +62,7 @@ you want to match your IdP, you can use more configurations as below.
     ```
 
   - environment variables
-    ```sh
+    ```shell
     CMD_SAML_ATTRIBUTE_ID=sAMAccountName
     CMD_SAML_ATTRIBUTE_USERNAME=nickName
     CMD_SAML_ATTRIBUTE_EMAIL=mail
@@ -77,7 +77,7 @@ you want to match your IdP, you can use more configurations as below.
     - *Note:* Evaluates `externalGroups` first
 
   - `config.json`:
-    ```javascript
+    ```json
     {
       "production": {
         "saml": {
@@ -91,7 +91,7 @@ you want to match your IdP, you can use more configurations as below.
     ```
 
   - environment variables
-    ```sh
+    ```shell
     CMD_SAML_GROUPATTRIBUTE=memberOf
     CMD_SAML_REQUIREDGROUPS=hedgedoc-users|board-members
     CMD_SAML_EXTERNALGROUPS=temporary-staff

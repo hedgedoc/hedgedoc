@@ -24,7 +24,7 @@
 
 7. Add your Consumer Key and Consumer Secret to your `config.json` file or pass them as environment variables:
   - `config.json`:
-    ```javascript
+    ```json
     {
       "production": {
         "twitter": {
@@ -36,7 +36,7 @@
     ```
 
   - environment variables:
-    ```sh
+    ```shell
     CMD_TWITTER_CONSUMERKEY=esTCJFXXXXXXXXXXXXXXXXXXX
     CMD_TWITTER_CONSUMERSECRET=zpCs4tU86pRVXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     ```
