@@ -44,6 +44,7 @@ nav:
 markdown_extensions:
   - toc:
       permalink: true
+  - pymdownx.superfences
 theme:
   name: 'material'
   language: en
