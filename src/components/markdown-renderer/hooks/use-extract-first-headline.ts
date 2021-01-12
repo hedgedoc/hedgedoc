@@ -9,6 +9,11 @@ import React, { useCallback, useEffect } from 'react'
 export const useExtractFirstHeadline = (documentElement: React.RefObject<HTMLDivElement>, content: string, onFirstHeadingChange?: (firstHeading: string | undefined) => void): void => {
   const extractInnerText = useCallback((node: ChildNode): string => {
     let innerText = ''
+
+    if ((node as HTMLElement).classList?.contains("katex-mathml")) {
+      return ''
+    }
+
     if (node.childNodes && node.childNodes.length > 0) {
       node.childNodes.forEach((child) => { innerText += extractInnerText(child) })
     } else if (node.nodeName === 'IMG') {
