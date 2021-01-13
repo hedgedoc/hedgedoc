@@ -4,8 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import appConfigMock from '../../../config/app.config.mock';
 import { LoggerModule } from '../../../logger/logger.module';
 import { MediaUpload } from '../../../media/media-upload.entity';
 import { MediaModule } from '../../../media/media.module';
@@ -26,7 +28,15 @@ describe('Media Controller', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [MediaController],
-      imports: [LoggerModule, MediaModule, NotesModule],
+      imports: [
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock],
+        }),
+        LoggerModule,
+        MediaModule,
+        NotesModule,
+      ],
     })
       .overrideProvider(getRepositoryToken(AuthorColor))
       .useValue({})

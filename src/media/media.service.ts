@@ -1,24 +1,29 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as FileType from 'file-type';
 import { Repository } from 'typeorm';
+import applicationConfig, { AppConfig } from '../config/app.config';
 import { ClientError, NotInDBError, PermissionError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { NotesService } from '../notes/notes.service';
 import { UsersService } from '../users/users.service';
 import { BackendType } from './backends/backend-type.enum';
 import { FilesystemBackend } from './backends/filesystem-backend';
+import { MediaBackend } from './media-backend.interface';
 import { MediaUpload } from './media-upload.entity';
 
 @Injectable()
 export class MediaService {
+  mediaBackend: MediaBackend;
+  mediaBackendType: BackendType;
+
   constructor(
     private readonly logger: ConsoleLoggerService,
     @InjectRepository(MediaUpload)
@@ -26,8 +31,12 @@ export class MediaService {
     private notesService: NotesService,
     private usersService: UsersService,
     private moduleRef: ModuleRef,
+    @Inject(applicationConfig.KEY)
+    private appConfig: AppConfig,
   ) {
     this.logger.setContext(MediaService.name);
+    this.mediaBackendType = this.chooseBackendType();
+    this.mediaBackend = this.getBackendFromType(this.mediaBackendType);
   }
 
   private static isAllowedMimeType(mimeType: string): boolean {
@@ -63,16 +72,14 @@ export class MediaService {
     if (!MediaService.isAllowedMimeType(fileTypeResult.mime)) {
       throw new ClientError('MIME type not allowed.');
     }
-    //TODO: Choose backend according to config
     const mediaUpload = MediaUpload.create(
       note,
       user,
       fileTypeResult.ext,
-      BackendType.FILEYSTEM,
+      this.mediaBackendType,
     );
     this.logger.debug(`Generated filename: '${mediaUpload.id}'`, 'saveFile');
-    const backend = this.moduleRef.get(FilesystemBackend);
-    const [url, backendData] = await backend.saveFile(
+    const [url, backendData] = await this.mediaBackend.saveFile(
       fileBuffer,
       mediaUpload.id,
     );
@@ -96,8 +103,7 @@ export class MediaService {
         `File '${filename}' is not owned by '${username}'`,
       );
     }
-    const backend = this.moduleRef.get(FilesystemBackend);
-    await backend.deleteFile(filename, mediaUpload.backendData);
+    await this.mediaBackend.deleteFile(filename, mediaUpload.backendData);
     await this.mediaUploadRepository.remove(mediaUpload);
   }
 
@@ -111,5 +117,19 @@ export class MediaService {
       );
     }
     return mediaUpload;
+  }
+
+  private chooseBackendType(): BackendType {
+    switch (this.appConfig.media.backend.use) {
+      case 'filesystem':
+        return BackendType.FILESYSTEM;
+    }
+  }
+
+  private getBackendFromType(type: BackendType): MediaBackend {
+    switch (type) {
+      case BackendType.FILESYSTEM:
+        return this.moduleRef.get(FilesystemBackend);
+    }
   }
 }

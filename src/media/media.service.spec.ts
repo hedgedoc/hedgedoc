@@ -4,8 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import appConfigMock from '../config/app.config.mock';
 import { LoggerModule } from '../logger/logger.module';
 import { AuthorColor } from '../notes/author-color.entity';
 import { Note } from '../notes/note.entity';
@@ -17,6 +19,7 @@ import { AuthToken } from '../users/auth-token.entity';
 import { Identity } from '../users/identity.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
+import { FilesystemBackend } from './backends/filesystem-backend';
 import { MediaUpload } from './media-upload.entity';
 import { MediaService } from './media.service';
 
@@ -31,8 +34,17 @@ describe('MediaService', () => {
           provide: getRepositoryToken(MediaUpload),
           useValue: {},
         },
+        FilesystemBackend,
       ],
-      imports: [LoggerModule, NotesModule, UsersModule],
+      imports: [
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock],
+        }),
+        LoggerModule,
+        NotesModule,
+        UsersModule,
+      ],
     })
       .overrideProvider(getRepositoryToken(AuthorColor))
       .useValue({})
