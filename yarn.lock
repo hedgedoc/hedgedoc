@@ -641,10 +641,10 @@
     fs-extra "9.0.1"
     pluralize "8.0.0"
 
-"@nestjs/swagger@4.7.9":
-  version "4.7.9"
-  resolved "https://registry.yarnpkg.com/@nestjs/swagger/-/swagger-4.7.9.tgz#062305c0f8875cd1af1924f210ee3f4bcd2f397e"
-  integrity sha512-5WjtrrbWriHCBN9eDCgr43eTU1S/adlF7RaXjS9YDY553vFABqESfs7riZZy4WhBJ35ldfpzgYoyZv3Z/+DyHQ==
+"@nestjs/swagger@4.7.10":
+  version "4.7.10"
+  resolved "https://registry.yarnpkg.com/@nestjs/swagger/-/swagger-4.7.10.tgz#f25349fe1f1511011ee1a2da5cacbf3536b50b37"
+  integrity sha512-3x2dBR790MV1GsYCQRc3N6umMAfcgWoQ8DF4UHuYgPuo1tOfnBnggxrEScdkzztq0Y4DbWMaAH/QOK8vuUSpXw==
   dependencies:
     "@nestjs/mapped-types" "0.1.1"
     lodash "4.17.20"
