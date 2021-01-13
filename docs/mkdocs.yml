@@ -44,7 +44,9 @@ nav:
 markdown_extensions:
   - toc:
       permalink: true
+  - pymdownx.highlight
   - pymdownx.superfences
+  - mdx_truly_sane_lists
 theme:
   name: 'material'
   language: en
