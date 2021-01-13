@@ -322,7 +322,7 @@ describe('Toolbar', () => {
     cy.get('.fa-caret-square-o-down')
       .click()
     cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span')
-      .should('have.text', '<details>')
+      .should('have.text', ':::spoiler Toggle label')
   })
 
   it('comment', () => {

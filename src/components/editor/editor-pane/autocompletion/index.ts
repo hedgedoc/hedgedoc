@@ -64,5 +64,5 @@ export const allHinters: Hinter[] = [
   ImageHinter,
   LinkAndExtraTagHinter,
   PDFHinter,
-  CollapsableBlockHinter
+  CollapsableBlockHinter,
 ]

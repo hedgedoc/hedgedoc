@@ -929,7 +929,7 @@ describe('test collapsable block', () => {
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(`${textFirstLine}\n<details>\n  <summary>Toggle label</summary>\n  Toggled content\n</details>`)
+        expect(replacement).toEqual(`${textFirstLine}\n:::spoiler Toggle label\n  Toggled content\n:::`)
         done()
       }
     })
@@ -941,7 +941,7 @@ describe('test collapsable block', () => {
       getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
-      replaceRange: expectFromToReplacement(firstLine, `${textFirstLine}\n<details>\n  <summary>Toggle label</summary>\n  Toggled content\n</details>`, done)
+      replaceRange: expectFromToReplacement(firstLine, `${textFirstLine}\n:::spoiler Toggle label\n  Toggled content\n:::`, done)
     })
     addCollapsableBlock(editor)
   })
@@ -952,7 +952,7 @@ describe('test collapsable block', () => {
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('2nd line\n<details>\n  <summary>Toggle label</summary>\n  Toggled content\n</details>')
+        expect(replacement).toEqual('2nd line\n:::spoiler Toggle label\n  Toggled content\n:::')
         done()
       }
     })
@@ -965,7 +965,7 @@ describe('test collapsable block', () => {
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('2nd line\n<details>\n  <summary>Toggle label</summary>\n  Toggled content\n</details>')
+        expect(replacement).toEqual('2nd line\n:::spoiler Toggle label\n  Toggled content\n:::')
         done()
       }
     })

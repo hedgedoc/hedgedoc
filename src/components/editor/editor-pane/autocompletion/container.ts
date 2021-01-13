@@ -5,12 +5,20 @@
  */
 
 import { Editor, Hint, Hints, Pos } from 'codemirror'
+import { validAlertLevels } from '../../../markdown-renderer/markdown-it-plugins/alert-container'
 import { findWordAtCursor, Hinter } from './index'
 
 const wordRegExp = /^:::((\w|-|_|\+)*)$/
-const allSupportedConatiner = ['success', 'info', 'warning', 'danger']
+const spoilerSuggestion: Hint = {
+  text: ':::spoiler Toggle label\nToggled content\n::: \n',
+  displayText: 'spoiler'
+}
+const suggestions = validAlertLevels.map((suggestion: string): Hint => ({
+  text: ':::' + suggestion + '\n\n::: \n',
+  displayText: suggestion
+})).concat(spoilerSuggestion)
 
-const containerHint = (editor: Editor): Promise< Hints| null > => {
+const containerHint = (editor: Editor): Promise<Hints | null> => {
   return new Promise((resolve) => {
     const searchTerm = findWordAtCursor(editor)
     const searchResult = wordRegExp.exec(searchTerm.text)
@@ -18,16 +26,12 @@ const containerHint = (editor: Editor): Promise< Hints| null > => {
       resolve(null)
       return
     }
-    const suggestions = allSupportedConatiner
     const cursor = editor.getCursor()
     if (!suggestions) {
       resolve(null)
     } else {
       resolve({
-        list: suggestions.map((suggestion: string): Hint => ({
-          text: ':::' + suggestion + '\n\n:::\n',
-          displayText: suggestion
-        })),
+        list: suggestions.filter((suggestion) => suggestion.displayText?.startsWith(searchResult[1])),
         from: Pos(cursor.line, searchTerm.start),
         to: Pos(cursor.line, searchTerm.end)
       })

@@ -10,7 +10,7 @@ import Renderer from 'markdown-it/lib/renderer'
 import Token from 'markdown-it/lib/token'
 import { MarkdownItPlugin } from '../replace-components/ComponentReplacer'
 
-type RenderContainerReturn = (tokens: Token[], index: number, options: MarkdownIt.Options, env: unknown, self: Renderer) => void;
+export type RenderContainerReturn = (tokens: Token[], index: number, options: MarkdownIt.Options, env: unknown, self: Renderer) => string;
 type ValidAlertLevels = ('warning' | 'danger' | 'success' | 'info')
 export const validAlertLevels: ValidAlertLevels[] = ['success', 'danger', 'info', 'warning']
 
