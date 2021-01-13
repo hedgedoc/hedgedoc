@@ -5,9 +5,9 @@
 The basic procedure is the same as the case of OneLogin which is mentioned in [OneLogin-Guide](./saml-onelogin.md). If
 you want to match your IdP, you can use more configurations as below.
 
-- If your IdP accepts metadata XML of the service provider to ease configuration, use this url to download metadata XML.
-  - {{your-serverurl}}/auth/saml/metadata
-  - *Note:* If not accessible from IdP, download to local once and upload to IdP.
+- If your IdP accepts metadata XML of the service provider to ease configuration, use this url to download metadata XML:
+  `{{your-serverurl}}/auth/saml/metadata`  
+  *Note:* If not accessible from IdP, download to local once and upload to IdP.
 
 - Change the value of `issuer`, `identifierFormat` to match your IdP.
   - `issuer`: A unique id to identify the application to the IdP, which is the base URL of your HedgeDoc as default

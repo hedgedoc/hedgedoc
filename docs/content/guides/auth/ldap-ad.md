@@ -12,9 +12,12 @@ CMD_LDAP_USERIDFIELD=sAMAccountName
 CMD_LDAP_PROVIDERNAME="Example Inc AD"
 ```
 
-`CMD_LDAP_BINDDN` is either the `distinguishedName` or the `userPrincipalName`. *This can cause "username/password is invalid" when either this value or the password from `CMD_LDAP_BINDCREDENTIALS` are incorrect.*
+`CMD_LDAP_BINDDN` is either the `distinguishedName` or the `userPrincipalName`.  
+*This can cause "username/password is invalid" when either this value or the password from `CMD_LDAP_BINDCREDENTIALS`
+are incorrect.*
 
-`CMD_LDAP_SEARCHFILTER` matches on all users and uses either the email address or the `sAMAccountName` (usually the login name you also use to login to Windows).
+`CMD_LDAP_SEARCHFILTER` matches on all users and uses either the email address or the `sAMAccountName` (usually the
+login name you also use to login to Windows).
 
 *Only using `sAMAccountName` looks like this:* `(&(objectcategory=person)(objectclass=user)(sAMAccountName={{username}}))`
 
