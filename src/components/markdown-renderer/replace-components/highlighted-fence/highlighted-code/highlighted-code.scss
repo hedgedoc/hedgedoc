@@ -26,26 +26,31 @@
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
 
+      .codeline {
+        grid-column: 2;
+        white-space: nowrap;
+      }
+
+      .linenumber {
+        grid-column: 1;
+        position: relative;
+        cursor: default;
+        z-index: 4;
+        padding: 0 8px 0 0;
+        min-width: 20px;
+        box-sizing: content-box;
+        color: #afafaf;
+        border-right: 3px solid #6ce26c;
+        flex-direction: column;
+        overflow: hidden;
+        user-select: none;
+        align-items: flex-end;
+        display: none;
+      }
+
       &.showGutter {
         .linenumber {
-          position: relative;
-          cursor: default;
-          z-index: 4;
-          padding: 0 8px 0 0;
-          min-width: 20px;
-          box-sizing: content-box;
-          color: #afafaf;
-          border-right: 3px solid #6ce26c;
-          flex-direction: column;
-          overflow: hidden;
-          user-select: none;
-
           display: flex;
-          align-items: flex-end;
-
-          &:before {
-            content: attr(data-line-number);
-          }
         }
       }
 

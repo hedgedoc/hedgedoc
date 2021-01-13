@@ -41,7 +41,9 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
       const unreplacedCode = !!language && languageSupported(language) ? hljs.default.highlight(language, code).value : escapeHtml(code)
       const replacedDom = replaceCode(unreplacedCode).map((line, index) => (
         <Fragment key={index}>
-          <span className={'linenumber'} data-line-number={(startLineNumber || 1) + index}/>
+          <span className={'linenumber'}>
+            { (startLineNumber || 1) + index }
+          </span>
           <div className={'codeline'}>
             {line}
           </div>

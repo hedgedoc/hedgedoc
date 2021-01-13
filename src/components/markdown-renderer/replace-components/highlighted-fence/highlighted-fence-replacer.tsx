@@ -19,7 +19,7 @@ export class HighlightedCodeReplacer extends ComponentReplacer {
 
     const language = codeNode.attribs['data-highlight-language']
     const extraData = codeNode.attribs['data-extra']
-    const extraInfos = /(=(\d*|\+))?(!?)/.exec(extraData)
+    const extraInfos = /(=(\d+|\+)?)?(!?)/.exec(extraData)
 
     let showLineNumbers = false
     let startLineNumberAttribute = ''
