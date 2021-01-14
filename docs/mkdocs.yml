@@ -19,20 +19,20 @@ nav:
       - Authentication:
           - LDAP: guides/auth/ldap-ad.md
           - OAuth: guides/auth/oauth.md
-          - SAML : guides/auth/saml.md
-          - SAML Keycloak : guides/auth/saml-keycloak.md
-          - SAML Onelogin : guides/auth/saml-onelogin.md
+          - SAML: guides/auth/saml.md
+          - SAML Keycloak: guides/auth/saml-keycloak.md
+          - SAML OneLogin: guides/auth/saml-onelogin.md
           - GitHub: guides/auth/github.md
           - GitLab: guides/auth/gitlab-self-hosted.md
           - Keycloak: guides/auth/keycloak.md
-          - NextCloud: guides/auth/nextcloud.md
+          - Nextcloud: guides/auth/nextcloud.md
           - Twitter: guides/auth/twitter.md
+      - Media Backend:
+          - MinIO: guides/minio-image-upload.md
+          - S3: guides/s3-image-upload.md
       - Migrate from Etherpad: guides/migrate-etherpad.md
       - Breaking Changes: guides/migrations-and-breaking-changes.md
-      - Media Backend:
-          - Minion: guides/minio-image-upload.md
-          - S3: guides/s3-image-upload.md
-      - Setting Terms: guides/providing-terms.md
+      - Terms of Use Setup: guides/providing-terms.md
   - Configuration: configuration.md
   - Developer:
       - 'Getting Started': dev/getting-started.md
@@ -44,6 +44,9 @@ nav:
 markdown_extensions:
   - toc:
       permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - mdx_truly_sane_lists
 theme:
   name: 'material'
   language: en

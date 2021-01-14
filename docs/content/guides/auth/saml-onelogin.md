@@ -1,6 +1,6 @@
 # Authentication guide - SAML (OneLogin)
 
-**Note:** *This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind :smile: thanks!*
+**Note:** *This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind 😃 thanks!*
 
 1. Sign-in or sign-up for an OneLogin account. (available free trial for 2 weeks)
 
@@ -34,7 +34,7 @@
 8. In your HedgeDoc server, create IdP certificate file from (A)
 9. Add the IdP URL (B) and the Idp certificate file path to your config.json file or pass them as environment variables.
   - `config.json`:
-    ```javascript
+    ```json
     {
       "production": {
         "saml": {
@@ -46,7 +46,7 @@
     ```
 
     - environment variables
-      ```sh
+      ```shell
       CMD_SAML_IDPSSOURL=https://*******.onelogin.com/trust/saml2/http-post/sso/******
       CMD_SAML_IDPCERT=/path/to/idp_cert.pem
       ```

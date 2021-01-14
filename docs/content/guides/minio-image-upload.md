@@ -1,6 +1,6 @@
 # Minio Guide for HedgeDoc
 
-*Note:* This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind :smile: thanks!
+**Note:** *This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind 😃 thanks!*
 
 1. First of all you need to setup Minio itself.
 

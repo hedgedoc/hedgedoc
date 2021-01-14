@@ -107,7 +107,7 @@ The configured mappers should look like this:
 }
 ```
 It you configure HedgeDoc with enviroment variables, these are the ones you have to set:
-```bash
+```shell
 CMD_SAML_ATTRIBUTE_USERNAME=username
 CMD_SAML_ATTRIBUTE_EMAIL=email
 ```

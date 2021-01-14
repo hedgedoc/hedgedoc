@@ -30,7 +30,7 @@ You may note that a separate realm is specified throughout this tutorial. It is 
 
 5. In the `docker-compose.yml` add the following environment variables to `app:` `environment:`
 
-```Dockerfile
+```yaml
 CMD_OAUTH2_USER_PROFILE_URL=https://keycloak.example.com/auth/realms/your-realm/protocol/openid-connect/userinfo
 CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR=preferred_username
 CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR=name

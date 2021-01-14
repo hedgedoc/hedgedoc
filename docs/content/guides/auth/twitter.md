@@ -1,6 +1,6 @@
 # Authentication guide - Twitter
 
-*Note:* This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind :smile: thanks!
+**Note:** *This guide was written before the renaming. Just replace `HackMD` with `HedgeDoc` in your mind 😃 thanks!*
 
 1. Sign-in or sign-up for a Twitter account
 
@@ -24,7 +24,7 @@
 
 7. Add your Consumer Key and Consumer Secret to your `config.json` file or pass them as environment variables:
   - `config.json`:
-    ```javascript
+    ```json
     {
       "production": {
         "twitter": {
@@ -36,7 +36,7 @@
     ```
 
   - environment variables:
-    ```sh
+    ```shell
     CMD_TWITTER_CONSUMERKEY=esTCJFXXXXXXXXXXXXXXXXXXX
     CMD_TWITTER_CONSUMERSECRET=zpCs4tU86pRVXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     ```
