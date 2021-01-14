@@ -72,7 +72,56 @@ const defaultOptions = {
 
 // options from yaml meta
 const meta = JSON.parse($('#meta').text())
-var options = meta.slideOptions || {}
+var options = {
+  autoPlayMedia: meta.slideOptions.autoPlayMedia,
+  autoSlide: meta.slideOptions.autoSlide,
+  autoSlideStoppable: meta.slideOptions.autoSlideStoppable,
+  backgroundTransition: meta.slideOptions.backgroundTransition,
+  center: meta.slideOptions.center,
+  controls: meta.slideOptions.controls,
+  controlsBackArrows: meta.slideOptions.controlsBackArrows,
+  controlsLayout: meta.slideOptions.controlsLayout,
+  controlsTutorial: meta.slideOptions.controlsTutorial,
+  defaultTiming: meta.slideOptions.defaultTiming,
+  display: meta.slideOptions.display,
+  embedded: meta.slideOptions.embedded,
+  fragmentInURL: meta.slideOptions.fragmentInURL,
+  fragments: meta.slideOptions.fragments,
+  hash: meta.slideOptions.hash,
+  height: meta.slideOptions.height,
+  help: meta.slideOptions.help,
+  hideAddressBar: meta.slideOptions.hideAddressBar,
+  hideCursorTime: meta.slideOptions.hideCursorTime,
+  hideInactiveCursor: meta.slideOptions.hideInactiveCursor,
+  history: meta.slideOptions.history,
+  keyboard: meta.slideOptions.keyboard,
+  loop: meta.slideOptions.loop,
+  margin: meta.slideOptions.margin,
+  maxScale: meta.slideOptions.maxScale,
+  minScale: meta.slideOptions.minScale,
+  minimumTimePerSlide: meta.slideOptions.minimumTimePerSlide,
+  mobileViewDistance: meta.slideOptions.mobileViewDistance,
+  mouseWheel: meta.slideOptions.mouseWheel,
+  navigationMode: meta.slideOptions.navigationMode,
+  overview: meta.slideOptions.overview,
+  parallaxBackgroundHorizontal: meta.slideOptions.parallaxBackgroundHorizontal,
+  parallaxBackgroundImage: meta.slideOptions.parallaxBackgroundImage,
+  parallaxBackgroundSize: meta.slideOptions.parallaxBackgroundSize,
+  parallaxBackgroundVertical: meta.slideOptions.parallaxBackgroundVertical,
+  preloadIframes: meta.slideOptions.preloadIframes,
+  previewLinks: meta.slideOptions.previewLinks,
+  progress: meta.slideOptions.progress,
+  rtl: meta.slideOptions.rtl,
+  showNotes: meta.slideOptions.showNotes,
+  shuffle: meta.slideOptions.shuffle,
+  slideNumber: meta.slideOptions.slideNumber,
+  totalTime: meta.slideOptions.totalTime,
+  touch: meta.slideOptions.touch,
+  transition: meta.slideOptions.transition,
+  transitionSpeed: meta.slideOptions.transitionSpeed,
+  viewDistance: meta.slideOptions.viewDistance,
+  width: meta.slideOptions.width
+} || {}
 
 const view = $('.reveal')
 
