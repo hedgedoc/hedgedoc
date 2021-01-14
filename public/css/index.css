@@ -64,7 +64,7 @@ body:not(.night) .night {
     overflow-y: auto !important;
 }
 .CodeMirror-code {
-    /*padding-bottom: 36px;*/
+    margin-bottom: 36px;
 }
 .CodeMirror-gutter-elt {
     text-align: center;
