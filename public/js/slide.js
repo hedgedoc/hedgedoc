@@ -115,6 +115,7 @@ var options = {
   showNotes: meta.slideOptions.showNotes,
   shuffle: meta.slideOptions.shuffle,
   slideNumber: meta.slideOptions.slideNumber,
+  theme: meta.slideOptions.theme,
   totalTime: meta.slideOptions.totalTime,
   touch: meta.slideOptions.touch,
   transition: meta.slideOptions.transition,
