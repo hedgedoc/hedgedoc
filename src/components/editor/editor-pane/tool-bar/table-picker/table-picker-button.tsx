@@ -30,7 +30,7 @@ export const TablePickerButton: React.FC<TablePickerButtonProps> = ({ editor }) 
           addTable(editor, rows, cols)
         }}
       />
-      <Button variant='light' onClick={() => setShowTablePicker(old => !old)} title={t('editor.editorToolbar.table.title')}>
+      <Button data-cy={'show-table-overlay'} variant='light' onClick={() => setShowTablePicker(old => !old)} title={t('editor.editorToolbar.table.title')}>
         <ForkAwesomeIcon icon="table"/>
       </Button>
     </Fragment>

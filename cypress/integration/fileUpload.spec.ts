@@ -9,16 +9,11 @@ const imageUrl = 'http://example.com/non-existing.png'
 describe('File upload', () => {
   beforeEach(() => {
     cy.visit('/n/test')
-    cy.get('.CodeMirror')
-      .click()
-      .get('textarea')
-      .as('codeinput')
   })
 
   it('doesn\'t prevent drag\'n\'drop of plain text', () => {
     const dataTransfer = new DataTransfer()
-    cy.get('@codeinput')
-      .fill('line 1\nline 2\ndragline')
+    cy.codemirrorFill('line 1\nline 2\ndragline')
     cy.get('.CodeMirror')
       .click()
     cy.get('.CodeMirror-line > span')
@@ -83,8 +78,6 @@ describe('File upload', () => {
   })
 
   it('upload fails', () => {
-    cy.get('@codeinput')
-      .type('not empty')
     cy.intercept({
       method: 'POST',
       url: '/api/v2/media/upload'
@@ -97,8 +90,8 @@ describe('File upload', () => {
       cy.get('input[type=file]')
         .attachFile({ filePath: 'acme.png', mimeType: 'image/png' })
     })
-    cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-      .should('have.text', 'not empty')
+    cy.get('.CodeMirror-activeline > .CodeMirror-line > span > span')
+      .should('have.text', String.fromCharCode(8203)) //thanks codemirror....
   })
 
   it('text paste still works', () => {

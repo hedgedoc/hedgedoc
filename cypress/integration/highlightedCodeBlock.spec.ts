@@ -11,19 +11,11 @@ describe('Code', () => {
         cy.spy(win.navigator.clipboard, 'writeText').as('copy')
       }
     })
-    cy.get('.btn.active.btn-outline-secondary > i.fa-columns')
-      .should('exist')
-
-    cy.get('.CodeMirror ')
-      .click()
-    cy.get('.CodeMirror textarea')
-      .as('codeinput')
   })
 
   describe('with just the language', () => {
     it('doesn\'t show a gutter', () => {
-      cy.get('@codeinput')
-        .fill('```javascript \nlet x = 0\n```')
+      cy.codemirrorFill('```javascript \nlet x = 0\n```')
       cy.get('.markdown-body > pre > code.hljs')
         .should('be.visible')
         .should('not.have.class', 'showGutter')
@@ -33,8 +25,7 @@ describe('Code', () => {
 
     describe('and line wrapping', () => {
       it('doesn\'t show a gutter', () => {
-        cy.get('@codeinput')
-          .fill('```javascript! \nlet x = 0\n```')
+        cy.codemirrorFill('```javascript! \nlet x = 0\n```')
         cy.get('.markdown-body > pre > code.hljs')
           .should('be.visible')
           .should('not.have.class', 'showGutter')
@@ -47,8 +38,7 @@ describe('Code', () => {
 
   describe('with the language and show gutter', () => {
     it('shows the correct line number', () => {
-      cy.get('@codeinput')
-        .fill('```javascript= \nlet x = 0\n```')
+      cy.codemirrorFill('```javascript= \nlet x = 0\n```')
       cy.get('.markdown-body > pre > code.hljs')
         .should('be.visible')
         .should('have.class', 'showGutter')
@@ -60,8 +50,7 @@ describe('Code', () => {
 
     describe('and line wrapping', () => {
       it('shows the correct line number', () => {
-        cy.get('@codeinput')
-          .fill('```javascript=! \nlet x = 0\n```')
+        cy.codemirrorFill('```javascript=! \nlet x = 0\n```')
         cy.get('.markdown-body > pre > code.hljs')
           .should('be.visible')
           .should('have.class', 'showGutter')
@@ -76,8 +65,7 @@ describe('Code', () => {
 
   describe('with the language, show gutter with a start number', () => {
     it('shows the correct line number', () => {
-      cy.get('@codeinput')
-        .fill('```javascript=100 \nlet x = 0\n```')
+      cy.codemirrorFill('```javascript=100 \nlet x = 0\n```')
       cy.get('.markdown-body > pre > code.hljs')
         .should('be.visible')
         .should('have.class', 'showGutter')
@@ -88,8 +76,7 @@ describe('Code', () => {
     })
 
     it('shows the correct line number and continues in another codeblock', () => {
-      cy.get('@codeinput')
-        .fill('```javascript=100 \nlet x = 0\nlet y = 1\n```\n\n```javascript=+\nlet y = 2\n```\n')
+      cy.codemirrorFill('```javascript=100 \nlet x = 0\nlet y = 1\n```\n\n```javascript=+\nlet y = 2\n```\n')
       cy.get('.markdown-body > pre > code.hljs')
         .should('be.visible')
         .should('have.class', 'showGutter')
@@ -117,8 +104,7 @@ describe('Code', () => {
 
     describe('and line wrapping', () => {
       it('shows the correct line number', () => {
-        cy.get('@codeinput')
-          .fill('```javascript=100! \nlet x = 0\n```')
+        cy.codemirrorFill('```javascript=100! \nlet x = 0\n```')
         cy.get('.markdown-body > pre > code.hljs')
           .should('be.visible')
           .should('have.class', 'showGutter')
@@ -130,8 +116,7 @@ describe('Code', () => {
       })
 
       it('shows the correct line number and continues in another codeblock', () => {
-        cy.get('@codeinput')
-          .fill('```javascript=100! \nlet x = 0\nlet y = 1\n```\n\n```javascript=+\nlet y = 2\n```\n')
+        cy.codemirrorFill('```javascript=100! \nlet x = 0\nlet y = 1\n```\n\n```javascript=+\nlet y = 2\n```\n')
         cy.get('.markdown-body > pre > code.hljs')
           .should('be.visible')
           .should('have.class', 'showGutter')
@@ -161,8 +146,7 @@ describe('Code', () => {
   })
 
   it('has a working copy button', () => {
-    cy.get('@codeinput')
-      .fill('```javascript \nlet x = 0\n```')
+    cy.codemirrorFill('```javascript \nlet x = 0\n```')
     cy.get('.markdown-body > pre > div > button > i')
       .should('have.class', 'fa-files-o')
       .click()

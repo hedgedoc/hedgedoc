@@ -10,12 +10,7 @@ describe('Export', () => {
 
   beforeEach(() => {
     cy.visit('/n/test')
-    cy.get('.btn.active.btn-outline-secondary > i.fa-columns')
-      .should('exist')
-    cy.get('.CodeMirror')
-      .click()
-      .get('textarea')
-      .fill(testContent)
+    cy.codemirrorFill(testContent)
   })
 
   it('Markdown', () => {

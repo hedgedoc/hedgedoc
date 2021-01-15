@@ -72,7 +72,7 @@ export const TablePicker: React.FC<TablePickerProps> = ({ show, onDismiss, onTab
         ))}
       </div>
       <div className="d-flex justify-content-center mt-2">
-        <Button className={'text-center'} onClick={() => setShowDialog(true)}>
+        <Button data-cy={'show-custom-table-modal'} className={'text-center'} onClick={() => setShowDialog(true)}>
           <ForkAwesomeIcon icon="table"/>&nbsp;{t('editor.editorToolbar.table.customSize')}
         </Button>
         <CustomTableSizeModal

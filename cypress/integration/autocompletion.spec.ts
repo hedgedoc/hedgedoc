@@ -7,9 +7,6 @@
 describe('Autocompletion', () => {
   beforeEach(() => {
     cy.visit('/n/test')
-    cy.get('.btn.active.btn-outline-secondary > i.fa-columns')
-      .should('exist')
-
     cy.get('.CodeMirror')
       .click()
       .get('textarea')
@@ -18,8 +15,7 @@ describe('Autocompletion', () => {
 
   describe('code block', () => {
     it('via Enter', () => {
-      cy.get('@codeinput')
-        .fill('```')
+      cy.codemirrorFill('```')
       cy.get('.CodeMirror-hints')
         .should('exist')
       cy.get('@codeinput')
@@ -34,8 +30,7 @@ describe('Autocompletion', () => {
         .should('exist')
     })
     it('via doubleclick', () => {
-      cy.get('@codeinput')
-        .fill('```')
+      cy.codemirrorFill('```')
       cy.get('.CodeMirror-hints > li')
         .first()
         .dblclick()
@@ -52,8 +47,7 @@ describe('Autocompletion', () => {
 
   describe('container', () => {
     it('via Enter', () => {
-      cy.get('@codeinput')
-        .fill(':::')
+      cy.codemirrorFill(':::')
       cy.get('.CodeMirror-hints')
         .should('exist')
       cy.get('@codeinput')
@@ -68,8 +62,7 @@ describe('Autocompletion', () => {
         .should('exist')
     })
     it('via doubleclick', () => {
-      cy.get('@codeinput')
-        .fill(':::')
+      cy.codemirrorFill(':::')
       cy.get('.CodeMirror-hints > li')
         .first()
         .dblclick()
@@ -148,8 +141,7 @@ describe('Autocompletion', () => {
 
   describe('header', () => {
     it('via Enter', () => {
-      cy.get('@codeinput')
-        .fill('#')
+      cy.codemirrorFill('#')
       cy.get('.CodeMirror-hints')
         .should('exist')
       cy.get('@codeinput')
@@ -162,8 +154,7 @@ describe('Autocompletion', () => {
         .should('have.text', ' ')
     })
     it('via doubleclick', () => {
-      cy.get('@codeinput')
-        .fill('#')
+      cy.codemirrorFill('#')
       cy.get('.CodeMirror-hints > li')
         .first()
         .dblclick()
@@ -178,8 +169,7 @@ describe('Autocompletion', () => {
 
   describe('images', () => {
     it('via Enter', () => {
-      cy.get('@codeinput')
-        .fill('!')
+      cy.codemirrorFill('!')
       cy.get('.CodeMirror-hints')
         .should('exist')
       cy.get('@codeinput')
@@ -194,8 +184,7 @@ describe('Autocompletion', () => {
         .should('have.attr', 'title', 'title')
     })
     it('via doubleclick', () => {
-      cy.get('@codeinput')
-        .fill('!')
+      cy.codemirrorFill('!')
       cy.get('.CodeMirror-hints > li')
         .first()
         .dblclick()
@@ -212,8 +201,7 @@ describe('Autocompletion', () => {
 
   describe('links', () => {
     it('via Enter', () => {
-      cy.get('@codeinput')
-        .fill('[')
+      cy.codemirrorFill('[')
       cy.get('.CodeMirror-hints')
         .should('exist')
       cy.get('@codeinput')
@@ -228,8 +216,7 @@ describe('Autocompletion', () => {
         .should('have.attr', 'title', 'title')
     })
     it('via doubleclick', () => {
-      cy.get('@codeinput')
-        .fill('[')
+      cy.codemirrorFill('[')
       cy.get('.CodeMirror-hints > li')
         .first()
         .dblclick()
@@ -246,8 +233,7 @@ describe('Autocompletion', () => {
 
   describe('pdf', () => {
     it('via Enter', () => {
-      cy.get('@codeinput')
-        .fill('{')
+      cy.codemirrorFill('{')
       cy.get('.CodeMirror-hints')
         .should('exist')
       cy.get('@codeinput')
@@ -260,8 +246,7 @@ describe('Autocompletion', () => {
         .should('exist')
     })
     it('via doubleclick', () => {
-      cy.get('@codeinput')
-        .fill('{')
+      cy.codemirrorFill('{')
       cy.get('.CodeMirror-hints > li')
         .first()
         .dblclick()
@@ -276,8 +261,7 @@ describe('Autocompletion', () => {
 
   describe('collapsable blocks', () => {
     it('via Enter', () => {
-      cy.get('@codeinput')
-        .fill('<d')
+      cy.codemirrorFill('<d')
       cy.get('.CodeMirror-hints')
         .should('exist')
       cy.get('@codeinput')
@@ -290,8 +274,7 @@ describe('Autocompletion', () => {
         .should('exist')
     })
     it('via doubleclick', () => {
-      cy.get('@codeinput')
-        .fill('<d')
+      cy.codemirrorFill('<d')
       cy.get('.CodeMirror-hints > li')
         .first()
         .dblclick()

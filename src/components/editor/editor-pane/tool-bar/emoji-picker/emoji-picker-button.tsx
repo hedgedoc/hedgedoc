@@ -29,7 +29,7 @@ export const EmojiPickerButton: React.FC<EmojiPickerButtonProps> = ({ editor }) 
           addEmoji(emoji, editor)
         }}
         onDismiss={() => setShowEmojiPicker(false)}/>
-      <Button variant='light' onClick={() => setShowEmojiPicker(old => !old)} title={t('editor.editorToolbar.emoji')}>
+      <Button data-cy={'show-emoji-picker'} variant='light' onClick={() => setShowEmojiPicker(old => !old)} title={t('editor.editorToolbar.emoji')}>
         <ForkAwesomeIcon icon="smile-o"/>
       </Button>
     </Fragment>

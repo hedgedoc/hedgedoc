@@ -7,8 +7,6 @@
 describe('Help Dialog', () => {
   beforeEach(() => {
     cy.visit('/n/test')
-    cy.get('.btn.active.btn-outline-secondary > i.fa-columns')
-      .should('exist')
   })
 
   it('ToDo-List', () => {

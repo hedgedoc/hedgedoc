@@ -7,8 +7,6 @@
 describe('Import markdown file', () => {
   beforeEach(() => {
     cy.visit('/n/test')
-    cy.get('.btn.active.btn-outline-secondary > i.fa-columns')
-      .should('exist')
   })
 
   it('import on blank note', () => {
@@ -26,10 +24,7 @@ describe('Import markdown file', () => {
 
   it('import on note with content', () => {
 
-    cy.get('.CodeMirror')
-      .click()
-      .get('textarea')
-      .fill('test\nabc')
+    cy.codemirrorFill('test\nabc')
     cy.get('button#editor-menu-import')
       .click()
     cy.get('.import-md-file')

@@ -12,12 +12,26 @@ declare namespace Cypress {
      * @example cy.get(input).fill('content')
      */
     fill (value: string): Chainable<Element>
+    codemirrorFill (value: string): Chainable<Element>
   }
 }
 
 Cypress.Commands.add('fill', {
   prevSubject: 'element'
 }, (subject, value) => {
-  cy.wrap(subject).invoke('val', value)
-  .trigger('change', { force: true })
+  return cy.wrap(subject)
+    .invoke('val', value)
+    .trigger('change', { force: true })
+})
+
+Cypress.Commands.add('codemirrorFill', (content: string) => {
+  const line = content.split("\n").find(value => value !== '');
+  cy.get('.CodeMirror')
+    .click()
+    .get('textarea')
+    .fill(content)
+  if(line) {
+    cy.get('.CodeMirror')
+      .contains('.CodeMirror-line', line)
+  }
 })

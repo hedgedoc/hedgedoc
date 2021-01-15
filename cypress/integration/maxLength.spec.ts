@@ -11,11 +11,6 @@ describe('The status bar text length info', () => {
 
   beforeEach(() => {
     cy.visit('/n/test')
-
-    cy.get('.CodeMirror ')
-      .click()
-    cy.get('.CodeMirror textarea')
-      .as('codeinput')
   })
 
   it('shows the maximal length of the document as number of available characters in the tooltip', () => {
@@ -25,22 +20,19 @@ describe('The status bar text length info', () => {
   })
 
   it('color is set to "warning" on <= 100 characters remaining', () => {
-    cy.get('@codeinput')
-      .fill(warningTestContent)
+    cy.codemirrorFill(warningTestContent)
     cy.get('.status-bar [data-cy="remainingCharacters"]')
       .should('have.class', 'text-warning')
   })
 
   it('color is set to danger on <= 0 characters remaining', () => {
-    cy.get('@codeinput')
-      .fill(dangerTestContent)
+    cy.codemirrorFill(dangerTestContent)
     cy.get('.status-bar [data-cy="remainingCharacters"]')
       .should('have.class', 'text-danger')
   })
 
   it('shows a warning and opens a modal', () => {
-    cy.get('@codeinput')
-      .fill(tooMuchTestContent)
+    cy.codemirrorFill(tooMuchTestContent)
     cy.get('[data-cy="limitReachedModal"]')
       .should('be.visible')
     cy.get('[data-cy="limitReachedMessage"]')
