@@ -11,12 +11,15 @@ import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { UserInfoDto } from './user-info.dto';
 import { User } from './user.entity';
+import { AuthToken } from './auth-token.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     private readonly logger: ConsoleLoggerService,
     @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(AuthToken)
+    private authTokenRepository: Repository<AuthToken>,
   ) {
     this.logger.setContext(UsersService.name);
   }
@@ -40,6 +43,22 @@ export class UsersService {
     });
     if (user === undefined) {
       throw new NotInDBError(`User with username '${userName}' not found`);
+    }
+    return user;
+  }
+
+  async getUserByAuthToken(authToken: string): Promise<User> {
+    const foundAuthToken = await this.authTokenRepository.findOne({
+      where: { accessToken: authToken },
+    });
+    if (foundAuthToken === undefined) {
+      throw new NotInDBError(`AuthToken '${authToken}' not found`);
+    }
+    const user = await this.userRepository.findOne({
+      where: { id: foundAuthToken.id },
+    });
+    if (user === undefined) {
+      throw new NotInDBError(`User with id '${foundAuthToken.id}' not found`);
     }
     return user;
   }

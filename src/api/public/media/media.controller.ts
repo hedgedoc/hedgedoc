@@ -12,8 +12,10 @@ import {
   NotFoundException,
   Param,
   Post,
+  Request,
   UnauthorizedException,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -25,6 +27,7 @@ import {
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
 import { MulterFile } from '../../../media/multer-file.interface';
+import { TokenAuthGuard } from '../../../auth/token-auth.guard';
 
 @Controller('media')
 export class MediaController {
@@ -35,14 +38,16 @@ export class MediaController {
     this.logger.setContext(MediaController.name);
   }
 
+  @UseGuards(TokenAuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   async uploadMedia(
+    @Request() req,
     @UploadedFile() file: MulterFile,
     @Headers('HedgeDoc-Note') noteId: string,
   ) {
     //TODO: Get user from request
-    const username = 'hardcoded';
+    const username = req.user.userName;
     this.logger.debug(
       `Recieved filename '${file.originalname}' for note '${noteId}' from user '${username}'`,
       'uploadImage',
@@ -64,10 +69,11 @@ export class MediaController {
     }
   }
 
+  @UseGuards(TokenAuthGuard)
   @Delete(':filename')
-  async deleteMedia(@Param('filename') filename: string) {
+  async deleteMedia(@Request() req, @Param('filename') filename: string) {
     //TODO: Get user from request
-    const username = 'hardcoded';
+    const username = req.user.userName;
     try {
       await this.mediaService.deleteFile(filename, username);
     } catch (e) {
