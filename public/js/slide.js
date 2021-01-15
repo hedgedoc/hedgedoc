@@ -124,6 +124,12 @@ var options = {
   width: meta.slideOptions.width
 } || {}
 
+for (const key in options) {
+  if (options.hasOwnProperty(key) && options[key] === undefined) {
+    delete options[key]
+  }
+}
+
 const view = $('.reveal')
 
 // text language
