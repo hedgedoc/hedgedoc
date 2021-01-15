@@ -19,7 +19,7 @@
 
 1. Check if you meet the [requirements at the top of this document](#requirements-on-your-server).
 2. Download a [release](https://github.com/hedgedoc/hedgedoc/releases) tarball and extract it.
-   Alternatively, you can use Git to clone the repository and checkout a release, e.g. with `git clone -b 1.7.0 https://github.com/hedgedoc/hedgedoc.git`.
+   Alternatively, you can use Git to clone the repository and checkout a release, e.g. with `git clone -b 1.7.2 https://github.com/hedgedoc/hedgedoc.git`.
 3. Enter the directory and type `bin/setup`, which will install the dependencies and create configs.
 4. Modify the file named `config.json` or configure HedgeDoc through environment variables which will overwrite the configs, see docs [here](https://github.com/hedgedoc/hedgedoc/blob/master/docs/configuration.md).
 5. **If using the release tarball for 1.7.0 or newer, this step can be skipped.**  

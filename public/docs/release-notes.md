@@ -1,4 +1,13 @@
 # Release Notes
+## <i class="fa fa-tag"></i> 1.7.2 <i class="fa fa-calendar-o"></i> 2021-01-15
+This release fixes a security issue. We recommend upgrading as soon as possible.
+### Security Fixes
+- [CVE-2021-21259: Stored XSS in slide mode](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-44w9-vm8p-3cxw)  
+  An attacker can inject arbitrary JavaScript into a HedgeDoc note.
+
+### Bugfixes
+- Ensure the last line of the markdown editor is not covered by the status bar (thanks to [@mhdrone](https://github.com/mhdrone) for reporting!)
+
 ## <i class="fa fa-tag"></i> 1.7.1 <i class="fa fa-calendar-o"></i> 2020-12-27
 This release fixes two security issues. We recommend upgrading as soon as possible.
 ### Security Fixes
