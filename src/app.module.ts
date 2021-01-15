@@ -18,6 +18,7 @@ import { NotesModule } from './notes/notes.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { RevisionsModule } from './revisions/revisions.module';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 import appConfig from './config/app.config';
 import mediaConfig from './config/media.config';
 import hstsConfig from './config/hsts.config';
@@ -55,6 +56,7 @@ import authConfig from './config/auth.config';
     GroupsModule,
     LoggerModule,
     MediaModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
