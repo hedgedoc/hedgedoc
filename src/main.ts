@@ -12,6 +12,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { AppConfig } from './config/app.config';
 import { NestConsoleLoggerService } from './logger/nest-console-logger.service';
+import { MediaConfig } from './config/media.config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -20,6 +21,7 @@ async function bootstrap() {
   app.useLogger(logger);
   const configService = app.get(ConfigService);
   const appConfig = configService.get<AppConfig>('appConfig');
+  const mediaConfig = configService.get<MediaConfig>('mediaConfig');
 
   const swaggerOptions = new DocumentBuilder()
     .setTitle('HedgeDoc')
@@ -35,9 +37,9 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  if (appConfig.media.backend.use === 'filesystem') {
+  if (mediaConfig.backend.use === 'filesystem') {
     app.useStaticAssets('uploads', {
-      prefix: appConfig.media.backend.filesystem.uploadPath,
+      prefix: mediaConfig.backend.filesystem.uploadPath,
     });
   }
   await app.listen(appConfig.port);

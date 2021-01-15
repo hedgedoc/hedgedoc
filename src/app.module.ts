@@ -19,6 +19,11 @@ import { PermissionsModule } from './permissions/permissions.module';
 import { RevisionsModule } from './revisions/revisions.module';
 import { UsersModule } from './users/users.module';
 import appConfig from './config/app.config';
+import mediaConfig from './config/media.config';
+import hstsConfig from './config/hsts.config';
+import cspConfig from './config/csp.config';
+import databaseConfig from './config/database.config';
+import authConfig from './config/auth.config';
 
 @Module({
   imports: [
@@ -29,7 +34,14 @@ import appConfig from './config/app.config';
       synchronize: true,
     }),
     ConfigModule.forRoot({
-      load: [appConfig],
+      load: [
+        appConfig,
+        mediaConfig,
+        hstsConfig,
+        cspConfig,
+        databaseConfig,
+        authConfig,
+      ],
       isGlobal: true,
     }),
     NotesModule,

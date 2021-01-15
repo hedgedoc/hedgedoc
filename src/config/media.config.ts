@@ -6,6 +6,7 @@
 
 import * as Joi from 'joi';
 import { BackendType } from '../media/backends/backend-type.enum';
+import { registerAs } from '@nestjs/config';
 
 export interface MediaConfig {
   backend: {
@@ -30,7 +31,7 @@ export interface MediaConfig {
   };
 }
 
-export const mediaSchema = Joi.object({
+const mediaSchema = Joi.object({
   backend: {
     use: Joi.string().valid(...Object.values(BackendType)),
     filesystem: {
@@ -69,25 +70,38 @@ export const mediaSchema = Joi.object({
   },
 });
 
-export const appConfigMedia = {
-  backend: {
-    use: process.env.HD_MEDIA_BACKEND,
-    filesystem: {
-      uploadPath: process.env.HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH,
+export default registerAs('mediaConfig', async () => {
+  const mediaConfig = mediaSchema.validate(
+    {
+      backend: {
+        use: process.env.HD_MEDIA_BACKEND,
+        filesystem: {
+          uploadPath: process.env.HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH,
+        },
+        s3: {
+          accessKey: process.env.HD_MEDIA_BACKEND_S3_ACCESS_KEY,
+          secretKey: process.env.HD_MEDIA_BACKEND_S3_ACCESS_KEY,
+          endPoint: process.env.HD_MEDIA_BACKEND_S3_ENDPOINT,
+          secure: process.env.HD_MEDIA_BACKEND_S3_SECURE,
+          port: parseInt(process.env.HD_MEDIA_BACKEND_S3_PORT) || undefined,
+        },
+        azure: {
+          connectionString:
+            process.env.HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING,
+          container: process.env.HD_MEDIA_BACKEND_AZURE_CONTAINER,
+        },
+        imgur: {
+          clientID: process.env.HD_MEDIA_BACKEND_IMGUR_CLIENTID,
+        },
+      },
     },
-    s3: {
-      accessKey: process.env.HD_MEDIA_BACKEND_S3_ACCESS_KEY,
-      secretKey: process.env.HD_MEDIA_BACKEND_S3_ACCESS_KEY,
-      endPoint: process.env.HD_MEDIA_BACKEND_S3_ENDPOINT,
-      secure: process.env.HD_MEDIA_BACKEND_S3_SECURE,
-      port: parseInt(process.env.HD_MEDIA_BACKEND_S3_PORT) || undefined,
+    {
+      abortEarly: false,
+      presence: 'required',
     },
-    azure: {
-      connectionString: process.env.HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING,
-      container: process.env.HD_MEDIA_BACKEND_AZURE_CONTAINER,
-    },
-    imgur: {
-      clientID: process.env.HD_MEDIA_BACKEND_IMGUR_CLIENTID,
-    },
-  },
-};
+  );
+  if (mediaConfig.error) {
+    throw new Error(mediaConfig.error.toString());
+  }
+  return mediaConfig.value;
+});
