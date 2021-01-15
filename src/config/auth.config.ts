@@ -7,6 +7,7 @@
 import * as Joi from 'joi';
 import { GitlabScope, GitlabVersion } from './gitlab.enum';
 import { toArrayConfig } from './utils';
+import { registerAs } from '@nestjs/config';
 
 export interface AuthConfig {
   email: {
@@ -99,7 +100,7 @@ export interface AuthConfig {
   ];
 }
 
-export const authSchema = Joi.object({
+const authSchema = Joi.object({
   email: {
     enableLogin: Joi.boolean().default(false).optional(),
     enableRegister: Joi.boolean().default(false).optional(),
@@ -297,35 +298,47 @@ const oauth2s = oauth2Names.map((oauth2Name) => {
   };
 });
 
-export const appConfigAuth = {
-  email: {
-    enableLogin: process.env.HD_AUTH_EMAIL_ENABLE_LOGIN,
-    enableRegister: process.env.HD_AUTH_EMAIL_ENABLE_REGISTER,
-  },
-  facebook: {
-    clientID: process.env.HD_AUTH_FACEBOOK_CLIENT_ID,
-    clientSecret: process.env.HD_AUTH_FACEBOOK_CLIENT_SECRET,
-  },
-  twitter: {
-    consumerKey: process.env.HD_AUTH_TWITTER_CONSUMER_KEY,
-    consumerSecret: process.env.HD_AUTH_TWITTER_CONSUMER_SECRET,
-  },
-  github: {
-    clientID: process.env.HD_AUTH_GITHUB_CLIENT_ID,
-    clientSecret: process.env.HD_AUTH_GITHUB_CLIENT_SECRET,
-  },
-  dropbox: {
-    clientID: process.env.HD_AUTH_DROPBOX_CLIENT_ID,
-    clientSecret: process.env.HD_AUTH_DROPBOX_CLIENT_SECRET,
-    appKey: process.env.HD_AUTH_DROPBOX_APP_KEY,
-  },
-  google: {
-    clientID: process.env.HD_AUTH_GOOGLE_CLIENT_ID,
-    clientSecret: process.env.HD_AUTH_GOOGLE_CLIENT_SECRET,
-    apiKey: process.env.HD_AUTH_GOOGLE_APP_KEY,
-  },
-  gitlab: gitlabs,
-  ldap: ldaps,
-  saml: samls,
-  oauth2: oauth2s,
-};
+export default registerAs('authConfig', async () => {
+  const authConfig = authSchema.validate(
+    {
+      email: {
+        enableLogin: process.env.HD_AUTH_EMAIL_ENABLE_LOGIN,
+        enableRegister: process.env.HD_AUTH_EMAIL_ENABLE_REGISTER,
+      },
+      facebook: {
+        clientID: process.env.HD_AUTH_FACEBOOK_CLIENT_ID,
+        clientSecret: process.env.HD_AUTH_FACEBOOK_CLIENT_SECRET,
+      },
+      twitter: {
+        consumerKey: process.env.HD_AUTH_TWITTER_CONSUMER_KEY,
+        consumerSecret: process.env.HD_AUTH_TWITTER_CONSUMER_SECRET,
+      },
+      github: {
+        clientID: process.env.HD_AUTH_GITHUB_CLIENT_ID,
+        clientSecret: process.env.HD_AUTH_GITHUB_CLIENT_SECRET,
+      },
+      dropbox: {
+        clientID: process.env.HD_AUTH_DROPBOX_CLIENT_ID,
+        clientSecret: process.env.HD_AUTH_DROPBOX_CLIENT_SECRET,
+        appKey: process.env.HD_AUTH_DROPBOX_APP_KEY,
+      },
+      google: {
+        clientID: process.env.HD_AUTH_GOOGLE_CLIENT_ID,
+        clientSecret: process.env.HD_AUTH_GOOGLE_CLIENT_SECRET,
+        apiKey: process.env.HD_AUTH_GOOGLE_APP_KEY,
+      },
+      gitlab: gitlabs,
+      ldap: ldaps,
+      saml: samls,
+      oauth2: oauth2s,
+    },
+    {
+      abortEarly: false,
+      presence: 'required',
+    },
+  );
+  if (authConfig.error) {
+    throw new Error(authConfig.error.toString());
+  }
+  return authConfig.value;
+});

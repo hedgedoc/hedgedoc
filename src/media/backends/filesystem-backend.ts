@@ -7,10 +7,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { promises as fs } from 'fs';
 import { join } from 'path';
-import applicationConfig, { AppConfig } from '../../config/app.config';
+import mediaConfiguration from '../../config/media.config';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
 import { BackendData } from '../media-upload.entity';
+import { MediaConfig } from '../../config/media.config';
 
 @Injectable()
 export class FilesystemBackend implements MediaBackend {
@@ -18,11 +19,11 @@ export class FilesystemBackend implements MediaBackend {
 
   constructor(
     private readonly logger: ConsoleLoggerService,
-    @Inject(applicationConfig.KEY)
-    private appConfig: AppConfig,
+    @Inject(mediaConfiguration.KEY)
+    private mediaConfig: MediaConfig,
   ) {
     this.logger.setContext(FilesystemBackend.name);
-    this.uploadDirectory = appConfig.media.backend.filesystem.uploadPath;
+    this.uploadDirectory = mediaConfig.backend.filesystem.uploadPath;
   }
 
   async saveFile(

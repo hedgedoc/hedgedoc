@@ -9,7 +9,7 @@ import { ModuleRef } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as FileType from 'file-type';
 import { Repository } from 'typeorm';
-import applicationConfig, { AppConfig } from '../config/app.config';
+import mediaConfiguration, { MediaConfig } from '../config/media.config';
 import { ClientError, NotInDBError, PermissionError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { NotesService } from '../notes/notes.service';
@@ -31,8 +31,8 @@ export class MediaService {
     private notesService: NotesService,
     private usersService: UsersService,
     private moduleRef: ModuleRef,
-    @Inject(applicationConfig.KEY)
-    private appConfig: AppConfig,
+    @Inject(mediaConfiguration.KEY)
+    private mediaConfig: MediaConfig,
   ) {
     this.logger.setContext(MediaService.name);
     this.mediaBackendType = this.chooseBackendType();
@@ -120,7 +120,7 @@ export class MediaService {
   }
 
   private chooseBackendType(): BackendType {
-    switch (this.appConfig.media.backend.use) {
+    switch (this.mediaConfig.backend.use) {
       case 'filesystem':
         return BackendType.FILESYSTEM;
     }
