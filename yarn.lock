@@ -2264,7 +2264,7 @@
   dependencies:
     "@types/markdown-it" "*"
 
-"@types/markdown-it-plantuml@^1.4.0":
+"@types/markdown-it-plantuml@1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@types/markdown-it-plantuml/-/markdown-it-plantuml-1.4.0.tgz#f8c599f333ba86e3525a02a056c1113e4ce30654"
   integrity sha512-43NP8P6nK4gpvWEF1UaijVNUcjjyToGtprr9jFpm7AWHO2UNpNXYm/fhMFie+e+hOdlepHuRahA6lnSy1sTqtA==
