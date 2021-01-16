@@ -36,7 +36,9 @@ export class TokensController {
   }
 
   @Post()
-  async postToken(@Body() label: string): Promise<AuthTokenWithSecretDto> {
+  async postTokenRequest(
+    @Body() label: string,
+  ): Promise<AuthTokenWithSecretDto> {
     // ToDo: Get real userName
     const authToken = await this.usersService.createTokenForUser(
       'hardcoded',
