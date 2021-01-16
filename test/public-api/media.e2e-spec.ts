@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { ConfigModule, registerAs } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -22,6 +22,9 @@ import { NotesModule } from '../../src/notes/notes.module';
 import { NotesService } from '../../src/notes/notes.service';
 import { PermissionsModule } from '../../src/permissions/permissions.module';
 import { UsersService } from '../../src/users/users.service';
+import { AuthModule } from '../../src/auth/auth.module';
+import { TokenAuthGuard } from '../../src/auth/token-auth.guard';
+import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
 
 describe('Notes', () => {
   let app: NestExpressApplication;
@@ -47,8 +50,12 @@ describe('Notes', () => {
         PermissionsModule,
         GroupsModule,
         LoggerModule,
+        AuthModule,
       ],
-    }).compile();
+    })
+      .overrideGuard(TokenAuthGuard)
+      .useClass(MockAuthGuard)
+      .compile();
     app = moduleRef.createNestApplication<NestExpressApplication>();
     app.useStaticAssets('uploads', {
       prefix: '/uploads',
