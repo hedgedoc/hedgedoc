@@ -25,7 +25,9 @@ import { NotesService } from '../../../notes/notes.service';
 import { UserInfoDto } from '../../../users/user-info.dto';
 import { UsersService } from '../../../users/users.service';
 import { TokenAuthGuard } from '../../../auth/token-auth.guard';
+import { ApiSecurity } from '@nestjs/swagger';
 
+@ApiSecurity('token')
 @Controller('me')
 export class MeController {
   constructor(
