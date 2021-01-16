@@ -8,7 +8,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { AuthToken } from './auth-token.entity';
+import { AuthToken } from '../users/auth-token.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { Identity } from '../users/identity.entity';
