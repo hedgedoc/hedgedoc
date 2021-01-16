@@ -17,6 +17,10 @@ import { LoggerModule } from '../../src/logger/logger.module';
 import { NotesModule } from '../../src/notes/notes.module';
 import { NotesService } from '../../src/notes/notes.service';
 import { PermissionsModule } from '../../src/permissions/permissions.module';
+import { AuthModule } from '../../src/auth/auth.module';
+import { TokenAuthGuard } from '../../src/auth/token-auth.guard';
+import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
+import { UsersService } from '../../src/users/users.service';
 
 describe('Notes', () => {
   let app: INestApplication;
@@ -41,12 +45,18 @@ describe('Notes', () => {
           dropSchema: true,
         }),
         LoggerModule,
+        AuthModule,
       ],
-    }).compile();
+    })
+      .overrideGuard(TokenAuthGuard)
+      .useClass(MockAuthGuard)
+      .compile();
 
     app = moduleRef.createNestApplication();
     await app.init();
     notesService = moduleRef.get(NotesService);
+    const usersService: UsersService = moduleRef.get('UsersService');
+    await usersService.createUser('testy', 'Testy McTestFace');
   });
 
   it(`POST /notes`, async () => {
