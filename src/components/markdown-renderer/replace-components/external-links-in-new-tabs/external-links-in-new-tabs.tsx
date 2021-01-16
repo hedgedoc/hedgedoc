@@ -15,7 +15,7 @@ export class LinkInNewTabReplacer extends ComponentReplacer {
       return undefined
     }
 
-    return <a {...node.attribs} rel='noopener noreferrer' target='_blank'>
+    return <a className={node.attribs?.class} title={node.attribs?.title} href={node.attribs?.href} rel='noopener noreferrer' target='_blank'>
       {
         node.children?.map((child, index) => subNodeTransform(child, index))
       }
