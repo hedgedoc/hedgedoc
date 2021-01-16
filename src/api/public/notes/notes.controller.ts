@@ -24,7 +24,9 @@ import { NotesService } from '../../../notes/notes.service';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { MarkdownBody } from '../../utils/markdownbody-decorator';
 import { TokenAuthGuard } from '../../../auth/token-auth.guard';
+import { ApiSecurity } from '@nestjs/swagger';
 
+@ApiSecurity('token')
 @Controller('notes')
 export class NotesController {
   constructor(

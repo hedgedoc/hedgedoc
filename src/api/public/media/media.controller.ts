@@ -28,7 +28,9 @@ import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
 import { MulterFile } from '../../../media/multer-file.interface';
 import { TokenAuthGuard } from '../../../auth/token-auth.guard';
+import { ApiSecurity } from '@nestjs/swagger';
 
+@ApiSecurity('token')
 @Controller('media')
 export class MediaController {
   constructor(
