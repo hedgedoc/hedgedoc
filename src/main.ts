@@ -26,6 +26,10 @@ async function bootstrap() {
   const swaggerOptions = new DocumentBuilder()
     .setTitle('HedgeDoc')
     .setVersion('2.0-dev')
+    .addSecurity('token', {
+      type: 'http',
+      scheme: 'bearer',
+    })
     .build();
   const document = SwaggerModule.createDocument(app, swaggerOptions);
   SwaggerModule.setup('apidoc', app, document);
