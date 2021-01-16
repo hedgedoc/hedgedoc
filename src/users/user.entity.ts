@@ -10,7 +10,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Column, OneToMany } from 'typeorm/index';
+import { Column, OneToMany } from 'typeorm';
 import { Note } from '../notes/note.entity';
 import { AuthToken } from './auth-token.entity';
 import { Identity } from './identity.entity';
@@ -46,7 +46,7 @@ export class User {
   ownedNotes: Note[];
 
   @OneToMany((_) => AuthToken, (authToken) => authToken.user)
-  authToken: AuthToken[];
+  authTokens: AuthToken[];
 
   @OneToMany((_) => Identity, (identity) => identity.user)
   identities: Identity[];
@@ -59,7 +59,7 @@ export class User {
     displayName: string,
   ): Pick<
     User,
-    'userName' | 'displayName' | 'ownedNotes' | 'authToken' | 'identities'
+    'userName' | 'displayName' | 'ownedNotes' | 'authTokens' | 'identities'
   > {
     const newUser = new User();
     newUser.userName = userName;
