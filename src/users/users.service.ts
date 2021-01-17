@@ -39,19 +39,24 @@ export class UsersService {
   ): Promise<AuthToken> {
     const user = await this.getUserByUsername(userName);
     let accessToken = '';
+    let randomString = '';
     for (let i = 0; i < 100; i++) {
       try {
-        const randomString = crypt.randomBytes(64).toString();
+        randomString = crypt.randomBytes(64).toString("base64");
         accessToken = await this.hashPassword(randomString);
         await this.getUserByAuthToken(accessToken);
       } catch (NotInDBError) {
         const token = AuthToken.create(user, identifier, accessToken);
-        return this.authTokenRepository.save(token);
+        const createdToken = this.authTokenRepository.save(token);
+        return {
+          accessToken: randomString,
+          ...createdToken
+        }
       }
     }
     // This should never happen
     throw new RandomnessError(
-      'You machine is not able to generate not-in-use tokens. This should never happen.',
+      'Your machine is not able to generate not-in-use tokens. This should never happen.',
     );
   }
 
