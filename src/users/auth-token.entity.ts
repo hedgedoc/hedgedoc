@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './user.entity';
 import { Type } from 'class-transformer';
 
@@ -19,8 +19,7 @@ export class AuthToken {
   @Column()
   identifier: string;
 
-  @Type(() => Date)
-  @Column('text')
+  @CreateDateColumn()
   createdAt: Date;
 
   @Column()
