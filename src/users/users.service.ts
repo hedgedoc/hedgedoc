@@ -7,7 +7,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { NotInDBError, RandomnessError } from '../errors/errors';
+import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { UserInfoDto } from './user-info.dto';
 import { User } from './user.entity';
@@ -38,26 +38,14 @@ export class UsersService {
     identifier: string,
   ): Promise<AuthToken> {
     const user = await this.getUserByUsername(userName);
-    let accessToken = '';
-    let randomString = '';
-    for (let i = 0; i < 100; i++) {
-      try {
-        randomString = crypt.randomBytes(64).toString("base64");
-        accessToken = await this.hashPassword(randomString);
-        await this.getUserByAuthToken(accessToken);
-      } catch (NotInDBError) {
-        const token = AuthToken.create(user, identifier, accessToken);
-        const createdToken = this.authTokenRepository.save(token);
-        return {
-          accessToken: randomString,
-          ...createdToken
-        }
-      }
-    }
-    // This should never happen
-    throw new RandomnessError(
-      'Your machine is not able to generate not-in-use tokens. This should never happen.',
-    );
+    const randomString = crypt.randomBytes(64).toString('base64');
+    const accessToken = await this.hashPassword(randomString);
+    const token = AuthToken.create(user, identifier, accessToken);
+    const createdToken = this.authTokenRepository.save(token);
+    return {
+      accessToken: randomString,
+      ...createdToken,
+    };
   }
 
   async deleteUser(userName: string) {
