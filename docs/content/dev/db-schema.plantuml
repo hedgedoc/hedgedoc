@@ -29,6 +29,8 @@ entity "auth_token"{
   --
   *userId : uuid
   *accessToken : text
+  *identifier: text
+  *createdAt: date
 }
 
 entity "identity" {
@@ -131,7 +133,7 @@ entity "media_upload" {
 
 user "1" -- "0..*" note: owner
 user "1" -u- "1..*" identity
-user "1" - "1..*" auth_token
+user "1" - "1..*" auth_token: authTokens
 user "1" -l- "1..*" session
 user "1" - "0..*" media_upload
 user "0..*" -- "0..*" note
