@@ -78,8 +78,9 @@ export class UsersService {
   }
 
   async getUserByAuthToken(token: string): Promise<User> {
+    const hash = this.hashPassword(token);
     const accessToken = await this.authTokenRepository.findOne({
-      where: { accessToken: token },
+      where: { accessToken: hash },
     });
     if (accessToken === undefined) {
       throw new NotInDBError(`AuthToken '${token}' not found`);
