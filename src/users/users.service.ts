@@ -12,7 +12,7 @@ import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { UserInfoDto } from './user-info.dto';
 import { User } from './user.entity';
 import { AuthToken } from './auth-token.entity';
-import { hash } from 'bcrypt'
+import { createHash } from 'crypto';
 
 @Injectable()
 export class UsersService {
@@ -49,25 +49,22 @@ export class UsersService {
   }
 
   async hashPassword(password: string): Promise<string> {
-    // hash the password with bcrypt and 2^16 iterations
-    return hash(password, 16)
+    // hash the password with SHA-256
+    const hash = createHash('sha256');
+    hash.update(password);
+    return hash.digest('hex');
   }
 
   async getUserByAuthToken(authToken: string): Promise<User> {
     const hash = await this.hashPassword(authToken);
     const foundAuthToken = await this.authTokenRepository.findOne({
       where: { accessToken: hash },
+      relations: ['user']
     });
     if (foundAuthToken === undefined) {
       throw new NotInDBError(`AuthToken '${authToken}' not found`);
     }
-    const user = await this.userRepository.findOne({
-      where: { id: foundAuthToken.id },
-    });
-    if (user === undefined) {
-      throw new NotInDBError(`User with id '${foundAuthToken.id}' not found`);
-    }
-    return user;
+    return foundAuthToken.user;
   }
 
   getPhotoUrl(user: User): string {
