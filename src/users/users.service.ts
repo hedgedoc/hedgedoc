@@ -12,6 +12,7 @@ import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { UserInfoDto } from './user-info.dto';
 import { User } from './user.entity';
 import { AuthToken } from './auth-token.entity';
+import { hash } from 'bcrypt'
 
 @Injectable()
 export class UsersService {
@@ -45,6 +46,11 @@ export class UsersService {
       throw new NotInDBError(`User with username '${userName}' not found`);
     }
     return user;
+  }
+
+  async hashPassword(password: string): Promise<string> {
+    // hash the password with bcrypt and 2^16 iterations
+    return hash(password, 16)
   }
 
   async getUserByAuthToken(authToken: string): Promise<User> {
