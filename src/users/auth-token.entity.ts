@@ -22,7 +22,7 @@ export class AuthToken {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
+  @Column({ unique: true })
   accessToken: string;
 
   public static create(
