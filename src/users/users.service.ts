@@ -41,7 +41,8 @@ export class UsersService {
     let accessToken = '';
     for (let i = 0; i < 100; i++) {
       try {
-        accessToken = crypt.randomBytes(64).toString();
+        const randomString = crypt.randomBytes(64).toString();
+        accessToken = await this.hashPassword(randomString);
         await this.getUserByAuthToken(accessToken);
       } catch (NotInDBError) {
         const token = AuthToken.create(user, identifier, accessToken);
