@@ -1,5 +1,5 @@
 # Installation / Upgrading
-You can run HedgeDoc in a number of ways, and we created setup instructions for all of these:
+You can run HedgeDoc in a number of ways:
 
 - [Docker](docker)
 - [Cloudron](cloudron)
