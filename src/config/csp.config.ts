@@ -6,17 +6,16 @@
 
 import * as Joi from 'joi';
 import { registerAs } from '@nestjs/config';
+import { buildErrorMessage } from './utils';
 
 export interface CspConfig {
   enable: boolean;
-  maxAgeSeconds: number;
-  includeSubdomains: boolean;
-  preload: boolean;
+  reportURI: string;
 }
 
 const cspSchema = Joi.object({
-  enable: Joi.boolean().default(true).optional(),
-  reportURI: Joi.string().optional(),
+  enable: Joi.boolean().default(true).optional().label('HD_CSP_ENABLE'),
+  reportURI: Joi.string().optional().label('HD_CSP_REPORTURI'),
 });
 
 export default registerAs('cspConfig', async () => {
@@ -31,7 +30,10 @@ export default registerAs('cspConfig', async () => {
     },
   );
   if (cspConfig.error) {
-    throw new Error(cspConfig.error.toString());
+    const errorMessages = await cspConfig.error.details.map(
+      (detail) => detail.message,
+    );
+    throw new Error(buildErrorMessage(errorMessages));
   }
   return cspConfig.value;
 });
