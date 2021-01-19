@@ -6,7 +6,11 @@
 
 import * as Joi from 'joi';
 import { GitlabScope, GitlabVersion } from './gitlab.enum';
-import { toArrayConfig } from './utils';
+import {
+  buildErrorMessage,
+  replaceAuthErrorsWithEnvironmentVariables,
+  toArrayConfig,
+} from './utils';
 import { registerAs } from '@nestjs/config';
 
 export interface AuthConfig {
@@ -102,38 +106,50 @@ export interface AuthConfig {
 
 const authSchema = Joi.object({
   email: {
-    enableLogin: Joi.boolean().default(false).optional(),
-    enableRegister: Joi.boolean().default(false).optional(),
+    enableLogin: Joi.boolean()
+      .default(false)
+      .optional()
+      .label('HD_AUTH_EMAIL_ENABLE_LOGIN'),
+    enableRegister: Joi.boolean()
+      .default(false)
+      .optional()
+      .label('HD_AUTH_EMAIL_ENABLE_REGISTER'),
   },
   facebook: {
-    clientID: Joi.string().optional(),
-    clientSecret: Joi.string().optional(),
+    clientID: Joi.string().optional().label('HD_AUTH_FACEBOOK_CLIENT_ID'),
+    clientSecret: Joi.string()
+      .optional()
+      .label('HD_AUTH_FACEBOOK_CLIENT_SECRET'),
   },
   twitter: {
-    consumerKey: Joi.string().optional(),
-    consumerSecret: Joi.string().optional(),
+    consumerKey: Joi.string().optional().label('HD_AUTH_TWITTER_CONSUMER_KEY'),
+    consumerSecret: Joi.string()
+      .optional()
+      .label('HD_AUTH_TWITTER_CONSUMER_SECRET'),
   },
   github: {
-    clientID: Joi.string().optional(),
-    clientSecret: Joi.string().optional(),
+    clientID: Joi.string().optional().label('HD_AUTH_GITHUB_CLIENT_ID'),
+    clientSecret: Joi.string().optional().label('HD_AUTH_GITHUB_CLIENT_SECRET'),
   },
   dropbox: {
-    clientID: Joi.string().optional(),
-    clientSecret: Joi.string().optional(),
-    appKey: Joi.string().optional(),
+    clientID: Joi.string().optional().label('HD_AUTH_DROPBOX_CLIENT_ID'),
+    clientSecret: Joi.string()
+      .optional()
+      .label('HD_AUTH_DROPBOX_CLIENT_SECRET'),
+    appKey: Joi.string().optional().label('HD_AUTH_DROPBOX_APP_KEY'),
   },
   google: {
-    clientID: Joi.string().optional(),
-    clientSecret: Joi.string().optional(),
-    apiKey: Joi.string().optional(),
+    clientID: Joi.string().optional().label('HD_AUTH_GOOGLE_CLIENT_ID'),
+    clientSecret: Joi.string().optional().label('HD_AUTH_GOOGLE_CLIENT_SECRET'),
+    apiKey: Joi.string().optional().label('HD_AUTH_GOOGLE_APP_KEY'),
   },
   gitlab: Joi.array()
     .items(
       Joi.object({
         providerName: Joi.string().default('Gitlab').optional(),
-        baseURL: Joi.string().optional(),
-        clientID: Joi.string().optional(),
-        clientSecret: Joi.string().optional(),
+        baseURL: Joi.string(),
+        clientID: Joi.string(),
+        clientSecret: Joi.string(),
         scope: Joi.string()
           .valid(...Object.values(GitlabScope))
           .default(GitlabScope.READ_USER)
@@ -142,7 +158,7 @@ const authSchema = Joi.object({
           .valid(...Object.values(GitlabVersion))
           .default(GitlabVersion.V4)
           .optional(),
-      }),
+      }).optional(),
     )
     .optional(),
   // ToDo: should searchfilter have a default?
@@ -150,155 +166,168 @@ const authSchema = Joi.object({
     .items(
       Joi.object({
         providerName: Joi.string().default('LDAP').optional(),
-        url: Joi.string().optional(),
+        url: Joi.string(),
         bindDn: Joi.string().optional(),
         bindCredentials: Joi.string().optional(),
-        searchBase: Joi.string().optional(),
+        searchBase: Joi.string(),
         searchFilter: Joi.string().default('(uid={{username}})').optional(),
-        searchAttributes: Joi.array().items(Joi.string()),
-        usernameField: Joi.string().default('userid').optional(),
-        useridField: Joi.string().optional(),
-        tlsCa: Joi.array().items(Joi.string()),
-      }),
+        searchAttributes: Joi.array()
+          .items(Joi.string())
+          .default(['displayName', 'mail'])
+          .optional(),
+        usernameField: Joi.string().optional(),
+        useridField: Joi.string(),
+        tlsCa: Joi.array().items(Joi.string()).optional(),
+      }).optional(),
     )
     .optional(),
   saml: Joi.array()
     .items(
       Joi.object({
         providerName: Joi.string().default('SAML').optional(),
-        idpSsoUrl: Joi.string().optional(),
-        idpCert: Joi.string().optional(),
+        idpSsoUrl: Joi.string(),
+        idpCert: Joi.string(),
         clientCert: Joi.string().optional(),
         // ToDo: (default: config.serverURL) will be build on-the-fly in the config/index.js from domain, urlAddPort and urlPath.
-        issuer: Joi.string().optional(), //.default().optional(),
+        issuer: Joi.string().optional(),
         identifierFormat: Joi.string()
           .default('urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress')
           .optional(),
         disableRequestedAuthnContext: Joi.boolean().default(false).optional(),
         groupAttribute: Joi.string().optional(),
-        requiredGroups: Joi.array().items(Joi.string()),
-        externalGroups: Joi.array().items(Joi.string()),
+        requiredGroups: Joi.array().items(Joi.string()).optional(),
+        externalGroups: Joi.array().items(Joi.string()).optional(),
         attribute: {
           id: Joi.string().default('NameId').optional(),
           username: Joi.string().default('NameId').optional(),
           email: Joi.string().default('NameId').optional(),
         },
-      }),
+      }).optional(),
     )
     .optional(),
   oauth2: Joi.array()
     .items(
       Joi.object({
         providerName: Joi.string().default('OAuth2').optional(),
-        baseURL: Joi.string().optional(),
-        userProfileURL: Joi.string().optional(),
+        baseURL: Joi.string(),
+        userProfileURL: Joi.string(),
         userProfileIdAttr: Joi.string().optional(),
-        userProfileUsernameAttr: Joi.string().optional(),
-        userProfileDisplayNameAttr: Joi.string().optional(),
-        userProfileEmailAttr: Joi.string().optional(),
-        tokenURL: Joi.string().optional(),
-        authorizationURL: Joi.string().optional(),
-        clientID: Joi.string().optional(),
-        clientSecret: Joi.string().optional(),
+        userProfileUsernameAttr: Joi.string(),
+        userProfileDisplayNameAttr: Joi.string(),
+        userProfileEmailAttr: Joi.string(),
+        tokenURL: Joi.string(),
+        authorizationURL: Joi.string(),
+        clientID: Joi.string(),
+        clientSecret: Joi.string(),
         scope: Joi.string().optional(),
         rolesClaim: Joi.string().optional(),
         accessRole: Joi.string().optional(),
-      }),
+      }).optional(),
     )
     .optional(),
 });
 
-// ToDo: Validate these with Joi to prevent duplicate entries?
-
-const gitlabNames = toArrayConfig(process.env.HD_AUTH_GITLABS, ',');
-const ldapNames = toArrayConfig(process.env.HD_AUTH_LDAPS, ',');
-const samlNames = toArrayConfig(process.env.HD_AUTH_SAMLS, ',');
-const oauth2Names = toArrayConfig(process.env.HD_AUTH_OAUTH2S, ',');
-
-const gitlabs = gitlabNames.map((gitlabName) => {
-  return {
-    providerName: process.env[`HD_AUTH_GITLAB_${gitlabName}_PROVIDER_NAME`],
-    baseURL: process.env[`HD_AUTH_GITLAB_${gitlabName}_BASE_URL`],
-    clientID: process.env[`HD_AUTH_GITLAB_${gitlabName}_CLIENT_ID`],
-    clientSecret: process.env[`HD_AUTH_GITLAB_${gitlabName}_CLIENT_SECRET`],
-    scope: process.env[`HD_AUTH_GITLAB_${gitlabName}_GITLAB_SCOPE`],
-    version: process.env[`HD_AUTH_GITLAB_${gitlabName}_GITLAB_VERSION`],
-  };
-});
-
-const ldaps = ldapNames.map((ldapName) => {
-  return {
-    providerName: process.env[`HD_AUTH_LDAP_${ldapName}_PROVIDER_NAME`],
-    url: process.env[`HD_AUTH_LDAP_${ldapName}_URL`],
-    bindDn: process.env[`HD_AUTH_LDAP_${ldapName}_BIND_DN`],
-    bindCredentials: process.env[`HD_AUTH_LDAP_${ldapName}_BIND_CREDENTIALS`],
-    searchBase: process.env[`HD_AUTH_LDAP_${ldapName}_SEARCH_BASE`],
-    searchFilter: process.env[`HD_AUTH_LDAP_${ldapName}_SEARCH_FILTER`],
-    searchAttributes: toArrayConfig(
-      process.env[`HD_AUTH_LDAP_${ldapName}_SEARCH_ATTRIBUTES`],
-      ',',
-    ),
-    usernameField: process.env[`HD_AUTH_LDAP_${ldapName}_USERNAME_FIELD`],
-    useridField: process.env[`HD_AUTH_LDAP_${ldapName}_USERID_FIELD`],
-    tlsCa: toArrayConfig(process.env[`HD_AUTH_LDAP_${ldapName}_TLS_CA`], ','),
-  };
-});
-
-const samls = samlNames.map((samlName) => {
-  return {
-    providerName: process.env[`HD_AUTH_SAML_${samlName}_PROVIDER_NAME`],
-    idpSsoUrl: process.env[`HD_AUTH_SAML_${samlName}_IDPSSOURL`],
-    idpCert: process.env[`HD_AUTH_SAML_${samlName}_IDPCERT`],
-    clientCert: process.env[`HD_AUTH_SAML_${samlName}_CLIENTCERT`],
-    issuer: process.env[`HD_AUTH_SAML_${samlName}_ISSUER`],
-    identifierFormat: process.env[`HD_AUTH_SAML_${samlName}_IDENTIFIERFORMAT`],
-    disableRequestedAuthnContext:
-      process.env[`HD_AUTH_SAML_${samlName}_DISABLEREQUESTEDAUTHNCONTEXT`],
-    groupAttribute: process.env[`HD_AUTH_SAML_${samlName}_GROUPATTRIBUTE`],
-    requiredGroups: toArrayConfig(
-      process.env[`HD_AUTH_SAML_${samlName}_REQUIREDGROUPS`],
-      '|',
-    ),
-    externalGroups: toArrayConfig(
-      process.env[`HD_AUTH_SAML_${samlName}_EXTERNALGROUPS`],
-      '|',
-    ),
-    attribute: {
-      id: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_ID`],
-      username: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_USERNAME`],
-      email: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_USERNAME`],
-    },
-  };
-});
-
-const oauth2s = oauth2Names.map((oauth2Name) => {
-  return {
-    providerName: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_PROVIDER_NAME`],
-    baseURL: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_BASEURL`],
-    userProfileURL:
-      process.env[`HD_AUTH_OAUTH2_${oauth2Name}_USER_PROFILE_URL`],
-    userProfileIdAttr:
-      process.env[`HD_AUTH_OAUTH2_${oauth2Name}_USER_PROFILE_ID_ATTR`],
-    userProfileUsernameAttr:
-      process.env[`HD_AUTH_OAUTH2_${oauth2Name}_USER_PROFILE_USERNAME_ATTR`],
-    userProfileDisplayNameAttr:
-      process.env[
-        `HD_AUTH_OAUTH2_${oauth2Name}_USER_PROFILE_DISPLAY_NAME_ATTR`
-      ],
-    userProfileEmailAttr:
-      process.env[`HD_AUTH_OAUTH2_${oauth2Name}_USER_PROFILE_EMAIL_ATTR`],
-    tokenURL: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_TOKEN_URL`],
-    authorizationURL:
-      process.env[`HD_AUTH_OAUTH2_${oauth2Name}_AUTHORIZATION_URL`],
-    clientID: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_CLIENT_ID`],
-    clientSecret: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_CLIENT_SECRET`],
-    scope: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_SCOPE`],
-    rolesClaim: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_ROLES_CLAIM`],
-    accessRole: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_ACCESS_ROLE`],
-  };
-});
-
 export default registerAs('authConfig', async () => {
+  // ToDo: Validate these with Joi to prevent duplicate entries?
+  const gitlabNames = toArrayConfig(
+    process.env.HD_AUTH_GITLABS,
+    ',',
+  ).map((name) => name.toUpperCase());
+  const ldapNames = toArrayConfig(process.env.HD_AUTH_LDAPS, ',').map((name) =>
+    name.toUpperCase(),
+  );
+  const samlNames = toArrayConfig(process.env.HD_AUTH_SAMLS, ',').map((name) =>
+    name.toUpperCase(),
+  );
+  const oauth2Names = toArrayConfig(
+    process.env.HD_AUTH_OAUTH2S,
+    ',',
+  ).map((name) => name.toUpperCase());
+
+  const gitlabs = gitlabNames.map((gitlabName) => {
+    return {
+      providerName: process.env[`HD_AUTH_GITLAB_${gitlabName}_PROVIDER_NAME`],
+      baseURL: process.env[`HD_AUTH_GITLAB_${gitlabName}_BASE_URL`],
+      clientID: process.env[`HD_AUTH_GITLAB_${gitlabName}_CLIENT_ID`],
+      clientSecret: process.env[`HD_AUTH_GITLAB_${gitlabName}_CLIENT_SECRET`],
+      scope: process.env[`HD_AUTH_GITLAB_${gitlabName}_SCOPE`],
+      version: process.env[`HD_AUTH_GITLAB_${gitlabName}_GITLAB_VERSION`],
+    };
+  });
+
+  const ldaps = ldapNames.map((ldapName) => {
+    return {
+      providerName: process.env[`HD_AUTH_LDAP_${ldapName}_PROVIDER_NAME`],
+      url: process.env[`HD_AUTH_LDAP_${ldapName}_URL`],
+      bindDn: process.env[`HD_AUTH_LDAP_${ldapName}_BIND_DN`],
+      bindCredentials: process.env[`HD_AUTH_LDAP_${ldapName}_BIND_CREDENTIALS`],
+      searchBase: process.env[`HD_AUTH_LDAP_${ldapName}_SEARCH_BASE`],
+      searchFilter: process.env[`HD_AUTH_LDAP_${ldapName}_SEARCH_FILTER`],
+      searchAttributes: toArrayConfig(
+        process.env[`HD_AUTH_LDAP_${ldapName}_SEARCH_ATTRIBUTES`],
+        ',',
+      ),
+      usernameField: process.env[`HD_AUTH_LDAP_${ldapName}_USERNAME_FIELD`],
+      useridField: process.env[`HD_AUTH_LDAP_${ldapName}_USERID_FIELD`],
+      tlsCa: toArrayConfig(process.env[`HD_AUTH_LDAP_${ldapName}_TLS_CA`], ','),
+    };
+  });
+
+  const samls = samlNames.map((samlName) => {
+    return {
+      providerName: process.env[`HD_AUTH_SAML_${samlName}_PROVIDER_NAME`],
+      idpSsoUrl: process.env[`HD_AUTH_SAML_${samlName}_IDPSSOURL`],
+      idpCert: process.env[`HD_AUTH_SAML_${samlName}_IDPCERT`],
+      clientCert: process.env[`HD_AUTH_SAML_${samlName}_CLIENTCERT`],
+      issuer: process.env[`HD_AUTH_SAML_${samlName}_ISSUER`],
+      identifierFormat:
+        process.env[`HD_AUTH_SAML_${samlName}_IDENTIFIERFORMAT`],
+      disableRequestedAuthnContext:
+        process.env[`HD_AUTH_SAML_${samlName}_DISABLEREQUESTEDAUTHNCONTEXT`],
+      groupAttribute: process.env[`HD_AUTH_SAML_${samlName}_GROUPATTRIBUTE`],
+      requiredGroups: toArrayConfig(
+        process.env[`HD_AUTH_SAML_${samlName}_REQUIREDGROUPS`],
+        '|',
+      ),
+      externalGroups: toArrayConfig(
+        process.env[`HD_AUTH_SAML_${samlName}_EXTERNALGROUPS`],
+        '|',
+      ),
+      attribute: {
+        id: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_ID`],
+        username: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_USERNAME`],
+        email: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_USERNAME`],
+      },
+    };
+  });
+
+  const oauth2s = oauth2Names.map((oauth2Name) => {
+    return {
+      providerName: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_PROVIDER_NAME`],
+      baseURL: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_BASE_URL`],
+      userProfileURL:
+        process.env[`HD_AUTH_OAUTH2_${oauth2Name}_USER_PROFILE_URL`],
+      userProfileIdAttr:
+        process.env[`HD_AUTH_OAUTH2_${oauth2Name}_USER_PROFILE_ID_ATTR`],
+      userProfileUsernameAttr:
+        process.env[`HD_AUTH_OAUTH2_${oauth2Name}_USER_PROFILE_USERNAME_ATTR`],
+      userProfileDisplayNameAttr:
+        process.env[
+          `HD_AUTH_OAUTH2_${oauth2Name}_USER_PROFILE_DISPLAY_NAME_ATTR`
+        ],
+      userProfileEmailAttr:
+        process.env[`HD_AUTH_OAUTH2_${oauth2Name}_USER_PROFILE_EMAIL_ATTR`],
+      tokenURL: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_TOKEN_URL`],
+      authorizationURL:
+        process.env[`HD_AUTH_OAUTH2_${oauth2Name}_AUTHORIZATION_URL`],
+      clientID: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_CLIENT_ID`],
+      clientSecret: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_CLIENT_SECRET`],
+      scope: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_SCOPE`],
+      rolesClaim: process.env[`HD_AUTH_OAUTH2_${oauth2Name}`],
+      accessRole: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_ACCESS_ROLE`],
+    };
+  });
+
   const authConfig = authSchema.validate(
     {
       email: {
@@ -338,7 +367,36 @@ export default registerAs('authConfig', async () => {
     },
   );
   if (authConfig.error) {
-    throw new Error(authConfig.error.toString());
+    const errorMessages = await authConfig.error.details
+      .map((detail) => detail.message)
+      .map((error) => {
+        error = replaceAuthErrorsWithEnvironmentVariables(
+          error,
+          'gitlab',
+          'HD_AUTH_GITLAB_',
+          gitlabNames,
+        );
+        error = replaceAuthErrorsWithEnvironmentVariables(
+          error,
+          'ldap',
+          'HD_AUTH_LDAP_',
+          ldapNames,
+        );
+        error = replaceAuthErrorsWithEnvironmentVariables(
+          error,
+          'saml',
+          'HD_AUTH_SAML_',
+          samlNames,
+        );
+        error = replaceAuthErrorsWithEnvironmentVariables(
+          error,
+          'oauth2',
+          'HD_AUTH_OAUTH2_',
+          oauth2Names,
+        );
+        return error;
+      });
+    throw new Error(buildErrorMessage(errorMessages));
   }
   return authConfig.value;
 });
