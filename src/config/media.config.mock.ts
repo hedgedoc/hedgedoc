@@ -6,6 +6,11 @@
 
 import { registerAs } from '@nestjs/config';
 
-export default registerAs('appConfig', () => ({
-  port: 3000,
+export default registerAs('mediaConfig', () => ({
+  backend: {
+    use: 'filesystem',
+    filesystem: {
+      uploadPath: 'uploads',
+    },
+  },
 }));

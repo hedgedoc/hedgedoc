@@ -7,7 +7,7 @@
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import appConfigMock from '../config/app.config.mock';
+import mediaConfigMock from '../config/media.config.mock';
 import { LoggerModule } from '../logger/logger.module';
 import { AuthorColor } from '../notes/author-color.entity';
 import { Note } from '../notes/note.entity';
@@ -39,7 +39,7 @@ describe('MediaService', () => {
       imports: [
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [appConfigMock],
+          load: [mediaConfigMock],
         }),
         LoggerModule,
         NotesModule,
