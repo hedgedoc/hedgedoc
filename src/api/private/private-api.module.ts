@@ -7,9 +7,10 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from '../../users/users.module';
 import { TokensController } from './tokens/tokens.controller';
+import { LoggerModule } from '../../logger/logger.module';
 
 @Module({
-  imports: [UsersModule],
+  imports: [UsersModule, LoggerModule],
   controllers: [TokensController],
 })
 export class PrivateApiModule {}

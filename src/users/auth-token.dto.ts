@@ -11,4 +11,8 @@ export class AuthTokenDto {
   label: string;
   @IsNumber()
   created: number;
+  @IsNumber()
+  validUntil: number | null;
+  @IsNumber()
+  lastUsed: number | null;
 }

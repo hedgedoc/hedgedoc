@@ -4,13 +4,22 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { User } from './user.entity';
 
 @Entity()
 export class AuthToken {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ unique: true })
+  keyId: string;
 
   @ManyToOne((_) => User, (user) => user.authTokens)
   user: User;
@@ -24,21 +33,32 @@ export class AuthToken {
   @Column({ unique: true })
   accessToken: string;
 
-  @Column({ type: 'date' })
-  validUntil: Date;
+  @Column({
+    nullable: true,
+  })
+  validUntil: number;
+
+  @Column({
+    nullable: true,
+  })
+  lastUsed: number;
 
   public static create(
     user: User,
     identifier: string,
+    keyId: string,
     accessToken: string,
-    validUntil: Date,
+    validUntil?: number,
   ): Pick<AuthToken, 'user' | 'accessToken'> {
     const newToken = new AuthToken();
     newToken.user = user;
     newToken.identifier = identifier;
+    newToken.keyId = keyId;
     newToken.accessToken = accessToken;
     newToken.createdAt = new Date();
-    newToken.validUntil = validUntil;
+    if (validUntil !== undefined) {
+      newToken.validUntil = validUntil;
+    }
     return newToken;
   }
 }

@@ -28,9 +28,12 @@ entity "auth_token"{
   *id : number <<generated>>
   --
   *userId : uuid
+  *keyId: text
   *accessToken : text
   *identifier: text
   *createdAt: date
+  lastUsed: number
+  validUntil: number
 }
 
 entity "identity" {

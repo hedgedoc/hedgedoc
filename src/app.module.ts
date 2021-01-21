@@ -25,6 +25,7 @@ import hstsConfig from './config/hsts.config';
 import cspConfig from './config/csp.config';
 import databaseConfig from './config/database.config';
 import authConfig from './config/auth.config';
+import { PrivateApiModule } from './api/private/private-api.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import authConfig from './config/auth.config';
     RevisionsModule,
     AuthorsModule,
     PublicApiModule,
+    PrivateApiModule,
     HistoryModule,
     MonitoringModule,
     PermissionsModule,
