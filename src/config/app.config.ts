@@ -7,6 +7,7 @@
 import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
 import { Loglevel } from './loglevel.enum';
+import { buildErrorMessage } from './utils';
 
 export interface AppConfig {
   domain: string;
@@ -15,12 +16,13 @@ export interface AppConfig {
 }
 
 const schema = Joi.object({
-  domain: Joi.string(),
-  port: Joi.number().default(3000).optional(),
+  domain: Joi.string().label('HD_DOMAIN'),
+  port: Joi.number().default(3000).optional().label('PORT'),
   loglevel: Joi.string()
     .valid(...Object.values(Loglevel))
     .default(Loglevel.WARN)
-    .optional(),
+    .optional()
+    .label('HD_LOGLEVEL'),
 });
 
 export default registerAs('appConfig', async () => {
@@ -36,7 +38,10 @@ export default registerAs('appConfig', async () => {
     },
   );
   if (appConfig.error) {
-    throw new Error(appConfig.error.toString());
+    const errorMessages = await appConfig.error.details.map(
+      (detail) => detail.message,
+    );
+    throw new Error(buildErrorMessage(errorMessages));
   }
   return appConfig.value;
 });

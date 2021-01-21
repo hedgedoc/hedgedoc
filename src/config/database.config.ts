@@ -7,6 +7,7 @@
 import * as Joi from 'joi';
 import { DatabaseDialect } from './database-dialect.enum';
 import { registerAs } from '@nestjs/config';
+import { buildErrorMessage } from './utils';
 
 export interface DatabaseConfig {
   username: string;
@@ -23,33 +24,35 @@ const databaseSchema = Joi.object({
     is: Joi.invalid(DatabaseDialect.SQLITE),
     then: Joi.string(),
     otherwise: Joi.optional(),
-  }),
+  }).label('HD_DATABASE_USER'),
   password: Joi.when('dialect', {
     is: Joi.invalid(DatabaseDialect.SQLITE),
     then: Joi.string(),
     otherwise: Joi.optional(),
-  }),
+  }).label('HD_DATABASE_PASS'),
   database: Joi.when('dialect', {
     is: Joi.invalid(DatabaseDialect.SQLITE),
     then: Joi.string(),
     otherwise: Joi.optional(),
-  }),
+  }).label('HD_DATABASE_NAME'),
   host: Joi.when('dialect', {
     is: Joi.invalid(DatabaseDialect.SQLITE),
     then: Joi.string(),
     otherwise: Joi.optional(),
-  }),
+  }).label('HD_DATABASE_HOST'),
   port: Joi.when('dialect', {
     is: Joi.invalid(DatabaseDialect.SQLITE),
     then: Joi.number(),
     otherwise: Joi.optional(),
-  }),
+  }).label('HD_DATABASE_PORT'),
   storage: Joi.when('dialect', {
     is: Joi.valid(DatabaseDialect.SQLITE),
     then: Joi.string(),
     otherwise: Joi.optional(),
-  }),
-  dialect: Joi.string().valid(...Object.values(DatabaseDialect)),
+  }).label('HD_DATABASE_STORAGE'),
+  dialect: Joi.string()
+    .valid(...Object.values(DatabaseDialect))
+    .label('HD_DATABASE_DIALECT'),
 });
 
 export default registerAs('databaseConfig', async () => {
@@ -69,7 +72,10 @@ export default registerAs('databaseConfig', async () => {
     },
   );
   if (databaseConfig.error) {
-    throw new Error(databaseConfig.error.toString());
+    const errorMessages = await databaseConfig.error.details.map(
+      (detail) => detail.message,
+    );
+    throw new Error(buildErrorMessage(errorMessages));
   }
   return databaseConfig.value;
 });

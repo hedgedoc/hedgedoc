@@ -6,6 +6,7 @@
 
 import * as Joi from 'joi';
 import { registerAs } from '@nestjs/config';
+import { buildErrorMessage } from './utils';
 
 export interface HstsConfig {
   enable: boolean;
@@ -15,12 +16,16 @@ export interface HstsConfig {
 }
 
 const hstsSchema = Joi.object({
-  enable: Joi.boolean().default(true).optional(),
+  enable: Joi.boolean().default(true).optional().label('HD_HSTS_ENABLE'),
   maxAgeSeconds: Joi.number()
     .default(60 * 60 * 24 * 365)
-    .optional(),
-  includeSubdomains: Joi.boolean().default(true).optional(),
-  preload: Joi.boolean().default(true).optional(),
+    .optional()
+    .label('HD_HSTS_MAX_AGE'),
+  includeSubdomains: Joi.boolean()
+    .default(true)
+    .optional()
+    .label('HD_HSTS_INCLUDE_SUBDOMAINS'),
+  preload: Joi.boolean().default(true).optional().label('HD_HSTS_PRELOAD'),
 });
 
 export default registerAs('hstsConfig', async () => {
@@ -37,7 +42,10 @@ export default registerAs('hstsConfig', async () => {
     },
   );
   if (hstsConfig.error) {
-    throw new Error(hstsConfig.error.toString());
+    const errorMessages = await hstsConfig.error.details.map(
+      (detail) => detail.message,
+    );
+    throw new Error(buildErrorMessage(errorMessages));
   }
   return hstsConfig.value;
 });
