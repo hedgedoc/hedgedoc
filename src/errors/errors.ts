@@ -15,3 +15,7 @@ export class ClientError extends Error {
 export class PermissionError extends Error {
   name = 'PermissionError';
 }
+
+export class TokenNotValid extends Error {
+  name = 'TokenNotValid';
+}

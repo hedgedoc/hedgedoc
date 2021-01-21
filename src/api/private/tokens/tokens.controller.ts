@@ -30,9 +30,9 @@ export class TokensController {
   @Get()
   async getUserTokens(): Promise<AuthTokenDto[]> {
     // ToDo: Get real userName
-    return (await this.usersService.getTokensByUsername('molly')).map((token) =>
-      this.usersService.toAuthTokenDto(token),
-    );
+    return (
+      await this.usersService.getTokensByUsername('hardcoded')
+    ).map((token) => this.usersService.toAuthTokenDto(token));
   }
 
   @Post()
@@ -49,10 +49,10 @@ export class TokensController {
     return this.usersService.toAuthTokenWithSecretDto(authToken);
   }
 
-  @Delete('/:timestamp')
+  @Delete('/:keyId')
   @HttpCode(204)
-  async deleteToken(@Param('timestamp') timestamp: number) {
+  async deleteToken(@Param('keyId') keyId: string) {
     // ToDo: Get real userName
-    return this.usersService.removeToken('hardcoded', timestamp);
+    return this.usersService.removeToken('hardcoded', keyId);
   }
 }

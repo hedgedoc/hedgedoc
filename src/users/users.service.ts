@@ -7,13 +7,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { NotInDBError } from '../errors/errors';
+import { NotInDBError, TokenNotValid } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { UserInfoDto } from './user-info.dto';
 import { User } from './user.entity';
 import { AuthToken } from './auth-token.entity';
-import { hash, compare } from 'bcrypt'
-import crypt from 'crypto';
+import { hash, compare } from 'bcrypt';
+import { randomBytes } from 'crypto';
 import { AuthTokenDto } from './auth-token.dto';
 import { AuthTokenWithSecretDto } from './auth-token-with-secret.dto';
 
@@ -33,19 +33,36 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
+  randomBase64UrlString(): string {
+    // This is necessary as the is no base64url encoding in the toString method
+    // but as can be seen on https://tools.ietf.org/html/rfc4648#page-7
+    // base64url is quite easy buildable from base64
+    return randomBytes(64)
+      .toString('base64')
+      .replace('+', '-')
+      .replace('/', '_')
+      .replace(/=+$/, '');
+  }
+
   async createTokenForUser(
     userName: string,
     identifier: string,
     until: number,
   ): Promise<AuthToken> {
     const user = await this.getUserByUsername(userName);
-    const randomString = crypt.randomBytes(64).toString('base64url');
-    const accessToken = await this.hashPassword(randomString);
-    const token = AuthToken.create(user, identifier, accessToken, new Date(until));
+    const secret = this.randomBase64UrlString();
+    const keyId = this.randomBase64UrlString();
+    const accessToken = await this.hashPassword(secret);
+    let token;
+    if (until === 0) {
+      token = AuthToken.create(user, identifier, keyId, accessToken);
+    } else {
+      token = AuthToken.create(user, identifier, keyId, accessToken, until);
+    }
     const createdToken = await this.authTokenRepository.save(token);
     return {
-      accessToken: randomString,
       ...createdToken,
+      accessToken: `${keyId}.${secret}`,
     };
   }
 
@@ -57,9 +74,10 @@ export class UsersService {
     await this.userRepository.delete(user);
   }
 
-  async getUserByUsername(userName: string): Promise<User> {
+  async getUserByUsername(userName: string, withTokens = false): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { userName: userName },
+      relations: withTokens ? ['authTokens'] : null,
     });
     if (user === undefined) {
       throw new NotInDBError(`User with username '${userName}' not found`);
@@ -69,21 +87,44 @@ export class UsersService {
 
   async hashPassword(cleartext: string): Promise<string> {
     // hash the password with bcrypt and 2^16 iterations
-    return hash(cleartext, 16)
+    return hash(cleartext, 16);
   }
 
   async checkPassword(cleartext: string, password: string): Promise<boolean> {
     // hash the password with bcrypt and 2^16 iterations
-    return compare(cleartext, password)
+    return compare(cleartext, password);
   }
 
-  async getUserByAuthToken(token: string): Promise<User> {
-    const hash = this.hashPassword(token);
+  async setLastUsedToken(keyId: string) {
     const accessToken = await this.authTokenRepository.findOne({
-      where: { accessToken: hash },
+      where: { keyId: keyId },
+    });
+    accessToken.lastUsed = new Date().getTime();
+    await this.authTokenRepository.save(accessToken);
+  }
+
+  async getUserByAuthToken(keyId: string, token: string): Promise<User> {
+    const accessToken = await this.authTokenRepository.findOne({
+      where: { keyId: keyId },
+      relations: ['user'],
     });
     if (accessToken === undefined) {
       throw new NotInDBError(`AuthToken '${token}' not found`);
+    }
+    if (!(await this.checkPassword(token, accessToken.accessToken))) {
+      // hashes are not the same
+      throw new TokenNotValid(`AuthToken '${token}' is not valid.`);
+    }
+    if (
+      accessToken.validUntil &&
+      accessToken.validUntil < new Date().getTime()
+    ) {
+      // tokens validUntil Date lies in the past
+      throw new TokenNotValid(
+        `AuthToken '${token}' is not valid since ${new Date(
+          accessToken.validUntil,
+        )}.`,
+      );
     }
     return this.getUserByUsername(accessToken.user.userName);
   }
@@ -98,14 +139,17 @@ export class UsersService {
   }
 
   async getTokensByUsername(userName: string): Promise<AuthToken[]> {
-    const user = await this.getUserByUsername(userName);
+    const user = await this.getUserByUsername(userName, true);
+    if (user.authTokens === undefined) {
+      return [];
+    }
     return user.authTokens;
   }
 
-  async removeToken(userName: string, timestamp: number) {
+  async removeToken(userName: string, keyId: string) {
     const user = await this.getUserByUsername(userName);
     const token = await this.authTokenRepository.findOne({
-      where: { createdAt: new Date(timestamp), user: user },
+      where: { keyId: keyId, user: user },
     });
     await this.authTokenRepository.remove(token);
   }
@@ -118,19 +162,17 @@ export class UsersService {
     return {
       label: authToken.identifier,
       created: authToken.createdAt.getTime(),
+      validUntil: authToken.validUntil,
+      lastUsed: authToken.lastUsed,
     };
   }
 
   toAuthTokenWithSecretDto(
     authToken: AuthToken | null | undefined,
   ): AuthTokenWithSecretDto | null {
-    if (!authToken) {
-      this.logger.warn(`Recieved ${authToken} argument!`, 'toAuthTokenDto');
-      return null;
-    }
+    const tokeDto = this.toAuthTokenDto(authToken)
     return {
-      label: authToken.identifier,
-      created: authToken.createdAt.getTime(),
+      ...tokeDto,
       secret: authToken.accessToken,
     };
   }
