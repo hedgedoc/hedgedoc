@@ -6,7 +6,6 @@
 
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './user.entity';
-import { Type } from 'class-transformer';
 
 @Entity()
 export class AuthToken {
@@ -25,16 +24,21 @@ export class AuthToken {
   @Column({ unique: true })
   accessToken: string;
 
+  @Column({ type: 'date' })
+  validUntil: Date;
+
   public static create(
     user: User,
     identifier: string,
     accessToken: string,
+    validUntil: Date,
   ): Pick<AuthToken, 'user' | 'accessToken'> {
     const newToken = new AuthToken();
     newToken.user = user;
     newToken.identifier = identifier;
     newToken.accessToken = accessToken;
     newToken.createdAt = new Date();
+    newToken.validUntil = validUntil;
     return newToken;
   }
 }

@@ -37,12 +37,14 @@ export class TokensController {
 
   @Post()
   async postTokenRequest(
-    @Body() label: string,
+    @Body('label') label: string,
+    @Body('until') until: number,
   ): Promise<AuthTokenWithSecretDto> {
     // ToDo: Get real userName
     const authToken = await this.usersService.createTokenForUser(
       'hardcoded',
       label,
+      until,
     );
     return this.usersService.toAuthTokenWithSecretDto(authToken);
   }
