@@ -12,7 +12,7 @@ import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { UserInfoDto } from './user-info.dto';
 import { User } from './user.entity';
 import { AuthToken } from './auth-token.entity';
-import { hash } from 'bcrypt'
+import { hash, compare } from 'bcrypt'
 import crypt from 'crypto';
 import { AuthTokenDto } from './auth-token.dto';
 import { AuthTokenWithSecretDto } from './auth-token-with-secret.dto';
@@ -36,12 +36,13 @@ export class UsersService {
   async createTokenForUser(
     userName: string,
     identifier: string,
+    until: number,
   ): Promise<AuthToken> {
     const user = await this.getUserByUsername(userName);
-    const randomString = crypt.randomBytes(64).toString('base64');
+    const randomString = crypt.randomBytes(64).toString('base64url');
     const accessToken = await this.hashPassword(randomString);
-    const token = AuthToken.create(user, identifier, accessToken);
-    const createdToken = this.authTokenRepository.save(token);
+    const token = AuthToken.create(user, identifier, accessToken, new Date(until));
+    const createdToken = await this.authTokenRepository.save(token);
     return {
       accessToken: randomString,
       ...createdToken,
@@ -66,9 +67,14 @@ export class UsersService {
     return user;
   }
 
-  async hashPassword(password: string): Promise<string> {
+  async hashPassword(cleartext: string): Promise<string> {
     // hash the password with bcrypt and 2^16 iterations
-    return hash(password, 16)
+    return hash(cleartext, 16)
+  }
+
+  async checkPassword(cleartext: string, password: string): Promise<boolean> {
+    // hash the password with bcrypt and 2^16 iterations
+    return compare(cleartext, password)
   }
 
   async getUserByAuthToken(token: string): Promise<User> {
