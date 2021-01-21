@@ -48,11 +48,8 @@ export class AuthToken {
     identifier: string,
     keyId: string,
     accessToken: string,
-    validUntil?: Date,
-  ): Pick<
-    AuthToken,
-    'user' | 'label' | 'keyId' | 'accessTokenHash' | 'createdAt' | 'validUntil'
-  > {
+    validUntil: Date,
+  ): Pick<AuthToken, 'user' | 'accessToken'> {
     const newToken = new AuthToken();
     newToken.user = user;
     newToken.label = identifier;
