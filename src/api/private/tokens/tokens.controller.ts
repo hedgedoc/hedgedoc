@@ -14,15 +14,15 @@ import {
   Post,
 } from '@nestjs/common';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { UsersService } from '../../../users/users.service';
-import { AuthTokenDto } from '../../../users/auth-token.dto';
-import { AuthTokenWithSecretDto } from '../../../users/auth-token-with-secret.dto';
+import { AuthTokenDto } from '../../../auth/auth-token.dto';
+import { AuthTokenWithSecretDto } from '../../../auth/auth-token-with-secret.dto';
+import { AuthService } from '../../../auth/auth.service';
 
 @Controller('tokens')
 export class TokensController {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    private usersService: UsersService,
+    private authService: AuthService,
   ) {
     this.logger.setContext(TokensController.name);
   }
@@ -31,8 +31,8 @@ export class TokensController {
   async getUserTokens(): Promise<AuthTokenDto[]> {
     // ToDo: Get real userName
     return (
-      await this.usersService.getTokensByUsername('hardcoded')
-    ).map((token) => this.usersService.toAuthTokenDto(token));
+      await this.authService.getTokensByUsername('hardcoded')
+    ).map((token) => this.authService.toAuthTokenDto(token));
   }
 
   @Post()
@@ -41,18 +41,13 @@ export class TokensController {
     @Body('until') until: number,
   ): Promise<AuthTokenWithSecretDto> {
     // ToDo: Get real userName
-    const authToken = await this.usersService.createTokenForUser(
-      'hardcoded',
-      label,
-      until,
-    );
-    return this.usersService.toAuthTokenWithSecretDto(authToken);
+    return this.authService.createTokenForUser('hardcoded', label, until);
   }
 
   @Delete('/:keyId')
   @HttpCode(204)
   async deleteToken(@Param('keyId') keyId: string) {
     // ToDo: Get real userName
-    return this.usersService.removeToken('hardcoded', keyId);
+    return this.authService.removeToken('hardcoded', keyId);
   }
 }

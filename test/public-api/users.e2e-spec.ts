@@ -8,7 +8,6 @@ import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../../src/app.module';
-//import { UsersService } from '../../src/users/users.service';
 import { UserInfoDto } from '../../src/users/user-info.dto';
 import { HistoryService } from '../../src/history/history.service';
 import { NotesService } from '../../src/notes/notes.service';

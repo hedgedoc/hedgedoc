@@ -11,7 +11,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from './user.entity';
+import { User } from '../users/user.entity';
 
 @Entity()
 export class AuthToken {
@@ -31,7 +31,7 @@ export class AuthToken {
   createdAt: Date;
 
   @Column({ unique: true })
-  accessToken: string;
+  accessTokenHash: string;
 
   @Column({
     nullable: true,
@@ -49,12 +49,12 @@ export class AuthToken {
     keyId: string,
     accessToken: string,
     validUntil?: number,
-  ): Pick<AuthToken, 'user' | 'accessToken'> {
+  ): Pick<AuthToken, 'user' | 'accessTokenHash'> {
     const newToken = new AuthToken();
     newToken.user = user;
     newToken.identifier = identifier;
     newToken.keyId = keyId;
-    newToken.accessToken = accessToken;
+    newToken.accessTokenHash = accessToken;
     newToken.createdAt = new Date();
     if (validUntil !== undefined) {
       newToken.validUntil = validUntil;

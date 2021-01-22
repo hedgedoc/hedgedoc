@@ -9,7 +9,6 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { LoggerModule } from '../logger/logger.module';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
-import { AuthToken } from './auth-token.entity';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -22,16 +21,10 @@ describe('UsersService', () => {
           provide: getRepositoryToken(User),
           useValue: {},
         },
-        {
-          provide: getRepositoryToken(AuthToken),
-          useValue: {},
-        },
       ],
       imports: [LoggerModule],
     })
       .overrideProvider(getRepositoryToken(User))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(AuthToken))
       .useValue({})
       .compile();
 
