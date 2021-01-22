@@ -2,18 +2,18 @@
 hide circle
 skinparam nodesep 60
 
-entity "Note" {
+entity "note" {
   *id : uuid <<generated>>
   --
   *shortid : text
   alias : text
   *viewcount : number
-  *ownerId : uuid <<FK User>>
+  *ownerId : uuid <<FK user>>
   description: text
   title: text
 }
 
-entity "User" {
+entity "user" {
   *id : uuid <<generated>>
   --
   *userName : text
@@ -24,17 +24,17 @@ entity "User" {
   email : text
 }
 
-entity "AuthToken" as authToken{
+entity "auth_token"{
   *id : number <<generated>>
   --
   *userId : uuid
   *accessToken : text
 }
 
-entity "Identity" {
+entity "identity" {
   *id : number
   --
-  *userId : uuid <<FK User>>
+  *userId : uuid <<FK user>>
   ' Identifies the external login provider and is set in the config
   *providerName : text
   *syncSource : boolean
@@ -48,7 +48,7 @@ entity "Identity" {
   passwordHash : text
 }
 
-entity "Session" {
+entity "session" {
   *id : text
   --
   *expiredAt : number
@@ -56,47 +56,47 @@ entity "Session" {
 }
 
 
-entity "Revision" {
+entity "revision" {
   *id : number <<generated>>
   --
-  *noteId : uuid <<FK Note>>
+  *noteId : uuid <<FK note>>
   *content : text
   *patch : text
   *createdAt : date
   *length : number
 }
 
-entity "Authorship" {
+entity "authorship" {
   *id : uuid <<generated>>
   --
-  *userId : uuid <FK User>>
+  *userId : uuid <FK user>>
   *startPos : number
   *endPos : number
   *createdAt : date
   *updatedAt : date
 }
 
-entity "RevisionAuthorship" {
-  *revisionId : number <<FK Revision>>
-  *authorshipId : uuid <<FK Authorship>>
+entity "revision_authorship" {
+  *revisionId : number <<FK revision>>
+  *authorshipId : uuid <<FK authorship>>
 }
 
-entity "AuthorColors" {
-  *noteId : uuid <<FK Note>>
-  *userId : uuid <<FK User>>
+entity "author_colors" {
+  *noteId : uuid <<FK note>>
+  *userId : uuid <<FK user>>
   --
   *color : text
 }
 
 
-entity "NoteUserPermission" {
-  *userId : uuid <<FK User>>
-  *noteId : uuid <<FK Note>>
+entity "note_user_permission" {
+  *userId : uuid <<FK user>>
+  *noteId : uuid <<FK note>>
   --
   *canEdit : boolean
 }
 
-entity "Group" {
+entity "group" {
   *id : number <<generated>>
   --
   *name : text <<unique>>
@@ -107,48 +107,48 @@ entity "Group" {
   *special : boolean
   }
 
-entity "NoteGroupPermission" {
-  *groupId : number <<FK Group>>
-  *noteId : uuid <<FK Note>>
+entity "note_group_permission" {
+  *groupId : number <<FK group>>
+  *noteId : uuid <<FK note>>
   --
   *canEdit : boolean
 }
 
-entity "Tag" {
+entity "tag" {
   *id: number <<generated>>
   *name: text
 }
 
-entity "MediaUpload" {
+entity "media_upload" {
   *id : text <<unique>>
   --
-  *noteId : uuid <<FK Note>>
-  *userId : uuid <<FK User>>
+  *noteId : uuid <<FK note>>
+  *userId : uuid <<FK user>>
   *backendType: text
   backendData: text
   *createdAt : date
 }
 
-User "1" -- "0..*" Note: owner
-User "1" -u- "1..*" Identity
-User "1" - "1..*" authToken
-User "1" -l- "1..*" Session
-User "1" - "0..*" MediaUpload
-User "0..*" -- "0..*" Note
-User "1" - "0..*" Authorship
+user "1" -- "0..*" note: owner
+user "1" -u- "1..*" identity
+user "1" - "1..*" auth_token
+user "1" -l- "1..*" session
+user "1" - "0..*" media_upload
+user "0..*" -- "0..*" note
+user "1" - "0..*" authorship
 
-(User, Note) . AuthorColors
+(user, note) . author_colors
 
-Revision "0..*" - "0..*" Authorship
-(Revision, Authorship) .. RevisionAuthorship
+revision "0..*" - "0..*" authorship
+(revision, authorship) .. revision_authorship
 
-MediaUpload "0..*"  -- "1" Note
-Note "1" - "1..*" Revision
-Note "0..*" -l- "0..*" Tag
-Note "0..*" -- "0..*" Group
+media_upload "0..*"  -- "1" note
+note "1" - "1..*" revision
+note "0..*" -l- "0..*" tag
+note "0..*" -- "0..*" group
 
-User "0..*" -- "0..*" Note
-(User, Note) . NoteUserPermission
-(Note, Group) . NoteGroupPermission
+user "0..*" -- "0..*" note
+(user, note) . note_user_permission
+(note, group) . note_group_permission
 
 @enduml
