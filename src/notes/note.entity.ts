@@ -21,7 +21,7 @@ import { User } from '../users/user.entity';
 import { AuthorColor } from './author-color.entity';
 import { Tag } from './tag.entity';
 
-@Entity('Notes')
+@Entity()
 export class Note {
   @PrimaryGeneratedColumn('uuid')
   id: string;
