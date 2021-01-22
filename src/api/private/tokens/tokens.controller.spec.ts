@@ -7,11 +7,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TokensController } from './tokens.controller';
 import { LoggerModule } from '../../../logger/logger.module';
-import { UsersModule } from '../../../users/users.module';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Identity } from '../../../users/identity.entity';
 import { User } from '../../../users/user.entity';
-import { AuthToken } from '../../../users/auth-token.entity';
+import { AuthToken } from '../../../auth/auth-token.entity';
+import { AuthModule } from '../../../auth/auth.module';
 
 describe('TokensController', () => {
   let controller: TokensController;
@@ -19,7 +19,7 @@ describe('TokensController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TokensController],
-      imports: [LoggerModule, UsersModule],
+      imports: [LoggerModule, AuthModule],
     })
       .overrideProvider(getRepositoryToken(User))
       .useValue({})

@@ -10,7 +10,7 @@ import { LoggerModule } from '../logger/logger.module';
 import { AuthorColor } from '../notes/author-color.entity';
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
-import { AuthToken } from '../users/auth-token.entity';
+import { AuthToken } from '../auth/auth-token.entity';
 import { Identity } from '../users/identity.entity';
 import { User } from '../users/user.entity';
 import { Authorship } from './authorship.entity';

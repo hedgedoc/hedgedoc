@@ -9,6 +9,8 @@ import { IsNumber, IsString } from 'class-validator';
 export class AuthTokenDto {
   @IsString()
   label: string;
+  @IsString()
+  keyId: string;
   @IsNumber()
   created: number;
   @IsNumber()

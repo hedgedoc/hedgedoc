@@ -12,7 +12,7 @@ import {
 } from 'typeorm';
 import { Column, OneToMany } from 'typeorm';
 import { Note } from '../notes/note.entity';
-import { AuthToken } from './auth-token.entity';
+import { AuthToken } from '../auth/auth-token.entity';
 import { Identity } from './identity.entity';
 
 @Entity()

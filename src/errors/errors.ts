@@ -16,6 +16,6 @@ export class PermissionError extends Error {
   name = 'PermissionError';
 }
 
-export class TokenNotValid extends Error {
-  name = 'TokenNotValid';
+export class TokenNotValidError extends Error {
+  name = 'TokenNotValidError';
 }

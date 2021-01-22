@@ -5,12 +5,13 @@
  */
 
 import { Module } from '@nestjs/common';
-import { UsersModule } from '../../users/users.module';
 import { TokensController } from './tokens/tokens.controller';
 import { LoggerModule } from '../../logger/logger.module';
+import { UsersModule } from '../../users/users.module';
+import { AuthModule } from '../../auth/auth.module';
 
 @Module({
-  imports: [UsersModule, LoggerModule],
+  imports: [LoggerModule, UsersModule, AuthModule],
   controllers: [TokensController],
 })
 export class PrivateApiModule {}
