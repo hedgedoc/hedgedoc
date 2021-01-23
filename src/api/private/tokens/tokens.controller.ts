@@ -17,6 +17,7 @@ import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { AuthTokenDto } from '../../../auth/auth-token.dto';
 import { AuthTokenWithSecretDto } from '../../../auth/auth-token-with-secret.dto';
 import { AuthService } from '../../../auth/auth.service';
+import { TimestampMillis } from '../../../utils/timestamp';
 
 @Controller('tokens')
 export class TokensController {
@@ -38,10 +39,10 @@ export class TokensController {
   @Post()
   async postTokenRequest(
     @Body('label') label: string,
-    @Body('until') until: number,
+    @Body('validUntil') validUntil: TimestampMillis,
   ): Promise<AuthTokenWithSecretDto> {
     // ToDo: Get real userName
-    return this.authService.createTokenForUser('hardcoded', label, until);
+    return this.authService.createTokenForUser('hardcoded', label, validUntil);
   }
 
   @Delete('/:keyId')

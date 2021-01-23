@@ -36,29 +36,35 @@ export class AuthToken {
   @Column({
     nullable: true,
   })
-  validUntil: number;
+  validUntil: Date;
 
   @Column({
     nullable: true,
   })
-  lastUsed: number;
+  lastUsed: Date;
 
   public static create(
     user: User,
     identifier: string,
     keyId: string,
     accessToken: string,
-    validUntil?: number,
-  ): Pick<AuthToken, 'user' | 'accessTokenHash'> {
+    validUntil?: Date,
+  ): Pick<
+    AuthToken,
+    | 'user'
+    | 'identifier'
+    | 'keyId'
+    | 'accessTokenHash'
+    | 'createdAt'
+    | 'validUntil'
+  > {
     const newToken = new AuthToken();
     newToken.user = user;
     newToken.identifier = identifier;
     newToken.keyId = keyId;
     newToken.accessTokenHash = accessToken;
     newToken.createdAt = new Date();
-    if (validUntil !== undefined) {
-      newToken.validUntil = validUntil;
-    }
+    newToken.validUntil = validUntil;
     return newToken;
   }
 }

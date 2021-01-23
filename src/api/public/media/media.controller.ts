@@ -48,7 +48,6 @@ export class MediaController {
     @UploadedFile() file: MulterFile,
     @Headers('HedgeDoc-Note') noteId: string,
   ) {
-    //TODO: Get user from request
     const username = req.user.userName;
     this.logger.debug(
       `Recieved filename '${file.originalname}' for note '${noteId}' from user '${username}'`,
@@ -74,7 +73,6 @@ export class MediaController {
   @UseGuards(TokenAuthGuard)
   @Delete(':filename')
   async deleteMedia(@Request() req, @Param('filename') filename: string) {
-    //TODO: Get user from request
     const username = req.user.userName;
     try {
       await this.mediaService.deleteFile(filename, username);
