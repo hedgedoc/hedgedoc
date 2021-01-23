@@ -6118,10 +6118,10 @@ emittery@^0.7.1:
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.7.2.tgz#25595908e13af0f5674ab419396e2fb394cdfa82"
   integrity sha512-A8OG5SR/ij3SsJdWDJdkkSYUjQdCUx6APQXem0SaEePBSRg4eymGYwBkKo1Y6DU+af/Jn2dBQqDBvjnr9Vi8nQ==
 
-emoji-picker-element@1.3.4:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/emoji-picker-element/-/emoji-picker-element-1.3.4.tgz#9fd32fe8fdf3b324950a4600862d6a8d378a5208"
-  integrity sha512-xIzWrZ3wbGhstLcDNi4a9oDU+BqO9WIvFxGDh0bldMhZ3f6H82PEoLdBdmAxpK2dRLQsgoeMI3nWwWobHioBMQ==
+emoji-picker-element@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/emoji-picker-element/-/emoji-picker-element-1.4.0.tgz#d69561e8d17bbeb1f0ac464f4bef70780a5bf248"
+  integrity sha512-ZwjedtXzaQ+1JF76zIhlpb4JpEl5xoSVP5WHbW9SviO7QulyMQORC4CNntAY9KNT5jmkeY7ciV7H6jCFaAdQzQ==
 
 emoji-regex@^7.0.1:
   version "7.0.3"
