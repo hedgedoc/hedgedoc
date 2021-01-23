@@ -152,7 +152,7 @@ describe('AuthService', () => {
 
   describe('removeToken', () => {
     it('works', async () => {
-      await service.removeToken(user.userName, authToken.keyId);
+      await service.removeToken(authToken.keyId);
     });
   });
 
