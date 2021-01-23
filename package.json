@@ -57,7 +57,7 @@
         "highlight.js": "10.5.0",
         "i18next": "19.8.4",
         "i18next-browser-languagedetector": "6.0.1",
-        "i18next-http-backend": "1.0.21",
+        "i18next-http-backend": "1.0.22",
         "js-yaml": "4.0.0",
         "katex": "0.12.0",
         "luxon": "1.25.0",
