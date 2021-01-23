@@ -1,10 +1,11 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { useEffect, useRef } from 'react'
+import './abc.scss'
 
 export interface AbcFrameProps {
   code: string
@@ -23,5 +24,5 @@ export const AbcFrame: React.FC<AbcFrameProps> = ({ code }) => {
     }).catch(() => { console.error('error while loading abcjs') })
   }, [code])
 
-  return <div ref={container} className={'bg-white text-center overflow-x-auto'}/>
+  return <div ref={container} className={'abcjs-score bg-white text-center overflow-x-auto'}/>
 }
