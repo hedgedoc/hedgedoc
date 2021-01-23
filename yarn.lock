@@ -5081,12 +5081,12 @@ cypress-commands@1.1.0:
   resolved "https://registry.yarnpkg.com/cypress-commands/-/cypress-commands-1.1.0.tgz#9248190168783deb8ab27ae7c722e3e01d172c97"
   integrity sha512-Q8Jr25pHJQFXwln6Hp8O+Hgs8Z506Y2wA9F1Te2cTajjc5L9gtt9WPOcw1Ogh+OgyqaMHF+uq31vdfImRTio5Q==
 
-cypress-file-upload@4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/cypress-file-upload/-/cypress-file-upload-4.1.1.tgz#952713c8104ab7008de99c65bd63f74b244fe4df"
-  integrity sha512-tX6UhuJ63rNgjdzxglpX+ZYf/bM6PDhFMtt1qCBljLtAgdearqyfD1AHqyh59rOHCjfM+bf6FA3o9b/mdaX6pw==
+cypress-file-upload@5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/cypress-file-upload/-/cypress-file-upload-5.0.2.tgz#538722e64747b5bf309399a7df26b470431859cb"
+  integrity sha512-QRPnQPeEaW+HMVB62/htIsKh7Kd/x2uzoHKEQxh7LCD+4IaG0rAjLZupCIjjUh+JnRymgfir8wOYtFSJCNWlpA==
   dependencies:
-    mime "^2.4.4"
+    mime "^2.5.0"
 
 cypress@6.3.0:
   version "6.3.0"
@@ -9837,6 +9837,11 @@ mime@^2.3.1, mime@^2.4.4:
   version "2.4.7"
   resolved "https://registry.yarnpkg.com/mime/-/mime-2.4.7.tgz#962aed9be0ed19c91fd7dc2ece5d7f4e89a90d74"
   integrity sha512-dhNd1uA2u397uQk3Nv5LM4lm93WYDUXFn3Fu291FJerns4jyTudqhIWe4W04YLy7Uk1tm1Ore04NpjRvQp/NPA==
+
+mime@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/mime/-/mime-2.5.0.tgz#2b4af934401779806ee98026bb42e8c1ae1876b1"
+  integrity sha512-ft3WayFSFUVBuJj7BMLKAQcSlItKtfjsKDDsii3rqFDAZ7t11zRe8ASw/GlmivGwVUYtwkQrxiGGpL6gFvB0ag==
 
 mimic-fn@^1.0.0:
   version "1.2.0"
