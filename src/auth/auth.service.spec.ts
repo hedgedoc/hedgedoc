@@ -112,7 +112,7 @@ describe('AuthService', () => {
   it('getAuthToken', async () => {
     const token = 'testToken';
     authToken.accessTokenHash = await service.hashPassword(token);
-    const authTokenFromCall = await service.getAuthToken(
+    const authTokenFromCall = await service.getAuthTokenAndValidate(
       authToken.keyId,
       token,
     );
@@ -153,5 +153,20 @@ describe('AuthService', () => {
     expect(token.validUntil).toBeUndefined();
     expect(token.lastUsed).toBeUndefined();
     expect(token.secret.startsWith(token.keyId)).toBeTruthy();
+  });
+
+  it('BufferToBase64Url', () => {
+    expect(
+      service.BufferToBase64Url(Buffer.from('testsentence is a test sentence')),
+    ).toEqual('dGVzdHNlbnRlbmNlIGlzIGEgdGVzdCBzZW50ZW5jZQ');
+  });
+
+  it('toAuthTokenDto', async () => {
+    const tokenDto = await service.toAuthTokenDto(authToken);
+    expect(tokenDto.keyId).toEqual(authToken.keyId);
+    expect(tokenDto.lastUsed).toBeNull();
+    expect(tokenDto.label).toEqual(authToken.identifier);
+    expect(tokenDto.validUntil).toBeNull();
+    expect(tokenDto.created).toEqual(authToken.createdAt.getTime());
   });
 });
