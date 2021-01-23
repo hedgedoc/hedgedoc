@@ -141,10 +141,9 @@ export class AuthService {
     return user.authTokens;
   }
 
-  async removeToken(userName: string, keyId: string) {
-    const user = await this.usersService.getUserByUsername(userName);
+  async removeToken(keyId: string) {
     const token = await this.authTokenRepository.findOne({
-      where: { keyId: keyId, user: user },
+      where: { keyId: keyId },
     });
     await this.authTokenRepository.remove(token);
   }

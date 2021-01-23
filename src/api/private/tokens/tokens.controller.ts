@@ -48,7 +48,6 @@ export class TokensController {
   @Delete('/:keyId')
   @HttpCode(204)
   async deleteToken(@Param('keyId') keyId: string) {
-    // ToDo: Get real userName
-    return this.authService.removeToken('hardcoded', keyId);
+    return this.authService.removeToken(keyId);
   }
 }
