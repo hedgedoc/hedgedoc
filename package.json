@@ -104,7 +104,7 @@
         "use-media": "1.4.0",
         "use-resize-observer": "7.0.0",
         "uuid": "8.3.2",
-        "vega": "5.18.0",
+        "vega": "5.19.1",
         "vega-embed": "6.15.0",
         "vega-lite": "4.17.0"
     },
