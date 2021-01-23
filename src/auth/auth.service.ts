@@ -30,7 +30,7 @@ export class AuthService {
 
   async validateToken(token: string): Promise<User> {
     const parts = token.split('.');
-    const accessToken = await this.getAuthToken(parts[0], parts[1]);
+    const accessToken = await this.getAuthTokenAndValidate(parts[0], parts[1]);
     const user = await this.usersService.getUserByUsername(
       accessToken.user.userName,
     );
@@ -42,20 +42,26 @@ export class AuthService {
   }
 
   async hashPassword(cleartext: string): Promise<string> {
-    // hash the password with bcrypt and 2^16 iterations
+    // hash the password with bcrypt and 2^12 iterations
     return hash(cleartext, 12);
   }
 
   async checkPassword(cleartext: string, password: string): Promise<boolean> {
-    // hash the password with bcrypt and 2^16 iterations
     return compare(cleartext, password);
   }
 
-  randomBase64UrlString(length = 64): string {
+  async randomString(length: number): Promise<Buffer> {
     // This is necessary as the is no base64url encoding in the toString method
     // but as can be seen on https://tools.ietf.org/html/rfc4648#page-7
     // base64url is quite easy buildable from base64
-    return randomBytes(length)
+    if (length <= 0) {
+      return null;
+    }
+    return randomBytes(length);
+  }
+
+  BufferToBase64Url(text: Buffer): string {
+    return text
       .toString('base64')
       .replace('+', '-')
       .replace('/', '_')
@@ -68,9 +74,10 @@ export class AuthService {
     until: number,
   ): Promise<AuthTokenWithSecretDto> {
     const user = await this.usersService.getUserByUsername(userName);
-    const secret = this.randomBase64UrlString();
-    const keyId = this.randomBase64UrlString(8);
-    const accessToken = await this.hashPassword(secret);
+    const secret = await this.randomString(64);
+    const keyId = this.BufferToBase64Url(await this.randomString(8));
+    const accessTokenString = await this.hashPassword(secret.toString());
+    const accessToken = this.BufferToBase64Url(Buffer.from(accessTokenString));
     let token;
     if (until === 0) {
       token = AuthToken.create(user, identifier, keyId, accessToken);
@@ -89,7 +96,10 @@ export class AuthService {
     await this.authTokenRepository.save(accessToken);
   }
 
-  async getAuthToken(keyId: string, token: string): Promise<AuthToken> {
+  async getAuthTokenAndValidate(
+    keyId: string,
+    token: string,
+  ): Promise<AuthToken> {
     const accessToken = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
       relations: ['user'],
@@ -149,9 +159,9 @@ export class AuthService {
     authToken: AuthToken | null | undefined,
     secret: string,
   ): AuthTokenWithSecretDto | null {
-    const tokeDto = this.toAuthTokenDto(authToken);
+    const tokenDto = this.toAuthTokenDto(authToken);
     return {
-      ...tokeDto,
+      ...tokenDto,
       secret: secret,
     };
   }
