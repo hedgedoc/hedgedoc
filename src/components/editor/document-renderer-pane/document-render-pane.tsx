@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import { TocAst } from 'markdown-it-toc-done-right'
 import React, { RefObject, useRef, useState } from 'react'
@@ -31,23 +31,23 @@ export interface DocumentRenderPaneProps {
   wide?: boolean
 }
 
-export const DocumentRenderPane: React.FC<DocumentRenderPaneProps> = ({
-  extraClasses,
-  onFirstHeadingChange,
-  onLineMarkerPositionChanged,
-  onMetadataChange,
-  onMouseEnterRenderer,
-  onScrollRenderer,
-  onTaskCheckedChange,
-  documentRenderPaneRef,
-  wide
-}) => {
+export const DocumentRenderPane: React.FC<DocumentRenderPaneProps> = (
+  {
+    extraClasses,
+    onFirstHeadingChange,
+    onLineMarkerPositionChanged,
+    onMetadataChange,
+    onMouseEnterRenderer,
+    onScrollRenderer,
+    onTaskCheckedChange,
+    documentRenderPaneRef,
+    wide
+  }) => {
   const [tocAst, setTocAst] = useState<TocAst>()
   const { width } = useResizeObserver(documentRenderPaneRef ? { ref: documentRenderPaneRef } : undefined)
   const realWidth = width || 0
-  const rendererRef = useRef<HTMLDivElement|null>(null)
+  const rendererRef = useRef<HTMLDivElement | null>(null)
   const markdownContent = useSelector((state: ApplicationState) => state.documentContent.content)
-  const yamlDeprecatedTags = useSelector((state: ApplicationState) => state.documentContent.metadata.deprecatedTagsSyntax)
   const changeLineMarker = useAdaptedLineMarkerCallback(documentRenderPaneRef, rendererRef, onLineMarkerPositionChanged)
 
   return (
@@ -55,21 +55,19 @@ export const DocumentRenderPane: React.FC<DocumentRenderPaneProps> = ({
          ref={documentRenderPaneRef} onScroll={onScrollRenderer} onMouseEnter={onMouseEnterRenderer}>
       <div className={'col-md'}/>
       <div className={'bg-light flex-fill'}>
-        <ShowIf condition={yamlDeprecatedTags}>
-          <YamlArrayDeprecationAlert/>
-        </ShowIf>
-        <div >
-        <FullMarkdownRenderer
-          rendererRef={rendererRef}
-          className={'flex-fill mb-3'}
-          content={markdownContent}
-          onFirstHeadingChange={onFirstHeadingChange}
-          onLineMarkerPositionChanged={changeLineMarker}
-          onMetaDataChange={onMetadataChange}
-          onTaskCheckedChange={onTaskCheckedChange}
-          onTocChange={(tocAst) => setTocAst(tocAst)}
-          wide={wide}
-        />
+        <YamlArrayDeprecationAlert/>
+        <div>
+          <FullMarkdownRenderer
+            rendererRef={rendererRef}
+            className={'flex-fill mb-3'}
+            content={markdownContent}
+            onFirstHeadingChange={onFirstHeadingChange}
+            onLineMarkerPositionChanged={changeLineMarker}
+            onMetaDataChange={onMetadataChange}
+            onTaskCheckedChange={onTaskCheckedChange}
+            onTocChange={(tocAst) => setTocAst(tocAst)}
+            wide={wide}
+          />
         </div>
       </div>
 

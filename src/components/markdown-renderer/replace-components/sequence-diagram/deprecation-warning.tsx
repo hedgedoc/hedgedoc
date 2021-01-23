@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { Alert } from 'react-bootstrap'
@@ -15,8 +15,10 @@ export const DeprecationWarning: React.FC = () => {
 
   return (
     <Alert data-cy={'yaml'} className={'mt-2'} variant={'warning'}>
-      <Trans i18nKey={'renderer.sequence.deprecationWarning'}/>
-      &nbsp;
+      <span className={'text-wrap'}>
+        <Trans i18nKey={'renderer.sequence.deprecationWarning'}/>
+      </span>
+      <br/>
       <TranslatedExternalLink i18nKey={'common.readForMoreInfo'} className={'text-primary'} href={links.faq}/>
     </Alert>
   )

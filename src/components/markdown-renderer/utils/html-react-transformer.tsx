@@ -1,13 +1,13 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import { DomElement } from 'domhandler'
 import React, { ReactElement, Suspense } from 'react'
 import { convertNodeToElement, Transform } from 'react-html-parser'
-import { ComponentReplacer, SubNodeTransform } from '../replace-components/ComponentReplacer'
+import { ComponentReplacer, NativeRenderer, SubNodeTransform } from '../replace-components/ComponentReplacer'
 import { LineKeys } from '../types'
 
 export interface TextDifferenceResult {
@@ -45,9 +45,9 @@ export const calculateKeyFromLineMarker = (node: DomElement, lineKeys?: LineKeys
   return `${lineKeys[startLine].id}_${lineKeys[endLine].id}`
 }
 
-export const findNodeReplacement = (node: DomElement, key: string, allReplacers: ComponentReplacer[], subNodeTransform: SubNodeTransform): ReactElement|null|undefined => {
+export const findNodeReplacement = (node: DomElement, key: string, allReplacers: ComponentReplacer[], subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer): ReactElement | null | undefined => {
   return allReplacers
-    .map((componentReplacer) => componentReplacer.getReplacement(node, subNodeTransform))
+    .map((componentReplacer) => componentReplacer.getReplacement(node, subNodeTransform, nativeRenderer))
     .find((replacement) => replacement !== undefined)
 }
 
@@ -62,18 +62,18 @@ export const renderNativeNode = (node: DomElement, key: string, transform: Trans
 
 export const buildTransformer = (lineKeys: (LineKeys[] | undefined), allReplacers: ComponentReplacer[]):Transform => {
   const transform: Transform = (node, index) => {
-    const nativeRenderer = (subNode: DomElement, subKey: string) => renderNativeNode(subNode, subKey, transform)
-    const subNodeTransform:SubNodeTransform = (subNode, subIndex) => transform(subNode, subIndex, transform)
+    const nativeRenderer: NativeRenderer = () => renderNativeNode(node, key, transform)
+    const subNodeTransform: SubNodeTransform = (subNode, subIndex) => transform(subNode, subIndex, transform)
 
     const key = calculateKeyFromLineMarker(node, lineKeys) ?? (-index).toString()
-    const tryReplacement = findNodeReplacement(node, key, allReplacers, subNodeTransform)
+    const tryReplacement = findNodeReplacement(node, key, allReplacers, subNodeTransform, nativeRenderer)
     if (tryReplacement === null) {
       return null
     } else if (tryReplacement === undefined) {
-      return nativeRenderer(node, key)
+      return nativeRenderer()
     } else {
       return <Suspense key={key} fallback={<span>Loading...</span>}>
-        { tryReplacement }
+        {tryReplacement}
       </Suspense>
     }
   }

@@ -10,10 +10,10 @@ import { ReactElement } from 'react'
 
 export type SubNodeTransform = (node: DomElement, subIndex: number) => ReactElement | void | null
 
-export type NativeRenderer = (node: DomElement, key: number) => ReactElement
+export type NativeRenderer = () => ReactElement
 
 export type MarkdownItPlugin = MarkdownIt.PluginSimple | MarkdownIt.PluginWithOptions | MarkdownIt.PluginWithParams
 
 export abstract class ComponentReplacer {
-  public abstract getReplacement (node: DomElement, subNodeTransform: SubNodeTransform): (ReactElement | null | undefined);
+  public abstract getReplacement (node: DomElement, subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer): (ReactElement | null | undefined);
 }

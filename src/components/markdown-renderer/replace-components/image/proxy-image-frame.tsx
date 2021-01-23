@@ -1,16 +1,22 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getProxiedUrl } from '../../../../api/media'
 import { ApplicationState } from '../../../../redux'
-import { LightboxedImageFrame } from './lightboxedImageFrame'
+import { LightboxImageFrame } from './lightbox-image-frame'
 
-export const ImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ src, title, alt, ...props }) => {
+export const ProxyImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = (
+  {
+    src,
+    title,
+    alt,
+    ...props
+  }) => {
   const [imageUrl, setImageUrl] = useState('')
   const imageProxyEnabled = useSelector((state: ApplicationState) => state.config.useImageProxy)
 
@@ -25,11 +31,11 @@ export const ImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = (
 
   if (imageProxyEnabled) {
     return (
-      <LightboxedImageFrame src={imageUrl} title={title ?? alt ?? ''} alt={alt} {...props}/>
+      <LightboxImageFrame src={imageUrl} title={title ?? alt ?? ''} alt={alt} {...props}/>
     )
   }
 
   return (
-    <LightboxedImageFrame src={src ?? ''} title={title ?? alt ?? ''} alt={alt} {...props}/>
+    <LightboxImageFrame src={src ?? ''} title={title ?? alt ?? ''} alt={alt} {...props}/>
   )
 }

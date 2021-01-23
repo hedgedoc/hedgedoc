@@ -7,7 +7,7 @@
 import { useEffect } from 'react'
 import { useIsDarkModeActivated } from './use-is-dark-mode-activated'
 
-export const useApplyDarkMode = ():void => {
+export const useApplyDarkMode = (): void => {
   const darkModeActivated = useIsDarkModeActivated()
 
   useEffect(() => {
