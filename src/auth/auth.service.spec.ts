@@ -64,7 +64,9 @@ describe('AuthService', () => {
           if (entity.lastUsed === undefined) {
             expect(entity.lastUsed).toBeUndefined();
           } else {
-            expect(entity.lastUsed).toBeLessThanOrEqual(new Date().getTime());
+            expect(entity.lastUsed.getTime()).toBeLessThanOrEqual(
+              new Date().getTime(),
+            );
           }
           return entity;
         },
@@ -95,78 +97,100 @@ describe('AuthService', () => {
     expect(service).toBeDefined();
   });
 
-  it('checkPassword', async () => {
-    const testPassword = 'thisIsATestPassword';
-    const hash = await service.hashPassword(testPassword);
-    service
-      .checkPassword(testPassword, hash)
-      .then((result) => expect(result).toBeTruthy());
-  });
-
-  it('getTokensByUsername', async () => {
-    const tokens = await service.getTokensByUsername(user.userName);
-    expect(tokens).toHaveLength(1);
-    expect(tokens).toEqual([authToken]);
-  });
-
-  it('getAuthToken', async () => {
-    const token = 'testToken';
-    authToken.accessTokenHash = await service.hashPassword(token);
-    const authTokenFromCall = await service.getAuthTokenAndValidate(
-      authToken.keyId,
-      token,
-    );
-    expect(authTokenFromCall).toEqual({
-      ...authToken,
-      user: user,
+  describe('checkPassword', () => {
+    it('works', async () => {
+      const testPassword = 'thisIsATestPassword';
+      const hash = await service.hashPassword(testPassword);
+      service
+        .checkPassword(testPassword, hash)
+        .then((result) => expect(result).toBeTruthy());
     });
   });
 
-  it('setLastUsedToken', async () => {
-    await service.setLastUsedToken(authToken.keyId);
-  });
-
-  it('validateToken', async () => {
-    const token = 'testToken';
-    authToken.accessTokenHash = await service.hashPassword(token);
-    const userByToken = await service.validateToken(
-      `${authToken.keyId}.${token}`,
-    );
-    expect(userByToken).toEqual({
-      ...user,
-      authTokens: [authToken],
+  describe('getTokensByUsername', () => {
+    it('works', async () => {
+      const tokens = await service.getTokensByUsername(user.userName);
+      expect(tokens).toHaveLength(1);
+      expect(tokens).toEqual([authToken]);
     });
   });
 
-  it('removeToken', async () => {
-    await service.removeToken(user.userName, authToken.keyId);
+  describe('getAuthToken', () => {
+    it('works', async () => {
+      const token = 'testToken';
+      authToken.accessTokenHash = await service.hashPassword(token);
+      const authTokenFromCall = await service.getAuthTokenAndValidate(
+        authToken.keyId,
+        token,
+      );
+      expect(authTokenFromCall).toEqual({
+        ...authToken,
+        user: user,
+      });
+    });
   });
 
-  it('createTokenForUser', async () => {
-    const identifier = 'identifier2';
-    const token = await service.createTokenForUser(
-      user.userName,
-      identifier,
-      0,
-    );
-    expect(token.label).toEqual(identifier);
-    expect(token.validUntil).toBeUndefined();
-    expect(token.lastUsed).toBeUndefined();
-    expect(token.secret.startsWith(token.keyId)).toBeTruthy();
+  describe('setLastUsedToken', () => {
+    it('works', async () => {
+      await service.setLastUsedToken(authToken.keyId);
+    });
   });
 
-  it('BufferToBase64Url', () => {
-    expect(
-      service.BufferToBase64Url(Buffer.from('testsentence is a test sentence')),
-    ).toEqual('dGVzdHNlbnRlbmNlIGlzIGEgdGVzdCBzZW50ZW5jZQ');
+  describe('validateToken', () => {
+    it('works', async () => {
+      const token = 'testToken';
+      authToken.accessTokenHash = await service.hashPassword(token);
+      const userByToken = await service.validateToken(
+        `${authToken.keyId}.${token}`,
+      );
+      expect(userByToken).toEqual({
+        ...user,
+        authTokens: [authToken],
+      });
+    });
   });
 
-  it('toAuthTokenDto', async () => {
-    const tokenDto = await service.toAuthTokenDto(authToken);
-    expect(tokenDto.keyId).toEqual(authToken.keyId);
-    expect(tokenDto.lastUsed).toBeNull();
-    expect(tokenDto.label).toEqual(authToken.identifier);
-    expect(tokenDto.validUntil).toBeNull();
-    expect(tokenDto.created).toEqual(authToken.createdAt.getTime());
+  describe('removeToken', () => {
+    it('works', async () => {
+      await service.removeToken(user.userName, authToken.keyId);
+    });
+  });
+
+  describe('createTokenForUser', () => {
+    it('works', async () => {
+      const identifier = 'identifier2';
+      const token = await service.createTokenForUser(
+        user.userName,
+        identifier,
+        0,
+      );
+      expect(token.label).toEqual(identifier);
+      expect(token.validUntil).toBeNull();
+      expect(token.lastUsed).toBeNull();
+      expect(token.secret.startsWith(token.keyId)).toBeTruthy();
+    });
+  });
+
+  describe('BufferToBase64Url', () => {
+    it('works', () => {
+      expect(
+        service.BufferToBase64Url(
+          Buffer.from('testsentence is a test sentence'),
+        ),
+      ).toEqual('dGVzdHNlbnRlbmNlIGlzIGEgdGVzdCBzZW50ZW5jZQ');
+    });
+  });
+
+  describe('toAuthTokenDto', () => {
+    it('works', async () => {
+      const tokenDto = await service.toAuthTokenDto(authToken);
+      expect(tokenDto.keyId).toEqual(authToken.keyId);
+      expect(tokenDto.lastUsed).toBeNull();
+      expect(tokenDto.label).toEqual(authToken.identifier);
+      expect(tokenDto.validUntil).toBeNull();
+      expect(tokenDto.createdAt.getTime()).toEqual(
+        authToken.createdAt.getTime(),
+      );
+    });
   });
 });

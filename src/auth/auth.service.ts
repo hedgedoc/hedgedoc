@@ -16,6 +16,7 @@ import { randomBytes } from 'crypto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { TimestampMillis } from '../utils/timestamp';
 
 @Injectable()
 export class AuthService {
@@ -29,13 +30,13 @@ export class AuthService {
   }
 
   async validateToken(token: string): Promise<User> {
-    const parts = token.split('.');
-    const accessToken = await this.getAuthTokenAndValidate(parts[0], parts[1]);
+    const [keyId, secret] = token.split('.');
+    const accessToken = await this.getAuthTokenAndValidate(keyId, secret);
     const user = await this.usersService.getUserByUsername(
       accessToken.user.userName,
     );
     if (user) {
-      await this.setLastUsedToken(parts[0]);
+      await this.setLastUsedToken(keyId);
       return user;
     }
     return null;
@@ -43,6 +44,7 @@ export class AuthService {
 
   async hashPassword(cleartext: string): Promise<string> {
     // hash the password with bcrypt and 2^12 iterations
+    // this was decided on the basis of https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#bcrypt
     return hash(cleartext, 12);
   }
 
@@ -71,7 +73,7 @@ export class AuthService {
   async createTokenForUser(
     userName: string,
     identifier: string,
-    until: number,
+    validUntil: TimestampMillis,
   ): Promise<AuthTokenWithSecretDto> {
     const user = await this.usersService.getUserByUsername(userName);
     const secret = await this.randomString(64);
@@ -79,10 +81,16 @@ export class AuthService {
     const accessTokenString = await this.hashPassword(secret.toString());
     const accessToken = this.BufferToBase64Url(Buffer.from(accessTokenString));
     let token;
-    if (until === 0) {
+    if (validUntil === 0) {
       token = AuthToken.create(user, identifier, keyId, accessToken);
     } else {
-      token = AuthToken.create(user, identifier, keyId, accessToken, until);
+      token = AuthToken.create(
+        user,
+        identifier,
+        keyId,
+        accessToken,
+        new Date(validUntil),
+      );
     }
     const createdToken = await this.authTokenRepository.save(token);
     return this.toAuthTokenWithSecretDto(createdToken, `${keyId}.${secret}`);
@@ -92,7 +100,7 @@ export class AuthService {
     const accessToken = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
     });
-    accessToken.lastUsed = new Date().getTime();
+    accessToken.lastUsed = new Date();
     await this.authTokenRepository.save(accessToken);
   }
 
@@ -113,7 +121,7 @@ export class AuthService {
     }
     if (
       accessToken.validUntil &&
-      accessToken.validUntil < new Date().getTime()
+      accessToken.validUntil.getTime() < new Date().getTime()
     ) {
       // tokens validUntil Date lies in the past
       throw new TokenNotValidError(
@@ -141,18 +149,28 @@ export class AuthService {
     await this.authTokenRepository.remove(token);
   }
 
-  toAuthTokenDto(authToken: AuthToken | null | undefined): AuthTokenDto | null {
+  toAuthTokenDto(authToken: AuthToken): AuthTokenDto | null {
     if (!authToken) {
       this.logger.warn(`Recieved ${authToken} argument!`, 'toAuthTokenDto');
       return null;
     }
-    return {
+    const tokenDto: AuthTokenDto = {
+      lastUsed: null,
+      validUntil: null,
       label: authToken.identifier,
       keyId: authToken.keyId,
-      created: authToken.createdAt.getTime(),
-      validUntil: authToken.validUntil,
-      lastUsed: authToken.lastUsed,
+      createdAt: authToken.createdAt,
     };
+
+    if (authToken.validUntil) {
+      tokenDto.validUntil = new Date(authToken.validUntil);
+    }
+
+    if (authToken.lastUsed) {
+      tokenDto.lastUsed = new Date(authToken.lastUsed);
+    }
+
+    return tokenDto;
   }
 
   toAuthTokenWithSecretDto(
