@@ -26,6 +26,7 @@ import cspConfig from './config/csp.config';
 import databaseConfig from './config/database.config';
 import authConfig from './config/auth.config';
 import { PrivateApiModule } from './api/private/private-api.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { PrivateApiModule } from './api/private/private-api.module';
       ],
       isGlobal: true,
     }),
+    ScheduleModule.forRoot(),
     NotesModule,
     UsersModule,
     RevisionsModule,

@@ -25,7 +25,7 @@ export class AuthToken {
   user: User;
 
   @Column()
-  identifier: string;
+  label: string;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -51,16 +51,11 @@ export class AuthToken {
     validUntil?: Date,
   ): Pick<
     AuthToken,
-    | 'user'
-    | 'identifier'
-    | 'keyId'
-    | 'accessTokenHash'
-    | 'createdAt'
-    | 'validUntil'
+    'user' | 'label' | 'keyId' | 'accessTokenHash' | 'createdAt' | 'validUntil'
   > {
     const newToken = new AuthToken();
     newToken.user = user;
-    newToken.identifier = identifier;
+    newToken.label = identifier;
     newToken.keyId = keyId;
     newToken.accessTokenHash = accessToken;
     newToken.createdAt = new Date();

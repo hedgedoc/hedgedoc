@@ -17,6 +17,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { TimestampMillis } from '../utils/timestamp';
+import { Cron } from '@nestjs/schedule';
 
 @Injectable()
 export class AuthService {
@@ -32,11 +33,11 @@ export class AuthService {
   async validateToken(token: string): Promise<User> {
     const [keyId, secret] = token.split('.');
     const accessToken = await this.getAuthTokenAndValidate(keyId, secret);
+    await this.setLastUsedToken(keyId);
     const user = await this.usersService.getUserByUsername(
       accessToken.user.userName,
     );
     if (user) {
-      await this.setLastUsedToken(keyId);
       return user;
     }
     return null;
@@ -125,9 +126,7 @@ export class AuthService {
     ) {
       // tokens validUntil Date lies in the past
       throw new TokenNotValidError(
-        `AuthToken '${token}' is not valid since ${new Date(
-          accessToken.validUntil,
-        )}.`,
+        `AuthToken '${token}' is not valid since ${accessToken.validUntil}.`,
       );
     }
     return accessToken;
@@ -156,7 +155,7 @@ export class AuthService {
     const tokenDto: AuthTokenDto = {
       lastUsed: null,
       validUntil: null,
-      label: authToken.identifier,
+      label: authToken.label,
       keyId: authToken.keyId,
       createdAt: authToken.createdAt,
     };
@@ -181,5 +180,17 @@ export class AuthService {
       ...tokenDto,
       secret: secret,
     };
+  }
+
+  // Delete all non valid tokens  every sunday on 3:00 AM
+  @Cron('0 0 3 * * 0')
+  async handleCron() {
+    const currentTime = new Date().getTime();
+    const tokens: AuthToken[] = await this.authTokenRepository.find();
+    for (const token of tokens) {
+      if (token.validUntil && token.validUntil.getTime() <= currentTime) {
+        await this.authTokenRepository.remove(token);
+      }
+    }
   }
 }
