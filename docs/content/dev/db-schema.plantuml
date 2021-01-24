@@ -30,7 +30,7 @@ entity "auth_token"{
   *userId : uuid
   *keyId: text
   *accessToken : text
-  *identifier: text
+  *label: text
   *createdAt: date
   lastUsed: number
   validUntil: number

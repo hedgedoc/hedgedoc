@@ -35,7 +35,7 @@ describe('AuthService', () => {
       accessTokenHash: '',
       createdAt: new Date(),
       id: 1,
-      identifier: 'testIdentifier',
+      label: 'testIdentifier',
       keyId: 'abc',
       lastUsed: null,
       user: null,
@@ -186,7 +186,7 @@ describe('AuthService', () => {
       const tokenDto = await service.toAuthTokenDto(authToken);
       expect(tokenDto.keyId).toEqual(authToken.keyId);
       expect(tokenDto.lastUsed).toBeNull();
-      expect(tokenDto.label).toEqual(authToken.identifier);
+      expect(tokenDto.label).toEqual(authToken.label);
       expect(tokenDto.validUntil).toBeNull();
       expect(tokenDto.createdAt.getTime()).toEqual(
         authToken.createdAt.getTime(),
