@@ -9,14 +9,14 @@ import { AbcReplacer } from '../replace-components/abc/abc-replacer'
 import { AsciinemaReplacer } from '../replace-components/asciinema/asciinema-replacer'
 import { ComponentReplacer } from '../replace-components/ComponentReplacer'
 import { CsvReplacer } from '../replace-components/csv/csv-replacer'
-import { LinkInNewTabReplacer } from '../replace-components/external-links-in-new-tabs/external-links-in-new-tabs'
 import { FlowchartReplacer } from '../replace-components/flow/flowchart-replacer'
 import { GistReplacer } from '../replace-components/gist/gist-replacer'
 import { GraphvizReplacer } from '../replace-components/graphviz/graphviz-replacer'
 import { HighlightedCodeReplacer } from '../replace-components/highlighted-fence/highlighted-fence-replacer'
-import { ImageReplacer } from '../replace-components/image/image-replacer'
+import { ImageClickHandler, ImageReplacer } from '../replace-components/image/image-replacer'
 import { KatexReplacer } from '../replace-components/katex/katex-replacer'
 import { LinemarkerReplacer } from '../replace-components/linemarker/linemarker-replacer'
+import { LinkReplacer } from '../replace-components/link-replacer/link-replacer'
 import { MarkmapReplacer } from '../replace-components/markmap/markmap-replacer'
 import { MermaidReplacer } from '../replace-components/mermaid/mermaid-replacer'
 import { PdfReplacer } from '../replace-components/pdf/pdf-replacer'
@@ -28,9 +28,10 @@ import { VegaReplacer } from '../replace-components/vega-lite/vega-replacer'
 import { VimeoReplacer } from '../replace-components/vimeo/vimeo-replacer'
 import { YoutubeReplacer } from '../replace-components/youtube/youtube-replacer'
 
-export const useReplacerInstanceListCreator = (onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void): () => ComponentReplacer[] => {
-  return useMemo(() => () => [
-    new LinkInNewTabReplacer(),
+export const useReplacerInstanceListCreator = (onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void,
+                                               onImageClick?: ImageClickHandler, baseUrl?: string): () => ComponentReplacer[] => useMemo(() =>
+  () => [
+    new LinkReplacer(baseUrl),
     new LinemarkerReplacer(),
     new PossibleWiderReplacer(),
     new GistReplacer(),
@@ -39,7 +40,7 @@ export const useReplacerInstanceListCreator = (onTaskCheckedChange?: (lineInMark
     new AsciinemaReplacer(),
     new AbcReplacer(),
     new PdfReplacer(),
-    new ImageReplacer(),
+    new ImageReplacer(onImageClick),
     new SequenceDiagramReplacer(),
     new CsvReplacer(),
     new FlowchartReplacer(),
@@ -51,5 +52,4 @@ export const useReplacerInstanceListCreator = (onTaskCheckedChange?: (lineInMark
     new QuoteOptionsReplacer(),
     new KatexReplacer(),
     new TaskListReplacer(onTaskCheckedChange)
-  ], [onTaskCheckedChange])
-}
+  ], [onImageClick, onTaskCheckedChange, baseUrl])

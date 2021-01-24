@@ -39,5 +39,9 @@
     "version": "mock",
     "sourceCodeUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     "issueTrackerUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  "iframeCommunication": {
+    "editorOrigin": "http://localhost:3001",
+    "rendererOrigin": "http://localhost:3001"
   }
 }

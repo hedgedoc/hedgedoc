@@ -16,14 +16,14 @@ export const useConvertMarkdownToReactDom = (
   markdownCode: string,
   markdownIt: MarkdownIt,
   componentReplacers?: () => ComponentReplacer[],
-  onPreRendering?: () => void,
-  onPostRendering?: () => void): ReactElement[] => {
+  onBeforeRendering?: () => void,
+  onAfterRendering?: () => void): ReactElement[] => {
   const oldMarkdownLineKeys = useRef<LineKeys[]>()
   const lastUsedLineId = useRef<number>(0)
 
   return useMemo(() => {
-    if (onPreRendering) {
-      onPreRendering()
+    if (onBeforeRendering) {
+      onBeforeRendering()
     }
     const html = markdownIt.render(markdownCode)
     const contentLines = markdownCode.split('\n')
@@ -35,9 +35,9 @@ export const useConvertMarkdownToReactDom = (
     lastUsedLineId.current = newLastUsedLineId
     const transformer = componentReplacers ? buildTransformer(newLines, componentReplacers()) : undefined
     const rendering = ReactHtmlParser(html, { transform: transformer })
-    if (onPostRendering) {
-      onPostRendering()
+    if (onAfterRendering) {
+      onAfterRendering()
     }
     return rendering
-  }, [onPreRendering, onPostRendering, markdownCode, markdownIt, componentReplacers])
+  }, [onBeforeRendering, onAfterRendering, markdownCode, markdownIt, componentReplacers])
 }

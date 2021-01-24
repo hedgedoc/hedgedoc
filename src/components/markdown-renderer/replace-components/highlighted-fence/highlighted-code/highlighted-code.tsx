@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { Fragment, ReactElement, useEffect, useState } from 'react'
 import ReactHtmlParser from 'react-html-parser'
@@ -59,7 +59,7 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
         { dom }
       </code>
       <div className={'text-right button-inside'}>
-        <CopyToClipboardButton content={code}/>
+        <CopyToClipboardButton content={code} data-cy="copy-code-button"/>
       </div>
     </Fragment>)
 }

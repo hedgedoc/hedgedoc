@@ -6,8 +6,12 @@
 
 export const download = (data: BlobPart, fileName: string, mimeType: string): void => {
   const file = new Blob([data], { type: mimeType })
+  downloadLink(URL.createObjectURL(file), fileName)
+}
+
+export const downloadLink = (url: string, fileName: string): void => {
   const helperElement = document.createElement('a')
-  helperElement.href = URL.createObjectURL(file)
+  helperElement.href = url
   helperElement.download = fileName
   document.body.appendChild(helperElement)
   helperElement.click()

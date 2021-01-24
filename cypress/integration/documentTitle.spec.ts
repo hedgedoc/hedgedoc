@@ -87,7 +87,8 @@ describe('Document Title', () => {
 
     it('katex code looks right', () => {
       cy.codemirrorFill(`# $\\alpha$-foo`)
-      cy.get('.markdown-body > h1')
+      cy.getMarkdownRenderer()
+        .find('h1')
         .should('contain', 'α')
       cy.get('.CodeMirror textarea')
         .type('{Enter}{Enter}{Enter}{Enter}{Enter}') //This is a workaround because I don't know how to make sure, that the title gets updated in time.

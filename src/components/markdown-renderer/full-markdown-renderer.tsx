@@ -5,7 +5,7 @@
  */
 
 import { TocAst } from 'markdown-it-toc-done-right'
-import React, { RefObject, useCallback, useMemo, useRef, useState } from 'react'
+import React, { Ref, useCallback, useMemo, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { InternalLink } from '../common/links/internal-link'
@@ -17,6 +17,7 @@ import { usePostMetaDataOnChange } from './hooks/use-post-meta-data-on-change'
 import { usePostTocAstOnChange } from './hooks/use-post-toc-ast-on-change'
 import { useReplacerInstanceListCreator } from './hooks/use-replacer-instance-list-creator'
 import { FullMarkdownItConfigurator } from './markdown-it-configurator/FullMarkdownItConfigurator'
+import { ImageClickHandler } from './replace-components/image/image-replacer'
 import { LineMarkers } from './replace-components/linemarker/line-number-marker'
 import { AdditionalMarkdownRendererProps, LineMarkerPosition } from './types'
 import { useCalculateLineMarkerPosition } from './utils/calculate-line-marker-positions'
@@ -27,21 +28,26 @@ export interface FullMarkdownRendererProps {
   onMetaDataChange?: (yamlMetaData: YAMLMetaData | undefined) => void
   onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
   onTocChange?: (ast: TocAst) => void
-  rendererRef?: RefObject<HTMLDivElement>
+  rendererRef?: Ref<HTMLDivElement>
+  baseUrl?: string
+  onImageClick?: ImageClickHandler
 }
 
-export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & AdditionalMarkdownRendererProps> = ({
-  onFirstHeadingChange,
-  onLineMarkerPositionChanged,
-  onMetaDataChange,
-  onTaskCheckedChange,
-  onTocChange,
-  content,
-  className,
-  wide,
-  rendererRef
-}) => {
-  const allReplacers = useReplacerInstanceListCreator(onTaskCheckedChange)
+export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & AdditionalMarkdownRendererProps> = (
+  {
+    onFirstHeadingChange,
+    onLineMarkerPositionChanged,
+    onMetaDataChange,
+    onTaskCheckedChange,
+    onTocChange,
+    content,
+    className,
+    wide,
+    rendererRef,
+    baseUrl,
+    onImageClick
+  }) => {
+  const allReplacers = useReplacerInstanceListCreator(onTaskCheckedChange, onImageClick, baseUrl)
   useTranslation()
 
   const [showYamlError, setShowYamlError] = useState(false)

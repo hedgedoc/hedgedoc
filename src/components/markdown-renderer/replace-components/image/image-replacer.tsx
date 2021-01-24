@@ -9,17 +9,27 @@ import React from 'react'
 import { ComponentReplacer } from '../ComponentReplacer'
 import { ProxyImageFrame } from './proxy-image-frame'
 
+export type ImageClickHandler = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => void;
+
 export class ImageReplacer extends ComponentReplacer {
+  private readonly clickHandler?: ImageClickHandler
+
+  constructor (clickHandler?: ImageClickHandler) {
+    super()
+    this.clickHandler = clickHandler
+  }
+
   public getReplacement (node: DomElement): React.ReactElement | undefined {
     if (node.name === 'img' && node.attribs) {
       return <ProxyImageFrame
         id={node.attribs.id}
-        className={node.attribs.class}
+        className={`${node.attribs.class} cursor-zoom-in`}
         src={node.attribs.src}
         alt={node.attribs.alt}
         title={node.attribs.title}
         width={node.attribs.width}
         height={node.attribs.height}
+        onClick={this.clickHandler}
       />
     }
   }

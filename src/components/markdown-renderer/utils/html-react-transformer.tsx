@@ -15,7 +15,7 @@ export interface TextDifferenceResult {
   lastUsedLineId: number
 }
 
-export const calculateKeyFromLineMarker = (node: DomElement, lineKeys?: LineKeys[]): string|undefined => {
+export const calculateKeyFromLineMarker = (node: DomElement, lineKeys?: LineKeys[]): string | undefined => {
   if (!node.attribs || lineKeys === undefined) {
     return
   }
@@ -60,7 +60,7 @@ export const renderNativeNode = (node: DomElement, key: string, transform: Trans
   return convertNodeToElement(node, key as unknown as number, transform)
 }
 
-export const buildTransformer = (lineKeys: (LineKeys[] | undefined), allReplacers: ComponentReplacer[]):Transform => {
+export const buildTransformer = (lineKeys: (LineKeys[] | undefined), allReplacers: ComponentReplacer[]): Transform => {
   const transform: Transform = (node, index) => {
     const nativeRenderer: NativeRenderer = () => renderNativeNode(node, key, transform)
     const subNodeTransform: SubNodeTransform = (subNode, subIndex) => transform(subNode, subIndex, transform)

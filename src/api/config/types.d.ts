@@ -16,6 +16,12 @@ export interface Config {
   version: BackendVersion,
   plantumlServer: string | null,
   maxDocumentLength: number,
+  iframeCommunication: iframeCommunicationConfig
+}
+
+export interface iframeCommunicationConfig {
+  editorOrigin: string,
+  rendererOrigin: string
 }
 
 export interface BrandingConfig {

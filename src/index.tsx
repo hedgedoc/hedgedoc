@@ -26,6 +26,7 @@ import './style/index.scss'
 import { isTestMode } from './utils/is-test-mode'
 
 const Editor = React.lazy(() => import(/* webpackPrefetch: true */ './components/editor/editor'))
+const RenderPage = React.lazy(() => import (/* webpackPrefetch: true */ './components/render-page/render-page'))
 
 ReactDOM.render(
   <Provider store={store}>
@@ -58,6 +59,9 @@ ReactDOM.render(
                 <ProfilePage/>
               </LandingLayout>
             </Route>
+            <Route path="/render">
+              <RenderPage/>
+            </Route>
             <Route path="/n/:id">
               <Editor/>
             </Route>
@@ -82,10 +86,11 @@ ReactDOM.render(
 )
 
 if (isTestMode()) {
-  console.log("This build runs in test mode. This means:\n - No default content in the editor")
+  console.log("This build runs in test mode. This means:\n - No default content in the editor\n - no sandboxed iframe")
 }
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorkerRegistration.unregister()
+

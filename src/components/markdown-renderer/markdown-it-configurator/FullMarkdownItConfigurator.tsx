@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import MarkdownIt from 'markdown-it'
 import { TocAst } from 'markdown-it-toc-done-right'
@@ -45,9 +45,9 @@ export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
           !this.useFrontmatter
             ? undefined
             : {
-                onYamlError: (hasError: boolean) => this.passYamlErrorState(hasError),
-                onRawMeta: (rawMeta: RawYAMLMetadata) => this.onRawMeta(rawMeta)
-              })
+              onYamlError: (hasError: boolean) => this.passYamlErrorState(hasError),
+              onRawMeta: (rawMeta: RawYAMLMetadata) => this.onRawMeta(rawMeta)
+            })
       },
       headlineAnchors,
       KatexReplacer.markdownItPlugin,

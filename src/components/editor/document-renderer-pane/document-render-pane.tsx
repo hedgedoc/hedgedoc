@@ -5,14 +5,13 @@
  */
 
 import { TocAst } from 'markdown-it-toc-done-right'
-import React, { RefObject, useRef, useState } from 'react'
+import React, { MutableRefObject, useCallback, useRef, useState } from 'react'
 import { Dropdown } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
 import useResizeObserver from 'use-resize-observer'
-import { ApplicationState } from '../../../redux'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../../common/show-if/show-if'
 import { FullMarkdownRenderer } from '../../markdown-renderer/full-markdown-renderer'
+import { ImageClickHandler } from '../../markdown-renderer/replace-components/image/image-replacer'
 import { LineMarkerPosition } from '../../markdown-renderer/types'
 import { TableOfContents } from '../table-of-contents/table-of-contents'
 import { YAMLMetaData } from '../yaml-metadata/yaml-metadata'
@@ -21,14 +20,17 @@ import { YamlArrayDeprecationAlert } from './yaml-array-deprecation-alert'
 
 export interface DocumentRenderPaneProps {
   extraClasses?: string
-  onFirstHeadingChange: (firstHeading: string | undefined) => void
+  onFirstHeadingChange?: (firstHeading: string | undefined) => void
   onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void
-  onMetadataChange: (metaData: YAMLMetaData | undefined) => void
+  onMetadataChange?: (metaData: YAMLMetaData | undefined) => void
   onMouseEnterRenderer?: () => void
   onScrollRenderer?: () => void
-  onTaskCheckedChange: (lineInMarkdown: number, checked: boolean) => void
-  documentRenderPaneRef?: RefObject<HTMLDivElement>
-  wide?: boolean
+  onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
+  documentRenderPaneRef?: MutableRefObject<HTMLDivElement | null>
+  wide?: boolean,
+  markdownContent: string,
+  baseUrl?: string
+  onImageClick?: ImageClickHandler
 }
 
 export const DocumentRenderPane: React.FC<DocumentRenderPaneProps> = (
@@ -41,25 +43,34 @@ export const DocumentRenderPane: React.FC<DocumentRenderPaneProps> = (
     onScrollRenderer,
     onTaskCheckedChange,
     documentRenderPaneRef,
-    wide
+    wide,
+    baseUrl,
+    markdownContent,
+    onImageClick
   }) => {
   const [tocAst, setTocAst] = useState<TocAst>()
-  const { width } = useResizeObserver(documentRenderPaneRef ? { ref: documentRenderPaneRef } : undefined)
+  const internalDocumentRenderPaneRef = useRef<HTMLDivElement>()
+  const { width } = useResizeObserver({ ref: internalDocumentRenderPaneRef.current })
   const realWidth = width || 0
   const rendererRef = useRef<HTMLDivElement | null>(null)
-  const markdownContent = useSelector((state: ApplicationState) => state.documentContent.content)
   const changeLineMarker = useAdaptedLineMarkerCallback(documentRenderPaneRef, rendererRef, onLineMarkerPositionChanged)
+  const setContainerReference = useCallback((instance: HTMLDivElement | null) => {
+    if (documentRenderPaneRef) {
+      documentRenderPaneRef.current = instance || null
+    }
+    internalDocumentRenderPaneRef.current = instance || undefined
+  }, [documentRenderPaneRef])
 
   return (
-    <div className={`bg-light flex-fill pb-5 flex-row d-flex w-100 h-100 ${extraClasses ?? ''}`}
-         ref={documentRenderPaneRef} onScroll={onScrollRenderer} onMouseEnter={onMouseEnterRenderer}>
-      <div className={'col-md'}/>
-      <div className={'bg-light flex-fill'}>
+    <div className={`bg-light m-0 pb-5 row ${extraClasses ?? ''}`}
+         ref={setContainerReference} onScroll={onScrollRenderer} onMouseEnter={onMouseEnterRenderer}>
+      <div className={'col-md d-none d-md-block'}/>
+      <div className={'bg-light col'}>
         <YamlArrayDeprecationAlert/>
         <div>
           <FullMarkdownRenderer
             rendererRef={rendererRef}
-            className={'flex-fill mb-3'}
+            className={'flex-fill pt-4 mb-3'}
             content={markdownContent}
             onFirstHeadingChange={onFirstHeadingChange}
             onLineMarkerPositionChanged={changeLineMarker}
@@ -67,13 +78,14 @@ export const DocumentRenderPane: React.FC<DocumentRenderPaneProps> = (
             onTaskCheckedChange={onTaskCheckedChange}
             onTocChange={(tocAst) => setTocAst(tocAst)}
             wide={wide}
-          />
+            baseUrl={baseUrl}
+            onImageClick={onImageClick}/>
         </div>
       </div>
 
-      <div className={'col-md'}>
+      <div className={'col-md pt-4'}>
         <ShowIf condition={realWidth >= 1280 && !!tocAst}>
-          <TableOfContents ast={tocAst as TocAst} className={'position-fixed'}/>
+          <TableOfContents ast={tocAst as TocAst} className={'sticky'} baseUrl={baseUrl}/>
         </ShowIf>
         <ShowIf condition={realWidth < 1280 && !!tocAst}>
           <div className={'markdown-toc-sidebar-button'}>
@@ -83,7 +95,7 @@ export const DocumentRenderPane: React.FC<DocumentRenderPaneProps> = (
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <div className={'p-2'}>
-                  <TableOfContents ast={tocAst as TocAst}/>
+                  <TableOfContents ast={tocAst as TocAst} baseUrl={baseUrl}/>
                 </div>
               </Dropdown.Menu>
             </Dropdown>

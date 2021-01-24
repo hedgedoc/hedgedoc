@@ -16,6 +16,10 @@
   color: $black;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 body {
   background-color: darken($dark, 8%);
 }

@@ -19,7 +19,7 @@ import { MotdBanner } from '../common/motd-banner/motd-banner'
 import { AppBar, AppBarMode } from './app-bar/app-bar'
 import { EditorMode } from './app-bar/editor-view-mode'
 import { DocumentBar } from './document-bar/document-bar'
-import { ScrollingDocumentRenderPane } from './document-renderer-pane/scrolling-document-render-pane'
+import { DocumentIframe } from './document-renderer-pane/document-iframe'
 import { EditorPane } from './editor-pane/editor-pane'
 import { editorTestContent } from './editorTestContent'
 import { useViewModeShortcuts } from './hooks/useViewModeShortcuts'
@@ -121,6 +121,10 @@ export const Editor: React.FC = () => {
   useApplyDarkMode()
   useDocumentTitle(documentTitle)
 
+  const setRendererToScrollSource = useCallback(() => {
+    scrollSource.current = ScrollSource.RENDERER
+  }, [])
+
   return (
     <Fragment>
       <MotdBanner/>
@@ -140,16 +144,14 @@ export const Editor: React.FC = () => {
           }
           showRight={editorMode === EditorMode.PREVIEW || (editorMode === EditorMode.BOTH)}
           right={
-            <ScrollingDocumentRenderPane
-              onFirstHeadingChange={onFirstHeadingChange}
-              onMakeScrollSource={() => {
-                scrollSource.current = ScrollSource.RENDERER
-              }}
-              onMetadataChange={onMetadataChange}
-              onScroll={onMarkdownRendererScroll}
-              onTaskCheckedChange={onTaskCheckedChange}
-              scrollState={scrollState.rendererScrollState}
-              wide={editorMode === EditorMode.PREVIEW}
+            <DocumentIframe markdownContent={markdownContent}
+                            onMakeScrollSource={setRendererToScrollSource}
+                            onFirstHeadingChange={onFirstHeadingChange}
+                            onTaskCheckedChange={onTaskCheckedChange}
+                            onMetadataChange={onMetadataChange}
+                            onScroll={onMarkdownRendererScroll}
+                            wide={editorMode === EditorMode.PREVIEW}
+                            scrollState={scrollState.rendererScrollState}
             />
           }
           containerClassName={'overflow-hidden'}/>
@@ -157,5 +159,4 @@ export const Editor: React.FC = () => {
     </Fragment>
   )
 }
-
 export default Editor

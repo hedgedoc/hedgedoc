@@ -227,5 +227,3 @@ export const HistoryPage: React.FC = () => {
     />
   </Fragment>
 }
-
-export default HistoryPage

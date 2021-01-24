@@ -18,9 +18,11 @@ export const YamlArrayDeprecationAlert: React.FC = () => {
   const yamlDeprecatedTags = useSelector((state: ApplicationState) => state.documentContent.metadata.deprecatedTagsSyntax)
 
   return <ShowIf condition={yamlDeprecatedTags}>
-    <Alert data-cy={'yamlArrayDeprecationAlert'} variant='warning' dir='auto'>
-      <span className={'text-wrap'}>
-        <Trans i18nKey='editor.deprecatedTags'/>
+    <Alert data-cy={'yamlArrayDeprecationAlert'} className={'text-wrap'} variant='warning' dir='auto'>
+        <span className={'text-wrap'}>
+          <span className={'text-wrap'}>
+        <Trans i18nKey='editor.deprecatedTags' />
+        </span>
       </span>
       <br/>
       <TranslatedExternalLink i18nKey={'common.readForMoreInfo'} href={links.faq} className={'text-primary'}/>

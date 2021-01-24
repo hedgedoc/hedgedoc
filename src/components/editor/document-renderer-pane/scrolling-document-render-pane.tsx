@@ -1,38 +1,48 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { useMemo, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../redux'
 import { LineMarkerPosition } from '../../markdown-renderer/types'
+import { useOnUserScroll } from '../scroll/hooks/use-on-user-scroll'
 import { useScrollToLineMark } from '../scroll/hooks/use-scroll-to-line-mark'
-import { useUserScroll } from '../scroll/hooks/use-user-scroll'
 import { ScrollProps } from '../scroll/scroll-props'
 import { DocumentRenderPane, DocumentRenderPaneProps } from './document-render-pane'
 
-export const ScrollingDocumentRenderPane: React.FC<DocumentRenderPaneProps & ScrollProps> = ({
-  scrollState,
-  wide,
-  onFirstHeadingChange,
-  onMakeScrollSource,
-  onMetadataChange,
-  onScroll,
-  onTaskCheckedChange
-}) => {
-  const markdownContent = useSelector((state: ApplicationState) => state.documentContent.content)
+type ImplementedProps =
+  'onLineMarkerPositionChanged'
+  | 'onScrollRenderer'
+  | 'rendererReference'
+  | 'onMouseEnterRenderer'
+
+export type ScrollingDocumentRenderPaneProps = Omit<(DocumentRenderPaneProps & ScrollProps), ImplementedProps>
+
+export const ScrollingDocumentRenderPane: React.FC<ScrollingDocumentRenderPaneProps> = (
+  {
+    scrollState,
+    wide,
+    onFirstHeadingChange,
+    onMakeScrollSource,
+    onMetadataChange,
+    onScroll,
+    onTaskCheckedChange,
+    markdownContent,
+    extraClasses,
+    baseUrl,
+    onImageClick
+  }) => {
   const renderer = useRef<HTMLDivElement>(null)
   const [lineMarks, setLineMarks] = useState<LineMarkerPosition[]>()
 
   const contentLineCount = useMemo(() => markdownContent.split('\n').length, [markdownContent])
   useScrollToLineMark(scrollState, lineMarks, contentLineCount, renderer)
-  const userScroll = useUserScroll(lineMarks, renderer, onScroll)
+  const userScroll = useOnUserScroll(lineMarks, renderer, onScroll)
 
   return (
     <DocumentRenderPane
-      extraClasses={'overflow-y-scroll'}
+      extraClasses={`overflow-y-scroll h-100 ${extraClasses || ''}`}
       documentRenderPaneRef={renderer}
       wide={wide}
       onFirstHeadingChange={onFirstHeadingChange}
@@ -41,6 +51,9 @@ export const ScrollingDocumentRenderPane: React.FC<DocumentRenderPaneProps & Scr
       onMouseEnterRenderer={onMakeScrollSource}
       onScrollRenderer={userScroll}
       onTaskCheckedChange={onTaskCheckedChange}
+      markdownContent={markdownContent}
+      baseUrl={baseUrl}
+      onImageClick={onImageClick}
     />
   )
 }

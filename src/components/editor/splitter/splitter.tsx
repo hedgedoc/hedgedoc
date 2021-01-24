@@ -1,10 +1,10 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
-
-import React, { ReactElement, useRef, useState } from 'react'
+import React, { ReactElement, useCallback, useRef, useState } from 'react'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SplitDivider } from './split-divider/split-divider'
 import './splitter.scss'
@@ -33,28 +33,35 @@ export const Splitter: React.FC<SplitterProps> = ({ containerClassName, left, ri
     setSplit(newSize * 100)
   }
 
+  const stopResizing = useCallback(() => {
+    setDoResizing(false)
+  }, [])
+
+  const onMouseMove = useCallback((mouseEvent: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (doResizing) {
+      recalculateSize(mouseEvent.pageX)
+      mouseEvent.preventDefault()
+    }
+  }, [doResizing])
+
+  const onTouchMove = useCallback((touchEvent: React.TouchEvent<HTMLDivElement>) => {
+    if (doResizing) {
+      recalculateSize(touchEvent.touches[0].pageX)
+      touchEvent.preventDefault()
+    }
+  }, [doResizing])
+
+  const onGrab = useCallback(() => setDoResizing(true), [])
+
   return (
     <div ref={splitContainer} className={`flex-fill flex-row d-flex ${containerClassName || ''}`}
-      onMouseUp={() => setDoResizing(false)}
-      onTouchEnd={() => setDoResizing(false)}
-      onMouseMove={(mouseEvent) => {
-        if (doResizing) {
-          recalculateSize(mouseEvent.pageX)
-          mouseEvent.preventDefault()
-        }
-      }}
-      onTouchMove={(touchEvent) => {
-        if (doResizing) {
-          recalculateSize(touchEvent.touches[0].pageX)
-        }
-      }}
-    >
+         onMouseUp={stopResizing} onTouchEnd={stopResizing} onMouseMove={onMouseMove} onTouchMove={onTouchMove}>
       <div className={`splitter left ${!showLeft ? 'd-none' : ''}`} style={{ flexBasis: `calc(${realSplit}% - 5px)` }}>
         {left}
       </div>
       <ShowIf condition={showLeft && showRight}>
         <div className='splitter separator'>
-          <SplitDivider onGrab={() => setDoResizing(true)}/>
+          <SplitDivider onGrab={onGrab}/>
         </div>
       </ShowIf>
       <div className={`splitter right ${!showRight ? 'd-none' : ''}`}>

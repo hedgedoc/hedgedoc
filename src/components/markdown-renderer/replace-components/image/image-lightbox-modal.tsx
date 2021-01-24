@@ -8,6 +8,7 @@ import React from 'react'
 import { Modal } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import "./lightbox.scss"
+import { ProxyImageFrame } from './proxy-image-frame'
 
 export interface ImageLightboxModalProps {
   show: boolean
@@ -33,7 +34,7 @@ export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({ show, on
           <span>{alt ?? title ?? ''}</span>
         </Modal.Title>
       </Modal.Header>
-      <img alt={alt} src={src} title={title} className={'w-100 cursor-zoom-out'} onClick={onHide}/>
+      <ProxyImageFrame alt={alt} src={src} title={title} className={'w-100 cursor-zoom-out'} onClick={onHide}/>
     </Modal>
   )
 }

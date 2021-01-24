@@ -49,6 +49,10 @@ export const initialState: Config = {
     version: '',
     sourceCodeUrl: '',
     issueTrackerUrl: ''
+  },
+  iframeCommunication: {
+    editorOrigin: '',
+    rendererOrigin: ''
   }
 }
 

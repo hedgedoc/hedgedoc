@@ -1,22 +1,24 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { getNote, Note } from '../../api/notes'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { useDocumentTitle } from '../../hooks/common/use-document-title'
+import { ApplicationState } from '../../redux'
 import { setDocumentContent, setDocumentMetadata } from '../../redux/document-content/methods'
 import { extractNoteTitle } from '../common/document-title/note-title-extractor'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
 import { ShowIf } from '../common/show-if/show-if'
 import { AppBar, AppBarMode } from '../editor/app-bar/app-bar'
-import { DocumentRenderPane } from '../editor/document-renderer-pane/document-render-pane'
+import { DocumentIframe } from '../editor/document-renderer-pane/document-iframe'
 import { EditorPathParams } from '../editor/editor'
 import { YAMLMetaData } from '../editor/yaml-metadata/yaml-metadata'
 import { DocumentInfobar } from './document-infobar'
@@ -60,6 +62,7 @@ export const PadViewOnly: React.FC = () => {
 
   useApplyDarkMode()
   useDocumentTitle(documentTitle)
+  const markdownContent = useSelector((state: ApplicationState) => state.documentContent.content)
 
   return (
     <div className={'d-flex flex-column mvh-100 bg-light'}>
@@ -80,7 +83,7 @@ export const PadViewOnly: React.FC = () => {
         </ShowIf>
       </div>
       <ShowIf condition={!error && !loading}>
-        { /* TODO set editable and created author properly */ }
+        { /* TODO set editable and created author properly */}
         <DocumentInfobar
           changedAuthor={noteData?.lastChange.userId ?? ''}
           changedTime={noteData?.lastChange.timestamp ?? 0}
@@ -90,11 +93,10 @@ export const PadViewOnly: React.FC = () => {
           noteId={id}
           viewCount={noteData?.viewcount ?? 0}
         />
-        <DocumentRenderPane
-          onFirstHeadingChange={onFirstHeadingChange}
-          onMetadataChange={onMetadataChange}
-          onTaskCheckedChange={() => false}
-        />
+        <DocumentIframe extraClasses={"flex-fill"}
+                        markdownContent={markdownContent}
+                        onFirstHeadingChange={onFirstHeadingChange}
+                        onMetadataChange={onMetadataChange}/>
       </ShowIf>
     </div>
   )

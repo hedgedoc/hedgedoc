@@ -35,7 +35,8 @@ describe('The status bar text length info', () => {
     cy.codemirrorFill(tooMuchTestContent)
     cy.get('[data-cy="limitReachedModal"]')
       .should('be.visible')
-    cy.get('[data-cy="limitReachedMessage"]')
+    cy.getMarkdownRenderer()
+      .find('[data-cy="limitReachedMessage"]')
       .should('be.visible')
   })
 
