@@ -203,9 +203,7 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
   return (
     <div className={'d-flex flex-column h-100 position-relative'} onMouseEnter={onMakeScrollSource}>
       <MaxLengthWarningModal show={showMaxLengthWarning} onHide={onMaxLengthHide} maxLength={maxLength}/>
-      <ToolBar
-        editor={editor}
-      />
+      <ToolBar editor={editor}/>
       <ControlledCodeMirror
         className={`overflow-hidden w-100 flex-fill ${ligaturesEnabled ? '' : 'no-ligatures'}`}
         value={content}

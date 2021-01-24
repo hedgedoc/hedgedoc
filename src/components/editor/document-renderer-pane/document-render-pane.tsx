@@ -51,7 +51,7 @@ export const DocumentRenderPane: React.FC<DocumentRenderPaneProps> = (
   const [tocAst, setTocAst] = useState<TocAst>()
   const internalDocumentRenderPaneRef = useRef<HTMLDivElement>()
   const { width } = useResizeObserver({ ref: internalDocumentRenderPaneRef.current })
-  const realWidth = width || 0
+  const realWidth = width ?? 0
   const rendererRef = useRef<HTMLDivElement | null>(null)
   const changeLineMarker = useAdaptedLineMarkerCallback(documentRenderPaneRef, rendererRef, onLineMarkerPositionChanged)
   const setContainerReference = useCallback((instance: HTMLDivElement | null) => {
@@ -84,22 +84,24 @@ export const DocumentRenderPane: React.FC<DocumentRenderPaneProps> = (
       </div>
 
       <div className={'col-md pt-4'}>
-        <ShowIf condition={realWidth >= 1280 && !!tocAst}>
-          <TableOfContents ast={tocAst as TocAst} className={'sticky'} baseUrl={baseUrl}/>
-        </ShowIf>
-        <ShowIf condition={realWidth < 1280 && !!tocAst}>
-          <div className={'markdown-toc-sidebar-button'}>
-            <Dropdown drop={'up'}>
-              <Dropdown.Toggle id="toc-overlay-button" variant={'secondary'} className={'no-arrow'}>
-                <ForkAwesomeIcon icon={'bars'}/>
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <div className={'p-2'}>
-                  <TableOfContents ast={tocAst as TocAst} baseUrl={baseUrl}/>
-                </div>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
+        <ShowIf condition={!!tocAst}>
+          <ShowIf condition={realWidth >= 1280}>
+            <TableOfContents ast={tocAst as TocAst} className={'sticky'} baseUrl={baseUrl}/>
+          </ShowIf>
+          <ShowIf condition={realWidth < 1280}>
+            <div className={'markdown-toc-sidebar-button'}>
+              <Dropdown drop={'up'}>
+                <Dropdown.Toggle id="toc-overlay-button" variant={'secondary'} className={'no-arrow'}>
+                  <ForkAwesomeIcon icon={'list-ol'}/>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <div className={'p-2'}>
+                    <TableOfContents ast={tocAst as TocAst} baseUrl={baseUrl}/>
+                  </div>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          </ShowIf>
         </ShowIf>
       </div>
     </div>

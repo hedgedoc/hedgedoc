@@ -224,6 +224,9 @@
                 "highlightedText": "Highlight"
             }
         },
+        "onlineStatus": {
+            "online": "Online"
+        },
         "error": {
             "locked": {
                 "title": "This note is locked",
@@ -260,6 +263,7 @@
             "switchToLight": "Switch to Light Mode"
         },
         "appBar": {
+            "new": "New",
             "syncScroll": {
                 "disable": "Disable sync scroll",
                 "enable": "Enable sync scroll"
@@ -299,16 +303,11 @@
             "menu": "Menu",
             "import": "Import",
             "export": "Export",
-            "new": "New",
-            "shareLink": "Share link",
             "extra": "Extra",
-            "revision": "Revision",
             "slideMode": "Slide Mode",
             "download": "Download",
             "help": "Help",
             "deleteNote": "Delete note",
-            "permissions": "Permissions",
-            "documentInfo": "Document info",
             "pinNoteToHistory": "Pin note to history",
             "pinnedToHistory": "Pinned to history"
         },
@@ -328,7 +327,8 @@
         },
         "export": {
             "rawHtml": "Raw HTML",
-            "pdf": "PDF export is unavailable."
+            "pdf": "PDF export is unavailable.",
+            "markdown-file": "Markdown file"
         },
         "import": {
             "clipboard": "Clipboard",

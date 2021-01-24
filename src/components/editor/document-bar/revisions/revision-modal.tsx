@@ -15,13 +15,18 @@ import { Revision, RevisionListEntry } from '../../../../api/revisions/types'
 import { UserResponse } from '../../../../api/users/types'
 import { useIsDarkModeActivated } from '../../../../hooks/common/use-is-dark-mode-activated'
 import { ApplicationState } from '../../../../redux'
-import { CommonModal, CommonModalProps } from '../../../common/modals/common-modal'
+import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { RevisionModalListEntry } from './revision-modal-list-entry'
 import './revision-modal.scss'
 import { downloadRevision, getUserDataForRevision } from './utils'
 
-export const RevisionModal: React.FC<CommonModalProps> = ({ show, onHide, icon, titleI18nKey }) => {
+export interface PermissionsModalProps {
+  show: boolean,
+  onHide: () => void
+}
+
+export const RevisionModal: React.FC<PermissionsModalProps> = ({ show, onHide }) => {
   useTranslation()
   const [revisions, setRevisions] = useState<RevisionListEntry[]>([])
   const [selectedRevisionTimestamp, setSelectedRevisionTimestamp] = useState<number | null>(null)
@@ -56,7 +61,7 @@ export const RevisionModal: React.FC<CommonModalProps> = ({ show, onHide, icon, 
   const markdownContent = useSelector((state: ApplicationState) => state.documentContent.content)
 
   return (
-    <CommonModal show={show} onHide={onHide} titleI18nKey={titleI18nKey} icon={icon} closeButton={true} size={'xl'} additionalClasses='revision-modal'>
+    <CommonModal show={show} onHide={onHide} titleI18nKey={'editor.modal.revision.title'} icon={'history'} closeButton={true} size={'xl'} additionalClasses='revision-modal'>
       <Modal.Body>
         <Row>
           <Col lg={4} className={'scroll-col'}>

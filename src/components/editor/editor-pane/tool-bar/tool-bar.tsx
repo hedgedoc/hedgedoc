@@ -5,16 +5,15 @@ SPDX-License-Identifier: AGPL-3.0-only
 */
 
 import { Editor } from 'codemirror'
-import React, { useCallback } from 'react'
+import React from 'react'
 import { Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import { HiddenInputMenuEntry } from '../../../common/hidden-input-menu-entry/hidden-input-menu-entry'
-import { handleUpload } from '../upload-handler'
 import { EditorPreferences } from './editor-preferences/editor-preferences'
 import { EmojiPickerButton } from './emoji-picker/emoji-picker-button'
 import { TablePickerButton } from './table-picker/table-picker-button'
 import './tool-bar.scss'
+import { UploadImageButton } from './upload-image-button'
 import {
   addCodeFences,
   addCollapsableBlock,
@@ -34,21 +33,13 @@ import {
   superscriptSelection,
   underlineSelection
 } from './utils/toolbarButtonUtils'
-import { supportedMimeTypesJoined } from './utils/upload-image-mimetypes'
 
 export interface ToolBarProps {
-  editor: Editor | undefined
+  editor?: Editor
 }
 
 export const ToolBar: React.FC<ToolBarProps> = ({ editor }) => {
   const { t } = useTranslation()
-
-  const onUploadImage = useCallback((file: File) => {
-    if (editor) {
-      handleUpload(file, editor)
-    }
-    return Promise.resolve()
-  }, [editor])
 
   if (!editor) {
     return null
@@ -103,13 +94,7 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor }) => {
         <Button data-cy={'format-image'} variant='light' onClick={() => addImage(editor)} title={t('editor.editorToolbar.image')}>
           <ForkAwesomeIcon icon="picture-o"/>
         </Button>
-        <HiddenInputMenuEntry
-          type={'button'}
-          acceptedFiles={supportedMimeTypesJoined}
-          i18nKey={'editor.editorToolbar.uploadImage'}
-          icon={'upload'}
-          onLoad={onUploadImage}
-        />
+        <UploadImageButton editor={editor}/>
       </ButtonGroup>
       <ButtonGroup className={'mx-1 flex-wrap'}>
         <TablePickerButton editor={editor}/>

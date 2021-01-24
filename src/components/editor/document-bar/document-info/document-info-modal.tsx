@@ -1,29 +1,28 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import { DateTime } from 'luxon'
-import React, { Fragment, useState } from 'react'
+import React from 'react'
 import { ListGroup, Modal } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
-import { TranslatedIconButton } from '../../../common/icon-button/translated-icon-button'
+import { Trans } from 'react-i18next'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { DocumentInfoLine } from './document-info-line'
 import { DocumentInfoLineWithTimeMode, DocumentInfoTimeLine } from './document-info-time-line'
 import { UnitalicBoldText } from './unitalic-bold-text'
 
-export const DocumentInfoButton: React.FC = () => {
-  const [showModal, setShowModal] = useState(false)
-  useTranslation()
+export interface DocumentInfoModalProps {
+  show: boolean,
+  onHide: () => void
+}
 
-  return (
-    <Fragment>
-      <TranslatedIconButton size={'sm'} className={'mx-1'} icon={'line-chart'} variant={'light'} onClick={() => setShowModal(true)} i18nKey={'editor.documentBar.documentInfo'}/>
+export const DocumentInfoModal: React.FC<DocumentInfoModalProps> = ({show, onHide}) => {
+    return (
       <CommonModal
-        show={showModal}
-        onHide={() => setShowModal(false)}
+        show={show}
+        onHide={onHide}
         closeButton={true}
         titleI18nKey={'editor.modal.documentInfo.title'}>
         <Modal.Body>
@@ -61,6 +60,5 @@ export const DocumentInfoButton: React.FC = () => {
           </ListGroup>
         </Modal.Body>
       </CommonModal>
-    </Fragment>
-  )
+    );
 }

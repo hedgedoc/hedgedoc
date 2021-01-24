@@ -10,11 +10,11 @@ describe('Import markdown file', () => {
   })
 
   it('import on blank note', () => {
-    cy.get('button#editor-menu-import')
+    cy.get('[data-cy="menu-import"]')
       .click()
-    cy.get('.import-md-file')
+    cy.get('[data-cy="menu-import-markdown"]')
       .click()
-    cy.get('div[aria-labelledby="editor-menu-import"] > input[type=file]')
+    cy.get('[data-cy="menu-import-markdown-input"]')
       .attachFile({ filePath: 'import.md', mimeType: 'text/markdown' })
     cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span')
       .should('have.text', '# Some short import test file')
@@ -25,11 +25,11 @@ describe('Import markdown file', () => {
   it('import on note with content', () => {
 
     cy.codemirrorFill('test\nabc')
-    cy.get('button#editor-menu-import')
+    cy.get('[data-cy="menu-import"]')
       .click()
-    cy.get('.import-md-file')
+    cy.get('[data-cy="menu-import-markdown"]')
       .click()
-    cy.get('div[aria-labelledby="editor-menu-import"] > input[type=file]')
+    cy.get('[data-cy="menu-import-markdown-input"]')
       .attachFile({ filePath: 'import.md', mimeType: 'text/markdown' })
     cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span')
       .should('have.text', 'test')

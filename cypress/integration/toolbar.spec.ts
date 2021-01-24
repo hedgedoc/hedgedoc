@@ -104,7 +104,7 @@ describe('Toolbar Buttons', () => {
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `# ${testText}`)
-      cy.get('.btn-toolbar [data-cy="format-heading"]')
+      cy.get('.fa-header')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `## ${testText}`)

@@ -56,7 +56,7 @@ export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
       </Nav>
       <Nav className="d-flex align-items-center text-secondary">
         <Button className="mx-2" size="sm" variant="primary">
-          <ForkAwesomeIcon icon="plus"/> <Trans i18nKey="editor.documentBar.new"/>
+          <ForkAwesomeIcon icon="plus"/> <Trans i18nKey="editor.appBar.new"/>
         </Button>
         <ShowIf condition={!userExists}>
           <SignInButton size={'sm'} />

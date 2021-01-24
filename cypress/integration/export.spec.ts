@@ -14,9 +14,9 @@ describe('Export', () => {
   })
 
   it('Markdown', () => {
-    cy.get('#editor-menu-export')
+    cy.get('[data-cy="menu-export"]')
       .click()
-    cy.get('a.dropdown-item > i.fa-file-text')
+    cy.get('[data-cy="menu-export-markdown"]')
       .click()
     cy.get('a[download]')
       .then((anchor) => (

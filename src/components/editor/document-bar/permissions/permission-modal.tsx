@@ -16,7 +16,7 @@ import { PermissionList } from './permission-list'
 
 export interface PermissionsModalProps {
   show: boolean,
-  onChangeShow: (newShow: boolean) => void
+  onHide: () => void
 }
 
 export interface Principal {
@@ -59,7 +59,7 @@ const permissionsApiResponse: NotePermissions = {
   }]
 }
 
-export const PermissionModal: React.FC<PermissionsModalProps> = ({ show, onChangeShow }) => {
+export const PermissionModal: React.FC<PermissionsModalProps> = ({ show, onHide }) => {
   useTranslation()
   const [error, setError] = useState(false)
   const [userList, setUserList] = useState<Principal[]>([])
@@ -123,7 +123,7 @@ export const PermissionModal: React.FC<PermissionsModalProps> = ({ show, onChang
   return (
     <CommonModal
       show={show}
-      onHide={() => onChangeShow(false)}
+      onHide={onHide}
       closeButton={true}
       titleI18nKey={'editor.modal.permissions.title'}>
       <Modal.Body>

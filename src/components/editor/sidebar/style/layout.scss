@@ -1,0 +1,100 @@
+/*!
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+
+$height: 40px;
+$menu-width: 175px;
+
+.slide-sidebar {
+  flex: 0 0 $height;
+  position: relative;
+
+  .sidebar-inner {
+    height: 100%;
+    display: flex;
+    overflow-y: auto;
+    flex-direction: column;
+    position: absolute;
+    z-index: 999;
+    width: $menu-width;
+    top: 0;
+    left: 0;
+    transition: left 0.3s;
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0.15);
+
+    &:hover, &.show {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+      left: (-$menu-width + $height);
+    }
+  }
+
+  .sidebar-menu {
+    transition: height 0.2s, flex-basis 0.2s;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex: 0 1 0;
+    height: 0;
+
+    &.show {
+      height: 100%;
+      flex-basis: 100%;
+      overflow-y: auto;
+    }
+  }
+
+  .sidebar-entry {
+    height: $height;
+    flex: 0 0 $height;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border: solid 1px rgba(0, 0, 0, 0.15);
+    user-select: none;
+    cursor: pointer;
+    background: transparent;
+    padding: 0;
+    transition: height 0.2s, flex-basis 0.2s;
+    overflow: hidden;
+
+    &.hide {
+      flex-basis: 0;
+      height: 0px;
+      border-width: 0px;
+
+      .sidebar-icon {
+        opacity: 0;
+      }
+
+      .sidebar-text {
+        opacity: 0;
+      }
+    }
+
+    .sidebar-icon {
+      transition: opacity 0.2s;
+      opacity: 1;
+      height: $height;
+      width: $height;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      flex: 0 0 40px;
+    }
+
+    .sidebar-text {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      opacity: 1;
+      transition: opacity 0.2s;
+      text-align: left;
+      flex: 1 1 0;
+      width: 0;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+/*!
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+body.dark {
+  @import "../../../../style/variables.dark";
+  $entry-hover-bg: lighten($body-bg, 10%);
+  $sidebar-menu-bg: $body-bg;
+  $sidebar-menu-shadow: #1d1d1d;
+  @import "colors";
+}
+
+@import "../../../../style/variables.light";
+$entry-hover-bg: darken($body-bg, 10%);
+$sidebar-menu-bg: $body-bg;
+$sidebar-menu-shadow: #bbbbbb;
+@import "colors";
+
+@import "layout";

@@ -29,7 +29,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({ name, photo, size, additionalCl
         title={name}
       />
       <ShowIf condition={showName}>
-        <span className="mx-1">{name}</span>
+        <span className="mx-1 user-line-name">{name}</span>
       </ShowIf>
     </span>
   )

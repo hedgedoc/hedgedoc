@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -18,12 +18,12 @@ import { extractNoteTitle } from '../common/document-title/note-title-extractor'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
 import { AppBar, AppBarMode } from './app-bar/app-bar'
 import { EditorMode } from './app-bar/editor-view-mode'
-import { DocumentBar } from './document-bar/document-bar'
 import { DocumentIframe } from './document-renderer-pane/document-iframe'
 import { EditorPane } from './editor-pane/editor-pane'
 import { editorTestContent } from './editorTestContent'
 import { useViewModeShortcuts } from './hooks/useViewModeShortcuts'
 import { DualScrollState, ScrollState } from './scroll/scroll-props'
+import { Sidebar } from './sidebar/sidebar'
 import { Splitter } from './splitter/splitter'
 import { YAMLMetaData } from './yaml-metadata/yaml-metadata'
 
@@ -125,36 +125,41 @@ export const Editor: React.FC = () => {
     scrollSource.current = ScrollSource.RENDERER
   }, [])
 
+  const setEditorToScrollSource = useCallback(() => {
+    scrollSource.current = ScrollSource.EDITOR
+  }, [])
+
   return (
     <Fragment>
       <MotdBanner/>
       <div className={'d-flex flex-column vh-100'}>
         <AppBar mode={AppBarMode.EDITOR}/>
-        <DocumentBar title={documentTitle}/>
-        <Splitter
-          showLeft={editorMode === EditorMode.EDITOR || editorMode === EditorMode.BOTH}
-          left={
-            <EditorPane
-              onContentChange={setDocumentContent}
-              content={markdownContent}
-              scrollState={scrollState.editorScrollState}
-              onScroll={onEditorScroll}
-              onMakeScrollSource={() => (scrollSource.current = ScrollSource.EDITOR)}
-            />
-          }
-          showRight={editorMode === EditorMode.PREVIEW || (editorMode === EditorMode.BOTH)}
-          right={
-            <DocumentIframe markdownContent={markdownContent}
-                            onMakeScrollSource={setRendererToScrollSource}
-                            onFirstHeadingChange={onFirstHeadingChange}
-                            onTaskCheckedChange={onTaskCheckedChange}
-                            onMetadataChange={onMetadataChange}
-                            onScroll={onMarkdownRendererScroll}
-                            wide={editorMode === EditorMode.PREVIEW}
-                            scrollState={scrollState.rendererScrollState}
-            />
-          }
-          containerClassName={'overflow-hidden'}/>
+        <div className={"flex-fill d-flex h-100 w-100 overflow-hidden flex-row"}>
+          <Splitter
+            showLeft={editorMode === EditorMode.EDITOR || editorMode === EditorMode.BOTH}
+            left={
+              <EditorPane
+                onContentChange={setDocumentContent}
+                content={markdownContent}
+                scrollState={scrollState.editorScrollState}
+                onScroll={onEditorScroll}
+                onMakeScrollSource={setEditorToScrollSource}/>
+            }
+            showRight={editorMode === EditorMode.PREVIEW || editorMode === EditorMode.BOTH}
+            right={
+              <DocumentIframe
+                markdownContent={markdownContent}
+                onMakeScrollSource={setRendererToScrollSource}
+                onFirstHeadingChange={onFirstHeadingChange}
+                onTaskCheckedChange={onTaskCheckedChange}
+                onMetadataChange={onMetadataChange}
+                onScroll={onMarkdownRendererScroll}
+                wide={editorMode === EditorMode.PREVIEW}
+                scrollState={scrollState.rendererScrollState}/>
+            }
+            containerClassName={'overflow-hidden'}/>
+          <Sidebar/>
+        </div>
       </div>
     </Fragment>
   )
