@@ -19,3 +19,7 @@ export class PermissionError extends Error {
 export class TokenNotValidError extends Error {
   name = 'TokenNotValidError';
 }
+
+export class TooManyTokensError extends Error {
+  name = 'TooManyTokensError';
+}

@@ -11,7 +11,11 @@ import { AuthToken } from './auth-token.entity';
 import { AuthTokenDto } from './auth-token.dto';
 import { AuthTokenWithSecretDto } from './auth-token-with-secret.dto';
 import { compare, hash } from 'bcrypt';
-import { NotInDBError, TokenNotValidError } from '../errors/errors';
+import {
+  NotInDBError,
+  TokenNotValidError,
+  TooManyTokensError,
+} from '../errors/errors';
 import { randomBytes } from 'crypto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -76,7 +80,14 @@ export class AuthService {
     identifier: string,
     validUntil: TimestampMillis,
   ): Promise<AuthTokenWithSecretDto> {
-    const user = await this.usersService.getUserByUsername(userName);
+    const user = await this.usersService.getUserByUsername(userName, true);
+    if (user.authTokens.length >= 200) {
+      // This is a very high ceiling unlikely to hinder legitimate usage,
+      // but should prevent possible attack vectors
+      throw new TooManyTokensError(
+        `User '${user.displayName}' has already 200 tokens and can't have anymore`,
+      );
+    }
     const secret = await this.randomString(64);
     const keyId = this.BufferToBase64Url(await this.randomString(8));
     const accessTokenString = await this.hashPassword(secret.toString());
