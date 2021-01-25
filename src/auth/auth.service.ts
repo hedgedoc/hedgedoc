@@ -85,7 +85,7 @@ export class AuthService {
       // This is a very high ceiling unlikely to hinder legitimate usage,
       // but should prevent possible attack vectors
       throw new TooManyTokensError(
-        `User '${user.displayName}' has already 200 tokens and can't have anymore`,
+        `User '${user.userName}' has already 200 tokens and can't have anymore`,
       );
     }
     const secret = await this.randomString(64);
