@@ -7,6 +7,9 @@
 import { IsBoolean } from 'class-validator';
 
 export class HistoryEntryUpdateDto {
+  /**
+   * True if the note should be pinned
+   */
   @IsBoolean()
   pinStatus: boolean;
 }

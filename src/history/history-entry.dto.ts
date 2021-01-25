@@ -8,8 +8,16 @@ import { IsBoolean, ValidateNested } from 'class-validator';
 import { NoteMetadataDto } from '../notes/note-metadata.dto';
 
 export class HistoryEntryDto {
+  /**
+   * Metadata of this note
+   */
   @ValidateNested()
   metadata: NoteMetadataDto;
+
+  /**
+   * True if this note is pinned
+   * @example false
+   */
   @IsBoolean()
   pinStatus: boolean;
 }
