@@ -21,7 +21,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { TimestampMillis } from '../utils/timestamp';
-import { Cron } from '@nestjs/schedule';
+import { Cron, Timeout } from '@nestjs/schedule';
 
 @Injectable()
 export class AuthService {
@@ -58,9 +58,6 @@ export class AuthService {
   }
 
   async randomString(length: number): Promise<Buffer> {
-    // This is necessary as the is no base64url encoding in the toString method
-    // but as can be seen on https://tools.ietf.org/html/rfc4648#page-7
-    // base64url is quite easy buildable from base64
     if (length <= 0) {
       return null;
     }
@@ -68,6 +65,9 @@ export class AuthService {
   }
 
   BufferToBase64Url(text: Buffer): string {
+    // This is necessary as the is no base64url encoding in the toString method
+    // but as can be seen on https://tools.ietf.org/html/rfc4648#page-7
+    // base64url is quite easy buildable from base64
     return text
       .toString('base64')
       .replace('+', '-')
@@ -205,12 +205,28 @@ export class AuthService {
   // Delete all non valid tokens  every sunday on 3:00 AM
   @Cron('0 0 3 * * 0')
   async handleCron() {
+    return this.removeInvalidTokens();
+  }
+
+  // Delete all non valid tokens 5 sec after startup
+  @Timeout(5000)
+  async handleTimeout() {
+    return this.removeInvalidTokens();
+  }
+
+  async removeInvalidTokens() {
     const currentTime = new Date().getTime();
     const tokens: AuthToken[] = await this.authTokenRepository.find();
+    let removedTokens = 0;
     for (const token of tokens) {
       if (token.validUntil && token.validUntil.getTime() <= currentTime) {
+        this.logger.debug(`AuthToken '${token.keyId}' was removed`);
         await this.authTokenRepository.remove(token);
+        removedTokens++;
       }
     }
+    this.logger.log(
+      `${removedTokens} invalid AuthTokens were purged from the DB.`,
+    );
   }
 }
