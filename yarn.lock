@@ -614,7 +614,7 @@
   resolved "https://registry.yarnpkg.com/@nestjs/mapped-types/-/mapped-types-0.3.0.tgz#1dcf178c198e948c548ca803850e2eba639900d4"
   integrity sha512-AdWVTOg3AhAEcVhPGgUJiLbLXb7L5Pe7vc20YQ0oOXP/KD/nJj0I3BcytVdBhzmgepol67BdivNUvo27Hx3Ndw==
 
-"@nestjs/passport@^7.1.5":
+"@nestjs/passport@7.1.5":
   version "7.1.5"
   resolved "https://registry.yarnpkg.com/@nestjs/passport/-/passport-7.1.5.tgz#b32fc0492008d73ebae4327fbc0012a738a83664"
   integrity sha512-Hu9hPxTdBZA0C4GrWTsSflzwsJ99oAk9jqAwpcszdFNqfjMjkPGuCM9QsVZbBP2bE8fxrVrPsNOILS6puY8e/A==
@@ -630,7 +630,7 @@
     multer "1.4.2"
     tslib "2.0.3"
 
-"@nestjs/schedule@^0.4.2":
+"@nestjs/schedule@0.4.2":
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/@nestjs/schedule/-/schedule-0.4.2.tgz#7503545586b3a2ba82e46241e9fdbe2c3e33cf9f"
   integrity sha512-TLfGTe7YT6FofE6MJmmf0i73OvB0k9EWGulbz3gRnNVtMiyvnY8RaRwwDXlO5873p5wfDFWz+7PDOzdI+lLN7w==
@@ -796,7 +796,7 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/bcrypt@^3.0.0":
+"@types/bcrypt@3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/bcrypt/-/bcrypt-3.0.0.tgz#851489a9065a067cb7f3c9cbe4ce9bed8bba0876"
   integrity sha512-nohgNyv+1ViVcubKBh0+XiNJ3dO8nYu///9aJ4cgSqv70gBL+94SNy/iC2NLzKPT2Zt/QavrOkBVbZRLZmw6NQ==
@@ -836,7 +836,7 @@
     "@types/keygrip" "*"
     "@types/node" "*"
 
-"@types/cron@^1.7.2":
+"@types/cron@1.7.2":
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/@types/cron/-/cron-1.7.2.tgz#e9fb420da616920dae82d13adfca53282ffaab6e"
   integrity sha512-AEpNLRcsVSc5AdseJKNHpz0d4e8+ow+abTaC0fKDbAU86rF1evoFF0oC2fV9FdqtfVXkG2LKshpLTJCFOpyvTg==
@@ -1011,7 +1011,7 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
-"@types/passport-http-bearer@^1.0.36":
+"@types/passport-http-bearer@1.0.36":
   version "1.0.36"
   resolved "https://registry.yarnpkg.com/@types/passport-http-bearer/-/passport-http-bearer-1.0.36.tgz#c48e3040441de10b140bf8e5cec1a73df9c07172"
   integrity sha512-D6yFiojv/JSxuQY2FcT/dzFHw+ypVOkKN4QzTdt6xZyrmMQBI7p1wr5F3+clCNUgxRgoNaBVRuzlwu5NSV530w==
@@ -1727,7 +1727,7 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-bcrypt@^5.0.0:
+bcrypt@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/bcrypt/-/bcrypt-5.0.0.tgz#051407c7cd5ffbfb773d541ca3760ea0754e37e2"
   integrity sha512-jB0yCBl4W/kVHM2whjfyqnxTmOHkCX4kHEa5nYKSoGeYe8YrjTYTc87/6bwt1g8cmV0QrbhKriETg9jWtcREhg==
@@ -5455,7 +5455,7 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
-passport-http-bearer@^1.0.1:
+passport-http-bearer@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/passport-http-bearer/-/passport-http-bearer-1.0.1.tgz#147469ea3669e2a84c6167ef99dbb77e1f0098a8"
   integrity sha1-FHRp6jZp4qhMYWfvmdu3fh8AmKg=
@@ -5467,7 +5467,7 @@ passport-strategy@1.x.x:
   resolved "https://registry.yarnpkg.com/passport-strategy/-/passport-strategy-1.0.0.tgz#b5539aa8fc225a3d1ad179476ddf236b440f52e4"
   integrity sha1-tVOaqPwiWj0a0XlHbd8ja0QPUuQ=
 
-passport@^0.4.1:
+passport@0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/passport/-/passport-0.4.1.tgz#941446a21cb92fc688d97a0861c38ce9f738f270"
   integrity sha512-IxXgZZs8d7uFSt3eqNjM9NQ3g3uQCW5avD8mRNoXV99Yig50vjuaez6dQK2qC0kVWPRTujxY0dWgGfT09adjYg==
