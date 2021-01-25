@@ -45,14 +45,17 @@ export class AuthToken {
 
   public static create(
     user: User,
-    identifier: string,
+    label: string,
     keyId: string,
     accessToken: string,
     validUntil: Date,
-  ): Pick<AuthToken, 'user' | 'accessToken'> {
+  ): Pick<
+    AuthToken,
+    'user' | 'label' | 'keyId' | 'accessTokenHash' | 'createdAt' | 'validUntil'
+  > {
     const newToken = new AuthToken();
     newToken.user = user;
-    newToken.label = identifier;
+    newToken.label = label;
     newToken.keyId = keyId;
     newToken.accessTokenHash = accessToken;
     newToken.createdAt = new Date();
