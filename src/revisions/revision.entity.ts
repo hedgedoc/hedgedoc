@@ -11,7 +11,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { JoinTable, ManyToMany } from 'typeorm/index';
+import { JoinTable, ManyToMany } from 'typeorm';
 import { Note } from '../notes/note.entity';
 import { Authorship } from './authorship.entity';
 

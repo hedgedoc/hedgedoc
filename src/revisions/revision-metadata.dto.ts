@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { IsDate, IsNumber, IsString } from 'class-validator';
+import { IsDate, IsNumber } from 'class-validator';
 import { Revision } from './revision.entity';
 
 export class RevisionMetadataDto {

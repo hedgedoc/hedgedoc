@@ -15,3 +15,11 @@ export class ClientError extends Error {
 export class PermissionError extends Error {
   name = 'PermissionError';
 }
+
+export class TokenNotValidError extends Error {
+  name = 'TokenNotValidError';
+}
+
+export class TooManyTokensError extends Error {
+  name = 'TooManyTokensError';
+}

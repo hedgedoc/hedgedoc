@@ -18,12 +18,15 @@ import { NotesModule } from './notes/notes.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { RevisionsModule } from './revisions/revisions.module';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 import appConfig from './config/app.config';
 import mediaConfig from './config/media.config';
 import hstsConfig from './config/hsts.config';
 import cspConfig from './config/csp.config';
 import databaseConfig from './config/database.config';
 import authConfig from './config/auth.config';
+import { PrivateApiModule } from './api/private/private-api.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -44,17 +47,20 @@ import authConfig from './config/auth.config';
       ],
       isGlobal: true,
     }),
+    ScheduleModule.forRoot(),
     NotesModule,
     UsersModule,
     RevisionsModule,
     AuthorsModule,
     PublicApiModule,
+    PrivateApiModule,
     HistoryModule,
     MonitoringModule,
     PermissionsModule,
     GroupsModule,
     LoggerModule,
     MediaModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

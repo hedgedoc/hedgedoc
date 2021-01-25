@@ -27,16 +27,17 @@ export class UsersService {
   }
 
   async deleteUser(userName: string) {
-    //TOOD: Handle owned notes and edits
+    // TODO: Handle owned notes and edits
     const user = await this.userRepository.findOne({
       where: { userName: userName },
     });
     await this.userRepository.delete(user);
   }
 
-  async getUserByUsername(userName: string): Promise<User> {
+  async getUserByUsername(userName: string, withTokens = false): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { userName: userName },
+      relations: withTokens ? ['authTokens'] : null,
     });
     if (user === undefined) {
       throw new NotInDBError(`User with username '${userName}' not found`);

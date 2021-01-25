@@ -12,7 +12,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm/index';
+} from 'typeorm';
 import { User } from '../users/user.entity';
 import { Revision } from './revision.entity';
 
