@@ -14,10 +14,10 @@ import {
   Post,
 } from '@nestjs/common';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { AuthTokenDto } from '../../../auth/auth-token.dto';
-import { AuthTokenWithSecretDto } from '../../../auth/auth-token-with-secret.dto';
 import { AuthService } from '../../../auth/auth.service';
 import { TimestampMillis } from '../../../utils/timestamp';
+import { AuthTokenDto } from '../../../auth/auth-token.dto';
+import { AuthTokenWithSecretDto } from '../../../auth/auth-token-with-secret.dto';
 
 @Controller('tokens')
 export class TokensController {

@@ -8,11 +8,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { AuthToken } from '../users/auth-token.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { Identity } from '../users/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
+import { AuthToken } from './auth-token.entity';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -165,7 +165,10 @@ describe('AuthService', () => {
         0,
       );
       expect(token.label).toEqual(identifier);
-      expect(token.validUntil).toBeNull();
+      expect(
+        token.validUntil.getTime() -
+          (new Date().getTime() + 2 * 365 * 24 * 60 * 60 * 1000),
+      ).toBeLessThanOrEqual(10000);
       expect(token.lastUsed).toBeNull();
       expect(token.secret.startsWith(token.keyId)).toBeTruthy();
     });

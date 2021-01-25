@@ -93,8 +93,17 @@ export class AuthService {
     const accessTokenString = await this.hashPassword(secret.toString());
     const accessToken = this.BufferToBase64Url(Buffer.from(accessTokenString));
     let token;
-    if (validUntil === 0) {
-      token = AuthToken.create(user, identifier, keyId, accessToken);
+    // Tokens can only be valid for a maximum of 2 years
+    const maximumTokenValidity =
+      new Date().getTime() + 2 * 365 * 24 * 60 * 60 * 1000;
+    if (validUntil === 0 || validUntil > maximumTokenValidity) {
+      token = AuthToken.create(
+        user,
+        identifier,
+        keyId,
+        accessToken,
+        new Date(maximumTokenValidity),
+      );
     } else {
       token = AuthToken.create(
         user,
