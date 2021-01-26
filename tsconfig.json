@@ -10,7 +10,6 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "incremental": true,
-    "lib": ["esnext"]
+    "incremental": true
   }
 }
