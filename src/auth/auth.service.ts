@@ -70,9 +70,9 @@ export class AuthService {
     // base64url is quite easy buildable from base64
     return text
       .toString('base64')
-      .replace('+', '-')
-      .replace('/', '_')
-      .replace(/=+$/, '');
+      .replaceAll(/\+/g, '-')
+      .replaceAll(/\//g, '_')
+      .replaceAll(/=+$/g, '');
   }
 
   async createTokenForUser(
