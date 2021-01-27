@@ -25,6 +25,8 @@ import { MediaService } from './media.service';
 import { Repository } from 'typeorm';
 import { promises as fs } from 'fs';
 import { ClientError, NotInDBError, PermissionError } from '../errors/errors';
+import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
+import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 
 describe('MediaService', () => {
   let service: MediaService;
@@ -69,6 +71,10 @@ describe('MediaService', () => {
       .overrideProvider(getRepositoryToken(User))
       .useClass(Repository)
       .overrideProvider(getRepositoryToken(Tag))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(NoteGroupPermission))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(MediaUpload))
       .useClass(Repository)
