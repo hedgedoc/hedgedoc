@@ -17,6 +17,8 @@ import { Authorship } from './authorship.entity';
 import { Revision } from './revision.entity';
 import { RevisionsService } from './revisions.service';
 import { Tag } from '../notes/tag.entity';
+import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
+import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 
 describe('RevisionsService', () => {
   let service: RevisionsService;
@@ -47,6 +49,10 @@ describe('RevisionsService', () => {
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})
       .overrideProvider(getRepositoryToken(Tag))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(NoteGroupPermission))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .compile();
 

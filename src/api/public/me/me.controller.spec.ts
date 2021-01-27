@@ -20,6 +20,8 @@ import { User } from '../../../users/user.entity';
 import { UsersModule } from '../../../users/users.module';
 import { MeController } from './me.controller';
 import { HistoryEntry } from '../../../history/history-entry.entity';
+import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
+import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
 
 describe('Me Controller', () => {
   let controller: MeController;
@@ -46,6 +48,10 @@ describe('Me Controller', () => {
       .overrideProvider(getRepositoryToken(Tag))
       .useValue({})
       .overrideProvider(getRepositoryToken(HistoryEntry))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(NoteGroupPermission))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .compile();
 

@@ -18,6 +18,8 @@ import { AuthorColor } from './author-color.entity';
 import { Note } from './note.entity';
 import { NotesService } from './notes.service';
 import { Tag } from './tag.entity';
+import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
+import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 
 describe('NotesService', () => {
   let service: NotesService;
@@ -52,6 +54,10 @@ describe('NotesService', () => {
       .overrideProvider(getRepositoryToken(Note))
       .useValue({})
       .overrideProvider(getRepositoryToken(Tag))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(NoteGroupPermission))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .compile();
     service = module.get<NotesService>(NotesService);

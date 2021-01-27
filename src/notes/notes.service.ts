@@ -159,6 +159,7 @@ export class NotesService {
         historyEntries: [],
         updatedAt: new Date(),
         userName: 'Testy',
+        groups: [],
       },
       description: 'Very descriptive text.',
       userPermissions: [],

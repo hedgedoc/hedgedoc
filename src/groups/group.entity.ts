@@ -4,7 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { User } from '../users/user.entity';
 
 @Entity()
 export class Group {
@@ -26,4 +33,11 @@ export class Group {
    */
   @Column()
   special: boolean;
+
+  @ManyToMany((_) => User, (user) => user.groups, {
+    eager: true,
+    cascade: true,
+  })
+  @JoinTable()
+  members: User[];
 }
