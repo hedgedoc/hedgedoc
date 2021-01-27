@@ -8,11 +8,11 @@ import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { AppConfig } from './config/app.config';
-import { NestConsoleLoggerService } from './logger/nest-console-logger.service';
 import { MediaConfig } from './config/media.config';
+import { NestConsoleLoggerService } from './logger/nest-console-logger.service';
+import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -23,16 +23,10 @@ async function bootstrap() {
   const appConfig = configService.get<AppConfig>('appConfig');
   const mediaConfig = configService.get<MediaConfig>('mediaConfig');
 
-  const swaggerOptions = new DocumentBuilder()
-    .setTitle('HedgeDoc')
-    .setVersion('2.0-dev')
-    .addSecurity('token', {
-      type: 'http',
-      scheme: 'bearer',
-    })
-    .build();
-  const document = SwaggerModule.createDocument(app, swaggerOptions);
-  SwaggerModule.setup('apidoc', app, document);
+  setupPublicApiDocs(app);
+  if (process.env.NODE_ENV === 'development') {
+    setupPrivateApiDocs(app);
+  }
 
   app.useGlobalPipes(
     new ValidationPipe({
