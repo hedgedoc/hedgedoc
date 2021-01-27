@@ -70,8 +70,8 @@ export class AuthService {
     // base64url is quite easy buildable from base64
     return text
       .toString('base64')
-      .replace('+', '-')
-      .replace('/', '_')
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
       .replace(/=+$/, '');
   }
 
@@ -88,10 +88,9 @@ export class AuthService {
         `User '${user.userName}' has already 200 tokens and can't have anymore`,
       );
     }
-    const secret = await this.randomString(64);
+    const secret = this.BufferToBase64Url(await this.randomString(64));
     const keyId = this.BufferToBase64Url(await this.randomString(8));
-    const accessTokenString = await this.hashPassword(secret.toString());
-    const accessToken = this.BufferToBase64Url(Buffer.from(accessTokenString));
+    const accessToken = await this.hashPassword(secret);
     let token;
     // Tokens can only be valid for a maximum of 2 years
     const maximumTokenValidity =
