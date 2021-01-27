@@ -13,10 +13,18 @@ import { AuthorColor } from './author-color.entity';
 import { Note } from './note.entity';
 import { NotesService } from './notes.service';
 import { Tag } from './tag.entity';
+import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
+import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Note, AuthorColor, Tag]),
+    TypeOrmModule.forFeature([
+      Note,
+      AuthorColor,
+      Tag,
+      NoteGroupPermission,
+      NoteUserPermission,
+    ]),
     forwardRef(() => RevisionsModule),
     UsersModule,
     LoggerModule,

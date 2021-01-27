@@ -22,6 +22,8 @@ import { UsersModule } from '../users/users.module';
 import { FilesystemBackend } from './backends/filesystem-backend';
 import { MediaUpload } from './media-upload.entity';
 import { MediaService } from './media.service';
+import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
+import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 
 describe('MediaService', () => {
   let service: MediaService;
@@ -63,6 +65,10 @@ describe('MediaService', () => {
       .overrideProvider(getRepositoryToken(User))
       .useValue({})
       .overrideProvider(getRepositoryToken(Tag))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(NoteGroupPermission))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .compile();
 

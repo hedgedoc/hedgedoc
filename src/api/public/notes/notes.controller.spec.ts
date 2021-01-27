@@ -19,8 +19,11 @@ import { Identity } from '../../../users/identity.entity';
 import { User } from '../../../users/user.entity';
 import { UsersModule } from '../../../users/users.module';
 import { NotesController } from './notes.controller';
+import { PermissionsModule } from '../../../permissions/permissions.module';
 import { HistoryModule } from '../../../history/history.module';
 import { HistoryEntry } from '../../../history/history-entry.entity';
+import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
+import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
 
 describe('Notes Controller', () => {
   let controller: NotesController;
@@ -39,7 +42,13 @@ describe('Notes Controller', () => {
           useValue: {},
         },
       ],
-      imports: [RevisionsModule, UsersModule, LoggerModule, HistoryModule],
+      imports: [
+        RevisionsModule,
+        UsersModule,
+        LoggerModule,
+        PermissionsModule,
+        HistoryModule,
+      ],
     })
       .overrideProvider(getRepositoryToken(Note))
       .useValue({})
@@ -60,6 +69,10 @@ describe('Notes Controller', () => {
       .overrideProvider(getRepositoryToken(Tag))
       .useValue({})
       .overrideProvider(getRepositoryToken(HistoryEntry))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(NoteGroupPermission))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .compile();
 

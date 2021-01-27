@@ -31,6 +31,7 @@ describe('AuthService', () => {
       historyEntries: [],
       updatedAt: new Date(),
       userName: 'Testy',
+      groups: [],
     };
 
     authToken = {
