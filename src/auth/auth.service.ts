@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/user.entity';
 import { AuthToken } from './auth-token.entity';
@@ -35,16 +35,20 @@ export class AuthService {
   }
 
   async validateToken(token: string): Promise<User> {
-    const [keyId, secret] = token.split('.');
-    const accessToken = await this.getAuthTokenAndValidate(keyId, secret);
-    await this.setLastUsedToken(keyId);
-    const user = await this.usersService.getUserByUsername(
-      accessToken.user.userName,
-    );
-    if (user) {
-      return user;
+    try {
+      const [keyId, secret] = token.split('.');
+      const accessToken = await this.getAuthTokenAndValidate(keyId, secret);
+      await this.setLastUsedToken(keyId);
+      return this.usersService.getUserByUsername(accessToken.user.userName);
+    } catch (error) {
+      if (
+        error instanceof NotInDBError ||
+        error instanceof TokenNotValidError
+      ) {
+        throw new UnauthorizedException(error.message);
+      }
+      throw error;
     }
-    return null;
   }
 
   async hashPassword(cleartext: string): Promise<string> {
