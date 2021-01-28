@@ -13,6 +13,7 @@ import { UsersModule } from '../users/users.module';
 import { Identity } from '../users/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
 import { AuthToken } from './auth-token.entity';
+import { TokenNotValidError } from '../errors/errors';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -105,6 +106,16 @@ describe('AuthService', () => {
         .checkPassword(testPassword, hash)
         .then((result) => expect(result).toBeTruthy());
     });
+    it('fails, if secret is too short', async () => {
+      const secret = service.BufferToBase64Url(await service.randomString(54));
+      const hash = await service.hashPassword(secret);
+      service
+        .checkPassword(secret, hash)
+        .then((result) => expect(result).toBeTruthy());
+      service
+        .checkPassword(secret.substr(0, secret.length - 1), hash)
+        .then((result) => expect(result).toBeFalsy());
+    });
   });
 
   describe('getTokensByUsername', () => {
@@ -147,6 +158,11 @@ describe('AuthService', () => {
         ...user,
         authTokens: [authToken],
       });
+    });
+    it('fails on too long token', () => {
+      expect(
+        service.validateToken(`${authToken.keyId}.${'a'.repeat(73)}`),
+      ).rejects.toBeInstanceOf(TokenNotValidError);
     });
   });
 
