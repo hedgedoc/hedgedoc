@@ -74,9 +74,10 @@
 }
 
 .night .markdown-body .gist table tr:nth-child(2n){
-
     background-color: #ddd;
-
+}
+.night .markdown-body .gist table tr:nth-child(2n+1) {
+    background-color: #e3e3e3;
 }
 
 .markdown-body code[data-gist-id] {
@@ -133,8 +134,8 @@
     white-space: inherit;
 }
 
-.night .markdown-body pre.graphviz .graph > polygon{
-    fill: #333;
+.night .markdown-body pre.graphviz {
+    filter: none;
 }
 
 .night .markdown-body pre.mermaid .titleText,
@@ -160,25 +161,13 @@
     height: 100%;
 }
 
-.night .markdown-body .abc path{
-    fill: #eee;
-}
-
-.night .markdown-body .abc path.note_selected{
-    fill: ##4DD0E1;
-}
-
-.night tspan{
-    fill: #fefefe;
+.night .markdown-body .abc {
+    background-color: #fff;
+    filter: none;
 }
 
 .night pre rect{
     fill: transparent;
-}
-
-.night pre.flow-chart rect,
-.night pre.flow-chart path{
-    stroke: white;
 }
 
 .markdown-body pre > code.wrap {
