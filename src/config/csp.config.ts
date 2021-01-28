@@ -15,14 +15,14 @@ export interface CspConfig {
 
 const cspSchema = Joi.object({
   enable: Joi.boolean().default(true).optional().label('HD_CSP_ENABLE'),
-  reportURI: Joi.string().optional().label('HD_CSP_REPORTURI'),
+  reportURI: Joi.string().optional().label('HD_CSP_REPORT_URI'),
 });
 
 export default registerAs('cspConfig', async () => {
   const cspConfig = cspSchema.validate(
     {
       enable: process.env.HD_CSP_ENABLE || true,
-      reportURI: process.env.HD_CSP_REPORTURI,
+      reportURI: process.env.HD_CSP_REPORT_URI,
     },
     {
       abortEarly: false,
