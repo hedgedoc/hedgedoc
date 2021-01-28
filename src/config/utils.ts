@@ -54,18 +54,18 @@ export const replaceAuthErrorsWithEnvironmentVariables = (
   message = message.replace('.usernameField', '_USERNAME_FIELD');
   message = message.replace('.useridField', '_USERID_FIELD');
   message = message.replace('.tlsCa', '_TLS_CA');
-  message = message.replace('.idpSsoUrl', '_IDPSSOURL');
-  message = message.replace('.idpCert', '_IDPCERT');
-  message = message.replace('.clientCert', '_CLIENTCERT');
+  message = message.replace('.idpSsoUrl', '_IDP_SSO_URL');
+  message = message.replace('.idpCert', '_IDP_CERT');
+  message = message.replace('.clientCert', '_CLIENT_CERT');
   message = message.replace('.issuer', '_ISSUER');
-  message = message.replace('.identifierFormat', '_IDENTIFIERFORMAT');
+  message = message.replace('.identifierFormat', '_IDENTIFIER_FORMAT');
   message = message.replace(
     '.disableRequestedAuthnContext',
-    '_DISABLEREQUESTEDAUTHNCONTEXT',
+    '_DISABLE_REQUESTED_AUTHN_CONTEXT',
   );
-  message = message.replace('.groupAttribute', '_GROUPATTRIBUTE');
-  message = message.replace('.requiredGroups', '_REQUIREDGROUPS');
-  message = message.replace('.externalGroups', '_EXTERNALGROUPS');
+  message = message.replace('.groupAttribute', '_GROUP_ATTRIBUTE');
+  message = message.replace('.requiredGroups', '_REQUIRED_GROUPS');
+  message = message.replace('.externalGroups', '_EXTERNAL_GROUPS');
   message = message.replace('.attribute.id', '_ATTRIBUTE_ID');
   message = message.replace('.attribute.username', '_ATTRIBUTE_USERNAME');
   message = message.replace('.attribute.email', '_ATTRIBUTE_USERNAME');

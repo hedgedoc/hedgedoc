@@ -68,7 +68,7 @@ const mediaSchema = Joi.object({
     imgur: Joi.when('...use', {
       is: Joi.valid(BackendType.IMGUR),
       then: Joi.object({
-        clientID: Joi.string().label('HD_MEDIA_BACKEND_IMGUR_CLIENTID'),
+        clientID: Joi.string().label('HD_MEDIA_BACKEND_IMGUR_CLIENT_ID'),
       }),
       otherwise: Joi.optional(),
     }),
@@ -96,7 +96,7 @@ export default registerAs('mediaConfig', async () => {
           container: process.env.HD_MEDIA_BACKEND_AZURE_CONTAINER,
         },
         imgur: {
-          clientID: process.env.HD_MEDIA_BACKEND_IMGUR_CLIENTID,
+          clientID: process.env.HD_MEDIA_BACKEND_IMGUR_CLIENT_ID,
         },
       },
     },
