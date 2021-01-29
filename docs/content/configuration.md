@@ -1,416 +1,249 @@
 # Configuration
 
-You can choose to configure HedgeDoc with either a config file or with environment variables.
+You can choose to configure CodiMD with either a config file or with environment variables.
 
-Environment variables take precedence over configurations from the config files. They generally start with `CMD_` for
-our own options, but we also list node-specific options you can configure this way.
+Environment variables take precedence over configurations from the config files. They generally start with `CMD_` for our own options, but we also list node-specific options you can configure this way.
 
-- Environment variables are processed
-  in [`lib/config/environment.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/environment.js) - so this
-  is the first place to look if anything is missing not obvious from this document. The default values are defined
-  in [`lib/config/default.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/default.js), in case you
-  wonder if you even need to override it.
+- Environment variables are processed in [`lib/config/environment.js`](../lib/config/environment.js) - so this is the first place to look if anything is missing not obvious from this document. The default values are defined in [`lib/config/default.js`](../lib/config/default.js), in case you wonder if you even need to override it.
 
-- The config file is processed
-  in [`lib/config/index.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/index.js) - so this is the
-  first place to look if anything is missing not obvious from this document. The default values are defined
-  in [`lib/config/default.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/default.js), in case you
-  wonder if you even need to override it. To get started, it is a good idea to take the `config.json.example` and copy
-  it to `config.json` before filling in your own details.
+- The config file is processed in [`lib/config/index.js`](../lib/config/index.js) - so this is the first place to look if anything is missing not obvious from this document. The default values are defined in [`lib/config/default.js`](../lib/config/default.js), in case you wonder if you even need to override it. To get started, it is a good idea to take the `config.json.example` and copy it
+to `config.json` before filling in your own details.
 
-**Note:** *Due to the rename process we renamed all `HMD_`-prefix variables to be `CMD_`-prefixed. The old ones continue
-to work.*
+**Note:** *Due to the rename process we renamed all `HMD_`-prefix variables to be `CMD_`-prefixed. The old ones continue to work.*
 
 ## Node.JS
 
-| config file | environment | **
-default** and example value | description | | ----------- | ----------- | ----------------------------- |
--------------------------------------------------------------------------------- | | | `NODE_ENV`  | `production`
-or `development` | set current environment (will apply corresponding settings in the `config.json`) | | `debug`
-| `DEBUG`     | `true` or `false`             | set debug mode, show more logs |
+| config file | environment | **default** and example value | description                                                                      |
+| ----------- | ----------- | ----------------------------- | -------------------------------------------------------------------------------- |
+|             | `NODE_ENV`  | `production` or `development` | set current environment (will apply corresponding settings in the `config.json`) |
+| `debug`     | `DEBUG`     | `true` or `false`             | set debug mode, show more logs                                                   |
 
-## HedgeDoc basics
+## CodiMD basics
 
-| config file | environment | **
-default** and example value | description | | ------------------- | ------------------------ |
----------------------------------------------------------------------------------------------------------------------------------------------------
-|
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| | | `CMD_CONFIG_FILE`        | **no default**, `/path/to/config.json`
-| optional override for the path to HedgeDoc's config file | | `db`                | | **`undefined`**
-, `{ "dialect": "sqlite", "storage": "./db.hedgedoc.sqlite" }`
-| set the db configs, [see more here](http://sequelize.readthedocs.org/en/latest/api/sequelize/)
-| | `dbURL`             | `CMD_DB_URL`             | **`undefined`**
-, `postgres://username:password@localhost:5432/hedgedoc` or `mysql://username:password@localhost:3306/hedgedoc`| Set the
-db in URL style. If set, then the relevant `db` config entries will be overridden. | | `loglevel`
-| `CMD_LOGLEVEL`           | **`info`**, `debug` ... | Defines what kind of logs are provided to stdout. Available
-options: `debug`, `verbose`, `info`, `warn`, `error`
-| | `forbiddenNoteIDs`  | `CMD_FORBIDDEN_NOTE_IDS`
-| **`['robots.txt', 'favicon.ico', 'api', 'build', 'css', 'docs', 'fonts', 'js', 'uploads', 'vendor', 'views']`**
-, `['robots.txt']` or `'robots.txt'` | disallow creation of notes, even if `allowFreeUrl` or `CMD_ALLOW_FREEURL`
-is `true`
-| | `imageUploadType`   | `CMD_IMAGE_UPLOAD_TYPE`  | **`filesystem`**, `imgur`, `s3`, `minio`, `azure`, `lutim`
-| Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md)
-or [Minio](guides/minio-image-upload.md), also there's a whole section on their respective env vars below. |
-| `sourceURL`         | `CMD_SOURCE_URL`         | **no default**
-, `https://github.com/hedgedoc/hedgedoc/tree/<current commit>`         | Provides the link to the source code of
-HedgeDoc on the entry page (Please, make sure you change this when you run a modified version)
-| | `tooBusyLag`        | `CMD_TOOBUSY_LAG`        | **`70`**
-| CPU time for one event loop tick until node throttles connections. (milliseconds)
-| | `staticCacheTime`   | | **`1 * 24 * 60 * 60 * 1000`**
-| static file cache time | | `heartbeatInterval` | | **`5000`**
-| socket.io heartbeat interval | | `heartbeatTimeout`  | | **`10000`**
-| socket.io heartbeat timeout | | `documentMaxLength` | | **`100000`**
-| note max length | | `linkifyHeaderStyle`  | | **`keep-case`**, `lower-case`, `gfm`
-| how is a header text converted into a link id |
+| config file         | environment              | **default** and example value                                                                                                                       | description                                                                                                                                                                                                |
+| ------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `allowPDFExport`    | `CMD_ALLOW_PDF_EXPORT`   | **`true`** or `false`                                                                                                                               | Enable or disable PDF exports                                                                                                                                                                              |
+|                     | `CMD_CONFIG_FILE`        | **no default**, `/path/to/config.json`                                                                                                              | optional override for the path to CodiMD's config file                                                                                                                                                     |
+| `db`                |                          | **`undefined`**, `{ "dialect": "sqlite", "storage": "./db.codimd.sqlite" }`                                                                         | set the db configs, [see more here](http://sequelize.readthedocs.org/en/latest/api/sequelize/)                                                                                                             |
+| `dbURL`             | `CMD_DB_URL`             | **`undefined`**, `mysql://localhost:3306/database`                                                                                                  | Set the db in URL style. If set, then the relevant `db` config entries will be overridden.                                                                                                                 |
+| `loglevel`          | `CMD_LOGLEVEL`           | **`info`**, `debug` ...                                                                                                                             | Defines what kind of logs are provided to stdout. Available options: `debug`, `verbose`, `info`, `warn`, `error`                                                                                           |
+| `forbiddenNoteIDs`  | `CMD_FORBIDDEN_NOTE_IDS` | **`['robots.txt', 'favicon.ico', 'api', 'build', 'css', 'docs', 'fonts', 'js', 'uploads', 'vendor', 'views']`**, `['robots.txt']` or `'robots.txt'` | disallow creation of notes, even if `allowFreeUrl` or `CMD_ALLOW_FREEURL` is `true`                                                                                                                        |
+| `imageUploadType`   | `CMD_IMAGE_UPLOAD_TYPE`  | **`filesystem`**, `imgur`, `s3`, `minio`, `azure`, `lutim`                                                                                          | Where to upload images. For S3, see our Image Upload Guides for [S3](guides/s3-image-upload.md) or [Minio](guides/minio-image-upload.md), also there's a whole section on their respective env vars below. |
+| `sourceURL`         | `CMD_SOURCE_URL`         | **no default**, `https://github.com/codimd/server/tree/<current commit>`                                                                            | Provides the link to the source code of CodiMD on the entry page (Please, make sure you change this when you run a modified version)                                                                       |
+| `tooBusyLag`        | `CMD_TOOBUSY_LAG`        | **`70`**                                                                                                                                            | CPU time for one event loop tick until node throttles connections. (milliseconds)                                                                                                                          |
+| `staticCacheTime`   |                          | **`1 * 24 * 60 * 60 * 1000`**                                                                                                                       | static file cache time                                                                                                                                                                                     |
+| `heartbeatInterval` |                          | **`5000`**                                                                                                                                          | socket.io heartbeat interval                                                                                                                                                                               |
+| `heartbeatTimeout`  |                          | **`10000`**                                                                                                                                         | socket.io heartbeat timeout                                                                                                                                                                                |
+| `documentMaxLength` |                          | **`100000`**                                                                                                                                        | note max length                                                                                                                                                                                            |
+| linkifyHeaderStyle  |                          | **`keep-case`**, `lower-case`, `gfm`                                                                                                                | how is a header text converted into a link id                                                                                                                                                              |
 
-## HedgeDoc paths stuff
+## CodiMD paths stuff
 
 these are rarely used for various reasons.
 
-| config file | environment | **
-default** and example values | description | | ----------------- | ----------- |
------------------------------------------------------ |
------------------------------------------------------------------------------------------------- | | `defaultNotePath` |
-| **`./public/default.md`**                             | default note file path<sup>1</sup>, empty notes will be
-created with this template. | | `dhParamPath`     | | **`undefined`**, `./cert/dhparam.pem`                 | SSL
-dhparam path<sup>1</sup> (only need when you set `useSSL`)                                   | | `sslCAPath`       |
-| **`undefined`**, `['./cert/COMODORSAAddTrustCA.crt']` | SSL ca chain<sup>1</sup> (only need when you set `useSSL`)
-| | `sslCertPath`     | | **`undefined`**, `./cert/hedgedoc_io.crt`               | SSL cert path<sup>1</sup> (only need
-when you set `useSSL`)                                      | | `sslKeyPath`      | | **`undefined`**
-, `./cert/client.key`                  | SSL key path<sup>1</sup> (only need when you set `useSSL`)
-| | `tmpPath`         | | **`os.tmpdir()`**, `./tmp/`                           | temp directory path<sup>1</sup>
-| | `docsPath`        | | **`./public/docs`**                                   | docs directory path<sup>1</sup>
-| | `viewPath`        | | **`./public/views`**                                  | template directory path<sup>1</sup>
-| | `uploadsPath`     | | **`./public/uploads`**                                | uploads directory<sup>1</sup> - needs
-to be persistent when you use imageUploadType `filesystem` |
+| config file       | environment | **default** and example values                        | description                                                                                      |
+| ----------------- | ----------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `defaultNotePath` |             | **`./public/default.md`**                             | default note file path<sup>1</sup>, empty notes will be created with this template.              |
+| `dhParamPath`     |             | **`undefined`**, `./cert/dhparam.pem`                 | SSL dhparam path<sup>1</sup> (only need when you set `useSSL`)                                   |
+| `sslCAPath`       |             | **`undefined`**, `['./cert/COMODORSAAddTrustCA.crt']` | SSL ca chain<sup>1</sup> (only need when you set `useSSL`)                                       |
+| `sslCertPath`     |             | **`undefined`**, `./cert/codimd_io.crt`               | SSL cert path<sup>1</sup> (only need when you set `useSSL`)                                      |
+| `sslKeyPath`      |             | **`undefined`**, `./cert/client.key`                  | SSL key path<sup>1</sup> (only need when you set `useSSL`)                                       |
+| `tmpPath`         |             | **`os.tmpdir()`**, `./tmp/`                           | temp directory path<sup>1</sup>                                                                  |
+| `docsPath`        |             | **`./public/docs`**                                   | docs directory path<sup>1</sup>                                                                  |
+| `viewPath`        |             | **`./public/views`**                                  | template directory path<sup>1</sup>                                                              |
+| `uploadsPath`     |             | **`./public/uploads`**                                | uploads directory<sup>1</sup> - needs to be persistent when you use imageUploadType `filesystem` |
 
-**Note:** *relative paths are based on HedgeDoc's base directory*
+**Note:** *relative paths are based on CodiMD's base directory*
 
-## HedgeDoc Location
+## CodiMD Location
 
-| config file | environment | **
-default** and example value | description | | ---------------- | --------------------- |
----------------------------------------------------------------- |
------------------------------------------------------------------------------------------------------------------ |
-| `domain`         | `CMD_DOMAIN`          | **`null`**, `localhost`, `hedgedoc.org`                            | domain
-name | | `urlPath`        | `CMD_URL_PATH`        | **`null`**, `hedgedoc`                                             |
-If HedgeDoc is run from a subdirectory like `www.example.com/<urlpath>`                                             |
-| `host`           | `CMD_HOST`            | **`0.0.0.0`**, `localhost`                                       |
-interface/ip to listen on | | `port`           | `CMD_PORT`            | **`3000`**, `80`
-| port to listen on | | `path`           | `CMD_PATH`            | **no default**, `/var/run/hedgedoc.sock`
-| path to UNIX domain socket to listen on (if specified, `host` or `CMD_HOST` and `port` or `CMD_PORT` are ignored) |
-| `protocolUseSSL` | `CMD_PROTOCOL_USESSL` | **`false`** or `true`                                            | set to
-use SSL protocol for resources path (only applied when domain is set)                                      | | `useSSL`
-| | **`false`** or `true`                                            | set to use SSL server (if `true`, will auto turn
-on `protocolUseSSL`)                                             | | `urlAddPort`     | `CMD_URL_ADDPORT`
-| **`false`** or `true`                                            | set to add port on callback URL (ports `80`
-or `443` won't be applied) (only applied when domain is set)          | | `allowOrigin`    | `CMD_ALLOW_ORIGIN`
-| **`['localhost']`**, `['hedgedoc.org']`, `['localhost', 'hedgedoc.org']` | domain name whitelist (use comma to
-separate)                                                                     |
+| config file      | environment           | **default** and example value                                    | description                                                                                                       |
+| ---------------- | --------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `domain`         | `CMD_DOMAIN`          | **`null`**, `localhost`, `codimd.org`                            | domain name                                                                                                       |
+| `urlPath`        | `CMD_URL_PATH`        | **`null`**, `codimd`                                             | If CodiMD is run from a subdirectory like `www.example.com/<urlpath>`                                             |
+| `host`           | `CMD_HOST`            | **`0.0.0.0`**, `localhost`                                       | interface/ip to listen on                                                                                         |
+| `port`           | `CMD_PORT`            | **`3000`**, `80`                                                 | port to listen on                                                                                                 |
+| `path`           | `CMD_PATH`            | **no default**, `/var/run/codimd.sock`                           | path to UNIX domain socket to listen on (if specified, `host` or `CMD_HOST` and `port` or `CMD_PORT` are ignored) |
+| `protocolUseSSL` | `CMD_PROTOCOL_USESSL` | **`false`** or `true`                                            | set to use SSL protocol for resources path (only applied when domain is set)                                      |
+| `useSSL`         |                       | **`false`** or `true`                                            | set to use SSL server (if `true`, will auto turn on `protocolUseSSL`)                                             |
+| `urlAddPort`     | `CMD_URL_ADDPORT`     | **`false`** or `true`                                            | set to add port on callback URL (ports `80` or `443` won't be applied) (only applied when domain is set)          |
+| `allowOrigin`    | `CMD_ALLOW_ORIGIN`    | **`['localhost']`**, `['codimd.org']`, `[localhost, codimd.org]` | domain name whitelist (use comma to separate)                                                                     |
 
-## Web security aspects
+## CSP and HSTS
 
-| config file | environment | **
-default** and example value | description | | -------------- | ----------------------------- |
-------------------------------------------------------------------------------------------------------------------------------------------
-|
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| | `hsts`         | | `{"enable": true, "maxAgeSeconds": 31536000, "includeSubdomains": true, "preload": true}`
-| [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) options to use with HTTPS (default is the example
-value, max age is a year)
-| | | `CMD_HSTS_ENABLE`             | **`true`** or `false`
-| set to enable [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) if HTTPS is also enabled (default
-is ` true`)
-| | | `CMD_HSTS_INCLUDE_SUBDOMAINS` | **`true`** or `false`
-| set to include subdomains in HSTS (default is `true`)
-| | | `CMD_HSTS_MAX_AGE`            | **`31536000`**, `60 * 60 * 24 * 365`
-| max duration in seconds to tell clients to keep HSTS status (default is a year)
-| | | `CMD_HSTS_PRELOAD`            | **`true`** or `false`
-| whether to allow preloading of the site's HSTS status (e.g. into browsers)
-| | `csp`          |
-| `{"enable": true, "directives": {"scriptSrc": "trustworthy-scripts.example.com"}, "upgradeInsecureRequests": "auto", "addDefaults": true}`
-| Configures [Content Security Policy](https://helmetjs.github.io/docs/csp/). Directives are passed to Helmet -
-see [their documentation](https://helmetjs.github.io/docs/csp/) for more information on the format. Some defaults are
-added to the configured values so that the application doesn't break. To disable this behaviour, set `addDefaults`
-to `false`. Further, if `usecdn` is on, some CDN locations are allowed too. By default (`auto`), insecure (HTTP)
-requests are upgraded to HTTPS via CSP if `useSSL` is on. To change this behaviour, set `upgradeInsecureRequests` to
-either `true` or `false`. | | | `CMD_CSP_ENABLE`              | **`true`** or `false`
-| whether to enable Content Security Policy (directives cannot be configured with environment variables)
-| | | `CMD_CSP_REPORTURI`           | **`undefined`**, `https://<someid>.report-uri.com/r/d/csp/enforce`
-| Allows to add a URL for CSP reports in case of violations | | `cookiePolicy` | `CMD_COOKIE_POLICY`
-| **`lax`**, `strict` or `none`
-| Set a SameSite policy whether cookies are send from cross-origin. Be careful: setting a SameSite value of none without
-https breaks the editor |
+| config file | environment                   | **default** and example value                                                                                                              | description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ----------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `hsts`      |                               | `{"enable": true, "maxAgeSeconds": 31536000, "includeSubdomains": true, "preload": true}`                                                  | [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) options to use with HTTPS (default is the example value, max age is a year)                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+|             | `CMD_HSTS_ENABLE`             | **`true`** or `false`                                                                                                                      | set to enable [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) if HTTPS is also enabled (default is ` true`)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+|             | `CMD_HSTS_INCLUDE_SUBDOMAINS` | **`true`** or `false`                                                                                                                      | set to include subdomains in HSTS (default is `true`)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+|             | `CMD_HSTS_MAX_AGE`            | **`31536000`**, `60 * 60 * 24 * 365`                                                                                                       | max duration in seconds to tell clients to keep HSTS status (default is a year)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+|             | `CMD_HSTS_PRELOAD`            | **`true`** or `false`                                                                                                                      | whether to allow preloading of the site's HSTS status (e.g. into browsers)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `csp`       |                               | `{"enable": true, "directives": {"scriptSrc": "trustworthy-scripts.example.com"}, "upgradeInsecureRequests": "auto", "addDefaults": true}` | Configures [Content Security Policy](https://helmetjs.github.io/docs/csp/). Directives are passed to Helmet - see [their documentation](https://helmetjs.github.io/docs/csp/) for more information on the format. Some defaults are added to the configured values so that the application doesn't break. To disable this behaviour, set `addDefaults` to `false`. Further, if `usecdn` is on, some CDN locations are allowed too. By default (`auto`), insecure (HTTP) requests are upgraded to HTTPS via CSP if `useSSL` is on. To change this behaviour, set `upgradeInsecureRequests` to either `true` or `false`. |
+|             | `CMD_CSP_ENABLE`              | **`true`** or `false`                                                                                                                      | whether to enable Content Security Policy (directives cannot be configured with environment variables)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+|             | `CMD_CSP_REPORTURI`           | **`undefined`**, `https://<someid>.report-uri.com/r/d/csp/enforce`                                                                         | Allows to add a URL for CSP reports in case of violations                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 
 ## Privacy and External Requests
 
-| config file | environment | **
-default** and example value | description | | --------------- | -------------------- | ----------------------------- |
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| | `allowGravatar` | `CMD_ALLOW_GRAVATAR` | **`true`** or `false`         | set to `false` to
-disable [Libravatar](https://www.libravatar.org/) as profile picture source on your instance. Libravatar is a federated
-open-source alternative to Gravatar. | | `useCDN`        | `CMD_USECDN`         | **`false`** or `true`         | set to
-use CDN resources or not (default is `false`)
-|
+| config file     | environment          | **default** and example value | description                                                                                                                                                                    |
+| --------------- | -------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `allowGravatar` | `CMD_ALLOW_GRAVATAR` | **`true`** or `false`         | set to `false` to disable [Libravatar](https://www.libravatar.org/) as profile picture source on your instance. Libravatar is a federated open-source alternative to Gravatar. |
+| `useCDN`        | `CMD_USECDN`         | **`false`** or `true`         | set to use CDN resources or not (default is `false`)                                                                                                                           |
 
 ## Users and Privileges
 
-| config file | environment | **
-default** and example value | description | | --------------------- | --------------------------- |
------------------------------------------------------------------------ |
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-| | `allowAnonymous`      | `CMD_ALLOW_ANONYMOUS`       | **`true`** or `false`
-| Set to allow anonymous usage (default is `true`). | | `allowAnonymousEdits` | `CMD_ALLOW_ANONYMOUS_EDITS`
-| **`false`** or `true`                                                   | If `allowAnonymous` is `false`: allow users
-to select `freely` permission, allowing guests to edit existing notes (default is `false`). | | `allowFreeURL`
-| `CMD_ALLOW_FREEURL`         | **`false`** or `true`                                                   | Set to allow
-new note creation by accessing a nonexistent note URL. This is the behavior familiar
-from [Etherpad](https://github.com/ether/etherpad-lite). | | `defaultPermission`   | `CMD_DEFAULT_PERMISSION`
-| **`editable`**, `freely`, `limited`, `locked`, `protected` or `private` | Set notes default permission (only applied
-on signed-in users). | | `sessionName`         | | **`connect.sid`**
-| Cookie session name. | | `sessionLife`         | `CMD_SESSION_LIFE`          | **`14 * 24 * 60 * 60 * 1000`**
-, `1209600000` (14 days)                  | Cookie session life time in milliseconds. | | `sessionSecret`
-| `CMD_SESSION_SECRET`        | **`secret`**                                                            | Cookie session
-secret used to sign the session cookie. If none is set, one will randomly generated on each startup, meaning all your
-users will be logged out. |
+| config file           | environment                 | **default** and example value                                           | description                                                                                                                                                    |
+| --------------------- | --------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `allowAnonymous`      | `CMD_ALLOW_ANONYMOUS`       | **`true`** or `false`                                                   | Set to allow anonymous usage (default is `true`).                                                                                                              |
+| `allowAnonymousEdits` | `CMD_ALLOW_ANONYMOUS_EDITS` | **`false`** or `true`                                                   | If `allowAnonymous` is `false`: allow users to select `freely` permission, allowing guests to edit existing notes (default is `false`).                        |
+| `allowFreeURL`        | `CMD_ALLOW_FREEURL`         | **`false`** or `true`                                                   | Set to allow new note creation by accessing a nonexistent note URL. This is the behavior familiar from [Etherpad](https://github.com/ether/etherpad-lite).     |
+| `defaultPermission`   | `CMD_DEFAULT_PERMISSION`    | **`editable`**, `freely`, `limited`, `locked`, `protected` or `private` | Set notes default permission (only applied on signed-in users).                                                                                                |
+| `sessionName`         |                             | **`connect.sid`**                                                       | Cookie session name.                                                                                                                                           |
+| `sessionLife`         | `CMD_SESSION_LIFE`          | **`14 * 24 * 60 * 60 * 1000`**, `1209600000` (14 days)                  | Cookie session life time in milliseconds.                                                                                                                      |
+| `sessionSecret`       | `CMD_SESSION_SECRET`        | **`secret`**                                                            | Cookie session secret used to sign the session cookie. If none is set, one will randomly generated on each startup, meaning all your users will be logged out. |
 
 ## Login methods
 
 ### Email (local account)
 
-| config file | environment | **
-default** and example value | description | | -------------------- | -------------------------- |
------------------------------ |
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| | `email`              | `CMD_EMAIL`                | **`true`** or `false`         | Set to allow email sign-in. The
-default is `true`. | | `allowEmailRegister` | `CMD_ALLOW_EMAIL_REGISTER` | **`true`** or `false`         | Set to allow
-registration of new accounts using an email address. If set to `false`, you can still create accounts using the command
-line - see `bin/manage_users` for details (In production mode, remember to run it with `NODE_ENV` set as `production` in
-the enviroment). This setting has no effect if `email` or `CMD_EMAIL` is `false`. The default for `allowEmailRegister`
-or `CMD_ALLOW_EMAIL_REGISTER` is `true`. |
+| config file          | environment                | **default** and example value | description                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| -------------------- | -------------------------- | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `email`              | `CMD_EMAIL`                | **`true`** or `false`         | Set to allow email sign-in. The default is `true`.                                                                                                                                                                                                                                                                                                                                                                            |
+| `allowEmailRegister` | `CMD_ALLOW_EMAIL_REGISTER` | **`true`** or `false`         | Set to allow registration of new accounts using an email address. If set to `false`, you can still create accounts using the command line - see `bin/manage_users` for details (In production mode, remember to run it with `NODE_ENV` set as `production` in the enviroment). This setting has no effect if `email` or `CMD_EMAIL` is `false`. The default for `allowEmailRegister` or `CMD_ALLOW_EMAIL_REGISTER` is `true`. |
 
 ### Dropbox Login
 
-| config file | environment | **
-default** and example value | description | | ----------- | -------------------------- |
------------------------------------- |
--------------------------------------------------------------------------------------------------------------------------------------------
-| | `dropbox`   | | `{clientID: ..., clientSecret: ...}` | An object containing the client ID and the client secret
-obtained by the [Dropbox developer tools](https://www.dropbox.com/developers/apps) | | | `CMD_DROPBOX_CLIENTID`     | **
-no default**                       | Dropbox API client id | | | `CMD_DROPBOX_CLIENTSECRET` | **no default**
-| Dropbox API client secret |
+| config file | environment                | **default** and example value        | description                                                                                                                                 |
+| ----------- | -------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `dropbox`   |                            | `{clientID: ..., clientSecret: ...}` | An object containing the client ID and the client secret obtained by the [Dropbox developer tools](https://www.dropbox.com/developers/apps) |
+|             | `CMD_DROPBOX_CLIENTID`     | **no default**                       | Dropbox API client id                                                                                                                       |
+|             | `CMD_DROPBOX_CLIENTSECRET` | **no default**                       | Dropbox API client secret                                                                                                                   |
 
 ### Facebook Login
 
-| config file | environment | **
-default** and example value | description | | ----------- | --------------------------- |
------------------------------------- |
--------------------------------------------------------------------------------------------------------------------------------------
-| | `facebook`  | | `{clientID: ..., clientSecret: ...}` | An object containing the client ID and the client secret
-obtained by the [Facebook app console](https://developers.facebook.com/apps) | | | `CMD_FACEBOOK_CLIENTID`     | **no
-default**                       | Facebook API client id | | | `CMD_FACEBOOK_CLIENTSECRET` | **no default**
-| Facebook API client secret |
+| config file | environment                 | **default** and example value        | description                                                                                                                           |
+| ----------- | --------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `facebook`  |                             | `{clientID: ..., clientSecret: ...}` | An object containing the client ID and the client secret obtained by the [Facebook app console](https://developers.facebook.com/apps) |
+|             | `CMD_FACEBOOK_CLIENTID`     | **no default**                       | Facebook API client id                                                                                                                |
+|             | `CMD_FACEBOOK_CLIENTSECRET` | **no default**                       | Facebook API client secret                                                                                                            |
 
 ### GitHub Login
 
-| config file | environment | **
-default** and example value | description | | ----------- | ------------------------- |
------------------------------------- |
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| | `github`    | | `{clientID: ..., clientSecret: ...}` | An object containing the client ID and the client secret
-obtained by the GitHub developer page. For more details have a look at the [GitHub auth guide](guides/auth/github.md). |
-| | `CMD_GITHUB_CLIENTID`     | **no default**                       | GitHub API client id | |
-| `CMD_GITHUB_CLIENTSECRET` | **no default**                       | GitHub API client secret |
+| config file | environment               | **default** and example value        | description                                                                                                                                                                     |
+| ----------- | ------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `github`    |                           | `{clientID: ..., clientSecret: ...}` | An object containing the client ID and the client secret obtained by the GitHub developer page. For more details have a look at the [GitHub auth guide](guides/auth/github.md). |
+|             | `CMD_GITHUB_CLIENTID`     | **no default**                       | GitHub API client id                                                                                                                                                            |
+|             | `CMD_GITHUB_CLIENTSECRET` | **no default**                       | GitHub API client secret                                                                                                                                                        |
 
 ### GitLab Login
 
-| config file | environment | **
-default** and example value | description | | ----------- | ------------------------- |
----------------------------------------------------------------------------- |
------------------------------------------------------------------------------------------------------------------------------------
-| | `gitlab`    | | `{baseURL: ..., scope: ..., version: ..., clientID: ..., clientSecret: ...}` | An object containing
-your GitLab application data. Refer to the [GitLab guide](guides/auth/gitlab-self-hosted.md) for more details! | |
-| `CMD_GITLAB_SCOPE`        | **no default**, `read_user` or `api`                                         | GitLab API
-requested scope (default is `api`) (GitLab snippet import/export need `api` scope)
-| | | `CMD_GITLAB_BASEURL`      | **no default**                                                               | GitLab
-authentication endpoint, set to use other endpoint than GitLab.com (optional)
-| | | `CMD_GITLAB_CLIENTID`     | **no default**                                                               | GitLab
-API client id | | | `CMD_GITLAB_CLIENTSECRET` | **no default**
-| GitLab API client secret | | | `CMD_GITLAB_VERSION`      | **`v4`**
-| GitLab API version (v3 or v4)
-|
+| config file | environment               | **default** and example value                                                | description                                                                                                                         |
+| ----------- | ------------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `gitlab`    |                           | `{baseURL: ..., scope: ..., version: ..., clientID: ..., clientSecret: ...}` | An object containing your GitLab application data. Refer to the [GitLab guide](guides/auth/gitlab-self-hosted.md) for more details! |
+|             | `CMD_GITLAB_SCOPE`        | **no default**, `read_user` or `api`                                         | GitLab API requested scope (default is `api`) (GitLab snippet import/export need `api` scope)                                       |
+|             | `CMD_GITLAB_BASEURL`      | **no default**                                                               | GitLab authentication endpoint, set to use other endpoint than GitLab.com (optional)                                                |
+|             | `CMD_GITLAB_CLIENTID`     | **no default**                                                               | GitLab API client id                                                                                                                |
+|             | `CMD_GITLAB_CLIENTSECRET` | **no default**                                                               | GitLab API client secret                                                                                                            |
+|             | `CMD_GITLAB_VERSION`      | **`v4`**                                                                     | GitLab API version (v3 or v4)                                                                                                       |
 
 ### Google Login
 
-| config file | environment | **
-default** and example value | description | | ----------- | ------------------------- |
-------------------------------------------------------- |
-------------------------------------------------------------------------------------------------------------------------------------
-| | `google`    | | `{clientID: ..., clientSecret: ..., hostedDomain: ...}` | An object containing the client ID and the
-client secret obtained by the [Google API console](https://console.cloud.google.com/apis) | | | `CMD_GOOGLE_CLIENTID`
-| **no default**                                          | Google API client id | | | `CMD_GOOGLE_CLIENTSECRET` | **no
-default**                                          | Google API client secret | | | `CMD_GOOGLE_HOSTEDDOMAIN` | **no
-default**, `example.com`                           | Provided only if the user belongs to a hosted domain. default
-is `undefined`                                                         |
+| config file | environment               | **default** and example value                           | description                                                                                                                          |
+| ----------- | ------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `google`    |                           | `{clientID: ..., clientSecret: ..., hostedDomain: ...}` | An object containing the client ID and the client secret obtained by the [Google API console](https://console.cloud.google.com/apis) |
+|             | `CMD_GOOGLE_CLIENTID`     | **no default**                                          | Google API client id                                                                                                                 |
+|             | `CMD_GOOGLE_CLIENTSECRET` | **no default**                                          | Google API client secret                                                                                                             |
+|             | `CMD_GOOGLE_HOSTEDDOMAIN` | **no default**, `example.com`                           | Provided only if the user belongs to a hosted domain. default is `undefined`                                                         |
 
 ### LDAP Login
 
-| config file | environment | **
-default** and example value | description | | ----------- | --------------------------- |
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| --------------------------------------------------------------------------------------------------------------- |
-| `ldap`      |
-| `{providerName: ..., url: ..., bindDn: ..., bindCredentials: ..., searchBase: ..., searchFilter: ..., searchAttributes: ..., usernameField: ..., useridField: ..., tlsca: ...}`
-| An object detailing the LDAP connection. Refer to the [LDAP-AD guide](guides/auth/ldap-ad.md) for more details! | |
-| `CMD_LDAP_URL`              | **no default**, `ldap://example.com`
-| URL of LDAP server | | | `CMD_LDAP_BINDDN`           | **no default**
-| bindDn for LDAP access | | | `CMD_LDAP_BINDCREDENTIALS`  | **no default**, | bindCredentials for LDAP access | |
-| `CMD_LDAP_SEARCHBASE`       | **no default**, `o=users,dc=example,dc=com`
-| LDAP directory to begin search from | | | `CMD_LDAP_SEARCHFILTER`     | **no default**, `(uid={{username}})`
-| LDAP filter to search with | | | `CMD_LDAP_SEARCHATTRIBUTES` | **no default**, `displayName, mail`
-| LDAP attributes to search with (use comma to separate)                                                          | |
-| `CMD_LDAP_USERIDFIELD`      | **no default**, `uidNumber` or `uid` or `sAMAccountName`
-| The LDAP field which is used uniquely identify a user on HedgeDoc | | | `CMD_LDAP_USERNAMEFIELD`    | **no default**,
-fallback to userid | The LDAP field which is used as the username on HedgeDoc | | | `CMD_LDAP_TLS_CA`           | **no
-default**, `server-cert.pem, root.pem`
-| Root CA for LDAP TLS in PEM format (use comma to separate)                                                      | |
-| `CMD_LDAP_PROVIDERNAME`     | **no default**, `My institution`
-| Optional name to be displayed at login form indicating the LDAP provider |
+| config file | environment                 | **default** and example value                                                                                                                                                   | description                                                                                                     |
+| ----------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `ldap`      |                             | `{providerName: ..., url: ..., bindDn: ..., bindCredentials: ..., searchBase: ..., searchFilter: ..., searchAttributes: ..., usernameField: ..., useridField: ..., tlsca: ...}` | An object detailing the LDAP connection. Refer to the [LDAP-AD guide](guides/auth/ldap-ad.md) for more details! |
+|             | `CMD_LDAP_URL`              | **no default**, `ldap://example.com`                                                                                                                                            | URL of LDAP server                                                                                              |
+|             | `CMD_LDAP_BINDDN`           | **no default**                                                                                                                                                                  | bindDn for LDAP access                                                                                          |
+|             | `CMD_LDAP_BINDCREDENTIALS`  | **no default**,                                                                                                                                                                 | bindCredentials for LDAP access                                                                                 |
+|             | `CMD_LDAP_SEARCHBASE`       | **no default**, `o=users,dc=example,dc=com`                                                                                                                                     | LDAP directory to begin search from                                                                             |
+|             | `CMD_LDAP_SEARCHFILTER`     | **no default**, `(uid={{username}})`                                                                                                                                            | LDAP filter to search with                                                                                      |
+|             | `CMD_LDAP_SEARCHATTRIBUTES` | **no default**, `displayName, mail`                                                                                                                                             | LDAP attributes to search with (use comma to separate)                                                          |
+|             | `CMD_LDAP_USERIDFIELD`      | **no default**, `uidNumber` or `uid` or `sAMAccountName`                                                                                                                        | The LDAP field which is used uniquely identify a user on CodiMD                                                 |
+|             | `CMD_LDAP_USERNAMEFIELD`    | **no default**, fallback to userid                                                                                                                                              | The LDAP field which is used as the username on CodiMD                                                          |
+|             | `CMD_LDAP_TLS_CA`           | **no default**, `server-cert.pem, root.pem`                                                                                                                                     | Root CA for LDAP TLS in PEM format (use comma to separate)                                                      |
+|             | `CMD_LDAP_PROVIDERNAME`     | **no default**, `My institution`                                                                                                                                                | Optional name to be displayed at login form indicating the LDAP provider                                        |
 
 ### Mattermost Login
 
-| config file | environment | **
-default** and example value | description | | ------------ | ----------------------------- |
--------------------------------------------------- |
----------------------------------------------------------------------------------------------------------------------------------------------------------------
-| | `mattermost` | | `{baseURL: ..., clientID: ..., clientSecret: ...}` | An object containing the base URL of your
-Mattermost application data. Refer to the [Mattermost guide](guides/auth/mattermost-self-hosted.md) for more details! |
-| | `CMD_MATTERMOST_BASEURL`      | **no default**                                     | Mattermost authentication
-endpoint for versions below 5.0. For Mattermost version 5.0 and above,
-see [guide](guides/auth/mattermost-self-hosted.md). | | | `CMD_MATTERMOST_CLIENTID`     | **no default**
-| Mattermost API client id | | | `CMD_MATTERMOST_CLIENTSECRET` | **no default**                                     |
-Mattermost API client secret |
+| config file  | environment                   | **default** and example value                      | description                                                                                                                                                     |
+| ------------ | ----------------------------- | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mattermost` |                               | `{baseURL: ..., clientID: ..., clientSecret: ...}` | An object containing the base URL of your Mattermost application data. Refer to the [Mattermost guide](guides/auth/mattermost-self-hosted.md) for more details! |
+|              | `CMD_MATTERMOST_BASEURL`      | **no default**                                     | Mattermost authentication endpoint for versions below 5.0. For Mattermost version 5.0 and above, see [guide](guides/auth/mattermost-self-hosted.md).            |
+|              | `CMD_MATTERMOST_CLIENTID`     | **no default**                                     | Mattermost API client id                                                                                                                                        |
+|              | `CMD_MATTERMOST_CLIENTSECRET` | **no default**                                     | Mattermost API client secret                                                                                                                                    |
 
 ### OAuth2 Login
 
-| config file | environment | **
-default** and example value | description | | ----------- | ------------------------------------------- |
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| | `oauth2`    |
-| `{baseURL: ..., userProfileURL: ..., userProfileUsernameAttr: ..., userProfileDisplayNameAttr: ..., userProfileEmailAttr: ..., tokenURL: ..., authorizationURL: ..., clientID: ..., clientSecret: ..., scope: ...}`
-| An object detailing your OAuth2 provider. Refer to the [Mattermost](guides/auth/mattermost-self-hosted.md)
-or [Nextcloud](guides/auth/nextcloud.md) examples for more details!
-| | | `CMD_OAUTH2_USER_PROFILE_URL`               | **no default**, `https://example.com`
-| Where to retrieve information about a user after successful login. Needs to output JSON. (no default value) Refer to
-the [Mattermost](guides/auth/mattermost-self-hosted.md) or [Nextcloud](guides/auth/nextcloud.md) examples for more
-details on all of the `CMD_OAUTH2...` options. | | | `CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR`     | **no default**
-, `name`
-| where to find the username in the JSON from the user profile URL. (no default value)
-| | | `CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR` | **no default**, `display-name`
-| where to find the display-name in the JSON from the user profile URL. (no default value)
-| | | `CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR`        | **no default**, `email`
-| where to find the email address in the JSON from the user profile URL. (no default value)
-| | | `CMD_OAUTH2_USER_PROFILE_ID_ATTR`           | **no default**, `user_uuid`
-| where to find the dedicated user ID (optional, overrides `CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR`)
-| | | `CMD_OAUTH2_TOKEN_URL`                      | **no default**, `https://example.com`
-| sometimes called token endpoint, please refer to the documentation of your OAuth2 provider (no default value)
-| | | `CMD_OAUTH2_AUTHORIZATION_URL`              | **no default**, `https://example.com`
-| authorization URL of your provider, please refer to the documentation of your OAuth2 provider (no default value)
-| | | `CMD_OAUTH2_CLIENT_ID`                      | **no default**, `afae02fckafd...`
-| you will get this from your OAuth2 provider when you register HedgeDoc as OAuth2-client, (no default value)
-| | | `CMD_OAUTH2_CLIENT_SECRET`                  | **no default**, `afae02fckafd...`
-| you will get this from your OAuth2 provider when you register HedgeDoc as OAuth2-client, (no default value)
-| | | `CMD_OAUTH2_PROVIDERNAME`                   | **no default**, `My institution`
-| Optional name to be displayed at login form indicating the oAuth2 provider | | | `CMD_OAUTH2_SCOPE`
-| **no default**, `openid email profile`
-| Scope to request for OIDC (OpenID Connect) providers. | | | `CMD_OAUTH2_ROLES_CLAIM`                    | **no
-default**, `roles`
-| ID token claim, which is supposed to provide an array of strings of roles | | | `CMD_OAUTH2_ACCESS_ROLE`
-| **no default**, `role/hedgedoc`
-| The role which should be included in the ID token roles claim to grant access |
+| config file | environment                                 | **default** and example value                                                                                                                                                                                       | description                                                                                                                                                                                                                                                                            |
+| ----------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `oauth2`    |                                             | `{baseURL: ..., userProfileURL: ..., userProfileUsernameAttr: ..., userProfileDisplayNameAttr: ..., userProfileEmailAttr: ..., tokenURL: ..., authorizationURL: ..., clientID: ..., clientSecret: ..., scope: ...}` | An object detailing your OAuth2 provider. Refer to the [Mattermost](guides/auth/mattermost-self-hosted.md) or [Nextcloud](guides/auth/nextcloud.md) examples for more details!                                                                                                         |
+|             | `CMD_OAUTH2_USER_PROFILE_URL`               | **no default**, `https://example.com`                                                                                                                                                                               | Where to retrieve information about a user after successful login. Needs to output JSON. (no default value) Refer to the [Mattermost](guides/auth/mattermost-self-hosted.md) or [Nextcloud](guides/auth/nextcloud.md) examples for more details on all of the `CMD_OAUTH2...` options. |
+|             | `CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR`     | **no default**, `name`                                                                                                                                                                                              | where to find the username in the JSON from the user profile URL. (no default value)                                                                                                                                                                                                   |
+|             | `CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR` | **no default**, `display-name`                                                                                                                                                                                      | where to find the display-name in the JSON from the user profile URL. (no default value)                                                                                                                                                                                               |
+|             | `CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR`        | **no default**, `email`                                                                                                                                                                                             | where to find the email address in the JSON from the user profile URL. (no default value)                                                                                                                                                                                              |
+|             | `CMD_OAUTH2_TOKEN_URL`                      | **no default**, `https://example.com`                                                                                                                                                                               | sometimes called token endpoint, please refer to the documentation of your OAuth2 provider (no default value)                                                                                                                                                                          |
+|             | `CMD_OAUTH2_AUTHORIZATION_URL`              | **no default**, `https://example.com`                                                                                                                                                                               | authorization URL of your provider, please refer to the documentation of your OAuth2 provider (no default value)                                                                                                                                                                       |
+|             | `CMD_OAUTH2_CLIENT_ID`                      | **no default**, `afae02fckafd...`                                                                                                                                                                                   | you will get this from your OAuth2 provider when you register CodiMD as OAuth2-client, (no default value)                                                                                                                                                                              |
+|             | `CMD_OAUTH2_CLIENT_SECRET`                  | **no default**, `afae02fckafd...`                                                                                                                                                                                   | you will get this from your OAuth2 provider when you register CodiMD as OAuth2-client, (no default value)                                                                                                                                                                              |
+|             | `CMD_OAUTH2_PROVIDERNAME`                   | **no default**, `My institution`                                                                                                                                                                                    | Optional name to be displayed at login form indicating the oAuth2 provider                                                                                                                                                                                                             |
+|             | `CMD_OAUTH2_SCOPE`                          | **no default**, `openid email profile`                                                                                                                                                                              | Scope to request for OIDC (OpenID Connect) providers.                                                                                                                                                                                                                                  |
 
 ### SAML Login
 
-| config file | environment | **
-default** and example value | description | | ----------- | --------------------------------------- |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|
-------------------------------------------------------------------------------------------------------------------------------------------------------
-| | `saml`      |
-| `{idpSsoUrl: ..., idpCert: ..., clientCert: ..., issuer: ..., identifierFormat: ..., disableRequestedAuthnContext: ..., groupAttribute: ..., externalGroups: [], requiredGroups: [], attribute: {id: ..., username: ..., email: ...}}`
-| An object detailing your SAML provider. Refer to the [OneLogin](guides/auth/saml-onelogin.md)
-and [SAML](guides/auth/saml.md) guides for more details! | | | `CMD_SAML_IDPSSOURL`                    | **no default**
-, `https://idp.example.com/sso`
-| authentication endpoint of IdP. for details, see [guide](guides/auth/saml-onelogin.md). | | | `CMD_SAML_IDPCERT`
-| **no default**, `/path/to/cert.pem`
-| certificate file path of IdP in PEM format | | | `CMD_SAML_CLIENTCERT`                   | **no default**
-, `/path/to/privatecert.pem`
-| certificate file path for the client in PEM format (optional)
-| | | `CMD_SAML_ISSUER`                       | **no default**
-| Issuer to supply to identity provider (optional, default: `serverURL` config)"
-| | | `CMD_SAML_DISABLEREQUESTEDAUTHNCONTEXT` | **no default**, `true` or `false`
-| true to allow any authentication method, false restricts to password authentication (PasswordProtectedTransport)
-method (default: false)               | | | `CMD_SAML_IDENTIFIERFORMAT`
-| **`urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress`**
-| name identifier format (optional, default: `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress`)
-| | | `CMD_SAML_GROUPATTRIBUTE`               | **no default**, `memberOf`
-| attribute name for group list (optional)
-| | | `CMD_SAML_REQUIREDGROUPS`               | **no default**, `hedgedoc-users`
-| group names that allowed (use vertical bar to separate) (optional)
-| | | `CMD_SAML_EXTERNALGROUPS`               | **no default**, `Temporary-staff`
-| group names that not allowed (use vertical bar to separate) (optional)
-| | | `CMD_SAML_ATTRIBUTE_ID`                 | **no default**, `sAMAccountName`
-| attribute map for `id` (optional, default: NameID of SAML response)
-| | | `CMD_SAML_ATTRIBUTE_USERNAME`           | **no default**, `mailNickname`
-| attribute map for `username` (optional, default: NameID of SAML response)
-| | | `CMD_SAML_ATTRIBUTE_EMAIL`              | **no default**, `mail`
-| attribute map for `email` (optional, default: NameID of SAML response if `CMD_SAML_IDENTIFIERFORMAT` is default)
-|
+| config file | environment                             | **default** and example value                                                                                                                                                                                                          | description                                                                                                                                            |
+| ----------- | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `saml`      |                                         | `{idpSsoUrl: ..., idpCert: ..., clientCert: ..., issuer: ..., identifierFormat: ..., disableRequestedAuthnContext: ..., groupAttribute: ..., externalGroups: [], requiredGroups: [], attribute: {id: ..., username: ..., email: ...}}` | An object detailing your SAML provider. Refer to the [OneLogin](guides/auth/saml-onelogin.md) and [SAML](guides/auth/saml.md) guides for more details! |
+|             | `CMD_SAML_IDPSSOURL`                    | **no default**, `https://idp.example.com/sso`                                                                                                                                                                                          | authentication endpoint of IdP. for details, see [guide](guides/auth/saml-onelogin.md).                                                                |
+|             | `CMD_SAML_IDPCERT`                      | **no default**, `/path/to/cert.pem`                                                                                                                                                                                                    | certificate file path of IdP in PEM format                                                                                                             |
+|             | `CMD_SAML_CLIENTCERT`                   | **no default**, `/path/to/privatecert.pem`                                                                                                                                                                                             | certificate file path for the client in PEM format (optional)                                                                                          |
+|             | `CMD_SAML_ISSUER`                       | **no default**                                                                                                                                                                                                                         | Issuer to supply to identity provider (optional, default: `serverURL` config)"                                                                         |
+|             | `CMD_SAML_DISABLEREQUESTEDAUTHNCONTEXT` | **no default**, `true` or `false`                                                                                                                                                                                                      | true to allow any authentication method, false restricts to password authentication (PasswordProtectedTransport) method (default: false)               |
+|             | `CMD_SAML_IDENTIFIERFORMAT`             | **`urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress`**                                                                                                                                                                           | name identifier format (optional, default: `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress`)                                                   |
+|             | `CMD_SAML_GROUPATTRIBUTE`               | **no default**, `memberOf`                                                                                                                                                                                                             | attribute name for group list (optional)                                                                                                               |
+|             | `CMD_SAML_REQUIREDGROUPS`               | **no default**, `codimd-users`                                                                                                                                                                                                         | group names that allowed (use vertical bar to separate) (optional)                                                                                     |
+|             | `CMD_SAML_EXTERNALGROUPS`               | **no default**, `Temporary-staff`                                                                                                                                                                                                      | group names that not allowed (use vertical bar to separate) (optional)                                                                                 |
+|             | `CMD_SAML_ATTRIBUTE_ID`                 | **no default**, `sAMAccountName`                                                                                                                                                                                                       | attribute map for `id` (optional, default: NameID of SAML response)                                                                                    |
+|             | `CMD_SAML_ATTRIBUTE_USERNAME`           | **no default**, `mailNickname`                                                                                                                                                                                                         | attribute map for `username` (optional, default: NameID of SAML response)                                                                              |
+|             | `CMD_SAML_ATTRIBUTE_EMAIL`              | **no default**, `mail`                                                                                                                                                                                                                 | attribute map for `email` (optional, default: NameID of SAML response if `CMD_SAML_IDENTIFIERFORMAT` is default)                                       |
 
 ### Twitter Login
 
-| config file | environment | **
-default** and example value | description | | ----------- | ---------------------------- |
------------------------------------------ |
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| | `twitter`   | | `{consumerKey: ..., consumerSecret: ...}` | An object containing the consumer key and secret
-obtained by the [Twitter developer tools](https://developer.twitter.com/apps). For more details have a look at
-the [Twitter auth guide](guides/auth/twitter.md) | | | `CMD_TWITTER_CONSUMERKEY`    | **no default**
-| Twitter API consumer key | | | `CMD_TWITTER_CONSUMERSECRET` | **no default**                            | Twitter API
-consumer secret |
+| config file | environment                  | **default** and example value             | description                                                                                                                                                                                                      |
+| ----------- | ---------------------------- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `twitter`   |                              | `{consumerKey: ..., consumerSecret: ...}` | An object containing the consumer key and secret obtained by the [Twitter developer tools](https://developer.twitter.com/apps). For more details have a look at the [Twitter auth guide](guides/auth/twitter.md) |
+|             | `CMD_TWITTER_CONSUMERKEY`    | **no default**                            | Twitter API consumer key                                                                                                                                                                                         |
+|             | `CMD_TWITTER_CONSUMERSECRET` | **no default**                            | Twitter API consumer secret                                                                                                                                                                                      |
 
 ## Upload Storage
 
 These are only relevant when they are also configured in sync with their
-`CMD_IMAGE_UPLOAD_TYPE`. Also keep in mind, that `filesystem` is available, so you don't have to use either of these.
+`CMD_IMAGE_UPLOAD_TYPE`. Also keep in mind, that `filesystem` is available, so
+you don't have to use either of these.
 
 ### Amazon S3
 
-| config file | environment | **
-default** and example value | description | | ----------- | -------------------------- |
------------------------------------------------------------------------------------------------------------------ |
-------------------------------------------------------------------------------------------------------------------------------------------
-| | `s3`        |
-| `{ "accessKeyId": "YOUR_S3_ACCESS_KEY_ID", "secretAccessKey": "YOUR_S3_ACCESS_KEY", "region": "YOUR_S3_REGION" }` |
-When `imageuploadtype` be set to `s3`, you would also need to setup this key, check
-our [S3 Image Upload Guide](guides/s3-image-upload.md) | | | `CMD_S3_ACCESS_KEY_ID`     | **no default**
-| AWS access key id | | | `CMD_S3_SECRET_ACCESS_KEY` | **no default**
-| AWS secret key | | | `CMD_S3_REGION`            | **no default**, `ap-northeast-1`
-| AWS S3 region | | `s3bucket`  | `CMD_S3_BUCKET`            | **no default**
-| AWS S3 bucket name | | | `CMD_S3_ENDPOINT ENV`      | **no default**
-| S3 API endpoint if you don't use AWS name |
+| config file | environment                | **default** and example value                                                                                     | description                                                                                                                                |
+| ----------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `s3`        |                            | `{ "accessKeyId": "YOUR_S3_ACCESS_KEY_ID", "secretAccessKey": "YOUR_S3_ACCESS_KEY", "region": "YOUR_S3_REGION" }` | When `imageuploadtype` be set to `s3`, you would also need to setup this key, check our [S3 Image Upload Guide](guides/s3-image-upload.md) |
+|             | `CMD_S3_ACCESS_KEY_ID`     | **no default**                                                                                                    | AWS access key id                                                                                                                          |
+|             | `CMD_S3_SECRET_ACCESS_KEY` | **no default**                                                                                                    | AWS secret key                                                                                                                             |
+|             | `CMD_S3_REGION`            | **no default**, `ap-northeast-1`                                                                                  | AWS S3 region                                                                                                                              |
+| `s3bucket`  | `CMD_S3_BUCKET`            | **no default**                                                                                                    | AWS S3 bucket name                                                                                                                         |
+|             | `CMD_S3_ENDPOINT ENV`      | **no default**                                                                                                    | S3 API endpoint if you don't use AWS name                                                                                                  |
 
 ### Azure Blob Storage
 
-| config file | environment | **
-default** and example value | description | | ----------- | ----------------------------- |
------------------------------ | ------------------------------------------------------------------------- | |
-| `CMD_AZURE_CONNECTION_STRING` | **no default**                | Azure Blob Storage connection string | |
-| `CMD_AZURE_CONTAINER`         | **no default**                | Azure Blob Storage container name (automatically
-created if non existent) |
+| config file | environment                   | **default** and example value | description                                                               |
+| ----------- | ----------------------------- | ----------------------------- | ------------------------------------------------------------------------- |
+|             | `CMD_AZURE_CONNECTION_STRING` | **no default**                | Azure Blob Storage connection string                                      |
+|             | `CMD_AZURE_CONTAINER`         | **no default**                | Azure Blob Storage container name (automatically created if non existent) |
 
 ### imgur
 
@@ -420,26 +253,18 @@ created if non existent) |
 
 ### Minio
 
-| config file | environment | **
-default** and example value | description | | ----------- | ---------------------- |
------------------------------------------------------------------------------------------------------------------------------------------
-|
------------------------------------------------------------------------------------------------------------------------------------------------
-| | `minio`     |
-| `{ "accessKey": "YOUR_MINIO_ACCESS_KEY", "secretKey": "YOUR_MINIO_SECRET_KEY", "endpoint": "YOUR_MINIO_HOST", port: 9000, secure: true }`
-| When `imageUploadType` is set to `minio`, you need to set this key. Also check out
-our [Minio Image Upload Guide](guides/minio-image-upload.md) | | | `CMD_MINIO_ACCESS_KEY` | **no default**
-| Minio access key | | | `CMD_MINIO_SECRET_KEY` | **no default**
-| Minio secret key | | | `CMD_MINIO_ENDPOINT`   | **no default**, `minio.example.org`
-| Address of your Minio endpoint/instance | | | `CMD_MINIO_PORT`       | **no default**, `9000`
-| Port that is used for your Minio instance | | | `CMD_MINIO_SECURE`     | **no default**, `true`
-| If set to `true` HTTPS is used for Minio |
+| config file | environment            | **default** and example value                                                                                                             | description                                                                                                                                     |
+| ----------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `minio`     |                        | `{ "accessKey": "YOUR_MINIO_ACCESS_KEY", "secretKey": "YOUR_MINIO_SECRET_KEY", "endpoint": "YOUR_MINIO_HOST", port: 9000, secure: true }` | When `imageUploadType` is set to `minio`, you need to set this key. Also check out our [Minio Image Upload Guide](guides/minio-image-upload.md) |
+|             | `CMD_MINIO_ACCESS_KEY` | **no default**                                                                                                                            | Minio access key                                                                                                                                |
+|             | `CMD_MINIO_SECRET_KEY` | **no default**                                                                                                                            | Minio secret key                                                                                                                                |
+|             | `CMD_MINIO_ENDPOINT`   | **no default**, `minio.example.org`                                                                                                       | Address of your Minio endpoint/instance                                                                                                         |
+|             | `CMD_MINIO_PORT`       | **no default**, `9000`                                                                                                                    | Port that is used for your Minio instance                                                                                                       |
+|             | `CMD_MINIO_SECURE`     | **no default**, `true`                                                                                                                    | If set to `true` HTTPS is used for Minio                                                                                                        |
 
 ### Lutim
 
-| config file | environment | **
-default** and example value | description | | ----------- | --------------- | ----------------------------- |
---------------------------------------------------------------------------- | | `lutim`     |
-| `{"url": "YOUR_LUTIM_URL"}`   | When `imageUploadType` is set to `lutim`, you can setup the lutim url | |
-| `CMD_LUTIM_URL` | **`https://framapic.org/`**   | When `CMD_IMAGE_UPLOAD_TYPE` is set to `lutim`, you can setup the
-lutim url |
+| config file | environment     | **default** and example value | description                                                                 |
+| ----------- | --------------- | ----------------------------- | --------------------------------------------------------------------------- |
+| `lutim`     |                 | `{"url": "YOUR_LUTIM_URL"}`   | When `imageUploadType` is set to `lutim`, you can setup the lutim url       |
+|             | `CMD_LUTIM_URL` | **`https://framapic.org/`**   | When `CMD_IMAGE_UPLOAD_TYPE` is set to `lutim`, you can setup the lutim url |
