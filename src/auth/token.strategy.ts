@@ -6,9 +6,10 @@
 
 import { Strategy } from 'passport-http-bearer';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { User } from '../users/user.entity';
+import { NotInDBError, TokenNotValidError } from '../errors/errors';
 
 @Injectable()
 export class TokenStrategy extends PassportStrategy(Strategy, 'token') {
@@ -17,6 +18,16 @@ export class TokenStrategy extends PassportStrategy(Strategy, 'token') {
   }
 
   async validate(token: string): Promise<User> {
-    return this.authService.validateToken(token);
+    try {
+      return await this.authService.validateToken(token);
+    } catch (error) {
+      if (
+        error instanceof NotInDBError ||
+        error instanceof TokenNotValidError
+      ) {
+        throw new UnauthorizedException(error.message);
+      }
+      throw error;
+    }
   }
 }
