@@ -276,21 +276,21 @@ export default registerAs('authConfig', async () => {
   const samls = samlNames.map((samlName) => {
     return {
       providerName: process.env[`HD_AUTH_SAML_${samlName}_PROVIDER_NAME`],
-      idpSsoUrl: process.env[`HD_AUTH_SAML_${samlName}_IDPSSOURL`],
-      idpCert: process.env[`HD_AUTH_SAML_${samlName}_IDPCERT`],
-      clientCert: process.env[`HD_AUTH_SAML_${samlName}_CLIENTCERT`],
+      idpSsoUrl: process.env[`HD_AUTH_SAML_${samlName}_IDP_SSO_URL`],
+      idpCert: process.env[`HD_AUTH_SAML_${samlName}_IDP_CERT`],
+      clientCert: process.env[`HD_AUTH_SAML_${samlName}_CLIENT_CERT`],
       issuer: process.env[`HD_AUTH_SAML_${samlName}_ISSUER`],
       identifierFormat:
-        process.env[`HD_AUTH_SAML_${samlName}_IDENTIFIERFORMAT`],
+        process.env[`HD_AUTH_SAML_${samlName}_IDENTIFIER_FORMAT`],
       disableRequestedAuthnContext:
-        process.env[`HD_AUTH_SAML_${samlName}_DISABLEREQUESTEDAUTHNCONTEXT`],
-      groupAttribute: process.env[`HD_AUTH_SAML_${samlName}_GROUPATTRIBUTE`],
+        process.env[`HD_AUTH_SAML_${samlName}_DISABLE_REQUESTED_AUTHN_CONTEXT`],
+      groupAttribute: process.env[`HD_AUTH_SAML_${samlName}_GROUP_ATTRIBUTE`],
       requiredGroups: toArrayConfig(
-        process.env[`HD_AUTH_SAML_${samlName}_REQUIREDGROUPS`],
+        process.env[`HD_AUTH_SAML_${samlName}_REQUIRED_GROUPS`],
         '|',
       ),
       externalGroups: toArrayConfig(
-        process.env[`HD_AUTH_SAML_${samlName}_EXTERNALGROUPS`],
+        process.env[`HD_AUTH_SAML_${samlName}_EXTERNAL_GROUPS`],
         '|',
       ),
       attribute: {
