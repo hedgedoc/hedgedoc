@@ -24,30 +24,28 @@ export class RevisionsService {
     this.logger.setContext(RevisionsService.name);
   }
 
-  async getNoteRevisionMetadatas(
+  async getAllRevisions(
     noteIdOrAlias: string,
-  ): Promise<RevisionMetadataDto[]> {
+  ): Promise<Revision[]> {
     const note = await this.notesService.getNoteByIdOrAlias(noteIdOrAlias);
-    const revisions = await this.revisionRepository.find({
+    return await this.revisionRepository.find({
       where: {
-        note: note.id,
+        note: note,
       },
     });
-    return revisions.map((revision) => this.toMetadataDto(revision));
   }
 
-  async getNoteRevision(
+  async getRevision(
     noteIdOrAlias: string,
     revisionId: number,
-  ): Promise<RevisionDto> {
+  ): Promise<Revision> {
     const note = await this.notesService.getNoteByIdOrAlias(noteIdOrAlias);
-    const revision = await this.revisionRepository.findOne({
+    return await this.revisionRepository.findOne({
       where: {
         id: revisionId,
         note: note,
       },
     });
-    return this.toDto(revision);
   }
 
   getLatestRevision(noteId: string): Promise<Revision> {
@@ -73,7 +71,7 @@ export class RevisionsService {
     });
   }
 
-  toMetadataDto(revision: Revision): RevisionMetadataDto {
+  toRevisionMetadataDto(revision: Revision): RevisionMetadataDto {
     return {
       id: revision.id,
       length: revision.length,
@@ -81,7 +79,7 @@ export class RevisionsService {
     };
   }
 
-  toDto(revision: Revision): RevisionDto {
+  toRevisionDto(revision: Revision): RevisionDto {
     return {
       id: revision.id,
       content: revision.content,
@@ -90,7 +88,7 @@ export class RevisionsService {
     };
   }
 
-  createRevision(content: string) {
+  createRevision(content: string) : Revision {
     // TODO: Add previous revision
     // TODO: Calculate patch
     // TODO: Save metadata
