@@ -36,6 +36,9 @@ export class AuthService {
 
   async validateToken(token: string): Promise<User> {
     const [keyId, secret] = token.split('.');
+    if (!secret) {
+      throw new TokenNotValidError('Invalid AuthToken format');
+    }
     if (secret.length > 72) {
       // Only the first 72 characters of the tokens are considered by bcrypt
       // This should prevent strange corner cases
