@@ -19,12 +19,16 @@ import {
 } from '@nestjs/common';
 import { NotInDBError } from '../../../errors/errors';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { NotePermissionsUpdateDto } from '../../../notes/note-permissions.dto';
+import { NotePermissionsDto, NotePermissionsUpdateDto } from '../../../notes/note-permissions.dto';
 import { NotesService } from '../../../notes/notes.service';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { MarkdownBody } from '../../utils/markdownbody-decorator';
 import { TokenAuthGuard } from '../../../auth/token-auth.guard';
 import { ApiSecurity } from '@nestjs/swagger';
+import { NoteDto } from '../../../notes/note.dto';
+import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
+import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
+import { RevisionDto } from '../../../revisions/revision.dto';
 
 @ApiSecurity('token')
 @Controller('notes')
@@ -39,18 +43,36 @@ export class NotesController {
 
   @UseGuards(TokenAuthGuard)
   @Post()
-  async createNote(@Request() req, @MarkdownBody() text: string) {
+  async createNote(@Request() req, @MarkdownBody() text: string): Promise<NoteDto> {
     // ToDo: provide user for createNoteDto
     this.logger.debug('Got raw markdown:\n' + text);
-    return this.noteService.createNoteDto(text);
+    return this.noteService.toNoteDto(
+      await this.noteService.createNote(text, undefined, req.user)
+    );
+  }
+
+  @UseGuards(TokenAuthGuard)
+  @Post(':noteAlias')
+  async createNamedNote(
+    @Request() req,
+    @Param('noteAlias') noteAlias: string,
+    @MarkdownBody() text: string,
+  ): Promise<NoteDto> {
+    // ToDo: check if user is allowed to view this note
+    this.logger.debug('Got raw markdown:\n' + text);
+    return this.noteService.toNoteDto(
+      await this.noteService.createNote(text, noteAlias, req.user)
+    );
   }
 
   @UseGuards(TokenAuthGuard)
   @Get(':noteIdOrAlias')
-  async getNote(@Request() req, @Param('noteIdOrAlias') noteIdOrAlias: string) {
+  async getNote(@Request() req, @Param('noteIdOrAlias') noteIdOrAlias: string) : Promise<NoteDto> {
     // ToDo: check if user is allowed to view this note
     try {
-      return await this.noteService.getNoteDtoByIdOrAlias(noteIdOrAlias);
+      return this.noteService.toNoteDto(
+        await this.noteService.getNoteByIdOrAlias(noteIdOrAlias)
+      );
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
@@ -60,23 +82,11 @@ export class NotesController {
   }
 
   @UseGuards(TokenAuthGuard)
-  @Post(':noteAlias')
-  async createNamedNote(
-    @Request() req,
-    @Param('noteAlias') noteAlias: string,
-    @MarkdownBody() text: string,
-  ) {
-    // ToDo: check if user is allowed to view this note
-    this.logger.debug('Got raw markdown:\n' + text);
-    return this.noteService.createNoteDto(text, noteAlias);
-  }
-
-  @UseGuards(TokenAuthGuard)
   @Delete(':noteIdOrAlias')
   async deleteNote(
     @Request() req,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
-  ) {
+  ): Promise<void> {
     // ToDo: check if user is allowed to delete this note
     this.logger.debug('Deleting note: ' + noteIdOrAlias);
     try {
@@ -97,11 +107,13 @@ export class NotesController {
     @Request() req,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @MarkdownBody() text: string,
-  ) {
+  ) : Promise<NoteDto> {
     // ToDo: check if user is allowed to change this note
     this.logger.debug('Got raw markdown:\n' + text);
     try {
-      return await this.noteService.updateNoteByIdOrAlias(noteIdOrAlias, text);
+      return this.noteService.toNoteDto(
+        await this.noteService.updateNoteByIdOrAlias(noteIdOrAlias, text)
+      );
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
@@ -116,7 +128,7 @@ export class NotesController {
   async getNoteContent(
     @Request() req,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
-  ) {
+  ) : Promise<string> {
     // ToDo: check if user is allowed to view this notes content
     try {
       return await this.noteService.getNoteContent(noteIdOrAlias);
@@ -133,10 +145,12 @@ export class NotesController {
   async getNoteMetadata(
     @Request() req,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
-  ) {
+  ) : Promise<NoteMetadataDto> {
     // ToDo: check if user is allowed to view this notes metadata
     try {
-      return await this.noteService.getNoteMetadata(noteIdOrAlias);
+      return this.noteService.toNoteMetadataDto(
+        await this.noteService.getNoteByIdOrAlias(noteIdOrAlias)
+      );
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
@@ -151,12 +165,14 @@ export class NotesController {
     @Request() req,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @Body() updateDto: NotePermissionsUpdateDto,
-  ) {
+  ) : Promise<NotePermissionsDto> {
     // ToDo: check if user is allowed to view this notes permissions
     try {
-      return await this.noteService.updateNotePermissions(
-        noteIdOrAlias,
-        updateDto,
+      return this.noteService.toNotePermissionsDto(
+        await this.noteService.updateNotePermissions(
+          noteIdOrAlias,
+          updateDto,
+        )
       );
     } catch (e) {
       if (e instanceof NotInDBError) {
@@ -171,11 +187,14 @@ export class NotesController {
   async getNoteRevisions(
     @Request() req,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
-  ) {
+  ) : Promise<RevisionMetadataDto[]> {
     // ToDo: check if user is allowed to view this notes revisions
     try {
-      return await this.revisionsService.getNoteRevisionMetadatas(
+      const revisions = await this.revisionsService.getAllRevisions(
         noteIdOrAlias,
+      );
+      return Promise.all(
+        revisions.map(revision => this.revisionsService.toRevisionMetadataDto(revision))
       );
     } catch (e) {
       if (e instanceof NotInDBError) {
@@ -191,12 +210,14 @@ export class NotesController {
     @Request() req,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @Param('revisionId') revisionId: number,
-  ) {
+  ) : Promise<RevisionDto> {
     // ToDo: check if user is allowed to view this notes revision
     try {
-      return await this.revisionsService.getNoteRevision(
-        noteIdOrAlias,
-        revisionId,
+      return this.revisionsService.toRevisionDto(
+        await this.revisionsService.getRevision(
+          noteIdOrAlias,
+          revisionId,
+        )
       );
     } catch (e) {
       if (e instanceof NotInDBError) {
