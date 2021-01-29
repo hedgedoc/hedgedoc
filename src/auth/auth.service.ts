@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/user.entity';
 import { AuthToken } from './auth-token.entity';
@@ -35,20 +35,21 @@ export class AuthService {
   }
 
   async validateToken(token: string): Promise<User> {
-    try {
-      const [keyId, secret] = token.split('.');
-      const accessToken = await this.getAuthTokenAndValidate(keyId, secret);
-      await this.setLastUsedToken(keyId);
-      return this.usersService.getUserByUsername(accessToken.user.userName);
-    } catch (error) {
-      if (
-        error instanceof NotInDBError ||
-        error instanceof TokenNotValidError
-      ) {
-        throw new UnauthorizedException(error.message);
-      }
-      throw error;
+    const [keyId, secret] = token.split('.');
+    if (!secret) {
+      throw new TokenNotValidError('Invalid AuthToken format');
     }
+    if (secret.length > 72) {
+      // Only the first 72 characters of the tokens are considered by bcrypt
+      // This should prevent strange corner cases
+      // At the very least it won't hurt us
+      throw new TokenNotValidError(
+        `AuthToken '${secret}' is too long the be a proper token`,
+      );
+    }
+    const accessToken = await this.getAuthTokenAndValidate(keyId, secret);
+    await this.setLastUsedToken(keyId);
+    return this.usersService.getUserByUsername(accessToken.user.userName);
   }
 
   async hashPassword(cleartext: string): Promise<string> {
@@ -92,7 +93,7 @@ export class AuthService {
         `User '${user.userName}' has already 200 tokens and can't have anymore`,
       );
     }
-    const secret = this.BufferToBase64Url(await this.randomString(64));
+    const secret = this.BufferToBase64Url(await this.randomString(54));
     const keyId = this.BufferToBase64Url(await this.randomString(8));
     const accessToken = await this.hashPassword(secret);
     let token;
