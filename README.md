@@ -18,10 +18,10 @@ HedgeDoc 2
 HedgeDoc lets you create real-time collaborative markdown notes. Have a look at [our website](https://hedgedoc.org) for
 more details.
 
-**Important:** We are currently working on HedgeDoc 2, a complete rewrite of HedgeDoc. Please note the following:
+⚠️⚠️⚠️ **Important:** We are currently working on HedgeDoc 2, a complete rewrite of HedgeDoc. Please note the following:
 
-- This branch contains the latest development code and does not implement all features yet. If you are looking for the
-  1.x source code, have a look at the `master` branch.
+- This branch contains the latest development code and does not implement all features yet. **If you are looking for the
+  1.x source code, have a look at the `master` branch.**
 - HedgeDoc 2 will be split in two components: the backend (this repo) and the frontend in
   the [react-client repo](https://github.com/hedgedoc/react-client).
 - The 1.x release is maintenance-only. We do not accept feature requests or PRs for this release anymore and may choose
