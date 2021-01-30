@@ -4,11 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-
-
 import { IsString } from 'class-validator';
 
 export class MediaUploadUrlDto {
   @IsString()
-  link: string
+  link: string;
 }

@@ -17,7 +17,7 @@ export class MonitoringController {
 
   @UseGuards(TokenAuthGuard)
   @Get()
-  getStatus() : Promise<ServerStatusDto> {
+  getStatus(): Promise<ServerStatusDto> {
     // TODO: toServerStatusDto.
     return this.monitoringService.getServerStatus();
   }
