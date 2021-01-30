@@ -24,9 +24,7 @@ export class RevisionsService {
     this.logger.setContext(RevisionsService.name);
   }
 
-  async getAllRevisions(
-    noteIdOrAlias: string,
-  ): Promise<Revision[]> {
+  async getAllRevisions(noteIdOrAlias: string): Promise<Revision[]> {
     const note = await this.notesService.getNoteByIdOrAlias(noteIdOrAlias);
     return await this.revisionRepository.find({
       where: {
@@ -88,7 +86,7 @@ export class RevisionsService {
     };
   }
 
-  createRevision(content: string) : Revision {
+  createRevision(content: string): Revision {
     // TODO: Add previous revision
     // TODO: Calculate patch
     // TODO: Save metadata

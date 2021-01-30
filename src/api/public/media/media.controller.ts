@@ -48,7 +48,7 @@ export class MediaController {
     @Request() req,
     @UploadedFile() file: MulterFile,
     @Headers('HedgeDoc-Note') noteId: string,
-  ) : Promise<MediaUploadUrlDto> {
+  ): Promise<MediaUploadUrlDto> {
     const username = req.user.userName;
     this.logger.debug(
       `Recieved filename '${file.originalname}' for note '${noteId}' from user '${username}'`,
@@ -60,7 +60,7 @@ export class MediaController {
         username,
         noteId,
       );
-      return this.mediaService.toMediaUploadUrlDto(url)
+      return this.mediaService.toMediaUploadUrlDto(url);
     } catch (e) {
       if (e instanceof ClientError || e instanceof NotInDBError) {
         throw new BadRequestException(e.message);
@@ -71,7 +71,10 @@ export class MediaController {
 
   @UseGuards(TokenAuthGuard)
   @Delete(':filename')
-  async deleteMedia(@Request() req, @Param('filename') filename: string) : Promise<void> {
+  async deleteMedia(
+    @Request() req,
+    @Param('filename') filename: string,
+  ): Promise<void> {
     const username = req.user.userName;
     try {
       await this.mediaService.deleteFile(filename, username);

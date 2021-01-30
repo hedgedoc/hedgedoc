@@ -41,7 +41,7 @@ export class NotesService {
       {
         id: 'foobar-barfoo',
         alias: null,
-        shortid: "abc",
+        shortid: 'abc',
         owner: user,
         description: 'Very descriptive text.',
         userPermissions: [],
@@ -125,7 +125,10 @@ export class NotesService {
     return await this.noteRepository.remove(note);
   }
 
-  async updateNoteByIdOrAlias(noteIdOrAlias: string, noteContent: string): Promise<Note> {
+  async updateNoteByIdOrAlias(
+    noteIdOrAlias: string,
+    noteContent: string,
+  ): Promise<Note> {
     const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
     const revisions = await note.revisions;
     //TODO: Calculate patch
@@ -140,27 +143,27 @@ export class NotesService {
   ): Note {
     this.logger.warn('Using hardcoded data!');
     return {
-        id: 'foobar-barfoo',
-        alias: null,
-        shortid: "abc",
-        owner: {
-          authTokens: [],
-          createdAt: new Date(),
-          displayName: 'hardcoded',
-          id: '1',
-          identities: [],
-          ownedNotes: [],
-          updatedAt: new Date(),
-          userName: 'Testy',
-        },
-        description: 'Very descriptive text.',
-        userPermissions: [],
-        groupPermissions: [],
-        tags: [],
-        revisions: Promise.resolve([]),
-        authorColors: [],
-        title: 'Title!',
-        viewcount: 42,
+      id: 'foobar-barfoo',
+      alias: null,
+      shortid: 'abc',
+      owner: {
+        authTokens: [],
+        createdAt: new Date(),
+        displayName: 'hardcoded',
+        id: '1',
+        identities: [],
+        ownedNotes: [],
+        updatedAt: new Date(),
+        userName: 'Testy',
+      },
+      description: 'Very descriptive text.',
+      userPermissions: [],
+      groupPermissions: [],
+      tags: [],
+      revisions: Promise.resolve([]),
+      authorColors: [],
+      title: 'Title!',
+      viewcount: 42,
     };
   }
 
@@ -180,7 +183,7 @@ export class NotesService {
         group: noteGroupPermission.group,
         canEdit: noteGroupPermission.canEdit,
       })),
-    }
+    };
   }
 
   async toNoteMetadataDto(note: Note): Promise<NoteMetadataDto> {

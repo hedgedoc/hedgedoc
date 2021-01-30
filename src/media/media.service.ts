@@ -59,7 +59,11 @@ export class MediaService {
     return allowedTypes.includes(mimeType);
   }
 
-  public async saveFile(fileBuffer: Buffer, username: string, noteId: string): Promise<string> {
+  public async saveFile(
+    fileBuffer: Buffer,
+    username: string,
+    noteId: string,
+  ): Promise<string> {
     this.logger.debug(
       `Saving file for note '${noteId}' and user '${username}'`,
       'saveFile',
@@ -137,6 +141,6 @@ export class MediaService {
   toMediaUploadUrlDto(url: string): MediaUploadUrlDto {
     return {
       link: url,
-    }
+    };
   }
 }
