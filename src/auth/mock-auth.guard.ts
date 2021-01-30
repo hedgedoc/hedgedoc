@@ -5,14 +5,20 @@
  */
 
 import { ExecutionContext, Injectable } from '@nestjs/common';
+import { UsersService } from '../users/users.service';
+import { User } from '../users/user.entity';
 
 @Injectable()
 export class MockAuthGuard {
-  canActivate(context: ExecutionContext) {
+  private user: User;
+  constructor(private usersService: UsersService) {}
+
+  async canActivate(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
-    req.user = {
-      userName: 'hardcoded',
-    };
+    if (!this.user) {
+      this.user = await this.usersService.createUser('hardcoded', 'Testy');
+    }
+    req.user = this.user;
     return true;
   }
 }

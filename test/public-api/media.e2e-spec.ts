@@ -20,7 +20,6 @@ import { MediaService } from '../../src/media/media.service';
 import { NotesModule } from '../../src/notes/notes.module';
 import { NotesService } from '../../src/notes/notes.service';
 import { PermissionsModule } from '../../src/permissions/permissions.module';
-import { UsersService } from '../../src/users/users.service';
 import { AuthModule } from '../../src/auth/auth.module';
 import { TokenAuthGuard } from '../../src/auth/token-auth.guard';
 import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
@@ -65,8 +64,6 @@ describe('Notes', () => {
     app.useLogger(logger);
     const notesService: NotesService = moduleRef.get('NotesService');
     await notesService.createNote('test content', 'test_upload_media');
-    const usersService: UsersService = moduleRef.get('UsersService');
-    await usersService.createUser('hardcoded', 'Hard Coded');
     mediaService = moduleRef.get('MediaService');
   });
 
