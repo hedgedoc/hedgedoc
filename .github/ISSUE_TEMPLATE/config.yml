@@ -1,0 +1,12 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Support
+    url: https://community.hedgedoc.org/c/support/6
+    about: Find help with your installation and common problems that appear in administration, configuration or in general
+  - name: Community Feedback
+    url: https://community.hedgedoc.org/c/community/feedback/7
+    about: Provide feedback or ask question about the community
+  - name: Community Chat
+    url: https://chat.hedgedoc.org
+    about: Meet the Community on Matrix
+

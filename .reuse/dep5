@@ -11,6 +11,10 @@ Files: .github/ISSUE_TEMPLATE/*.md
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC-BY-SA-4.0
 
+Files: .github/ISSUE_TEMPLATE/*.yml
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC-BY-SA-4.0
+
 Files: .github/pull_request_template.md
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC-BY-SA-4.0
