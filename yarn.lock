@@ -9468,10 +9468,10 @@ markdown-it-abbr@1.0.4:
   resolved "https://registry.yarnpkg.com/markdown-it-abbr/-/markdown-it-abbr-1.0.4.tgz#d66b5364521cbb3dd8aa59dadfba2fb6865c8fd8"
   integrity sha1-1mtTZFIcuz3Yqlna37ovtoZcj9g=
 
-markdown-it-anchor@7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/markdown-it-anchor/-/markdown-it-anchor-7.0.0.tgz#6c43e6a3d3a0b56d0f7e04af7a122834ebbcc311"
-  integrity sha512-7n4ZT58WUoejDDPvk5bxdu/f+BIvRILxs29kPn3YDFJ9tejwOv9Ipw8VpqxXarMjflwYxqpFIYx7whGbLO62nA==
+markdown-it-anchor@7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/markdown-it-anchor/-/markdown-it-anchor-7.0.1.tgz#2ea5353369e22b48d230fc849e205678821c6a86"
+  integrity sha512-FF+1jvBAX04jlDUyz2qZGiz5PKw8MwWPb2EJvjvIiVuz7DcVMfW7b3NQnAiH52DSIQfMJ0FCAsQjhUpAOTGLMg==
 
 markdown-it-container@3.0.0:
   version "3.0.0"
