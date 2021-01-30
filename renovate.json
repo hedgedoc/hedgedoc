@@ -41,7 +41,8 @@
       "groupName": "markmap",
       "packagePatterns": [
         "markmap-view",
-        "markmap-lib"
+        "markmap-lib",
+        "markmap-common"
       ]
     },
     {
