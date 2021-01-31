@@ -13,13 +13,13 @@ import { headlineAnchors } from '../markdown-it-plugins/headline-anchors'
 import { highlightedCode } from '../markdown-it-plugins/highlighted-code'
 import { plantumlWithError } from '../markdown-it-plugins/plantuml'
 import { quoteExtra } from '../markdown-it-plugins/quote-extra'
+import { legacyPdfShortCode } from '../regex-plugins/replace-legacy-pdf-short-code'
 import { legacySlideshareShortCode } from '../regex-plugins/replace-legacy-slideshare-short-code'
 import { legacySpeakerdeckShortCode } from '../regex-plugins/replace-legacy-speakerdeck-short-code'
 import { AsciinemaReplacer } from '../replace-components/asciinema/asciinema-replacer'
 import { GistReplacer } from '../replace-components/gist/gist-replacer'
 import { KatexReplacer } from '../replace-components/katex/katex-replacer'
 import { LineMarkers, lineNumberMarker } from '../replace-components/linemarker/line-number-marker'
-import { PdfReplacer } from '../replace-components/pdf/pdf-replacer'
 import { VimeoReplacer } from '../replace-components/vimeo/vimeo-replacer'
 import { YoutubeReplacer } from '../replace-components/youtube/youtube-replacer'
 import { BasicMarkdownItConfigurator } from './BasicMarkdownItConfigurator'
@@ -54,9 +54,9 @@ export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
       YoutubeReplacer.markdownItPlugin,
       VimeoReplacer.markdownItPlugin,
       GistReplacer.markdownItPlugin,
+      legacyPdfShortCode,
       legacySlideshareShortCode,
       legacySpeakerdeckShortCode,
-      PdfReplacer.markdownItPlugin,
       AsciinemaReplacer.markdownItPlugin,
       highlightedCode,
       quoteExtra,
