@@ -70,9 +70,31 @@ like `git config --global alias.ci 'commit -s'`. Now you can commit with `git ci
 ## Submitting a Pull Request
 
 1. Submit an issue describing your proposed change. We will try to respond to your issue promptly.
-2. Fork this repo, develop and test your code changes. Ensure you signed all your commits (see above for details).
+2. Fork this repo, develop and test your code changes. Ensure you follow the commit guidelines (see below)
+   and signed all your commits (see above for details).
 3. Submit a pull request against this repo's `develop` branch.
 4. Your branch may be merged once all configured checks pass.
+
+### Commit guidelines
+
+- Follow these rules when writing a commit message:
+  1. Separate subject from body with a blank line
+  2. Limit the subject line to 50 characters
+  3. If you worked on a specific part of the application, you can prefix your commit message with that Example: "
+     MediaService: Get media backend from configuration"
+  3. Capitalize the subject line
+  4. Do not end the subject line with a period
+  5. Use the imperative mood in the subject line
+  6. Wrap the body at 72 characters
+  7. Use the body to explain what and why vs. how
+
+  These are inspired by https://chris.beams.io/posts/git-commit/
+- Split your change into small, atomic commits. This helps reviewing the changes and enables the use of `git bisect`.
+- Ensure the commit history is easy to follow. Use `git rebase -i` to sort and squash your commits if neccessary.
+- If your branch includes fixup commits (like "Fix typo...", "Fix tests..."), use `git rebase -i` to clean them up
+  before submitting a pull request.
+- When refactoring something, take care to not include any functional changes into the same commit. Mixing refactoring
+  and functional changes makes it hard to find the cause of regressions.
 
 [code-of-conduct]: ./CODE-OF-CONDUCT.md
 
