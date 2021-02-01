@@ -1,0 +1,17 @@
+/*!
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+.status-bar {
+  background: #1c1c1e;
+  border-top: 1px solid #343434;
+  color: #ccc;
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  font-size: 13px;
+  line-height: 25px;
+  height: 26px;
+}

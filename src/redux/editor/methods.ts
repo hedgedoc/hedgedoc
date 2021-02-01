@@ -6,7 +6,7 @@
 
 import { EditorConfiguration } from 'codemirror'
 import { store } from '..'
-import { EditorMode } from '../../components/editor/app-bar/editor-view-mode'
+import { EditorMode } from '../../components/editor-page/app-bar/editor-view-mode'
 import {
   EditorConfig,
   EditorConfigActionType,

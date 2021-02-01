@@ -6,7 +6,7 @@
 
 import MarkdownIt from 'markdown-it'
 import toc, { TocAst } from 'markdown-it-toc-done-right'
-import { slugify } from '../../editor/table-of-contents/table-of-contents'
+import { slugify } from '../../editor-page/table-of-contents/table-of-contents'
 
 export type DocumentTocPluginOptions = (ast: TocAst) => void
 

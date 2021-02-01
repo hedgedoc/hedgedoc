@@ -6,16 +6,14 @@
 
 import { TocAst } from 'markdown-it-toc-done-right'
 import React, { Ref, useCallback, useMemo, useRef, useState } from 'react'
-import { Alert } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
-import { InternalLink } from '../common/links/internal-link'
-import { ShowIf } from '../common/show-if/show-if'
-import { NoteFrontmatter, RawNoteFrontmatter } from '../editor/note-frontmatter/note-frontmatter'
+import { useTranslation } from 'react-i18next'
+import { NoteFrontmatter, RawNoteFrontmatter } from '../editor-page/note-frontmatter/note-frontmatter'
 import { BasicMarkdownRenderer } from './basic-markdown-renderer'
 import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
 import { usePostFrontmatterOnChange } from './hooks/use-post-frontmatter-on-change'
 import { usePostTocAstOnChange } from './hooks/use-post-toc-ast-on-change'
 import { useReplacerInstanceListCreator } from './hooks/use-replacer-instance-list-creator'
+import { InvalidYamlAlert } from './invalid-yaml-alert'
 import { FullMarkdownItConfigurator } from './markdown-it-configurator/FullMarkdownItConfigurator'
 import { ImageClickHandler } from './replace-components/image/image-replacer'
 import { LineMarkers } from './replace-components/linemarker/line-number-marker'
@@ -93,13 +91,7 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
 
   return (
     <div ref={rendererRef} className={'position-relative'}>
-      <ShowIf condition={showYamlError}>
-        <Alert variant='warning' dir='auto'>
-          <Trans i18nKey='editor.invalidYaml'>
-            <InternalLink text='yaml-metadata' href='/n/yaml-metadata' className='text-primary'/>
-          </Trans>
-        </Alert>
-      </ShowIf>
+      <InvalidYamlAlert showYamlError={showYamlError}/>
       <BasicMarkdownRenderer
         className={className}
         wide={wide}

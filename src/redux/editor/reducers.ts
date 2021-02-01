@@ -5,7 +5,7 @@
  */
 
 import { Reducer } from 'redux'
-import { EditorMode } from '../../components/editor/app-bar/editor-view-mode'
+import { EditorMode } from '../../components/editor-page/app-bar/editor-view-mode'
 import { loadFromLocalStorage, saveToLocalStorage } from './methods'
 import {
   EditorConfig,

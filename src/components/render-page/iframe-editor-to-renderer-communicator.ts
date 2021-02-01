@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { NoteFrontmatter } from "../editor/note-frontmatter/note-frontmatter"
-import { ScrollState } from "../editor/scroll/scroll-props"
+import { NoteFrontmatter } from "../editor-page/note-frontmatter/note-frontmatter"
+import { ScrollState } from "../editor-page/synced-scroll/scroll-props"
 import { IframeCommunicator } from "./iframe-communicator"
 import {
   EditorToRendererIframeMessage,
@@ -18,7 +18,7 @@ export class IframeEditorToRendererCommunicator extends IframeCommunicator<Edito
   private onSetScrollSourceToRendererHandler?: () => void
   private onTaskCheckboxChangeHandler?: (lineInMarkdown: number, checked: boolean) => void
   private onFirstHeadingChangeHandler?: (heading?: string) => void
-  private onFrontmatterChangeHandler?: (metaData?: NoteFrontmatter) => void
+  private onFrontmatterChangeHandler?: (frontmatter?: NoteFrontmatter) => void
   private onSetScrollStateHandler?: (scrollState: ScrollState) => void
   private onRendererReadyHandler?: () => void
   private onImageClickedHandler?: (details: ImageDetails) => void

@@ -11,12 +11,12 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import { ApplicationLoader } from './components/application-loader/application-loader'
 import { NotFoundErrorScreen } from './components/common/routing/not-found-error-screen'
 import { Redirector } from './components/common/routing/redirector'
+import { DocumentReadOnlyPage } from './components/document-read-only-page/document-read-only-page'
 import { ErrorBoundary } from './components/error-boundary/error-boundary'
 import { HistoryPage } from './components/history-page/history-page'
 import { IntroPage } from './components/intro-page/intro-page'
 import { LandingLayout } from './components/landing-layout/landing-layout'
 import { LoginPage } from './components/login-page/login-page'
-import { PadViewOnly } from './components/pad-view-only/pad-view-only'
 import { ProfilePage } from './components/profile-page/profile-page'
 import { RegisterPage } from './components/register-page/register-page'
 import { store } from './redux'
@@ -25,7 +25,7 @@ import './style/dark.scss'
 import './style/index.scss'
 import { isTestMode } from './utils/is-test-mode'
 
-const Editor = React.lazy(() => import(/* webpackPrefetch: true */ './components/editor/editor'))
+const EditorPage = React.lazy(() => import(/* webpackPrefetch: true */ './components/editor-page/editor-page'))
 const RenderPage = React.lazy(() => import (/* webpackPrefetch: true */ './components/render-page/render-page'))
 
 ReactDOM.render(
@@ -63,10 +63,10 @@ ReactDOM.render(
               <RenderPage/>
             </Route>
             <Route path="/n/:id">
-              <Editor/>
+              <EditorPage/>
             </Route>
             <Route path="/s/:id">
-              <PadViewOnly/>
+              <DocumentReadOnlyPage/>
             </Route>
             <Route path="/:id">
               <Redirector/>

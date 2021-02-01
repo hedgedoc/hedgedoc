@@ -6,7 +6,7 @@
 
 import equal from 'fast-deep-equal'
 import { useEffect, useRef } from 'react'
-import { NoteFrontmatter, RawNoteFrontmatter } from '../../editor/note-frontmatter/note-frontmatter'
+import { NoteFrontmatter, RawNoteFrontmatter } from '../../editor-page/note-frontmatter/note-frontmatter'
 
 export const usePostFrontmatterOnChange = (
   rawFrontmatter: RawNoteFrontmatter | undefined,

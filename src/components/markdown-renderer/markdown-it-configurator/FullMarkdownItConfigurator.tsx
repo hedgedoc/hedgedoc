@@ -6,14 +6,13 @@
 
 import MarkdownIt from 'markdown-it'
 import { TocAst } from 'markdown-it-toc-done-right'
-import { RawNoteFrontmatter } from '../../editor/note-frontmatter/note-frontmatter'
+import { RawNoteFrontmatter } from '../../editor-page/note-frontmatter/note-frontmatter'
 import { documentToc } from '../markdown-it-plugins/document-toc'
 import { frontmatterExtract } from '../markdown-it-plugins/frontmatter'
 import { headlineAnchors } from '../markdown-it-plugins/headline-anchors'
 import { highlightedCode } from '../markdown-it-plugins/highlighted-code'
 import { plantumlWithError } from '../markdown-it-plugins/plantuml'
 import { quoteExtra } from '../markdown-it-plugins/quote-extra'
-import { legacyPdfShortCode } from '../regex-plugins/replace-legacy-pdf-short-code'
 import { legacySlideshareShortCode } from '../regex-plugins/replace-legacy-slideshare-short-code'
 import { legacySpeakerdeckShortCode } from '../regex-plugins/replace-legacy-speakerdeck-short-code'
 import { AsciinemaReplacer } from '../replace-components/asciinema/asciinema-replacer'
@@ -54,7 +53,6 @@ export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
       YoutubeReplacer.markdownItPlugin,
       VimeoReplacer.markdownItPlugin,
       GistReplacer.markdownItPlugin,
-      legacyPdfShortCode,
       legacySlideshareShortCode,
       legacySpeakerdeckShortCode,
       AsciinemaReplacer.markdownItPlugin,

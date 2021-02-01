@@ -6,7 +6,7 @@
 
 import { EditorConfiguration } from 'codemirror'
 import { Action } from 'redux'
-import { EditorMode } from '../../components/editor/app-bar/editor-view-mode'
+import { EditorMode } from '../../components/editor-page/app-bar/editor-view-mode'
 
 export enum EditorConfigActionType {
   SET_EDITOR_VIEW_MODE = 'editor/mode/set',

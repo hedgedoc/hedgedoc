@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { NoteFrontmatter } from '../editor/note-frontmatter/note-frontmatter'
-import { ScrollState } from '../editor/scroll/scroll-props'
+import { NoteFrontmatter } from '../editor-page/note-frontmatter/note-frontmatter'
+import { ScrollState } from '../editor-page/synced-scroll/scroll-props'
 
 export enum RenderIframeMessageType {
   SET_MARKDOWN_CONTENT = 'SET_MARKDOWN_CONTENT',

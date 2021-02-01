@@ -6,7 +6,7 @@
 
 import { store } from '..'
 import { Note } from '../../api/notes'
-import { NoteFrontmatter } from '../../components/editor/note-frontmatter/note-frontmatter'
+import { NoteFrontmatter } from '../../components/editor-page/note-frontmatter/note-frontmatter'
 import { initialState } from './reducers'
 import {
   NoteDetailsActionType,

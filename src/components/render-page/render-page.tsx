@@ -9,11 +9,11 @@ import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { ApplicationState } from '../../redux'
 import { setDarkMode } from '../../redux/dark-mode/methods'
 import { setNoteFrontmatter } from '../../redux/note-details/methods'
-import { DocumentRenderPane } from '../editor/document-renderer-pane/document-render-pane'
-import { NoteFrontmatter } from '../editor/note-frontmatter/note-frontmatter'
-import { ScrollState } from '../editor/scroll/scroll-props'
+import { NoteFrontmatter } from '../editor-page/note-frontmatter/note-frontmatter'
+import { ScrollState } from '../editor-page/synced-scroll/scroll-props'
 import { ImageClickHandler } from '../markdown-renderer/replace-components/image/image-replacer'
 import { IframeRendererToEditorCommunicator } from './iframe-renderer-to-editor-communicator'
+import { MarkdownDocument } from './markdown-document'
 
 export const RenderPage: React.FC = () => {
   useApplyDarkMode()
@@ -81,7 +81,7 @@ export const RenderPage: React.FC = () => {
 
   return (
     <div className={"vh-100 w-100"}>
-      <DocumentRenderPane
+      <MarkdownDocument
         extraClasses={'w-100'}
         markdownContent={markdownContent}
         wide={isWide}
