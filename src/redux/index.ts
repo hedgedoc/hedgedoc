@@ -13,10 +13,10 @@ import { BannerState } from './banner/types'
 import { ConfigReducer } from './config/reducers'
 import { DarkModeConfigReducer } from './dark-mode/reducers'
 import { DarkModeConfig } from './dark-mode/types'
-import { DocumentContentReducer } from './document-content/reducers'
-import { DocumentContent } from './document-content/types'
 import { EditorConfigReducer } from './editor/reducers'
 import { EditorConfig } from './editor/types'
+import { NoteDetailsReducer } from './note-details/reducers'
+import { NoteDetails } from './note-details/types'
 import { UserReducer } from './user/reducers'
 import { MaybeUserState } from './user/types'
 
@@ -27,7 +27,7 @@ export interface ApplicationState {
   apiUrl: ApiUrlObject;
   editorConfig: EditorConfig;
   darkMode: DarkModeConfig;
-  documentContent: DocumentContent;
+  noteDetails: NoteDetails;
 }
 
 export const allReducers: Reducer<ApplicationState> = combineReducers<ApplicationState>({
@@ -37,7 +37,7 @@ export const allReducers: Reducer<ApplicationState> = combineReducers<Applicatio
   apiUrl: ApiUrlReducer,
   editorConfig: EditorConfigReducer,
   darkMode: DarkModeConfigReducer,
-  documentContent: DocumentContentReducer
+  noteDetails: NoteDetailsReducer
 })
 
 export const store = createStore(allReducers)

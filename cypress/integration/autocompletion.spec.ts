@@ -6,7 +6,7 @@
 
 describe('Autocompletion', () => {
   beforeEach(() => {
-    cy.visit('/n/test')
+    cy.visitTestEditor()
     cy.get('.CodeMirror')
       .click()
       .get('textarea')

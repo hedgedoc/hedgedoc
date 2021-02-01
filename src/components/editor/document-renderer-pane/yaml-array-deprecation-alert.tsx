@@ -15,7 +15,7 @@ import { ShowIf } from '../../common/show-if/show-if'
 
 export const YamlArrayDeprecationAlert: React.FC = () => {
   useTranslation()
-  const yamlDeprecatedTags = useSelector((state: ApplicationState) => state.documentContent.metadata.deprecatedTagsSyntax)
+  const yamlDeprecatedTags = useSelector((state: ApplicationState) => state.noteDetails.frontmatter.deprecatedTagsSyntax)
 
   return <ShowIf condition={yamlDeprecatedTags}>
     <Alert data-cy={'yamlArrayDeprecationAlert'} className={'text-wrap'} variant='warning' dir='auto'>

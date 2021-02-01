@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -86,7 +86,7 @@ ReactDOM.render(
 )
 
 if (isTestMode()) {
-  console.log("This build runs in test mode. This means:\n - No default content in the editor\n - no sandboxed iframe")
+  console.log("This build runs in test mode. This means:\n - no sandboxed iframe")
 }
 
 // If you want your app to work offline and load faster, you can change

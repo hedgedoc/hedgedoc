@@ -8,13 +8,13 @@ import { RefObject, useCallback } from 'react'
 import { LineMarkerPosition } from '../../../markdown-renderer/types'
 import { ScrollState } from '../scroll-props'
 
-export const useOnUserScroll = (lineMarks: LineMarkerPosition[] | undefined, renderer: RefObject<HTMLElement>, onScroll: ((newScrollState: ScrollState) => void) | undefined): () => void =>
-  useCallback(() => {
-    if (!renderer.current || !lineMarks || lineMarks.length === 0 || !onScroll) {
+export const useOnUserScroll = (lineMarks: LineMarkerPosition[] | undefined, scrollContainer: RefObject<HTMLElement>, onScroll: ((newScrollState: ScrollState) => void) | undefined): () => void => {
+  return useCallback(() => {
+    if (!scrollContainer.current || !lineMarks || lineMarks.length === 0 || !onScroll) {
       return
     }
 
-    const scrollTop = renderer.current.scrollTop
+    const scrollTop = scrollContainer.current.scrollTop
 
     const lineMarksBeforeScrollTop = lineMarks.filter(lineMark => lineMark.position <= scrollTop)
     if (lineMarksBeforeScrollTop.length === 0) {
@@ -44,4 +44,5 @@ export const useOnUserScroll = (lineMarks: LineMarkerPosition[] | undefined, ren
 
     const newScrollState: ScrollState = { firstLineInView: line, scrolledPercentage: innerScrolling }
     onScroll(newScrollState)
-  }, [lineMarks, onScroll, renderer])
+  }, [lineMarks, onScroll, scrollContainer])
+}

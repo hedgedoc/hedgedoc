@@ -6,14 +6,14 @@
 
 describe('Editor mode from URL parameter is used', () => {
   it('mode view', () => {
-    cy.visit('/n/features?view')
+    cy.visitTestEditor('view')
     cy.get('.splitter.left')
       .should('have.class', 'd-none')
     cy.get('.splitter.right')
       .should('not.have.class', 'd-none')
   })
   it('mode both', () => {
-    cy.visit('/n/features?both')
+    cy.visitTestEditor('both')
     cy.get('.splitter.left')
       .should('not.have.class', 'd-none')
     cy.get('.splitter.separator')
@@ -22,7 +22,7 @@ describe('Editor mode from URL parameter is used', () => {
       .should('not.have.class', 'd-none')
   })
   it('mode edit', () => {
-    cy.visit('/n/features?edit')
+    cy.visitTestEditor('edit')
     cy.get('.splitter.left')
       .should('not.have.class', 'd-none')
     cy.get('.splitter.right')

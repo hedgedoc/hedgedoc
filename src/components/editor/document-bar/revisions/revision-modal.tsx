@@ -1,20 +1,19 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { useEffect, useRef, useState } from 'react'
 import { Alert, Button, Col, ListGroup, Modal, Row } from 'react-bootstrap'
 import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { getAllRevisions, getRevision } from '../../../../api/revisions'
 import { Revision, RevisionListEntry } from '../../../../api/revisions/types'
 import { UserResponse } from '../../../../api/users/types'
 import { useIsDarkModeActivated } from '../../../../hooks/common/use-is-dark-mode-activated'
-import { ApplicationState } from '../../../../redux'
+import { useNoteMarkdownContent } from '../../../../hooks/common/use-note-markdown-content'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { RevisionModalListEntry } from './revision-modal-list-entry'
@@ -58,7 +57,7 @@ export const RevisionModal: React.FC<PermissionsModalProps> = ({ show, onHide })
     }).catch(() => setError(true))
   }, [selectedRevisionTimestamp, id])
 
-  const markdownContent = useSelector((state: ApplicationState) => state.documentContent.content)
+  const markdownContent = useNoteMarkdownContent()
 
   return (
     <CommonModal show={show} onHide={onHide} titleI18nKey={'editor.modal.revision.title'} icon={'history'} closeButton={true} size={'xl'} additionalClasses='revision-modal'>

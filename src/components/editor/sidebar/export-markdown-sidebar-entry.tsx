@@ -6,16 +6,14 @@
 
 import React, { useCallback } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../redux'
+import { useNoteMarkdownContent } from '../../../hooks/common/use-note-markdown-content'
 import { download } from '../../common/download/download'
 import { SidebarButton } from './sidebar-button'
 
 export const ExportMarkdownSidebarEntry: React.FC = () => {
   useTranslation()
 
-  const markdownContent = useSelector((state: ApplicationState) => state.documentContent.content)
+  const markdownContent = useNoteMarkdownContent()
   const onClick = useCallback(() => {
     download(markdownContent, `title.md`, 'text/markdown') //todo: replace hard coded title with redux
   }, [markdownContent])

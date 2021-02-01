@@ -6,7 +6,7 @@
 
 describe('Help Dialog', () => {
   beforeEach(() => {
-    cy.visit('/n/test')
+    cy.visitTestEditor()
   })
 
   it('ToDo-List', () => {

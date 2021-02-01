@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import { DateTime } from 'luxon'
 import React from 'react'
@@ -17,9 +17,9 @@ import './document-infobar.scss'
 
 export interface DocumentInfobarProps {
   changedAuthor: string
-  changedTime: number
+  changedTime: DateTime
   createdAuthor: string
-  createdTime: number
+  createdTime: DateTime
   editable: boolean
   noteId: string
   viewCount: number
@@ -43,12 +43,12 @@ export const DocumentInfobar: React.FC<DocumentInfobarProps> = ({
         <div className={'d-flex flex-column'}>
           <DocumentInfoTimeLine
             mode={DocumentInfoLineWithTimeMode.CREATED}
-            time={ DateTime.fromSeconds(createdTime) }
+            time={createdTime}
             userName={createdAuthor}
             profileImageSrc={'/img/avatar.png'}/>
           <DocumentInfoTimeLine
             mode={DocumentInfoLineWithTimeMode.EDITED}
-            time={ DateTime.fromSeconds(changedTime) }
+            time={changedTime}
             userName={changedAuthor}
             profileImageSrc={'/img/avatar.png'}/>
           <hr/>

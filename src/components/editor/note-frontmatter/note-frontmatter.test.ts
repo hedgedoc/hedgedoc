@@ -7,11 +7,11 @@
 import yaml from 'js-yaml'
 import MarkdownIt from 'markdown-it'
 import frontmatter from 'markdown-it-front-matter'
-import { RawYAMLMetadata, YAMLMetaData } from './yaml-metadata'
+import { NoteFrontmatter, RawNoteFrontmatter } from './note-frontmatter'
 
-describe('yaml tests', () => {
-  let raw: RawYAMLMetadata | undefined
-  let finished: YAMLMetaData | undefined
+describe('yaml frontmatter tests', () => {
+  let raw: RawNoteFrontmatter | undefined
+  let finished: NoteFrontmatter | undefined
   const md = new MarkdownIt('default', {
     html: true,
     breaks: true,
@@ -19,15 +19,15 @@ describe('yaml tests', () => {
     typographer: true
   })
   md.use(frontmatter, (rawMeta: string) => {
-    raw = yaml.load(rawMeta) as RawYAMLMetadata
-    finished = new YAMLMetaData(raw)
+    raw = yaml.load(rawMeta) as RawNoteFrontmatter
+    finished = new NoteFrontmatter(raw)
   })
 
   // generate default YAMLMetadata
   md.render('---\n---')
   const defaultYAML = finished
 
-  const testMetadata = (input: string, expectedRaw: Partial<RawYAMLMetadata>, expectedFinished: Partial<YAMLMetaData>) => {
+  const testFrontmatter = (input: string, expectedRaw: Partial<RawNoteFrontmatter>, expectedFinished: Partial<NoteFrontmatter>) => {
     md.render(input)
     expect(raw).not.toBe(undefined)
     expect(raw).toEqual(expectedRaw)
@@ -44,47 +44,47 @@ describe('yaml tests', () => {
   })
 
   it('title only', () => {
-    testMetadata(`---
+    testFrontmatter(`---
     title: test
     ___
     `,
-    {
-      title: 'test'
-    },
-    {
-      title: 'test'
-    })
+      {
+        title: 'test'
+      },
+      {
+        title: 'test'
+      })
   })
 
   it('robots only', () => {
-    testMetadata(`---
+    testFrontmatter(`---
     robots: index, follow
     ___
     `,
-    {
-      robots: 'index, follow'
-    },
-    {
-      robots: 'index, follow'
-    })
+      {
+        robots: 'index, follow'
+      },
+      {
+        robots: 'index, follow'
+      })
   })
 
   it('tags only (old syntax)', () => {
-    testMetadata(`---
+    testFrontmatter(`---
     tags: test123, abc
     ___
     `,
-    {
-      tags: 'test123, abc'
-    },
-    {
-      tags: ['test123', 'abc'],
-      deprecatedTagsSyntax: true
-    })
+      {
+        tags: 'test123, abc'
+      },
+      {
+        tags: ['test123', 'abc'],
+        deprecatedTagsSyntax: true
+      })
   })
 
   it('tags only', () => {
-    testMetadata(`---
+    testFrontmatter(`---
     tags:
       - test123
       - abc
@@ -100,7 +100,7 @@ describe('yaml tests', () => {
   })
 
   it('tags only (alternative syntax)', () => {
-    testMetadata(`---
+    testFrontmatter(`---
     tags: ['test123', 'abc']
     ___
     `,
@@ -114,21 +114,21 @@ describe('yaml tests', () => {
   })
 
   it('breaks only', () => {
-    testMetadata(`---
+    testFrontmatter(`---
     breaks: false
     ___
     `,
-    {
-      breaks: false
-    },
-    {
-      breaks: false
-    })
+      {
+        breaks: false
+      },
+      {
+        breaks: false
+      })
   })
 
   /*
   it('slideOptions nothing', () => {
-    testMetadata(`---
+    testFrontmatter(`---
     slideOptions:
     ___
     `,
@@ -144,7 +144,7 @@ describe('yaml tests', () => {
   })
 
   it('slideOptions.theme only', () => {
-    testMetadata(`---
+    testFrontmatter(`---
     slideOptions:
       theme: sky
     ___
@@ -164,7 +164,7 @@ describe('yaml tests', () => {
   })
 
   it('slideOptions full', () => {
-    testMetadata(`---
+    testFrontmatter(`---
     slideOptions:
       transition: zoom
       theme: sky
@@ -186,46 +186,46 @@ describe('yaml tests', () => {
   */
 
   it('opengraph nothing', () => {
-    testMetadata(`---
+    testFrontmatter(`---
     opengraph:
     ___
     `,
-    {
-      opengraph: null
-    },
-    {
-      opengraph: new Map<string, string>()
-    })
+      {
+        opengraph: null
+      },
+      {
+        opengraph: new Map<string, string>()
+      })
   })
 
   it('opengraph title only', () => {
-    testMetadata(`---
+    testFrontmatter(`---
     opengraph:
       title: Testtitle
     ___
     `,
-    {
-      opengraph: {
-        title: 'Testtitle'
-      }
-    },
-    {
+      {
+        opengraph: {
+          title: 'Testtitle'
+        }
+      },
+      {
       opengraph: new Map<string, string>(Object.entries({ title: 'Testtitle' }))
     })
   })
 
   it('opengraph more attributes', () => {
-    testMetadata(`---
+    testFrontmatter(`---
     opengraph:
       title: Testtitle
       image: https://dummyimage.com/48.png
       image:type: image/png
     ___
     `,
-    {
-      opengraph: {
-        title: 'Testtitle',
-        image: 'https://dummyimage.com/48.png',
+      {
+        opengraph: {
+          title: 'Testtitle',
+          image: 'https://dummyimage.com/48.png',
         'image:type': 'image/png'
       }
     },

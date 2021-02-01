@@ -10,7 +10,7 @@ describe('The status bar text length info', () => {
   const tooMuchTestContent = `${dangerTestContent}a`
 
   beforeEach(() => {
-    cy.visit('/n/test')
+    cy.visitTestEditor()
   })
 
   it('shows the maximal length of the document as number of available characters in the tooltip', () => {

@@ -4,10 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 
 export const useExtractFirstHeadline = (documentElement: React.RefObject<HTMLDivElement>, content: string, onFirstHeadingChange?: (firstHeading: string | undefined) => void): void => {
-  const extractInnerText = useCallback((node: ChildNode): string => {
+  const extractInnerText = useCallback((node: ChildNode | null): string => {
+    if (!node) {
+      return ''
+    }
+
     let innerText = ''
 
     if ((node as HTMLElement).classList?.contains("katex-mathml")) {
@@ -15,7 +19,9 @@ export const useExtractFirstHeadline = (documentElement: React.RefObject<HTMLDiv
     }
 
     if (node.childNodes && node.childNodes.length > 0) {
-      node.childNodes.forEach((child) => { innerText += extractInnerText(child) })
+      node.childNodes.forEach((child) => {
+        innerText += extractInnerText(child)
+      })
     } else if (node.nodeName === 'IMG') {
       innerText += (node as HTMLImageElement).getAttribute('alt')
     } else {
@@ -24,14 +30,17 @@ export const useExtractFirstHeadline = (documentElement: React.RefObject<HTMLDiv
     return innerText
   }, [])
 
+  const lastFirstHeading = useRef<string | undefined>()
+
   useEffect(() => {
     if (onFirstHeadingChange && documentElement.current) {
       const firstHeading = documentElement.current.getElementsByTagName('h1').item(0)
-      if (firstHeading) {
-        onFirstHeadingChange(extractInnerText(firstHeading))
-      } else {
-        onFirstHeadingChange(undefined)
+      const headingText = extractInnerText(firstHeading)
+      if (headingText === lastFirstHeading.current) {
+        return
       }
+      lastFirstHeading.current = headingText
+      onFirstHeadingChange(headingText)
     }
   }, [documentElement, extractInnerText, onFirstHeadingChange, content])
 }

@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import equal from "fast-deep-equal"
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { ApplicationState } from '../../redux'
 import { setDarkMode } from '../../redux/dark-mode/methods'
-import { setDocumentMetadata } from '../../redux/document-content/methods'
-import { ScrollingDocumentRenderPane } from '../editor/document-renderer-pane/scrolling-document-render-pane'
+import { setNoteFrontmatter } from '../../redux/note-details/methods'
+import { DocumentRenderPane } from '../editor/document-renderer-pane/document-render-pane'
+import { NoteFrontmatter } from '../editor/note-frontmatter/note-frontmatter'
 import { ScrollState } from '../editor/scroll/scroll-props'
-import { YAMLMetaData } from '../editor/yaml-metadata/yaml-metadata'
 import { ImageClickHandler } from '../markdown-renderer/replace-components/image/image-replacer'
 import { IframeRendererToEditorCommunicator } from './iframe-renderer-to-editor-communicator'
 
@@ -41,11 +40,7 @@ export const RenderPage: React.FC = () => {
   useEffect(() => iframeCommunicator.onSetMarkdownContent(setMarkdownContent), [iframeCommunicator])
   useEffect(() => iframeCommunicator.onSetDarkMode(setDarkMode), [iframeCommunicator])
   useEffect(() => iframeCommunicator.onSetWide(setWide), [iframeCommunicator])
-  useEffect(() => iframeCommunicator.onSetScrollState((newScrollState) => {
-    if (!equal(scrollState, newScrollState)) {
-      setScrollState(newScrollState)
-    }
-  }), [iframeCommunicator, scrollState])
+  useEffect(() => iframeCommunicator.onSetScrollState(setScrollState), [iframeCommunicator, scrollState])
 
   const onTaskCheckedChange = useCallback((lineInMarkdown: number, checked: boolean) => {
     iframeCommunicator.sendTaskCheckBoxChange(lineInMarkdown, checked)
@@ -59,9 +54,9 @@ export const RenderPage: React.FC = () => {
     iframeCommunicator.sendSetScrollSourceToRenderer()
   }, [iframeCommunicator])
 
-  const onMetaDataChange = useCallback((metaData?: YAMLMetaData) => {
-    setDocumentMetadata(metaData)
-    iframeCommunicator.sendSetMetaData(metaData)
+  const onFrontmatterChange = useCallback((frontmatter?: NoteFrontmatter) => {
+    setNoteFrontmatter(frontmatter)
+    iframeCommunicator.sendSetFrontmatter(frontmatter)
   }, [iframeCommunicator])
 
   const onScroll = useCallback((scrollState: ScrollState) => {
@@ -86,14 +81,14 @@ export const RenderPage: React.FC = () => {
 
   return (
     <div className={"vh-100 w-100"}>
-      <ScrollingDocumentRenderPane
+      <DocumentRenderPane
         extraClasses={'w-100'}
         markdownContent={markdownContent}
         wide={isWide}
         onTaskCheckedChange={onTaskCheckedChange}
         onFirstHeadingChange={onFirstHeadingChange}
         onMakeScrollSource={onMakeScrollSource}
-        onMetadataChange={onMetaDataChange}
+        onFrontmatterChange={onFrontmatterChange}
         scrollState={scrollState}
         onScroll={onScroll}
         baseUrl={baseUrl}

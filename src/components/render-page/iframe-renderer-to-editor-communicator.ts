@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { NoteFrontmatter } from "../editor/note-frontmatter/note-frontmatter"
 import { ScrollState } from "../editor/scroll/scroll-props"
-import { YAMLMetaData } from "../editor/yaml-metadata/yaml-metadata"
 import { IframeCommunicator } from "./iframe-communicator"
 import {
   EditorToRendererIframeMessage,
@@ -68,10 +68,10 @@ export class IframeRendererToEditorCommunicator extends IframeCommunicator<Rende
     })
   }
 
-  public sendSetMetaData (metaData: YAMLMetaData | undefined): void {
+  public sendSetFrontmatter (frontmatter: NoteFrontmatter | undefined): void {
     this.sendMessageToOtherSide({
-      type: RenderIframeMessageType.ON_SET_META_DATA,
-      metaData
+      type: RenderIframeMessageType.ON_SET_FRONTMATTER,
+      frontmatter: frontmatter
     })
   }
 

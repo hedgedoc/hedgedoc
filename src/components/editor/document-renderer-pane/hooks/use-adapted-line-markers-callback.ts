@@ -1,11 +1,11 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import { RefObject, useCallback } from 'react'
-import { LineMarkerPosition } from '../../markdown-renderer/types'
+import { LineMarkerPosition } from '../../../markdown-renderer/types'
 
 export const useAdaptedLineMarkerCallback = (documentRenderPaneRef: RefObject<HTMLDivElement> | undefined,
                                              rendererRef: RefObject<HTMLDivElement>,

@@ -4,99 +4,61 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { Alert } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
-import { getNote, Note } from '../../api/notes'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
-import { useDocumentTitle } from '../../hooks/common/use-document-title'
+import { useDocumentTitleWithNoteTitle } from '../../hooks/common/use-document-title-with-note-title'
+import { useNoteMarkdownContent } from '../../hooks/common/use-note-markdown-content'
 import { ApplicationState } from '../../redux'
-import { setDocumentContent, setDocumentMetadata } from '../../redux/document-content/methods'
-import { extractNoteTitle } from '../common/document-title/note-title-extractor'
+import { setNoteFrontmatter, updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
 import { ShowIf } from '../common/show-if/show-if'
 import { AppBar, AppBarMode } from '../editor/app-bar/app-bar'
 import { DocumentIframe } from '../editor/document-renderer-pane/document-iframe'
 import { EditorPathParams } from '../editor/editor'
-import { YAMLMetaData } from '../editor/yaml-metadata/yaml-metadata'
+import { useLoadNoteFromServer } from '../editor/useLoadNoteFromServer'
 import { DocumentInfobar } from './document-infobar'
+import { ErrorWhileLoadingNoteAlert } from './ErrorWhileLoadingNoteAlert'
+import { LoadingNoteAlert } from './LoadingNoteAlert'
 
 export const PadViewOnly: React.FC = () => {
-  const { t } = useTranslation()
+
+  useTranslation()
   const { id } = useParams<EditorPathParams>()
-  const untitledNote = t('editor.untitledNote')
-  const [documentTitle, setDocumentTitle] = useState(untitledNote)
-  const [noteData, setNoteData] = useState<Note>()
-  const [error, setError] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const noteMetadata = useRef<YAMLMetaData>()
-  const firstHeading = useRef<string>()
-
-  const updateDocumentTitle = useCallback(() => {
-    const noteTitle = extractNoteTitle(untitledNote, noteMetadata.current, firstHeading.current)
-    setDocumentTitle(noteTitle)
-  }, [untitledNote])
-
-  const onFirstHeadingChange = useCallback((newFirstHeading: string | undefined) => {
-    firstHeading.current = newFirstHeading
-    updateDocumentTitle()
-  }, [updateDocumentTitle])
-
-  const onMetadataChange = useCallback((metaData: YAMLMetaData | undefined) => {
-    noteMetadata.current = metaData
-    setDocumentMetadata(metaData)
-    updateDocumentTitle()
-  }, [updateDocumentTitle])
-
-  useEffect(() => {
-    getNote(id)
-      .then(note => {
-        setNoteData(note)
-        setDocumentContent(note.content)
-      })
-      .catch(() => setError(true))
-      .finally(() => setLoading(false))
-  }, [id])
 
   useApplyDarkMode()
-  useDocumentTitle(documentTitle)
-  const markdownContent = useSelector((state: ApplicationState) => state.documentContent.content)
+  useDocumentTitleWithNoteTitle()
+
+  const onFirstHeadingChange = useCallback(updateNoteTitleByFirstHeading, [])
+  const onFrontmatterChange = useCallback(setNoteFrontmatter, [])
+  const [error, loading] = useLoadNoteFromServer()
+  const markdownContent = useNoteMarkdownContent()
+  const noteDetails = useSelector((state: ApplicationState) => state.noteDetails)
 
   return (
     <div className={'d-flex flex-column mvh-100 bg-light'}>
       <MotdBanner/>
       <AppBar mode={AppBarMode.BASIC}/>
       <div className={'container'}>
-        <ShowIf condition={error}>
-          <Alert variant={'danger'} className={'my-2'}>
-            <b><Trans i18nKey={'views.readOnly.error.title'}/></b>
-            <br/>
-            <Trans i18nKey={'views.readOnly.error.description'}/>
-          </Alert>
-        </ShowIf>
-        <ShowIf condition={loading}>
-          <Alert variant={'info'} className={'my-2'}>
-            <Trans i18nKey={'views.readOnly.loading'}/>
-          </Alert>
-        </ShowIf>
+        <ErrorWhileLoadingNoteAlert show={error}/>
+        <LoadingNoteAlert show={loading}/>
       </div>
       <ShowIf condition={!error && !loading}>
-        { /* TODO set editable and created author properly */}
         <DocumentInfobar
-          changedAuthor={noteData?.lastChange.userId ?? ''}
-          changedTime={noteData?.lastChange.timestamp ?? 0}
+          changedAuthor={noteDetails.lastChange.userId ?? ''}
+          changedTime={noteDetails.lastChange.timestamp}
           createdAuthor={'Test'}
-          createdTime={noteData?.createtime ?? 0}
+          createdTime={noteDetails.createTime}
           editable={true}
           noteId={id}
-          viewCount={noteData?.viewcount ?? 0}
+          viewCount={noteDetails.viewCount}
         />
         <DocumentIframe extraClasses={"flex-fill"}
                         markdownContent={markdownContent}
                         onFirstHeadingChange={onFirstHeadingChange}
-                        onMetadataChange={onMetadataChange}/>
+                        onFrontmatterChange={onFrontmatterChange}/>
       </ShowIf>
     </div>
   )

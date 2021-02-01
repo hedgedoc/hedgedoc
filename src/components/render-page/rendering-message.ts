@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { NoteFrontmatter } from '../editor/note-frontmatter/note-frontmatter'
 import { ScrollState } from '../editor/scroll/scroll-props'
-import { YAMLMetaData } from '../editor/yaml-metadata/yaml-metadata'
 
 export enum RenderIframeMessageType {
   SET_MARKDOWN_CONTENT = 'SET_MARKDOWN_CONTENT',
@@ -15,7 +15,7 @@ export enum RenderIframeMessageType {
   ON_FIRST_HEADING_CHANGE = 'ON_FIRST_HEADING_CHANGE',
   SET_SCROLL_SOURCE_TO_RENDERER = 'SET_SCROLL_SOURCE_TO_RENDERER',
   SET_SCROLL_STATE = 'SET_SCROLL_STATE',
-  ON_SET_META_DATA = 'ON_SET_META_DATA',
+  ON_SET_FRONTMATTER = 'ON_SET_FRONTMATTER',
   IMAGE_CLICKED = 'IMAGE_CLICKED',
   SET_BASE_URL = 'SET_BASE_URL'
 }
@@ -71,9 +71,9 @@ export interface OnFirstHeadingChangeMessage {
   firstHeading: string | undefined
 }
 
-export interface OnMetadataChangeMessage {
-  type: RenderIframeMessageType.ON_SET_META_DATA,
-  metaData: YAMLMetaData | undefined
+export interface OnFrontmatterChangeMessage {
+  type: RenderIframeMessageType.ON_SET_FRONTMATTER,
+  frontmatter: NoteFrontmatter | undefined
 }
 
 export type EditorToRendererIframeMessage =
@@ -87,6 +87,6 @@ export type RendererToEditorIframeMessage =
   RendererToEditorSimpleMessage |
   OnFirstHeadingChangeMessage |
   OnTaskCheckboxChangeMessage |
-  OnMetadataChangeMessage |
+  OnFrontmatterChangeMessage |
   SetScrollStateMessage |
   ImageClickedMessage

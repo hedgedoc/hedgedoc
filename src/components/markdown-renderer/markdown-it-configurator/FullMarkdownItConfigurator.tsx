@@ -6,7 +6,7 @@
 
 import MarkdownIt from 'markdown-it'
 import { TocAst } from 'markdown-it-toc-done-right'
-import { RawYAMLMetadata } from '../../editor/yaml-metadata/yaml-metadata'
+import { RawNoteFrontmatter } from '../../editor/note-frontmatter/note-frontmatter'
 import { documentToc } from '../markdown-it-plugins/document-toc'
 import { frontmatterExtract } from '../markdown-it-plugins/frontmatter'
 import { headlineAnchors } from '../markdown-it-plugins/headline-anchors'
@@ -28,7 +28,7 @@ export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
   constructor (
     private useFrontmatter: boolean,
     private passYamlErrorState: (error: boolean) => void,
-    private onRawMeta: (rawMeta: RawYAMLMetadata) => void,
+    private onRawMeta: (rawMeta: RawNoteFrontmatter) => void,
     private onToc: (toc: TocAst) => void,
     private onLineMarkers: (lineMarkers: LineMarkers[]) => void
   ) {
@@ -45,8 +45,8 @@ export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
           !this.useFrontmatter
             ? undefined
             : {
-              onYamlError: (hasError: boolean) => this.passYamlErrorState(hasError),
-              onRawMeta: (rawMeta: RawYAMLMetadata) => this.onRawMeta(rawMeta)
+              onParseError: (hasError: boolean) => this.passYamlErrorState(hasError),
+              onRawMeta: (rawMeta: RawNoteFrontmatter) => this.onRawMeta(rawMeta)
             })
       },
       headlineAnchors,

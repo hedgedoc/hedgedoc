@@ -6,7 +6,7 @@
 
 describe('Import markdown file', () => {
   beforeEach(() => {
-    cy.visit('/n/test')
+    cy.visitTestEditor()
   })
 
   it('import on blank note', () => {

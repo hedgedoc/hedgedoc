@@ -21,7 +21,7 @@ export const handleUpload = (file: File, editor: Editor): void => {
   }
   const cursor = editor.getCursor()
   const uploadPlaceholder = `![${i18n.t('editor.upload.uploadFile', { fileName: file.name })}]()`
-  const noteId = store.getState().documentContent.noteId
+  const noteId = store.getState().noteDetails.id
   editor.replaceRange(uploadPlaceholder, cursor, cursor, '+input')
   uploadFile(noteId, mimeType, file)
     .then(({ link }) => {

@@ -15,15 +15,17 @@ export interface Note {
   id: string
   alias: string
   lastChange: LastChange
-  viewcount: number
-  createtime: number
+  viewCount: number
+  createTime: number
   content: string
   authorship: number[]
   preVersionTwoNote: boolean
 }
 
 export const getNote = async (noteId: string): Promise<Note> => {
-  const response = await fetch(getApiUrl() + `/notes/${noteId}`, {
+  // The "-get" suffix is necessary, because in our mock api (filesystem) the note id might already be a folder.
+  // TODO: [mrdrogdrog] replace -get with actual api route as soon as api backend is ready.
+  const response = await fetch(getApiUrl() + `/notes/${noteId}-get`, {
     ...defaultFetchConfig
   })
   expectResponseCode(response)

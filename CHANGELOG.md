@@ -18,7 +18,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
     - `{%speakerdeck foobar %}` -> Embedding removed
     - `{%pdf https://example.org/example-pdf.pdf %}` -> Embedding removed
 - The use of `sequence` as code block language ([Why?](https://hedgedoc.org/faq/))
-- Comma-separated definition of tags in the yaml-metadata
+- Comma-separated definition of tags in the yaml-frontmatter
 
 ### Removed
 

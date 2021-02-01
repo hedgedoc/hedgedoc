@@ -7,11 +7,11 @@
 import yaml from 'js-yaml'
 import MarkdownIt from 'markdown-it'
 import frontmatter from 'markdown-it-front-matter'
-import { RawYAMLMetadata } from '../../editor/yaml-metadata/yaml-metadata'
+import { RawNoteFrontmatter } from '../../editor/note-frontmatter/note-frontmatter'
 
 interface FrontmatterPluginOptions {
-  onYamlError: (error: boolean) => void,
-  onRawMeta: (rawMeta: RawYAMLMetadata) => void,
+  onParseError: (error: boolean) => void,
+  onRawMeta: (rawMeta: RawNoteFrontmatter) => void,
 }
 
 export const frontmatterExtract: MarkdownIt.PluginWithOptions<FrontmatterPluginOptions> = (markdownIt: MarkdownIt, options) => {
@@ -20,13 +20,13 @@ export const frontmatterExtract: MarkdownIt.PluginWithOptions<FrontmatterPluginO
   }
   frontmatter(markdownIt, (rawMeta: string) => {
     try {
-      const meta: RawYAMLMetadata = yaml.load(rawMeta) as RawYAMLMetadata
-      options.onYamlError(false)
+      const meta: RawNoteFrontmatter = yaml.load(rawMeta) as RawNoteFrontmatter
+      options.onParseError(false)
       options.onRawMeta(meta)
     } catch (e) {
       console.error(e)
-      options.onYamlError(true)
-      options.onRawMeta({} as RawYAMLMetadata)
+      options.onParseError(true)
+      options.onRawMeta({} as RawNoteFrontmatter)
     }
   })
 }

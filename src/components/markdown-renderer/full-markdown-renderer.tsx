@@ -10,10 +10,10 @@ import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { InternalLink } from '../common/links/internal-link'
 import { ShowIf } from '../common/show-if/show-if'
-import { RawYAMLMetadata, YAMLMetaData } from '../editor/yaml-metadata/yaml-metadata'
+import { NoteFrontmatter, RawNoteFrontmatter } from '../editor/note-frontmatter/note-frontmatter'
 import { BasicMarkdownRenderer } from './basic-markdown-renderer'
 import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
-import { usePostMetaDataOnChange } from './hooks/use-post-meta-data-on-change'
+import { usePostFrontmatterOnChange } from './hooks/use-post-frontmatter-on-change'
 import { usePostTocAstOnChange } from './hooks/use-post-toc-ast-on-change'
 import { useReplacerInstanceListCreator } from './hooks/use-replacer-instance-list-creator'
 import { FullMarkdownItConfigurator } from './markdown-it-configurator/FullMarkdownItConfigurator'
@@ -25,7 +25,7 @@ import { useCalculateLineMarkerPosition } from './utils/calculate-line-marker-po
 export interface FullMarkdownRendererProps {
   onFirstHeadingChange?: (firstHeading: string | undefined) => void
   onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void
-  onMetaDataChange?: (yamlMetaData: YAMLMetaData | undefined) => void
+  onFrontmatterChange?: (frontmatter: NoteFrontmatter | undefined) => void
   onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
   onTocChange?: (ast: TocAst) => void
   rendererRef?: Ref<HTMLDivElement>
@@ -37,7 +37,7 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
   {
     onFirstHeadingChange,
     onLineMarkerPositionChanged,
-    onMetaDataChange,
+    onFrontmatterChange,
     onTaskCheckedChange,
     onTocChange,
     content,
@@ -53,11 +53,11 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
   const [showYamlError, setShowYamlError] = useState(false)
   const hasNewYamlError = useRef(false)
 
-  const rawMetaRef = useRef<RawYAMLMetadata>()
+  const rawMetaRef = useRef<RawNoteFrontmatter>()
   const firstHeadingRef = useRef<string>()
   const documentElement = useRef<HTMLDivElement>(null)
   const currentLineMarkers = useRef<LineMarkers[]>()
-  usePostMetaDataOnChange(rawMetaRef.current, firstHeadingRef.current, onMetaDataChange, onFirstHeadingChange)
+  usePostFrontmatterOnChange(rawMetaRef.current, firstHeadingRef.current, onFrontmatterChange, onFirstHeadingChange)
   useCalculateLineMarkerPosition(documentElement, currentLineMarkers.current, onLineMarkerPositionChanged, documentElement.current?.offsetTop ?? 0)
   useExtractFirstHeadline(documentElement, content, onFirstHeadingChange)
 
@@ -66,7 +66,7 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
 
   const markdownIt = useMemo(() => {
     return (new FullMarkdownItConfigurator(
-      !!onMetaDataChange,
+      !!onFrontmatterChange,
       errorState => hasNewYamlError.current = errorState,
       rawMeta => {
         rawMetaRef.current = rawMeta
@@ -78,9 +78,9 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
         currentLineMarkers.current = lineMarkers
       }
     )).buildConfiguredMarkdownIt()
-  }, [onMetaDataChange])
+  }, [onFrontmatterChange])
 
-  const clearMetadata = useCallback(() => {
+  const clearFrontmatter = useCallback(() => {
     hasNewYamlError.current = false
     rawMetaRef.current = undefined
   }, [])
@@ -107,7 +107,7 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
         componentReplacers={allReplacers}
         markdownIt={markdownIt}
         documentReference={documentElement}
-        onBeforeRendering={clearMetadata}
+        onBeforeRendering={clearFrontmatter}
         onAfterRendering={checkYamlErrorState}
       />
     </div>
