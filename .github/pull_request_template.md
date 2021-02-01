@@ -12,7 +12,9 @@ This PR fixes/adds/improves/...
 - [ ] Added / updated tests
 - [ ] Added / updated documentation
 - [ ] I read the [contribution documentation](https://github.com/hedgedoc/hedgedoc/blob/develop/CONTRIBUTING.md) and
-  signed-off my commits to accept the DCO.
+  made sure that:
+  - My commits are signed-off to accept the DCO.
+  - This PR targets the correct branch: `master` for 1.x & docs, `develop` for 2.x
 
 ### Related Issue(s)
 <!-- e.g #123 -->
