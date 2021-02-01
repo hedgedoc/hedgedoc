@@ -20,7 +20,7 @@ import { PermissionsModule } from '../../src/permissions/permissions.module';
 import { AuthModule } from '../../src/auth/auth.module';
 import { TokenAuthGuard } from '../../src/auth/token-auth.guard';
 import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
-import { UsersService } from '../../src/users/users.service';
+import { UsersModule } from '../../src/users/users.module';
 
 describe('Notes', () => {
   let app: INestApplication;
@@ -46,6 +46,7 @@ describe('Notes', () => {
         }),
         LoggerModule,
         AuthModule,
+        UsersModule,
       ],
     })
       .overrideGuard(TokenAuthGuard)
@@ -55,8 +56,6 @@ describe('Notes', () => {
     app = moduleRef.createNestApplication();
     await app.init();
     notesService = moduleRef.get(NotesService);
-    const usersService: UsersService = moduleRef.get('UsersService');
-    await usersService.createUser('testy', 'Testy McTestFace');
   });
 
   it(`POST /notes`, async () => {
@@ -69,8 +68,9 @@ describe('Notes', () => {
       .expect(201);
     expect(response.body.metadata?.id).toBeDefined();
     expect(
-      (await notesService.getNoteDtoByIdOrAlias(response.body.metadata.id))
-        .content,
+      await notesService.getCurrentContent(
+        await notesService.getNoteByIdOrAlias(response.body.metadata.id),
+      ),
     ).toEqual(newNote);
   });
 
@@ -100,8 +100,9 @@ describe('Notes', () => {
       .expect(201);
     expect(response.body.metadata?.id).toBeDefined();
     return expect(
-      (await notesService.getNoteDtoByIdOrAlias(response.body.metadata.id))
-        .content,
+      await notesService.getCurrentContent(
+        await notesService.getNoteByIdOrAlias(response.body.metadata?.id),
+      ),
     ).toEqual(newNote);
   });
 
@@ -125,7 +126,9 @@ describe('Notes', () => {
       .send('New note text')
       .expect(200);
     await expect(
-      (await notesService.getNoteDtoByIdOrAlias('test4')).content,
+      await notesService.getCurrentContent(
+        await notesService.getNoteByIdOrAlias('test4'),
+      ),
     ).toEqual('New note text');
     expect(response.body.content).toEqual('New note text');
 

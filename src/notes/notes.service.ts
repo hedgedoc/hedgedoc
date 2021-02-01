@@ -35,46 +35,24 @@ export class NotesService {
     this.logger.setContext(NotesService.name);
   }
 
-  getUserNotes(username: string): NoteMetadataDto[] {
+  getUserNotes(user: User): Note[] {
     this.logger.warn('Using hardcoded data!');
     return [
       {
-        alias: null,
-        createTime: new Date(),
-        description: 'Very descriptive text.',
-        editedBy: [],
         id: 'foobar-barfoo',
-        permissions: {
-          owner: {
-            displayName: 'foo',
-            userName: 'fooUser',
-            email: 'foo@example.com',
-            photo: '',
-          },
-          sharedToUsers: [],
-          sharedToGroups: [],
-        },
+        alias: null,
+        shortid: 'abc',
+        owner: user,
+        description: 'Very descriptive text.',
+        userPermissions: [],
+        groupPermissions: [],
         tags: [],
+        revisions: Promise.resolve([]),
+        authorColors: [],
         title: 'Title!',
-        updateTime: new Date(),
-        updateUser: {
-          displayName: 'foo',
-          userName: 'fooUser',
-          email: 'foo@example.com',
-          photo: '',
-        },
-        viewCount: 42,
+        viewcount: 42,
       },
     ];
-  }
-
-  async createNoteDto(
-    noteContent: string,
-    alias?: NoteMetadataDto['alias'],
-    owner?: User,
-  ): Promise<NoteDto> {
-    const note = await this.createNote(noteContent, alias, owner);
-    return this.toNoteDto(note);
   }
 
   async createNote(
@@ -96,7 +74,7 @@ export class NotesService {
     return this.noteRepository.save(newNote);
   }
 
-  async getCurrentContent(note: Note) {
+  async getCurrentContent(note: Note): Promise<string> {
     return (await this.getLatestRevision(note)).content;
   }
 
@@ -106,42 +84,6 @@ export class NotesService {
 
   async getFirstRevision(note: Note): Promise<Revision> {
     return this.revisionsService.getFirstRevision(note.id);
-  }
-
-  async getMetadata(note: Note): Promise<NoteMetadataDto> {
-    return {
-      // TODO: Convert DB UUID to base64
-      id: note.id,
-      alias: note.alias,
-      title: note.title,
-      createTime: (await this.getFirstRevision(note)).createdAt,
-      description: note.description,
-      editedBy: note.authorColors.map(
-        (authorColor) => authorColor.user.userName,
-      ),
-      // TODO: Extract into method
-      permissions: {
-        owner: this.usersService.toUserDto(note.owner),
-        sharedToUsers: note.userPermissions.map((noteUserPermission) => ({
-          user: this.usersService.toUserDto(noteUserPermission.user),
-          canEdit: noteUserPermission.canEdit,
-        })),
-        sharedToGroups: note.groupPermissions.map((noteGroupPermission) => ({
-          group: noteGroupPermission.group,
-          canEdit: noteGroupPermission.canEdit,
-        })),
-      },
-      tags: note.tags.map((tag) => tag.name),
-      updateTime: (await this.getLatestRevision(note)).createdAt,
-      // TODO: Get actual updateUser
-      updateUser: {
-        displayName: 'Hardcoded User',
-        userName: 'hardcoded',
-        email: 'foo@example.com',
-        photo: '',
-      },
-      viewCount: 42,
-    };
   }
 
   async getNoteByIdOrAlias(noteIdOrAlias: string): Promise<Note> {
@@ -178,45 +120,50 @@ export class NotesService {
     return note;
   }
 
-  async getNoteDtoByIdOrAlias(noteIdOrAlias: string): Promise<NoteDto> {
-    const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
-    return this.toNoteDto(note);
-  }
-
   async deleteNoteByIdOrAlias(noteIdOrAlias: string) {
     const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
     return await this.noteRepository.remove(note);
   }
 
-  async updateNoteByIdOrAlias(noteIdOrAlias: string, noteContent: string) {
+  async updateNoteByIdOrAlias(
+    noteIdOrAlias: string,
+    noteContent: string,
+  ): Promise<Note> {
     const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
     const revisions = await note.revisions;
     //TODO: Calculate patch
     revisions.push(Revision.create(noteContent, noteContent));
     note.revisions = Promise.resolve(revisions);
-    await this.noteRepository.save(note);
-    return this.toNoteDto(note);
-  }
-
-  async getNoteMetadata(noteIdOrAlias: string): Promise<NoteMetadataDto> {
-    const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
-    return this.getMetadata(note);
+    return this.noteRepository.save(note);
   }
 
   updateNotePermissions(
     noteIdOrAlias: string,
     newPermissions: NotePermissionsUpdateDto,
-  ): NotePermissionsDto {
+  ): Note {
     this.logger.warn('Using hardcoded data!');
     return {
+      id: 'foobar-barfoo',
+      alias: null,
+      shortid: 'abc',
       owner: {
-        displayName: 'foo',
-        userName: 'fooUser',
-        email: 'foo@example.com',
-        photo: '',
+        authTokens: [],
+        createdAt: new Date(),
+        displayName: 'hardcoded',
+        id: '1',
+        identities: [],
+        ownedNotes: [],
+        updatedAt: new Date(),
+        userName: 'Testy',
       },
-      sharedToUsers: [],
-      sharedToGroups: [],
+      description: 'Very descriptive text.',
+      userPermissions: [],
+      groupPermissions: [],
+      tags: [],
+      revisions: Promise.resolve([]),
+      authorColors: [],
+      title: 'Title!',
+      viewcount: 42,
     };
   }
 
@@ -225,10 +172,50 @@ export class NotesService {
     return this.getCurrentContent(note);
   }
 
+  async toNotePermissionsDto(note: Note): Promise<NotePermissionsDto> {
+    return {
+      owner: this.usersService.toUserDto(note.owner),
+      sharedToUsers: note.userPermissions.map((noteUserPermission) => ({
+        user: this.usersService.toUserDto(noteUserPermission.user),
+        canEdit: noteUserPermission.canEdit,
+      })),
+      sharedToGroups: note.groupPermissions.map((noteGroupPermission) => ({
+        group: noteGroupPermission.group,
+        canEdit: noteGroupPermission.canEdit,
+      })),
+    };
+  }
+
+  async toNoteMetadataDto(note: Note): Promise<NoteMetadataDto> {
+    return {
+      // TODO: Convert DB UUID to base64
+      id: note.id,
+      alias: note.alias,
+      title: note.title,
+      createTime: (await this.getFirstRevision(note)).createdAt,
+      description: note.description,
+      editedBy: note.authorColors.map(
+        (authorColor) => authorColor.user.userName,
+      ),
+      // TODO: Extract into method
+      permissions: await this.toNotePermissionsDto(note),
+      tags: note.tags.map((tag) => tag.name),
+      updateTime: (await this.getLatestRevision(note)).createdAt,
+      // TODO: Get actual updateUser
+      updateUser: {
+        displayName: 'Hardcoded User',
+        userName: 'hardcoded',
+        email: 'foo@example.com',
+        photo: '',
+      },
+      viewCount: 42,
+    };
+  }
+
   async toNoteDto(note: Note): Promise<NoteDto> {
     return {
       content: await this.getCurrentContent(note),
-      metadata: await this.getMetadata(note),
+      metadata: await this.toNoteMetadataDto(note),
       editedByAtPosition: [],
     };
   }

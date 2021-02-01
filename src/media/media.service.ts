@@ -18,6 +18,7 @@ import { BackendType } from './backends/backend-type.enum';
 import { FilesystemBackend } from './backends/filesystem-backend';
 import { MediaBackend } from './media-backend.interface';
 import { MediaUpload } from './media-upload.entity';
+import { MediaUploadUrlDto } from './media-upload-url.dto';
 
 @Injectable()
 export class MediaService {
@@ -58,7 +59,11 @@ export class MediaService {
     return allowedTypes.includes(mimeType);
   }
 
-  public async saveFile(fileBuffer: Buffer, username: string, noteId: string) {
+  public async saveFile(
+    fileBuffer: Buffer,
+    username: string,
+    noteId: string,
+  ): Promise<string> {
     this.logger.debug(
       `Saving file for note '${noteId}' and user '${username}'`,
       'saveFile',
@@ -88,7 +93,7 @@ export class MediaService {
     return url;
   }
 
-  public async deleteFile(filename: string, username: string) {
+  public async deleteFile(filename: string, username: string): Promise<void> {
     this.logger.debug(
       `Deleting '${filename}' for user '${username}'`,
       'deleteFile',
@@ -131,5 +136,11 @@ export class MediaService {
       case BackendType.FILESYSTEM:
         return this.moduleRef.get(FilesystemBackend);
     }
+  }
+
+  toMediaUploadUrlDto(url: string): MediaUploadUrlDto {
+    return {
+      link: url,
+    };
   }
 }
