@@ -35,6 +35,10 @@ Please note we have a [code of conduct][code-of-conduct], please follow it in al
 * Please note that we only accept PRs for the 1.x releases if they fix critical issues. If you are unsure if your fix is
   critical, it's best to ask us before you start coding.
 
+* **Choose the correct base branch:**  
+  The code for 1.x lives in the `master` branch. docs.hedgedoc.org is also deployed from there until 2.0 is released.  
+  HedgeDoc 2.x is developed in the `develop` branch.
+
 ### Do you intend to add a new feature or change an existing one?
 
 * Suggest your idea via a new GitHub issue. After a confirmation about your idea, you can start writing code. Our
@@ -72,7 +76,7 @@ like `git config --global alias.ci 'commit -s'`. Now you can commit with `git ci
 1. Submit an issue describing your proposed change. We will try to respond to your issue promptly.
 2. Fork this repo, develop and test your code changes. Ensure you follow the commit guidelines (see below)
    and signed all your commits (see above for details).
-3. Submit a pull request against this repo's `develop` branch.
+3. Submit a pull request against this repo's `develop` branch for 2.x or the `master` branch for 1.x.
 4. Your branch may be merged once all configured checks pass.
 
 ### Commit guidelines
