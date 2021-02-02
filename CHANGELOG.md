@@ -49,7 +49,6 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - Better support for RTL-languages (and LTR-content in a RTL-page)
 - Users may now change their display name and password (only email accounts) on the new profile page
 - Highlighted code blocks can now use line wrapping and line numbers at once
-- Images, videos, and other non-text content is now wider in View Mode
 - Notes may now be deleted directly from the history page
 - HedgeDoc instances can be branded either with a '@ \<custom string\>' or '@ \<custom logo\>' after the HedgeDoc logo and text
 - Images will be loaded via proxy if an image proxy is configured in the backend

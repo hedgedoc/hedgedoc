@@ -55,9 +55,7 @@ export const Cheatsheet: React.FC = () => {
               <td>
                 <BasicMarkdownRenderer
                   content={code}
-                  wide={false}
-                  markdownIt={markdownIt}
-                />
+                  markdownIt={markdownIt}/>
               </td>
               <td className={'markdown-body'}>
                 <HighlightedCode code={code} wrapLines={true} startLineNumber={1} language={'markdown'}/>

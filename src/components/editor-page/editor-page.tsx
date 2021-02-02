@@ -8,7 +8,6 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
-import useMedia from 'use-media'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { useDocumentTitleWithNoteTitle } from '../../hooks/common/use-document-title-with-note-title'
 import { useNoteMarkdownContent } from '../../hooks/common/use-note-markdown-content'
@@ -47,7 +46,6 @@ export const EditorPage: React.FC = () => {
   useTranslation()
   const { search } = useLocation()
   const markdownContent = useNoteMarkdownContent()
-  const isWide = useMedia({ minWidth: 576 }, true)
   const scrollSource = useRef<ScrollSource>(ScrollSource.EDITOR)
 
   const editorMode: EditorMode = useSelector((state: ApplicationState) => state.editorConfig.editorMode)
@@ -65,12 +63,6 @@ export const EditorPage: React.FC = () => {
       setEditorMode(mode)
     }
   }, [search])
-
-  useEffect(() => {
-    if (!isWide && editorMode === EditorMode.BOTH) {
-      setEditorMode(EditorMode.PREVIEW)
-    }
-  }, [editorMode, isWide])
 
   const onMarkdownRendererScroll = useCallback((newScrollState: ScrollState) => {
     if (scrollSource.current === ScrollSource.RENDERER && editorSyncScroll) {
@@ -128,7 +120,6 @@ export const EditorPage: React.FC = () => {
                   onTaskCheckedChange={SetCheckboxInMarkdownContent}
                   onFrontmatterChange={setNoteFrontmatter}
                   onScroll={onMarkdownRendererScroll}
-                  wide={editorMode === EditorMode.PREVIEW}
                   scrollState={scrollState.rendererScrollState}/>
               }
               containerClassName={'overflow-hidden'}/>

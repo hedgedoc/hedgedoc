@@ -99,13 +99,6 @@ export class IframeEditorToRendererCommunicator extends IframeCommunicator<Edito
     })
   }
 
-  public sendSetWide (isWide: boolean): void {
-    this.sendMessageToOtherSide({
-      type: RenderIframeMessageType.SET_WIDE,
-      activated: isWide
-    })
-  }
-
   public sendScrollState (scrollState?: ScrollState): void {
     if (!scrollState) {
       return

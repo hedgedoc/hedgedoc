@@ -23,7 +23,6 @@ export const RenderIframe: React.FC<MarkdownDocumentProps> = (
     onFrontmatterChange,
     scrollState,
     onFirstHeadingChange,
-    wide,
     onScroll,
     onMakeScrollSource,
     extraClasses
@@ -46,8 +45,7 @@ export const RenderIframe: React.FC<MarkdownDocumentProps> = (
   useEffect(() => iframeCommunicator.onSetScrollSourceToRenderer(onMakeScrollSource), [iframeCommunicator, onMakeScrollSource])
   useEffect(() => iframeCommunicator.onTaskCheckboxChange(onTaskCheckedChange), [iframeCommunicator, onTaskCheckedChange])
   useEffect(() => iframeCommunicator.onImageClicked(setLightboxDetails), [iframeCommunicator])
-  useEffect(() => iframeCommunicator.onRendererReady(() => setRendererReady(true)), [darkMode, iframeCommunicator, scrollState, wide])
-
+  useEffect(() => iframeCommunicator.onRendererReady(() => setRendererReady(true)), [darkMode, iframeCommunicator, scrollState])
   useEffect(() => {
     if (rendererReady) {
       iframeCommunicator.sendSetDarkmode(darkMode)
@@ -61,12 +59,6 @@ export const RenderIframe: React.FC<MarkdownDocumentProps> = (
       iframeCommunicator.sendScrollState(scrollState)
     }
   }, [iframeCommunicator, rendererReady, scrollState])
-
-  useEffect(() => {
-    if (rendererReady) {
-      iframeCommunicator.sendSetWide(wide ?? false)
-    }
-  }, [iframeCommunicator, rendererReady, wide])
 
   useEffect(() => {
     if (rendererReady) {

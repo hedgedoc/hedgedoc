@@ -25,7 +25,6 @@ export interface MarkdownDocumentProps extends ScrollProps {
   onFrontmatterChange?: (frontmatter: NoteFrontmatter | undefined) => void
   onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
   documentRenderPaneRef?: MutableRefObject<HTMLDivElement | null>
-  wide?: boolean,
   markdownContent: string,
   baseUrl?: string
   onImageClick?: ImageClickHandler
@@ -38,7 +37,6 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = (
     onFrontmatterChange,
     onMakeScrollSource,
     onTaskCheckedChange,
-    wide,
     baseUrl,
     markdownContent,
     onImageClick,
@@ -60,17 +58,16 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = (
       <div className={'bg-light markdown-document-content'}>
         <YamlArrayDeprecationAlert/>
         <FullMarkdownRenderer
-          rendererRef={rendererRef}
-          className={'flex-fill pt-4 mb-3'}
-          content={markdownContent}
-          onFirstHeadingChange={onFirstHeadingChange}
-          onLineMarkerPositionChanged={onLineMarkerPositionChanged}
-          onFrontmatterChange={onFrontmatterChange}
-          onTaskCheckedChange={onTaskCheckedChange}
-          onTocChange={(tocAst) => setTocAst(tocAst)}
-          wide={wide}
-          baseUrl={baseUrl}
-          onImageClick={onImageClick}/>
+            rendererRef={rendererRef}
+            className={'flex-fill pt-4 mb-3'}
+            content={markdownContent}
+            onFirstHeadingChange={onFirstHeadingChange}
+            onLineMarkerPositionChanged={onLineMarkerPositionChanged}
+            onFrontmatterChange={onFrontmatterChange}
+            onTaskCheckedChange={onTaskCheckedChange}
+            onTocChange={(tocAst) => setTocAst(tocAst)}
+            baseUrl={baseUrl}
+            onImageClick={onImageClick}/>
 
       </div>
 

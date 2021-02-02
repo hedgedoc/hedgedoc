@@ -17,7 +17,6 @@ import {
 export class IframeRendererToEditorCommunicator extends IframeCommunicator<RendererToEditorIframeMessage, EditorToRendererIframeMessage> {
   private onSetMarkdownContentHandler?: ((markdownContent: string) => void)
   private onSetDarkModeHandler?: ((darkModeActivated: boolean) => void)
-  private onSetWideHandler?: ((wide: boolean) => void)
   private onSetScrollStateHandler?: ((scrollState: ScrollState) => void)
   private onSetBaseUrlHandler?: ((baseUrl: string) => void)
 
@@ -31,10 +30,6 @@ export class IframeRendererToEditorCommunicator extends IframeCommunicator<Rende
 
   public onSetDarkMode (handler?: (darkModeActivated: boolean) => void): void {
     this.onSetDarkModeHandler = handler
-  }
-
-  public onSetWide (handler?: (wide: boolean) => void): void {
-    this.onSetWideHandler = handler
   }
 
   public onSetScrollState (handler?: (scrollState: ScrollState) => void): void {
@@ -90,9 +85,6 @@ export class IframeRendererToEditorCommunicator extends IframeCommunicator<Rende
         return false
       case RenderIframeMessageType.SET_DARKMODE:
         this.onSetDarkModeHandler?.(renderMessage.activated)
-        return false
-      case RenderIframeMessageType.SET_WIDE:
-        this.onSetWideHandler?.(renderMessage.activated)
         return false
       case RenderIframeMessageType.SET_SCROLL_STATE:
         this.onSetScrollStateHandler?.(renderMessage.scrollState)

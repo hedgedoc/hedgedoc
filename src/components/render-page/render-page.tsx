@@ -19,7 +19,6 @@ export const RenderPage: React.FC = () => {
   useApplyDarkMode()
 
   const [markdownContent, setMarkdownContent] = useState('')
-  const [isWide, setWide] = useState(false)
   const [scrollState, setScrollState] = useState<ScrollState>({ firstLineInView: 1, scrolledPercentage: 0 })
   const [baseUrl, setBaseUrl] = useState<string>()
 
@@ -39,7 +38,6 @@ export const RenderPage: React.FC = () => {
   useEffect(() => iframeCommunicator.onSetBaseUrl(setBaseUrl), [iframeCommunicator])
   useEffect(() => iframeCommunicator.onSetMarkdownContent(setMarkdownContent), [iframeCommunicator])
   useEffect(() => iframeCommunicator.onSetDarkMode(setDarkMode), [iframeCommunicator])
-  useEffect(() => iframeCommunicator.onSetWide(setWide), [iframeCommunicator])
   useEffect(() => iframeCommunicator.onSetScrollState(setScrollState), [iframeCommunicator, scrollState])
 
   const onTaskCheckedChange = useCallback((lineInMarkdown: number, checked: boolean) => {
@@ -84,7 +82,6 @@ export const RenderPage: React.FC = () => {
       <MarkdownDocument
         extraClasses={'bg-light'}
         markdownContent={markdownContent}
-        wide={isWide}
         onTaskCheckedChange={onTaskCheckedChange}
         onFirstHeadingChange={onFirstHeadingChange}
         onMakeScrollSource={onMakeScrollSource}

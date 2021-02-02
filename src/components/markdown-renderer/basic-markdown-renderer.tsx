@@ -26,7 +26,6 @@ export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & Additi
   {
     className,
     content,
-    wide,
     componentReplacers,
     markdownIt,
     documentReference,
@@ -38,7 +37,7 @@ export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & Additi
   const markdownReactDom = useConvertMarkdownToReactDom(trimmedContent, markdownIt, componentReplacers, onBeforeRendering, onAfterRendering)
 
   return (
-    <div className={`${className ?? ''} d-flex flex-column align-items-center ${wide ? 'wider' : ''}`}>
+    <div className={`${className ?? ''} d-flex flex-column align-items-center`}>
       <DocumentLengthLimitReachedAlert contentLength={content.length}/>
       <div ref={documentReference} className={'markdown-body w-100 d-flex flex-column align-items-center'}>
         {markdownReactDom}

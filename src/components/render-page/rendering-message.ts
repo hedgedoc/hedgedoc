@@ -10,7 +10,6 @@ export enum RenderIframeMessageType {
   SET_MARKDOWN_CONTENT = 'SET_MARKDOWN_CONTENT',
   RENDERER_READY = 'RENDERER_READY',
   SET_DARKMODE = 'SET_DARKMODE',
-  SET_WIDE = 'SET_WIDE',
   ON_TASK_CHECKBOX_CHANGE = 'ON_TASK_CHECKBOX_CHANGE',
   ON_FIRST_HEADING_CHANGE = 'ON_FIRST_HEADING_CHANGE',
   SET_SCROLL_SOURCE_TO_RENDERER = 'SET_SCROLL_SOURCE_TO_RENDERER',
@@ -45,11 +44,6 @@ export interface ImageClickedMessage {
   details: ImageDetails
 }
 
-export interface SetWideMessage {
-  type: RenderIframeMessageType.SET_WIDE,
-  activated: boolean
-}
-
 export interface SetMarkdownContentMessage {
   type: RenderIframeMessageType.SET_MARKDOWN_CONTENT,
   content: string
@@ -79,7 +73,6 @@ export interface OnFrontmatterChangeMessage {
 export type EditorToRendererIframeMessage =
   SetMarkdownContentMessage |
   SetDarkModeMessage |
-  SetWideMessage |
   SetScrollStateMessage |
   SetBaseUrlMessage
 

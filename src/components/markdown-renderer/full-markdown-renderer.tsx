@@ -40,7 +40,6 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
     onTocChange,
     content,
     className,
-    wide,
     rendererRef,
     baseUrl,
     onImageClick
@@ -94,14 +93,12 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
       <InvalidYamlAlert showYamlError={showYamlError}/>
       <BasicMarkdownRenderer
         className={className}
-        wide={wide}
         content={content}
         componentReplacers={allReplacers}
         markdownIt={markdownIt}
         documentReference={documentElement}
         onBeforeRendering={clearFrontmatter}
-        onAfterRendering={checkYamlErrorState}
-      />
+        onAfterRendering={checkYamlErrorState}/>
     </div>
   )
 }

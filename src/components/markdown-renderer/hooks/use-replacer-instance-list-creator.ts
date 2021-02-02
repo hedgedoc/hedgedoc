@@ -19,7 +19,6 @@ import { LinemarkerReplacer } from '../replace-components/linemarker/linemarker-
 import { LinkReplacer } from '../replace-components/link-replacer/link-replacer'
 import { MarkmapReplacer } from '../replace-components/markmap/markmap-replacer'
 import { MermaidReplacer } from '../replace-components/mermaid/mermaid-replacer'
-import { PossibleWiderReplacer } from '../replace-components/possible-wider/possible-wider-replacer'
 import { QuoteOptionsReplacer } from '../replace-components/quote-options/quote-options-replacer'
 import { SequenceDiagramReplacer } from '../replace-components/sequence-diagram/sequence-diagram-replacer'
 import { TaskListReplacer } from '../replace-components/task-list/task-list-replacer'
@@ -32,7 +31,6 @@ export const useReplacerInstanceListCreator = (onTaskCheckedChange?: (lineInMark
   () => [
     new LinkReplacer(baseUrl),
     new LinemarkerReplacer(),
-    new PossibleWiderReplacer(),
     new GistReplacer(),
     new YoutubeReplacer(),
     new VimeoReplacer(),
