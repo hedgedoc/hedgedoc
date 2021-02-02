@@ -17,6 +17,7 @@ import { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import { TableOfContents } from '../editor-page/table-of-contents/table-of-contents'
 import { FullMarkdownRenderer } from '../markdown-renderer/full-markdown-renderer'
 import { ImageClickHandler } from '../markdown-renderer/replace-components/image/image-replacer'
+import './markdown-document.scss'
 
 export interface MarkdownDocumentProps extends ScrollProps {
   extraClasses?: string
@@ -53,33 +54,32 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = (
   const [onLineMarkerPositionChanged, onUserScroll] = useSyncedScrolling(internalDocumentRenderPaneRef, rendererRef, contentLineCount, scrollState, onScroll)
 
   return (
-    <div className={`overflow-y-scroll h-100 bg-light m-0 pb-5 row ${extraClasses ?? ''}`}
+    <div className={`markdown-document ${extraClasses ?? ''}`}
          ref={internalDocumentRenderPaneRef} onScroll={onUserScroll} onMouseEnter={onMakeScrollSource}>
-      <div className={'col-md d-none d-md-block'}/>
-      <div className={'bg-light col'}>
+      <div className={'markdown-document-side'}/>
+      <div className={'bg-light markdown-document-content'}>
         <YamlArrayDeprecationAlert/>
-        <div>
-          <FullMarkdownRenderer
-            rendererRef={rendererRef}
-            className={'flex-fill pt-4 mb-3'}
-            content={markdownContent}
-            onFirstHeadingChange={onFirstHeadingChange}
-            onLineMarkerPositionChanged={onLineMarkerPositionChanged}
-            onFrontmatterChange={onFrontmatterChange}
-            onTaskCheckedChange={onTaskCheckedChange}
-            onTocChange={(tocAst) => setTocAst(tocAst)}
-            wide={wide}
-            baseUrl={baseUrl}
-            onImageClick={onImageClick}/>
-        </div>
+        <FullMarkdownRenderer
+          rendererRef={rendererRef}
+          className={'flex-fill pt-4 mb-3'}
+          content={markdownContent}
+          onFirstHeadingChange={onFirstHeadingChange}
+          onLineMarkerPositionChanged={onLineMarkerPositionChanged}
+          onFrontmatterChange={onFrontmatterChange}
+          onTaskCheckedChange={onTaskCheckedChange}
+          onTocChange={(tocAst) => setTocAst(tocAst)}
+          wide={wide}
+          baseUrl={baseUrl}
+          onImageClick={onImageClick}/>
+
       </div>
 
-      <div className={'col-md pt-4'}>
+      <div className={'markdown-document-side pt-4'}>
         <ShowIf condition={!!tocAst}>
-          <ShowIf condition={width >= 1280}>
+          <ShowIf condition={width >= 1100}>
             <TableOfContents ast={tocAst as TocAst} className={'sticky'} baseUrl={baseUrl}/>
           </ShowIf>
-          <ShowIf condition={width < 1280}>
+          <ShowIf condition={width < 1100}>
             <div className={'markdown-toc-sidebar-button'}>
               <Dropdown drop={'up'}>
                 <Dropdown.Toggle id="toc-overlay-button" variant={'secondary'} className={'no-arrow'}>

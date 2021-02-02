@@ -82,7 +82,7 @@ export const RenderPage: React.FC = () => {
   return (
     <div className={"vh-100 w-100"}>
       <MarkdownDocument
-        extraClasses={'w-100'}
+        extraClasses={'bg-light'}
         markdownContent={markdownContent}
         wide={isWide}
         onTaskCheckedChange={onTaskCheckedChange}
