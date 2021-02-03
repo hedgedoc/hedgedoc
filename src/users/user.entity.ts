@@ -14,6 +14,7 @@ import { Column, OneToMany } from 'typeorm';
 import { Note } from '../notes/note.entity';
 import { AuthToken } from '../auth/auth-token.entity';
 import { Identity } from './identity.entity';
+import { HistoryEntry } from '../history/history-entry.entity';
 
 @Entity()
 export class User {
@@ -51,8 +52,8 @@ export class User {
   @OneToMany((_) => Identity, (identity) => identity.user)
   identities: Identity[];
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  private constructor() {}
+  @OneToMany((_) => HistoryEntry, (historyEntry) => historyEntry.user)
+  historyEntries: HistoryEntry[];
 
   public static create(
     userName: string,

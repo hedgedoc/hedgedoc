@@ -19,6 +19,7 @@ import { Identity } from '../../../users/identity.entity';
 import { User } from '../../../users/user.entity';
 import { UsersModule } from '../../../users/users.module';
 import { MeController } from './me.controller';
+import { HistoryEntry } from '../../../history/history-entry.entity';
 
 describe('Me Controller', () => {
   let controller: MeController;
@@ -43,6 +44,8 @@ describe('Me Controller', () => {
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})
       .overrideProvider(getRepositoryToken(Tag))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(HistoryEntry))
       .useValue({})
       .compile();
 

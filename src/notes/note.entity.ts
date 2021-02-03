@@ -20,6 +20,7 @@ import { Revision } from '../revisions/revision.entity';
 import { User } from '../users/user.entity';
 import { AuthorColor } from './author-color.entity';
 import { Tag } from './tag.entity';
+import { HistoryEntry } from '../history/history-entry.entity';
 
 @Entity()
 export class Note {
@@ -53,6 +54,8 @@ export class Note {
   revisions: Promise<Revision[]>;
   @OneToMany((_) => AuthorColor, (authorColor) => authorColor.note)
   authorColors: AuthorColor[];
+  @OneToMany((_) => HistoryEntry, (historyEntry) => historyEntry.user)
+  historyEntries: HistoryEntry[];
 
   @Column({
     nullable: true,
