@@ -8,14 +8,18 @@ edit_uri: https://github.com/hedgedoc/hedgedoc/edit/master/docs/content/
 nav:
   - Home: index.md
   - Installation:
-      - 'Manual Installation': setup/manual-setup.md
-      - 'Reverse Proxy': setup/reverse-proxy.md
-      - Docker: setup/docker.md
-      - Cloudron: setup/cloudron.md
-      - Heroku: setup/heroku.md
-      - LinuxServer: setup/docker-linuxserver.md
-      - Yunohost: setup/yunohost.md
+      - Official installation methods:
+          - 'Docker Image': setup/docker.md
+          - 'Manual Installation': setup/manual-setup.md
+          - Heroku: setup/heroku.md
+      - Community installation methods:
+          - 'LinuxServer Docker Image': setup/docker-linuxserver.md
+          - 'Helm Chart': setup/kubernetes-helm.md
+          - 'YunoHost App': setup/yunohost.md
+          - 'Cloudron App': setup/cloudron.md
+          - 'Arch Linux Package': setup/arch-linux.md
   - Guides:
+      - 'Reverse Proxy': guides/reverse-proxy.md
       - Authentication:
           - LDAP: guides/auth/ldap-ad.md
           - OAuth: guides/auth/oauth.md
