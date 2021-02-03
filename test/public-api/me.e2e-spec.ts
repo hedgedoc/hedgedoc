@@ -7,7 +7,6 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
-import { UserInfoDto } from '../../src/users/user-info.dto';
 import { HistoryService } from '../../src/history/history.service';
 import { NotesService } from '../../src/notes/notes.service';
 import { HistoryEntryUpdateDto } from '../../src/history/history-entry-update.dto';
@@ -35,6 +34,7 @@ describe('Notes', () => {
   let app: INestApplication;
   let historyService: HistoryService;
   let notesService: NotesService;
+  let userService: UsersService;
   let user: User;
 
   beforeAll(async () => {
@@ -67,19 +67,18 @@ describe('Notes', () => {
     app = moduleRef.createNestApplication();
     notesService = moduleRef.get(NotesService);
     historyService = moduleRef.get(HistoryService);
-    const userService = moduleRef.get(UsersService);
+    userService = moduleRef.get(UsersService);
     user = await userService.createUser('hardcoded', 'Testy');
     await app.init();
   });
 
-  it.skip(`GET /me`, async () => {
-    // TODO Get user from beforeAll
-    const userInfo = new UserInfoDto();
+  it(`GET /me`, async () => {
+    const userInfo = userService.toUserDto(user);
     const response = await request(app.getHttpServer())
-      .post('/me')
+      .get('/me')
       .expect('Content-Type', /json/)
       .expect(200);
-    expect(response.body.content).toEqual(userInfo);
+    expect(response.body).toEqual(userInfo);
   });
 
   it(`GET /me/history`, async () => {
