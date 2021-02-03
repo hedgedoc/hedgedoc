@@ -8,6 +8,7 @@ edit_uri: https://github.com/hedgedoc/hedgedoc/edit/master/docs/content/
 nav:
   - Home: index.md
   - Installation:
+      - 'Getting Started': setup/getting-started.md
       - Official installation methods:
           - 'Docker Image': setup/docker.md
           - 'Manual Installation': setup/manual-setup.md
@@ -51,6 +52,10 @@ markdown_extensions:
   - pymdownx.highlight
   - pymdownx.superfences
   - mdx_truly_sane_lists
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - attr_list
 theme:
   name: 'material'
   language: en
