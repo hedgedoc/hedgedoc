@@ -10,7 +10,7 @@ import { HistoryEntryUpdateDto } from './history-entry-update.dto';
 import { HistoryEntryDto } from './history-entry.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { HistoryEntry } from './history-entry.enity';
+import { HistoryEntry } from './history-entry.entity';
 import { UsersService } from '../users/users.service';
 import { NotesService } from '../notes/notes.service';
 import { User } from '../users/user.entity';

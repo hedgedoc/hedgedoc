@@ -7,28 +7,68 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
-import { AppModule } from '../../src/app.module';
 import { UserInfoDto } from '../../src/users/user-info.dto';
 import { HistoryService } from '../../src/history/history.service';
 import { NotesService } from '../../src/notes/notes.service';
 import { HistoryEntryUpdateDto } from '../../src/history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../src/history/history-entry.dto';
+import { HistoryEntry } from '../../src/history/history-entry.entity';
+import { UsersService } from '../../src/users/users.service';
+import { TokenAuthGuard } from '../../src/auth/token-auth.guard';
+import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { PublicApiModule } from '../../src/api/public/public-api.module';
+import { NotesModule } from '../../src/notes/notes.module';
+import { PermissionsModule } from '../../src/permissions/permissions.module';
+import { GroupsModule } from '../../src/groups/groups.module';
+import { LoggerModule } from '../../src/logger/logger.module';
+import { AuthModule } from '../../src/auth/auth.module';
+import { UsersModule } from '../../src/users/users.module';
+import { HistoryModule } from '../../src/history/history.module';
+import { ConfigModule } from '@nestjs/config';
+import mediaConfigMock from '../../src/config/media.config.mock';
+import { User } from '../../src/users/user.entity';
 
 // TODO Tests have to be reworked using UserService functions
 
 describe('Notes', () => {
   let app: INestApplication;
-  //let usersService: UsersService;
   let historyService: HistoryService;
   let notesService: NotesService;
+  let user: User;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-    // TODO Create User and generateAPI Token or other Auth
+      imports: [
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [mediaConfigMock],
+        }),
+        PublicApiModule,
+        NotesModule,
+        PermissionsModule,
+        GroupsModule,
+        TypeOrmModule.forRoot({
+          type: 'sqlite',
+          database: './hedgedoc-e2e-me.sqlite',
+          autoLoadEntities: true,
+          synchronize: true,
+          dropSchema: true,
+        }),
+        LoggerModule,
+        AuthModule,
+        UsersModule,
+        HistoryModule,
+      ],
+    })
+      .overrideGuard(TokenAuthGuard)
+      .useClass(MockAuthGuard)
+      .compile();
     app = moduleRef.createNestApplication();
-    //usersService = moduleRef.get(UsersService);
+    notesService = moduleRef.get(NotesService);
+    historyService = moduleRef.get(HistoryService);
+    const userService = moduleRef.get(UsersService);
+    user = await userService.createUser('hardcoded', 'Testy');
     await app.init();
   });
 
@@ -42,85 +82,63 @@ describe('Notes', () => {
     expect(response.body.content).toEqual(userInfo);
   });
 
-  it.skip(`GET /me/history`, async () => {
-    // TODO user has to be chosen
-    /* TODO Note maybe not added to history by createNote,
-        use function from HistoryService instead
-     */
-    await notesService.createNote('', 'testGetHistory');
+  it(`GET /me/history`, async () => {
+    const noteName = 'testGetNoteHistory1';
+    const note = await notesService.createNote('', noteName);
+    const createdHistoryEntry = await historyService.createOrUpdateHistoryEntry(
+      note,
+      user,
+    );
     const response = await request(app.getHttpServer())
       .get('/me/history')
       .expect('Content-Type', /json/)
       .expect(200);
-    let historyEntry: HistoryEntryDto;
-    for (const e of <any[]>response.body.content) {
-      if ((<HistoryEntryDto>e).metadata.alias === 'testGetHistory') {
-        historyEntry = e;
+    const history = <HistoryEntryDto[]>response.body;
+    for (const historyEntry of history) {
+      if ((<HistoryEntryDto>historyEntry).identifier === 'testGetHistory') {
+        expect(historyEntry).toEqual(createdHistoryEntry);
       }
     }
-    expect(historyEntry).toEqual(history);
   });
 
-  it.skip(`GET /me/history/{note}`, async () => {
-    const noteName = 'testGetNoteHistory';
-    /* TODO Note maybe not added to history by createNote,
-        use function from HistoryService instead
-     */
-    await notesService.createNote('', noteName);
-    const response = await request(app.getHttpServer())
-      .get('/me/history/' + noteName)
-      .expect('Content-Type', /json/)
-      .expect(200);
-    expect(response.body.metadata?.id).toBeDefined();
-    return expect(response.body.metadata.alias).toEqual(noteName);
-  });
-
-  it.skip(`DELETE /me/history/{note}`, async () => {
-    const noteName = 'testDeleteNoteHistory';
-    /* TODO Note maybe not added to history by createNote,
-        use function from HistoryService instead
-     */
-    await notesService.createNote('This is a test note.', noteName);
-    const response = await request(app.getHttpServer())
-      .delete('/me/history/test3')
-      .expect(204);
-    expect(response.body.content).toBeNull();
-    const history = historyService.getEntriesByUser('testuser');
-    let historyEntry: HistoryEntryDto = null;
-    for (const e of history) {
-      if (e.metadata.alias === noteName) {
-        historyEntry = e;
-      }
-    }
-    return expect(historyEntry).toBeNull();
-  });
-
-  it.skip(`PUT /me/history/{note}`, async () => {
-    const noteName = 'testPutNoteHistory';
-    // TODO use function from HistoryService to add an History Entry
-    await notesService.createNote('', noteName);
+  it(`PUT /me/history/{note}`, async () => {
+    const noteName = 'testGetNoteHistory2';
+    const note = await notesService.createNote('', noteName);
+    await historyService.createOrUpdateHistoryEntry(note, user);
     const historyEntryUpdateDto = new HistoryEntryUpdateDto();
     historyEntryUpdateDto.pinStatus = true;
     const response = await request(app.getHttpServer())
       .put('/me/history/' + noteName)
       .send(historyEntryUpdateDto)
       .expect(200);
-    // TODO parameter is not used for now
-    const history = historyService.getEntriesByUser('testuser');
-    let historyEntry: HistoryEntryDto;
-    for (const e of <any[]>response.body.content) {
-      if ((<HistoryEntryDto>e).metadata.alias === noteName) {
-        historyEntry = e;
-      }
-    }
+    const history = await historyService.getEntriesByUser(user);
+    let historyEntry: HistoryEntryDto = response.body;
     expect(historyEntry.pinStatus).toEqual(true);
     historyEntry = null;
     for (const e of history) {
-      if (e.metadata.alias === noteName) {
-        historyEntry = e;
+      if (e.note.alias === noteName) {
+        historyEntry = await historyService.toHistoryEntryDto(e);
       }
     }
     expect(historyEntry.pinStatus).toEqual(true);
+  });
+
+  it(`DELETE /me/history/{note}`, async () => {
+    const noteName = 'testGetNoteHistory3';
+    const note = await notesService.createNote('', noteName);
+    await historyService.createOrUpdateHistoryEntry(note, user);
+    const response = await request(app.getHttpServer())
+      .delete(`/me/history/${noteName}`)
+      .expect(204);
+    expect(response.body).toEqual({});
+    const history = await historyService.getEntriesByUser(user);
+    let historyEntry: HistoryEntry = null;
+    for (const e of history) {
+      if ((<HistoryEntry>e).note.alias === noteName) {
+        historyEntry = e;
+      }
+    }
+    return expect(historyEntry).toBeNull();
   });
 
   it.skip(`GET /me/notes/`, async () => {
