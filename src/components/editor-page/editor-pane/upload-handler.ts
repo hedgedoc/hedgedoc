@@ -20,7 +20,7 @@ export const handleUpload = (file: File, editor: Editor): void => {
     return
   }
   const cursor = editor.getCursor()
-  const uploadPlaceholder = `![${i18n.t('editor.upload.uploadFile', { fileName: file.name })}]()`
+  const uploadPlaceholder = `![${ i18n.t('editor.upload.uploadFile', { fileName: file.name }) }]()`
   const noteId = store.getState().noteDetails.id
   editor.replaceRange(uploadPlaceholder, cursor, cursor, '+input')
   uploadFile(noteId, mimeType, file)
@@ -41,8 +41,8 @@ export const handleUpload = (file: File, editor: Editor): void => {
 const getCorrectSyntaxForLink = (mimeType: string, link: string): string => {
   switch (mimeType) {
     case 'application/pdf':
-      return `{%pdf ${link} %}`
+      return `{%pdf ${ link } %}`
     default:
-      return `![](${link})`
+      return `![](${ link })`
   }
 }

@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import { loadCSS, loadJS } from 'markmap-common'
 import { Transformer } from 'markmap-lib'
@@ -18,7 +18,8 @@ export const markmapLoader = (svg: SVGSVGElement, code: string): void => {
     loadCSS(styles)
   }
   if (scripts) {
-    loadJS(scripts).catch(console.log)
+    loadJS(scripts)
+      .catch(console.log)
   }
 
   Markmap.create(svg, {}, root)

@@ -21,8 +21,11 @@ export const AbcFrame: React.FC<AbcFrameProps> = ({ code }) => {
     const actualContainer = container.current
     import(/* webpackChunkName: "abc.js" */ 'abcjs').then((imp) => {
       imp.renderAbc(actualContainer, code)
-    }).catch(() => { console.error('error while loading abcjs') })
+    })
+                                                    .catch(() => {
+                                                      console.error('error while loading abcjs')
+                                                    })
   }, [code])
 
-  return <div ref={container} className={'abcjs-score bg-white text-black text-center overflow-x-auto'}/>
+  return <div ref={ container } className={ 'abcjs-score bg-white text-black text-center overflow-x-auto' }/>
 }

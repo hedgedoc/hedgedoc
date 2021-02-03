@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { Button } from 'react-bootstrap'
@@ -17,7 +17,7 @@ export const ExportHistoryButton: React.FC<ExportHistoryButtonProps> = ({ onExpo
   const { t } = useTranslation()
 
   return (
-    <Button variant={'light'} title={t('landing.history.toolbar.export')} onClick={onExportHistory}>
+    <Button variant={ 'light' } title={ t('landing.history.toolbar.export') } onClick={ onExportHistory }>
       <ForkAwesomeIcon icon='download'/>
     </Button>
   )

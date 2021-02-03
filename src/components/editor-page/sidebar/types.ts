@@ -21,7 +21,7 @@ export interface SidebarEntryProps {
   hide?: boolean
   className?: string
   onClick?: () => void
-  "data-cy"?: string
+  'data-cy'?: string
 }
 
 export interface SidebarMenuProps {

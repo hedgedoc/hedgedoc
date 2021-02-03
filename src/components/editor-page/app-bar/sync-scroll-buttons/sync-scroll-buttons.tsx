@@ -24,21 +24,21 @@ export const SyncScrollButtons: React.FC = () => {
   const { t } = useTranslation()
 
   return (
-    <ToggleButtonGroup type="radio" defaultValue={[]} name="sync-scroll" className={'ml-2 sync-scroll-buttons'}
-      value={syncScrollEnabled}>
+    <ToggleButtonGroup type="radio" defaultValue={ [] } name="sync-scroll" className={ 'ml-2 sync-scroll-buttons' }
+                       value={ syncScrollEnabled }>
       <ToggleButton
-        variant={'outline-secondary'}
-        title={t('editor.appBar.syncScroll.enable')}
-        onChange={() => setEditorSyncScroll(true)}
-        value={SyncScrollState.SYNCED}
+        variant={ 'outline-secondary' }
+        title={ t('editor.appBar.syncScroll.enable') }
+        onChange={ () => setEditorSyncScroll(true) }
+        value={ SyncScrollState.SYNCED }
       >
         <EnabledScrollIcon/>
       </ToggleButton>
       <ToggleButton
-        variant={'outline-secondary'}
-        title={t('editor.appBar.syncScroll.disable')}
-        onChange={() => setEditorSyncScroll(false)}
-        value={SyncScrollState.UNSYNCED}
+        variant={ 'outline-secondary' }
+        title={ t('editor.appBar.syncScroll.disable') }
+        onChange={ () => setEditorSyncScroll(false) }
+        value={ SyncScrollState.UNSYNCED }
       >
         <DisabledScrollIcon/>
       </ToggleButton>

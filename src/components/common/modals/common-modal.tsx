@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { Modal } from 'react-bootstrap'
@@ -26,15 +26,16 @@ export const CommonModal: React.FC<CommonModalProps> = ({ show, onHide, titleI18
   useTranslation()
 
   return (
-    <Modal data-cy={'limitReachedModal'} show={show} onHide={onHide} animation={true} dialogClassName={`text-dark ${additionalClasses ?? ''}`} size={size}>
-      <Modal.Header closeButton={!!closeButton}>
+    <Modal data-cy={ 'limitReachedModal' } show={ show } onHide={ onHide } animation={ true }
+           dialogClassName={ `text-dark ${ additionalClasses ?? '' }` } size={ size }>
+      <Modal.Header closeButton={ !!closeButton }>
         <Modal.Title>
-          <ShowIf condition={!!icon}>
-            <ForkAwesomeIcon icon={icon as IconName}/>&nbsp;
+          <ShowIf condition={ !!icon }>
+            <ForkAwesomeIcon icon={ icon as IconName }/>&nbsp;
           </ShowIf>
           { titleI18nKey
-            ? <Trans i18nKey={titleI18nKey}/>
-            : <span>{title}</span>
+            ? <Trans i18nKey={ titleI18nKey }/>
+            : <span>{ title }</span>
           }
         </Modal.Title>
       </Modal.Header>

@@ -5,7 +5,7 @@
  */
 
 import { EditorConfiguration } from 'codemirror'
-import equal from "fast-deep-equal"
+import equal from 'fast-deep-equal'
 import React, { ChangeEvent, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
@@ -30,15 +30,16 @@ export const EditorPreferenceBooleanProperty: React.FC<EditorPreferenceBooleanPr
     } as EditorConfiguration)
   }, [property])
 
-  const i18nPrefix = `editor.modal.preferences.${property}`
+  const i18nPrefix = `editor.modal.preferences.${ property }`
 
   return (
-    <EditorPreferenceInput onChange={selectItem} property={property} type={EditorPreferenceInputType.SELECT} value={preference}>
-      <option value={'true'}>
-        {t(`${i18nPrefix}.on`)}
+    <EditorPreferenceInput onChange={ selectItem } property={ property } type={ EditorPreferenceInputType.SELECT }
+                           value={ preference }>
+      <option value={ 'true' }>
+        { t(`${ i18nPrefix }.on`) }
       </option>
-      <option value={'false'}>
-        {t(`${i18nPrefix}.off`)}
+      <option value={ 'false' }>
+        { t(`${ i18nPrefix }.off`) }
       </option>
     </EditorPreferenceInput>
   )

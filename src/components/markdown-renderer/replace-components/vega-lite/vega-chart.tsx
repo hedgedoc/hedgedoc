@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
@@ -50,20 +50,23 @@ export const VegaChart: React.FC<VegaChartProps> = ({ code }) => {
             SVG_ACTION: t('renderer.vega-lite.svg')
           }
         })
-          .then(() => setError(undefined))
-          .catch(err => showError(err))
+             .then(() => setError(undefined))
+             .catch(err => showError(err))
       } catch (err) {
         showError(t('renderer.vega-lite.errorJson'))
       }
-    }).catch(() => { console.error('error while loading vega-light') })
+    })
+                                                       .catch(() => {
+                                                         console.error('error while loading vega-light')
+                                                       })
   }, [code, showError, t])
 
   return <Fragment>
-    <ShowIf condition={!!error}>
-      <Alert variant={'danger'}>{error}</Alert>
+    <ShowIf condition={ !!error }>
+      <Alert variant={ 'danger' }>{ error }</Alert>
     </ShowIf>
-    <div className={'text-center'}>
-      <div ref={diagramContainer}/>
+    <div className={ 'text-center' }>
+      <div ref={ diagramContainer }/>
     </div>
   </Fragment>
 }

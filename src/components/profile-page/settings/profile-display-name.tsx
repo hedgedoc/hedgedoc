@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
@@ -27,7 +27,7 @@ export const ProfileDisplayName: React.FC = () => {
   }, [userName])
 
   if (!userName) {
-    return <Alert variant={'danger'}>User not logged in</Alert>
+    return <Alert variant={ 'danger' }>User not logged in</Alert>
   }
 
   const changeNameField = (event: ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +41,8 @@ export const ProfileDisplayName: React.FC = () => {
   }
 
   const changeNameSubmit = (event: FormEvent) => {
-    doAsyncChange().catch(() => setError(true))
+    doAsyncChange()
+      .catch(() => setError(true))
     event.preventDefault()
   }
 
@@ -51,18 +52,18 @@ export const ProfileDisplayName: React.FC = () => {
         <Card.Title>
           <Trans i18nKey="profile.userProfile"/>
         </Card.Title>
-        <Form onSubmit={changeNameSubmit} className="text-left">
+        <Form onSubmit={ changeNameSubmit } className="text-left">
           <Form.Group controlId="displayName">
             <Form.Label><Trans i18nKey="profile.displayName"/></Form.Label>
             <Form.Control
               type="text"
               size="sm"
-              placeholder={t('profile.displayName')}
-              value={displayName}
+              placeholder={ t('profile.displayName') }
+              value={ displayName }
               className="bg-dark text-light"
-              onChange={changeNameField}
-              isValid={submittable}
-              isInvalid={error}
+              onChange={ changeNameField }
+              isValid={ submittable }
+              isInvalid={ error }
               required
             />
             <Form.Text><Trans i18nKey="profile.displayNameInfo"/></Form.Text>
@@ -71,7 +72,7 @@ export const ProfileDisplayName: React.FC = () => {
           <Button
             type="submit"
             variant="primary"
-            disabled={!submittable}>
+            disabled={ !submittable }>
             <Trans i18nKey="common.save"/>
           </Button>
         </Form>

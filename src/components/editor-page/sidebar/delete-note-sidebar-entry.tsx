@@ -16,21 +16,21 @@ export const DeleteNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ hi
 
   return (
     <Fragment>
-      <SidebarButton icon={"trash"} className={className} hide={hide} onClick={() => setShowDialog(true)}>
-        <Trans i18nKey={'landing.history.menu.deleteNote'}/>
+      <SidebarButton icon={ 'trash' } className={ className } hide={ hide } onClick={ () => setShowDialog(true) }>
+        <Trans i18nKey={ 'landing.history.menu.deleteNote' }/>
       </SidebarButton>
       <DeletionModal
-        onConfirm={() => setShowDialog(false)}
-        deletionButtonI18nKey={'editor.modal.deleteNote.button'}
-        show={showDialog}
-        onHide={() => setShowDialog(false)}
-        titleI18nKey={'editor.modal.deleteNote.title'}>
-        <h5><Trans i18nKey={'editor.modal.deleteNote.question'}/></h5>
+        onConfirm={ () => setShowDialog(false) }
+        deletionButtonI18nKey={ 'editor.modal.deleteNote.button' }
+        show={ showDialog }
+        onHide={ () => setShowDialog(false) }
+        titleI18nKey={ 'editor.modal.deleteNote.title' }>
+        <h5><Trans i18nKey={ 'editor.modal.deleteNote.question' }/></h5>
         <ul>
           <li> noteTitle</li>
         </ul>
         <h6>
-          <Trans i18nKey={'editor.modal.deleteNote.warning'}/>
+          <Trans i18nKey={ 'editor.modal.deleteNote.warning' }/>
         </h6>
       </DeletionModal>
     </Fragment>

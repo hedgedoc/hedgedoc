@@ -14,7 +14,7 @@ export const useExtractFirstHeadline = (documentElement: React.RefObject<HTMLDiv
 
     let innerText = ''
 
-    if ((node as HTMLElement).classList?.contains("katex-mathml")) {
+    if ((node as HTMLElement).classList?.contains('katex-mathml')) {
       return ''
     }
 
@@ -34,7 +34,8 @@ export const useExtractFirstHeadline = (documentElement: React.RefObject<HTMLDiv
 
   useEffect(() => {
     if (onFirstHeadingChange && documentElement.current) {
-      const firstHeading = documentElement.current.getElementsByTagName('h1').item(0)
+      const firstHeading = documentElement.current.getElementsByTagName('h1')
+                                          .item(0)
       const headingText = extractInnerText(firstHeading)
       if (headingText === lastFirstHeading.current) {
         return

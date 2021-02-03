@@ -29,7 +29,7 @@ const EditorPage = React.lazy(() => import(/* webpackPrefetch: true */ './compon
 const RenderPage = React.lazy(() => import (/* webpackPrefetch: true */ './components/render-page/render-page'))
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={ store }>
     <Router>
       <ApplicationLoader>
         <ErrorBoundary>
@@ -86,7 +86,7 @@ ReactDOM.render(
 )
 
 if (isTestMode()) {
-  console.log("This build runs in test mode. This means:\n - no sandboxed iframe")
+  console.log('This build runs in test mode. This means:\n - no sandboxed iframe')
 }
 
 // If you want your app to work offline and load faster, you can change

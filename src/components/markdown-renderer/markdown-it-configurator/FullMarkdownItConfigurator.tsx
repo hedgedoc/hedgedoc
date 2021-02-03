@@ -24,7 +24,7 @@ import { YoutubeReplacer } from '../replace-components/youtube/youtube-replacer'
 import { BasicMarkdownItConfigurator } from './BasicMarkdownItConfigurator'
 
 export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
-  constructor (
+  constructor(
     private useFrontmatter: boolean,
     private passYamlErrorState: (error: boolean) => void,
     private onRawMeta: (rawMeta: RawNoteFrontmatter) => void,
@@ -34,7 +34,7 @@ export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
     super()
   }
 
-  protected configure (markdownIt: MarkdownIt): void {
+  protected configure(markdownIt: MarkdownIt): void {
     super.configure(markdownIt)
 
     this.configurations.push(

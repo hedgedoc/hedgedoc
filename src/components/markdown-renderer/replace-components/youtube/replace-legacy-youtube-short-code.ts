@@ -12,6 +12,6 @@ export const replaceLegacyYoutubeShortCode: RegexOptions = {
   replace: (match) => {
     // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
     // noinspection CheckTagEmptyBody
-    return `<app-youtube id="${match}"></app-youtube>`
+    return `<app-youtube id="${ match }"></app-youtube>`
   }
 }

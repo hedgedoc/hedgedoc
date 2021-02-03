@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { Fragment } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
@@ -22,15 +22,15 @@ export const PoweredByLinks: React.FC = () => {
   return (
     <p>
       <Trans i18nKey="landing.footer.poweredBy">
-        <ExternalLink href={links.webpage} text="HedgeDoc"/>
+        <ExternalLink href={ links.webpage } text="HedgeDoc"/>
       </Trans>
       &nbsp;|&nbsp;
       <TranslatedInternalLink href='/n/release-notes' i18nKey='landing.footer.releases'/>
       {
         specialLinks.map(([i18nKey, href]) =>
-          <Fragment key={i18nKey}>
+          <Fragment key={ i18nKey }>
             &nbsp;|&nbsp;
-            <TranslatedExternalLink href={href} i18nKey={'landing.footer.' + i18nKey}/>
+            <TranslatedExternalLink href={ href } i18nKey={ 'landing.footer.' + i18nKey }/>
           </Fragment>
         )
       }

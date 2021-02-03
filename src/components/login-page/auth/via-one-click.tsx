@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { useSelector } from 'react-redux'
@@ -29,7 +29,7 @@ interface OneClickMetadata {
 }
 
 const buildBackendAuthUrl = (backendUrl: string, backendName: string): string => {
-  return `${backendUrl}/auth/${backendName}`
+  return `${ backendUrl }/auth/${ backendName }`
 }
 
 const getMetadata = (backendUrl: string, oneClickType: OneClickType): OneClickMetadata => {
@@ -113,12 +113,12 @@ export const ViaOneClick: React.FC<ViaOneClickProps> = ({ oneClickType, optional
 
   return (
     <SocialLinkButton
-      backgroundClass={className}
-      icon={icon}
-      href={url}
-      title={text}
+      backgroundClass={ className }
+      icon={ icon }
+      href={ url }
+      title={ text }
     >
-      {text}
+      { text }
     </SocialLinkButton>
   )
 }

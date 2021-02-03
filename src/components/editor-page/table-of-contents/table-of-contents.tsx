@@ -19,28 +19,31 @@ export interface TableOfContentsProps {
 }
 
 export const slugify = (content: string): string => {
-  return encodeURIComponent(content.trim().toLowerCase().replace(/\s+/g, '-'))
+  return encodeURIComponent(content.trim()
+                                   .toLowerCase()
+                                   .replace(/\s+/g, '-'))
 }
 
 const convertLevel = (toc: TocAst, levelsToShowUnderThis: number, headerCounts: Map<string, number>,
-                      wrapInListItem: boolean, baseUrl?: string): ReactElement | null => {
+  wrapInListItem: boolean, baseUrl?: string): ReactElement | null => {
   if (levelsToShowUnderThis < 0) {
     return null
   }
 
   const rawName = toc.n.trim()
   const nameCount = (headerCounts.get(rawName) ?? -1) + 1
-  const slug = `#${slugify(rawName)}${nameCount > 0 ? `-${nameCount}` : ''}`
+  const slug = `#${ slugify(rawName) }${ nameCount > 0 ? `-${ nameCount }` : '' }`
   const headlineUrl = new URL(slug, baseUrl).toString()
 
   headerCounts.set(rawName, nameCount)
 
   const content = (
     <Fragment>
-      <ShowIf condition={toc.l > 0}>
-        <a href={headlineUrl} title={rawName} onClick={createJumpToMarkClickEventHandler(slug.substr(1))}>{rawName}</a>
+      <ShowIf condition={ toc.l > 0 }>
+        <a href={ headlineUrl } title={ rawName }
+           onClick={ createJumpToMarkClickEventHandler(slug.substr(1)) }>{ rawName }</a>
       </ShowIf>
-      <ShowIf condition={toc.c.length > 0}>
+      <ShowIf condition={ toc.c.length > 0 }>
         <ul>
           {
             toc.c.map(child =>
@@ -53,8 +56,8 @@ const convertLevel = (toc: TocAst, levelsToShowUnderThis: number, headerCounts: 
 
   if (wrapInListItem) {
     return (
-      <li key={headlineUrl}>
-        {content}
+      <li key={ headlineUrl }>
+        { content }
       </li>
     )
   } else {
@@ -63,20 +66,21 @@ const convertLevel = (toc: TocAst, levelsToShowUnderThis: number, headerCounts: 
 }
 
 export const TableOfContents: React.FC<TableOfContentsProps> = ({
-                                                                  ast,
-                                                                  maxDepth = 3,
-                                                                  className,
-                                                                  baseUrl
-                                                                }) => {
+  ast,
+  maxDepth = 3,
+  className,
+  baseUrl
+}) => {
   useTranslation()
-  const tocTree = useMemo(() => convertLevel(ast, maxDepth, new Map<string, number>(), false, baseUrl), [ast, maxDepth, baseUrl])
+  const tocTree = useMemo(() => convertLevel(ast, maxDepth, new Map<string, number>(), false, baseUrl), [ast, maxDepth,
+    baseUrl])
 
   return (
-    <div className={`markdown-toc ${className ?? ''}`}>
-      <ShowIf condition={ast.c.length === 0}>
-        <Trans i18nKey={'editor.infoToc'}/>
+    <div className={ `markdown-toc ${ className ?? '' }` }>
+      <ShowIf condition={ ast.c.length === 0 }>
+        <Trans i18nKey={ 'editor.infoToc' }/>
       </ShowIf>
-      {tocTree}
+      { tocTree }
     </div>
   )
 }

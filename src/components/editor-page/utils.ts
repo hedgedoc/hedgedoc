@@ -4,4 +4,5 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export const isMac = navigator.platform.toLowerCase().includes('mac')
+export const isMac = navigator.platform.toLowerCase()
+                              .includes('mac')

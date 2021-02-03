@@ -17,7 +17,8 @@ describe('Languages', () => {
     cy.get('@languages')
       .should('have.length', 28)
     languages.forEach(language => {
-      cy.get('@languages').contains(language)
+      cy.get('@languages')
+        .contains(language)
     })
   })
 

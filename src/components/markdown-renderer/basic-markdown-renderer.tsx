@@ -33,14 +33,15 @@ export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & Additi
     onAfterRendering
   }) => {
   const maxLength = useSelector((state: ApplicationState) => state.config.maxDocumentLength)
-  const trimmedContent = useMemo(() => content.length > maxLength ? content.substr(0, maxLength) : content, [content, maxLength])
+  const trimmedContent = useMemo(() => content.length > maxLength ? content.substr(0, maxLength) : content, [content,
+    maxLength])
   const markdownReactDom = useConvertMarkdownToReactDom(trimmedContent, markdownIt, componentReplacers, onBeforeRendering, onAfterRendering)
 
   return (
-    <div className={`${className ?? ''} d-flex flex-column align-items-center`}>
-      <DocumentLengthLimitReachedAlert contentLength={content.length}/>
-      <div ref={documentReference} className={'markdown-body w-100 d-flex flex-column align-items-center'}>
-        {markdownReactDom}
+    <div className={ `${ className ?? '' } d-flex flex-column align-items-center` }>
+      <DocumentLengthLimitReachedAlert contentLength={ content.length }/>
+      <div ref={ documentReference } className={ 'markdown-body w-100 d-flex flex-column align-items-center' }>
+        { markdownReactDom }
       </div>
     </div>
   )

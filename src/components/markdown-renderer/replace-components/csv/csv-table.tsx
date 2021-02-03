@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { useMemo } from 'react'
 import { parseCsv } from './csv-parser'
@@ -29,17 +29,17 @@ export const CsvTable: React.FC<CsvTableProps> = ({ code, delimiter, showHeader,
     if (row !== []) {
       return (
         <thead>
-          <tr>
-            {
-              row.map((column, columnNumber) => (
-                <th
-                  key={`header-${columnNumber}`}
-                >
-                  {column}
-                </th>
-              ))
-            }
-          </tr>
+        <tr>
+          {
+            row.map((column, columnNumber) => (
+              <th
+                key={ `header-${ columnNumber }` }
+              >
+                { column }
+              </th>
+            ))
+          }
+        </tr>
         </thead>
       )
     }
@@ -48,30 +48,30 @@ export const CsvTable: React.FC<CsvTableProps> = ({ code, delimiter, showHeader,
   const renderTableBody = (rows: string[][]) => {
     return (
       <tbody>
-        {
-          rows.map((row, rowNumber) => (
-            <tr className={tableRowClassName} key={`row-${rowNumber}`}>
-              {
-                row.map((column, columnIndex) => (
-                  <td
-                    className={tableColumnClassName}
-                    key={`cell-${rowNumber}-${columnIndex}`}
-                  >
-                    {column.replace(/^"|"$/g, '')}
-                  </td>
-                ))
-              }
-            </tr>
-          ))
-        }
+      {
+        rows.map((row, rowNumber) => (
+          <tr className={ tableRowClassName } key={ `row-${ rowNumber }` }>
+            {
+              row.map((column, columnIndex) => (
+                <td
+                  className={ tableColumnClassName }
+                  key={ `cell-${ rowNumber }-${ columnIndex }` }
+                >
+                  { column.replace(/^"|"$/g, '') }
+                </td>
+              ))
+            }
+          </tr>
+        ))
+      }
       </tbody>
     )
   }
 
   return (
-    <table className={'csv-html-table table-striped'}>
-      {renderTableHeader(headerRow)}
-      {renderTableBody(rowsWithColumns)}
+    <table className={ 'csv-html-table table-striped' }>
+      { renderTableHeader(headerRow) }
+      { renderTableBody(rowsWithColumns) }
     </table>
   )
 }

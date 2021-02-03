@@ -19,7 +19,7 @@ export interface LinkWithTextProps extends GeneralLinkProp {
   text: string
 }
 
-export interface TranslatedLinkProps extends GeneralLinkProp{
+export interface TranslatedLinkProps extends GeneralLinkProp {
   i18nKey: string
   i18nOption?: (TOptionsBase & StringMap) | string
 }

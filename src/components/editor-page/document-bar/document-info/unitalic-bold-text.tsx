@@ -7,9 +7,9 @@
 import React from 'react'
 
 export interface UnitalicBoldTextProps {
-  text: string ;
+  text: string;
 }
 
 export const UnitalicBoldText: React.FC<UnitalicBoldTextProps> = ({ text }) => {
-  return <b className={'font-style-normal mr-1'}>{text}</b>
+  return <b className={ 'font-style-normal mr-1' }>{ text }</b>
 }

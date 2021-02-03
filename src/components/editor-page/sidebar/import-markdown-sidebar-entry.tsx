@@ -20,7 +20,7 @@ export const ImportMarkdownSidebarEntry: React.FC = () => {
       const fileReader = new FileReader()
       fileReader.addEventListener('load', () => {
         const newContent = fileReader.result as string
-        setNoteMarkdownContent(markdownContent.length === 0 ? newContent : `${markdownContent}\n${newContent}`)
+        setNoteMarkdownContent(markdownContent.length === 0 ? newContent : `${ markdownContent }\n${ newContent }`)
       })
       fileReader.addEventListener('loadend', () => {
         resolve()
@@ -39,11 +39,11 @@ export const ImportMarkdownSidebarEntry: React.FC = () => {
 
   return (
     <Fragment>
-      <SidebarButton data-cy={"menu-import-markdown"} icon={"file-text-o"} onClick={buttonClick}>
-        <Trans i18nKey={'editor.import.file'}/>
+      <SidebarButton data-cy={ 'menu-import-markdown' } icon={ 'file-text-o' } onClick={ buttonClick }>
+        <Trans i18nKey={ 'editor.import.file' }/>
       </SidebarButton>
-      <UploadInput onLoad={onImportMarkdown} data-cy={"menu-import-markdown-input"}
-                   acceptedFiles={'.md, text/markdown, text/plain'} onClickRef={clickRef}/>
+      <UploadInput onLoad={ onImportMarkdown } data-cy={ 'menu-import-markdown-input' }
+                   acceptedFiles={ '.md, text/markdown, text/plain' } onClickRef={ clickRef }/>
     </Fragment>
   )
 }

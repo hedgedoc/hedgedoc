@@ -38,42 +38,42 @@ export const CustomTableSizeModal: React.FC<CustomTableSizeModalProps> = ({ show
 
   return (
     <CommonModal
-      show={showModal}
-      onHide={() => onDismiss()}
-      titleI18nKey={'editor.editorToolbar.table.customSize'}
-      closeButton={true}
-      icon={'table'}>
-      <div className={'col-lg-10 d-flex flex-row p-3 align-items-center'}>
+      show={ showModal }
+      onHide={ () => onDismiss() }
+      titleI18nKey={ 'editor.editorToolbar.table.customSize' }
+      closeButton={ true }
+      icon={ 'table' }>
+      <div className={ 'col-lg-10 d-flex flex-row p-3 align-items-center' }>
         <Form.Control
-          type={'number'}
-          min={1}
-          placeholder={t('editor.editorToolbar.table.cols')}
-          isInvalid={tableSize.columns <= 0}
-          onChange={(event) => {
+          type={ 'number' }
+          min={ 1 }
+          placeholder={ t('editor.editorToolbar.table.cols') }
+          isInvalid={ tableSize.columns <= 0 }
+          onChange={ (event) => {
             const value = Number.parseInt(event.currentTarget.value)
             setTableSize(old => ({
               rows: old.rows,
               columns: isNaN(value) ? 0 : value
             }))
-          }}
+          } }
         />
-        <ForkAwesomeIcon icon='times' className='mx-2' fixedWidth={true}/>
+        <ForkAwesomeIcon icon='times' className='mx-2' fixedWidth={ true }/>
         <Form.Control
-          type={'number'}
-          min={1}
-          placeholder={t('editor.editorToolbar.table.rows')}
-          isInvalid={tableSize.rows <= 0}
-          onChange={(event) => {
+          type={ 'number' }
+          min={ 1 }
+          placeholder={ t('editor.editorToolbar.table.rows') }
+          isInvalid={ tableSize.rows <= 0 }
+          onChange={ (event) => {
             const value = Number.parseInt(event.currentTarget.value)
             setTableSize(old => ({
               rows: isNaN(value) ? 0 : value,
               columns: old.columns
             }))
-          }}/>
+          } }/>
       </div>
       <ModalFooter>
-        <Button onClick={onClick} disabled={tableSize.rows <= 0 || tableSize.columns <= 0}>
-          {t('editor.editorToolbar.table.create')}
+        <Button onClick={ onClick } disabled={ tableSize.rows <= 0 || tableSize.columns <= 0 }>
+          { t('editor.editorToolbar.table.create') }
         </Button>
       </ModalFooter>
     </CommonModal>

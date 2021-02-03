@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { Fragment } from 'react'
 import { Col, Row } from 'react-bootstrap'
@@ -21,16 +21,16 @@ export const ProfilePage: React.FC = () => {
 
   if (!userProvider) {
     return (
-      <Redirect to={'/login'}/>
+      <Redirect to={ '/login' }/>
     )
   }
 
   return <Fragment>
     <div className="my-3">
       <Row className="h-100 flex justify-content-center">
-        <Col lg={6}>
+        <Col lg={ 6 }>
           <ProfileDisplayName/>
-          <ShowIf condition={userProvider === LoginProvider.INTERNAL}>
+          <ShowIf condition={ userProvider === LoginProvider.INTERNAL }>
             <ProfileChangePassword/>
           </ShowIf>
           <ProfileAccessTokens/>

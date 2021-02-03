@@ -6,7 +6,7 @@
 
 describe('Export', () => {
   const testTitle = 'testContent'
-  const testContent = `---\ntitle: ${testTitle}\n---\nThis is some test content`
+  const testContent = `---\ntitle: ${ testTitle }\n---\nThis is some test content`
 
   beforeEach(() => {
     cy.visitTestEditor()

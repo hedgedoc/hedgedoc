@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { Button } from 'react-bootstrap'
@@ -18,8 +18,8 @@ export interface PinButtonProps {
 
 export const PinButton: React.FC<PinButtonProps> = ({ isPinned, onPinClick, isDark, className }) => {
   return (
-    <Button variant={isDark ? 'secondary' : 'light'}
-      className={`history-pin ${className || ''} ${isPinned ? 'pinned' : ''}`} onClick={onPinClick}>
+    <Button variant={ isDark ? 'secondary' : 'light' }
+            className={ `history-pin ${ className || '' } ${ isPinned ? 'pinned' : '' }` } onClick={ onPinClick }>
       <ForkAwesomeIcon icon="thumb-tack"/>
     </Button>
   )

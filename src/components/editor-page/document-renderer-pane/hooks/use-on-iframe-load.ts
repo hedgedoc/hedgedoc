@@ -8,7 +8,7 @@ import { RefObject, useCallback, useRef } from 'react'
 import { IframeEditorToRendererCommunicator } from '../../../render-page/iframe-editor-to-renderer-communicator'
 
 export const useOnIframeLoad = (frameReference: RefObject<HTMLIFrameElement>, iframeCommunicator: IframeEditorToRendererCommunicator,
-                                rendererOrigin: string, renderPageUrl: string, onNavigateAway: () => void): () => void => {
+  rendererOrigin: string, renderPageUrl: string, onNavigateAway: () => void): () => void => {
   const sendToRenderPage = useRef<boolean>(true)
 
   return useCallback(() => {
@@ -24,7 +24,7 @@ export const useOnIframeLoad = (frameReference: RefObject<HTMLIFrameElement>, if
       return
     } else {
       onNavigateAway()
-      console.error("Navigated away from unknown URL")
+      console.error('Navigated away from unknown URL')
       frame.src = renderPageUrl
       sendToRenderPage.current = true
     }

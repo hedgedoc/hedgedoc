@@ -91,7 +91,7 @@ const setCheckboxInMarkdownContent = (markdownContent: string, lineInMarkdown: n
   if (results) {
     const before = results[1]
     const after = results[3]
-    lines[lineInMarkdown] = `${before}[${checked ? 'x' : ' '}]${after}`
+    lines[lineInMarkdown] = `${ before }[${ checked ? 'x' : ' ' }]${ after }`
     return lines.join('\n')
   }
   return markdownContent

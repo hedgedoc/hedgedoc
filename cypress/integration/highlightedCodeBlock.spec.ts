@@ -6,8 +6,8 @@
 
 const findHljsCodeBlock = () => {
   return cy.getMarkdownBody()
-    .find('pre > code.hljs')
-    .should('be.visible')
+           .find('pre > code.hljs')
+           .should('be.visible')
 }
 
 describe('Code', () => {
@@ -160,14 +160,15 @@ describe('Code', () => {
           return cy.wrap(null)
         }
 
-        cy.spy(frame.contentWindow.navigator.clipboard, 'writeText').as("copy")
+        cy.spy(frame.contentWindow.navigator.clipboard, 'writeText')
+          .as('copy')
       })
 
     cy.getMarkdownRenderer()
       .find('[data-cy="copy-code-button"]')
       .click()
 
-    cy.get("@copy")
+    cy.get('@copy')
       .should('be.calledWithExactly', 'let x = 0\n')
   })
 })

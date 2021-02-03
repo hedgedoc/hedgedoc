@@ -12,7 +12,7 @@ describe('profile page', () => {
     }, {
       body: [
         {
-          label: "cypress-App",
+          label: 'cypress-App',
           created: 1601991518
         }
       ]

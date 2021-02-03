@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { Nav } from 'react-bootstrap'
@@ -16,8 +16,8 @@ export interface HeaderNavLinkProps {
 export const HeaderNavLink: React.FC<HeaderNavLinkProps> = ({ to, id, children }) => {
   return (
     <Nav.Item>
-      <LinkContainer to={to}>
-        <Nav.Link id={id} className="text-light" href={to}>{children}</Nav.Link>
+      <LinkContainer to={ to }>
+        <Nav.Link id={ id } className="text-light" href={ to }>{ children }</Nav.Link>
       </LinkContainer>
     </Nav.Item>
   )

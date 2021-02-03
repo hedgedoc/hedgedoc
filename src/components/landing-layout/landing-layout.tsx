@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { Container } from 'react-bootstrap'
@@ -18,9 +18,9 @@ export const LandingLayout: React.FC = ({ children }) => {
     <Container className="text-light d-flex flex-column mvh-100">
       <MotdBanner/>
       <HeaderBar/>
-      <div className={'d-flex flex-column justify-content-between flex-fill text-center'}>
+      <div className={ 'd-flex flex-column justify-content-between flex-fill text-center' }>
         <div>
-          {children}
+          { children }
         </div>
         <Footer/>
       </div>

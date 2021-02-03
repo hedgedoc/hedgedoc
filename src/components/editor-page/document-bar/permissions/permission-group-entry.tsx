@@ -25,35 +25,35 @@ export const PermissionGroupEntry: React.FC<PermissionGroupEntryProps> = ({ titl
   const { t } = useTranslation()
 
   return (
-    <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
-      <Trans i18nKey={title}/>
+    <li className={ 'list-group-item d-flex flex-row justify-content-between align-items-center' }>
+      <Trans i18nKey={ title }/>
       <ToggleButtonGroup
         type='radio'
         name='edit-mode'
-        value={editMode}
-        onChange={onChangeEditMode}
+        value={ editMode }
+        onChange={ onChangeEditMode }
       >
         <ToggleButton
-          title={ t('editor.modal.permissions.denyGroup', { name: t(title) })}
-          variant={'light'}
-          className={'text-secondary'}
-          value={GroupMode.NONE}
+          title={ t('editor.modal.permissions.denyGroup', { name: t(title) }) }
+          variant={ 'light' }
+          className={ 'text-secondary' }
+          value={ GroupMode.NONE }
         >
           <ForkAwesomeIcon icon='ban'/>
         </ToggleButton>
         <ToggleButton
-          title={ t('editor.modal.permissions.viewOnlyGroup', { name: t(title) })}
-          variant={'light'}
-          className={'text-secondary'}
-          value={GroupMode.VIEW}
+          title={ t('editor.modal.permissions.viewOnlyGroup', { name: t(title) }) }
+          variant={ 'light' }
+          className={ 'text-secondary' }
+          value={ GroupMode.VIEW }
         >
           <ForkAwesomeIcon icon='eye'/>
         </ToggleButton>
         <ToggleButton
-          title={t('editor.modal.permissions.editGroup', { name: t(title) })}
-          variant={'light'}
-          className={'text-secondary'}
-          value={GroupMode.EDIT}
+          title={ t('editor.modal.permissions.editGroup', { name: t(title) }) }
+          variant={ 'light' }
+          className={ 'text-secondary' }
+          value={ GroupMode.EDIT }
         >
           <ForkAwesomeIcon icon='pencil'/>
         </ToggleButton>

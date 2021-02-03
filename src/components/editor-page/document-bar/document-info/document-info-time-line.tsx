@@ -32,10 +32,11 @@ export const DocumentInfoTimeLine: React.FC<DocumentInfoLineWithTimeProps> = ({ 
   const icon: IconName = mode === DocumentInfoLineWithTimeMode.CREATED ? 'plus' : 'pencil'
 
   return (
-    <DocumentInfoLine icon={icon} size={size}>
-      <Trans i18nKey={i18nKey} >
-        <UserAvatar photo={profileImageSrc} additionalClasses={'font-style-normal bold font-weight-bold'} name={userName} size={size ? 'lg' : undefined}/>
-        <TimeFromNow time={time}/>
+    <DocumentInfoLine icon={ icon } size={ size }>
+      <Trans i18nKey={ i18nKey }>
+        <UserAvatar photo={ profileImageSrc } additionalClasses={ 'font-style-normal bold font-weight-bold' }
+                    name={ userName } size={ size ? 'lg' : undefined }/>
+        <TimeFromNow time={ time }/>
       </Trans>
     </DocumentInfoLine>
   )

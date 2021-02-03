@@ -15,9 +15,9 @@ export interface LoadingNoteAlertProps {
 
 export const LoadingNoteAlert: React.FC<LoadingNoteAlertProps> = ({ show }) => {
   return (
-    <ShowIf condition={show}>
-      <Alert variant={'info'} className={'my-2'}>
-        <Trans i18nKey={'views.readOnly.loading'}/>
+    <ShowIf condition={ show }>
+      <Alert variant={ 'info' } className={ 'my-2' }>
+        <Trans i18nKey={ 'views.readOnly.loading' }/>
       </Alert>
     </ShowIf>
   )

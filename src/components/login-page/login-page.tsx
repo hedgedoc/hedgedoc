@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import equal from 'fast-deep-equal'
 import React, { Fragment } from 'react'
@@ -48,34 +48,34 @@ export const LoginPage: React.FC = () => {
   return <Fragment>
     <div className="my-3">
       <Row className="h-100 flex justify-content-center">
-        <ShowIf condition={authProviders.internal || authProviders.ldap || authProviders.openid}>
-          <Col xs={12} sm={10} lg={4}>
-            <ShowIf condition={authProviders.internal}><ViaInternal/></ShowIf>
-            <ShowIf condition={authProviders.ldap}><ViaLdap/></ShowIf>
-            <ShowIf condition={authProviders.openid}><ViaOpenId/></ShowIf>
+        <ShowIf condition={ authProviders.internal || authProviders.ldap || authProviders.openid }>
+          <Col xs={ 12 } sm={ 10 } lg={ 4 }>
+            <ShowIf condition={ authProviders.internal }><ViaInternal/></ShowIf>
+            <ShowIf condition={ authProviders.ldap }><ViaLdap/></ShowIf>
+            <ShowIf condition={ authProviders.openid }><ViaOpenId/></ShowIf>
           </Col>
         </ShowIf>
-        <ShowIf condition={oneClickProviders.includes(true)}>
-          <Col xs={12} sm={10} lg={4}>
+        <ShowIf condition={ oneClickProviders.includes(true) }>
+          <Col xs={ 12 } sm={ 10 } lg={ 4 }>
             <Card className="bg-dark mb-4">
               <Card.Body>
                 <Card.Title>
-                  <Trans i18nKey="login.signInVia" values={{ service: '' }}/>
+                  <Trans i18nKey="login.signInVia" values={ { service: '' } }/>
                 </Card.Title>
                 {
                   Object.values(OneClickType)
-                    .filter((value) => authProviders[value])
-                    .map((value) => (
-                      <div
-                        className="p-2 d-flex flex-column social-button-container"
-                        key={value}
-                      >
-                        <ViaOneClick
-                          oneClickType={value}
-                          optionalName={oneClickCustomName(value)}
-                        />
-                      </div>
-                    ))
+                        .filter((value) => authProviders[value])
+                        .map((value) => (
+                          <div
+                            className="p-2 d-flex flex-column social-button-container"
+                            key={ value }
+                          >
+                            <ViaOneClick
+                              oneClickType={ value }
+                              optionalName={ oneClickCustomName(value) }
+                            />
+                          </div>
+                        ))
                 }
               </Card.Body>
             </Card>

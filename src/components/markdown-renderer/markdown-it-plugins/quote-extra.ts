@@ -20,7 +20,7 @@ const replaceQuoteExtraTime: RegexOptions = {
   replace: (match) => {
     // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
     // noinspection CheckTagEmptyBody
-    return `<span class="quote-extra"><i class="fa fa-clock-o mx-1"></i> ${match}</span>`
+    return `<span class="quote-extra"><i class="fa fa-clock-o mx-1"></i> ${ match }</span>`
   }
 }
 
@@ -32,7 +32,7 @@ const replaceQuoteExtraColor: RegexOptions = {
   replace: (match) => {
     // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
     // noinspection CheckTagEmptyBody
-    return `<span class="quote-extra" data-color='${match}' style='color: ${match}'><i class="fa fa-tag"></i></span>`
+    return `<span class="quote-extra" data-color='${ match }' style='color: ${ match }'><i class="fa fa-tag"></i></span>`
   }
 }
 
@@ -42,6 +42,6 @@ const replaceQuoteExtraAuthor: RegexOptions = {
   replace: (match) => {
     // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
     // noinspection CheckTagEmptyBody
-    return `<span class="quote-extra"><i class="fa fa-user mx-1"></i> ${match}</span>`
+    return `<span class="quote-extra"><i class="fa fa-user mx-1"></i> ${ match }</span>`
   }
 }

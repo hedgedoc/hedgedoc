@@ -38,14 +38,14 @@ export const lineNumberMarker: MarkdownIt.PluginWithOptions<LineNumberMarkerOpti
       return ''
     }
     // noinspection CheckTagEmptyBody
-    return `<app-linemarker data-start-line='${startLineNumber}' data-end-line='${endLineNumber}'></app-linemarker>`
+    return `<app-linemarker data-start-line='${ startLineNumber }' data-end-line='${ endLineNumber }'></app-linemarker>`
   }
 
   const insertNewLineMarker = (startLineNumber: number, endLineNumber: number, tokenPosition: number, level: number, tokens: Token[]) => {
     const startToken = new Token('app_linemarker', 'app-linemarker', 0)
     startToken.level = level
-    startToken.attrPush(['data-start-line', `${startLineNumber}`])
-    startToken.attrPush(['data-end-line', `${endLineNumber}`])
+    startToken.attrPush(['data-start-line', `${ startLineNumber }`])
+    startToken.attrPush(['data-end-line', `${ endLineNumber }`])
     tokens.splice(tokenPosition, 0, startToken)
   }
 

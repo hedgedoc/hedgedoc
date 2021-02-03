@@ -10,7 +10,7 @@ export interface UploadInputProps {
   onLoad: (file: File) => Promise<void>
   acceptedFiles: string
   onClickRef: MutableRefObject<(() => void) | undefined>
-  "data-cy"?: string
+  'data-cy'?: string
 }
 
 export const UploadInput: React.FC<UploadInputProps> = ({ onLoad, acceptedFiles, onClickRef, ...props }) => {
@@ -25,11 +25,13 @@ export const UploadInput: React.FC<UploadInputProps> = ({ onLoad, acceptedFiles,
         return
       }
       const file = fileInput.files[0]
-      onLoad(file).then(() => {
-        fileInput.value = ''
-      }).catch((error) => {
-        console.error(error)
-      })
+      onLoad(file)
+        .then(() => {
+          fileInput.value = ''
+        })
+        .catch((error) => {
+          console.error(error)
+        })
     })
     fileInput.click()
   }, [onLoad])
@@ -39,6 +41,7 @@ export const UploadInput: React.FC<UploadInputProps> = ({ onLoad, acceptedFiles,
   })
 
   return (
-    <input data-cy={props["data-cy"]} type='file' ref={fileInputReference} className='d-none' accept={acceptedFiles}/>
+    <input data-cy={ props['data-cy'] } type='file' ref={ fileInputReference } className='d-none'
+           accept={ acceptedFiles }/>
   )
 }

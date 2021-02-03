@@ -37,20 +37,21 @@ export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
   const userExists = useSelector((state: ApplicationState) => !!state.user)
 
   return (
-    <Navbar bg={'light'}>
+    <Navbar bg={ 'light' }>
       <Nav className="mr-auto d-flex align-items-center">
         <NavbarBranding/>
-        <ShowIf condition={mode === AppBarMode.EDITOR}>
+        <ShowIf condition={ mode === AppBarMode.EDITOR }>
           <EditorViewMode/>
           <SyncScrollButtons/>
         </ShowIf>
         <DarkModeButton/>
-        <Link to={`/p/${id}`} target='_blank'>
-          <Button title={t('editor.documentBar.slideMode')} className="ml-2 text-secondary" size="sm" variant="outline-light">
+        <Link to={ `/p/${ id }` } target='_blank'>
+          <Button title={ t('editor.documentBar.slideMode') } className="ml-2 text-secondary" size="sm"
+                  variant="outline-light">
             <ForkAwesomeIcon icon="television"/>
           </Button>
         </Link>
-        <ShowIf condition={mode === AppBarMode.EDITOR}>
+        <ShowIf condition={ mode === AppBarMode.EDITOR }>
           <HelpButton/>
         </ShowIf>
       </Nav>
@@ -58,11 +59,11 @@ export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
         <Button className="mx-2" size="sm" variant="primary">
           <ForkAwesomeIcon icon="plus"/> <Trans i18nKey="editor.appBar.new"/>
         </Button>
-        <ShowIf condition={!userExists}>
-          <SignInButton size={'sm'} />
+        <ShowIf condition={ !userExists }>
+          <SignInButton size={ 'sm' }/>
         </ShowIf>
-        <ShowIf condition={userExists}>
-          <UserDropdown />
+        <ShowIf condition={ userExists }>
+          <UserDropdown/>
         </ShowIf>
       </Nav>
     </Navbar>

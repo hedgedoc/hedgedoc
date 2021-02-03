@@ -13,7 +13,7 @@ export const Shortcut: React.FC = () => {
   const modifierKey = isMac ? <kbd>⌘</kbd> : <kbd>Ctrl</kbd>
   const altKey = isMac ? <kbd>⌥</kbd> : <kbd>Alt</kbd>
 
-  const shortcutMap: {[category: string]: { [functionName: string]: JSX.Element[] }} = {
+  const shortcutMap: { [category: string]: { [functionName: string]: JSX.Element[] } } = {
     'View Mode': {
       'editor.help.shortcuts.view': [<kbd>Ctrl</kbd>, <> + </>, altKey, <> + </>, <kbd>V</kbd>],
       'editor.help.shortcuts.both': [<kbd>Ctrl</kbd>, <> + </>, altKey, <> + </>, <kbd>B</kbd>],
@@ -29,28 +29,30 @@ export const Shortcut: React.FC = () => {
     }
   }
   return (
-    <Row className={'justify-content-center pt-4'}>
-      {Object.keys(shortcutMap).map(category => {
-        return (
-          <Card key={category} className={'m-2 w-50'}>
-            <Card.Header>{category}</Card.Header>
-            <ListGroup variant="flush">
-              {Object.entries(shortcutMap[category]).map(([functionName, shortcuts]) => {
+    <Row className={ 'justify-content-center pt-4' }>
+      { Object.keys(shortcutMap)
+              .map(category => {
                 return (
-                  <ListGroup.Item key={functionName} className={'d-flex justify-content-between'}>
-                    <span><Trans i18nKey={functionName}/></span>
-                    <span>
+                  <Card key={ category } className={ 'm-2 w-50' }>
+                    <Card.Header>{ category }</Card.Header>
+                    <ListGroup variant="flush">
+                      { Object.entries(shortcutMap[category])
+                              .map(([functionName, shortcuts]) => {
+                                return (
+                                  <ListGroup.Item key={ functionName } className={ 'd-flex justify-content-between' }>
+                                    <span><Trans i18nKey={ functionName }/></span>
+                                    <span>
                       {
                         shortcuts.map((shortcut, shortcutIndex) =>
-                          <Fragment key={shortcutIndex}>{shortcut}</Fragment>)
+                          <Fragment key={ shortcutIndex }>{ shortcut }</Fragment>)
                       }
                     </span>
-                  </ListGroup.Item>
-                )
-              })}
-            </ListGroup>
-          </Card>)
-      })
+                                  </ListGroup.Item>
+                                )
+                              }) }
+                    </ListGroup>
+                  </Card>)
+              })
       }
     </Row>
   )

@@ -29,19 +29,19 @@ export const ImportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = (
 
   return (
     <Fragment>
-      <SidebarButton data-cy={"menu-import"} hide={hide} icon={expand ? "arrow-left" : "cloud-upload"}
-                     className={className} onClick={onClickHandler}>
-        <Trans i18nKey={'editor.documentBar.import'}/>
+      <SidebarButton data-cy={ 'menu-import' } hide={ hide } icon={ expand ? 'arrow-left' : 'cloud-upload' }
+                     className={ className } onClick={ onClickHandler }>
+        <Trans i18nKey={ 'editor.documentBar.import' }/>
       </SidebarButton>
-      <SidebarMenu expand={expand}>
-        <SidebarButton icon={"github"}>
+      <SidebarMenu expand={ expand }>
+        <SidebarButton icon={ 'github' }>
           Gist
         </SidebarButton>
-        <SidebarButton icon={"gitlab"}>
+        <SidebarButton icon={ 'gitlab' }>
           Gitlab Snippet
         </SidebarButton>
-        <SidebarButton icon={"clipboard"}>
-          <Trans i18nKey={'editor.import.clipboard'}/>
+        <SidebarButton icon={ 'clipboard' }>
+          <Trans i18nKey={ 'editor.import.clipboard' }/>
         </SidebarButton>
         <ImportMarkdownSidebarEntry/>
       </SidebarMenu>

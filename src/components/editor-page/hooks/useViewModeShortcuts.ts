@@ -25,7 +25,7 @@ const shortcutHandler = (event: KeyboardEvent): void => {
   }
 }
 
-export const useViewModeShortcuts = ():void => {
+export const useViewModeShortcuts = (): void => {
   useEffect(() => {
     document.addEventListener('keydown', shortcutHandler, false)
     return () => {

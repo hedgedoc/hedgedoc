@@ -52,39 +52,39 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = (
   const [onLineMarkerPositionChanged, onUserScroll] = useSyncedScrolling(internalDocumentRenderPaneRef, rendererRef, contentLineCount, scrollState, onScroll)
 
   return (
-    <div className={`markdown-document ${extraClasses ?? ''}`}
-         ref={internalDocumentRenderPaneRef} onScroll={onUserScroll} onMouseEnter={onMakeScrollSource}>
-      <div className={'markdown-document-side'}/>
-      <div className={'bg-light markdown-document-content'}>
+    <div className={ `markdown-document ${ extraClasses ?? '' }` }
+         ref={ internalDocumentRenderPaneRef } onScroll={ onUserScroll } onMouseEnter={ onMakeScrollSource }>
+      <div className={ 'markdown-document-side' }/>
+      <div className={ 'bg-light markdown-document-content' }>
         <YamlArrayDeprecationAlert/>
         <FullMarkdownRenderer
-            rendererRef={rendererRef}
-            className={'flex-fill pt-4 mb-3'}
-            content={markdownContent}
-            onFirstHeadingChange={onFirstHeadingChange}
-            onLineMarkerPositionChanged={onLineMarkerPositionChanged}
-            onFrontmatterChange={onFrontmatterChange}
-            onTaskCheckedChange={onTaskCheckedChange}
-            onTocChange={(tocAst) => setTocAst(tocAst)}
-            baseUrl={baseUrl}
-            onImageClick={onImageClick}/>
+          rendererRef={ rendererRef }
+          className={ 'flex-fill pt-4 mb-3' }
+          content={ markdownContent }
+          onFirstHeadingChange={ onFirstHeadingChange }
+          onLineMarkerPositionChanged={ onLineMarkerPositionChanged }
+          onFrontmatterChange={ onFrontmatterChange }
+          onTaskCheckedChange={ onTaskCheckedChange }
+          onTocChange={ (tocAst) => setTocAst(tocAst) }
+          baseUrl={ baseUrl }
+          onImageClick={ onImageClick }/>
 
       </div>
 
-      <div className={'markdown-document-side pt-4'}>
-        <ShowIf condition={!!tocAst}>
-          <ShowIf condition={width >= 1100}>
-            <TableOfContents ast={tocAst as TocAst} className={'sticky'} baseUrl={baseUrl}/>
+      <div className={ 'markdown-document-side pt-4' }>
+        <ShowIf condition={ !!tocAst }>
+          <ShowIf condition={ width >= 1100 }>
+            <TableOfContents ast={ tocAst as TocAst } className={ 'sticky' } baseUrl={ baseUrl }/>
           </ShowIf>
-          <ShowIf condition={width < 1100}>
-            <div className={'markdown-toc-sidebar-button'}>
-              <Dropdown drop={'up'}>
-                <Dropdown.Toggle id="toc-overlay-button" variant={'secondary'} className={'no-arrow'}>
-                  <ForkAwesomeIcon icon={'list-ol'}/>
+          <ShowIf condition={ width < 1100 }>
+            <div className={ 'markdown-toc-sidebar-button' }>
+              <Dropdown drop={ 'up' }>
+                <Dropdown.Toggle id="toc-overlay-button" variant={ 'secondary' } className={ 'no-arrow' }>
+                  <ForkAwesomeIcon icon={ 'list-ol' }/>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <div className={'p-2'}>
-                    <TableOfContents ast={tocAst as TocAst} baseUrl={baseUrl}/>
+                  <div className={ 'p-2' }>
+                    <TableOfContents ast={ tocAst as TocAst } baseUrl={ baseUrl }/>
                   </div>
                 </Dropdown.Menu>
               </Dropdown>

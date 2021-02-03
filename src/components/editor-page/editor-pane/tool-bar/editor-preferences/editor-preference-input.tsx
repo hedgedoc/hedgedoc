@@ -23,17 +23,18 @@ export interface EditorPreferenceInputProps {
 export const EditorPreferenceInput: React.FC<EditorPreferenceInputProps> = ({ property, type, onChange, value, children }) => {
   useTranslation()
   return (
-    <Form.Group controlId={`editor-pref-${property}`}>
+    <Form.Group controlId={ `editor-pref-${ property }` }>
       <Form.Label>
-        <Trans i18nKey={`editor.modal.preferences.${property}${type===EditorPreferenceInputType.NUMBER ? '' : '.label'}`}/>
+        <Trans
+          i18nKey={ `editor.modal.preferences.${ property }${ type === EditorPreferenceInputType.NUMBER ? '' : '.label' }` }/>
       </Form.Label>
       <Form.Control
-        as={type === EditorPreferenceInputType.NUMBER ? 'input' : 'select'}
+        as={ type === EditorPreferenceInputType.NUMBER ? 'input' : 'select' }
         size='sm'
-        value={value}
-        onChange={onChange}
-        type={type === EditorPreferenceInputType.NUMBER ? 'number' : ''}>
-        {children}
+        value={ value }
+        onChange={ onChange }
+        type={ type === EditorPreferenceInputType.NUMBER ? 'number' : '' }>
+        { children }
       </Form.Control>
     </Form.Group>
   )

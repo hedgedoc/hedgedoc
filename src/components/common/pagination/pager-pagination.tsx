@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { useEffect, useState } from 'react'
 import { Pagination } from 'react-bootstrap'
@@ -53,28 +53,31 @@ export const PagerPagination: React.FC<PaginationProps> = ({ numberOfPageButtons
       0
     )
 
-  const paginationItemsBefore = Array.from(new Array(correctedPageIndex - correctedLowerPageIndex)).map((k, index) => {
-    const itemIndex = correctedLowerPageIndex + index
-    return <PagerItem key={itemIndex} index={itemIndex} onClick={setPageIndex}/>
-  })
+  const paginationItemsBefore = Array.from(new Array(correctedPageIndex - correctedLowerPageIndex))
+                                     .map((k, index) => {
+                                       const itemIndex = correctedLowerPageIndex + index
+                                       return <PagerItem key={ itemIndex } index={ itemIndex }
+                                                         onClick={ setPageIndex }/>
+                                     })
 
-  const paginationItemsAfter = Array.from(new Array(correctedUpperPageIndex - correctedPageIndex)).map((k, index) => {
-    const itemIndex = correctedPageIndex + index + 1
-    return <PagerItem key={itemIndex} index={itemIndex} onClick={setPageIndex}/>
-  })
+  const paginationItemsAfter = Array.from(new Array(correctedUpperPageIndex - correctedPageIndex))
+                                    .map((k, index) => {
+                                      const itemIndex = correctedPageIndex + index + 1
+                                      return <PagerItem key={ itemIndex } index={ itemIndex } onClick={ setPageIndex }/>
+                                    })
 
   return (
     <Pagination dir='ltr'>
-      <ShowIf condition={correctedLowerPageIndex > 0}>
-        <PagerItem key={0} index={0} onClick={setPageIndex}/>
+      <ShowIf condition={ correctedLowerPageIndex > 0 }>
+        <PagerItem key={ 0 } index={ 0 } onClick={ setPageIndex }/>
         <Pagination.Ellipsis disabled/>
       </ShowIf>
-      {paginationItemsBefore}
-      <Pagination.Item active>{correctedPageIndex + 1}</Pagination.Item>
-      {paginationItemsAfter}
-      <ShowIf condition={correctedUpperPageIndex < lastPageIndex}>
+      { paginationItemsBefore }
+      <Pagination.Item active>{ correctedPageIndex + 1 }</Pagination.Item>
+      { paginationItemsAfter }
+      <ShowIf condition={ correctedUpperPageIndex < lastPageIndex }>
         <Pagination.Ellipsis disabled/>
-        <PagerItem key={lastPageIndex} index={lastPageIndex} onClick={setPageIndex}/>
+        <PagerItem key={ lastPageIndex } index={ lastPageIndex } onClick={ setPageIndex }/>
       </ShowIf>
     </Pagination>
   )

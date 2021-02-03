@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
@@ -41,19 +41,23 @@ export const FlowChart: React.FC<FlowChartProps> = ({ code }) => {
       } catch (error) {
         setError(true)
       }
-    }).catch(() => { console.error('error while loading flowchart.js') })
+    })
+                                                                 .catch(() => {
+                                                                   console.error('error while loading flowchart.js')
+                                                                 })
 
     return () => {
-      Array.from(currentDiagramRef.children).forEach(value => value.remove())
+      Array.from(currentDiagramRef.children)
+           .forEach(value => value.remove())
     }
   }, [code, darkModeActivated])
 
   if (error) {
     return (
-      <Alert variant={'danger'}>
-        <Trans i18nKey={'renderer.flowchart.invalidSyntax'}/>
+      <Alert variant={ 'danger' }>
+        <Trans i18nKey={ 'renderer.flowchart.invalidSyntax' }/>
       </Alert>)
   } else {
-    return <div ref={diagramRef} className={'text-center'}/>
+    return <div ref={ diagramRef } className={ 'text-center' }/>
   }
 }

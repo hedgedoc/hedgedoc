@@ -18,7 +18,7 @@ const createRenderContainer = (level: ValidAlertLevels): RenderContainerReturn =
   return (tokens: Token[], index: number, options: MarkdownIt.Options, env: unknown, self: Renderer) => {
     tokens[index].attrJoin('role', 'alert')
     tokens[index].attrJoin('class', 'alert')
-    tokens[index].attrJoin('class', `alert-${level}`)
+    tokens[index].attrJoin('class', `alert-${ level }`)
     return self.renderToken(tokens, index, options)
   }
 }

@@ -10,7 +10,7 @@ import { LineKeys } from '../types'
 
 export const calculateNewLineNumberMapping = (newMarkdownLines: string[], oldLineKeys: LineKeys[], lastUsedLineId: number): TextDifferenceResult => {
   const lineDifferences = diffArrays<string, LineKeys>(newMarkdownLines, oldLineKeys, {
-    comparator: (left:string|LineKeys, right:string|LineKeys) => {
+    comparator: (left: string | LineKeys, right: string | LineKeys) => {
       const leftLine = (left as LineKeys).line ?? (left as string)
       const rightLine = (right as LineKeys).line ?? (right as string)
       return leftLine === rightLine

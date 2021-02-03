@@ -13,7 +13,7 @@ export const headlineAnchors: MarkdownIt.PluginSimple = (markdownIt) => {
     permalinkBefore: true,
     permalinkClass: 'heading-anchor text-dark',
     permalinkSymbol: '<i class="fa fa-link"></i>',
-    permalinkHref: (slug: string): string => `#${slug}`
+    permalinkHref: (slug: string): string => `#${ slug }`
   }
 
   anchor(markdownIt, options)

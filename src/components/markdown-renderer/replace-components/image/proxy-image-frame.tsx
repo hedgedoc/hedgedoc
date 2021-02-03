@@ -28,6 +28,6 @@ export const ProxyImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>
       .catch(err => console.error(err))
   }, [imageProxyEnabled, src])
 
-  return <img src={imageProxyEnabled ? imageUrl : (src ?? '')} title={title ?? alt ?? ''} alt={alt} {...props}/>
+  return <img src={ imageProxyEnabled ? imageUrl : (src ?? '') } title={ title ?? alt ?? '' } alt={ alt } { ...props }/>
 }
 

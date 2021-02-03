@@ -18,11 +18,12 @@ export interface UserLineProps {
 
 export const UserLine: React.FC<UserLineProps> = ({ name, photo, color, status }) => {
   return (
-    <div className={'d-flex align-items-center h-100 w-100'}>
-      <div className='d-inline-flex align-items-bottom user-line-color-indicator' style={{ borderLeftColor: color }}/>
-      <UserAvatar photo={photo} name={name} additionalClasses={'flex-fill overflow-hidden px-2 text-nowrap w-100'}/>
-      <div className={"active-indicator-container"}>
-        <ActiveIndicator status={status} />
+    <div className={ 'd-flex align-items-center h-100 w-100' }>
+      <div className='d-inline-flex align-items-bottom user-line-color-indicator' style={ { borderLeftColor: color } }/>
+      <UserAvatar photo={ photo } name={ name }
+                  additionalClasses={ 'flex-fill overflow-hidden px-2 text-nowrap w-100' }/>
+      <div className={ 'active-indicator-container' }>
+        <ActiveIndicator status={ status }/>
       </div>
     </div>
   )

@@ -58,7 +58,7 @@ export const setEditorLigatures = (ligatures: boolean): void => {
     type: EditorConfigActionType.SET_LIGATURES,
     ligatures: ligatures
   }
-  store.dispatch(action);
+  store.dispatch(action)
 }
 
 export const mergeEditorPreferences = (preferences: EditorConfiguration): void => {

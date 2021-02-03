@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { Button } from 'react-bootstrap'
@@ -17,7 +17,8 @@ import './cover-buttons.scss'
 export const CoverButtons: React.FC = () => {
   useTranslation()
   const userExists = useSelector((state: ApplicationState) => !!state.user)
-  const anyAuthProviderActivated = useSelector((state: ApplicationState) => Object.values(state.config.authProviders).includes(true))
+  const anyAuthProviderActivated = useSelector((state: ApplicationState) => Object.values(state.config.authProviders)
+                                                                                  .includes(true))
 
   if (userExists) {
     return null
@@ -30,7 +31,7 @@ export const CoverButtons: React.FC = () => {
         variant="success"
         size="lg"
       />
-      <ShowIf condition={anyAuthProviderActivated}>
+      <ShowIf condition={ anyAuthProviderActivated }>
         <span className="m-2">
           <Trans i18nKey="common.or"/>
         </span>

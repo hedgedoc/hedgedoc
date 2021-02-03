@@ -13,9 +13,9 @@ import { Links } from './links'
 import { Shortcut } from './shortcuts'
 
 export enum HelpTabStatus {
-  Cheatsheet='cheatsheet.title',
-  Shortcuts='shortcuts.title',
-  Links='links.title'
+  Cheatsheet = 'cheatsheet.title',
+  Shortcuts = 'shortcuts.title',
+  Links = 'links.title'
 }
 
 export const HelpButton: React.FC = () => {
@@ -36,35 +36,39 @@ export const HelpButton: React.FC = () => {
 
   return (
     <Fragment>
-      <Button title={t('editor.documentBar.help')} className='ml-2 text-secondary' size='sm' variant='outline-light'
-        onClick={() => setShow(true)}>
+      <Button title={ t('editor.documentBar.help') } className='ml-2 text-secondary' size='sm' variant='outline-light'
+              onClick={ () => setShow(true) }>
         <ForkAwesomeIcon icon="question-circle"/>
       </Button>
-      <Modal show={show} onHide={() => setShow(false)} animation={true} className='text-dark' size='lg'>
+      <Modal show={ show } onHide={ () => setShow(false) } animation={ true } className='text-dark' size='lg'>
         <Modal.Header closeButton>
           <Modal.Title>
-            <ForkAwesomeIcon icon='question-circle'/> <Trans i18nKey={'editor.documentBar.help'}/> – <Trans i18nKey={`editor.help.${tab}`}/>
+            <ForkAwesomeIcon icon='question-circle'/> <Trans i18nKey={ 'editor.documentBar.help' }/> – <Trans
+            i18nKey={ `editor.help.${ tab }` }/>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <nav className='nav nav-tabs'>
-            <Button variant={'light'} className={`nav-link nav-item ${tab === HelpTabStatus.Cheatsheet ? 'active' : ''}`}
-              onClick={() => setTab(HelpTabStatus.Cheatsheet)}
+            <Button variant={ 'light' }
+                    className={ `nav-link nav-item ${ tab === HelpTabStatus.Cheatsheet ? 'active' : '' }` }
+                    onClick={ () => setTab(HelpTabStatus.Cheatsheet) }
             >
-              <Trans i18nKey={'editor.help.cheatsheet.title'}/>
+              <Trans i18nKey={ 'editor.help.cheatsheet.title' }/>
             </Button>
-            <Button variant={'light'} className={`nav-link nav-item ${tab === HelpTabStatus.Shortcuts ? 'active' : ''}`}
-              onClick={() => setTab(HelpTabStatus.Shortcuts)}
+            <Button variant={ 'light' }
+                    className={ `nav-link nav-item ${ tab === HelpTabStatus.Shortcuts ? 'active' : '' }` }
+                    onClick={ () => setTab(HelpTabStatus.Shortcuts) }
             >
-              <Trans i18nKey={'editor.help.shortcuts.title'}/>
+              <Trans i18nKey={ 'editor.help.shortcuts.title' }/>
             </Button>
-            <Button variant={'light'} className={`nav-link nav-item ${tab === HelpTabStatus.Links ? 'active' : ''}`}
-              onClick={() => setTab(HelpTabStatus.Links)}
+            <Button variant={ 'light' }
+                    className={ `nav-link nav-item ${ tab === HelpTabStatus.Links ? 'active' : '' }` }
+                    onClick={ () => setTab(HelpTabStatus.Links) }
             >
-              <Trans i18nKey={'editor.help.links.title'}/>
+              <Trans i18nKey={ 'editor.help.links.title' }/>
             </Button>
           </nav>
-          {tabContent()}
+          { tabContent() }
         </Modal.Body>
       </Modal>
     </Fragment>

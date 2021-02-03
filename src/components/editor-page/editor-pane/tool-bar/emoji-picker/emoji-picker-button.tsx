@@ -23,13 +23,14 @@ export const EmojiPickerButton: React.FC<EmojiPickerButtonProps> = ({ editor }) 
   return (
     <Fragment>
       <EmojiPicker
-        show={showEmojiPicker}
-        onEmojiSelected={(emoji) => {
+        show={ showEmojiPicker }
+        onEmojiSelected={ (emoji) => {
           setShowEmojiPicker(false)
           addEmoji(emoji, editor)
-        }}
-        onDismiss={() => setShowEmojiPicker(false)}/>
-      <Button data-cy={'show-emoji-picker'} variant='light' onClick={() => setShowEmojiPicker(old => !old)} title={t('editor.editorToolbar.emoji')}>
+        } }
+        onDismiss={ () => setShowEmojiPicker(false) }/>
+      <Button data-cy={ 'show-emoji-picker' } variant='light' onClick={ () => setShowEmojiPicker(old => !old) }
+              title={ t('editor.editorToolbar.emoji') }>
         <ForkAwesomeIcon icon="smile-o"/>
       </Button>
     </Fragment>

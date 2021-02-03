@@ -26,7 +26,7 @@ export const ShowOnPropChangeImageLightbox: React.FC<ShowOnPropChangeImageLightb
   }, [details])
 
   return (
-    <ImageLightboxModal show={show} onHide={hideLightbox} src={details?.src}
-                        alt={details?.alt} title={details?.title}/>
+    <ImageLightboxModal show={ show } onHide={ hideLightbox } src={ details?.src }
+                        alt={ details?.alt } title={ details?.title }/>
   )
 }

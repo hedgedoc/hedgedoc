@@ -62,16 +62,18 @@
   content: ' ';
   display: inline-block;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
-}.markdown-body {
-   -ms-text-size-adjust: 100%;
-   -webkit-text-size-adjust: 100%;
-   line-height: 1.5;
- //  color: #24292e;
-   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
-   font-size: 16px;
-   line-height: 1.5;
-   word-wrap: break-word;
- }
+}
+
+.markdown-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+  //  color: #24292e;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
 
 .markdown-body details {
   display: block;
@@ -107,7 +109,7 @@
 .markdown-body code,
 .markdown-body kbd,
 .markdown-body pre {
-  font-family: monospace,monospace;
+  font-family: monospace, monospace;
   font-size: 1em;
 }
 
@@ -190,7 +192,7 @@
 .markdown-body kbd {
   display: inline-block;
   padding: 3px 5px;
-  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
   line-height: 10px;
   color: #444d56;
   vertical-align: middle;
@@ -283,7 +285,7 @@
 
 .markdown-body code,
 .markdown-body pre {
-  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
   font-size: 12px;
 }
 
@@ -299,102 +301,102 @@
   appearance: none;
 }
 
-.markdown-body :checked+.radio-label {
+.markdown-body :checked + .radio-label {
   position: relative;
   z-index: 1;
   border-color: #0366d6;
 }
 
 .markdown-body .border {
-  border: 1px solid #e1e4e8!important;
+  border: 1px solid #e1e4e8 !important;
 }
 
 .markdown-body .border-0 {
-  border: 0!important;
+  border: 0 !important;
 }
 
 .markdown-body .border-bottom {
-  border-bottom: 1px solid #e1e4e8!important;
+  border-bottom: 1px solid #e1e4e8 !important;
 }
 
 .markdown-body .rounded-1 {
-  border-radius: 3px!important;
+  border-radius: 3px !important;
 }
 
 .markdown-body .bg-white {
-  background-color: #fff!important;
+  background-color: #fff !important;
 }
 
 .markdown-body .bg-gray-light {
-  background-color: #fafbfc!important;
+  background-color: #fafbfc !important;
 }
 
 .markdown-body .text-gray-light {
-  color: #6a737d!important;
+  color: #6a737d !important;
 }
 
 .markdown-body .mb-0 {
-  margin-bottom: 0!important;
+  margin-bottom: 0 !important;
 }
 
 .markdown-body .my-2 {
-  margin-top: 8px!important;
-  margin-bottom: 8px!important;
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
 }
 
 .markdown-body .pl-0 {
-  padding-left: 0!important;
+  padding-left: 0 !important;
 }
 
 .markdown-body .py-0 {
-  padding-top: 0!important;
-  padding-bottom: 0!important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .markdown-body .pl-1 {
-  padding-left: 4px!important;
+  padding-left: 4px !important;
 }
 
 .markdown-body .pl-2 {
-  padding-left: 8px!important;
+  padding-left: 8px !important;
 }
 
 .markdown-body .py-2 {
-  padding-top: 8px!important;
-  padding-bottom: 8px!important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
 }
 
 .markdown-body .pl-3,
 .markdown-body .px-3 {
-  padding-left: 16px!important;
+  padding-left: 16px !important;
 }
 
 .markdown-body .px-3 {
-  padding-right: 16px!important;
+  padding-right: 16px !important;
 }
 
 .markdown-body .pl-4 {
-  padding-left: 24px!important;
+  padding-left: 24px !important;
 }
 
 .markdown-body .pl-5 {
-  padding-left: 32px!important;
+  padding-left: 32px !important;
 }
 
 .markdown-body .pl-6 {
-  padding-left: 40px!important;
+  padding-left: 40px !important;
 }
 
 .markdown-body .f6 {
-  font-size: 12px!important;
+  font-size: 12px !important;
 }
 
 .markdown-body .lh-condensed {
-  line-height: 1.25!important;
+  line-height: 1.25 !important;
 }
 
 .markdown-body .text-bold {
-  font-weight: 600!important;
+  font-weight: 600 !important;
 }
 
 .markdown-body .pl-c {
@@ -522,77 +524,77 @@
 }
 
 .markdown-body .mb-0 {
-  margin-bottom: 0!important;
+  margin-bottom: 0 !important;
 }
 
 .markdown-body .my-2 {
-  margin-bottom: 8px!important;
+  margin-bottom: 8px !important;
 }
 
 .markdown-body .my-2 {
-  margin-top: 8px!important;
+  margin-top: 8px !important;
 }
 
 .markdown-body .pl-0 {
-  padding-left: 0!important;
+  padding-left: 0 !important;
 }
 
 .markdown-body .py-0 {
-  padding-top: 0!important;
-  padding-bottom: 0!important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .markdown-body .pl-1 {
-  padding-left: 4px!important;
+  padding-left: 4px !important;
 }
 
 .markdown-body .pl-2 {
-  padding-left: 8px!important;
+  padding-left: 8px !important;
 }
 
 .markdown-body .py-2 {
-  padding-top: 8px!important;
-  padding-bottom: 8px!important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
 }
 
 .markdown-body .pl-3 {
-  padding-left: 16px!important;
+  padding-left: 16px !important;
 }
 
 .markdown-body .pl-4 {
-  padding-left: 24px!important;
+  padding-left: 24px !important;
 }
 
 .markdown-body .pl-5 {
-  padding-left: 32px!important;
+  padding-left: 32px !important;
 }
 
 .markdown-body .pl-6 {
-  padding-left: 40px!important;
+  padding-left: 40px !important;
 }
 
 .markdown-body .pl-7 {
-  padding-left: 48px!important;
+  padding-left: 48px !important;
 }
 
 .markdown-body .pl-8 {
-  padding-left: 64px!important;
+  padding-left: 64px !important;
 }
 
 .markdown-body .pl-9 {
-  padding-left: 80px!important;
+  padding-left: 80px !important;
 }
 
 .markdown-body .pl-10 {
-  padding-left: 96px!important;
+  padding-left: 96px !important;
 }
 
 .markdown-body .pl-11 {
-  padding-left: 112px!important;
+  padding-left: 112px !important;
 }
 
 .markdown-body .pl-12 {
-  padding-left: 128px!important;
+  padding-left: 128px !important;
 }
 
 .markdown-body hr {
@@ -602,7 +604,7 @@
 .markdown-body kbd {
   display: inline-block;
   padding: 3px 5px;
-  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
   line-height: 10px;
   color: #444d56;
   vertical-align: middle;
@@ -622,12 +624,12 @@
   clear: both;
 }
 
-.markdown-body>:first-child {
-  margin-top: 0!important;
+.markdown-body > :first-child {
+  margin-top: 0 !important;
 }
 
-.markdown-body>:last-child {
-  margin-bottom: 0!important;
+.markdown-body > :last-child {
+  margin-bottom: 0 !important;
 }
 
 .markdown-body a:not([href]) {
@@ -661,11 +663,11 @@
   border-left: .25em solid #dfe2e5;
 }
 
-.markdown-body blockquote>:first-child {
+.markdown-body blockquote > :first-child {
   margin-top: 0;
 }
 
-.markdown-body blockquote>:last-child {
+.markdown-body blockquote > :last-child {
   margin-bottom: 0;
 }
 
@@ -697,25 +699,25 @@
 
 .markdown-body h2 {
   body.dark &, & {
-  font-size: 1.5em;
+    font-size: 1.5em;
   }
 }
 
 .markdown-body h3 {
   body.dark &, & {
-  font-size: 1.25em;
+    font-size: 1.25em;
   }
 }
 
 .markdown-body h4 {
   body.dark &, & {
-  font-size: 1em;
+    font-size: 1em;
   }
 }
 
 .markdown-body h5 {
   body.dark &, & {
-  font-size: .875em;
+    font-size: .875em;
   }
 }
 
@@ -723,6 +725,7 @@
   body.dark &, & {
     font-size: .85em;
   }
+
   body.dark & {
     color: #b4c7d5;
   }
@@ -745,11 +748,11 @@
   word-wrap: break-all;
 }
 
-.markdown-body li>p {
+.markdown-body li > p {
   margin-top: 16px;
 }
 
-.markdown-body li+li {
+.markdown-body li + li {
   margin-top: .25em;
 }
 
@@ -787,7 +790,7 @@
 }
 
 .markdown-body table tr {
- // background-color: #fff;
+  // background-color: #fff;
   border-top: 1px solid #c6cbd1;
 }
 
@@ -813,7 +816,7 @@
   padding: .2em .4em;
   margin: 0;
   font-size: 85%;
-  background-color: rgba(27,31,35,.05);
+  background-color: rgba(27, 31, 35, .05);
   border-radius: 3px;
 }
 
@@ -821,7 +824,7 @@
   word-wrap: normal;
 }
 
-.markdown-body pre>code {
+.markdown-body pre > code {
   padding: 0;
   margin: 0;
   font-size: 100%;
@@ -864,7 +867,7 @@
 
 .markdown-body .commit-tease-sha {
   display: inline-block;
-  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
   font-size: 90%;
   color: #444d56;
 }
@@ -889,10 +892,10 @@
   min-width: 50px;
   padding-right: 10px;
   padding-left: 10px;
-  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
   font-size: 12px;
   line-height: 20px;
-  color: rgba(27,31,35,.3);
+  color: rgba(27, 31, 35, .3);
   text-align: right;
   white-space: nowrap;
   vertical-align: top;
@@ -904,7 +907,7 @@
 }
 
 .markdown-body .blob-num:hover {
-  color: rgba(27,31,35,.6);
+  color: rgba(27, 31, 35, .6);
 }
 
 .markdown-body .blob-num:before {
@@ -921,7 +924,7 @@
 
 .markdown-body .blob-code-inner {
   overflow: visible;
-  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
   font-size: 12px;
   color: #24292e;
   word-wrap: normal;
@@ -998,7 +1001,7 @@
   list-style-type: none;
 }
 
-.markdown-body .task-list-item+.task-list-item {
+.markdown-body .task-list-item + .task-list-item {
   margin-top: 3px;
 }
 

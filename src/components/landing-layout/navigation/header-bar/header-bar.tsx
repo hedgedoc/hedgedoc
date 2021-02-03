@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { Fragment } from 'react'
 import { Navbar } from 'react-bootstrap'
@@ -31,19 +31,19 @@ const HeaderBar: React.FC = () => {
         </HeaderNavLink>
       </div>
       <div className="d-inline-flex">
-        {!userExists
+        { !userExists
           ? <Fragment>
-              <span className={'mx-1 d-flex'}>
+              <span className={ 'mx-1 d-flex' }>
                 <NewGuestNoteButton/>
               </span>
-              <SignInButton size="sm"/>
-            </Fragment>
+            <SignInButton size="sm"/>
+          </Fragment>
           : <Fragment>
-              <span className={'mx-1 d-flex'}>
+              <span className={ 'mx-1 d-flex' }>
                 <NewUserNoteButton/>
               </span>
-              <UserDropdown/>
-            </Fragment>
+            <UserDropdown/>
+          </Fragment>
         }
       </div>
     </Navbar>

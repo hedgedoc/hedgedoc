@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { Button, Card, Modal } from 'react-bootstrap'
@@ -19,13 +19,13 @@ export const ProfileAccountManagement: React.FC = () => {
   const [countdown, setCountdown] = useState(0)
   const interval = useRef<NodeJS.Timeout>()
 
-  const stopCountdown = ():void => {
+  const stopCountdown = (): void => {
     if (interval.current) {
       clearTimeout(interval.current)
     }
   }
 
-  const startCountdown = ():void => {
+  const startCountdown = (): void => {
     interval.current = setInterval(() => {
       setCountdown((oldValue) => oldValue - 1)
     }, 1000)
@@ -63,28 +63,28 @@ export const ProfileAccountManagement: React.FC = () => {
       <Card className="bg-dark mb-4">
         <Card.Body>
           <Card.Title><Trans i18nKey="profile.accountManagement"/></Card.Title>
-          <Button variant="secondary" block href={getApiUrl() + '/me/export'} className="mb-2">
-            <ForkAwesomeIcon icon="cloud-download" fixedWidth={true} className="mx-2"/>
+          <Button variant="secondary" block href={ getApiUrl() + '/me/export' } className="mb-2">
+            <ForkAwesomeIcon icon="cloud-download" fixedWidth={ true } className="mx-2"/>
             <Trans i18nKey="profile.exportUserData"/>
           </Button>
-          <Button variant="danger" block onClick={handleModalOpen}>
-            <ForkAwesomeIcon icon="trash" fixedWidth={true} className="mx-2"/>
+          <Button variant="danger" block onClick={ handleModalOpen }>
+            <ForkAwesomeIcon icon="trash" fixedWidth={ true } className="mx-2"/>
             <Trans i18nKey="profile.deleteUser"/>
           </Button>
         </Card.Body>
       </Card>
 
-      <Modal show={showDeleteModal} onHide={handleModalClose} animation={true}>
+      <Modal show={ showDeleteModal } onHide={ handleModalClose } animation={ true }>
         <Modal.Body className="text-dark">
           <h3 dir="auto"><Trans i18nKey="profile.modal.deleteUser.message"/></h3>
           <Trans i18nKey="profile.modal.deleteUser.subMessage"/>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleModalClose}>
+          <Button variant="secondary" onClick={ handleModalClose }>
             <Trans i18nKey="common.close"/>
           </Button>
-          <Button variant="danger" onClick={deleteUserAccount} disabled={!deletionButtonActive}>
-            {deletionButtonActive ? <Trans i18nKey={'profile.modal.deleteUser.title'}/> : countdown}
+          <Button variant="danger" onClick={ deleteUserAccount } disabled={ !deletionButtonActive }>
+            { deletionButtonActive ? <Trans i18nKey={ 'profile.modal.deleteUser.title' }/> : countdown }
           </Button>
         </Modal.Footer>
       </Modal>

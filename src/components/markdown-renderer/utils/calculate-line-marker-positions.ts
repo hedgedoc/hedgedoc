@@ -13,36 +13,37 @@ import { LineMarkers } from '../replace-components/linemarker/line-number-marker
 export const calculateLineMarkerPositions = (documentElement: HTMLDivElement, currentLineMarkers: LineMarkers[], offset?: number): LineMarkerPosition[] => {
   const lineMarkers = currentLineMarkers
   const children: HTMLCollection = documentElement.children
-  const lineMarkerPositions:LineMarkerPosition[] = []
+  const lineMarkerPositions: LineMarkerPosition[] = []
 
-  Array.from(children).forEach((child, childIndex) => {
-    const htmlChild = (child as HTMLElement)
-    if (htmlChild.offsetTop === undefined) {
-      return
-    }
-    const currentLineMarker = lineMarkers[childIndex]
-    if (currentLineMarker === undefined) {
-      return
-    }
+  Array.from(children)
+       .forEach((child, childIndex) => {
+         const htmlChild = (child as HTMLElement)
+         if (htmlChild.offsetTop === undefined) {
+           return
+         }
+         const currentLineMarker = lineMarkers[childIndex]
+         if (currentLineMarker === undefined) {
+           return
+         }
 
-    const lastPosition = lineMarkerPositions[lineMarkerPositions.length - 1]
-    if (!lastPosition || lastPosition.line !== currentLineMarker.startLine) {
-      lineMarkerPositions.push({
-        line: currentLineMarker.startLine,
-        position: htmlChild.offsetTop + (offset ?? 0)
-      })
-    }
+         const lastPosition = lineMarkerPositions[lineMarkerPositions.length - 1]
+         if (!lastPosition || lastPosition.line !== currentLineMarker.startLine) {
+           lineMarkerPositions.push({
+             line: currentLineMarker.startLine,
+             position: htmlChild.offsetTop + (offset ?? 0)
+           })
+         }
 
-    lineMarkerPositions.push({
-      line: currentLineMarker.endLine,
-      position: htmlChild.offsetTop + htmlChild.offsetHeight + (offset ?? 0)
-    })
-  })
+         lineMarkerPositions.push({
+           line: currentLineMarker.endLine,
+           position: htmlChild.offsetTop + htmlChild.offsetHeight + (offset ?? 0)
+         })
+       })
 
   return lineMarkerPositions
 }
 
-export const useCalculateLineMarkerPosition = (documentElement: RefObject<HTMLDivElement>, lineMarkers?: LineMarkers[], onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void, offset?: number) : void => {
+export const useCalculateLineMarkerPosition = (documentElement: RefObject<HTMLDivElement>, lineMarkers?: LineMarkers[], onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void, offset?: number): void => {
   const lastLineMarkerPositions = useRef<LineMarkerPosition[]>()
 
   const calculateNewLineMarkerPositions = useCallback(() => {

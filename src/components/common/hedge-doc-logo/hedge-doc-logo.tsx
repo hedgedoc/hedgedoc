@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { ReactComponent as LogoColor } from './logo_color.svg'
@@ -18,5 +18,5 @@ export interface HedgeDocLogoProps {
 }
 
 export const HedgeDocLogo: React.FC<HedgeDocLogoProps> = ({ size = HedgeDocLogoSize.MEDIUM }) => {
-  return <LogoColor className={'w-auto'} title={'HedgeDoc logo with text'} style={{ height: size }}/>
+  return <LogoColor className={ 'w-auto' } title={ 'HedgeDoc logo with text' } style={ { height: size } }/>
 }

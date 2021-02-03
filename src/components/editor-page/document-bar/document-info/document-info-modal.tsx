@@ -18,47 +18,49 @@ export interface DocumentInfoModalProps {
   onHide: () => void
 }
 
-export const DocumentInfoModal: React.FC<DocumentInfoModalProps> = ({show, onHide}) => {
-    return (
-      <CommonModal
-        show={show}
-        onHide={onHide}
-        closeButton={true}
-        titleI18nKey={'editor.modal.documentInfo.title'}>
-        <Modal.Body>
-          <ListGroup>
-            <ListGroup.Item>
-              <DocumentInfoTimeLine
-                size={'2x'}
-                mode={DocumentInfoLineWithTimeMode.CREATED}
-                time={DateTime.local().minus({ days: 11 })}
-                userName={'Tilman'}
-                profileImageSrc={'/img/avatar.png'}/>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <DocumentInfoTimeLine
-                size={'2x'}
-                mode={DocumentInfoLineWithTimeMode.EDITED}
-                time={DateTime.local().minus({ minutes: 3 })}
-                userName={'Philip'}
-                profileImageSrc={'/img/avatar.png'}/>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <DocumentInfoLine icon={'users'} size={'2x'}>
-                <Trans i18nKey='editor.modal.documentInfo.usersContributed'>
-                  <UnitalicBoldText text={'42'}/>
-                </Trans>
-              </DocumentInfoLine>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <DocumentInfoLine icon={'history'} size={'2x'}>
-                <Trans i18nKey='editor.modal.documentInfo.revisions'>
-                  <UnitalicBoldText text={'192'}/>
-                </Trans>
-              </DocumentInfoLine>
-            </ListGroup.Item>
-          </ListGroup>
-        </Modal.Body>
-      </CommonModal>
-    );
+export const DocumentInfoModal: React.FC<DocumentInfoModalProps> = ({ show, onHide }) => {
+  return (
+    <CommonModal
+      show={ show }
+      onHide={ onHide }
+      closeButton={ true }
+      titleI18nKey={ 'editor.modal.documentInfo.title' }>
+      <Modal.Body>
+        <ListGroup>
+          <ListGroup.Item>
+            <DocumentInfoTimeLine
+              size={ '2x' }
+              mode={ DocumentInfoLineWithTimeMode.CREATED }
+              time={ DateTime.local()
+                             .minus({ days: 11 }) }
+              userName={ 'Tilman' }
+              profileImageSrc={ '/img/avatar.png' }/>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <DocumentInfoTimeLine
+              size={ '2x' }
+              mode={ DocumentInfoLineWithTimeMode.EDITED }
+              time={ DateTime.local()
+                             .minus({ minutes: 3 }) }
+              userName={ 'Philip' }
+              profileImageSrc={ '/img/avatar.png' }/>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <DocumentInfoLine icon={ 'users' } size={ '2x' }>
+              <Trans i18nKey='editor.modal.documentInfo.usersContributed'>
+                <UnitalicBoldText text={ '42' }/>
+              </Trans>
+            </DocumentInfoLine>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <DocumentInfoLine icon={ 'history' } size={ '2x' }>
+              <Trans i18nKey='editor.modal.documentInfo.revisions'>
+                <UnitalicBoldText text={ '192' }/>
+              </Trans>
+            </DocumentInfoLine>
+          </ListGroup.Item>
+        </ListGroup>
+      </Modal.Body>
+    </CommonModal>
+  )
 }

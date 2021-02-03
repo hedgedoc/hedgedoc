@@ -22,7 +22,7 @@ interface findWordAtCursorResponse {
 
 export interface Hinter {
   wordRegExp: RegExp,
-  hint: (editor: Editor) => Promise< Hints| null >
+  hint: (editor: Editor) => Promise<Hints | null>
 }
 
 const allowedChars = /[^\s]/
@@ -40,7 +40,8 @@ export const findWordAtCursor = (editor: Editor): findWordAtCursorResponse => {
   }
 
   return {
-    text: line.slice(start, end).toLowerCase(),
+    text: line.slice(start, end)
+              .toLowerCase(),
     start: start,
     end: end
   }
@@ -49,7 +50,8 @@ export const findWordAtCursor = (editor: Editor): findWordAtCursorResponse => {
 export const search = (term: string, list: string[]): string[] => {
   const suggestions: string[] = []
   list.forEach(item => {
-    if (item.toLowerCase().startsWith(term.toLowerCase())) {
+    if (item.toLowerCase()
+            .startsWith(term.toLowerCase())) {
       suggestions.push(item)
     }
   })
@@ -64,5 +66,5 @@ export const allHinters: Hinter[] = [
   ImageHinter,
   LinkAndExtraTagHinter,
   PDFHinter,
-  CollapsableBlockHinter,
+  CollapsableBlockHinter
 ]

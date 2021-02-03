@@ -78,18 +78,18 @@ export const RenderPage: React.FC = () => {
   }
 
   return (
-    <div className={"vh-100 w-100"}>
+    <div className={ 'vh-100 w-100' }>
       <MarkdownDocument
-        extraClasses={'bg-light'}
-        markdownContent={markdownContent}
-        onTaskCheckedChange={onTaskCheckedChange}
-        onFirstHeadingChange={onFirstHeadingChange}
-        onMakeScrollSource={onMakeScrollSource}
-        onFrontmatterChange={onFrontmatterChange}
-        scrollState={scrollState}
-        onScroll={onScroll}
-        baseUrl={baseUrl}
-        onImageClick={onImageClick}/>
+        extraClasses={ 'bg-light' }
+        markdownContent={ markdownContent }
+        onTaskCheckedChange={ onTaskCheckedChange }
+        onFirstHeadingChange={ onFirstHeadingChange }
+        onMakeScrollSource={ onMakeScrollSource }
+        onFrontmatterChange={ onFrontmatterChange }
+        scrollState={ scrollState }
+        onScroll={ onScroll }
+        baseUrl={ baseUrl }
+        onImageClick={ onImageClick }/>
     </div>
   )
 }

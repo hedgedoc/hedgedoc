@@ -42,7 +42,7 @@ export const calculateKeyFromLineMarker = (node: DomElement, lineKeys?: LineKeys
     return
   }
 
-  return `${lineKeys[startLine].id}_${lineKeys[endLine].id}`
+  return `${ lineKeys[startLine].id }_${ lineKeys[endLine].id }`
 }
 
 export const findNodeReplacement = (node: DomElement, key: string, allReplacers: ComponentReplacer[], subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer): ReactElement | null | undefined => {
@@ -72,8 +72,8 @@ export const buildTransformer = (lineKeys: (LineKeys[] | undefined), allReplacer
     } else if (tryReplacement === undefined) {
       return nativeRenderer()
     } else {
-      return <Suspense key={key} fallback={<span>Loading...</span>}>
-        {tryReplacement}
+      return <Suspense key={ key } fallback={ <span>Loading...</span> }>
+        { tryReplacement }
       </Suspense>
     }
   }

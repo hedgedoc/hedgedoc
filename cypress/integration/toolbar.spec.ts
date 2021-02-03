@@ -21,7 +21,7 @@ describe('Toolbar Buttons', () => {
     beforeEach(() => {
       cy.codemirrorFill(testText)
       cy.get('.CodeMirror-line > span')
-        .should("exist")
+        .should('exist')
         .should('have.text', testText)
     })
 
@@ -35,42 +35,42 @@ describe('Toolbar Buttons', () => {
         cy.get('.btn-toolbar [data-cy="format-bold"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `**${testText}**`)
+          .should('have.text', `**${ testText }**`)
       })
 
       it('should format as italic', () => {
         cy.get('.btn-toolbar [data-cy="format-italic"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `*${testText}*`)
+          .should('have.text', `*${ testText }*`)
       })
 
       it('should format as underline', () => {
         cy.get('.btn-toolbar [data-cy="format-underline"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `++${testText}++`)
+          .should('have.text', `++${ testText }++`)
       })
 
       it('should format as strikethrough', () => {
         cy.get('.btn-toolbar  [data-cy="format-strikethrough"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `~~${testText}~~`)
+          .should('have.text', `~~${ testText }~~`)
       })
 
       it('should format as subscript', () => {
         cy.get('.btn-toolbar [data-cy="format-subscript"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `~${testText}~`)
+          .should('have.text', `~${ testText }~`)
       })
 
       it('should format as superscript', () => {
         cy.get('.btn-toolbar [data-cy="format-superscript"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `^${testText}^`)
+          .should('have.text', `^${ testText }^`)
       })
 
       it('should format the line as code block', () => {
@@ -88,14 +88,14 @@ describe('Toolbar Buttons', () => {
         cy.get('.btn-toolbar [data-cy="format-link"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `[${testText}](https://)`)
+          .should('have.text', `[${ testText }](https://)`)
       })
 
       it('should format as image', () => {
         cy.get('.btn-toolbar [data-cy="format-image"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `![${testText}](https://)`)
+          .should('have.text', `![${ testText }](https://)`)
       })
     })
 
@@ -103,11 +103,11 @@ describe('Toolbar Buttons', () => {
       cy.get('.btn-toolbar [data-cy="format-heading"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `# ${testText}`)
+        .should('have.text', `# ${ testText }`)
       cy.get('.fa-header')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `## ${testText}`)
+        .should('have.text', `## ${ testText }`)
     })
 
     it('should format the line as code', () => {
@@ -125,58 +125,58 @@ describe('Toolbar Buttons', () => {
       cy.get('.btn-toolbar [data-cy="format-block-quote"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `> ${testText}`)
+        .should('have.text', `> ${ testText }`)
       cy.get('.btn-toolbar [data-cy="format-block-quote"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `> > ${testText}`)
+        .should('have.text', `> > ${ testText }`)
     })
 
     it('should format as unordered list', () => {
       cy.get('.btn-toolbar [data-cy="format-unordered-list"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `- ${testText}`)
+        .should('have.text', `- ${ testText }`)
       cy.get('.btn-toolbar [data-cy="format-unordered-list"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `- - ${testText}`)
+        .should('have.text', `- - ${ testText }`)
     })
 
     it('should format as ordered list', () => {
       cy.get('.btn-toolbar [data-cy="format-ordered-list"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `1. ${testText}`)
+        .should('have.text', `1. ${ testText }`)
       cy.get('.btn-toolbar [data-cy="format-ordered-list"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `1. 1. ${testText}`)
+        .should('have.text', `1. 1. ${ testText }`)
     })
 
     it('should format as check list', () => {
       cy.get('.btn-toolbar [data-cy="format-check-list"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `- [ ] ${testText}`)
+        .should('have.text', `- [ ] ${ testText }`)
       cy.get('.btn-toolbar [data-cy="format-check-list"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `- [ ] - [ ] ${testText}`)
+        .should('have.text', `- [ ] - [ ] ${ testText }`)
     })
 
     it('should insert links', () => {
       cy.get('.btn-toolbar [data-cy="format-link"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `${testText}[](https://)`)
+        .should('have.text', `${ testText }[](https://)`)
     })
 
     it('should insert an empty image link', () => {
       cy.get('.btn-toolbar [data-cy="format-image"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `${testText}![](https://)`)
+        .should('have.text', `${ testText }![](https://)`)
     })
   })
 
@@ -184,7 +184,7 @@ describe('Toolbar Buttons', () => {
     beforeEach(() => {
       cy.codemirrorFill(testLink)
       cy.get('.CodeMirror-line > span')
-        .should("exist")
+        .should('exist')
         .should('have.text', testLink)
       cy.get('@codeinput')
         .type('{ctrl}a')
@@ -194,14 +194,14 @@ describe('Toolbar Buttons', () => {
       cy.get('.btn-toolbar [data-cy="format-link"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `[](${testLink})`)
+        .should('have.text', `[](${ testLink })`)
     })
 
     it('should format as image', () => {
       cy.get('.btn-toolbar [data-cy="format-image"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `![](${testLink})`)
+        .should('have.text', `![](${ testLink })`)
     })
   })
 

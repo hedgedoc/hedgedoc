@@ -13,7 +13,7 @@ export const downloadRevision = (noteId: string, revision: Revision | null): voi
   if (!revision) {
     return
   }
-  download(revision.content, `${noteId}-${revision.timestamp}.md`, 'text/markdown')
+  download(revision.content, `${ noteId }-${ revision.timestamp }.md`, 'text/markdown')
 }
 
 export const getUserDataForRevision = (authors: string[]): UserResponse[] => {

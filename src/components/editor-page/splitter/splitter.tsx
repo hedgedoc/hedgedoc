@@ -54,18 +54,19 @@ export const Splitter: React.FC<SplitterProps> = ({ containerClassName, left, ri
   const onGrab = useCallback(() => setDoResizing(true), [])
 
   return (
-    <div ref={splitContainer} className={`flex-fill flex-row d-flex ${containerClassName || ''}`}
-         onMouseUp={stopResizing} onTouchEnd={stopResizing} onMouseMove={onMouseMove} onTouchMove={onTouchMove}>
-      <div className={`splitter left ${!showLeft ? 'd-none' : ''}`} style={{ flexBasis: `calc(${realSplit}% - 5px)` }}>
-        {left}
+    <div ref={ splitContainer } className={ `flex-fill flex-row d-flex ${ containerClassName || '' }` }
+         onMouseUp={ stopResizing } onTouchEnd={ stopResizing } onMouseMove={ onMouseMove } onTouchMove={ onTouchMove }>
+      <div className={ `splitter left ${ !showLeft ? 'd-none' : '' }` }
+           style={ { flexBasis: `calc(${ realSplit }% - 5px)` } }>
+        { left }
       </div>
-      <ShowIf condition={showLeft && showRight}>
+      <ShowIf condition={ showLeft && showRight }>
         <div className='splitter separator'>
-          <SplitDivider onGrab={onGrab}/>
+          <SplitDivider onGrab={ onGrab }/>
         </div>
       </ShowIf>
-      <div className={`splitter right ${!showRight ? 'd-none' : ''}`}>
-        {right}
+      <div className={ `splitter right ${ !showRight ? 'd-none' : '' }` }>
+        { right }
       </div>
     </div>
   )

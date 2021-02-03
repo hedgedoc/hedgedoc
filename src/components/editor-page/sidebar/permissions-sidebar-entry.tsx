@@ -10,16 +10,16 @@ import { PermissionModal } from '../document-bar/permissions/permission-modal'
 import { SidebarButton } from './sidebar-button'
 import { SpecificSidebarEntryProps } from './types'
 
-export const PermissionsSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({className, hide}) => {
+export const PermissionsSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
   const [showModal, setShowModal] = useState(false)
   useTranslation()
 
   return (
     <Fragment>
-      <SidebarButton hide={hide} className={className} icon={"lock"} onClick={() => setShowModal(true)}>
-        <Trans i18nKey={'editor.modal.permissions.title'}/>
+      <SidebarButton hide={ hide } className={ className } icon={ 'lock' } onClick={ () => setShowModal(true) }>
+        <Trans i18nKey={ 'editor.modal.permissions.title' }/>
       </SidebarButton>
-      <PermissionModal show={showModal} onHide={() => setShowModal(false)}/>
+      <PermissionModal show={ showModal } onHide={ () => setShowModal(false) }/>
     </Fragment>
   )
 }

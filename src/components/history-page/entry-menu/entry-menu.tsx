@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
@@ -28,9 +28,10 @@ export const EntryMenu: React.FC<EntryMenuProps> = ({ id, title, location, isDar
   useTranslation()
 
   return (
-    <Dropdown className={`d-inline-flex ${className || ''}`}>
-      <Dropdown.Toggle variant={isDark ? 'secondary' : 'light'} id={`dropdown-card-${id}`} className='no-arrow history-menu d-inline-flex align-items-center'>
-        <ForkAwesomeIcon icon="ellipsis-v" fixedWidth={true}/>
+    <Dropdown className={ `d-inline-flex ${ className || '' }` }>
+      <Dropdown.Toggle variant={ isDark ? 'secondary' : 'light' } id={ `dropdown-card-${ id }` }
+                       className='no-arrow history-menu d-inline-flex align-items-center'>
+        <ForkAwesomeIcon icon="ellipsis-v" fixedWidth={ true }/>
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
@@ -39,23 +40,23 @@ export const EntryMenu: React.FC<EntryMenuProps> = ({ id, title, location, isDar
           <Trans i18nKey="landing.history.menu.recentNotes"/>
         </Dropdown.Header>
 
-        <ShowIf condition={location === HistoryEntryOrigin.LOCAL}>
+        <ShowIf condition={ location === HistoryEntryOrigin.LOCAL }>
           <Dropdown.Item disabled>
-            <ForkAwesomeIcon icon="laptop" fixedWidth={true} className="mx-2"/>
+            <ForkAwesomeIcon icon="laptop" fixedWidth={ true } className="mx-2"/>
             <Trans i18nKey="landing.history.menu.entryLocal"/>
           </Dropdown.Item>
         </ShowIf>
-        <ShowIf condition={location === HistoryEntryOrigin.REMOTE}>
+        <ShowIf condition={ location === HistoryEntryOrigin.REMOTE }>
           <Dropdown.Item disabled>
-            <ForkAwesomeIcon icon="cloud" fixedWidth={true} className="mx-2"/>
+            <ForkAwesomeIcon icon="cloud" fixedWidth={ true } className="mx-2"/>
             <Trans i18nKey="landing.history.menu.entryRemote"/>
           </Dropdown.Item>
         </ShowIf>
-        <RemoveNoteEntryItem onConfirm={onRemove} noteTitle={title} />
+        <RemoveNoteEntryItem onConfirm={ onRemove } noteTitle={ title }/>
 
         <Dropdown.Divider/>
 
-        <DeleteNoteItem onConfirm={onDelete} noteTitle={title} />
+        <DeleteNoteItem onConfirm={ onDelete } noteTitle={ title }/>
       </Dropdown.Menu>
     </Dropdown>
   )

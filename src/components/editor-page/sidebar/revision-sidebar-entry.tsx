@@ -10,15 +10,15 @@ import { RevisionModal } from '../document-bar/revisions/revision-modal'
 import { SidebarButton } from './sidebar-button'
 import { SpecificSidebarEntryProps } from './types'
 
-export const RevisionSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({className, hide}) => {
+export const RevisionSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
   const [showModal, setShowModal] = useState(false)
 
   return (
     <Fragment>
-      <SidebarButton hide={hide} className={className} icon={"history"} onClick={() => setShowModal(true)}>
-        <Trans i18nKey={'editor.modal.revision.title'}/>
+      <SidebarButton hide={ hide } className={ className } icon={ 'history' } onClick={ () => setShowModal(true) }>
+        <Trans i18nKey={ 'editor.modal.revision.title' }/>
       </SidebarButton>
-      <RevisionModal show={showModal} onHide={() => setShowModal(false)}/>
+      <RevisionModal show={ showModal } onHide={ () => setShowModal(false) }/>
     </Fragment>
   )
 }

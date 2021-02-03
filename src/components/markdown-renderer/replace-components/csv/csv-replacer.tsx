@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import { DomElement } from 'domhandler'
 import React from 'react'
@@ -10,7 +10,7 @@ import { ComponentReplacer } from '../ComponentReplacer'
 import { CsvTable } from './csv-table'
 
 export class CsvReplacer extends ComponentReplacer {
-  public getReplacement (codeNode: DomElement): React.ReactElement | undefined {
+  public getReplacement(codeNode: DomElement): React.ReactElement | undefined {
     if (codeNode.name !== 'code' || !codeNode.attribs || !codeNode.attribs['data-highlight-language'] || codeNode.attribs['data-highlight-language'] !== 'csv' || !codeNode.children || !codeNode.children[0]) {
       return
     }
@@ -29,6 +29,6 @@ export class CsvReplacer extends ComponentReplacer {
       showHeader = extraInfos[3] !== undefined
     }
 
-    return <CsvTable code={code} delimiter={delimiter} showHeader={showHeader}/>
+    return <CsvTable code={ code } delimiter={ delimiter } showHeader={ showHeader }/>
   }
 }

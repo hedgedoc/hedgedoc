@@ -14,7 +14,7 @@ const allSupportedImages = [
   '![image alt][reference]'
 ]
 
-const imageHint = (editor: Editor): Promise< Hints| null > => {
+const imageHint = (editor: Editor): Promise<Hints | null> => {
   return new Promise((resolve) => {
     const searchTerm = findWordAtCursor(editor)
     const searchResult = wordRegExp.exec(searchTerm.text)

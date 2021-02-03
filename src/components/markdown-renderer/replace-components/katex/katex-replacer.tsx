@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import { DomElement } from 'domhandler'
 import MarkdownIt from 'markdown-it'
@@ -27,15 +27,6 @@ const getNodeIfInlineKatex = (node: DomElement): (DomElement | undefined) => {
 const KaTeX = React.lazy(() => import(/* webpackChunkName: "katex" */ '@matejmazur/react-katex'))
 
 export class KatexReplacer extends ComponentReplacer {
-  public getReplacement (node: DomElement): React.ReactElement | undefined {
-    const katex = getNodeIfKatexBlock(node) || getNodeIfInlineKatex(node)
-    if (katex?.children && katex.children[0]) {
-      const mathJaxContent = katex.children[0]?.data as string
-      const isInline = (katex.attribs?.inline) !== undefined
-      return <KaTeX block={!isInline} math={mathJaxContent} errorColor={'#cc0000'}/>
-    }
-  }
-
   public static readonly markdownItPlugin: MarkdownIt.PluginSimple = mathJax({
     beforeMath: '<app-katex>',
     afterMath: '</app-katex>',
@@ -44,4 +35,13 @@ export class KatexReplacer extends ComponentReplacer {
     beforeDisplayMath: '<app-katex>',
     afterDisplayMath: '</app-katex>'
   })
+
+  public getReplacement(node: DomElement): React.ReactElement | undefined {
+    const katex = getNodeIfKatexBlock(node) || getNodeIfInlineKatex(node)
+    if (katex?.children && katex.children[0]) {
+      const mathJaxContent = katex.children[0]?.data as string
+      const isInline = (katex.attribs?.inline) !== undefined
+      return <KaTeX block={ !isInline } math={ mathJaxContent } errorColor={ '#cc0000' }/>
+    }
+  }
 }

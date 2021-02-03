@@ -9,17 +9,18 @@ import { ComponentReplacer, NativeRenderer, SubNodeTransform } from '../Componen
 
 export const createJumpToMarkClickEventHandler = (id: string) => {
   return (event: React.MouseEvent<HTMLElement, MouseEvent>): void => {
-    document.getElementById(id)?.scrollIntoView()
+    document.getElementById(id)
+            ?.scrollIntoView()
     event.preventDefault()
   }
 }
 
 export class LinkReplacer extends ComponentReplacer {
-  constructor (private baseUrl?: string) {
+  constructor(private baseUrl?: string) {
     super()
   }
 
-  public getReplacement (node: DomElement, subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer): (ReactElement | null | undefined) {
+  public getReplacement(node: DomElement, subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer): (ReactElement | null | undefined) {
     if (node.name !== 'a' || !node.attribs || !node.attribs.href) {
       return undefined
     }
@@ -36,12 +37,12 @@ export class LinkReplacer extends ComponentReplacer {
     }
 
     if (isJumpMark) {
-      return <span onClick={createJumpToMarkClickEventHandler(id)}>
-        {nativeRenderer()}
+      return <span onClick={ createJumpToMarkClickEventHandler(id) }>
+        { nativeRenderer() }
       </span>
     } else {
-      node.attribs.rel = "noreferer noopener"
-      node.attribs.target = "_blank"
+      node.attribs.rel = 'noreferer noopener'
+      node.attribs.target = '_blank'
       return nativeRenderer()
     }
   }

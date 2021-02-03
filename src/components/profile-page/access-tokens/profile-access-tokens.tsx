@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import { DateTime } from 'luxon'
 import React, { ChangeEvent, FormEvent, Fragment, useCallback, useEffect, useMemo, useState } from 'react'
@@ -86,30 +86,31 @@ export const ProfileAccessTokens: React.FC = () => {
           <p className='text-start'><Trans i18nKey='profile.accessTokens.info'/></p>
           <p className='text-start small'><Trans i18nKey='profile.accessTokens.infoDev'/></p>
           <hr/>
-          <ShowIf condition={accessTokens.length === 0 && !error}>
+          <ShowIf condition={ accessTokens.length === 0 && !error }>
             <Trans i18nKey='profile.accessTokens.noTokens'/>
           </ShowIf>
-          <ShowIf condition={error}>
+          <ShowIf condition={ error }>
             <Trans i18nKey='common.errorOccurred'/>
           </ShowIf>
           <ListGroup>
             {
               accessTokens.map((token) => {
                 return (
-                  <ListGroup.Item className='bg-dark' key={token.created}>
+                  <ListGroup.Item className='bg-dark' key={ token.created }>
                     <Row>
                       <Col className='text-start'>
                         { token.label }
                       </Col>
                       <Col className='text-start text-white-50'>
-                        <Trans i18nKey='profile.accessTokens.created' values={{
-                          time: DateTime.fromSeconds(token.created).toRelative({
-                            style: 'short'
-                          })
-                        }}/>
+                        <Trans i18nKey='profile.accessTokens.created' values={ {
+                          time: DateTime.fromSeconds(token.created)
+                                        .toRelative({
+                                          style: 'short'
+                                        })
+                        } }/>
                       </Col>
                       <Col xs='auto'>
-                        <IconButton icon='trash-o' variant='danger' onClick={() => selectForDeletion(token.created)}/>
+                        <IconButton icon='trash-o' variant='danger' onClick={ () => selectForDeletion(token.created) }/>
                       </Col>
                     </Row>
                   </ListGroup.Item>
@@ -118,26 +119,26 @@ export const ProfileAccessTokens: React.FC = () => {
             }
           </ListGroup>
           <hr/>
-          <Form onSubmit={addToken} className='text-left'>
+          <Form onSubmit={ addToken } className='text-left'>
             <Form.Row>
               <Col>
                 <Form.Control
                   type='text'
                   size='sm'
-                  placeholder={t('profile.accessTokens.label')}
-                  value={newTokenLabel}
+                  placeholder={ t('profile.accessTokens.label') }
+                  value={ newTokenLabel }
                   className='bg-dark text-light'
-                  onChange={(event: ChangeEvent<HTMLInputElement>) => setNewTokenLabel(event.target.value)}
-                  isValid={newTokenSubmittable}
+                  onChange={ (event: ChangeEvent<HTMLInputElement>) => setNewTokenLabel(event.target.value) }
+                  isValid={ newTokenSubmittable }
                   required
                 />
               </Col>
-              <Col xs={'auto'}>
+              <Col xs={ 'auto' }>
                 <Button
                   type='submit'
                   variant='primary'
                   size='sm'
-                  disabled={!newTokenSubmittable}>
+                  disabled={ !newTokenSubmittable }>
                   <Trans i18nKey='profile.accessTokens.createToken'/>
                 </Button>
               </Col>
@@ -146,25 +147,26 @@ export const ProfileAccessTokens: React.FC = () => {
         </Card.Body>
       </Card>
 
-      <CommonModal show={showAddedModal} onHide={() => setShowAddedModal(false)} titleI18nKey='profile.modal.addedAccessToken.title'>
+      <CommonModal show={ showAddedModal } onHide={ () => setShowAddedModal(false) }
+                   titleI18nKey='profile.modal.addedAccessToken.title'>
         <Modal.Body>
           <Trans i18nKey='profile.modal.addedAccessToken.message'/>
           <br/>
-          <CopyableField content={newTokenSecret}/>
+          <CopyableField content={ newTokenSecret }/>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='primary' onClick={() => setShowAddedModal(false)}>
+          <Button variant='primary' onClick={ () => setShowAddedModal(false) }>
             <Trans i18nKey='common.close'/>
           </Button>
         </Modal.Footer>
       </CommonModal>
 
       <DeletionModal
-        onConfirm={deleteToken}
-        deletionButtonI18nKey={'common.delete'}
-        show={showDeleteModal}
-        onHide={() => setShowDeleteModal(false)}
-        titleI18nKey={'profile.modal.deleteAccessToken.title'}>
+        onConfirm={ deleteToken }
+        deletionButtonI18nKey={ 'common.delete' }
+        show={ showDeleteModal }
+        onHide={ () => setShowDeleteModal(false) }
+        titleI18nKey={ 'profile.modal.deleteAccessToken.title' }>
         <Trans i18nKey='profile.modal.deleteAccessToken.message'/>
       </DeletionModal>
     </Fragment>

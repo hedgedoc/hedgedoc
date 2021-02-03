@@ -83,9 +83,9 @@ interface DropEvent {
   pageX: number,
   pageY: number,
   dataTransfer: {
-    files: FileList
-    effectAllowed: string
-  } | null
+                  files: FileList
+                  effectAllowed: string
+                } | null
   preventDefault: () => void
 }
 
@@ -201,22 +201,22 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
   }), [t, editorPreferences])
 
   return (
-    <div className={'d-flex flex-column h-100 position-relative'} onMouseEnter={onMakeScrollSource}>
-      <MaxLengthWarningModal show={showMaxLengthWarning} onHide={onMaxLengthHide} maxLength={maxLength}/>
-      <ToolBar editor={editor}/>
+    <div className={ 'd-flex flex-column h-100 position-relative' } onMouseEnter={ onMakeScrollSource }>
+      <MaxLengthWarningModal show={ showMaxLengthWarning } onHide={ onMaxLengthHide } maxLength={ maxLength }/>
+      <ToolBar editor={ editor }/>
       <ControlledCodeMirror
-        className={`overflow-hidden w-100 flex-fill ${ligaturesEnabled ? '' : 'no-ligatures'}`}
-        value={content}
-        options={codeMirrorOptions}
-        onChange={onChange}
-        onPaste={onPaste}
-        onDrop={onDrop}
-        onCursorActivity={onCursorActivity}
-        editorDidMount={onEditorDidMount}
-        onBeforeChange={onBeforeChange}
-        onScroll={onEditorScroll}
+        className={ `overflow-hidden w-100 flex-fill ${ ligaturesEnabled ? '' : 'no-ligatures' }` }
+        value={ content }
+        options={ codeMirrorOptions }
+        onChange={ onChange }
+        onPaste={ onPaste }
+        onDrop={ onDrop }
+        onCursorActivity={ onCursorActivity }
+        editorDidMount={ onEditorDidMount }
+        onBeforeChange={ onBeforeChange }
+        onScroll={ onEditorScroll }
       />
-      <StatusBar {...statusBarInfo} />
+      <StatusBar { ...statusBarInfo } />
     </div>
   )
 }

@@ -16,7 +16,7 @@
 
 import { clientsClaim } from 'workbox-core'
 import { ExpirationPlugin } from 'workbox-expiration'
-import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching'
+import { createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching'
 import { registerRoute } from 'workbox-routing'
 import { StaleWhileRevalidate } from 'workbox-strategies'
 
@@ -80,7 +80,8 @@ registerRoute(
 self.addEventListener('message', (event) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting().catch((e) => console.error(e))
+    self.skipWaiting()
+        .catch((e) => console.error(e))
   }
 })
 

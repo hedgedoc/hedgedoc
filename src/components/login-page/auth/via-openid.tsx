@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { FormEvent, useState } from 'react'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
@@ -20,7 +20,8 @@ export const ViaOpenId: React.FC = () => {
   }
 
   const onFormSubmit = (event: FormEvent) => {
-    doAsyncLogin().catch(() => setError(true))
+    doAsyncLogin()
+      .catch(() => setError(true))
     event.preventDefault()
   }
 
@@ -28,22 +29,22 @@ export const ViaOpenId: React.FC = () => {
     <Card className="bg-dark mb-4">
       <Card.Body>
         <Card.Title>
-          <Trans i18nKey="login.signInVia" values={{ service: 'OpenID' }}/>
+          <Trans i18nKey="login.signInVia" values={ { service: 'OpenID' } }/>
         </Card.Title>
 
-        <Form onSubmit={onFormSubmit}>
+        <Form onSubmit={ onFormSubmit }>
           <Form.Group controlId="openid">
             <Form.Control
-              isInvalid={error}
+              isInvalid={ error }
               type="text"
               size="sm"
-              placeholder={'OpenID'}
-              onChange={(event) => setOpenId(event.currentTarget.value)}
+              placeholder={ 'OpenID' }
+              onChange={ (event) => setOpenId(event.currentTarget.value) }
               className="bg-dark text-light"
             />
           </Form.Group>
 
-          <Alert className="small" show={error} variant="danger">
+          <Alert className="small" show={ error } variant="danger">
             <Trans i18nKey="login.auth.error.openIdLogin"/>
           </Alert>
 

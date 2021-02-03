@@ -15,25 +15,25 @@ export interface CopyToClipboardButtonProps {
   content: string
   size?: 'sm' | 'lg'
   variant?: Variant
-  "data-cy"?: string
+  'data-cy'?: string
 }
 
 export const CopyToClipboardButton: React.FC<CopyToClipboardButtonProps> = ({
-                                                                              content,
-                                                                              size = 'sm',
-                                                                              variant = 'dark',
-                                                                              ...props
-                                                                            }) => {
+  content,
+  size = 'sm',
+  variant = 'dark',
+  ...props
+}) => {
   const { t } = useTranslation()
   const button = useRef<HTMLButtonElement>(null)
 
   return (
     <Fragment>
-      <Button ref={button} size={size} variant={variant} title={t('renderer.highlightCode.copyCode')}
-              data-cy={props["data-cy"]}>
+      <Button ref={ button } size={ size } variant={ variant } title={ t('renderer.highlightCode.copyCode') }
+              data-cy={ props['data-cy'] }>
         <ForkAwesomeIcon icon='files-o'/>
       </Button>
-      <CopyOverlay content={content} clickComponent={button}/>
+      <CopyOverlay content={ content } clickComponent={ button }/>
     </Fragment>
   )
 }

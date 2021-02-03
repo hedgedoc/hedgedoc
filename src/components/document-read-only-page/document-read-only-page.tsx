@@ -38,27 +38,27 @@ export const DocumentReadOnlyPage: React.FC = () => {
   const noteDetails = useSelector((state: ApplicationState) => state.noteDetails)
 
   return (
-    <div className={'d-flex flex-column mvh-100 bg-light'}>
+    <div className={ 'd-flex flex-column mvh-100 bg-light' }>
       <MotdBanner/>
-      <AppBar mode={AppBarMode.BASIC}/>
-      <div className={'container'}>
-        <ErrorWhileLoadingNoteAlert show={error}/>
-        <LoadingNoteAlert show={loading}/>
+      <AppBar mode={ AppBarMode.BASIC }/>
+      <div className={ 'container' }>
+        <ErrorWhileLoadingNoteAlert show={ error }/>
+        <LoadingNoteAlert show={ loading }/>
       </div>
-      <ShowIf condition={!error && !loading}>
+      <ShowIf condition={ !error && !loading }>
         <DocumentInfobar
-          changedAuthor={noteDetails.lastChange.userId ?? ''}
-          changedTime={noteDetails.lastChange.timestamp}
-          createdAuthor={'Test'}
-          createdTime={noteDetails.createTime}
-          editable={true}
-          noteId={id}
-          viewCount={noteDetails.viewCount}
+          changedAuthor={ noteDetails.lastChange.userId ?? '' }
+          changedTime={ noteDetails.lastChange.timestamp }
+          createdAuthor={ 'Test' }
+          createdTime={ noteDetails.createTime }
+          editable={ true }
+          noteId={ id }
+          viewCount={ noteDetails.viewCount }
         />
-        <RenderIframe extraClasses={"flex-fill"}
-                      markdownContent={markdownContent}
-                      onFirstHeadingChange={onFirstHeadingChange}
-                      onFrontmatterChange={onFrontmatterChange}/>
+        <RenderIframe extraClasses={ 'flex-fill' }
+                      markdownContent={ markdownContent }
+                      onFirstHeadingChange={ onFirstHeadingChange }
+                      onFrontmatterChange={ onFrontmatterChange }/>
       </ShowIf>
     </div>
   )

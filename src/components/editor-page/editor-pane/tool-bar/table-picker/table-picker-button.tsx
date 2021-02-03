@@ -23,14 +23,15 @@ export const TablePickerButton: React.FC<TablePickerButtonProps> = ({ editor }) 
   return (
     <Fragment>
       <TablePicker
-        show={showTablePicker}
-        onDismiss={() => setShowTablePicker(false)}
-        onTablePicked={(rows, cols) => {
+        show={ showTablePicker }
+        onDismiss={ () => setShowTablePicker(false) }
+        onTablePicked={ (rows, cols) => {
           setShowTablePicker(false)
           addTable(editor, rows, cols)
-        }}
+        } }
       />
-      <Button data-cy={'show-table-overlay'} variant='light' onClick={() => setShowTablePicker(old => !old)} title={t('editor.editorToolbar.table.title')}>
+      <Button data-cy={ 'show-table-overlay' } variant='light' onClick={ () => setShowTablePicker(old => !old) }
+              title={ t('editor.editorToolbar.table.title') }>
         <ForkAwesomeIcon icon="table"/>
       </Button>
     </Fragment>

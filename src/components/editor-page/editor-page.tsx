@@ -58,7 +58,8 @@ export const EditorPage: React.FC = () => {
 
   useEffect(() => {
     const requestedMode = search.substr(1)
-    const mode = Object.values(EditorMode).find(mode => mode === requestedMode)
+    const mode = Object.values(EditorMode)
+                       .find(mode => mode === requestedMode)
     if (mode) {
       setEditorMode(mode)
     }
@@ -92,37 +93,37 @@ export const EditorPage: React.FC = () => {
   return (
     <Fragment>
       <MotdBanner/>
-      <div className={'d-flex flex-column vh-100'}>
-        <AppBar mode={AppBarMode.EDITOR}/>
+      <div className={ 'd-flex flex-column vh-100' }>
+        <AppBar mode={ AppBarMode.EDITOR }/>
 
-        <div className={'container'}>
-          <ErrorWhileLoadingNoteAlert show={error}/>
-          <LoadingNoteAlert show={loading}/>
+        <div className={ 'container' }>
+          <ErrorWhileLoadingNoteAlert show={ error }/>
+          <LoadingNoteAlert show={ loading }/>
         </div>
-        <ShowIf condition={!error && !loading}>
-          <div className={"flex-fill d-flex h-100 w-100 overflow-hidden flex-row"}>
+        <ShowIf condition={ !error && !loading }>
+          <div className={ 'flex-fill d-flex h-100 w-100 overflow-hidden flex-row' }>
             <Splitter
-              showLeft={editorMode === EditorMode.EDITOR || editorMode === EditorMode.BOTH}
+              showLeft={ editorMode === EditorMode.EDITOR || editorMode === EditorMode.BOTH }
               left={
                 <EditorPane
-                  onContentChange={setNoteMarkdownContent}
-                  content={markdownContent}
-                  scrollState={scrollState.editorScrollState}
-                  onScroll={onEditorScroll}
-                  onMakeScrollSource={setEditorToScrollSource}/>
+                  onContentChange={ setNoteMarkdownContent }
+                  content={ markdownContent }
+                  scrollState={ scrollState.editorScrollState }
+                  onScroll={ onEditorScroll }
+                  onMakeScrollSource={ setEditorToScrollSource }/>
               }
-              showRight={editorMode === EditorMode.PREVIEW || editorMode === EditorMode.BOTH}
+              showRight={ editorMode === EditorMode.PREVIEW || editorMode === EditorMode.BOTH }
               right={
                 <RenderIframe
-                  markdownContent={markdownContent}
-                  onMakeScrollSource={setRendererToScrollSource}
-                  onFirstHeadingChange={updateNoteTitleByFirstHeading}
-                  onTaskCheckedChange={SetCheckboxInMarkdownContent}
-                  onFrontmatterChange={setNoteFrontmatter}
-                  onScroll={onMarkdownRendererScroll}
-                  scrollState={scrollState.rendererScrollState}/>
+                  markdownContent={ markdownContent }
+                  onMakeScrollSource={ setRendererToScrollSource }
+                  onFirstHeadingChange={ updateNoteTitleByFirstHeading }
+                  onTaskCheckedChange={ SetCheckboxInMarkdownContent }
+                  onFrontmatterChange={ setNoteFrontmatter }
+                  onScroll={ onMarkdownRendererScroll }
+                  scrollState={ scrollState.rendererScrollState }/>
               }
-              containerClassName={'overflow-hidden'}/>
+              containerClassName={ 'overflow-hidden' }/>
             <Sidebar/>
           </div>
         </ShowIf>

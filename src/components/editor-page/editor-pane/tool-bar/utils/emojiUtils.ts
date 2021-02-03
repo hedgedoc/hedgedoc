@@ -12,18 +12,18 @@ export const getEmojiIcon = (emoji: EmojiClickEventDetail): string => {
   }
   if (emoji.name) {
     // noinspection CheckTagEmptyBody
-    return `<i class="fa ${emoji.name}"></i>`
+    return `<i class="fa ${ emoji.name }"></i>`
   }
   return ''
 }
 
-export const getEmojiShortCode = (emoji: EmojiClickEventDetail): string|undefined => {
+export const getEmojiShortCode = (emoji: EmojiClickEventDetail): string | undefined => {
   if (!emoji.emoji.shortcodes) {
     return undefined
   }
   let skinToneModifier = ''
   if ((emoji.emoji as NativeEmoji).skins && emoji.skinTone !== 0) {
-    skinToneModifier = `:skin-tone-${emoji.skinTone as number}:`
+    skinToneModifier = `:skin-tone-${ emoji.skinTone as number }:`
   }
-  return `:${emoji.emoji.shortcodes[0]}:${skinToneModifier}`
+  return `:${ emoji.emoji.shortcodes[0] }:${ skinToneModifier }`
 }

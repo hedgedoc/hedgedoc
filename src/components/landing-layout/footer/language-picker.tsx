@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import { Settings } from 'luxon'
 import React, { useCallback } from 'react'
@@ -41,9 +41,11 @@ const languages = {
 }
 
 const findLanguageCode = (wantedLanguage: string): string => {
-  let foundLanguage = Object.keys(languages).find((supportedLanguage) => wantedLanguage === supportedLanguage)
+  let foundLanguage = Object.keys(languages)
+                            .find((supportedLanguage) => wantedLanguage === supportedLanguage)
   if (!foundLanguage) {
-    foundLanguage = Object.keys(languages).find((supportedLanguage) => wantedLanguage.substr(0, 2) === supportedLanguage)
+    foundLanguage = Object.keys(languages)
+                          .find((supportedLanguage) => wantedLanguage.substr(0, 2) === supportedLanguage)
   }
   return foundLanguage || ''
 }
@@ -62,13 +64,14 @@ const LanguagePicker: React.FC = () => {
       as="select"
       size="sm"
       className="mb-2 mx-auto w-auto"
-      value={findLanguageCode(i18n.language)}
-      onChange={onChangeLang()}
+      value={ findLanguageCode(i18n.language) }
+      onChange={ onChangeLang() }
     >
       {
-        Object.entries(languages).map(([language, languageName]) => {
-          return <option key={language} value={language}>{languageName}</option>
-        })
+        Object.entries(languages)
+              .map(([language, languageName]) => {
+                return <option key={ language } value={ language }>{ languageName }</option>
+              })
       }
     </Form.Control>
   )

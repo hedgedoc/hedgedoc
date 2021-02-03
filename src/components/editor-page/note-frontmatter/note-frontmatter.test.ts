@@ -29,13 +29,19 @@ describe('yaml frontmatter tests', () => {
 
   const testFrontmatter = (input: string, expectedRaw: Partial<RawNoteFrontmatter>, expectedFinished: Partial<NoteFrontmatter>) => {
     md.render(input)
-    expect(raw).not.toBe(undefined)
-    expect(raw).toEqual(expectedRaw)
-    expect(finished).not.toBe(undefined)
-    expect(finished).toEqual({
-      ...defaultYAML,
-      ...expectedFinished
-    })
+    expect(raw)
+      .not
+      .toBe(undefined)
+    expect(raw)
+      .toEqual(expectedRaw)
+    expect(finished)
+      .not
+      .toBe(undefined)
+    expect(finished)
+      .toEqual({
+        ...defaultYAML,
+        ...expectedFinished
+      })
   }
 
   beforeEach(() => {
@@ -127,63 +133,63 @@ describe('yaml frontmatter tests', () => {
   })
 
   /*
-  it('slideOptions nothing', () => {
-    testFrontmatter(`---
-    slideOptions:
-    ___
-    `,
-    {
-      slideOptions: null
-    },
-    {
-      slideOptions: {
-        theme: 'white',
-        transition: 'none'
-      }
-    })
-  })
+   it('slideOptions nothing', () => {
+   testFrontmatter(`---
+   slideOptions:
+   ___
+   `,
+   {
+   slideOptions: null
+   },
+   {
+   slideOptions: {
+   theme: 'white',
+   transition: 'none'
+   }
+   })
+   })
 
-  it('slideOptions.theme only', () => {
-    testFrontmatter(`---
-    slideOptions:
-      theme: sky
-    ___
-    `,
-    {
-      slideOptions: {
-        theme: 'sky',
-        transition: undefined
-      }
-    },
-    {
-      slideOptions: {
-        theme: 'sky',
-        transition: 'none'
-      }
-    })
-  })
+   it('slideOptions.theme only', () => {
+   testFrontmatter(`---
+   slideOptions:
+   theme: sky
+   ___
+   `,
+   {
+   slideOptions: {
+   theme: 'sky',
+   transition: undefined
+   }
+   },
+   {
+   slideOptions: {
+   theme: 'sky',
+   transition: 'none'
+   }
+   })
+   })
 
-  it('slideOptions full', () => {
-    testFrontmatter(`---
-    slideOptions:
-      transition: zoom
-      theme: sky
-    ___
-    `,
-    {
-      slideOptions: {
-        theme: 'sky',
-        transition: 'zoom'
-      }
-    },
-    {
-      slideOptions: {
-        theme: 'sky',
-        transition: 'zoom'
-      }
-    })
-  })
-  */
+   it('slideOptions full', () => {
+   testFrontmatter(`---
+   slideOptions:
+   transition: zoom
+   theme: sky
+   ___
+   `,
+   {
+   slideOptions: {
+   theme: 'sky',
+   transition: 'zoom'
+   }
+   },
+   {
+   slideOptions: {
+   theme: 'sky',
+   transition: 'zoom'
+   }
+   })
+   })
+   */
 
   it('opengraph nothing', () => {
     testFrontmatter(`---

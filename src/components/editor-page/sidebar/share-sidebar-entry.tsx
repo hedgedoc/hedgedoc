@@ -10,16 +10,16 @@ import { ShareModal } from '../document-bar/share/share-modal'
 import { SidebarButton } from './sidebar-button'
 import { SpecificSidebarEntryProps } from './types'
 
-export const ShareSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({className, hide}) => {
+export const ShareSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
   const [showModal, setShowModal] = useState(false)
   useTranslation()
 
   return (
     <Fragment>
-      <SidebarButton hide={hide} className={className} icon={"share"} onClick={() => setShowModal(true)}>
-        <Trans i18nKey={'editor.modal.shareLink.title'}/>
+      <SidebarButton hide={ hide } className={ className } icon={ 'share' } onClick={ () => setShowModal(true) }>
+        <Trans i18nKey={ 'editor.modal.shareLink.title' }/>
       </SidebarButton>
-      <ShareModal show={showModal} onHide={() => setShowModal(false)}/>
+      <ShareModal show={ showModal } onHide={ () => setShowModal(false) }/>
     </Fragment>
   )
 }

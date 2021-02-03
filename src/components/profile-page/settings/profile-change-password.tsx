@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
@@ -39,7 +39,7 @@ export const ProfileChangePassword: React.FC = () => {
     <Card className="bg-dark mb-4">
       <Card.Body>
         <Card.Title><Trans i18nKey="profile.changePassword.title"/></Card.Title>
-        <Form onSubmit={updatePasswordSubmit} className="text-left">
+        <Form onSubmit={ updatePasswordSubmit } className="text-left">
           <Form.Group controlId="oldPassword">
             <Form.Label><Trans i18nKey="profile.changePassword.old"/></Form.Label>
             <Form.Control
@@ -47,7 +47,7 @@ export const ProfileChangePassword: React.FC = () => {
               size="sm"
               className="bg-dark text-light"
               required
-              onChange={(event) => setOldPassword(event.target.value)}
+              onChange={ (event) => setOldPassword(event.target.value) }
             />
           </Form.Group>
           <Form.Group controlId="newPassword">
@@ -57,8 +57,8 @@ export const ProfileChangePassword: React.FC = () => {
               size="sm"
               className="bg-dark text-light"
               required
-              onChange={onChangeNewPassword}
-              isValid={newPasswordValid}
+              onChange={ onChangeNewPassword }
+              isValid={ newPasswordValid }
             />
             <Form.Text><Trans i18nKey="profile.changePassword.info"/></Form.Text>
           </Form.Group>
@@ -69,16 +69,16 @@ export const ProfileChangePassword: React.FC = () => {
               size="sm"
               className="bg-dark text-light"
               required
-              onChange={onChangeNewPasswordAgain}
-              isValid={newPasswordAgainValid}
-              isInvalid={newPasswordAgain !== '' && !newPasswordAgainValid}
+              onChange={ onChangeNewPasswordAgain }
+              isValid={ newPasswordAgainValid }
+              isInvalid={ newPasswordAgain !== '' && !newPasswordAgainValid }
             />
           </Form.Group>
 
           <Button
             type="submit"
             variant="primary"
-            disabled={!newPasswordValid || !newPasswordAgainValid}>
+            disabled={ !newPasswordValid || !newPasswordAgainValid }>
             <Trans i18nKey="common.save"/>
           </Button>
         </Form>

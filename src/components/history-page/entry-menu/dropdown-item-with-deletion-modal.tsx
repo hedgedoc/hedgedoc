@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { Fragment, useState } from 'react'
 import { Dropdown } from 'react-bootstrap'
@@ -33,24 +33,24 @@ export const DropdownItemWithDeletionModal: React.FC<DropdownItemWithDeletionMod
 
   return (
     <Fragment>
-      <Dropdown.Item onClick={() => setShowDialog(true)} className={className}>
-        <ForkAwesomeIcon icon={modalIcon} fixedWidth={true} className="mx-2"/>
-        <Trans i18nKey={itemI18nKey}/>
+      <Dropdown.Item onClick={ () => setShowDialog(true) } className={ className }>
+        <ForkAwesomeIcon icon={ modalIcon } fixedWidth={ true } className="mx-2"/>
+        <Trans i18nKey={ itemI18nKey }/>
       </Dropdown.Item>
       <DeletionModal
-        onConfirm={() => {
+        onConfirm={ () => {
           setShowDialog(false)
           onConfirm()
-        }}
-        deletionButtonI18nKey={modalButtonI18nKey}
-        show={showDialog}
-        onHide={() => setShowDialog(false)}
-        titleI18nKey={modalTitleI18nKey}>
-        <h5><Trans i18nKey={modalQuestionI18nKey}/></h5>
+        } }
+        deletionButtonI18nKey={ modalButtonI18nKey }
+        show={ showDialog }
+        onHide={ () => setShowDialog(false) }
+        titleI18nKey={ modalTitleI18nKey }>
+        <h5><Trans i18nKey={ modalQuestionI18nKey }/></h5>
         <ul>
           <li>{ noteTitle }</li>
         </ul>
-        <h6><Trans i18nKey={modalWarningI18nKey}/></h6>
+        <h6><Trans i18nKey={ modalWarningI18nKey }/></h6>
       </DeletionModal>
     </Fragment>
   )

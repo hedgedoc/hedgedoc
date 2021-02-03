@@ -119,9 +119,12 @@ const mockListSelections = (positions: FromTo, empty: boolean): (() => CodeMirro
 
 const expectFromToReplacement = (position: FromTo, expectedReplacement: string, done: () => void): ((replacement: string | string[], from: CodeMirror.Position, to?: CodeMirror.Position) => void) => {
   return (replacement: string | string[], from: CodeMirror.Position, to?: CodeMirror.Position) => {
-    expect(from).toEqual(position.from)
-    expect(to).toEqual(position.to)
-    expect(replacement).toEqual(expectedReplacement)
+    expect(from)
+      .toEqual(position.from)
+    expect(to)
+      .toEqual(position.to)
+    expect(replacement)
+      .toEqual(expectedReplacement)
     done()
   }
 }
@@ -410,18 +413,19 @@ describe('test addHeaderLevel', () => {
   const { cursor, firstLine, multiline, multilineOffset } = buildRanges()
 
   const noHeading = testContent.split('\n')[0]
-  const firstHeading = `# ${noHeading}`
-  const secondHeading = `## ${noHeading}`
+  const firstHeading = `# ${ noHeading }`
+  const secondHeading = `## ${ noHeading }`
 
   const firstLineNoHeading = testContent.split('\n')[1]
-  const firstLineFirstHeading = `# ${firstLineNoHeading}`
+  const firstLineFirstHeading = `# ${ firstLineNoHeading }`
 
   it('no heading before', done => {
     const editor = buildEditor({
       getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(firstHeading)
+        expect(replacement)
+          .toEqual(firstHeading)
         done()
       },
       getLine: (): string => (noHeading)
@@ -434,7 +438,8 @@ describe('test addHeaderLevel', () => {
       getCursor: () => cursor.from,
       listSelections: mockListSelections(cursor, true),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(secondHeading)
+        expect(replacement)
+          .toEqual(secondHeading)
         done()
       },
       getLine: (): string => (firstHeading)
@@ -447,7 +452,8 @@ describe('test addHeaderLevel', () => {
       getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(firstLineFirstHeading)
+        expect(replacement)
+          .toEqual(firstLineFirstHeading)
         done()
       },
       getLine: (): string => (firstLineNoHeading)
@@ -460,7 +466,8 @@ describe('test addHeaderLevel', () => {
       getCursor: () => cursor.from,
       listSelections: mockListSelections(multiline, false),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(firstLineFirstHeading)
+        expect(replacement)
+          .toEqual(firstLineFirstHeading)
         done()
       },
       getLine: (): string => (firstLineNoHeading)
@@ -473,7 +480,8 @@ describe('test addHeaderLevel', () => {
       getCursor: () => cursor.from,
       listSelections: mockListSelections(multilineOffset, false),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(firstLineFirstHeading)
+        expect(replacement)
+          .toEqual(firstLineFirstHeading)
         done()
       },
       getLine: (): string => (firstLineNoHeading)
@@ -492,7 +500,8 @@ describe('test addCodeFences', () => {
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => '',
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('```\n\n```')
+        expect(replacement)
+          .toEqual('```\n\n```')
         done()
       }
     })
@@ -506,7 +515,8 @@ describe('test addCodeFences', () => {
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => '1st line',
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('```\n1st line\n```')
+        expect(replacement)
+          .toEqual('```\n1st line\n```')
         done()
       }
     })
@@ -555,7 +565,8 @@ describe('test addQuotes', () => {
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(`> ${textFirstLine}`)
+        expect(replacement)
+          .toEqual(`> ${ textFirstLine }`)
         done()
       }
     })
@@ -568,7 +579,7 @@ describe('test addQuotes', () => {
       getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
-      replaceRange: expectFromToReplacement(firstLine, `> ${textFirstLine}`, done)
+      replaceRange: expectFromToReplacement(firstLine, `> ${ textFirstLine }`, done)
     })
     addQuotes(editor)
   })
@@ -602,7 +613,8 @@ describe('test unordered list', () => {
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(`- ${textFirstLine}`)
+        expect(replacement)
+          .toEqual(`- ${ textFirstLine }`)
         done()
       }
     })
@@ -614,7 +626,7 @@ describe('test unordered list', () => {
       getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
-      replaceRange: expectFromToReplacement(firstLine, `- ${textFirstLine}`, done)
+      replaceRange: expectFromToReplacement(firstLine, `- ${ textFirstLine }`, done)
     })
     addList(editor)
   })
@@ -625,7 +637,8 @@ describe('test unordered list', () => {
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('- 2nd line3rd line')
+        expect(replacement)
+          .toEqual('- 2nd line3rd line')
         done()
       }
     })
@@ -638,7 +651,8 @@ describe('test unordered list', () => {
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('- line3rd ')
+        expect(replacement)
+          .toEqual('- line3rd ')
         done()
       }
     })
@@ -655,7 +669,8 @@ describe('test ordered list', () => {
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(`1. ${textFirstLine}`)
+        expect(replacement)
+          .toEqual(`1. ${ textFirstLine }`)
         done()
       }
     })
@@ -667,7 +682,7 @@ describe('test ordered list', () => {
       getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
-      replaceRange: expectFromToReplacement(firstLine, `1. ${textFirstLine}`, done)
+      replaceRange: expectFromToReplacement(firstLine, `1. ${ textFirstLine }`, done)
     })
     addOrderedList(editor)
   })
@@ -678,7 +693,8 @@ describe('test ordered list', () => {
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('1. 2nd line3rd line')
+        expect(replacement)
+          .toEqual('1. 2nd line3rd line')
         done()
       }
     })
@@ -691,7 +707,8 @@ describe('test ordered list', () => {
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('1. line3rd ')
+        expect(replacement)
+          .toEqual('1. line3rd ')
         done()
       }
     })
@@ -709,7 +726,8 @@ describe('test todo list', () => {
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(`- [ ] ${textFirstLine}`)
+        expect(replacement)
+          .toEqual(`- [ ] ${ textFirstLine }`)
         done()
       }
     })
@@ -721,7 +739,7 @@ describe('test todo list', () => {
       getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
-      replaceRange: expectFromToReplacement(firstLine, `- [ ] ${textFirstLine}`, done)
+      replaceRange: expectFromToReplacement(firstLine, `- [ ] ${ textFirstLine }`, done)
     })
     addTaskList(editor)
   })
@@ -732,7 +750,8 @@ describe('test todo list', () => {
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('- [ ] 2nd line3rd line')
+        expect(replacement)
+          .toEqual('- [ ] 2nd line3rd line')
         done()
       }
     })
@@ -745,7 +764,8 @@ describe('test todo list', () => {
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('- [ ] line3rd ')
+        expect(replacement)
+          .toEqual('- [ ] line3rd ')
         done()
       }
     })
@@ -764,7 +784,8 @@ describe('test addLink', () => {
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('[](https://)')
+        expect(replacement)
+          .toEqual('[](https://)')
         done()
       }
     })
@@ -776,7 +797,7 @@ describe('test addLink', () => {
       getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
-      replaceRange: expectFromToReplacement(firstLine, `[${textFirstLine}](https://)`, done)
+      replaceRange: expectFromToReplacement(firstLine, `[${ textFirstLine }](https://)`, done)
     })
     addLink(editor)
   })
@@ -787,7 +808,8 @@ describe('test addLink', () => {
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('[2nd line3rd line](https://)')
+        expect(replacement)
+          .toEqual('[2nd line3rd line](https://)')
         done()
       }
     })
@@ -800,7 +822,8 @@ describe('test addLink', () => {
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('[line3rd ](https://)')
+        expect(replacement)
+          .toEqual('[line3rd ](https://)')
         done()
       }
     })
@@ -819,7 +842,8 @@ describe('test addImage', () => {
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('![](https://)')
+        expect(replacement)
+          .toEqual('![](https://)')
         done()
       }
     })
@@ -831,7 +855,7 @@ describe('test addImage', () => {
       getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
-      replaceRange: expectFromToReplacement(firstLine, `![${textFirstLine}](https://)`, done)
+      replaceRange: expectFromToReplacement(firstLine, `![${ textFirstLine }](https://)`, done)
     })
     addImage(editor)
   })
@@ -842,7 +866,8 @@ describe('test addImage', () => {
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('![2nd line3rd line](https://)')
+        expect(replacement)
+          .toEqual('![2nd line3rd line](https://)')
         done()
       }
     })
@@ -855,7 +880,8 @@ describe('test addImage', () => {
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('![line3rd ](https://)')
+        expect(replacement)
+          .toEqual('![line3rd ](https://)')
         done()
       }
     })
@@ -874,7 +900,8 @@ describe('test addLine', () => {
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(`${textFirstLine}\n----`)
+        expect(replacement)
+          .toEqual(`${ textFirstLine }\n----`)
         done()
       }
     })
@@ -886,7 +913,7 @@ describe('test addLine', () => {
       getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
-      replaceRange: expectFromToReplacement(firstLine, `${textFirstLine}\n----`, done)
+      replaceRange: expectFromToReplacement(firstLine, `${ textFirstLine }\n----`, done)
     })
     addLine(editor)
   })
@@ -897,7 +924,8 @@ describe('test addLine', () => {
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('2nd line\n----')
+        expect(replacement)
+          .toEqual('2nd line\n----')
         done()
       }
     })
@@ -910,7 +938,8 @@ describe('test addLine', () => {
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('2nd line\n----')
+        expect(replacement)
+          .toEqual('2nd line\n----')
         done()
       }
     })
@@ -929,7 +958,8 @@ describe('test collapsable block', () => {
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(`${textFirstLine}\n:::spoiler Toggle label\n  Toggled content\n:::`)
+        expect(replacement)
+          .toEqual(`${ textFirstLine }\n:::spoiler Toggle label\n  Toggled content\n:::`)
         done()
       }
     })
@@ -941,7 +971,7 @@ describe('test collapsable block', () => {
       getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
-      replaceRange: expectFromToReplacement(firstLine, `${textFirstLine}\n:::spoiler Toggle label\n  Toggled content\n:::`, done)
+      replaceRange: expectFromToReplacement(firstLine, `${ textFirstLine }\n:::spoiler Toggle label\n  Toggled content\n:::`, done)
     })
     addCollapsableBlock(editor)
   })
@@ -952,7 +982,8 @@ describe('test collapsable block', () => {
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('2nd line\n:::spoiler Toggle label\n  Toggled content\n:::')
+        expect(replacement)
+          .toEqual('2nd line\n:::spoiler Toggle label\n  Toggled content\n:::')
         done()
       }
     })
@@ -965,7 +996,8 @@ describe('test collapsable block', () => {
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('2nd line\n:::spoiler Toggle label\n  Toggled content\n:::')
+        expect(replacement)
+          .toEqual('2nd line\n:::spoiler Toggle label\n  Toggled content\n:::')
         done()
       }
     })
@@ -984,7 +1016,8 @@ describe('test addComment', () => {
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(`${textFirstLine}\n> []`)
+        expect(replacement)
+          .toEqual(`${ textFirstLine }\n> []`)
         done()
       }
     })
@@ -996,7 +1029,7 @@ describe('test addComment', () => {
       getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
-      replaceRange: expectFromToReplacement(firstLine, `${textFirstLine}\n> []`, done)
+      replaceRange: expectFromToReplacement(firstLine, `${ textFirstLine }\n> []`, done)
     })
     addComment(editor)
   })
@@ -1007,7 +1040,8 @@ describe('test addComment', () => {
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('2nd line\n> []')
+        expect(replacement)
+          .toEqual('2nd line\n> []')
         done()
       }
     })
@@ -1020,7 +1054,8 @@ describe('test addComment', () => {
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual('2nd line\n> []')
+        expect(replacement)
+          .toEqual('2nd line\n> []')
         done()
       }
     })
@@ -1039,7 +1074,8 @@ describe('test addTable', () => {
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(`${textFirstLine}\n${table}`)
+        expect(replacement)
+          .toEqual(`${ textFirstLine }\n${ table }`)
         done()
       }
     })
@@ -1051,7 +1087,7 @@ describe('test addTable', () => {
       getCursor: () => cursor.from,
       listSelections: mockListSelections(firstLine, false),
       getLine: (): string => (textFirstLine),
-      replaceRange: expectFromToReplacement(firstLine, `${textFirstLine}\n${table}`, done)
+      replaceRange: expectFromToReplacement(firstLine, `${ textFirstLine }\n${ table }`, done)
     })
     addTable(editor, 1, 3)
   })
@@ -1062,7 +1098,8 @@ describe('test addTable', () => {
       listSelections: mockListSelections(multiline, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(`2nd line\n${table}`)
+        expect(replacement)
+          .toEqual(`2nd line\n${ table }`)
         done()
       }
     })
@@ -1075,7 +1112,8 @@ describe('test addTable', () => {
       listSelections: mockListSelections(multilineOffset, false),
       getLine: (): string => '2nd line',
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(`2nd line\n${table}`)
+        expect(replacement)
+          .toEqual(`2nd line\n${ table }`)
         done()
       }
     })
@@ -1112,7 +1150,8 @@ describe('test addEmoji with native emoji', () => {
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(':1234:')
+        expect(replacement)
+          .toEqual(':1234:')
         done()
       }
     })
@@ -1173,7 +1212,8 @@ describe('test addEmoji with native emoji', () => {
       listSelections: mockListSelections(cursor, true),
       getLine: (): string => (textFirstLine),
       replaceRange: (replacement: string | string[]) => {
-        expect(replacement).toEqual(forkAwesomeIcon)
+        expect(replacement)
+          .toEqual(forkAwesomeIcon)
         done()
       }
     })

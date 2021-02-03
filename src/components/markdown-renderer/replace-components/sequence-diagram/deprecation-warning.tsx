@@ -14,12 +14,12 @@ export const DeprecationWarning: React.FC = () => {
   useTranslation()
 
   return (
-    <Alert data-cy={'yaml'} className={'mt-2'} variant={'warning'}>
-      <span className={'text-wrap'}>
-        <Trans i18nKey={'renderer.sequence.deprecationWarning'}/>
+    <Alert data-cy={ 'yaml' } className={ 'mt-2' } variant={ 'warning' }>
+      <span className={ 'text-wrap' }>
+        <Trans i18nKey={ 'renderer.sequence.deprecationWarning' }/>
       </span>
       <br/>
-      <TranslatedExternalLink i18nKey={'common.readForMoreInfo'} className={'text-primary'} href={links.faq}/>
+      <TranslatedExternalLink i18nKey={ 'common.readForMoreInfo' } className={ 'text-primary' } href={ links.faq }/>
     </Alert>
   )
 }

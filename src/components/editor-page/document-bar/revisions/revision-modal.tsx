@@ -36,61 +36,66 @@ export const RevisionModal: React.FC<PermissionsModalProps> = ({ show, onHide })
   const { id } = useParams<{ id: string }>()
 
   useEffect(() => {
-    getAllRevisions(id).then(fetchedRevisions => {
-      fetchedRevisions.forEach(revision => {
-        const authorData = getUserDataForRevision(revision.authors)
-        revisionAuthorListMap.current.set(revision.timestamp, authorData)
+    getAllRevisions(id)
+      .then(fetchedRevisions => {
+        fetchedRevisions.forEach(revision => {
+          const authorData = getUserDataForRevision(revision.authors)
+          revisionAuthorListMap.current.set(revision.timestamp, authorData)
+        })
+        setRevisions(fetchedRevisions)
+        if (fetchedRevisions.length >= 1) {
+          setSelectedRevisionTimestamp(fetchedRevisions[0].timestamp)
+        }
       })
-      setRevisions(fetchedRevisions)
-      if (fetchedRevisions.length >= 1) {
-        setSelectedRevisionTimestamp(fetchedRevisions[0].timestamp)
-      }
-    }).catch(() => setError(true))
+      .catch(() => setError(true))
   }, [setRevisions, setError, id])
 
   useEffect(() => {
     if (selectedRevisionTimestamp === null) {
       return
     }
-    getRevision(id, selectedRevisionTimestamp).then(fetchedRevision => {
-      setSelectedRevision(fetchedRevision)
-    }).catch(() => setError(true))
+    getRevision(id, selectedRevisionTimestamp)
+      .then(fetchedRevision => {
+        setSelectedRevision(fetchedRevision)
+      })
+      .catch(() => setError(true))
   }, [selectedRevisionTimestamp, id])
 
   const markdownContent = useNoteMarkdownContent()
 
   return (
-    <CommonModal show={show} onHide={onHide} titleI18nKey={'editor.modal.revision.title'} icon={'history'} closeButton={true} size={'xl'} additionalClasses='revision-modal'>
+    <CommonModal show={ show } onHide={ onHide } titleI18nKey={ 'editor.modal.revision.title' } icon={ 'history' }
+                 closeButton={ true } size={ 'xl' } additionalClasses='revision-modal'>
       <Modal.Body>
         <Row>
-          <Col lg={4} className={'scroll-col'}>
+          <Col lg={ 4 } className={ 'scroll-col' }>
             <ListGroup as='ul'>
               {
                 revisions.map((revision, revisionIndex) => (
                   <RevisionModalListEntry
-                    key={revisionIndex}
-                    active={selectedRevisionTimestamp === revision.timestamp}
-                    revision={revision}
-                    revisionAuthorListMap={revisionAuthorListMap.current}
-                    onClick={() => setSelectedRevisionTimestamp(revision.timestamp)}
+                    key={ revisionIndex }
+                    active={ selectedRevisionTimestamp === revision.timestamp }
+                    revision={ revision }
+                    revisionAuthorListMap={ revisionAuthorListMap.current }
+                    onClick={ () => setSelectedRevisionTimestamp(revision.timestamp) }
                   />
                 ))
               }
             </ListGroup>
           </Col>
-          <Col lg={8} className={'scroll-col'}>
-            <ShowIf condition={error}>
+          <Col lg={ 8 } className={ 'scroll-col' }>
+            <ShowIf condition={ error }>
               <Alert variant='danger'>
                 <Trans i18nKey='editor.modal.revision.error'/>
               </Alert>
             </ShowIf>
-            <ShowIf condition={!error && !!selectedRevision}>
+            <ShowIf condition={ !error && !!selectedRevision }>
               <ReactDiffViewer
-                oldValue={selectedRevision?.content}
-                newValue={markdownContent}
-                splitView={false}
-                compareMethod={DiffMethod.WORDS}
-                useDarkTheme={darkModeEnabled}
+                oldValue={ selectedRevision?.content }
+                newValue={ markdownContent }
+                splitView={ false }
+                compareMethod={ DiffMethod.WORDS }
+                useDarkTheme={ darkModeEnabled }
               />
             </ShowIf>
           </Col>
@@ -99,20 +104,20 @@ export const RevisionModal: React.FC<PermissionsModalProps> = ({ show, onHide })
       <Modal.Footer>
         <Button
           variant='secondary'
-          onClick={onHide}>
-          <Trans i18nKey={'common.close'}/>
+          onClick={ onHide }>
+          <Trans i18nKey={ 'common.close' }/>
         </Button>
         <Button
           variant='danger'
-          disabled={!selectedRevisionTimestamp}
-          onClick={() => window.alert('Not yet implemented. Requires websocket.')}>
-          <Trans i18nKey={'editor.modal.revision.revertButton'}/>
+          disabled={ !selectedRevisionTimestamp }
+          onClick={ () => window.alert('Not yet implemented. Requires websocket.') }>
+          <Trans i18nKey={ 'editor.modal.revision.revertButton' }/>
         </Button>
         <Button
           variant='primary'
-          disabled={!selectedRevisionTimestamp}
-          onClick={() => downloadRevision(id, selectedRevision)}>
-          <Trans i18nKey={'editor.modal.revision.download'}/>
+          disabled={ !selectedRevisionTimestamp }
+          onClick={ () => downloadRevision(id, selectedRevision) }>
+          <Trans i18nKey={ 'editor.modal.revision.download' }/>
         </Button>
       </Modal.Footer>
     </CommonModal>

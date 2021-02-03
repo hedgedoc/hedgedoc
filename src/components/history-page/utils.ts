@@ -6,26 +6,22 @@
 
 import { DateTime } from 'luxon'
 import { SortModeEnum } from './sort-button/sort-button'
-import {
-  HistoryEntry,
-  HistoryEntryOrigin,
-  LocatedHistoryEntry
-} from './history-page'
+import { HistoryEntry, HistoryEntryOrigin, LocatedHistoryEntry } from './history-page'
 import { HistoryToolbarState } from './history-toolbar/history-toolbar'
 
-export function collectEntries (localEntries: HistoryEntry[], remoteEntries: HistoryEntry[]): LocatedHistoryEntry[] {
+export function collectEntries(localEntries: HistoryEntry[], remoteEntries: HistoryEntry[]): LocatedHistoryEntry[] {
   const locatedLocalEntries = locateEntries(localEntries, HistoryEntryOrigin.LOCAL)
   const locatedRemoteEntries = locateEntries(remoteEntries, HistoryEntryOrigin.REMOTE)
   return mergeEntryArrays(locatedLocalEntries, locatedRemoteEntries)
 }
 
-export function sortAndFilterEntries (entries: LocatedHistoryEntry[], toolbarState: HistoryToolbarState): LocatedHistoryEntry[] {
+export function sortAndFilterEntries(entries: LocatedHistoryEntry[], toolbarState: HistoryToolbarState): LocatedHistoryEntry[] {
   const filteredBySelectedTagsEntries = filterBySelectedTags(entries, toolbarState.selectedTags)
   const filteredByKeywordSearchEntries = filterByKeywordSearch(filteredBySelectedTagsEntries, toolbarState.keywordSearch)
   return sortEntries(filteredByKeywordSearchEntries, toolbarState)
 }
 
-function locateEntries (entries: HistoryEntry[], location: HistoryEntryOrigin): LocatedHistoryEntry[] {
+function locateEntries(entries: HistoryEntry[], location: HistoryEntryOrigin): LocatedHistoryEntry[] {
   return entries.map(entry => {
     return {
       ...entry,
@@ -34,7 +30,7 @@ function locateEntries (entries: HistoryEntry[], location: HistoryEntryOrigin): 
   })
 }
 
-export function mergeEntryArrays<T extends HistoryEntry> (localEntries: T[], remoteEntries: T[]): T[] {
+export function mergeEntryArrays<T extends HistoryEntry>(localEntries: T[], remoteEntries: T[]): T[] {
   const filteredLocalEntries = localEntries.filter(localEntry => {
     const entry = remoteEntries.find(remoteEntry => remoteEntry.id === localEntry.id)
     return !entry
@@ -43,14 +39,14 @@ export function mergeEntryArrays<T extends HistoryEntry> (localEntries: T[], rem
   return filteredLocalEntries.concat(remoteEntries)
 }
 
-function filterBySelectedTags (entries: LocatedHistoryEntry[], selectedTags: string[]): LocatedHistoryEntry[] {
+function filterBySelectedTags(entries: LocatedHistoryEntry[], selectedTags: string[]): LocatedHistoryEntry[] {
   return entries.filter(entry => {
-    return (selectedTags.length === 0 || arrayCommonCheck(entry.tags, selectedTags))
-  }
+      return (selectedTags.length === 0 || arrayCommonCheck(entry.tags, selectedTags))
+    }
   )
 }
 
-function arrayCommonCheck<T> (array1: T[], array2: T[]): boolean {
+function arrayCommonCheck<T>(array1: T[], array2: T[]): boolean {
   const foundElement = array1.find((element1) =>
     array2.find((element2) =>
       element2 === element1
@@ -59,12 +55,13 @@ function arrayCommonCheck<T> (array1: T[], array2: T[]): boolean {
   return !!foundElement
 }
 
-function filterByKeywordSearch (entries: LocatedHistoryEntry[], keywords: string): LocatedHistoryEntry[] {
+function filterByKeywordSearch(entries: LocatedHistoryEntry[], keywords: string): LocatedHistoryEntry[] {
   const searchTerm = keywords.toLowerCase()
-  return entries.filter(entry => entry.title.toLowerCase().includes(searchTerm))
+  return entries.filter(entry => entry.title.toLowerCase()
+                                      .includes(searchTerm))
 }
 
-function sortEntries (entries: LocatedHistoryEntry[], viewState: HistoryToolbarState): LocatedHistoryEntry[] {
+function sortEntries(entries: LocatedHistoryEntry[], viewState: HistoryToolbarState): LocatedHistoryEntry[] {
   return entries.sort((firstEntry, secondEntry) => {
     if (firstEntry.pinned && !secondEntry.pinned) {
       return -1
@@ -90,8 +87,9 @@ function sortEntries (entries: LocatedHistoryEntry[], viewState: HistoryToolbarS
   })
 }
 
-export function formatHistoryDate (date: string): string {
-  return DateTime.fromISO(date).toFormat('DDDD T')
+export function formatHistoryDate(date: string): string {
+  return DateTime.fromISO(date)
+                 .toFormat('DDDD T')
 }
 
 export interface V1HistoryEntry {
@@ -102,19 +100,20 @@ export interface V1HistoryEntry {
   pinned: boolean;
 }
 
-export function convertV1History (oldHistory: V1HistoryEntry[]): HistoryEntry[] {
+export function convertV1History(oldHistory: V1HistoryEntry[]): HistoryEntry[] {
   return oldHistory.map((entry: V1HistoryEntry) => {
     return {
       id: entry.id,
       title: entry.text,
-      lastVisited: DateTime.fromMillis(entry.time).toISO(),
+      lastVisited: DateTime.fromMillis(entry.time)
+                           .toISO(),
       tags: entry.tags,
       pinned: entry.pinned
     }
   })
 }
 
-export function loadHistoryFromLocalStore (): HistoryEntry[] {
+export function loadHistoryFromLocalStore(): HistoryEntry[] {
   const historyJsonString = window.localStorage.getItem('history')
 
   if (!historyJsonString) {
@@ -128,6 +127,6 @@ export function loadHistoryFromLocalStore (): HistoryEntry[] {
   }
 }
 
-export function setHistoryToLocalStore (entries: HistoryEntry[]): void {
+export function setHistoryToLocalStore(entries: HistoryEntry[]): void {
   window.localStorage.setItem('history', JSON.stringify(entries))
 }

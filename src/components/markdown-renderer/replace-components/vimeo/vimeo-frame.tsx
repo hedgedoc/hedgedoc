@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { useCallback } from 'react'
 import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
@@ -19,7 +19,7 @@ export interface VimeoFrameProps {
 
 export const VimeoFrame: React.FC<VimeoFrameProps> = ({ id }) => {
   const getPreviewImageLink = useCallback(async () => {
-    const response = await fetch(`https://vimeo.com/api/v2/video/${id}.json`, {
+    const response = await fetch(`https://vimeo.com/api/v2/video/${ id }.json`, {
       credentials: 'omit',
       referrerPolicy: 'no-referrer'
     })
@@ -36,11 +36,13 @@ export const VimeoFrame: React.FC<VimeoFrameProps> = ({ id }) => {
   }, [id])
 
   return (
-    <OneClickEmbedding containerClassName={'embed-responsive embed-responsive-16by9'} previewContainerClassName={'embed-responsive-item'} loadingImageUrl={'https://i.vimeocdn.com/video/'} hoverIcon={'vimeo-square'}
-      onImageFetch={getPreviewImageLink}>
-      <iframe className='embed-responsive-item' title={`vimeo video of ${id}`}
-        src={`https://player.vimeo.com/video/${id}?autoplay=1`}
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"/>
+    <OneClickEmbedding containerClassName={ 'embed-responsive embed-responsive-16by9' }
+                       previewContainerClassName={ 'embed-responsive-item' }
+                       loadingImageUrl={ 'https://i.vimeocdn.com/video/' } hoverIcon={ 'vimeo-square' }
+                       onImageFetch={ getPreviewImageLink }>
+      <iframe className='embed-responsive-item' title={ `vimeo video of ${ id }` }
+              src={ `https://player.vimeo.com/video/${ id }?autoplay=1` }
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"/>
     </OneClickEmbedding>
   )
 }

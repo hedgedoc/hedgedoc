@@ -24,7 +24,9 @@ describe('Banner', () => {
       .find('.fa-times')
       .click()
       .then(() => {
-        expect(localStorage.getItem('bannerTimeStamp')).to.equal(banner.timestamp)
+        expect(localStorage.getItem('bannerTimeStamp'))
+          .to
+          .equal(banner.timestamp)
       })
     cy.get('.alert-primary.show')
       .should('not.exist')

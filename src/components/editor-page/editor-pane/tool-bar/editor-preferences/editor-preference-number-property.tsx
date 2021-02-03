@@ -5,7 +5,7 @@
  */
 
 import { EditorConfiguration } from 'codemirror'
-import equal from "fast-deep-equal"
+import equal from 'fast-deep-equal'
 import React, { ChangeEvent, useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../../../../redux'
@@ -29,6 +29,7 @@ export const EditorPreferenceNumberProperty: React.FC<EditorPreferenceNumberProp
   }, [property])
 
   return (
-    <EditorPreferenceInput onChange={selectItem} property={property} type={EditorPreferenceInputType.NUMBER} value={preference}/>
+    <EditorPreferenceInput onChange={ selectItem } property={ property } type={ EditorPreferenceInputType.NUMBER }
+                           value={ preference }/>
   )
 }

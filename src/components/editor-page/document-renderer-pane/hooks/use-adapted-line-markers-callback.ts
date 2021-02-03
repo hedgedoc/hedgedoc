@@ -8,8 +8,8 @@ import { RefObject, useCallback } from 'react'
 import { LineMarkerPosition } from '../../../markdown-renderer/types'
 
 export const useAdaptedLineMarkerCallback = (documentRenderPaneRef: RefObject<HTMLDivElement> | undefined,
-                                             rendererRef: RefObject<HTMLDivElement>,
-                                             onLineMarkerPositionChanged: ((lineMarkerPosition: LineMarkerPosition[]) => void) | undefined): ((lineMarkerPosition: LineMarkerPosition[]) => void) => {
+  rendererRef: RefObject<HTMLDivElement>,
+  onLineMarkerPositionChanged: ((lineMarkerPosition: LineMarkerPosition[]) => void) | undefined): ((lineMarkerPosition: LineMarkerPosition[]) => void) => {
   return useCallback((linkMarkerPositions) => {
     if (!onLineMarkerPositionChanged || !documentRenderPaneRef || !documentRenderPaneRef.current || !rendererRef.current) {
       return

@@ -18,6 +18,6 @@ export interface ActiveIndicatorProps {
 
 export const ActiveIndicator: React.FC<ActiveIndicatorProps> = ({ status }) => {
   return (
-    <span className={`activeIndicator ${status}`}/>
+    <span className={ `activeIndicator ${ status }` }/>
   )
 }

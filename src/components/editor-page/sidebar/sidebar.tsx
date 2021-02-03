@@ -14,7 +14,7 @@ import { PermissionsSidebarEntry } from './permissions-sidebar-entry'
 import { PinNoteSidebarEntry } from './pin-note-sidebar-entry'
 import { RevisionSidebarEntry } from './revision-sidebar-entry'
 import { ShareSidebarEntry } from './share-sidebar-entry'
-import "./style/theme.scss"
+import './style/theme.scss'
 import { DocumentSidebarMenuSelection } from './types'
 import { UsersOnlineSidebarMenu } from './users-online-sidebar-menu/users-online-sidebar-menu'
 
@@ -36,19 +36,19 @@ export const Sidebar: React.FC = () => {
 
   return (
     <div className="slide-sidebar">
-      <div ref={sideBarRef} className={`sidebar-inner ${selectionIsNotNone ? 'show' : ''}`}>
-        <UsersOnlineSidebarMenu menuId={DocumentSidebarMenuSelection.USERS_ONLINE}
-                                selectedMenuId={selectedMenu} onClick={toggleValue}/>
-        <DocumentInfoSidebarEntry hide={selectionIsNotNone}/>
-        <RevisionSidebarEntry hide={selectionIsNotNone}/>
-        <PermissionsSidebarEntry hide={selectionIsNotNone}/>
-        <ImportMenuSidebarMenu menuId={DocumentSidebarMenuSelection.IMPORT}
-                               selectedMenuId={selectedMenu} onClick={toggleValue}/>
-        <ExportMenuSidebarMenu menuId={DocumentSidebarMenuSelection.EXPORT}
-                               selectedMenuId={selectedMenu} onClick={toggleValue}/>
-        <ShareSidebarEntry hide={selectionIsNotNone}/>
-        <DeleteNoteSidebarEntry hide={selectionIsNotNone}/>
-        <PinNoteSidebarEntry hide={selectionIsNotNone}/>
+      <div ref={ sideBarRef } className={ `sidebar-inner ${ selectionIsNotNone ? 'show' : '' }` }>
+        <UsersOnlineSidebarMenu menuId={ DocumentSidebarMenuSelection.USERS_ONLINE }
+                                selectedMenuId={ selectedMenu } onClick={ toggleValue }/>
+        <DocumentInfoSidebarEntry hide={ selectionIsNotNone }/>
+        <RevisionSidebarEntry hide={ selectionIsNotNone }/>
+        <PermissionsSidebarEntry hide={ selectionIsNotNone }/>
+        <ImportMenuSidebarMenu menuId={ DocumentSidebarMenuSelection.IMPORT }
+                               selectedMenuId={ selectedMenu } onClick={ toggleValue }/>
+        <ExportMenuSidebarMenu menuId={ DocumentSidebarMenuSelection.EXPORT }
+                               selectedMenuId={ selectedMenu } onClick={ toggleValue }/>
+        <ShareSidebarEntry hide={ selectionIsNotNone }/>
+        <DeleteNoteSidebarEntry hide={ selectionIsNotNone }/>
+        <PinNoteSidebarEntry hide={ selectionIsNotNone }/>
       </div>
     </div>
   )

@@ -26,18 +26,18 @@ const emojiSkinToneModifierMap = [1, 2, 3, 4, 5]
   .reduce((reduceObject, modifierValue) => {
     const lightSkinCode = 127995
     const codepoint = lightSkinCode + (modifierValue - 1)
-    const shortcode = `skin-tone-${modifierValue}`
-    reduceObject[shortcode] = `&#${codepoint};`
+    const shortcode = `skin-tone-${ modifierValue }`
+    reduceObject[shortcode] = `&#${ codepoint };`
     return reduceObject
   }, {} as ShortCodeMap)
 
 const forkAwesomeIconMap = Object.keys(ForkAwesomeIcons)
-  .reduce((reduceObject, icon) => {
-    const shortcode = `fa-${icon}`
-    // noinspection CheckTagEmptyBody
-    reduceObject[shortcode] = `<i class="fa fa-${icon}"></i>`
-    return reduceObject
-  }, {} as ShortCodeMap)
+                                 .reduce((reduceObject, icon) => {
+                                   const shortcode = `fa-${ icon }`
+                                   // noinspection CheckTagEmptyBody
+                                   reduceObject[shortcode] = `<i class="fa fa-${ icon }"></i>`
+                                   return reduceObject
+                                 }, {} as ShortCodeMap)
 
 export const combinedEmojiData = {
   ...shortCodeMap,

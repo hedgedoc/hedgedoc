@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { Fragment, useState } from 'react'
 import { Alert, Row } from 'react-bootstrap'
@@ -31,12 +31,12 @@ export interface HistoryEntryProps {
 }
 
 export interface HistoryEntriesProps {
-    entries: LocatedHistoryEntry[]
-    onPinClick: OnEntryClick
-    onRemoveClick: OnEntryClick
-    onDeleteClick: OnEntryClick
-    pageIndex: number
-    onLastPageIndexChange: (lastPageIndex: number) => void
+  entries: LocatedHistoryEntry[]
+  onPinClick: OnEntryClick
+  onRemoveClick: OnEntryClick
+  onDeleteClick: OnEntryClick
+  pageIndex: number
+  onLastPageIndexChange: (lastPageIndex: number) => void
 }
 
 export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entries, onPinClick, onRemoveClick, onDeleteClick }) => {
@@ -46,9 +46,9 @@ export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entri
 
   if (entries.length === 0) {
     return (
-      <Row className={'justify-content-center'}>
-        <Alert variant={'secondary'}>
-          <Trans i18nKey={'landing.history.noHistory'}/>
+      <Row className={ 'justify-content-center' }>
+        <Alert variant={ 'secondary' }>
+          <Trans i18nKey={ 'landing.history.noHistory' }/>
         </Alert>
       </Row>
     )
@@ -57,29 +57,29 @@ export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entri
   const mapViewStateToComponent = (viewState: ViewStateEnum) => {
     switch (viewState) {
       case ViewStateEnum.TABLE:
-        return <HistoryTable entries={entries}
-          onPinClick={onPinClick}
-          onRemoveClick={onRemoveClick}
-          onDeleteClick={onDeleteClick}
-          pageIndex={pageIndex}
-          onLastPageIndexChange={setLastPageIndex}/>
+        return <HistoryTable entries={ entries }
+                             onPinClick={ onPinClick }
+                             onRemoveClick={ onRemoveClick }
+                             onDeleteClick={ onDeleteClick }
+                             pageIndex={ pageIndex }
+                             onLastPageIndexChange={ setLastPageIndex }/>
       case ViewStateEnum.CARD:
       default:
-        return <HistoryCardList entries={entries}
-          onPinClick={onPinClick}
-          onRemoveClick={onRemoveClick}
-          onDeleteClick={onDeleteClick}
-          pageIndex={pageIndex}
-          onLastPageIndexChange={setLastPageIndex}/>
+        return <HistoryCardList entries={ entries }
+                                onPinClick={ onPinClick }
+                                onRemoveClick={ onRemoveClick }
+                                onDeleteClick={ onDeleteClick }
+                                pageIndex={ pageIndex }
+                                onLastPageIndexChange={ setLastPageIndex }/>
     }
   }
 
   return (
     <Fragment>
-      {mapViewStateToComponent(viewState)}
+      { mapViewStateToComponent(viewState) }
       <Row className="justify-content-center">
-        <PagerPagination numberOfPageButtonsToShowAfterAndBeforeCurrent={2} lastPageIndex={lastPageIndex}
-          onPageChange={setPageIndex}/>
+        <PagerPagination numberOfPageButtonsToShowAfterAndBeforeCurrent={ 2 } lastPageIndex={ lastPageIndex }
+                         onPageChange={ setPageIndex }/>
       </Row>
     </Fragment>)
 }

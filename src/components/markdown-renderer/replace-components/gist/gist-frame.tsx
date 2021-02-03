@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import './gist-frame.scss'
@@ -29,7 +29,7 @@ export const GistFrame: React.FC<GistFrameProps> = ({ id }) => {
           </style>
           <script type="text/javascript">
             function doLoad() {
-                window.parent.postMessage({eventType: 'gistResize', size: document.body.scrollHeight, id: '${id}'}, '*')
+                window.parent.postMessage({eventType: 'gistResize', size: document.body.scrollHeight, id: '${ id }'}, '*')
                 tweakLinks();
             }
             function tweakLinks() {
@@ -41,7 +41,7 @@ export const GistFrame: React.FC<GistFrameProps> = ({ id }) => {
           </script>
         </head>
         <body onload="doLoad()">
-          <script type="text/javascript" src="https://gist.github.com/${id}.js"></script>
+          <script type="text/javascript" src="https://gist.github.com/${ id }.js"></script>
         </body>
       </html>`)
   }, [id])
@@ -67,9 +67,9 @@ export const GistFrame: React.FC<GistFrameProps> = ({ id }) => {
     <iframe
       sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups"
       width='100%'
-      height={`${frameHeight}px`}
+      height={ `${ frameHeight }px` }
       frameBorder='0'
-      title={`gist ${id}`}
-      src={`data:text/html;base64,${btoa(iframeHtml)}`}/>
+      title={ `gist ${ id }` }
+      src={ `data:text/html;base64,${ btoa(iframeHtml) }` }/>
   )
 }

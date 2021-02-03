@@ -27,7 +27,7 @@ import { VimeoReplacer } from '../replace-components/vimeo/vimeo-replacer'
 import { YoutubeReplacer } from '../replace-components/youtube/youtube-replacer'
 
 export const useReplacerInstanceListCreator = (onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void,
-                                               onImageClick?: ImageClickHandler, baseUrl?: string): () => ComponentReplacer[] => useMemo(() =>
+  onImageClick?: ImageClickHandler, baseUrl?: string): () => ComponentReplacer[] => useMemo(() =>
   () => [
     new LinkReplacer(baseUrl),
     new LinemarkerReplacer(),

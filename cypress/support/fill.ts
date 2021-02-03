@@ -11,8 +11,9 @@ declare namespace Cypress {
      * Custom command to fill an input field with text and trigger a change event.
      * @example cy.get(input).fill('content')
      */
-    fill (value: string): Chainable<Element>
-    codemirrorFill (value: string): Chainable<Element>
+    fill(value: string): Chainable<Element>
+
+    codemirrorFill(value: string): Chainable<Element>
   }
 }
 
@@ -20,17 +21,18 @@ Cypress.Commands.add('fill', {
   prevSubject: 'element'
 }, (subject, value) => {
   return cy.wrap(subject)
-    .invoke('val', value)
-    .trigger('change', { force: true })
+           .invoke('val', value)
+           .trigger('change', { force: true })
 })
 
 Cypress.Commands.add('codemirrorFill', (content: string) => {
-  const line = content.split("\n").find(value => value !== '');
+  const line = content.split('\n')
+                      .find(value => value !== '')
   cy.get('.CodeMirror')
     .click()
     .get('textarea')
     .fill(content)
-  if(line) {
+  if (line) {
     cy.get('.CodeMirror')
       .contains('.CodeMirror-line', line)
   }

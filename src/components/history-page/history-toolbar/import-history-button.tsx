@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { useRef, useState } from 'react'
 import { Button } from 'react-bootstrap'
@@ -74,21 +74,21 @@ export const ImportHistoryButton: React.FC<ImportHistoryButtonProps> = ({ onImpo
 
   return (
     <div>
-      <input type='file' className="d-none" accept=".json" onChange={handleUpload} ref={uploadInput}/>
-      <Button variant={'light'}
-        title={t('landing.history.toolbar.import')}
-        onClick={() => uploadInput.current?.click()}
+      <input type='file' className="d-none" accept=".json" onChange={ handleUpload } ref={ uploadInput }/>
+      <Button variant={ 'light' }
+              title={ t('landing.history.toolbar.import') }
+              onClick={ () => uploadInput.current?.click() }
       >
         <ForkAwesomeIcon icon='upload'/>
       </Button>
       <ErrorModal
-        show={show}
-        onHide={handleClose}
+        show={ show }
+        onHide={ handleClose }
         titleI18nKey='landing.history.modal.importHistoryError.title'
         icon='exclamation-circle'
       >
         <h5>
-          <Trans i18nKey={i18nKey} values={fileName !== '' ? { fileName: fileName } : {}}/>
+          <Trans i18nKey={ i18nKey } values={ fileName !== '' ? { fileName: fileName } : {} }/>
         </h5>
       </ErrorModal>
     </div>

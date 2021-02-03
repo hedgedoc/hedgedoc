@@ -64,14 +64,16 @@ describe('Links Intro', () => {
 
   describe('Menu Buttons logged in', () => {
     it('New note', () => {
-      cy.get('.d-inline-flex.btn-primary').click()
+      cy.get('.d-inline-flex.btn-primary')
+        .click()
       cy.url()
         .should('include', '/new')
     })
 
     describe('User Menu', () => {
       beforeEach(() => {
-        cy.get('#dropdown-user').click()
+        cy.get('#dropdown-user')
+          .click()
       })
 
       it('Features', () => {

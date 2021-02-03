@@ -24,6 +24,6 @@ export const getApiUrl = (): string => {
 
 export const expectResponseCode = (response: Response, code = 200): void => {
   if (response.status !== code) {
-    throw new Error(`response code is not ${code}`)
+    throw new Error(`response code is not ${ code }`)
   }
 }

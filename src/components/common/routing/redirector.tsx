@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { useEffect, useState } from 'react'
 import { Redirect } from 'react-router'
@@ -27,7 +27,7 @@ export const Redirector: React.FC = () => {
   if (error) {
     return (<NotFoundErrorScreen/>)
   } else if (!error && error != null) {
-    return (<Redirect to={`/n/${id}`}/>)
+    return (<Redirect to={ `/n/${ id }` }/>)
   } else {
     return (<span>Loading</span>)
   }

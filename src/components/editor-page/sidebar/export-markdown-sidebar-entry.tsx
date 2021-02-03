@@ -19,8 +19,8 @@ export const ExportMarkdownSidebarEntry: React.FC = () => {
   }, [markdownContent])
 
   return (
-    <SidebarButton data-cy={"menu-export-markdown"} onClick={onClick} icon={'file-text'}>
-      <Trans i18nKey={'editor.export.markdown-file'}/>
+    <SidebarButton data-cy={ 'menu-export-markdown' } onClick={ onClick } icon={ 'file-text' }>
+      <Trans i18nKey={ 'editor.export.markdown-file' }/>
     </SidebarButton>
   )
 }

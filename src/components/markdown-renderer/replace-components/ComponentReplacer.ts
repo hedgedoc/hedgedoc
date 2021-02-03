@@ -15,5 +15,5 @@ export type NativeRenderer = () => ReactElement
 export type MarkdownItPlugin = MarkdownIt.PluginSimple | MarkdownIt.PluginWithOptions | MarkdownIt.PluginWithParams
 
 export abstract class ComponentReplacer {
-  public abstract getReplacement (node: DomElement, subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer): (ReactElement | null | undefined);
+  public abstract getReplacement(node: DomElement, subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer): (ReactElement | null | undefined);
 }

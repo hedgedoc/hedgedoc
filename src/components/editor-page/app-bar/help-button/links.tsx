@@ -18,15 +18,15 @@ export const Links: React.FC = () => {
 
   const backendIssueTracker = useSelector((state: ApplicationState) => state.config.version.issueTrackerUrl)
   return (
-    <Row className={'justify-content-center pt-4'}>
-      <Col lg={4}>
+    <Row className={ 'justify-content-center pt-4' }>
+      <Col lg={ 4 }>
         <h3><Trans i18nKey='editor.help.contacts.title'/></h3>
         <div>
           <ul className="list-unstyled">
             <li>
               <TranslatedExternalLink
                 i18nKey='editor.help.contacts.community'
-                href={links.community}
+                href={ links.community }
                 icon='users'
                 className='text-primary'
               />
@@ -34,8 +34,8 @@ export const Links: React.FC = () => {
             <li>
               <TranslatedExternalLink
                 i18nKey='editor.help.contacts.meetUsOn'
-                i18nOption={{ service: 'Matrix' }}
-                href={links.chat}
+                i18nOption={ { service: 'Matrix' } }
+                href={ links.chat }
                 icon='hashtag'
                 className='text-primary'
               />
@@ -43,7 +43,7 @@ export const Links: React.FC = () => {
             <li>
               <TranslatedExternalLink
                 i18nKey='editor.help.contacts.reportIssue'
-                href={backendIssueTracker}
+                href={ backendIssueTracker }
                 icon='tag'
                 className='text-primary'
               />
@@ -51,7 +51,7 @@ export const Links: React.FC = () => {
             <li>
               <TranslatedExternalLink
                 i18nKey='editor.help.contacts.helpTranslating'
-                href={links.translate}
+                href={ links.translate }
                 icon='language'
                 className='text-primary'
               />
@@ -59,7 +59,7 @@ export const Links: React.FC = () => {
           </ul>
         </div>
       </Col>
-      <Col lg={4}>
+      <Col lg={ 4 }>
         <h3><Trans i18nKey='editor.help.documents.title'/></h3>
         <div>
           <ul className="list-unstyled">

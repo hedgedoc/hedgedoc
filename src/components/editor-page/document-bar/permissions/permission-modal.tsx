@@ -69,22 +69,26 @@ export const PermissionModal: React.FC<PermissionsModalProps> = ({ show, onHide 
 
   useEffect(() => {
     // set owner
-    getUserById(permissionsApiResponse.owner).then(response => {
-      setOwner({
-        name: response.name,
-        photo: response.photo
+    getUserById(permissionsApiResponse.owner)
+      .then(response => {
+        setOwner({
+          name: response.name,
+          photo: response.photo
+        })
       })
-    }).catch(() => setError(true))
+      .catch(() => setError(true))
     // set user List
     permissionsApiResponse.sharedTo.forEach(shareUser => {
-      getUserById(shareUser.username).then(response => {
-        setUserList(list => list.concat([{
-          id: response.id,
-          name: response.name,
-          photo: response.photo,
-          canEdit: shareUser.canEdit
-        }]))
-      }).catch(() => setError(true))
+      getUserById(shareUser.username)
+        .then(response => {
+          setUserList(list => list.concat([{
+            id: response.id,
+            name: response.name,
+            photo: response.photo,
+            canEdit: shareUser.canEdit
+          }]))
+        })
+        .catch(() => setError(true))
     })
     // set group List
     permissionsApiResponse.sharedToGroup.forEach(sharedGroup => {
@@ -122,45 +126,45 @@ export const PermissionModal: React.FC<PermissionsModalProps> = ({ show, onHide 
 
   return (
     <CommonModal
-      show={show}
-      onHide={onHide}
-      closeButton={true}
-      titleI18nKey={'editor.modal.permissions.title'}>
+      show={ show }
+      onHide={ onHide }
+      closeButton={ true }
+      titleI18nKey={ 'editor.modal.permissions.title' }>
       <Modal.Body>
-        <h5 className={'mb-3'}><Trans i18nKey={'editor.modal.permissions.owner'}/></h5>
-        <ShowIf condition={error}>
+        <h5 className={ 'mb-3' }><Trans i18nKey={ 'editor.modal.permissions.owner' }/></h5>
+        <ShowIf condition={ error }>
           <Alert variant='danger'>
             <Trans i18nKey='editor.modal.permissions.error'/>
           </Alert>
         </ShowIf>
-        <ul className={'list-group'}>
-          <li className={'list-group-item d-flex flex-row align-items-center'}>
-            <UserAvatar name={owner?.name ?? ''} photo={owner?.photo ?? ''}/>
+        <ul className={ 'list-group' }>
+          <li className={ 'list-group-item d-flex flex-row align-items-center' }>
+            <UserAvatar name={ owner?.name ?? '' } photo={ owner?.photo ?? '' }/>
           </li>
         </ul>
-        <h5 className={'my-3'}><Trans i18nKey={'editor.modal.permissions.sharedWithUsers'}/></h5>
+        <h5 className={ 'my-3' }><Trans i18nKey={ 'editor.modal.permissions.sharedWithUsers' }/></h5>
         <PermissionList
-          list={userList}
-          identifier={entry => (<UserAvatar name={entry.name} photo={entry.photo}/>)}
-          changeEditMode={changeUserMode}
-          removeEntry={removeUser}
-          createEntry={addUser}
-          editI18nKey={'editor.modal.permissions.editUser'}
-          viewI18nKey={'editor.modal.permissions.viewOnlyUser'}
-          removeI18nKey={'editor.modal.permissions.removeUser'}
-          addI18nKey={'editor.modal.permissions.addUser'}
+          list={ userList }
+          identifier={ entry => (<UserAvatar name={ entry.name } photo={ entry.photo }/>) }
+          changeEditMode={ changeUserMode }
+          removeEntry={ removeUser }
+          createEntry={ addUser }
+          editI18nKey={ 'editor.modal.permissions.editUser' }
+          viewI18nKey={ 'editor.modal.permissions.viewOnlyUser' }
+          removeI18nKey={ 'editor.modal.permissions.removeUser' }
+          addI18nKey={ 'editor.modal.permissions.addUser' }
         />
-        <h5 className={'my-3'}><Trans i18nKey={'editor.modal.permissions.sharedWithGroups'}/></h5>
-        <ul className={'list-group'}>
+        <h5 className={ 'my-3' }><Trans i18nKey={ 'editor.modal.permissions.sharedWithGroups' }/></h5>
+        <ul className={ 'list-group' }>
           <PermissionGroupEntry
-            title={'editor.modal.permissions.allUser'}
-            editMode={allUserPermissions}
-            onChangeEditMode={setAllUserPermissions}
+            title={ 'editor.modal.permissions.allUser' }
+            editMode={ allUserPermissions }
+            onChangeEditMode={ setAllUserPermissions }
           />
           <PermissionGroupEntry
-            title={'editor.modal.permissions.allLoggedInUser'}
-            editMode={allLoggedInUserPermissions}
-            onChangeEditMode={setAllLoggedInUserPermissions}
+            title={ 'editor.modal.permissions.allLoggedInUser' }
+            editMode={ allLoggedInUserPermissions }
+            onChangeEditMode={ setAllLoggedInUserPermissions }
           />
         </ul>
       </Modal.Body>

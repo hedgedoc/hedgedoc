@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { Row } from 'react-bootstrap'
@@ -96,7 +96,7 @@ export const HistoryPage: React.FC = () => {
       version: 2,
       entries: mergeEntryArrays(localHistoryEntries, remoteHistoryEntries)
     }
-    download(JSON.stringify(dataObject), `history_${(new Date()).getTime()}.json`, 'application/json')
+    download(JSON.stringify(dataObject), `history_${ (new Date()).getTime() }.json`, 'application/json')
   }, [localHistoryEntries, remoteHistoryEntries])
 
   const clearHistory = useCallback(() => {
@@ -164,7 +164,7 @@ export const HistoryPage: React.FC = () => {
       }
       updateHistoryEntry(entryId, changedEntry)
         .then(() => setRemoteHistoryEntries((entries) => (
-          entries.map((entry) => {
+            entries.map((entry) => {
               if (entry.id === entryId) {
                 entry.pinned = !entry.pinned
               }
@@ -186,44 +186,44 @@ export const HistoryPage: React.FC = () => {
 
   const tags = useMemo<string[]>(() => {
     return allEntries.map(entry => entry.tags)
-      .reduce((a, b) => ([...a, ...b]), [])
-      .filter((value, index, array) => {
-        if (index === 0) {
-          return true
-        }
-        return (value !== array[index - 1])
-      })
+                     .reduce((a, b) => ([...a, ...b]), [])
+                     .filter((value, index, array) => {
+                       if (index === 0) {
+                         return true
+                       }
+                       return (value !== array[index - 1])
+                     })
   }, [allEntries])
 
   const entriesToShow = useMemo<LocatedHistoryEntry[]>(() =>
-    sortAndFilterEntries(allEntries, toolbarState),
-  [allEntries, toolbarState])
+      sortAndFilterEntries(allEntries, toolbarState),
+    [allEntries, toolbarState])
 
   return <Fragment>
-    <ErrorModal show={error !== ''} onHide={resetError}
-      titleI18nKey={error !== '' ? `landing.history.error.${error}.title` : ''}>
+    <ErrorModal show={ error !== '' } onHide={ resetError }
+                titleI18nKey={ error !== '' ? `landing.history.error.${ error }.title` : '' }>
       <h5>
-        <Trans i18nKey={error !== '' ? `landing.history.error.${error}.text` : ''}/>
+        <Trans i18nKey={ error !== '' ? `landing.history.error.${ error }.text` : '' }/>
       </h5>
     </ErrorModal>
     <h1 className="mb-4"><Trans i18nKey="landing.navigation.history"/></h1>
-    <Row className={'justify-content-center mt-5 mb-3'}>
+    <Row className={ 'justify-content-center mt-5 mb-3' }>
       <HistoryToolbar
-        onSettingsChange={setToolbarState}
-        tags={tags}
-        onClearHistory={clearHistory}
-        onRefreshHistory={refreshHistory}
-        onExportHistory={exportHistory}
-        onImportHistory={importHistory}
-        onUploadAll={uploadAll}
+        onSettingsChange={ setToolbarState }
+        tags={ tags }
+        onClearHistory={ clearHistory }
+        onRefreshHistory={ refreshHistory }
+        onExportHistory={ exportHistory }
+        onImportHistory={ importHistory }
+        onUploadAll={ uploadAll }
       />
     </Row>
     <HistoryContent
-      viewState={toolbarState.viewState}
-      entries={entriesToShow}
-      onPinClick={pinClick}
-      onRemoveClick={removeFromHistoryClick}
-      onDeleteClick={deleteNoteClick}
+      viewState={ toolbarState.viewState }
+      entries={ entriesToShow }
+      onPinClick={ pinClick }
+      onRemoveClick={ removeFromHistoryClick }
+      onDeleteClick={ deleteNoteClick }
     />
   </Fragment>
 }

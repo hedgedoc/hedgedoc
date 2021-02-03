@@ -7,7 +7,7 @@
 describe('The status bar text length info', () => {
   const warningTestContent = ('0123456789'.repeat(10))
   const dangerTestContent = ('0123456789'.repeat(20))
-  const tooMuchTestContent = `${dangerTestContent}a`
+  const tooMuchTestContent = `${ dangerTestContent }a`
 
   beforeEach(() => {
     cy.visitTestEditor()

@@ -37,64 +37,64 @@ export const PermissionList: React.FC<PermissionListProps> = ({ list, identifier
   }
 
   return (
-    <ul className={'list-group'}>
-      {list.map(entry => (
-        <li key={entry.id} className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
-          {identifier(entry)}
+    <ul className={ 'list-group' }>
+      { list.map(entry => (
+        <li key={ entry.id } className={ 'list-group-item d-flex flex-row justify-content-between align-items-center' }>
+          { identifier(entry) }
           <div>
             <Button
               variant='light'
-              className={'text-danger mr-2'}
-              title={t(removeI18nKey, { name: entry.name })}
-              onClick={() => removeEntry(entry.id)}
+              className={ 'text-danger mr-2' }
+              title={ t(removeI18nKey, { name: entry.name }) }
+              onClick={ () => removeEntry(entry.id) }
             >
-              <ForkAwesomeIcon icon={'times'}/>
+              <ForkAwesomeIcon icon={ 'times' }/>
             </Button>
             <ToggleButtonGroup
               type='radio'
               name='edit-mode'
-              value={entry.canEdit ? EditMode.EDIT : EditMode.VIEW}
-              onChange={(value: EditMode) => changeEditMode(entry.id, value === EditMode.EDIT)}
+              value={ entry.canEdit ? EditMode.EDIT : EditMode.VIEW }
+              onChange={ (value: EditMode) => changeEditMode(entry.id, value === EditMode.EDIT) }
             >
               <ToggleButton
-                title={ t(viewI18nKey, { name: entry.name })}
-                variant={'light'}
-                className={'text-secondary'}
-                value={EditMode.VIEW}
+                title={ t(viewI18nKey, { name: entry.name }) }
+                variant={ 'light' }
+                className={ 'text-secondary' }
+                value={ EditMode.VIEW }
               >
                 <ForkAwesomeIcon icon='eye'/>
               </ToggleButton>
               <ToggleButton
-                title={t(editI18nKey, { name: entry.name })}
-                variant={'light'}
-                className={'text-secondary'}
-                value={EditMode.EDIT}
+                title={ t(editI18nKey, { name: entry.name }) }
+                variant={ 'light' }
+                className={ 'text-secondary' }
+                value={ EditMode.EDIT }
               >
                 <ForkAwesomeIcon icon='pencil'/>
               </ToggleButton>
             </ToggleButtonGroup>
           </div>
         </li>
-      ))}
-      <li className={'list-group-item'}>
-        <form onSubmit={event => {
+      )) }
+      <li className={ 'list-group-item' }>
+        <form onSubmit={ event => {
           event.preventDefault()
           addEntry()
-        }}>
-          <InputGroup className={'mr-1 mb-1'}>
+        } }>
+          <InputGroup className={ 'mr-1 mb-1' }>
             <FormControl
-              value={newEntry}
-              placeholder={t(addI18nKey)}
-              aria-label={t(addI18nKey)}
-              onChange={event => setNewEntry(event.currentTarget.value)}
+              value={ newEntry }
+              placeholder={ t(addI18nKey) }
+              aria-label={ t(addI18nKey) }
+              onChange={ event => setNewEntry(event.currentTarget.value) }
             />
             <Button
               variant='light'
-              className={'text-secondary ml-2'}
-              title={t(addI18nKey)}
-              onClick={addEntry}
+              className={ 'text-secondary ml-2' }
+              title={ t(addI18nKey) }
+              onClick={ addEntry }
             >
-              <ForkAwesomeIcon icon={'plus'}/>
+              <ForkAwesomeIcon icon={ 'plus' }/>
             </Button>
           </InputGroup>
         </form>

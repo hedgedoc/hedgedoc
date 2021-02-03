@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { Alert } from 'react-bootstrap'
@@ -17,13 +17,13 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ failedTitle }) => 
   return (
     <div className="loader middle text-light overflow-hidden">
       <div className="mb-3 text-light">
-        <span className={`d-block ${failedTitle ? 'animation-shake' : 'animation-jump'}`}>
-          <HedgeDocLogo size={HedgeDocLogoSize.BIG}/>
+        <span className={ `d-block ${ failedTitle ? 'animation-shake' : 'animation-jump' }` }>
+          <HedgeDocLogo size={ HedgeDocLogoSize.BIG }/>
         </span>
       </div>
-      <ShowIf condition={!!failedTitle}>
-        <Alert variant={'danger'}>
-          The task '{failedTitle}' failed.<br/>
+      <ShowIf condition={ !!failedTitle }>
+        <Alert variant={ 'danger' }>
+          The task '{ failedTitle }' failed.<br/>
           For further information look into the browser console.
         </Alert>
       </ShowIf>

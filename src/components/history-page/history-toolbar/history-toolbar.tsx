@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Button, Form, FormControl, InputGroup, ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
@@ -90,57 +90,61 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
   }, [onSettingsChange, state])
 
   return (
-    <Form inline={true}>
-      <InputGroup className={'mr-1 mb-1'}>
-        <Typeahead id={'tagsSelection'} options={tags} multiple={true} placeholder={t('landing.history.toolbar.selectTags')}
-          onChange={selectedTagsChanged}/>
+    <Form inline={ true }>
+      <InputGroup className={ 'mr-1 mb-1' }>
+        <Typeahead id={ 'tagsSelection' } options={ tags } multiple={ true }
+                   placeholder={ t('landing.history.toolbar.selectTags') }
+                   onChange={ selectedTagsChanged }/>
       </InputGroup>
-      <InputGroup className={'mr-1 mb-1'}>
+      <InputGroup className={ 'mr-1 mb-1' }>
         <FormControl
-          placeholder={t('landing.history.toolbar.searchKeywords')}
-          aria-label={t('landing.history.toolbar.searchKeywords')}
-          onChange={keywordSearchChanged}
+          placeholder={ t('landing.history.toolbar.searchKeywords') }
+          aria-label={ t('landing.history.toolbar.searchKeywords') }
+          onChange={ keywordSearchChanged }
         />
       </InputGroup>
-      <InputGroup className={'mr-1 mb-1'}>
-        <SortButton onDirectionChange={titleSortChanged} direction={state.titleSortDirection} variant={'light'}><Trans
-          i18nKey={'landing.history.toolbar.sortByTitle'}/></SortButton>
+      <InputGroup className={ 'mr-1 mb-1' }>
+        <SortButton onDirectionChange={ titleSortChanged } direction={ state.titleSortDirection }
+                    variant={ 'light' }><Trans
+          i18nKey={ 'landing.history.toolbar.sortByTitle' }/></SortButton>
       </InputGroup>
-      <InputGroup className={'mr-1 mb-1'}>
-        <SortButton onDirectionChange={lastVisitedSortChanged} direction={state.lastVisitedSortDirection}
-          variant={'light'}><Trans i18nKey={'landing.history.toolbar.sortByLastVisited'}/></SortButton>
+      <InputGroup className={ 'mr-1 mb-1' }>
+        <SortButton onDirectionChange={ lastVisitedSortChanged } direction={ state.lastVisitedSortDirection }
+                    variant={ 'light' }><Trans i18nKey={ 'landing.history.toolbar.sortByLastVisited' }/></SortButton>
       </InputGroup>
-      <InputGroup className={'mr-1 mb-1'}>
-        <ExportHistoryButton onExportHistory={onExportHistory}/>
+      <InputGroup className={ 'mr-1 mb-1' }>
+        <ExportHistoryButton onExportHistory={ onExportHistory }/>
       </InputGroup>
-      <InputGroup className={'mr-1 mb-1'}>
-        <ImportHistoryButton onImportHistory={onImportHistory}/>
+      <InputGroup className={ 'mr-1 mb-1' }>
+        <ImportHistoryButton onImportHistory={ onImportHistory }/>
       </InputGroup>
-      <InputGroup className={'mr-1 mb-1'}>
-        <ClearHistoryButton onClearHistory={onClearHistory}/>
+      <InputGroup className={ 'mr-1 mb-1' }>
+        <ClearHistoryButton onClearHistory={ onClearHistory }/>
       </InputGroup>
-      <InputGroup className={'mr-1 mb-1'}>
-        <Button variant={'light'} title={t('landing.history.toolbar.refresh')} onClick={onRefreshHistory}>
+      <InputGroup className={ 'mr-1 mb-1' }>
+        <Button variant={ 'light' } title={ t('landing.history.toolbar.refresh') } onClick={ onRefreshHistory }>
           <ForkAwesomeIcon icon='refresh'/>
         </Button>
       </InputGroup>
-      <ShowIf condition={userExists}>
-        <InputGroup className={'mr-1 mb-1'}>
-          <Button variant={'light'} title={t('landing.history.toolbar.uploadAll')} onClick={onUploadAll}>
+      <ShowIf condition={ userExists }>
+        <InputGroup className={ 'mr-1 mb-1' }>
+          <Button variant={ 'light' } title={ t('landing.history.toolbar.uploadAll') } onClick={ onUploadAll }>
             <ForkAwesomeIcon icon='cloud-upload'/>
           </Button>
         </InputGroup>
       </ShowIf>
-      <InputGroup className={'mr-1 mb-1'}>
-        <ToggleButtonGroup type="radio" name="options" dir='ltr' value={state.viewState} className={'button-height'}
-          onChange={(newViewState: ViewStateEnum) => {
-            toggleViewChanged(newViewState)
-          }}>
-          <ToggleButton className={'btn-light'} value={ViewStateEnum.CARD} title={t('landing.history.toolbar.cards')}>
-            <ForkAwesomeIcon icon={'sticky-note'} className={'fa-fix-line-height'}/>
+      <InputGroup className={ 'mr-1 mb-1' }>
+        <ToggleButtonGroup type="radio" name="options" dir='ltr' value={ state.viewState } className={ 'button-height' }
+                           onChange={ (newViewState: ViewStateEnum) => {
+                             toggleViewChanged(newViewState)
+                           } }>
+          <ToggleButton className={ 'btn-light' } value={ ViewStateEnum.CARD }
+                        title={ t('landing.history.toolbar.cards') }>
+            <ForkAwesomeIcon icon={ 'sticky-note' } className={ 'fa-fix-line-height' }/>
           </ToggleButton>
-          <ToggleButton className={'btn-light'} value={ViewStateEnum.TABLE} title={t('landing.history.toolbar.table')}>
-            <ForkAwesomeIcon icon={'table'} className={'fa-fix-line-height'}/>
+          <ToggleButton className={ 'btn-light' } value={ ViewStateEnum.TABLE }
+                        title={ t('landing.history.toolbar.table') }>
+            <ForkAwesomeIcon icon={ 'table' } className={ 'fa-fix-line-height' }/>
           </ToggleButton>
         </ToggleButtonGroup>
       </InputGroup>

@@ -29,32 +29,33 @@ export const ExportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = (
 
   return (
     <Fragment>
-      <SidebarButton data-cy={"menu-export"} hide={hide} icon={expand ? "arrow-left" : "cloud-download"}
-                     className={className} onClick={onClickHandler}>
-        <Trans i18nKey={'editor.documentBar.export'}/>
+      <SidebarButton data-cy={ 'menu-export' } hide={ hide } icon={ expand ? 'arrow-left' : 'cloud-download' }
+                     className={ className } onClick={ onClickHandler }>
+        <Trans i18nKey={ 'editor.documentBar.export' }/>
       </SidebarButton>
-      <SidebarMenu expand={expand}>
-        <SidebarButton icon={"github"}>
+      <SidebarMenu expand={ expand }>
+        <SidebarButton icon={ 'github' }>
           Gist
         </SidebarButton>
-        <SidebarButton icon={"gitlab"}>
+        <SidebarButton icon={ 'gitlab' }>
           Gitlab Snippet
         </SidebarButton>
 
         <ExportMarkdownSidebarEntry/>
 
-        <SidebarButton icon={"file-code-o"}>
+        <SidebarButton icon={ 'file-code-o' }>
           HTML
         </SidebarButton>
-        <SidebarButton icon={"file-code-o"}>
+        <SidebarButton icon={ 'file-code-o' }>
           <Trans i18nKey='editor.export.rawHtml'/>
         </SidebarButton>
-        <SidebarButton icon={"file-pdf-o"}>
-          <a className='small text-muted' dir={'auto'} href={links.faq} target={'_blank'} rel='noopener noreferrer'>
-            <Trans i18nKey={'editor.export.pdf'}/>
+        <SidebarButton icon={ 'file-pdf-o' }>
+          <a className='small text-muted' dir={ 'auto' } href={ links.faq } target={ '_blank' }
+             rel='noopener noreferrer'>
+            <Trans i18nKey={ 'editor.export.pdf' }/>
             &nbsp;
-            <span className={'text-primary'}>
-                <Trans i18nKey={'common.why'}/>
+            <span className={ 'text-primary' }>
+                <Trans i18nKey={ 'common.why' }/>
               </span>
           </a>
         </SidebarButton>

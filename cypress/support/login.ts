@@ -11,11 +11,13 @@ declare namespace Cypress {
      * Custom command to log the user out.
      * @example cy.logout()
      */
-    logout (): Chainable<Window>
+    logout(): Chainable<Window>
   }
 }
 
 Cypress.Commands.add('logout', () => {
-  cy.get('#dropdown-user').click()
-  cy.get('.fa-sign-out').click()
+  cy.get('#dropdown-user')
+    .click()
+  cy.get('.fa-sign-out')
+    .click()
 })

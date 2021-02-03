@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { Button, ButtonProps } from 'react-bootstrap'
@@ -19,13 +19,14 @@ export interface IconButtonProps extends ButtonProps {
 
 export const IconButton: React.FC<IconButtonProps> = ({ icon, children, border = false, ...props }) => {
   return (
-    <Button {...props} className={`btn-icon p-0 d-inline-flex align-items-stretch ${border ? 'with-border' : ''}`}>
+    <Button { ...props }
+            className={ `btn-icon p-0 d-inline-flex align-items-stretch ${ border ? 'with-border' : '' }` }>
       <span className="icon-part d-flex align-items-center">
-        <ForkAwesomeIcon icon={icon} className={'icon'}/>
+        <ForkAwesomeIcon icon={ icon } className={ 'icon' }/>
       </span>
-      <ShowIf condition={!!children}>
+      <ShowIf condition={ !!children }>
         <span className="text-part d-flex align-items-center">
-          {children}
+          { children }
         </span>
       </ShowIf>
     </Button>

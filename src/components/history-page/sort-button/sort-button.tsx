@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { ButtonProps } from 'react-bootstrap'
@@ -10,9 +10,9 @@ import { IconName } from '../../common/fork-awesome/types'
 import { IconButton } from '../../common/icon-button/icon-button'
 
 export enum SortModeEnum {
-    up = 1,
-    down = -1,
-    no = 0
+  up = 1,
+  down = -1,
+  no = 0
 }
 
 const getIcon = (direction: SortModeEnum): IconName => {
@@ -29,8 +29,8 @@ const getIcon = (direction: SortModeEnum): IconName => {
 }
 
 export interface SortButtonProps extends ButtonProps {
-    onDirectionChange: (direction: SortModeEnum) => void
-    direction: SortModeEnum
+  onDirectionChange: (direction: SortModeEnum) => void
+  direction: SortModeEnum
 }
 
 const toggleDirection = (direction: SortModeEnum) => {
@@ -50,5 +50,6 @@ export const SortButton: React.FC<SortButtonProps> = ({ children, variant, onDir
     onDirectionChange(toggleDirection(direction))
   }
 
-  return <IconButton onClick={toggleSort} variant={variant} icon={getIcon(direction)} border={true}>{children}</IconButton>
+  return <IconButton onClick={ toggleSort } variant={ variant } icon={ getIcon(direction) }
+                     border={ true }>{ children }</IconButton>
 }

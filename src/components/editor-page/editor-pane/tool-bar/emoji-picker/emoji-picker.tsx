@@ -19,12 +19,13 @@ export interface EmojiPickerProps {
   onDismiss: () => void
 }
 
-export const customEmojis: CustomEmoji[] = Object.keys(ForkAwesomeIcons).map((name) => ({
-  name: `fa-${name}`,
-  shortcodes: [`fa-${name.toLowerCase()}`],
-  url: forkawesomeIcon,
-  category: 'ForkAwesome'
-}))
+export const customEmojis: CustomEmoji[] = Object.keys(ForkAwesomeIcons)
+                                                 .map((name) => ({
+                                                   name: `fa-${ name }`,
+                                                   shortcodes: [`fa-${ name.toLowerCase() }`],
+                                                   url: forkawesomeIcon,
+                                                   category: 'ForkAwesome'
+                                                 }))
 
 export const EMOJI_DATA_PATH = '/static/js/emoji-data.json'
 
@@ -92,6 +93,7 @@ export const EmojiPicker: React.FC<EmojiPickerProps> = ({ show, onEmojiSelected,
   }, [darkModeEnabled])
 
   return (
-    <div className={`position-absolute emoji-picker-container ${!show ? 'd-none' : ''}`} ref={pickerContainerRef}/>
+    <div className={ `position-absolute emoji-picker-container ${ !show ? 'd-none' : '' }` }
+         ref={ pickerContainerRef }/>
   )
 }

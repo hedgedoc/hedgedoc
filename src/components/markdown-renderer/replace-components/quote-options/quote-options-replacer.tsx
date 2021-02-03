@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import { DomElement } from 'domhandler'
 import { ReactElement } from 'react'
@@ -25,7 +25,7 @@ const findQuoteOptionsParent = (nodes: DomElement[]): DomElement | undefined => 
 }
 
 export class QuoteOptionsReplacer extends ComponentReplacer {
-  public getReplacement (node: DomElement):ReactElement|undefined {
+  public getReplacement(node: DomElement): ReactElement | undefined {
     if (node.name !== 'blockquote' || !node.children || node.children.length < 1) {
       return
     }
@@ -43,6 +43,6 @@ export class QuoteOptionsReplacer extends ComponentReplacer {
     if (!attributes || !attributes['data-color']) {
       return
     }
-    node.attribs = Object.assign(node.attribs || {}, { style: `border-left-color: ${attributes['data-color']};` })
+    node.attribs = Object.assign(node.attribs || {}, { style: `border-left-color: ${ attributes['data-color'] };` })
   }
 }

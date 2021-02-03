@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { Button } from 'react-bootstrap'
@@ -16,7 +16,7 @@ export interface LockButtonProps {
 
 export const LockButton: React.FC<LockButtonProps> = ({ locked, onLockedChanged, title }) => {
   return (
-    <Button variant='dark' size='sm' onClick={() => onLockedChanged(!locked)} title={title}>
+    <Button variant='dark' size='sm' onClick={ () => onLockedChanged(!locked) } title={ title }>
       { locked
         ? <ForkAwesomeIcon icon='lock'/>
         : <ForkAwesomeIcon icon='unlock'/>

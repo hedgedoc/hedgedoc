@@ -14,7 +14,7 @@ export const legacyPdfShortCode: MarkdownIt.PluginSimple = (markdownIt) => {
     name: 'legacy-pdf-short-code',
     regex: finalRegex,
     replace: (match: string) => {
-      return `<a target="_blank" rel="noopener noreferrer" href="${match}">${match}</a>`
+      return `<a target="_blank" rel="noopener noreferrer" href="${ match }">${ match }</a>`
     }
   })
 }

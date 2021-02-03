@@ -16,8 +16,8 @@ export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
   const i18nKey = isPinned ? 'editor.documentBar.pinNoteToHistory' : 'editor.documentBar.pinnedToHistory'
 
   return (
-    <SidebarButton icon={'thumb-tack'} className={className} hide={hide}>
-      <Trans i18nKey={i18nKey}/>
+    <SidebarButton icon={ 'thumb-tack' } className={ className } hide={ hide }>
+      <Trans i18nKey={ i18nKey }/>
     </SidebarButton>
   )
 }

@@ -37,30 +37,32 @@ export const DocumentInfobar: React.FC<DocumentInfobarProps> = ({
   const { t } = useTranslation()
 
   return (
-    <div className={'d-flex flex-row my-3 document-infobar'}>
-      <div className={'col-md'}>&nbsp;</div>
-      <div className={'d-flex flex-fill'}>
-        <div className={'d-flex flex-column'}>
+    <div className={ 'd-flex flex-row my-3 document-infobar' }>
+      <div className={ 'col-md' }>&nbsp;</div>
+      <div className={ 'd-flex flex-fill' }>
+        <div className={ 'd-flex flex-column' }>
           <DocumentInfoTimeLine
-            mode={DocumentInfoLineWithTimeMode.CREATED}
-            time={createdTime}
-            userName={createdAuthor}
-            profileImageSrc={'/img/avatar.png'}/>
+            mode={ DocumentInfoLineWithTimeMode.CREATED }
+            time={ createdTime }
+            userName={ createdAuthor }
+            profileImageSrc={ '/img/avatar.png' }/>
           <DocumentInfoTimeLine
-            mode={DocumentInfoLineWithTimeMode.EDITED}
-            time={changedTime}
-            userName={changedAuthor}
-            profileImageSrc={'/img/avatar.png'}/>
+            mode={ DocumentInfoLineWithTimeMode.EDITED }
+            time={ changedTime }
+            userName={ changedAuthor }
+            profileImageSrc={ '/img/avatar.png' }/>
           <hr/>
         </div>
-        <span className={'ml-auto'}>
-          { viewCount } <Trans i18nKey={'views.readOnly.viewCount'}/>
-          <ShowIf condition={editable}>
-            <InternalLink text={''} href={`/n/${noteId}`} icon={'pencil'} className={'text-primary text-decoration-none mx-1'} title={t('views.readOnly.editNote')}/>
+        <span className={ 'ml-auto' }>
+          { viewCount } <Trans i18nKey={ 'views.readOnly.viewCount' }/>
+          <ShowIf condition={ editable }>
+            <InternalLink text={ '' } href={ `/n/${ noteId }` } icon={ 'pencil' }
+                          className={ 'text-primary text-decoration-none mx-1' }
+                          title={ t('views.readOnly.editNote') }/>
           </ShowIf>
         </span>
       </div>
-      <div className={'col-md'}>&nbsp;</div>
+      <div className={ 'col-md' }>&nbsp;</div>
     </div>
   )
 }

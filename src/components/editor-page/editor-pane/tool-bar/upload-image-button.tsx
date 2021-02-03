@@ -37,10 +37,10 @@ export const UploadImageButton: React.FC<UploadImageButtonProps> = ({ editor }) 
 
   return (
     <Fragment>
-      <Button variant='light' onClick={buttonClick} title={t('editor.editorToolbar.uploadImage')}>
-        <ForkAwesomeIcon icon={'upload'}/>
+      <Button variant='light' onClick={ buttonClick } title={ t('editor.editorToolbar.uploadImage') }>
+        <ForkAwesomeIcon icon={ 'upload' }/>
       </Button>
-      <UploadInput onLoad={onUploadImage} acceptedFiles={supportedMimeTypesJoined} onClickRef={clickRef}/>
+      <UploadInput onLoad={ onUploadImage } acceptedFiles={ supportedMimeTypesJoined } onClickRef={ clickRef }/>
     </Fragment>
   )
 }

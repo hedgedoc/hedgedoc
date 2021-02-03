@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import equal from 'fast-deep-equal'
 import React from 'react'
@@ -23,16 +23,16 @@ export const MotdBanner: React.FC = () => {
   }
 
   return (
-    <ShowIf condition={bannerState.show}>
+    <ShowIf condition={ bannerState.show }>
       <Alert variant='primary' dir='auto' className='mb-0 text-center d-flex flex-row justify-content-center'>
         <Link to='/s/banner' className='flex-grow-1 align-self-center text-black'>
-          {bannerState.text}
+          { bannerState.text }
         </Link>
         <Button
           variant='outline-primary'
           size='sm'
           className='mx-2'
-          onClick={dismissBanner}>
+          onClick={ dismissBanner }>
           <ForkAwesomeIcon icon='times'/>
         </Button>
       </Alert>

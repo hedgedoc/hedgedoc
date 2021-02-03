@@ -11,7 +11,7 @@ import Token from 'markdown-it/lib/token'
 import { MarkdownItPlugin } from '../replace-components/ComponentReplacer'
 import { RenderContainerReturn } from './alert-container'
 
-export const spoilerRegEx = /^spoiler\s+(.*)$/;
+export const spoilerRegEx = /^spoiler\s+(.*)$/
 
 const createSpoilerContainer = (): RenderContainerReturn => {
   return (tokens: Token[], index: number) => {
@@ -19,7 +19,7 @@ const createSpoilerContainer = (): RenderContainerReturn => {
 
     if (tokens[index].nesting === 1 && matches && matches[1]) {
       // opening tag
-      return `<details><summary>${escapeHtml(matches[1])}</summary>`
+      return `<details><summary>${ escapeHtml(matches[1]) }</summary>`
 
     } else {
       // closing tag

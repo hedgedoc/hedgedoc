@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import { DomElement } from 'domhandler'
 import React from 'react'
@@ -10,9 +10,9 @@ import { ComponentReplacer } from '../ComponentReplacer'
 import { HighlightedCode } from './highlighted-code/highlighted-code'
 
 export class HighlightedCodeReplacer extends ComponentReplacer {
-  private lastLineNumber = 0;
+  private lastLineNumber = 0
 
-  public getReplacement (codeNode: DomElement): React.ReactElement | undefined {
+  public getReplacement(codeNode: DomElement): React.ReactElement | undefined {
     if (codeNode.name !== 'code' || !codeNode.attribs || !codeNode.attribs['data-highlight-language'] || !codeNode.children || !codeNode.children[0]) {
       return
     }
@@ -36,9 +36,10 @@ export class HighlightedCodeReplacer extends ComponentReplacer {
 
     if (showLineNumbers) {
       this.lastLineNumber = startLineNumber + code.split('\n')
-        .filter(line => !!line).length
+                                                  .filter(line => !!line).length
     }
 
-    return <HighlightedCode language={language} startLineNumber={showLineNumbers ? startLineNumber : undefined} wrapLines={wrapLines} code={code}/>
+    return <HighlightedCode language={ language } startLineNumber={ showLineNumbers ? startLineNumber : undefined }
+                            wrapLines={ wrapLines } code={ code }/>
   }
 }

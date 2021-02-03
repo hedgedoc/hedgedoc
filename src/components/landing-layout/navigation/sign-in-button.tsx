@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { Button } from 'react-bootstrap'
@@ -14,18 +14,19 @@ import { ApplicationState } from '../../../redux'
 import { ShowIf } from '../../common/show-if/show-if'
 
 type SignInButtonProps = {
-  className?: string
-} & Omit<ButtonProps, 'href'>
+                           className?: string
+                         } & Omit<ButtonProps, 'href'>
 
 export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props }) => {
   const { t } = useTranslation()
-  const anyAuthProviderActive = useSelector((state: ApplicationState) => Object.values(state.config.authProviders).includes(true))
+  const anyAuthProviderActive = useSelector((state: ApplicationState) => Object.values(state.config.authProviders)
+                                                                               .includes(true))
   return (
-    <ShowIf condition={anyAuthProviderActive}>
-      <LinkContainer to="/login" title={t('login.signIn')}>
+    <ShowIf condition={ anyAuthProviderActive }>
+      <LinkContainer to="/login" title={ t('login.signIn') }>
         <Button
-          variant={variant || 'success'}
-          {...props}
+          variant={ variant || 'success' }
+          { ...props }
         >
           <Trans i18nKey="login.signIn"/>
         </Button>

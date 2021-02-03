@@ -9,7 +9,7 @@ import { findWordAtCursor, Hinter } from './index'
 
 const wordRegExp = /^({[%}]?)$/
 
-const pdfHint = (editor: Editor): Promise< Hints| null > => {
+const pdfHint = (editor: Editor): Promise<Hints | null> => {
   return new Promise((resolve) => {
     const searchTerm = findWordAtCursor(editor)
     const searchResult = wordRegExp.exec(searchTerm.text)

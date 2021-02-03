@@ -11,7 +11,7 @@ const wordRegExp = /^(\s{0,3})(#{1,6})$/
 const allSupportedHeaders = ['# h1', '## h2', '### h3', '#### h4', '##### h5', '###### h6', '###### tags: `example`']
 const allSupportedHeadersTextToInsert = ['# ', '## ', '### ', '#### ', '##### ', '###### ', '###### tags: `example`']
 
-const headerHint = (editor: Editor): Promise< Hints| null > => {
+const headerHint = (editor: Editor): Promise<Hints | null> => {
   return new Promise((resolve) => {
     const searchTerm = findWordAtCursor(editor)
     const searchResult = wordRegExp.exec(searchTerm.text)

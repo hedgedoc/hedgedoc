@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,15 +21,15 @@ const UserAvatar: React.FC<UserAvatarProps> = ({ name, photo, size, additionalCl
   const { t } = useTranslation()
 
   return (
-    <span className={'d-inline-flex align-items-center ' + additionalClasses}>
+    <span className={ 'd-inline-flex align-items-center ' + additionalClasses }>
       <img
-        src={photo}
-        className={`user-avatar rounded mr-1 ${size ?? ''}`}
-        alt={t('common.avatarOf', { name })}
-        title={name}
+        src={ photo }
+        className={ `user-avatar rounded mr-1 ${ size ?? '' }` }
+        alt={ t('common.avatarOf', { name }) }
+        title={ name }
       />
-      <ShowIf condition={showName}>
-        <span className="mx-1 user-line-name">{name}</span>
+      <ShowIf condition={ showName }>
+        <span className="mx-1 user-line-name">{ name }</span>
       </ShowIf>
     </span>
   )

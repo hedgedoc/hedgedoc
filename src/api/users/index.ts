@@ -14,7 +14,7 @@ export const getUserById = async (userid: string): Promise<UserResponse> => {
   if (cache.has(userid)) {
     return cache.get(userid)
   }
-  const response = await fetch(`${getApiUrl()}/users/${userid}`, {
+  const response = await fetch(`${ getApiUrl() }/users/${ userid }`, {
     ...defaultFetchConfig
   })
   expectResponseCode(response)

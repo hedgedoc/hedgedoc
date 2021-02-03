@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React from 'react'
 import { Table } from 'react-bootstrap'
@@ -15,28 +15,28 @@ import './history-table.scss'
 export const HistoryTable: React.FC<HistoryEntriesProps> = ({ entries, onPinClick, onRemoveClick, onDeleteClick, pageIndex, onLastPageIndexChange }) => {
   useTranslation()
   return (
-    <Table striped bordered hover size="sm" variant="dark" className={'history-table'}>
+    <Table striped bordered hover size="sm" variant="dark" className={ 'history-table' }>
       <thead>
-        <tr>
-          <th><Trans i18nKey={'landing.history.tableHeader.title'}/></th>
-          <th><Trans i18nKey={'landing.history.tableHeader.lastVisit'}/></th>
-          <th><Trans i18nKey={'landing.history.tableHeader.tags'}/></th>
-          <th><Trans i18nKey={'landing.history.tableHeader.actions'}/></th>
-        </tr>
+      <tr>
+        <th><Trans i18nKey={ 'landing.history.tableHeader.title' }/></th>
+        <th><Trans i18nKey={ 'landing.history.tableHeader.lastVisit' }/></th>
+        <th><Trans i18nKey={ 'landing.history.tableHeader.tags' }/></th>
+        <th><Trans i18nKey={ 'landing.history.tableHeader.actions' }/></th>
+      </tr>
       </thead>
       <tbody>
-        <Pager numberOfElementsPerPage={12} pageIndex={pageIndex} onLastPageIndexChange={onLastPageIndexChange}>
-          {
-            entries.map((entry) =>
-              <HistoryTableRow
-                key={entry.id}
-                entry={entry}
-                onPinClick={onPinClick}
-                onRemoveClick={onRemoveClick}
-                onDeleteClick={onDeleteClick}
-              />)
-          }
-        </Pager>
+      <Pager numberOfElementsPerPage={ 12 } pageIndex={ pageIndex } onLastPageIndexChange={ onLastPageIndexChange }>
+        {
+          entries.map((entry) =>
+            <HistoryTableRow
+              key={ entry.id }
+              entry={ entry }
+              onPinClick={ onPinClick }
+              onRemoveClick={ onRemoveClick }
+              onDeleteClick={ onDeleteClick }
+            />)
+        }
+      </Pager>
       </tbody>
     </Table>
   )

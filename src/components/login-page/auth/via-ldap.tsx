@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { FormEvent, useCallback, useState } from 'react'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
@@ -21,7 +21,7 @@ export const ViaLdap: React.FC = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(false)
 
-  const name = ldapCustomName ? `${ldapCustomName} (LDAP)` : 'LDAP'
+  const name = ldapCustomName ? `${ ldapCustomName } (LDAP)` : 'LDAP'
 
   const onLoginSubmit = useCallback((event: FormEvent) => {
     doLdapLogin(username, password)
@@ -34,33 +34,33 @@ export const ViaLdap: React.FC = () => {
     <Card className="bg-dark mb-4">
       <Card.Body>
         <Card.Title>
-          <Trans i18nKey="login.signInVia" values={{ service: name }}/>
+          <Trans i18nKey="login.signInVia" values={ { service: name } }/>
         </Card.Title>
-        <Form onSubmit={onLoginSubmit}>
+        <Form onSubmit={ onLoginSubmit }>
           <Form.Group controlId="ldap-username">
             <Form.Control
-              isInvalid={error}
+              isInvalid={ error }
               type="text"
               size="sm"
-              placeholder={t('login.auth.username')}
-              onChange={(event) => setUsername(event.currentTarget.value)} className="bg-dark text-light"
+              placeholder={ t('login.auth.username') }
+              onChange={ (event) => setUsername(event.currentTarget.value) } className="bg-dark text-light"
               autoComplete='username'
             />
           </Form.Group>
 
           <Form.Group controlId="ldap-password">
             <Form.Control
-              isInvalid={error}
+              isInvalid={ error }
               type="password"
               size="sm"
-              placeholder={t('login.auth.password')}
-              onChange={(event) => setPassword(event.currentTarget.value)}
+              placeholder={ t('login.auth.password') }
+              onChange={ (event) => setPassword(event.currentTarget.value) }
               className="bg-dark text-light"
               autoComplete='current-password'
             />
           </Form.Group>
 
-          <Alert className="small" show={error} variant="danger">
+          <Alert className="small" show={ error } variant="danger">
             <Trans i18nKey="login.auth.error.usernamePassword"/>
           </Alert>
 

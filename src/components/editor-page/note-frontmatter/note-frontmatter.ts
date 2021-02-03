@@ -240,7 +240,7 @@ export class NoteFrontmatter {
   // slideOptions: RevealOptions
   opengraph: Map<string, string>
 
-  constructor (rawData: RawNoteFrontmatter) {
+  constructor(rawData: RawNoteFrontmatter) {
     this.title = rawData?.title ?? ''
     this.description = rawData?.description ?? ''
     this.robots = rawData?.robots ?? ''
@@ -253,11 +253,12 @@ export class NoteFrontmatter {
     this.dir = (rawData?.dir as NoteFrontmatter['dir']) ?? 'ltr'
 
     /* this.slideOptions = (rawData?.slideOptions as RevealOptions) ?? {
-      transition: 'none',
-      theme: 'white'
-    } */
+     transition: 'none',
+     theme: 'white'
+     } */
     if (typeof rawData?.tags === 'string') {
-      this.tags = rawData?.tags?.split(',').map(entry => entry.trim()) ?? []
+      this.tags = rawData?.tags?.split(',')
+                         .map(entry => entry.trim()) ?? []
       this.deprecatedTagsSyntax = true
     } else if (typeof rawData?.tags === 'object') {
       this.tags = rawData?.tags?.filter(tag => tag !== null) ?? []

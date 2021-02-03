@@ -31,7 +31,7 @@ const findEmojiInDatabase = async (emojiIndex: Database, term: string): Promise<
   }
 }
 
-const convertEmojiEventToHint = (emojiData:EmojiClickEventDetail): Hint | undefined => {
+const convertEmojiEventToHint = (emojiData: EmojiClickEventDetail): Hint | undefined => {
   const shortCode = getEmojiShortCode(emojiData)
   if (!shortCode) {
     return undefined
@@ -40,7 +40,7 @@ const convertEmojiEventToHint = (emojiData:EmojiClickEventDetail): Hint | undefi
     text: shortCode,
     render: (parent: HTMLLIElement) => {
       const wrapper = document.createElement('div')
-      wrapper.innerHTML = `${getEmojiIcon(emojiData)}   ${shortCode}`
+      wrapper.innerHTML = `${ getEmojiIcon(emojiData) }   ${ shortCode }`
       parent.appendChild(wrapper)
     }
   }

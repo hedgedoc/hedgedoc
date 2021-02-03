@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { NoteFrontmatter } from "../editor-page/note-frontmatter/note-frontmatter"
-import { ScrollState } from "../editor-page/synced-scroll/scroll-props"
-import { IframeCommunicator } from "./iframe-communicator"
+import { NoteFrontmatter } from '../editor-page/note-frontmatter/note-frontmatter'
+import { ScrollState } from '../editor-page/synced-scroll/scroll-props'
+import { IframeCommunicator } from './iframe-communicator'
 import {
   EditorToRendererIframeMessage,
   ImageDetails,
   RendererToEditorIframeMessage,
   RenderIframeMessageType
-} from "./rendering-message"
+} from './rendering-message'
 
 export class IframeEditorToRendererCommunicator extends IframeCommunicator<EditorToRendererIframeMessage, RendererToEditorIframeMessage> {
   private onSetScrollSourceToRendererHandler?: () => void
@@ -23,31 +23,66 @@ export class IframeEditorToRendererCommunicator extends IframeCommunicator<Edito
   private onRendererReadyHandler?: () => void
   private onImageClickedHandler?: (details: ImageDetails) => void
 
-  public onFrontmatterChange (handler?: (frontmatter?: NoteFrontmatter) => void): void {
+  public onFrontmatterChange(handler?: (frontmatter?: NoteFrontmatter) => void): void {
     this.onFrontmatterChangeHandler = handler
   }
 
-  public onImageClicked (handler?: (details: ImageDetails) => void): void {
+  public onImageClicked(handler?: (details: ImageDetails) => void): void {
     this.onImageClickedHandler = handler
   }
 
-  public onRendererReady (handler?: () => void): void {
+  public onRendererReady(handler?: () => void): void {
     this.onRendererReadyHandler = handler
   }
 
-  public onSetScrollSourceToRenderer (handler?: () => void): void {
+  public onSetScrollSourceToRenderer(handler?: () => void): void {
     this.onSetScrollSourceToRendererHandler = handler
   }
 
-  public onTaskCheckboxChange (handler?: (lineInMarkdown: number, checked: boolean) => void): void {
+  public onTaskCheckboxChange(handler?: (lineInMarkdown: number, checked: boolean) => void): void {
     this.onTaskCheckboxChangeHandler = handler
   }
 
-  public onFirstHeadingChange (handler?: (heading?: string) => void): void {
+  public onFirstHeadingChange(handler?: (heading?: string) => void): void {
     this.onFirstHeadingChangeHandler = handler
   }
 
-  protected handleEvent (event: MessageEvent<RendererToEditorIframeMessage>): boolean | undefined {
+  public onSetScrollState(handler?: (scrollState: ScrollState) => void): void {
+    this.onSetScrollStateHandler = handler
+  }
+
+  public sendSetBaseUrl(baseUrl: string): void {
+    this.sendMessageToOtherSide({
+      type: RenderIframeMessageType.SET_BASE_URL,
+      baseUrl
+    })
+  }
+
+  public sendSetMarkdownContent(markdownContent: string): void {
+    this.sendMessageToOtherSide({
+      type: RenderIframeMessageType.SET_MARKDOWN_CONTENT,
+      content: markdownContent
+    })
+  }
+
+  public sendSetDarkmode(darkModeActivated: boolean): void {
+    this.sendMessageToOtherSide({
+      type: RenderIframeMessageType.SET_DARKMODE,
+      activated: darkModeActivated
+    })
+  }
+
+  public sendScrollState(scrollState?: ScrollState): void {
+    if (!scrollState) {
+      return
+    }
+    this.sendMessageToOtherSide({
+      type: RenderIframeMessageType.SET_SCROLL_STATE,
+      scrollState
+    })
+  }
+
+  protected handleEvent(event: MessageEvent<RendererToEditorIframeMessage>): boolean | undefined {
     const renderMessage = event.data
     switch (renderMessage.type) {
       case RenderIframeMessageType.RENDERER_READY:
@@ -72,40 +107,5 @@ export class IframeEditorToRendererCommunicator extends IframeCommunicator<Edito
         this.onImageClickedHandler?.(renderMessage.details)
         return false
     }
-  }
-
-  public onSetScrollState (handler?: (scrollState: ScrollState) => void): void {
-    this.onSetScrollStateHandler = handler
-  }
-
-  public sendSetBaseUrl (baseUrl: string): void {
-    this.sendMessageToOtherSide({
-      type: RenderIframeMessageType.SET_BASE_URL,
-      baseUrl
-    })
-  }
-
-  public sendSetMarkdownContent (markdownContent: string): void {
-    this.sendMessageToOtherSide({
-      type: RenderIframeMessageType.SET_MARKDOWN_CONTENT,
-      content: markdownContent
-    })
-  }
-
-  public sendSetDarkmode (darkModeActivated: boolean): void {
-    this.sendMessageToOtherSide({
-      type: RenderIframeMessageType.SET_DARKMODE,
-      activated: darkModeActivated
-    })
-  }
-
-  public sendScrollState (scrollState?: ScrollState): void {
-    if (!scrollState) {
-      return
-    }
-    this.sendMessageToOtherSide({
-      type: RenderIframeMessageType.SET_SCROLL_STATE,
-      scrollState
-    })
   }
 }

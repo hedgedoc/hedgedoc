@@ -1,8 +1,8 @@
 /*
-SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 
-SPDX-License-Identifier: AGPL-3.0-only
-*/
+ SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 import React, { Fragment, useState } from 'react'
 import { Button } from 'react-bootstrap'
@@ -23,21 +23,21 @@ export const ClearHistoryButton: React.FC<ClearHistoryButtonProps> = ({ onClearH
 
   return (
     <Fragment>
-      <Button variant={'light'} title={t('landing.history.toolbar.clear')} onClick={handleShow}>
-        <ForkAwesomeIcon icon={'trash'}/>
+      <Button variant={ 'light' } title={ t('landing.history.toolbar.clear') } onClick={ handleShow }>
+        <ForkAwesomeIcon icon={ 'trash' }/>
       </Button>
       <DeletionModal
-        onConfirm={() => {
+        onConfirm={ () => {
           onClearHistory()
           handleClose()
-        }}
-        deletionButtonI18nKey={'landing.history.toolbar.clear'}
-        show={show}
-        onHide={handleClose}
-        titleI18nKey={'landing.history.modal.clearHistory.title'}
+        } }
+        deletionButtonI18nKey={ 'landing.history.toolbar.clear' }
+        show={ show }
+        onHide={ handleClose }
+        titleI18nKey={ 'landing.history.modal.clearHistory.title' }
       >
-        <h5><Trans i18nKey={'landing.history.modal.clearHistory.question'}/></h5>
-        <h6><Trans i18nKey={'landing.history.modal.clearHistory.disclaimer'}/></h6>
+        <h5><Trans i18nKey={ 'landing.history.modal.clearHistory.question' }/></h5>
+        <h6><Trans i18nKey={ 'landing.history.modal.clearHistory.disclaimer' }/></h6>
       </DeletionModal>
     </Fragment>
   )

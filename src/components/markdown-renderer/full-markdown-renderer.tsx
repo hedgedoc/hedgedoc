@@ -89,16 +89,16 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
   }, [setShowYamlError, showYamlError])
 
   return (
-    <div ref={rendererRef} className={'position-relative'}>
-      <InvalidYamlAlert showYamlError={showYamlError}/>
+    <div ref={ rendererRef } className={ 'position-relative' }>
+      <InvalidYamlAlert showYamlError={ showYamlError }/>
       <BasicMarkdownRenderer
-        className={className}
-        content={content}
-        componentReplacers={allReplacers}
-        markdownIt={markdownIt}
-        documentReference={documentElement}
-        onBeforeRendering={clearFrontmatter}
-        onAfterRendering={checkYamlErrorState}/>
+        className={ className }
+        content={ content }
+        componentReplacers={ allReplacers }
+        markdownIt={ markdownIt }
+        documentReference={ documentElement }
+        onBeforeRendering={ clearFrontmatter }
+        onAfterRendering={ checkYamlErrorState }/>
     </div>
   )
 }
