@@ -85,7 +85,7 @@ describe('Notes', () => {
       .delete('/me/history/test3')
       .expect(204);
     expect(response.body.content).toBeNull();
-    const history = historyService.getUserHistory('testuser');
+    const history = historyService.getEntriesByUser('testuser');
     let historyEntry: HistoryEntryDto = null;
     for (const e of history) {
       if (e.metadata.alias === noteName) {
@@ -106,7 +106,7 @@ describe('Notes', () => {
       .send(historyEntryUpdateDto)
       .expect(200);
     // TODO parameter is not used for now
-    const history = historyService.getUserHistory('testuser');
+    const history = historyService.getEntriesByUser('testuser');
     let historyEntry: HistoryEntryDto;
     for (const e of <any[]>response.body.content) {
       if ((<HistoryEntryDto>e).metadata.alias === noteName) {

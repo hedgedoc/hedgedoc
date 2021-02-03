@@ -7,10 +7,19 @@
 import { Module } from '@nestjs/common';
 import { LoggerModule } from '../logger/logger.module';
 import { HistoryService } from './history.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { HistoryEntry } from './history-entry.entity';
+import { UsersModule } from '../users/users.module';
+import { NotesModule } from '../notes/notes.module';
 
 @Module({
   providers: [HistoryService],
   exports: [HistoryService],
-  imports: [LoggerModule],
+  imports: [
+    LoggerModule,
+    TypeOrmModule.forFeature([HistoryEntry]),
+    UsersModule,
+    NotesModule,
+  ],
 })
 export class HistoryModule {}

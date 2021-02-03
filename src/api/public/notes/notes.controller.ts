@@ -28,6 +28,7 @@ import { RevisionsService } from '../../../revisions/revisions.service';
 import { MarkdownBody } from '../../utils/markdownbody-decorator';
 import { TokenAuthGuard } from '../../../auth/token-auth.guard';
 import { ApiSecurity } from '@nestjs/swagger';
+import { HistoryService } from '../../../history/history.service';
 import { NoteDto } from '../../../notes/note.dto';
 import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
 import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
@@ -40,6 +41,7 @@ export class NotesController {
     private readonly logger: ConsoleLoggerService,
     private noteService: NotesService,
     private revisionsService: RevisionsService,
+    private historyService: HistoryService,
   ) {
     this.logger.setContext(NotesController.name);
   }
@@ -58,6 +60,22 @@ export class NotesController {
   }
 
   @UseGuards(TokenAuthGuard)
+  @Get(':noteIdOrAlias')
+  async getNote(@Request() req, @Param('noteIdOrAlias') noteIdOrAlias: string) {
+    // ToDo: check if user is allowed to view this note
+    try {
+      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
+      await this.historyService.createOrUpdateHistoryEntry(note, req.user);
+      return this.noteService.toNoteDto(note);
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      throw e;
+    }
+  }
+
+  @UseGuards(TokenAuthGuard)
   @Post(':noteAlias')
   async createNamedNote(
     @Request() req,
@@ -69,25 +87,6 @@ export class NotesController {
     return this.noteService.toNoteDto(
       await this.noteService.createNote(text, noteAlias, req.user),
     );
-  }
-
-  @UseGuards(TokenAuthGuard)
-  @Get(':noteIdOrAlias')
-  async getNote(
-    @Request() req,
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
-  ): Promise<NoteDto> {
-    // ToDo: check if user is allowed to view this note
-    try {
-      return this.noteService.toNoteDto(
-        await this.noteService.getNoteByIdOrAlias(noteIdOrAlias),
-      );
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      throw e;
-    }
   }
 
   @UseGuards(TokenAuthGuard)
