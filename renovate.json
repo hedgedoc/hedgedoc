@@ -11,6 +11,10 @@
     ":rebaseStalePrs",
     ":maintainLockFilesWeekly"
   ],
+  "baseBranches": [
+    "master",
+    "develop"
+  ],
   "labels": [
     "type: maintenance"
   ],
