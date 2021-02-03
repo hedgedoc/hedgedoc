@@ -189,7 +189,7 @@ module.exports = {
     common: [
       'expose-loader?jQuery!expose-loader?$!jquery',
       'velocity-animate',
-      'imports-loader?$=jquery!jquery-mousewheel',
+      'imports-loader?imports=default|jquery|$!jquery-mousewheel',
       'bootstrap'
     ],
     cover: [
@@ -335,7 +335,7 @@ module.exports = {
       'babel-polyfill',
       'expose-loader?jQuery!expose-loader?$!jquery',
       'velocity-animate',
-      'imports-loader?$=jquery!jquery-mousewheel',
+      'imports-loader?imports=default|jquery|$!jquery-mousewheel',
       'bootstrap-tooltip',
       'expose-loader?jsyaml!js-yaml',
       'script-loader!mermaid',
@@ -423,7 +423,9 @@ module.exports = {
       test: require.resolve('js-sequence-diagrams'),
       use: [{
         loader: 'imports-loader',
-        options: { _: 'lodash', Raphael: 'raphael', eve: 'eve' }
+        options: {
+          imports: ['default lodash _', 'default raphael Raphael', 'default eve eve']
+        }
       }]
     }, {
       test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
