@@ -202,7 +202,7 @@
     "url-loader": "2.3.0",
     "webpack": "4.44.2",
     "webpack-cli": "3.3.12",
-    "webpack-merge": "4.2.2"
+    "webpack-merge": "5.7.3"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.0",
