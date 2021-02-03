@@ -17,15 +17,16 @@ import {
   Request,
 } from '@nestjs/common';
 import { HistoryEntryUpdateDto } from '../../../history/history-entry-update.dto';
-import { HistoryEntryDto } from '../../../history/history-entry.dto';
 import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
 import { NotesService } from '../../../notes/notes.service';
-import { UserInfoDto } from '../../../users/user-info.dto';
 import { UsersService } from '../../../users/users.service';
 import { TokenAuthGuard } from '../../../auth/token-auth.guard';
 import { ApiSecurity } from '@nestjs/swagger';
+import { HistoryEntryDto } from '../../../history/history-entry.dto';
+import { UserInfoDto } from '../../../users/user-info.dto';
+import { NotInDBError } from '../../../errors/errors';
 
 @ApiSecurity('token')
 @Controller('me')
@@ -49,19 +50,37 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Get('history')
-  getUserHistory(@Request() req): HistoryEntryDto[] {
-    return this.historyService.getUserHistory(req.user.userName);
+  async getUserHistory(@Request() req): Promise<HistoryEntryDto[]> {
+    const foundEntries = await this.historyService.getEntriesByUser(req.user);
+    return Promise.all(
+      foundEntries.map(
+        async (entry) => await this.historyService.toHistoryEntryDto(entry),
+      ),
+    );
   }
 
   @UseGuards(TokenAuthGuard)
   @Put('history/:note')
-  updateHistoryEntry(
+  async updateHistoryEntry(
     @Request() req,
     @Param('note') note: string,
     @Body() entryUpdateDto: HistoryEntryUpdateDto,
-  ): HistoryEntryDto {
+  ): Promise<HistoryEntryDto> {
     // ToDo: Check if user is allowed to pin this history entry
-    return this.historyService.updateHistoryEntry(note, entryUpdateDto);
+    try {
+      return this.historyService.toHistoryEntryDto(
+        await this.historyService.updateHistoryEntry(
+          note,
+          req.user,
+          entryUpdateDto,
+        ),
+      );
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      throw e;
+    }
   }
 
   @UseGuards(TokenAuthGuard)
@@ -70,9 +89,12 @@ export class MeController {
   deleteHistoryEntry(@Request() req, @Param('note') note: string) {
     // ToDo: Check if user is allowed to delete note
     try {
-      return this.historyService.deleteHistoryEntry(note);
+      return this.historyService.deleteHistoryEntry(note, req.user);
     } catch (e) {
-      throw new NotFoundException(e.message);
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      throw e;
     }
   }
 

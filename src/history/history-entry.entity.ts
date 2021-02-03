@@ -4,12 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, UpdateDateColumn } from 'typeorm';
 import { User } from '../users/user.entity';
 import { Note } from '../notes/note.entity';
 

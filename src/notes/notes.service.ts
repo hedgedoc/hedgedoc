@@ -177,6 +177,10 @@ export class NotesService {
     return this.getCurrentContent(note);
   }
 
+  toTagList(note: Note): string[] {
+    return note.tags.map((tag) => tag.name);
+  }
+
   async toNotePermissionsDto(note: Note): Promise<NotePermissionsDto> {
     return {
       owner: this.usersService.toUserDto(note.owner),
@@ -204,7 +208,7 @@ export class NotesService {
       ),
       // TODO: Extract into method
       permissions: await this.toNotePermissionsDto(note),
-      tags: note.tags.map((tag) => tag.name),
+      tags: this.toTagList(note),
       updateTime: (await this.getLatestRevision(note)).createdAt,
       // TODO: Get actual updateUser
       updateUser: {
