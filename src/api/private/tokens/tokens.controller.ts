@@ -18,7 +18,9 @@ import { AuthService } from '../../../auth/auth.service';
 import { TimestampMillis } from '../../../utils/timestamp';
 import { AuthTokenDto } from '../../../auth/auth-token.dto';
 import { AuthTokenWithSecretDto } from '../../../auth/auth-token-with-secret.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('tokens')
 @Controller('tokens')
 export class TokensController {
   constructor(

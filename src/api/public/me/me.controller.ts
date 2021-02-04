@@ -23,11 +23,12 @@ import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
 import { NotesService } from '../../../notes/notes.service';
 import { UsersService } from '../../../users/users.service';
 import { TokenAuthGuard } from '../../../auth/token-auth.guard';
-import { ApiSecurity } from '@nestjs/swagger';
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { HistoryEntryDto } from '../../../history/history-entry.dto';
 import { UserInfoDto } from '../../../users/user-info.dto';
 import { NotInDBError } from '../../../errors/errors';
 
+@ApiTags('me')
 @ApiSecurity('token')
 @Controller('me')
 export class MeController {
