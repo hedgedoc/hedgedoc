@@ -7,38 +7,8 @@ docs_dir: content
 edit_uri: https://github.com/hedgedoc/hedgedoc/edit/master/docs/content/
 nav:
   - Home: index.md
-  - Installation:
-      - 'Manual Installation': setup/manual-setup.md
-      - 'Reverse Proxy': setup/reverse-proxy.md
-      - Docker: setup/docker.md
-      - Cloudron: setup/cloudron.md
-      - Heroku: setup/heroku.md
-      - LinuxServer: setup/docker-linuxserver.md
-      - Yunohost: setup/yunohost.md
-  - Guides:
-      - Authentication:
-          - LDAP: guides/auth/ldap-ad.md
-          - OAuth: guides/auth/oauth.md
-          - SAML: guides/auth/saml.md
-          - SAML Keycloak: guides/auth/saml-keycloak.md
-          - SAML Onelogin: guides/auth/saml-onelogin.md
-          - GitHub: guides/auth/github.md
-          - GitLab: guides/auth/gitlab-self-hosted.md
-          - Keycloak: guides/auth/keycloak.md
-          - NextCloud: guides/auth/nextcloud.md
-          - Twitter: guides/auth/twitter.md
-      - Migrate from Etherpad: guides/migrate-etherpad.md
-      - Breaking Changes: guides/migrations-and-breaking-changes.md
-      - Media Backend:
-          - Minion: guides/minio-image-upload.md
-          - S3: guides/s3-image-upload.md
-      - Setting Terms: guides/providing-terms.md
-  - Configuration: configuration.md
   - Developer:
-      - 'Getting Started': dev/getting-started.md
-      - API: dev/api.md
-      - 'Operational Transformation': dev/ot.md
-      - Webpack: dev/webpack.md
+      - '2.0 Development': dev/2.0.md
       - 'Documentation': dev/documentation.md
   - FAQ: https://hedgedoc.org/faq
 markdown_extensions:
