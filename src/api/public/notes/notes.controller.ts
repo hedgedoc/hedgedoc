@@ -27,13 +27,14 @@ import { NotesService } from '../../../notes/notes.service';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { MarkdownBody } from '../../utils/markdownbody-decorator';
 import { TokenAuthGuard } from '../../../auth/token-auth.guard';
-import { ApiSecurity } from '@nestjs/swagger';
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { HistoryService } from '../../../history/history.service';
 import { NoteDto } from '../../../notes/note.dto';
 import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
 import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
 
+@ApiTags('notes')
 @ApiSecurity('token')
 @Controller('notes')
 export class NotesController {
