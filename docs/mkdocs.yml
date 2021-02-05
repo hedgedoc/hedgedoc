@@ -9,6 +9,7 @@ nav:
   - Home: index.md
   - Developer:
       - '2.0 Development': dev/2.0.md
+      - Configuration: dev/config.md
       - 'Documentation': dev/documentation.md
   - FAQ: https://hedgedoc.org/faq
 markdown_extensions:
