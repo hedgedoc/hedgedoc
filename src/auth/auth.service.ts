@@ -224,13 +224,17 @@ export class AuthService {
     let removedTokens = 0;
     for (const token of tokens) {
       if (token.validUntil && token.validUntil.getTime() <= currentTime) {
-        this.logger.debug(`AuthToken '${token.keyId}' was removed`);
+        this.logger.debug(
+          `AuthToken '${token.keyId}' was removed`,
+          'removeInvalidTokens',
+        );
         await this.authTokenRepository.remove(token);
         removedTokens++;
       }
     }
     this.logger.log(
       `${removedTokens} invalid AuthTokens were purged from the DB.`,
+      'removeInvalidTokens',
     );
   }
 }
