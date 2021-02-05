@@ -54,7 +54,7 @@ export class NotesController {
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
     // ToDo: provide user for createNoteDto
-    this.logger.debug('Got raw markdown:\n' + text);
+    this.logger.debug('Got raw markdown:\n' + text, 'createNote');
     return this.noteService.toNoteDto(
       await this.noteService.createNote(text, undefined, req.user),
     );
@@ -84,7 +84,7 @@ export class NotesController {
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
     // ToDo: check if user is allowed to view this note
-    this.logger.debug('Got raw markdown:\n' + text);
+    this.logger.debug('Got raw markdown:\n' + text, 'createNamedNote');
     return this.noteService.toNoteDto(
       await this.noteService.createNote(text, noteAlias, req.user),
     );
@@ -97,7 +97,7 @@ export class NotesController {
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<void> {
     // ToDo: check if user is allowed to delete this note
-    this.logger.debug('Deleting note: ' + noteIdOrAlias);
+    this.logger.debug('Deleting note: ' + noteIdOrAlias, 'deleteNote');
     try {
       await this.noteService.deleteNoteByIdOrAlias(noteIdOrAlias);
     } catch (e) {
@@ -106,7 +106,7 @@ export class NotesController {
       }
       throw e;
     }
-    this.logger.debug('Successfully deleted ' + noteIdOrAlias);
+    this.logger.debug('Successfully deleted ' + noteIdOrAlias, 'deleteNote');
     return;
   }
 
@@ -118,7 +118,7 @@ export class NotesController {
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
     // ToDo: check if user is allowed to change this note
-    this.logger.debug('Got raw markdown:\n' + text);
+    this.logger.debug('Got raw markdown:\n' + text, 'updateNote');
     try {
       return this.noteService.toNoteDto(
         await this.noteService.updateNoteByIdOrAlias(noteIdOrAlias, text),
