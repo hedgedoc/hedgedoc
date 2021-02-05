@@ -144,7 +144,7 @@ export class NotesService {
     noteIdOrAlias: string,
     newPermissions: NotePermissionsUpdateDto,
   ): Note {
-    this.logger.warn('Using hardcoded data!');
+    this.logger.warn('Using hardcoded data!', 'updateNotePermissions');
     return {
       id: 'foobar-barfoo',
       alias: null,
