@@ -134,11 +134,20 @@ entity "media_upload" {
   *createdAt : date
 }
 
+entity "history_entry" {
+  *noteId : uuid <<FK note>>
+  *userId : uuid <<FK user>>
+  --
+  *pinStatus: boolean
+  *updatedAt: date
+}
+
 user "1" -- "0..*" note: owner
 user "1" -u- "1..*" identity
 user "1" - "1..*" auth_token: authTokens
 user "1" -l- "1..*" session
 user "1" - "0..*" media_upload
+user "1" - "0..*" history_entry
 user "0..*" -- "0..*" note
 user "1" - "0..*" authorship
 
@@ -149,6 +158,7 @@ revision "0..*" - "0..*" authorship
 
 media_upload "0..*"  -- "1" note
 note "1" - "1..*" revision
+note "1" - "0..*" history_entry
 note "0..*" -l- "0..*" tag
 note "0..*" -- "0..*" group
 

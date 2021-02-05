@@ -19,6 +19,8 @@ import { Identity } from '../../../users/identity.entity';
 import { User } from '../../../users/user.entity';
 import { UsersModule } from '../../../users/users.module';
 import { NotesController } from './notes.controller';
+import { HistoryModule } from '../../../history/history.module';
+import { HistoryEntry } from '../../../history/history-entry.entity';
 
 describe('Notes Controller', () => {
   let controller: NotesController;
@@ -37,7 +39,7 @@ describe('Notes Controller', () => {
           useValue: {},
         },
       ],
-      imports: [RevisionsModule, UsersModule, LoggerModule],
+      imports: [RevisionsModule, UsersModule, LoggerModule, HistoryModule],
     })
       .overrideProvider(getRepositoryToken(Note))
       .useValue({})
@@ -56,6 +58,8 @@ describe('Notes Controller', () => {
       .overrideProvider(getRepositoryToken(Note))
       .useValue({})
       .overrideProvider(getRepositoryToken(Tag))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(HistoryEntry))
       .useValue({})
       .compile();
 

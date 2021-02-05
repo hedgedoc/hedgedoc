@@ -16,7 +16,13 @@ export class MockAuthGuard {
   async canActivate(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
     if (!this.user) {
-      this.user = await this.usersService.createUser('hardcoded', 'Testy');
+      // this assures that we can create the user 'hardcoded', if we need them before any calls are made or
+      // create them on the fly when the first call to the api is made
+      try {
+        this.user = await this.usersService.getUserByUsername('hardcoded');
+      } catch (e) {
+        this.user = await this.usersService.createUser('hardcoded', 'Testy');
+      }
     }
     req.user = this.user;
     return true;

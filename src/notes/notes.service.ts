@@ -21,6 +21,7 @@ import {
 import { NoteDto } from './note.dto';
 import { Note } from './note.entity';
 import { Tag } from './tag.entity';
+import { HistoryEntry } from '../history/history-entry.entity';
 
 @Injectable()
 export class NotesService {
@@ -46,6 +47,7 @@ export class NotesService {
         description: 'Very descriptive text.',
         userPermissions: [],
         groupPermissions: [],
+        historyEntries: [],
         tags: [],
         revisions: Promise.resolve([]),
         authorColors: [],
@@ -69,6 +71,7 @@ export class NotesService {
       newNote.alias = alias;
     }
     if (owner) {
+      newNote.historyEntries = [HistoryEntry.create(owner)];
       newNote.owner = owner;
     }
     return this.noteRepository.save(newNote);
@@ -153,12 +156,14 @@ export class NotesService {
         id: '1',
         identities: [],
         ownedNotes: [],
+        historyEntries: [],
         updatedAt: new Date(),
         userName: 'Testy',
       },
       description: 'Very descriptive text.',
       userPermissions: [],
       groupPermissions: [],
+      historyEntries: [],
       tags: [],
       revisions: Promise.resolve([]),
       authorColors: [],
@@ -170,6 +175,10 @@ export class NotesService {
   async getNoteContent(noteIdOrAlias: string): Promise<string> {
     const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
     return this.getCurrentContent(note);
+  }
+
+  toTagList(note: Note): string[] {
+    return note.tags.map((tag) => tag.name);
   }
 
   async toNotePermissionsDto(note: Note): Promise<NotePermissionsDto> {
@@ -199,7 +208,7 @@ export class NotesService {
       ),
       // TODO: Extract into method
       permissions: await this.toNotePermissionsDto(note),
-      tags: note.tags.map((tag) => tag.name),
+      tags: this.toTagList(note),
       updateTime: (await this.getLatestRevision(note)).createdAt,
       // TODO: Get actual updateUser
       updateUser: {
