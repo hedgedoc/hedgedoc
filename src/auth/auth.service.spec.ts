@@ -13,86 +13,47 @@ import { UsersModule } from '../users/users.module';
 import { Identity } from '../users/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
 import { AuthToken } from './auth-token.entity';
-import { TokenNotValidError } from '../errors/errors';
+import { NotInDBError, TokenNotValidError } from '../errors/errors';
+import { Repository } from 'typeorm';
 
 describe('AuthService', () => {
   let service: AuthService;
   let user: User;
   let authToken: AuthToken;
+  let userRepo: Repository<User>;
+  let authTokenRepo: Repository<AuthToken>;
 
   beforeEach(async () => {
-    user = {
-      authTokens: [],
-      createdAt: new Date(),
-      displayName: 'hardcoded',
-      id: '1',
-      identities: [],
-      ownedNotes: [],
-      historyEntries: [],
-      updatedAt: new Date(),
-      userName: 'Testy',
-    };
-
-    authToken = {
-      accessTokenHash: '',
-      createdAt: new Date(),
-      id: 1,
-      label: 'testIdentifier',
-      keyId: 'abc',
-      lastUsed: null,
-      user: null,
-      validUntil: null,
-    };
-
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
         {
           provide: getRepositoryToken(AuthToken),
-          useValue: {},
+          useClass: Repository,
         },
       ],
       imports: [PassportModule, UsersModule, LoggerModule],
     })
-      .overrideProvider(getRepositoryToken(AuthToken))
-      .useValue({
-        findOne: (): AuthToken => {
-          return {
-            ...authToken,
-            user: user,
-          };
-        },
-        save: async (entity: AuthToken) => {
-          if (entity.lastUsed === undefined) {
-            expect(entity.lastUsed).toBeUndefined();
-          } else {
-            expect(entity.lastUsed.getTime()).toBeLessThanOrEqual(
-              new Date().getTime(),
-            );
-          }
-          return entity;
-        },
-        remove: async (entity: AuthToken) => {
-          expect(entity).toEqual({
-            ...authToken,
-            user: user,
-          });
-        },
-      })
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
       .overrideProvider(getRepositoryToken(User))
-      .useValue({
-        findOne: (): User => {
-          return {
-            ...user,
-            authTokens: [authToken],
-          };
-        },
-      })
+      .useClass(Repository)
       .compile();
 
     service = module.get<AuthService>(AuthService);
+    userRepo = module.get<Repository<User>>(getRepositoryToken(User));
+    authTokenRepo = module.get<Repository<AuthToken>>(
+      getRepositoryToken(AuthToken),
+    );
+
+    user = User.create('hardcoded', 'Testy') as User;
+    authToken = AuthToken.create(
+      user,
+      'testToken',
+      'testKeyId',
+      'abc',
+      new Date(new Date().getTime() + 60000), // make this AuthToken valid for 1min
+    ) as AuthToken;
   });
 
   it('should be defined', () => {
@@ -121,6 +82,9 @@ describe('AuthService', () => {
 
   describe('getTokensByUsername', () => {
     it('works', async () => {
+      jest
+        .spyOn(userRepo, 'findOne')
+        .mockResolvedValueOnce({ ...user, authTokens: [authToken] });
       const tokens = await service.getTokensByUsername(user.userName);
       expect(tokens).toHaveLength(1);
       expect(tokens).toEqual([authToken]);
@@ -128,9 +92,14 @@ describe('AuthService', () => {
   });
 
   describe('getAuthToken', () => {
+    const token = 'testToken';
     it('works', async () => {
-      const token = 'testToken';
-      authToken.accessTokenHash = await service.hashPassword(token);
+      const accessTokenHash = await service.hashPassword(token);
+      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
+        ...authToken,
+        user: user,
+        accessTokenHash: accessTokenHash,
+      });
       const authTokenFromCall = await service.getAuthTokenAndValidate(
         authToken.keyId,
         token,
@@ -138,12 +107,61 @@ describe('AuthService', () => {
       expect(authTokenFromCall).toEqual({
         ...authToken,
         user: user,
+        accessTokenHash: accessTokenHash,
+      });
+    });
+    describe('fails:', () => {
+      it('AuthToken could not be found', async () => {
+        jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(undefined);
+        try {
+          await service.getAuthTokenAndValidate(authToken.keyId, token);
+        } catch (e) {
+          expect(e).toBeInstanceOf(NotInDBError);
+        }
+      });
+      it('AuthToken has wrong hash', async () => {
+        jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
+          ...authToken,
+          user: user,
+          accessTokenHash: 'the wrong hash',
+        });
+        try {
+          await service.getAuthTokenAndValidate(authToken.keyId, token);
+        } catch (e) {
+          expect(e).toBeInstanceOf(TokenNotValidError);
+        }
+      });
+      it('AuthToken has wrong validUntil Date', async () => {
+        const accessTokenHash = await service.hashPassword(token);
+        jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
+          ...authToken,
+          user: user,
+          accessTokenHash: accessTokenHash,
+          validUntil: new Date(1549312452000),
+        });
+        try {
+          await service.getAuthTokenAndValidate(authToken.keyId, token);
+        } catch (e) {
+          expect(e).toBeInstanceOf(TokenNotValidError);
+        }
       });
     });
   });
 
   describe('setLastUsedToken', () => {
     it('works', async () => {
+      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
+        ...authToken,
+        user: user,
+        lastUsed: new Date(1549312452000),
+      });
+      jest
+        .spyOn(authTokenRepo, 'save')
+        .mockImplementationOnce(async (authTokenSaved, _) => {
+          expect(authTokenSaved.keyId).toEqual(authToken.keyId);
+          expect(authTokenSaved.lastUsed).not.toEqual(1549312452000);
+          return authToken;
+        });
       await service.setLastUsedToken(authToken.keyId);
     });
   });
@@ -151,7 +169,21 @@ describe('AuthService', () => {
   describe('validateToken', () => {
     it('works', async () => {
       const token = 'testToken';
-      authToken.accessTokenHash = await service.hashPassword(token);
+      const accessTokenHash = await service.hashPassword(token);
+      jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce({
+        ...user,
+        authTokens: [authToken],
+      });
+      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValue({
+        ...authToken,
+        user: user,
+        accessTokenHash: accessTokenHash,
+      });
+      jest
+        .spyOn(authTokenRepo, 'save')
+        .mockImplementationOnce(async (_, __) => {
+          return authToken;
+        });
       const userByToken = await service.validateToken(
         `${authToken.keyId}.${token}`,
       );
@@ -160,34 +192,88 @@ describe('AuthService', () => {
         authTokens: [authToken],
       });
     });
-    it('fails on too long token', () => {
-      expect(
-        service.validateToken(`${authToken.keyId}.${'a'.repeat(73)}`),
-      ).rejects.toBeInstanceOf(TokenNotValidError);
+    describe('fails:', () => {
+      it('the secret is missing', () => {
+        expect(
+          service.validateToken(`${authToken.keyId}`),
+        ).rejects.toBeInstanceOf(TokenNotValidError);
+      });
+      it('the secret is too long', () => {
+        expect(
+          service.validateToken(`${authToken.keyId}.${'a'.repeat(73)}`),
+        ).rejects.toBeInstanceOf(TokenNotValidError);
+      });
     });
   });
 
   describe('removeToken', () => {
     it('works', async () => {
+      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValue({
+        ...authToken,
+        user: user,
+      });
+      jest
+        .spyOn(authTokenRepo, 'remove')
+        .mockImplementationOnce(async (token, __) => {
+          expect(token).toEqual({
+            ...authToken,
+            user: user,
+          });
+          return authToken;
+        });
       await service.removeToken(authToken.keyId);
     });
   });
 
   describe('createTokenForUser', () => {
-    it('works', async () => {
-      const identifier = 'identifier2';
-      const token = await service.createTokenForUser(
-        user.userName,
-        identifier,
-        0,
-      );
-      expect(token.label).toEqual(identifier);
-      expect(
-        token.validUntil.getTime() -
-          (new Date().getTime() + 2 * 365 * 24 * 60 * 60 * 1000),
-      ).toBeLessThanOrEqual(10000);
-      expect(token.lastUsed).toBeNull();
-      expect(token.secret.startsWith(token.keyId)).toBeTruthy();
+    describe('works', () => {
+      const identifier = 'testIdentifier';
+      it('with validUntil 0', async () => {
+        jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce({
+          ...user,
+          authTokens: [authToken],
+        });
+        jest
+          .spyOn(authTokenRepo, 'save')
+          .mockImplementationOnce(async (authTokenSaved: AuthToken, _) => {
+            expect(authTokenSaved.lastUsed).toBeUndefined();
+            return authTokenSaved;
+          });
+        const token = await service.createTokenForUser(
+          user.userName,
+          identifier,
+          0,
+        );
+        expect(token.label).toEqual(identifier);
+        expect(
+          token.validUntil.getTime() -
+            (new Date().getTime() + 2 * 365 * 24 * 60 * 60 * 1000),
+        ).toBeLessThanOrEqual(10000);
+        expect(token.lastUsed).toBeNull();
+        expect(token.secret.startsWith(token.keyId)).toBeTruthy();
+      });
+      it('with validUntil not 0', async () => {
+        jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce({
+          ...user,
+          authTokens: [authToken],
+        });
+        jest
+          .spyOn(authTokenRepo, 'save')
+          .mockImplementationOnce(async (authTokenSaved: AuthToken, _) => {
+            expect(authTokenSaved.lastUsed).toBeUndefined();
+            return authTokenSaved;
+          });
+        const validUntil = new Date().getTime() + 30000;
+        const token = await service.createTokenForUser(
+          user.userName,
+          identifier,
+          validUntil,
+        );
+        expect(token.label).toEqual(identifier);
+        expect(token.validUntil.getTime()).toEqual(validUntil);
+        expect(token.lastUsed).toBeNull();
+        expect(token.secret.startsWith(token.keyId)).toBeTruthy();
+      });
     });
   });
 
@@ -203,6 +289,10 @@ describe('AuthService', () => {
 
   describe('toAuthTokenDto', () => {
     it('works', async () => {
+      const authToken = new AuthToken();
+      authToken.keyId = 'testKeyId';
+      authToken.label = 'testLabel';
+      authToken.createdAt = new Date();
       const tokenDto = await service.toAuthTokenDto(authToken);
       expect(tokenDto.keyId).toEqual(authToken.keyId);
       expect(tokenDto.lastUsed).toBeNull();
