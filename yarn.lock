@@ -1958,10 +1958,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fontsource/source-sans-pro@4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/source-sans-pro/-/source-sans-pro-4.1.0.tgz#a4e564fb876259c293bb4af8372f1d9b5d1eb5ca"
-  integrity sha512-kybYq6GRXjKeTIJyhvHAcUxn2tpSCqSqmpRClIe8HpXhv6TcT1TkBsxWDnPy8V47KHbkuXWO2C4ZsD9NR9aHMg==
+"@fontsource/source-sans-pro@4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/source-sans-pro/-/source-sans-pro-4.2.0.tgz#b3b04371574fe17522ca7487a46b46c7c7fa323f"
+  integrity sha512-34xf187viMYxV7lN6ad/4AZ+wxwxBg0OUFyUOF44SKqrdQ0U88G4vmFtwRrENhN2ZKCMgZ+hxTiF+QmXpWglLQ==
 
 "@hapi/address@2.x.x":
   version "2.1.4"
