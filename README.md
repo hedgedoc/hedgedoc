@@ -60,7 +60,7 @@ You can inspect the generated production-bundle files to look for optimization i
 1. Clone this repo (e.g. `git clone https://github.com/hedgedoc/react-client.git hedgedoc-react-client`)
 2. Go inside the repo (e.g. `cd hedgedoc-react-client`)
 3. Run `yarn install`
-4. Run `yarn build`
+4. Run `yarn build:production`
 
 This will build the app in production mode and save it into the `build` folder.
 The production build is optimized for best performance, minimized
