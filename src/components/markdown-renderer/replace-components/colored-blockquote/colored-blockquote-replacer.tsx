@@ -1,12 +1,12 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import { DomElement } from 'domhandler'
 import { ReactElement } from 'react'
-import { ComponentReplacer } from '../ComponentReplacer'
+import { ComponentReplacer, NativeRenderer, SubNodeTransform } from '../ComponentReplacer'
 
 const isColorExtraElement = (node: DomElement | undefined): boolean => {
   if (!node || !node.attribs || !node.attribs.class || !node.attribs['data-color']) {
@@ -24,8 +24,8 @@ const findQuoteOptionsParent = (nodes: DomElement[]): DomElement | undefined => 
   })
 }
 
-export class QuoteOptionsReplacer extends ComponentReplacer {
-  public getReplacement(node: DomElement): ReactElement | undefined {
+export class ColoredBlockquoteReplacer extends ComponentReplacer {
+  public getReplacement(node: DomElement, subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer): ReactElement | undefined {
     if (node.name !== 'blockquote' || !node.children || node.children.length < 1) {
       return
     }
@@ -44,5 +44,6 @@ export class QuoteOptionsReplacer extends ComponentReplacer {
       return
     }
     node.attribs = Object.assign(node.attribs || {}, { style: `border-left-color: ${ attributes['data-color'] };` })
+    return nativeRenderer()
   }
 }

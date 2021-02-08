@@ -22,6 +22,7 @@ import { LineMarkers, lineNumberMarker } from '../replace-components/linemarker/
 import { VimeoReplacer } from '../replace-components/vimeo/vimeo-replacer'
 import { YoutubeReplacer } from '../replace-components/youtube/youtube-replacer'
 import { BasicMarkdownItConfigurator } from './BasicMarkdownItConfigurator'
+import { quoteExtraColor } from '../markdown-it-plugins/quote-extra-color'
 
 export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
   constructor(
@@ -57,7 +58,15 @@ export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
       legacySpeakerdeckShortCode,
       AsciinemaReplacer.markdownItPlugin,
       highlightedCode,
-      quoteExtra,
+      quoteExtraColor,
+      quoteExtra({
+        quoteLabel: 'name',
+        icon: 'user'
+      }),
+      quoteExtra({
+        quoteLabel: 'time',
+        icon: 'clock-o'
+      }),
       (markdownIt) => documentToc(markdownIt, this.onToc))
     if (this.onLineMarkers) {
       const callback = this.onLineMarkers

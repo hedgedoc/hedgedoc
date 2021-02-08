@@ -4,44 +4,112 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import MarkdownIt from 'markdown-it'
-import markdownItRegex from 'markdown-it-regex'
-import { RegexOptions } from '../../../external-types/markdown-it-regex/interface'
+import MarkdownIt from 'markdown-it/lib'
+import Token from 'markdown-it/lib/token'
+import { IconName } from '../../common/fork-awesome/types'
 
-export const quoteExtra: MarkdownIt.PluginSimple = (markdownIt) => {
-  markdownItRegex(markdownIt, replaceQuoteExtraAuthor)
-  markdownItRegex(markdownIt, replaceQuoteExtraColor)
-  markdownItRegex(markdownIt, replaceQuoteExtraTime)
+export interface QuoteExtraOptions {
+  quoteLabel: string
+  icon: IconName
 }
 
-const replaceQuoteExtraTime: RegexOptions = {
-  name: 'quote-extra-time',
-  regex: /\[time=([^\]]+)]/,
-  replace: (match) => {
-    // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
-    // noinspection CheckTagEmptyBody
-    return `<span class="quote-extra"><i class="fa fa-clock-o mx-1"></i> ${ match }</span>`
+export const quoteExtra: (pluginOptions: QuoteExtraOptions) => MarkdownIt.PluginSimple =
+  (pluginOptions) => (md) => {
+    md.inline.ruler.push(`extraQuote_${ pluginOptions.quoteLabel }`, (state) => {
+      const quoteExtraTagValues = parseQuoteExtraTag(state.src, state.pos, state.posMax)
+
+      if (!quoteExtraTagValues || quoteExtraTagValues.label !== pluginOptions.quoteLabel) {
+        return false
+      }
+      state.pos = quoteExtraTagValues.valueEndIndex + 1
+
+      const tokens: Token[] = []
+      state.md.inline.parse(
+        quoteExtraTagValues.value,
+        state.md,
+        state.env,
+        tokens
+      )
+
+      const token = state.push('quote-extra', '', 0)
+      token.attrSet('icon', pluginOptions.icon)
+      token.children = tokens
+
+      return true
+    })
+
+    if (md.renderer.rules['quote-extra']) {
+      return
+    }
+
+    md.renderer.rules['quote-extra'] = (tokens, idx, options: MarkdownIt.Options, env: unknown) => {
+      const token = tokens[idx]
+      const innerTokens = token.children
+
+      if (!innerTokens) {
+        return ''
+      }
+
+      const innerHtml = md.renderer.renderInline(innerTokens, options, env)
+      return `<span class="quote-extra"><i class="fa fa-${ token.attrGet('icon') ?? '' } mx-1"></i>${ innerHtml }</span>`
+    }
+  }
+
+export interface QuoteExtraTagValues {
+  labelStartIndex: number,
+  labelEndIndex: number,
+  valueStartIndex: number,
+  valueEndIndex: number,
+  label: string,
+  value: string
+}
+
+export const parseQuoteExtraTag = (line: string, start: number, maxPos: number): QuoteExtraTagValues | undefined => {
+  if (line[start] !== '[') {
+    return
+  }
+
+  const labelStartIndex = start + 1
+  const labelEndIndex = parseLabel(line, labelStartIndex, maxPos)
+  if (!labelEndIndex || labelStartIndex === labelEndIndex) {
+    return
+  }
+
+  const valueStartIndex = labelEndIndex + 1
+  const valueEndIndex = parseValue(line, valueStartIndex, maxPos)
+  if (!valueEndIndex || valueStartIndex === valueEndIndex) {
+    return
+  }
+
+  return {
+    labelStartIndex,
+    labelEndIndex,
+    valueStartIndex,
+    valueEndIndex,
+    label: line.substr(labelStartIndex, labelEndIndex - labelStartIndex),
+    value: line.substr(valueStartIndex, valueEndIndex - valueStartIndex)
   }
 }
 
-const cssColorRegex = /\[color=(#(?:[0-9a-f]{2}){2,4}|(?:#[0-9a-f]{3})|black|silver|gray|whitesmoke|maroon|red|purple|fuchsia|green|lime|olivedrab|yellow|navy|blue|teal|aquamarine|orange|aliceblue|antiquewhite|aqua|azure|beige|bisque|blanchedalmond|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|currentcolor|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkgrey|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkslategrey|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dimgrey|dodgerblue|firebrick|floralwhite|forestgreen|gainsboro|ghostwhite|goldenrod|gold|greenyellow|grey|honeydew|hotpink|indianred|indigo|ivory|khaki|lavenderblush|lavender|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgray|lightgreen|lightgrey|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightslategrey|lightsteelblue|lightyellow|limegreen|linen|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|oldlace|olive|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|rebeccapurple|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|skyblue|slateblue|slategray|slategrey|snow|springgreen|steelblue|tan|thistle|tomato|transparent|turquoise|violet|wheat|white|yellowgreen)]/i
-
-const replaceQuoteExtraColor: RegexOptions = {
-  name: 'quote-extra-color',
-  regex: cssColorRegex,
-  replace: (match) => {
-    // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
-    // noinspection CheckTagEmptyBody
-    return `<span class="quote-extra" data-color='${ match }' style='color: ${ match }'><i class="fa fa-tag"></i></span>`
+const parseValue = (line: string, start: number, maxPos: number): number | undefined => {
+  let level = 1
+  for (let pos = start; pos <= maxPos; pos += 1) {
+    const currentCharacter = line[pos]
+    if (currentCharacter === ']') {
+      level -= 1
+      if (level === 0) {
+        return pos
+      }
+    } else if (currentCharacter === '[') {
+      level += 1
+    }
   }
 }
 
-const replaceQuoteExtraAuthor: RegexOptions = {
-  name: 'quote-extra-name',
-  regex: /\[name=([^\]]+)]/,
-  replace: (match) => {
-    // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
-    // noinspection CheckTagEmptyBody
-    return `<span class="quote-extra"><i class="fa fa-user mx-1"></i> ${ match }</span>`
+const parseLabel = (line: string, start: number, maxPos: number): number | undefined => {
+  for (let pos = start; pos <= maxPos; pos += 1) {
+    if (line[pos] === '=') {
+      return pos
+    }
   }
 }

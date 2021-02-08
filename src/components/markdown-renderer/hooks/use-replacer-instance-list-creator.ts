@@ -19,7 +19,7 @@ import { LinemarkerReplacer } from '../replace-components/linemarker/linemarker-
 import { LinkReplacer } from '../replace-components/link-replacer/link-replacer'
 import { MarkmapReplacer } from '../replace-components/markmap/markmap-replacer'
 import { MermaidReplacer } from '../replace-components/mermaid/mermaid-replacer'
-import { QuoteOptionsReplacer } from '../replace-components/quote-options/quote-options-replacer'
+import { ColoredBlockquoteReplacer } from '../replace-components/colored-blockquote/colored-blockquote-replacer'
 import { SequenceDiagramReplacer } from '../replace-components/sequence-diagram/sequence-diagram-replacer'
 import { TaskListReplacer } from '../replace-components/task-list/task-list-replacer'
 import { VegaReplacer } from '../replace-components/vega-lite/vega-replacer'
@@ -45,7 +45,7 @@ export const useReplacerInstanceListCreator = (onTaskCheckedChange?: (lineInMark
     new MarkmapReplacer(),
     new VegaReplacer(),
     new HighlightedCodeReplacer(),
-    new QuoteOptionsReplacer(),
+    new ColoredBlockquoteReplacer(),
     new KatexReplacer(),
     new TaskListReplacer(onTaskCheckedChange)
   ], [onImageClick, onTaskCheckedChange, baseUrl])

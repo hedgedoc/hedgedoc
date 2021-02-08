@@ -34,6 +34,7 @@ Cypress.Commands.add('codemirrorFill', (content: string) => {
     .fill(content)
   if (line) {
     cy.get('.CodeMirror')
-      .contains('.CodeMirror-line', line)
+      .find('.CodeMirror-line')
+      .should('contain.text', line)
   }
 })
