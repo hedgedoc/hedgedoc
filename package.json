@@ -186,7 +186,7 @@
     "eslint-plugin-standard": "4.1.0",
     "expose-loader": "1.0.3",
     "file-loader": "6.2.0",
-    "html-webpack-plugin": "4.5.1",
+    "html-webpack-plugin": "5.0.0",
     "imports-loader": "1.2.0",
     "jsonlint": "1.6.3",
     "less": "3.13.1",
