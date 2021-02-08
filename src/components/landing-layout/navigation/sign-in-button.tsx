@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React from 'react'
@@ -13,9 +13,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { ApplicationState } from '../../../redux'
 import { ShowIf } from '../../common/show-if/show-if'
 
-type SignInButtonProps = {
-                           className?: string
-                         } & Omit<ButtonProps, 'href'>
+export type SignInButtonProps = Omit<ButtonProps, 'href'>
 
 export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props }) => {
   const { t } = useTranslation()
@@ -25,9 +23,9 @@ export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props })
     <ShowIf condition={ anyAuthProviderActive }>
       <LinkContainer to="/login" title={ t('login.signIn') }>
         <Button
+          data-cy={ 'sign-in-button' }
           variant={ variant || 'success' }
-          { ...props }
-        >
+          { ...props }>
           <Trans i18nKey="login.signIn"/>
         </Button>
       </LinkContainer>

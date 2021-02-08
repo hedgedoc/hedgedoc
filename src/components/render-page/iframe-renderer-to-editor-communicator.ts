@@ -8,6 +8,7 @@ import { NoteFrontmatter } from '../editor-page/note-frontmatter/note-frontmatte
 import { ScrollState } from '../editor-page/synced-scroll/scroll-props'
 import { IframeCommunicator } from './iframe-communicator'
 import {
+  BaseConfiguration,
   EditorToRendererIframeMessage,
   ImageDetails,
   RendererToEditorIframeMessage,
@@ -18,10 +19,10 @@ export class IframeRendererToEditorCommunicator extends IframeCommunicator<Rende
   private onSetMarkdownContentHandler?: ((markdownContent: string) => void)
   private onSetDarkModeHandler?: ((darkModeActivated: boolean) => void)
   private onSetScrollStateHandler?: ((scrollState: ScrollState) => void)
-  private onSetBaseUrlHandler?: ((baseUrl: string) => void)
+  private onSetBaseConfigurationHandler?: ((baseConfiguration: BaseConfiguration) => void)
 
-  public onSetBaseUrl(handler?: (baseUrl: string) => void): void {
-    this.onSetBaseUrlHandler = handler
+  public onSetBaseConfiguration(handler?: (baseConfiguration: BaseConfiguration) => void): void {
+    this.onSetBaseConfigurationHandler = handler
   }
 
   public onSetMarkdownContent(handler?: (markdownContent: string) => void): void {
@@ -84,6 +85,13 @@ export class IframeRendererToEditorCommunicator extends IframeCommunicator<Rende
     })
   }
 
+  public sendHeightChange(height: number): void {
+    this.sendMessageToOtherSide({
+      type: RenderIframeMessageType.ON_HEIGHT_CHANGE,
+      height
+    })
+  }
+
   protected handleEvent(event: MessageEvent<EditorToRendererIframeMessage>): boolean | undefined {
     const renderMessage = event.data
     switch (renderMessage.type) {
@@ -96,8 +104,8 @@ export class IframeRendererToEditorCommunicator extends IframeCommunicator<Rende
       case RenderIframeMessageType.SET_SCROLL_STATE:
         this.onSetScrollStateHandler?.(renderMessage.scrollState)
         return false
-      case RenderIframeMessageType.SET_BASE_URL:
-        this.onSetBaseUrlHandler?.(renderMessage.baseUrl)
+      case RenderIframeMessageType.SET_BASE_CONFIGURATION:
+        this.onSetBaseConfigurationHandler?.(renderMessage.baseConfiguration)
         return false
     }
   }

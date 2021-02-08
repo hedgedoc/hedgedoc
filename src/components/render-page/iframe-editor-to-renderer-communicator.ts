@@ -8,6 +8,7 @@ import { NoteFrontmatter } from '../editor-page/note-frontmatter/note-frontmatte
 import { ScrollState } from '../editor-page/synced-scroll/scroll-props'
 import { IframeCommunicator } from './iframe-communicator'
 import {
+  BaseConfiguration,
   EditorToRendererIframeMessage,
   ImageDetails,
   RendererToEditorIframeMessage,
@@ -22,6 +23,11 @@ export class IframeEditorToRendererCommunicator extends IframeCommunicator<Edito
   private onSetScrollStateHandler?: (scrollState: ScrollState) => void
   private onRendererReadyHandler?: () => void
   private onImageClickedHandler?: (details: ImageDetails) => void
+  private onHeightChangeHandler?: (height: number) => void
+
+  public onHeightChange(handler?: (height: number) => void): void {
+    this.onHeightChangeHandler = handler
+  }
 
   public onFrontmatterChange(handler?: (frontmatter?: NoteFrontmatter) => void): void {
     this.onFrontmatterChangeHandler = handler
@@ -51,10 +57,10 @@ export class IframeEditorToRendererCommunicator extends IframeCommunicator<Edito
     this.onSetScrollStateHandler = handler
   }
 
-  public sendSetBaseUrl(baseUrl: string): void {
+  public sendSetBaseConfiguration(baseConfiguration: BaseConfiguration): void {
     this.sendMessageToOtherSide({
-      type: RenderIframeMessageType.SET_BASE_URL,
-      baseUrl
+      type: RenderIframeMessageType.SET_BASE_CONFIGURATION,
+      baseConfiguration
     })
   }
 
@@ -105,6 +111,9 @@ export class IframeEditorToRendererCommunicator extends IframeCommunicator<Edito
         return false
       case RenderIframeMessageType.IMAGE_CLICKED:
         this.onImageClickedHandler?.(renderMessage.details)
+        return false
+      case RenderIframeMessageType.ON_HEIGHT_CHANGE:
+        this.onHeightChangeHandler?.(renderMessage.height)
         return false
     }
   }

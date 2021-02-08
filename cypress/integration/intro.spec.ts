@@ -5,50 +5,58 @@
  */
 
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-describe('Intro', () => {
+describe('Intro page', () => {
   beforeEach(() => {
+    cy.intercept('/intro.md', 'test content')
     cy.visit('/')
   })
 
-  describe('Cover Button are hidden when logged in', () => {
-    it('Sign in Cover Button', () => {
-      cy.get('.cover-button.btn-success')
-        .should('not.exist')
-    })
-
-    it('Features Cover Button', () => {
-      cy.get('.cover-button.btn-primary')
-        .should('not.exist')
+  describe('content', () => {
+    it('fetches and shows the correct intro page content', () => {
+      cy.getMarkdownBody()
+        .contains('test content')
     })
   })
 
-  describe('Cover Button are shown when logged out', () => {
-    beforeEach(() => {
+  describe('features button', () => {
+    it('is hidden when logged in', () => {
+      cy.get('[data-cy="features-button"]')
+        .should('not.exist')
+    })
+
+    it('is visible when logged out', () => {
       cy.logout()
-    })
-
-    it('Sign in Cover Button', () => {
-      cy.get('.cover-button.btn-success')
-        .should('exist')
-    })
-
-    it('Features Cover Button', () => {
-      cy.get('.cover-button.btn-primary')
+      cy.get('[data-cy="features-button"]')
         .should('exist')
     })
   })
 
-  it('Version can be opened and closed', () => {
-    cy.get('#versionModal')
-      .should('not.exist')
-    cy.get('#version')
-      .click()
-    cy.get('#versionModal')
-      .should('be.visible')
-    cy.get('#versionModal .modal-footer .btn')
-      .contains('Close')
-      .click()
-    cy.get('#versionModal')
-      .should('not.exist')
+  describe('sign in button', () => {
+    it('is hidden when logged in', () => {
+      cy.get('[data-cy="sign-in-button"]')
+        .should('not.exist')
+    })
+
+    it('is visible when logged out', () => {
+      cy.logout()
+      cy.get('[data-cy="sign-in-button"]')
+        .should('exist')
+    })
+  })
+
+  describe('version dialog', () => {
+    it('can be opened and closed', () => {
+      cy.get('[data-cy="version-modal"]')
+        .should('not.exist')
+      cy.get('[data-cy="show-version-modal"]')
+        .click()
+      cy.get('[data-cy="version-modal"]')
+        .should('be.visible')
+      cy.get('[data-cy="version-modal"] [data-cy="close-version-modal-button"]')
+        .contains('Close')
+        .click()
+      cy.get('[data-cy="version-modal"]')
+        .should('not.exist')
+    })
   })
 })

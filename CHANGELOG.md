@@ -69,6 +69,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - Surround selected text with a link via shortcut (ctrl+k or cmd+k).
 - A sidebar for menu options
 - Improved security by wrapping the markdown rendering into an iframe
+- The intro page content can be changed by editing `public/intro.md`
 
 ### Changed
 

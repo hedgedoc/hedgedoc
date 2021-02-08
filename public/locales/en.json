@@ -34,7 +34,8 @@
                 "katex": "Works with charts and KaTeX",
                 "slides": "Supports slide mode"
             },
-            "screenShotAltText": "HedgeDoc Screenshot"
+            "markdownWhileLoading": "Loading...",
+            "markdownLoadingError": "Error while fetching intro content"
         },
         "history": {
             "error": {

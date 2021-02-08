@@ -5,7 +5,7 @@
  */
 
 import { TocAst } from 'markdown-it-toc-done-right'
-import React, { MutableRefObject, useMemo, useRef, useState } from 'react'
+import React, { MutableRefObject, useEffect, useMemo, useRef, useState } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import useResizeObserver from 'use-resize-observer'
 import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
@@ -19,8 +19,7 @@ import { FullMarkdownRenderer } from '../markdown-renderer/full-markdown-rendere
 import { ImageClickHandler } from '../markdown-renderer/replace-components/image/image-replacer'
 import './markdown-document.scss'
 
-export interface MarkdownDocumentProps extends ScrollProps {
-  extraClasses?: string
+export interface RendererProps extends ScrollProps {
   onFirstHeadingChange?: (firstHeading: string | undefined) => void
   onFrontmatterChange?: (frontmatter: NoteFrontmatter | undefined) => void
   onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
@@ -28,11 +27,19 @@ export interface MarkdownDocumentProps extends ScrollProps {
   markdownContent: string,
   baseUrl?: string
   onImageClick?: ImageClickHandler
+  onHeightChange?: (height: number) => void
+  disableToc?: boolean
+}
+
+export interface MarkdownDocumentProps extends RendererProps {
+  additionalOuterContainerClasses?: string
+  additionalRendererClasses?: string
 }
 
 export const MarkdownDocument: React.FC<MarkdownDocumentProps> = (
   {
-    extraClasses,
+    additionalOuterContainerClasses,
+    additionalRendererClasses,
     onFirstHeadingChange,
     onFrontmatterChange,
     onMakeScrollSource,
@@ -41,42 +48,53 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = (
     markdownContent,
     onImageClick,
     onScroll,
-    scrollState
+    scrollState,
+    onHeightChange,
+    disableToc
   }) => {
   const rendererRef = useRef<HTMLDivElement | null>(null)
   const internalDocumentRenderPaneRef = useRef<HTMLDivElement>(null)
   const [tocAst, setTocAst] = useState<TocAst>()
-  const width = useResizeObserver({ ref: internalDocumentRenderPaneRef.current }).width ?? 0
+
+  const internalDocumentRenderPaneSize = useResizeObserver({ ref: internalDocumentRenderPaneRef.current })
+  const rendererSize = useResizeObserver({ ref: rendererRef.current })
+
+  const containerWidth = internalDocumentRenderPaneSize.width ?? 0
+
+  useEffect(() => {
+    if (!onHeightChange) {
+      return
+    }
+    onHeightChange(rendererSize.height ? rendererSize.height + 1 : 0)
+  }, [rendererSize.height, onHeightChange])
 
   const contentLineCount = useMemo(() => markdownContent.split('\n').length, [markdownContent])
   const [onLineMarkerPositionChanged, onUserScroll] = useSyncedScrolling(internalDocumentRenderPaneRef, rendererRef, contentLineCount, scrollState, onScroll)
 
   return (
-    <div className={ `markdown-document ${ extraClasses ?? '' }` }
+    <div className={ `markdown-document ${ additionalOuterContainerClasses ?? '' }` }
          ref={ internalDocumentRenderPaneRef } onScroll={ onUserScroll } onMouseEnter={ onMakeScrollSource }>
       <div className={ 'markdown-document-side' }/>
-      <div className={ 'bg-light markdown-document-content' }>
+      <div className={ 'markdown-document-content' }>
         <YamlArrayDeprecationAlert/>
         <FullMarkdownRenderer
           rendererRef={ rendererRef }
-          className={ 'flex-fill pt-4 mb-3' }
+          className={ `flex-fill mb-3 ${ additionalRendererClasses ?? '' }` }
           content={ markdownContent }
           onFirstHeadingChange={ onFirstHeadingChange }
           onLineMarkerPositionChanged={ onLineMarkerPositionChanged }
           onFrontmatterChange={ onFrontmatterChange }
           onTaskCheckedChange={ onTaskCheckedChange }
-          onTocChange={ (tocAst) => setTocAst(tocAst) }
+          onTocChange={ setTocAst }
           baseUrl={ baseUrl }
           onImageClick={ onImageClick }/>
-
       </div>
-
       <div className={ 'markdown-document-side pt-4' }>
-        <ShowIf condition={ !!tocAst }>
-          <ShowIf condition={ width >= 1100 }>
+        <ShowIf condition={ !!tocAst && !disableToc }>
+          <ShowIf condition={ containerWidth >= 1100 }>
             <TableOfContents ast={ tocAst as TocAst } className={ 'sticky' } baseUrl={ baseUrl }/>
           </ShowIf>
-          <ShowIf condition={ width < 1100 }>
+          <ShowIf condition={ containerWidth < 1100 }>
             <div className={ 'markdown-toc-sidebar-button' }>
               <Dropdown drop={ 'up' }>
                 <Dropdown.Toggle id="toc-overlay-button" variant={ 'secondary' } className={ 'no-arrow' }>

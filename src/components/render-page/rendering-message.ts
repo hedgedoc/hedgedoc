@@ -16,7 +16,8 @@ export enum RenderIframeMessageType {
   SET_SCROLL_STATE = 'SET_SCROLL_STATE',
   ON_SET_FRONTMATTER = 'ON_SET_FRONTMATTER',
   IMAGE_CLICKED = 'IMAGE_CLICKED',
-  SET_BASE_URL = 'SET_BASE_URL'
+  ON_HEIGHT_CHANGE = 'ON_HEIGHT_CHANGE',
+  SET_BASE_CONFIGURATION = 'SET_BASE_CONFIGURATION'
 }
 
 export interface RendererToEditorSimpleMessage {
@@ -35,8 +36,8 @@ export interface ImageDetails {
 }
 
 export interface SetBaseUrlMessage {
-  type: RenderIframeMessageType.SET_BASE_URL,
-  baseUrl: string
+  type: RenderIframeMessageType.SET_BASE_CONFIGURATION,
+  baseConfiguration: BaseConfiguration
 }
 
 export interface ImageClickedMessage {
@@ -70,6 +71,11 @@ export interface OnFrontmatterChangeMessage {
   frontmatter: NoteFrontmatter | undefined
 }
 
+export interface OnHeightChangeMessage {
+  type: RenderIframeMessageType.ON_HEIGHT_CHANGE,
+  height: number
+}
+
 export type EditorToRendererIframeMessage =
   SetMarkdownContentMessage |
   SetDarkModeMessage |
@@ -82,4 +88,15 @@ export type RendererToEditorIframeMessage =
   OnTaskCheckboxChangeMessage |
   OnFrontmatterChangeMessage |
   SetScrollStateMessage |
-  ImageClickedMessage
+  ImageClickedMessage |
+  OnHeightChangeMessage
+
+export enum RendererType {
+  DOCUMENT,
+  INTRO
+}
+
+export interface BaseConfiguration {
+  baseUrl: string
+  rendererType: RendererType
+}

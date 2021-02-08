@@ -21,7 +21,7 @@
 }
 
 body {
-  background-color: darken($dark, 8%);
+  background-color: $dark;
 }
 
 html {
@@ -86,4 +86,8 @@ body {
 
 .overflow-x-auto {
   overflow-x: auto !important;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden !important;
 }

@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React from 'react'
@@ -38,6 +38,7 @@ export const CoverButtons: React.FC = () => {
       </ShowIf>
       <Link to="/n/features">
         <Button
+          data-cy={ 'features-button' }
           className="cover-button"
           variant="primary"
           size="lg"

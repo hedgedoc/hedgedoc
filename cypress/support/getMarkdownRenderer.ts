@@ -14,6 +14,7 @@ declare namespace Cypress {
 
 Cypress.Commands.add('getMarkdownRenderer', () => {
   return cy.get(`iframe[data-cy="documentIframe"]`)
+           .should('be.visible')
            .its('0.contentDocument')
            .should('exist')
            .its('body')

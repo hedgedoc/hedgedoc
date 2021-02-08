@@ -29,7 +29,7 @@ export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
     private passYamlErrorState: (error: boolean) => void,
     private onRawMeta: (rawMeta: RawNoteFrontmatter) => void,
     private onToc: (toc: TocAst) => void,
-    private onLineMarkers: (lineMarkers: LineMarkers[]) => void
+    private onLineMarkers?: (lineMarkers: LineMarkers[]) => void
   ) {
     super()
   }
@@ -58,8 +58,12 @@ export class FullMarkdownItConfigurator extends BasicMarkdownItConfigurator {
       AsciinemaReplacer.markdownItPlugin,
       highlightedCode,
       quoteExtra,
-      (markdownIt) => documentToc(markdownIt, this.onToc),
-      (markdownIt) => lineNumberMarker(markdownIt, (lineMarkers) => this.onLineMarkers(lineMarkers))
-    )
+      (markdownIt) => documentToc(markdownIt, this.onToc))
+    if (this.onLineMarkers) {
+      const callback = this.onLineMarkers
+      this.configurations.push(
+        (markdownIt) => lineNumberMarker(markdownIt, (lineMarkers) => callback(lineMarkers))
+      )
+    }
   }
 }

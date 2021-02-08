@@ -22,6 +22,7 @@ import { RenderIframe } from '../editor-page/renderer-pane/render-iframe'
 import { DocumentInfobar } from './document-infobar'
 import { ErrorWhileLoadingNoteAlert } from './ErrorWhileLoadingNoteAlert'
 import { LoadingNoteAlert } from './LoadingNoteAlert'
+import { RendererType } from '../render-page/rendering-message'
 
 export const DocumentReadOnlyPage: React.FC = () => {
 
@@ -55,10 +56,11 @@ export const DocumentReadOnlyPage: React.FC = () => {
           noteId={ id }
           viewCount={ noteDetails.viewCount }
         />
-        <RenderIframe extraClasses={ 'flex-fill' }
+        <RenderIframe frameClasses={ 'flex-fill h-100 w-100' }
                       markdownContent={ markdownContent }
                       onFirstHeadingChange={ onFirstHeadingChange }
-                      onFrontmatterChange={ onFrontmatterChange }/>
+                      onFrontmatterChange={ onFrontmatterChange }
+                      rendererType={RendererType.DOCUMENT}/>
       </ShowIf>
     </div>
   )

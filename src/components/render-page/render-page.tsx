@@ -12,15 +12,17 @@ import { setNoteFrontmatter } from '../../redux/note-details/methods'
 import { NoteFrontmatter } from '../editor-page/note-frontmatter/note-frontmatter'
 import { ScrollState } from '../editor-page/synced-scroll/scroll-props'
 import { ImageClickHandler } from '../markdown-renderer/replace-components/image/image-replacer'
+import { useImageClickHandler } from './hooks/use-image-click-handler'
 import { IframeRendererToEditorCommunicator } from './iframe-renderer-to-editor-communicator'
 import { MarkdownDocument } from './markdown-document'
+import { BaseConfiguration, RendererType } from './rendering-message'
 
 export const RenderPage: React.FC = () => {
   useApplyDarkMode()
 
   const [markdownContent, setMarkdownContent] = useState('')
   const [scrollState, setScrollState] = useState<ScrollState>({ firstLineInView: 1, scrolledPercentage: 0 })
-  const [baseUrl, setBaseUrl] = useState<string>()
+  const [baseConfiguration, setBaseConfiguration] = useState<BaseConfiguration | undefined>(undefined)
 
   const editorOrigin = useSelector((state: ApplicationState) => state.config.iframeCommunication.editorOrigin)
 
@@ -35,7 +37,7 @@ export const RenderPage: React.FC = () => {
     return () => iframeCommunicator.unregisterEventListener()
   }, [iframeCommunicator])
 
-  useEffect(() => iframeCommunicator.onSetBaseUrl(setBaseUrl), [iframeCommunicator])
+  useEffect(() => iframeCommunicator.onSetBaseConfiguration(setBaseConfiguration), [iframeCommunicator])
   useEffect(() => iframeCommunicator.onSetMarkdownContent(setMarkdownContent), [iframeCommunicator])
   useEffect(() => iframeCommunicator.onSetDarkMode(setDarkMode), [iframeCommunicator])
   useEffect(() => iframeCommunicator.onSetScrollState(setScrollState), [iframeCommunicator, scrollState])
@@ -61,37 +63,45 @@ export const RenderPage: React.FC = () => {
     iframeCommunicator.sendSetScrollState(scrollState)
   }, [iframeCommunicator])
 
-  const onImageClick: ImageClickHandler = useCallback((event) => {
-    const image = event.target as HTMLImageElement
-    if (image.src === '') {
-      return
-    }
-    iframeCommunicator.sendClickedImageUrl({
-      src: image.src,
-      alt: image.alt,
-      title: image.title
-    })
+  const onImageClick: ImageClickHandler = useImageClickHandler(iframeCommunicator)
+
+  const onHeightChange = useCallback((height: number) => {
+    iframeCommunicator.sendHeightChange(height)
   }, [iframeCommunicator])
 
-  if (!baseUrl) {
+  if (!baseConfiguration) {
     return null
   }
 
-  return (
-    <div className={ 'vh-100 w-100' }>
-      <MarkdownDocument
-        extraClasses={ 'bg-light' }
-        markdownContent={ markdownContent }
-        onTaskCheckedChange={ onTaskCheckedChange }
-        onFirstHeadingChange={ onFirstHeadingChange }
-        onMakeScrollSource={ onMakeScrollSource }
-        onFrontmatterChange={ onFrontmatterChange }
-        scrollState={ scrollState }
-        onScroll={ onScroll }
-        baseUrl={ baseUrl }
-        onImageClick={ onImageClick }/>
-    </div>
-  )
+  switch (baseConfiguration.rendererType) {
+    case RendererType.DOCUMENT:
+      return (
+        <MarkdownDocument
+          additionalOuterContainerClasses={ 'vh-100 bg-light' }
+          additionalRendererClasses={ 'mb-3' }
+          markdownContent={ markdownContent }
+          onTaskCheckedChange={ onTaskCheckedChange }
+          onFirstHeadingChange={ onFirstHeadingChange }
+          onMakeScrollSource={ onMakeScrollSource }
+          onFrontmatterChange={ onFrontmatterChange }
+          scrollState={ scrollState }
+          onScroll={ onScroll }
+          baseUrl={ baseConfiguration.baseUrl }
+          onImageClick={ onImageClick }/>
+      )
+    case RendererType.INTRO:
+      return (
+        <MarkdownDocument
+          additionalOuterContainerClasses={ 'vh-100 bg-light overflow-y-hidden' }
+          markdownContent={ markdownContent }
+          baseUrl={ baseConfiguration.baseUrl }
+          onImageClick={ onImageClick }
+          disableToc={ true }
+          onHeightChange={ onHeightChange }/>
+      )
+    default:
+      return null
+  }
 }
 
 export default RenderPage

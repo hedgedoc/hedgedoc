@@ -71,11 +71,13 @@ export const FullMarkdownRenderer: React.FC<FullMarkdownRendererProps & Addition
       toc => {
         tocAst.current = toc
       },
-      lineMarkers => {
-        currentLineMarkers.current = lineMarkers
-      }
+      onLineMarkerPositionChanged === undefined
+        ? undefined
+        : lineMarkers => {
+          currentLineMarkers.current = lineMarkers
+        }
     )).buildConfiguredMarkdownIt()
-  }, [onFrontmatterChange])
+  }, [onLineMarkerPositionChanged, onFrontmatterChange])
 
   const clearFrontmatter = useCallback(() => {
     hasNewYamlError.current = false

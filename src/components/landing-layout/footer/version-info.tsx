@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import equal from 'fast-deep-equal'
@@ -43,10 +43,10 @@ export const VersionInfo: React.FC = () => {
 
   return (
     <Fragment>
-      <Link id='version' to={ '#' } className={ 'text-light' } onClick={ handleShow }>
+      <Link data-cy={ 'show-version-modal' } to={ '#' } className={ 'text-light' } onClick={ handleShow }>
         <Trans i18nKey={ 'landing.versionInfo.versionInfo' }/>
       </Link>
-      <Modal id='versionModal' show={ show } onHide={ handleClose } animation={ true }>
+      <Modal data-cy={ 'version-modal' } show={ show } onHide={ handleClose } animation={ true }>
         <Modal.Body className="text-dark">
           <h3><Trans i18nKey={ 'landing.versionInfo.title' }/></h3>
           <Row>
@@ -55,7 +55,7 @@ export const VersionInfo: React.FC = () => {
           </Row>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={ handleClose }>
+          <Button variant="secondary" onClick={ handleClose } data-cy={ 'close-version-modal-button' }>
             <Trans i18nKey={ 'common.close' }/>
           </Button>
         </Modal.Footer>

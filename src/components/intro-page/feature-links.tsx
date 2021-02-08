@@ -13,29 +13,29 @@ import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
 export const FeatureLinks: React.FC = () => {
   useTranslation()
   return (
-    <Row className="mb-5">
-      <Col md={ 4 }>
+    <Row className="mb-5 d-flex flex-row justify-content-center">
+      <Col md={ 3 }>
         <Link to={ '/n/features#Share-Notes' } className="text-light">
-          <ForkAwesomeIcon icon="bolt" size="3x"/>
-          <h5>
+          <ForkAwesomeIcon icon="bolt" size="2x"/>
+          <h6>
             <Trans i18nKey="landing.intro.features.collaboration"/>
-          </h5>
+          </h6>
         </Link>
       </Col>
-      <Col md={ 4 }>
+      <Col md={ 3 }>
         <Link to={ '/n/features#MathJax' } className="text-light">
-          <ForkAwesomeIcon icon="bar-chart" size="3x"/>
-          <h5>
+          <ForkAwesomeIcon icon="bar-chart" size="2x"/>
+          <h6>
             <Trans i18nKey="landing.intro.features.katex"/>
-          </h5>
+          </h6>
         </Link>
       </Col>
-      <Col md={ 4 }>
+      <Col md={ 3 }>
         <Link to={ '/n/features#Slide-Mode' } className="text-light">
-          <ForkAwesomeIcon icon="television" size="3x"/>
-          <h5>
+          <ForkAwesomeIcon icon="television" size="2x"/>
+          <h6>
             <Trans i18nKey="landing.intro.features.slides"/>
-          </h5>
+          </h6>
         </Link>
       </Col>
     </Row>

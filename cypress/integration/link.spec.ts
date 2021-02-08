@@ -94,21 +94,21 @@ describe('Links Intro', () => {
 
   describe('Feature Links', () => {
     it('Share-Notes', () => {
-      cy.get('i.fa-bolt.fa-3x')
+      cy.get('i.fa-bolt')
         .click()
       cy.url()
         .should('include', '/features#Share-Notes')
     })
 
     it('KaTeX', () => {
-      cy.get('i.fa-bar-chart.fa-3x')
+      cy.get('i.fa-bar-chart')
         .click()
       cy.url()
         .should('include', '/features#MathJax')
     })
 
     it('Slide-Mode', () => {
-      cy.get('i.fa-television.fa-3x')
+      cy.get('i.fa-television')
         .click()
       cy.url()
         .should('include', '/features#Slide-Mode')
