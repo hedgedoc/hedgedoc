@@ -187,9 +187,9 @@ module.exports = {
     font: path.join(__dirname, 'public/css/google-font.css'),
     'font-pack': path.join(__dirname, 'public/css/font.css'),
     common: [
-      'expose-loader?jQuery!expose-loader?$!jquery',
+      'expose-loader?exposes[]=$&exposes[]=jQuery!jquery',
       'velocity-animate',
-      'imports-loader?$=jquery!jquery-mousewheel',
+      'imports-loader?imports=default|jquery|$!jquery-mousewheel',
       'bootstrap'
     ],
     cover: [
@@ -206,15 +206,15 @@ module.exports = {
     'cover-pack': [
       'babel-polyfill',
       'bootstrap-validator',
-      'expose-loader?select2!select2',
-      'expose-loader?moment!moment',
+      'expose-loader?exposes=select2!select2',
+      'expose-loader?exposes=moment!moment',
       path.join(__dirname, 'public/js/cover.js')
     ],
     index: [
       'babel-polyfill',
       'script-loader!jquery-ui-resizable',
       'script-loader!Idle.Js',
-      'expose-loader?LZString!lz-string',
+      'expose-loader?exposes=LZString!lz-string',
       'script-loader!codemirror',
       'script-loader!inlineAttachment',
       'script-loader!jqueryTextcomplete',
@@ -223,7 +223,7 @@ module.exports = {
       'script-loader!ot',
       'flowchart.js',
       'js-sequence-diagrams',
-      'expose-loader?RevealMarkdown!reveal-markdown',
+      'expose-loader?exposes=RevealMarkdown!reveal-markdown',
       path.join(__dirname, 'public/js/index.js')
     ],
     'index-styles': [
@@ -253,18 +253,18 @@ module.exports = {
     ],
     'index-pack': [
       'babel-polyfill',
-      'expose-loader?Spinner!spin.js',
+      'expose-loader?exposes=Spinner!spin.js',
       'script-loader!jquery-ui-resizable',
       'bootstrap-validator',
-      'expose-loader?jsyaml!js-yaml',
+      'expose-loader?exposes=jsyaml!js-yaml',
       'script-loader!mermaid',
-      'expose-loader?moment!moment',
+      'expose-loader?exposes=moment!moment',
       'script-loader!handlebars',
-      'expose-loader?hljs!highlight.js',
-      'expose-loader?emojify!emojify.js',
+      'expose-loader?exposes=hljs!highlight.js',
+      'expose-loader?exposes=emojify!emojify.js',
       'script-loader!Idle.Js',
       'script-loader!gist-embed',
-      'expose-loader?LZString!lz-string',
+      'expose-loader?exposes=LZString!lz-string',
       'script-loader!codemirror',
       'script-loader!inlineAttachment',
       'script-loader!jqueryTextcomplete',
@@ -273,17 +273,17 @@ module.exports = {
       'script-loader!ot',
       'flowchart.js',
       'js-sequence-diagrams',
-      'expose-loader?Viz!viz.js',
+      'expose-loader?exposes=Viz!viz.js',
       'script-loader!abcjs',
-      'expose-loader?io!socket.io-client',
-      'expose-loader?RevealMarkdown!reveal-markdown',
+      'expose-loader?exposes=io!socket.io-client',
+      'expose-loader?exposes=RevealMarkdown!reveal-markdown',
       path.join(__dirname, 'public/js/index.js')
     ],
     pretty: [
       'babel-polyfill',
       'flowchart.js',
       'js-sequence-diagrams',
-      'expose-loader?RevealMarkdown!reveal-markdown',
+      'expose-loader?exposes=RevealMarkdown!reveal-markdown',
       path.join(__dirname, 'public/js/pretty.js')
     ],
     'pretty-styles': [
@@ -299,18 +299,18 @@ module.exports = {
     ],
     'pretty-pack': [
       'babel-polyfill',
-      'expose-loader?jsyaml!js-yaml',
+      'expose-loader?exposes=jsyaml!js-yaml',
       'script-loader!mermaid',
-      'expose-loader?moment!moment',
+      'expose-loader?exposes=moment!moment',
       'script-loader!handlebars',
-      'expose-loader?hljs!highlight.js',
-      'expose-loader?emojify!emojify.js',
+      'expose-loader?exposes=hljs!highlight.js',
+      'expose-loader?exposes=emojify!emojify.js',
       'script-loader!gist-embed',
       'flowchart.js',
       'js-sequence-diagrams',
-      'expose-loader?Viz!viz.js',
+      'expose-loader?exposes=Viz!viz.js',
       'script-loader!abcjs',
-      'expose-loader?RevealMarkdown!reveal-markdown',
+      'expose-loader?exposes=RevealMarkdown!reveal-markdown',
       path.join(__dirname, 'public/js/pretty.js')
     ],
     slide: [
@@ -318,7 +318,7 @@ module.exports = {
       'bootstrap-tooltip',
       'flowchart.js',
       'js-sequence-diagrams',
-      'expose-loader?RevealMarkdown!reveal-markdown',
+      'expose-loader?exposes=RevealMarkdown!reveal-markdown',
       path.join(__dirname, 'public/js/slide.js')
     ],
     'slide-styles': [
@@ -333,23 +333,23 @@ module.exports = {
     ],
     'slide-pack': [
       'babel-polyfill',
-      'expose-loader?jQuery!expose-loader?$!jquery',
+      'expose-loader?exposes[]=$&exposes[]=jQuery!jquery',
       'velocity-animate',
-      'imports-loader?$=jquery!jquery-mousewheel',
+      'imports-loader?imports=default|jquery|$!jquery-mousewheel',
       'bootstrap-tooltip',
-      'expose-loader?jsyaml!js-yaml',
+      'expose-loader?exposes=jsyaml!js-yaml',
       'script-loader!mermaid',
-      'expose-loader?moment!moment',
+      'expose-loader?exposes=moment!moment',
       'script-loader!handlebars',
-      'expose-loader?hljs!highlight.js',
-      'expose-loader?emojify!emojify.js',
+      'expose-loader?exposes=hljs!highlight.js',
+      'expose-loader?exposes=emojify!emojify.js',
       'script-loader!gist-embed',
       'flowchart.js',
       'js-sequence-diagrams',
-      'expose-loader?Viz!viz.js',
+      'expose-loader?exposes=Viz!viz.js',
       'script-loader!abcjs',
-      'expose-loader?Reveal!reveal.js',
-      'expose-loader?RevealMarkdown!reveal-markdown',
+      'expose-loader?exposes=Reveal!reveal.js',
+      'expose-loader?exposes=RevealMarkdown!reveal-markdown',
       path.join(__dirname, 'public/js/slide.js')
     ]
   },
@@ -423,7 +423,9 @@ module.exports = {
       test: require.resolve('js-sequence-diagrams'),
       use: [{
         loader: 'imports-loader',
-        options: { _: 'lodash', Raphael: 'raphael', eve: 'eve' }
+        options: {
+          imports: ['default lodash _', 'default raphael Raphael', 'default eve eve']
+        }
       }]
     }, {
       test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
