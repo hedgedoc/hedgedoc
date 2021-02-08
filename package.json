@@ -11,9 +11,9 @@
     "markdownlint": "remark .",
     "mocha-suite": "NODE_ENV=test CMD_DB_URL=\"sqlite::memory:\" mocha --exit",
     "standard": "echo 'standard is no longer being used, use `npm run eslint` instead!' && exit 1",
-    "dev": "webpack --config webpack.dev.js --progress --colors --watch",
+    "dev": "webpack --config webpack.dev.js --progress --watch",
     "heroku-prebuild": "bin/heroku",
-    "build": "webpack --config webpack.prod.js --progress --colors --bail",
+    "build": "webpack --config webpack.prod.js --progress",
     "start": "sequelize db:migrate && node app.js"
   },
   "dependencies": {
@@ -201,7 +201,7 @@
     "string-loader": "0.0.1",
     "url-loader": "4.1.1",
     "webpack": "4.46.0",
-    "webpack-cli": "3.3.12",
+    "webpack-cli": "4.5.0",
     "webpack-merge": "4.2.2"
   },
   "optionalDependencies": {
