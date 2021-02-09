@@ -54,7 +54,7 @@
     "highlight.js": "^9.12.0",
     "i18n": "^0.13.0",
     "imgur": "git+https://github.com/hackmdio/node-imgur.git",
-    "ionicons": "^2.0.1",
+    "ionicons": "^5.0.0",
     "jquery": "^3.5.1",
     "jquery-mousewheel": "^3.1.13",
     "jquery-ui": "^1.12.1",

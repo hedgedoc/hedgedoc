@@ -5372,10 +5372,10 @@ invariant@^2.2.2:
   dependencies:
     loose-envify "^1.0.0"
 
-ionicons@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-2.0.1.tgz#ca398113293ea870244f538f0aabbd4b5b209a3e"
-  integrity sha1-yjmBEyk+qHAkT1OPCqu9S1sgmj4=
+ionicons@^5.0.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-5.4.0.tgz#7d8b87edbe250284f1fad0d64b261a6e480adf95"
+  integrity sha512-q8jG3vB87lXz3/OokEDoFsEQVUqdyHq3w2r5bp1OUwODus/njuc8MxjlBE7Z1RLkf6NbNaG+/kJTx3dsCJQwQQ==
 
 ipaddr.js@1.9.1:
   version "1.9.1"
