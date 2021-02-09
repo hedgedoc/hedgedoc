@@ -17,13 +17,13 @@ export const setUpI18n = async (): Promise<void> => {
     .use(initReactI18next)
     .init({
       fallbackLng: 'en',
-      debug: true,
+      debug: process.env.NODE_ENV !== 'production',
       backend: {
         loadPath: '/locales/{{lng}}.json'
       },
 
       interpolation: {
-        escapeValue: false // not needed for react as it escapes by default
+        escapeValue: false
       }
     })
 
