@@ -20,10 +20,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/1.7.0/viz.js" integrity="sha256-8t+rndrF+TU4JtelmOH1lDHTMe2ovhO2UbzDArp5lY8=" crossorigin="anonymous" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.8/validator.min.js" integrity="sha256-LHeY7YoYJ0SSXbCx7sR14Pqna+52moaH3bhv0Mjzd/M=" crossorigin="anonymous" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/abcjs/3.1.1/abcjs_basic-min.js" integrity="sha256-Sq1r2XXWXQoShQKsS0Wrf5r7fRkErd9Fat9vHYeU68s=" crossorigin="anonymous"></script>
-<%- include ../build/index-scripts %>
+<%- include('../build/index-scripts') %>
 <% } else { %>
 <script src="<%- serverURL %>/build/MathJax/MathJax.js" defer></script>
 <script src="<%- serverURL %>/build/MathJax/config/TeX-AMS-MML_HTMLorMML.js" defer></script>
 <script src="<%- serverURL %>/build/MathJax/config/Safe.js" defer></script>
-<%- include ../build/index-pack-scripts %>
+<%- include('../build/index-pack-scripts') %>
 <% } %>

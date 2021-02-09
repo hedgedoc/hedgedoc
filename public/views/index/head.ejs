@@ -6,7 +6,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="description" content="<%= __('Best way to write and share your knowledge in markdown.') %>">
 <meta name="keywords" content="Collaborative, Markdown, Notes">
-<%- include ../includes/favicon %>
+<%- include('../includes/favicon') %>
 <meta property="og:title" content="HedgeDoc - <%= __('Collaborative markdown notes') %>">
 <meta property="og:description" content="<%= __('Best way to write and share your knowledge in markdown.') %>">
 <meta property="og:type" content="website">
@@ -22,8 +22,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.9.0/bootstrap-social.min.css" integrity="sha256-02JtFTurpwBjQJ6q13iJe82/NF0RbZlJroDegK5g87Y=" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.4/select2.min.css" integrity="sha256-ijlUKKj3hJCiiT2HWo1kqkI79NTEYpzOsw5Rs3k42dI=" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.4/select2-bootstrap.min.css" integrity="sha256-NAWFcNIZdH+TS1xpWujF/EB/Y8gwBbEOCoaK/eqaer8=" crossorigin="anonymous" />
-<%- include ../build/cover-header %>
-<%- include ../shared/polyfill %>
+<%- include('../build/cover-header') %>
+<%- include('../shared/polyfill') %>
 <% } else { %>
-<%- include ../build/cover-pack-header %>
+<%- include('../build/cover-pack-header') %>
 <% } %>
