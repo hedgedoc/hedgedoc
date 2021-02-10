@@ -29,7 +29,6 @@ import { YoutubeReplacer } from '../replace-components/youtube/youtube-replacer'
 export const useReplacerInstanceListCreator = (onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void,
   onImageClick?: ImageClickHandler, baseUrl?: string): () => ComponentReplacer[] => useMemo(() =>
   () => [
-    new LinkReplacer(baseUrl),
     new LinemarkerReplacer(),
     new GistReplacer(),
     new YoutubeReplacer(),
@@ -47,5 +46,6 @@ export const useReplacerInstanceListCreator = (onTaskCheckedChange?: (lineInMark
     new HighlightedCodeReplacer(),
     new ColoredBlockquoteReplacer(),
     new KatexReplacer(),
-    new TaskListReplacer(onTaskCheckedChange)
+    new TaskListReplacer(onTaskCheckedChange),
+    new LinkReplacer(baseUrl)
   ], [onImageClick, onTaskCheckedChange, baseUrl])

@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { useEffect, useState } from 'react'
@@ -9,6 +9,7 @@ import { Trans } from 'react-i18next'
 import { IconName } from '../../../common/fork-awesome/types'
 import { ShowIf } from '../../../common/show-if/show-if'
 import './one-click-embedding.scss'
+import { ProxyImageFrame } from '../image/proxy-image-frame'
 
 interface OneClickFrameProps {
   onImageFetch?: () => Promise<string>
@@ -53,8 +54,8 @@ export const OneClickEmbedding: React.FC<OneClickFrameProps> = ({ previewContain
       <ShowIf condition={ !showFrame }>
         <span className={ `one-click-embedding ${ previewContainerClassName || '' }` } onClick={ showChildren }>
           <ShowIf condition={ !!previewImageUrl }>
-            <img className={ 'one-click-embedding-preview' } src={ previewImageUrl } alt={ tooltip || '' }
-                 title={ tooltip || '' }/>
+            <ProxyImageFrame className={ 'one-click-embedding-preview' } src={ previewImageUrl } alt={ tooltip || '' }
+                             title={ tooltip || '' }/>
           </ShowIf>
           <ShowIf condition={ !!hoverIcon }>
             <span className='one-click-embedding-icon text-center'>

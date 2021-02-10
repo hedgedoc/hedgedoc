@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import { DomElement } from 'domhandler'
@@ -15,8 +15,6 @@ import { replaceVimeoLink } from './replace-vimeo-link'
 import { VimeoFrame } from './vimeo-frame'
 
 export class VimeoReplacer extends ComponentReplacer {
-  private counterMap: Map<string, number> = new Map<string, number>()
-
   public static readonly markdownItPlugin: MarkdownIt.PluginSimple = (markdownIt) => {
     markdownItRegex(markdownIt, replaceVimeoLink)
     markdownItRegex(markdownIt, replaceLegacyVimeoShortCode)
@@ -26,8 +24,6 @@ export class VimeoReplacer extends ComponentReplacer {
     const attributes = getAttributesFromHedgeDocTag(node, 'vimeo')
     if (attributes && attributes.id) {
       const videoId = attributes.id
-      const count = (this.counterMap.get(videoId) || 0) + 1
-      this.counterMap.set(videoId, count)
       return <VimeoFrame id={ videoId }/>
     }
   }

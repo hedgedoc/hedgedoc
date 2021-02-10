@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import { DomElement } from 'domhandler'
@@ -39,7 +39,10 @@ export class HighlightedCodeReplacer extends ComponentReplacer {
                                                   .filter(line => !!line).length
     }
 
-    return <HighlightedCode language={ language } startLineNumber={ showLineNumbers ? startLineNumber : undefined }
-                            wrapLines={ wrapLines } code={ code }/>
+    return <HighlightedCode
+      language={ language }
+      startLineNumber={ showLineNumbers ? startLineNumber : undefined }
+      wrapLines={ wrapLines }
+      code={ code }/>
   }
 }

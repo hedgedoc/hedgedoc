@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import { DomElement } from 'domhandler'
@@ -17,8 +17,6 @@ import { replaceGistLink } from './replace-gist-link'
 import { replaceLegacyGistShortCode } from './replace-legacy-gist-short-code'
 
 export class GistReplacer extends ComponentReplacer {
-  private counterMap: Map<string, number> = new Map<string, number>()
-
   public static readonly markdownItPlugin: MarkdownIt.PluginSimple = (markdownIt) => {
     markdownItRegex(markdownIt, replaceGistLink)
     markdownItRegex(markdownIt, replaceLegacyGistShortCode)
@@ -28,11 +26,12 @@ export class GistReplacer extends ComponentReplacer {
     const attributes = getAttributesFromHedgeDocTag(node, 'gist')
     if (attributes && attributes.id) {
       const gistId = attributes.id
-      const count = (this.counterMap.get(gistId) || 0) + 1
-      this.counterMap.set(gistId, count)
       return (
-        <OneClickEmbedding previewContainerClassName={ 'gist-frame' } loadingImageUrl={ preview } hoverIcon={ 'github' }
-                           tooltip={ 'click to load gist' }>
+        <OneClickEmbedding
+          previewContainerClassName={ 'gist-frame' }
+          loadingImageUrl={ preview }
+          hoverIcon={ 'github' }
+          tooltip={ 'click to load gist' }>
           <GistFrame id={ gistId }/>
         </OneClickEmbedding>
       )
