@@ -122,7 +122,7 @@
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
     "spin.js": "^2.3.2",
-    "sqlite3": "^4.1.0",
+    "sqlite3": "^5.0.0",
     "store": "^2.0.12",
     "string": "^3.3.3",
     "tedious": "^6.6.0",
