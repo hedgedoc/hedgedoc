@@ -7952,10 +7952,10 @@ passport-github@^1.1.0:
   dependencies:
     passport-oauth2 "1.x.x"
 
-passport-gitlab2@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/passport-gitlab2/-/passport-gitlab2-4.0.0.tgz#08de8b54d58cbe6f22f577f977f7874df3c26efb"
-  integrity sha512-C/8/L8piHwv57J6fY/MzsEJc8yCkgsyBSzMWxfTfEHRvCaTkD08vJ5b/txydKrWrRPl4MHuZfisFnKlZHmq4yw==
+passport-gitlab2@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/passport-gitlab2/-/passport-gitlab2-5.0.0.tgz#ea37e5285321c026a02671e87469cac28cce9b69"
+  integrity sha512-cXQMgM6JQx9wHVh7JLH30D8fplfwjsDwRz+zS0pqC8JS+4bNmc1J04NGp5g2M4yfwylH9kQRrMN98GxMw7q7cg==
   dependencies:
     passport-oauth2 "^1.4.0"
 
