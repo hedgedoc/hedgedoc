@@ -1,6 +1,6 @@
 /* eslint-env browser, jquery */
 /* eslint no-console: ["error", { allow: ["warn", "error", "debug"] }] */
-/* global CodeMirror, Cookies, moment, Spinner, Idle, serverurl,
+/* global CodeMirror, Cookies, moment, Idle, serverurl,
    key, Dropbox, ot, hex2rgb, Visibility */
 
 import TurndownService from 'turndown'
@@ -10,6 +10,7 @@ import randomColor from 'randomcolor'
 import store from 'store'
 import hljs from 'highlight.js'
 import url from 'wurl'
+import { Spinner } from 'spin.js'
 
 import _ from 'lodash'
 
