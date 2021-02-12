@@ -239,6 +239,7 @@ module.exports = {
       path.join(__dirname, 'node_modules/codemirror/theme/one-dark.css'),
       path.join(__dirname, 'node_modules/codemirror/mode/tiddlywiki/tiddlywiki.css'),
       path.join(__dirname, 'node_modules/codemirror/mode/mediawiki/mediawiki.css'),
+      path.join(__dirname, 'node_modules/spin.js/spin.css'),
       path.join(__dirname, 'public/css/github-extract.css'),
       path.join(__dirname, 'public/vendor/showup/showup.css'),
       path.join(__dirname, 'public/css/mermaid.css'),
@@ -253,7 +254,6 @@ module.exports = {
     ],
     'index-pack': [
       'babel-polyfill',
-      'expose-loader?exposes=Spinner!spin.js',
       'script-loader!jquery-ui-resizable',
       'bootstrap-validator',
       'expose-loader?exposes=jsyaml!js-yaml',
