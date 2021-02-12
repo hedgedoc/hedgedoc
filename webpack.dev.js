@@ -1,6 +1,6 @@
 const common = require('./webpack.common.js')
 const htmlexport = require('./webpack.htmlexport')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge');
 
 module.exports = [
   // merge common config
