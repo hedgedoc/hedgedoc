@@ -11426,10 +11426,10 @@ vfile@^4.0.0:
     unist-util-stringify-position "^2.0.0"
     vfile-message "^2.0.0"
 
-visibilityjs@^1.2.4:
-  version "1.2.8"
-  resolved "https://registry.yarnpkg.com/visibilityjs/-/visibilityjs-1.2.8.tgz#4ccdcebdaef0b34fb89219ab8e10e39c3a7cbfd8"
-  integrity sha512-Y+aL3OUX88b+/VSmkmC2ApuLbf0grzbNLpCfIDSw3BzTU6PqcPsdgIOaw8b+eZoy+DdQqnVN3y/Evow9vQq9Ig==
+visibilityjs@^2.0.0:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/visibilityjs/-/visibilityjs-2.0.2.tgz#d7c466e922024bb6c413d2136d5567e71f5fdc2f"
+  integrity sha512-y5sN5oGvuXXcK6s8WupOymRcqEss7kusojpScRqkT+cTCIFjul+06uSMDPMByN9DIBv/sUUnvV8BplKjqelAfw==
 
 viz.js@^1.7.0:
   version "1.8.2"
