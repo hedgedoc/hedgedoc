@@ -18,7 +18,7 @@ if (config.dbURL) {
 const minioClient = new Minio.Client({
   endPoint: config.minio.endPoint,
   port: config.minio.port,
-  secure: config.minio.secure,
+  useSSL: config.minio.secure,
   accessKey: config.minio.accessKey,
   secretKey: config.minio.secretKey
 });
@@ -49,7 +49,7 @@ fs.readdir(config.uploadsPath, function (err, files) {
   if (err) {
     console.log('Unable to scan directory: ' + err);
     process.exit();
-  } 
+  }
   files.forEach(function (file) {
     key = path.join('uploads', file)
     filePath = path.join(config.uploadsPath, file)
