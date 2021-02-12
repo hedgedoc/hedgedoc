@@ -131,7 +131,7 @@
     "uuid": "^3.1.0",
     "validator": "^10.4.0",
     "velocity-animate": "^1.4.0",
-    "visibilityjs": "^1.2.4",
+    "visibilityjs": "^2.0.0",
     "viz.js": "^1.7.0",
     "winston": "^3.1.0",
     "ws": "^6.0.0",
