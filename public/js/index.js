@@ -1583,7 +1583,7 @@ $('#clipboardModalClear').click(function () {
   $('#clipboardModalContent').html('')
 })
 $('#clipboardModalConfirm').click(function () {
-  const data = $('#clipboardModalContent').html()
+  const data = $('#clipboardModalContent').text()
   if (data) {
     parseToEditor(data)
     $('#clipboardModal').modal('hide')
