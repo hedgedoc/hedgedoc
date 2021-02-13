@@ -1287,10 +1287,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fontsource/source-sans-pro@4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/source-sans-pro/-/source-sans-pro-4.2.0.tgz#b3b04371574fe17522ca7487a46b46c7c7fa323f"
-  integrity sha512-34xf187viMYxV7lN6ad/4AZ+wxwxBg0OUFyUOF44SKqrdQ0U88G4vmFtwRrENhN2ZKCMgZ+hxTiF+QmXpWglLQ==
+"@fontsource/source-sans-pro@4.2.1":
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@fontsource/source-sans-pro/-/source-sans-pro-4.2.1.tgz#ffd5a5edd57ece16fdb16e8769d40aabc0138b86"
+  integrity sha512-YnW2Ceadfy0GkQDm5Sm6RUcpms6JYS2sy+9DVDldZO4asARFSWS2dDG6isG4xNrs1S+JgUhaeYoalzX+gHXwJQ==
 
 "@hapi/address@2.x.x":
   version "2.1.4"
