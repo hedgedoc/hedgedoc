@@ -37,7 +37,7 @@
     "cookie-parser": "^1.4.3",
     "deep-freeze": "^0.0.1",
     "diff-match-patch": "git+https://github.com/hackmdio/diff-match-patch.git",
-    "ejs": "^2.5.5",
+    "ejs": "^3.0.0",
     "emojify.js": "^1.1.0",
     "escape-html": "^1.0.3",
     "express": ">=4.14",

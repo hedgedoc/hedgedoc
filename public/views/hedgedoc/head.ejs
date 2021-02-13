@@ -4,7 +4,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="mobile-web-app-capable" content="yes">
-<%- include ../includes/favicon %>
+<%- include('../includes/favicon') %>
 <% for (var og in opengraph) { %>
 <% if (opengraph.hasOwnProperty(og) && opengraph[og].trim() !== '') { %>
 <meta property="og:<%- og %>" content="<%- opengraph[og] %>">
@@ -21,9 +21,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.9.0/bootstrap-social.min.css" integrity="sha256-02JtFTurpwBjQJ6q13iJe82/NF0RbZlJroDegK5g87Y=" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/css/basic/emojify.min.css" integrity="sha256-UOrvMOsSDSrW6szVLe8ZDZezBxh5IoIfgTwdNDgTjiU=" crossorigin="anonymous" />
-<%- include ../build/index-header %>
-<%- include ../shared/polyfill %>
+<%- include('../build/index-header') %>
+<%- include('../shared/polyfill') %>
 <% } else { %>
 <link rel="stylesheet" href='<%- serverURL %>/build/emojify.js/dist/css/basic/emojify.min.css'>
-<%- include ../build/index-pack-header %>
+<%- include('../build/index-pack-header') %>
 <% } %>
