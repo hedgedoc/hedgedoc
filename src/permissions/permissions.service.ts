@@ -7,16 +7,25 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '../users/user.entity';
 import { Note } from '../notes/note.entity';
-import { ConsoleLoggerService } from '../logger/console-logger.service';
+
+// TODO move to config or remove
+export enum GuestPermission {
+  DENY = 'deny',
+  READ = 'read',
+  WRITE = 'write',
+  CREATE = 'create',
+  CREATE_ALIAS = 'createAlias',
+}
 
 @Injectable()
 export class PermissionsService {
-  constructor(private readonly logger: ConsoleLoggerService) {}
+  public guestPermission: GuestPermission; // TODO change to configOption
   mayRead(user: User, note: Note): boolean {
     if (this.isOwner(user, note)) return true;
 
     if (this.hasPermissionUser(user, note, false)) return true;
 
+    // noinspection RedundantIfStatementJS
     if (this.hasPermissionGroup(user, note, false)) return true;
 
     return false;
@@ -27,19 +36,30 @@ export class PermissionsService {
 
     if (this.hasPermissionUser(user, note, true)) return true;
 
+    // noinspection RedundantIfStatementJS
     if (this.hasPermissionGroup(user, note, true)) return true;
 
     return false;
   }
+
   mayCreate(user: User): boolean {
     if (user) {
-      // TODO: (config.guestPermission == "create")
       return true;
+    } else {
+      if (
+        this.guestPermission == GuestPermission.CREATE ||
+        this.guestPermission == GuestPermission.CREATE_ALIAS
+      ) {
+        // TODO change to guestPermission to config option
+        return true;
+      }
     }
     return false;
   }
+
   isOwner(user: User, note: Note): boolean {
     if (!user) return false;
+    if (!note.owner) return false;
     return note.owner.id === user.id;
   }
 
@@ -68,7 +88,16 @@ export class PermissionsService {
     wantEdit: boolean,
   ): boolean {
     // TODO: Get real config value
-    const guestsAllowed = false; // (config.guestPermission == "write" || config.guestPermission == "read" && !wantEdit)
+    let guestsAllowed = false;
+    switch (this.guestPermission) {
+      case GuestPermission.CREATE_ALIAS:
+      case GuestPermission.CREATE:
+      case GuestPermission.WRITE:
+        guestsAllowed = true;
+        break;
+      case GuestPermission.READ:
+        guestsAllowed = !wantEdit;
+    }
     for (const groupPermission of note.groupPermissions) {
       if (groupPermission.canEdit || !wantEdit) {
         // Handle special groups
