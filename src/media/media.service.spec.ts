@@ -20,11 +20,17 @@ import { Identity } from '../users/identity.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { FilesystemBackend } from './backends/filesystem-backend';
-import { MediaUpload } from './media-upload.entity';
+import { BackendData, MediaUpload } from './media-upload.entity';
 import { MediaService } from './media.service';
+import { Repository } from 'typeorm';
+import { promises as fs } from 'fs';
+import { ClientError, NotInDBError, PermissionError } from '../errors/errors';
 
 describe('MediaService', () => {
   let service: MediaService;
+  let noteRepo: Repository<Note>;
+  let userRepo: Repository<User>;
+  let mediaRepo: Repository<MediaUpload>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -32,7 +38,7 @@ describe('MediaService', () => {
         MediaService,
         {
           provide: getRepositoryToken(MediaUpload),
-          useValue: {},
+          useClass: Repository,
         },
         FilesystemBackend,
       ],
@@ -57,19 +63,154 @@ describe('MediaService', () => {
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
       .overrideProvider(getRepositoryToken(Note))
-      .useValue({})
+      .useClass(Repository)
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})
       .overrideProvider(getRepositoryToken(User))
-      .useValue({})
+      .useClass(Repository)
       .overrideProvider(getRepositoryToken(Tag))
       .useValue({})
+      .overrideProvider(getRepositoryToken(MediaUpload))
+      .useClass(Repository)
       .compile();
 
     service = module.get<MediaService>(MediaService);
+    noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
+    userRepo = module.get<Repository<User>>(getRepositoryToken(User));
+    mediaRepo = module.get<Repository<MediaUpload>>(
+      getRepositoryToken(MediaUpload),
+    );
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  describe('saveFile', () => {
+    beforeEach(async () => {
+      const user = User.create('hardcoded', 'Testy') as User;
+      const alias = 'alias';
+      const note = Note.create(user, alias);
+      jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
+      jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
+    });
+
+    it('works', async () => {
+      const testImage = await fs.readFile('test/public-api/fixtures/test.png');
+      let fileId = '';
+      jest
+        .spyOn(mediaRepo, 'save')
+        .mockImplementationOnce(async (entry: MediaUpload) => {
+          fileId = entry.id;
+          return entry;
+        });
+      jest.spyOn(service.mediaBackend, 'saveFile').mockImplementationOnce(
+        async (
+          buffer: Buffer,
+          fileName: string,
+        ): Promise<[string, BackendData]> => {
+          expect(buffer).toEqual(testImage);
+          return [fileName, null];
+        },
+      );
+      const url = await service.saveFile(testImage, 'hardcoded', 'test');
+      expect(url).toEqual(fileId);
+    });
+
+    describe('fails:', () => {
+      it('MIME type not identifiable', async () => {
+        try {
+          await service.saveFile(Buffer.alloc(1), 'hardcoded', 'test');
+        } catch (e) {
+          expect(e).toBeInstanceOf(ClientError);
+          expect(e.message).toContain('detect');
+        }
+      });
+
+      it('MIME type not supported', async () => {
+        try {
+          const testText = await fs.readFile(
+            'test/public-api/fixtures/test.zip',
+          );
+          await service.saveFile(testText, 'hardcoded', 'test');
+        } catch (e) {
+          expect(e).toBeInstanceOf(ClientError);
+          expect(e.message).not.toContain('detect');
+        }
+      });
+    });
+  });
+
+  describe('deleteFile', () => {
+    it('works', async () => {
+      const testFileName = 'testFilename';
+      const mockMediaUploadEntry = {
+        id: 'testMediaUpload',
+        backendData: 'testBackendData',
+        user: {
+          userName: 'hardcoded',
+        } as User,
+      } as MediaUpload;
+      jest
+        .spyOn(mediaRepo, 'findOne')
+        .mockResolvedValueOnce(mockMediaUploadEntry);
+      jest.spyOn(service.mediaBackend, 'deleteFile').mockImplementationOnce(
+        async (fileName: string, backendData: BackendData): Promise<void> => {
+          expect(fileName).toEqual(testFileName);
+          expect(backendData).toEqual(mockMediaUploadEntry.backendData);
+        },
+      );
+      jest
+        .spyOn(mediaRepo, 'remove')
+        .mockImplementationOnce(async (entry, _) => {
+          expect(entry).toEqual(mockMediaUploadEntry);
+          return entry;
+        });
+      await service.deleteFile(testFileName, 'hardcoded');
+    });
+
+    it('fails: the mediaUpload is not owned by user', async () => {
+      const testFileName = 'testFilename';
+      const mockMediaUploadEntry = {
+        id: 'testMediaUpload',
+        backendData: 'testBackendData',
+        user: {
+          userName: 'not-hardcoded',
+        } as User,
+      } as MediaUpload;
+      jest
+        .spyOn(mediaRepo, 'findOne')
+        .mockResolvedValueOnce(mockMediaUploadEntry);
+      try {
+        await service.deleteFile(testFileName, 'hardcoded');
+      } catch (e) {
+        expect(e).toBeInstanceOf(PermissionError);
+      }
+    });
+  });
+  describe('findUploadByFilename', () => {
+    it('works', async () => {
+      const testFileName = 'testFilename';
+      const mockMediaUploadEntry = {
+        id: 'testMediaUpload',
+        backendData: 'testBackendData',
+        user: {
+          userName: 'hardcoded',
+        } as User,
+      } as MediaUpload;
+      jest
+        .spyOn(mediaRepo, 'findOne')
+        .mockResolvedValueOnce(mockMediaUploadEntry);
+      await service.findUploadByFilename(testFileName);
+    });
+    it("fails: can't find mediaUpload", async () => {
+      const testFileName = 'testFilename';
+      jest.spyOn(mediaRepo, 'findOne').mockResolvedValueOnce(undefined);
+      try {
+        await service.findUploadByFilename(testFileName);
+      } catch (e) {
+        expect(e).toBeInstanceOf(NotInDBError);
+      }
+    });
   });
 });
