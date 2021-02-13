@@ -60,7 +60,7 @@
         "i18next-http-backend": "1.1.0",
         "js-yaml": "4.0.0",
         "katex": "0.12.0",
-        "luxon": "1.25.0",
+        "luxon": "1.26.0",
         "markdown-it": "12.0.4",
         "markdown-it-abbr": "1.0.4",
         "markdown-it-anchor": "7.0.2",
