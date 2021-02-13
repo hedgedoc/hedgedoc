@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -59,7 +59,16 @@ export class MediaService {
     return allowedTypes.includes(mimeType);
   }
 
-  public async saveFile(
+  /**
+   * @async
+   * Save the given buffer to the configured MediaBackend and create a MediaUploadEntity to track where the file is, who uploaded it and to which note.
+   * @param {Buffer} fileBuffer - the buffer of the file to save.
+   * @param {string} username - the username of the user who uploaded this file
+   * @param {string} noteId - the id or alias of the note which will be associated with the new file.
+   * @return {string} the url of the saved file
+   * @throws {ClientError} the MIME type of the file is not supported.
+   */
+  async saveFile(
     fileBuffer: Buffer,
     username: string,
     noteId: string,
@@ -93,7 +102,16 @@ export class MediaService {
     return url;
   }
 
-  public async deleteFile(filename: string, username: string): Promise<void> {
+  /**
+   * @async
+   * Try to delete the file specified by the filename with the user specified by the username.
+   * @param {string} filename - the name of the file to delete.
+   * @param {string} username - the username of the user who uploaded this file
+   * @return {string} the url of the saved file
+   * @throws {PermissionError} the user is not permitted to delete this file.
+   * @throws {NotInDBError} - the file entry specified is not in the database
+   */
+  async deleteFile(filename: string, username: string): Promise<void> {
     this.logger.debug(
       `Deleting '${filename}' for user '${username}'`,
       'deleteFile',
@@ -112,7 +130,14 @@ export class MediaService {
     await this.mediaUploadRepository.remove(mediaUpload);
   }
 
-  public async findUploadByFilename(filename: string): Promise<MediaUpload> {
+  /**
+   * @async
+   * Find a file entry by its filename.
+   * @param {string} filename - the name of the file entry to find
+   * @return {MediaUpload} the file entry, that was searched for
+   * @throws {NotInDBError} - the file entry specified is not in the database
+   */
+  async findUploadByFilename(filename: string): Promise<MediaUpload> {
     const mediaUpload = await this.mediaUploadRepository.findOne(filename, {
       relations: ['user'],
     });
