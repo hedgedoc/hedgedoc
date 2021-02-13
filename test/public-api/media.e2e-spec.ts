@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -23,10 +23,12 @@ import { PermissionsModule } from '../../src/permissions/permissions.module';
 import { AuthModule } from '../../src/auth/auth.module';
 import { TokenAuthGuard } from '../../src/auth/token-auth.guard';
 import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
+import { join } from 'path';
 
 describe('Notes', () => {
   let app: NestExpressApplication;
   let mediaService: MediaService;
+  let uploadPath: string;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -54,8 +56,10 @@ describe('Notes', () => {
       .overrideGuard(TokenAuthGuard)
       .useClass(MockAuthGuard)
       .compile();
+    const config = moduleRef.get<ConfigService>(ConfigService);
+    uploadPath = config.get('mediaConfig').backend.filesystem.uploadPath;
     app = moduleRef.createNestApplication<NestExpressApplication>();
-    app.useStaticAssets('uploads', {
+    app.useStaticAssets(uploadPath, {
       prefix: '/uploads',
     });
     await app.init();
@@ -78,6 +82,10 @@ describe('Notes', () => {
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
     const downloadResponse = await request(app.getHttpServer()).get(path);
     expect(downloadResponse.body).toEqual(testImage);
+    // Remove /upload/ from path as we just need the filename.
+    const fileName = path.replace('/uploads/', '');
+    // delete the file afterwards
+    await fs.unlink(join(uploadPath, fileName));
   });
 
   it('DELETE /media/{filename}', async () => {
@@ -91,5 +99,10 @@ describe('Notes', () => {
     await request(app.getHttpServer())
       .delete('/media/' + filename)
       .expect(200);
+  });
+
+  afterAll(async () => {
+    // Delete the upload folder
+    await fs.rmdir(uploadPath);
   });
 });
