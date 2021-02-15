@@ -262,8 +262,8 @@ function updateItemFromNow () {
   }
 }
 
-var clearHistory = false
-var deleteId = null
+let clearHistory = false
+let deleteId = null
 
 function deleteHistory () {
   checkIfAuth(() => {
@@ -431,9 +431,9 @@ $('.search').keyup(() => {
 
 // focus user field after opening login modal
 $('.signin-modal').on('shown.bs.modal', function () {
-  let fieldLDAP = $('input[name=username]')
-  let fieldEmail = $('input[name=email]')
-  let fieldOpenID = $('input[name=openid_identifier]')
+  const fieldLDAP = $('input[name=username]')
+  const fieldEmail = $('input[name=email]')
+  const fieldOpenID = $('input[name=openid_identifier]')
   if (fieldLDAP.length === 1) {
     fieldLDAP.focus()
   } else if (fieldEmail.length === 1) {

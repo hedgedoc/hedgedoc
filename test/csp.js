@@ -46,7 +46,7 @@ describe('Content security policies', function () {
 
   // beginnging Tests
   it('Disable CDN', function () {
-    let testconfig = defaultConfig
+    const testconfig = defaultConfig
     testconfig.useCDN = false
     mock('../lib/config', testconfig)
     csp = mock.reRequire('../lib/csp')
@@ -60,7 +60,7 @@ describe('Content security policies', function () {
   })
 
   it('Disable Google Analytics', function () {
-    let testconfig = defaultConfig
+    const testconfig = defaultConfig
     testconfig.csp.addGoogleAnalytics = false
     mock('../lib/config', testconfig)
     csp = mock.reRequire('../lib/csp')
@@ -69,7 +69,7 @@ describe('Content security policies', function () {
   })
 
   it('Disable Disqus', function () {
-    let testconfig = defaultConfig
+    const testconfig = defaultConfig
     testconfig.csp.addDisqus = false
     mock('../lib/config', testconfig)
     csp = mock.reRequire('../lib/csp')
@@ -82,7 +82,7 @@ describe('Content security policies', function () {
   })
 
   it('Include dropbox if configured', function () {
-    let testconfig = defaultConfig
+    const testconfig = defaultConfig
     testconfig.dropbox.appKey = 'hedgedoc'
     mock('../lib/config', testconfig)
     csp = mock.reRequire('../lib/csp')
@@ -92,7 +92,7 @@ describe('Content security policies', function () {
   })
 
   it('Set ReportURI', function () {
-    let testconfig = defaultConfig
+    const testconfig = defaultConfig
     testconfig.csp.reportURI = 'https://example.com/reportURI'
     mock('../lib/config', testconfig)
     csp = mock.reRequire('../lib/csp')
@@ -101,7 +101,7 @@ describe('Content security policies', function () {
   })
 
   it('Set own directives', function () {
-    let testconfig = defaultConfig
+    const testconfig = defaultConfig
     mock('../lib/config', defaultConfig)
     csp = mock.reRequire('../lib/csp')
     const unextendedCSP = csp.computeDirectives()
