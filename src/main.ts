@@ -13,6 +13,7 @@ import { AppConfig } from './config/app.config';
 import { MediaConfig } from './config/media.config';
 import { NestConsoleLoggerService } from './logger/nest-console-logger.service';
 import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
+import { BackendType } from './media/backends/backend-type.enum';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -35,9 +36,13 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  if (mediaConfig.backend.use === 'filesystem') {
-    app.useStaticAssets('uploads', {
-      prefix: mediaConfig.backend.filesystem.uploadPath,
+  if (mediaConfig.backend.use === BackendType.FILESYSTEM) {
+    logger.log(
+      `Serving ${mediaConfig.backend.filesystem.uploadPath} under 'uploads/'`,
+      'AppBootstrap',
+    );
+    app.useStaticAssets(mediaConfig.backend.filesystem.uploadPath, {
+      prefix: '/uploads/',
     });
   }
   await app.listen(appConfig.port);
