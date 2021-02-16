@@ -9,11 +9,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from '../logger/logger.module';
 import { NoteGroupPermission } from './note-group-permission.entity';
 import { NoteUserPermission } from './note-user-permission.entity';
+import { PermissionsService } from './permissions.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([NoteUserPermission, NoteGroupPermission]),
-    LoggerModule,
-  ],
+  exports: [PermissionsService],
+  providers: [PermissionsService],
 })
 export class PermissionsModule {}
