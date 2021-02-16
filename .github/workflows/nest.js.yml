@@ -18,7 +18,7 @@ jobs:
       matrix:
         command:
           - yarn run lint
-          - yarn run format:check
+          - yarn run format
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 14
