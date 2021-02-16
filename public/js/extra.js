@@ -29,7 +29,7 @@ require('prismjs/components/prism-gherkin')
 require('./lib/common/login')
 require('./locale')
 require('../vendor/md-toc')
-var Viz = require('viz.js')
+const Viz = require('viz.js')
 const ui = getUIElements()
 
 // auto update last change
@@ -314,8 +314,9 @@ export function finishView (view) {
   // sequence diagram
   const sequences = view.find('div.sequence-diagram.raw').removeClass('raw')
   sequences.each((key, value) => {
+    let $value
     try {
-      var $value = $(value)
+      $value = $(value)
       const $ele = $(value).parent().parent()
 
       const sequence = $value
@@ -337,15 +338,16 @@ export function finishView (view) {
   // flowchart
   const flow = view.find('div.flow-chart.raw').removeClass('raw')
   flow.each((key, value) => {
+    let $value
     try {
-      var $value = $(value)
+      $value = $(value)
       const $ele = $(value).parent().parent()
 
       const chart = window.flowchart.parse($value.text())
       $value.html('')
       chart.drawSVG(value, {
         'line-width': 2,
-        'fill': 'none',
+        fill: 'none',
         'font-size': '16px',
         'font-family': "'Andale Mono', monospace"
       })
@@ -359,13 +361,14 @@ export function finishView (view) {
     }
   })
   // graphviz
-  var graphvizs = view.find('div.graphviz.raw').removeClass('raw')
+  const graphvizs = view.find('div.graphviz.raw').removeClass('raw')
   graphvizs.each(function (key, value) {
+    let $value
     try {
-      var $value = $(value)
-      var $ele = $(value).parent().parent()
+      $value = $(value)
+      const $ele = $(value).parent().parent()
 
-      var graphviz = Viz($value.text())
+      const graphviz = Viz($value.text())
       if (!graphviz) throw Error('viz.js output empty graph')
       $value.html(graphviz)
 
@@ -380,8 +383,9 @@ export function finishView (view) {
   // mermaid
   const mermaids = view.find('div.mermaid.raw').removeClass('raw')
   mermaids.each((key, value) => {
+    let $value
     try {
-      var $value = $(value)
+      $value = $(value)
       const $ele = $(value).closest('pre')
 
       window.mermaid.mermaidAPI.parse($value.text())
@@ -389,7 +393,7 @@ export function finishView (view) {
       $ele.text($value.text())
       window.mermaid.init(undefined, $ele)
     } catch (err) {
-      var errormessage = err
+      let errormessage = err
       if (err.str) {
         errormessage = err.str
       }
@@ -402,9 +406,10 @@ export function finishView (view) {
   // abc.js
   const abcs = view.find('div.abc.raw').removeClass('raw')
   abcs.each((key, value) => {
+    let $value
     try {
-      var $value = $(value)
-      var $ele = $(value).parent().parent()
+      $value = $(value)
+      const $ele = $(value).parent().parent()
 
       window.ABCJS.renderAbc(value, $value.text())
 
@@ -493,7 +498,7 @@ export function finishView (view) {
         let code = ''
         if (codeDiv.length > 0) code = codeDiv.html()
         else code = langDiv.html()
-        var result
+        let result
         if (!reallang) {
           result = {
             value: code
@@ -571,7 +576,7 @@ export function postProcess (code) {
   }
   // show yaml meta paring error
   if (md.metaError) {
-    var warning = result.find('div#meta-error')
+    let warning = result.find('div#meta-error')
     if (warning && warning.length > 0) {
       warning.text(md.metaError)
     } else {
@@ -583,14 +588,14 @@ export function postProcess (code) {
 }
 window.postProcess = postProcess
 
-var domevents = Object.getOwnPropertyNames(document).concat(Object.getOwnPropertyNames(Object.getPrototypeOf(Object.getPrototypeOf(document)))).concat(Object.getOwnPropertyNames(Object.getPrototypeOf(window))).filter(function (i) {
+const domevents = Object.getOwnPropertyNames(document).concat(Object.getOwnPropertyNames(Object.getPrototypeOf(Object.getPrototypeOf(document)))).concat(Object.getOwnPropertyNames(Object.getPrototypeOf(window))).filter(function (i) {
   return !i.indexOf('on') && (document[i] === null || typeof document[i] === 'function')
 }).filter(function (elem, pos, self) {
   return self.indexOf(elem) === pos
 })
 
 export function removeDOMEvents (view) {
-  for (var i = 0, l = domevents.length; i < l; i++) {
+  for (let i = 0, l = domevents.length; i < l; i++) {
     view.find('[' + domevents[i] + ']').removeAttr(domevents[i])
   }
 }
@@ -739,13 +744,13 @@ export function generateToc (id) {
   const target = $(`#${id}`)
   target.html('')
   /* eslint-disable no-unused-vars */
-  var toc = new window.Toc('doc', {
-    'level': 3,
-    'top': -1,
-    'class': 'toc',
-    'ulClass': 'nav',
-    'targetId': id,
-    'process': getHeaderContent
+  const toc = new window.Toc('doc', {
+    level: 3,
+    top: -1,
+    class: 'toc',
+    ulClass: 'nav',
+    targetId: id,
+    process: getHeaderContent
   })
   /* eslint-enable no-unused-vars */
   if (target.text() === 'undefined') { target.html('') }
@@ -858,7 +863,7 @@ const linkifyAnchors = (level, containingElement) => {
   const headers = containingElement.getElementsByTagName(`h${level}`)
 
   for (let i = 0, l = headers.length; i < l; i++) {
-    let header = headers[i]
+    const header = headers[i]
     if (header.getElementsByClassName('anchor').length === 0) {
       if (typeof header.id === 'undefined' || header.id === '') {
         header.id = createHeaderId(getHeaderContent(header))
@@ -903,7 +908,7 @@ export function deduplicatedHeaderId (view) {
   if (window.linkifyHeaderStyle === 'gfm') {
     // consistent with GitHub, GitLab, Pandoc & co.
     // all headers contained in the document, in order of appearance
-    const allHeaders = view.find(`:header`).toArray()
+    const allHeaders = view.find(':header').toArray()
     // list of finaly assigned header IDs
     const headerIds = new Set()
     for (let j = 0; j < allHeaders.length; j++) {
@@ -938,12 +943,12 @@ export function renderTOC (view) {
     const target = $(`#${id}`)
     target.html('')
     /* eslint-disable no-unused-vars */
-    let TOC = new window.Toc('doc', {
-      'level': 3,
-      'top': -1,
-      'class': 'toc',
-      'targetId': id,
-      'process': getHeaderContent
+    const TOC = new window.Toc('doc', {
+      level: 3,
+      top: -1,
+      class: 'toc',
+      targetId: id,
+      process: getHeaderContent
     })
     /* eslint-enable no-unused-vars */
     if (target.text() === 'undefined') { target.html('') }
@@ -991,7 +996,7 @@ function highlightRender (code, lang) {
   return result.value
 }
 
-export let md = markdownit('default', {
+export const md = markdownit('default', {
   html: true,
   breaks: true,
   langPrefix: '',
@@ -1044,7 +1049,7 @@ md.use(markdownitContainer, 'info', { render: renderContainer })
 md.use(markdownitContainer, 'warning', { render: renderContainer })
 md.use(markdownitContainer, 'danger', { render: renderContainer })
 
-let defaultImageRender = md.renderer.rules.image
+const defaultImageRender = md.renderer.rules.image
 md.renderer.rules.image = function (tokens, idx, options, env, self) {
   tokens[idx].attrJoin('class', 'raw')
   return defaultImageRender(...arguments)
@@ -1203,7 +1208,8 @@ function meta (state, start, end, silent) {
   if (!get(state, start).match(/^---$/)) return false
 
   const data = []
-  for (var line = start + 1; line < end; line++) {
+  let line
+  for (line = start + 1; line < end; line++) {
     const str = get(state, line)
     if (str.match(/^(\.{3}|-{3})$/)) break
     if (state.tShift[line] < 0) break

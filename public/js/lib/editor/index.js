@@ -35,30 +35,30 @@ export default class Editor {
       },
       Enter: 'newlineAndIndentContinueMarkdownList',
       Tab: function (cm) {
-        var tab = '\t'
+        const tab = '\t'
 
         // contruct x length spaces
-        var spaces = Array(parseInt(cm.getOption('indentUnit')) + 1).join(' ')
+        const spaces = Array(parseInt(cm.getOption('indentUnit')) + 1).join(' ')
 
         // auto indent whole line when in list or blockquote
-        var cursor = cm.getCursor()
-        var line = cm.getLine(cursor.line)
+        const cursor = cm.getCursor()
+        const line = cm.getLine(cursor.line)
 
         // this regex match the following patterns
         // 1. blockquote starts with "> " or ">>"
         // 2. unorder list starts with *+-
         // 3. order list starts with "1." or "1)"
-        var regex = /^(\s*)(>[> ]*|[*+-]\s|(\d+)([.)]))/
+        const regex = /^(\s*)(>[> ]*|[*+-]\s|(\d+)([.)]))/
 
-        var match
-        var multiple = cm.getSelection().split('\n').length > 1 ||
+        let match
+        const multiple = cm.getSelection().split('\n').length > 1 ||
           cm.getSelections().length > 1
 
         if (multiple) {
           cm.execCommand('defaultTab')
         } else if ((match = regex.exec(line)) !== null) {
-          var ch = match[1].length
-          var pos = {
+          const ch = match[1].length
+          const pos = {
             line: cursor.line,
             ch: ch
           }
@@ -77,8 +77,8 @@ export default class Editor {
       },
       'Cmd-Left': 'goLineLeftSmart',
       'Cmd-Right': 'goLineRight',
-      'Home': 'goLineLeftSmart',
-      'End': 'goLineRight',
+      Home: 'goLineLeftSmart',
+      End: 'goLineRight',
       'Ctrl-C': function (cm) {
         if (!isMac && cm.getOption('keyMap').substr(0, 3) === 'vim') {
           document.execCommand('copy')
@@ -140,27 +140,27 @@ export default class Editor {
   }
 
   addToolBar () {
-    var inlineAttach = inlineAttachment.editors.codemirror4.attach(this.editor)
+    const inlineAttach = inlineAttachment.editors.codemirror4.attach(this.editor)
     this.toolBar = $(toolBarTemplate)
     this.toolbarPanel = this.editor.addPanel(this.toolBar[0], {
       position: 'top'
     })
 
-    var makeBold = $('#makeBold')
-    var makeItalic = $('#makeItalic')
-    var makeStrike = $('#makeStrike')
-    var makeHeader = $('#makeHeader')
-    var makeCode = $('#makeCode')
-    var makeQuote = $('#makeQuote')
-    var makeGenericList = $('#makeGenericList')
-    var makeOrderedList = $('#makeOrderedList')
-    var makeCheckList = $('#makeCheckList')
-    var makeLink = $('#makeLink')
-    var makeImage = $('#makeImage')
-    var makeTable = $('#makeTable')
-    var makeLine = $('#makeLine')
-    var makeComment = $('#makeComment')
-    var uploadImage = $('#uploadImage')
+    const makeBold = $('#makeBold')
+    const makeItalic = $('#makeItalic')
+    const makeStrike = $('#makeStrike')
+    const makeHeader = $('#makeHeader')
+    const makeCode = $('#makeCode')
+    const makeQuote = $('#makeQuote')
+    const makeGenericList = $('#makeGenericList')
+    const makeOrderedList = $('#makeOrderedList')
+    const makeCheckList = $('#makeCheckList')
+    const makeLink = $('#makeLink')
+    const makeImage = $('#makeImage')
+    const makeTable = $('#makeTable')
+    const makeLine = $('#makeLine')
+    const makeComment = $('#makeComment')
+    const uploadImage = $('#uploadImage')
 
     makeBold.click(() => {
       utils.wrapTextWith(this.editor, this.editor, '**')
@@ -223,7 +223,7 @@ export default class Editor {
     })
 
     uploadImage.bind('change', function (e) {
-      var files = e.target.files || e.dataTransfer.files
+      const files = e.target.files || e.dataTransfer.files
       e.dataTransfer = {}
       e.dataTransfer.files = files
       inlineAttach.onDrop(e)
@@ -256,12 +256,12 @@ export default class Editor {
   updateStatusBar () {
     if (!this.statusBar) return
 
-    var cursor = this.editor.getCursor()
-    var cursorText = 'Line ' + (cursor.line + 1) + ', Columns ' + (cursor.ch + 1)
+    const cursor = this.editor.getCursor()
+    const cursorText = 'Line ' + (cursor.line + 1) + ', Columns ' + (cursor.ch + 1)
     this.statusCursor.text(cursorText)
-    var fileText = ' — ' + editor.lineCount() + ' Lines'
+    const fileText = ' — ' + editor.lineCount() + ' Lines'
     this.statusFile.text(fileText)
-    var docLength = editor.getValue().length
+    const docLength = editor.getValue().length
     this.statusLength.text('Length ' + docLength)
     if (docLength > (config.docmaxlength * 0.95)) {
       this.statusLength.css('color', 'red')
@@ -276,9 +276,9 @@ export default class Editor {
   }
 
   setIndent () {
-    var cookieIndentType = Cookies.get('indent_type')
-    var cookieTabSize = parseInt(Cookies.get('tab_size'))
-    var cookieSpaceUnits = parseInt(Cookies.get('space_units'))
+    const cookieIndentType = Cookies.get('indent_type')
+    let cookieTabSize = parseInt(Cookies.get('tab_size'))
+    let cookieSpaceUnits = parseInt(Cookies.get('space_units'))
     if (cookieIndentType) {
       if (cookieIndentType === 'tab') {
         this.editor.setOption('indentWithTabs', true)
@@ -296,9 +296,9 @@ export default class Editor {
       this.editor.setOption('tabSize', cookieTabSize)
     }
 
-    var type = this.statusIndicators.find('.indent-type')
-    var widthLabel = this.statusIndicators.find('.indent-width-label')
-    var widthInput = this.statusIndicators.find('.indent-width-input')
+    const type = this.statusIndicators.find('.indent-type')
+    const widthLabel = this.statusIndicators.find('.indent-width-label')
+    const widthInput = this.statusIndicators.find('.indent-width-input')
 
     const setType = () => {
       if (this.editor.getOption('indentWithTabs')) {
@@ -318,7 +318,7 @@ export default class Editor {
     setType()
 
     const setUnit = () => {
-      var unit = this.editor.getOption('indentUnit')
+      const unit = this.editor.getOption('indentUnit')
       if (this.editor.getOption('indentWithTabs')) {
         Cookies.set('tab_size', unit, {
           expires: 365,
@@ -364,7 +364,7 @@ export default class Editor {
       }
     })
     widthInput.on('change', () => {
-      var val = parseInt(widthInput.val())
+      let val = parseInt(widthInput.val())
       if (!val) val = this.editor.getOption('indentUnit')
       if (val < 1) val = 1
       else if (val > 10) val = 10
@@ -382,18 +382,18 @@ export default class Editor {
   }
 
   setKeymap () {
-    var cookieKeymap = Cookies.get('keymap')
+    const cookieKeymap = Cookies.get('keymap')
     if (cookieKeymap) {
       this.editor.setOption('keyMap', cookieKeymap)
     }
 
-    var label = this.statusIndicators.find('.ui-keymap-label')
-    var sublime = this.statusIndicators.find('.ui-keymap-sublime')
-    var emacs = this.statusIndicators.find('.ui-keymap-emacs')
-    var vim = this.statusIndicators.find('.ui-keymap-vim')
+    const label = this.statusIndicators.find('.ui-keymap-label')
+    const sublime = this.statusIndicators.find('.ui-keymap-sublime')
+    const emacs = this.statusIndicators.find('.ui-keymap-emacs')
+    const vim = this.statusIndicators.find('.ui-keymap-vim')
 
     const setKeymapLabel = () => {
-      var keymap = this.editor.getOption('keyMap')
+      const keymap = this.editor.getOption('keyMap')
       Cookies.set('keymap', keymap, {
         expires: 365,
         sameSite: window.cookiePolicy
@@ -419,15 +419,15 @@ export default class Editor {
   }
 
   setTheme () {
-    var cookieTheme = Cookies.get('theme')
+    const cookieTheme = Cookies.get('theme')
     if (cookieTheme) {
       this.editor.setOption('theme', cookieTheme)
     }
 
-    var themeToggle = this.statusTheme.find('.ui-theme-toggle')
+    const themeToggle = this.statusTheme.find('.ui-theme-toggle')
 
     const checkTheme = () => {
-      var theme = this.editor.getOption('theme')
+      const theme = this.editor.getOption('theme')
       if (theme === 'one-dark') {
         themeToggle.removeClass('active')
       } else {
@@ -436,7 +436,7 @@ export default class Editor {
     }
 
     themeToggle.click(() => {
-      var theme = this.editor.getOption('theme')
+      let theme = this.editor.getOption('theme')
       if (theme === 'one-dark') {
         theme = 'default'
       } else {
@@ -455,9 +455,9 @@ export default class Editor {
   }
 
   setSpellcheck () {
-    var cookieSpellcheck = Cookies.get('spellcheck')
+    const cookieSpellcheck = Cookies.get('spellcheck')
     if (cookieSpellcheck) {
-      var mode = null
+      let mode = null
       if (cookieSpellcheck === 'true' || cookieSpellcheck === true) {
         mode = 'spell-checker'
       } else {
@@ -468,10 +468,10 @@ export default class Editor {
       }
     }
 
-    var spellcheckToggle = this.statusSpellcheck.find('.ui-spellcheck-toggle')
+    const spellcheckToggle = this.statusSpellcheck.find('.ui-spellcheck-toggle')
 
     const checkSpellcheck = () => {
-      var mode = this.editor.getOption('mode')
+      const mode = this.editor.getOption('mode')
       if (mode === defaultEditorMode) {
         spellcheckToggle.removeClass('active')
       } else {
@@ -480,7 +480,7 @@ export default class Editor {
     }
 
     spellcheckToggle.click(() => {
-      var mode = this.editor.getOption('mode')
+      let mode = this.editor.getOption('mode')
       if (mode === defaultEditorMode) {
         mode = 'spell-checker'
       } else {
@@ -501,7 +501,7 @@ export default class Editor {
 
     // workaround spellcheck might not activate beacuse the ajax loading
     if (window.num_loaded < 2) {
-      var spellcheckTimer = setInterval(
+      const spellcheckTimer = setInterval(
         () => {
           if (window.num_loaded >= 2) {
             if (this.editor.getOption('mode') === 'spell-checker') {
@@ -516,7 +516,7 @@ export default class Editor {
   }
 
   resetEditorKeymapToBrowserKeymap () {
-    var keymap = this.editor.getOption('keyMap')
+    const keymap = this.editor.getOption('keyMap')
     if (!this.jumpToAddressBarKeymapValue) {
       this.jumpToAddressBarKeymapValue = CodeMirror.keyMap[keymap][jumpToAddressBarKeymapName]
       delete CodeMirror.keyMap[keymap][jumpToAddressBarKeymapName]
@@ -524,14 +524,15 @@ export default class Editor {
   }
 
   restoreOverrideEditorKeymap () {
-    var keymap = this.editor.getOption('keyMap')
+    const keymap = this.editor.getOption('keyMap')
     if (this.jumpToAddressBarKeymapValue) {
       CodeMirror.keyMap[keymap][jumpToAddressBarKeymapName] = this.jumpToAddressBarKeymapValue
       this.jumpToAddressBarKeymapValue = null
     }
   }
+
   setOverrideBrowserKeymap () {
-    var overrideBrowserKeymap = $(
+    const overrideBrowserKeymap = $(
       '.ui-preferences-override-browser-keymap label > input[type="checkbox"]'
     )
     if (overrideBrowserKeymap.is(':checked')) {
@@ -547,10 +548,10 @@ export default class Editor {
   }
 
   setPreferences () {
-    var overrideBrowserKeymap = $(
+    const overrideBrowserKeymap = $(
       '.ui-preferences-override-browser-keymap label > input[type="checkbox"]'
     )
-    var cookieOverrideBrowserKeymap = Cookies.get(
+    const cookieOverrideBrowserKeymap = Cookies.get(
       'preferences-override-browser-keymap'
     )
     if (cookieOverrideBrowserKeymap && cookieOverrideBrowserKeymap === 'true') {

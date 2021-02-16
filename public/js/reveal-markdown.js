@@ -17,28 +17,28 @@ import { md } from './extra'
     root.RevealMarkdown.initialize()
   }
 }(this, function () {
-  var DEFAULT_SLIDE_SEPARATOR = '^\r?\n---\r?\n$'
-  var DEFAULT_NOTES_SEPARATOR = '^note:'
-  var DEFAULT_ELEMENT_ATTRIBUTES_SEPARATOR = '\\.element\\s*?(.+?)$'
-  var DEFAULT_SLIDE_ATTRIBUTES_SEPARATOR = '\\.slide:\\s*?(\\S.+?)$'
+  const DEFAULT_SLIDE_SEPARATOR = '^\r?\n---\r?\n$'
+  const DEFAULT_NOTES_SEPARATOR = '^note:'
+  const DEFAULT_ELEMENT_ATTRIBUTES_SEPARATOR = '\\.element\\s*?(.+?)$'
+  const DEFAULT_SLIDE_ATTRIBUTES_SEPARATOR = '\\.slide:\\s*?(\\S.+?)$'
 
-  var SCRIPT_END_PLACEHOLDER = '__SCRIPT_END__'
+  const SCRIPT_END_PLACEHOLDER = '__SCRIPT_END__'
 
   /**
    * Retrieves the markdown contents of a slide section
    * element. Normalizes leading tabs/whitespace.
    */
   function getMarkdownFromSlide (section) {
-    var template = section.querySelector('script')
+    const template = section.querySelector('script')
 
     // strip leading whitespace so it isn't evaluated as code
-    var text = (template || section).textContent
+    let text = (template || section).textContent
 
     // restore script end tags
     text = text.replace(new RegExp(SCRIPT_END_PLACEHOLDER, 'g'), '</script>')
 
-    var leadingWs = text.match(/^\n?(\s*)/)[1].length
-    var leadingTabs = text.match(/^\n?(\t*)/)[1].length
+    const leadingWs = text.match(/^\n?(\s*)/)[1].length
+    const leadingTabs = text.match(/^\n?(\t*)/)[1].length
 
     if (leadingTabs > 0) {
       text = text.replace(new RegExp('\\n?\\t{' + leadingTabs + '}', 'g'), '\n')
@@ -56,12 +56,12 @@ import { md } from './extra'
    * to the output markdown slide.
    */
   function getForwardedAttributes (section) {
-    var attributes = section.attributes
-    var result = []
+    const attributes = section.attributes
+    const result = []
 
-    for (var i = 0, len = attributes.length; i < len; i++) {
-      var name = attributes[i].name
-      var value = attributes[i].value
+    for (let i = 0, len = attributes.length; i < len; i++) {
+      const name = attributes[i].name
+      const value = attributes[i].value
 
       // disregard attributes that are used for markdown loading/parsing
       if (/data-(markdown|separator|vertical|notes)/gi.test(name)) continue
@@ -95,7 +95,7 @@ import { md } from './extra'
   function createMarkdownSlide (content, options) {
     options = getSlidifyOptions(options)
 
-    var notesMatch = content.split(new RegExp(options.notesSeparator, 'mgi'))
+    const notesMatch = content.split(new RegExp(options.notesSeparator, 'mgi'))
 
     if (notesMatch.length === 2) {
       content = notesMatch[0] + '<aside class="notes" data-markdown>' + notesMatch[1].trim() + '</aside>'
@@ -115,15 +115,15 @@ import { md } from './extra'
   function slidify (markdown, options) {
     options = getSlidifyOptions(options)
 
-    var separatorRegex = new RegExp(options.separator + (options.verticalSeparator ? '|' + options.verticalSeparator : ''), 'mg')
-    var horizontalSeparatorRegex = new RegExp(options.separator)
+    const separatorRegex = new RegExp(options.separator + (options.verticalSeparator ? '|' + options.verticalSeparator : ''), 'mg')
+    const horizontalSeparatorRegex = new RegExp(options.separator)
 
-    var matches
-    var lastIndex = 0
-    var isHorizontal
-    var wasHorizontal = true
-    var content
-    var sectionStack = []
+    let matches
+    let lastIndex = 0
+    let isHorizontal
+    let wasHorizontal = true
+    let content
+    const sectionStack = []
 
     // iterate until all blocks between separators are stacked up
     while ((matches = separatorRegex.exec(markdown)) !== null) {
@@ -153,10 +153,10 @@ import { md } from './extra'
     // add the remaining slide
     (wasHorizontal ? sectionStack : sectionStack[sectionStack.length - 1]).push(markdown.substring(lastIndex))
 
-    var markdownSections = ''
+    let markdownSections = ''
 
     // flatten the hierarchical stack, and insert <section data-markdown> tags
-    for (var i = 0, len = sectionStack.length; i < len; i++) {
+    for (let i = 0, len = sectionStack.length; i < len; i++) {
       // vertical
       if (sectionStack[i] instanceof Array) {
         markdownSections += '<section ' + options.attributes + '>'
@@ -180,17 +180,17 @@ import { md } from './extra'
    * handles loading of external markdown.
    */
   function processSlides () {
-    var sections = document.querySelectorAll('[data-markdown]')
-    var section
+    const sections = document.querySelectorAll('[data-markdown]')
+    let section
 
-    for (var i = 0, len = sections.length; i < len; i++) {
+    for (let i = 0, len = sections.length; i < len; i++) {
       section = sections[i]
 
       if (section.getAttribute('data-markdown').length) {
-        var xhr = new XMLHttpRequest()
-        var url = section.getAttribute('data-markdown')
+        const xhr = new XMLHttpRequest()
+        const url = section.getAttribute('data-markdown')
 
-        var datacharset = section.getAttribute('data-charset')
+        const datacharset = section.getAttribute('data-charset')
 
         // see https://developer.mozilla.org/en-US/docs/Web/API/element.getAttribute#Notes
         if (datacharset !== null && datacharset !== '') {
@@ -247,18 +247,18 @@ import { md } from './extra'
    * http://stackoverflow.com/questions/5690269/disabling-chrome-cache-for-website-development/7000899#answer-11786277
    */
   function addAttributeInElement (node, elementTarget, separator) {
-    var mardownClassesInElementsRegex = new RegExp(separator, 'mg')
-    var mardownClassRegex = new RegExp('([^"= ]+?)="([^"=]+?)"', 'mg')
-    var nodeValue = node.nodeValue
-    var matches
-    var matchesClass
+    const mardownClassesInElementsRegex = new RegExp(separator, 'mg')
+    const mardownClassRegex = /([^"= ]+?)="([^"=]+?)"/mg
+    let nodeValue = node.nodeValue
+    let matches
+    let matchesClass
     if ((matches = mardownClassesInElementsRegex.exec(nodeValue))) {
-      var classes = matches[1]
+      const classes = matches[1]
       nodeValue = nodeValue.substring(0, matches.index) + nodeValue.substring(mardownClassesInElementsRegex.lastIndex)
       node.nodeValue = nodeValue
       while ((matchesClass = mardownClassRegex.exec(classes))) {
-        var name = matchesClass[1]
-        var value = matchesClass[2]
+        const name = matchesClass[1]
+        const value = matchesClass[2]
         if (name.substr(0, 5) === 'data-' || window.whiteListAttr.indexOf(name) !== -1) { elementTarget.setAttribute(name, escapeAttrValue(value)) }
       }
       return true
@@ -272,13 +272,13 @@ import { md } from './extra'
    */
   function addAttributes (section, element, previousElement, separatorElementAttributes, separatorSectionAttributes) {
     if (element != null && element.childNodes !== undefined && element.childNodes.length > 0) {
-      var previousParentElement = element
-      for (var i = 0; i < element.childNodes.length; i++) {
-        var childElement = element.childNodes[i]
+      let previousParentElement = element
+      for (let i = 0; i < element.childNodes.length; i++) {
+        const childElement = element.childNodes[i]
         if (i > 0) {
           let j = i - 1
           while (j >= 0) {
-            var aPreviousChildElement = element.childNodes[j]
+            const aPreviousChildElement = element.childNodes[j]
             if (typeof aPreviousChildElement.setAttribute === 'function' && aPreviousChildElement.tagName !== 'BR') {
               previousParentElement = aPreviousChildElement
               break
@@ -286,7 +286,7 @@ import { md } from './extra'
             j = j - 1
           }
         }
-        var parentSection = section
+        let parentSection = section
         if (childElement.nodeName === 'section') {
           parentSection = childElement
           previousParentElement = childElement
@@ -309,21 +309,21 @@ import { md } from './extra'
    * DOM to HTML.
    */
   function convertSlides () {
-    var sections = document.querySelectorAll('[data-markdown]')
+    const sections = document.querySelectorAll('[data-markdown]')
 
-    for (var i = 0, len = sections.length; i < len; i++) {
-      var section = sections[i]
+    for (let i = 0, len = sections.length; i < len; i++) {
+      const section = sections[i]
 
       // Only parse the same slide once
       if (!section.getAttribute('data-markdown-parsed')) {
         section.setAttribute('data-markdown-parsed', true)
 
-        var notes = section.querySelector('aside.notes')
-        var markdown = getMarkdownFromSlide(section)
+        const notes = section.querySelector('aside.notes')
+        let markdown = getMarkdownFromSlide(section)
         markdown = markdown.replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-        var rendered = md.render(markdown)
+        let rendered = md.render(markdown)
         rendered = preventXSS(rendered)
-        var result = window.postProcess(rendered)
+        const result = window.postProcess(rendered)
         section.innerHTML = result[0].outerHTML
         addAttributes(section, section, null, section.getAttribute('data-element-attributes') ||
         section.parentNode.getAttribute('data-element-attributes') ||

@@ -155,12 +155,12 @@ const buildMap = _.throttle(buildMapInner, buildMapThrottle)
 // Optimizations are required only for big texts.
 function buildMapInner (callback) {
   if (!viewArea || !markdownArea) return
-  let i, offset, nonEmptyList, pos, a, b, _lineHeightMap, linesCount, acc, _scrollMap
+  let i, pos, a, b, acc
 
-  offset = viewArea.scrollTop() - viewArea.offset().top
-  _scrollMap = []
-  nonEmptyList = []
-  _lineHeightMap = []
+  const offset = viewArea.scrollTop() - viewArea.offset().top
+  const _scrollMap = []
+  const nonEmptyList = []
+  const _lineHeightMap = []
   viewTop = 0
   viewBottom = viewArea[0].scrollHeight - viewArea.height()
 
@@ -181,7 +181,7 @@ function buildMapInner (callback) {
     acc += Math.round(h / lineHeight)
   }
   _lineHeightMap.push(acc)
-  linesCount = acc
+  const linesCount = acc
 
   for (i = 0; i < linesCount; i++) {
     _scrollMap.push(-1)
@@ -290,11 +290,12 @@ export function syncScrollToEdit (event, preventAnimate) {
     posTo += Math.ceil(posToNextDiff)
   }
 
+  let duration = 0
   if (preventAnimate) {
     editArea.scrollTop(posTo)
   } else {
     const posDiff = Math.abs(scrollInfo.top - posTo)
-    var duration = posDiff / 50
+    duration = posDiff / 50
     duration = duration >= 100 ? duration : 100
     editArea.stop(true, true).animate({
       scrollTop: posTo
@@ -331,11 +332,11 @@ export function syncScrollToView (event, preventAnimate) {
   }
   if (viewScrolling) return
 
-  let lineNo, posTo
+  let posTo
   let topDiffPercent, posToNextDiff
   const scrollInfo = editor.getScrollInfo()
   const textHeight = editor.defaultTextHeight()
-  lineNo = Math.floor(scrollInfo.top / textHeight)
+  const lineNo = Math.floor(scrollInfo.top / textHeight)
   // if reach the last line, will start lerp to the bottom
   const diffToBottom = (scrollInfo.top + scrollInfo.clientHeight) - (scrollInfo.height - textHeight)
   if (scrollInfo.height > scrollInfo.clientHeight && diffToBottom > 0) {
@@ -350,11 +351,12 @@ export function syncScrollToView (event, preventAnimate) {
     posTo += Math.floor(posToNextDiff)
   }
 
+  let duration = 0
   if (preventAnimate) {
     viewArea.scrollTop(posTo)
   } else {
     const posDiff = Math.abs(viewArea.scrollTop() - posTo)
-    var duration = posDiff / 50
+    duration = posDiff / 50
     duration = duration >= 100 ? duration : 100
     viewArea.stop(true, true).animate({
       scrollTop: posTo

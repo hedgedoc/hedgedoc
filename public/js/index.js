@@ -85,19 +85,49 @@ require('../css/site.css')
 
 require('highlight.js/styles/github-gist.css')
 
-var defaultTextHeight = 20
-var viewportMargin = 20
-var defaultEditorMode = 'gfm'
+let defaultTextHeight = 20
+let viewportMargin = 20
+const defaultEditorMode = 'gfm'
 
-var idleTime = 300000 // 5 mins
-var updateViewDebounce = 100
-var cursorMenuThrottle = 50
-var cursorActivityDebounce = 50
-var cursorAnimatePeriod = 100
-var supportContainers = ['success', 'info', 'warning', 'danger']
-var supportCodeModes = ['javascript', 'typescript', 'jsx', 'htmlmixed', 'htmlembedded', 'css', 'xml', 'clike', 'clojure', 'ruby', 'python', 'shell', 'php', 'sql', 'haskell', 'coffeescript', 'yaml', 'pug', 'lua', 'cmake', 'nginx', 'perl', 'sass', 'r', 'dockerfile', 'tiddlywiki', 'mediawiki', 'go', 'gherkin'].concat(hljs.listLanguages())
-var supportCharts = ['sequence', 'flow', 'graphviz', 'mermaid', 'abc']
-var supportHeaders = [
+const idleTime = 300000 // 5 mins
+const updateViewDebounce = 100
+const cursorMenuThrottle = 50
+const cursorActivityDebounce = 50
+const cursorAnimatePeriod = 100
+const supportContainers = ['success', 'info', 'warning', 'danger']
+const supportCodeModes = [
+  'javascript',
+  'typescript',
+  'jsx',
+  'htmlmixed',
+  'htmlembedded',
+  'css',
+  'xml',
+  'clike',
+  'clojure',
+  'ruby',
+  'python',
+  'shell',
+  'php',
+  'sql',
+  'haskell',
+  'coffeescript',
+  'yaml',
+  'pug',
+  'lua',
+  'cmake',
+  'nginx',
+  'perl',
+  'sass',
+  'r',
+  'dockerfile',
+  'tiddlywiki',
+  'mediawiki',
+  'go',
+  'gherkin'
+].concat(hljs.listLanguages())
+const supportCharts = ['sequence', 'flow', 'graphviz', 'mermaid', 'abc']
+const supportHeaders = [
   {
     text: '# h1',
     search: '#'
@@ -225,7 +255,7 @@ const supportExtraTags = [
     text: '[random color tag]',
     search: '[]',
     command: function () {
-      var color = randomColor()
+      const color = randomColor()
       return '[color=' + color + ']'
     }
   }
@@ -259,7 +289,7 @@ let visibleMD = false
 let visibleLG = false
 const isTouchDevice = 'ontouchstart' in document.documentElement
 let currentStatus = statusType.offline
-let lastInfo = {
+const lastInfo = {
   needRestore: false,
   cursor: null,
   scroll: null,
@@ -285,14 +315,14 @@ let lastInfo = {
 let personalInfo = {}
 let onlineUsers = []
 const fileTypes = {
-  'pl': 'perl',
-  'cgi': 'perl',
-  'js': 'javascript',
-  'php': 'php',
-  'sh': 'bash',
-  'rb': 'ruby',
-  'html': 'html',
-  'py': 'python'
+  pl: 'perl',
+  cgi: 'perl',
+  js: 'javascript',
+  php: 'php',
+  sh: 'bash',
+  rb: 'ruby',
+  html: 'html',
+  py: 'python'
 }
 
 // editor settings
@@ -302,7 +332,7 @@ if (!textit) {
 }
 
 const editorInstance = new Editor()
-var editor = editorInstance.init(textit)
+const editor = editorInstance.init(textit)
 
 // FIXME: global referncing in jquery-textcomplete patch
 window.editor = editor
@@ -313,7 +343,7 @@ defaultTextHeight = parseInt($('.CodeMirror').css('line-height'))
 const ui = getUIElements()
 
 // page actions
-var opts = {
+const opts = {
   lines: 11, // The number of lines to draw
   length: 20, // The length of each line
   width: 2, // The line thickness
@@ -333,11 +363,11 @@ var opts = {
 }
 
 /* eslint-disable no-unused-vars */
-var spinner = new Spinner(opts).spin(ui.spinner[0])
+const spinner = new Spinner(opts).spin(ui.spinner[0])
 /* eslint-enable no-unused-vars */
 
 // idle
-var idle = new Idle({
+const idle = new Idle({
   onAway: function () {
     idle.isAway = true
     emitUserStatus()
@@ -356,7 +386,7 @@ ui.area.codemirror.on('touchstart', function () {
   idle.onActive()
 })
 
-var haveUnreadChanges = false
+let haveUnreadChanges = false
 
 function setHaveUnreadChanges (bool) {
   if (!window.loaded) return
@@ -379,7 +409,9 @@ function updateTitleReminder () {
 function setRefreshModal (status) {
   $('#refreshModal').modal('show')
   $('#refreshModal').find('.modal-body > div').hide()
-  $('#refreshModal').find('.' + status).show()
+  $('#refreshModal')
+    .find('.' + status)
+    .show()
 }
 
 function setNeedRefresh () {
@@ -395,9 +427,9 @@ setloginStateChangeEvent(function () {
 })
 
 // visibility
-var wasFocus = false
+let wasFocus = false
 Visibility.change(function (e, state) {
-  var hidden = Visibility.hidden()
+  const hidden = Visibility.hidden()
   if (hidden) {
     if (editorHasFocus()) {
       wasFocus = true
@@ -421,7 +453,7 @@ $(document).ready(function () {
   idle.checkAway()
   checkResponsive()
   // if in smaller screen, we don't need advanced scrollbar
-  var scrollbarStyle
+  let scrollbarStyle
   if (visibleXS) {
     scrollbarStyle = 'native'
   } else {
@@ -434,7 +466,7 @@ $(document).ready(function () {
   checkEditorStyle()
 
   /* cache dom references */
-  var $body = $('body')
+  const $body = $('body')
 
   /* we need this only on touch devices */
   if (isTouchDevice) {
@@ -463,7 +495,9 @@ $(document).ready(function () {
   $('[data-toggle="tooltip"]').tooltip()
   // shortcuts
   // allow on all tags
-  key.filter = function (e) { return true }
+  key.filter = function (e) {
+    return true
+  }
   key('ctrl+alt+e', function (e) {
     changeMode(modeType.edit)
   })
@@ -488,13 +522,18 @@ $(window).resize(function () {
 })
 // when page unload
 $(window).on('unload', function () {
-// updateHistoryInner();
+  // updateHistoryInner();
 })
 $(window).on('error', function () {
   // setNeedRefresh();
 })
 
-setupSyncAreas(ui.area.codemirrorScroll, ui.area.view, ui.area.markdown, editor)
+setupSyncAreas(
+  ui.area.codemirrorScroll,
+  ui.area.view,
+  ui.area.markdown,
+  editor
+)
 
 function autoSyncscroll () {
   if (editorHasFocus()) {
@@ -504,8 +543,8 @@ function autoSyncscroll () {
   }
 }
 
-var windowResizeDebounce = 200
-var windowResize = _.debounce(windowResizeInner, windowResizeDebounce)
+const windowResizeDebounce = 200
+const windowResize = _.debounce(windowResizeInner, windowResizeDebounce)
 
 function windowResizeInner (callback) {
   checkLayout()
@@ -520,7 +559,9 @@ function windowResizeInner (callback) {
         clearMap()
         autoSyncscroll()
         updateScrollspy()
-        if (callback && typeof callback === 'function') { callback() }
+        if (callback && typeof callback === 'function') {
+          callback()
+        }
       }, 1)
     } else {
       // force it load all docs at once to prevent scroll knob blink
@@ -530,18 +571,22 @@ function windowResizeInner (callback) {
         autoSyncscroll()
         editor.setOption('viewportMargin', viewportMargin)
         // add or update user cursors
-        for (var i = 0; i < onlineUsers.length; i++) {
-          if (onlineUsers[i].id !== personalInfo.id) { buildCursor(onlineUsers[i]) }
+        for (let i = 0; i < onlineUsers.length; i++) {
+          if (onlineUsers[i].id !== personalInfo.id) {
+            buildCursor(onlineUsers[i])
+          }
         }
         updateScrollspy()
-        if (callback && typeof callback === 'function') { callback() }
+        if (callback && typeof callback === 'function') {
+          callback()
+        }
       }, 1)
     }
   }
 }
 
 function checkLayout () {
-  var navbarHieght = $('.navbar').outerHeight()
+  const navbarHieght = $('.navbar').outerHeight()
   $('body').css('padding-top', navbarHieght + 'px')
 }
 
@@ -557,22 +602,28 @@ function checkResponsive () {
   visibleLG = $('.visible-lg').is(':visible')
 
   if (visibleXS && appState.currentMode === modeType.both) {
-    if (editorHasFocus()) { changeMode(modeType.edit) } else { changeMode(modeType.view) }
+    if (editorHasFocus()) {
+      changeMode(modeType.edit)
+    } else {
+      changeMode(modeType.view)
+    }
   }
 
   emitUserStatus()
 }
 
-var lastEditorWidth = 0
-var previousFocusOnEditor = null
+let lastEditorWidth = 0
+let previousFocusOnEditor = null
 
 function checkEditorStyle () {
-  var desireHeight = editorInstance.statusBar ? (ui.area.edit.height() - editorInstance.statusBar.outerHeight()) : ui.area.edit.height()
+  let desireHeight = editorInstance.statusBar
+    ? ui.area.edit.height() - editorInstance.statusBar.outerHeight()
+    : ui.area.edit.height()
   if (editorInstance.toolBar) {
     desireHeight = desireHeight - editorInstance.toolBar.outerHeight()
   }
   // set editor height and min height based on scrollbar style and mode
-  var scrollbarStyle = editor.getOption('scrollbarStyle')
+  const scrollbarStyle = editor.getOption('scrollbarStyle')
   if (scrollbarStyle === 'overlay' || appState.currentMode === modeType.both) {
     ui.area.codemirrorScroll.css('height', desireHeight + 'px')
     ui.area.codemirrorScroll.css('min-height', '')
@@ -590,9 +641,11 @@ function checkEditorStyle () {
       maxWidth: $(window).width() * 0.7,
       minWidth: $(window).width() * 0.2,
       create: function (e, ui) {
-        $(this).parent().on('resize', function (e) {
-          e.stopPropagation()
-        })
+        $(this)
+          .parent()
+          .on('resize', function (e) {
+            e.stopPropagation()
+          })
       },
       start: function (e) {
         editor.setOption('viewportMargin', Infinity)
@@ -622,23 +675,31 @@ function checkEditorStyle () {
     ui.area.resize.handle = $('.ui-resizable-handle')
   }
   if (!ui.area.resize.syncToggle.length) {
-    ui.area.resize.syncToggle = $('<button class="btn btn-lg btn-default ui-sync-toggle" title="Toggle sync scrolling"><i class="fa fa-link fa-fw"></i></button>')
-    ui.area.resize.syncToggle.hover(function () {
-      previousFocusOnEditor = editorHasFocus()
-    }, function () {
-      previousFocusOnEditor = null
-    })
+    ui.area.resize.syncToggle = $(
+      '<button class="btn btn-lg btn-default ui-sync-toggle" title="Toggle sync scrolling"><i class="fa fa-link fa-fw"></i></button>'
+    )
+    ui.area.resize.syncToggle.hover(
+      function () {
+        previousFocusOnEditor = editorHasFocus()
+      },
+      function () {
+        previousFocusOnEditor = null
+      }
+    )
     ui.area.resize.syncToggle.click(function () {
       appState.syncscroll = !appState.syncscroll
       checkSyncToggle()
     })
     ui.area.resize.handle.append(ui.area.resize.syncToggle)
     ui.area.resize.syncToggle.hide()
-    ui.area.resize.handle.hover(function () {
-      ui.area.resize.syncToggle.stop(true, true).delay(200).fadeIn(100)
-    }, function () {
-      ui.area.resize.syncToggle.stop(true, true).delay(300).fadeOut(300)
-    })
+    ui.area.resize.handle.hover(
+      function () {
+        ui.area.resize.syncToggle.stop(true, true).delay(200).fadeIn(100)
+      },
+      function () {
+        ui.area.resize.syncToggle.stop(true, true).delay(300).fadeOut(300)
+      }
+    )
   }
 }
 
@@ -651,37 +712,53 @@ function checkSyncToggle () {
       window.preventSyncScrollToEdit = false
       syncScrollToEdit()
     }
-    ui.area.resize.syncToggle.find('i').removeClass('fa-unlink').addClass('fa-link')
+    ui.area.resize.syncToggle
+      .find('i')
+      .removeClass('fa-unlink')
+      .addClass('fa-link')
   } else {
-    ui.area.resize.syncToggle.find('i').removeClass('fa-link').addClass('fa-unlink')
+    ui.area.resize.syncToggle
+      .find('i')
+      .removeClass('fa-link')
+      .addClass('fa-unlink')
   }
 }
 
-var checkEditorScrollbar = _.debounce(function () {
+const checkEditorScrollbar = _.debounce(function () {
   editor.operation(checkEditorScrollbarInner)
 }, 50)
 
 function checkEditorScrollbarInner () {
   // workaround simple scroll bar knob
   // will get wrong position when editor height changed
-  var scrollInfo = editor.getScrollInfo()
+  const scrollInfo = editor.getScrollInfo()
   editor.scrollTo(null, scrollInfo.top - 1)
   editor.scrollTo(null, scrollInfo.top)
 }
 
 function checkTocStyle () {
   // toc right
-  var paddingRight = parseFloat(ui.area.markdown.css('padding-right'))
-  var right = ($(window).width() - (ui.area.markdown.offset().left + ui.area.markdown.outerWidth() - paddingRight))
+  const paddingRight = parseFloat(ui.area.markdown.css('padding-right'))
+  const right =
+    $(window).width() -
+    (ui.area.markdown.offset().left +
+      ui.area.markdown.outerWidth() -
+      paddingRight)
   ui.toc.toc.css('right', right + 'px')
   // affix toc left
-  var newbool
-  var rightMargin = (ui.area.markdown.parent().outerWidth() - ui.area.markdown.outerWidth()) / 2
+  let newbool
+  const rightMargin =
+    (ui.area.markdown.parent().outerWidth() - ui.area.markdown.outerWidth()) /
+    2
   // for ipad or wider device
   if (rightMargin >= 133) {
     newbool = true
-    var affixLeftMargin = (ui.toc.affix.outerWidth() - ui.toc.affix.width()) / 2
-    var left = ui.area.markdown.offset().left + ui.area.markdown.outerWidth() - affixLeftMargin
+    const affixLeftMargin =
+      (ui.toc.affix.outerWidth() - ui.toc.affix.width()) / 2
+    const left =
+      ui.area.markdown.offset().left +
+      ui.area.markdown.outerWidth() -
+      affixLeftMargin
     ui.toc.affix.css('left', left + 'px')
     ui.toc.affix.css('width', rightMargin + 'px')
   } else {
@@ -708,12 +785,12 @@ function checkTocStyle () {
 
 function showStatus (type, num) {
   currentStatus = type
-  var shortStatus = ui.toolbar.shortStatus
-  var status = ui.toolbar.status
-  var label = $('<span class="label"></span>')
-  var fa = $('<i class="fa"></i>')
-  var msg = ''
-  var shortMsg = ''
+  const shortStatus = ui.toolbar.shortStatus
+  const status = ui.toolbar.status
+  const label = $('<span class="label"></span>')
+  const fa = $('<i class="fa"></i>')
+  let msg = ''
+  let shortMsg = ''
 
   shortStatus.html('')
   status.html('')
@@ -738,7 +815,7 @@ function showStatus (type, num) {
   }
 
   label.append(fa)
-  var shortLabel = label.clone()
+  const shortLabel = label.clone()
 
   shortLabel.append(' ' + shortMsg)
   shortStatus.append(shortLabel)
@@ -761,7 +838,7 @@ function toggleMode () {
   }
 }
 
-var lastMode = null
+let lastMode = null
 
 function changeMode (type) {
   // lock navbar to prevent it hide after changeMode
@@ -771,8 +848,8 @@ function changeMode (type) {
     lastMode = appState.currentMode
     appState.currentMode = type
   }
-  var responsiveClass = 'col-lg-6 col-md-6 col-sm-6'
-  var scrollClass = 'ui-scrollable'
+  const responsiveClass = 'col-lg-6 col-md-6 col-sm-6'
+  const scrollClass = 'ui-scrollable'
   ui.area.codemirror.removeClass(scrollClass)
   ui.area.edit.removeClass(responsiveClass)
   ui.area.view.removeClass(scrollClass)
@@ -798,11 +875,20 @@ function changeMode (type) {
       break
   }
   // save mode to url
-  if (history.replaceState && window.loaded) history.replaceState(null, '', serverurl + '/' + noteid + '?' + appState.currentMode.name)
+  if (history.replaceState && window.loaded) {
+    history.replaceState(
+      null,
+      '',
+      serverurl + '/' + noteid + '?' + appState.currentMode.name
+    )
+  }
   if (appState.currentMode === modeType.view) {
     editor.getInputField().blur()
   }
-  if (appState.currentMode === modeType.edit || appState.currentMode === modeType.both) {
+  if (
+    appState.currentMode === modeType.edit ||
+    appState.currentMode === modeType.both
+  ) {
     // add and update status bar
     if (!editorInstance.statusBar) {
       editorInstance.addStatusBar()
@@ -820,7 +906,10 @@ function changeMode (type) {
     $(document.body).css('background-color', 'white')
     updateView()
   } else {
-    $(document.body).css('background-color', ui.area.codemirror.css('background-color'))
+    $(document.body).css(
+      'background-color',
+      ui.area.codemirror.css('background-color')
+    )
   }
   // check resizable editor style
   if (appState.currentMode === modeType.both) {
@@ -864,15 +953,18 @@ function changeMode (type) {
   ui.toolbar.both.removeClass('active')
   ui.toolbar.edit.removeClass('active')
   ui.toolbar.view.removeClass('active')
-  var modeIcon = ui.toolbar.mode.find('i')
+  const modeIcon = ui.toolbar.mode.find('i')
   modeIcon.removeClass('fa-pencil').removeClass('fa-eye')
-  if (ui.area.edit.is(':visible') && ui.area.view.is(':visible')) { // both
+  if (ui.area.edit.is(':visible') && ui.area.view.is(':visible')) {
+    // both
     ui.toolbar.both.addClass('active')
     modeIcon.addClass('fa-eye')
-  } else if (ui.area.edit.is(':visible')) { // edit
+  } else if (ui.area.edit.is(':visible')) {
+    // edit
     ui.toolbar.edit.addClass('active')
     modeIcon.addClass('fa-eye')
-  } else if (ui.area.view.is(':visible')) { // view
+  } else if (ui.area.view.is(':visible')) {
+    // view
     ui.toolbar.view.addClass('active')
     modeIcon.addClass('fa-pencil')
   }
@@ -883,17 +975,27 @@ function lockNavbar () {
   $('.navbar').addClass('locked')
 }
 
-var unlockNavbar = _.debounce(function () {
+const unlockNavbar = _.debounce(function () {
   $('.navbar').removeClass('locked')
 }, 200)
 
 function showMessageModal (title, header, href, text, success) {
-  var modal = $('.message-modal')
+  const modal = $('.message-modal')
   modal.find('.modal-title').html(title)
   modal.find('.modal-body h5').html(header)
-  if (href) { modal.find('.modal-body a').attr('href', href).text(text) } else { modal.find('.modal-body a').removeAttr('href').text(text) }
-  modal.find('.modal-footer button').removeClass('btn-default btn-success btn-danger')
-  if (success) { modal.find('.modal-footer button').addClass('btn-success') } else { modal.find('.modal-footer button').addClass('btn-danger') }
+  if (href) {
+    modal.find('.modal-body a').attr('href', href).text(text)
+  } else {
+    modal.find('.modal-body a').removeAttr('href').text(text)
+  }
+  modal
+    .find('.modal-footer button')
+    .removeClass('btn-default btn-success btn-danger')
+  if (success) {
+    modal.find('.modal-footer button').addClass('btn-success')
+  } else {
+    modal.find('.modal-footer button').addClass('btn-danger')
+  }
   modal.modal('show')
 }
 
@@ -923,9 +1025,9 @@ ui.toolbar.extra.slide.attr('href', noteurl + '/slide')
 ui.toolbar.download.markdown.click(function (e) {
   e.preventDefault()
   e.stopPropagation()
-  var filename = renderFilename(ui.area.markdown) + '.md'
-  var markdown = editor.getValue()
-  var blob = new Blob([markdown], {
+  const filename = renderFilename(ui.area.markdown) + '.md'
+  const markdown = editor.getValue()
+  const blob = new Blob([markdown], {
     type: 'text/markdown;charset=utf-8'
   })
   saveAs(blob, filename, true)
@@ -945,12 +1047,12 @@ ui.toolbar.download.rawhtml.click(function (e) {
 // export to dropbox
 ui.toolbar.export.dropbox.click(function (event) {
   event.preventDefault()
-  var filename = renderFilename(ui.area.markdown) + '.md'
-  var options = {
+  const filename = renderFilename(ui.area.markdown) + '.md'
+  const options = {
     files: [
       {
-        'url': noteurl + '/download',
-        'filename': filename
+        url: noteurl + '/download',
+        filename: filename
       }
     ],
     error: function (errorMessage) {
@@ -971,25 +1073,48 @@ ui.toolbar.export.snippet.click(function () {
       $('#snippetExportModalVersion').val(data.version)
       $('#snippetExportModalLoading').hide()
       $('#snippetExportModal').modal('toggle')
-      $('#snippetExportModalProjects').find('option').remove().end().append('<option value="init" selected="selected" disabled="disabled">Select From Available Projects</option>')
+      $('#snippetExportModalProjects')
+        .find('option')
+        .remove()
+        .end()
+        .append(
+          '<option value="init" selected="selected" disabled="disabled">Select From Available Projects</option>'
+        )
       if (data.projects) {
         data.projects.sort(function (a, b) {
-          return (a.path_with_namespace < b.path_with_namespace) ? -1 : ((a.path_with_namespace > b.path_with_namespace) ? 1 : 0)
+          return a.path_with_namespace < b.path_with_namespace
+            ? -1
+            : a.path_with_namespace > b.path_with_namespace
+              ? 1
+              : 0
         })
         data.projects.forEach(function (project) {
-          if (!project.snippets_enabled ||
-                        (project.permissions.project_access === null && project.permissions.group_access === null) ||
-                        (project.permissions.project_access !== null && project.permissions.project_access.access_level < 20)) {
+          if (
+            !project.snippets_enabled ||
+            (project.permissions.project_access === null &&
+              project.permissions.group_access === null) ||
+            (project.permissions.project_access !== null &&
+              project.permissions.project_access.access_level < 20)
+          ) {
             return
           }
-          $('<option>').val(project.id).text(project.path_with_namespace).appendTo('#snippetExportModalProjects')
+          $('<option>')
+            .val(project.id)
+            .text(project.path_with_namespace)
+            .appendTo('#snippetExportModalProjects')
         })
         $('#snippetExportModalProjects').prop('disabled', false)
       }
       $('#snippetExportModalLoading').hide()
     })
     .fail(function (data) {
-      showMessageModal('<i class="fa fa-gitlab"></i> Import from Snippet', 'Unable to fetch gitlab parameters :(', '', '', false)
+      showMessageModal(
+        '<i class="fa fa-gitlab"></i> Import from Snippet',
+        'Unable to fetch gitlab parameters :(',
+        '',
+        '',
+        false
+      )
     })
     .always(function () {
       ui.spinner.hide()
@@ -998,10 +1123,10 @@ ui.toolbar.export.snippet.click(function () {
 // import from dropbox
 ui.toolbar.import.dropbox.click(function (event) {
   event.preventDefault()
-  var options = {
+  const options = {
     success: function (files) {
       ui.spinner.show()
-      var url = files[0].link
+      const url = files[0].link
       importFromUrl(url)
     },
     linkType: 'direct',
@@ -1026,25 +1151,48 @@ ui.toolbar.import.snippet.click(function () {
       $('#snippetImportModalConfirm').prop('disabled', false)
       $('#snippetImportModalLoading').hide()
       $('#snippetImportModal').modal('toggle')
-      $('#snippetImportModalProjects').find('option').remove().end().append('<option value="init" selected="selected" disabled="disabled">Select From Available Projects</option>')
+      $('#snippetImportModalProjects')
+        .find('option')
+        .remove()
+        .end()
+        .append(
+          '<option value="init" selected="selected" disabled="disabled">Select From Available Projects</option>'
+        )
       if (data.projects) {
         data.projects.sort(function (a, b) {
-          return (a.path_with_namespace < b.path_with_namespace) ? -1 : ((a.path_with_namespace > b.path_with_namespace) ? 1 : 0)
+          return a.path_with_namespace < b.path_with_namespace
+            ? -1
+            : a.path_with_namespace > b.path_with_namespace
+              ? 1
+              : 0
         })
         data.projects.forEach(function (project) {
-          if (!project.snippets_enabled ||
-                        (project.permissions.project_access === null && project.permissions.group_access === null) ||
-                        (project.permissions.project_access !== null && project.permissions.project_access.access_level < 20)) {
+          if (
+            !project.snippets_enabled ||
+            (project.permissions.project_access === null &&
+              project.permissions.group_access === null) ||
+            (project.permissions.project_access !== null &&
+              project.permissions.project_access.access_level < 20)
+          ) {
             return
           }
-          $('<option>').val(project.id).text(project.path_with_namespace).appendTo('#snippetImportModalProjects')
+          $('<option>')
+            .val(project.id)
+            .text(project.path_with_namespace)
+            .appendTo('#snippetImportModalProjects')
         })
         $('#snippetImportModalProjects').prop('disabled', false)
       }
       $('#snippetImportModalLoading').hide()
     })
     .fail(function (data) {
-      showMessageModal('<i class="fa fa-gitlab"></i> Import from Snippet', 'Unable to fetch gitlab parameters :(', '', '', false)
+      showMessageModal(
+        '<i class="fa fa-gitlab"></i> Import from Snippet',
+        'Unable to fetch gitlab parameters :(',
+        '',
+        '',
+        false
+      )
     })
     .always(function () {
       ui.spinner.hide()
@@ -1060,15 +1208,15 @@ $('a[href="#"]').click(function (e) {
 })
 
 // modal actions
-var revisions = []
-var revisionViewer = null
-var revisionInsert = []
-var revisionDelete = []
-var revisionInsertAnnotation = null
-var revisionDeleteAnnotation = null
-var revisionList = ui.modal.revision.find('.ui-revision-list')
-var revision = null
-var revisionTime = null
+let revisions = []
+let revisionViewer = null
+let revisionInsert = []
+let revisionDelete = []
+let revisionInsertAnnotation = null
+let revisionDeleteAnnotation = null
+const revisionList = ui.modal.revision.find('.ui-revision-list')
+let revision = null
+let revisionTime = null
 ui.modal.revision.on('show.bs.modal', function (e) {
   $.get(noteurl + '/revision')
     .done(function (data) {
@@ -1087,7 +1235,7 @@ ui.modal.revision.on('show.bs.modal', function (e) {
 })
 function checkRevisionViewer () {
   if (revisionViewer) {
-    var container = $(revisionViewer.display.wrapper).parent()
+    const container = $(revisionViewer.display.wrapper).parent()
     $(revisionViewer.display.scroller).css('height', container.height() + 'px')
     revisionViewer.refresh()
   }
@@ -1097,23 +1245,27 @@ $(window).resize(checkRevisionViewer)
 function parseRevisions (_revisions) {
   if (_revisions.length !== revisions) {
     revisions = _revisions
-    var lastRevision = null
+    let lastRevision = null
     if (revisionList.children().length > 0) {
       lastRevision = revisionList.find('.active').attr('data-revision-time')
     }
     revisionList.html('')
-    for (var i = 0; i < revisions.length; i++) {
-      var revision = revisions[i]
-      var item = $('<a class="list-group-item"></a>')
+    for (let i = 0; i < revisions.length; i++) {
+      const revision = revisions[i]
+      const item = $('<a class="list-group-item"></a>')
       item.attr('data-revision-time', revision.time)
       if (lastRevision === revision.time) item.addClass('active')
-      var itemHeading = $('<h5 class="list-group-item-heading"></h5>')
-      itemHeading.html('<i class="fa fa-clock-o"></i> ' + moment(revision.time).format('llll'))
-      var itemText = $('<p class="list-group-item-text"></p>')
-      itemText.html('<i class="fa fa-file-text"></i> Length: ' + revision.length)
+      const itemHeading = $('<h5 class="list-group-item-heading"></h5>')
+      itemHeading.html(
+        '<i class="fa fa-clock-o"></i> ' + moment(revision.time).format('llll')
+      )
+      const itemText = $('<p class="list-group-item-text"></p>')
+      itemText.html(
+        '<i class="fa fa-file-text"></i> Length: ' + revision.length
+      )
       item.append(itemHeading).append(itemText)
       item.click(function (e) {
-        var time = $(this).attr('data-revision-time')
+        const time = $(this).attr('data-revision-time')
         selectRevision(time)
       })
       revisionList.append(item)
@@ -1129,52 +1281,59 @@ function selectRevision (time) {
     .done(function (data) {
       revision = data
       revisionTime = time
-      var lastScrollInfo = revisionViewer.getScrollInfo()
+      const lastScrollInfo = revisionViewer.getScrollInfo()
       revisionList.children().removeClass('active')
-      revisionList.find('[data-revision-time="' + time + '"]').addClass('active')
-      var content = revision.content
+      revisionList
+        .find('[data-revision-time="' + time + '"]')
+        .addClass('active')
+      const content = revision.content
       revisionViewer.setValue(content)
       revisionViewer.scrollTo(null, lastScrollInfo.top)
       revisionInsert = []
       revisionDelete = []
       // mark the text which have been insert or delete
       if (revision.patch.length > 0) {
-        var bias = 0
-        for (var j = 0; j < revision.patch.length; j++) {
-          var patch = revision.patch[j]
-          var currIndex = patch.start1 + bias
-          for (var i = 0; i < patch.diffs.length; i++) {
-            var diff = patch.diffs[i]
+        let bias = 0
+        for (let j = 0; j < revision.patch.length; j++) {
+          const patch = revision.patch[j]
+          let currIndex = patch.start1 + bias
+          for (let i = 0; i < patch.diffs.length; i++) {
+            const diff = patch.diffs[i]
             // ignore if diff only contains line breaks
-            if ((diff[1].match(/\n/g) || []).length === diff[1].length) continue
-            var prePos
-            var postPos
+            if ((diff[1].match(/\n/g) || []).length === diff[1].length) { continue }
+            let prePos, postPos
             switch (diff[0]) {
               case 0: // retain
                 currIndex += diff[1].length
                 break
               case 1: // insert
                 prePos = revisionViewer.posFromIndex(currIndex)
-                postPos = revisionViewer.posFromIndex(currIndex + diff[1].length)
+                postPos = revisionViewer.posFromIndex(
+                  currIndex + diff[1].length
+                )
                 revisionInsert.push({
                   from: prePos,
                   to: postPos
                 })
                 revisionViewer.markText(prePos, postPos, {
-                  css: 'background-color: rgba(230,255,230,0.7); text-decoration: underline;'
+                  css:
+                    'background-color: rgba(230,255,230,0.7); text-decoration: underline;'
                 })
                 currIndex += diff[1].length
                 break
               case -1: // delete
                 prePos = revisionViewer.posFromIndex(currIndex)
                 revisionViewer.replaceRange(diff[1], prePos)
-                postPos = revisionViewer.posFromIndex(currIndex + diff[1].length)
+                postPos = revisionViewer.posFromIndex(
+                  currIndex + diff[1].length
+                )
                 revisionDelete.push({
                   from: prePos,
                   to: postPos
                 })
                 revisionViewer.markText(prePos, postPos, {
-                  css: 'background-color: rgba(255,230,230,0.7); text-decoration: line-through;'
+                  css:
+                    'background-color: rgba(255,230,230,0.7); text-decoration: line-through;'
                 })
                 bias += diff[1].length
                 currIndex += diff[1].length
@@ -1198,7 +1357,7 @@ function selectRevision (time) {
 }
 function initRevisionViewer () {
   if (revisionViewer) return
-  var revisionViewerTextArea = document.getElementById('revisionViewer')
+  const revisionViewerTextArea = document.getElementById('revisionViewer')
   revisionViewer = CodeMirror.fromTextArea(revisionViewerTextArea, {
     mode: defaultEditorMode,
     viewportMargin: viewportMargin,
@@ -1213,14 +1372,19 @@ function initRevisionViewer () {
     autoRefresh: true,
     scrollbarStyle: 'overlay'
   })
-  revisionInsertAnnotation = revisionViewer.annotateScrollbar({ className: 'CodeMirror-insert-match' })
-  revisionDeleteAnnotation = revisionViewer.annotateScrollbar({ className: 'CodeMirror-delete-match' })
+  revisionInsertAnnotation = revisionViewer.annotateScrollbar({
+    className: 'CodeMirror-insert-match'
+  })
+  revisionDeleteAnnotation = revisionViewer.annotateScrollbar({
+    className: 'CodeMirror-delete-match'
+  })
   checkRevisionViewer()
 }
 $('#revisionModalDownload').click(function () {
   if (!revision) return
-  var filename = renderFilename(ui.area.markdown) + '_' + revisionTime + '.md'
-  var blob = new Blob([revision.content], {
+  const filename =
+    renderFilename(ui.area.markdown) + '_' + revisionTime + '.md'
+  const blob = new Blob([revision.content], {
     type: 'text/markdown;charset=utf-8'
   })
   saveAs(blob, filename, true)
@@ -1232,17 +1396,34 @@ $('#revisionModalRevert').click(function () {
 })
 // snippet projects
 ui.modal.snippetImportProjects.change(function () {
-  var accesstoken = $('#snippetImportModalAccessToken').val()
-  var baseURL = $('#snippetImportModalBaseURL').val()
-  var project = $('#snippetImportModalProjects').val()
-  var version = $('#snippetImportModalVersion').val()
+  const accesstoken = $('#snippetImportModalAccessToken').val()
+  const baseURL = $('#snippetImportModalBaseURL').val()
+  const project = $('#snippetImportModalProjects').val()
+  const version = $('#snippetImportModalVersion').val()
   $('#snippetImportModalLoading').show()
   $('#snippetImportModalContent').val('/projects/' + project)
-  $.get(baseURL + '/api/' + version + '/projects/' + project + '/snippets?access_token=' + accesstoken)
+  $.get(
+    baseURL +
+      '/api/' +
+      version +
+      '/projects/' +
+      project +
+      '/snippets?access_token=' +
+      accesstoken
+  )
     .done(function (data) {
-      $('#snippetImportModalSnippets').find('option').remove().end().append('<option value="init" selected="selected" disabled="disabled">Select From Available Snippets</option>')
+      $('#snippetImportModalSnippets')
+        .find('option')
+        .remove()
+        .end()
+        .append(
+          '<option value="init" selected="selected" disabled="disabled">Select From Available Snippets</option>'
+        )
       data.forEach(function (snippet) {
-        $('<option>').val(snippet.id).text(snippet.title).appendTo($('#snippetImportModalSnippets'))
+        $('<option>')
+          .val(snippet.id)
+          .text(snippet.title)
+          .appendTo($('#snippetImportModalSnippets'))
       })
       $('#snippetImportModalLoading').hide()
       $('#snippetImportModalSnippets').prop('disabled', false)
@@ -1259,44 +1440,68 @@ ui.modal.snippetImportProjects.change(function () {
 })
 // snippet snippets
 ui.modal.snippetImportSnippets.change(function () {
-  var snippet = $('#snippetImportModalSnippets').val()
-  $('#snippetImportModalContent').val($('#snippetImportModalContent').val() + '/snippets/' + snippet)
+  const snippet = $('#snippetImportModalSnippets').val()
+  $('#snippetImportModalContent').val(
+    $('#snippetImportModalContent').val() + '/snippets/' + snippet
+  )
 })
 
 function scrollToTop () {
   if (appState.currentMode === modeType.both) {
-    if (editor.getScrollInfo().top !== 0) { editor.scrollTo(0, 0) } else {
-      ui.area.view.animate({
-        scrollTop: 0
-      }, 100, 'linear')
+    if (editor.getScrollInfo().top !== 0) {
+      editor.scrollTo(0, 0)
+    } else {
+      ui.area.view.animate(
+        {
+          scrollTop: 0
+        },
+        100,
+        'linear'
+      )
     }
   } else {
-    $('body, html').stop(true, true).animate({
-      scrollTop: 0
-    }, 100, 'linear')
+    $('body, html').stop(true, true).animate(
+      {
+        scrollTop: 0
+      },
+      100,
+      'linear'
+    )
   }
 }
 
 function scrollToBottom () {
   if (appState.currentMode === modeType.both) {
-    var scrollInfo = editor.getScrollInfo()
-    var scrollHeight = scrollInfo.height
-    if (scrollInfo.top !== scrollHeight) { editor.scrollTo(0, scrollHeight * 2) } else {
-      ui.area.view.animate({
-        scrollTop: ui.area.view[0].scrollHeight
-      }, 100, 'linear')
+    const scrollInfo = editor.getScrollInfo()
+    const scrollHeight = scrollInfo.height
+    if (scrollInfo.top !== scrollHeight) {
+      editor.scrollTo(0, scrollHeight * 2)
+    } else {
+      ui.area.view.animate(
+        {
+          scrollTop: ui.area.view[0].scrollHeight
+        },
+        100,
+        'linear'
+      )
     }
   } else {
-    $('body, html').stop(true, true).animate({
-      scrollTop: $(document.body)[0].scrollHeight
-    }, 100, 'linear')
+    $('body, html')
+      .stop(true, true)
+      .animate(
+        {
+          scrollTop: $(document.body)[0].scrollHeight
+        },
+        100,
+        'linear'
+      )
   }
 }
 
 window.scrollToTop = scrollToTop
 window.scrollToBottom = scrollToBottom
 
-var enoughForAffixToc = true
+let enoughForAffixToc = true
 
 // scrollspy
 function generateScrollspy () {
@@ -1320,29 +1525,53 @@ function generateScrollspy () {
 }
 
 function updateScrollspy () {
-  var headers = ui.area.markdown.find('h1, h2, h3').toArray()
-  var headerMap = []
-  for (var i = 0; i < headers.length; i++) {
-    headerMap.push($(headers[i]).offset().top - parseInt($(headers[i]).css('margin-top')))
+  const headers = ui.area.markdown.find('h1, h2, h3').toArray()
+  const headerMap = []
+  for (let i = 0; i < headers.length; i++) {
+    headerMap.push(
+      $(headers[i]).offset().top - parseInt($(headers[i]).css('margin-top'))
+    )
   }
-  applyScrollspyActive($(window).scrollTop(), headerMap, headers,
-    $('.scrollspy-body'), 0)
-  var offset = ui.area.view.scrollTop() - ui.area.view.offset().top
-  applyScrollspyActive(ui.area.view.scrollTop(), headerMap, headers,
-    $('.scrollspy-view'), offset - 10)
+  applyScrollspyActive(
+    $(window).scrollTop(),
+    headerMap,
+    headers,
+    $('.scrollspy-body'),
+    0
+  )
+  const offset = ui.area.view.scrollTop() - ui.area.view.offset().top
+  applyScrollspyActive(
+    ui.area.view.scrollTop(),
+    headerMap,
+    headers,
+    $('.scrollspy-view'),
+    offset - 10
+  )
 }
 
 function applyScrollspyActive (top, headerMap, headers, target, offset) {
-  var index = 0
-  for (var i = headerMap.length - 1; i >= 0; i--) {
-    if (top >= (headerMap[i] + offset) && headerMap[i + 1] && top < (headerMap[i + 1] + offset)) {
+  let index = 0
+  for (let i = headerMap.length - 1; i >= 0; i--) {
+    if (
+      top >= headerMap[i] + offset &&
+      headerMap[i + 1] &&
+      top < headerMap[i + 1] + offset
+    ) {
       index = i
       break
     }
   }
-  var header = $(headers[index])
-  var active = target.find('a[href="#' + header.attr('id') + '"]')
-  active.closest('li').addClass('active').parent().closest('li').addClass('active').parent().closest('li').addClass('active')
+  const header = $(headers[index])
+  const active = target.find('a[href="#' + header.attr('id') + '"]')
+  active
+    .closest('li')
+    .addClass('active')
+    .parent()
+    .closest('li')
+    .addClass('active')
+    .parent()
+    .closest('li')
+    .addClass('active')
 }
 
 // clipboard modal
@@ -1354,7 +1583,7 @@ $('#clipboardModalClear').click(function () {
   $('#clipboardModalContent').html('')
 })
 $('#clipboardModalConfirm').click(function () {
-  var data = $('#clipboardModalContent').html()
+  const data = $('#clipboardModalContent').html()
   if (data) {
     parseToEditor(data)
     $('#clipboardModal').modal('hide')
@@ -1372,22 +1601,34 @@ $('#gistImportModalClear').click(function () {
   $('#gistImportModalContent').val('')
 })
 $('#gistImportModalConfirm').click(function () {
-  var gisturl = $('#gistImportModalContent').val()
+  const gisturl = $('#gistImportModalContent').val()
   if (!gisturl) return
   $('#gistImportModal').modal('hide')
   $('#gistImportModalContent').val('')
   if (!isValidURL(gisturl)) {
-    showMessageModal('<i class="fa fa-github"></i> Import from Gist', 'Not a valid URL :(', '', '', false)
+    showMessageModal(
+      '<i class="fa fa-github"></i> Import from Gist',
+      'Not a valid URL :(',
+      '',
+      '',
+      false
+    )
   } else {
-    var hostname = url('hostname', gisturl)
+    const hostname = url('hostname', gisturl)
     if (hostname !== 'gist.github.com') {
-      showMessageModal('<i class="fa fa-github"></i> Import from Gist', 'Not a valid Gist URL :(', '', '', false)
+      showMessageModal(
+        '<i class="fa fa-github"></i> Import from Gist',
+        'Not a valid Gist URL :(',
+        '',
+        '',
+        false
+      )
     } else {
       ui.spinner.show()
       $.get('https://api.github.com/gists/' + url('-1', gisturl))
         .done(function (data) {
           if (data.files) {
-            var contents = ''
+            let contents = ''
             Object.keys(data.files).forEach(function (key) {
               contents += key
               contents += '\n---\n'
@@ -1396,11 +1637,23 @@ $('#gistImportModalConfirm').click(function () {
             })
             replaceAll(contents)
           } else {
-            showMessageModal('<i class="fa fa-github"></i> Import from Gist', 'Unable to fetch gist files :(', '', '', false)
+            showMessageModal(
+              '<i class="fa fa-github"></i> Import from Gist',
+              'Unable to fetch gist files :(',
+              '',
+              '',
+              false
+            )
           }
         })
         .fail(function (data) {
-          showMessageModal('<i class="fa fa-github"></i> Import from Gist', 'Not a valid Gist URL :(', '', JSON.stringify(data), false)
+          showMessageModal(
+            '<i class="fa fa-github"></i> Import from Gist',
+            'Not a valid Gist URL :(',
+            '',
+            JSON.stringify(data),
+            false
+          )
         })
         .always(function () {
           ui.spinner.hide()
@@ -1417,21 +1670,32 @@ $('#snippetImportModalClear').click(function () {
   $('#snippetImportModalSnippets').prop('disabled', true)
 })
 $('#snippetImportModalConfirm').click(function () {
-  var snippeturl = $('#snippetImportModalContent').val()
+  const snippeturl = $('#snippetImportModalContent').val()
   if (!snippeturl) return
   $('#snippetImportModal').modal('hide')
   $('#snippetImportModalContent').val('')
   if (!/^.+\/snippets\/.+$/.test(snippeturl)) {
-    showMessageModal('<i class="fa fa-github"></i> Import from Snippet', 'Not a valid Snippet URL :(', '', '', false)
+    showMessageModal(
+      '<i class="fa fa-github"></i> Import from Snippet',
+      'Not a valid Snippet URL :(',
+      '',
+      '',
+      false
+    )
   } else {
     ui.spinner.show()
-    var accessToken = '?access_token=' + $('#snippetImportModalAccessToken').val()
-    var fullURL = $('#snippetImportModalBaseURL').val() + '/api/' + $('#snippetImportModalVersion').val() + snippeturl
+    const accessToken =
+      '?access_token=' + $('#snippetImportModalAccessToken').val()
+    const fullURL =
+      $('#snippetImportModalBaseURL').val() +
+      '/api/' +
+      $('#snippetImportModalVersion').val() +
+      snippeturl
     $.get(fullURL + accessToken)
       .done(function (data) {
-        var content = '# ' + (data.title || 'Snippet Import')
-        var fileInfo = data.file_name.split('.')
-        fileInfo[1] = (fileInfo[1]) ? fileInfo[1] : 'md'
+        let content = '# ' + (data.title || 'Snippet Import')
+        const fileInfo = data.file_name.split('.')
+        fileInfo[1] = fileInfo[1] ? fileInfo[1] : 'md'
         $.get(fullURL + '/raw' + accessToken)
           .done(function (raw) {
             if (raw) {
@@ -1447,82 +1711,147 @@ $('#snippetImportModalConfirm').click(function () {
             }
           })
           .fail(function (data) {
-            showMessageModal('<i class="fa fa-gitlab"></i> Import from Snippet', 'Not a valid Snippet URL :(', '', JSON.stringify(data), false)
+            showMessageModal(
+              '<i class="fa fa-gitlab"></i> Import from Snippet',
+              'Not a valid Snippet URL :(',
+              '',
+              JSON.stringify(data),
+              false
+            )
           })
           .always(function () {
             ui.spinner.hide()
           })
       })
       .fail(function (data) {
-        showMessageModal('<i class="fa fa-gitlab"></i> Import from Snippet', 'Not a valid Snippet URL :(', '', JSON.stringify(data), false)
+        showMessageModal(
+          '<i class="fa fa-gitlab"></i> Import from Snippet',
+          'Not a valid Snippet URL :(',
+          '',
+          JSON.stringify(data),
+          false
+        )
       })
   }
 })
 
 // snippet export modal
 $('#snippetExportModalConfirm').click(function () {
-  var accesstoken = $('#snippetExportModalAccessToken').val()
-  var baseURL = $('#snippetExportModalBaseURL').val()
-  var version = $('#snippetExportModalVersion').val()
+  const accesstoken = $('#snippetExportModalAccessToken').val()
+  const baseURL = $('#snippetExportModalBaseURL').val()
+  const version = $('#snippetExportModalVersion').val()
 
-  var data = {
+  const data = {
     title: $('#snippetExportModalTitle').val(),
     file_name: $('#snippetExportModalFileName').val(),
     code: editor.getValue(),
     visibility_level: $('#snippetExportModalVisibility').val(),
-    visibility: $('#snippetExportModalVisibility').val() === '0' ? 'private' : ($('#snippetExportModalVisibility').val() === '10' ? 'internal' : 'private')
+    visibility:
+      $('#snippetExportModalVisibility').val() === '0'
+        ? 'private'
+        : $('#snippetExportModalVisibility').val() === '10'
+          ? 'internal'
+          : 'private'
   }
 
-  if (!data.title || !data.file_name || !data.code || !data.visibility_level || !$('#snippetExportModalProjects').val()) return
+  if (
+    !data.title ||
+    !data.file_name ||
+    !data.code ||
+    !data.visibility_level ||
+    !$('#snippetExportModalProjects').val()
+  ) { return }
   $('#snippetExportModalLoading').show()
-  var fullURL = baseURL + '/api/' + version + '/projects/' + $('#snippetExportModalProjects').val() + '/snippets?access_token=' + accesstoken
-  $.post(fullURL
-    , data
-    , function (ret) {
-      $('#snippetExportModalLoading').hide()
-      $('#snippetExportModal').modal('hide')
-      var redirect = baseURL + '/' + $("#snippetExportModalProjects option[value='" + $('#snippetExportModalProjects').val() + "']").text() + '/snippets/' + ret.id
-      showMessageModal('<i class="fa fa-gitlab"></i> Export to Snippet', 'Export Successful!', redirect, 'View Snippet Here', true)
-    }
-  )
+  const fullURL =
+    baseURL +
+    '/api/' +
+    version +
+    '/projects/' +
+    $('#snippetExportModalProjects').val() +
+    '/snippets?access_token=' +
+    accesstoken
+  $.post(fullURL, data, function (ret) {
+    $('#snippetExportModalLoading').hide()
+    $('#snippetExportModal').modal('hide')
+    const redirect =
+      baseURL +
+      '/' +
+      $(
+        "#snippetExportModalProjects option[value='" +
+          $('#snippetExportModalProjects').val() +
+          "']"
+      ).text() +
+      '/snippets/' +
+      ret.id
+    showMessageModal(
+      '<i class="fa fa-gitlab"></i> Export to Snippet',
+      'Export Successful!',
+      redirect,
+      'View Snippet Here',
+      true
+    )
+  })
 })
 
 function parseToEditor (data) {
-  var turndownService = new TurndownService({
+  const turndownService = new TurndownService({
     defaultReplacement: function (innerHTML, node) {
       return node.isBlock ? '\n\n' + node.outerHTML + '\n\n' : node.outerHTML
     }
   })
-  var parsed = turndownService.turndown(data)
-  if (parsed) { replaceAll(parsed) }
+  const parsed = turndownService.turndown(data)
+  if (parsed) {
+    replaceAll(parsed)
+  }
 }
 
 function replaceAll (data) {
-  editor.replaceRange(data, {
-    line: 0,
-    ch: 0
-  }, {
-    line: editor.lastLine(),
-    ch: editor.lastLine().length
-  }, '+input')
+  editor.replaceRange(
+    data,
+    {
+      line: 0,
+      ch: 0
+    },
+    {
+      line: editor.lastLine(),
+      ch: editor.lastLine().length
+    },
+    '+input'
+  )
 }
 
 function importFromUrl (url) {
   // console.debug(url);
   if (!url) return
   if (!isValidURL(url)) {
-    showMessageModal('<i class="fa fa-cloud-download"></i> Import from URL', 'Not a valid URL :(', '', '', false)
+    showMessageModal(
+      '<i class="fa fa-cloud-download"></i> Import from URL',
+      'Not a valid URL :(',
+      '',
+      '',
+      false
+    )
     return
   }
   $.ajax({
     method: 'GET',
     url: url,
     success: function (data) {
-      var extension = url.split('.').pop()
-      if (extension === 'html') { parseToEditor(data) } else { replaceAll(data) }
+      const extension = url.split('.').pop()
+      if (extension === 'html') {
+        parseToEditor(data)
+      } else {
+        replaceAll(data)
+      }
     },
     error: function (data) {
-      showMessageModal('<i class="fa fa-cloud-download"></i> Import from URL', 'Import failed :(', '', JSON.stringify(data), false)
+      showMessageModal(
+        '<i class="fa fa-cloud-download"></i> Import from URL',
+        'Import failed :(',
+        '',
+        JSON.stringify(data),
+        false
+      )
     },
     complete: function () {
       ui.spinner.hide()
@@ -1584,8 +1913,8 @@ $('.ui-delete-modal-confirm').click(function () {
 })
 
 function toggleNightMode () {
-  var $body = $('body')
-  var isActive = ui.toolbar.night.hasClass('active')
+  const $body = $('body')
+  const isActive = ui.toolbar.night.hasClass('active')
   if (isActive) {
     $body.removeClass('night')
     appState.nightMode = false
@@ -1613,8 +1942,8 @@ function updatePermission (newPermission) {
     permission = newPermission
     if (window.loaded) refreshView()
   }
-  var label = null
-  var title = null
+  let label = null
+  let title = null
   switch (permission) {
     case 'freely':
       label = '<i class="fa fa-leaf"></i> Freely'
@@ -1641,7 +1970,11 @@ function updatePermission (newPermission) {
       title = 'Only owner can view & edit'
       break
   }
-  if (personalInfo.userid && window.owner && personalInfo.userid === window.owner) {
+  if (
+    personalInfo.userid &&
+    window.owner &&
+    personalInfo.userid === window.owner
+  ) {
     label += ' <i class="fa fa-caret-down"></i>'
     ui.infobar.permission.label.removeClass('disabled')
   } else {
@@ -1651,7 +1984,7 @@ function updatePermission (newPermission) {
 }
 
 function havePermission () {
-  var bool = false
+  let bool = false
   switch (permission) {
     case 'freely':
       bool = true
@@ -1680,8 +2013,8 @@ function havePermission () {
 window.havePermission = havePermission
 
 // socket.io actions
-var io = require('socket.io-client')
-var socket = io.connect({
+const io = require('socket.io-client')
+const socket = io.connect({
   path: urlpath ? '/' + urlpath + '/socket.io/' : '',
   query: {
     noteId: noteid
@@ -1690,13 +2023,17 @@ var socket = io.connect({
   reconnectionAttempts: 20 // retry 20 times on connect failed
 })
 // overwrite original event for checking login state
-var on = socket.on
+const on = socket.on
 socket.on = function () {
-  if (!checkLoginStateChanged() && !needRefresh) { return on.apply(socket, arguments) }
+  if (!checkLoginStateChanged() && !needRefresh) {
+    return on.apply(socket, arguments)
+  }
 }
-var emit = socket.emit
+const emit = socket.emit
 socket.emit = function () {
-  if (!checkLoginStateChanged() && !needRefresh) { emit.apply(socket, arguments) }
+  if (!checkLoginStateChanged() && !needRefresh) {
+    emit.apply(socket, arguments)
+  }
 }
 socket.on('info', function (data) {
   console.error(data)
@@ -1714,7 +2051,9 @@ socket.on('info', function (data) {
 })
 socket.on('error', function (data) {
   console.error(data)
-  if (data.message && data.message.indexOf('AUTH failed') === 0) { location.href = serverurl + '/403' }
+  if (data.message && data.message.indexOf('AUTH failed') === 0) {
+    location.href = serverurl + '/403'
+  }
 })
 socket.on('delete', function () {
   if (personalInfo.login) {
@@ -1723,13 +2062,13 @@ socket.on('delete', function () {
     })
   } else {
     getHistory(function (notehistory) {
-      var newnotehistory = removeHistory(noteid, notehistory)
+      const newnotehistory = removeHistory(noteid, notehistory)
       saveHistory(newnotehistory)
       location.href = serverurl
     })
   }
 })
-var retryTimer = null
+let retryTimer = null
 socket.on('maintenance', function () {
   cmClient.revision = -1
 })
@@ -1739,7 +2078,9 @@ socket.on('disconnect', function (data) {
     saveInfo()
     lastInfo.history = editor.getHistory()
   }
-  if (!editor.getOption('readOnly')) { editor.setOption('readOnly', true) }
+  if (!editor.getOption('readOnly')) {
+    editor.setOption('readOnly', true)
+  }
   if (!retryTimer) {
     retryTimer = setInterval(function () {
       if (!needRefresh) socket.connect()
@@ -1755,7 +2096,7 @@ socket.on('reconnect', function (data) {
 socket.on('connect', function (data) {
   clearInterval(retryTimer)
   retryTimer = null
-  personalInfo['id'] = socket.id
+  personalInfo.id = socket.id
   showStatus(statusType.connected)
   socket.emit('version')
 })
@@ -1769,40 +2110,58 @@ socket.on('version', function (data) {
     }
   }
 })
-var authors = []
-var authorship = []
-var authorMarks = {} // temp variable
-var addTextMarkers = [] // temp variable
+let authors = []
+let authorship = []
+let authorMarks = {} // temp variable
+let addTextMarkers = [] // temp variable
 function updateInfo (data) {
   // console.debug(data);
-  if (data.hasOwnProperty('createtime') && window.createtime !== data.createtime) {
+  if (
+    Object.prototype.hasOwnProperty.call(data, 'createtime') &&
+    window.createtime !== data.createtime
+  ) {
     window.createtime = data.createtime
     updateLastChange()
   }
-  if (data.hasOwnProperty('updatetime') && window.lastchangetime !== data.updatetime) {
+  if (
+    Object.prototype.hasOwnProperty.call(data, 'updatetime') &&
+    window.lastchangetime !== data.updatetime
+  ) {
     window.lastchangetime = data.updatetime
     updateLastChange()
   }
-  if (data.hasOwnProperty('owner') && window.owner !== data.owner) {
+  if (
+    Object.prototype.hasOwnProperty.call(data, 'owner') &&
+    window.owner !== data.owner
+  ) {
     window.owner = data.owner
     window.ownerprofile = data.ownerprofile
     updateOwner()
   }
-  if (data.hasOwnProperty('lastchangeuser') && window.lastchangeuser !== data.lastchangeuser) {
+  if (
+    Object.prototype.hasOwnProperty.call(data, 'lastchangeuser') &&
+    window.lastchangeuser !== data.lastchangeuser
+  ) {
     window.lastchangeuser = data.lastchangeuser
     window.lastchangeuserprofile = data.lastchangeuserprofile
     updateLastChangeUser()
     updateOwner()
   }
-  if (data.hasOwnProperty('authors') && authors !== data.authors) {
+  if (
+    Object.prototype.hasOwnProperty.call(data, 'authors') &&
+    authors !== data.authors
+  ) {
     authors = data.authors
   }
-  if (data.hasOwnProperty('authorship') && authorship !== data.authorship) {
+  if (
+    Object.prototype.hasOwnProperty.call(data, 'authorship') &&
+    authorship !== data.authorship
+  ) {
     authorship = data.authorship
     updateAuthorship()
   }
 }
-var updateAuthorship = _.debounce(function () {
+const updateAuthorship = _.debounce(function () {
   editor.operation(updateAuthorshipInner)
 }, 50)
 function initMark () {
@@ -1822,46 +2181,59 @@ function initMarkAndCheckGutter (mark, author, timestamp) {
   }
   return mark
 }
-var addStyleRule = (function () {
-  var added = {}
-  var styleElement = document.createElement('style')
-  document.documentElement.getElementsByTagName('head')[0].appendChild(styleElement)
-  var styleSheet = styleElement.sheet
+const addStyleRule = (function () {
+  const added = {}
+  const styleElement = document.createElement('style')
+  document.documentElement
+    .getElementsByTagName('head')[0]
+    .appendChild(styleElement)
+  const styleSheet = styleElement.sheet
 
   return function (css) {
     if (added[css]) {
       return
     }
     added[css] = true
-    styleSheet.insertRule(css, (styleSheet.cssRules || styleSheet.rules).length)
+    styleSheet.insertRule(
+      css,
+      (styleSheet.cssRules || styleSheet.rules).length
+    )
   }
-}())
+})()
 function updateAuthorshipInner () {
   // ignore when ot not synced yet
   if (havePendingOperation()) return
   authorMarks = {}
   for (let i = 0; i < authorship.length; i++) {
-    var atom = authorship[i]
-    let author = authors[atom[0]]
+    const atom = authorship[i]
+    const author = authors[atom[0]]
     if (author) {
-      var prePos = editor.posFromIndex(atom[1])
-      var preLine = editor.getLine(prePos.line)
-      var postPos = editor.posFromIndex(atom[2])
-      var postLine = editor.getLine(postPos.line)
+      const prePos = editor.posFromIndex(atom[1])
+      const preLine = editor.getLine(prePos.line)
+      const postPos = editor.posFromIndex(atom[2])
+      const postLine = editor.getLine(postPos.line)
       if (prePos.ch === 0 && postPos.ch === postLine.length) {
         for (let j = prePos.line; j <= postPos.line; j++) {
           if (editor.getLine(j)) {
-            authorMarks[j] = initMarkAndCheckGutter(authorMarks[j], author, atom[3])
+            authorMarks[j] = initMarkAndCheckGutter(
+              authorMarks[j],
+              author,
+              atom[3]
+            )
           }
         }
       } else if (postPos.line - prePos.line >= 1) {
-        var startLine = prePos.line
-        var endLine = postPos.line
+        let startLine = prePos.line
+        let endLine = postPos.line
         if (prePos.ch === preLine.length) {
           startLine++
         } else if (prePos.ch !== 0) {
-          let mark = initMarkAndCheckGutter(authorMarks[prePos.line], author, atom[3])
-          var _postPos = {
+          const mark = initMarkAndCheckGutter(
+            authorMarks[prePos.line],
+            author,
+            atom[3]
+          )
+          const _postPos = {
             line: prePos.line,
             ch: preLine.length
           }
@@ -1877,8 +2249,12 @@ function updateAuthorshipInner () {
         if (postPos.ch === 0) {
           endLine--
         } else if (postPos.ch !== postLine.length) {
-          let mark = initMarkAndCheckGutter(authorMarks[postPos.line], author, atom[3])
-          var _prePos = {
+          const mark = initMarkAndCheckGutter(
+            authorMarks[postPos.line],
+            author,
+            atom[3]
+          )
+          const _prePos = {
             line: postPos.line,
             ch: 0
           }
@@ -1893,11 +2269,19 @@ function updateAuthorshipInner () {
         }
         for (let j = startLine; j <= endLine; j++) {
           if (editor.getLine(j)) {
-            authorMarks[j] = initMarkAndCheckGutter(authorMarks[j], author, atom[3])
+            authorMarks[j] = initMarkAndCheckGutter(
+              authorMarks[j],
+              author,
+              atom[3]
+            )
           }
         }
       } else {
-        let mark = initMarkAndCheckGutter(authorMarks[prePos.line], author, atom[3])
+        const mark = initMarkAndCheckGutter(
+          authorMarks[prePos.line],
+          author,
+          atom[3]
+        )
         if (JSON.stringify(prePos) !== JSON.stringify(postPos)) {
           mark.textmarkers.push({
             userid: author.userid,
@@ -1910,38 +2294,45 @@ function updateAuthorshipInner () {
   }
   addTextMarkers = []
   editor.eachLine(iterateLine)
-  var allTextMarks = editor.getAllMarks()
+  const allTextMarks = editor.getAllMarks()
   for (let i = 0; i < allTextMarks.length; i++) {
-    let _textMarker = allTextMarks[i]
-    var pos = _textMarker.find()
-    var found = false
+    const _textMarker = allTextMarks[i]
+    const pos = _textMarker.find()
+    let found = false
     for (let j = 0; j < addTextMarkers.length; j++) {
-      let textMarker = addTextMarkers[j]
-      let author = authors[textMarker.userid]
-      let className = 'authorship-inline-' + author.color.substr(1)
-      var obj = {
+      const textMarker = addTextMarkers[j]
+      const author = authors[textMarker.userid]
+      const className = 'authorship-inline-' + author.color.substr(1)
+      const obj = {
         from: textMarker.pos[0],
         to: textMarker.pos[1]
       }
-      if (JSON.stringify(pos) === JSON.stringify(obj) && _textMarker.className &&
-                _textMarker.className.indexOf(className) > -1) {
+      if (
+        JSON.stringify(pos) === JSON.stringify(obj) &&
+        _textMarker.className &&
+        _textMarker.className.indexOf(className) > -1
+      ) {
         addTextMarkers.splice(j, 1)
         j--
         found = true
         break
       }
     }
-    if (!found && _textMarker.className && _textMarker.className.indexOf('authorship-inline') > -1) {
+    if (
+      !found &&
+      _textMarker.className &&
+      _textMarker.className.indexOf('authorship-inline') > -1
+    ) {
       _textMarker.clear()
     }
   }
   for (let i = 0; i < addTextMarkers.length; i++) {
-    let textMarker = addTextMarkers[i]
-    let author = authors[textMarker.userid]
+    const textMarker = addTextMarkers[i]
+    const author = authors[textMarker.userid]
     const rgbcolor = hex2rgb(author.color)
     const colorString = `rgba(${rgbcolor.red},${rgbcolor.green},${rgbcolor.blue},0.7)`
     const styleString = `background-image: linear-gradient(to top, ${colorString} 1px, transparent 1px);`
-    let className = `authorship-inline-${author.color.substr(1)}`
+    const className = `authorship-inline-${author.color.substr(1)}`
     const rule = `.${className} { ${styleString} }`
     addStyleRule(rule)
     editor.markText(textMarker.pos[0], textMarker.pos[1], {
@@ -1951,19 +2342,22 @@ function updateAuthorshipInner () {
   }
 }
 function iterateLine (line) {
-  var lineNumber = line.lineNo()
-  var currMark = authorMarks[lineNumber]
-  var author = currMark ? authors[currMark.gutter.userid] : null
+  const lineNumber = line.lineNo()
+  const currMark = authorMarks[lineNumber]
+  const author = currMark ? authors[currMark.gutter.userid] : null
   if (currMark && author) {
-    let className = 'authorship-gutter-' + author.color.substr(1)
+    const className = 'authorship-gutter-' + author.color.substr(1)
     const gutters = line.gutterMarkers
-    if (!gutters || !gutters['authorship-gutters'] ||
-        !gutters['authorship-gutters'].className ||
-        !gutters['authorship-gutters'].className.indexOf(className) < 0) {
+    if (
+      !gutters ||
+      !gutters['authorship-gutters'] ||
+      !gutters['authorship-gutters'].className ||
+      !gutters['authorship-gutters'].className.indexOf(className) < 0
+    ) {
       const styleString = `border-left: 3px solid ${author.color}; height: ${defaultTextHeight}px; margin-left: 3px;`
       const rule = `.${className} { ${styleString} }`
       addStyleRule(rule)
-      var gutter = $('<div>', {
+      const gutter = $('<div>', {
         class: 'authorship-gutter ' + className,
         title: author.name
       })
@@ -1973,8 +2367,8 @@ function iterateLine (line) {
     editor.setGutterMarker(line, 'authorship-gutters', null)
   }
   if (currMark && currMark.textmarkers.length > 0) {
-    for (var i = 0; i < currMark.textmarkers.length; i++) {
-      let textMarker = currMark.textmarkers[i]
+    for (let i = 0; i < currMark.textmarkers.length; i++) {
+      const textMarker = currMark.textmarkers[i]
       if (textMarker.userid !== currMark.gutter.userid) {
         addTextMarkers.push(textMarker)
       }
@@ -1985,17 +2379,17 @@ editorInstance.on('update', function () {
   $('.authorship-gutter:not([data-original-title])').tooltip({
     container: '.CodeMirror-lines',
     placement: 'right',
-    delay: { 'show': 500, 'hide': 100 }
+    delay: { show: 500, hide: 100 }
   })
   $('.authorship-inline:not([data-original-title])').tooltip({
     container: '.CodeMirror-lines',
     placement: 'bottom',
-    delay: { 'show': 500, 'hide': 100 }
+    delay: { show: 500, hide: 100 }
   })
   // clear tooltip which described element has been removed
   $('[id^="tooltip"]').each(function (index, element) {
-    var $ele = $(element)
-    if ($('[aria-describedby="' + $ele.attr('id') + '"]').length <= 0) $ele.remove()
+    const $ele = $(element)
+    if ($('[aria-describedby="' + $ele.attr('id') + '"]').length <= 0) { $ele.remove() }
   })
 })
 socket.on('check', function (data) {
@@ -2006,7 +2400,7 @@ socket.on('permission', function (data) {
   updatePermission(data.permission)
 })
 
-var permission = null
+let permission = null
 socket.on('refresh', function (data) {
   // console.debug(data);
   editorInstance.config.docmaxlength = data.docmaxlength
@@ -2015,13 +2409,17 @@ socket.on('refresh', function (data) {
   updatePermission(data.permission)
   if (!window.loaded) {
     // auto change mode if no content detected
-    var nocontent = editor.getValue().length <= 0
+    const nocontent = editor.getValue().length <= 0
     if (nocontent) {
-      if (visibleXS) { appState.currentMode = modeType.edit } else { appState.currentMode = modeType.both }
+      if (visibleXS) {
+        appState.currentMode = modeType.edit
+      } else {
+        appState.currentMode = modeType.both
+      }
     }
     // parse mode from url
     if (window.location.search.length > 0) {
-      var urlMode = modeType[window.location.search.substr(1)]
+      const urlMode = modeType[window.location.search.substr(1)]
       if (urlMode) appState.currentMode = urlMode
     }
     changeMode(appState.currentMode)
@@ -2041,23 +2439,34 @@ socket.on('refresh', function (data) {
       scrollToHash()
     }, 1)
   }
-  if (editor.getOption('readOnly')) { editor.setOption('readOnly', false) }
+  if (editor.getOption('readOnly')) {
+    editor.setOption('readOnly', false)
+  }
 })
 
-var EditorClient = ot.EditorClient
-var SocketIOAdapter = ot.SocketIOAdapter
-var CodeMirrorAdapter = ot.CodeMirrorAdapter
-var cmClient = null
-var synchronized_ = null
+const EditorClient = ot.EditorClient
+const SocketIOAdapter = ot.SocketIOAdapter
+const CodeMirrorAdapter = ot.CodeMirrorAdapter
+let cmClient = null
+let synchronized_ = null
 
 function havePendingOperation () {
-  return !!((cmClient && cmClient.state && cmClient.state.hasOwnProperty('outstanding')))
+  return !!(
+    cmClient &&
+    cmClient.state &&
+    Object.prototype.hasOwnProperty.call(cmClient, 'outstanding')
+  )
 }
 
 socket.on('doc', function (obj) {
-  var body = obj.str
-  var bodyMismatch = editor.getValue() !== body
-  var setDoc = !cmClient || (cmClient && (cmClient.revision === -1 || (cmClient.revision !== obj.revision && !havePendingOperation()))) || obj.force
+  const body = obj.str
+  const bodyMismatch = editor.getValue() !== body
+  const setDoc =
+    !cmClient ||
+    (cmClient &&
+      (cmClient.revision === -1 ||
+        (cmClient.revision !== obj.revision && !havePendingOperation()))) ||
+    obj.force
 
   saveInfo()
   if (setDoc && bodyMismatch) {
@@ -2079,8 +2488,10 @@ socket.on('doc', function (obj) {
 
   if (!cmClient) {
     cmClient = window.cmClient = new EditorClient(
-      obj.revision, obj.clients,
-      new SocketIOAdapter(socket), new CodeMirrorAdapter(editor)
+      obj.revision,
+      obj.clients,
+      new SocketIOAdapter(socket),
+      new CodeMirrorAdapter(editor)
     )
     synchronized_ = cmClient.state
   } else if (setDoc) {
@@ -2115,91 +2526,120 @@ socket.on('operation', function () {
 })
 
 socket.on('online users', function (data) {
-  if (debug) { console.debug(data) }
+  if (debug) {
+    console.debug(data)
+  }
   onlineUsers = data.users
   updateOnlineStatus()
-  $('.CodeMirror-other-cursors').children().each(function (key, value) {
-    var found = false
-    for (var i = 0; i < data.users.length; i++) {
-      var user = data.users[i]
-      if ($(this).attr('id') === user.id) { found = true }
+  $('.CodeMirror-other-cursors')
+    .children()
+    .each(function (key, value) {
+      let found = false
+      for (let i = 0; i < data.users.length; i++) {
+        const user = data.users[i]
+        if ($(this).attr('id') === user.id) {
+          found = true
+        }
+      }
+      if (!found) {
+        $(this)
+          .stop(true)
+          .fadeOut('normal', function () {
+            $(this).remove()
+          })
+      }
+    })
+  for (let i = 0; i < data.users.length; i++) {
+    const user = data.users[i]
+    if (user.id !== socket.id) {
+      buildCursor(user)
+    } else {
+      personalInfo = user
     }
-    if (!found) {
-      $(this).stop(true).fadeOut('normal', function () {
-        $(this).remove()
-      })
-    }
-  })
-  for (var i = 0; i < data.users.length; i++) {
-    var user = data.users[i]
-    if (user.id !== socket.id) { buildCursor(user) } else { personalInfo = user }
   }
 })
 socket.on('user status', function (data) {
-  if (debug) { console.debug(data) }
-  for (var i = 0; i < onlineUsers.length; i++) {
+  if (debug) {
+    console.debug(data)
+  }
+  for (let i = 0; i < onlineUsers.length; i++) {
     if (onlineUsers[i].id === data.id) {
       onlineUsers[i] = data
     }
   }
   updateOnlineStatus()
-  if (data.id !== socket.id) { buildCursor(data) }
+  if (data.id !== socket.id) {
+    buildCursor(data)
+  }
 })
 socket.on('cursor focus', function (data) {
-  if (debug) { console.debug(data) }
-  for (var i = 0; i < onlineUsers.length; i++) {
+  if (debug) {
+    console.debug(data)
+  }
+  for (let i = 0; i < onlineUsers.length; i++) {
     if (onlineUsers[i].id === data.id) {
       onlineUsers[i].cursor = data.cursor
     }
   }
-  if (data.id !== socket.id) { buildCursor(data) }
+  if (data.id !== socket.id) {
+    buildCursor(data)
+  }
   // force show
-  var cursor = $('div[data-clientid="' + data.id + '"]')
+  const cursor = $('div[data-clientid="' + data.id + '"]')
   if (cursor.length > 0) {
     cursor.stop(true).fadeIn()
   }
 })
 socket.on('cursor activity', function (data) {
-  if (debug) { console.debug(data) }
-  for (var i = 0; i < onlineUsers.length; i++) {
+  if (debug) {
+    console.debug(data)
+  }
+  for (let i = 0; i < onlineUsers.length; i++) {
     if (onlineUsers[i].id === data.id) {
       onlineUsers[i].cursor = data.cursor
     }
   }
-  if (data.id !== socket.id) { buildCursor(data) }
+  if (data.id !== socket.id) {
+    buildCursor(data)
+  }
 })
 socket.on('cursor blur', function (data) {
-  if (debug) { console.debug(data) }
-  for (var i = 0; i < onlineUsers.length; i++) {
+  if (debug) {
+    console.debug(data)
+  }
+  for (let i = 0; i < onlineUsers.length; i++) {
     if (onlineUsers[i].id === data.id) {
       onlineUsers[i].cursor = null
     }
   }
-  if (data.id !== socket.id) { buildCursor(data) }
+  if (data.id !== socket.id) {
+    buildCursor(data)
+  }
   // force hide
-  var cursor = $('div[data-clientid="' + data.id + '"]')
+  const cursor = $('div[data-clientid="' + data.id + '"]')
   if (cursor.length > 0) {
     cursor.stop(true).fadeOut()
   }
 })
 
-var options = {
+const options = {
   valueNames: ['id', 'name'],
-  item: '<li class="ui-user-item">' +
-        '<span class="id" style="display:none;"></span>' +
-        '<a href="#">' +
-            '<span class="pull-left"><i class="ui-user-icon"></i></span><span class="ui-user-name name"></span><span class="pull-right"><i class="fa fa-circle ui-user-status"></i></span>' +
-        '</a>' +
-        '</li>'
+  item:
+    '<li class="ui-user-item">' +
+    '<span class="id" style="display:none;"></span>' +
+    '<a href="#">' +
+    '<span class="pull-left"><i class="ui-user-icon"></i></span><span class="ui-user-name name"></span><span class="pull-right"><i class="fa fa-circle ui-user-status"></i></span>' +
+    '</a>' +
+    '</li>'
 }
-var onlineUserList = new List('online-user-list', options)
-var shortOnlineUserList = new List('short-online-user-list', options)
+const onlineUserList = new List('online-user-list', options)
+const shortOnlineUserList = new List('short-online-user-list', options)
 
 function updateOnlineStatus () {
   if (!window.loaded || !socket.connected) return
-  var _onlineUsers = deduplicateOnlineUsers(onlineUsers)
+  const _onlineUsers = deduplicateOnlineUsers(onlineUsers)
   showStatus(statusType.online, _onlineUsers.length)
-  var items = onlineUserList.items
+  const items = onlineUserList.items
   // update or remove current list items
   for (let i = 0; i < items.length; i++) {
     let found = false
@@ -2211,7 +2651,7 @@ function updateOnlineStatus () {
         break
       }
     }
-    let id = items[i].values().id
+    const id = items[i].values().id
     if (found) {
       onlineUserList.get('id', id)[0].values(_onlineUsers[foundindex])
       shortOnlineUserList.get('id', id)[0].values(_onlineUsers[foundindex])
@@ -2246,23 +2686,57 @@ function sortOnlineUserList (list) {
   // sort order by isSelf, login state, idle state, alphabet name, color brightness
   list.sort('', {
     sortFunction: function (a, b) {
-      var usera = a.values()
-      var userb = b.values()
-      var useraIsSelf = (usera.id === personalInfo.id || (usera.login && usera.userid === personalInfo.userid))
-      var userbIsSelf = (userb.id === personalInfo.id || (userb.login && userb.userid === personalInfo.userid))
+      const usera = a.values()
+      const userb = b.values()
+      const useraIsSelf =
+        usera.id === personalInfo.id ||
+        (usera.login && usera.userid === personalInfo.userid)
+      const userbIsSelf =
+        userb.id === personalInfo.id ||
+        (userb.login && userb.userid === personalInfo.userid)
       if (useraIsSelf && !userbIsSelf) {
         return -1
       } else if (!useraIsSelf && userbIsSelf) {
         return 1
       } else {
-        if (usera.login && !userb.login) { return -1 } else if (!usera.login && userb.login) { return 1 } else {
-          if (!usera.idle && userb.idle) { return -1 } else if (usera.idle && !userb.idle) { return 1 } else {
-            if (usera.name && userb.name && usera.name.toLowerCase() < userb.name.toLowerCase()) {
+        if (usera.login && !userb.login) {
+          return -1
+        } else if (!usera.login && userb.login) {
+          return 1
+        } else {
+          if (!usera.idle && userb.idle) {
+            return -1
+          } else if (usera.idle && !userb.idle) {
+            return 1
+          } else {
+            if (
+              usera.name &&
+              userb.name &&
+              usera.name.toLowerCase() < userb.name.toLowerCase()
+            ) {
               return -1
-            } else if (usera.name && userb.name && usera.name.toLowerCase() > userb.name.toLowerCase()) {
+            } else if (
+              usera.name &&
+              userb.name &&
+              usera.name.toLowerCase() > userb.name.toLowerCase()
+            ) {
               return 1
             } else {
-              if (usera.color && userb.color && usera.color.toLowerCase() < userb.color.toLowerCase()) { return -1 } else if (usera.color && userb.color && usera.color.toLowerCase() > userb.color.toLowerCase()) { return 1 } else { return 0 }
+              if (
+                usera.color &&
+                userb.color &&
+                usera.color.toLowerCase() < userb.color.toLowerCase()
+              ) {
+                return -1
+              } else if (
+                usera.color &&
+                userb.color &&
+                usera.color.toLowerCase() > userb.color.toLowerCase()
+              ) {
+                return 1
+              } else {
+                return 0
+              }
             }
           }
         }
@@ -2272,11 +2746,11 @@ function sortOnlineUserList (list) {
 }
 
 function renderUserStatusList (list) {
-  var items = list.items
-  for (var j = 0; j < items.length; j++) {
-    var item = items[j]
-    var userstatus = $(item.elm).find('.ui-user-status')
-    var usericon = $(item.elm).find('.ui-user-icon')
+  const items = list.items
+  for (let j = 0; j < items.length; j++) {
+    const item = items[j]
+    const userstatus = $(item.elm).find('.ui-user-status')
+    const usericon = $(item.elm).find('.ui-user-icon')
     if (item.values().login && item.values().photo) {
       usericon.css('background-image', 'url(' + item.values().photo + ')')
       // add 1px more to right, make it feel aligned
@@ -2286,18 +2760,26 @@ function renderUserStatusList (list) {
     } else {
       usericon.css('background-color', item.values().color)
     }
-    userstatus.removeClass('ui-user-status-offline ui-user-status-online ui-user-status-idle')
-    if (item.values().idle) { userstatus.addClass('ui-user-status-idle') } else { userstatus.addClass('ui-user-status-online') }
+    userstatus.removeClass(
+      'ui-user-status-offline ui-user-status-online ui-user-status-idle'
+    )
+    if (item.values().idle) {
+      userstatus.addClass('ui-user-status-idle')
+    } else {
+      userstatus.addClass('ui-user-status-online')
+    }
   }
 }
 
 function deduplicateOnlineUsers (list) {
-  var _onlineUsers = []
-  for (var i = 0; i < list.length; i++) {
-    var user = $.extend({}, list[i])
-    if (!user.userid) { _onlineUsers.push(user) } else {
-      var found = false
-      for (var j = 0; j < _onlineUsers.length; j++) {
+  const _onlineUsers = []
+  for (let i = 0; i < list.length; i++) {
+    const user = $.extend({}, list[i])
+    if (!user.userid) {
+      _onlineUsers.push(user)
+    } else {
+      let found = false
+      for (let j = 0; j < _onlineUsers.length; j++) {
         if (_onlineUsers[j].userid === user.userid) {
           // keep self color when login
           if (user.id === personalInfo.id) {
@@ -2312,29 +2794,39 @@ function deduplicateOnlineUsers (list) {
           break
         }
       }
-      if (!found) { _onlineUsers.push(user) }
+      if (!found) {
+        _onlineUsers.push(user)
+      }
     }
   }
   return _onlineUsers
 }
 
-var userStatusCache = null
+let userStatusCache = null
 
 function emitUserStatus (force) {
   if (!window.loaded) return
-  var type = null
-  if (visibleXS) { type = 'xs' } else if (visibleSM) { type = 'sm' } else if (visibleMD) { type = 'md' } else if (visibleLG) { type = 'lg' }
+  let type = null
+  if (visibleXS) {
+    type = 'xs'
+  } else if (visibleSM) {
+    type = 'sm'
+  } else if (visibleMD) {
+    type = 'md'
+  } else if (visibleLG) {
+    type = 'lg'
+  }
 
-  personalInfo['idle'] = idle.isAway
-  personalInfo['type'] = type
+  personalInfo.idle = idle.isAway
+  personalInfo.type = type
 
-  for (var i = 0; i < onlineUsers.length; i++) {
+  for (let i = 0; i < onlineUsers.length; i++) {
     if (onlineUsers[i].id === personalInfo.id) {
       onlineUsers[i] = personalInfo
     }
   }
 
-  var userStatus = {
+  const userStatus = {
     idle: idle.isAway,
     type: type
   }
@@ -2348,24 +2840,24 @@ function emitUserStatus (force) {
 function checkCursorTag (coord, ele) {
   if (!ele) return // return if element not exists
   // set margin
-  var tagRightMargin = 0
-  var tagBottomMargin = 2
+  const tagRightMargin = 0
+  const tagBottomMargin = 2
   // use sizer to get the real doc size (won't count status bar and gutters)
-  var docWidth = ui.area.codemirrorSizer.width()
+  const docWidth = ui.area.codemirrorSizer.width()
   // get editor size (status bar not count in)
-  var editorHeight = ui.area.codemirror.height()
+  const editorHeight = ui.area.codemirror.height()
   // get element size
-  var width = ele.outerWidth()
-  var height = ele.outerHeight()
-  var padding = (ele.outerWidth() - ele.width()) / 2
+  const width = ele.outerWidth()
+  const height = ele.outerHeight()
+  const padding = (ele.outerWidth() - ele.width()) / 2
   // get coord position
-  var left = coord.left
-  var top = coord.top
+  const left = coord.left
+  const top = coord.top
   // get doc top offset (to workaround with viewport)
-  var docTopOffset = ui.area.codemirrorSizerInner.position().top
+  const docTopOffset = ui.area.codemirrorSizerInner.position().top
   // set offset
-  var offsetLeft = -3
-  var offsetTop = defaultTextHeight
+  let offsetLeft = -3
+  let offsetTop = defaultTextHeight
   // only do when have width and height
   if (width > 0 && height > 0) {
     // flip x when element right bound larger than doc width
@@ -2374,8 +2866,12 @@ function checkCursorTag (coord, ele) {
     }
     // flip y when element bottom bound larger than doc height
     // and element top position is larger than element height
-    if (top + docTopOffset + height + offsetTop + tagBottomMargin > Math.max(editor.doc.height, editorHeight) && top + docTopOffset > height + tagBottomMargin) {
-      offsetTop = -(height)
+    if (
+      top + docTopOffset + height + offsetTop + tagBottomMargin >
+        Math.max(editor.doc.height, editorHeight) &&
+      top + docTopOffset > height + tagBottomMargin
+    ) {
+      offsetTop = -height
     }
   }
   // set position
@@ -2386,10 +2882,10 @@ function checkCursorTag (coord, ele) {
 function buildCursor (user) {
   if (appState.currentMode === modeType.view) return
   if (!user.cursor) return
-  var coord = editor.charCoords(user.cursor, 'windows')
+  const coord = editor.charCoords(user.cursor, 'windows')
   coord.left = coord.left < 4 ? 4 : coord.left
   coord.top = coord.top < 0 ? 0 : coord.top
-  var iconClass = 'fa-user'
+  let iconClass = 'fa-user'
   switch (user.type) {
     case 'xs':
       iconClass = 'fa-mobile'
@@ -2405,19 +2901,29 @@ function buildCursor (user) {
       break
   }
   if ($('div[data-clientid="' + user.id + '"]').length <= 0) {
-    let cursor = $('<div data-clientid="' + user.id + '" class="CodeMirror-other-cursor" style="display:none;"></div>')
+    const cursor = $(
+      '<div data-clientid="' +
+        user.id +
+        '" class="CodeMirror-other-cursor" style="display:none;"></div>'
+    )
     cursor.attr('data-line', user.cursor.line)
     cursor.attr('data-ch', user.cursor.ch)
     cursor.attr('data-offset-left', 0)
     cursor.attr('data-offset-top', 0)
 
-    let cursorbar = $('<div class="cursorbar">&nbsp;</div>')
+    const cursorbar = $('<div class="cursorbar">&nbsp;</div>')
     cursorbar[0].style.height = defaultTextHeight + 'px'
     cursorbar[0].style.borderLeft = '2px solid ' + user.color
 
-    var icon = '<i class="fa ' + iconClass + '"></i>'
+    const icon = '<i class="fa ' + iconClass + '"></i>'
 
-    let cursortag = $('<div class="cursortag">' + icon + '&nbsp;<span class="name">' + user.name + '</span></div>')
+    const cursortag = $(
+      '<div class="cursortag">' +
+        icon +
+        '&nbsp;<span class="name">' +
+        user.name +
+        '</span></div>'
+    )
     // cursortag[0].style.background = color;
     cursortag[0].style.color = user.color
 
@@ -2425,28 +2931,43 @@ function buildCursor (user) {
     cursortag.delay(2000).fadeOut('fast')
     cursor.hover(
       function () {
-        if (cursor.attr('data-mode') === 'hover') { cursortag.stop(true).fadeIn('fast') }
+        if (cursor.attr('data-mode') === 'hover') {
+          cursortag.stop(true).fadeIn('fast')
+        }
       },
       function () {
-        if (cursor.attr('data-mode') === 'hover') { cursortag.stop(true).fadeOut('fast') }
-      })
+        if (cursor.attr('data-mode') === 'hover') {
+          cursortag.stop(true).fadeOut('fast')
+        }
+      }
+    )
 
-    var hideCursorTagDelay = 2000
-    var hideCursorTagTimer = null
+    const hideCursorTagDelay = 2000
+    let hideCursorTagTimer = null
 
-    var switchMode = function (ele) {
-      if (ele.attr('data-mode') === 'state') { ele.attr('data-mode', 'hover') } else if (ele.attr('data-mode') === 'hover') { ele.attr('data-mode', 'state') }
+    const switchMode = function (ele) {
+      if (ele.attr('data-mode') === 'state') {
+        ele.attr('data-mode', 'hover')
+      } else if (ele.attr('data-mode') === 'hover') {
+        ele.attr('data-mode', 'state')
+      }
     }
 
-    var switchTag = function (ele) {
-      if (ele.css('display') === 'none') { ele.stop(true).fadeIn('fast') } else { ele.stop(true).fadeOut('fast') }
+    const switchTag = function (ele) {
+      if (ele.css('display') === 'none') {
+        ele.stop(true).fadeIn('fast')
+      } else {
+        ele.stop(true).fadeOut('fast')
+      }
     }
 
-    var hideCursorTag = function () {
-      if (cursor.attr('data-mode') === 'hover') { cursortag.fadeOut('fast') }
+    const hideCursorTag = function () {
+      if (cursor.attr('data-mode') === 'hover') {
+        cursortag.fadeOut('fast')
+      }
     }
     cursor.on('touchstart', function (e) {
-      var display = cursortag.css('display')
+      const display = cursortag.css('display')
       cursortag.stop(true).fadeIn('fast')
       clearTimeout(hideCursorTagTimer)
       hideCursorTagTimer = setTimeout(hideCursorTag, hideCursorTagDelay)
@@ -2456,7 +2977,9 @@ function buildCursor (user) {
       }
     })
     cursortag.on('mousedown touchstart', function (e) {
-      if (cursor.attr('data-mode') === 'state') { switchTag(cursortag) }
+      if (cursor.attr('data-mode') === 'state') {
+        switchTag(cursortag)
+      }
       switchMode(cursor)
       e.preventDefault()
       e.stopPropagation()
@@ -2469,19 +2992,21 @@ function buildCursor (user) {
     cursor[0].style.top = coord.top + 'px'
     $('.CodeMirror-other-cursors').append(cursor)
 
-    if (!user.idle) { cursor.stop(true).fadeIn() }
+    if (!user.idle) {
+      cursor.stop(true).fadeIn()
+    }
 
     checkCursorTag(coord, cursortag)
   } else {
-    let cursor = $('div[data-clientid="' + user.id + '"]')
+    const cursor = $('div[data-clientid="' + user.id + '"]')
     cursor.attr('data-line', user.cursor.line)
     cursor.attr('data-ch', user.cursor.ch)
 
-    let cursorbar = cursor.find('.cursorbar')
+    const cursorbar = cursor.find('.cursorbar')
     cursorbar[0].style.height = defaultTextHeight + 'px'
     cursorbar[0].style.borderLeft = '2px solid ' + user.color
 
-    let cursortag = cursor.find('.cursortag')
+    const cursortag = cursor.find('.cursortag')
     cursortag.find('i').removeClass().addClass('fa').addClass(iconClass)
     cursortag.find('.name').text(user.name)
 
@@ -2489,16 +3014,23 @@ function buildCursor (user) {
       cursor[0].style.left = coord.left + 'px'
       cursor[0].style.top = coord.top + 'px'
     } else {
-      cursor.animate({
-        'left': coord.left,
-        'top': coord.top
-      }, {
-        duration: cursorAnimatePeriod,
-        queue: false
-      })
+      cursor.animate(
+        {
+          left: coord.left,
+          top: coord.top
+        },
+        {
+          duration: cursorAnimatePeriod,
+          queue: false
+        }
+      )
     }
 
-    if (user.idle && cursor.css('display') !== 'none') { cursor.stop(true).fadeOut() } else if (!user.idle && cursor.css('display') === 'none') { cursor.stop(true).fadeIn() }
+    if (user.idle && cursor.css('display') !== 'none') {
+      cursor.stop(true).fadeOut()
+    } else if (!user.idle && cursor.css('display') === 'none') {
+      cursor.stop(true).fadeIn()
+    }
 
     checkCursorTag(coord, cursortag)
   }
@@ -2506,18 +3038,23 @@ function buildCursor (user) {
 
 // editor actions
 function removeNullByte (cm, change) {
-  var str = change.text.join('\n')
+  const str = change.text.join('\n')
   // eslint-disable-next-line no-control-regex
   if (/\u0000/g.test(str) && change.update) {
-    // eslint-disable-next-line no-control-regex
-    change.update(change.from, change.to, str.replace(/\u0000/g, '').split('\n'))
+    change.update(
+      change.from,
+      change.to,
+      // eslint-disable-next-line no-control-regex
+      str.replace(/\u0000/g, '').split('\n')
+    )
   }
 }
 function enforceMaxLength (cm, change) {
-  var maxLength = cm.getOption('maxLength')
+  const maxLength = cm.getOption('maxLength')
   if (maxLength && change.update) {
-    var str = change.text.join('\n')
-    var delta = str.length - (cm.indexFromPos(change.to) - cm.indexFromPos(change.from))
+    let str = change.text.join('\n')
+    let delta =
+      str.length - (cm.indexFromPos(change.to) - cm.indexFromPos(change.from))
     if (delta <= 0) {
       return false
     }
@@ -2530,14 +3067,16 @@ function enforceMaxLength (cm, change) {
   }
   return false
 }
-var ignoreEmitEvents = ['setValue', 'ignoreHistory']
+const ignoreEmitEvents = ['setValue', 'ignoreHistory']
 editorInstance.on('beforeChange', function (cm, change) {
-  if (debug) { console.debug(change) }
+  if (debug) {
+    console.debug(change)
+  }
   removeNullByte(cm, change)
   if (enforceMaxLength(cm, change)) {
     $('.limit-modal').modal('show')
   }
-  var isIgnoreEmitEvent = (ignoreEmitEvents.indexOf(change.origin) !== -1)
+  const isIgnoreEmitEvent = ignoreEmitEvents.indexOf(change.origin) !== -1
   if (!isIgnoreEmitEvent) {
     if (!havePermission()) {
       change.canceled = true
@@ -2557,7 +3096,9 @@ editorInstance.on('beforeChange', function (cm, change) {
       updateTitleReminder()
     }
   }
-  if (cmClient && !socket.connected) { cmClient.editorAdapter.ignoreNextChange = true }
+  if (cmClient && !socket.connected) {
+    cmClient.editorAdapter.ignoreNextChange = true
+  }
 })
 editorInstance.on('cut', function () {
   // na
@@ -2567,9 +3108,9 @@ editorInstance.on('paste', function () {
 })
 editorInstance.on('changes', function (editor, changes) {
   updateHistory()
-  var docLength = editor.getValue().length
+  const docLength = editor.getValue().length
   // workaround for big documents
-  var newViewportMargin = 20
+  let newViewportMargin = 20
   if (docLength > 20000) {
     newViewportMargin = 1
   } else if (docLength > 10000) {
@@ -2582,7 +3123,10 @@ editorInstance.on('changes', function (editor, changes) {
     windowResize()
   }
   checkEditorScrollbar()
-  if (ui.area.codemirrorScroll[0].scrollHeight > ui.area.view[0].scrollHeight && editorHasFocus()) {
+  if (
+    ui.area.codemirrorScroll[0].scrollHeight > ui.area.view[0].scrollHeight &&
+    editorHasFocus()
+  ) {
     postUpdateEvent = function () {
       syncScrollToView()
       postUpdateEvent = null
@@ -2590,12 +3134,12 @@ editorInstance.on('changes', function (editor, changes) {
   }
 })
 editorInstance.on('focus', function (editor) {
-  for (var i = 0; i < onlineUsers.length; i++) {
+  for (let i = 0; i < onlineUsers.length; i++) {
     if (onlineUsers[i].id === personalInfo.id) {
       onlineUsers[i].cursor = editor.getCursor()
     }
   }
-  personalInfo['cursor'] = editor.getCursor()
+  personalInfo.cursor = editor.getCursor()
   socket.emit('cursor focus', editor.getCursor())
 })
 
@@ -2603,12 +3147,12 @@ const cursorActivity = _.debounce(cursorActivityInner, cursorActivityDebounce)
 
 function cursorActivityInner (editor) {
   if (editorHasFocus() && !Visibility.hidden()) {
-    for (var i = 0; i < onlineUsers.length; i++) {
+    for (let i = 0; i < onlineUsers.length; i++) {
       if (onlineUsers[i].id === personalInfo.id) {
         onlineUsers[i].cursor = editor.getCursor()
       }
     }
-    personalInfo['cursor'] = editor.getCursor()
+    personalInfo.cursor = editor.getCursor()
     socket.emit('cursor activity', editor.getCursor())
   }
 }
@@ -2632,7 +3176,7 @@ editorInstance.on('beforeSelectionChange', function (doc, selections) {
 
     // borrow from brackets EditorStatusBar.js
     if (start.line !== end.line) {
-      var lines = end.line - start.line + 1
+      let lines = end.line - start.line + 1
       if (end.ch === 0) {
         lines--
       }
@@ -2650,19 +3194,19 @@ editorInstance.on('beforeSelectionChange', function (doc, selections) {
 })
 
 editorInstance.on('blur', function (cm) {
-  for (var i = 0; i < onlineUsers.length; i++) {
+  for (let i = 0; i < onlineUsers.length; i++) {
     if (onlineUsers[i].id === personalInfo.id) {
       onlineUsers[i].cursor = null
     }
   }
-  personalInfo['cursor'] = null
+  personalInfo.cursor = null
   socket.emit('cursor blur')
 })
 
 function saveInfo () {
-  var scrollbarStyle = editor.getOption('scrollbarStyle')
-  var left = $(window).scrollLeft()
-  var top = $(window).scrollTop()
+  const scrollbarStyle = editor.getOption('scrollbarStyle')
+  const left = $(window).scrollLeft()
+  const top = $(window).scrollTop()
   switch (appState.currentMode) {
     case modeType.edit:
       if (scrollbarStyle === 'native') {
@@ -2688,10 +3232,10 @@ function saveInfo () {
 }
 
 function restoreInfo () {
-  var scrollbarStyle = editor.getOption('scrollbarStyle')
+  const scrollbarStyle = editor.getOption('scrollbarStyle')
   if (lastInfo.needRestore) {
-    var line = lastInfo.edit.cursor.line
-    var ch = lastInfo.edit.cursor.ch
+    const line = lastInfo.edit.cursor.line
+    const ch = lastInfo.edit.cursor.ch
     editor.setCursor(line, ch)
     editor.setSelections(lastInfo.edit.selections)
     switch (appState.currentMode) {
@@ -2700,8 +3244,8 @@ function restoreInfo () {
           $(window).scrollLeft(lastInfo.edit.scroll.left)
           $(window).scrollTop(lastInfo.edit.scroll.top)
         } else {
-          let left = lastInfo.edit.scroll.left
-          let top = lastInfo.edit.scroll.top
+          const left = lastInfo.edit.scroll.left
+          const top = lastInfo.edit.scroll.top
           editor.scrollIntoView()
           editor.scrollTo(left, top)
         }
@@ -2711,10 +3255,8 @@ function restoreInfo () {
         $(window).scrollTop(lastInfo.view.scroll.top)
         break
       case modeType.both:
-        let left = lastInfo.edit.scroll.left
-        let top = lastInfo.edit.scroll.top
         editor.scrollIntoView()
-        editor.scrollTo(left, top)
+        editor.scrollTo(lastInfo.edit.scroll.left, lastInfo.edit.scroll.top)
         ui.area.view.scrollLeft(lastInfo.view.scroll.left)
         ui.area.view.scrollTop(lastInfo.view.scroll.top)
         break
@@ -2731,27 +3273,30 @@ function refreshView () {
   updateViewInner()
 }
 
-var updateView = _.debounce(function () {
+const updateView = _.debounce(function () {
   editor.operation(updateViewInner)
 }, updateViewDebounce)
 
-var lastResult = null
-var postUpdateEvent = null
+let lastResult = null
+let postUpdateEvent = null
 
 function updateViewInner () {
   if (appState.currentMode === modeType.edit || !isDirty) return
-  var value = editor.getValue()
-  var lastMeta = md.meta
+  const value = editor.getValue()
+  const lastMeta = md.meta
   md.meta = {}
   delete md.metaError
-  var rendered = md.render(value)
+  let rendered = md.render(value)
   if (md.meta.type && md.meta.type === 'slide') {
     ui.area.view.addClass('black')
-    var slideOptions = {
+    const slideOptions = {
       separator: '^(\r\n?|\n)---(\r\n?|\n)$',
       verticalSeparator: '^(\r\n?|\n)----(\r\n?|\n)$'
     }
-    var slides = window.RevealMarkdown.slidify(editor.getValue(), slideOptions)
+    const slides = window.RevealMarkdown.slidify(
+      editor.getValue(),
+      slideOptions
+    )
     ui.area.markdown.html(slides)
     window.RevealMarkdown.initialize()
     // prevent XSS
@@ -2769,14 +3314,22 @@ function updateViewInner () {
     }
     // only render again when meta changed
     if (JSON.stringify(md.meta) !== JSON.stringify(lastMeta)) {
-      parseMeta(md, ui.area.codemirror, ui.area.markdown, $('#ui-toc'), $('#ui-toc-affix'))
+      parseMeta(
+        md,
+        ui.area.codemirror,
+        ui.area.markdown,
+        $('#ui-toc'),
+        $('#ui-toc-affix')
+      )
       rendered = md.render(value)
     }
     // prevent XSS
     rendered = preventXSS(rendered)
-    var result = postProcess(rendered).children().toArray()
+    const result = postProcess(rendered).children().toArray()
     partialUpdate(result, lastResult, ui.area.markdown.children().toArray())
-    if (result && lastResult && result.length !== lastResult.length) { updateDataAttrs(result, ui.area.markdown.children().toArray()) }
+    if (result && lastResult && result.length !== lastResult.length) {
+      updateDataAttrs(result, ui.area.markdown.children().toArray())
+    }
     lastResult = $(result).clone()
   }
   removeDOMEvents(ui.area.markdown)
@@ -2794,12 +3347,14 @@ function updateViewInner () {
   clearMap()
   // buildMap();
   updateTitleReminder()
-  if (postUpdateEvent && typeof postUpdateEvent === 'function') { postUpdateEvent() }
+  if (postUpdateEvent && typeof postUpdateEvent === 'function') {
+    postUpdateEvent()
+  }
 }
 
-var updateHistoryDebounce = 600
+const updateHistoryDebounce = 600
 
-var updateHistory = _.debounce(updateHistoryInner, updateHistoryDebounce)
+const updateHistory = _.debounce(updateHistoryInner, updateHistoryDebounce)
 
 function updateHistoryInner () {
   writeHistory(renderFilename(ui.area.markdown), renderTags(ui.area.markdown))
@@ -2807,50 +3362,59 @@ function updateHistoryInner () {
 
 function updateDataAttrs (src, des) {
   // sync data attr startline and endline
-  for (var i = 0; i < src.length; i++) {
+  for (let i = 0; i < src.length; i++) {
     copyAttribute(src[i], des[i], 'data-startline')
     copyAttribute(src[i], des[i], 'data-endline')
   }
 }
 
 function partialUpdate (src, tar, des) {
-  if (!src || src.length === 0 || !tar || tar.length === 0 || !des || des.length === 0) {
+  if (
+    !src ||
+    src.length === 0 ||
+    !tar ||
+    tar.length === 0 ||
+    !des ||
+    des.length === 0
+  ) {
     ui.area.markdown.html(src)
     return
   }
-  if (src.length === tar.length) { // same length
+  if (src.length === tar.length) {
+    // same length
     for (let i = 0; i < src.length; i++) {
       copyAttribute(src[i], des[i], 'data-startline')
       copyAttribute(src[i], des[i], 'data-endline')
-      var rawSrc = cloneAndRemoveDataAttr(src[i])
-      var rawTar = cloneAndRemoveDataAttr(tar[i])
+      const rawSrc = cloneAndRemoveDataAttr(src[i])
+      const rawTar = cloneAndRemoveDataAttr(tar[i])
       if (rawSrc.outerHTML !== rawTar.outerHTML) {
         // console.debug(rawSrc);
         // console.debug(rawTar);
         $(des[i]).replaceWith(src[i])
       }
     }
-  } else { // diff length
-    var start = 0
+  } else {
+    // diff length
+    let start = 0
     // find diff start position
     for (let i = 0; i < tar.length; i++) {
       // copyAttribute(src[i], des[i], 'data-startline');
       // copyAttribute(src[i], des[i], 'data-endline');
-      let rawSrc = cloneAndRemoveDataAttr(src[i])
-      let rawTar = cloneAndRemoveDataAttr(tar[i])
+      const rawSrc = cloneAndRemoveDataAttr(src[i])
+      const rawTar = cloneAndRemoveDataAttr(tar[i])
       if (!rawSrc || !rawTar || rawSrc.outerHTML !== rawTar.outerHTML) {
         start = i
         break
       }
     }
     // find diff end position
-    var srcEnd = 0
-    var tarEnd = 0
+    let srcEnd = 0
+    let tarEnd = 0
     for (let i = 0; i < src.length; i++) {
       // copyAttribute(src[i], des[i], 'data-startline');
       // copyAttribute(src[i], des[i], 'data-endline');
-      let rawSrc = cloneAndRemoveDataAttr(src[i])
-      let rawTar = cloneAndRemoveDataAttr(tar[i])
+      const rawSrc = cloneAndRemoveDataAttr(src[i])
+      const rawTar = cloneAndRemoveDataAttr(tar[i])
       if (!rawSrc || !rawTar || rawSrc.outerHTML !== rawTar.outerHTML) {
         start = i
         break
@@ -2858,12 +3422,12 @@ function partialUpdate (src, tar, des) {
     }
     // tar end
     for (let i = 1; i <= tar.length + 1; i++) {
-      let srcLength = src.length
-      let tarLength = tar.length
+      const srcLength = src.length
+      const tarLength = tar.length
       // copyAttribute(src[srcLength - i], des[srcLength - i], 'data-startline');
       // copyAttribute(src[srcLength - i], des[srcLength - i], 'data-endline');
-      let rawSrc = cloneAndRemoveDataAttr(src[srcLength - i])
-      let rawTar = cloneAndRemoveDataAttr(tar[tarLength - i])
+      const rawSrc = cloneAndRemoveDataAttr(src[srcLength - i])
+      const rawTar = cloneAndRemoveDataAttr(tar[tarLength - i])
       if (!rawSrc || !rawTar || rawSrc.outerHTML !== rawTar.outerHTML) {
         tarEnd = tar.length - i
         break
@@ -2871,25 +3435,35 @@ function partialUpdate (src, tar, des) {
     }
     // src end
     for (let i = 1; i <= src.length + 1; i++) {
-      let srcLength = src.length
-      let tarLength = tar.length
+      const srcLength = src.length
+      const tarLength = tar.length
       // copyAttribute(src[srcLength - i], des[srcLength - i], 'data-startline');
       // copyAttribute(src[srcLength - i], des[srcLength - i], 'data-endline');
-      let rawSrc = cloneAndRemoveDataAttr(src[srcLength - i])
-      let rawTar = cloneAndRemoveDataAttr(tar[tarLength - i])
+      const rawSrc = cloneAndRemoveDataAttr(src[srcLength - i])
+      const rawTar = cloneAndRemoveDataAttr(tar[tarLength - i])
       if (!rawSrc || !rawTar || rawSrc.outerHTML !== rawTar.outerHTML) {
         srcEnd = src.length - i
         break
       }
     }
     // check if tar end overlap tar start
-    var overlap = 0
-    for (var i = start; i >= 0; i--) {
-      var rawTarStart = cloneAndRemoveDataAttr(tar[i - 1])
-      var rawTarEnd = cloneAndRemoveDataAttr(tar[tarEnd + 1 + start - i])
-      if (rawTarStart && rawTarEnd && rawTarStart.outerHTML === rawTarEnd.outerHTML) { overlap++ } else { break }
+    let overlap = 0
+    for (let i = start; i >= 0; i--) {
+      const rawTarStart = cloneAndRemoveDataAttr(tar[i - 1])
+      const rawTarEnd = cloneAndRemoveDataAttr(tar[tarEnd + 1 + start - i])
+      if (
+        rawTarStart &&
+        rawTarEnd &&
+        rawTarStart.outerHTML === rawTarEnd.outerHTML
+      ) {
+        overlap++
+      } else {
+        break
+      }
     }
-    if (debug) { console.debug('overlap:' + overlap) }
+    if (debug) {
+      console.debug('overlap:' + overlap)
+    }
     // show diff content
     if (debug) {
       console.debug('start:' + start)
@@ -2898,10 +3472,10 @@ function partialUpdate (src, tar, des) {
     }
     tarEnd += overlap
     srcEnd += overlap
-    var repeatAdd = (start - srcEnd) < (start - tarEnd)
-    var repeatDiff = Math.abs(srcEnd - tarEnd) - 1
+    const repeatAdd = start - srcEnd < start - tarEnd
+    const repeatDiff = Math.abs(srcEnd - tarEnd) - 1
     // push new elements
-    var newElements = []
+    const newElements = []
     if (srcEnd >= start) {
       for (let j = start; j <= srcEnd; j++) {
         if (!src[j]) continue
@@ -2914,7 +3488,7 @@ function partialUpdate (src, tar, des) {
       }
     }
     // push remove elements
-    var removeElements = []
+    const removeElements = []
     if (tarEnd >= start) {
       for (let j = start; j <= tarEnd; j++) {
         if (!des[j]) continue
@@ -2931,28 +3505,38 @@ function partialUpdate (src, tar, des) {
       console.debug('ADD ELEMENTS')
       console.debug(newElements.join('\n'))
     }
-    if (des[start]) { $(newElements.join('')).insertBefore(des[start]) } else { $(newElements.join('')).insertAfter(des[start - 1]) }
+    if (des[start]) {
+      $(newElements.join('')).insertBefore(des[start])
+    } else {
+      $(newElements.join('')).insertAfter(des[start - 1])
+    }
     // remove elements
-    if (debug) { console.debug('REMOVE ELEMENTS') }
+    if (debug) {
+      console.debug('REMOVE ELEMENTS')
+    }
     for (let j = 0; j < removeElements.length; j++) {
       if (debug) {
         console.debug(removeElements[j].outerHTML)
       }
-      if (removeElements[j]) { $(removeElements[j]).remove() }
+      if (removeElements[j]) {
+        $(removeElements[j]).remove()
+      }
     }
   }
 }
 
 function cloneAndRemoveDataAttr (el) {
   if (!el) return
-  var rawEl = $(el).clone()
+  const rawEl = $(el).clone()
   rawEl.removeAttr('data-startline data-endline')
   rawEl.find('[data-startline]').removeAttr('data-startline data-endline')
   return rawEl[0]
 }
 
 function copyAttribute (src, des, attr) {
-  if (src && src.getAttribute(attr) && des) { des.setAttribute(attr, src.getAttribute(attr)) }
+  if (src && src.getAttribute(attr) && des) {
+    des.setAttribute(attr, src.getAttribute(attr))
+  }
 }
 
 if ($('.cursor-menu').length <= 0) {
@@ -2960,69 +3544,83 @@ if ($('.cursor-menu').length <= 0) {
 }
 
 function reverseSortCursorMenu (dropdown) {
-  var items = dropdown.find('.textcomplete-item')
+  const items = dropdown.find('.textcomplete-item')
   items.sort(function (a, b) {
     return $(b).attr('data-index') - $(a).attr('data-index')
   })
   return items
 }
 
-var checkCursorMenu = _.throttle(checkCursorMenuInner, cursorMenuThrottle)
+const checkCursorMenu = _.throttle(checkCursorMenuInner, cursorMenuThrottle)
 
 function checkCursorMenuInner () {
   // get element
-  var dropdown = $('.cursor-menu > .dropdown-menu')
+  const dropdown = $('.cursor-menu > .dropdown-menu')
   // return if not exists
   if (dropdown.length <= 0) return
   // set margin
-  var menuRightMargin = 10
-  var menuBottomMargin = 4
+  const menuRightMargin = 10
+  const menuBottomMargin = 4
   // use sizer to get the real doc size (won't count status bar and gutters)
-  var docWidth = ui.area.codemirrorSizer.width()
+  const docWidth = ui.area.codemirrorSizer.width()
   // get editor size (status bar not count in)
-  var editorHeight = ui.area.codemirror.height()
+  const editorHeight = ui.area.codemirror.height()
   // get element size
-  var width = dropdown.outerWidth()
-  var height = dropdown.outerHeight()
+  const width = dropdown.outerWidth()
+  const height = dropdown.outerHeight()
   // get cursor
-  var cursor = editor.getCursor()
+  const cursor = editor.getCursor()
   // set element cursor data
-  if (!dropdown.hasClass('CodeMirror-other-cursor')) { dropdown.addClass('CodeMirror-other-cursor') }
+  if (!dropdown.hasClass('CodeMirror-other-cursor')) {
+    dropdown.addClass('CodeMirror-other-cursor')
+  }
   dropdown.attr('data-line', cursor.line)
   dropdown.attr('data-ch', cursor.ch)
   // get coord position
-  var coord = editor.charCoords({
-    line: cursor.line,
-    ch: cursor.ch
-  }, 'windows')
-  var left = coord.left
-  var top = coord.top
+  const coord = editor.charCoords(
+    {
+      line: cursor.line,
+      ch: cursor.ch
+    },
+    'windows'
+  )
+  const left = coord.left
+  const top = coord.top
   // get doc top offset (to workaround with viewport)
-  var docTopOffset = ui.area.codemirrorSizerInner.position().top
+  const docTopOffset = ui.area.codemirrorSizerInner.position().top
   // set offset
-  var offsetLeft = 0
-  var offsetTop = defaultTextHeight
+  let offsetLeft = 0
+  let offsetTop = defaultTextHeight
   // set up side down
   window.upSideDown = false
-  var lastUpSideDown = window.upSideDown = false
+  let lastUpSideDown = (window.upSideDown = false)
   // only do when have width and height
   if (width > 0 && height > 0) {
     // make element right bound not larger than doc width
-    if (left + width + offsetLeft + menuRightMargin > docWidth) { offsetLeft = -(left + width - docWidth + menuRightMargin) }
+    if (left + width + offsetLeft + menuRightMargin > docWidth) {
+      offsetLeft = -(left + width - docWidth + menuRightMargin)
+    }
     // flip y when element bottom bound larger than doc height
     // and element top position is larger than element height
-    if (top + docTopOffset + height + offsetTop + menuBottomMargin > Math.max(editor.doc.height, editorHeight) && top + docTopOffset > height + menuBottomMargin) {
+    if (
+      top + docTopOffset + height + offsetTop + menuBottomMargin >
+        Math.max(editor.doc.height, editorHeight) &&
+      top + docTopOffset > height + menuBottomMargin
+    ) {
       offsetTop = -(height + menuBottomMargin)
       // reverse sort menu because upSideDown
       dropdown.html(reverseSortCursorMenu(dropdown))
       window.upSideDown = true
     }
-    var textCompleteDropdown = $(editor.getInputField()).data('textComplete').dropdown
+    const textCompleteDropdown = $(editor.getInputField()).data('textComplete')
+      .dropdown
     lastUpSideDown = textCompleteDropdown.upSideDown
     textCompleteDropdown.upSideDown = window.upSideDown
   }
   // make menu scroll top only if upSideDown changed
-  if (window.upSideDown !== lastUpSideDown) { dropdown.scrollTop(dropdown[0].scrollHeight) }
+  if (window.upSideDown !== lastUpSideDown) {
+    dropdown.scrollTop(dropdown[0].scrollHeight)
+  }
   // set element offset data
   dropdown.attr('data-offset-left', offsetLeft)
   dropdown.attr('data-offset-top', offsetTop)
@@ -3033,33 +3631,37 @@ function checkCursorMenuInner () {
 
 function checkInIndentCode () {
   // if line starts with tab or four spaces is a code block
-  var line = editor.getLine(editor.getCursor().line)
-  var isIndentCode = ((line.substr(0, 4) === '    ') || (line.substr(0, 1) === '\t'))
+  const line = editor.getLine(editor.getCursor().line)
+  const isIndentCode =
+    line.substr(0, 4) === '    ' || line.substr(0, 1) === '\t'
   return isIndentCode
 }
 
-var isInCode = false
+let isInCode = false
 
 function checkInCode () {
   isInCode = checkAbove(matchInCode) || checkInIndentCode()
 }
 
 function checkAbove (method) {
-  var cursor = editor.getCursor()
-  var text = []
-  for (var i = 0; i < cursor.line; i++) { // contain current line
+  const cursor = editor.getCursor()
+  let text = []
+  for (let i = 0; i < cursor.line; i++) {
+    // contain current line
     text.push(editor.getLine(i))
   }
-  text = text.join('\n') + '\n' + editor.getLine(cursor.line).slice(0, cursor.ch)
+  text =
+    text.join('\n') + '\n' + editor.getLine(cursor.line).slice(0, cursor.ch)
   // console.debug(text);
   return method(text)
 }
 
 function checkBelow (method) {
-  var cursor = editor.getCursor()
-  var count = editor.lineCount()
-  var text = []
-  for (var i = cursor.line + 1; i < count; i++) { // contain current line
+  const cursor = editor.getCursor()
+  const count = editor.lineCount()
+  let text = []
+  for (let i = cursor.line + 1; i < count; i++) {
+    // contain current line
     text.push(editor.getLine(i))
   }
   text = editor.getLine(cursor.line).slice(cursor.ch) + '\n' + text.join('\n')
@@ -3068,7 +3670,7 @@ function checkBelow (method) {
 }
 
 function matchInCode (text) {
-  var match
+  let match
   match = text.match(/`{3,}/g)
   if (match && match.length % 2) {
     return true
@@ -3082,8 +3684,8 @@ function matchInCode (text) {
   }
 }
 
-var isInContainer = false
-var isInContainerSyntax = false
+let isInContainer = false
+let isInContainerSyntax = false
 
 function checkInContainer () {
   isInContainer = checkAbove(matchInContainer) && !checkInIndentCode()
@@ -3091,13 +3693,12 @@ function checkInContainer () {
 
 function checkInContainerSyntax () {
   // if line starts with :::, it's in container syntax
-  var line = editor.getLine(editor.getCursor().line)
-  isInContainerSyntax = (line.substr(0, 3) === ':::')
+  const line = editor.getLine(editor.getCursor().line)
+  isInContainerSyntax = line.substr(0, 3) === ':::'
 }
 
 function matchInContainer (text) {
-  var match
-  match = text.match(/:{3,}/g)
+  const match = text.match(/:{3,}/g)
   if (match && match.length % 2) {
     return true
   } else {
@@ -3106,194 +3707,244 @@ function matchInContainer (text) {
 }
 
 $(editor.getInputField())
-  .textcomplete([
-    { // emoji strategy
-      match: /(^|\n|\s)\B:([-+\w]*)$/,
-      search: function (term, callback) {
-        var line = editor.getLine(editor.getCursor().line)
-        term = line.match(this.match)[2]
-        var list = []
-        $.map(window.emojify.emojiNames, function (emoji) {
-          if (emoji.indexOf(term) === 0) { // match at first character
-            list.push(emoji)
-          }
-        })
-        $.map(window.emojify.emojiNames, function (emoji) {
-          if (emoji.indexOf(term) !== -1) { // match inside the word
-            list.push(emoji)
-          }
-        })
-        callback(list)
-      },
-      template: function (value) {
-        return '<img class="emoji" src="' + serverurl + '/build/emojify.js/dist/images/basic/' + value + '.png"></img> ' + value
-      },
-      replace: function (value) {
-        return '$1:' + value + ': '
-      },
-      index: 1,
-      context: function (text) {
-        checkInCode()
-        checkInContainer()
-        checkInContainerSyntax()
-        return !isInCode && !isInContainerSyntax
-      }
-    },
-    { // Code block language strategy
-      langs: supportCodeModes,
-      charts: supportCharts,
-      match: /(^|\n)```(\w+)$/,
-      search: function (term, callback) {
-        var line = editor.getLine(editor.getCursor().line)
-        term = line.match(this.match)[2]
-        var list = []
-        $.map(this.langs, function (lang) {
-          if (lang.indexOf(term) === 0 && lang !== term) { list.push(lang) }
-        })
-        $.map(this.charts, function (chart) {
-          if (chart.indexOf(term) === 0 && chart !== term) { list.push(chart) }
-        })
-        callback(list)
-      },
-      replace: function (lang) {
-        var ending = ''
-        if (!checkBelow(matchInCode)) {
-          ending = '\n\n```'
-        }
-        if (this.langs.indexOf(lang) !== -1) { return '$1```' + lang + '=' + ending } else if (this.charts.indexOf(lang) !== -1) { return '$1```' + lang + ending }
-      },
-      done: function () {
-        var cursor = editor.getCursor()
-        var text = []
-        text.push(editor.getLine(cursor.line - 1))
-        text.push(editor.getLine(cursor.line))
-        text = text.join('\n')
-        // console.debug(text);
-        if (text === '\n```') { editor.doc.cm.execCommand('goLineUp') }
-      },
-      context: function (text) {
-        return isInCode
-      }
-    },
-    { // Container strategy
-      containers: supportContainers,
-      match: /(^|\n):::(\s*)(\w*)$/,
-      search: function (term, callback) {
-        var line = editor.getLine(editor.getCursor().line)
-        term = line.match(this.match)[3].trim()
-        var list = []
-        $.map(this.containers, function (container) {
-          if (container.indexOf(term) === 0 && container !== term) { list.push(container) }
-        })
-        callback(list)
-      },
-      replace: function (lang) {
-        var ending = ''
-        if (!checkBelow(matchInContainer)) {
-          ending = '\n\n:::'
-        }
-        if (this.containers.indexOf(lang) !== -1) { return '$1:::$2' + lang + ending }
-      },
-      done: function () {
-        var cursor = editor.getCursor()
-        var text = []
-        text.push(editor.getLine(cursor.line - 1))
-        text.push(editor.getLine(cursor.line))
-        text = text.join('\n')
-        // console.debug(text);
-        if (text === '\n:::') { editor.doc.cm.execCommand('goLineUp') }
-      },
-      context: function (text) {
-        return !isInCode && isInContainer
-      }
-    },
-    { // header
-      match: /(?:^|\n)(\s{0,3})(#{1,6}\w*)$/,
-      search: function (term, callback) {
-        callback($.map(supportHeaders, function (header) {
-          return header.search.indexOf(term) === 0 ? header.text : null
-        }))
-      },
-      replace: function (value) {
-        return '$1' + value
-      },
-      context: function (text) {
-        return !isInCode
-      }
-    },
-    { // extra tags for list
-      match: /(^[>\s]*[-+*]\s(?:\[[x ]\]|.*))(\[\])(\w*)$/,
-      search: function (term, callback) {
-        var list = []
-        $.map(supportExtraTags, function (extratag) {
-          if (extratag.search.indexOf(term) === 0) { list.push(extratag.command()) }
-        })
-        $.map(supportReferrals, function (referral) {
-          if (referral.search.indexOf(term) === 0) { list.push(referral.text) }
-        })
-        callback(list)
-      },
-      replace: function (value) {
-        return '$1' + value
-      },
-      context: function (text) {
-        return !isInCode
-      }
-    },
-    { // extra tags for blockquote
-      match: /(?:^|\n|\s)(>.*|\s|)((\^|)\[(\^|)\](\[\]|\(\)|:|)\s*\w*)$/,
-      search: function (term, callback) {
-        var line = editor.getLine(editor.getCursor().line)
-        var quote = line.match(this.match)[1].trim()
-        var list = []
-        if (quote.indexOf('>') === 0) {
-          $.map(supportExtraTags, function (extratag) {
-            if (extratag.search.indexOf(term) === 0) { list.push(extratag.command()) }
+  .textcomplete(
+    [
+      {
+        // emoji strategy
+        match: /(^|\n|\s)\B:([-+\w]*)$/,
+        search: function (term, callback) {
+          const line = editor.getLine(editor.getCursor().line)
+          term = line.match(this.match)[2]
+          const list = []
+          $.map(window.emojify.emojiNames, function (emoji) {
+            if (emoji.indexOf(term) === 0) {
+              // match at first character
+              list.push(emoji)
+            }
           })
+          $.map(window.emojify.emojiNames, function (emoji) {
+            if (emoji.indexOf(term) !== -1) {
+              // match inside the word
+              list.push(emoji)
+            }
+          })
+          callback(list)
+        },
+        template: function (value) {
+          return (
+            '<img class="emoji" src="' +
+            serverurl +
+            '/build/emojify.js/dist/images/basic/' +
+            value +
+            '.png"></img> ' +
+            value
+          )
+        },
+        replace: function (value) {
+          return '$1:' + value + ': '
+        },
+        index: 1,
+        context: function (text) {
+          checkInCode()
+          checkInContainer()
+          checkInContainerSyntax()
+          return !isInCode && !isInContainerSyntax
         }
-        $.map(supportReferrals, function (referral) {
-          if (referral.search.indexOf(term) === 0) { list.push(referral.text) }
-        })
-        callback(list)
       },
-      replace: function (value) {
-        return '$1' + value
+      {
+        // Code block language strategy
+        langs: supportCodeModes,
+        charts: supportCharts,
+        match: /(^|\n)```(\w+)$/,
+        search: function (term, callback) {
+          const line = editor.getLine(editor.getCursor().line)
+          term = line.match(this.match)[2]
+          const list = []
+          $.map(this.langs, function (lang) {
+            if (lang.indexOf(term) === 0 && lang !== term) {
+              list.push(lang)
+            }
+          })
+          $.map(this.charts, function (chart) {
+            if (chart.indexOf(term) === 0 && chart !== term) {
+              list.push(chart)
+            }
+          })
+          callback(list)
+        },
+        replace: function (lang) {
+          let ending = ''
+          if (!checkBelow(matchInCode)) {
+            ending = '\n\n```'
+          }
+          if (this.langs.indexOf(lang) !== -1) {
+            return '$1```' + lang + '=' + ending
+          } else if (this.charts.indexOf(lang) !== -1) {
+            return '$1```' + lang + ending
+          }
+        },
+        done: function () {
+          const cursor = editor.getCursor()
+          let text = []
+          text.push(editor.getLine(cursor.line - 1))
+          text.push(editor.getLine(cursor.line))
+          text = text.join('\n')
+          // console.debug(text);
+          if (text === '\n```') {
+            editor.doc.cm.execCommand('goLineUp')
+          }
+        },
+        context: function (text) {
+          return isInCode
+        }
       },
-      context: function (text) {
-        return !isInCode
+      {
+        // Container strategy
+        containers: supportContainers,
+        match: /(^|\n):::(\s*)(\w*)$/,
+        search: function (term, callback) {
+          const line = editor.getLine(editor.getCursor().line)
+          term = line.match(this.match)[3].trim()
+          const list = []
+          $.map(this.containers, function (container) {
+            if (container.indexOf(term) === 0 && container !== term) {
+              list.push(container)
+            }
+          })
+          callback(list)
+        },
+        replace: function (lang) {
+          let ending = ''
+          if (!checkBelow(matchInContainer)) {
+            ending = '\n\n:::'
+          }
+          if (this.containers.indexOf(lang) !== -1) {
+            return '$1:::$2' + lang + ending
+          }
+        },
+        done: function () {
+          const cursor = editor.getCursor()
+          let text = []
+          text.push(editor.getLine(cursor.line - 1))
+          text.push(editor.getLine(cursor.line))
+          text = text.join('\n')
+          // console.debug(text);
+          if (text === '\n:::') {
+            editor.doc.cm.execCommand('goLineUp')
+          }
+        },
+        context: function (text) {
+          return !isInCode && isInContainer
+        }
+      },
+      {
+        // header
+        match: /(?:^|\n)(\s{0,3})(#{1,6}\w*)$/,
+        search: function (term, callback) {
+          callback(
+            $.map(supportHeaders, function (header) {
+              return header.search.indexOf(term) === 0 ? header.text : null
+            })
+          )
+        },
+        replace: function (value) {
+          return '$1' + value
+        },
+        context: function (text) {
+          return !isInCode
+        }
+      },
+      {
+        // extra tags for list
+        match: /(^[>\s]*[-+*]\s(?:\[[x ]\]|.*))(\[\])(\w*)$/,
+        search: function (term, callback) {
+          const list = []
+          $.map(supportExtraTags, function (extratag) {
+            if (extratag.search.indexOf(term) === 0) {
+              list.push(extratag.command())
+            }
+          })
+          $.map(supportReferrals, function (referral) {
+            if (referral.search.indexOf(term) === 0) {
+              list.push(referral.text)
+            }
+          })
+          callback(list)
+        },
+        replace: function (value) {
+          return '$1' + value
+        },
+        context: function (text) {
+          return !isInCode
+        }
+      },
+      {
+        // extra tags for blockquote
+        match: /(?:^|\n|\s)(>.*|\s|)((\^|)\[(\^|)\](\[\]|\(\)|:|)\s*\w*)$/,
+        search: function (term, callback) {
+          const line = editor.getLine(editor.getCursor().line)
+          const quote = line.match(this.match)[1].trim()
+          const list = []
+          if (quote.indexOf('>') === 0) {
+            $.map(supportExtraTags, function (extratag) {
+              if (extratag.search.indexOf(term) === 0) {
+                list.push(extratag.command())
+              }
+            })
+          }
+          $.map(supportReferrals, function (referral) {
+            if (referral.search.indexOf(term) === 0) {
+              list.push(referral.text)
+            }
+          })
+          callback(list)
+        },
+        replace: function (value) {
+          return '$1' + value
+        },
+        context: function (text) {
+          return !isInCode
+        }
+      },
+      {
+        // referral
+        match: /(^\s*|\n|\s{2})((\[\]|\[\]\[\]|\[\]\(\)|!|!\[\]|!\[\]\[\]|!\[\]\(\))\s*\w*)$/,
+        search: function (term, callback) {
+          callback(
+            $.map(supportReferrals, function (referral) {
+              return referral.search.indexOf(term) === 0 ? referral.text : null
+            })
+          )
+        },
+        replace: function (value) {
+          return '$1' + value
+        },
+        context: function (text) {
+          return !isInCode
+        }
+      },
+      {
+        // externals
+        match: /(^|\n|\s)\{\}(\w*)$/,
+        search: function (term, callback) {
+          callback(
+            $.map(supportExternals, function (external) {
+              return external.search.indexOf(term) === 0 ? external.text : null
+            })
+          )
+        },
+        replace: function (value) {
+          return '$1' + value
+        },
+        context: function (text) {
+          return !isInCode
+        }
       }
-    },
-    { // referral
-      match: /(^\s*|\n|\s{2})((\[\]|\[\]\[\]|\[\]\(\)|!|!\[\]|!\[\]\[\]|!\[\]\(\))\s*\w*)$/,
-      search: function (term, callback) {
-        callback($.map(supportReferrals, function (referral) {
-          return referral.search.indexOf(term) === 0 ? referral.text : null
-        }))
-      },
-      replace: function (value) {
-        return '$1' + value
-      },
-      context: function (text) {
-        return !isInCode
-      }
-    },
-    { // externals
-      match: /(^|\n|\s)\{\}(\w*)$/,
-      search: function (term, callback) {
-        callback($.map(supportExternals, function (external) {
-          return external.search.indexOf(term) === 0 ? external.text : null
-        }))
-      },
-      replace: function (value) {
-        return '$1' + value
-      },
-      context: function (text) {
-        return !isInCode
-      }
+    ],
+    {
+      appendTo: $('.cursor-menu')
     }
-  ], {
-    appendTo: $('.cursor-menu')
-  })
+  )
   .on({
     'textComplete:beforeSearch': function (e) {
       // NA
@@ -3307,22 +3958,22 @@ $(editor.getInputField())
     'textComplete:show': function (e) {
       $(this).data('autocompleting', true)
       editor.setOption('extraKeys', {
-        'Up': function () {
+        Up: function () {
           return false
         },
-        'Right': function () {
+        Right: function () {
           editor.doc.cm.execCommand('goCharRight')
         },
-        'Down': function () {
+        Down: function () {
           return false
         },
-        'Left': function () {
+        Left: function () {
           editor.doc.cm.execCommand('goCharLeft')
         },
-        'Enter': function () {
+        Enter: function () {
           return false
         },
-        'Backspace': function () {
+        Backspace: function () {
           editor.doc.cm.execCommand('delCharBefore')
         }
       })
