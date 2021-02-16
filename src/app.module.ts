@@ -27,9 +27,18 @@ import databaseConfig from './config/database.config';
 import authConfig from './config/auth.config';
 import { PrivateApiModule } from './api/private/private-api.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { RouterModule, Routes } from 'nest-router';
+
+const routes: Routes = [
+  {
+    path: '/api/v2',
+    module: PublicApiModule,
+  },
+];
 
 @Module({
   imports: [
+    RouterModule.forRoutes(routes),
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: './hedgedoc.sqlite',
