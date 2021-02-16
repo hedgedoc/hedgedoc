@@ -36,7 +36,7 @@
     "@types/passport-http-bearer": "1.0.36",
     "@types/bcrypt": "3.0.0",
     "bcrypt": "5.0.0",
-    "class-transformer": "0.3.2",
+    "class-transformer": "0.4.0",
     "class-validator": "0.13.1",
     "cli-color": "2.0.0",
     "connect-typeorm": "1.1.4",
