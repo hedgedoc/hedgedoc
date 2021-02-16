@@ -16,6 +16,7 @@ import { MeController } from './me/me.controller';
 import { NotesController } from './notes/notes.controller';
 import { MediaController } from './media/media.controller';
 import { MonitoringController } from './monitoring/monitoring.controller';
+import { PermissionsModule } from '../../permissions/permissions.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { MonitoringController } from './monitoring/monitoring.controller';
     MonitoringModule,
     LoggerModule,
     MediaModule,
+    PermissionsModule,
   ],
   controllers: [
     MeController,
