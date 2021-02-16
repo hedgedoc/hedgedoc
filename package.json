@@ -51,7 +51,7 @@
     "shortid": "2.2.16",
     "sqlite3": "5.0.2",
     "swagger-ui-express": "4.1.6",
-    "typeorm": "0.2.30"
+    "typeorm": "0.2.31"
   },
   "devDependencies": {
     "@nestjs/cli": "7.5.4",
