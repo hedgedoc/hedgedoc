@@ -42,7 +42,7 @@
     "connect-typeorm": "1.1.4",
     "file-type": "16.2.0",
     "joi": "17.4.0",
-    "nest-router": "^1.0.9",
+    "nest-router": "1.0.9",
     "passport": "0.4.1",
     "passport-http-bearer": "1.0.1",
     "raw-body": "2.4.1",
