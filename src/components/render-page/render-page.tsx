@@ -78,7 +78,6 @@ export const RenderPage: React.FC = () => {
       return (
         <MarkdownDocument
           additionalOuterContainerClasses={ 'vh-100 bg-light' }
-          additionalRendererClasses={ 'mb-3' }
           markdownContent={ markdownContent }
           onTaskCheckedChange={ onTaskCheckedChange }
           onFirstHeadingChange={ onFirstHeadingChange }

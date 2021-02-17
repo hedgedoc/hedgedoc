@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
@@ -31,34 +31,35 @@ export const VegaChart: React.FC<VegaChartProps> = ({ code }) => {
     if (!diagramContainer.current) {
       return
     }
-    import(/* webpackChunkName: "vega" */ 'vega-embed').then((embed) => {
-      try {
-        if (!diagramContainer.current) {
-          return
-        }
-
-        const spec = JSON.parse(code) as VisualizationSpec
-        embed.default(diagramContainer.current, spec, {
-          actions: {
-            export: true,
-            source: false,
-            compiled: false,
-            editor: false
-          },
-          i18n: {
-            PNG_ACTION: t('renderer.vega-lite.png'),
-            SVG_ACTION: t('renderer.vega-lite.svg')
+    import(/* webpackChunkName: "vega" */ 'vega-embed')
+      .then((embed) => {
+        try {
+          if (!diagramContainer.current) {
+            return
           }
-        })
-             .then(() => setError(undefined))
-             .catch(err => showError(err))
-      } catch (err) {
-        showError(t('renderer.vega-lite.errorJson'))
-      }
-    })
-                                                       .catch(() => {
-                                                         console.error('error while loading vega-light')
-                                                       })
+
+          const spec = JSON.parse(code) as VisualizationSpec
+          embed.default(diagramContainer.current, spec, {
+            actions: {
+              export: true,
+              source: false,
+              compiled: false,
+              editor: false
+            },
+            i18n: {
+              PNG_ACTION: t('renderer.vega-lite.png'),
+              SVG_ACTION: t('renderer.vega-lite.svg')
+            }
+          })
+               .then(() => setError(undefined))
+               .catch(err => showError(err))
+        } catch (err) {
+          showError(t('renderer.vega-lite.errorJson'))
+        }
+      })
+      .catch(() => {
+        console.error('error while loading vega-light')
+      })
   }, [code, showError, t])
 
   return <Fragment>

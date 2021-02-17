@@ -65,3 +65,5 @@ export const DocumentReadOnlyPage: React.FC = () => {
     </div>
   )
 }
+
+export default DocumentReadOnlyPage

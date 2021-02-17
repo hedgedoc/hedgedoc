@@ -12,11 +12,11 @@ export const useExtractFirstHeadline = (documentElement: React.RefObject<HTMLDiv
       return ''
     }
 
-    let innerText = ''
-
     if ((node as HTMLElement).classList?.contains('katex-mathml')) {
       return ''
     }
+
+    let innerText = ''
 
     if (node.childNodes && node.childNodes.length > 0) {
       node.childNodes.forEach((child) => {
@@ -37,11 +37,11 @@ export const useExtractFirstHeadline = (documentElement: React.RefObject<HTMLDiv
       const firstHeading = documentElement.current.getElementsByTagName('h1')
                                           .item(0)
       const headingText = extractInnerText(firstHeading)
-      if (headingText === lastFirstHeading.current) {
-        return
+        .trim()
+      if (headingText !== lastFirstHeading.current) {
+        lastFirstHeading.current = headingText
+        onFirstHeadingChange(headingText)
       }
-      lastFirstHeading.current = headingText
-      onFirstHeadingChange(headingText)
     }
   }, [documentElement, extractInnerText, onFirstHeadingChange, content])
 }

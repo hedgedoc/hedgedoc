@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
@@ -32,7 +32,7 @@ export const GraphvizFrame: React.FC<GraphvizFrameProps> = ({ code }) => {
     }
     const actualContainer = container.current
 
-    import('@hpcc-js/wasm')
+    import(/* webpackChunkName: "d3-graphviz" */'@hpcc-js/wasm')
       .then((wasmPlugin) => {
         wasmPlugin.wasmFolder('/static/js')
       })

@@ -8,12 +8,9 @@ import React from 'react'
 import { Alert } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
 import { ShowIf } from '../common/show-if/show-if'
+import { SimpleAlertProps } from '../common/simple-alert/simple-alert-props'
 
-export interface LoadingNoteAlertProps {
-  show: boolean
-}
-
-export const LoadingNoteAlert: React.FC<LoadingNoteAlertProps> = ({ show }) => {
+export const LoadingNoteAlert: React.FC<SimpleAlertProps> = ({ show }) => {
   return (
     <ShowIf condition={ show }>
       <Alert variant={ 'info' } className={ 'my-2' }>

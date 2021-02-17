@@ -15,9 +15,11 @@ import { YamlArrayDeprecationAlert } from '../editor-page/renderer-pane/yaml-arr
 import { useSyncedScrolling } from '../editor-page/synced-scroll/hooks/use-synced-scrolling'
 import { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import { TableOfContents } from '../editor-page/table-of-contents/table-of-contents'
-import { FullMarkdownRenderer } from '../markdown-renderer/full-markdown-renderer'
+import { BasicMarkdownRenderer } from '../markdown-renderer/basic-markdown-renderer'
 import { ImageClickHandler } from '../markdown-renderer/replace-components/image/image-replacer'
 import './markdown-document.scss'
+import { useSelector } from 'react-redux'
+import { ApplicationState } from '../../redux'
 
 export interface RendererProps extends ScrollProps {
   onFirstHeadingChange?: (firstHeading: string | undefined) => void
@@ -53,13 +55,15 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = (
     disableToc
   }) => {
   const rendererRef = useRef<HTMLDivElement | null>(null)
-  const internalDocumentRenderPaneRef = useRef<HTMLDivElement>(null)
-  const [tocAst, setTocAst] = useState<TocAst>()
-
-  const internalDocumentRenderPaneSize = useResizeObserver({ ref: internalDocumentRenderPaneRef.current })
   const rendererSize = useResizeObserver({ ref: rendererRef.current })
 
+  const internalDocumentRenderPaneRef = useRef<HTMLDivElement>(null)
+  const internalDocumentRenderPaneSize = useResizeObserver({ ref: internalDocumentRenderPaneRef.current })
   const containerWidth = internalDocumentRenderPaneSize.width ?? 0
+
+  const [tocAst, setTocAst] = useState<TocAst>()
+
+  const useAlternativeBreaks = useSelector((state: ApplicationState) => state.noteDetails.frontmatter.breaks)
 
   useEffect(() => {
     if (!onHeightChange) {
@@ -77,9 +81,9 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = (
       <div className={ 'markdown-document-side' }/>
       <div className={ 'markdown-document-content' }>
         <YamlArrayDeprecationAlert/>
-        <FullMarkdownRenderer
-          rendererRef={ rendererRef }
-          className={ `flex-fill mb-3 ${ additionalRendererClasses ?? '' }` }
+        <BasicMarkdownRenderer
+          outerContainerRef={ rendererRef }
+          className={ `mb-3 ${ additionalRendererClasses ?? '' }` }
           content={ markdownContent }
           onFirstHeadingChange={ onFirstHeadingChange }
           onLineMarkerPositionChanged={ onLineMarkerPositionChanged }
@@ -87,7 +91,8 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = (
           onTaskCheckedChange={ onTaskCheckedChange }
           onTocChange={ setTocAst }
           baseUrl={ baseUrl }
-          onImageClick={ onImageClick }/>
+          onImageClick={ onImageClick }
+          useAlternativeBreaks={ useAlternativeBreaks }/>
       </div>
       <div className={ 'markdown-document-side pt-4' }>
         <ShowIf condition={ !!tocAst && !disableToc }>

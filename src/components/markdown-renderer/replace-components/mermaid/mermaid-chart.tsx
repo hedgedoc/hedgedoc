@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
@@ -27,13 +27,14 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ code }) => {
 
   useEffect(() => {
     if (!mermaidInitialized) {
-      import('mermaid').then((mermaid) => {
-        mermaid.default.initialize({ startOnLoad: false })
-        mermaidInitialized = true
-      })
-                       .catch(() => {
-                         console.error('error while loading mermaid')
-                       })
+      import(/* webpackChunkName: "mermaid" */'mermaid')
+        .then((mermaid) => {
+          mermaid.default.initialize({ startOnLoad: false })
+          mermaidInitialized = true
+        })
+        .catch(() => {
+          console.error('error while loading mermaid')
+        })
     }
   }, [])
 
@@ -51,22 +52,23 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ code }) => {
     if (!diagramContainer.current) {
       return
     }
-    import('mermaid').then((mermaid) => {
-      try {
-        if (!diagramContainer.current) {
-          return
+    import(/* webpackChunkName: "mermaid" */'mermaid')
+      .then((mermaid) => {
+        try {
+          if (!diagramContainer.current) {
+            return
+          }
+          mermaid.default.parse(code)
+          delete diagramContainer.current.dataset.processed
+          diagramContainer.current.textContent = code
+          mermaid.default.init(diagramContainer.current)
+          setError(undefined)
+        } catch (error) {
+          const message = (error as MermaidParseError).str
+          showError(message || t('renderer.mermaid.unknownError'))
         }
-        mermaid.default.parse(code)
-        delete diagramContainer.current.dataset.processed
-        diagramContainer.current.textContent = code
-        mermaid.default.init(diagramContainer.current)
-        setError(undefined)
-      } catch (error) {
-        const message = (error as MermaidParseError).str
-        showError(message || t('renderer.mermaid.unknownError'))
-      }
-    })
-                     .catch(() => showError('Error while loading mermaid'))
+      })
+      .catch(() => showError('Error while loading mermaid'))
   }, [code, showError, t])
 
   return <Fragment>

@@ -8,10 +8,12 @@ import { DomElement } from 'domhandler'
 import React, { ReactElement } from 'react'
 import { ComponentReplacer } from '../ComponentReplacer'
 
+export type TaskCheckedChangeHandler = (lineInMarkdown: number, checked: boolean) => void
+
 export class TaskListReplacer extends ComponentReplacer {
   onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
 
-  constructor(onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void) {
+  constructor(onTaskCheckedChange?: TaskCheckedChangeHandler) {
     super()
     this.onTaskCheckedChange = onTaskCheckedChange
   }

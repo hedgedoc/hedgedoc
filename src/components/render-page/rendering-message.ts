@@ -93,7 +93,8 @@ export type RendererToEditorIframeMessage =
 
 export enum RendererType {
   DOCUMENT,
-  INTRO
+  INTRO,
+  SLIDESHOW
 }
 
 export interface BaseConfiguration {

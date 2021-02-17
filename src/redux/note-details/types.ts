@@ -32,7 +32,7 @@ export interface NoteDetails {
   alias: string
   authorship: number[]
   noteTitle: string
-  firstHeading: string
+  firstHeading?: string
   frontmatter: NoteFrontmatter
 }
 
@@ -52,7 +52,7 @@ export interface SetNoteDetailsFromServerAction extends NoteDetailsAction {
 
 export interface UpdateNoteTitleByFirstHeadingAction extends NoteDetailsAction {
   type: NoteDetailsActionType.UPDATE_NOTE_TITLE_BY_FIRST_HEADING
-  firstHeading: string
+  firstHeading?: string
 }
 
 export interface SetNoteFrontmatterFromRenderingAction extends NoteDetailsAction {

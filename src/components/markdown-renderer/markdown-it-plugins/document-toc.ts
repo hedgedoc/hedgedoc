@@ -6,7 +6,7 @@
 
 import MarkdownIt from 'markdown-it'
 import toc, { TocAst } from 'markdown-it-toc-done-right'
-import { slugify } from '../../editor-page/table-of-contents/table-of-contents'
+import { tocSlugify } from '../../editor-page/table-of-contents/toc-slugify'
 
 export type DocumentTocPluginOptions = (ast: TocAst) => void
 
@@ -21,6 +21,6 @@ export const documentToc: MarkdownIt.PluginWithOptions<DocumentTocPluginOptions>
     callback: (code: string, ast: TocAst): void => {
       onToc(ast)
     },
-    slugify: slugify
+    slugify: tocSlugify
   })
 }

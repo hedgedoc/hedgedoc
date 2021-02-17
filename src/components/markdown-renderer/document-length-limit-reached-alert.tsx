@@ -10,17 +10,15 @@ import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../redux'
 import { ShowIf } from '../common/show-if/show-if'
+import { SimpleAlertProps } from '../common/simple-alert/simple-alert-props'
 
-export interface DocumentLengthLimitReachedAlertProps {
-  contentLength: number
-}
-
-export const DocumentLengthLimitReachedAlert: React.FC<DocumentLengthLimitReachedAlertProps> = ({ contentLength }) => {
+export const DocumentLengthLimitReachedAlert: React.FC<SimpleAlertProps> = ({ show }) => {
   useTranslation()
+
   const maxLength = useSelector((state: ApplicationState) => state.config.maxDocumentLength)
 
   return (
-    <ShowIf condition={ contentLength > maxLength }>
+    <ShowIf condition={ show }>
       <Alert variant='danger' dir={ 'auto' } data-cy={ 'limitReachedMessage' }>
         <Trans i18nKey={ 'editor.error.limitReached.description' } values={ { maxLength } }/>
       </Alert>

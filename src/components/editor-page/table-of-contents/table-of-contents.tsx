@@ -5,10 +5,10 @@
  */
 
 import { TocAst } from 'markdown-it-toc-done-right'
-import React, { Fragment, ReactElement, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ShowIf } from '../../common/show-if/show-if'
-import { createJumpToMarkClickEventHandler } from '../../markdown-renderer/replace-components/link-replacer/link-replacer'
+import { buildReactDomFromTocAst } from './build-react-dom-from-toc-ast'
 import './table-of-contents.scss'
 
 export interface TableOfContentsProps {
@@ -18,53 +18,6 @@ export interface TableOfContentsProps {
   baseUrl?: string
 }
 
-export const slugify = (content: string): string => {
-  return encodeURIComponent(content.trim()
-                                   .toLowerCase()
-                                   .replace(/\s+/g, '-'))
-}
-
-const convertLevel = (toc: TocAst, levelsToShowUnderThis: number, headerCounts: Map<string, number>,
-  wrapInListItem: boolean, baseUrl?: string): ReactElement | null => {
-  if (levelsToShowUnderThis < 0) {
-    return null
-  }
-
-  const rawName = toc.n.trim()
-  const nameCount = (headerCounts.get(rawName) ?? -1) + 1
-  const slug = `#${ slugify(rawName) }${ nameCount > 0 ? `-${ nameCount }` : '' }`
-  const headlineUrl = new URL(slug, baseUrl).toString()
-
-  headerCounts.set(rawName, nameCount)
-
-  const content = (
-    <Fragment>
-      <ShowIf condition={ toc.l > 0 }>
-        <a href={ headlineUrl } title={ rawName }
-           onClick={ createJumpToMarkClickEventHandler(slug.substr(1)) }>{ rawName }</a>
-      </ShowIf>
-      <ShowIf condition={ toc.c.length > 0 }>
-        <ul>
-          {
-            toc.c.map(child =>
-              (convertLevel(child, levelsToShowUnderThis - 1, headerCounts, true, baseUrl)))
-          }
-        </ul>
-      </ShowIf>
-    </Fragment>
-  )
-
-  if (wrapInListItem) {
-    return (
-      <li key={ headlineUrl }>
-        { content }
-      </li>
-    )
-  } else {
-    return content
-  }
-}
-
 export const TableOfContents: React.FC<TableOfContentsProps> = ({
   ast,
   maxDepth = 3,
@@ -72,7 +25,8 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
   baseUrl
 }) => {
   useTranslation()
-  const tocTree = useMemo(() => convertLevel(ast, maxDepth, new Map<string, number>(), false, baseUrl), [ast, maxDepth,
+  const tocTree = useMemo(() => buildReactDomFromTocAst(ast, maxDepth, new Map<string, number>(), false, baseUrl), [ast,
+    maxDepth,
     baseUrl])
 
   return (

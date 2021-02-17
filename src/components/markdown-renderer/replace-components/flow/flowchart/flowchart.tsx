@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { useEffect, useRef, useState } from 'react'
@@ -25,26 +25,25 @@ export const FlowChart: React.FC<FlowChartProps> = ({ code }) => {
       return
     }
     const currentDiagramRef = diagramRef.current
-    import(/* webpackChunkName: "flowchart.js" */ 'flowchart.js').then((imp) => {
-      const parserOutput = imp.parse(code)
-      try {
-        parserOutput.drawSVG(currentDiagramRef, {
-          'line-width': 2,
-          fill: 'none',
-          'font-size': 16,
-          'line-color': darkModeActivated ? '#ffffff' : '#000000',
-          'element-color': darkModeActivated ? '#ffffff' : '#000000',
-          'font-color': darkModeActivated ? '#ffffff' : '#000000',
-          'font-family': 'Source Sans Pro, "Twemoji Mozilla", monospace'
-        })
-        setError(false)
-      } catch (error) {
-        setError(true)
-      }
-    })
-                                                                 .catch(() => {
-                                                                   console.error('error while loading flowchart.js')
-                                                                 })
+    import(/* webpackChunkName: "flowchart.js" */ 'flowchart.js')
+      .then((imp) => {
+        const parserOutput = imp.parse(code)
+        try {
+          parserOutput.drawSVG(currentDiagramRef, {
+            'line-width': 2,
+            fill: 'none',
+            'font-size': 16,
+            'line-color': darkModeActivated ? '#ffffff' : '#000000',
+            'element-color': darkModeActivated ? '#ffffff' : '#000000',
+            'font-color': darkModeActivated ? '#ffffff' : '#000000',
+            'font-family': 'Source Sans Pro, "Twemoji Mozilla", monospace'
+          })
+          setError(false)
+        } catch (error) {
+          setError(true)
+        }
+      })
+      .catch(() => console.error('error while loading flowchart.js'))
 
     return () => {
       Array.from(currentDiagramRef.children)

@@ -4,45 +4,112 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import MarkdownIt from 'markdown-it'
-import React, { RefObject, useMemo } from 'react'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../redux'
+import React, { Ref, useCallback, useMemo, useRef, useState } from 'react'
 import { DocumentLengthLimitReachedAlert } from './document-length-limit-reached-alert'
 import { useConvertMarkdownToReactDom } from './hooks/use-convert-markdown-to-react-dom'
 import './markdown-renderer.scss'
 import { ComponentReplacer } from './replace-components/ComponentReplacer'
-import { AdditionalMarkdownRendererProps } from './types'
+import { AdditionalMarkdownRendererProps, LineMarkerPosition } from './types'
+import { useComponentReplacers } from './hooks/use-component-replacers'
+import { useTranslation } from 'react-i18next'
+import { NoteFrontmatter, RawNoteFrontmatter } from '../editor-page/note-frontmatter/note-frontmatter'
+import { LineMarkers } from './replace-components/linemarker/line-number-marker'
+import { useCalculateLineMarkerPosition } from './utils/calculate-line-marker-positions'
+import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
+import { TocAst } from 'markdown-it-toc-done-right'
+import { useOnRefChange } from './hooks/use-on-ref-change'
+import { BasicMarkdownItConfigurator } from './markdown-it-configurator/BasicMarkdownItConfigurator'
+import { ImageClickHandler } from './replace-components/image/image-replacer'
+import { InvalidYamlAlert } from './invalid-yaml-alert'
+import { useTrimmedContent } from './hooks/use-trimmed-content'
 
 export interface BasicMarkdownRendererProps {
-  componentReplacers?: () => ComponentReplacer[],
-  markdownIt: MarkdownIt,
-  documentReference?: RefObject<HTMLDivElement>
+  additionalReplacers?: () => ComponentReplacer[],
   onBeforeRendering?: () => void
   onAfterRendering?: () => void
+  onFirstHeadingChange?: (firstHeading: string | undefined) => void
+  onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void
+  onFrontmatterChange?: (frontmatter: NoteFrontmatter | undefined) => void
+  onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
+  onTocChange?: (ast?: TocAst) => void
+  baseUrl?: string
+  onImageClick?: ImageClickHandler
+  outerContainerRef?: Ref<HTMLDivElement>
+  useAlternativeBreaks?: boolean
 }
 
 export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & AdditionalMarkdownRendererProps> = (
   {
     className,
     content,
-    componentReplacers,
-    markdownIt,
-    documentReference,
+    additionalReplacers,
     onBeforeRendering,
-    onAfterRendering
+    onAfterRendering,
+    onFirstHeadingChange,
+    onLineMarkerPositionChanged,
+    onFrontmatterChange,
+    onTaskCheckedChange,
+    onTocChange,
+    baseUrl,
+    onImageClick,
+    outerContainerRef,
+    useAlternativeBreaks
   }) => {
-  const maxLength = useSelector((state: ApplicationState) => state.config.maxDocumentLength)
-  const trimmedContent = useMemo(() => content.length > maxLength ? content.substr(0, maxLength) : content, [content,
-    maxLength])
-  const markdownReactDom = useConvertMarkdownToReactDom(trimmedContent, markdownIt, componentReplacers, onBeforeRendering, onAfterRendering)
+  const rawMetaRef = useRef<RawNoteFrontmatter>()
+  const markdownBodyRef = useRef<HTMLDivElement>(null)
+  const currentLineMarkers = useRef<LineMarkers[]>()
+  const hasNewYamlError = useRef(false)
+  const tocAst = useRef<TocAst>()
+  const [showYamlError, setShowYamlError] = useState(false)
+  const [trimmedContent, contentExceedsLimit] = useTrimmedContent(content)
+
+  const markdownIt = useMemo(() =>
+    new BasicMarkdownItConfigurator({
+      useFrontmatter: !!onFrontmatterChange,
+      onParseError: errorState => hasNewYamlError.current = errorState,
+      onRawMetaChange: rawMeta => rawMetaRef.current = rawMeta,
+      onToc: toc => tocAst.current = toc,
+      onLineMarkers: onLineMarkerPositionChanged === undefined ? undefined
+        : lineMarkers => currentLineMarkers.current = lineMarkers,
+      useAlternativeBreaks
+    }).buildConfiguredMarkdownIt(), [onFrontmatterChange, onLineMarkerPositionChanged, useAlternativeBreaks])
+
+  const clearFrontmatter = useCallback(() => {
+    hasNewYamlError.current = false
+    rawMetaRef.current = undefined
+    onBeforeRendering?.()
+  }, [onBeforeRendering])
+
+  const checkYamlErrorState = useCallback(() => {
+    setShowYamlError(hasNewYamlError.current)
+    onAfterRendering?.()
+  }, [onAfterRendering])
+
+  const baseReplacers = useComponentReplacers(onTaskCheckedChange, onImageClick, baseUrl)
+  const markdownReactDom = useConvertMarkdownToReactDom(trimmedContent, markdownIt, baseReplacers, additionalReplacers, clearFrontmatter, checkYamlErrorState)
+
+  useTranslation()
+  useCalculateLineMarkerPosition(markdownBodyRef, currentLineMarkers.current, onLineMarkerPositionChanged, markdownBodyRef.current?.offsetTop ?? 0)
+  useExtractFirstHeadline(markdownBodyRef, content, onFirstHeadingChange)
+  useOnRefChange(tocAst, onTocChange)
+  useOnRefChange(rawMetaRef, (newValue) => {
+    if (!newValue) {
+      onFrontmatterChange?.(undefined)
+    } else {
+      onFrontmatterChange?.(new NoteFrontmatter(newValue))
+    }
+  })
 
   return (
-    <div className={ `${ className ?? '' } d-flex flex-column align-items-center` }>
-      <DocumentLengthLimitReachedAlert contentLength={ content.length }/>
-      <div ref={ documentReference } className={ 'markdown-body w-100 d-flex flex-column align-items-center' }>
+    <div ref={ outerContainerRef } className={ 'position-relative' }>
+      <InvalidYamlAlert show={ showYamlError }/>
+      <DocumentLengthLimitReachedAlert show={ contentExceedsLimit }/>
+      <div ref={ markdownBodyRef }
+           className={ `${ className ?? '' } markdown-body w-100 d-flex flex-column align-items-center` }>
         { markdownReactDom }
       </div>
     </div>
   )
 }
+
+export default BasicMarkdownRenderer

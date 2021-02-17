@@ -1,7 +1,7 @@
 /*
  * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
  *
- *SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { Fragment, useState } from 'react'
@@ -17,8 +17,8 @@ import { CoverButtons } from './cover-buttons/cover-buttons'
 import { FeatureLinks } from './feature-links'
 import { useIntroPageContent } from './hooks/use-intro-page-content'
 import { ShowIf } from '../common/show-if/show-if'
-import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
 import { RendererType } from '../render-page/rendering-message'
+import { WaitSpinner } from '../common/wait-spinner/wait-spinner'
 
 export const IntroPage: React.FC = () => {
   const introPageContent = useIntroPageContent()
@@ -38,7 +38,7 @@ export const IntroPage: React.FC = () => {
         </div>
         <CoverButtons/>
         <ShowIf condition={ showSpinner }>
-          <ForkAwesomeIcon icon={ 'spinner' } className={ 'fa-spin' }/>
+          <WaitSpinner/>
         </ShowIf>
         <RenderIframe
           frameClasses={ 'w-100 overflow-y-hidden' }

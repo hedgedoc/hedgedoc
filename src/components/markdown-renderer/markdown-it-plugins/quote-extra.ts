@@ -8,17 +8,12 @@ import MarkdownIt from 'markdown-it/lib'
 import Token from 'markdown-it/lib/token'
 import { IconName } from '../../common/fork-awesome/types'
 
-export interface QuoteExtraOptions {
-  quoteLabel: string
-  icon: IconName
-}
-
-export const quoteExtra: (pluginOptions: QuoteExtraOptions) => MarkdownIt.PluginSimple =
-  (pluginOptions) => (md) => {
-    md.inline.ruler.push(`extraQuote_${ pluginOptions.quoteLabel }`, (state) => {
+export const quoteExtra: (quoteLabel: string, icon: IconName) => MarkdownIt.PluginSimple =
+  (quoteLabel: string, icon: IconName) => (md) => {
+    md.inline.ruler.push(`extraQuote_${ quoteLabel }`, (state) => {
       const quoteExtraTagValues = parseQuoteExtraTag(state.src, state.pos, state.posMax)
 
-      if (!quoteExtraTagValues || quoteExtraTagValues.label !== pluginOptions.quoteLabel) {
+      if (!quoteExtraTagValues || quoteExtraTagValues.label !== quoteLabel) {
         return false
       }
       state.pos = quoteExtraTagValues.valueEndIndex + 1
@@ -32,7 +27,7 @@ export const quoteExtra: (pluginOptions: QuoteExtraOptions) => MarkdownIt.Plugin
       )
 
       const token = state.push('quote-extra', '', 0)
-      token.attrSet('icon', pluginOptions.icon)
+      token.attrSet('icon', icon)
       token.children = tokens
 
       return true

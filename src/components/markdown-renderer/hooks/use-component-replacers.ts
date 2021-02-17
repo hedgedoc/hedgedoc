@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { useMemo } from 'react'
+import { useCallback } from 'react'
 import { AbcReplacer } from '../replace-components/abc/abc-replacer'
 import { AsciinemaReplacer } from '../replace-components/asciinema/asciinema-replacer'
 import { ComponentReplacer } from '../replace-components/ComponentReplacer'
@@ -21,14 +21,13 @@ import { MarkmapReplacer } from '../replace-components/markmap/markmap-replacer'
 import { MermaidReplacer } from '../replace-components/mermaid/mermaid-replacer'
 import { ColoredBlockquoteReplacer } from '../replace-components/colored-blockquote/colored-blockquote-replacer'
 import { SequenceDiagramReplacer } from '../replace-components/sequence-diagram/sequence-diagram-replacer'
-import { TaskListReplacer } from '../replace-components/task-list/task-list-replacer'
+import { TaskCheckedChangeHandler, TaskListReplacer } from '../replace-components/task-list/task-list-replacer'
 import { VegaReplacer } from '../replace-components/vega-lite/vega-replacer'
 import { VimeoReplacer } from '../replace-components/vimeo/vimeo-replacer'
 import { YoutubeReplacer } from '../replace-components/youtube/youtube-replacer'
 
-export const useReplacerInstanceListCreator = (onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void,
-  onImageClick?: ImageClickHandler, baseUrl?: string): () => ComponentReplacer[] => useMemo(() =>
-  () => [
+export const useComponentReplacers = (onTaskCheckedChange?: TaskCheckedChangeHandler, onImageClick?: ImageClickHandler, baseUrl?: string): () => ComponentReplacer[] =>
+  useCallback(() => [
     new LinemarkerReplacer(),
     new GistReplacer(),
     new YoutubeReplacer(),

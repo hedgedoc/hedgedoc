@@ -7,7 +7,11 @@
 import { DateTime } from 'luxon'
 import { Reducer } from 'redux'
 import { Note } from '../../api/notes'
-import { NoteFrontmatter } from '../../components/editor-page/note-frontmatter/note-frontmatter'
+import {
+  NoteFrontmatter,
+  NoteTextDirection,
+  NoteType
+} from '../../components/editor-page/note-frontmatter/note-frontmatter'
 import {
   NoteDetails,
   NoteDetailsAction,
@@ -40,11 +44,11 @@ export const initialState: NoteDetails = {
     deprecatedTagsSyntax: false,
     robots: '',
     lang: 'en',
-    dir: 'ltr',
+    dir: NoteTextDirection.LTR,
     breaks: true,
     GA: '',
     disqus: '',
-    type: '',
+    type: NoteType.DOCUMENT,
     opengraph: new Map<string, string>()
   }
 }

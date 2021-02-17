@@ -15,7 +15,8 @@ import { calculateNewLineNumberMapping } from '../utils/line-number-mapping'
 export const useConvertMarkdownToReactDom = (
   markdownCode: string,
   markdownIt: MarkdownIt,
-  componentReplacers?: () => ComponentReplacer[],
+  baseReplacers: () => ComponentReplacer[],
+  additionalReplacers?: () => ComponentReplacer[],
   onBeforeRendering?: () => void,
   onAfterRendering?: () => void): ReactElement[] => {
   const oldMarkdownLineKeys = useRef<LineKeys[]>()
@@ -33,11 +34,14 @@ export const useConvertMarkdownToReactDom = (
     } = calculateNewLineNumberMapping(contentLines, oldMarkdownLineKeys.current ?? [], lastUsedLineId.current)
     oldMarkdownLineKeys.current = newLines
     lastUsedLineId.current = newLastUsedLineId
-    const transformer = componentReplacers ? buildTransformer(newLines, componentReplacers()) : undefined
+
+    const replacers = baseReplacers()
+      .concat(additionalReplacers ? additionalReplacers() : [])
+    const transformer = replacers.length > 0 ? buildTransformer(newLines, replacers) : undefined
     const rendering = ReactHtmlParser(html, { transform: transformer })
     if (onAfterRendering) {
       onAfterRendering()
     }
     return rendering
-  }, [onBeforeRendering, onAfterRendering, markdownCode, markdownIt, componentReplacers])
+  }, [onBeforeRendering, markdownIt, markdownCode, baseReplacers, additionalReplacers, onAfterRendering])
 }

@@ -18,7 +18,7 @@ export type LineNumberMarkerOptions = (lineMarkers: LineMarkers[]) => void;
  * This plugin adds markers to the dom, that are used to map line numbers to dom elements.
  * It also provides a list of line numbers for the top level dom elements.
  */
-export const lineNumberMarker: MarkdownIt.PluginWithOptions<LineNumberMarkerOptions> = (md: MarkdownIt, options) => {
+export const lineNumberMarker: (options: LineNumberMarkerOptions) => MarkdownIt.PluginSimple = (options) => (md: MarkdownIt) => {
   // add app_linemarker token before each opening or self-closing level-0 tag
   md.core.ruler.push('line_number_marker', (state) => {
     const lineMarkers: LineMarkers[] = []

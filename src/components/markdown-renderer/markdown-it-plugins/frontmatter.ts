@@ -11,22 +11,20 @@ import { RawNoteFrontmatter } from '../../editor-page/note-frontmatter/note-fron
 
 interface FrontmatterPluginOptions {
   onParseError: (error: boolean) => void,
-  onRawMeta: (rawMeta: RawNoteFrontmatter) => void,
+  onRawMetaChange: (rawMeta: RawNoteFrontmatter) => void,
 }
 
-export const frontmatterExtract: MarkdownIt.PluginWithOptions<FrontmatterPluginOptions> = (markdownIt: MarkdownIt, options) => {
-  if (!options) {
-    return
+export const frontmatterExtract: (options: FrontmatterPluginOptions) => MarkdownIt.PluginSimple = (options) =>
+  (markdownIt) => {
+    frontmatter(markdownIt, (rawMeta: string) => {
+      try {
+        const meta: RawNoteFrontmatter = yaml.load(rawMeta) as RawNoteFrontmatter
+        options.onParseError(false)
+        options.onRawMetaChange(meta)
+      } catch (e) {
+        console.error(e)
+        options.onParseError(true)
+        options.onRawMetaChange({} as RawNoteFrontmatter)
+      }
+    })
   }
-  frontmatter(markdownIt, (rawMeta: string) => {
-    try {
-      const meta: RawNoteFrontmatter = yaml.load(rawMeta) as RawNoteFrontmatter
-      options.onParseError(false)
-      options.onRawMeta(meta)
-    } catch (e) {
-      console.error(e)
-      options.onParseError(true)
-      options.onRawMeta({} as RawNoteFrontmatter)
-    }
-  })
-}

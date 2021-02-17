@@ -16,6 +16,7 @@ import { CopyableField } from '../../../common/copyable/copyable-field/copyable-
 import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { EditorPagePathParams } from '../../editor-page'
+import { NoteType } from '../../note-frontmatter/note-frontmatter'
 
 export interface ShareModalProps {
   show: boolean,
@@ -39,7 +40,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({ show, onHide }) => {
         <Trans i18nKey={ 'editor.modal.shareLink.editorDescription' }/>
         <CopyableField content={ `${ baseUrl }/n/${ id }?${ editorMode }` } nativeShareButton={ true }
                        url={ `${ baseUrl }/n/${ id }?${ editorMode }` }/>
-        <ShowIf condition={ noteFrontmatter.type === 'slide' }>
+        <ShowIf condition={ noteFrontmatter.type === NoteType.SLIDE }>
           <Trans i18nKey={ 'editor.modal.shareLink.slidesDescription' }/>
           <CopyableField content={ `${ baseUrl }/p/${ id }` } nativeShareButton={ true }
                          url={ `${ baseUrl }/p/${ id }` }/>

@@ -8,12 +8,9 @@ import React from 'react'
 import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { ShowIf } from '../common/show-if/show-if'
+import { SimpleAlertProps } from '../common/simple-alert/simple-alert-props'
 
-export interface ErrorWhileLoadingNoteAlertProps {
-  show: boolean
-}
-
-export const ErrorWhileLoadingNoteAlert: React.FC<ErrorWhileLoadingNoteAlertProps> = ({ show }) => {
+export const ErrorWhileLoadingNoteAlert: React.FC<SimpleAlertProps> = ({ show }) => {
   useTranslation()
 
   return (

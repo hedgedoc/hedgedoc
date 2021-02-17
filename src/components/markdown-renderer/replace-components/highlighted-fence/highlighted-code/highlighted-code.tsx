@@ -17,13 +17,16 @@ export interface HighlightedCodeProps {
   wrapLines: boolean
 }
 
-export const escapeHtml = (unsafe: string): string => {
+/*
+ TODO: Test method or rewrite code so this is not necessary anymore
+ */
+const escapeHtml = (unsafe: string): string => {
   return unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
+    .replaceAll(/&/g, '&amp;')
+    .replaceAll(/</g, '&lt;')
+    .replaceAll(/>/g, '&gt;')
+    .replaceAll(/"/g, '&quot;')
+    .replaceAll(/'/g, '&#039;')
 }
 
 const replaceCode = (code: string): ReactElement[][] => {
@@ -69,3 +72,5 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
       </div>
     </Fragment>)
 }
+
+export default HighlightedCode
