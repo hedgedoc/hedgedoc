@@ -119,6 +119,11 @@ entity "note_group_permission" {
   *canEdit : boolean
 }
 
+entity "group_members_user" {
+  *group : number <<FK group>>
+  *member : uuid <<FK user>>
+}
+
 entity "tag" {
   *id: number <<generated>>
   *name: text
@@ -144,16 +149,16 @@ entity "history_entry" {
 
 user "1" -- "0..*" note: owner
 user "1" -u- "1..*" identity
-user "1" - "1..*" auth_token: authTokens
-user "1" -l- "1..*" session
-user "1" - "0..*" media_upload
+user "1" -l- "1..*" auth_token: authTokens
+user "1" -r- "1..*" session
+user "1" -- "0..*" media_upload
 user "1" - "0..*" history_entry
 user "0..*" -- "0..*" note
-user "1" - "0..*" authorship
+user "1" -- "0..*" authorship
 
 (user, note) . author_colors
 
-revision "0..*" - "0..*" authorship
+revision "0..*" -- "0..*" authorship
 (revision, authorship) .. revision_authorship
 
 media_upload "0..*"  -- "1" note
@@ -161,9 +166,11 @@ note "1" - "1..*" revision
 note "1" - "0..*" history_entry
 note "0..*" -l- "0..*" tag
 note "0..*" -- "0..*" group
+user "1..*" -- "0..*" group
 
 user "0..*" -- "0..*" note
 (user, note) . note_user_permission
 (note, group) . note_group_permission
+(user, group) . group_members_user
 
 @enduml

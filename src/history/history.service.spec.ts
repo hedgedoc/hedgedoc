@@ -21,6 +21,8 @@ import { AuthToken } from '../auth/auth-token.entity';
 import { Revision } from '../revisions/revision.entity';
 import { Repository } from 'typeorm';
 import { NotInDBError } from '../errors/errors';
+import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
+import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 
 describe('HistoryService', () => {
   let service: HistoryService;
@@ -53,6 +55,10 @@ describe('HistoryService', () => {
       .overrideProvider(getRepositoryToken(Note))
       .useClass(Repository)
       .overrideProvider(getRepositoryToken(Tag))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(NoteGroupPermission))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .compile();
 
@@ -99,7 +105,7 @@ describe('HistoryService', () => {
   describe('createOrUpdateHistoryEntry', () => {
     describe('works', () => {
       it('without an preexisting entry', async () => {
-        const user = new User();
+        const user = {} as User;
         const alias = 'alias';
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
         jest
@@ -118,7 +124,7 @@ describe('HistoryService', () => {
       });
 
       it('with an preexisting entry', async () => {
-        const user = new User();
+        const user = {} as User;
         const alias = 'alias';
         const historyEntry = HistoryEntry.create(
           user,
@@ -148,7 +154,7 @@ describe('HistoryService', () => {
   describe('updateHistoryEntry', () => {
     describe('works', () => {
       it('with an entry', async () => {
-        const user = new User();
+        const user = {} as User;
         const alias = 'alias';
         const note = Note.create(user, alias);
         const historyEntry = HistoryEntry.create(user, note);
@@ -173,7 +179,7 @@ describe('HistoryService', () => {
       });
 
       it('without an entry', async () => {
-        const user = new User();
+        const user = {} as User;
         const alias = 'alias';
         const note = Note.create(user, alias);
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
@@ -192,7 +198,7 @@ describe('HistoryService', () => {
   describe('deleteHistoryEntry', () => {
     describe('works', () => {
       it('with an entry', async () => {
-        const user = new User();
+        const user = {} as User;
         const alias = 'alias';
         const note = Note.create(user, alias);
         const historyEntry = HistoryEntry.create(user, note);
@@ -208,7 +214,7 @@ describe('HistoryService', () => {
       });
 
       it('without an entry', async () => {
-        const user = new User();
+        const user = {} as User;
         const alias = 'alias';
         const note = Note.create(user, alias);
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
@@ -225,7 +231,7 @@ describe('HistoryService', () => {
   describe('toHistoryEntryDto', () => {
     describe('works', () => {
       it('with aliased note', async () => {
-        const user = new User();
+        const user = {} as User;
         const alias = 'alias';
         const title = 'title';
         const tags = ['tag1', 'tag2'];
@@ -247,7 +253,7 @@ describe('HistoryService', () => {
       });
 
       it('with regular note', async () => {
-        const user = new User();
+        const user = {} as User;
         const title = 'title';
         const id = 'id';
         const tags = ['tag1', 'tag2'];
