@@ -74,10 +74,19 @@ export class NotesService {
       newNote.historyEntries = [HistoryEntry.create(owner)];
       newNote.owner = owner;
     }
-    return this.noteRepository.save(newNote);
+    try {
+      return await this.noteRepository.save(newNote);
+    } catch {
+      this.logger.debug(
+        `A note with the alias '${alias}' already exists.`,
+        'createNote',
+      );
+      throw new AlreadyInDBError(
+        `A note with the alias '${alias}' already exists.`,
+      );
+    }
   }
-
-  async getCurrentContent(note: Note): Promise<string> {
+  async getNoteContentByNote(note: Note): Promise<string> {
     return (await this.getLatestRevision(note)).content;
   }
 
