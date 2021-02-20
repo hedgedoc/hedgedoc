@@ -8,6 +8,10 @@ export class NotInDBError extends Error {
   name = 'NotInDBError';
 }
 
+export class AlreadyInDBError extends Error {
+  name = 'AlreadyInDBError';
+}
+
 export class ClientError extends Error {
   name = 'ClientError';
 }
@@ -22,4 +26,8 @@ export class TokenNotValidError extends Error {
 
 export class TooManyTokensError extends Error {
   name = 'TooManyTokensError';
+}
+
+export class PermissionsUpdateInconsistentError extends Error {
+  name = 'PermissionsUpdateInconsistentError';
 }
