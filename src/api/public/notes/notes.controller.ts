@@ -129,7 +129,7 @@ export class NotesController {
         throw new UnauthorizedException('Deleting note denied!');
       }
       this.logger.debug('Deleting note: ' + noteIdOrAlias, 'deleteNote');
-      await this.noteService.deleteNoteByIdOrAlias(noteIdOrAlias);
+      await this.noteService.deleteNote(note);
       this.logger.debug('Successfully deleted ' + noteIdOrAlias, 'deleteNote');
       return;
     } catch (e) {
@@ -154,7 +154,7 @@ export class NotesController {
       }
       this.logger.debug('Got raw markdown:\n' + text, 'updateNote');
       return this.noteService.toNoteDto(
-        await this.noteService.updateNoteByIdOrAlias(noteIdOrAlias, text),
+        await this.noteService.updateNote(note, text),
       );
     } catch (e) {
       if (e instanceof NotInDBError) {
@@ -196,9 +196,7 @@ export class NotesController {
       if (!this.permissionsService.mayRead(req.user, note)) {
         throw new UnauthorizedException('Reading note denied!');
       }
-      return this.noteService.toNoteMetadataDto(
-        await this.noteService.getNoteByIdOrAlias(noteIdOrAlias),
-      );
+      return this.noteService.toNoteMetadataDto(note);
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
@@ -223,7 +221,7 @@ export class NotesController {
         throw new UnauthorizedException('Updating note denied!');
       }
       return this.noteService.toNotePermissionsDto(
-        await this.noteService.updateNotePermissions(noteIdOrAlias, updateDto),
+        await this.noteService.updateNotePermissions(note, updateDto),
       );
     } catch (e) {
       if (e instanceof NotInDBError) {
@@ -244,9 +242,7 @@ export class NotesController {
       if (!this.permissionsService.mayRead(req.user, note)) {
         throw new UnauthorizedException('Reading note denied!');
       }
-      const revisions = await this.revisionsService.getAllRevisions(
-        noteIdOrAlias,
-      );
+      const revisions = await this.revisionsService.getAllRevisions(note);
       return Promise.all(
         revisions.map((revision) =>
           this.revisionsService.toRevisionMetadataDto(revision),
@@ -273,7 +269,7 @@ export class NotesController {
         throw new UnauthorizedException('Reading note denied!');
       }
       return this.revisionsService.toRevisionDto(
-        await this.revisionsService.getRevision(noteIdOrAlias, revisionId),
+        await this.revisionsService.getRevision(note, revisionId),
       );
     } catch (e) {
       if (e instanceof NotInDBError) {

@@ -206,7 +206,7 @@ describe('Notes', () => {
       // wait one second
       await new Promise((r) => setTimeout(r, 1000));
       // update the note
-      await notesService.updateNoteByIdOrAlias('test5a', 'More test content');
+      await notesService.updateNote(note, 'More test content');
       const metadata = await request(app.getHttpServer())
         .get('/notes/test5a/metadata')
         .expect(200);

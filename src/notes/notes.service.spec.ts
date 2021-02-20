@@ -245,36 +245,31 @@ describe('NotesService', () => {
     });
   });
 
-  describe('deleteNoteByIdOrAlias', () => {
+  describe('deleteNote', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const note = Note.create(user);
-      jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
       jest
         .spyOn(noteRepo, 'remove')
         .mockImplementationOnce(async (entry, _) => {
           expect(entry).toEqual(note);
           return entry;
         });
-      await service.deleteNoteByIdOrAlias('noteThatExists');
+      await service.deleteNote(note);
     });
   });
 
-  describe('updateNoteByIdOrAlias', () => {
+  describe('updateNote', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const note = Note.create(user);
       const revisionLength = (await note.revisions).length;
-      jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
       jest
         .spyOn(noteRepo, 'save')
         .mockImplementationOnce(async (entry: Note) => {
           return entry;
         });
-      const updatedNote = await service.updateNoteByIdOrAlias(
-        'noteThatExists',
-        'newContent',
-      );
+      const updatedNote = await service.updateNote(note, 'newContent');
       expect(await updatedNote.revisions).toHaveLength(revisionLength + 1);
     });
   });
@@ -294,37 +289,29 @@ describe('NotesService', () => {
     const note = Note.create(user);
     describe('works', () => {
       it('with empty GroupPermissions and with empty UserPermissions', async () => {
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
         jest
           .spyOn(noteRepo, 'save')
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
-        const savedNote = await service.updateNotePermissions(
-          'noteThatExists',
-          {
-            sharedToUsers: [],
-            sharedToGroups: [],
-          },
-        );
+        const savedNote = await service.updateNotePermissions(note, {
+          sharedToUsers: [],
+          sharedToGroups: [],
+        });
         expect(savedNote.userPermissions).toHaveLength(0);
         expect(savedNote.groupPermissions).toHaveLength(0);
       });
       it('with empty GroupPermissions and with new UserPermissions', async () => {
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
         jest
           .spyOn(noteRepo, 'save')
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
-        const savedNote = await service.updateNotePermissions(
-          'noteThatExists',
-          {
-            sharedToUsers: [userPermissionUpdate],
-            sharedToGroups: [],
-          },
-        );
+        const savedNote = await service.updateNotePermissions(note, {
+          sharedToUsers: [userPermissionUpdate],
+          sharedToGroups: [],
+        });
         expect(savedNote.userPermissions).toHaveLength(1);
         expect(savedNote.userPermissions[0].user.userName).toEqual(
           userPermissionUpdate.username,
@@ -344,21 +331,15 @@ describe('NotesService', () => {
           },
         ];
         jest
-          .spyOn(noteRepo, 'findOne')
-          .mockResolvedValueOnce(noteWithPreexistingPermissions);
-        jest
           .spyOn(noteRepo, 'save')
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
-        const savedNote = await service.updateNotePermissions(
-          'noteThatExists',
-          {
-            sharedToUsers: [userPermissionUpdate],
-            sharedToGroups: [],
-          },
-        );
+        const savedNote = await service.updateNotePermissions(note, {
+          sharedToUsers: [userPermissionUpdate],
+          sharedToGroups: [],
+        });
         expect(savedNote.userPermissions).toHaveLength(1);
         expect(savedNote.userPermissions[0].user.userName).toEqual(
           userPermissionUpdate.username,
@@ -369,20 +350,16 @@ describe('NotesService', () => {
         expect(savedNote.groupPermissions).toHaveLength(0);
       });
       it('with new GroupPermissions and with empty UserPermissions', async () => {
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
         jest
           .spyOn(noteRepo, 'save')
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
-        const savedNote = await service.updateNotePermissions(
-          'noteThatExists',
-          {
-            sharedToUsers: [],
-            sharedToGroups: [groupPermissionUpate],
-          },
-        );
+        const savedNote = await service.updateNotePermissions(note, {
+          sharedToUsers: [],
+          sharedToGroups: [groupPermissionUpate],
+        });
         expect(savedNote.userPermissions).toHaveLength(0);
         expect(savedNote.groupPermissions[0].group.name).toEqual(
           groupPermissionUpate.groupname,
@@ -392,7 +369,6 @@ describe('NotesService', () => {
         );
       });
       it('with new GroupPermissions and with new UserPermissions', async () => {
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
         jest
           .spyOn(noteRepo, 'save')
           .mockImplementationOnce(async (entry: Note) => {
@@ -400,13 +376,10 @@ describe('NotesService', () => {
           });
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
-        const savedNote = await service.updateNotePermissions(
-          'noteThatExists',
-          {
-            sharedToUsers: [userPermissionUpdate],
-            sharedToGroups: [groupPermissionUpate],
-          },
-        );
+        const savedNote = await service.updateNotePermissions(note, {
+          sharedToUsers: [userPermissionUpdate],
+          sharedToGroups: [groupPermissionUpate],
+        });
         expect(savedNote.userPermissions[0].user.userName).toEqual(
           userPermissionUpdate.username,
         );
@@ -430,9 +403,6 @@ describe('NotesService', () => {
           },
         ];
         jest
-          .spyOn(noteRepo, 'findOne')
-          .mockResolvedValueOnce(noteWithUserPermission);
-        jest
           .spyOn(noteRepo, 'save')
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
@@ -440,7 +410,7 @@ describe('NotesService', () => {
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
         const savedNote = await service.updateNotePermissions(
-          'noteThatExists',
+          noteWithUserPermission,
           {
             sharedToUsers: [userPermissionUpdate],
             sharedToGroups: [groupPermissionUpate],
@@ -468,9 +438,6 @@ describe('NotesService', () => {
             canEdit: !groupPermissionUpate.canEdit,
           },
         ];
-        jest
-          .spyOn(noteRepo, 'findOne')
-          .mockResolvedValueOnce(noteWithPreexistingPermissions);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
         jest
           .spyOn(noteRepo, 'save')
@@ -478,7 +445,7 @@ describe('NotesService', () => {
             return entry;
           });
         const savedNote = await service.updateNotePermissions(
-          'noteThatExists',
+          noteWithPreexistingPermissions,
           {
             sharedToUsers: [],
             sharedToGroups: [groupPermissionUpate],
@@ -502,9 +469,6 @@ describe('NotesService', () => {
           },
         ];
         jest
-          .spyOn(noteRepo, 'findOne')
-          .mockResolvedValueOnce(noteWithPreexistingPermissions);
-        jest
           .spyOn(noteRepo, 'save')
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
@@ -512,7 +476,7 @@ describe('NotesService', () => {
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
         const savedNote = await service.updateNotePermissions(
-          'noteThatExists',
+          noteWithPreexistingPermissions,
           {
             sharedToUsers: [userPermissionUpdate],
             sharedToGroups: [groupPermissionUpate],
@@ -548,9 +512,6 @@ describe('NotesService', () => {
           },
         ];
         jest
-          .spyOn(noteRepo, 'findOne')
-          .mockResolvedValueOnce(noteWithPreexistingPermissions);
-        jest
           .spyOn(noteRepo, 'save')
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
@@ -558,7 +519,7 @@ describe('NotesService', () => {
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
         const savedNote = await service.updateNotePermissions(
-          'noteThatExists',
+          noteWithPreexistingPermissions,
           {
             sharedToUsers: [userPermissionUpdate],
             sharedToGroups: [groupPermissionUpate],
@@ -580,9 +541,8 @@ describe('NotesService', () => {
     });
     describe('fails:', () => {
       it('userPermissions has duplicate entries', async () => {
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
         try {
-          await service.updateNotePermissions('noteThatExists', {
+          await service.updateNotePermissions(note, {
             sharedToUsers: [userPermissionUpdate, userPermissionUpdate],
             sharedToGroups: [],
           });
@@ -592,9 +552,8 @@ describe('NotesService', () => {
       });
 
       it('groupPermissions has duplicate entries', async () => {
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
         try {
-          await service.updateNotePermissions('noteThatExists', {
+          await service.updateNotePermissions(note, {
             sharedToUsers: [],
             sharedToGroups: [groupPermissionUpate, groupPermissionUpate],
           });
@@ -604,9 +563,8 @@ describe('NotesService', () => {
       });
 
       it('userPermissions and groupPermissions have duplicate entries', async () => {
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
         try {
-          await service.updateNotePermissions('noteThatExists', {
+          await service.updateNotePermissions(note, {
             sharedToUsers: [userPermissionUpdate, userPermissionUpdate],
             sharedToGroups: [groupPermissionUpate, groupPermissionUpate],
           });

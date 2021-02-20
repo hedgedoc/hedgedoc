@@ -180,29 +180,24 @@ export class NotesService {
 
   /**
    * @async
-   * Delete a note by either their id or alias.
-   * @param {string} noteIdOrAlias - the notes id or alias
+   * Delete a note
+   * @param {Note} note - the note to delete
    * @return {Note} the note, that was deleted
    * @throws {NotInDBError} there is no note with this id or alias
    */
-  async deleteNoteByIdOrAlias(noteIdOrAlias: string): Promise<Note> {
-    const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
+  async deleteNote(note: Note): Promise<Note> {
     return await this.noteRepository.remove(note);
   }
 
   /**
    * @async
-   * Update a notes content. The note is specified by either their id or alias.
-   * @param {string} noteIdOrAlias - the notes id or alias
+   * Update a notes content.
+   * @param {Note} note - the note
    * @param {string} noteContent - the new content
    * @return {Note} the note with a new revision and new content
    * @throws {NotInDBError} there is no note with this id or alias
    */
-  async updateNoteByIdOrAlias(
-    noteIdOrAlias: string,
-    noteContent: string,
-  ): Promise<Note> {
-    const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
+  async updateNote(note: Note, noteContent: string): Promise<Note> {
     const revisions = await note.revisions;
     //TODO: Calculate patch
     revisions.push(Revision.create(noteContent, noteContent));
@@ -212,19 +207,17 @@ export class NotesService {
 
   /**
    * @async
-   * Update a notes permissions. The note is specified by either their id or alias.
-   * @param {string} noteIdOrAlias - the notes id or alias
+   * Update a notes permissions.
+   * @param {Note} note - the note
    * @param {NotePermissionsUpdateDto} newPermissions - the permissions the not should be set to
    * @return {Note} the note with the new permissions
    * @throws {NotInDBError} there is no note with this id or alias
    * @throws {PermissionsUpdateInconsistentError} the new permissions specify a user or group twice.
    */
   async updateNotePermissions(
-    noteIdOrAlias: string,
+    note: Note,
     newPermissions: NotePermissionsUpdateDto,
   ): Promise<Note> {
-    const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
-
     const users = newPermissions.sharedToUsers.map(
       (userPermission) => userPermission.username,
     );
