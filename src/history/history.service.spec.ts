@@ -23,6 +23,7 @@ import { Repository } from 'typeorm';
 import { NotInDBError } from '../errors/errors';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
+import { Group } from '../groups/group.entity';
 
 describe('HistoryService', () => {
   let service: HistoryService;
@@ -59,6 +60,8 @@ describe('HistoryService', () => {
       .overrideProvider(getRepositoryToken(NoteGroupPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(NoteUserPermission))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Group))
       .useValue({})
       .compile();
 
