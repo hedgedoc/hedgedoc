@@ -37,6 +37,8 @@ import { NoteGroupPermission } from '../permissions/note-group-permission.entity
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { GroupsModule } from '../groups/groups.module';
 import { Group } from '../groups/group.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import appConfigMock from '../config/app.config.mock';
 
 describe('NotesService', () => {
   let service: NotesService;
@@ -58,7 +60,16 @@ describe('NotesService', () => {
           useClass: Repository,
         },
       ],
-      imports: [LoggerModule, UsersModule, GroupsModule, RevisionsModule],
+      imports: [
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock],
+        }),
+        LoggerModule,
+        UsersModule,
+        GroupsModule,
+        RevisionsModule,
+      ],
     })
       .overrideProvider(getRepositoryToken(Note))
       .useClass(Repository)

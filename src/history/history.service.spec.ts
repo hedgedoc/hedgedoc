@@ -30,6 +30,8 @@ import { NotInDBError } from '../errors/errors';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Group } from '../groups/group.entity';
+import { ConfigModule } from '@nestjs/config';
+import appConfigMock from '../config/app.config.mock';
 
 describe('HistoryService', () => {
   let service: HistoryService;
@@ -45,7 +47,15 @@ describe('HistoryService', () => {
           useClass: Repository,
         },
       ],
-      imports: [LoggerModule, UsersModule, NotesModule],
+      imports: [
+        LoggerModule,
+        UsersModule,
+        NotesModule,
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock],
+        }),
+      ],
     })
       .overrideProvider(getRepositoryToken(User))
       .useValue({})

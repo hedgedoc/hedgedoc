@@ -11,6 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { HistoryEntry } from './history-entry.entity';
 import { UsersModule } from '../users/users.module';
 import { NotesModule } from '../notes/notes.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   providers: [HistoryService],
@@ -20,6 +21,7 @@ import { NotesModule } from '../notes/notes.module';
     TypeOrmModule.forFeature([HistoryEntry]),
     UsersModule,
     NotesModule,
+    ConfigModule,
   ],
 })
 export class HistoryModule {}
