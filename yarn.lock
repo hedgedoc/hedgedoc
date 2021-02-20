@@ -2268,10 +2268,10 @@
   resolved "https://registry.yarnpkg.com/@types/linkify-it/-/linkify-it-3.0.0.tgz#c0ca4c253664492dbf47a646f31cfd483a6bbc95"
   integrity sha512-x9OaQQTb1N2hPZ/LWJsqushexDvz7NgzuZxiRmZio44WPuolTZNHDBCrOxCzRVOMwamJRO2dWax5NbygOf1OTQ==
 
-"@types/luxon@1.25.2":
-  version "1.25.2"
-  resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-1.25.2.tgz#f0c98a1f8191883b4918d5e096d6a0eab4d66f76"
-  integrity sha512-lMc5+7ynC4+Pu3RR/FvKGx7WHakrPPTtFEZUy1cMXTbH5fQbso+LZjM/G1moOBpCR9XGNa39gXOQu89lpXTeiw==
+"@types/luxon@1.26.0":
+  version "1.26.0"
+  resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-1.26.0.tgz#8e783986370ad3bb9f885d93eb1a91caeecaed36"
+  integrity sha512-zYmLYGczqBaOFaFjR1giG1QCbGMlXWOJcYgH9Mnk0MGcZHq1aer3ZwGXX8vd9NOfai6mAI/mVU6jD9hK0Wys7Q==
 
 "@types/markdown-it-container@2.0.3":
   version "2.0.3"
@@ -2301,10 +2301,10 @@
   resolved "https://registry.yarnpkg.com/@types/mdurl/-/mdurl-1.0.2.tgz#e2ce9d83a613bacf284c7be7d491945e39e1f8e9"
   integrity sha512-eC4U9MlIcu2q0KQmXszyn5Akca/0jrQmwDRgpAMJai7qBWq4amIQhZyNau4VYGtCeALvW1/NtjzJJ567aZxfKA==
 
-"@types/mermaid@8.2.1":
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/@types/mermaid/-/mermaid-8.2.1.tgz#778fd45393965d6acf885b878911627fe9365d56"
-  integrity sha512-y3n4I34mKBGmHPiP7+dL7c+gMe+dI9h3I/5N6WJXHpnVn8hHcWH+YSsf+GwNx1LmjYVHmK8rcfbumjG+uprS0Q==
+"@types/mermaid@8.2.2":
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/@types/mermaid/-/mermaid-8.2.2.tgz#0f55568d7cb4272f21cacefe2005d2f0527ea612"
+  integrity sha512-39J4oa7WH1MFrCZd1VTiaywNAHH53q2PJLwFze/9XBwk27zTztCM7L0inLbIAN2ZvVb+4EJLWy/h1ooQ7n9Ckg==
 
 "@types/minimatch@*":
   version "3.0.3"
@@ -2323,10 +2323,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.28.tgz#cade4b64f8438f588951a6b35843ce536853f25b"
   integrity sha512-lg55ArB+ZiHHbBBttLpzD07akz0QPrZgUODNakeC09i62dnrywr9mFErHuaPlB6I7z+sEbK+IYmplahvplCj2g==
 
-"@types/node@12.20.0":
-  version "12.20.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.20.0.tgz#692dfdecd6c97f5380c42dd50f19261f9f604deb"
-  integrity sha512-0/41wHcurotvSOTHQUFkgL702c3pyWR1mToSrrX3pGPvGfpHTv3Ksx0M4UVuU5VJfjVb62Eyr1eKO1tWNUCg2Q==
+"@types/node@12.20.4":
+  version "12.20.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.20.4.tgz#73687043dd00fcb6962c60fbf499553a24d6bdf2"
+  integrity sha512-xRCgeE0Q4pT5UZ189TJ3SpYuX/QGl6QIAOAIeDSbAVAd2gX1NxSZup4jNVK7cxIeP8KDSbJgcckun495isP1jQ==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
