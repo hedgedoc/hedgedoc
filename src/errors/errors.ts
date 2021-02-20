@@ -12,6 +12,10 @@ export class AlreadyInDBError extends Error {
   name = 'AlreadyInDBError';
 }
 
+export class ForbiddenIdError extends Error {
+  name = 'ForbiddenIdError';
+}
+
 export class ClientError extends Error {
   name = 'ClientError';
 }
