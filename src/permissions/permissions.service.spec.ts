@@ -23,11 +23,6 @@ import { Revision } from '../revisions/revision.entity';
 import { Tag } from '../notes/tag.entity';
 import { Group } from '../groups/group.entity';
 
-jest.mock('../permissions/note-group-permission.entity.ts');
-jest.mock('../groups/group.entity.ts');
-jest.mock('../notes/note.entity.ts');
-jest.mock('../users/user.entity.ts');
-
 describe('PermissionsService', () => {
   let permissionsService: PermissionsService;
 
@@ -55,6 +50,8 @@ describe('PermissionsService', () => {
       .overrideProvider(getRepositoryToken(NoteGroupPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(NoteUserPermission))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Group))
       .useValue({})
       .compile();
     permissionsService = module.get<PermissionsService>(PermissionsService);
@@ -246,33 +243,27 @@ describe('PermissionsService', () => {
   function createGroups(): { [id: string]: Group } {
     const result: { [id: string]: Group } = {};
 
-    const everybody: Group = new Group();
+    const everybody: Group = Group.create('everybody', 'Everybody');
     everybody.special = true;
-    everybody.name = 'everybody';
     result['everybody'] = everybody;
 
-    const loggedIn = new Group();
+    const loggedIn = Group.create('loggedIn', 'loggedIn');
     loggedIn.special = true;
-    loggedIn.name = 'loggedIn';
     result['loggedIn'] = loggedIn;
 
-    const user1group = new Group();
-    user1group.name = 'user1group';
+    const user1group = Group.create('user1group', 'user1group');
     user1group.members = [user1];
     result['user1group'] = user1group;
 
-    const user2group = new Group();
-    user2group.name = 'user2group';
+    const user2group = Group.create('user2group', 'user2group');
     user2group.members = [user2];
     result['user2group'] = user2group;
 
-    const user1and2group = new Group();
-    user1and2group.name = 'user1and2group';
+    const user1and2group = Group.create('user1and2group', 'user1and2group');
     user1and2group.members = [user1, user2];
     result['user1and2group'] = user1and2group;
 
-    const user2and1group = new Group();
-    user2and1group.name = 'user2and1group';
+    const user2and1group = Group.create('user2and1group', 'user2and1group');
     user2and1group.members = [user2, user1];
     result['user2and1group'] = user2and1group;
 
@@ -292,10 +283,7 @@ describe('PermissionsService', () => {
       group: Group,
       write: boolean,
     ): NoteGroupPermission {
-      const noteGroupPermission = new NoteGroupPermission();
-      noteGroupPermission.canEdit = write;
-      noteGroupPermission.group = group;
-      return noteGroupPermission;
+      return NoteGroupPermission.create(group, write);
     }
 
     const everybodyRead = createNoteGroupPermission(groups['everybody'], false);

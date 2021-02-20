@@ -18,4 +18,14 @@ export class NoteUserPermission {
 
   @Column()
   canEdit: boolean;
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private constructor() {}
+
+  public static create(user: User, canEdit: boolean): NoteUserPermission {
+    const userPermission = new NoteUserPermission();
+    userPermission.user = user;
+    userPermission.canEdit = canEdit;
+    return userPermission;
+  }
 }

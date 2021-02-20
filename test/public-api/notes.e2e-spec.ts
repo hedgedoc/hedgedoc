@@ -74,7 +74,7 @@ describe('Notes', () => {
       .expect(201);
     expect(response.body.metadata?.id).toBeDefined();
     expect(
-      await notesService.getCurrentContent(
+      await notesService.getNoteContentByNote(
         await notesService.getNoteByIdOrAlias(response.body.metadata.id),
       ),
     ).toEqual(content);
@@ -109,10 +109,19 @@ describe('Notes', () => {
         .expect(201);
       expect(response.body.metadata?.id).toBeDefined();
       return expect(
-        await notesService.getCurrentContent(
+        await notesService.getNoteContentByNote(
           await notesService.getNoteByIdOrAlias(response.body.metadata?.id),
         ),
       ).toEqual(content);
+    });
+
+    it('fails with a existing alias', async () => {
+      await request(app.getHttpServer())
+        .post('/notes/test2')
+        .set('Content-Type', 'text/markdown')
+        .send(content)
+        .expect('Content-Type', /json/)
+        .expect(400);
     });
   });
 
@@ -141,7 +150,7 @@ describe('Notes', () => {
         .send(changedContent)
         .expect(200);
       await expect(
-        await notesService.getCurrentContent(
+        await notesService.getNoteContentByNote(
           await notesService.getNoteByIdOrAlias('test4'),
         ),
       ).toEqual(changedContent);
@@ -197,7 +206,7 @@ describe('Notes', () => {
       // wait one second
       await new Promise((r) => setTimeout(r, 1000));
       // update the note
-      await notesService.updateNoteByIdOrAlias('test5a', 'More test content');
+      await notesService.updateNote(note, 'More test content');
       const metadata = await request(app.getHttpServer())
         .get('/notes/test5a/metadata')
         .expect(200);

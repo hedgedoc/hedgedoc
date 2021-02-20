@@ -27,6 +27,7 @@ import { promises as fs } from 'fs';
 import { ClientError, NotInDBError, PermissionError } from '../errors/errors';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
+import { Group } from '../groups/group.entity';
 
 describe('MediaService', () => {
   let service: MediaService;
@@ -78,6 +79,8 @@ describe('MediaService', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(MediaUpload))
       .useClass(Repository)
+      .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
       .compile();
 
     service = module.get<MediaService>(MediaService);

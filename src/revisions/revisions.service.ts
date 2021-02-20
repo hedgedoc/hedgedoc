@@ -12,6 +12,7 @@ import { NotesService } from '../notes/notes.service';
 import { RevisionMetadataDto } from './revision-metadata.dto';
 import { RevisionDto } from './revision.dto';
 import { Revision } from './revision.entity';
+import { Note } from '../notes/note.entity';
 
 @Injectable()
 export class RevisionsService {
@@ -24,8 +25,7 @@ export class RevisionsService {
     this.logger.setContext(RevisionsService.name);
   }
 
-  async getAllRevisions(noteIdOrAlias: string): Promise<Revision[]> {
-    const note = await this.notesService.getNoteByIdOrAlias(noteIdOrAlias);
+  async getAllRevisions(note: Note): Promise<Revision[]> {
     return await this.revisionRepository.find({
       where: {
         note: note,
@@ -33,11 +33,7 @@ export class RevisionsService {
     });
   }
 
-  async getRevision(
-    noteIdOrAlias: string,
-    revisionId: number,
-  ): Promise<Revision> {
-    const note = await this.notesService.getNoteByIdOrAlias(noteIdOrAlias);
+  async getRevision(note: Note, revisionId: number): Promise<Revision> {
     return await this.revisionRepository.findOne({
       where: {
         id: revisionId,
