@@ -18,4 +18,14 @@ export class NoteGroupPermission {
 
   @Column()
   canEdit: boolean;
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private constructor() {}
+
+  public static create(group: Group, canEdit: boolean): NoteGroupPermission {
+    const groupPermission = new NoteGroupPermission();
+    groupPermission.group = group;
+    groupPermission.canEdit = canEdit;
+    return groupPermission;
+  }
 }
