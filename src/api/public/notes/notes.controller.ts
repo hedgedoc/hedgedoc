@@ -5,6 +5,7 @@
  */
 
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -18,7 +19,11 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { NotInDBError } from '../../../errors/errors';
+import {
+  AlreadyInDBError,
+  NotInDBError,
+  PermissionsUpdateInconsistentError,
+} from '../../../errors/errors';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import {
   NotePermissionsDto,
@@ -100,9 +105,16 @@ export class NotesController {
       throw new UnauthorizedException('Creating note denied!');
     }
     this.logger.debug('Got raw markdown:\n' + text, 'createNamedNote');
-    return this.noteService.toNoteDto(
-      await this.noteService.createNote(text, noteAlias, req.user),
-    );
+    try {
+      return this.noteService.toNoteDto(
+        await this.noteService.createNote(text, noteAlias, req.user),
+      );
+    } catch (e) {
+      if (e instanceof AlreadyInDBError) {
+        throw new BadRequestException(e.message);
+      }
+      throw e;
+    }
   }
 
   @UseGuards(TokenAuthGuard)
@@ -190,6 +202,9 @@ export class NotesController {
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
+      }
+      if (e instanceof PermissionsUpdateInconsistentError) {
+        throw new BadRequestException(e.message);
       }
       throw e;
     }
