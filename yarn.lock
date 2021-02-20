@@ -11841,10 +11841,10 @@ react-bootstrap-typeahead@5.1.4:
     scroll-into-view-if-needed "^2.2.20"
     warning "^4.0.1"
 
-react-bootstrap@1.4.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-1.4.3.tgz#9a76a66800b57f422dd824c9dbe4c9dcef634790"
-  integrity sha512-4tYhk26KRnK0myMEp2wvNjOvnHMwWfa6pWFIiCtj9wewYaTxP7TrCf7MwcIMBgUzyX0SJXx6UbbDG0+hObiXNg==
+react-bootstrap@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-1.5.0.tgz#86e4bd05ca3a0bd7486f7046643e9be5e2d86bbd"
+  integrity sha512-t1o4kP3coj2HIaBepJxGAc7HZ1fWGria/s0Yr9JUmNkCilyrnXtK209qn28vuZ4muhnA0uR0GMMXAMrLsLyiIw==
   dependencies:
     "@babel/runtime" "^7.4.2"
     "@restart/context" "^2.1.4"
@@ -11860,7 +11860,7 @@ react-bootstrap@1.4.3:
     invariant "^2.2.4"
     prop-types "^15.7.2"
     prop-types-extra "^1.1.0"
-    react-overlays "^4.1.0"
+    react-overlays "^4.1.1"
     react-transition-group "^4.4.1"
     uncontrollable "^7.0.0"
     warning "^4.0.3"
@@ -11956,7 +11956,7 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-overlays@^4.1.0, react-overlays@^4.1.1:
+react-overlays@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/react-overlays/-/react-overlays-4.1.1.tgz#0060107cbe1c5171a744ccda3fbf0556d064bc5f"
   integrity sha512-WtJifh081e6M24KnvTQoNjQEpz7HoLxqt8TwZM7LOYIkYJ8i/Ly1Xi7RVte87ZVnmqQ4PFaFiNHZhSINPSpdBQ==
