@@ -79,7 +79,7 @@ export class HistoryService {
       );
     }
     entry.pinStatus = updateDto.pinStatus;
-    return this.historyEntryRepository.save(entry);
+    return await this.historyEntryRepository.save(entry);
   }
 
   async deleteHistoryEntry(noteIdOrAlias: string, user: User): Promise<void> {

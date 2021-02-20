@@ -67,7 +67,7 @@ export class NotesController {
       throw new UnauthorizedException('Creating note denied!');
     }
     this.logger.debug('Got raw markdown:\n' + text);
-    return this.noteService.toNoteDto(
+    return await this.noteService.toNoteDto(
       await this.noteService.createNote(text, undefined, req.user),
     );
   }
@@ -91,7 +91,7 @@ export class NotesController {
       throw new UnauthorizedException('Reading note denied!');
     }
     await this.historyService.createOrUpdateHistoryEntry(note, req.user);
-    return this.noteService.toNoteDto(note);
+    return await this.noteService.toNoteDto(note);
   }
 
   @UseGuards(TokenAuthGuard)
@@ -106,7 +106,7 @@ export class NotesController {
     }
     this.logger.debug('Got raw markdown:\n' + text, 'createNamedNote');
     try {
-      return this.noteService.toNoteDto(
+      return await this.noteService.toNoteDto(
         await this.noteService.createNote(text, noteAlias, req.user),
       );
     } catch (e) {
@@ -153,7 +153,7 @@ export class NotesController {
         throw new UnauthorizedException('Updating note denied!');
       }
       this.logger.debug('Got raw markdown:\n' + text, 'updateNote');
-      return this.noteService.toNoteDto(
+      return await this.noteService.toNoteDto(
         await this.noteService.updateNote(note, text),
       );
     } catch (e) {
@@ -196,7 +196,7 @@ export class NotesController {
       if (!this.permissionsService.mayRead(req.user, note)) {
         throw new UnauthorizedException('Reading note denied!');
       }
-      return this.noteService.toNoteMetadataDto(note);
+      return await this.noteService.toNoteMetadataDto(note);
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
@@ -220,7 +220,7 @@ export class NotesController {
       if (!this.permissionsService.isOwner(req.user, note)) {
         throw new UnauthorizedException('Updating note denied!');
       }
-      return this.noteService.toNotePermissionsDto(
+      return await this.noteService.toNotePermissionsDto(
         await this.noteService.updateNotePermissions(note, updateDto),
       );
     } catch (e) {
@@ -243,7 +243,7 @@ export class NotesController {
         throw new UnauthorizedException('Reading note denied!');
       }
       const revisions = await this.revisionsService.getAllRevisions(note);
-      return Promise.all(
+      return await Promise.all(
         revisions.map((revision) =>
           this.revisionsService.toRevisionMetadataDto(revision),
         ),

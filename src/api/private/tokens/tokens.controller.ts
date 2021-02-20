@@ -44,12 +44,16 @@ export class TokensController {
     @Body('validUntil') validUntil: TimestampMillis,
   ): Promise<AuthTokenWithSecretDto> {
     // ToDo: Get real userName
-    return this.authService.createTokenForUser('hardcoded', label, validUntil);
+    return await this.authService.createTokenForUser(
+      'hardcoded',
+      label,
+      validUntil,
+    );
   }
 
   @Delete('/:keyId')
   @HttpCode(204)
   async deleteToken(@Param('keyId') keyId: string) {
-    return this.authService.removeToken(keyId);
+    return await this.authService.removeToken(keyId);
   }
 }

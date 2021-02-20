@@ -46,7 +46,7 @@ export class FilesystemBackend implements MediaBackend {
   async deleteFile(fileName: string, _: BackendData): Promise<void> {
     const filePath = this.getFilePath(fileName);
     try {
-      return fs.unlink(filePath);
+      return await fs.unlink(filePath);
     } catch (e) {
       this.logger.error(e.message, e.stack, 'deleteFile');
       throw new MediaBackendError(`Could not delete '${filePath}'`);

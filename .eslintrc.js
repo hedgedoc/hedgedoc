@@ -27,5 +27,7 @@ module.exports = {
       { argsIgnorePattern: '^_+$' },
     ],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'no-return-await': 'off',
+    '@typescript-eslint/return-await': ['error', 'always'],
   },
 };
