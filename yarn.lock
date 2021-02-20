@@ -1205,13 +1205,13 @@
     tunnel-agent "^0.6.0"
     uuid "^3.3.2"
 
-"@cypress/webpack-preprocessor@5.5.0":
-  version "5.5.0"
-  resolved "https://registry.yarnpkg.com/@cypress/webpack-preprocessor/-/webpack-preprocessor-5.5.0.tgz#e7010b2ee7449691cc16a9d5d1956af17ea175fd"
-  integrity sha512-iqwPygSNZ1u6bM3r5QRVv6qYngkcgI2xCzi9Jmo4mrkcofwX08UaItJq7xlB2/dHbB2aryQYOsfe4xNKtQIm3A==
+"@cypress/webpack-preprocessor@5.6.0":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@cypress/webpack-preprocessor/-/webpack-preprocessor-5.6.0.tgz#9648ae22d2e52f17a604e2a493af27a9c96568bd"
+  integrity sha512-kSelTDe6gs3Skp4vPP2vfTvAl+Ua+9rR/AMTir7bgJihDvzFESqnjWtF6N1TrPo+vCFVGx0VUA6JUvDkhvpwhA==
   dependencies:
     bluebird "^3.7.1"
-    debug "^4.1.1"
+    debug "4.3.2"
     lodash "^4.17.20"
 
 "@cypress/xvfb@^1.2.4":
@@ -5634,6 +5634,13 @@ debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.9:
   integrity sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==
   dependencies:
     ms "2.0.0"
+
+debug@4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.2.tgz#f0a49c18ac8779e31d4a0c6029dfb76873c7428b"
+  integrity sha512-mOp8wKcvj7XxC78zLgw/ZA+6TSgkoE2C/ienthhRD298T7UNwAg9diBpLRxC0mOezLl4B0xV7M0cCO6P/O0Xhw==
+  dependencies:
+    ms "2.1.2"
 
 debug@^3.1.0, debug@^3.1.1, debug@^3.2.5:
   version "3.2.7"
