@@ -114,6 +114,15 @@ describe('Notes', () => {
         ),
       ).toEqual(content);
     });
+
+    it('fails with a existing alias', async () => {
+      await request(app.getHttpServer())
+        .post('/notes/test2')
+        .set('Content-Type', 'text/markdown')
+        .send(content)
+        .expect('Content-Type', /json/)
+        .expect(400);
+    });
   });
 
   describe('DELETE /notes/{note}', () => {
