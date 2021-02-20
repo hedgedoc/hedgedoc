@@ -17,6 +17,7 @@ import { promises as fs } from 'fs';
 import * as request from 'supertest';
 import { PublicApiModule } from '../../src/api/public/public-api.module';
 import mediaConfigMock from '../../src/config/media.config.mock';
+import appConfigMock from '../../src/config/app.config.mock';
 import { GroupsModule } from '../../src/groups/groups.module';
 import { LoggerModule } from '../../src/logger/logger.module';
 import { NestConsoleLoggerService } from '../../src/logger/nest-console-logger.service';
@@ -40,7 +41,7 @@ describe('Notes', () => {
       imports: [
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [mediaConfigMock],
+          load: [mediaConfigMock, appConfigMock],
         }),
         PublicApiModule,
         MediaModule,

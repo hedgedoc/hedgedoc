@@ -11,12 +11,14 @@ import { NotesModule } from '../notes/notes.module';
 import { Authorship } from './authorship.entity';
 import { Revision } from './revision.entity';
 import { RevisionsService } from './revisions.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Revision, Authorship]),
     forwardRef(() => NotesModule),
     LoggerModule,
+    ConfigModule,
   ],
   providers: [RevisionsService],
   exports: [RevisionsService],

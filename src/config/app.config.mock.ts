@@ -8,4 +8,5 @@ import { registerAs } from '@nestjs/config';
 
 export default registerAs('appConfig', () => ({
   port: 3000,
+  forbiddenNoteIds: ['forbiddenNoteId'],
 }));

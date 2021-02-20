@@ -30,6 +30,7 @@ import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { GroupsService } from '../groups/groups.service';
 import { checkArrayForDuplicates } from '../utils/arrayDuplicatCheck';
+import appConfiguration, { AppConfig } from '../config/app.config';
 
 @Injectable()
 export class NotesService {
@@ -41,6 +42,8 @@ export class NotesService {
     @Inject(GroupsService) private groupsService: GroupsService,
     @Inject(forwardRef(() => RevisionsService))
     private revisionsService: RevisionsService,
+    @Inject(appConfiguration.KEY)
+    private appConfig: AppConfig,
   ) {
     this.logger.setContext(NotesService.name);
   }

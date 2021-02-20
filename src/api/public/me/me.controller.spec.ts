@@ -23,6 +23,8 @@ import { HistoryEntry } from '../../../history/history-entry.entity';
 import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
 import { Group } from '../../../groups/group.entity';
+import { ConfigModule } from '@nestjs/config';
+import appConfigMock from '../../../config/app.config.mock';
 
 describe('Me Controller', () => {
   let controller: MeController;
@@ -30,7 +32,16 @@ describe('Me Controller', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [MeController],
-      imports: [UsersModule, HistoryModule, NotesModule, LoggerModule],
+      imports: [
+        UsersModule,
+        HistoryModule,
+        NotesModule,
+        LoggerModule,
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock],
+        }),
+      ],
     })
       .overrideProvider(getRepositoryToken(User))
       .useValue({})
