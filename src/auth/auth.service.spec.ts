@@ -69,7 +69,7 @@ describe('AuthService', () => {
         .then((result) => expect(result).toBeTruthy());
     });
     it('fails, if secret is too short', async () => {
-      const secret = service.BufferToBase64Url(await service.randomString(54));
+      const secret = service.bufferToBase64Url(await service.randomString(54));
       const hash = await service.hashPassword(secret);
       service
         .checkPassword(secret, hash)
@@ -277,10 +277,10 @@ describe('AuthService', () => {
     });
   });
 
-  describe('BufferToBase64Url', () => {
+  describe('bufferToBase64Url', () => {
     it('works', () => {
       expect(
-        service.BufferToBase64Url(
+        service.bufferToBase64Url(
           Buffer.from('testsentence is a test sentence'),
         ),
       ).toEqual('dGVzdHNlbnRlbmNlIGlzIGEgdGVzdCBzZW50ZW5jZQ');

@@ -69,7 +69,7 @@ export class AuthService {
     return randomBytes(length);
   }
 
-  BufferToBase64Url(text: Buffer): string {
+  bufferToBase64Url(text: Buffer): string {
     // This is necessary as the is no base64url encoding in the toString method
     // but as can be seen on https://tools.ietf.org/html/rfc4648#page-7
     // base64url is quite easy buildable from base64
@@ -93,8 +93,8 @@ export class AuthService {
         `User '${user.userName}' has already 200 tokens and can't have anymore`,
       );
     }
-    const secret = this.BufferToBase64Url(await this.randomString(54));
-    const keyId = this.BufferToBase64Url(await this.randomString(8));
+    const secret = this.bufferToBase64Url(await this.randomString(54));
+    const keyId = this.bufferToBase64Url(await this.randomString(8));
     const accessToken = await this.hashPassword(secret);
     let token;
     // Tokens can only be valid for a maximum of 2 years
