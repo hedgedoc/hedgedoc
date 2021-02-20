@@ -10,7 +10,7 @@
 */
 
 import { INestApplication } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as request from 'supertest';
@@ -35,6 +35,7 @@ describe('Notes', () => {
   let notesService: NotesService;
   let user: User;
   let content: string;
+  let forbiddenNoteId: string;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -63,6 +64,8 @@ describe('Notes', () => {
       .useClass(MockAuthGuard)
       .compile();
 
+    const config = moduleRef.get<ConfigService>(ConfigService);
+    forbiddenNoteId = config.get('appConfig').forbiddenNoteIds[0];
     app = moduleRef.createNestApplication();
     await app.init();
     notesService = moduleRef.get(NotesService);
@@ -121,6 +124,15 @@ describe('Notes', () => {
       ).toEqual(content);
     });
 
+    it('fails with a forbidden alias', async () => {
+      await request(app.getHttpServer())
+        .post(`/notes/${forbiddenNoteId}`)
+        .set('Content-Type', 'text/markdown')
+        .send(content)
+        .expect('Content-Type', /json/)
+        .expect(400);
+    });
+
     it('fails with a existing alias', async () => {
       await request(app.getHttpServer())
         .post('/notes/test2')
@@ -138,6 +150,11 @@ describe('Notes', () => {
       await expect(notesService.getNoteByIdOrAlias('test3')).rejects.toEqual(
         new NotInDBError("Note with id/alias 'test3' not found."),
       );
+    });
+    it('fails with a forbidden alias', async () => {
+      await request(app.getHttpServer())
+        .delete(`/notes/${forbiddenNoteId}`)
+        .expect(400);
     });
     it('fails with a non-existing alias', async () => {
       await request(app.getHttpServer())
@@ -161,6 +178,13 @@ describe('Notes', () => {
         ),
       ).toEqual(changedContent);
       expect(response.body.content).toEqual(changedContent);
+    });
+    it('fails with a forbidden alias', async () => {
+      await request(app.getHttpServer())
+        .put(`/notes/${forbiddenNoteId}`)
+        .set('Content-Type', 'text/markdown')
+        .send(changedContent)
+        .expect(400);
     });
     it('fails with a non-existing alias', async () => {
       await request(app.getHttpServer())
@@ -194,6 +218,12 @@ describe('Notes', () => {
       expect(typeof metadata.body.updateUser.photo).toEqual('string');
       expect(typeof metadata.body.viewCount).toEqual('number');
       expect(metadata.body.editedBy).toEqual([]);
+    });
+
+    it('fails with a forbidden alias', async () => {
+      await request(app.getHttpServer())
+        .get(`/notes/${forbiddenNoteId}/metadata`)
+        .expect(400);
     });
 
     it('fails with non-existing alias', async () => {
@@ -231,6 +261,12 @@ describe('Notes', () => {
       expect(response.body).toHaveLength(1);
     });
 
+    it('fails with a forbidden alias', async () => {
+      await request(app.getHttpServer())
+        .get(`/notes/${forbiddenNoteId}/revisions`)
+        .expect(400);
+    });
+
     it('fails with non-existing alias', async () => {
       // check if a missing note correctly returns 404
       await request(app.getHttpServer())
@@ -250,6 +286,11 @@ describe('Notes', () => {
         .expect(200);
       expect(response.body.content).toEqual(content);
     });
+    it('fails with a forbidden alias', async () => {
+      await request(app.getHttpServer())
+        .get(`/notes/${forbiddenNoteId}/revisions/1`)
+        .expect(400);
+    });
     it('fails with non-existing alias', async () => {
       // check if a missing note correctly returns 404
       await request(app.getHttpServer())
@@ -267,7 +308,11 @@ describe('Notes', () => {
         .expect(200);
       expect(response.text).toEqual(content);
     });
-
+    it('fails with a forbidden alias', async () => {
+      await request(app.getHttpServer())
+        .get(`/notes/${forbiddenNoteId}/content`)
+        .expect(400);
+    });
     it('fails with non-existing alias', async () => {
       // check if a missing note correctly returns 404
       await request(app.getHttpServer())
