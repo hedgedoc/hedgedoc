@@ -21,6 +21,7 @@ import {
 } from '@nestjs/common';
 import {
   AlreadyInDBError,
+  ForbiddenIdError,
   NotInDBError,
   PermissionsUpdateInconsistentError,
 } from '../../../errors/errors';
@@ -86,6 +87,9 @@ export class NotesController {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
       }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
+      }
       throw e;
     }
     if (!this.permissionsService.mayRead(req.user, note)) {
@@ -114,6 +118,9 @@ export class NotesController {
       if (e instanceof AlreadyInDBError) {
         throw new BadRequestException(e.message);
       }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
+      }
       throw e;
     }
   }
@@ -136,6 +143,9 @@ export class NotesController {
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
+      }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
       }
       throw e;
     }
@@ -161,6 +171,9 @@ export class NotesController {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
       }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
+      }
       throw e;
     }
   }
@@ -181,6 +194,9 @@ export class NotesController {
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
+      }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
       }
       throw e;
     }
@@ -205,6 +221,9 @@ export class NotesController {
       if (e instanceof PermissionsUpdateInconsistentError) {
         throw new BadRequestException(e.message);
       }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
+      }
       throw e;
     }
   }
@@ -227,6 +246,9 @@ export class NotesController {
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
+      }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
       }
       throw e;
     }
@@ -253,6 +275,9 @@ export class NotesController {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
       }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
+      }
       throw e;
     }
   }
@@ -275,6 +300,9 @@ export class NotesController {
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
+      }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
       }
       throw e;
     }
