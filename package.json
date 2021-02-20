@@ -38,7 +38,7 @@
         "abcjs": "6.0.0-beta.27",
         "bootstrap": "4.6.0",
         "browserstack-cypress-cli": "1.7.1",
-        "codemirror": "5.59.2",
+        "codemirror": "5.59.3",
         "copy-webpack-plugin": "6.4.1",
         "d3-graphviz": "3.1.0",
         "diff": "5.0.0",
