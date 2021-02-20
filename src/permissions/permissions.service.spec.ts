@@ -23,11 +23,6 @@ import { Revision } from '../revisions/revision.entity';
 import { Tag } from '../notes/tag.entity';
 import { Group } from '../groups/group.entity';
 
-jest.mock('../permissions/note-group-permission.entity.ts');
-jest.mock('../groups/group.entity.ts');
-jest.mock('../notes/note.entity.ts');
-jest.mock('../users/user.entity.ts');
-
 describe('PermissionsService', () => {
   let permissionsService: PermissionsService;
 
@@ -292,10 +287,7 @@ describe('PermissionsService', () => {
       group: Group,
       write: boolean,
     ): NoteGroupPermission {
-      const noteGroupPermission = new NoteGroupPermission();
-      noteGroupPermission.canEdit = write;
-      noteGroupPermission.group = group;
-      return noteGroupPermission;
+      return NoteGroupPermission.create(group, write);
     }
 
     const everybodyRead = createNoteGroupPermission(groups['everybody'], false);
