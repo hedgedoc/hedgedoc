@@ -49,17 +49,17 @@ export class AuthService {
     }
     const accessToken = await this.getAuthTokenAndValidate(keyId, secret);
     await this.setLastUsedToken(keyId);
-    return this.usersService.getUserByUsername(accessToken.user.userName);
+    return await this.usersService.getUserByUsername(accessToken.user.userName);
   }
 
   async hashPassword(cleartext: string): Promise<string> {
     // hash the password with bcrypt and 2^12 iterations
     // this was decided on the basis of https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#bcrypt
-    return hash(cleartext, 12);
+    return await hash(cleartext, 12);
   }
 
   async checkPassword(cleartext: string, password: string): Promise<boolean> {
-    return compare(cleartext, password);
+    return await compare(cleartext, password);
   }
 
   async randomString(length: number): Promise<Buffer> {
@@ -209,13 +209,13 @@ export class AuthService {
   // Delete all non valid tokens  every sunday on 3:00 AM
   @Cron('0 0 3 * * 0')
   async handleCron() {
-    return this.removeInvalidTokens();
+    return await this.removeInvalidTokens();
   }
 
   // Delete all non valid tokens 5 sec after startup
   @Timeout(5000)
   async handleTimeout() {
-    return this.removeInvalidTokens();
+    return await this.removeInvalidTokens();
   }
 
   async removeInvalidTokens() {

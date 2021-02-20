@@ -202,7 +202,7 @@ export class NotesService {
     //TODO: Calculate patch
     revisions.push(Revision.create(noteContent, noteContent));
     note.revisions = Promise.resolve(revisions);
-    return this.noteRepository.save(note);
+    return await this.noteRepository.save(note);
   }
 
   /**

@@ -53,7 +53,7 @@ export class MeController {
   @Get('history')
   async getUserHistory(@Request() req): Promise<HistoryEntryDto[]> {
     const foundEntries = await this.historyService.getEntriesByUser(req.user);
-    return Promise.all(
+    return await Promise.all(
       foundEntries.map(
         async (entry) => await this.historyService.toHistoryEntryDto(entry),
       ),
@@ -69,7 +69,7 @@ export class MeController {
   ): Promise<HistoryEntryDto> {
     // ToDo: Check if user is allowed to pin this history entry
     try {
-      return this.historyService.toHistoryEntryDto(
+      return await this.historyService.toHistoryEntryDto(
         await this.historyService.updateHistoryEntry(
           note,
           req.user,
@@ -103,7 +103,7 @@ export class MeController {
   @Get('notes')
   async getMyNotes(@Request() req): Promise<NoteMetadataDto[]> {
     const notes = await this.notesService.getUserNotes(req.user);
-    return Promise.all(
+    return await Promise.all(
       notes.map((note) => this.notesService.toNoteMetadataDto(note)),
     );
   }
