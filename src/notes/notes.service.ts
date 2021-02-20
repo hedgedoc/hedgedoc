@@ -36,6 +36,12 @@ export class NotesService {
     this.logger.setContext(NotesService.name);
   }
 
+  /**
+   * @async
+   * Get all notes owned by a user.
+   * @param {User} user - the user who owns the notes
+   * @return {Note[]} arary of notes owned by the user
+   */
   getUserNotes(user: User): Note[] {
     this.logger.warn('Using hardcoded data!');
     return [
@@ -57,6 +63,14 @@ export class NotesService {
     ];
   }
 
+  /**
+   * @async
+   * Create a new note.
+   * @param {string} noteContent - the content the new note should have
+   * @param {string=} alias - a optional alias the note should have
+   * @param {User=} owner - the owner of the note
+   * @return {Note} the newly created note
+   */
   async createNote(
     noteContent: string,
     alias?: NoteMetadataDto['alias'],
@@ -86,18 +100,44 @@ export class NotesService {
       );
     }
   }
+
+  /**
+   * @async
+   * Get the current content of the note.
+   * @param {Note} note - the note to use
+   * @return {string} the content of the note
+   */
   async getNoteContentByNote(note: Note): Promise<string> {
     return (await this.getLatestRevision(note)).content;
   }
 
+  /**
+   * @async
+   * Get the first revision of the note.
+   * @param {Note} note - the note to use
+   * @return {Revision} the first revision of the note
+   */
   async getLatestRevision(note: Note): Promise<Revision> {
     return this.revisionsService.getLatestRevision(note.id);
   }
 
+  /**
+   * @async
+   * Get the last revision of the note.
+   * @param {Note} note - the note to use
+   * @return {Revision} the last revision of the note
+   */
   async getFirstRevision(note: Note): Promise<Revision> {
     return this.revisionsService.getFirstRevision(note.id);
   }
 
+  /**
+   * @async
+   * Get a note by either their id or alias.
+   * @param {string} noteIdOrAlias - the notes id or alias
+   * @return {Note} the note
+   * @throws {NotInDBError} there is no note with this id or alias
+   */
   async getNoteByIdOrAlias(noteIdOrAlias: string): Promise<Note> {
     this.logger.debug(
       `Trying to find note '${noteIdOrAlias}'`,
@@ -132,11 +172,26 @@ export class NotesService {
     return note;
   }
 
-  async deleteNoteByIdOrAlias(noteIdOrAlias: string) {
+  /**
+   * @async
+   * Delete a note by either their id or alias.
+   * @param {string} noteIdOrAlias - the notes id or alias
+   * @return {Note} the note, that was deleted
+   * @throws {NotInDBError} there is no note with this id or alias
+   */
+  async deleteNoteByIdOrAlias(noteIdOrAlias: string): Promise<Note> {
     const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
     return await this.noteRepository.remove(note);
   }
 
+  /**
+   * @async
+   * Update a notes content. The note is specified by either their id or alias.
+   * @param {string} noteIdOrAlias - the notes id or alias
+   * @param {string} noteContent - the new content
+   * @return {Note} the note with a new revision and new content
+   * @throws {NotInDBError} there is no note with this id or alias
+   */
   async updateNoteByIdOrAlias(
     noteIdOrAlias: string,
     noteContent: string,
@@ -149,7 +204,16 @@ export class NotesService {
     return this.noteRepository.save(note);
   }
 
-  updateNotePermissions(
+  /**
+   * @async
+   * Update a notes permissions. The note is specified by either their id or alias.
+   * @param {string} noteIdOrAlias - the notes id or alias
+   * @param {NotePermissionsUpdateDto} newPermissions - the permissions the not should be set to
+   * @return {Note} the note with the new permissions
+   * @throws {NotInDBError} there is no note with this id or alias
+   * @throws {PermissionsUpdateInconsistent} the new permissions specify a user or group twice.
+   */
+  async updateNotePermissions(
     noteIdOrAlias: string,
     newPermissions: NotePermissionsUpdateDto,
   ): Note {
@@ -187,10 +251,21 @@ export class NotesService {
     return this.getCurrentContent(note);
   }
 
+  /**
+   * Map the tags of a note to a string array of the tags names.
+   * @param {Note} note - the note to use
+   * @return {string[]} string array of tags names
+   */
   toTagList(note: Note): string[] {
     return note.tags.map((tag) => tag.name);
   }
 
+  /**
+   * @async
+   * Build NotePermissionsDto from a note.
+   * @param {Note} note - the note to use
+   * @return {NotePermissionsDto} the built NotePermissionDto
+   */
   async toNotePermissionsDto(note: Note): Promise<NotePermissionsDto> {
     return {
       owner: this.usersService.toUserDto(note.owner),
@@ -205,6 +280,12 @@ export class NotesService {
     };
   }
 
+  /**
+   * @async
+   * Build NoteMetadataDto from a note.
+   * @param {Note} note - the note to use
+   * @return {NoteMetadataDto} the built NoteMetadataDto
+   */
   async toNoteMetadataDto(note: Note): Promise<NoteMetadataDto> {
     return {
       // TODO: Convert DB UUID to base64
@@ -231,6 +312,12 @@ export class NotesService {
     };
   }
 
+  /**
+   * @async
+   * Build NoteDto from a note.
+   * @param {Note} note - the note to use
+   * @return {NoteDto} the built NoteDto
+   */
   async toNoteDto(note: Note): Promise<NoteDto> {
     return {
       content: await this.getCurrentContent(note),
