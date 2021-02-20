@@ -15,6 +15,7 @@ import { NotesService } from './notes.service';
 import { Tag } from './tag.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
+import { GroupsModule } from '../groups/groups.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { NoteUserPermission } from '../permissions/note-user-permission.entity';
     ]),
     forwardRef(() => RevisionsModule),
     UsersModule,
+    GroupsModule,
     LoggerModule,
   ],
   controllers: [],

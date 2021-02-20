@@ -22,6 +22,9 @@ import { NoteDto } from './note.dto';
 import { Note } from './note.entity';
 import { Tag } from './tag.entity';
 import { HistoryEntry } from '../history/history-entry.entity';
+import { NoteUserPermission } from '../permissions/note-user-permission.entity';
+import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
+import { GroupsService } from '../groups/groups.service';
 
 @Injectable()
 export class NotesService {
@@ -30,6 +33,7 @@ export class NotesService {
     @InjectRepository(Note) private noteRepository: Repository<Note>,
     @InjectRepository(Tag) private tagRepository: Repository<Tag>,
     @Inject(UsersService) private usersService: UsersService,
+    @Inject(GroupsService) private groupsService: GroupsService,
     @Inject(forwardRef(() => RevisionsService))
     private revisionsService: RevisionsService,
   ) {

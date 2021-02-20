@@ -40,4 +40,15 @@ export class Group {
   })
   @JoinTable()
   members: User[];
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private constructor() {}
+
+  public static create(name: string, displayName: string): Group {
+    const newGroup = new Group();
+    newGroup.special = false; // this attribute should only be true for the two special groups
+    newGroup.name = name;
+    newGroup.displayName = displayName;
+    return newGroup;
+  }
 }

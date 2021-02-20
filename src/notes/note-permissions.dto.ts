@@ -6,6 +6,7 @@
 
 import { IsArray, IsBoolean, IsString, ValidateNested } from 'class-validator';
 import { UserInfoDto } from '../users/user-info.dto';
+import { GroupInfoDto } from '../groups/group-info.dto';
 
 export class NoteUserPermissionEntryDto {
   /**
@@ -36,30 +37,6 @@ export class NoteUserPermissionUpdateDto {
    */
   @IsBoolean()
   canEdit: boolean;
-}
-
-export class GroupInfoDto {
-  /**
-   * Name of the group
-   * @example "superheroes"
-   */
-  @IsString()
-  name: string;
-
-  /**
-   * Display name of this group
-   * @example "Superheroes"
-   */
-  @IsString()
-  displayName: string;
-
-  /**
-   * True if this group must be specially handled
-   * Used for e.g. "everybody", "all logged in users"
-   * @example false
-   */
-  @IsBoolean()
-  special: boolean;
 }
 
 export class NoteGroupPermissionEntryDto {

@@ -17,9 +17,12 @@ import { UsersModule } from '../users/users.module';
 import { AuthorColor } from './author-color.entity';
 import { Note } from './note.entity';
 import { NotesService } from './notes.service';
+import { Repository } from 'typeorm';
 import { Tag } from './tag.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
+import { GroupsModule } from '../groups/groups.module';
+import { Group } from '../groups/group.entity';
 
 describe('NotesService', () => {
   let service: NotesService;
@@ -37,7 +40,7 @@ describe('NotesService', () => {
           useValue: {},
         },
       ],
-      imports: [UsersModule, RevisionsModule, LoggerModule],
+      imports: [LoggerModule, UsersModule, GroupsModule, RevisionsModule],
     })
       .overrideProvider(getRepositoryToken(User))
       .useValue({})
@@ -59,7 +62,10 @@ describe('NotesService', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
+      .overrideProvider(getRepositoryToken(Group))
+      .useClass(Repository)
       .compile();
+
     service = module.get<NotesService>(NotesService);
   });
 

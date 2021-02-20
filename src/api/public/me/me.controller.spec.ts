@@ -22,6 +22,7 @@ import { MeController } from './me.controller';
 import { HistoryEntry } from '../../../history/history-entry.entity';
 import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
+import { Group } from '../../../groups/group.entity';
 
 describe('Me Controller', () => {
   let controller: MeController;
@@ -52,6 +53,8 @@ describe('Me Controller', () => {
       .overrideProvider(getRepositoryToken(NoteGroupPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(NoteUserPermission))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Group))
       .useValue({})
       .compile();
 
