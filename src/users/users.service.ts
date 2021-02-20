@@ -63,7 +63,7 @@ export class UsersService {
       userName: user.userName,
       displayName: user.displayName,
       photo: this.getPhotoUrl(user),
-      email: user.email,
+      email: user.email ?? '',
     };
   }
 }
