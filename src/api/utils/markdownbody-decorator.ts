@@ -18,6 +18,8 @@ import * as getRawBody from 'raw-body';
  *
  * Implementation inspired by https://stackoverflow.com/questions/52283713/how-do-i-pass-plain-text-as-my-request-body-using-nestjs
  */
+// Override naming convention as decorators are in PascalCase
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const MarkdownBody = createParamDecorator(
   async (_, context: ExecutionContext) => {
     // we have to check req.readable because of raw-body issue #57
