@@ -7,7 +7,7 @@ entity "note" {
   --
   *shortid : text
   alias : text
-  *viewcount : number
+  *viewCount : number
   *ownerId : uuid <<FK user>>
   description: text
   title: text
