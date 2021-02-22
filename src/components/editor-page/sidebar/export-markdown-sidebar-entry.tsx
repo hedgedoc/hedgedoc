@@ -5,18 +5,20 @@
  */
 
 import React, { useCallback } from 'react'
+import sanitize from 'sanitize-filename'
+import { store } from '../../../redux'
 import { Trans, useTranslation } from 'react-i18next'
 import { useNoteMarkdownContent } from '../../../hooks/common/use-note-markdown-content'
 import { download } from '../../common/download/download'
 import { SidebarButton } from './sidebar-button'
 
 export const ExportMarkdownSidebarEntry: React.FC = () => {
-  useTranslation()
-
+  const { t } = useTranslation()
   const markdownContent = useNoteMarkdownContent()
   const onClick = useCallback(() => {
-    download(markdownContent, `title.md`, 'text/markdown') //todo: replace hard coded title with redux
-  }, [markdownContent])
+    const sanitized = sanitize(store.getState().noteDetails.noteTitle)
+    download(markdownContent, `${ sanitized !== '' ? sanitized : t('editor.untitledNote') }.md`, 'text/markdown')
+  }, [markdownContent, t])
 
   return (
     <SidebarButton data-cy={ 'menu-export-markdown' } onClick={ onClick } icon={ 'file-text' }>
