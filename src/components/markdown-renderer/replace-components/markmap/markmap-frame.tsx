@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LockButton } from '../../../common/lock-button/lock-button'
 import '../../utils/button-inside.scss'
@@ -64,12 +64,12 @@ export const MarkmapFrame: React.FC<MarkmapFrameProps> = ({ code }) => {
   }, [code])
 
   return (
-    <Fragment>
+    <div data-cy={ 'markmap' }>
       <div className={ 'text-center' } ref={ diagramContainer }/>
       <div className={ 'text-right button-inside' }>
         <LockButton locked={ disablePanAndZoom } onLockedChanged={ (newState => setDisablePanAndZoom(newState)) }
                     title={ disablePanAndZoom ? t('renderer.markmap.locked') : t('renderer.markmap.unlocked') }/>
       </div>
-    </Fragment>
+    </div>
   )
 }

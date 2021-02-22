@@ -4,17 +4,43 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-describe('Short code', () => {
+describe('Short code gets replaced or rendered: ', () => {
   beforeEach(() => {
     cy.visitTestEditor()
   })
 
-  describe('for pdfs', () => {
+  describe('pdf', () => {
     it('renders a plain link', () => {
       cy.codemirrorFill(`{%pdf https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf %}`)
       cy.getMarkdownBody()
         .find('a')
         .should('have.attr', 'href', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')
+    })
+  })
+
+  describe('slideshare', () => {
+    it('renders a plain link', () => {
+      cy.codemirrorFill(`{%slideshare example/123456789 %}`)
+      cy.getMarkdownBody()
+        .find('a')
+        .should('have.attr', 'href', 'https://www.slideshare.net/example/123456789')
+    })
+  })
+
+  describe('speakerdeck', () => {
+    it('renders a plain link', () => {
+      cy.codemirrorFill(`{%speakerdeck example/123456789 %}`)
+      cy.getMarkdownBody()
+        .find('a')
+        .should('have.attr', 'href', 'https://speakerdeck.com/example/123456789')
+    })
+  })
+
+  describe('youtube', () => {
+    it('renders one-click-embedding', () => {
+      cy.codemirrorFill(`{%youtube YE7VzlLtp-4 %}`)
+      cy.getMarkdownBody()
+        .find('.one-click-embedding.embed-responsive-item')
     })
   })
 })

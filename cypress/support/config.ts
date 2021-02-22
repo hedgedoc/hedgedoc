@@ -45,6 +45,7 @@ beforeEach(() => {
         termsOfUse: 'https://example.com/termsOfUse',
         imprint: 'https://example.com/imprint'
       },
+      plantumlServer: 'http://mock-plantuml.local',
       version: {
         version: 'mock',
         sourceCodeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',

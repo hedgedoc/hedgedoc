@@ -57,6 +57,6 @@ export const FlowChart: React.FC<FlowChartProps> = ({ code }) => {
         <Trans i18nKey={ 'renderer.flowchart.invalidSyntax' }/>
       </Alert>)
   } else {
-    return <div ref={ diagramRef } className={ 'text-center' }/>
+    return <div ref={ diagramRef } data-cy={ 'flowchart' } className={ 'text-center' }/>
   }
 }

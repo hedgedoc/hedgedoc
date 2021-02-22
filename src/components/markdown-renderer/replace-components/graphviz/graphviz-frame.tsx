@@ -55,12 +55,14 @@ export const GraphvizFrame: React.FC<GraphvizFrameProps> = ({ code }) => {
       })
   }, [code, error, showError])
 
-  return <Fragment>
-    <ShowIf condition={ !!error }>
-      <Alert variant={ 'warning' }>{ error }</Alert>
-    </ShowIf>
-    <div className={ 'text-center overflow-x-auto' } ref={ container }/>
-  </Fragment>
+  return (
+    <Fragment>
+      <ShowIf condition={ !!error }>
+        <Alert variant={ 'warning' }>{ error }</Alert>
+      </ShowIf>
+      <div className={ 'text-center overflow-x-auto' } data-cy={ 'graphviz' } ref={ container }/>
+    </Fragment>
+  )
 }
 
 export default GraphvizFrame

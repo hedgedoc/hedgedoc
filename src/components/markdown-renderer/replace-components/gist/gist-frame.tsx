@@ -66,6 +66,7 @@ export const GistFrame: React.FC<GistFrameProps> = ({ id }) => {
   return (
     <iframe
       sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups"
+      data-cy={ 'gh-gist' }
       width='100%'
       height={ `${ frameHeight }px` }
       frameBorder='0'
