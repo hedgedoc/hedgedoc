@@ -701,7 +701,7 @@ describe('NotesService', () => {
           notes: [note],
         },
       ];
-      note.viewcount = 1337;
+      note.viewCount = 1337;
       const metadataDto = await service.toNoteMetadataDto(note);
       expect(metadataDto.id).toEqual(note.id);
       expect(metadataDto.alias).toEqual(note.alias);
@@ -725,7 +725,7 @@ describe('NotesService', () => {
       expect(metadataDto.tags[0]).toEqual(note.tags[0].name);
       expect(metadataDto.updateTime).toEqual(revisions[0].createdAt);
       expect(metadataDto.updateUser.userName).toEqual(user.userName);
-      expect(metadataDto.viewCount).toEqual(note.viewcount);
+      expect(metadataDto.viewCount).toEqual(note.viewCount);
     });
   });
 
@@ -795,7 +795,7 @@ describe('NotesService', () => {
           notes: [note],
         },
       ];
-      note.viewcount = 1337;
+      note.viewCount = 1337;
       const noteDto = await service.toNoteDto(note);
       expect(noteDto.metadata.id).toEqual(note.id);
       expect(noteDto.metadata.alias).toEqual(note.alias);
@@ -825,7 +825,7 @@ describe('NotesService', () => {
       expect(noteDto.metadata.tags[0]).toEqual(note.tags[0].name);
       expect(noteDto.metadata.updateTime).toEqual(revisions[0].createdAt);
       expect(noteDto.metadata.updateUser.userName).toEqual(user.userName);
-      expect(noteDto.metadata.viewCount).toEqual(note.viewcount);
+      expect(noteDto.metadata.viewCount).toEqual(note.viewCount);
       expect(noteDto.content).toEqual(content);
     });
   });

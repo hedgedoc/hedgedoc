@@ -47,7 +47,7 @@ export class Note {
     nullable: false,
     default: 0,
   })
-  viewcount: number;
+  viewCount: number;
   @ManyToOne((_) => User, (user) => user.ownedNotes, { onDelete: 'CASCADE' })
   owner: User;
   @OneToMany((_) => Revision, (revision) => revision.note, { cascade: true })
@@ -80,7 +80,7 @@ export class Note {
     const newNote = new Note();
     newNote.shortid = shortid;
     newNote.alias = alias;
-    newNote.viewcount = 0;
+    newNote.viewCount = 0;
     newNote.owner = owner;
     newNote.authorColors = [];
     newNote.userPermissions = [];

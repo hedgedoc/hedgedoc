@@ -348,7 +348,7 @@ export class NotesService {
       updateUser: this.usersService.toUserDto(
         await this.calculateUpdateUser(note),
       ),
-      viewCount: note.viewcount,
+      viewCount: note.viewCount,
     };
   }
 
