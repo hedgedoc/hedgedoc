@@ -575,22 +575,6 @@ describe('NotesService', () => {
     });
   });
 
-  describe('getNoteContentByIdOrAlias', () => {
-    it('works', async () => {
-      const content = 'testContent';
-      jest
-        .spyOn(noteRepo, 'save')
-        .mockImplementation(async (note: Note): Promise<Note> => note);
-      const newNote = await service.createNote(content);
-      const revisions = await newNote.revisions;
-      jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(newNote);
-      jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
-      service.getNoteContentByIdOrAlias('noteThatExists').then((result) => {
-        expect(result).toEqual(content);
-      });
-    });
-  });
-
   describe('toTagList', () => {
     it('works', async () => {
       const note = {} as Note;
