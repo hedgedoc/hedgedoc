@@ -14,6 +14,7 @@ import { FilesystemBackend } from './backends/filesystem-backend';
 import { MediaUpload } from './media-upload.entity';
 import { MediaService } from './media.service';
 import { ImgurBackend } from './backends/imgur-backend';
+import { AzureBackend } from './backends/azure-backend';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { ImgurBackend } from './backends/imgur-backend';
     LoggerModule,
     ConfigModule,
   ],
-  providers: [MediaService, FilesystemBackend, ImgurBackend],
+  providers: [MediaService, FilesystemBackend, AzureBackend, ImgurBackend],
   exports: [MediaService],
 })
 export class MediaModule {}
