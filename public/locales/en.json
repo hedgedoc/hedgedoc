@@ -306,6 +306,7 @@
             "export": "Export",
             "extra": "Extra",
             "slideMode": "Slide Mode",
+            "readOnlyMode": "Read-only mode",
             "download": "Download",
             "help": "Help",
             "deleteNote": "Delete note",
