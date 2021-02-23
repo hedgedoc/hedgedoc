@@ -176,7 +176,7 @@ export class NotesController {
       if (!this.permissionsService.mayRead(req.user, note)) {
         throw new UnauthorizedException('Reading note denied!');
       }
-      return await this.noteService.getNoteContentByNote(note);
+      return await this.noteService.getNoteContent(note);
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);

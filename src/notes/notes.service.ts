@@ -112,7 +112,7 @@ export class NotesService {
    * @param {Note} note - the note to use
    * @return {string} the content of the note
    */
-  async getNoteContentByNote(note: Note): Promise<string> {
+  async getNoteContent(note: Note): Promise<string> {
     return (await this.getLatestRevision(note)).content;
   }
 
@@ -268,17 +268,6 @@ export class NotesService {
 
   /**
    * @async
-   * Get the current content of the note by either their id or alias.
-   * @param {string} noteIdOrAlias - the notes id or alias
-   * @return {string} the content of the note
-   */
-  async getNoteContentByIdOrAlias(noteIdOrAlias: string): Promise<string> {
-    const note = await this.getNoteByIdOrAlias(noteIdOrAlias);
-    return this.getNoteContentByNote(note);
-  }
-
-  /**
-   * @async
    * Calculate the updateUser (for the NoteDto) for a Note.
    * @param {Note} note - the note to use
    * @return {User} user to be used as updateUser in the NoteDto
@@ -360,7 +349,7 @@ export class NotesService {
    */
   async toNoteDto(note: Note): Promise<NoteDto> {
     return {
-      content: await this.getNoteContentByNote(note),
+      content: await this.getNoteContent(note),
       metadata: await this.toNoteMetadataDto(note),
       editedByAtPosition: [],
     };

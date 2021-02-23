@@ -180,7 +180,7 @@ describe('NotesService', () => {
     });
   });
 
-  describe('getNoteContentByNote', () => {
+  describe('getNoteContent', () => {
     it('works', async () => {
       const content = 'testContent';
       jest
@@ -189,7 +189,7 @@ describe('NotesService', () => {
       const newNote = await service.createNote(content);
       const revisions = await newNote.revisions;
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
-      service.getNoteContentByNote(newNote).then((result) => {
+      service.getNoteContent(newNote).then((result) => {
         expect(result).toEqual(content);
       });
     });
@@ -571,22 +571,6 @@ describe('NotesService', () => {
         } catch (e) {
           expect(e).toBeInstanceOf(PermissionsUpdateInconsistentError);
         }
-      });
-    });
-  });
-
-  describe('getNoteContentByIdOrAlias', () => {
-    it('works', async () => {
-      const content = 'testContent';
-      jest
-        .spyOn(noteRepo, 'save')
-        .mockImplementation(async (note: Note): Promise<Note> => note);
-      const newNote = await service.createNote(content);
-      const revisions = await newNote.revisions;
-      jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(newNote);
-      jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
-      service.getNoteContentByIdOrAlias('noteThatExists').then((result) => {
-        expect(result).toEqual(content);
       });
     });
   });
