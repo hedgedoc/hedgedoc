@@ -14,7 +14,7 @@ import {
   Param,
   Put,
   UseGuards,
-  Request,
+  Req,
 } from '@nestjs/common';
 import { HistoryEntryUpdateDto } from '../../../history/history-entry-update.dto';
 import { HistoryService } from '../../../history/history.service';
@@ -43,7 +43,7 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Get()
-  async getMe(@Request() req): Promise<UserInfoDto> {
+  async getMe(@Req() req): Promise<UserInfoDto> {
     return this.usersService.toUserDto(
       await this.usersService.getUserByUsername(req.user.userName),
     );
@@ -51,7 +51,7 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Get('history')
-  async getUserHistory(@Request() req): Promise<HistoryEntryDto[]> {
+  async getUserHistory(@Req() req): Promise<HistoryEntryDto[]> {
     const foundEntries = await this.historyService.getEntriesByUser(req.user);
     return await Promise.all(
       foundEntries.map(
@@ -63,7 +63,7 @@ export class MeController {
   @UseGuards(TokenAuthGuard)
   @Put('history/:note')
   async updateHistoryEntry(
-    @Request() req,
+    @Req() req,
     @Param('note') note: string,
     @Body() entryUpdateDto: HistoryEntryUpdateDto,
   ): Promise<HistoryEntryDto> {
@@ -87,7 +87,7 @@ export class MeController {
   @UseGuards(TokenAuthGuard)
   @Delete('history/:note')
   @HttpCode(204)
-  deleteHistoryEntry(@Request() req, @Param('note') note: string) {
+  deleteHistoryEntry(@Req() req, @Param('note') note: string) {
     // ToDo: Check if user is allowed to delete note
     try {
       return this.historyService.deleteHistoryEntry(note, req.user);
@@ -101,7 +101,7 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Get('notes')
-  async getMyNotes(@Request() req): Promise<NoteMetadataDto[]> {
+  async getMyNotes(@Req() req): Promise<NoteMetadataDto[]> {
     const notes = this.notesService.getUserNotes(req.user);
     return await Promise.all(
       notes.map((note) => this.notesService.toNoteMetadataDto(note)),

@@ -15,7 +15,7 @@ import {
   Param,
   Post,
   Put,
-  Request,
+  Req,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
@@ -59,7 +59,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Post()
   async createNote(
-    @Request() req,
+    @Req() req,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
     // ToDo: provide user for createNoteDto
@@ -75,7 +75,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Get(':noteIdOrAlias')
   async getNote(
-    @Request() req,
+    @Req() req,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<NoteDto> {
     let note: Note;
@@ -97,7 +97,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Post(':noteAlias')
   async createNamedNote(
-    @Request() req,
+    @Req() req,
     @Param('noteAlias') noteAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
@@ -120,7 +120,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Delete(':noteIdOrAlias')
   async deleteNote(
-    @Request() req,
+    @Req() req,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<void> {
     try {
@@ -143,7 +143,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Put(':noteIdOrAlias')
   async updateNote(
-    @Request() req,
+    @Req() req,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
@@ -168,7 +168,7 @@ export class NotesController {
   @Get(':noteIdOrAlias/content')
   @Header('content-type', 'text/markdown')
   async getNoteContent(
-    @Request() req,
+    @Req() req,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<string> {
     try {
@@ -188,7 +188,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Get(':noteIdOrAlias/metadata')
   async getNoteMetadata(
-    @Request() req,
+    @Req() req,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<NoteMetadataDto> {
     try {
@@ -211,7 +211,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Put(':noteIdOrAlias/metadata/permissions')
   async updateNotePermissions(
-    @Request() req,
+    @Req() req,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @Body() updateDto: NotePermissionsUpdateDto,
   ): Promise<NotePermissionsDto> {
@@ -234,7 +234,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Get(':noteIdOrAlias/revisions')
   async getNoteRevisions(
-    @Request() req,
+    @Req() req,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<RevisionMetadataDto[]> {
     try {
@@ -259,7 +259,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Get(':noteIdOrAlias/revisions/:revisionId')
   async getNoteRevision(
-    @Request() req,
+    @Req() req,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @Param('revisionId') revisionId: number,
   ): Promise<RevisionDto> {
