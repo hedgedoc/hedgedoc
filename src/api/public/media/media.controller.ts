@@ -20,6 +20,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Request } from 'express';
 import {
   ClientError,
   MediaBackendError,
@@ -48,7 +49,7 @@ export class MediaController {
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   async uploadMedia(
-    @Req() req,
+    @Req() req: Request,
     @UploadedFile() file: MulterFile,
     @Headers('HedgeDoc-Note') noteId: string,
   ): Promise<MediaUploadUrlDto> {
@@ -80,7 +81,7 @@ export class MediaController {
   @UseGuards(TokenAuthGuard)
   @Delete(':filename')
   async deleteMedia(
-    @Req() req,
+    @Req() req: Request,
     @Param('filename') filename: string,
   ): Promise<void> {
     const username = req.user.userName;

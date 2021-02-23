@@ -7,6 +7,7 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/user.entity';
+import { Request } from 'express';
 
 @Injectable()
 export class MockAuthGuard {
@@ -14,7 +15,7 @@ export class MockAuthGuard {
   constructor(private usersService: UsersService) {}
 
   async canActivate(context: ExecutionContext) {
-    const req = context.switchToHttp().getRequest();
+    const req: Request = context.switchToHttp().getRequest();
     if (!this.user) {
       // this assures that we can create the user 'hardcoded', if we need them before any calls are made or
       // create them on the fly when the first call to the api is made
