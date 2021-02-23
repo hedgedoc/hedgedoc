@@ -44,7 +44,7 @@ const mediaSchema = Joi.object({
         otherwise: Joi.optional(),
       }).label('HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH'),
     },
-    s3: Joi.when('...use', {
+    s3: Joi.when('use', {
       is: Joi.valid(BackendType.S3),
       then: Joi.object({
         accessKey: Joi.string().label('HD_MEDIA_BACKEND_S3_ACCESS_KEY'),
@@ -55,7 +55,7 @@ const mediaSchema = Joi.object({
       }),
       otherwise: Joi.optional(),
     }),
-    azure: Joi.when('...use', {
+    azure: Joi.when('use', {
       is: Joi.valid(BackendType.AZURE),
       then: Joi.object({
         connectionString: Joi.string().label(
@@ -65,7 +65,7 @@ const mediaSchema = Joi.object({
       }),
       otherwise: Joi.optional(),
     }),
-    imgur: Joi.when('...use', {
+    imgur: Joi.when('use', {
       is: Joi.valid(BackendType.IMGUR),
       then: Joi.object({
         clientID: Joi.string().label('HD_MEDIA_BACKEND_IMGUR_CLIENT_ID'),
