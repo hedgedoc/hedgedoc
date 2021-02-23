@@ -18,7 +18,6 @@ export interface MediaConfig {
     s3: {
       accessKeyId: string;
       secretAccessKey: string;
-      region: string;
       bucket: string;
       endPoint: string;
     };
@@ -49,9 +48,8 @@ const mediaSchema = Joi.object({
       then: Joi.object({
         accessKey: Joi.string().label('HD_MEDIA_BACKEND_S3_ACCESS_KEY'),
         secretKey: Joi.string().label('HD_MEDIA_BACKEND_S3_SECRET_KEY'),
+        bucket: Joi.string().label('HD_MEDIA_BACKEND_S3_BUCKET'),
         endPoint: Joi.string().label('HD_MEDIA_BACKEND_S3_ENDPOINT'),
-        secure: Joi.boolean().label('HD_MEDIA_BACKEND_S3_SECURE'),
-        port: Joi.number().label('HD_MEDIA_BACKEND_S3_PORT'),
       }),
       otherwise: Joi.optional(),
     }),
@@ -86,9 +84,8 @@ export default registerAs('mediaConfig', () => {
         s3: {
           accessKey: process.env.HD_MEDIA_BACKEND_S3_ACCESS_KEY,
           secretKey: process.env.HD_MEDIA_BACKEND_S3_SECRET_KEY,
+          bucket: process.env.HD_MEDIA_BACKEND_S3_BUCKET,
           endPoint: process.env.HD_MEDIA_BACKEND_S3_ENDPOINT,
-          secure: process.env.HD_MEDIA_BACKEND_S3_SECURE,
-          port: parseInt(process.env.HD_MEDIA_BACKEND_S3_PORT) || undefined,
         },
         azure: {
           connectionString:
