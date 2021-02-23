@@ -27,6 +27,7 @@ import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { HistoryEntryDto } from '../../../history/history-entry.dto';
 import { UserInfoDto } from '../../../users/user-info.dto';
 import { NotInDBError } from '../../../errors/errors';
+import { Request } from 'express';
 
 @ApiTags('me')
 @ApiSecurity('token')
@@ -43,7 +44,7 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Get()
-  async getMe(@Req() req): Promise<UserInfoDto> {
+  async getMe(@Req() req: Request): Promise<UserInfoDto> {
     return this.usersService.toUserDto(
       await this.usersService.getUserByUsername(req.user.userName),
     );
@@ -51,7 +52,7 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Get('history')
-  async getUserHistory(@Req() req): Promise<HistoryEntryDto[]> {
+  async getUserHistory(@Req() req: Request): Promise<HistoryEntryDto[]> {
     const foundEntries = await this.historyService.getEntriesByUser(req.user);
     return await Promise.all(
       foundEntries.map(
@@ -63,7 +64,7 @@ export class MeController {
   @UseGuards(TokenAuthGuard)
   @Put('history/:note')
   async updateHistoryEntry(
-    @Req() req,
+    @Req() req: Request,
     @Param('note') note: string,
     @Body() entryUpdateDto: HistoryEntryUpdateDto,
   ): Promise<HistoryEntryDto> {
@@ -87,7 +88,7 @@ export class MeController {
   @UseGuards(TokenAuthGuard)
   @Delete('history/:note')
   @HttpCode(204)
-  deleteHistoryEntry(@Req() req, @Param('note') note: string) {
+  deleteHistoryEntry(@Req() req: Request, @Param('note') note: string) {
     // ToDo: Check if user is allowed to delete note
     try {
       return this.historyService.deleteHistoryEntry(note, req.user);
@@ -101,7 +102,7 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Get('notes')
-  async getMyNotes(@Req() req): Promise<NoteMetadataDto[]> {
+  async getMyNotes(@Req() req: Request): Promise<NoteMetadataDto[]> {
     const notes = this.notesService.getUserNotes(req.user);
     return await Promise.all(
       notes.map((note) => this.notesService.toNoteMetadataDto(note)),
