@@ -62,7 +62,7 @@ export class AuthService {
     return await compare(cleartext, password);
   }
 
-  async randomString(length: number): Promise<Buffer> {
+  randomString(length: number): Buffer {
     if (length <= 0) {
       return null;
     }
@@ -93,8 +93,8 @@ export class AuthService {
         `User '${user.userName}' has already 200 tokens and can't have anymore`,
       );
     }
-    const secret = this.bufferToBase64Url(await this.randomString(54));
-    const keyId = this.bufferToBase64Url(await this.randomString(8));
+    const secret = this.bufferToBase64Url(this.randomString(54));
+    const keyId = this.bufferToBase64Url(this.randomString(8));
     const accessToken = await this.hashPassword(secret);
     let token;
     // Tokens can only be valid for a maximum of 2 years
