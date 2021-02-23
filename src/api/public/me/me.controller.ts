@@ -102,7 +102,7 @@ export class MeController {
   @UseGuards(TokenAuthGuard)
   @Get('notes')
   async getMyNotes(@Request() req): Promise<NoteMetadataDto[]> {
-    const notes = await this.notesService.getUserNotes(req.user);
+    const notes = this.notesService.getUserNotes(req.user);
     return await Promise.all(
       notes.map((note) => this.notesService.toNoteMetadataDto(note)),
     );
