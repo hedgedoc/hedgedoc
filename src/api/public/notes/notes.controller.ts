@@ -221,7 +221,7 @@ export class NotesController {
         throw new UnauthorizedException('Updating note denied!');
       }
       return await this.noteService.toNotePermissionsDto(
-        await this.noteService.updateNotePermissions(note, updateDto),
+        this.noteService.updateNotePermissions(note, updateDto),
       );
     } catch (e) {
       if (e instanceof NotInDBError) {
