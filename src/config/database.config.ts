@@ -55,7 +55,7 @@ const databaseSchema = Joi.object({
     .label('HD_DATABASE_DIALECT'),
 });
 
-export default registerAs('databaseConfig', async () => {
+export default registerAs('databaseConfig', () => {
   const databaseConfig = databaseSchema.validate(
     {
       username: process.env.HD_DATABASE_USER,
@@ -72,10 +72,10 @@ export default registerAs('databaseConfig', async () => {
     },
   );
   if (databaseConfig.error) {
-    const errorMessages = await databaseConfig.error.details.map(
+    const errorMessages = databaseConfig.error.details.map(
       (detail) => detail.message,
     );
     throw new Error(buildErrorMessage(errorMessages));
   }
-  return databaseConfig.value;
+  return databaseConfig.value as DatabaseConfig;
 });

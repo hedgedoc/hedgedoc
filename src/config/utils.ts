@@ -37,7 +37,7 @@ export const replaceAuthErrorsWithEnvironmentVariables = (
   const regex = new RegExp('"' + name + '\\[(\\d+)]\\.', 'g');
   message = message.replace(
     regex,
-    (_, index) => `"${replacement}${arrayOfNames[index]}.`,
+    (_, index: number) => `"${replacement}${arrayOfNames[index]}.`,
   );
   message = message.replace('.providerName', '_PROVIDER_NAME');
   message = message.replace('.baseURL', '_BASE_URL');
