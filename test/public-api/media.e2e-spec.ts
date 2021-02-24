@@ -4,6 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+/* eslint-disable
+@typescript-eslint/no-unsafe-assignment,
+@typescript-eslint/no-unsafe-member-access
+*/
+
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test } from '@nestjs/testing';
@@ -78,7 +83,7 @@ describe('Notes', () => {
       .set('HedgeDoc-Note', 'test_upload_media')
       .expect('Content-Type', /json/)
       .expect(201);
-    const path = uploadResponse.body.link;
+    const path: string = uploadResponse.body.link;
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
     const downloadResponse = await request(app.getHttpServer()).get(path);
     expect(downloadResponse.body).toEqual(testImage);
