@@ -4,6 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+/* eslint-disable
+@typescript-eslint/no-unsafe-assignment,
+@typescript-eslint/no-unsafe-member-access
+*/
+
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
@@ -94,7 +99,7 @@ describe('Notes', () => {
       .expect(200);
     const history = <HistoryEntryDto[]>response.body;
     for (const historyEntry of history) {
-      if ((<HistoryEntryDto>historyEntry).identifier === 'testGetHistory') {
+      if (historyEntry.identifier === 'testGetHistory') {
         expect(historyEntry).toEqual(createdHistoryEntry);
       }
     }
@@ -116,7 +121,7 @@ describe('Notes', () => {
     historyEntry = null;
     for (const e of history) {
       if (e.note.alias === noteName) {
-        historyEntry = await historyService.toHistoryEntryDto(e);
+        historyEntry = historyService.toHistoryEntryDto(e);
       }
     }
     expect(historyEntry.pinStatus).toEqual(true);
@@ -133,7 +138,7 @@ describe('Notes', () => {
     const history = await historyService.getEntriesByUser(user);
     let historyEntry: HistoryEntry = null;
     for (const e of history) {
-      if ((<HistoryEntry>e).note.alias === noteName) {
+      if (e.note.alias === noteName) {
         historyEntry = e;
       }
     }
