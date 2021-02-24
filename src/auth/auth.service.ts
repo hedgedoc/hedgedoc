@@ -117,7 +117,9 @@ export class AuthService {
         new Date(validUntil),
       );
     }
-    const createdToken = await this.authTokenRepository.save(token);
+    const createdToken = (await this.authTokenRepository.save(
+      token,
+    )) as AuthToken;
     return this.toAuthTokenWithSecretDto(createdToken, `${keyId}.${secret}`);
   }
 
@@ -150,7 +152,7 @@ export class AuthService {
     ) {
       // tokens validUntil Date lies in the past
       throw new TokenNotValidError(
-        `AuthToken '${token}' is not valid since ${accessToken.validUntil}.`,
+        `AuthToken '${token}' is not valid since ${accessToken.validUntil.toISOString()}.`,
       );
     }
     return accessToken;
@@ -173,7 +175,10 @@ export class AuthService {
 
   toAuthTokenDto(authToken: AuthToken): AuthTokenDto | null {
     if (!authToken) {
-      this.logger.warn(`Recieved ${authToken} argument!`, 'toAuthTokenDto');
+      this.logger.warn(
+        `Recieved ${String(authToken)} argument!`,
+        'toAuthTokenDto',
+      );
       return null;
     }
     const tokenDto: AuthTokenDto = {
