@@ -49,4 +49,4 @@ async function bootstrap() {
   logger.log(`Listening on port ${appConfig.port}`, 'AppBootstrap');
 }
 
-bootstrap();
+void bootstrap();
