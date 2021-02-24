@@ -22,6 +22,8 @@ async function getServerVersionFromPackageJson() {
       joinPath(__dirname, '../../package.json'),
       { encoding: 'utf8' },
     );
+    // TODO: Should this be validated in more detail?
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const packageInfo: { version: string } = JSON.parse(rawFileContent);
     const versionParts: number[] = packageInfo.version
       .split('.')

@@ -31,7 +31,7 @@ describe('GroupsService', () => {
 
     service = module.get<GroupsService>(GroupsService);
     groupRepo = module.get<Repository<Group>>(getRepositoryToken(Group));
-    group = Group.create('testGroup', 'Superheros') as Group;
+    group = Group.create('testGroup', 'Superheros');
   });
 
   it('should be defined', () => {

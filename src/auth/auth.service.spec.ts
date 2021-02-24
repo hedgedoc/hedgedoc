@@ -4,6 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+/* eslint-disable
+@typescript-eslint/no-unsafe-call,
+@typescript-eslint/no-unsafe-member-access,
+@typescript-eslint/no-unsafe-return,
+@typescript-eslint/require-await */
+
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { PassportModule } from '@nestjs/passport';
@@ -64,17 +70,17 @@ describe('AuthService', () => {
     it('works', async () => {
       const testPassword = 'thisIsATestPassword';
       const hash = await service.hashPassword(testPassword);
-      service
+      void service
         .checkPassword(testPassword, hash)
         .then((result) => expect(result).toBeTruthy());
     });
     it('fails, if secret is too short', async () => {
-      const secret = service.bufferToBase64Url(await service.randomString(54));
+      const secret = service.bufferToBase64Url(service.randomString(54));
       const hash = await service.hashPassword(secret);
-      service
+      void service
         .checkPassword(secret, hash)
         .then((result) => expect(result).toBeTruthy());
-      service
+      void service
         .checkPassword(secret.substr(0, secret.length - 1), hash)
         .then((result) => expect(result).toBeFalsy());
     });
@@ -194,12 +200,12 @@ describe('AuthService', () => {
     });
     describe('fails:', () => {
       it('the secret is missing', () => {
-        expect(
+        void expect(
           service.validateToken(`${authToken.keyId}`),
         ).rejects.toBeInstanceOf(TokenNotValidError);
       });
       it('the secret is too long', () => {
-        expect(
+        void expect(
           service.validateToken(`${authToken.keyId}.${'a'.repeat(73)}`),
         ).rejects.toBeInstanceOf(TokenNotValidError);
       });
@@ -293,7 +299,7 @@ describe('AuthService', () => {
       authToken.keyId = 'testKeyId';
       authToken.label = 'testLabel';
       authToken.createdAt = new Date();
-      const tokenDto = await service.toAuthTokenDto(authToken);
+      const tokenDto = service.toAuthTokenDto(authToken);
       expect(tokenDto.keyId).toEqual(authToken.keyId);
       expect(tokenDto.lastUsed).toBeNull();
       expect(tokenDto.label).toEqual(authToken.label);

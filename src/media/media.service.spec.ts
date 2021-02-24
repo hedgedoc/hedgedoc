@@ -4,6 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+/* eslint-disable
+@typescript-eslint/no-unsafe-call,
+@typescript-eslint/no-unsafe-member-access,
+@typescript-eslint/no-unsafe-return,
+@typescript-eslint/require-await */
+
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -96,7 +102,7 @@ describe('MediaService', () => {
   });
 
   describe('saveFile', () => {
-    beforeEach(async () => {
+    beforeEach(() => {
       const user = User.create('hardcoded', 'Testy') as User;
       const alias = 'alias';
       const note = Note.create(user, alias);

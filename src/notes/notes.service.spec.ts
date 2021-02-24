@@ -4,6 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable
+@typescript-eslint/no-unsafe-assignment,
+@typescript-eslint/no-unsafe-member-access
+*/
+
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { LoggerModule } from '../logger/logger.module';
@@ -189,7 +195,7 @@ describe('NotesService', () => {
       const newNote = await service.createNote(content);
       const revisions = await newNote.revisions;
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
-      service.getNoteContent(newNote).then((result) => {
+      void service.getNoteContent(newNote).then((result) => {
         expect(result).toEqual(content);
       });
     });
@@ -204,7 +210,7 @@ describe('NotesService', () => {
       const newNote = await service.createNote(content);
       const revisions = await newNote.revisions;
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
-      service.getLatestRevision(newNote).then((result) => {
+      void service.getLatestRevision(newNote).then((result) => {
         expect(result).toEqual(revisions[0]);
       });
     });
@@ -221,7 +227,7 @@ describe('NotesService', () => {
       const newNote = await service.createNote(content);
       const revisions = await newNote.revisions;
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
-      service.getLatestRevision(newNote).then((result) => {
+      void service.getLatestRevision(newNote).then((result) => {
         expect(result).toEqual(revisions[0]);
       });
     });
@@ -594,7 +600,7 @@ describe('NotesService', () => {
   describe('toNotePermissionsDto', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
-      const group = Group.create('testGroup', 'testGroup') as Group;
+      const group = Group.create('testGroup', 'testGroup');
       const note = Note.create(user);
       note.userPermissions = [
         {
@@ -610,7 +616,7 @@ describe('NotesService', () => {
           canEdit: true,
         },
       ];
-      const permissions = await service.toNotePermissionsDto(note);
+      const permissions = service.toNotePermissionsDto(note);
       expect(permissions.owner.userName).toEqual(user.userName);
       expect(permissions.sharedToUsers).toHaveLength(1);
       expect(permissions.sharedToUsers[0].user.userName).toEqual(user.userName);
@@ -627,7 +633,7 @@ describe('NotesService', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const otherUser = User.create('other hardcoded', 'Testy2') as User;
-      const group = Group.create('testGroup', 'testGroup') as Group;
+      const group = Group.create('testGroup', 'testGroup');
       const content = 'testContent';
       jest
         .spyOn(noteRepo, 'save')
@@ -718,7 +724,7 @@ describe('NotesService', () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const otherUser = User.create('other hardcoded', 'Testy2') as User;
       otherUser.userName = 'other hardcoded user';
-      const group = Group.create('testGroup', 'testGroup') as Group;
+      const group = Group.create('testGroup', 'testGroup');
       const content = 'testContent';
       jest
         .spyOn(noteRepo, 'save')

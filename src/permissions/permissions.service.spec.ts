@@ -4,6 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+/* eslint-disable
+@typescript-eslint/no-unsafe-call,
+@typescript-eslint/no-unsafe-member-access,
+@typescript-eslint/no-unsafe-return,
+@typescript-eslint/require-await */
+
 import { Test, TestingModule } from '@nestjs/testing';
 import { LoggerModule } from '../logger/logger.module';
 import { GuestPermission, PermissionsService } from './permissions.service';
@@ -350,7 +356,7 @@ describe('PermissionsService', () => {
         for (const group2 of noteGroupPermissions[2]) {
           for (const group3 of noteGroupPermissions[3]) {
             for (const group4 of noteGroupPermissions[4]) {
-              const insert = [];
+              const insert: NoteGroupPermission[] = [];
               let readPermission = false;
               let writePermission = false;
               if (group0 !== null) {
@@ -408,7 +414,7 @@ describe('PermissionsService', () => {
   ): NoteGroupPermission[][] {
     const results = [];
 
-    function permute(arr, memo) {
+    function permute(arr: NoteGroupPermission[], memo: NoteGroupPermission[]) {
       let cur;
 
       for (let i = 0; i < arr.length; i++) {
@@ -456,15 +462,15 @@ describe('PermissionsService', () => {
       note.groupPermissions = permission.permissions;
       let permissionString = '';
       for (const perm of permission.permissions) {
-        permissionString += ' ' + perm.group.name + ':' + perm.canEdit;
+        permissionString += ` ${perm.group.name}:${String(perm.canEdit)}`;
       }
-      it('mayWrite - test #' + i + ':' + permissionString, () => {
+      it(`mayWrite - test #${i}:${permissionString}`, () => {
         permissionsService.guestPermission = guestPermission;
         expect(permissionsService.mayWrite(user1, note)).toEqual(
           permission.allowsWrite,
         );
       });
-      it('mayRead - test #' + i + ':' + permissionString, () => {
+      it(`mayRead - test #${i}:${permissionString}`, () => {
         permissionsService.guestPermission = guestPermission;
         expect(permissionsService.mayRead(user1, note)).toEqual(
           permission.allowsRead,
