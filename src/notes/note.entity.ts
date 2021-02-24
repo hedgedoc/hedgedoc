@@ -85,7 +85,7 @@ export class Note {
     newNote.authorColors = [];
     newNote.userPermissions = [];
     newNote.groupPermissions = [];
-    newNote.revisions = Promise.resolve([]);
+    newNote.revisions = Promise.resolve([]) as Promise<Revision[]>;
     newNote.description = null;
     newNote.title = null;
     newNote.tags = [];
