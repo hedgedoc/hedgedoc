@@ -6,12 +6,12 @@
 
 import { Injectable, Optional, Scope } from '@nestjs/common';
 import { isObject } from '@nestjs/common/utils/shared.utils';
-import * as clc from 'cli-color';
+import clc = require('cli-color');
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class ConsoleLoggerService {
-  private classContext;
+  private classContext: string;
   private lastTimestamp: number;
 
   constructor(@Optional() context?: string) {
@@ -68,7 +68,7 @@ export class ConsoleLoggerService {
     );
   }
 
-  private makeContextString(functionContext) {
+  private makeContextString(functionContext: string) {
     let context = this.classContext;
     if (functionContext) {
       context += '.' + functionContext + '()';
