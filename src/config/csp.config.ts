@@ -18,7 +18,7 @@ const cspSchema = Joi.object({
   reportURI: Joi.string().optional().label('HD_CSP_REPORT_URI'),
 });
 
-export default registerAs('cspConfig', async () => {
+export default registerAs('cspConfig', () => {
   const cspConfig = cspSchema.validate(
     {
       enable: process.env.HD_CSP_ENABLE || true,
@@ -30,10 +30,10 @@ export default registerAs('cspConfig', async () => {
     },
   );
   if (cspConfig.error) {
-    const errorMessages = await cspConfig.error.details.map(
+    const errorMessages = cspConfig.error.details.map(
       (detail) => detail.message,
     );
     throw new Error(buildErrorMessage(errorMessages));
   }
-  return cspConfig.value;
+  return cspConfig.value as CspConfig;
 });

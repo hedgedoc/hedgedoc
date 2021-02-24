@@ -227,7 +227,7 @@ const authSchema = Joi.object({
     .optional(),
 });
 
-export default registerAs('authConfig', async () => {
+export default registerAs('authConfig', () => {
   // ToDo: Validate these with Joi to prevent duplicate entries?
   const gitlabNames = toArrayConfig(
     process.env.HD_AUTH_GITLABS,
@@ -367,7 +367,7 @@ export default registerAs('authConfig', async () => {
     },
   );
   if (authConfig.error) {
-    const errorMessages = await authConfig.error.details
+    const errorMessages = authConfig.error.details
       .map((detail) => detail.message)
       .map((error) => {
         error = replaceAuthErrorsWithEnvironmentVariables(
@@ -398,5 +398,5 @@ export default registerAs('authConfig', async () => {
       });
     throw new Error(buildErrorMessage(errorMessages));
   }
-  return authConfig.value;
+  return authConfig.value as AuthConfig;
 });
