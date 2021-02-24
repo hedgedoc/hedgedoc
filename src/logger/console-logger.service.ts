@@ -22,7 +22,7 @@ export class ConsoleLoggerService {
     this.classContext = context;
   }
 
-  error(message: any, trace = '', functionContext?: string) {
+  error(message: unknown, trace = '', functionContext?: string) {
     this.printMessage(
       message,
       clc.red,
@@ -32,7 +32,7 @@ export class ConsoleLoggerService {
     this.printStackTrace(trace);
   }
 
-  log(message: any, functionContext?: string) {
+  log(message: unknown, functionContext?: string) {
     this.printMessage(
       message,
       clc.green,
@@ -41,7 +41,7 @@ export class ConsoleLoggerService {
     );
   }
 
-  warn(message: any, functionContext?: string) {
+  warn(message: unknown, functionContext?: string) {
     this.printMessage(
       message,
       clc.yellow,
@@ -50,7 +50,7 @@ export class ConsoleLoggerService {
     );
   }
 
-  debug(message: any, functionContext?: string) {
+  debug(message: unknown, functionContext?: string) {
     this.printMessage(
       message,
       clc.magentaBright,
@@ -59,7 +59,7 @@ export class ConsoleLoggerService {
     );
   }
 
-  verbose(message: any, functionContext?: string) {
+  verbose(message: unknown, functionContext?: string) {
     this.printMessage(
       message,
       clc.cyanBright,
@@ -77,14 +77,14 @@ export class ConsoleLoggerService {
   }
 
   private printMessage(
-    message: any,
+    message: unknown,
     color: (message: string) => string,
     context = '',
     isTimeDiffEnabled?: boolean,
   ) {
     const output = isObject(message)
       ? `${color('Object:')}\n${JSON.stringify(message, null, 2)}\n`
-      : color(message);
+      : color(message as string);
 
     const localeStringOptions: DateTimeFormatOptions = {
       year: 'numeric',
