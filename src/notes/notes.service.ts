@@ -295,12 +295,11 @@ export class NotesService {
   }
 
   /**
-   * @async
    * Build NotePermissionsDto from a note.
    * @param {Note} note - the note to use
    * @return {NotePermissionsDto} the built NotePermissionDto
    */
-  async toNotePermissionsDto(note: Note): Promise<NotePermissionsDto> {
+  toNotePermissionsDto(note: Note): Promise<NotePermissionsDto> {
     return {
       owner: this.usersService.toUserDto(note.owner),
       sharedToUsers: note.userPermissions.map((noteUserPermission) => ({
@@ -331,7 +330,7 @@ export class NotesService {
       editedBy: note.authorColors.map(
         (authorColor) => authorColor.user.userName,
       ),
-      permissions: await this.toNotePermissionsDto(note),
+      permissions: this.toNotePermissionsDto(note),
       tags: this.toTagList(note),
       updateTime: (await this.getLatestRevision(note)).createdAt,
       updateUser: this.usersService.toUserDto(
