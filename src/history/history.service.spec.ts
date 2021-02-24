@@ -248,7 +248,7 @@ describe('HistoryService', () => {
         const historyEntry = HistoryEntry.create(user, note);
         historyEntry.pinStatus = true;
         jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
-        const historyEntryDto = await service.toHistoryEntryDto(historyEntry);
+        const historyEntryDto = service.toHistoryEntryDto(historyEntry);
         expect(historyEntryDto.pinStatus).toEqual(true);
         expect(historyEntryDto.identifier).toEqual(alias);
         expect(historyEntryDto.tags).toEqual(tags);
@@ -271,7 +271,7 @@ describe('HistoryService', () => {
         const historyEntry = HistoryEntry.create(user, note);
         historyEntry.pinStatus = true;
         jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
-        const historyEntryDto = await service.toHistoryEntryDto(historyEntry);
+        const historyEntryDto = service.toHistoryEntryDto(historyEntry);
         expect(historyEntryDto.pinStatus).toEqual(true);
         expect(historyEntryDto.identifier).toEqual(id);
         expect(historyEntryDto.tags).toEqual(tags);

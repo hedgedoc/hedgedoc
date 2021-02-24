@@ -55,9 +55,7 @@ export class MeController {
   async getUserHistory(@Req() req: Request): Promise<HistoryEntryDto[]> {
     const foundEntries = await this.historyService.getEntriesByUser(req.user);
     return await Promise.all(
-      foundEntries.map(
-        async (entry) => await this.historyService.toHistoryEntryDto(entry),
-      ),
+      foundEntries.map((entry) => this.historyService.toHistoryEntryDto(entry)),
     );
   }
 
@@ -70,7 +68,7 @@ export class MeController {
   ): Promise<HistoryEntryDto> {
     // ToDo: Check if user is allowed to pin this history entry
     try {
-      return await this.historyService.toHistoryEntryDto(
+      return this.historyService.toHistoryEntryDto(
         await this.historyService.updateHistoryEntry(
           note,
           req.user,
