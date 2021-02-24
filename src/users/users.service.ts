@@ -56,7 +56,7 @@ export class UsersService {
 
   toUserDto(user: User | null | undefined): UserInfoDto | null {
     if (!user) {
-      this.logger.warn(`Recieved ${user} argument!`, 'toUserDto');
+      this.logger.warn(`Recieved ${String(user)} argument!`, 'toUserDto');
       return null;
     }
     return {

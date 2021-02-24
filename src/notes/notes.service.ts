@@ -299,7 +299,7 @@ export class NotesService {
    * @param {Note} note - the note to use
    * @return {NotePermissionsDto} the built NotePermissionDto
    */
-  toNotePermissionsDto(note: Note): Promise<NotePermissionsDto> {
+  toNotePermissionsDto(note: Note): NotePermissionsDto {
     return {
       owner: this.usersService.toUserDto(note.owner),
       sharedToUsers: note.userPermissions.map((noteUserPermission) => ({
