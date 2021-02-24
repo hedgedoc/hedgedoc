@@ -221,7 +221,7 @@ export class NotesController {
       if (!this.permissionsService.isOwner(req.user, note)) {
         throw new UnauthorizedException('Updating note denied!');
       }
-      return await this.noteService.toNotePermissionsDto(
+      return this.noteService.toNotePermissionsDto(
         this.noteService.updateNotePermissions(note, updateDto),
       );
     } catch (e) {
