@@ -7,6 +7,7 @@
 import { Injectable, Optional, Scope } from '@nestjs/common';
 import { isObject } from '@nestjs/common/utils/shared.utils';
 import * as clc from 'cli-color';
+import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class ConsoleLoggerService {
@@ -85,7 +86,7 @@ export class ConsoleLoggerService {
       ? `${color('Object:')}\n${JSON.stringify(message, null, 2)}\n`
       : color(message);
 
-    const localeStringOptions = {
+    const localeStringOptions: DateTimeFormatOptions = {
       year: 'numeric',
       hour: 'numeric',
       minute: 'numeric',
