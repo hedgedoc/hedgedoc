@@ -103,7 +103,7 @@ export class MeController {
   async getMyNotes(@Req() req: Request): Promise<NoteMetadataDto[]> {
     const notes = this.notesService.getUserNotes(req.user);
     return await Promise.all(
-      notes.map((note) => this.notesService.toNoteMetadataDto(note)),
+      (await notes).map((note) => this.notesService.toNoteMetadataDto(note)),
     );
   }
 }
