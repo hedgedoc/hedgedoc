@@ -12,6 +12,7 @@ import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
 import { BackendData } from '../media-upload.entity';
 import { MediaConfig } from '../../config/media.config';
+import { MediaBackendError } from '../../errors/errors';
 
 @Injectable()
 export class FilesystemBackend implements MediaBackend {
@@ -33,12 +34,23 @@ export class FilesystemBackend implements MediaBackend {
     const filePath = this.getFilePath(fileName);
     this.logger.debug(`Writing file to: ${filePath}`, 'saveFile');
     await this.ensureDirectory();
-    await fs.writeFile(filePath, buffer, null);
-    return ['/' + filePath, null];
+    try {
+      await fs.writeFile(filePath, buffer, null);
+      return ['/' + filePath, null];
+    } catch (e) {
+      this.logger.error(e.message, e.stack, 'saveFile');
+      throw new MediaBackendError(`Could not save '${filePath}'`);
+    }
   }
 
   async deleteFile(fileName: string, _: BackendData): Promise<void> {
-    return fs.unlink(this.getFilePath(fileName));
+    const filePath = this.getFilePath(fileName);
+    try {
+      return fs.unlink(filePath);
+    } catch (e) {
+      this.logger.error(e.message, e.stack, 'deleteFile');
+      throw new MediaBackendError(`Could not delete '${filePath}'`);
+    }
   }
 
   getFileURL(fileName: string, _: BackendData): Promise<string> {
@@ -55,7 +67,17 @@ export class FilesystemBackend implements MediaBackend {
     try {
       await fs.access(this.uploadDirectory);
     } catch (e) {
-      await fs.mkdir(this.uploadDirectory);
+      try {
+        this.logger.debug(
+          `The directory '${this.uploadDirectory}' can't be accessed. Trying to create the directory`,
+        );
+        await fs.mkdir(this.uploadDirectory);
+      } catch (e) {
+        this.logger.error(e.message, e.stack, 'deleteFile');
+        throw new MediaBackendError(
+          `Could not create '${this.uploadDirectory}'`,
+        );
+      }
     }
   }
 }
