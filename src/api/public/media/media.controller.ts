@@ -9,6 +9,7 @@ import {
   Controller,
   Delete,
   Headers,
+  InternalServerErrorException,
   NotFoundException,
   Param,
   Post,
@@ -21,6 +22,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ClientError,
+  MediaBackendError,
   NotInDBError,
   PermissionError,
 } from '../../../errors/errors';
@@ -66,6 +68,11 @@ export class MediaController {
       if (e instanceof ClientError || e instanceof NotInDBError) {
         throw new BadRequestException(e.message);
       }
+      if (e instanceof MediaBackendError) {
+        throw new InternalServerErrorException(
+          'There was an error in the media backend',
+        );
+      }
       throw e;
     }
   }
@@ -85,6 +92,11 @@ export class MediaController {
       }
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
+      }
+      if (e instanceof MediaBackendError) {
+        throw new InternalServerErrorException(
+          'There was an error in the media backend',
+        );
       }
       throw e;
     }
