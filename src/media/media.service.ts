@@ -67,6 +67,8 @@ export class MediaService {
    * @param {string} noteId - the id or alias of the note which will be associated with the new file.
    * @return {string} the url of the saved file
    * @throws {ClientError} the MIME type of the file is not supported.
+   * @throws {NotInDBError} - the note or user is not in the database
+   * @throws {MediaBackendError} - there was an error saving the file
    */
   async saveFile(
     fileBuffer: Buffer,
@@ -110,6 +112,7 @@ export class MediaService {
    * @return {string} the url of the saved file
    * @throws {PermissionError} the user is not permitted to delete this file.
    * @throws {NotInDBError} - the file entry specified is not in the database
+   * @throws {MediaBackendError} - there was an error deleting the file
    */
   async deleteFile(filename: string, username: string): Promise<void> {
     this.logger.debug(
@@ -136,6 +139,7 @@ export class MediaService {
    * @param {string} filename - the name of the file entry to find
    * @return {MediaUpload} the file entry, that was searched for
    * @throws {NotInDBError} - the file entry specified is not in the database
+   * @throws {MediaBackendError} - there was an error retrieving the url
    */
   async findUploadByFilename(filename: string): Promise<MediaUpload> {
     const mediaUpload = await this.mediaUploadRepository.findOne(filename, {

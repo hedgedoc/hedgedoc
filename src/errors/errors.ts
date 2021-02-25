@@ -31,3 +31,7 @@ export class TooManyTokensError extends Error {
 export class PermissionsUpdateInconsistentError extends Error {
   name = 'PermissionsUpdateInconsistentError';
 }
+
+export class MediaBackendError extends Error {
+  name = 'MediaBackendError';
+}
