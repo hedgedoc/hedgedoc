@@ -38,7 +38,7 @@ export class FilesystemBackend implements MediaBackend {
       await fs.writeFile(filePath, buffer, null);
       return ['/' + filePath, null];
     } catch (e) {
-      this.logger.error(e.message, e.stack, 'saveFile');
+      this.logger.error((e as Error).message, (e as Error).stack, 'saveFile');
       throw new MediaBackendError(`Could not save '${filePath}'`);
     }
   }
@@ -48,7 +48,7 @@ export class FilesystemBackend implements MediaBackend {
     try {
       return await fs.unlink(filePath);
     } catch (e) {
-      this.logger.error(e.message, e.stack, 'deleteFile');
+      this.logger.error((e as Error).message, (e as Error).stack, 'deleteFile');
       throw new MediaBackendError(`Could not delete '${filePath}'`);
     }
   }
@@ -73,7 +73,11 @@ export class FilesystemBackend implements MediaBackend {
         );
         await fs.mkdir(this.uploadDirectory);
       } catch (e) {
-        this.logger.error(e.message, e.stack, 'deleteFile');
+        this.logger.error(
+          (e as Error).message,
+          (e as Error).stack,
+          'deleteFile',
+        );
         throw new MediaBackendError(
           `Could not create '${this.uploadDirectory}'`,
         );
