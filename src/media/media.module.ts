@@ -13,6 +13,7 @@ import { UsersModule } from '../users/users.module';
 import { FilesystemBackend } from './backends/filesystem-backend';
 import { MediaUpload } from './media-upload.entity';
 import { MediaService } from './media.service';
+import { ImgurBackend } from './backends/imgur-backend';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { MediaService } from './media.service';
     LoggerModule,
     ConfigModule,
   ],
-  providers: [MediaService, FilesystemBackend],
+  providers: [MediaService, FilesystemBackend, ImgurBackend],
   exports: [MediaService],
 })
 export class MediaModule {}
