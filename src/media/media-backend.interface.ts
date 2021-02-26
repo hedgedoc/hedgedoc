@@ -17,14 +17,6 @@ export interface MediaBackend {
   saveFile(buffer: Buffer, fileName: string): Promise<[string, BackendData]>;
 
   /**
-   * Retrieve the URL of a previously saved file.
-   * @param fileName String to identify the file
-   * @param backendData Internal backend data
-   * @throws {MediaBackendError} - there was an error deleting the file
-   */
-  getFileURL(fileName: string, backendData: BackendData): Promise<string>;
-
-  /**
    * Delete a file from the backend
    * @param fileName String to identify the file
    * @param backendData Internal backend data
