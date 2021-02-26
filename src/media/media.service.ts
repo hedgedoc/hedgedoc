@@ -100,6 +100,7 @@ export class MediaService {
       mediaUpload.id,
     );
     mediaUpload.backendData = backendData;
+    mediaUpload.fileUrl = url;
     await this.mediaUploadRepository.save(mediaUpload);
     return url;
   }
