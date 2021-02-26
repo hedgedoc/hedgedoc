@@ -35,7 +35,7 @@
     "@types/bcrypt": "3.0.0",
     "@types/cron": "1.7.2",
     "@types/passport-http-bearer": "1.0.36",
-    "bcrypt": "5.0.0",
+    "bcrypt": "5.0.1",
     "class-transformer": "0.4.0",
     "class-validator": "0.13.1",
     "cli-color": "2.0.0",
