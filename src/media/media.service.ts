@@ -19,6 +19,7 @@ import { FilesystemBackend } from './backends/filesystem-backend';
 import { MediaBackend } from './media-backend.interface';
 import { MediaUpload } from './media-upload.entity';
 import { MediaUploadUrlDto } from './media-upload-url.dto';
+import { ImgurBackend } from './backends/imgur-backend';
 
 @Injectable()
 export class MediaService {
@@ -158,6 +159,8 @@ export class MediaService {
     switch (this.mediaConfig.backend.use) {
       case 'filesystem':
         return BackendType.FILESYSTEM;
+      case 'imgur':
+        return BackendType.IMGUR;
     }
   }
 
@@ -165,6 +168,8 @@ export class MediaService {
     switch (type) {
       case BackendType.FILESYSTEM:
         return this.moduleRef.get(FilesystemBackend);
+      case BackendType.IMGUR:
+        return this.moduleRef.get(ImgurBackend);
     }
   }
 
