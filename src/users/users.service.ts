@@ -26,7 +26,7 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
-  async deleteUser(userName: string) {
+  async deleteUser(userName: string): Promise<void> {
     // TODO: Handle owned notes and edits
     const user = await this.userRepository.findOne({
       where: { userName: userName },

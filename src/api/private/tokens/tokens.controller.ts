@@ -53,7 +53,7 @@ export class TokensController {
 
   @Delete('/:keyId')
   @HttpCode(204)
-  async deleteToken(@Param('keyId') keyId: string) {
+  async deleteToken(@Param('keyId') keyId: string): Promise<void> {
     return await this.authService.removeToken(keyId);
   }
 }

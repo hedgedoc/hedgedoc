@@ -41,7 +41,7 @@ export const MarkdownBody = createParamDecorator(
     }
   },
   [
-    (target, key) => {
+    (target, key): void => {
       ApiConsumes('text/markdown')(
         target,
         key,

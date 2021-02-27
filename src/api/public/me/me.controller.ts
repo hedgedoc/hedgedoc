@@ -86,7 +86,10 @@ export class MeController {
   @UseGuards(TokenAuthGuard)
   @Delete('history/:note')
   @HttpCode(204)
-  deleteHistoryEntry(@Req() req: Request, @Param('note') note: string) {
+  deleteHistoryEntry(
+    @Req() req: Request,
+    @Param('note') note: string,
+  ): Promise<void> {
     // ToDo: Check if user is allowed to delete note
     try {
       return this.historyService.deleteHistoryEntry(note, req.user);

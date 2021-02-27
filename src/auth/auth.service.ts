@@ -123,7 +123,7 @@ export class AuthService {
     return this.toAuthTokenWithSecretDto(createdToken, `${keyId}.${secret}`);
   }
 
-  async setLastUsedToken(keyId: string) {
+  async setLastUsedToken(keyId: string): Promise<void> {
     const accessToken = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
     });
@@ -166,7 +166,7 @@ export class AuthService {
     return user.authTokens;
   }
 
-  async removeToken(keyId: string) {
+  async removeToken(keyId: string): Promise<void> {
     const token = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
     });
@@ -213,17 +213,17 @@ export class AuthService {
 
   // Delete all non valid tokens  every sunday on 3:00 AM
   @Cron('0 0 3 * * 0')
-  async handleCron() {
+  async handleCron(): Promise<void> {
     return await this.removeInvalidTokens();
   }
 
   // Delete all non valid tokens 5 sec after startup
   @Timeout(5000)
-  async handleTimeout() {
+  async handleTimeout(): Promise<void> {
     return await this.removeInvalidTokens();
   }
 
-  async removeInvalidTokens() {
+  async removeInvalidTokens(): Promise<void> {
     const currentTime = new Date().getTime();
     const tokens: AuthToken[] = await this.authTokenRepository.find();
     let removedTokens = 0;

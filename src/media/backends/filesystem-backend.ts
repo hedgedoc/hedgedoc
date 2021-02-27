@@ -63,7 +63,7 @@ export class FilesystemBackend implements MediaBackend {
     return join(this.uploadDirectory, fileName);
   }
 
-  private async ensureDirectory() {
+  private async ensureDirectory(): Promise<void> {
     try {
       await fs.access(this.uploadDirectory);
     } catch (e) {

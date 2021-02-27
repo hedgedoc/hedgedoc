@@ -9,7 +9,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { PrivateApiModule } from '../api/private/private-api.module';
 import { PublicApiModule } from '../api/public/public-api.module';
 
-export function setupPublicApiDocs(app: INestApplication) {
+export function setupPublicApiDocs(app: INestApplication): void {
   const publicApiOptions = new DocumentBuilder()
     .setTitle('HedgeDoc Public API')
     // TODO: Use real version
@@ -25,7 +25,7 @@ export function setupPublicApiDocs(app: INestApplication) {
   SwaggerModule.setup('apidoc', app, publicApi);
 }
 
-export function setupPrivateApiDocs(app: INestApplication) {
+export function setupPrivateApiDocs(app: INestApplication): void {
   const privateApiOptions = new DocumentBuilder()
     .setTitle('HedgeDoc Private API')
     // TODO: Use real version

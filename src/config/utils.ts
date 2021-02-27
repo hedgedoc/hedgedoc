@@ -4,7 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export const toArrayConfig = (configValue: string, separator = ',') => {
+export const toArrayConfig: (
+  configValue: string,
+  separator?: string,
+) => string[] = (configValue: string, separator = ',') => {
   if (!configValue) {
     return [];
   }
