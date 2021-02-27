@@ -15,7 +15,7 @@ import {
   Param,
   Post,
   Put,
-  Request,
+  Req,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
@@ -41,6 +41,7 @@ import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
 import { PermissionsService } from '../../../permissions/permissions.service';
 import { Note } from '../../../notes/note.entity';
+import { Request } from 'express';
 
 @ApiTags('notes')
 @ApiSecurity('token')
@@ -59,7 +60,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Post()
   async createNote(
-    @Request() req,
+    @Req() req: Request,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
     // ToDo: provide user for createNoteDto
@@ -67,7 +68,7 @@ export class NotesController {
       throw new UnauthorizedException('Creating note denied!');
     }
     this.logger.debug('Got raw markdown:\n' + text);
-    return this.noteService.toNoteDto(
+    return await this.noteService.toNoteDto(
       await this.noteService.createNote(text, undefined, req.user),
     );
   }
@@ -75,7 +76,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Get(':noteIdOrAlias')
   async getNote(
-    @Request() req,
+    @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<NoteDto> {
     let note: Note;
@@ -91,13 +92,13 @@ export class NotesController {
       throw new UnauthorizedException('Reading note denied!');
     }
     await this.historyService.createOrUpdateHistoryEntry(note, req.user);
-    return this.noteService.toNoteDto(note);
+    return await this.noteService.toNoteDto(note);
   }
 
   @UseGuards(TokenAuthGuard)
   @Post(':noteAlias')
   async createNamedNote(
-    @Request() req,
+    @Req() req: Request,
     @Param('noteAlias') noteAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
@@ -106,7 +107,7 @@ export class NotesController {
     }
     this.logger.debug('Got raw markdown:\n' + text, 'createNamedNote');
     try {
-      return this.noteService.toNoteDto(
+      return await this.noteService.toNoteDto(
         await this.noteService.createNote(text, noteAlias, req.user),
       );
     } catch (e) {
@@ -120,7 +121,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Delete(':noteIdOrAlias')
   async deleteNote(
-    @Request() req,
+    @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<void> {
     try {
@@ -143,7 +144,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Put(':noteIdOrAlias')
   async updateNote(
-    @Request() req,
+    @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
@@ -153,7 +154,7 @@ export class NotesController {
         throw new UnauthorizedException('Updating note denied!');
       }
       this.logger.debug('Got raw markdown:\n' + text, 'updateNote');
-      return this.noteService.toNoteDto(
+      return await this.noteService.toNoteDto(
         await this.noteService.updateNote(note, text),
       );
     } catch (e) {
@@ -168,7 +169,7 @@ export class NotesController {
   @Get(':noteIdOrAlias/content')
   @Header('content-type', 'text/markdown')
   async getNoteContent(
-    @Request() req,
+    @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<string> {
     try {
@@ -188,7 +189,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Get(':noteIdOrAlias/metadata')
   async getNoteMetadata(
-    @Request() req,
+    @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<NoteMetadataDto> {
     try {
@@ -196,7 +197,7 @@ export class NotesController {
       if (!this.permissionsService.mayRead(req.user, note)) {
         throw new UnauthorizedException('Reading note denied!');
       }
-      return this.noteService.toNoteMetadataDto(note);
+      return await this.noteService.toNoteMetadataDto(note);
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
@@ -211,7 +212,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Put(':noteIdOrAlias/metadata/permissions')
   async updateNotePermissions(
-    @Request() req,
+    @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @Body() updateDto: NotePermissionsUpdateDto,
   ): Promise<NotePermissionsDto> {
@@ -234,7 +235,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Get(':noteIdOrAlias/revisions')
   async getNoteRevisions(
-    @Request() req,
+    @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<RevisionMetadataDto[]> {
     try {
@@ -243,7 +244,7 @@ export class NotesController {
         throw new UnauthorizedException('Reading note denied!');
       }
       const revisions = await this.revisionsService.getAllRevisions(note);
-      return Promise.all(
+      return await Promise.all(
         revisions.map((revision) =>
           this.revisionsService.toRevisionMetadataDto(revision),
         ),
@@ -259,7 +260,7 @@ export class NotesController {
   @UseGuards(TokenAuthGuard)
   @Get(':noteIdOrAlias/revisions/:revisionId')
   async getNoteRevision(
-    @Request() req,
+    @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @Param('revisionId') revisionId: number,
   ): Promise<RevisionDto> {

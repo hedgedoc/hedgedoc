@@ -5,23 +5,20 @@
  */
 
 import { Injectable } from '@nestjs/common';
-import { ServerStatusDto } from './server-status.dto';
 import { promises as fs } from 'fs';
 import { join as joinPath } from 'path';
+import { ServerStatusDto, ServerVersion } from './server-status.dto';
 
-let versionCache: null | {
-  major: number;
-  minor: number;
-  patch: number;
-  preRelease?: string;
-  commit?: string;
-} = null;
-async function getServerVersionFromPackageJson() {
+let versionCache: ServerVersion;
+
+async function getServerVersionFromPackageJson(): Promise<ServerVersion> {
   if (versionCache === null) {
     const rawFileContent: string = await fs.readFile(
       joinPath(__dirname, '../../package.json'),
       { encoding: 'utf8' },
     );
+    // TODO: Should this be validated in more detail?
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const packageInfo: { version: string } = JSON.parse(rawFileContent);
     const versionParts: number[] = packageInfo.version
       .split('.')

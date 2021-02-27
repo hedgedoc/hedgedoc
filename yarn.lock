@@ -846,6 +846,11 @@
     "@types/connect" "*"
     "@types/node" "*"
 
+"@types/cli-color@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/cli-color/-/cli-color-2.0.0.tgz#dc64e32da0fb9ea1814300fb468a58e833ce71a6"
+  integrity sha512-E2Oisr73FjwxMHkYU6RcN9P9mmrbG4TNQMIebWhazYxOgWRzA7s4hM+DtAs6ZwiwKFbPst42v1XUAC1APIhRJA==
+
 "@types/connect@*":
   version "3.4.34"
   resolved "https://registry.yarnpkg.com/@types/connect/-/connect-3.4.34.tgz#170a40223a6d666006d93ca128af2beb1d9b1901"
@@ -1094,6 +1099,11 @@
   dependencies:
     "@types/mime" "^1"
     "@types/node" "*"
+
+"@types/shortid@^0.0.29":
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/@types/shortid/-/shortid-0.0.29.tgz#8093ee0416a6e2bf2aa6338109114b3fbffa0e9b"
+  integrity sha1-gJPuBBam4r8qpjOBCRFLP7/6Dps=
 
 "@types/source-list-map@*":
   version "0.1.2"

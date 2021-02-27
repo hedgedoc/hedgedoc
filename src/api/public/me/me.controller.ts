@@ -14,7 +14,7 @@ import {
   Param,
   Put,
   UseGuards,
-  Request,
+  Req,
 } from '@nestjs/common';
 import { HistoryEntryUpdateDto } from '../../../history/history-entry-update.dto';
 import { HistoryService } from '../../../history/history.service';
@@ -27,6 +27,7 @@ import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { HistoryEntryDto } from '../../../history/history-entry.dto';
 import { UserInfoDto } from '../../../users/user-info.dto';
 import { NotInDBError } from '../../../errors/errors';
+import { Request } from 'express';
 
 @ApiTags('me')
 @ApiSecurity('token')
@@ -43,7 +44,7 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Get()
-  async getMe(@Request() req): Promise<UserInfoDto> {
+  async getMe(@Req() req: Request): Promise<UserInfoDto> {
     return this.usersService.toUserDto(
       await this.usersService.getUserByUsername(req.user.userName),
     );
@@ -51,19 +52,17 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Get('history')
-  async getUserHistory(@Request() req): Promise<HistoryEntryDto[]> {
+  async getUserHistory(@Req() req: Request): Promise<HistoryEntryDto[]> {
     const foundEntries = await this.historyService.getEntriesByUser(req.user);
-    return Promise.all(
-      foundEntries.map(
-        async (entry) => await this.historyService.toHistoryEntryDto(entry),
-      ),
+    return await Promise.all(
+      foundEntries.map((entry) => this.historyService.toHistoryEntryDto(entry)),
     );
   }
 
   @UseGuards(TokenAuthGuard)
   @Put('history/:note')
   async updateHistoryEntry(
-    @Request() req,
+    @Req() req: Request,
     @Param('note') note: string,
     @Body() entryUpdateDto: HistoryEntryUpdateDto,
   ): Promise<HistoryEntryDto> {
@@ -87,7 +86,10 @@ export class MeController {
   @UseGuards(TokenAuthGuard)
   @Delete('history/:note')
   @HttpCode(204)
-  deleteHistoryEntry(@Request() req, @Param('note') note: string) {
+  deleteHistoryEntry(
+    @Req() req: Request,
+    @Param('note') note: string,
+  ): Promise<void> {
     // ToDo: Check if user is allowed to delete note
     try {
       return this.historyService.deleteHistoryEntry(note, req.user);
@@ -101,10 +103,10 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Get('notes')
-  async getMyNotes(@Request() req): Promise<NoteMetadataDto[]> {
-    const notes = await this.notesService.getUserNotes(req.user);
-    return Promise.all(
-      notes.map((note) => this.notesService.toNoteMetadataDto(note)),
+  async getMyNotes(@Req() req: Request): Promise<NoteMetadataDto[]> {
+    const notes = this.notesService.getUserNotes(req.user);
+    return await Promise.all(
+      (await notes).map((note) => this.notesService.toNoteMetadataDto(note)),
     );
   }
 }

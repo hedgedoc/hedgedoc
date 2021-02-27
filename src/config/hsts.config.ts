@@ -28,7 +28,7 @@ const hstsSchema = Joi.object({
   preload: Joi.boolean().default(true).optional().label('HD_HSTS_PRELOAD'),
 });
 
-export default registerAs('hstsConfig', async () => {
+export default registerAs('hstsConfig', () => {
   const hstsConfig = hstsSchema.validate(
     {
       enable: process.env.HD_HSTS_ENABLE,
@@ -42,10 +42,10 @@ export default registerAs('hstsConfig', async () => {
     },
   );
   if (hstsConfig.error) {
-    const errorMessages = await hstsConfig.error.details.map(
+    const errorMessages = hstsConfig.error.details.map(
       (detail) => detail.message,
     );
     throw new Error(buildErrorMessage(errorMessages));
   }
-  return hstsConfig.value;
+  return hstsConfig.value as HstsConfig;
 });

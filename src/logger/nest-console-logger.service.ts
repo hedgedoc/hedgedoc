@@ -12,27 +12,27 @@ Injectable();
 export class NestConsoleLoggerService implements LoggerService {
   private consoleLoggerService = new ConsoleLoggerService();
 
-  debug(message: any, context?: string): any {
+  debug(message: unknown, context?: string): void {
     this.consoleLoggerService.setContext(context);
     this.consoleLoggerService.debug(message);
   }
 
-  error(message: any, trace?: string, context?: string): any {
+  error(message: unknown, trace?: string, context?: string): void {
     this.consoleLoggerService.setContext(context);
     this.consoleLoggerService.error(message, trace);
   }
 
-  log(message: any, context?: string): any {
+  log(message: unknown, context?: string): void {
     this.consoleLoggerService.setContext(context);
     this.consoleLoggerService.log(message);
   }
 
-  verbose(message: any, context?: string): any {
+  verbose(message: unknown, context?: string): void {
     this.consoleLoggerService.setContext(context);
     this.consoleLoggerService.verbose(message);
   }
 
-  warn(message: any, context?: string): any {
+  warn(message: unknown, context?: string): void {
     this.consoleLoggerService.setContext(context);
     this.consoleLoggerService.warn(message);
   }

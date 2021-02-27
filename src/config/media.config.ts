@@ -75,7 +75,7 @@ const mediaSchema = Joi.object({
   },
 });
 
-export default registerAs('mediaConfig', async () => {
+export default registerAs('mediaConfig', () => {
   const mediaConfig = mediaSchema.validate(
     {
       backend: {
@@ -106,10 +106,10 @@ export default registerAs('mediaConfig', async () => {
     },
   );
   if (mediaConfig.error) {
-    const errorMessages = await mediaConfig.error.details.map(
+    const errorMessages = mediaConfig.error.details.map(
       (detail) => detail.message,
     );
     throw new Error(buildErrorMessage(errorMessages));
   }
-  return mediaConfig.value;
+  return mediaConfig.value as MediaConfig;
 });

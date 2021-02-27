@@ -49,27 +49,27 @@ export class AuthService {
     }
     const accessToken = await this.getAuthTokenAndValidate(keyId, secret);
     await this.setLastUsedToken(keyId);
-    return this.usersService.getUserByUsername(accessToken.user.userName);
+    return await this.usersService.getUserByUsername(accessToken.user.userName);
   }
 
   async hashPassword(cleartext: string): Promise<string> {
     // hash the password with bcrypt and 2^12 iterations
     // this was decided on the basis of https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#bcrypt
-    return hash(cleartext, 12);
+    return await hash(cleartext, 12);
   }
 
   async checkPassword(cleartext: string, password: string): Promise<boolean> {
-    return compare(cleartext, password);
+    return await compare(cleartext, password);
   }
 
-  async randomString(length: number): Promise<Buffer> {
+  randomString(length: number): Buffer {
     if (length <= 0) {
       return null;
     }
     return randomBytes(length);
   }
 
-  BufferToBase64Url(text: Buffer): string {
+  bufferToBase64Url(text: Buffer): string {
     // This is necessary as the is no base64url encoding in the toString method
     // but as can be seen on https://tools.ietf.org/html/rfc4648#page-7
     // base64url is quite easy buildable from base64
@@ -93,8 +93,8 @@ export class AuthService {
         `User '${user.userName}' has already 200 tokens and can't have anymore`,
       );
     }
-    const secret = this.BufferToBase64Url(await this.randomString(54));
-    const keyId = this.BufferToBase64Url(await this.randomString(8));
+    const secret = this.bufferToBase64Url(this.randomString(54));
+    const keyId = this.bufferToBase64Url(this.randomString(8));
     const accessToken = await this.hashPassword(secret);
     let token;
     // Tokens can only be valid for a maximum of 2 years
@@ -117,11 +117,13 @@ export class AuthService {
         new Date(validUntil),
       );
     }
-    const createdToken = await this.authTokenRepository.save(token);
+    const createdToken = (await this.authTokenRepository.save(
+      token,
+    )) as AuthToken;
     return this.toAuthTokenWithSecretDto(createdToken, `${keyId}.${secret}`);
   }
 
-  async setLastUsedToken(keyId: string) {
+  async setLastUsedToken(keyId: string): Promise<void> {
     const accessToken = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
     });
@@ -150,7 +152,7 @@ export class AuthService {
     ) {
       // tokens validUntil Date lies in the past
       throw new TokenNotValidError(
-        `AuthToken '${token}' is not valid since ${accessToken.validUntil}.`,
+        `AuthToken '${token}' is not valid since ${accessToken.validUntil.toISOString()}.`,
       );
     }
     return accessToken;
@@ -164,7 +166,7 @@ export class AuthService {
     return user.authTokens;
   }
 
-  async removeToken(keyId: string) {
+  async removeToken(keyId: string): Promise<void> {
     const token = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
     });
@@ -173,7 +175,10 @@ export class AuthService {
 
   toAuthTokenDto(authToken: AuthToken): AuthTokenDto | null {
     if (!authToken) {
-      this.logger.warn(`Recieved ${authToken} argument!`, 'toAuthTokenDto');
+      this.logger.warn(
+        `Recieved ${String(authToken)} argument!`,
+        'toAuthTokenDto',
+      );
       return null;
     }
     const tokenDto: AuthTokenDto = {
@@ -208,17 +213,17 @@ export class AuthService {
 
   // Delete all non valid tokens  every sunday on 3:00 AM
   @Cron('0 0 3 * * 0')
-  async handleCron() {
-    return this.removeInvalidTokens();
+  async handleCron(): Promise<void> {
+    return await this.removeInvalidTokens();
   }
 
   // Delete all non valid tokens 5 sec after startup
   @Timeout(5000)
-  async handleTimeout() {
-    return this.removeInvalidTokens();
+  async handleTimeout(): Promise<void> {
+    return await this.removeInvalidTokens();
   }
 
-  async removeInvalidTokens() {
+  async removeInvalidTokens(): Promise<void> {
     const currentTime = new Date().getTime();
     const tokens: AuthToken[] = await this.authTokenRepository.find();
     let removedTokens = 0;

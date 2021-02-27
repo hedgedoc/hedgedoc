@@ -45,7 +45,7 @@ export class GroupsService {
    */
   toGroupDto(group: Group | null | undefined): GroupInfoDto | null {
     if (!group) {
-      this.logger.warn(`Recieved ${group} argument!`, 'toGroupDto');
+      this.logger.warn(`Recieved ${String(group)} argument!`, 'toGroupDto');
       return null;
     }
     return {

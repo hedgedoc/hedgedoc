@@ -15,7 +15,7 @@ import { NestConsoleLoggerService } from './logger/nest-console-logger.service';
 import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
 import { BackendType } from './media/backends/backend-type.enum';
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const logger = await app.resolve(NestConsoleLoggerService);
   logger.log('Switching logger', 'AppBootstrap');
@@ -49,4 +49,4 @@ async function bootstrap() {
   logger.log(`Listening on port ${appConfig.port}`, 'AppBootstrap');
 }
 
-bootstrap();
+void bootstrap();

@@ -4,6 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+/* eslint-disable
+@typescript-eslint/no-unsafe-assignment,
+@typescript-eslint/no-unsafe-member-access
+*/
+
 import { INestApplication } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
@@ -149,7 +154,7 @@ describe('Notes', () => {
         .set('Content-Type', 'text/markdown')
         .send(changedContent)
         .expect(200);
-      await expect(
+      expect(
         await notesService.getNoteContent(
           await notesService.getNoteByIdOrAlias('test4'),
         ),
@@ -239,7 +244,7 @@ describe('Notes', () => {
       const note = await notesService.createNote(content, 'test7', user);
       const revision = await notesService.getLatestRevision(note);
       const response = await request(app.getHttpServer())
-        .get('/notes/test7/revisions/' + revision.id)
+        .get(`/notes/test7/revisions/${revision.id}`)
         .expect('Content-Type', /json/)
         .expect(200);
       expect(response.body.content).toEqual(content);

@@ -25,7 +25,7 @@ const schema = Joi.object({
     .label('HD_LOGLEVEL'),
 });
 
-export default registerAs('appConfig', async () => {
+export default registerAs('appConfig', () => {
   const appConfig = schema.validate(
     {
       domain: process.env.HD_DOMAIN,
@@ -38,10 +38,10 @@ export default registerAs('appConfig', async () => {
     },
   );
   if (appConfig.error) {
-    const errorMessages = await appConfig.error.details.map(
+    const errorMessages = appConfig.error.details.map(
       (detail) => detail.message,
     );
     throw new Error(buildErrorMessage(errorMessages));
   }
-  return appConfig.value;
+  return appConfig.value as AppConfig;
 });

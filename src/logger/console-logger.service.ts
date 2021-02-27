@@ -6,23 +6,23 @@
 
 import { Injectable, Optional, Scope } from '@nestjs/common';
 import { isObject } from '@nestjs/common/utils/shared.utils';
-import * as clc from 'cli-color';
+import clc = require('cli-color');
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class ConsoleLoggerService {
-  private classContext;
+  private classContext: string;
   private lastTimestamp: number;
 
   constructor(@Optional() context?: string) {
     this.classContext = context;
   }
 
-  setContext(context: string) {
+  setContext(context: string): void {
     this.classContext = context;
   }
 
-  error(message: any, trace = '', functionContext?: string) {
+  error(message: unknown, trace = '', functionContext?: string): void {
     this.printMessage(
       message,
       clc.red,
@@ -32,7 +32,7 @@ export class ConsoleLoggerService {
     this.printStackTrace(trace);
   }
 
-  log(message: any, functionContext?: string) {
+  log(message: unknown, functionContext?: string): void {
     this.printMessage(
       message,
       clc.green,
@@ -41,7 +41,7 @@ export class ConsoleLoggerService {
     );
   }
 
-  warn(message: any, functionContext?: string) {
+  warn(message: unknown, functionContext?: string): void {
     this.printMessage(
       message,
       clc.yellow,
@@ -50,7 +50,7 @@ export class ConsoleLoggerService {
     );
   }
 
-  debug(message: any, functionContext?: string) {
+  debug(message: unknown, functionContext?: string): void {
     this.printMessage(
       message,
       clc.magentaBright,
@@ -59,7 +59,7 @@ export class ConsoleLoggerService {
     );
   }
 
-  verbose(message: any, functionContext?: string) {
+  verbose(message: unknown, functionContext?: string): void {
     this.printMessage(
       message,
       clc.cyanBright,
@@ -68,7 +68,7 @@ export class ConsoleLoggerService {
     );
   }
 
-  private makeContextString(functionContext) {
+  private makeContextString(functionContext: string): string {
     let context = this.classContext;
     if (functionContext) {
       context += '.' + functionContext + '()';
@@ -77,14 +77,14 @@ export class ConsoleLoggerService {
   }
 
   private printMessage(
-    message: any,
+    message: unknown,
     color: (message: string) => string,
     context = '',
     isTimeDiffEnabled?: boolean,
-  ) {
+  ): void {
     const output = isObject(message)
       ? `${color('Object:')}\n${JSON.stringify(message, null, 2)}\n`
-      : color(message);
+      : color(message as string);
 
     const localeStringOptions: DateTimeFormatOptions = {
       year: 'numeric',
@@ -117,7 +117,7 @@ export class ConsoleLoggerService {
     return result;
   }
 
-  private printStackTrace(trace: string) {
+  private printStackTrace(trace: string): void {
     if (!trace) {
       return;
     }

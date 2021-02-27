@@ -4,6 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+/* eslint-disable
+@typescript-eslint/no-unsafe-call,
+@typescript-eslint/no-unsafe-member-access,
+@typescript-eslint/no-unsafe-return,
+@typescript-eslint/require-await */
+
 import { Test, TestingModule } from '@nestjs/testing';
 import { LoggerModule } from '../logger/logger.module';
 import { HistoryService } from './history.service';
@@ -248,7 +254,7 @@ describe('HistoryService', () => {
         const historyEntry = HistoryEntry.create(user, note);
         historyEntry.pinStatus = true;
         jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
-        const historyEntryDto = await service.toHistoryEntryDto(historyEntry);
+        const historyEntryDto = service.toHistoryEntryDto(historyEntry);
         expect(historyEntryDto.pinStatus).toEqual(true);
         expect(historyEntryDto.identifier).toEqual(alias);
         expect(historyEntryDto.tags).toEqual(tags);
@@ -271,7 +277,7 @@ describe('HistoryService', () => {
         const historyEntry = HistoryEntry.create(user, note);
         historyEntry.pinStatus = true;
         jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
-        const historyEntryDto = await service.toHistoryEntryDto(historyEntry);
+        const historyEntryDto = service.toHistoryEntryDto(historyEntry);
         expect(historyEntryDto.pinStatus).toEqual(true);
         expect(historyEntryDto.identifier).toEqual(id);
         expect(historyEntryDto.tags).toEqual(tags);

@@ -4,19 +4,17 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export const toArrayConfig = (configValue: string, separator = ',') => {
+export function toArrayConfig(configValue: string, separator = ','): string[] {
   if (!configValue) {
     return [];
   }
-
   if (!configValue.includes(separator)) {
     return [configValue.trim()];
   }
-
   return configValue.split(separator).map((arrayItem) => arrayItem.trim());
-};
+}
 
-export const buildErrorMessage = (errorMessages: string[]): string => {
+export function buildErrorMessage(errorMessages: string[]): string {
   let totalErrorMessage = 'There were some errors with your configuration:';
   for (const message of errorMessages) {
     totalErrorMessage += '\n - ';
@@ -25,19 +23,19 @@ export const buildErrorMessage = (errorMessages: string[]): string => {
   totalErrorMessage +=
     '\nFor further information, have a look at our configuration docs at https://docs.hedgedoc.org/configuration';
   return totalErrorMessage;
-};
+}
 
-export const replaceAuthErrorsWithEnvironmentVariables = (
+export function replaceAuthErrorsWithEnvironmentVariables(
   message: string,
   name: string,
   replacement: string,
   arrayOfNames: string[],
-): string => {
+): string {
   // this builds a regex like /"gitlab\[(\d+)]\./ to extract the position in the arrayOfNames
   const regex = new RegExp('"' + name + '\\[(\\d+)]\\.', 'g');
   message = message.replace(
     regex,
-    (_, index) => `"${replacement}${arrayOfNames[index]}.`,
+    (_, index: number) => `"${replacement}${arrayOfNames[index]}.`,
   );
   message = message.replace('.providerName', '_PROVIDER_NAME');
   message = message.replace('.baseURL', '_BASE_URL');
@@ -88,4 +86,4 @@ export const replaceAuthErrorsWithEnvironmentVariables = (
   message = message.replace('.rolesClaim', '_ROLES_CLAIM');
   message = message.replace('.accessRole', '_ACCESS_ROLE');
   return message;
-};
+}

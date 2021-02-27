@@ -26,7 +26,7 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
-  async deleteUser(userName: string) {
+  async deleteUser(userName: string): Promise<void> {
     // TODO: Handle owned notes and edits
     const user = await this.userRepository.findOne({
       where: { userName: userName },
@@ -56,7 +56,7 @@ export class UsersService {
 
   toUserDto(user: User | null | undefined): UserInfoDto | null {
     if (!user) {
-      this.logger.warn(`Recieved ${user} argument!`, 'toUserDto');
+      this.logger.warn(`Recieved ${String(user)} argument!`, 'toUserDto');
       return null;
     }
     return {

@@ -12,6 +12,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'prettier',
   ],
   root: true,
@@ -20,13 +21,37 @@ module.exports = {
     jest: true,
   },
   rules: {
-    '@typescript-eslint/interface-name-prefix': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    'func-style': ['error', 'declaration'],
     '@typescript-eslint/no-unused-vars': [
       'warn',
       { argsIgnorePattern: '^_+$' },
     ],
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'warn',
+    'no-return-await': 'off',
+    '@typescript-eslint/return-await': ['error', 'always'],
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        selector: 'default',
+        format: ['camelCase'],
+        leadingUnderscore: 'allow',
+        trailingUnderscore: 'allow',
+      },
+      {
+        selector: 'enumMember',
+        format: ['UPPER_CASE'],
+      },
+      {
+        selector: 'variable',
+        format: ['camelCase', 'UPPER_CASE'],
+        leadingUnderscore: 'allow',
+        trailingUnderscore: 'allow',
+      },
+
+      {
+        selector: 'typeLike',
+        format: ['PascalCase'],
+      },
+    ],
   },
 };
