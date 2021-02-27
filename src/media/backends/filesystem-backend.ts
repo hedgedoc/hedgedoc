@@ -53,12 +53,6 @@ export class FilesystemBackend implements MediaBackend {
     }
   }
 
-  getFileURL(fileName: string, _: BackendData): Promise<string> {
-    const filePath = this.getFilePath(fileName);
-    // TODO: Add server address to url
-    return Promise.resolve('/' + filePath);
-  }
-
   private getFilePath(fileName: string): string {
     return join(this.uploadDirectory, fileName);
   }
