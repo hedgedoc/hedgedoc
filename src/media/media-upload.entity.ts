@@ -34,6 +34,9 @@ export class MediaUpload {
   })
   backendType: string;
 
+  @Column()
+  fileUrl: string;
+
   @Column({
     nullable: true,
   })
