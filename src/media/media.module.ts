@@ -13,6 +13,7 @@ import { UsersModule } from '../users/users.module';
 import { FilesystemBackend } from './backends/filesystem-backend';
 import { MediaUpload } from './media-upload.entity';
 import { MediaService } from './media.service';
+import { S3Backend } from './backends/s3-backend';
 import { ImgurBackend } from './backends/imgur-backend';
 import { AzureBackend } from './backends/azure-backend';
 
@@ -24,7 +25,13 @@ import { AzureBackend } from './backends/azure-backend';
     LoggerModule,
     ConfigModule,
   ],
-  providers: [MediaService, FilesystemBackend, AzureBackend, ImgurBackend],
+  providers: [
+    MediaService,
+    FilesystemBackend,
+    AzureBackend,
+    ImgurBackend,
+    S3Backend,
+  ],
   exports: [MediaService],
 })
 export class MediaModule {}

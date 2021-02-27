@@ -19,6 +19,7 @@ import { FilesystemBackend } from './backends/filesystem-backend';
 import { MediaBackend } from './media-backend.interface';
 import { MediaUpload } from './media-upload.entity';
 import { MediaUploadUrlDto } from './media-upload-url.dto';
+import { S3Backend } from './backends/s3-backend';
 import { AzureBackend } from './backends/azure-backend';
 import { ImgurBackend } from './backends/imgur-backend';
 
@@ -164,6 +165,8 @@ export class MediaService {
         return BackendType.AZURE;
       case 'imgur':
         return BackendType.IMGUR;
+      case 's3':
+        return BackendType.S3;
     }
   }
 
@@ -171,6 +174,8 @@ export class MediaService {
     switch (type) {
       case BackendType.FILESYSTEM:
         return this.moduleRef.get(FilesystemBackend);
+      case BackendType.S3:
+        return this.moduleRef.get(S3Backend);
       case BackendType.AZURE:
         return this.moduleRef.get(AzureBackend);
       case BackendType.IMGUR:
