@@ -135,6 +135,7 @@ entity "media_upload" {
   *noteId : uuid <<FK note>>
   *userId : uuid <<FK user>>
   *backendType: text
+  *fileUrl: text
   backendData: text
   *createdAt : date
 }
