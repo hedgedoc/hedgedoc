@@ -11,23 +11,23 @@
 @typescript-eslint/require-await */
 
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoggerModule } from '../logger/logger.module';
-import { GuestPermission, PermissionsService } from './permissions.service';
-import { User } from '../users/user.entity';
-import { Note } from '../notes/note.entity';
-import { UsersModule } from '../users/users.module';
-import { NotesModule } from '../notes/notes.module';
-import { PermissionsModule } from './permissions.module';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { AuthToken } from '../auth/auth-token.entity';
+import { Group } from '../groups/group.entity';
+import { LoggerModule } from '../logger/logger.module';
+import { AuthorColor } from '../notes/author-color.entity';
+import { Note } from '../notes/note.entity';
+import { NotesModule } from '../notes/notes.module';
+import { Tag } from '../notes/tag.entity';
+import { Authorship } from '../revisions/authorship.entity';
+import { Revision } from '../revisions/revision.entity';
+import { Identity } from '../users/identity.entity';
+import { User } from '../users/user.entity';
+import { UsersModule } from '../users/users.module';
 import { NoteGroupPermission } from './note-group-permission.entity';
 import { NoteUserPermission } from './note-user-permission.entity';
-import { Identity } from '../users/identity.entity';
-import { AuthToken } from '../auth/auth-token.entity';
-import { Authorship } from '../revisions/authorship.entity';
-import { AuthorColor } from '../notes/author-color.entity';
-import { Revision } from '../revisions/revision.entity';
-import { Tag } from '../notes/tag.entity';
-import { Group } from '../groups/group.entity';
+import { PermissionsModule } from './permissions.module';
+import { GuestPermission, PermissionsService } from './permissions.service';
 
 describe('PermissionsService', () => {
   let permissionsService: PermissionsService;
@@ -154,6 +154,7 @@ describe('PermissionsService', () => {
       noteEverybodyWrite,
     ];
   }
+
   const notes = createNoteUserPermissionNotes();
 
   describe('mayRead works with', () => {
@@ -342,6 +343,7 @@ describe('PermissionsService', () => {
       [user2groupWrite, user2groupRead, null], // group4: don't allow user1 to read or write via group
     ];
   }
+
   /*
    * creates the matrix multiplication of group0 to group4 of createAllNoteGroupPermissions
    */
@@ -414,7 +416,10 @@ describe('PermissionsService', () => {
   ): NoteGroupPermission[][] {
     const results = [];
 
-    function permute(arr: NoteGroupPermission[], memo: NoteGroupPermission[]) {
+    function permute(
+      arr: NoteGroupPermission[],
+      memo: NoteGroupPermission[],
+    ): NoteGroupPermission[][] {
       let cur;
 
       for (let i = 0; i < arr.length; i++) {

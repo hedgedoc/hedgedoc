@@ -16,7 +16,13 @@ let versionCache: null | {
   preRelease?: string;
   commit?: string;
 } = null;
-async function getServerVersionFromPackageJson() {
+async function getServerVersionFromPackageJson(): Promise<{
+  major: number;
+  minor: number;
+  patch: number;
+  preRelease?: string;
+  commit?: string;
+}> {
   if (versionCache === null) {
     const rawFileContent: string = await fs.readFile(
       joinPath(__dirname, '../../package.json'),

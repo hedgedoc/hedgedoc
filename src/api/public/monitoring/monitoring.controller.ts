@@ -25,7 +25,7 @@ export class MonitoringController {
 
   @UseGuards(TokenAuthGuard)
   @Get('prometheus')
-  getPrometheusStatus() {
+  getPrometheusStatus(): string {
     return '';
   }
 }

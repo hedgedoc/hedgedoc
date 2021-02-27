@@ -18,11 +18,11 @@ export class ConsoleLoggerService {
     this.classContext = context;
   }
 
-  setContext(context: string) {
+  setContext(context: string): void {
     this.classContext = context;
   }
 
-  error(message: unknown, trace = '', functionContext?: string) {
+  error(message: unknown, trace = '', functionContext?: string): void {
     this.printMessage(
       message,
       clc.red,
@@ -32,7 +32,7 @@ export class ConsoleLoggerService {
     this.printStackTrace(trace);
   }
 
-  log(message: unknown, functionContext?: string) {
+  log(message: unknown, functionContext?: string): void {
     this.printMessage(
       message,
       clc.green,
@@ -41,7 +41,7 @@ export class ConsoleLoggerService {
     );
   }
 
-  warn(message: unknown, functionContext?: string) {
+  warn(message: unknown, functionContext?: string): void {
     this.printMessage(
       message,
       clc.yellow,
@@ -50,7 +50,7 @@ export class ConsoleLoggerService {
     );
   }
 
-  debug(message: unknown, functionContext?: string) {
+  debug(message: unknown, functionContext?: string): void {
     this.printMessage(
       message,
       clc.magentaBright,
@@ -59,7 +59,7 @@ export class ConsoleLoggerService {
     );
   }
 
-  verbose(message: unknown, functionContext?: string) {
+  verbose(message: unknown, functionContext?: string): void {
     this.printMessage(
       message,
       clc.cyanBright,
@@ -68,7 +68,7 @@ export class ConsoleLoggerService {
     );
   }
 
-  private makeContextString(functionContext: string) {
+  private makeContextString(functionContext: string): string {
     let context = this.classContext;
     if (functionContext) {
       context += '.' + functionContext + '()';
@@ -81,7 +81,7 @@ export class ConsoleLoggerService {
     color: (message: string) => string,
     context = '',
     isTimeDiffEnabled?: boolean,
-  ) {
+  ): void {
     const output = isObject(message)
       ? `${color('Object:')}\n${JSON.stringify(message, null, 2)}\n`
       : color(message as string);
@@ -117,7 +117,7 @@ export class ConsoleLoggerService {
     return result;
   }
 
-  private printStackTrace(trace: string) {
+  private printStackTrace(trace: string): void {
     if (!trace) {
       return;
     }

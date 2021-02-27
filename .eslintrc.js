@@ -25,7 +25,7 @@ module.exports = {
       'warn',
       { argsIgnorePattern: '^_+$' },
     ],
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'warn',
     'no-return-await': 'off',
     '@typescript-eslint/return-await': ['error', 'always'],
     '@typescript-eslint/naming-convention': [

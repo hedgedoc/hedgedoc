@@ -14,7 +14,7 @@ export class MockAuthGuard {
   private user: User;
   constructor(private usersService: UsersService) {}
 
-  async canActivate(context: ExecutionContext) {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const req: Request = context.switchToHttp().getRequest();
     if (!this.user) {
       // this assures that we can create the user 'hardcoded', if we need them before any calls are made or
