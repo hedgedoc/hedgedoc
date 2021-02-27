@@ -4,14 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+export interface ServerVersion {
+  major: number;
+  minor: number;
+  patch: number;
+  preRelease?: string;
+  commit?: string;
+}
+
 export class ServerStatusDto {
-  serverVersion: {
-    major: number;
-    minor: number;
-    patch: number;
-    preRelease?: string;
-    commit?: string;
-  };
+  serverVersion: ServerVersion;
   onlineNotes: number;
   onlineUsers: number;
   destictOnlineUsers: number;
