@@ -10,9 +10,16 @@ import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
 import { BackendData } from '../media-upload.entity';
 import { MediaConfig } from '../../config/media.config';
-import fetch from 'node-fetch';
+import fetch, { Response } from 'node-fetch';
 import { URLSearchParams } from 'url';
 import { MediaBackendError } from '../../errors/errors';
+
+type UploadResult = {
+  data: {
+    link: string;
+    deletehash: string;
+  };
+};
 
 @Injectable()
 export class ImgurBackend implements MediaBackend {
@@ -35,44 +42,56 @@ export class ImgurBackend implements MediaBackend {
     params.append('image', buffer.toString('base64'));
     params.append('type', 'base64');
     try {
-      const result = await fetch('https://api.imgur.com/3/image', {
+      const result = (await fetch('https://api.imgur.com/3/image', {
         method: 'POST',
         body: params,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         headers: { Authorization: `Client-ID ${this.config.clientID}` },
       })
-        .then(ImgurBackend.checkStatus)
-        .then((res) => res.json());
+        .then((res) => ImgurBackend.checkStatus(res))
+        .then((res) => res.json())) as UploadResult;
       this.logger.debug(`Response: ${JSON.stringify(result)}`, 'saveFile');
       this.logger.log(`Uploaded ${fileName}`, 'saveFile');
       return [result.data.link, result.data.deletehash];
     } catch (e) {
-      this.logger.error(`error: ${e.message}`, e.stack, 'saveFile');
+      this.logger.error(
+        `error: ${(e as Error).message}`,
+        (e as Error).stack,
+        'saveFile',
+      );
       throw new MediaBackendError(`Could not save '${fileName}' on imgur`);
     }
   }
 
   async deleteFile(fileName: string, backendData: BackendData): Promise<void> {
     if (backendData === null) {
-      throw new Error();
+      throw new MediaBackendError(
+        `We don't have any delete tokens for '${fileName}' and therefore can't delete this image on imgur`,
+      );
     }
     try {
       const result = await fetch(
         `https://api.imgur.com/3/image/${backendData}`,
         {
           method: 'POST',
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           headers: { Authorization: `Client-ID ${this.config.clientID}` },
         },
-      ).then(ImgurBackend.checkStatus);
-      this.logger.debug(`Response: ${result}`, 'saveFile');
+      ).then((res) => ImgurBackend.checkStatus(res));
+      this.logger.debug(`Response: ${result.toString()}`, 'saveFile');
       this.logger.log(`Deleted ${fileName}`, 'deleteFile');
       return;
     } catch (e) {
-      this.logger.error(`error: ${e.message}`, e.stack, 'deleteFile');
+      this.logger.error(
+        `error: ${(e as Error).message}`,
+        (e as Error).stack,
+        'deleteFile',
+      );
       throw new MediaBackendError(`Could not delete '${fileName}' on imgur`);
     }
   }
 
-  private static checkStatus(res) {
+  private static checkStatus(res: Response): Response {
     if (res.ok) {
       // res.status >= 200 && res.status < 300
       return res;
