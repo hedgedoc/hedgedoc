@@ -21,6 +21,7 @@ module.exports = {
     jest: true,
   },
   rules: {
+    'func-style': ['error', 'declaration'],
     '@typescript-eslint/no-unused-vars': [
       'warn',
       { argsIgnorePattern: '^_+$' },
