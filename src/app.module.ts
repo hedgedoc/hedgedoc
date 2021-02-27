@@ -43,7 +43,7 @@ const routes: Routes = [
       type: 'sqlite',
       database: './hedgedoc.sqlite',
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: true, // ToDo: Remove this before release
     }),
     ConfigModule.forRoot({
       load: [
