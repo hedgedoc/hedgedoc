@@ -24,7 +24,7 @@ import { NoteGroupPermission } from '../../../../permissions/note-group-permissi
 import { NoteUserPermission } from '../../../../permissions/note-user-permission.entity';
 import { Group } from '../../../../groups/group.entity';
 import { ConfigModule } from '@nestjs/config';
-import appConfigMock from '../../../../config/app.config.mock';
+import appConfigMock from '../../../../config/mock/app.config.mock';
 
 describe('HistoryController', () => {
   let controller: HistoryController;
