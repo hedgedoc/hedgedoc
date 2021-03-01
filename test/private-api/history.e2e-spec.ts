@@ -16,6 +16,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as request from 'supertest';
 import mediaConfigMock from '../../src/config/mock/media.config.mock';
 import appConfigMock from '../../src/config/mock/app.config.mock';
+import authConfigMock from '../../src/config/mock/auth.config.mock';
+import customizationConfigMock from '../../src/config/mock/customization.config.mock';
+import externalServicesConfigMock from '../../src/config/mock/external-services.config.mock';
 import { GroupsModule } from '../../src/groups/groups.module';
 import { LoggerModule } from '../../src/logger/logger.module';
 import { NotesModule } from '../../src/notes/notes.module';
@@ -43,7 +46,13 @@ describe('History', () => {
       imports: [
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [appConfigMock, mediaConfigMock],
+          load: [
+            appConfigMock,
+            mediaConfigMock,
+            authConfigMock,
+            customizationConfigMock,
+            externalServicesConfigMock,
+          ],
         }),
         PrivateApiModule,
         NotesModule,
