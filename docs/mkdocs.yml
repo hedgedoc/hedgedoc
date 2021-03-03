@@ -37,6 +37,7 @@ nav:
           - S3: guides/s3-image-upload.md
       - Migrate from Etherpad: guides/migrate-etherpad.md
       - Breaking Changes: guides/migrations-and-breaking-changes.md
+      - Migration Troubleshooting: guides/migration-troubleshooting.md
       - Terms of Use Setup: guides/providing-terms.md
   - Configuration: configuration.md
   - Developer:
