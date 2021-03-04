@@ -10,6 +10,10 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "incremental": true
+    "incremental": true,
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
+    ]
   }
 }
