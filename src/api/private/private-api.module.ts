@@ -9,6 +9,7 @@ import { TokensController } from './tokens/tokens.controller';
 import { LoggerModule } from '../../logger/logger.module';
 import { UsersModule } from '../../users/users.module';
 import { AuthModule } from '../../auth/auth.module';
+import { MeController } from './me/me.controller';
 import { ConfigController } from './config/config.controller';
 import { FrontendConfigModule } from '../../frontend-config/frontend-config.module';
 import { HistoryController } from './me/history/history.controller';
@@ -27,8 +28,8 @@ import { RevisionsModule } from '../../revisions/revisions.module';
     AuthModule,
     FrontendConfigModule,
     HistoryModule,
-    NotesModule,
     PermissionsModule,
+    NotesModule,
     MediaModule,
     RevisionsModule,
   ],
@@ -37,6 +38,7 @@ import { RevisionsModule } from '../../revisions/revisions.module';
     ConfigController,
     MediaController,
     HistoryController,
+    MeController,
     NotesController,
   ],
 })
