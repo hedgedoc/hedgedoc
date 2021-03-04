@@ -264,16 +264,19 @@ function startListen () {
 }
 
 // sync db then start listen
-models.sequelize.sync().then(function () {
-  // check if realtime is ready
-  if (realtime.isReady()) {
-    models.Revision.checkAllNotesRevision(function (err, notes) {
-      if (err) throw new Error(err)
-      if (!notes || notes.length <= 0) return startListen()
-    })
-  } else {
-    throw new Error('server still not ready after db synced')
-  }
+models.sequelize.authenticate().then(function () {
+  models.runMigrations().then(() => {
+    sessionStore.sync()
+    // check if realtime is ready
+    if (realtime.isReady()) {
+      models.Revision.checkAllNotesRevision(function (err, notes) {
+        if (err) throw new Error(err)
+        if (!notes || notes.length <= 0) return startListen()
+      })
+    } else {
+      throw new Error('server still not ready after db synced')
+    }
+  })
 })
 
 // log uncaught exception
