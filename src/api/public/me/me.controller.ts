@@ -60,6 +60,26 @@ export class MeController {
   }
 
   @UseGuards(TokenAuthGuard)
+  @Get('history/:note')
+  async getHistoryEntry(
+    @Req() req: Request,
+    @Param('note') note: string,
+  ): Promise<HistoryEntryDto> {
+    try {
+      const foundEntry = await this.historyService.getEntryByNoteIdOrAlias(
+        note,
+        req.user,
+      );
+      return this.historyService.toHistoryEntryDto(foundEntry);
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      throw e;
+    }
+  }
+
+  @UseGuards(TokenAuthGuard)
   @Put('history/:note')
   async updateHistoryEntry(
     @Req() req: Request,
@@ -86,13 +106,13 @@ export class MeController {
   @UseGuards(TokenAuthGuard)
   @Delete('history/:note')
   @HttpCode(204)
-  deleteHistoryEntry(
+  async deleteHistoryEntry(
     @Req() req: Request,
     @Param('note') note: string,
   ): Promise<void> {
     // ToDo: Check if user is allowed to delete note
     try {
-      return this.historyService.deleteHistoryEntry(note, req.user);
+      await this.historyService.deleteHistoryEntry(note, req.user);
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
