@@ -32,6 +32,7 @@ import { HistoryModule } from '../../src/history/history.module';
 import { ConfigModule } from '@nestjs/config';
 import mediaConfigMock from '../../src/config/media.config.mock';
 import { User } from '../../src/users/user.entity';
+import { NoteMetadataDto } from '../../src/notes/note-metadata.dto';
 
 // TODO Tests have to be reworked using UserService functions
 
@@ -98,62 +99,126 @@ describe('Notes', () => {
       .expect('Content-Type', /json/)
       .expect(200);
     const history = <HistoryEntryDto[]>response.body;
+    expect(history.length).toEqual(1);
+    const historyDto = historyService.toHistoryEntryDto(createdHistoryEntry);
     for (const historyEntry of history) {
-      if (historyEntry.identifier === 'testGetHistory') {
-        expect(historyEntry).toEqual(createdHistoryEntry);
-      }
+      expect(historyEntry.identifier).toEqual(historyDto.identifier);
+      expect(historyEntry.title).toEqual(historyDto.title);
+      expect(historyEntry.tags).toEqual(historyDto.tags);
+      expect(historyEntry.pinStatus).toEqual(historyDto.pinStatus);
+      expect(historyEntry.lastVisited).toEqual(
+        historyDto.lastVisited.toISOString(),
+      );
     }
   });
 
-  it(`PUT /me/history/{note}`, async () => {
-    const noteName = 'testGetNoteHistory2';
-    const note = await notesService.createNote('', noteName);
-    await historyService.createOrUpdateHistoryEntry(note, user);
-    const historyEntryUpdateDto = new HistoryEntryUpdateDto();
-    historyEntryUpdateDto.pinStatus = true;
-    const response = await request(app.getHttpServer())
-      .put('/me/history/' + noteName)
-      .send(historyEntryUpdateDto)
-      .expect(200);
-    const history = await historyService.getEntriesByUser(user);
-    let historyEntry: HistoryEntryDto = response.body;
-    expect(historyEntry.pinStatus).toEqual(true);
-    historyEntry = null;
-    for (const e of history) {
-      if (e.note.alias === noteName) {
-        historyEntry = historyService.toHistoryEntryDto(e);
-      }
-    }
-    expect(historyEntry.pinStatus).toEqual(true);
+  describe(`GET /me/history/{note}`, () => {
+    it('works with an existing note', async () => {
+      const noteName = 'testGetNoteHistory2';
+      const note = await notesService.createNote('', noteName);
+      const createdHistoryEntry = await historyService.createOrUpdateHistoryEntry(
+        note,
+        user,
+      );
+      const response = await request(app.getHttpServer())
+        .get(`/me/history/${noteName}`)
+        .expect('Content-Type', /json/)
+        .expect(200);
+      const historyEntry = <HistoryEntryDto>response.body;
+      const historyEntryDto = historyService.toHistoryEntryDto(
+        createdHistoryEntry,
+      );
+      expect(historyEntry.identifier).toEqual(historyEntryDto.identifier);
+      expect(historyEntry.title).toEqual(historyEntryDto.title);
+      expect(historyEntry.tags).toEqual(historyEntryDto.tags);
+      expect(historyEntry.pinStatus).toEqual(historyEntryDto.pinStatus);
+      expect(historyEntry.lastVisited).toEqual(
+        historyEntryDto.lastVisited.toISOString(),
+      );
+    });
+    it('fails with a non-existing note', async () => {
+      await request(app.getHttpServer())
+        .get('/me/history/i_dont_exist')
+        .expect('Content-Type', /json/)
+        .expect(404);
+    });
   });
 
-  it(`DELETE /me/history/{note}`, async () => {
-    const noteName = 'testGetNoteHistory3';
-    const note = await notesService.createNote('', noteName);
-    await historyService.createOrUpdateHistoryEntry(note, user);
-    const response = await request(app.getHttpServer())
-      .delete(`/me/history/${noteName}`)
-      .expect(204);
-    expect(response.body).toEqual({});
-    const history = await historyService.getEntriesByUser(user);
-    let historyEntry: HistoryEntry = null;
-    for (const e of history) {
-      if (e.note.alias === noteName) {
-        historyEntry = e;
+  describe(`PUT /me/history/{note}`, () => {
+    it('works', async () => {
+      const noteName = 'testGetNoteHistory3';
+      const note = await notesService.createNote('', noteName);
+      await historyService.createOrUpdateHistoryEntry(note, user);
+      const historyEntryUpdateDto = new HistoryEntryUpdateDto();
+      historyEntryUpdateDto.pinStatus = true;
+      const response = await request(app.getHttpServer())
+        .put('/me/history/' + noteName)
+        .send(historyEntryUpdateDto)
+        .expect(200);
+      const history = await historyService.getEntriesByUser(user);
+      let historyEntry: HistoryEntryDto = response.body;
+      expect(historyEntry.pinStatus).toEqual(true);
+      historyEntry = null;
+      for (const e of history) {
+        if (e.note.alias === noteName) {
+          historyEntry = historyService.toHistoryEntryDto(e);
+        }
       }
-    }
-    return expect(historyEntry).toBeNull();
+      expect(historyEntry.pinStatus).toEqual(true);
+    });
+    it('fails with a non-existing note', async () => {
+      await request(app.getHttpServer())
+        .put('/me/history/i_dont_exist')
+        .expect('Content-Type', /json/)
+        .expect(404);
+    });
   });
 
-  it.skip(`GET /me/notes/`, async () => {
-    // TODO use function from HistoryService to add an History Entry
-    await notesService.createNote('This is a test note.', 'test7');
-    // usersService.getALLNotesOwnedByUser() TODO Implement function
+  describe(`DELETE /me/history/{note}`, () => {
+    it('works', async () => {
+      const noteName = 'testGetNoteHistory4';
+      const note = await notesService.createNote('', noteName);
+      await historyService.createOrUpdateHistoryEntry(note, user);
+      const response = await request(app.getHttpServer())
+        .delete(`/me/history/${noteName}`)
+        .expect(204);
+      expect(response.body).toEqual({});
+      const history = await historyService.getEntriesByUser(user);
+      let historyEntry: HistoryEntry = null;
+      for (const e of history) {
+        if (e.note.alias === noteName) {
+          historyEntry = e;
+        }
+      }
+      return expect(historyEntry).toBeNull();
+    });
+    describe('fails', () => {
+      it('with a non-existing note', async () => {
+        await request(app.getHttpServer())
+          .delete('/me/history/i_dont_exist')
+          .expect(404);
+      });
+      it('with a non-existing history entry', async () => {
+        const noteName = 'testGetNoteHistory5';
+        await notesService.createNote('', noteName);
+        await request(app.getHttpServer())
+          .delete(`/me/history/${noteName}`)
+          .expect(404);
+      });
+    });
+  });
+
+  it(`GET /me/notes/`, async () => {
+    const noteName = 'testNote';
+    await notesService.createNote('', noteName, user);
     const response = await request(app.getHttpServer())
       .get('/me/notes/')
       .expect('Content-Type', /json/)
       .expect(200);
-    expect(response.body.revisions).toHaveLength(1);
+    const noteMetaDtos = response.body as NoteMetadataDto[];
+    expect(noteMetaDtos).toHaveLength(1);
+    expect(noteMetaDtos[0].alias).toEqual(noteName);
+    expect(noteMetaDtos[0].updateUser.userName).toEqual(user.userName);
   });
 
   afterAll(async () => {
