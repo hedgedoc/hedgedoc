@@ -4,15 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import React, { Fragment, useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { useLocation } from 'react-router'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { useDocumentTitleWithNoteTitle } from '../../hooks/common/use-document-title-with-note-title'
 import { useNoteMarkdownContent } from '../../hooks/common/use-note-markdown-content'
 import { ApplicationState } from '../../redux'
-import { setEditorMode } from '../../redux/editor/methods'
 import {
   SetCheckboxInMarkdownContent,
   setNoteFrontmatter,
@@ -33,6 +31,7 @@ import { Sidebar } from './sidebar/sidebar'
 import { Splitter } from './splitter/splitter'
 import { DualScrollState, ScrollState } from './synced-scroll/scroll-props'
 import { RendererType } from '../render-page/rendering-message'
+import { useEditorModeFromUrl } from './hooks/useEditorModeFromUrl'
 
 export interface EditorPagePathParams {
   id: string
@@ -45,7 +44,6 @@ export enum ScrollSource {
 
 export const EditorPage: React.FC = () => {
   useTranslation()
-  const { search } = useLocation()
   const markdownContent = useNoteMarkdownContent()
   const scrollSource = useRef<ScrollSource>(ScrollSource.EDITOR)
 
@@ -56,15 +54,6 @@ export const EditorPage: React.FC = () => {
     editorScrollState: { firstLineInView: 1, scrolledPercentage: 0 },
     rendererScrollState: { firstLineInView: 1, scrolledPercentage: 0 }
   }))
-
-  useEffect(() => {
-    const requestedMode = search.substr(1)
-    const mode = Object.values(EditorMode)
-                       .find(mode => mode === requestedMode)
-    if (mode) {
-      setEditorMode(mode)
-    }
-  }, [search])
 
   const onMarkdownRendererScroll = useCallback((newScrollState: ScrollState) => {
     if (scrollSource.current === ScrollSource.RENDERER && editorSyncScroll) {
@@ -81,6 +70,8 @@ export const EditorPage: React.FC = () => {
   useViewModeShortcuts()
   useApplyDarkMode()
   useDocumentTitleWithNoteTitle()
+  useEditorModeFromUrl()
+
   const [error, loading] = useLoadNoteFromServer()
 
   const setRendererToScrollSource = useCallback(() => {
@@ -116,7 +107,7 @@ export const EditorPage: React.FC = () => {
               showRight={ editorMode === EditorMode.PREVIEW || editorMode === EditorMode.BOTH }
               right={
                 <RenderIframe
-                  frameClasses={'h-100 w-100'}
+                  frameClasses={ 'h-100 w-100' }
                   markdownContent={ markdownContent }
                   onMakeScrollSource={ setRendererToScrollSource }
                   onFirstHeadingChange={ updateNoteTitleByFirstHeading }
