@@ -28,7 +28,8 @@
    ```
    This way it's easier to see warnings or errors that might occur.  
    <small>You can leave out `NODE_ENV=production` for development.</small>
-7. Run the server as you like (node, forever, pm2, SystemD, Init-Scripts)
+8. Run the server as you like (node, forever, pm2, systemd, Init-Scripts).  
+   See [below](#systemd-unit-example) for an example using systemd.
 
 ## Upgrading
 
@@ -53,3 +54,70 @@ If you are upgrading HedgeDoc from an older version, follow these steps:
    ```
    This way it's easier to see warnings or errors that might occur.
 8. You can now restart the HedgeDoc server!
+
+## Systemd Unit Example
+Using the unit file below, you can run HedgeDoc as a systemd service.
+
+!!! warning
+    - In this example, you must configure HedgeDoc using the `config.json` file and the 
+    `production` key.
+    - Make sure the user and group `hedgedoc` exists and has appropriate permissions in the
+    directory you installed HedgeDoc in or change the `User` and `Group` settings in the unit
+    file.
+    - Make sure `WorkingDirectory` points to the directory you installed HedgeDoc in.
+    - Make sure `ReadWritePaths` contains all directories HedgeDoc might write to. This may
+    include the `public/uploads` folder if you configured local storage. If you use SQLite, you
+    must also include the directory where the database file is saved. **Do not save the SQLite
+    file in the root directory of the HedgeDoc installation**, but create a subfolder like `db`!
+    - If you use an external database like PostgreSQL or MariaDB, make sure to add a corresponding
+    `After` statement.
+
+```ini
+[Unit]
+Description=HedgeDoc - The best platform to write and share markdown.
+Documentation=https://docs.hedgedoc.org/
+After=network.target
+# Uncomment if you use MariaDB/MySQL
+# After=mysql.service
+# Uncomment if you use PostgreSQL
+# After=postgresql.service
+
+[Service]
+Type=exec
+Environment=NODE_ENV=production
+Restart=always
+RestartSec=2s
+ExecStart=/usr/bin/yarn start --production
+CapabilityBoundingSet=
+NoNewPrivileges=true
+PrivateDevices=true
+RemoveIPC=true
+LockPersonality=true
+ProtectControlGroups=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=noaccess
+RestrictRealtime=true
+RestrictSUIDSGID=true
+RestrictNamespaces=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+
+# You may have to adjust these settings
+User=hedgedoc
+Group=hedgedoc
+WorkingDirectory=/opt/hedgedoc
+
+# Example: local storage for uploads and SQLite
+# ReadWritePaths=/opt/hedgedoc/public/uploads /opt/hedgedoc/db
+
+[Install]
+WantedBy=multi-user.target
+```
