@@ -46,10 +46,6 @@ if [ ! -f config.json ]; then
   cp config.json.example config.json
 fi
 
-if [ ! -f .sequelizerc ]; then
-  cp .sequelizerc.example .sequelizerc
-fi
-
 echo "Installing packages..."
 yarn install --pure-lockfile
 yarn install --production=false --pure-lockfile
@@ -61,7 +57,6 @@ Edit the following config file to setup HedgeDoc server and client.
 Read more info at https://github.com/hedgedoc/hedgedoc#configuration-files
 
 * config.json           -- HedgeDoc config
-* .sequelizerc          -- db config
 EOF
 
 # change directory back
