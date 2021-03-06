@@ -2365,10 +2365,10 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.4.tgz#15925414e0ad2cd765bfef58842f7e26a7accb24"
   integrity sha512-1HcDas8SEj4z1Wc696tH56G8OlRaH/sqZOynNNB+HF0WOeXPaxTtbYzJY2oEfiUxjSKjhCKr+MvR7dCHcEelug==
 
-"@types/react-bootstrap-typeahead@5.1.2":
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/@types/react-bootstrap-typeahead/-/react-bootstrap-typeahead-5.1.2.tgz#219c2f69e6b0f5edd1b418a53fb60ee786948dd7"
-  integrity sha512-S9SiiP55+G2lyi+fbD6/JCvWdeNDYlVTFqsvrh9OK+jm5hF71haW2LakeUOGrO+Tx09VW12VXCtXyQbSGZOwIw==
+"@types/react-bootstrap-typeahead@5.1.3":
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/@types/react-bootstrap-typeahead/-/react-bootstrap-typeahead-5.1.3.tgz#c2a348f6697e8f5c8cc32547d19dfad1bb548552"
+  integrity sha512-TVgpV0DBCpQILwP5gSGLMM0ULZBDS68mqVB2uzCQ2EKYveHlFHheHRaZe6s3+vxnAYH1z65WJOPhQ4BWVLK2RA==
   dependencies:
     "@types/react" "*"
 
@@ -2414,10 +2414,18 @@
     "@types/react" "*"
     "@types/react-router" "*"
 
-"@types/react-router@*", "@types/react-router@5.1.11":
+"@types/react-router@*":
   version "5.1.11"
   resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-5.1.11.tgz#b01ce4cb21bf7d6b32edc862fc1e2c0088044b5b"
   integrity sha512-ofHbZMlp0Y2baOHgsWBQ4K3AttxY61bDMkwTiBOkPg7U6C/3UwwB5WaIx28JmSVi/eX3uFEMRo61BV22fDQIvg==
+  dependencies:
+    "@types/history" "*"
+    "@types/react" "*"
+
+"@types/react-router@5.1.12":
+  version "5.1.12"
+  resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-5.1.12.tgz#0f300e09468e7aed86e18241c90238c18c377e51"
+  integrity sha512-0bhXQwHYfMeJlCh7mGhc0VJTRm0Gk+Z8T00aiP4702mDUuLs9SMhnd2DitpjWFjdOecx2UXtICK14H9iMnziGA==
   dependencies:
     "@types/history" "*"
     "@types/react" "*"
