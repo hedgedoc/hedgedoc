@@ -174,7 +174,7 @@
         "eslint-plugin-cypress": "2.11.2",
         "http-server": "0.12.3",
         "redux-devtools": "3.7.0",
-        "redux-devtools-extension": "2.13.8",
+        "redux-devtools-extension": "2.13.9",
         "ts-loader": "8.0.17",
         "webpack-bundle-analyzer": "4.4.0"
     },
