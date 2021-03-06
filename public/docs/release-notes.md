@@ -1,4 +1,9 @@
 # Release Notes
+## <i class="fa fa-tag"></i> 1.8.0 <i class="fa fa-calendar-o"></i> UNRELEASED
+### Features
+- Database migrations are now automatically applied on application startup.  
+  The separate `.sequelizerc` configuration file is no longer necessary and can be safely deleted.
+  
 ## <i class="fa fa-tag"></i> 1.7.2 <i class="fa fa-calendar-o"></i> 2021-01-15
 This release fixes a security issue. We recommend upgrading as soon as possible.
 ### Security Fixes
