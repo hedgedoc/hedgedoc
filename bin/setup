@@ -54,7 +54,7 @@ cat << EOF
 
 
 Edit the following config file to setup HedgeDoc server and client.
-Read more info at https://github.com/hedgedoc/hedgedoc#configuration-files
+Read more info at https://docs.hedgedoc.org/configuration/
 
 * config.json           -- HedgeDoc config
 EOF
