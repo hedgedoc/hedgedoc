@@ -43,7 +43,7 @@
     "class-validator": "0.13.1",
     "cli-color": "2.0.0",
     "connect-typeorm": "1.1.4",
-    "file-type": "16.2.0",
+    "file-type": "16.3.0",
     "joi": "17.4.0",
     "minio": "7.0.18",
     "nest-router": "1.0.9",
