@@ -15,8 +15,8 @@
   },
   "allowRegister": true,
   "branding": {
-    "name": "ACME Corp",
-    "logo": "/img/acme.png"
+    "name": "DEMO Corp",
+    "logo": "/img/demo.png"
   },
   "banner": {
       "text": "This is the test banner text",

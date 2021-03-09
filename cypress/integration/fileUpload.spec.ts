@@ -44,13 +44,13 @@ describe('File upload', () => {
       cy.get('.fa-upload')
         .click()
       cy.get('div.btn-group > input[type=file]')
-        .attachFile({ filePath: 'acme.png', mimeType: 'image/png' })
+        .attachFile({ filePath: 'demo.png', mimeType: 'image/png' })
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `![](${ imageUrl })`)
     })
 
     it('via paste', () => {
-      cy.fixture('acme.png')
+      cy.fixture('demo.png')
         .then((image: string) => {
           const pasteEvent = {
             clipboardData: {
@@ -65,7 +65,7 @@ describe('File upload', () => {
     })
 
     it('via drag and drop', () => {
-      cy.fixture('acme.png')
+      cy.fixture('demo.png')
         .then((image: string) => {
           const dropEvent = {
             dataTransfer: {
@@ -92,10 +92,10 @@ describe('File upload', () => {
     })
     cy.get('.fa-upload')
       .click()
-    cy.fixture('acme.png')
+    cy.fixture('demo.png')
       .then(() => {
         cy.get('input[type=file]')
-          .attachFile({ filePath: 'acme.png', mimeType: 'image/png' })
+          .attachFile({ filePath: 'demo.png', mimeType: 'image/png' })
       })
     cy.get('.CodeMirror-activeline > .CodeMirror-line > span > span')
       .should('have.text', String.fromCharCode(8203)) //thanks codemirror....
