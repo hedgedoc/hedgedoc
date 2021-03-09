@@ -6,6 +6,7 @@
 
 describe('Diagram codeblock ', () => {
   beforeEach(() => {
+    cy.loadConfig()
     cy.visitTestEditor()
   })
 

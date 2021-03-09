@@ -12,6 +12,7 @@ const findHljsCodeBlock = () => {
 
 describe('Code', () => {
   beforeEach(() => {
+    cy.loadConfig()
     cy.visitTestEditor()
   })
 

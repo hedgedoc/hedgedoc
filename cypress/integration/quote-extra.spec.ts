@@ -6,6 +6,7 @@
 
 describe('Quote extra tags', function () {
   beforeEach(() => {
+    cy.loadConfig()
     cy.visitTestEditor()
   })
 

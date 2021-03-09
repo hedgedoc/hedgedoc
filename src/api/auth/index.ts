@@ -7,6 +7,8 @@
 import { RegisterError } from '../../components/register-page/register-page'
 import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 
+export const INTERACTIVE_LOGIN_METHODS = ['internal', 'ldap', 'openid']
+
 export const doInternalLogin = async (username: string, password: string): Promise<void> => {
   const response = await fetch(getApiUrl() + '/auth/internal', {
     ...defaultFetchConfig,

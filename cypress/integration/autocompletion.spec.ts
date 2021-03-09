@@ -6,6 +6,7 @@
 
 describe('Autocompletion', () => {
   beforeEach(() => {
+    cy.loadConfig()
     cy.visitTestEditor()
     cy.get('.CodeMirror')
       .click()

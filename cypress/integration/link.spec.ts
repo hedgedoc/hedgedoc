@@ -8,6 +8,7 @@ import '../support/index'
 
 describe('Links Intro', () => {
   beforeEach(() => {
+    cy.loadConfig()
     cy.visit('/')
   })
 
@@ -53,13 +54,6 @@ describe('Links Intro', () => {
       cy.url()
         .should('include', '/new')
     })
-
-    it('Sign In', () => {
-      cy.get('.btn-success.btn-sm')
-        .click()
-      cy.url()
-        .should('include', '/login')
-    })
   })
 
   describe('Menu Buttons logged in', () => {
@@ -83,7 +77,7 @@ describe('Links Intro', () => {
           .should('include', '/features')
       })
 
-      it('Features', () => {
+      it('Profile', () => {
         cy.get('a.dropdown-item > i.fa-user')
           .click()
         cy.url()

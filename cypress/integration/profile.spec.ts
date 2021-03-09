@@ -6,6 +6,7 @@
 
 describe('profile page', () => {
   beforeEach(() => {
+    cy.loadConfig()
     cy.intercept({
       url: '/api/v2/tokens',
       method: 'GET'

@@ -85,7 +85,8 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - The dark-mode is also applied to the read-only-view and can be toggled from there.
 - Access tokens for the CLI and 3rd-party-clients can be managed in the user profile.
 - Change editor font to "Fira Code"
-- Note tags can be set as yaml-array in frontmatter
+- Note tags can be set as yaml-array in frontmatter.
+- If only one external login provider is configured, the sign-in button will directly link to it.
 
 ---
 
