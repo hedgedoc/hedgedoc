@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import equal from 'fast-deep-equal'
@@ -42,10 +42,11 @@ export const UserDropdown: React.FC = () => {
             <Trans i18nKey="profile.userProfile"/>
           </Dropdown.Item>
         </LinkContainer>
-        <Dropdown.Item dir='auto'
-                       onClick={ () => {
-                         clearUser()
-                       } }>
+        <Dropdown.Item
+          dir='auto'
+          onClick={ () => {
+            clearUser()
+          } }>
           <ForkAwesomeIcon icon="sign-out" fixedWidth={ true } className="mx-2"/>
           <Trans i18nKey="login.signOut"/>
         </Dropdown.Item>

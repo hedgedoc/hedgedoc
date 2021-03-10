@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { Fragment } from 'react'
@@ -12,12 +12,13 @@ import { ApplicationState } from '../../../redux'
 import { ExternalLink } from '../../common/links/external-link'
 import { TranslatedExternalLink } from '../../common/links/translated-external-link'
 import { TranslatedInternalLink } from '../../common/links/translated-internal-link'
-import { VersionInfo } from './version-info'
+import { VersionInfoLink } from './version-info/version-info-link'
+import equal from 'fast-deep-equal'
 
 export const PoweredByLinks: React.FC = () => {
   useTranslation()
 
-  const specialLinks = useSelector((state: ApplicationState) => Object.entries(state.config.specialLinks) as [string, string][])
+  const specialLinks = useSelector((state: ApplicationState) => Object.entries(state.config.specialLinks) as [string, string][], equal)
 
   return (
     <p>
@@ -35,7 +36,7 @@ export const PoweredByLinks: React.FC = () => {
         )
       }
       &nbsp;|&nbsp;
-      <VersionInfo/>
+      <VersionInfoLink/>
     </p>
   )
 }

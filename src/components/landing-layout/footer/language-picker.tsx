@@ -1,11 +1,11 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import { Settings } from 'luxon'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Form } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 
@@ -40,41 +40,52 @@ const languages = {
   sk: 'Slovensky'
 }
 
-const findLanguageCode = (wantedLanguage: string): string => {
-  let foundLanguage = Object.keys(languages)
-                            .find((supportedLanguage) => wantedLanguage === supportedLanguage)
-  if (!foundLanguage) {
-    foundLanguage = Object.keys(languages)
-                          .find((supportedLanguage) => wantedLanguage.substr(0, 2) === supportedLanguage)
-  }
-  return foundLanguage || ''
-}
+/**
+ * This function checks if the wanted language code is supported by our translations.
+ * The language code that is provided by the browser can (but don't need to) contain the region.
+ * Some of our translations are region dependent (e.g. chinese-traditional and chinese-simplified).
+ * Therefore we first need to check if the complete wanted language code is supported by our translations.
+ * If not, then we look if we at least have a region independent translation.
+ *
+ * @param wantedLanguage an ISO 639-1 standard language code
+ */
+const findLanguageCode = (wantedLanguage: string): string => (
+  (
+    Object.keys(languages)
+          .find((supportedLanguage) => wantedLanguage === supportedLanguage)
+  ) ?? (
+    Object.keys(languages)
+          .find((supportedLanguage) => wantedLanguage.substr(0, 2) === supportedLanguage)
+  ) ?? ''
+)
 
-const LanguagePicker: React.FC = () => {
+export const LanguagePicker: React.FC = () => {
   const { i18n } = useTranslation()
 
-  const onChangeLang = useCallback(() => async (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const onChangeLang = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     const language = event.currentTarget.value
     Settings.defaultLocale = language
-    await i18n.changeLanguage(language)
+    i18n.changeLanguage(language)
+        .catch(error => console.error('Error while switching language', error))
   }, [i18n])
+
+  const languageCode = useMemo(() => findLanguageCode(i18n.language), [i18n.language])
+
+  const languageOptions = useMemo(() =>
+    Object.entries(languages)
+          .map(([language, languageName]) =>
+            <option key={ language } value={ language }>{ languageName }</option>), [])
 
   return (
     <Form.Control
       as="select"
       size="sm"
       className="mb-2 mx-auto w-auto"
-      value={ findLanguageCode(i18n.language) }
-      onChange={ onChangeLang() }
-    >
+      value={ languageCode }
+      onChange={ onChangeLang }>
       {
-        Object.entries(languages)
-              .map(([language, languageName]) => {
-                return <option key={ language } value={ language }>{ languageName }</option>
-              })
+        languageOptions
       }
     </Form.Control>
   )
 }
-
-export { LanguagePicker }

@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { FormEvent, useCallback, useState } from 'react'
@@ -42,8 +42,7 @@ export const ViaInternal: React.FC = () => {
               size="sm"
               placeholder={ t('login.auth.username') }
               onChange={ (event) => setUsername(event.currentTarget.value) } className="bg-dark text-light"
-              autoComplete='username'
-            />
+              autoComplete='username'/>
           </Form.Group>
 
           <Form.Group controlId="internal-password">
@@ -54,8 +53,7 @@ export const ViaInternal: React.FC = () => {
               placeholder={ t('login.auth.password') }
               onChange={ (event) => setPassword(event.currentTarget.value) }
               className="bg-dark text-light"
-              autoComplete='current-password'
-            />
+              autoComplete='current-password'/>
           </Form.Group>
 
           <Alert className="small" show={ error } variant="danger">

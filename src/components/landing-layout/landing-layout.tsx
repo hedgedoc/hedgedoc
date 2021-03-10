@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React from 'react'
@@ -19,9 +19,9 @@ export const LandingLayout: React.FC = ({ children }) => {
       <MotdBanner/>
       <HeaderBar/>
       <div className={ 'd-flex flex-column justify-content-between flex-fill text-center' }>
-        <div>
+        <main>
           { children }
-        </div>
+        </main>
         <Footer/>
       </div>
     </Container>

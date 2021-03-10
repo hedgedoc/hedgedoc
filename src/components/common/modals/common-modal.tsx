@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React from 'react'
@@ -20,13 +20,14 @@ export interface CommonModalProps {
   icon?: IconName
   size?: 'lg' | 'sm' | 'xl'
   additionalClasses?: string
+  'data-cy'?: string
 }
 
-export const CommonModal: React.FC<CommonModalProps> = ({ show, onHide, titleI18nKey, title, closeButton, icon, additionalClasses, size, children }) => {
+export const CommonModal: React.FC<CommonModalProps> = ({ show, onHide, titleI18nKey, title, closeButton, icon, additionalClasses, size, children, ...props }) => {
   useTranslation()
 
   return (
-    <Modal data-cy={ 'limitReachedModal' } show={ show } onHide={ onHide } animation={ true }
+    <Modal data-cy={ props['data-cy'] } show={ show } onHide={ onHide } animation={ true }
            dialogClassName={ `text-dark ${ additionalClasses ?? '' }` } size={ size }>
       <Modal.Header closeButton={ !!closeButton }>
         <Modal.Title>
