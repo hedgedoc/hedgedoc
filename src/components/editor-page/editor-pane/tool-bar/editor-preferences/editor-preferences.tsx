@@ -19,6 +19,7 @@ import { EditorPreferenceLigaturesSelect } from './editor-preference-ligatures-s
 import { EditorPreferenceNumberProperty } from './editor-preference-number-property'
 import { EditorPreferenceProperty } from './editor-preference-property'
 import { EditorPreferenceSelectProperty } from './editor-preference-select-property'
+import { EditorPreferenceSmartPasteSelect } from './editor-preference-smart-paste-select'
 
 export const EditorPreferences: React.FC = () => {
   const { t } = useTranslation()
@@ -56,6 +57,9 @@ export const EditorPreferences: React.FC = () => {
             </ShowIf>
             <ListGroup.Item>
               <EditorPreferenceLigaturesSelect/>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <EditorPreferenceSmartPasteSelect/>
             </ListGroup.Item>
             <ListGroup.Item>
               <EditorPreferenceInput onChange={ () => alert('This feature is not yet implemented.') }

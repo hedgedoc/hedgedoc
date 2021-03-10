@@ -13,6 +13,7 @@ import {
   SetEditorConfigAction,
   SetEditorLigaturesAction,
   SetEditorPreferencesAction,
+  SetEditorSmartPasteAction,
   SetEditorSyncScrollAction
 } from './types'
 
@@ -48,7 +49,7 @@ export const setEditorMode = (editorMode: EditorMode): void => {
 export const setEditorSyncScroll = (syncScroll: boolean): void => {
   const action: SetEditorSyncScrollAction = {
     type: EditorConfigActionType.SET_SYNC_SCROLL,
-    syncScroll: syncScroll
+    syncScroll
   }
   store.dispatch(action)
 }
@@ -56,7 +57,15 @@ export const setEditorSyncScroll = (syncScroll: boolean): void => {
 export const setEditorLigatures = (ligatures: boolean): void => {
   const action: SetEditorLigaturesAction = {
     type: EditorConfigActionType.SET_LIGATURES,
-    ligatures: ligatures
+    ligatures
+  }
+  store.dispatch(action)
+}
+
+export const setEditorSmartPaste = (smartPaste: boolean): void => {
+  const action: SetEditorSmartPasteAction = {
+    type: EditorConfigActionType.SET_SMART_PASTE,
+    smartPaste
   }
   store.dispatch(action)
 }
@@ -64,7 +73,7 @@ export const setEditorLigatures = (ligatures: boolean): void => {
 export const mergeEditorPreferences = (preferences: EditorConfiguration): void => {
   const action: SetEditorPreferencesAction = {
     type: EditorConfigActionType.MERGE_EDITOR_PREFERENCES,
-    preferences: preferences
+    preferences
   }
   store.dispatch(action)
 }

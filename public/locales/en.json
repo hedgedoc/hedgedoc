@@ -421,6 +421,9 @@
                 },
                 "ligatures": {
                     "label": "Show ligatures"
+                },
+                "smartPaste": {
+                    "label": "Auto format pasted content"
                 }
             }
         },

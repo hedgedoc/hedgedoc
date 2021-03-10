@@ -41,6 +41,7 @@ import { defaultKeyMap } from './key-map'
 import { createStatusInfo, defaultState, StatusBar, StatusBarInfo } from './status-bar/status-bar'
 import { ToolBar } from './tool-bar/tool-bar'
 import { handleUpload } from './upload-handler'
+import { handleFilePaste, handleTablePaste, PasteEvent } from './tool-bar/utils/pasteHandlers'
 
 export interface EditorPaneProps {
   onContentChange: (content: string) => void
@@ -62,23 +63,6 @@ const onChange = (editor: Editor) => {
   }
 }
 
-interface PasteEvent {
-  clipboardData: {
-    files: FileList
-  },
-  preventDefault: () => void
-}
-
-const onPaste = (pasteEditor: Editor, event: PasteEvent) => {
-  if (event && event.clipboardData && event.clipboardData.files && event.clipboardData.files.length > 0) {
-    event.preventDefault()
-    const files: FileList = event.clipboardData.files
-    if (files && files.length >= 1) {
-      handleUpload(files[0], pasteEditor)
-    }
-  }
-}
-
 interface DropEvent {
   pageX: number,
   pageY: number,
@@ -92,6 +76,7 @@ interface DropEvent {
 export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentChange, content, scrollState, onScroll, onMakeScrollSource }) => {
   const { t } = useTranslation()
   const maxLength = useSelector((state: ApplicationState) => state.config.maxDocumentLength)
+  const smartPasteEnabled = useSelector((state: ApplicationState) => state.editorConfig.smartPaste)
   const [showMaxLengthWarning, setShowMaxLengthWarning] = useState(false)
   const maxLengthWarningAlreadyShown = useRef(false)
   const [editor, setEditor] = useState<Editor>()
@@ -102,6 +87,19 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
   const lastScrollPosition = useRef<number>()
   const [editorScroll, setEditorScroll] = useState<ScrollInfo>()
   const onEditorScroll = useCallback((editor: Editor, data: ScrollInfo) => setEditorScroll(data), [])
+
+  const onPaste = useCallback((pasteEditor: Editor, event: PasteEvent) => {
+    if (!event || !event.clipboardData) {
+      return
+    }
+    if (smartPasteEnabled) {
+      const tableInserted = handleTablePaste(event, pasteEditor)
+      if (tableInserted) {
+        return
+      }
+    }
+    handleFilePaste(event, pasteEditor)
+  }, [smartPasteEnabled])
 
   useEffect(() => {
     if (!editor || !onScroll || !editorScroll) {

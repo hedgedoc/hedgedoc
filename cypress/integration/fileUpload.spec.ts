@@ -54,7 +54,8 @@ describe('File upload', () => {
         .then((image: string) => {
           const pasteEvent = {
             clipboardData: {
-              files: [Cypress.Blob.base64StringToBlob(image, 'image/png')]
+              files: [Cypress.Blob.base64StringToBlob(image, 'image/png')],
+              getData: (_: string) => ''
             }
           }
           cy.get('.CodeMirror-scroll')
