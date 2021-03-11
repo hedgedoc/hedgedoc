@@ -19,6 +19,8 @@ import { NoteDetailsReducer } from './note-details/reducers'
 import { NoteDetails } from './note-details/types'
 import { UserReducer } from './user/reducers'
 import { MaybeUserState } from './user/types'
+import { UiNotificationState } from './ui-notifications/types'
+import { UiNotificationReducer } from './ui-notifications/reducers'
 
 export interface ApplicationState {
   user: MaybeUserState;
@@ -28,6 +30,7 @@ export interface ApplicationState {
   editorConfig: EditorConfig;
   darkMode: DarkModeConfig;
   noteDetails: NoteDetails;
+  uiNotifications: UiNotificationState;
 }
 
 export const allReducers: Reducer<ApplicationState> = combineReducers<ApplicationState>({
@@ -37,7 +40,8 @@ export const allReducers: Reducer<ApplicationState> = combineReducers<Applicatio
   apiUrl: ApiUrlReducer,
   editorConfig: EditorConfigReducer,
   darkMode: DarkModeConfigReducer,
-  noteDetails: NoteDetailsReducer
+  noteDetails: NoteDetailsReducer,
+  uiNotifications: UiNotificationReducer
 })
 
 export const store = createStore(allReducers)

@@ -32,6 +32,8 @@ import { Splitter } from './splitter/splitter'
 import { DualScrollState, ScrollState } from './synced-scroll/scroll-props'
 import { RendererType } from '../render-page/rendering-message'
 import { useEditorModeFromUrl } from './hooks/useEditorModeFromUrl'
+import { UiNotifications } from '../notifications/ui-notifications'
+import { useNotificationTest } from './use-notification-test'
 
 export interface EditorPagePathParams {
   id: string
@@ -82,8 +84,11 @@ export const EditorPage: React.FC = () => {
     scrollSource.current = ScrollSource.EDITOR
   }, [])
 
+  useNotificationTest()
+
   return (
     <Fragment>
+      <UiNotifications/>
       <MotdBanner/>
       <div className={ 'd-flex flex-column vh-100' }>
         <AppBar mode={ AppBarMode.EDITOR }/>

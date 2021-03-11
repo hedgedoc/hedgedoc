@@ -1,4 +1,4 @@
-/*
+/*!
  * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
@@ -11,4 +11,6 @@ $dark: #222222 !default;
 @import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/mixins";
 @import "../../node_modules/bootstrap/scss/variables";
+
+$toast-background-color: $white;
 
