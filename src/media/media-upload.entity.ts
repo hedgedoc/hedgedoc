@@ -23,10 +23,14 @@ export class MediaUpload {
   @PrimaryColumn()
   id: string;
 
-  @ManyToOne((_) => Note, { nullable: false })
+  @ManyToOne((_) => Note, (note) => note.mediaUploads, {
+    nullable: false,
+  })
   note: Note;
 
-  @ManyToOne((_) => User, { nullable: false })
+  @ManyToOne((_) => User, (user) => user.mediaUploads, {
+    nullable: false,
+  })
   user: User;
 
   @Column({
