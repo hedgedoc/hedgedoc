@@ -2859,10 +2859,10 @@ abbrev@1:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
-abcjs@6.0.0-beta.28:
-  version "6.0.0-beta.28"
-  resolved "https://registry.yarnpkg.com/abcjs/-/abcjs-6.0.0-beta.28.tgz#94786aa8c72138f781d360ca3f7142d4d57a4d38"
-  integrity sha512-irOWgcMJhGAgaZK9BqQiWXOlKzRdUvSq9egRczePvXFD4kCUEc7Spjspez1EEan7bQaIJ0nHLZWYaU0OOL1mPg==
+abcjs@6.0.0-beta.30:
+  version "6.0.0-beta.30"
+  resolved "https://registry.yarnpkg.com/abcjs/-/abcjs-6.0.0-beta.30.tgz#e6fd7c185453c07d03308153adcd102d4e5a2ffa"
+  integrity sha512-IETUG0bftExUdUqI834p/9O3KDJOVsA7SJwmpqrWs5PN8hqpwufIIugvEOGqD+KvxcmoHuUDmetvm6W9IE4hjA==
 
 accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.7:
   version "1.3.7"
