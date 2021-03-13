@@ -59,7 +59,7 @@
         "i18next-browser-languagedetector": "6.0.1",
         "i18next-http-backend": "1.1.1",
         "js-yaml": "4.0.0",
-        "katex": "0.12.0",
+        "katex": "0.13.0",
         "luxon": "1.26.0",
         "markdown-it": "12.0.4",
         "markdown-it-abbr": "1.0.4",
