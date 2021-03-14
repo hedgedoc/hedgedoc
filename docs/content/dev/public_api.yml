@@ -908,19 +908,21 @@ components:
     MediaUpload:
       type: object
       properties:
-        note:
-          type: string
-          description: ID of the note the file was uploaded to
-        user:
-          type: string
-          description: username of the user who uploaded the file
         url:
           type: string
           description: URL of the file
+        owningNote:
+          type: string
+          description: ID of the note the file was uploaded to
         createdAt:
           type: string
           format: date-time
           description: Date when the file was upladed
+        owningUser:
+          type: string
+          description: username of the user who uploaded the file
+
+
   examples:
     markdownExample:
       value: '# Some header\nSome normal text. **Some bold text**'

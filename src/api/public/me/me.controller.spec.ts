@@ -23,7 +23,10 @@ import { HistoryEntry } from '../../../history/history-entry.entity';
 import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
 import { Group } from '../../../groups/group.entity';
+import { MediaModule } from '../../../media/media.module';
+import { MediaUpload } from '../../../media/media-upload.entity';
 import { ConfigModule } from '@nestjs/config';
+import mediaConfigMock from '../../../config/media.config.mock';
 import appConfigMock from '../../../config/app.config.mock';
 
 describe('Me Controller', () => {
@@ -33,14 +36,19 @@ describe('Me Controller', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [MeController],
       imports: [
-        UsersModule,
-        HistoryModule,
-        NotesModule,
-        LoggerModule,
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [mediaConfigMock],
+        }),
         ConfigModule.forRoot({
           isGlobal: true,
           load: [appConfigMock],
         }),
+        UsersModule,
+        HistoryModule,
+        NotesModule,
+        LoggerModule,
+        MediaModule,
       ],
     })
       .overrideProvider(getRepositoryToken(User))
@@ -66,6 +74,8 @@ describe('Me Controller', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(MediaUpload))
       .useValue({})
       .compile();
 

@@ -28,6 +28,9 @@ import { HistoryEntryDto } from '../../../history/history-entry.dto';
 import { UserInfoDto } from '../../../users/user-info.dto';
 import { NotInDBError } from '../../../errors/errors';
 import { Request } from 'express';
+import { MediaService } from '../../../media/media.service';
+import { MediaUploadUrlDto } from '../../../media/media-upload-url.dto';
+import { MediaUploadDto } from '../../../media/media-upload.dto';
 
 @ApiTags('me')
 @ApiSecurity('token')
@@ -38,6 +41,7 @@ export class MeController {
     private usersService: UsersService,
     private historyService: HistoryService,
     private notesService: NotesService,
+    private mediaService: MediaService,
   ) {
     this.logger.setContext(MeController.name);
   }
@@ -128,5 +132,12 @@ export class MeController {
     return await Promise.all(
       (await notes).map((note) => this.notesService.toNoteMetadataDto(note)),
     );
+  }
+
+  @UseGuards(TokenAuthGuard)
+  @Get('media')
+  async getMyMedia(@Req() req: Request): Promise<MediaUploadDto[]> {
+    const media = await this.mediaService.listUploadsByUser(req.user);
+    return media.map((media) => this.mediaService.toMediaUploadDto(media));
   }
 }
