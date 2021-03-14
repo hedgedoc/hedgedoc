@@ -113,6 +113,15 @@
   dependencies:
     "@azure/core-asynciterator-polyfill" "^1.0.0"
 
+"@azure/core-tracing@1.0.0-preview.10":
+  version "1.0.0-preview.10"
+  resolved "https://registry.yarnpkg.com/@azure/core-tracing/-/core-tracing-1.0.0-preview.10.tgz#e7060272145dddad4486765030d1b037cd52a8ea"
+  integrity sha512-iIwjtMwQnsxB7cYkugMx+s4W1nfy3+pT/ceo+uW1fv4YDgYe84nh+QP0fEC9IH/3UATLSWbIBemdMHzk2APUrw==
+  dependencies:
+    "@opencensus/web-types" "0.0.7"
+    "@opentelemetry/api" "^0.10.2"
+    tslib "^2.0.0"
+
 "@azure/core-tracing@1.0.0-preview.9":
   version "1.0.0-preview.9"
   resolved "https://registry.yarnpkg.com/@azure/core-tracing/-/core-tracing-1.0.0-preview.9.tgz#84f3b85572013f9d9b85e1e5d89787aa180787eb"
@@ -129,16 +138,16 @@
   dependencies:
     tslib "^2.0.0"
 
-"@azure/storage-blob@12.4.1":
-  version "12.4.1"
-  resolved "https://registry.yarnpkg.com/@azure/storage-blob/-/storage-blob-12.4.1.tgz#f2cc4a36a0df770b7b918ba89e72c02d72afbf2f"
-  integrity sha512-RH6ru8LbnCC+m1rlVLon6mYUXdHsTcyUXFCJAWRQQM7p0XOwVKPS+UiVk2tZXfvMWd3q/qT/meOrEbHEcp/c4g==
+"@azure/storage-blob@12.5.0":
+  version "12.5.0"
+  resolved "https://registry.yarnpkg.com/@azure/storage-blob/-/storage-blob-12.5.0.tgz#1ddd8837d9a15ebe355e795375d13b406f2cb496"
+  integrity sha512-DgoefgODst2IPkkQsNdhtYdyJgSsAZC1pEujO6aD5y7uFy5GnzhYliobSrp204jYRyK5XeJ9iiePmy/SPtTbLA==
   dependencies:
     "@azure/abort-controller" "^1.0.0"
     "@azure/core-http" "^1.2.0"
     "@azure/core-lro" "^1.0.2"
     "@azure/core-paging" "^1.1.1"
-    "@azure/core-tracing" "1.0.0-preview.9"
+    "@azure/core-tracing" "1.0.0-preview.10"
     "@azure/logger" "^1.0.0"
     "@opentelemetry/api" "^0.10.2"
     events "^3.0.0"
