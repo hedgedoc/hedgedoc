@@ -177,7 +177,7 @@
     "babel-preset-env": "1.7.0",
     "babel-runtime": "6.26.0",
     "copy-webpack-plugin": "6.4.1",
-    "css-loader": "5.1.1",
+    "css-loader": "5.1.2",
     "eslint": "7.21.0",
     "eslint-config-standard": "16.0.2",
     "eslint-plugin-import": "2.22.1",
