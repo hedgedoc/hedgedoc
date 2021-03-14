@@ -121,6 +121,32 @@ describe('HistoryService', () => {
     });
   });
 
+  describe('getEntryByNoteIdOrAlias', () => {
+    const user = {} as User;
+    const alias = 'alias';
+    describe('works', () => {
+      it('with history entry', async () => {
+        const note = Note.create(user, alias);
+        const historyEntry = HistoryEntry.create(user, note);
+        jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(historyEntry);
+        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
+        expect(await service.getEntryByNoteIdOrAlias(alias, user)).toEqual(
+          historyEntry,
+        );
+      });
+    });
+    describe('fails', () => {
+      it('with an non-existing note', async () => {
+        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
+        try {
+          await service.getEntryByNoteIdOrAlias(alias, {} as User);
+        } catch (e) {
+          expect(e).toBeInstanceOf(NotInDBError);
+        }
+      });
+    });
+  });
+
   describe('createOrUpdateHistoryEntry', () => {
     describe('works', () => {
       it('without an preexisting entry', async () => {
@@ -231,15 +257,24 @@ describe('HistoryService', () => {
         );
         await service.deleteHistoryEntry(alias, user);
       });
-
+    });
+    describe('fails', () => {
+      const user = {} as User;
+      const alias = 'alias';
       it('without an entry', async () => {
-        const user = {} as User;
-        const alias = 'alias';
         const note = Note.create(user, alias);
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
         jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
         try {
           await service.deleteHistoryEntry(alias, user);
+        } catch (e) {
+          expect(e).toBeInstanceOf(NotInDBError);
+        }
+      });
+      it('without a note', async () => {
+        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
+        try {
+          await service.getEntryByNoteIdOrAlias(alias, {} as User);
         } catch (e) {
           expect(e).toBeInstanceOf(NotInDBError);
         }
