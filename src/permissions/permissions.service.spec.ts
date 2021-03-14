@@ -28,6 +28,8 @@ import { NoteGroupPermission } from './note-group-permission.entity';
 import { NoteUserPermission } from './note-user-permission.entity';
 import { PermissionsModule } from './permissions.module';
 import { GuestPermission, PermissionsService } from './permissions.service';
+import { ConfigModule } from '@nestjs/config';
+import appConfigMock from '../config/app.config.mock';
 
 describe('PermissionsService', () => {
   let permissionsService: PermissionsService;
@@ -35,7 +37,16 @@ describe('PermissionsService', () => {
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [PermissionsService],
-      imports: [PermissionsModule, UsersModule, LoggerModule, NotesModule],
+      imports: [
+        PermissionsModule,
+        UsersModule,
+        LoggerModule,
+        NotesModule,
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock],
+        }),
+      ],
     })
       .overrideProvider(getRepositoryToken(User))
       .useValue({})

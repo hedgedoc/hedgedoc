@@ -34,6 +34,7 @@ import { ClientError, NotInDBError, PermissionError } from '../errors/errors';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Group } from '../groups/group.entity';
+import appConfigMock from '../../src/config/app.config.mock';
 
 describe('MediaService', () => {
   let service: MediaService;
@@ -54,7 +55,7 @@ describe('MediaService', () => {
       imports: [
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [mediaConfigMock],
+          load: [mediaConfigMock, appConfigMock],
         }),
         LoggerModule,
         NotesModule,

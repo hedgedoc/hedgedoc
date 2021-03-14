@@ -16,6 +16,7 @@ import { Tag } from './tag.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { GroupsModule } from '../groups/groups.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { GroupsModule } from '../groups/groups.module';
     UsersModule,
     GroupsModule,
     LoggerModule,
+    ConfigModule,
   ],
   controllers: [],
   providers: [NotesService],

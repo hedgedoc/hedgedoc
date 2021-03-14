@@ -26,6 +26,8 @@ import { NotesService } from './notes.service';
 import { Repository } from 'typeorm';
 import { Tag } from './tag.entity';
 import {
+  AlreadyInDBError,
+  ForbiddenIdError,
   NotInDBError,
   PermissionsUpdateInconsistentError,
 } from '../errors/errors';
@@ -37,6 +39,8 @@ import { NoteGroupPermission } from '../permissions/note-group-permission.entity
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { GroupsModule } from '../groups/groups.module';
 import { Group } from '../groups/group.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import appConfigMock from '../config/app.config.mock';
 
 describe('NotesService', () => {
   let service: NotesService;
@@ -44,6 +48,7 @@ describe('NotesService', () => {
   let revisionRepo: Repository<Revision>;
   let userRepo: Repository<User>;
   let groupRepo: Repository<Group>;
+  let forbiddenNoteId: string;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -58,7 +63,16 @@ describe('NotesService', () => {
           useClass: Repository,
         },
       ],
-      imports: [LoggerModule, UsersModule, GroupsModule, RevisionsModule],
+      imports: [
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock],
+        }),
+        LoggerModule,
+        UsersModule,
+        GroupsModule,
+        RevisionsModule,
+      ],
     })
       .overrideProvider(getRepositoryToken(Note))
       .useClass(Repository)
@@ -84,6 +98,8 @@ describe('NotesService', () => {
       .useClass(Repository)
       .compile();
 
+    const config = module.get<ConfigService>(ConfigService);
+    forbiddenNoteId = config.get('appConfig').forbiddenNoteIds[0];
     service = module.get<NotesService>(NotesService);
     noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
     revisionRepo = module.get<Repository<Revision>>(
@@ -124,10 +140,10 @@ describe('NotesService', () => {
   });
 
   describe('createNote', () => {
+    const user = User.create('hardcoded', 'Testy') as User;
+    const alias = 'alias';
+    const content = 'testContent';
     describe('works', () => {
-      const user = User.create('hardcoded', 'Testy') as User;
-      const alias = 'alias';
-      const content = 'testContent';
       beforeEach(() => {
         jest
           .spyOn(noteRepo, 'save')
@@ -182,6 +198,26 @@ describe('NotesService', () => {
         expect(newNote.tags).toHaveLength(0);
         expect(newNote.owner).toEqual(user);
         expect(newNote.alias).toEqual(alias);
+      });
+    });
+    describe('fails:', () => {
+      it('alias is forbidden', async () => {
+        try {
+          await service.createNote(content, forbiddenNoteId);
+        } catch (e) {
+          expect(e).toBeInstanceOf(ForbiddenIdError);
+        }
+      });
+
+      it('alias is already used', async () => {
+        jest.spyOn(noteRepo, 'save').mockImplementationOnce(async () => {
+          throw new Error();
+        });
+        try {
+          await service.createNote(content, alias);
+        } catch (e) {
+          expect(e).toBeInstanceOf(AlreadyInDBError);
+        }
       });
     });
   });
@@ -241,13 +277,23 @@ describe('NotesService', () => {
       const foundNote = await service.getNoteByIdOrAlias('noteThatExists');
       expect(foundNote).toEqual(note);
     });
-    it('fails: no note found', async () => {
-      jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
-      try {
-        await service.getNoteByIdOrAlias('noteThatDoesNoteExist');
-      } catch (e) {
-        expect(e).toBeInstanceOf(NotInDBError);
-      }
+    describe('fails:', () => {
+      it('no note found', async () => {
+        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
+        try {
+          await service.getNoteByIdOrAlias('noteThatDoesNoteExist');
+        } catch (e) {
+          expect(e).toBeInstanceOf(NotInDBError);
+        }
+      });
+      it('id is forbidden', async () => {
+        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
+        try {
+          await service.getNoteByIdOrAlias(forbiddenNoteId);
+        } catch (e) {
+          expect(e).toBeInstanceOf(ForbiddenIdError);
+        }
+      });
     });
   });
 

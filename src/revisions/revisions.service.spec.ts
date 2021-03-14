@@ -20,6 +20,8 @@ import { Tag } from '../notes/tag.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Group } from '../groups/group.entity';
+import { ConfigModule } from '@nestjs/config';
+import appConfigMock from '../config/app.config.mock';
 
 describe('RevisionsService', () => {
   let service: RevisionsService;
@@ -33,7 +35,14 @@ describe('RevisionsService', () => {
           useValue: {},
         },
       ],
-      imports: [NotesModule, LoggerModule],
+      imports: [
+        NotesModule,
+        LoggerModule,
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock],
+        }),
+      ],
     })
       .overrideProvider(getRepositoryToken(Authorship))
       .useValue({})
