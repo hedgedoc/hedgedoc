@@ -22,6 +22,8 @@ import { MediaUploadUrlDto } from './media-upload-url.dto';
 import { S3Backend } from './backends/s3-backend';
 import { AzureBackend } from './backends/azure-backend';
 import { ImgurBackend } from './backends/imgur-backend';
+import { User } from '../users/user.entity';
+import { MediaUploadDto } from './media-upload.dto';
 
 @Injectable()
 export class MediaService {
@@ -157,6 +159,23 @@ export class MediaService {
     return mediaUpload;
   }
 
+  /**
+   * @async
+   * List all uploads by a specific user
+   * @param {User} user - the specific user
+   * @return {MediaUpload[]} arary of media uploads owned by the user
+   */
+  async listUploadsByUser(user: User): Promise<MediaUpload[]> {
+    const mediaUploads = await this.mediaUploadRepository.find({
+      where: { user: user },
+      relations: ['user', 'note'],
+    });
+    if (mediaUploads === undefined) {
+      return [];
+    }
+    return mediaUploads;
+  }
+
   private chooseBackendType(): BackendType {
     switch (this.mediaConfig.backend.use) {
       case 'filesystem':
@@ -181,6 +200,15 @@ export class MediaService {
       case BackendType.IMGUR:
         return this.moduleRef.get(ImgurBackend);
     }
+  }
+
+  toMediaUploadDto(mediaUpload: MediaUpload): MediaUploadDto {
+    return {
+      url: mediaUpload.fileUrl,
+      noteId: mediaUpload.note.id,
+      createdAt: mediaUpload.createdAt,
+      userName: mediaUpload.user.userName,
+    };
   }
 
   toMediaUploadUrlDto(url: string): MediaUploadUrlDto {

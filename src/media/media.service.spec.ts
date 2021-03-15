@@ -229,4 +229,39 @@ describe('MediaService', () => {
       }
     });
   });
+
+  describe('listUploadsByUser', () => {
+    describe('works', () => {
+      it('with one upload from user', async () => {
+        const mockMediaUploadEntry = {
+          id: 'testMediaUpload',
+          backendData: 'testBackendData',
+          user: {
+            userName: 'hardcoded',
+          } as User,
+        } as MediaUpload;
+        jest
+          .spyOn(mediaRepo, 'find')
+          .mockResolvedValueOnce([mockMediaUploadEntry]);
+        expect(
+          await service.listUploadsByUser({ userName: 'hardcoded' } as User),
+        ).toEqual([mockMediaUploadEntry]);
+      });
+
+      it('without uploads from user', async () => {
+        jest.spyOn(mediaRepo, 'find').mockResolvedValueOnce([]);
+        const mediaList = await service.listUploadsByUser({
+          userName: 'hardcoded',
+        } as User);
+        expect(mediaList).toEqual([]);
+      });
+      it('with error (undefined as return value of find)', async () => {
+        jest.spyOn(mediaRepo, 'find').mockResolvedValueOnce(undefined);
+        const mediaList = await service.listUploadsByUser({
+          userName: 'hardcoded',
+        } as User);
+        expect(mediaList).toEqual([]);
+      });
+    });
+  });
 });
