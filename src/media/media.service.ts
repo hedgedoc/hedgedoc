@@ -47,7 +47,6 @@ export class MediaService {
 
   private static isAllowedMimeType(mimeType: string): boolean {
     const allowedTypes = [
-      'application/pdf',
       'image/apng',
       'image/bmp',
       'image/gif',
