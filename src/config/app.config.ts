@@ -24,7 +24,8 @@ const schema = Joi.object({
     .default(Loglevel.WARN)
     .optional()
     .label('HD_LOGLEVEL'),
-  forbiddenNoteIds: Joi.string()
+  forbiddenNoteIds: Joi.array()
+    .items(Joi.string())
     .optional()
     .default([])
     .label('HD_FORBIDDEN_NOTE_IDS'),
