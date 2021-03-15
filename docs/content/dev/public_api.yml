@@ -496,10 +496,6 @@ paths:
         required: true
         description: The binary file to upload.
         content:
-          application/pdf:
-            schema:
-              type: string
-              format: binary
           image/apng:
             schema:
               type: string
