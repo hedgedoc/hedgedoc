@@ -39,6 +39,7 @@
     "@types/minio": "7.0.7",
     "@types/node-fetch": "2.5.10",
     "@types/passport-http-bearer": "1.0.36",
+    "@types/yargs": "^16.0.0",
     "base32-encode": "1.2.0",
     "bcrypt": "5.0.1",
     "class-transformer": "0.4.0",
@@ -51,6 +52,7 @@
     "joi": "17.4.0",
     "minio": "7.0.18",
     "nest-router": "1.0.9",
+    "nestjs-command": "^2.0.0",
     "node-fetch": "2.6.1",
     "passport": "0.4.1",
     "passport-http-bearer": "1.0.1",
@@ -60,7 +62,8 @@
     "rxjs": "7.1.0",
     "sqlite3": "5.0.2",
     "swagger-ui-express": "4.1.6",
-    "typeorm": "0.2.33"
+    "typeorm": "0.2.33",
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@nestjs/cli": "7.6.0",
