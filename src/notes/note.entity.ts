@@ -39,9 +39,14 @@ export class Note {
   @OneToMany(
     (_) => NoteGroupPermission,
     (groupPermission) => groupPermission.note,
+    { cascade: true }, // This ensures that embedded NoteGroupPermissions are automatically saved to the database
   )
   groupPermissions: NoteGroupPermission[];
-  @OneToMany((_) => NoteUserPermission, (userPermission) => userPermission.note)
+  @OneToMany(
+    (_) => NoteUserPermission,
+    (userPermission) => userPermission.note,
+    { cascade: true }, // This ensures that embedded NoteUserPermission are automatically saved to the database
+  )
   userPermissions: NoteUserPermission[];
   @Column({
     nullable: false,
