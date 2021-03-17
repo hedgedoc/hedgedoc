@@ -7,10 +7,11 @@
 import { Module, OnModuleInit } from '@nestjs/common';
 import { CommandModule, CommandService } from 'nestjs-command';
 import { ConfigModule } from '@nestjs/config';
+import { ConfigCommand } from './config.command';
 
 @Module({
   imports: [CommandModule, ConfigModule],
-  providers: [],
+  providers: [ConfigCommand],
 })
 export class CliModule implements OnModuleInit {
   constructor(private readonly command: CommandService) {}
