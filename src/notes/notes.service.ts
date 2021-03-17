@@ -224,6 +224,8 @@ export class NotesService {
     //TODO: Calculate patch
     revisions.push(Revision.create(noteContent, noteContent));
     note.revisions = Promise.resolve(revisions);
+    note.userPermissions = [];
+    note.groupPermissions = [];
     return await this.noteRepository.save(note);
   }
 
@@ -270,6 +272,7 @@ export class NotesService {
         user,
         newUserPermission.canEdit,
       );
+      createdPermission.note = note;
       note.userPermissions.push(createdPermission);
     }
 
@@ -282,6 +285,7 @@ export class NotesService {
         group,
         newGroupPermission.canEdit,
       );
+      createdPermission.note = note;
       note.groupPermissions.push(createdPermission);
     }
 
