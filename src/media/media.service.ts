@@ -24,6 +24,7 @@ import { AzureBackend } from './backends/azure-backend';
 import { ImgurBackend } from './backends/imgur-backend';
 import { User } from '../users/user.entity';
 import { MediaUploadDto } from './media-upload.dto';
+import { Note } from '../notes/note.entity';
 
 @Injectable()
 export class MediaService {
@@ -167,6 +168,23 @@ export class MediaService {
   async listUploadsByUser(user: User): Promise<MediaUpload[]> {
     const mediaUploads = await this.mediaUploadRepository.find({
       where: { user: user },
+      relations: ['user', 'note'],
+    });
+    if (mediaUploads === undefined) {
+      return [];
+    }
+    return mediaUploads;
+  }
+
+  /**
+   * @async
+   * List all uploads by a specific note
+   * @param {Note} note - the specific user
+   * @return {MediaUpload[]} arary of media uploads owned by the user
+   */
+  async listUploadsByNote(note: Note): Promise<MediaUpload[]> {
+    const mediaUploads = await this.mediaUploadRepository.find({
+      where: { note: note },
       relations: ['user', 'note'],
     });
     if (mediaUploads === undefined) {
