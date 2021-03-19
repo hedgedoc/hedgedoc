@@ -146,7 +146,7 @@ describe('Notes', () => {
   describe('DELETE /notes/{note}', () => {
     it('works with an existing alias', async () => {
       await notesService.createNote(content, 'test3', user);
-      await request(app.getHttpServer()).delete('/notes/test3').expect(200);
+      await request(app.getHttpServer()).delete('/notes/test3').expect(204);
       await expect(notesService.getNoteByIdOrAlias('test3')).rejects.toEqual(
         new NotInDBError("Note with id/alias 'test3' not found."),
       );

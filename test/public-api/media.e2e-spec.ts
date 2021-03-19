@@ -104,7 +104,7 @@ describe('Notes', () => {
     const filename = url.split('/').pop();
     await request(app.getHttpServer())
       .delete('/media/' + filename)
-      .expect(200);
+      .expect(204);
   });
 
   afterAll(async () => {

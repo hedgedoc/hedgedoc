@@ -9,6 +9,7 @@ import {
   Controller,
   Delete,
   Headers,
+  HttpCode,
   InternalServerErrorException,
   NotFoundException,
   Param,
@@ -31,8 +32,25 @@ import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
 import { MulterFile } from '../../../media/multer-file.interface';
 import { TokenAuthGuard } from '../../../auth/token-auth.guard';
-import { ApiSecurity, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiHeader,
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
+  ApiSecurity,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { MediaUploadUrlDto } from '../../../media/media-upload-url.dto';
+import {
+  forbiddenDescription,
+  notFoundDescription,
+  successfullyDeletedDescription,
+  unauthorizedDescription,
+} from '../../utils/descriptions';
 
 @ApiTags('media')
 @ApiSecurity('token')
@@ -47,7 +65,22 @@ export class MediaController {
 
   @UseGuards(TokenAuthGuard)
   @Post()
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'The binary file to upload',
+  })
+  @ApiHeader({
+    name: 'HedgeDoc-Note',
+    description: 'ID or alias of the parent note',
+  })
+  @ApiCreatedResponse({
+    description: 'The file was uploaded successfully',
+    type: MediaUploadUrlDto,
+  })
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @ApiForbiddenResponse({ description: forbiddenDescription })
   @UseInterceptors(FileInterceptor('file'))
+  @HttpCode(201)
   async uploadMedia(
     @Req() req: Request,
     @UploadedFile() file: MulterFile,
@@ -80,6 +113,11 @@ export class MediaController {
 
   @UseGuards(TokenAuthGuard)
   @Delete(':filename')
+  @HttpCode(204)
+  @ApiNoContentResponse({ description: successfullyDeletedDescription })
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @ApiForbiddenResponse({ description: forbiddenDescription })
+  @ApiNotFoundResponse({ description: notFoundDescription })
   async deleteMedia(
     @Req() req: Request,
     @Param('filename') filename: string,
