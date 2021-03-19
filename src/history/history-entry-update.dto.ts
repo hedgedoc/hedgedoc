@@ -5,11 +5,13 @@
  */
 
 import { IsBoolean } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class HistoryEntryUpdateDto {
   /**
    * True if the note should be pinned
    */
   @IsBoolean()
+  @ApiProperty()
   pinStatus: boolean;
 }

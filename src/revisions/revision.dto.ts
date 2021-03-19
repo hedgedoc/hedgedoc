@@ -6,6 +6,7 @@
 
 import { IsDate, IsNumber, IsString } from 'class-validator';
 import { Revision } from './revision.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class RevisionDto {
   /**
@@ -13,6 +14,7 @@ export class RevisionDto {
    * @example 13
    */
   @IsNumber()
+  @ApiProperty()
   id: Revision['id'];
 
   /**
@@ -20,12 +22,14 @@ export class RevisionDto {
    * @example "# I am a heading"
    */
   @IsString()
+  @ApiProperty()
   content: string;
 
   /**
    * Patch from the preceding revision to this one
    */
   @IsString()
+  @ApiProperty()
   patch: string;
 
   /**
@@ -33,5 +37,6 @@ export class RevisionDto {
    * @example "2020-12-01 12:23:34"
    */
   @IsDate()
+  @ApiProperty()
   createdAt: Date;
 }

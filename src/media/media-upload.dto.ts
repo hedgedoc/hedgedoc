@@ -5,6 +5,7 @@
  */
 
 import { IsDate, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class MediaUploadDto {
   /**
@@ -12,6 +13,7 @@ export class MediaUploadDto {
    * @example "https://example.com/uploads/testfile123.jpg"
    */
   @IsString()
+  @ApiProperty()
   url: string;
 
   /**
@@ -19,6 +21,7 @@ export class MediaUploadDto {
    * @example "noteId" TODO how looks a note id?
    */
   @IsString()
+  @ApiProperty()
   noteId: string;
 
   /**
@@ -26,6 +29,7 @@ export class MediaUploadDto {
    * @example "2020-12-01 12:23:34"
    */
   @IsDate()
+  @ApiProperty()
   createdAt: Date;
 
   /**
@@ -33,5 +37,6 @@ export class MediaUploadDto {
    * @example "testuser5"
    */
   @IsString()
+  @ApiProperty()
   userName: string;
 }

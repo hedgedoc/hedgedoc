@@ -14,12 +14,14 @@ import {
 } from 'class-validator';
 import { UserInfoDto } from '../users/user-info.dto';
 import { NotePermissionsDto } from './note-permissions.dto';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class NoteMetadataDto {
   /**
    * ID of the note
    */
   @IsString()
+  @ApiProperty()
   id: string;
 
   /**
@@ -28,6 +30,7 @@ export class NoteMetadataDto {
    */
   @IsString()
   @IsOptional()
+  @ApiPropertyOptional()
   alias: string;
 
   /**
@@ -36,6 +39,7 @@ export class NoteMetadataDto {
    * @example "Shopping List"
    */
   @IsString()
+  @ApiProperty()
   title: string;
 
   /**
@@ -44,6 +48,7 @@ export class NoteMetadataDto {
    * @example Everything I want to buy
    */
   @IsString()
+  @ApiProperty()
   description: string;
 
   /**
@@ -52,6 +57,7 @@ export class NoteMetadataDto {
    */
   @IsArray()
   @IsString({ each: true })
+  @ApiProperty()
   tags: string[];
 
   /**
@@ -59,12 +65,14 @@ export class NoteMetadataDto {
    * @example "2020-12-01 12:23:34"
    */
   @IsDate()
+  @ApiProperty()
   updateTime: Date;
 
   /**
    * User that last edited the note
    */
   @ValidateNested()
+  @ApiProperty({ type: UserInfoDto })
   updateUser: UserInfoDto;
 
   /**
@@ -72,6 +80,7 @@ export class NoteMetadataDto {
    * @example 42
    */
   @IsNumber()
+  @ApiProperty()
   viewCount: number;
 
   /**
@@ -79,6 +88,7 @@ export class NoteMetadataDto {
    * @example "2020-12-01 12:23:34"
    */
   @IsDate()
+  @ApiProperty()
   createTime: Date;
 
   /**
@@ -87,12 +97,14 @@ export class NoteMetadataDto {
    */
   @IsArray()
   @ValidateNested()
+  @ApiProperty()
   editedBy: UserInfoDto['userName'][];
 
   /**
    * Permissions currently in effect for the note
    */
   @ValidateNested()
+  @ApiProperty({ type: NotePermissionsDto })
   permissions: NotePermissionsDto;
 }
 
@@ -103,6 +115,7 @@ export class NoteMetadataUpdateDto {
    * @example "Shopping List"
    */
   @IsString()
+  @ApiProperty()
   title: string;
 
   /**
@@ -111,6 +124,7 @@ export class NoteMetadataUpdateDto {
    * @example Everything I want to buy
    */
   @IsString()
+  @ApiProperty()
   description: string;
 
   /**
@@ -119,5 +133,6 @@ export class NoteMetadataUpdateDto {
    */
   @IsArray()
   @IsString({ each: true })
+  @ApiProperty()
   tags: string[];
 }

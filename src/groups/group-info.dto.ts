@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { IsBoolean, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class GroupInfoDto {
   /**
@@ -11,6 +12,7 @@ export class GroupInfoDto {
    * @example "superheroes"
    */
   @IsString()
+  @ApiProperty()
   name: string;
 
   /**
@@ -18,6 +20,7 @@ export class GroupInfoDto {
    * @example "Superheroes"
    */
   @IsString()
+  @ApiProperty()
   displayName: string;
 
   /**
@@ -26,5 +29,6 @@ export class GroupInfoDto {
    * @example false
    */
   @IsBoolean()
+  @ApiProperty()
   special: boolean;
 }
