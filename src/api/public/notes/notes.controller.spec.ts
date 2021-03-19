@@ -27,7 +27,10 @@ import { NoteUserPermission } from '../../../permissions/note-user-permission.en
 import { Group } from '../../../groups/group.entity';
 import { GroupsModule } from '../../../groups/groups.module';
 import { ConfigModule } from '@nestjs/config';
+import { MediaModule } from '../../../media/media.module';
+import { MediaUpload } from '../../../media/media-upload.entity';
 import appConfigMock from '../../../config/app.config.mock';
+import mediaConfigMock from '../../../config/media.config.mock';
 
 describe('Notes Controller', () => {
   let controller: NotesController;
@@ -53,9 +56,10 @@ describe('Notes Controller', () => {
         LoggerModule,
         PermissionsModule,
         HistoryModule,
+        MediaModule,
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [appConfigMock],
+          load: [appConfigMock, mediaConfigMock],
         }),
       ],
     })
@@ -84,6 +88,8 @@ describe('Notes Controller', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(MediaUpload))
       .useValue({})
       .compile();
 
