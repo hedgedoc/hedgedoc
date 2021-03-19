@@ -264,4 +264,40 @@ describe('MediaService', () => {
       });
     });
   });
+
+  describe('listUploadsByNote', () => {
+    describe('works', () => {
+      it('with one upload to note', async () => {
+        const mockMediaUploadEntry = {
+          id: 'testMediaUpload',
+          backendData: 'testBackendData',
+          note: {
+            id: '123',
+          } as Note,
+        } as MediaUpload;
+        jest
+          .spyOn(mediaRepo, 'find')
+          .mockResolvedValueOnce([mockMediaUploadEntry]);
+        const mediaList = await service.listUploadsByNote({
+          id: '123',
+        } as Note);
+        expect(mediaList).toEqual([mockMediaUploadEntry]);
+      });
+
+      it('without uploads to note', async () => {
+        jest.spyOn(mediaRepo, 'find').mockResolvedValueOnce([]);
+        const mediaList = await service.listUploadsByNote({
+          id: '123',
+        } as Note);
+        expect(mediaList).toEqual([]);
+      });
+      it('with error (undefined as return value of find)', async () => {
+        jest.spyOn(mediaRepo, 'find').mockResolvedValueOnce(undefined);
+        const mediaList = await service.listUploadsByNote({
+          id: '123',
+        } as Note);
+        expect(mediaList).toEqual([]);
+      });
+    });
+  });
 });
