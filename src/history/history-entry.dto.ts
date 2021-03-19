@@ -5,12 +5,14 @@
  */
 
 import { IsArray, IsBoolean, IsDate, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class HistoryEntryDto {
   /**
    * ID or Alias of the note
    */
   @IsString()
+  @ApiProperty()
   identifier: string;
 
   /**
@@ -19,6 +21,7 @@ export class HistoryEntryDto {
    * @example "Shopping List"
    */
   @IsString()
+  @ApiProperty()
   title: string;
 
   /**
@@ -26,10 +29,12 @@ export class HistoryEntryDto {
    * @example "2020-12-01 12:23:34"
    */
   @IsDate()
+  @ApiProperty()
   lastVisited: Date;
 
   @IsArray()
   @IsString({ each: true })
+  @ApiProperty()
   tags: string[];
 
   /**
@@ -37,5 +42,6 @@ export class HistoryEntryDto {
    * @example false
    */
   @IsBoolean()
+  @ApiProperty()
   pinStatus: boolean;
 }
