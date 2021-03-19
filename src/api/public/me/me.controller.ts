@@ -23,14 +23,25 @@ import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
 import { NotesService } from '../../../notes/notes.service';
 import { UsersService } from '../../../users/users.service';
 import { TokenAuthGuard } from '../../../auth/token-auth.guard';
-import { ApiSecurity, ApiTags } from '@nestjs/swagger';
+import {
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiSecurity,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { HistoryEntryDto } from '../../../history/history-entry.dto';
 import { UserInfoDto } from '../../../users/user-info.dto';
 import { NotInDBError } from '../../../errors/errors';
 import { Request } from 'express';
 import { MediaService } from '../../../media/media.service';
-import { MediaUploadUrlDto } from '../../../media/media-upload-url.dto';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
+import {
+  notFoundDescription,
+  successfullyDeletedDescription,
+  unauthorizedDescription,
+} from '../../utils/descriptions';
 
 @ApiTags('me')
 @ApiSecurity('token')
@@ -48,6 +59,11 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Get()
+  @ApiOkResponse({
+    description: 'The user information',
+    type: UserInfoDto,
+  })
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getMe(@Req() req: Request): Promise<UserInfoDto> {
     return this.usersService.toUserDto(
       await this.usersService.getUserByUsername(req.user.userName),
@@ -56,6 +72,12 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Get('history')
+  @ApiOkResponse({
+    description: 'The history entries of the user',
+    isArray: true,
+    type: HistoryEntryDto,
+  })
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getUserHistory(@Req() req: Request): Promise<HistoryEntryDto[]> {
     const foundEntries = await this.historyService.getEntriesByUser(req.user);
     return await Promise.all(
@@ -65,6 +87,12 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Get('history/:note')
+  @ApiOkResponse({
+    description: 'The history entry of the user which points to the note',
+    type: HistoryEntryDto,
+  })
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @ApiNotFoundResponse({ description: notFoundDescription })
   async getHistoryEntry(
     @Req() req: Request,
     @Param('note') note: string,
@@ -85,6 +113,12 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Put('history/:note')
+  @ApiOkResponse({
+    description: 'The updated history entry',
+    type: HistoryEntryDto,
+  })
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @ApiNotFoundResponse({ description: notFoundDescription })
   async updateHistoryEntry(
     @Req() req: Request,
     @Param('note') note: string,
@@ -110,6 +144,9 @@ export class MeController {
   @UseGuards(TokenAuthGuard)
   @Delete('history/:note')
   @HttpCode(204)
+  @ApiNoContentResponse({ description: successfullyDeletedDescription })
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @ApiNotFoundResponse({ description: notFoundDescription })
   async deleteHistoryEntry(
     @Req() req: Request,
     @Param('note') note: string,
@@ -127,6 +164,12 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Get('notes')
+  @ApiOkResponse({
+    description: 'Metadata of all notes of the user',
+    isArray: true,
+    type: NoteMetadataDto,
+  })
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getMyNotes(@Req() req: Request): Promise<NoteMetadataDto[]> {
     const notes = this.notesService.getUserNotes(req.user);
     return await Promise.all(
@@ -136,6 +179,12 @@ export class MeController {
 
   @UseGuards(TokenAuthGuard)
   @Get('media')
+  @ApiOkResponse({
+    description: 'All media uploads of the user',
+    isArray: true,
+    type: MediaUploadDto,
+  })
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getMyMedia(@Req() req: Request): Promise<MediaUploadDto[]> {
     const media = await this.mediaService.listUploadsByUser(req.user);
     return media.map((media) => this.mediaService.toMediaUploadDto(media));
