@@ -132,7 +132,23 @@ export class MediaController {
   ): Promise<void> {
     const username = req.user.userName;
     try {
-      await this.mediaService.deleteFile(filename, username);
+      this.logger.debug(
+        `Deleting '${filename}' for user '${username}'`,
+        'deleteFile',
+      );
+      const mediaUpload = await this.mediaService.findUploadByFilename(
+        filename,
+      );
+      if (mediaUpload.user.userName !== username) {
+        this.logger.warn(
+          `${username} tried to delete '${filename}', but is not the owner`,
+          'deleteFile',
+        );
+        throw new PermissionError(
+          `File '${filename}' is not owned by '${username}'`,
+        );
+      }
+      await this.mediaService.deleteFile(mediaUpload);
     } catch (e) {
       if (e instanceof PermissionError) {
         throw new UnauthorizedException(e.message);
