@@ -3852,10 +3852,10 @@ browserslist@^4.0.0, browserslist@^4.12.0, browserslist@^4.14.5, browserslist@^4
     escalade "^3.1.1"
     node-releases "^1.1.70"
 
-browserstack-cypress-cli@1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/browserstack-cypress-cli/-/browserstack-cypress-cli-1.8.0.tgz#64a4bce5c146c07d75334e3261b874a65ad92be3"
-  integrity sha512-6HGBUKwJt43gi1occj0lpVZr63KNd+LVUKte7e2Hv4XN/kiKnJMY6H0AMr7EOxVyVb2UDY+21eitCBJABjRR3Q==
+browserstack-cypress-cli@1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/browserstack-cypress-cli/-/browserstack-cypress-cli-1.8.1.tgz#4daa1b26185c3ded0d167ebd759eeebcdb6a80e0"
+  integrity sha512-XON69yD39am7ZzK5J5Raxf+ssnbC4xc3odCybr0pFlcDAomeFUCoqsg8RHFKRBVEmpWYJyyn5/miaZUJpNzKRA==
   dependencies:
     archiver "^5.2.0"
     async "^3.2.0"
