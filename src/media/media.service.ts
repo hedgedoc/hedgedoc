@@ -10,7 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as FileType from 'file-type';
 import { Repository } from 'typeorm';
 import mediaConfiguration, { MediaConfig } from '../config/media.config';
-import { ClientError, NotInDBError, PermissionError } from '../errors/errors';
+import { ClientError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { NotesService } from '../notes/notes.service';
 import { UsersService } from '../users/users.service';
@@ -113,30 +113,12 @@ export class MediaService {
 
   /**
    * @async
-   * Try to delete the file specified by the filename with the user specified by the username.
-   * @param {string} filename - the name of the file to delete.
-   * @param {string} username - the username of the user who uploaded this file
-   * @return {string} the url of the saved file
-   * @throws {PermissionError} the user is not permitted to delete this file.
-   * @throws {NotInDBError} - the file entry specified is not in the database
+   * Try to delete the specified file.
+   * @param {MediaUpload} mediaUpload - the name of the file to delete.
    * @throws {MediaBackendError} - there was an error deleting the file
    */
-  async deleteFile(filename: string, username: string): Promise<void> {
-    this.logger.debug(
-      `Deleting '${filename}' for user '${username}'`,
-      'deleteFile',
-    );
-    const mediaUpload = await this.findUploadByFilename(filename);
-    if (mediaUpload.user.userName !== username) {
-      this.logger.warn(
-        `${username} tried to delete '${filename}', but is not the owner`,
-        'deleteFile',
-      );
-      throw new PermissionError(
-        `File '${filename}' is not owned by '${username}'`,
-      );
-    }
-    await this.mediaBackend.deleteFile(filename, mediaUpload.backendData);
+  async deleteFile(mediaUpload: MediaUpload): Promise<void> {
+    await this.mediaBackend.deleteFile(mediaUpload.id, mediaUpload.backendData);
     await this.mediaUploadRepository.remove(mediaUpload);
   }
 
