@@ -38,10 +38,10 @@ async function getServerVersionFromPackageJson(): Promise<ServerVersion> {
 export class MonitoringService {
   async getServerStatus(): Promise<ServerStatusDto> {
     return {
-      connectionSocketQueueLenght: 0,
-      destictOnlineUsers: 0,
+      connectionSocketQueueLength: 0,
+      distinctOnlineUsers: 0,
       disconnectSocketQueueLength: 0,
-      distictOnlineRegisteredUsers: 0,
+      distinctOnlineRegisteredUsers: 0,
       isConnectionBusy: false,
       isDisconnectBusy: false,
       notesCount: 0,

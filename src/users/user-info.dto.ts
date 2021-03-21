@@ -13,6 +13,7 @@ export class UserInfoDto {
    * @example "john.smith"
    */
   @IsString()
+  @ApiProperty()
   userName: string;
 
   /**
@@ -20,6 +21,7 @@ export class UserInfoDto {
    * @example "John Smith"
    */
   @IsString()
+  @ApiProperty()
   displayName: string;
 
   /**

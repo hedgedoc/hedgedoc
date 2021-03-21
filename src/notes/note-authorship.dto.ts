@@ -6,6 +6,7 @@
 
 import { IsDate, IsNumber, IsString, Min } from 'class-validator';
 import { UserInfoDto } from '../users/user-info.dto';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class NoteAuthorshipDto {
   /**
@@ -13,6 +14,7 @@ export class NoteAuthorshipDto {
    * @example "john.smith"
    */
   @IsString()
+  @ApiProperty()
   userName: UserInfoDto['userName'];
 
   /**
@@ -21,6 +23,7 @@ export class NoteAuthorshipDto {
    */
   @IsNumber()
   @Min(0)
+  @ApiProperty()
   startPos: number;
 
   /**
@@ -30,6 +33,7 @@ export class NoteAuthorshipDto {
    */
   @IsNumber()
   @Min(0)
+  @ApiProperty()
   endPos: number;
 
   /**
@@ -37,6 +41,7 @@ export class NoteAuthorshipDto {
    * @example "2020-12-01 12:23:34"
    */
   @IsDate()
+  @ApiProperty()
   createdAt: Date;
 
   /**
@@ -44,5 +49,6 @@ export class NoteAuthorshipDto {
    * @example "2020-12-01 12:23:34"
    */
   @IsDate()
+  @ApiProperty()
   updatedAt: Date;
 }

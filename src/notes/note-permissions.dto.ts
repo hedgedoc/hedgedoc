@@ -7,12 +7,14 @@
 import { IsArray, IsBoolean, IsString, ValidateNested } from 'class-validator';
 import { UserInfoDto } from '../users/user-info.dto';
 import { GroupInfoDto } from '../groups/group-info.dto';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class NoteUserPermissionEntryDto {
   /**
    * User this permission applies to
    */
   @ValidateNested()
+  @ApiProperty({ type: UserInfoDto })
   user: UserInfoDto;
 
   /**
@@ -20,6 +22,7 @@ export class NoteUserPermissionEntryDto {
    * @example false
    */
   @IsBoolean()
+  @ApiProperty()
   canEdit: boolean;
 }
 
@@ -29,6 +32,7 @@ export class NoteUserPermissionUpdateDto {
    * @example "john.smith"
    */
   @IsString()
+  @ApiProperty()
   username: string;
 
   /**
@@ -36,6 +40,7 @@ export class NoteUserPermissionUpdateDto {
    * @example false
    */
   @IsBoolean()
+  @ApiProperty()
   canEdit: boolean;
 }
 
@@ -44,6 +49,7 @@ export class NoteGroupPermissionEntryDto {
    * Group this permission applies to
    */
   @ValidateNested()
+  @ApiProperty({ type: GroupInfoDto })
   group: GroupInfoDto;
 
   /**
@@ -51,6 +57,7 @@ export class NoteGroupPermissionEntryDto {
    * @example false
    */
   @IsBoolean()
+  @ApiProperty()
   canEdit: boolean;
 }
 
@@ -60,6 +67,7 @@ export class NoteGroupPermissionUpdateDto {
    * @example "superheroes"
    */
   @IsString()
+  @ApiProperty()
   groupname: string;
 
   /**
@@ -67,6 +75,7 @@ export class NoteGroupPermissionUpdateDto {
    * @example false
    */
   @IsBoolean()
+  @ApiProperty()
   canEdit: boolean;
 }
 
@@ -75,6 +84,7 @@ export class NotePermissionsDto {
    * User this permission applies to
    */
   @ValidateNested()
+  @ApiProperty({ type: UserInfoDto })
   owner: UserInfoDto;
 
   /**
@@ -82,6 +92,7 @@ export class NotePermissionsDto {
    */
   @ValidateNested()
   @IsArray()
+  @ApiProperty({ isArray: true, type: NoteUserPermissionEntryDto })
   sharedToUsers: NoteUserPermissionEntryDto[];
 
   /**
@@ -89,6 +100,7 @@ export class NotePermissionsDto {
    */
   @ValidateNested()
   @IsArray()
+  @ApiProperty({ isArray: true, type: NoteGroupPermissionEntryDto })
   sharedToGroups: NoteGroupPermissionEntryDto[];
 }
 
@@ -98,6 +110,7 @@ export class NotePermissionsUpdateDto {
    */
   @IsArray()
   @ValidateNested()
+  @ApiProperty({ isArray: true, type: NoteUserPermissionUpdateDto })
   sharedToUsers: NoteUserPermissionUpdateDto[];
 
   /**
@@ -105,5 +118,6 @@ export class NotePermissionsUpdateDto {
    */
   @IsArray()
   @ValidateNested()
+  @ApiProperty({ isArray: true, type: NoteGroupPermissionUpdateDto })
   sharedToGroups: NoteGroupPermissionUpdateDto[];
 }
