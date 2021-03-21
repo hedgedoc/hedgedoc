@@ -38,7 +38,7 @@ export class HistoryService {
   async getEntriesByUser(user: User): Promise<HistoryEntry[]> {
     return await this.historyEntryRepository.find({
       where: { user: user },
-      relations: ['note'],
+      relations: ['note', 'user'],
     });
   }
 
@@ -134,6 +134,18 @@ export class HistoryService {
     }
     await this.historyEntryRepository.remove(entry);
     return;
+  }
+
+  /**
+   * @async
+   * Delete all history entries of a specific user
+   * @param {User} user - the user that the entry belongs to
+   */
+  async deleteHistory(user: User): Promise<void> {
+    const entries: HistoryEntry[] = await this.getEntriesByUser(user);
+    for (const entry of entries) {
+      await this.historyEntryRepository.remove(entry);
+    }
   }
 
   /**
