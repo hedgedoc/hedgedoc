@@ -60,6 +60,8 @@ import {
   successfullyDeletedDescription,
   unauthorizedDescription,
 } from '../../utils/descriptions';
+import { MediaUploadDto } from '../../../media/media-upload.dto';
+import { MediaService } from '../../../media/media.service';
 
 @ApiTags('notes')
 @ApiSecurity('token')
@@ -71,6 +73,7 @@ export class NotesController {
     private revisionsService: RevisionsService,
     private permissionsService: PermissionsService,
     private historyService: HistoryService,
+    private mediaService: MediaService,
   ) {
     this.logger.setContext(NotesController.name);
   }
@@ -385,6 +388,33 @@ export class NotesController {
       }
       if (e instanceof ForbiddenIdError) {
         throw new BadRequestException(e.message);
+      }
+      throw e;
+    }
+  }
+
+  @UseGuards(TokenAuthGuard)
+  @Get(':noteIdOrAlias/media')
+  @ApiOkResponse({
+    description: 'All media uploads of the note',
+    isArray: true,
+    type: MediaUploadDto,
+  })
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  async getNotesMedia(
+    @Req() req: Request,
+    @Param('noteIdOrAlias') noteIdOrAlias: string,
+  ): Promise<MediaUploadDto[]> {
+    try {
+      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
+      if (!this.permissionsService.mayRead(req.user, note)) {
+        throw new UnauthorizedException('Reading note denied!');
+      }
+      const media = await this.mediaService.listUploadsByNote(note);
+      return media.map((media) => this.mediaService.toMediaUploadDto(media));
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
       }
       throw e;
     }

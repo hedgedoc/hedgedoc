@@ -29,11 +29,15 @@ import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
 import { UsersService } from '../../src/users/users.service';
 import { User } from '../../src/users/user.entity';
 import { UsersModule } from '../../src/users/users.module';
+import { promises as fs } from 'fs';
+import { MediaService } from '../../src/media/media.service';
 
 describe('Notes', () => {
   let app: INestApplication;
   let notesService: NotesService;
+  let mediaService: MediaService;
   let user: User;
+  let user2: User;
   let content: string;
   let forbiddenNoteId: string;
 
@@ -69,8 +73,10 @@ describe('Notes', () => {
     app = moduleRef.createNestApplication();
     await app.init();
     notesService = moduleRef.get(NotesService);
+    mediaService = moduleRef.get(MediaService);
     const userService = moduleRef.get(UsersService);
     user = await userService.createUser('hardcoded', 'Testy');
+    user2 = await userService.createUser('hardcoded2', 'Max Mustermann');
     content = 'This is a test note.';
   });
 
@@ -319,6 +325,52 @@ describe('Notes', () => {
         .get('/notes/i_dont_exist/content')
         .expect('Content-Type', /text\/markdown/)
         .expect(404);
+    });
+  });
+
+  describe('GET /notes/{note}/media', () => {
+    it('works', async () => {
+      const note = await notesService.createNote(content, 'test9', user);
+      const extraNote = await notesService.createNote(content, 'test10', user);
+      const httpServer = app.getHttpServer();
+      const response = await request(httpServer)
+        .get(`/notes/${note.id}/media/`)
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(response.body).toHaveLength(0);
+
+      const testImage = await fs.readFile('test/public-api/fixtures/test.png');
+      const url0 = await mediaService.saveFile(testImage, 'hardcoded', note.id);
+      const url1 = await mediaService.saveFile(
+        testImage,
+        'hardcoded',
+        extraNote.id,
+      );
+
+      const responseAfter = await request(httpServer)
+        .get(`/notes/${note.id}/media/`)
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(responseAfter.body).toHaveLength(1);
+      expect(responseAfter.body[0].url).toEqual(url0);
+      expect(responseAfter.body[0].url).not.toEqual(url1);
+    });
+    it('fails, when note does not exist', async () => {
+      await request(app.getHttpServer())
+        .get(`/notes/i_dont_exist/media/`)
+        .expect('Content-Type', /json/)
+        .expect(404);
+    });
+    it("fails, when user can't read note", async () => {
+      const note = await notesService.createNote(
+        'This is a test note.',
+        'test11',
+        user2,
+      );
+      await request(app.getHttpServer())
+        .get(`/notes/${note.id}/media/`)
+        .expect('Content-Type', /json/)
+        .expect(401);
     });
   });
 
