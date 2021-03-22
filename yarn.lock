@@ -9723,42 +9723,35 @@ markdown-it@12.0.4:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-markmap-common@0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/markmap-common/-/markmap-common-0.1.4.tgz#065a59381c650c18ab84a7ad98ff84ff7ec9ca85"
-  integrity sha512-B1oPFXm6gudKzoyfuHBF6lBFXX68DJoQJ970GiWhJbCmpG2H1Qh3NQtWUD2ZgzDYS1RRtK0vt2Mx7pSb5viCZg==
-  dependencies:
-    "@babel/runtime" "^7.12.1"
-
-markmap-common@^0.1.4:
+markmap-common@0.1.5, markmap-common@^0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/markmap-common/-/markmap-common-0.1.5.tgz#f48e7abac5790c72d5ab55429a214acbe1670922"
   integrity sha512-bZj02doiGrPvllN25Pfm3msj/dkZy6oVFmgoG0Hldui7TRLJqI1vfbIqbXag7wTviuNeGLKtyrMqSdEMGa5+NA==
   dependencies:
     "@babel/runtime" "^7.12.1"
 
-markmap-lib@0.11.3:
-  version "0.11.3"
-  resolved "https://registry.yarnpkg.com/markmap-lib/-/markmap-lib-0.11.3.tgz#10bdd384cc0ed1b6c6e4d69fd4b5a22fc133d718"
-  integrity sha512-wIQjg0w1A1GqU4P46iOWJKEHWCGEVGL4QK7/mQfGKKfmwEQmwJkonX0DgQCsWn3qs482jZepya2ML9HFpcedeQ==
+markmap-lib@0.11.6:
+  version "0.11.6"
+  resolved "https://registry.yarnpkg.com/markmap-lib/-/markmap-lib-0.11.6.tgz#f57883f9b70350ead94ed2d56926166b6d7ab2ef"
+  integrity sha512-9CnLt/vZzNgW3kO/wqldhinKBbK/h8WUx5GGVjdn2JTs/DrDcZZbvAyVmke3VG+mnWwYHsnjLVIiCbPi5PaepA==
   dependencies:
     "@babel/runtime" "^7.12.5"
     katex "^0.12.0"
-    markmap-common "^0.1.4"
+    markmap-common "^0.1.5"
     prismjs "^1.21.0"
     remarkable "^2.0.0"
     remarkable-katex "^1.1.6"
 
-markmap-view@0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/markmap-view/-/markmap-view-0.2.3.tgz#d430de97649369b70db1d394272d9f85bf3a9177"
-  integrity sha512-CU1i+7S6be2iG7gME+HHKq3RBb3vre8qPX/HaMaqeE0xPaa9we93X9cy71BELjsMnBAoAp3oDLfxcn5EjF9mag==
+markmap-view@0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/markmap-view/-/markmap-view-0.2.6.tgz#ede2c615ad1dde6f7e04f93eaca4b4877ca00c2a"
+  integrity sha512-MZzfRu+HXZUV5vNb7gSj898tTNqxJif8Bteg2J+etEtNGyLfdYe0gUUCWOZ9LLZcYZ/sZJmERQr95nYm3IAyCA==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@types/d3" "^6.0.0"
     d3 "^6.2.0"
     d3-flextree "^2.1.1"
-    markmap-common "^0.1.4"
+    markmap-common "^0.1.5"
 
 md5.js@^1.3.4:
   version "1.3.5"
