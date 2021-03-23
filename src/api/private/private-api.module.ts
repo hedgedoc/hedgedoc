@@ -14,6 +14,10 @@ import { FrontendConfigModule } from '../../frontend-config/frontend-config.modu
 import { HistoryController } from './me/history/history.controller';
 import { HistoryModule } from '../../history/history.module';
 import { NotesModule } from '../../notes/notes.module';
+import { NotesController } from './notes/notes.controller';
+import { PermissionsModule } from '../../permissions/permissions.module';
+import { MediaModule } from '../../media/media.module';
+import { RevisionsModule } from '../../revisions/revisions.module';
 
 @Module({
   imports: [
@@ -23,7 +27,15 @@ import { NotesModule } from '../../notes/notes.module';
     FrontendConfigModule,
     HistoryModule,
     NotesModule,
+    PermissionsModule,
+    MediaModule,
+    RevisionsModule,
   ],
-  controllers: [TokensController, ConfigController, HistoryController],
+  controllers: [
+    TokensController,
+    ConfigController,
+    HistoryController,
+    NotesController,
+  ],
 })
 export class PrivateApiModule {}
