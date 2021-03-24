@@ -29,8 +29,8 @@ import { GroupsModule } from '../../../groups/groups.module';
 import { ConfigModule } from '@nestjs/config';
 import { MediaModule } from '../../../media/media.module';
 import { MediaUpload } from '../../../media/media-upload.entity';
-import appConfigMock from '../../../config/app.config.mock';
-import mediaConfigMock from '../../../config/media.config.mock';
+import appConfigMock from '../../../config/mock/app.config.mock';
+import mediaConfigMock from '../../../config/mock/media.config.mock';
 
 describe('Notes Controller', () => {
   let controller: NotesController;

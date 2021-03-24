@@ -8,7 +8,7 @@ NestJS - the framework we use - is reading the variables from the environment an
 
 ## How the config code works
 
-The config of HedgeDoc is split up into **six** different modules:
+The config of HedgeDoc is split up into **eight** different modules:
 
 `app.config.ts`
 : General configuration of the app
@@ -19,8 +19,14 @@ The config of HedgeDoc is split up into **six** different modules:
 `csp.config.ts`
 : Configuration for [Content Security Policy][csp]
 
+`customization.config.ts`
+: Config to customize the instance and set instance specific links
+
 `database.config.ts`
 : Which database should be used
+
+`external-services.config.ts`
+: Which external services are activated and where can they be called
 
 `hsts.config.ts`
 : Configuration for [HTTP Strict-Transport-Security][hsts]
