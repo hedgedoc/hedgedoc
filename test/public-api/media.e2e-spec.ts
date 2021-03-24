@@ -31,7 +31,7 @@ import { TokenAuthGuard } from '../../src/auth/token-auth.guard';
 import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
 import { join } from 'path';
 
-describe('Notes', () => {
+describe('Media', () => {
   let app: NestExpressApplication;
   let mediaService: MediaService;
   let uploadPath: string;
@@ -77,21 +77,54 @@ describe('Notes', () => {
     mediaService = moduleRef.get('MediaService');
   });
 
-  it('POST /media', async () => {
-    const uploadResponse = await request(app.getHttpServer())
-      .post('/media')
-      .attach('file', 'test/public-api/fixtures/test.png')
-      .set('HedgeDoc-Note', 'test_upload_media')
-      .expect('Content-Type', /json/)
-      .expect(201);
-    const path: string = uploadResponse.body.link;
-    const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-    const downloadResponse = await request(app.getHttpServer()).get(path);
-    expect(downloadResponse.body).toEqual(testImage);
-    // Remove /upload/ from path as we just need the filename.
-    const fileName = path.replace('/uploads/', '');
-    // delete the file afterwards
-    await fs.unlink(join(uploadPath, fileName));
+  describe('POST /media', () => {
+    it('works', async () => {
+      const uploadResponse = await request(app.getHttpServer())
+        .post('/media')
+        .attach('file', 'test/public-api/fixtures/test.png')
+        .set('HedgeDoc-Note', 'test_upload_media')
+        .expect('Content-Type', /json/)
+        .expect(201);
+      const path: string = uploadResponse.body.link;
+      const testImage = await fs.readFile('test/public-api/fixtures/test.png');
+      const downloadResponse = await request(app.getHttpServer()).get(path);
+      expect(downloadResponse.body).toEqual(testImage);
+      // Remove /upload/ from path as we just need the filename.
+      const fileName = path.replace('/uploads/', '');
+      // delete the file afterwards
+      await fs.unlink(join(uploadPath, fileName));
+    });
+    describe('fails:', () => {
+      it('MIME type not supported', async () => {
+        await request(app.getHttpServer())
+          .post('/media')
+          .attach('file', 'test/public-api/fixtures/test.zip')
+          .set('HedgeDoc-Note', 'test_upload_media')
+          .expect(400);
+        expect(await fs.access(uploadPath)).toBeFalsy();
+      });
+      it('note does not exist', async () => {
+        await request(app.getHttpServer())
+          .post('/media')
+          .attach('file', 'test/public-api/fixtures/test.zip')
+          .set('HedgeDoc-Note', 'i_dont_exist')
+          .expect(400);
+        expect(await fs.access(uploadPath)).toBeFalsy();
+      });
+      it('mediaBackend error', async () => {
+        await fs.rmdir(uploadPath);
+        await fs.mkdir(uploadPath, {
+          mode: '444',
+        });
+        await request(app.getHttpServer())
+          .post('/media')
+          .attach('file', 'test/public-api/fixtures/test.png')
+          .set('HedgeDoc-Note', 'test_upload_media')
+          .expect('Content-Type', /json/)
+          .expect(500);
+        await fs.rmdir(uploadPath);
+      });
+    });
   });
 
   it('DELETE /media/{filename}', async () => {
