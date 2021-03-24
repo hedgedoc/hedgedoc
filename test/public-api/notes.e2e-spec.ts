@@ -31,6 +31,7 @@ import { User } from '../../src/users/user.entity';
 import { UsersModule } from '../../src/users/users.module';
 import { promises as fs } from 'fs';
 import { MediaService } from '../../src/media/media.service';
+import { join } from 'path';
 
 describe('Notes', () => {
   let app: INestApplication;
@@ -40,6 +41,7 @@ describe('Notes', () => {
   let user2: User;
   let content: string;
   let forbiddenNoteId: string;
+  let uploadPath: string;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -70,6 +72,7 @@ describe('Notes', () => {
 
     const config = moduleRef.get<ConfigService>(ConfigService);
     forbiddenNoteId = config.get('appConfig').forbiddenNoteIds[0];
+    uploadPath = config.get('mediaConfig').backend.filesystem.uploadPath;
     app = moduleRef.createNestApplication();
     await app.init();
     notesService = moduleRef.get(NotesService);
@@ -354,6 +357,12 @@ describe('Notes', () => {
       expect(responseAfter.body).toHaveLength(1);
       expect(responseAfter.body[0].url).toEqual(url0);
       expect(responseAfter.body[0].url).not.toEqual(url1);
+      for (const fileUrl of [url0, url1]) {
+        const fileName = fileUrl.replace('/uploads/', '');
+        // delete the file afterwards
+        await fs.unlink(join(uploadPath, fileName));
+      }
+      await fs.rmdir(uploadPath);
     });
     it('fails, when note does not exist', async () => {
       await request(app.getHttpServer())
