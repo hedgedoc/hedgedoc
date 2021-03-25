@@ -14,9 +14,10 @@ import { FrontendConfigModule } from '../../frontend-config/frontend-config.modu
 import { HistoryController } from './me/history/history.controller';
 import { HistoryModule } from '../../history/history.module';
 import { NotesModule } from '../../notes/notes.module';
+import { MediaModule } from '../../media/media.module';
+import { MediaController } from './media/media.controller';
 import { NotesController } from './notes/notes.controller';
 import { PermissionsModule } from '../../permissions/permissions.module';
-import { MediaModule } from '../../media/media.module';
 import { RevisionsModule } from '../../revisions/revisions.module';
 
 @Module({
@@ -34,6 +35,7 @@ import { RevisionsModule } from '../../revisions/revisions.module';
   controllers: [
     TokensController,
     ConfigController,
+    MediaController,
     HistoryController,
     NotesController,
   ],
