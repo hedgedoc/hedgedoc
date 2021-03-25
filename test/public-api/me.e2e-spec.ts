@@ -29,7 +29,7 @@ import { LoggerModule } from '../../src/logger/logger.module';
 import { AuthModule } from '../../src/auth/auth.module';
 import { UsersModule } from '../../src/users/users.module';
 import { HistoryModule } from '../../src/history/history.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import mediaConfigMock from '../../src/config/mock/media.config.mock';
 import appConfigMock from '../../src/config/mock/app.config.mock';
 import { User } from '../../src/users/user.entity';
@@ -37,15 +37,17 @@ import { MediaService } from '../../src/media/media.service';
 import { MediaModule } from '../../src/media/media.module';
 import { promises as fs } from 'fs';
 import { NoteMetadataDto } from '../../src/notes/note-metadata.dto';
+import { join } from 'path';
 
 // TODO Tests have to be reworked using UserService functions
 
-describe('Notes', () => {
+describe('Me', () => {
   let app: INestApplication;
   let historyService: HistoryService;
   let notesService: NotesService;
   let userService: UsersService;
   let mediaService: MediaService;
+  let uploadPath: string;
   let user: User;
 
   beforeAll(async () => {
@@ -76,6 +78,8 @@ describe('Notes', () => {
       .overrideGuard(TokenAuthGuard)
       .useClass(MockAuthGuard)
       .compile();
+    const config = moduleRef.get<ConfigService>(ConfigService);
+    uploadPath = config.get('mediaConfig').backend.filesystem.uploadPath;
     app = moduleRef.createNestApplication();
     notesService = moduleRef.get(NotesService);
     historyService = moduleRef.get(HistoryService);
@@ -261,6 +265,12 @@ describe('Notes', () => {
     expect(response.body[1].url).toEqual(url1);
     expect(response.body[2].url).toEqual(url2);
     expect(response.body[3].url).toEqual(url3);
+    for (const fileUrl of [url0, url1, url2, url3]) {
+      const fileName = fileUrl.replace('/uploads/', '');
+      // delete the file afterwards
+      await fs.unlink(join(uploadPath, fileName));
+    }
+    await fs.rmdir(uploadPath);
   });
 
   afterAll(async () => {
