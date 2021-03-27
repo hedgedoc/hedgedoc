@@ -46,6 +46,15 @@
       ]
     },
     {
+      "groupName": "i18next",
+      "packagePatterns": [
+        "i18next",
+        "i18next-browser-languagedetector",
+        "i18next-http-backend",
+        "react-i18next"
+      ]
+    },
+    {
       "groupName": "JS test packages",
       "packagePatterns": [
         "^@testing-library/"
