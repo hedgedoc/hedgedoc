@@ -1,3 +1,6 @@
+---
+tags: features, cool, updated
+---
 # Features
 
 ## Introduction
@@ -125,9 +128,13 @@ The first **level 1 heading** (e.g. `# Title`) will be used as the note title.
 
 ### Tags
 
-Using tags as follows, the specified tags will show in your **history**.
+Tags can be specified with [YAML metadata](./yaml-metadata#tags) at the **start** of the note. Those tags will show in your **history**.
 
-#### tags: `features` `cool` `updated`
+```yml
+---
+tags: features, cool, updated
+---
+```
 
 ### [YAML Metadata](./yaml-metadata)
 
