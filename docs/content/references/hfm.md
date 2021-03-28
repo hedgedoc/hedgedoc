@@ -1,8 +1,8 @@
 # HedgeDoc Flavored Markdown
 
-HedgeDoc mostly follows the [CommonMark][commonmark] standard. It shares some extensions with the [GFM][gfm] standard, but for historical reasons HedgeDoc does support not exactly GFM, but a bit more in places (and a bit less in other places).
+HedgeDoc has its own markdown dialect which supports many features from [CommonMark][commonmark] and [Github Flavored Markdown][gfm]. It also adds some new extensions and is missing some.
 
-These tables will tell you what exactly we support in HedgeDoc 1.x (HFM 1) and HedgeDoc 2 (HFM 2).
+These tables tell you what exactly we support in HedgeDoc 1.x (HFM 1) and HedgeDoc 2 (HFM 2).
 
 
 ## Typography
@@ -39,9 +39,9 @@ These tables will tell you what exactly we support in HedgeDoc 1.x (HFM 1) and H
 | [ForkAwesome][fa] | ☑️ with `<i class='fa'>`  | ☑️ with shortcodes        |                      |                      |
 | LaTeX             | ☑️[^mj]                   | ☑️[^kt]                   |                      |                      |
 
-[^highlight]: Code-blocks with a given language are rendered with syntax-highlighting for the code.
+[^highlight]: Code blocks with a given language are rendered using syntax highlighting.
 [^extra-code]: Several special "language" keywords can be used for rendering diagrams, charts, etc.
-[^in-bq-list]: Use of these tags is only supported within blockquotes or (un)ordered lists.
+[^in-bq-list]: Use of these tags is only supported within blockquotes and (un)ordered lists.
 [^mj]: LaTeX is rendered with [MathJax][mathjax].
 [^kt]: LaTeX is rendered with [KaTeX][katex].
 
@@ -70,9 +70,7 @@ These tables will tell you what exactly we support in HedgeDoc 1.x (HFM 1) and H
 | Alerts            | ☑️                        | ☑️                        |                      |                      |
 
 ## Embeddings
-HFM1 included support for certain embeddings of external content. These were defined in markdown by the uncommon `{%keyword parameter %}` syntax.
-
-Instead of this uncommon syntax, HFM2 uses just plain links to external content and creates embeddings for supported providers.
+HFM 1 includes support for certain embeddings of external content by using the `{%keyword parameter %}` syntax. To increase the readability of the markdown code we decided that HFM 2 should just use plain links if possible.
 
 | Feature                  | HFM 1 | HFM 2              | CommonMark | GFM |
 |--------------------------|:-----:|:------------------:|:----------:|:---:|
@@ -83,7 +81,7 @@ Instead of this uncommon syntax, HFM2 uses just plain links to external content 
 | [Speakerdeck][speakerdeck] (`{%speakerdeck ... %}`) | ☑️     | removed            |            |     |
 | [GitHub Gist][gist] (`{%gist ... %}`)             | ☑️     | with plain link[^embed] |            |     |
 
-[^embed]: The special syntax is deprecated but will continue to work. However a plain link to the content will generate the same embedding and is preferred.
+[^embed]: The special syntax from HFM 1 is deprecated, but will still work in HFM 2. However, a plain link to the content should be used.
 
 ## HTML
 Besides the basic HTML typography elements (`<p>`, `<a>`, `<b>`, `<ins>`, `<del>`) the following more special HTML elements are supported by some specification.
