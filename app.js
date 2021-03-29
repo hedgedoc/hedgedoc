@@ -301,7 +301,13 @@ function handleTermSignals () {
     }, 0)
   })
   if (config.path) {
-    fs.unlink(config.path)
+    fs.unlink(config.path, err => {
+      if (err) {
+        logger.error(`Could not cleanup socket: ${err.message}`)
+      } else {
+        logger.info('Successfully cleaned up socket')
+      }
+    })
   }
   const checkCleanTimer = setInterval(function () {
     if (realtime.isReady()) {
