@@ -142,6 +142,7 @@ describe('Media', () => {
 
   afterAll(async () => {
     // Delete the upload folder
-    await fs.rmdir(uploadPath);
+    await fs.rmdir(uploadPath, { recursive: true });
+    await app.close();
   });
 });
