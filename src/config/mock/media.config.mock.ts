@@ -10,7 +10,7 @@ export default registerAs('mediaConfig', () => ({
   backend: {
     use: 'filesystem',
     filesystem: {
-      uploadPath: 'uploads',
+      uploadPath: 'test_uploads',
     },
   },
 }));
