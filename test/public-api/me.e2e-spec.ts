@@ -270,7 +270,7 @@ describe('Me', () => {
       // delete the file afterwards
       await fs.unlink(join(uploadPath, fileName));
     }
-    await fs.rmdir(uploadPath);
+    await fs.rmdir(uploadPath, { recursive: true });
   });
 
   afterAll(async () => {
