@@ -38,6 +38,7 @@ describe('Notes', () => {
   let content: string;
   let forbiddenNoteId: string;
   let uploadPath: string;
+  let testImage: Buffer;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -77,6 +78,7 @@ describe('Notes', () => {
     user = await userService.createUser('hardcoded', 'Testy');
     user2 = await userService.createUser('hardcoded2', 'Max Mustermann');
     content = 'This is a test note.';
+    testImage = await fs.readFile('test/public-api/fixtures/test.png');
   });
 
   it('POST /notes', async () => {
@@ -149,12 +151,47 @@ describe('Notes', () => {
   });
 
   describe('DELETE /notes/{note}', () => {
-    it('works with an existing alias', async () => {
-      await notesService.createNote(content, 'test3', user);
-      await request(app.getHttpServer()).delete('/notes/test3').expect(204);
-      await expect(notesService.getNoteByIdOrAlias('test3')).rejects.toEqual(
-        new NotInDBError("Note with id/alias 'test3' not found."),
-      );
+    describe('works', () => {
+      it('with an existing alias and keepMedia false', async () => {
+        const noteId = 'test3';
+        await notesService.createNote(content, noteId, user);
+        await mediaService.saveFile(testImage, user.userName, noteId);
+        await request(app.getHttpServer())
+          .delete(`/notes/${noteId}`)
+          .set('Content-Type', 'application/json')
+          .send({
+            keepMedia: false,
+          })
+          .expect(204);
+        await expect(notesService.getNoteByIdOrAlias(noteId)).rejects.toEqual(
+          new NotInDBError(`Note with id/alias '${noteId}' not found.`),
+        );
+        expect(await mediaService.listUploadsByUser(user)).toHaveLength(0);
+      });
+      it('with an existing alias and keepMedia true', async () => {
+        const noteId = 'test3a';
+        await notesService.createNote(content, noteId, user);
+        const url = await mediaService.saveFile(
+          testImage,
+          user.userName,
+          noteId,
+        );
+        await request(app.getHttpServer())
+          .delete(`/notes/${noteId}`)
+          .set('Content-Type', 'application/json')
+          .send({
+            keepMedia: true,
+          })
+          .expect(204);
+        await expect(notesService.getNoteByIdOrAlias(noteId)).rejects.toEqual(
+          new NotInDBError(`Note with id/alias '${noteId}' not found.`),
+        );
+        expect(await mediaService.listUploadsByUser(user)).toHaveLength(1);
+        // Remove /upload/ from path as we just need the filename.
+        const fileName = url.replace('/uploads/', '');
+        // delete the file afterwards
+        await fs.unlink(join(uploadPath, fileName));
+      });
     });
     it('works with an existing alias with permissions', async () => {
       const note = await notesService.createNote(content, 'test3', user);
