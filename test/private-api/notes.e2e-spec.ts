@@ -63,7 +63,7 @@ describe('Notes', () => {
         GroupsModule,
         TypeOrmModule.forRoot({
           type: 'sqlite',
-          database: './hedgedoc-e2e-notes.sqlite',
+          database: './hedgedoc-e2e-private-notes.sqlite',
           autoLoadEntities: true,
           synchronize: true,
           dropSchema: true,
@@ -236,7 +236,7 @@ describe('Notes', () => {
         .expect(200);
       expect(response.body).toHaveLength(0);
 
-      const testImage = await fs.readFile('test/public-api/fixtures/test.png');
+      const testImage = await fs.readFile('test/private-api/fixtures/test.png');
       const url0 = await mediaService.saveFile(testImage, 'hardcoded', note.id);
       const url1 = await mediaService.saveFile(
         testImage,
