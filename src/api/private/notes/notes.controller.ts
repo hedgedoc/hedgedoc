@@ -6,6 +6,7 @@
 
 import {
   BadRequestException,
+  Body,
   Controller,
   Delete,
   Get,
@@ -33,6 +34,7 @@ import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { MarkdownBody } from '../../utils/markdownbody-decorator';
+import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
 
 @Controller('notes')
 export class NotesController {
@@ -140,6 +142,7 @@ export class NotesController {
   @HttpCode(204)
   async deleteNote(
     @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Body() noteMediaDeletionDto: NoteMediaDeletionDto,
   ): Promise<void> {
     try {
       // ToDo: use actual user here
@@ -147,6 +150,14 @@ export class NotesController {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
       if (!this.permissionsService.isOwner(user, note)) {
         throw new UnauthorizedException('Deleting note denied!');
+      }
+      const mediaUploads = await this.mediaService.listUploadsByNote(note);
+      for (const mediaUpload of mediaUploads) {
+        if (!noteMediaDeletionDto.keepMedia) {
+          await this.mediaService.deleteFile(mediaUpload);
+        } else {
+          await this.mediaService.removeNoteFromMediaUpload(mediaUpload);
+        }
       }
       this.logger.debug('Deleting note: ' + noteIdOrAlias, 'deleteNote');
       await this.noteService.deleteNote(note);
