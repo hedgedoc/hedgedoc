@@ -24,7 +24,7 @@ export class MediaUpload {
   id: string;
 
   @ManyToOne((_) => Note, (note) => note.mediaUploads, {
-    nullable: false,
+    nullable: true,
   })
   note: Note;
 
