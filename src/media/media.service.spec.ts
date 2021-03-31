@@ -265,4 +265,27 @@ describe('MediaService', () => {
       });
     });
   });
+
+  describe('removeNoteFromMediaUpload', () => {
+    it('works', async () => {
+      const mockMediaUploadEntry = {
+        id: 'testMediaUpload',
+        backendData: 'testBackendData',
+        note: {
+          alias: 'test',
+        } as Note,
+        user: {
+          userName: 'hardcoded',
+        } as User,
+      } as MediaUpload;
+      jest
+        .spyOn(mediaRepo, 'save')
+        .mockImplementationOnce(async (entry: MediaUpload) => {
+          expect(entry.note).toBeNull();
+          return entry;
+        });
+      await service.removeNoteFromMediaUpload(mockMediaUploadEntry);
+      expect(mediaRepo.save).toHaveBeenCalled();
+    });
+  });
 });
