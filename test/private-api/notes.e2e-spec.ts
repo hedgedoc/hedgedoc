@@ -256,7 +256,7 @@ describe('Notes', () => {
         // delete the file afterwards
         await fs.unlink(join(uploadPath, fileName));
       }
-      await fs.rmdir(uploadPath);
+      await fs.rmdir(uploadPath, { recursive: true });
     });
     it('fails, when note does not exist', async () => {
       await request(app.getHttpServer())
