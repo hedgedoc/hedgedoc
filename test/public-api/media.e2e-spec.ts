@@ -89,7 +89,7 @@ describe('Media', () => {
       const testImage = await fs.readFile('test/public-api/fixtures/test.png');
       const downloadResponse = await request(app.getHttpServer()).get(path);
       expect(downloadResponse.body).toEqual(testImage);
-      // Remove /upload/ from path as we just need the filename.
+      // Remove /uploads/ from path as we just need the filename.
       const fileName = path.replace('/uploads/', '');
       // delete the file afterwards
       await fs.unlink(join(uploadPath, fileName));
