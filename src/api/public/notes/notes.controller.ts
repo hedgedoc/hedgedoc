@@ -62,6 +62,7 @@ import {
 } from '../../utils/descriptions';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
+import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
 
 @ApiTags('notes')
 @ApiSecurity('token')
@@ -172,11 +173,20 @@ export class NotesController {
   async deleteNote(
     @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Body() noteMediaDeletionDto: NoteMediaDeletionDto,
   ): Promise<void> {
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
       if (!this.permissionsService.isOwner(req.user, note)) {
         throw new UnauthorizedException('Deleting note denied!');
+      }
+      const mediaUploads = await this.mediaService.listUploadsByNote(note);
+      for (const mediaUpload of mediaUploads) {
+        if (!noteMediaDeletionDto.keepMedia) {
+          await this.mediaService.deleteFile(mediaUpload);
+        } else {
+          await this.mediaService.removeNoteFromMediaUpload(mediaUpload);
+        }
       }
       this.logger.debug('Deleting note: ' + noteIdOrAlias, 'deleteNote');
       await this.noteService.deleteNote(note);
