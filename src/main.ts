@@ -38,7 +38,7 @@ async function bootstrap(): Promise<void> {
   );
   if (mediaConfig.backend.use === BackendType.FILESYSTEM) {
     logger.log(
-      `Serving ${mediaConfig.backend.filesystem.uploadPath} under 'uploads/'`,
+      `Serving the local folder '${mediaConfig.backend.filesystem.uploadPath}' under '/uploads'`,
       'AppBootstrap',
     );
     app.useStaticAssets(mediaConfig.backend.filesystem.uploadPath, {
