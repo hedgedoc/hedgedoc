@@ -15,7 +15,6 @@ import mediaConfigMock from '../../src/config/mock/media.config.mock';
 import appConfigMock from '../../src/config/mock/app.config.mock';
 import { GroupsModule } from '../../src/groups/groups.module';
 import { LoggerModule } from '../../src/logger/logger.module';
-import { NestConsoleLoggerService } from '../../src/logger/nest-console-logger.service';
 import { MediaModule } from '../../src/media/media.module';
 import { MediaService } from '../../src/media/media.service';
 import { NotesModule } from '../../src/notes/notes.module';
@@ -25,6 +24,7 @@ import { AuthModule } from '../../src/auth/auth.module';
 import { TokenAuthGuard } from '../../src/auth/token-auth.guard';
 import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
 import { join } from 'path';
+import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
 
 describe('Media', () => {
   let app: NestExpressApplication;
@@ -64,7 +64,7 @@ describe('Media', () => {
       prefix: '/uploads',
     });
     await app.init();
-    const logger = await app.resolve(NestConsoleLoggerService);
+    const logger = await app.resolve(ConsoleLoggerService);
     logger.log('Switching logger', 'AppBootstrap');
     app.useLogger(logger);
     const notesService: NotesService = moduleRef.get('NotesService');
