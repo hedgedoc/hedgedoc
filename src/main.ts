@@ -39,6 +39,11 @@ async function bootstrap(): Promise<void> {
     );
   }
 
+  app.enableCors({
+    origin: appConfig.rendererOrigin,
+  });
+  logger.log(`Enabling CORS for '${appConfig.rendererOrigin}'`, 'AppBootstrap');
+
   app.useGlobalPipes(
     new ValidationPipe({
       forbidUnknownValues: true,
