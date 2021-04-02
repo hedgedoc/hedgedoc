@@ -11,6 +11,7 @@ HedgeDoc 2
 [![version][github-version-badge]][github-release-page]
 [![POEditor][poeditor-image]][poeditor-url]
 [![Mastodon][social-mastodon-image]][social-mastodon]
+[![Twitter][social-twitter-image]][social-twitter]
 ![REUSE Compliance Check][reuse-workflow-badge]
 ![Nest.JS CI][nestjs-workflow-badge]
 [![codecov][codecov-badge]][codecov-url]
@@ -75,6 +76,10 @@ the [github repository](https://github.com/hedgedoc/hedgedoc-logo).
 [social-mastodon]: https://social.hedgedoc.org/mastodon
 
 [social-mastodon-image]: https://img.shields.io/mastodon/follow/49593?domain=https%3A%2F%2Fsocial.snopyta.org&style=social
+
+[social-twitter]: https://social.hedgedoc.org/twitter
+
+[social-twitter-image]: https://img.shields.io/twitter/follow/HedgeDocOrg?style=social
 
 [reuse-workflow-badge]: https://github.com/hedgedoc/hedgedoc/workflows/REUSE%20Compliance%20Check/badge.svg
 
