@@ -35,7 +35,7 @@
     "@nestjs/typeorm": "7.1.5",
     "@types/bcrypt": "3.0.0",
     "@types/cron": "1.7.2",
-    "@types/node-fetch": "2.5.8",
+    "@types/node-fetch": "2.5.9",
     "@types/minio": "7.0.7",
     "@types/passport-http-bearer": "1.0.36",
     "bcrypt": "5.0.1",
