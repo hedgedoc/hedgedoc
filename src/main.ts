@@ -25,8 +25,16 @@ async function bootstrap(): Promise<void> {
   const mediaConfig = configService.get<MediaConfig>('mediaConfig');
 
   setupPublicApiDocs(app);
+  logger.log(
+    `Serving OpenAPI docs for public api under '/apidoc'`,
+    'AppBootstrap',
+  );
   if (process.env.NODE_ENV === 'development') {
     setupPrivateApiDocs(app);
+    logger.log(
+      `Serving OpenAPI docs for private api under '/private/apidoc'`,
+      'AppBootstrap',
+    );
   }
 
   app.useGlobalPipes(
