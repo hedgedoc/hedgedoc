@@ -183,7 +183,9 @@ export class NotesService {
         'authorColors',
         'owner',
         'groupPermissions',
+        'groupPermissions.group',
         'userPermissions',
+        'userPermissions.user',
         'tags',
       ],
     });
