@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useCallback, useRef, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
@@ -34,6 +34,7 @@ import { RendererType } from '../render-page/rendering-message'
 import { useEditorModeFromUrl } from './hooks/useEditorModeFromUrl'
 import { UiNotifications } from '../notifications/ui-notifications'
 import { useNotificationTest } from './use-notification-test'
+import { IframeCommunicatorContextProvider } from './render-context/iframe-communicator-context-provider'
 
 export interface EditorPagePathParams {
   id: string
@@ -86,13 +87,35 @@ export const EditorPage: React.FC = () => {
 
   useNotificationTest()
 
+  const leftPane = useMemo(() =>
+      <EditorPane
+        onContentChange={ setNoteMarkdownContent }
+        content={ markdownContent }
+        scrollState={ scrollState.editorScrollState }
+        onScroll={ onEditorScroll }
+        onMakeScrollSource={ setEditorToScrollSource }/>
+    , [markdownContent, onEditorScroll, scrollState.editorScrollState, setEditorToScrollSource])
+
+  const rightPane = useMemo(() =>
+      <RenderIframe
+        frameClasses={ 'h-100 w-100' }
+        markdownContent={ markdownContent }
+        onMakeScrollSource={ setRendererToScrollSource }
+        onFirstHeadingChange={ updateNoteTitleByFirstHeading }
+        onTaskCheckedChange={ SetCheckboxInMarkdownContent }
+        onFrontmatterChange={ setNoteFrontmatter }
+        onScroll={ onMarkdownRendererScroll }
+        scrollState={ scrollState.rendererScrollState }
+        rendererType={ RendererType.DOCUMENT }/>
+    , [markdownContent, onMarkdownRendererScroll, scrollState.rendererScrollState,
+      setRendererToScrollSource])
+
   return (
-    <Fragment>
+    <IframeCommunicatorContextProvider>
       <UiNotifications/>
       <MotdBanner/>
       <div className={ 'd-flex flex-column vh-100' }>
         <AppBar mode={ AppBarMode.EDITOR }/>
-
         <div className={ 'container' }>
           <ErrorWhileLoadingNoteAlert show={ error }/>
           <LoadingNoteAlert show={ loading }/>
@@ -101,33 +124,16 @@ export const EditorPage: React.FC = () => {
           <div className={ 'flex-fill d-flex h-100 w-100 overflow-hidden flex-row' }>
             <Splitter
               showLeft={ editorMode === EditorMode.EDITOR || editorMode === EditorMode.BOTH }
-              left={
-                <EditorPane
-                  onContentChange={ setNoteMarkdownContent }
-                  content={ markdownContent }
-                  scrollState={ scrollState.editorScrollState }
-                  onScroll={ onEditorScroll }
-                  onMakeScrollSource={ setEditorToScrollSource }/>
-              }
+              left={ leftPane }
               showRight={ editorMode === EditorMode.PREVIEW || editorMode === EditorMode.BOTH }
-              right={
-                <RenderIframe
-                  frameClasses={ 'h-100 w-100' }
-                  markdownContent={ markdownContent }
-                  onMakeScrollSource={ setRendererToScrollSource }
-                  onFirstHeadingChange={ updateNoteTitleByFirstHeading }
-                  onTaskCheckedChange={ SetCheckboxInMarkdownContent }
-                  onFrontmatterChange={ setNoteFrontmatter }
-                  onScroll={ onMarkdownRendererScroll }
-                  scrollState={ scrollState.rendererScrollState }
-                  rendererType={ RendererType.DOCUMENT }/>
-              }
+              right={ rightPane }
               containerClassName={ 'overflow-hidden' }/>
             <Sidebar/>
           </div>
         </ShowIf>
       </div>
-    </Fragment>
+    </IframeCommunicatorContextProvider>
   )
 }
+
 export default EditorPage

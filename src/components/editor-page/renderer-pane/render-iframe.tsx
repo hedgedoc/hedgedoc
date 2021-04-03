@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import equal from 'fast-deep-equal'
-import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useIsDarkModeActivated } from '../../../hooks/common/use-is-dark-mode-activated'
 import { ApplicationState } from '../../../redux'
 import { isTestMode } from '../../../utils/is-test-mode'
-import { IframeEditorToRendererCommunicator } from '../../render-page/iframe-editor-to-renderer-communicator'
 import { RendererProps } from '../../render-page/markdown-document'
 import { ImageDetails, RendererType } from '../../render-page/rendering-message'
+import { useContextOrStandaloneIframeCommunicator } from '../render-context/iframe-communicator-context-provider'
 import { ScrollState } from '../synced-scroll/scroll-props'
 import { useOnIframeLoad } from './hooks/use-on-iframe-load'
 import { ShowOnPropChangeImageLightbox } from './show-on-prop-change-image-lightbox'
@@ -46,7 +46,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = (
   const rendererOrigin = useSelector((state: ApplicationState) => state.config.iframeCommunication.rendererOrigin)
   const renderPageUrl = `${ rendererOrigin }/render`
   const resetRendererReady = useCallback(() => setRendererReady(false), [])
-  const iframeCommunicator = useMemo(() => new IframeEditorToRendererCommunicator(), [])
+  const iframeCommunicator = useContextOrStandaloneIframeCommunicator()
   const onIframeLoad = useOnIframeLoad(frameReference, iframeCommunicator, rendererOrigin, renderPageUrl, resetRendererReady)
   const [frameHeight, setFrameHeight] = useState<number>(0)
 
