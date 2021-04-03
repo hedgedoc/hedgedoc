@@ -40,6 +40,8 @@ nav:
       - Migration Troubleshooting: guides/migration-troubleshooting.md
       - Terms of Use Setup: guides/providing-terms.md
   - Configuration: configuration.md
+  - References:
+    - 'HedgeDoc Flavored Markdown': references/hfm.md
   - Developer:
       - 'Getting Started': dev/getting-started.md
       - API: dev/api.md
