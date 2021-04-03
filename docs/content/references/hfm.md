@@ -12,34 +12,34 @@ These tables will tell you what exactly we support in HedgeDoc 1.x (HFM 1) and w
 
 | Feature       | HFM 1 | HFM 2 | CommonMark          | GFM               |
 |---------------|:-----:|:-----:|:-------------------:|:-----------------:|
-| bold          | ☑️     | ☑️     | ☑️                   | ☑️                 |
-| italic        | ☑️     | ☑️     | ☑️                   | ☑️                 |
-| underline     | ☑️     | ☑️     | (☑️ with `<ins>`)    | (☑️ with `<ins>`)  |
-| strikethrough | ☑️     | ☑️     | (☑️ with `<del>`)    | ☑️                 |
-| subscript     | ☑️     | ☑️     | (☑️ with `<sub>`)    | (☑️ with `<sub>`)  |
-| superscript   | ☑️     | ☑️     | (☑️ with `<sup>`)    | (☑️ with `<sup>`)  |
-| marked        | ☑️     | ☑️     | (☑️ with `<mark>`)   | (☑️ with `<mark>`) |
+| bold          | :ballot_box_with_check: | :ballot_box_with_check:     | :ballot_box_with_check:                   | :ballot_box_with_check:                 |
+| italic        | :ballot_box_with_check:     | :ballot_box_with_check:     | :ballot_box_with_check:                   | :ballot_box_with_check:                 |
+| underline     | :ballot_box_with_check:     | :ballot_box_with_check:     | (:ballot_box_with_check: with `<ins>`)    | (:ballot_box_with_check: with `<ins>`)  |
+| strikethrough | :ballot_box_with_check:     | :ballot_box_with_check:     | (:ballot_box_with_check: with `<del>`)    | :ballot_box_with_check:                 |
+| subscript     | :ballot_box_with_check:     | :ballot_box_with_check:     | (:ballot_box_with_check: with `<sub>`)    | (:ballot_box_with_check: with `<sub>`)  |
+| superscript   | :ballot_box_with_check:     | :ballot_box_with_check:     | (:ballot_box_with_check: with `<sup>`)    | (:ballot_box_with_check: with `<sup>`)  |
+| marked        | :ballot_box_with_check:     | :ballot_box_with_check:     | (:ballot_box_with_check: with `<mark>`)   | (:ballot_box_with_check: with `<mark>`) |
 
 ## Extended typography features
 
 | Feature                        | HFM 1 | HFM 2 | CommonMark | GFM |
 |--------------------------------|:-----:|:-----:|:----------:|:---:|
-| heading                        | ☑️     | ☑️     | ☑️          | ☑️   |
-| inline code                    | ☑️     | ☑️     | ☑️          | ☑️   |
-| indented code blocks           | ☑️     | ☑️     | ☑️          | ☑️   |
-| code block with language[^highlight]       | ☑️     | ☑️     | ☑️          | ☑️   |
-| code block with extra features[^extra-code] | ☑️     | ☑️     |            |     |
-| block quote                    | ☑️     | ☑️     | ☑️          | ☑️   |
-| name tag (`[name=...]`)        | (☑️)[^in-bq-list]     | ☑️     |            |     |
-| time tag (`[time=...]`)        | (☑️)[^in-bq-list]     | ☑️     |            |     |
-| color tag (`[color=...]`)      | (☑️)[^in-bq-list]     | ☑️     |            |     |
-| unorderd list                  | ☑️     | ☑️     | ☑️          | ☑️   |
-| ordered list                   | ☑️     | ☑️     | ☑️          | ☑️   |
-| task list                      | ☑️     | ☑️     |            | ☑️   |
-| defition list                  | ☑️     | ☑️     |            |     |
+| heading                        | :ballot_box_with_check:     | :ballot_box_with_check:     | :ballot_box_with_check:          | :ballot_box_with_check:   |
+| inline code                    | :ballot_box_with_check:     | :ballot_box_with_check:     | :ballot_box_with_check:          | :ballot_box_with_check:   |
+| indented code blocks           | :ballot_box_with_check:     | :ballot_box_with_check:     | :ballot_box_with_check:          | :ballot_box_with_check:   |
+| code block with language[^highlight]       | :ballot_box_with_check:     | :ballot_box_with_check:     | :ballot_box_with_check:          | :ballot_box_with_check:   |
+| code block with extra features[^extra-code] | :ballot_box_with_check:     | :ballot_box_with_check:     |            |     |
+| block quote                    | :ballot_box_with_check:     | :ballot_box_with_check:     | :ballot_box_with_check:          | :ballot_box_with_check:   |
+| name tag (`[name=...]`)        | (:ballot_box_with_check:)[^in-bq-list]     | :ballot_box_with_check:     |            |     |
+| time tag (`[time=...]`)        | (:ballot_box_with_check:)[^in-bq-list]     | :ballot_box_with_check:     |            |     |
+| color tag (`[color=...]`)      | (:ballot_box_with_check:)[^in-bq-list]     | :ballot_box_with_check:     |            |     |
+| unorderd list                  | :ballot_box_with_check:     | :ballot_box_with_check:     | :ballot_box_with_check:          | :ballot_box_with_check:   |
+| ordered list                   | :ballot_box_with_check:     | :ballot_box_with_check:     | :ballot_box_with_check:          | :ballot_box_with_check:   |
+| task list                      | :ballot_box_with_check:     | :ballot_box_with_check:     |            | :ballot_box_with_check:   |
+| defition list                  | :ballot_box_with_check:     | :ballot_box_with_check:     |            |     |
 | emoji             | [Unicode 6.1][unicode-6] | [Unicode 13][unicode-13] |                      |                      |
-| [ForkAwesome][fa] | ☑️ with `<i class='fa'>`  | ☑️ with shortcodes        |                      |                      |
-| LaTeX             | ☑️[^mj]                   | ☑️[^kt]                   |                      |                      |
+| [ForkAwesome][fa] | :ballot_box_with_check: with `<i class='fa'>`  | :ballot_box_with_check: with shortcodes        |                      |                      |
+| LaTeX             | :ballot_box_with_check:[^mj]                   | :ballot_box_with_check:[^kt]                   |                      |                      |
 
 [^highlight]: Code-blocks with a given language are rendered with syntax-highlighting for the code.
 [^extra-code]: Several special "language" keywords can be used for rendering diagrams, charts, etc.
@@ -51,25 +51,25 @@ These tables will tell you what exactly we support in HedgeDoc 1.x (HFM 1) and w
 
 | Feature               | HFM 1 | HFM 2 | CommonMark       | GFM              |
 |-----------------------|:-----:|:-----:|:----------------:|:----------------:|
-| link                  | ☑️     | ☑️     | ☑️                | ☑️                |
-| link reference        | ☑️     | ☑️     | ☑️                | ☑️                |
-| link title            | ☑️     | ☑️     | ☑️                | ☑️                |
-| autolink with `<>`    | ☑️     | ☑️     | ☑️                | ☑️                |
-| autolink without `<>` | ☑️     | ☑️     |                  | ☑️                |
-| footnotes             | ☑️     | ☑️     |                  |                  |
-| image                 | ☑️     | ☑️     | ☑️                | ☑️                |
-| image with given size | ☑️     | ☑️     | (☑️ with `<img>`) | (☑️ with `<img>`) |
-| table of contents     | ☑️     | ☑️     |                  |                  |
+| link                  | :ballot_box_with_check:     | :ballot_box_with_check:     | :ballot_box_with_check:                | :ballot_box_with_check:                |
+| link reference        | :ballot_box_with_check:     | :ballot_box_with_check:     | :ballot_box_with_check:                | :ballot_box_with_check:                |
+| link title            | :ballot_box_with_check:     | :ballot_box_with_check:     | :ballot_box_with_check:                | :ballot_box_with_check:                |
+| autolink with `<>`    | :ballot_box_with_check:     | :ballot_box_with_check:     | :ballot_box_with_check:                | :ballot_box_with_check:                |
+| autolink without `<>` | :ballot_box_with_check:     | :ballot_box_with_check:     |                  | :ballot_box_with_check:                |
+| footnotes             | :ballot_box_with_check:     | :ballot_box_with_check:     |                  |                  |
+| image                 | :ballot_box_with_check:     | :ballot_box_with_check:     | :ballot_box_with_check:                | :ballot_box_with_check:                |
+| image with given size | :ballot_box_with_check:     | :ballot_box_with_check:     | (:ballot_box_with_check: with `<img>`) | (:ballot_box_with_check: with `<img>`) |
+| table of contents     | :ballot_box_with_check:     | :ballot_box_with_check:     |                  |                  |
 
 
 ## Structural elements
 
 | Feature           | HFM 1                    | HFM 2                    | CommonMark           | GFM                  |
 |-------------------|:------------------------:|:------------------------:|:--------------------:|:--------------------:|
-| table             | ☑️                        | ☑️                        | (☑️ with `<table>`)   | ☑️                    |
-| horizontal line   | ☑️                        | ☑️                        | ☑️                    | ☑️                    |
-| collapsable block | (☑️ with `<details>`)     | ☑️                        | (☑️ with `<details>`) | (☑️ with `<details>`) |
-| Alerts            | ☑️                        | ☑️                        |                      |                      |
+| table             | :ballot_box_with_check:                        | :ballot_box_with_check:                        | (:ballot_box_with_check: with `<table>`)   | :ballot_box_with_check:                    |
+| horizontal line   | :ballot_box_with_check:                        | :ballot_box_with_check:                        | :ballot_box_with_check:                    | :ballot_box_with_check:                    |
+| collapsable block | (:ballot_box_with_check: with `<details>`)     | :ballot_box_with_check:                        | (:ballot_box_with_check: with `<details>`) | (:ballot_box_with_check: with `<details>`) |
+| Alerts            | :ballot_box_with_check:                        | :ballot_box_with_check:                        |                      |                      |
 
 ## Embeddings
 HFM1 included support for certain embeddings of external content. These were defined in markdown by the uncommon `{%keyword parameter %}` syntax.
@@ -78,12 +78,12 @@ Instead of this uncommon syntax, HFM2 uses just plain links to external content 
 
 | Feature                  | HFM 1 | HFM 2              | CommonMark | GFM |
 |--------------------------|:-----:|:------------------:|:----------:|:---:|
-| PDF (`{%pdf ... %}`)     | ☑️     | removed            |            |     |
-| [YouTube][youtube] (`{%youtube ... %}`)       | ☑️     | with plain link[^embed] |            |     |
-| [Vimeo][vimeo] (`{%vimeo ... %}`)          | ☑️     | with plain link[^embed] |            |     |
-| [Slideshare][slideshare] (`{%slideshare ... %}`) | ☑️     | removed            |            |     |
-| [Speakerdeck][speakerdeck] (`{%speakerdeck ... %}`) | ☑️     | removed            |            |     |
-| [GitHub Gist][gist] (`{%gist ... %}`)             | ☑️     | with plain link[^embed] |            |     |
+| PDF (`{%pdf ... %}`)     | :ballot_box_with_check:     | removed            |            |     |
+| [YouTube][youtube] (`{%youtube ... %}`)       | :ballot_box_with_check:     | with plain link[^embed] |            |     |
+| [Vimeo][vimeo] (`{%vimeo ... %}`)          | :ballot_box_with_check:     | with plain link[^embed] |            |     |
+| [Slideshare][slideshare] (`{%slideshare ... %}`) | :ballot_box_with_check:     | removed            |            |     |
+| [Speakerdeck][speakerdeck] (`{%speakerdeck ... %}`) | :ballot_box_with_check:     | removed            |            |     |
+| [GitHub Gist][gist] (`{%gist ... %}`)             | :ballot_box_with_check:     | with plain link[^embed] |            |     |
 
 [^embed]: The special syntax is deprecated but will continue to work. However a plain link to the content will generate the same embedding and is preferred.
 
@@ -92,15 +92,15 @@ Besides the basic HTML typography elements (`<p>`, `<a>`, `<b>`, `<ins>`, `<del>
 
 |    Feature    | HedgeDocMark 1 | HedgeDocMark 2 | CommonMark | GFM |
 |:-------------:|:--------------:|:--------------:|:----------:|:---:|
-|   `<title>`   |                |                | ☑️          |     |
-|  `<textarea>` |                | ☑️              | ☑️          |     |
-|   `<style>`   | ☑️              | ☑️              | ☑️          |     |
-|    `<xmp>`    |                |                | ☑️          |     |
-|   `<iframe>`  | ☑️              | ☑️              | ☑️          |     |
-|  `<noembed>`  | ☑️              |                | ☑️          |     |
-|  `<noframes>` | ☑️              |                | ☑️          |     |
-|   `<script>`  |                |                | ☑️          |     |
-| `<plaintext>` |                | ☑️              | ☑️          |     |
+|   `<title>`   |                |                | :ballot_box_with_check:          |     |
+|  `<textarea>` |                | :ballot_box_with_check:              | :ballot_box_with_check:          |     |
+|   `<style>`   | :ballot_box_with_check:              | :ballot_box_with_check:              | :ballot_box_with_check:          |     |
+|    `<xmp>`    |                |                | :ballot_box_with_check:          |     |
+|   `<iframe>`  | :ballot_box_with_check:              | :ballot_box_with_check:              | :ballot_box_with_check:          |     |
+|  `<noembed>`  | :ballot_box_with_check:              |                | :ballot_box_with_check:          |     |
+|  `<noframes>` | :ballot_box_with_check:              |                | :ballot_box_with_check:          |     |
+|   `<script>`  |                |                | :ballot_box_with_check:          |     |
+| `<plaintext>` |                | :ballot_box_with_check:              | :ballot_box_with_check:          |     |
 
 [fa]: https://forkaweso.me/
 [youtube]: https://www.youtube.com/
