@@ -14,8 +14,8 @@ you want to match your IdP, you can use more configurations as below.
 
   - `identifierFormat`: A format of unique id to identify the user of IdP, which is the format based on email address as
     default. It is recommend that you use as below.
-    - urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress (default)
-    - urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+    - `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress` (default)
+    - `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified`
 
   - `config.json`:
     ```javascript
