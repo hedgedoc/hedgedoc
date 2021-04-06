@@ -9,7 +9,9 @@
   ],
   "packageRules": [
     {
-      "updateTypes": ["pin"],
+      "updateTypes": [
+        "pin"
+      ],
       "automerge": true
     },
     {
@@ -43,6 +45,14 @@
         "markmap-view",
         "markmap-lib",
         "markmap-common"
+      ]
+    },
+    {
+      "groupName": "vega",
+      "packagePatterns": [
+        "vega",
+        "vega-embed",
+        "vega-lite"
       ]
     },
     {
