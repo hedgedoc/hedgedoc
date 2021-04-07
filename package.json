@@ -192,7 +192,7 @@
     "jsonlint": "1.6.3",
     "less": "4.1.1",
     "less-loader": "7.3.0",
-    "mini-css-extract-plugin": "1.4.0",
+    "mini-css-extract-plugin": "1.4.1",
     "mocha": "8.3.2",
     "mock-require": "3.0.3",
     "optimize-css-assets-webpack-plugin": "5.0.4",
