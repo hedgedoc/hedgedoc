@@ -89,19 +89,22 @@ describe('Media', () => {
       const testImage = await fs.readFile('test/public-api/fixtures/test.png');
       const downloadResponse = await request(app.getHttpServer()).get(path);
       expect(downloadResponse.body).toEqual(testImage);
-      // Remove /upload/ from path as we just need the filename.
+      // Remove /uploads/ from path as we just need the filename.
       const fileName = path.replace('/uploads/', '');
       // delete the file afterwards
       await fs.unlink(join(uploadPath, fileName));
     });
     describe('fails:', () => {
+      beforeEach(async () => {
+        await fs.rmdir(uploadPath, { recursive: true });
+      });
       it('MIME type not supported', async () => {
         await request(app.getHttpServer())
           .post('/media')
           .attach('file', 'test/public-api/fixtures/test.zip')
           .set('HedgeDoc-Note', 'test_upload_media')
           .expect(400);
-        expect(await fs.access(uploadPath)).toBeFalsy();
+        await expect(fs.access(uploadPath)).rejects.toBeDefined();
       });
       it('note does not exist', async () => {
         await request(app.getHttpServer())
@@ -109,10 +112,9 @@ describe('Media', () => {
           .attach('file', 'test/public-api/fixtures/test.zip')
           .set('HedgeDoc-Note', 'i_dont_exist')
           .expect(400);
-        expect(await fs.access(uploadPath)).toBeFalsy();
+        await expect(fs.access(uploadPath)).rejects.toBeDefined();
       });
       it('mediaBackend error', async () => {
-        await fs.rmdir(uploadPath);
         await fs.mkdir(uploadPath, {
           mode: '444',
         });
@@ -122,7 +124,9 @@ describe('Media', () => {
           .set('HedgeDoc-Note', 'test_upload_media')
           .expect('Content-Type', /json/)
           .expect(500);
-        await fs.rmdir(uploadPath);
+      });
+      afterEach(async () => {
+        await fs.rmdir(uploadPath, { recursive: true });
       });
     });
   });
@@ -142,6 +146,7 @@ describe('Media', () => {
 
   afterAll(async () => {
     // Delete the upload folder
-    await fs.rmdir(uploadPath);
+    await fs.rmdir(uploadPath, { recursive: true });
+    await app.close();
   });
 });

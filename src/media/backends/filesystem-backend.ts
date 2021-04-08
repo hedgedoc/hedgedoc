@@ -36,7 +36,7 @@ export class FilesystemBackend implements MediaBackend {
     await this.ensureDirectory();
     try {
       await fs.writeFile(filePath, buffer, null);
-      return ['/' + filePath, null];
+      return ['/uploads/' + fileName, null];
     } catch (e) {
       this.logger.error((e as Error).message, (e as Error).stack, 'saveFile');
       throw new MediaBackendError(`Could not save '${filePath}'`);
