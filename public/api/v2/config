@@ -29,7 +29,7 @@
   },
   "maxDocumentLength": 100000,
   "useImageProxy": false,
-  "plantumlServer": "http://www.plantuml.com/plantuml",
+  "plantumlServer": "https://www.plantuml.com/plantuml",
   "specialLinks": {
     "privacy": "https://example.com/privacy",
     "termsOfUse": "https://example.com/termsOfUse",
