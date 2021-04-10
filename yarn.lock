@@ -12362,10 +12362,10 @@ react-universal-interface@^0.6.2:
   resolved "https://registry.yarnpkg.com/react-universal-interface/-/react-universal-interface-0.6.2.tgz#5e8d438a01729a4dbbcbeeceb0b86be146fe2b3b"
   integrity sha512-dg8yXdcQmvgR13RIlZbTRQOoUrDciFVoSBZILwjE2LFISxZZ8loVJKAkuzswl5js8BHda79bIb2b84ehU8IjXw==
 
-react-use@17.2.1:
-  version "17.2.1"
-  resolved "https://registry.yarnpkg.com/react-use/-/react-use-17.2.1.tgz#c81e12544115ed049c7deba1e3bb3d977dfee9b8"
-  integrity sha512-9r51/at7/Nr/nEP4CsHz+pl800EAqhIY9R6O68m68kaWc8slDAfx1UrIedQqpsb4ImddFYb+6hF1i5Vj4u4Cnw==
+react-use@17.2.3:
+  version "17.2.3"
+  resolved "https://registry.yarnpkg.com/react-use/-/react-use-17.2.3.tgz#ba3e5711d6ec4d51637641d6db63897e98c5904f"
+  integrity sha512-cHLG5mwv9NSkydhlY3J1B/Z5gGzRF43QXzFaMisSaFClg0o1VeWJaYj2d9HJIiTGC+imt47FY4TpnZNRhbOyaQ==
   dependencies:
     "@types/js-cookie" "^2.2.6"
     "@xobotyi/scrollbar-width" "^1.9.5"
