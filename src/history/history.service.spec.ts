@@ -149,9 +149,10 @@ describe('HistoryService', () => {
 
   describe('createOrUpdateHistoryEntry', () => {
     describe('works', () => {
-      it('without an preexisting entry', async () => {
-        const user = {} as User;
-        const alias = 'alias';
+      const user = {} as User;
+      const alias = 'alias';
+      const pinStatus = true;
+      it('without an preexisting entry and without pinStatus', async () => {
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
         jest
           .spyOn(historyRepo, 'save')
@@ -168,9 +169,25 @@ describe('HistoryService', () => {
         expect(createHistoryEntry.pinStatus).toEqual(false);
       });
 
-      it('with an preexisting entry', async () => {
-        const user = {} as User;
-        const alias = 'alias';
+      it('without an preexisting entry and with pinStatus', async () => {
+        jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
+        jest
+          .spyOn(historyRepo, 'save')
+          .mockImplementation(
+            async (entry: HistoryEntry): Promise<HistoryEntry> => entry,
+          );
+        const createHistoryEntry = await service.createOrUpdateHistoryEntry(
+          Note.create(user, alias),
+          user,
+          pinStatus,
+        );
+        expect(createHistoryEntry.note.alias).toEqual(alias);
+        expect(createHistoryEntry.note.owner).toEqual(user);
+        expect(createHistoryEntry.user).toEqual(user);
+        expect(createHistoryEntry.pinStatus).toEqual(pinStatus);
+      });
+
+      it('with an preexisting entry and without pinStatus', async () => {
         const historyEntry = HistoryEntry.create(
           user,
           Note.create(user, alias),
@@ -189,6 +206,32 @@ describe('HistoryService', () => {
         expect(createHistoryEntry.note.owner).toEqual(user);
         expect(createHistoryEntry.user).toEqual(user);
         expect(createHistoryEntry.pinStatus).toEqual(false);
+        expect(createHistoryEntry.updatedAt.getTime()).toBeGreaterThanOrEqual(
+          historyEntry.updatedAt.getTime(),
+        );
+      });
+
+      it('with an preexisting entry and with pinStatus', async () => {
+        const historyEntry = HistoryEntry.create(
+          user,
+          Note.create(user, alias),
+          pinStatus,
+        );
+        jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(historyEntry);
+        jest
+          .spyOn(historyRepo, 'save')
+          .mockImplementation(
+            async (entry: HistoryEntry): Promise<HistoryEntry> => entry,
+          );
+        const createHistoryEntry = await service.createOrUpdateHistoryEntry(
+          Note.create(user, alias),
+          user,
+          pinStatus,
+        );
+        expect(createHistoryEntry.note.alias).toEqual(alias);
+        expect(createHistoryEntry.note.owner).toEqual(user);
+        expect(createHistoryEntry.user).toEqual(user);
+        expect(createHistoryEntry.pinStatus).toEqual(pinStatus);
         expect(createHistoryEntry.updatedAt.getTime()).toBeGreaterThanOrEqual(
           historyEntry.updatedAt.getTime(),
         );

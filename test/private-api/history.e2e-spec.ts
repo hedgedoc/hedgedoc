@@ -105,8 +105,10 @@ describe('History', () => {
   });
 
   it('POST /me/history', async () => {
+    const pinStatus = true;
     const postEntryDto = new HistoryEntryImportDto();
     postEntryDto.note = note2.alias;
+    postEntryDto.pinStatus = pinStatus;
     await request(app.getHttpServer())
       .post('/me/history')
       .set('Content-Type', 'application/json')
@@ -115,6 +117,8 @@ describe('History', () => {
     const userEntries = await historyService.getEntriesByUser(user);
     expect(userEntries.length).toEqual(1);
     expect(userEntries[0].note.alias).toEqual(note2.alias);
+    expect(userEntries[0].user.userName).toEqual(user.userName);
+    expect(userEntries[0].pinStatus).toEqual(pinStatus);
   });
 
   it('DELETE /me/history', async () => {
