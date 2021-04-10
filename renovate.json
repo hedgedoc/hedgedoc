@@ -46,6 +46,14 @@
       ]
     },
     {
+      "groupName": "vega",
+      "packagePatterns": [
+        "vega",
+        "vega-embed",
+        "vega-lite"
+      ]
+    },
+    {
       "groupName": "markmap",
       "matchPackagePatterns": [
         "markmap-view",
