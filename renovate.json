@@ -11,37 +11,43 @@
     {
       "updateTypes": [
         "pin"
-      ],
-      "automerge": true
+      ]
     },
     {
-      "extends": "packages:linters",
       "groupName": "linters",
-      "automerge": true
+      "extends": "packages:linters"
     },
     {
+      "groupName": "eslint",
       "extends": "monorepo:typescript-eslint",
-      "groupName": "typescript-eslint monorepo",
-      "automerge": true
+      "matchPackagePatterns": [
+        "^eslint"
+      ]
     },
     {
-      "extends": "monorepo:react",
-      "groupName": "react monorepo"
+      "groupName": "cypress",
+      "matchPackagePatterns": [
+        "^@cypress",
+        "^cypress"
+      ]
     },
     {
-      "extends": "monorepo:reactrouter",
-      "groupName": "reactrouter monorepo"
+      "groupName": "react",
+      "extends": "monorepo:react"
     },
     {
-      "groupName": "definitelyTyped",
-      "packagePatterns": [
+      "groupName": "react router",
+      "extends": "monorepo:reactrouter"
+    },
+    {
+      "groupName": "definitely typed",
+      "matchPackagePatterns": [
         "^@types/"
-      ],
-      "automerge": true
+      ]
     },
     {
       "groupName": "markmap",
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "markmap-view",
         "markmap-lib",
         "markmap-common"
@@ -57,7 +63,7 @@
     },
     {
       "groupName": "i18next",
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "i18next",
         "i18next-browser-languagedetector",
         "i18next-http-backend",
@@ -65,11 +71,10 @@
       ]
     },
     {
-      "groupName": "JS test packages",
-      "packagePatterns": [
+      "groupName": "jest",
+      "matchPackagePatterns": [
         "^@testing-library/"
-      ],
-      "automerge": true
+      ]
     }
   ],
   "prHourlyLimit": 0,
