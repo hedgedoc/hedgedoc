@@ -31,7 +31,7 @@ import { UsersModule } from '../../src/users/users.module';
 import { PrivateApiModule } from '../../src/api/private/private-api.module';
 import { HistoryService } from '../../src/history/history.service';
 import { Note } from '../../src/notes/note.entity';
-import { HistoryEntryCreationDto } from '../../src/history/history-entry-creation.dto';
+import { HistoryEntryImportDto } from '../../src/history/history-entry-import.dto';
 
 describe('History', () => {
   let app: INestApplication;
@@ -105,7 +105,7 @@ describe('History', () => {
   });
 
   it('POST /me/history', async () => {
-    const postEntryDto = new HistoryEntryCreationDto();
+    const postEntryDto = new HistoryEntryImportDto();
     postEntryDto.note = note2.alias;
     await request(app.getHttpServer())
       .post('/me/history')
