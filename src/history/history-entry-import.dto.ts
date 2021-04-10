@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { IsString } from 'class-validator';
+import { IsBoolean, IsString } from 'class-validator';
 
 export class HistoryEntryImportDto {
   /**
@@ -12,4 +12,10 @@ export class HistoryEntryImportDto {
    */
   @IsString()
   note: string;
+  /**
+   * True if the note should be pinned
+   * @example true
+   */
+  @IsBoolean()
+  pinStatus: boolean;
 }

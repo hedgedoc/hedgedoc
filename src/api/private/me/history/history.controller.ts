@@ -65,7 +65,11 @@ export class HistoryController {
         const note = await this.noteService.getNoteByIdOrAlias(
           historyEntry.note,
         );
-        await this.historyService.createOrUpdateHistoryEntry(note, user);
+        await this.historyService.createOrUpdateHistoryEntry(
+          note,
+          user,
+          historyEntry.pinStatus,
+        );
       }
     } catch (e) {
       if (e instanceof NotInDBError) {
