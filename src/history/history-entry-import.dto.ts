@@ -6,7 +6,7 @@
 
 import { IsString } from 'class-validator';
 
-export class HistoryEntryCreationDto {
+export class HistoryEntryImportDto {
   /**
    * ID or Alias of the note
    */
