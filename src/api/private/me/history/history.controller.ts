@@ -69,6 +69,7 @@ export class HistoryController {
           note,
           user,
           historyEntry.pinStatus,
+          historyEntry.lastVisited,
         );
       }
     } catch (e) {
