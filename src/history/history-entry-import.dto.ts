@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { IsBoolean, IsString } from 'class-validator';
+import { IsBoolean, IsDate, IsString } from 'class-validator';
 
 export class HistoryEntryImportDto {
   /**
@@ -18,4 +18,10 @@ export class HistoryEntryImportDto {
    */
   @IsBoolean()
   pinStatus: boolean;
+  /**
+   * Datestring of the last time this note was updated
+   * @example "2020-12-01 12:23:34"
+   */
+  @IsDate()
+  lastVisited: Date;
 }
