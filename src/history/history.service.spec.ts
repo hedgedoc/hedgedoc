@@ -9,7 +9,7 @@ import { LoggerModule } from '../logger/logger.module';
 import { HistoryService } from './history.service';
 import { UsersModule } from '../users/users.module';
 import { NotesModule } from '../notes/notes.module';
-import { getRepositoryToken } from '@nestjs/typeorm';
+import { getConnectionToken, getRepositoryToken } from '@nestjs/typeorm';
 import { Identity } from '../users/identity.entity';
 import { User } from '../users/user.entity';
 import { AuthorColor } from '../notes/author-color.entity';
@@ -19,23 +19,39 @@ import { Note } from '../notes/note.entity';
 import { Tag } from '../notes/tag.entity';
 import { AuthToken } from '../auth/auth-token.entity';
 import { Revision } from '../revisions/revision.entity';
-import { Repository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import { NotInDBError } from '../errors/errors';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Group } from '../groups/group.entity';
 import { ConfigModule } from '@nestjs/config';
 import appConfigMock from '../config/mock/app.config.mock';
+import { HistoryEntryImportDto } from './history-entry-import.dto';
 
 describe('HistoryService', () => {
   let service: HistoryService;
   let historyRepo: Repository<HistoryEntry>;
+  let connection;
   let noteRepo: Repository<Note>;
+
+  type MockConnection = {
+    transaction: () => void;
+  };
+
+  function mockConnection(): MockConnection {
+    return {
+      transaction: jest.fn(),
+    };
+  }
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         HistoryService,
+        {
+          provide: getConnectionToken(),
+          useFactory: mockConnection,
+        },
         {
           provide: getRepositoryToken(HistoryEntry),
           useClass: Repository,
@@ -79,6 +95,7 @@ describe('HistoryService', () => {
     historyRepo = module.get<Repository<HistoryEntry>>(
       getRepositoryToken(HistoryEntry),
     );
+    connection = module.get<Connection>(Connection);
     noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
   });
 
@@ -307,6 +324,44 @@ describe('HistoryService', () => {
           service.getEntryByNoteIdOrAlias(alias, {} as User),
         ).rejects.toThrow(NotInDBError);
       });
+    });
+  });
+
+  describe('setHistory', () => {
+    it('works', async () => {
+      const user = {} as User;
+      const alias = 'alias';
+      const note = Note.create(user, alias);
+      const historyEntry = HistoryEntry.create(user, note);
+      const historyEntryImport: HistoryEntryImportDto = {
+        lastVisited: new Date('2020-12-01 12:23:34'),
+        note: alias,
+        pinStatus: true,
+      };
+      const newlyCreatedHistoryEntry: HistoryEntry = {
+        ...historyEntry,
+        pinStatus: historyEntryImport.pinStatus,
+        updatedAt: historyEntryImport.lastVisited,
+      };
+      const mockedManager = {
+        find: jest.fn().mockResolvedValueOnce([historyEntry]),
+        findOne: jest.fn().mockResolvedValueOnce(note),
+        remove: jest.fn().mockImplementationOnce((entry: HistoryEntry) => {
+          expect(entry.note.alias).toEqual(alias);
+          expect(entry.pinStatus).toEqual(false);
+        }),
+        save: jest.fn().mockImplementationOnce((entry: HistoryEntry) => {
+          expect(entry.note.alias).toEqual(newlyCreatedHistoryEntry.note.alias);
+          expect(entry.pinStatus).toEqual(newlyCreatedHistoryEntry.pinStatus);
+          expect(entry.updatedAt).toEqual(newlyCreatedHistoryEntry.updatedAt);
+        }),
+      };
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      connection.transaction.mockImplementation((cb) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        cb(mockedManager);
+      });
+      await service.setHistory(user, [historyEntryImport]);
     });
   });
 
