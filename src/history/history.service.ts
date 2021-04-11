@@ -8,19 +8,22 @@ import { Injectable } from '@nestjs/common';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { HistoryEntryUpdateDto } from './history-entry-update.dto';
 import { HistoryEntryDto } from './history-entry.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
+import { Connection, Repository } from 'typeorm';
 import { HistoryEntry } from './history-entry.entity';
 import { UsersService } from '../users/users.service';
 import { NotesService } from '../notes/notes.service';
 import { User } from '../users/user.entity';
 import { Note } from '../notes/note.entity';
 import { NotInDBError } from '../errors/errors';
+import { HistoryEntryImportDto } from './history-entry-import.dto';
 
 @Injectable()
 export class HistoryService {
   constructor(
     private readonly logger: ConsoleLoggerService,
+    @InjectConnection()
+    private connection: Connection,
     @InjectRepository(HistoryEntry)
     private historyEntryRepository: Repository<HistoryEntry>,
     private usersService: UsersService,
@@ -146,6 +149,54 @@ export class HistoryService {
     for (const entry of entries) {
       await this.historyEntryRepository.remove(entry);
     }
+  }
+
+  /**
+   * @async
+   * Replace the user history with the provided history
+   * @param {User} user - the user that get's their history replaces
+   * @param {HistoryEntryImportDto[]} history
+   * @throws {ForbiddenIdError} one of the note ids or alias in the new history are forbidden
+   */
+  async setHistory(
+    user: User,
+    history: HistoryEntryImportDto[],
+  ): Promise<void> {
+    await this.connection.transaction(async (manager) => {
+      const currentHistory = await manager.find<HistoryEntry>(HistoryEntry, {
+        where: { user: user },
+        relations: ['note', 'user'],
+      });
+      for (const entry of currentHistory) {
+        await manager.remove<HistoryEntry>(entry);
+      }
+      for (const historyEntry of history) {
+        this.notesService.checkNoteIdOrAlias(historyEntry.note);
+        const note = await manager.findOne<Note>(Note, {
+          where: [
+            {
+              id: historyEntry.note,
+            },
+            {
+              alias: historyEntry.note,
+            },
+          ],
+        });
+        if (note === undefined) {
+          this.logger.debug(
+            `Could not find note '${historyEntry.note}'`,
+            'setHistory',
+          );
+          throw new NotInDBError(
+            `Note with id/alias '${historyEntry.note}' not found.`,
+          );
+        }
+        const entry = HistoryEntry.create(user, note);
+        entry.pinStatus = historyEntry.pinStatus;
+        entry.updatedAt = historyEntry.lastVisited;
+        await manager.save<HistoryEntry>(entry);
+      }
+    });
   }
 
   /**

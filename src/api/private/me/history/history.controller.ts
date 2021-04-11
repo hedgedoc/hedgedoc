@@ -5,6 +5,7 @@
  */
 
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -16,9 +17,8 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UsersService } from '../../../../users/users.service';
-import { NotesService } from '../../../../notes/notes.service';
 import { HistoryEntryDto } from '../../../../history/history-entry.dto';
-import { NotInDBError } from '../../../../errors/errors';
+import { ForbiddenIdError, NotInDBError } from '../../../../errors/errors';
 import { HistoryEntryImportDto } from '../../../../history/history-entry-import.dto';
 import { HistoryEntryUpdateDto } from '../../../../history/history-entry-update.dto';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
@@ -31,7 +31,6 @@ export class HistoryController {
     private readonly logger: ConsoleLoggerService,
     private historyService: HistoryService,
     private userService: UsersService,
-    private noteService: NotesService,
   ) {
     this.logger.setContext(HistoryController.name);
   }
@@ -60,21 +59,10 @@ export class HistoryController {
     try {
       // ToDo: use actual user here
       const user = await this.userService.getUserByUsername('hardcoded');
-      await this.historyService.deleteHistory(user);
-      for (const historyEntry of history) {
-        const note = await this.noteService.getNoteByIdOrAlias(
-          historyEntry.note,
-        );
-        await this.historyService.createOrUpdateHistoryEntry(
-          note,
-          user,
-          historyEntry.pinStatus,
-          historyEntry.lastVisited,
-        );
-      }
+      await this.historyService.setHistory(user, history);
     } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
+      if (e instanceof NotInDBError || e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
       }
       throw e;
     }
