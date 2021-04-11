@@ -80,25 +80,15 @@ export class HistoryService {
    * Create or update a history entry by the user and note. If the entry is merely updated the updatedAt date is set to the current date.
    * @param {Note} note - the note that the history entry belongs to
    * @param {User} user - the user that the history entry belongs to
-   * @param {boolean} pinStatus - if the pinStatus of the history entry should be set
-   * @param {Date} lastVisited - the last time the associated note was accessed
    * @return {HistoryEntry} the requested history entry
    */
   async createOrUpdateHistoryEntry(
     note: Note,
     user: User,
-    pinStatus?: boolean,
-    lastVisited?: Date,
   ): Promise<HistoryEntry> {
     let entry = await this.getEntryByNote(note, user);
     if (!entry) {
       entry = HistoryEntry.create(user, note);
-      if (pinStatus !== undefined) {
-        entry.pinStatus = pinStatus;
-      }
-      if (lastVisited !== undefined) {
-        entry.updatedAt = lastVisited;
-      }
     } else {
       entry.updatedAt = new Date();
     }
