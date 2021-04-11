@@ -5,7 +5,11 @@
  */
 
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
+import {
+  getConnectionToken,
+  getRepositoryToken,
+  TypeOrmModule,
+} from '@nestjs/typeorm';
 import { HistoryModule } from '../../../history/history.module';
 import { LoggerModule } from '../../../logger/logger.module';
 import { AuthorColor } from '../../../notes/author-color.entity';
@@ -45,8 +49,11 @@ describe('Me Controller', () => {
         NotesModule,
         LoggerModule,
         MediaModule,
+        TypeOrmModule.forRoot(),
       ],
     })
+      .overrideProvider(getConnectionToken())
+      .useValue({})
       .overrideProvider(getRepositoryToken(User))
       .useValue({})
       .overrideProvider(getRepositoryToken(Note))
