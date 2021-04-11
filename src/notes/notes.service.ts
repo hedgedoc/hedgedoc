@@ -79,6 +79,8 @@ export class NotesService {
    * @param {string=} alias - a optional alias the note should have
    * @param {User=} owner - the owner of the note
    * @return {Note} the newly created note
+   * @throws {AlreadyInDBError} a note with the requested id or alias already exists
+   * @throws {ForbiddenIdError} the requested id or alias is forbidden
    */
   async createNote(
     noteContent: string,
@@ -92,15 +94,7 @@ export class NotesService {
     ]);
     if (alias) {
       newNote.alias = alias;
-      if (this.appConfig.forbiddenNoteIds.includes(alias)) {
-        this.logger.debug(
-          `Creating a note with the alias '${alias}' is forbidden by the administrator.`,
-          'createNote',
-        );
-        throw new ForbiddenIdError(
-          `Creating a note with the alias '${alias}' is forbidden by the administrator.`,
-        );
-      }
+      this.checkNoteIdOrAlias(alias);
     }
     if (owner) {
       newNote.historyEntries = [HistoryEntry.create(owner)];
@@ -154,6 +148,7 @@ export class NotesService {
    * Get a note by either their id or alias.
    * @param {string} noteIdOrAlias - the notes id or alias
    * @return {Note} the note
+   * @throws {ForbiddenIdError} the requested id or alias is forbidden
    * @throws {NotInDBError} there is no note with this id or alias
    */
   async getNoteByIdOrAlias(noteIdOrAlias: string): Promise<Note> {
@@ -161,15 +156,7 @@ export class NotesService {
       `Trying to find note '${noteIdOrAlias}'`,
       'getNoteByIdOrAlias',
     );
-    if (this.appConfig.forbiddenNoteIds.includes(noteIdOrAlias)) {
-      this.logger.debug(
-        `Accessing a note with the alias '${noteIdOrAlias}' is forbidden by the administrator.`,
-        'getNoteByIdOrAlias',
-      );
-      throw new ForbiddenIdError(
-        `Accessing a note with the alias '${noteIdOrAlias}' is forbidden by the administrator.`,
-      );
-    }
+    this.checkNoteIdOrAlias(noteIdOrAlias);
     const note = await this.noteRepository.findOne({
       where: [
         {
@@ -198,6 +185,23 @@ export class NotesService {
     }
     this.logger.debug(`Found note '${noteIdOrAlias}'`, 'getNoteByIdOrAlias');
     return note;
+  }
+
+  /**
+   * Check if the provided note id or alias is not forbidden
+   * @param noteIdOrAlias - the alias or id in question
+   * @throws {ForbiddenIdError} the requested id or alias is forbidden
+   */
+  checkNoteIdOrAlias(noteIdOrAlias: string): void {
+    if (this.appConfig.forbiddenNoteIds.includes(noteIdOrAlias)) {
+      this.logger.debug(
+        `A note with the alias '${noteIdOrAlias}' is forbidden by the administrator.`,
+        'checkNoteIdOrAlias',
+      );
+      throw new ForbiddenIdError(
+        `A note with the alias '${noteIdOrAlias}' is forbidden by the administrator.`,
+      );
+    }
   }
 
   /**
