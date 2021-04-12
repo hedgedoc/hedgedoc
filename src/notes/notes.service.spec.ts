@@ -4,12 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable
-@typescript-eslint/no-unsafe-assignment,
-@typescript-eslint/no-unsafe-member-access
-*/
-
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { LoggerModule } from '../logger/logger.module';
