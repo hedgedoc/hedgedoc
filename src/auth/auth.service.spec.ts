@@ -4,12 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-/* eslint-disable
-@typescript-eslint/no-unsafe-call,
-@typescript-eslint/no-unsafe-member-access,
-@typescript-eslint/no-unsafe-return,
-@typescript-eslint/require-await */
-
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { PassportModule } from '@nestjs/passport';
@@ -204,8 +198,8 @@ describe('AuthService', () => {
           service.validateToken(`${authToken.keyId}`),
         ).rejects.toBeInstanceOf(TokenNotValidError);
       });
-      it('the secret is too long', () => {
-        void expect(
+      it('the secret is too long', async () => {
+        await expect(
           service.validateToken(`${authToken.keyId}.${'a'.repeat(73)}`),
         ).rejects.toBeInstanceOf(TokenNotValidError);
       });
