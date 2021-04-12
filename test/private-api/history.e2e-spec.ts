@@ -5,7 +5,7 @@
  */
 
 import { INestApplication } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as request from 'supertest';
@@ -27,6 +27,7 @@ import { PrivateApiModule } from '../../src/api/private/private-api.module';
 import { HistoryService } from '../../src/history/history.service';
 import { Note } from '../../src/notes/note.entity';
 import { HistoryEntryImportDto } from '../../src/history/history-entry-import.dto';
+import { HistoryEntry } from '../../src/history/history-entry.entity';
 
 describe('History', () => {
   let app: INestApplication;
@@ -34,6 +35,7 @@ describe('History', () => {
   let user: User;
   let note: Note;
   let note2: Note;
+  let forbiddenNoteId: string;
   let content: string;
 
   beforeAll(async () => {
@@ -66,6 +68,8 @@ describe('History', () => {
       ],
     }).compile();
 
+    const config = moduleRef.get<ConfigService>(ConfigService);
+    forbiddenNoteId = config.get('appConfig').forbiddenNoteIds[0];
     app = moduleRef.createNestApplication();
     await app.init();
     content = 'This is a test note.';
@@ -99,25 +103,76 @@ describe('History', () => {
     );
   });
 
-  it('POST /me/history', async () => {
-    expect((await historyService.getEntriesByUser(user)).length).toEqual(1);
-    const pinStatus = true;
-    const lastVisited = new Date('2020-12-01 12:23:34');
-    const postEntryDto = new HistoryEntryImportDto();
-    postEntryDto.note = note2.alias;
-    postEntryDto.pinStatus = pinStatus;
-    postEntryDto.lastVisited = lastVisited;
-    await request(app.getHttpServer())
-      .post('/me/history')
-      .set('Content-Type', 'application/json')
-      .send(JSON.stringify({ history: [postEntryDto] }))
-      .expect(201);
-    const userEntries = await historyService.getEntriesByUser(user);
-    expect(userEntries.length).toEqual(1);
-    expect(userEntries[0].note.alias).toEqual(note2.alias);
-    expect(userEntries[0].user.userName).toEqual(user.userName);
-    expect(userEntries[0].pinStatus).toEqual(pinStatus);
-    expect(userEntries[0].updatedAt).toEqual(lastVisited);
+  describe('POST /me/history', () => {
+    it('works', async () => {
+      expect(await historyService.getEntriesByUser(user)).toHaveLength(1);
+      const pinStatus = true;
+      const lastVisited = new Date('2020-12-01 12:23:34');
+      const postEntryDto = new HistoryEntryImportDto();
+      postEntryDto.note = note2.alias;
+      postEntryDto.pinStatus = pinStatus;
+      postEntryDto.lastVisited = lastVisited;
+      await request(app.getHttpServer())
+        .post('/me/history')
+        .set('Content-Type', 'application/json')
+        .send(JSON.stringify({ history: [postEntryDto] }))
+        .expect(201);
+      const userEntries = await historyService.getEntriesByUser(user);
+      expect(userEntries.length).toEqual(1);
+      expect(userEntries[0].note.alias).toEqual(note2.alias);
+      expect(userEntries[0].user.userName).toEqual(user.userName);
+      expect(userEntries[0].pinStatus).toEqual(pinStatus);
+      expect(userEntries[0].updatedAt).toEqual(lastVisited);
+    });
+    describe('fails', () => {
+      let pinStatus: boolean;
+      let lastVisited: Date;
+      let postEntryDto: HistoryEntryImportDto;
+      let prevEntry: HistoryEntry;
+      beforeAll(async () => {
+        const previousHistory = await historyService.getEntriesByUser(user);
+        expect(previousHistory).toHaveLength(1);
+        prevEntry = previousHistory[0];
+        pinStatus = !previousHistory[0].pinStatus;
+        lastVisited = new Date('2020-12-01 23:34:45');
+        postEntryDto = new HistoryEntryImportDto();
+        postEntryDto.note = note2.alias;
+        postEntryDto.pinStatus = pinStatus;
+        postEntryDto.lastVisited = lastVisited;
+      });
+      it('with forbiddenId', async () => {
+        const brokenEntryDto = new HistoryEntryImportDto();
+        brokenEntryDto.note = forbiddenNoteId;
+        brokenEntryDto.pinStatus = pinStatus;
+        brokenEntryDto.lastVisited = lastVisited;
+        await request(app.getHttpServer())
+          .post('/me/history')
+          .set('Content-Type', 'application/json')
+          .send(JSON.stringify({ history: [brokenEntryDto] }))
+          .expect(400);
+      });
+      it('with non-existing note', async () => {
+        const brokenEntryDto = new HistoryEntryImportDto();
+        brokenEntryDto.note = 'i_dont_exist';
+        brokenEntryDto.pinStatus = pinStatus;
+        brokenEntryDto.lastVisited = lastVisited;
+        await request(app.getHttpServer())
+          .post('/me/history')
+          .set('Content-Type', 'application/json')
+          .send(JSON.stringify({ history: [brokenEntryDto] }))
+          .expect(400);
+      });
+      afterEach(async () => {
+        const historyEntries = await historyService.getEntriesByUser(user);
+        expect(historyEntries).toHaveLength(1);
+        expect(historyEntries[0].note.alias).toEqual(prevEntry.note.alias);
+        expect(historyEntries[0].user.userName).toEqual(
+          prevEntry.user.userName,
+        );
+        expect(historyEntries[0].pinStatus).toEqual(prevEntry.pinStatus);
+        expect(historyEntries[0].updatedAt).toEqual(prevEntry.updatedAt);
+      });
+    });
   });
 
   it('DELETE /me/history', async () => {
