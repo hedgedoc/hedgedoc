@@ -64,17 +64,17 @@ describe('AuthService', () => {
     it('works', async () => {
       const testPassword = 'thisIsATestPassword';
       const hash = await service.hashPassword(testPassword);
-      void service
+      await service
         .checkPassword(testPassword, hash)
         .then((result) => expect(result).toBeTruthy());
     });
     it('fails, if secret is too short', async () => {
       const secret = service.bufferToBase64Url(service.randomString(54));
       const hash = await service.hashPassword(secret);
-      void service
+      await service
         .checkPassword(secret, hash)
         .then((result) => expect(result).toBeTruthy());
-      void service
+      await service
         .checkPassword(secret.substr(0, secret.length - 1), hash)
         .then((result) => expect(result).toBeFalsy());
     });
@@ -113,11 +113,9 @@ describe('AuthService', () => {
     describe('fails:', () => {
       it('AuthToken could not be found', async () => {
         jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(undefined);
-        try {
-          await service.getAuthTokenAndValidate(authToken.keyId, token);
-        } catch (e) {
-          expect(e).toBeInstanceOf(NotInDBError);
-        }
+        await expect(
+          service.getAuthTokenAndValidate(authToken.keyId, token),
+        ).rejects.toThrow(NotInDBError);
       });
       it('AuthToken has wrong hash', async () => {
         jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
@@ -125,11 +123,9 @@ describe('AuthService', () => {
           user: user,
           accessTokenHash: 'the wrong hash',
         });
-        try {
-          await service.getAuthTokenAndValidate(authToken.keyId, token);
-        } catch (e) {
-          expect(e).toBeInstanceOf(TokenNotValidError);
-        }
+        await expect(
+          service.getAuthTokenAndValidate(authToken.keyId, token),
+        ).rejects.toThrow(TokenNotValidError);
       });
       it('AuthToken has wrong validUntil Date', async () => {
         const accessTokenHash = await service.hashPassword(token);
@@ -139,11 +135,9 @@ describe('AuthService', () => {
           accessTokenHash: accessTokenHash,
           validUntil: new Date(1549312452000),
         });
-        try {
-          await service.getAuthTokenAndValidate(authToken.keyId, token);
-        } catch (e) {
-          expect(e).toBeInstanceOf(TokenNotValidError);
-        }
+        await expect(
+          service.getAuthTokenAndValidate(authToken.keyId, token),
+        ).rejects.toThrow(TokenNotValidError);
       });
     });
   });
@@ -155,13 +149,13 @@ describe('AuthService', () => {
         user: user,
         lastUsed: new Date(1549312452000),
       });
-      jest
-        .spyOn(authTokenRepo, 'save')
-        .mockImplementationOnce(async (authTokenSaved, _) => {
+      jest.spyOn(authTokenRepo, 'save').mockImplementationOnce(
+        async (authTokenSaved, _): Promise<AuthToken> => {
           expect(authTokenSaved.keyId).toEqual(authToken.keyId);
           expect(authTokenSaved.lastUsed).not.toEqual(1549312452000);
           return authToken;
-        });
+        },
+      );
       await service.setLastUsedToken(authToken.keyId);
     });
   });
@@ -179,11 +173,11 @@ describe('AuthService', () => {
         user: user,
         accessTokenHash: accessTokenHash,
       });
-      jest
-        .spyOn(authTokenRepo, 'save')
-        .mockImplementationOnce(async (_, __) => {
+      jest.spyOn(authTokenRepo, 'save').mockImplementationOnce(
+        async (_, __): Promise<AuthToken> => {
           return authToken;
-        });
+        },
+      );
       const userByToken = await service.validateToken(
         `${authToken.keyId}.${token}`,
       );
@@ -193,15 +187,15 @@ describe('AuthService', () => {
       });
     });
     describe('fails:', () => {
-      it('the secret is missing', () => {
-        void expect(
+      it('the secret is missing', async () => {
+        await expect(
           service.validateToken(`${authToken.keyId}`),
-        ).rejects.toBeInstanceOf(TokenNotValidError);
+        ).rejects.toThrow(TokenNotValidError);
       });
       it('the secret is too long', async () => {
         await expect(
           service.validateToken(`${authToken.keyId}.${'a'.repeat(73)}`),
-        ).rejects.toBeInstanceOf(TokenNotValidError);
+        ).rejects.toThrow(TokenNotValidError);
       });
     });
   });
@@ -212,15 +206,15 @@ describe('AuthService', () => {
         ...authToken,
         user: user,
       });
-      jest
-        .spyOn(authTokenRepo, 'remove')
-        .mockImplementationOnce(async (token, __) => {
+      jest.spyOn(authTokenRepo, 'remove').mockImplementationOnce(
+        async (token, __): Promise<AuthToken> => {
           expect(token).toEqual({
             ...authToken,
             user: user,
           });
           return authToken;
-        });
+        },
+      );
       await service.removeToken(authToken.keyId);
     });
   });
@@ -233,12 +227,12 @@ describe('AuthService', () => {
           ...user,
           authTokens: [authToken],
         });
-        jest
-          .spyOn(authTokenRepo, 'save')
-          .mockImplementationOnce(async (authTokenSaved: AuthToken, _) => {
+        jest.spyOn(authTokenRepo, 'save').mockImplementationOnce(
+          async (authTokenSaved: AuthToken, _): Promise<AuthToken> => {
             expect(authTokenSaved.lastUsed).toBeUndefined();
             return authTokenSaved;
-          });
+          },
+        );
         const token = await service.createTokenForUser(
           user.userName,
           identifier,
@@ -257,12 +251,12 @@ describe('AuthService', () => {
           ...user,
           authTokens: [authToken],
         });
-        jest
-          .spyOn(authTokenRepo, 'save')
-          .mockImplementationOnce(async (authTokenSaved: AuthToken, _) => {
+        jest.spyOn(authTokenRepo, 'save').mockImplementationOnce(
+          async (authTokenSaved: AuthToken, _): Promise<AuthToken> => {
             expect(authTokenSaved.lastUsed).toBeUndefined();
             return authTokenSaved;
-          });
+          },
+        );
         const validUntil = new Date().getTime() + 30000;
         const token = await service.createTokenForUser(
           user.userName,
@@ -288,7 +282,7 @@ describe('AuthService', () => {
   });
 
   describe('toAuthTokenDto', () => {
-    it('works', async () => {
+    it('works', () => {
       const authToken = new AuthToken();
       authToken.keyId = 'testKeyId';
       authToken.label = 'testLabel';

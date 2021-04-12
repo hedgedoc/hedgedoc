@@ -419,13 +419,13 @@ describe('PermissionsService', () => {
   function permutator(
     inputArr: NoteGroupPermission[],
   ): NoteGroupPermission[][] {
-    const results = [];
+    const results: NoteGroupPermission[][] = [];
 
     function permute(
       arr: NoteGroupPermission[],
       memo: NoteGroupPermission[],
     ): NoteGroupPermission[][] {
-      let cur;
+      let cur: NoteGroupPermission[];
 
       for (let i = 0; i < arr.length; i++) {
         cur = arr.splice(i, 1);

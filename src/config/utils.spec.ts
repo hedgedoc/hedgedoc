@@ -28,7 +28,7 @@ describe('config utils', () => {
       ]);
     });
   });
-  describe('toArrayConfig', () => {
+  describe('replaceAuthErrorsWithEnvironmentVariables', () => {
     it('"gitlab[0].scope', () => {
       expect(
         replaceAuthErrorsWithEnvironmentVariables(

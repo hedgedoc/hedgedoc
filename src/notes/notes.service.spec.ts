@@ -196,22 +196,18 @@ describe('NotesService', () => {
     });
     describe('fails:', () => {
       it('alias is forbidden', async () => {
-        try {
-          await service.createNote(content, forbiddenNoteId);
-        } catch (e) {
-          expect(e).toBeInstanceOf(ForbiddenIdError);
-        }
+        await expect(
+          service.createNote(content, forbiddenNoteId),
+        ).rejects.toThrow(ForbiddenIdError);
       });
 
       it('alias is already used', async () => {
         jest.spyOn(noteRepo, 'save').mockImplementationOnce(async () => {
           throw new Error();
         });
-        try {
-          await service.createNote(content, alias);
-        } catch (e) {
-          expect(e).toBeInstanceOf(AlreadyInDBError);
-        }
+        await expect(service.createNote(content, alias)).rejects.toThrow(
+          AlreadyInDBError,
+        );
       });
     });
   });
@@ -225,7 +221,7 @@ describe('NotesService', () => {
       const newNote = await service.createNote(content);
       const revisions = await newNote.revisions;
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
-      void service.getNoteContent(newNote).then((result) => {
+      await service.getNoteContent(newNote).then((result) => {
         expect(result).toEqual(content);
       });
     });
@@ -240,7 +236,7 @@ describe('NotesService', () => {
       const newNote = await service.createNote(content);
       const revisions = await newNote.revisions;
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
-      void service.getLatestRevision(newNote).then((result) => {
+      await service.getLatestRevision(newNote).then((result) => {
         expect(result).toEqual(revisions[0]);
       });
     });
@@ -257,7 +253,7 @@ describe('NotesService', () => {
       const newNote = await service.createNote(content);
       const revisions = await newNote.revisions;
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
-      void service.getLatestRevision(newNote).then((result) => {
+      await service.getLatestRevision(newNote).then((result) => {
         expect(result).toEqual(revisions[0]);
       });
     });
@@ -274,19 +270,15 @@ describe('NotesService', () => {
     describe('fails:', () => {
       it('no note found', async () => {
         jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
-        try {
-          await service.getNoteByIdOrAlias('noteThatDoesNoteExist');
-        } catch (e) {
-          expect(e).toBeInstanceOf(NotInDBError);
-        }
+        await expect(
+          service.getNoteByIdOrAlias('noteThatDoesNoteExist'),
+        ).rejects.toThrow(NotInDBError);
       });
       it('id is forbidden', async () => {
         jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
-        try {
-          await service.getNoteByIdOrAlias(forbiddenNoteId);
-        } catch (e) {
-          expect(e).toBeInstanceOf(ForbiddenIdError);
-        }
+        await expect(
+          service.getNoteByIdOrAlias(forbiddenNoteId),
+        ).rejects.toThrow(ForbiddenIdError);
       });
     });
   });
@@ -587,36 +579,30 @@ describe('NotesService', () => {
     });
     describe('fails:', () => {
       it('userPermissions has duplicate entries', async () => {
-        try {
-          await service.updateNotePermissions(note, {
+        await expect(
+          service.updateNotePermissions(note, {
             sharedToUsers: [userPermissionUpdate, userPermissionUpdate],
             sharedToGroups: [],
-          });
-        } catch (e) {
-          expect(e).toBeInstanceOf(PermissionsUpdateInconsistentError);
-        }
+          }),
+        ).rejects.toThrow(PermissionsUpdateInconsistentError);
       });
 
       it('groupPermissions has duplicate entries', async () => {
-        try {
-          await service.updateNotePermissions(note, {
+        await expect(
+          service.updateNotePermissions(note, {
             sharedToUsers: [],
             sharedToGroups: [groupPermissionUpate, groupPermissionUpate],
-          });
-        } catch (e) {
-          expect(e).toBeInstanceOf(PermissionsUpdateInconsistentError);
-        }
+          }),
+        ).rejects.toThrow(PermissionsUpdateInconsistentError);
       });
 
       it('userPermissions and groupPermissions have duplicate entries', async () => {
-        try {
-          await service.updateNotePermissions(note, {
+        await expect(
+          service.updateNotePermissions(note, {
             sharedToUsers: [userPermissionUpdate, userPermissionUpdate],
             sharedToGroups: [groupPermissionUpate, groupPermissionUpate],
-          });
-        } catch (e) {
-          expect(e).toBeInstanceOf(PermissionsUpdateInconsistentError);
-        }
+          }),
+        ).rejects.toThrow(PermissionsUpdateInconsistentError);
       });
     });
   });
