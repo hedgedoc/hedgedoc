@@ -48,11 +48,9 @@ describe('GroupsService', () => {
     });
     it('fails with non-existing group', async () => {
       jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(undefined);
-      try {
-        await service.getGroupByName('i_dont_exist');
-      } catch (e) {
-        expect(e).toBeInstanceOf(NotInDBError);
-      }
+      await expect(service.getGroupByName('i_dont_exist')).rejects.toThrow(
+        NotInDBError,
+      );
     });
   });
 

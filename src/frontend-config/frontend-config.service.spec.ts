@@ -16,6 +16,10 @@ import { AppConfig } from '../config/app.config';
 import { ExternalServicesConfig } from '../config/external-services.config';
 import { Loglevel } from '../config/loglevel.enum';
 
+/* eslint-disable
+ jest/no-conditional-expect
+ */
+
 describe('FrontendConfigService', () => {
   const emptyAuthConfig: AuthConfig = {
     email: {

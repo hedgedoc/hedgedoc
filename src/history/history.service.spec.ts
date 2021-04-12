@@ -132,11 +132,9 @@ describe('HistoryService', () => {
     describe('fails', () => {
       it('with an non-existing note', async () => {
         jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
-        try {
-          await service.getEntryByNoteIdOrAlias(alias, {} as User);
-        } catch (e) {
-          expect(e).toBeInstanceOf(NotInDBError);
-        }
+        await expect(
+          service.getEntryByNoteIdOrAlias(alias, {} as User),
+        ).rejects.toThrow(NotInDBError);
       });
     });
   });
@@ -223,13 +221,11 @@ describe('HistoryService', () => {
         const note = Note.create(user, alias);
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
         jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
-        try {
-          await service.updateHistoryEntry(alias, user, {
+        await expect(
+          service.updateHistoryEntry(alias, user, {
             pinStatus: true,
-          });
-        } catch (e) {
-          expect(e).toBeInstanceOf(NotInDBError);
-        }
+          }),
+        ).rejects.toThrow(NotInDBError);
       });
     });
   });
@@ -276,6 +272,7 @@ describe('HistoryService', () => {
       it('without an entry', async () => {
         jest.spyOn(historyRepo, 'find').mockResolvedValueOnce([]);
         await service.deleteHistory(user);
+        expect(true).toBeTruthy();
       });
     });
   });
@@ -305,19 +302,15 @@ describe('HistoryService', () => {
         const note = Note.create(user, alias);
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
         jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
-        try {
-          await service.deleteHistoryEntry(alias, user);
-        } catch (e) {
-          expect(e).toBeInstanceOf(NotInDBError);
-        }
+        await expect(service.deleteHistoryEntry(alias, user)).rejects.toThrow(
+          NotInDBError,
+        );
       });
       it('without a note', async () => {
         jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
-        try {
-          await service.getEntryByNoteIdOrAlias(alias, {} as User);
-        } catch (e) {
-          expect(e).toBeInstanceOf(NotInDBError);
-        }
+        await expect(
+          service.getEntryByNoteIdOrAlias(alias, {} as User),
+        ).rejects.toThrow(NotInDBError);
       });
     });
   });

@@ -129,24 +129,16 @@ describe('MediaService', () => {
 
     describe('fails:', () => {
       it('MIME type not identifiable', async () => {
-        try {
-          await service.saveFile(Buffer.alloc(1), 'hardcoded', 'test');
-        } catch (e) {
-          expect(e).toBeInstanceOf(ClientError);
-          expect(e.message).toContain('detect');
-        }
+        await expect(
+          service.saveFile(Buffer.alloc(1), 'hardcoded', 'test'),
+        ).rejects.toThrow(ClientError);
       });
 
       it('MIME type not supported', async () => {
-        try {
-          const testText = await fs.readFile(
-            'test/public-api/fixtures/test.zip',
-          );
-          await service.saveFile(testText, 'hardcoded', 'test');
-        } catch (e) {
-          expect(e).toBeInstanceOf(ClientError);
-          expect(e.message).not.toContain('detect');
-        }
+        const testText = await fs.readFile('test/public-api/fixtures/test.zip');
+        await expect(
+          service.saveFile(testText, 'hardcoded', 'test'),
+        ).rejects.toThrow(ClientError);
       });
     });
   });
@@ -191,36 +183,36 @@ describe('MediaService', () => {
       jest
         .spyOn(mediaRepo, 'findOne')
         .mockResolvedValueOnce(mockMediaUploadEntry);
-      try {
-        await service.deleteFile(testFileName, 'hardcoded');
-      } catch (e) {
-        expect(e).toBeInstanceOf(PermissionError);
-      }
+      await expect(
+        service.deleteFile(testFileName, 'hardcoded'),
+      ).rejects.toThrow(PermissionError);
     });
   });
   describe('findUploadByFilename', () => {
     it('works', async () => {
       const testFileName = 'testFilename';
+      const userName = 'hardcoded';
+      const backendData = 'testBackendData';
       const mockMediaUploadEntry = {
         id: 'testMediaUpload',
-        backendData: 'testBackendData',
+        backendData: backendData,
         user: {
-          userName: 'hardcoded',
+          userName: userName,
         } as User,
       } as MediaUpload;
       jest
         .spyOn(mediaRepo, 'findOne')
         .mockResolvedValueOnce(mockMediaUploadEntry);
-      await service.findUploadByFilename(testFileName);
+      const mediaUpload = await service.findUploadByFilename(testFileName);
+      expect(mediaUpload.user.userName).toEqual(userName);
+      expect(mediaUpload.backendData).toEqual(backendData);
     });
     it("fails: can't find mediaUpload", async () => {
       const testFileName = 'testFilename';
       jest.spyOn(mediaRepo, 'findOne').mockResolvedValueOnce(undefined);
-      try {
-        await service.findUploadByFilename(testFileName);
-      } catch (e) {
-        expect(e).toBeInstanceOf(NotInDBError);
-      }
+      await expect(service.findUploadByFilename(testFileName)).rejects.toThrow(
+        NotInDBError,
+      );
     });
   });
 
