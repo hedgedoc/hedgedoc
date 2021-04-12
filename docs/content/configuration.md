@@ -102,6 +102,14 @@ these are rarely used for various reasons.
 | `sessionLife`         | `CMD_SESSION_LIFE`          | **`14 * 24 * 60 * 60 * 1000`**, `1209600000` (14 days)                  | Cookie session life time in milliseconds.                                                                                                                      |
 | `sessionSecret`       | `CMD_SESSION_SECRET`        | **`secret`**                                                            | Cookie session secret used to sign the session cookie. If none is set, one will randomly generated on each startup, meaning all your users will be logged out. |
 
+## Guest Notes autolock
+
+| config file           | environment                 | **default** and example value                                           | description                                                                                                                                                    |
+| --------------------- | --------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `lockGuestNotes` | | `{ timeout: 0,  permission: 'locked' }` | If the `timeout` setting is `>` 0, the autolock feature is activated. It'll automatically set the permission of guest notes, which have a creation date older than the timeout setting, to the permission defined in the `permission` setting. |
+| | `CMD_LOCKGUESTNOTES_TIMEOUT` | `0` | This is the maximum age in seconds a note is allowed to have before before the `CMD_LOCKGUESTNOTES_PERMISSION` is applied to it. If the timeout is set to 0, the autolock feature is disabled |
+| | `CMD_LOCKGUESTNOTES_PERMISSION` | `locked` | This variable defines the permission used when locking guest notes. |
+
 ## Login methods
 
 ### Email (local account)

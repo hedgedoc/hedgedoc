@@ -276,6 +276,13 @@ models.sequelize.authenticate().then(function () {
     } else {
       throw new Error('server still not ready after db synced')
     }
+    // Allow to timeout-lock guest notes so they can no longer be changed after the timeout period
+    if (config.lockGuestNotes.timeout > 0) {
+      setInterval(models.Note.lockOldGuestNotes, (config.lockGuestNotes.timeout / 2) * 1000, config.lockGuestNotes.timeout, config.lockGuestNotes.permission)
+      // Additional call of the lockOldGuestNotes function to make sure notes that weren't locked during the last app run, can get locked.
+      // We run this 30 seconds after start, to give the app a bit of warmup, but not waiting too long.
+      setTimeout(models.Note.lockOldGuestNotes, 30 * 1000, config.lockGuestNotes.timeout, config.lockGuestNotes.permission)
+    }
   })
 })
 
