@@ -11,6 +11,8 @@ import { Repository } from 'typeorm';
 import { Group } from './group.entity';
 import { NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
+import { ConfigModule } from '@nestjs/config';
+import appConfigMock from '../config/mock/app.config.mock';
 
 describe('GroupsService', () => {
   let service: GroupsService;
@@ -26,7 +28,13 @@ describe('GroupsService', () => {
           useClass: Repository,
         },
       ],
-      imports: [LoggerModule],
+      imports: [
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock],
+        }),
+        LoggerModule,
+      ],
     }).compile();
 
     service = module.get<GroupsService>(GroupsService);

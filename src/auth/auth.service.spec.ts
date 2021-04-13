@@ -21,6 +21,8 @@ import { LoggerModule } from '../logger/logger.module';
 import { AuthToken } from './auth-token.entity';
 import { NotInDBError, TokenNotValidError } from '../errors/errors';
 import { Repository } from 'typeorm';
+import { ConfigModule } from '@nestjs/config';
+import appConfigMock from '../config/mock/app.config.mock';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -38,7 +40,15 @@ describe('AuthService', () => {
           useClass: Repository,
         },
       ],
-      imports: [PassportModule, UsersModule, LoggerModule],
+      imports: [
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock],
+        }),
+        PassportModule,
+        UsersModule,
+        LoggerModule,
+      ],
     })
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
