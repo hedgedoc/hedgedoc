@@ -68,24 +68,10 @@ Check out [the configuration docs](/configuration) for more details.
 You can upgrade to the latest release by stopping the containers and changing the referenced image version in `docker-compose.yml`.  
 Then run `docker-compose up` to start HedgeDoc again. 
 
-### Migrating from HackMD
+### Migrating from CodiMD & HackMD
 
-If you used the [`docker-hackmd`](https://github.com/hackmdio/docker-hackmd) repository before,
-you can migrate to [`hedgedoc-container`](https://github.com/hedgedoc/container).
-
-`hedgedoc-container` is a fork of `docker-hackmd`, so you need to replace the upstream URL:
-
-```shell
-git remote set-url origin https://github.com/hedgedoc/container.git
-git pull
-```
-
-Since both codebases diverged since the fork, we recommend that you read the
-[HedgeDoc release notes](https://hedgedoc.org/releases/) at
-least since 1.6.0 and follow any instructions present there. A particular issue
-that has come up is when handling TLS connections when using a reverse proxy.
-You must [set the `X-Forwarded-Proto` header
-correctly](https://docs.hedgedoc.org/guides/reverse-proxy/).
+If you currently use CodiMD or HackMD, you should be able to swap the docker image for ours.
+See [the general migration hints](/setup/getting-started/#migrating-from-codimd-hackmd) for compatibility details.
 
 
 ## Backup
