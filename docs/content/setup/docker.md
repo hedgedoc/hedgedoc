@@ -91,23 +91,3 @@ If you want to restore your PostgreSQL backup, run these commands before startin
 docker-compose up -d database
 cat backup.sql | docker exec -i $(docker-compose ps -q database) psql -U hedgedoc
 ```
-
-## Custom build
-
-The default setting is to use pre-built docker images.  
-If you want to build your own containers uncomment the `build` section in the
-[`docker-compose.yml`](https://github.com/hedgedoc/container/blob/master/docker-compose.yml)
-and edit the
-[`config.json`](https://github.com/hedgedoc/container/blob/master/resources/config.json).
-
-If you change the database settings and don't use the `CMD_DB_URL` make sure
-you edit the
-[`.sequelizerc`](https://github.com/hedgedoc/container/blob/master/resources/.sequelizerc).
-
-## Issues
-
-If you have any problems with or questions about this image, please contact us
-through a [GitHub issue](https://github.com/hedgedoc/container/issues).
-
-You can also reach many of the project maintainers via our matrix room
-[`#hedgedoc:matrix.org`](https://chat.hedgedoc.org).
