@@ -6,6 +6,8 @@ To set up your instance follow these steps:
 1. Choose an installation method and follow the instructions
 2. [Configure your reverse proxy](https://docs.hedgedoc.org/guides/reverse-proxy/)
 3. [Configure HedgeDoc](https://docs.hedgedoc.org/configuration/)
+4. If you didn't disable [local accounts](/configuration/#email-local-account), you can use the "Sign In" button to
+   create an account, login and start using HedgeDoc.
 
 Follow us on <a href="https://social.hedgedoc.org/" target="_blank" rel="noreferer noopener">:fontawesome-brands-mastodon:{: .mastodon }Mastodon</a> or <a href="https://social.hedgedoc.org/twitter" target="_blank" rel="noreferer noopener">:fontawesome-brands-twitter:{: .twitter }Twitter</a> for updates.
 
