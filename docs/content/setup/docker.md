@@ -6,18 +6,46 @@
     - [Docker Compose](https://docs.docker.com/compose/install/)
 
 The official docker images are [available on quay.io](https://quay.io/repository/hedgedoc/hedgedoc).
-We currently only support the AMD64 architecture.
+We currently only support the `amd64` architecture.
 
 
 The easiest way to get started with HedgeDoc and Docker is to use the following `docker-compose.yml`:
 
-```shell
-git clone https://github.com/hedgedoc/container.git hedgedoc-container
-cd hedgedoc-container
-docker-compose up
+!!! warning
+    This is a minimal example to get started quickly and not intended for production use.
+
+```yaml
+version: '3'
+services:
+  database:
+    image: postgres:9.6-alpine
+    environment:
+      - POSTGRES_USER=hedgedoc
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=hedgedoc
+    volumes:
+      - database:/var/lib/postgresql/data
+    restart: always
+  app:
+    # Make sure to use the latest release from https://hedgedoc.org/latest-release
+    image: quay.io/hedgedoc/hedgedoc:1.7.2
+    environment:
+      - CMD_DB_URL=postgres://hedgedoc:password@database:5432/hedgedoc
+      - CMD_DOMAIN=localhost
+      - CMD_URL_ADDPORT=true
+    volumes:
+      - uploads:/hedgedoc/public/uploads
+    ports:
+      - "3000:3000"
+    restart: always
+    depends_on:
+      - database
+volumes:
+  database:
+  uploads:
 ```
-HedgeDoc should now be available at http://127.0.0.1:3000.  
-You can configure your container with a config file or with env vars.
+After executing `docker-compose up`, HedgeDoc should be available at [http://127.0.0.1:3000](http://127.0.0.1:3000).  
+You can now continue to configure your container with environment variables.
 Check out [the configuration docs](/configuration) for more details.
 
 ## Upgrading
@@ -37,14 +65,8 @@ Check out [the configuration docs](/configuration) for more details.
     ```
     before running `docker-compose up`.
 
-You can upgrade to the latest release using these commands:
-
-```shell
-cd hedgedoc-container # Enter the directory you previously cloned into
-git pull # Pull new commits
-docker-compose pull # Pull new container images
-docker-compose up # Start with the new images
-```
+You can upgrade to the latest release by stopping the containers and changing the referenced image version in `docker-compose.yml`.  
+Then run `docker-compose up` to start HedgeDoc again. 
 
 ### Migrating from HackMD
 
