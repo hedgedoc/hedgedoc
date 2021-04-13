@@ -85,6 +85,9 @@ export class ConsoleLoggerService {
 
   private makeContextString(functionContext: string): string {
     let context = this.classContext;
+    if (!context) {
+      context = 'HedgeDoc';
+    }
     if (functionContext) {
       context += '.' + functionContext + '()';
     }
