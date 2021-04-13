@@ -18,7 +18,20 @@
 2. Download the [latest release](https://hedgedoc.org/latest-release/) and extract it.  
    <small>Alternatively, you can use Git to clone the repository and checkout a release, e.g. with `git clone -b 1.7.2 https://github.com/hedgedoc/hedgedoc.git`.</small>
 3. Enter the directory and type `bin/setup`, which will install the dependencies and create example configs.
-4. Configure HedgeDoc: You can either use the `config.json` file or environment variables.  
+4. Configure HedgeDoc: To get started, you can use this minimal `config.json`:
+   ```json
+   {
+     "production": {
+       "db": {
+         "dialect": "sqlite",
+         "storage": "./db.hedgedoc.sqlite"
+      },
+       "urlAddPort": true,
+       "domain": "localhost"
+     }
+   }
+   ```
+   It's also possible to use environment variables.
    For details, have a look at [the configuration documentation](../configuration.md).
 5. *:octicons-light-bulb-16: If you used the release tarball for 1.7.0 or newer, this step can be skipped.*  
    Build the frontend bundle by running `yarn run build`.
@@ -27,7 +40,8 @@
    NODE_ENV=production yarn start
    ```
    This way it's easier to see warnings or errors that might occur.  
-   <small>You can leave out `NODE_ENV=production` for development.</small>
+   <small>You can leave out `NODE_ENV=production` for development.</small>  
+7. If you used the example config, HedgeDoc should now be available at [http://127.0.0.1:3000](http://127.0.0.1:3000).
 8. Run the server as you like (node, forever, pm2, systemd, Init-Scripts).  
    See [below](#systemd-unit-example) for an example using systemd.
 
