@@ -6,7 +6,6 @@
 
 describe('Short code gets replaced or rendered: ', () => {
   beforeEach(() => {
-    cy.loadConfig()
     cy.visitTestEditor()
   })
 

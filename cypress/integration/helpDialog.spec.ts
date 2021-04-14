@@ -6,7 +6,6 @@
 
 describe('Help Dialog', () => {
   beforeEach(() => {
-    cy.loadConfig()
     cy.visitTestEditor()
   })
 

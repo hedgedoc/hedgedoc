@@ -9,7 +9,6 @@ describe('Toolbar Buttons', () => {
   const testLink = 'http://hedgedoc.org'
 
   beforeEach(() => {
-    cy.loadConfig()
     cy.visitTestEditor()
 
     cy.get('.CodeMirror')

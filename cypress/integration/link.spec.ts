@@ -8,7 +8,6 @@ import '../support/index'
 
 describe('Links Intro', () => {
   beforeEach(() => {
-    cy.loadConfig()
     cy.visit('/')
   })
 

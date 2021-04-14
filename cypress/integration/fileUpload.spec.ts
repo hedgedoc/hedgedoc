@@ -8,7 +8,6 @@ const imageUrl = 'http://example.com/non-existing.png'
 
 describe('File upload', () => {
   beforeEach(() => {
-    cy.loadConfig()
     cy.visitTestEditor()
   })
 

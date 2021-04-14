@@ -12,6 +12,9 @@
 # testing
 /coverage
 
+# downloaded files during tests with cypress
+/cypress/downloads
+
 # production
 /build
 

@@ -8,7 +8,6 @@ import { banner } from '../support/config'
 
 describe('Banner', () => {
   beforeEach(() => {
-    cy.loadConfig()
     cy.visit('/')
     expect(localStorage.getItem('bannerTimeStamp')).to.be.null
   })

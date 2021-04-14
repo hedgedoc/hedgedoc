@@ -6,7 +6,6 @@
 
 describe('markdown formatted links to', () => {
   beforeEach(() => {
-    cy.loadConfig()
     cy.visitTestEditor()
   })
 
@@ -50,7 +49,6 @@ describe('markdown formatted links to', () => {
 
 describe('HTML anchor element links to', () => {
   beforeEach(() => {
-    cy.loadConfig()
     cy.visitTestEditor()
   })
 

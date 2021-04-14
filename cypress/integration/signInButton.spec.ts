@@ -31,7 +31,6 @@ const initLoggedOutTestWithCustomAuthProviders = (cy: Cypress.cy, enabledProvide
 
 describe('When logged-in, ', () => {
   it('sign-in button is hidden', () => {
-    cy.loadConfig()
     cy.visit('/')
     cy.get('[data-cy=sign-in-button]')
       .should('not.exist')

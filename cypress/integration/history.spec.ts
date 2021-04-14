@@ -6,7 +6,6 @@
 
 describe('History', () => {
   beforeEach(() => {
-    cy.loadConfig()
     cy.visit('/history')
   })
 

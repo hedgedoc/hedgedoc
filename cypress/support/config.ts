@@ -71,3 +71,7 @@ Cypress.Commands.add('loadConfig', (additionalConfig?: Partial<typeof config>) =
     }
   })
 })
+
+beforeEach(() => {
+  cy.loadConfig()
+})

@@ -5,10 +5,6 @@
  */
 
 describe('Editor mode from URL parameter is used', () => {
-  beforeEach(() => {
-    cy.loadConfig()
-  })
-
   it('mode view', () => {
     cy.visitTestEditor('view')
     cy.get('.splitter.left')

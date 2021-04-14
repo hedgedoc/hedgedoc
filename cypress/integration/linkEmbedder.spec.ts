@@ -6,7 +6,6 @@
 
 describe('Link gets replaced with embedding: ', () => {
   beforeEach(() => {
-    cy.loadConfig()
     cy.visitTestEditor()
   })
 

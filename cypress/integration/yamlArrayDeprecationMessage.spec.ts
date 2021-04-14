@@ -6,7 +6,6 @@
 
 describe('YAML Array for deprecated syntax of document tags in frontmatter', () => {
   beforeEach(() => {
-    cy.loadConfig()
     cy.visitTestEditor()
   })
 

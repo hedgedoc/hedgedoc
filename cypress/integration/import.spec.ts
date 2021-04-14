@@ -6,7 +6,6 @@
 
 describe('Import markdown file', () => {
   beforeEach(() => {
-    cy.loadConfig()
     cy.visitTestEditor()
   })
 

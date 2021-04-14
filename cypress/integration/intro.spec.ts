@@ -7,7 +7,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 describe('Intro page', () => {
   beforeEach(() => {
-    cy.loadConfig()
     cy.intercept('/intro.md', 'test content')
     cy.visit('/')
   })

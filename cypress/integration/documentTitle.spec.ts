@@ -9,7 +9,6 @@ import { branding } from '../support/config'
 const title = 'This is a test title'
 describe('Document Title', () => {
   beforeEach(() => {
-    cy.loadConfig()
     cy.visitTestEditor()
     cy.get('.btn.active.btn-outline-secondary > i.fa-columns')
       .should('exist')
