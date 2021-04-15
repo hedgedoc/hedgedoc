@@ -166,14 +166,14 @@
     "cross-env": "7.0.3",
     "cypress": "7.1.0",
     "cypress-commands": "1.1.0",
-    "cypress-file-upload": "5.0.5",
+    "cypress-file-upload": "5.0.6",
     "eslint-plugin-chai-friendly": "0.6.0",
     "eslint-plugin-cypress": "2.11.2",
     "http-server": "0.12.3",
     "redux-devtools": "3.7.0",
     "redux-devtools-extension": "2.13.9",
     "ts-loader": "8.1.0",
-    "webpack-bundle-analyzer": "4.4.0"
+    "webpack-bundle-analyzer": "4.4.1"
   },
   "resolutions": {
     "cypress": "7.1.0"
