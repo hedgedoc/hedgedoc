@@ -12,7 +12,7 @@ import { getAndSetUser } from '../../login-page/auth/utils'
 
 export const loadAllConfig: (baseUrl: string) => Promise<void> = async (baseUrl) => {
   setApiUrl({
-    apiUrl: (process.env.REACT_APP_BACKEND || baseUrl) + '/api/v2'
+    apiUrl: (process.env.REACT_APP_BACKEND || baseUrl) + '/api/private'
   })
 
   const config = await getConfig()
