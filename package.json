@@ -176,6 +176,7 @@
     "webpack-bundle-analyzer": "4.4.1"
   },
   "resolutions": {
-    "cypress": "7.1.0"
+    "cypress": "7.1.0",
+    "katex": "0.13.2"
   }
 }
