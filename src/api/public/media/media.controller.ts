@@ -67,7 +67,15 @@ export class MediaController {
   @Post()
   @ApiConsumes('multipart/form-data')
   @ApiBody({
-    description: 'The binary file to upload',
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
   })
   @ApiHeader({
     name: 'HedgeDoc-Note',
