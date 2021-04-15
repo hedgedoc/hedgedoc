@@ -14,15 +14,17 @@ import { MediaConfig } from './config/media.config';
 import { NestConsoleLoggerService } from './logger/nest-console-logger.service';
 import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
 import { BackendType } from './media/backends/backend-type.enum';
+import { AddVersionInterceptor } from './utils/version.interceptor';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const logger = await app.resolve(NestConsoleLoggerService);
-  logger.log('Switching logger', 'AppBootstrap');
-  app.useLogger(logger);
   const configService = app.get(ConfigService);
   const appConfig = configService.get<AppConfig>('appConfig');
   const mediaConfig = configService.get<MediaConfig>('mediaConfig');
+  logger.log('Switching logger', 'AppBootstrap');
+  app.useLogger(logger);
+  app.useGlobalInterceptors(new AddVersionInterceptor(appConfig));
 
   setupPublicApiDocs(app);
   if (process.env.NODE_ENV === 'development') {
