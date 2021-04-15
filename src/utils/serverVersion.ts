@@ -32,3 +32,15 @@ export async function getServerVersionFromPackageJson(): Promise<ServerVersion> 
 
   return versionCache;
 }
+
+export async function getVersionString(): Promise<string> {
+  const serverVersion = await this.getServerVersionFromPackageJson();
+  let versionString = `${serverVersion.major}.${serverVersion.minor}.${serverVersion.patch}`;
+  if (serverVersion.preRelease) {
+    versionString += `-${serverVersion.preRelease}`;
+  }
+  if (serverVersion.commit) {
+    return serverVersion.commit;
+  }
+  return versionString;
+}
