@@ -11,7 +11,7 @@ import { join as joinPath } from 'path';
 let versionCache: ServerVersion;
 
 export async function getServerVersionFromPackageJson(): Promise<ServerVersion> {
-  if (versionCache === null) {
+  if (versionCache === undefined) {
     const rawFileContent: string = await fs.readFile(
       joinPath(__dirname, '../../package.json'),
       { encoding: 'utf8' },
