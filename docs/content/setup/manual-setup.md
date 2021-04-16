@@ -17,7 +17,7 @@
 1. Check if you meet the [requirements at the top of this document](#manual-installation).
 2. Download the [latest release](https://hedgedoc.org/latest-release/) and extract it.  
    <small>Alternatively, you can use Git to clone the repository and checkout a release, e.g. with `git clone -b 1.7.2 https://github.com/hedgedoc/hedgedoc.git`.</small>
-3. Enter the directory and type `bin/setup`, which will install the dependencies and create example configs.
+3. Enter the directory and execute `bin/setup`, which will install the dependencies and create example configs.
 4. Configure HedgeDoc: To get started, you can use this minimal `config.json`:
    ```json
    {
@@ -33,7 +33,7 @@
    ```
    It's also possible to use environment variables.
    For details, have a look at [the configuration documentation](../configuration.md).
-5. *:octicons-light-bulb-16: If you used the release tarball for 1.7.0 or newer, this step can be skipped.*  
+5. *:octicons-light-bulb-16: If you use the release tarball for 1.7.0 or newer, this step can be skipped.*  
    Build the frontend bundle by running `yarn run build`.
 6. It is recommended to start your server manually once:  
    ```shell
@@ -41,7 +41,7 @@
    ```
    This way it's easier to see warnings or errors that might occur.  
    <small>You can leave out `NODE_ENV=production` for development.</small>  
-7. If you used the example config, HedgeDoc should now be available at [http://127.0.0.1:3000](http://127.0.0.1:3000).
+7. If you use the example config, HedgeDoc should now be available at [http://127.0.0.1:3000](http://127.0.0.1:3000).
 8. Run the server as you like (node, forever, pm2, systemd, Init-Scripts).  
    See [below](#systemd-unit-example) for an example using systemd.
 
@@ -51,7 +51,7 @@
     Before you upgrade, **always read the release notes**.  
     You can find them on our [releases page](https://hedgedoc.org/releases/).
 
-If you are upgrading HedgeDoc from an older version, follow these steps:
+If you want to upgrade HedgeDoc from an older version, follow these steps:
 
 1. Check if you still meet the [requirements at the top of this document](#requirements-on-your-server).
 2. Ensure you read the [release notes](https://hedgedoc.org/releases/) of all versions between your current version
