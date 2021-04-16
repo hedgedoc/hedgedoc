@@ -30,15 +30,15 @@ more details.
 
 ## Community and Contributions
 
-We welcome contributions!  
-Have a look at our [contribution docs](CONTRIBUTING.md) to find out how you can help. If you want to contribute to
-HedgeDoc 2, please join our [development chat][matrix.org-dev-url].
-
 To stay up to date with our work or get support it's recommended to join our
 [Matrix channel][matrix.org-url], stop by our [community forums][hedgedoc-community]
 or subscribe to the [release feed][github-release-feed]. We also engage in
 regular [community calls][hedgedoc-community-calls] ([RSS](https://community.codimd.org/t/codimd-community-call/19.rss))
 which you are very welcome to join.
+
+We welcome contributions!  
+Have a look at our [contribution docs](CONTRIBUTING.md) to find out how you can help. If you want to contribute to
+HedgeDoc 2, please join our [development chat][matrix.org-dev-url].
 
 # License
 
