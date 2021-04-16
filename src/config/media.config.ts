@@ -28,6 +28,11 @@ export interface MediaConfig {
     imgur: {
       clientID: string;
     };
+    webdav: {
+      connectionString: string;
+      uploadDir: string;
+      publicUrl: string;
+    };
   };
 }
 
@@ -70,6 +75,21 @@ const mediaSchema = Joi.object({
       }),
       otherwise: Joi.optional(),
     }),
+    webdav: Joi.when('use', {
+      is: Joi.valid(BackendType.WEBDAV),
+      then: Joi.object({
+        connectionString: Joi.string()
+          .uri()
+          .label('HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING'),
+        uploadDir: Joi.string()
+          .optional()
+          .label('HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR'),
+        publicUrl: Joi.string()
+          .uri()
+          .label('HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL'),
+      }),
+      otherwise: Joi.optional(),
+    }),
   },
 });
 
@@ -94,6 +114,12 @@ export default registerAs('mediaConfig', () => {
         },
         imgur: {
           clientID: process.env.HD_MEDIA_BACKEND_IMGUR_CLIENT_ID,
+        },
+        webdav: {
+          connectionString:
+            process.env.HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING,
+          uploadDir: process.env.HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR,
+          publicUrl: process.env.HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL,
         },
       },
     },
