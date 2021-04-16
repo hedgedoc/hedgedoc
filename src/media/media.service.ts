@@ -25,6 +25,7 @@ import { ImgurBackend } from './backends/imgur-backend';
 import { User } from '../users/user.entity';
 import { MediaUploadDto } from './media-upload.dto';
 import { Note } from '../notes/note.entity';
+import { WebdavBackend } from './backends/webdav-backend';
 
 @Injectable()
 export class MediaService {
@@ -203,6 +204,8 @@ export class MediaService {
         return BackendType.IMGUR;
       case 's3':
         return BackendType.S3;
+      case 'webdav':
+        return BackendType.WEBDAV;
     }
   }
 
@@ -216,6 +219,8 @@ export class MediaService {
         return this.moduleRef.get(AzureBackend);
       case BackendType.IMGUR:
         return this.moduleRef.get(ImgurBackend);
+      case BackendType.WEBDAV:
+        return this.moduleRef.get(WebdavBackend);
     }
   }
 
