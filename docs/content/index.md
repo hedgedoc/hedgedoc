@@ -1,6 +1,7 @@
 # Welcome to the HedgeDoc 2 Documentation
 
-![HedgeDoc Logo](images/hedgedoc_logo_horizontal.svg)
+<img alt="HedgeDoc Logo" title="HedgeDoc Logo" class="light-mode-only" src="images/hedgedoc_logo_black.svg">
+<img alt="HedgeDoc Logo" title="HedgeDoc Logo" class="dark-mode-only" src="images/hedgedoc_logo_white.svg">
 
 🚧⚠️🚧 **HedgeDoc 2.0 is still in development!**  
 You are probably looking for the 1.x docs.  
