@@ -8,7 +8,26 @@ module.exports = {
     project: 'tsconfig.json',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint'],
+  overrides: [
+    {
+      files: ['test/**', 'src/**/*.spec.ts'],
+      extends: ['plugin:jest/recommended'],
+      rules: {
+        '@typescript-eslint/unbound-method': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/require-await': 'off',
+        'jest/unbound-method': 'error',
+        'jest/expect-expect': [
+          'error',
+          {
+            assertFunctionNames: ['expect', 'request.**.expect'],
+          },
+        ],
+      },
+    },
+  ],
+  plugins: ['@typescript-eslint', 'jest'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',

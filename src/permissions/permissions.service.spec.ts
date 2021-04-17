@@ -4,12 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-/* eslint-disable
-@typescript-eslint/no-unsafe-call,
-@typescript-eslint/no-unsafe-member-access,
-@typescript-eslint/no-unsafe-return,
-@typescript-eslint/require-await */
-
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { AuthToken } from '../auth/auth-token.entity';
@@ -425,13 +419,13 @@ describe('PermissionsService', () => {
   function permutator(
     inputArr: NoteGroupPermission[],
   ): NoteGroupPermission[][] {
-    const results = [];
+    const results: NoteGroupPermission[][] = [];
 
     function permute(
       arr: NoteGroupPermission[],
       memo: NoteGroupPermission[],
     ): NoteGroupPermission[][] {
-      let cur;
+      let cur: NoteGroupPermission[];
 
       for (let i = 0; i < arr.length; i++) {
         cur = arr.splice(i, 1);

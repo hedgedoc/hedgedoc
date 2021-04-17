@@ -4,11 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-/* eslint-disable
-@typescript-eslint/no-unsafe-assignment,
-@typescript-eslint/no-unsafe-member-access
-*/
-
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test } from '@nestjs/testing';
