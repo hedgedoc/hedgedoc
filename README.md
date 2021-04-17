@@ -4,7 +4,7 @@ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-HedgeDoc 2
+HedgeDoc
 ===
 
 [![#HedgeDoc on matrix.org][matrix.org-image]][matrix.org-url]
@@ -16,25 +16,30 @@ HedgeDoc 2
 ![Nest.JS CI][nestjs-workflow-badge]
 [![codecov][codecov-badge]][codecov-url]
 
-HedgeDoc lets you create real-time collaborative markdown notes. Have a look at [our website](https://hedgedoc.org) for
-more details.
+HedgeDoc lets you create real-time collaborative markdown notes. 
 
-⚠️⚠️⚠️ **Important:** We are currently working on HedgeDoc 2, a complete rewrite of HedgeDoc. Please note the following:
+## Getting Started
+- ℹ️ Read all about HedgeDoc and the history of the project on [our website](https://hedgedoc.org)
+- 🧪 Try out HedgeDoc with the [demo instance][hedgedoc-demo]. Check out the [features page][hedgedoc-demo-features]!
+- 💽 Install HedgeDoc yourself using the [install guide](https://docs.hedgedoc.org/setup/getting-started/)
+- ❓ Questions? Join our [Matrix chat][matrix.org-url] or the [community forums][hedgedoc-community]
+- 💬 Stay up to date by subscribing to the [release feed][github-release-feed]
 
-- This branch contains the latest development code and does not implement all features yet. **If you are looking for the
-  1.x source code, have a look at the `master` branch.**
+
+## State of the project
+HedgeDoc 1.x is stable and used around the world, but the codebase has [grown over time](https://hedgedoc.org/history/),
+making it hard to add new features.  
+We are currently working on HedgeDoc 2, a complete rewrite of HedgeDoc. Please note the following:
+
+- This branch contains the latest development code and does not implement all features yet.
+  **If you are looking for the 1.x source code, have a look at the [master branch](https://github.com/hedgedoc/hedgedoc/tree/master).**
 - HedgeDoc 2 will be split in two components: the backend (this repo) and the frontend in
   the [react-client repo](https://github.com/hedgedoc/react-client).
 - The 1.x release is maintenance-only. We do not accept feature requests or PRs for this release anymore and may choose
   to close non-critical bug reports, if the bug will be non-existent in 2.0.
 
-## Community and Contributions
 
-To stay up to date with our work or get support it's recommended to join our
-[Matrix channel][matrix.org-url], stop by our [community forums][hedgedoc-community]
-or subscribe to the [release feed][github-release-feed]. We also engage in
-regular [community calls][hedgedoc-community-calls] ([RSS](https://community.codimd.org/t/codimd-community-call/19.rss))
-which you are very welcome to join.
+## Contributions
 
 We welcome contributions!  
 Have a look at our [contribution docs](CONTRIBUTING.md) to find out how you can help. If you want to contribute to
