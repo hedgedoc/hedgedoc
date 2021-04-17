@@ -27,6 +27,8 @@ HedgeDoc lets you create real-time collaborative markdown notes.
 
 
 ## State of the project
+HedgeDoc 1.x is stable and used around the world, but the codebase has [grown over time](https://hedgedoc.org/history/),
+making it hard to add new features.  
 We are currently working on HedgeDoc 2, a complete rewrite of HedgeDoc. Please note the following:
 
 - This branch contains the latest development code and does not implement all features yet.
