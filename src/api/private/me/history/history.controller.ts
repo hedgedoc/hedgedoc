@@ -19,7 +19,7 @@ import { UsersService } from '../../../../users/users.service';
 import { NotesService } from '../../../../notes/notes.service';
 import { HistoryEntryDto } from '../../../../history/history-entry.dto';
 import { NotInDBError } from '../../../../errors/errors';
-import { HistoryEntryCreationDto } from '../../../../history/history-entry-creation.dto';
+import { HistoryEntryImportDto } from '../../../../history/history-entry-import.dto';
 import { HistoryEntryUpdateDto } from '../../../../history/history-entry-update.dto';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { HistoryService } from '../../../../history/history.service';
@@ -55,7 +55,7 @@ export class HistoryController {
 
   @Post()
   async setHistory(
-    @Body('history') history: HistoryEntryCreationDto[],
+    @Body('history') history: HistoryEntryImportDto[],
   ): Promise<void> {
     try {
       // ToDo: use actual user here
@@ -65,7 +65,12 @@ export class HistoryController {
         const note = await this.noteService.getNoteByIdOrAlias(
           historyEntry.note,
         );
-        await this.historyService.createOrUpdateHistoryEntry(note, user);
+        await this.historyService.createOrUpdateHistoryEntry(
+          note,
+          user,
+          historyEntry.pinStatus,
+          historyEntry.lastVisited,
+        );
       }
     } catch (e) {
       if (e instanceof NotInDBError) {

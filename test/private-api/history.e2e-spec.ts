@@ -26,7 +26,7 @@ import { UsersModule } from '../../src/users/users.module';
 import { PrivateApiModule } from '../../src/api/private/private-api.module';
 import { HistoryService } from '../../src/history/history.service';
 import { Note } from '../../src/notes/note.entity';
-import { HistoryEntryCreationDto } from '../../src/history/history-entry-creation.dto';
+import { HistoryEntryImportDto } from '../../src/history/history-entry-import.dto';
 
 describe('History', () => {
   let app: INestApplication;
@@ -100,8 +100,13 @@ describe('History', () => {
   });
 
   it('POST /me/history', async () => {
-    const postEntryDto = new HistoryEntryCreationDto();
+    expect((await historyService.getEntriesByUser(user)).length).toEqual(1);
+    const pinStatus = true;
+    const lastVisited = new Date('2020-12-01 12:23:34');
+    const postEntryDto = new HistoryEntryImportDto();
     postEntryDto.note = note2.alias;
+    postEntryDto.pinStatus = pinStatus;
+    postEntryDto.lastVisited = lastVisited;
     await request(app.getHttpServer())
       .post('/me/history')
       .set('Content-Type', 'application/json')
@@ -110,6 +115,9 @@ describe('History', () => {
     const userEntries = await historyService.getEntriesByUser(user);
     expect(userEntries.length).toEqual(1);
     expect(userEntries[0].note.alias).toEqual(note2.alias);
+    expect(userEntries[0].user.userName).toEqual(user.userName);
+    expect(userEntries[0].pinStatus).toEqual(pinStatus);
+    expect(userEntries[0].updatedAt).toEqual(lastVisited);
   });
 
   it('DELETE /me/history', async () => {
