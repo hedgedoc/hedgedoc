@@ -160,7 +160,7 @@
   },
   "devDependencies": {
     "@cypress/webpack-preprocessor": "5.7.0",
-    "@testing-library/cypress": "7.0.5",
+    "@testing-library/cypress": "7.0.6",
     "@types/redux-devtools": "3.0.47",
     "@types/redux-devtools-extension": "2.13.2",
     "cross-env": "7.0.3",
