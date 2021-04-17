@@ -36,7 +36,6 @@ nav:
           - MinIO: guides/minio-image-upload.md
           - S3: guides/s3-image-upload.md
       - Migrate from Etherpad: guides/migrate-etherpad.md
-      - Breaking Changes: guides/migrations-and-breaking-changes.md
       - Migration Troubleshooting: guides/migration-troubleshooting.md
       - Terms of Use Setup: guides/providing-terms.md
   - Configuration: configuration.md
@@ -60,6 +59,7 @@ markdown_extensions:
       emoji_generator: !!python/name:materialx.emoji.to_svg
   - attr_list
   - footnotes
+  - admonition
 theme:
   name: 'material'
   language: en

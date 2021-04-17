@@ -1,20 +1,93 @@
 # HedgeDoc Docker Image
 
-[![Try in PWD](https://cdn.rawgit.com/play-with-docker/stacks/cff22438/assets/images/button.png)](http://play-with-docker.com?stack=https://github.com/hedgedoc/container/raw/master/docker-compose.yml&stack_name=hedgedoc)
+!!! info "Requirements on your server"
+    - [Git](https://git-scm.com/)
+    - [Docker](https://docs.docker.com/get-docker/) 17.03.1 or higher
+    - [Docker Compose](https://docs.docker.com/compose/install/)
 
-## Debian-based version
+The official docker images are [available on quay.io](https://quay.io/repository/hedgedoc/hedgedoc).
+We currently only support the `amd64` architecture.
 
-[![Docker Repository on Quay](https://quay.io/repository/hedgedoc/hedgedoc/status "Docker Repository on Quay")](https://quay.io/repository/hedgedoc/hedgedoc)
 
-## Alpine-based version
+The easiest way to get started with HedgeDoc and Docker is to use the following `docker-compose.yml`:
 
-[![Docker Repository on Quay](https://quay.io/repository/hedgedoc/hedgedoc/status "Docker Repository on Quay")](https://quay.io/repository/hedgedoc/hedgedoc)
+!!! warning
+    This is a minimal example to get started quickly and not intended for production use.
 
-The easiest way to setup HedgeDoc using docker are using the following three commands:
-
-```sh
-git clone https://github.com/hedgedoc/container.git hedgedoc-container
-cd hedgedoc-container
-docker-compose up
+```yaml
+version: '3'
+services:
+  database:
+    image: postgres:9.6-alpine
+    environment:
+      - POSTGRES_USER=hedgedoc
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=hedgedoc
+    volumes:
+      - database:/var/lib/postgresql/data
+    restart: always
+  app:
+    # Make sure to use the latest release from https://hedgedoc.org/latest-release
+    image: quay.io/hedgedoc/hedgedoc:1.7.2
+    environment:
+      - CMD_DB_URL=postgres://hedgedoc:password@database:5432/hedgedoc
+      - CMD_DOMAIN=localhost
+      - CMD_URL_ADDPORT=true
+    volumes:
+      - uploads:/hedgedoc/public/uploads
+    ports:
+      - "3000:3000"
+    restart: always
+    depends_on:
+      - database
+volumes:
+  database:
+  uploads:
 ```
-Read more about it in the [container repository](https://github.com/hedgedoc/container).
+After executing `docker-compose up`, HedgeDoc should be available at [http://127.0.0.1:3000](http://127.0.0.1:3000).  
+You can now continue to configure your container with environment variables.
+Check out [the configuration docs](/configuration) for more details.
+
+## Upgrading
+
+!!! warning
+    Before you upgrade, **always read the release notes**.  
+    You can find them on our [releases page](https://hedgedoc.org/releases/).
+
+!!! info "Upgrading to 1.7"
+    Together with changing the name to "HedgeDoc" the default username,
+    password and database name have been changed in `docker-compose.yml`.
+
+    In order to migrate the existing database to the new default credentials, run
+    ```shell
+    docker-compose exec database createuser --superuser -Uhackmd postgres
+    docker-compose exec database psql -Upostgres -c "alter role hackmd rename to hedgedoc; alter role hedgedoc with password 'password'; alter database hackmd rename to hedgedoc;"
+    ```
+    before running `docker-compose up`.
+
+You can upgrade to the latest release by stopping the containers and changing the referenced image version in `docker-compose.yml`.  
+Then run `docker-compose up` to start HedgeDoc again. 
+
+### Migrating from CodiMD & HackMD
+
+If you currently use CodiMD or HackMD, you should be able to swap the docker image for ours.
+See [the general migration hints](/setup/getting-started/#migrating-from-codimd-hackmd) for compatibility details.
+
+
+## Backup
+
+If you use a PostgreSQL database, you can leverage this command to create a backup: 
+
+```shell
+ docker-compose exec database pg_dump hedgedoc -U hedgedoc > backup.sql
+```
+
+
+## Restore
+
+If you want to restore your PostgreSQL backup, run these commands before starting the application for the first time:
+
+```shell
+docker-compose up -d database
+cat backup.sql | docker exec -i $(docker-compose ps -q database) psql -U hedgedoc
+```
