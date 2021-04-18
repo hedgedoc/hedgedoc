@@ -9,4 +9,5 @@ export enum BackendType {
   S3 = 's3',
   IMGUR = 'imgur',
   AZURE = 'azure',
+  WEBDAV = 'webdav',
 }

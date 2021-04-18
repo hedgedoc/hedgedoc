@@ -16,6 +16,7 @@ import { MediaService } from './media.service';
 import { S3Backend } from './backends/s3-backend';
 import { ImgurBackend } from './backends/imgur-backend';
 import { AzureBackend } from './backends/azure-backend';
+import { WebdavBackend } from './backends/webdav-backend';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { AzureBackend } from './backends/azure-backend';
     AzureBackend,
     ImgurBackend,
     S3Backend,
+    WebdavBackend,
   ],
   exports: [MediaService],
 })
