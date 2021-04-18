@@ -26,6 +26,7 @@ const logger = require('./lib/logger')
 const errors = require('./lib/errors')
 const models = require('./lib/models')
 const csp = require('./lib/csp')
+const metrics = require('./lib/prometheus')
 
 // server setup
 const app = express()
@@ -66,6 +67,7 @@ app.use(morgan('combined', {
 
 // Register prometheus metrics endpoint
 app.use(apiMetrics())
+metrics.setupCustomPrometheusMetrics()
 
 // socket io
 const io = require('socket.io')(server, { cookie: false })
