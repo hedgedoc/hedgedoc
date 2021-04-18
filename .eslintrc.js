@@ -24,6 +24,12 @@ module.exports = {
             assertFunctionNames: ['expect', 'request.**.expect'],
           },
         ],
+        'jest/no-standalone-expect': [
+          'error',
+          {
+            additionalTestBlockFunctions: ['afterEach', 'beforeAll'],
+          },
+        ],
       },
     },
   ],
