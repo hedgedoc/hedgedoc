@@ -1,6 +1,7 @@
 # Welcome to the HedgeDoc Documentation
 
-![HedgeDoc Logo](images/hedgedoc_logo_horizontal.svg)
+<img alt="HedgeDoc Logo" title="HedgeDoc Logo" class="light-mode-only" src="images/hedgedoc_logo_black.svg">
+<img alt="HedgeDoc Logo" title="HedgeDoc Logo" class="dark-mode-only" src="images/hedgedoc_logo_white.svg">
 
 HedgeDoc lets you create real-time collaborative markdown notes. You can test-drive
 it by visiting our [HedgeDoc demo server][hedgedoc-demo].
