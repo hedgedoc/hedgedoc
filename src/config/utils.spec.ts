@@ -11,9 +11,11 @@
 @typescript-eslint/require-await */
 
 import {
+  needToLog,
   replaceAuthErrorsWithEnvironmentVariables,
   toArrayConfig,
 } from './utils';
+import { Loglevel } from './loglevel.enum';
 
 describe('config utils', () => {
   describe('toArrayConfig', () => {
@@ -44,6 +46,48 @@ describe('config utils', () => {
           ['test'],
         ),
       ).toEqual('"HD_AUTH_GITLAB_test_SCOPE');
+    });
+  });
+  describe('needToLog', () => {
+    it('currentLevel ERROR', () => {
+      const currentLevel = Loglevel.ERROR;
+      expect(needToLog(currentLevel, Loglevel.ERROR)).toBeTruthy();
+      expect(needToLog(currentLevel, Loglevel.WARN)).toBeFalsy();
+      expect(needToLog(currentLevel, Loglevel.INFO)).toBeFalsy();
+      expect(needToLog(currentLevel, Loglevel.DEBUG)).toBeFalsy();
+      expect(needToLog(currentLevel, Loglevel.TRACE)).toBeFalsy();
+    });
+    it('currentLevel WARN', () => {
+      const currentLevel = Loglevel.WARN;
+      expect(needToLog(currentLevel, Loglevel.ERROR)).toBeTruthy();
+      expect(needToLog(currentLevel, Loglevel.WARN)).toBeTruthy();
+      expect(needToLog(currentLevel, Loglevel.INFO)).toBeFalsy();
+      expect(needToLog(currentLevel, Loglevel.DEBUG)).toBeFalsy();
+      expect(needToLog(currentLevel, Loglevel.TRACE)).toBeFalsy();
+    });
+    it('currentLevel INFO', () => {
+      const currentLevel = Loglevel.INFO;
+      expect(needToLog(currentLevel, Loglevel.ERROR)).toBeTruthy();
+      expect(needToLog(currentLevel, Loglevel.WARN)).toBeTruthy();
+      expect(needToLog(currentLevel, Loglevel.INFO)).toBeTruthy();
+      expect(needToLog(currentLevel, Loglevel.DEBUG)).toBeFalsy();
+      expect(needToLog(currentLevel, Loglevel.TRACE)).toBeFalsy();
+    });
+    it('currentLevel DEBUG', () => {
+      const currentLevel = Loglevel.DEBUG;
+      expect(needToLog(currentLevel, Loglevel.ERROR)).toBeTruthy();
+      expect(needToLog(currentLevel, Loglevel.WARN)).toBeTruthy();
+      expect(needToLog(currentLevel, Loglevel.INFO)).toBeTruthy();
+      expect(needToLog(currentLevel, Loglevel.DEBUG)).toBeTruthy();
+      expect(needToLog(currentLevel, Loglevel.TRACE)).toBeFalsy();
+    });
+    it('currentLevel TRACE', () => {
+      const currentLevel = Loglevel.TRACE;
+      expect(needToLog(currentLevel, Loglevel.ERROR)).toBeTruthy();
+      expect(needToLog(currentLevel, Loglevel.WARN)).toBeTruthy();
+      expect(needToLog(currentLevel, Loglevel.INFO)).toBeTruthy();
+      expect(needToLog(currentLevel, Loglevel.DEBUG)).toBeTruthy();
+      expect(needToLog(currentLevel, Loglevel.TRACE)).toBeTruthy();
     });
   });
 });
