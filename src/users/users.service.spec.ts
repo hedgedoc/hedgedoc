@@ -9,6 +9,8 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { LoggerModule } from '../logger/logger.module';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
+import { ConfigModule } from '@nestjs/config';
+import appConfigMock from '../config/mock/app.config.mock';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -22,7 +24,13 @@ describe('UsersService', () => {
           useValue: {},
         },
       ],
-      imports: [LoggerModule],
+      imports: [
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock],
+        }),
+        LoggerModule,
+      ],
     })
       .overrideProvider(getRepositoryToken(User))
       .useValue({})

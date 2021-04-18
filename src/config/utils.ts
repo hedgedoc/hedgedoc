@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { Loglevel } from './loglevel.enum';
+
 export function toArrayConfig(configValue: string, separator = ','): string[] {
   if (!configValue) {
     return [];
@@ -86,4 +88,28 @@ export function replaceAuthErrorsWithEnvironmentVariables(
   message = message.replace('.rolesClaim', '_ROLES_CLAIM');
   message = message.replace('.accessRole', '_ACCESS_ROLE');
   return message;
+}
+
+export function needToLog(
+  currentLoglevel: Loglevel,
+  requestedLoglevel: Loglevel,
+): boolean {
+  const current = transformLoglevelToInt(currentLoglevel);
+  const requested = transformLoglevelToInt(requestedLoglevel);
+  return current >= requested;
+}
+
+function transformLoglevelToInt(loglevel: Loglevel): number {
+  switch (loglevel) {
+    case Loglevel.TRACE:
+      return 5;
+    case Loglevel.DEBUG:
+      return 4;
+    case Loglevel.INFO:
+      return 3;
+    case Loglevel.WARN:
+      return 2;
+    case Loglevel.ERROR:
+      return 1;
+  }
 }

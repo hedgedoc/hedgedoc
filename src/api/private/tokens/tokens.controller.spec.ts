@@ -12,6 +12,8 @@ import { Identity } from '../../../users/identity.entity';
 import { User } from '../../../users/user.entity';
 import { AuthToken } from '../../../auth/auth-token.entity';
 import { AuthModule } from '../../../auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import appConfigMock from '../../../config/mock/app.config.mock';
 
 describe('TokensController', () => {
   let controller: TokensController;
@@ -19,7 +21,14 @@ describe('TokensController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TokensController],
-      imports: [LoggerModule, AuthModule],
+      imports: [
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock],
+        }),
+        LoggerModule,
+        AuthModule,
+      ],
     })
       .overrideProvider(getRepositoryToken(User))
       .useValue({})

@@ -4,20 +4,22 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { ValidationPipe } from '@nestjs/common';
+import { LogLevel, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { AppConfig } from './config/app.config';
 import { MediaConfig } from './config/media.config';
-import { NestConsoleLoggerService } from './logger/nest-console-logger.service';
 import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
 import { BackendType } from './media/backends/backend-type.enum';
+import { ConsoleLoggerService } from './logger/console-logger.service';
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  const logger = await app.resolve(NestConsoleLoggerService);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    logger: ['error', 'warn', 'log'] as LogLevel[],
+  });
+  const logger = await app.resolve(ConsoleLoggerService);
   logger.log('Switching logger', 'AppBootstrap');
   app.useLogger(logger);
   const configService = app.get(ConfigService);
@@ -25,8 +27,16 @@ async function bootstrap(): Promise<void> {
   const mediaConfig = configService.get<MediaConfig>('mediaConfig');
 
   setupPublicApiDocs(app);
+  logger.log(
+    `Serving OpenAPI docs for public api under '/apidoc'`,
+    'AppBootstrap',
+  );
   if (process.env.NODE_ENV === 'development') {
     setupPrivateApiDocs(app);
+    logger.log(
+      `Serving OpenAPI docs for private api under '/private/apidoc'`,
+      'AppBootstrap',
+    );
   }
 
   app.useGlobalPipes(
@@ -38,7 +48,7 @@ async function bootstrap(): Promise<void> {
   );
   if (mediaConfig.backend.use === BackendType.FILESYSTEM) {
     logger.log(
-      `Serving ${mediaConfig.backend.filesystem.uploadPath} under 'uploads/'`,
+      `Serving the local folder '${mediaConfig.backend.filesystem.uploadPath}' under '/uploads'`,
       'AppBootstrap',
     );
     app.useStaticAssets(mediaConfig.backend.filesystem.uploadPath, {
