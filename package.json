@@ -53,7 +53,6 @@
     "helmet": "^4.0.0",
     "highlight.js": "^10.0.0",
     "i18n": "^0.13.0",
-    "imgur": "git+https://github.com/hackmdio/node-imgur.git",
     "ionicons": "^2.0.1",
     "is-svg": "^4.3.1",
     "jquery": "^3.5.1",
