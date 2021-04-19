@@ -24,7 +24,7 @@ import { BackendData, MediaUpload } from './media-upload.entity';
 import { MediaService } from './media.service';
 import { Repository } from 'typeorm';
 import { promises as fs } from 'fs';
-import { ClientError, NotInDBError, PermissionError } from '../errors/errors';
+import { ClientError, NotInDBError } from '../errors/errors';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Group } from '../groups/group.entity';
@@ -145,7 +145,6 @@ describe('MediaService', () => {
 
   describe('deleteFile', () => {
     it('works', async () => {
-      const testFileName = 'testFilename';
       const mockMediaUploadEntry = {
         id: 'testMediaUpload',
         backendData: 'testBackendData',
@@ -153,12 +152,9 @@ describe('MediaService', () => {
           userName: 'hardcoded',
         } as User,
       } as MediaUpload;
-      jest
-        .spyOn(mediaRepo, 'findOne')
-        .mockResolvedValueOnce(mockMediaUploadEntry);
       jest.spyOn(service.mediaBackend, 'deleteFile').mockImplementationOnce(
         async (fileName: string, backendData: BackendData): Promise<void> => {
-          expect(fileName).toEqual(testFileName);
+          expect(fileName).toEqual(mockMediaUploadEntry.id);
           expect(backendData).toEqual(mockMediaUploadEntry.backendData);
         },
       );
@@ -168,24 +164,7 @@ describe('MediaService', () => {
           expect(entry).toEqual(mockMediaUploadEntry);
           return entry;
         });
-      await service.deleteFile(testFileName, 'hardcoded');
-    });
-
-    it('fails: the mediaUpload is not owned by user', async () => {
-      const testFileName = 'testFilename';
-      const mockMediaUploadEntry = {
-        id: 'testMediaUpload',
-        backendData: 'testBackendData',
-        user: {
-          userName: 'not-hardcoded',
-        } as User,
-      } as MediaUpload;
-      jest
-        .spyOn(mediaRepo, 'findOne')
-        .mockResolvedValueOnce(mockMediaUploadEntry);
-      await expect(
-        service.deleteFile(testFileName, 'hardcoded'),
-      ).rejects.toThrow(PermissionError);
+      await service.deleteFile(mockMediaUploadEntry);
     });
   });
   describe('findUploadByFilename', () => {

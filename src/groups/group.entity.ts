@@ -36,7 +36,6 @@ export class Group {
 
   @ManyToMany((_) => User, (user) => user.groups, {
     eager: true,
-    cascade: true,
   })
   @JoinTable()
   members: User[];

@@ -19,7 +19,9 @@ export class Identity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne((_) => User, (user) => user.identities)
+  @ManyToOne((_) => User, (user) => user.identities, {
+    onDelete: 'CASCADE', // This deletes the Identity, when the associated User is deleted
+  })
   user: User;
 
   @Column()
