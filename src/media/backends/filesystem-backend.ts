@@ -58,19 +58,24 @@ export class FilesystemBackend implements MediaBackend {
   }
 
   private async ensureDirectory(): Promise<void> {
+    this.logger.debug(
+      `Ensuring presence of directory at ${this.uploadDirectory}`,
+      'ensureDirectory',
+    );
     try {
       await fs.access(this.uploadDirectory);
     } catch (e) {
       try {
         this.logger.debug(
           `The directory '${this.uploadDirectory}' can't be accessed. Trying to create the directory`,
+          'ensureDirectory',
         );
         await fs.mkdir(this.uploadDirectory);
       } catch (e) {
         this.logger.error(
           (e as Error).message,
           (e as Error).stack,
-          'deleteFile',
+          'ensureDirectory',
         );
         throw new MediaBackendError(
           `Could not create '${this.uploadDirectory}'`,
