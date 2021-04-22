@@ -176,6 +176,20 @@ export class MediaService {
     return mediaUploads;
   }
 
+  /**
+   * @async
+   * Set the note of a mediaUpload to null
+   * @param {MediaUpload} mediaUpload - the media upload to be changed
+   */
+  async removeNoteFromMediaUpload(mediaUpload: MediaUpload): Promise<void> {
+    this.logger.debug(
+      'Setting note to null for mediaUpload: ' + mediaUpload.id,
+      'removeNoteFromMediaUpload',
+    );
+    mediaUpload.note = null;
+    await this.mediaUploadRepository.save(mediaUpload);
+  }
+
   private chooseBackendType(): BackendType {
     switch (this.mediaConfig.backend.use) {
       case 'filesystem':
