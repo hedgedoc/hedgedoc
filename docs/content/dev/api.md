@@ -36,6 +36,7 @@ These endpoints return information about the current logged-in user and it's not
 ## HedgeDoc-server
 These endpoints return information about the running HedgeDoc instance.
 
-| Endpoint  | HTTP-Method | Description                                                                                                                                                                            |
-| --------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/status` | `GET`       | **Returns the current status of the HedgeDoc instance.**<br>The data is returned as a JSON object containing the number of notes stored on the server, (distinct) online users and more. |
+| Endpoint   | HTTP-Method | Description                                                                                                                                                                              |
+| ---------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/status`  | `GET`       | **Returns the current status of the HedgeDoc instance.**<br>The data is returned as a JSON object containing the number of notes stored on the server, (distinct) online users and more. |
+| `/metrics` | `GET`       | **Prometheus-compatible endpoint**<br>Exposes the same stats as `/status` in addition to various Node.js performance figures. Available since HedgeDoc 1.8                               |

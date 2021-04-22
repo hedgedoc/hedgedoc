@@ -3,10 +3,13 @@
 ### Features
 - Database migrations are now automatically applied on application startup.  
   The separate `.sequelizerc` configuration file is no longer necessary and can be safely deleted.
-
+- A Prometheus-endpoint is now available at `/metrics`, exposing the same stats as `/status`
+  in addition to various Node.js performance figures.
+  
 ### Enhancements
 - Removed dependency on external imgur library
  
+
 ## <i class="fa fa-tag"></i> 1.7.2 <i class="fa fa-calendar-o"></i> 2021-01-15
 This release fixes a security issue. We recommend upgrading as soon as possible.
 ### Security Fixes
