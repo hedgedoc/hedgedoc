@@ -4,46 +4,43 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { HistoryEntry } from '../../components/history-page/history-page'
 import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
+import { HistoryEntryDto, HistoryEntryPutDto, HistoryEntryUpdateDto } from './types'
 
-export const getHistory = async (): Promise<HistoryEntry[]> => {
+export const getHistory = async (): Promise<HistoryEntryDto[]> => {
   const response = await fetch(getApiUrl() + '/history')
   expectResponseCode(response)
-  return await response.json() as Promise<HistoryEntry[]>
+  return await response.json() as Promise<HistoryEntryDto[]>
 }
 
-export const setHistory = async (entries: HistoryEntry[]): Promise<void> => {
+export const postHistory = async (entries: HistoryEntryPutDto[]): Promise<void> => {
   const response = await fetch(getApiUrl() + '/history', {
     ...defaultFetchConfig,
     method: 'POST',
-    body: JSON.stringify({
-      history: entries
-    })
+    body: JSON.stringify(entries)
   })
   expectResponseCode(response)
 }
 
-export const deleteHistory = async (): Promise<void> => {
-  const response = await fetch(getApiUrl() + '/history', {
-    ...defaultFetchConfig,
-    method: 'DELETE'
-  })
-  expectResponseCode(response)
-}
-
-export const updateHistoryEntry = async (noteId: string, entry: HistoryEntry): Promise<HistoryEntry> => {
+export const updateHistoryEntryPinStatus = async (noteId: string, entry: HistoryEntryUpdateDto): Promise<void> => {
   const response = await fetch(getApiUrl() + '/history/' + noteId, {
     ...defaultFetchConfig,
     method: 'PUT',
     body: JSON.stringify(entry)
   })
   expectResponseCode(response)
-  return await response.json() as Promise<HistoryEntry>
 }
 
 export const deleteHistoryEntry = async (noteId: string): Promise<void> => {
   const response = await fetch(getApiUrl() + '/history/' + noteId, {
+    ...defaultFetchConfig,
+    method: 'DELETE'
+  })
+  expectResponseCode(response)
+}
+
+export const deleteHistory = async (): Promise<void> => {
+  const response = await fetch(getApiUrl() + '/history', {
     ...defaultFetchConfig,
     method: 'DELETE'
   })

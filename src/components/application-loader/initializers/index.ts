@@ -6,6 +6,7 @@
 
 import { loadAllConfig } from './configLoader'
 import { setUpI18n } from './i18n'
+import { refreshHistoryState } from '../../../redux/history/methods'
 
 const customDelay: () => Promise<void> = async () => {
   if (window.localStorage.getItem('customDelay')) {
@@ -27,6 +28,9 @@ export const createSetUpTaskList = (baseUrl: string): InitTask[] => {
   }, {
     name: 'Load config',
     task: loadAllConfig(baseUrl)
+  }, {
+    name: 'Load history state',
+    task: refreshHistoryState()
   }, {
     name: 'Add Delay',
     task: customDelay()

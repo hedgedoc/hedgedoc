@@ -4,22 +4,30 @@
  SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useCallback, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { DeletionModal } from '../../common/modals/deletion-modal'
+import { deleteAllHistoryEntries, refreshHistoryState } from '../../../redux/history/methods'
+import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 
-export interface ClearHistoryButtonProps {
-  onClearHistory: () => void
-}
-
-export const ClearHistoryButton: React.FC<ClearHistoryButtonProps> = ({ onClearHistory }) => {
+export const ClearHistoryButton: React.FC = () => {
   const { t } = useTranslation()
   const [show, setShow] = useState(false)
 
   const handleShow = () => setShow(true)
   const handleClose = () => setShow(false)
+
+  const onConfirm = useCallback(() => {
+    deleteAllHistoryEntries().catch(error => {
+      showErrorNotification(t('landing.history.error.deleteEntry.text'))(error)
+      refreshHistoryState().catch(
+        showErrorNotification(t('landing.history.error.getHistory.text'))
+      )
+    })
+    handleClose()
+  }, [t])
 
   return (
     <Fragment>
@@ -27,10 +35,7 @@ export const ClearHistoryButton: React.FC<ClearHistoryButtonProps> = ({ onClearH
         <ForkAwesomeIcon icon={ 'trash' }/>
       </Button>
       <DeletionModal
-        onConfirm={ () => {
-          onClearHistory()
-          handleClose()
-        } }
+        onConfirm={ onConfirm }
         deletionButtonI18nKey={ 'landing.history.toolbar.clear' }
         show={ show }
         onHide={ handleClose }

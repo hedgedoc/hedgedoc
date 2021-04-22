@@ -21,11 +21,14 @@ import { UserReducer } from './user/reducers'
 import { MaybeUserState } from './user/types'
 import { UiNotificationState } from './ui-notifications/types'
 import { UiNotificationReducer } from './ui-notifications/reducers'
+import { HistoryEntry } from './history/types'
+import { HistoryReducer } from './history/reducers'
 
 export interface ApplicationState {
   user: MaybeUserState;
   config: Config;
   banner: BannerState;
+  history: HistoryEntry[];
   apiUrl: ApiUrlObject;
   editorConfig: EditorConfig;
   darkMode: DarkModeConfig;
@@ -38,6 +41,7 @@ export const allReducers: Reducer<ApplicationState> = combineReducers<Applicatio
   config: ConfigReducer,
   banner: BannerReducer,
   apiUrl: ApiUrlReducer,
+  history: HistoryReducer,
   editorConfig: EditorConfigReducer,
   darkMode: DarkModeConfigReducer,
   noteDetails: NoteDetailsReducer,

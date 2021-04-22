@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import i18n from 'i18next'
 import { store } from '../index'
 import {
   DismissUiNotificationAction,
@@ -36,4 +37,11 @@ export const dismissUiNotification = (notificationId: number): void => {
     type: UiNotificationActionType.DISMISS_NOTIFICATION,
     notificationId
   } as DismissUiNotificationAction)
+}
+
+// Promises catch errors as any.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
+export const showErrorNotification = (message: string) => (error: any): void => {
+  console.error(message, error)
+  dispatchUiNotification(i18n.t('common.errorOccurred'), message, DEFAULT_DURATION_IN_SECONDS, 'exclamation-triangle')
 }

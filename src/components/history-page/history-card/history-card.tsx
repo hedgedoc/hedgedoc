@@ -5,26 +5,34 @@
  */
 
 import { DateTime } from 'luxon'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Badge, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { EntryMenu } from '../entry-menu/entry-menu'
-import { HistoryEntryProps } from '../history-content/history-content'
+import { HistoryEntryProps, HistoryEventHandlers } from '../history-content/history-content'
 import { PinButton } from '../pin-button/pin-button'
 import { formatHistoryDate } from '../utils'
 import './history-card.scss'
 
-export const HistoryCard: React.FC<HistoryEntryProps> = ({ entry, onPinClick, onRemoveClick, onDeleteClick }) => {
+export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = ({ entry, onPinClick, onRemoveClick, onDeleteClick }) => {
+  const onRemove = useCallback(() => {
+    onRemoveClick(entry.identifier)
+  }, [onRemoveClick, entry.identifier])
+
+  const onDelete = useCallback(() => {
+    onDeleteClick(entry.identifier)
+  }, [onDeleteClick, entry.identifier])
+
   return (
     <div className="p-2 col-xs-12 col-sm-6 col-md-6 col-lg-4">
       <Card className="card-min-height" text={ 'dark' } bg={ 'light' }>
         <Card.Body className="p-2 d-flex flex-row justify-content-between">
           <div className={ 'd-flex flex-column' }>
-            <PinButton isDark={ false } isPinned={ entry.pinned }
-                       onPinClick={ () => onPinClick(entry.id, entry.location) }/>
+            <PinButton isDark={ false } isPinned={ entry.pinStatus }
+                       onPinClick={ () => onPinClick(entry.identifier) }/>
           </div>
-          <Link to={ `/n/${ entry.id }` } className="text-decoration-none flex-fill text-dark">
+          <Link to={ `/n/${ entry.identifier }` } className="text-decoration-none flex-fill text-dark">
             <div className={ 'd-flex flex-column justify-content-between' }>
               <Card.Title className="m-0 mt-1dot5">{ entry.title }</Card.Title>
               <div>
@@ -44,12 +52,12 @@ export const HistoryCard: React.FC<HistoryEntryProps> = ({ entry, onPinClick, on
           </Link>
           <div className={ 'd-flex flex-column' }>
             <EntryMenu
-              id={ entry.id }
+              id={ entry.identifier }
               title={ entry.title }
-              location={ entry.location }
+              origin={ entry.origin }
               isDark={ false }
-              onRemove={ () => onRemoveClick(entry.id, entry.location) }
-              onDelete={ () => onDeleteClick(entry.id, entry.location) }
+              onRemove={ onRemove }
+              onDelete={ onDelete }
             />
           </div>
         </Card.Body>

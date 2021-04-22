@@ -8,16 +8,13 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { downloadHistory } from '../../../redux/history/methods'
 
-export interface ExportHistoryButtonProps {
-  onExportHistory: () => void
-}
-
-export const ExportHistoryButton: React.FC<ExportHistoryButtonProps> = ({ onExportHistory }) => {
+export const ExportHistoryButton: React.FC = () => {
   const { t } = useTranslation()
 
   return (
-    <Button variant={ 'light' } title={ t('landing.history.toolbar.export') } onClick={ onExportHistory }>
+    <Button variant={ 'light' } title={ t('landing.history.toolbar.export') } onClick={ downloadHistory }>
       <ForkAwesomeIcon icon='download'/>
     </Button>
   )

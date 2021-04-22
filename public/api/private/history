@@ -1,17 +1,19 @@
 [
     {
-        "id": "29QLD0AmT-adevdOPECtqg",
+        "identifier": "29QLD0AmT-adevdOPECtqg",
         "title": "HedgeDoc community call 2020-04-26",
         "lastVisited": "2020-05-16T22:26:56.547Z",
+        "pinStatus": false,
         "tags": [
             "HedgeDoc",
             "Community Call"
         ]
     },
     {
-        "id": "features",
+        "identifier": "features",
         "title": "Features",
         "lastVisited": "2020-05-31T15:20:36.088Z",
+        "pinStatus": true,
         "tags": [
             "features",
             "cool",
@@ -19,15 +21,17 @@
         ]
     },
     {
-        "id": "ODakLc2MQkyyFc_Xmb53sg",
+        "identifier": "ODakLc2MQkyyFc_Xmb53sg",
         "title": "HedgeDoc V2 API",
         "lastVisited": "2020-05-25T19:48:14.025Z",
+        "pinStatus": false,
         "tags": []
     },
     {
-        "id": "l8JuWxApTR6Fqa0LCrpnLg",
+        "identifier": "l8JuWxApTR6Fqa0LCrpnLg",
         "title": "Community call - Let’s meet! (2020-06-06 18:00 UTC / 20:00 CEST)",
         "lastVisited": "2020-05-24T16:04:36.433Z",
+        "pinStatus": false,
         "tags": [
             "agenda",
             "HedgeDoc community",

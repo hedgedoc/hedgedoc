@@ -4,7 +4,7 @@
  SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
 import { Button, Form, FormControl, InputGroup, ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
 import { Typeahead } from 'react-bootstrap-typeahead'
 import { Trans, useTranslation } from 'react-i18next'
@@ -12,12 +12,14 @@ import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../../redux'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../../common/show-if/show-if'
-import { HistoryEntry } from '../history-page'
 import { SortButton, SortModeEnum } from '../sort-button/sort-button'
 import { ClearHistoryButton } from './clear-history-button'
 import { ExportHistoryButton } from './export-history-button'
 import { ImportHistoryButton } from './import-history-button'
 import './typeahead-hacks.scss'
+import { HistoryEntryOrigin } from '../../../redux/history/types'
+import { importHistoryEntries, refreshHistoryState, setHistoryEntries } from '../../../redux/history/methods'
+import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 
 export type HistoryToolbarChange = (settings: HistoryToolbarState) => void;
 
@@ -36,12 +38,6 @@ export enum ViewStateEnum {
 
 export interface HistoryToolbarProps {
   onSettingsChange: HistoryToolbarChange
-  tags: string[]
-  onClearHistory: () => void
-  onRefreshHistory: () => void
-  onExportHistory: () => void
-  onImportHistory: (entries: HistoryEntry[]) => void
-  onUploadAll: () => void
 }
 
 export const initState: HistoryToolbarState = {
@@ -52,10 +48,17 @@ export const initState: HistoryToolbarState = {
   selectedTags: []
 }
 
-export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange, tags, onClearHistory, onRefreshHistory, onExportHistory, onImportHistory, onUploadAll }) => {
-  const [t] = useTranslation()
+export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange }) => {
+  const { t } = useTranslation()
   const [state, setState] = useState<HistoryToolbarState>(initState)
+  const historyEntries = useSelector((state: ApplicationState) => state.history)
   const userExists = useSelector((state: ApplicationState) => !!state.user)
+
+  const tags = useMemo<string[]>(() => {
+    const allTags = historyEntries.map(entry => entry.tags)
+                                  .flat()
+    return [...new Set(allTags)]
+  }, [historyEntries])
 
   const titleSortChanged = (direction: SortModeEnum) => {
     setState(prevState => ({
@@ -85,6 +88,33 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
     setState(prevState => ({ ...prevState, selectedTags: selected }))
   }
 
+  const refreshHistory = useCallback(() => {
+    refreshHistoryState()
+      .catch(
+        showErrorNotification(t('landing.history.error.getHistory.text'))
+      )
+  }, [t])
+
+  const onUploadAllToRemote = useCallback(() => {
+    if (!userExists) {
+      return
+    }
+    const localEntries = historyEntries.filter(entry => entry.origin === HistoryEntryOrigin.LOCAL)
+                                       .map(entry => entry.identifier)
+    historyEntries.forEach(entry => entry.origin = HistoryEntryOrigin.REMOTE)
+    importHistoryEntries(historyEntries)
+      .catch(error => {
+        showErrorNotification(t('landing.history.error.setHistory.text'))(error)
+        historyEntries.forEach(entry => {
+          if (localEntries.includes(entry.identifier)) {
+            entry.origin = HistoryEntryOrigin.LOCAL
+          }
+        })
+        setHistoryEntries(historyEntries)
+        refreshHistory()
+      })
+  }, [userExists, historyEntries, t, refreshHistory])
+
   useEffect(() => {
     onSettingsChange(state)
   }, [onSettingsChange, state])
@@ -113,28 +143,28 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
                     variant={ 'light' }><Trans i18nKey={ 'landing.history.toolbar.sortByLastVisited' }/></SortButton>
       </InputGroup>
       <InputGroup className={ 'mr-1 mb-1' }>
-        <ExportHistoryButton onExportHistory={ onExportHistory }/>
+        <ExportHistoryButton/>
       </InputGroup>
       <InputGroup className={ 'mr-1 mb-1' }>
-        <ImportHistoryButton onImportHistory={ onImportHistory }/>
+        <ImportHistoryButton/>
       </InputGroup>
       <InputGroup className={ 'mr-1 mb-1' }>
-        <ClearHistoryButton onClearHistory={ onClearHistory }/>
+        <ClearHistoryButton/>
       </InputGroup>
       <InputGroup className={ 'mr-1 mb-1' }>
-        <Button variant={ 'light' } title={ t('landing.history.toolbar.refresh') } onClick={ onRefreshHistory }>
-          <ForkAwesomeIcon icon='refresh'/>
+        <Button variant={ 'light' } title={ t('landing.history.toolbar.refresh') } onClick={ refreshHistory }>
+          <ForkAwesomeIcon icon="refresh"/>
         </Button>
       </InputGroup>
       <ShowIf condition={ userExists }>
         <InputGroup className={ 'mr-1 mb-1' }>
-          <Button variant={ 'light' } title={ t('landing.history.toolbar.uploadAll') } onClick={ onUploadAll }>
-            <ForkAwesomeIcon icon='cloud-upload'/>
+          <Button variant={ 'light' } title={ t('landing.history.toolbar.uploadAll') } onClick={ onUploadAllToRemote }>
+            <ForkAwesomeIcon icon="cloud-upload"/>
           </Button>
         </InputGroup>
       </ShowIf>
       <InputGroup className={ 'mr-1 mb-1' }>
-        <ToggleButtonGroup type="radio" name="options" dir='ltr' value={ state.viewState } className={ 'button-height' }
+        <ToggleButtonGroup type="radio" name="options" dir="ltr" value={ state.viewState } className={ 'button-height' }
                            onChange={ (newViewState: ViewStateEnum) => {
                              toggleViewChanged(newViewState)
                            } }>

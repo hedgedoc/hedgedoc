@@ -38,10 +38,10 @@ describe('History', () => {
           .first()
           .as('pin-button')
         cy.get('@pin-button')
-          .should('not.have.class', 'pinned')
+          .should('have.class', 'pinned')
           .click()
         cy.get('@pin-button')
-          .should('have.class', 'pinned')
+          .should('not.have.class', 'pinned')
       })
 
       it('Table', () => {
@@ -51,10 +51,10 @@ describe('History', () => {
           .first()
           .as('pin-button')
         cy.get('@pin-button')
-          .should('not.have.class', 'pinned')
+          .should('have.class', 'pinned')
           .click()
         cy.get('@pin-button')
-          .should('have.class', 'pinned')
+          .should('not.have.class', 'pinned')
       })
     })
 
@@ -71,7 +71,7 @@ describe('History', () => {
         cy.get('.fa-thumb-tack')
           .first()
           .click()
-        cy.get('.modal-dialog')
+        cy.get('.notifications-area .toast')
           .should('be.visible')
       })
 
@@ -81,7 +81,7 @@ describe('History', () => {
         cy.get('.fa-thumb-tack')
           .first()
           .click()
-        cy.get('.modal-dialog')
+        cy.get('.notifications-area .toast')
           .should('be.visible')
       })
     })
