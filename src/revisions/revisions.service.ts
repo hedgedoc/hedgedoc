@@ -42,8 +42,8 @@ export class RevisionsService {
     });
   }
 
-  getLatestRevision(noteId: string): Promise<Revision> {
-    return this.revisionRepository.findOne({
+  async getLatestRevision(noteId: string): Promise<Revision> {
+    return await this.revisionRepository.findOne({
       where: {
         note: noteId,
       },
@@ -54,8 +54,8 @@ export class RevisionsService {
     });
   }
 
-  getFirstRevision(noteId: string): Promise<Revision> {
-    return this.revisionRepository.findOne({
+  async getFirstRevision(noteId: string): Promise<Revision> {
+    return await this.revisionRepository.findOne({
       where: {
         note: noteId,
       },
