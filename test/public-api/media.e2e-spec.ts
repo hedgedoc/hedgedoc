@@ -25,6 +25,7 @@ import { TokenAuthGuard } from '../../src/auth/token-auth.guard';
 import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
 import { join } from 'path';
 import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
+import { ensureDeleted } from '../utils';
 
 describe('Media', () => {
   let app: NestExpressApplication;
@@ -91,7 +92,7 @@ describe('Media', () => {
     });
     describe('fails:', () => {
       beforeEach(async () => {
-        await fs.rmdir(uploadPath, { recursive: true });
+        await ensureDeleted(uploadPath);
       });
       it('MIME type not supported', async () => {
         await request(app.getHttpServer())
@@ -121,7 +122,7 @@ describe('Media', () => {
           .expect(500);
       });
       afterEach(async () => {
-        await fs.rmdir(uploadPath, { recursive: true });
+        await ensureDeleted(uploadPath);
       });
     });
   });
@@ -141,7 +142,7 @@ describe('Media', () => {
 
   afterAll(async () => {
     // Delete the upload folder
-    await fs.rmdir(uploadPath, { recursive: true });
+    await ensureDeleted(uploadPath);
     await app.close();
   });
 });

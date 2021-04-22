@@ -26,6 +26,7 @@ import { join } from 'path';
 import { PrivateApiModule } from '../../src/api/private/private-api.module';
 import { UsersService } from '../../src/users/users.service';
 import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
+import { ensureDeleted } from '../utils';
 
 describe('Media', () => {
   let app: NestExpressApplication;
@@ -95,7 +96,7 @@ describe('Media', () => {
     });
     describe('fails:', () => {
       beforeEach(async () => {
-        await fs.rmdir(uploadPath, { recursive: true });
+        await ensureDeleted(uploadPath);
       });
       it('MIME type not supported', async () => {
         await request(app.getHttpServer())
@@ -125,14 +126,14 @@ describe('Media', () => {
           .expect(500);
       });
       afterEach(async () => {
-        await fs.rmdir(uploadPath, { recursive: true });
+        await ensureDeleted(uploadPath);
       });
     });
   });
 
   afterAll(async () => {
     // Delete the upload folder
-    await fs.rmdir(uploadPath, { recursive: true });
+    await ensureDeleted(uploadPath);
     await app.close();
   });
 });
