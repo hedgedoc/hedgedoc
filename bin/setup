@@ -23,7 +23,7 @@ fi
 
 if version_lt "$(yarn --version)" '1.22.0'; then
   cat << EOF
-FATAL: Your Yarn version is outdated.
+FATAL: Your Yarn version is not supported.
 
 Please upgrade to version 1.22.0 or higher and try again.
 See https://classic.yarnpkg.com/en/docs/install for instructions.
@@ -33,7 +33,7 @@ fi
 
 if version_lt "$(node --version)" 'v12.0.0'; then
   cat << EOF
-FATAL: Your Node.js version is outdated.
+FATAL: Your Node.js version is not supported.
 
 Please upgrade to version 12 or higher and try again.
 We recommend running the latest LTS release, see https://nodejs.org/en/about/releases/ for details.
