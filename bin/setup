@@ -31,11 +31,11 @@ EOF
   exit 1
 fi
 
-if version_lt "$(node --version)" 'v10.13.0'; then
+if version_lt "$(node --version)" 'v12.0.0'; then
   cat << EOF
 FATAL: Your Node.js version is outdated.
 
-Please upgrade to version 10.13 or higher and try again.
+Please upgrade to version 12 or higher and try again.
 We recommend running the latest LTS release, see https://nodejs.org/en/about/releases/ for details.
 EOF
   exit 1

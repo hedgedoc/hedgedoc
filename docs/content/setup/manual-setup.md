@@ -1,7 +1,7 @@
 # Manual Installation
 
 !!! info "Requirements on your server"
-    - Node.js 10.13 or higher
+    - Node.js 12 or higher
     - Database (PostgreSQL, MySQL, MariaDB, SQLite, MSSQL)  
       The database must use charset `utf8`. This is typically the default in PostgreSQL and SQLite.  
       In MySQL and MariaDB UTF-8 might need to be set with `alter database <DBNAME> character set utf8 collate utf8_bin;`  

@@ -145,7 +145,7 @@
     "**/request": "^2.88.0"
   },
   "engines": {
-    "node": ">=10.13"
+    "node": ">=12"
   },
   "bugs": "https://github.com/hedgedoc/hedgedoc/issues",
   "keywords": [
