@@ -11,33 +11,15 @@
   @import "../../../../../style/variables.light";
 
   .table-cell {
-    border-top: 1px solid $dark;
-    border-left: 1px solid $dark;
+    border: 1px solid $gray-700;
+    margin: 1px;
+    border-radius: 2px;
   }
 
   .table-container {
-    border-bottom: 1px solid $dark;
-    border-right: 1px solid $dark;
     display: grid;
     grid-template-columns: repeat(10, 15px [col-start]);
     grid-template-rows: repeat(8, 15px [row-start]);
-  }
-
-  body.dark {
-    @import "../../../../../style/variables.dark";
-
-    .table-cell {
-      border-top: 1px solid $dark;
-      border-left: 1px solid $dark;
-    }
-
-    .table-container {
-      border-bottom: 1px solid $dark;
-      border-right: 1px solid $dark;
-      display: grid;
-      grid-template-columns: repeat(10, 15px [col-start]);
-      grid-template-rows: repeat(8, 15px [row-start]);
-    }
   }
 }
 
