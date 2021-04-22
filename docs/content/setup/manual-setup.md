@@ -35,14 +35,18 @@
    For details, have a look at [the configuration documentation](../configuration.md).
 5. *:octicons-light-bulb-16: If you use the release tarball for 1.7.0 or newer, this step can be skipped.*  
    Build the frontend bundle by running `yarn run build`.
-6. It is recommended to start your server manually once:  
+6. Modify the file named `.sequelizerc`, change the value of the variable `url` to your db connection string. For example:
+  - `postgres://username:password@localhost:5432/hedgedoc`
+  - `mysql://username:password@localhost:3306/hedgedoc`
+  - `sqlite:///opt/hedgedoc/hedgedoc.sqlite` (note that you need to use an absolute path to the SQLite file)
+7. It is recommended to start your server manually once:  
    ```shell
    NODE_ENV=production yarn start
    ```
    This way it's easier to see warnings or errors that might occur.  
    <small>You can leave out `NODE_ENV=production` for development.</small>  
-7. If you use the example config, HedgeDoc should now be available at [http://127.0.0.1:3000](http://127.0.0.1:3000).
-8. Run the server as you like (node, forever, pm2, systemd, Init-Scripts).  
+8. If you use the example config, HedgeDoc should now be available at [http://127.0.0.1:3000](http://127.0.0.1:3000).
+9. Run the server as you like (node, forever, pm2, systemd, Init-Scripts).  
    See [below](#systemd-unit-example) for an example using systemd.
 
 ## Upgrading
