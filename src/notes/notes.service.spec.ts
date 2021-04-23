@@ -656,92 +656,124 @@ describe('NotesService', () => {
   });
 
   describe('toNoteMetadataDto', () => {
-    it('works', async () => {
+    describe('works', () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const otherUser = User.create('other hardcoded', 'Testy2') as User;
       const group = Group.create('testGroup', 'testGroup');
       const content = 'testContent';
-      jest
-        .spyOn(noteRepo, 'save')
-        .mockImplementation(async (note: Note): Promise<Note> => note);
-      const note = await service.createNote(content);
-      const revisions = await note.revisions;
-      revisions[0].authorships = [
-        {
-          user: otherUser,
-          revisions: revisions,
-          startPos: 0,
-          endPos: 1,
-          updatedAt: new Date(1549312452000),
-        } as Authorship,
-        {
-          user: user,
-          revisions: revisions,
-          startPos: 0,
-          endPos: 1,
-          updatedAt: new Date(1549312452001),
-        } as Authorship,
-      ];
-      revisions[0].createdAt = new Date(1549312452000);
-      jest.spyOn(revisionRepo, 'findOne').mockResolvedValue(revisions[0]);
-      note.id = 'testId';
-      note.alias = 'testAlias';
-      note.title = 'testTitle';
-      note.description = 'testDescription';
-      note.authorColors = [
-        {
-          note: note,
-          user: user,
-          color: 'red',
-        } as AuthorColor,
-      ];
-      note.owner = user;
-      note.userPermissions = [
-        {
-          note: note,
-          user: user,
-          canEdit: true,
-        },
-      ];
-      note.groupPermissions = [
-        {
-          note: note,
-          group: group,
-          canEdit: true,
-        },
-      ];
-      note.tags = [
-        {
-          id: 1,
-          name: 'testTag',
-          notes: [note],
-        },
-      ];
-      note.viewCount = 1337;
-      const metadataDto = await service.toNoteMetadataDto(note);
-      expect(metadataDto.id).toEqual(note.id);
-      expect(metadataDto.alias).toEqual(note.alias);
-      expect(metadataDto.title).toEqual(note.title);
-      expect(metadataDto.createTime).toEqual(revisions[0].createdAt);
-      expect(metadataDto.description).toEqual(note.description);
-      expect(metadataDto.editedBy).toHaveLength(1);
-      expect(metadataDto.editedBy[0]).toEqual(user.userName);
-      expect(metadataDto.permissions.owner.userName).toEqual(user.userName);
-      expect(metadataDto.permissions.sharedToUsers).toHaveLength(1);
-      expect(metadataDto.permissions.sharedToUsers[0].user.userName).toEqual(
-        user.userName,
-      );
-      expect(metadataDto.permissions.sharedToUsers[0].canEdit).toEqual(true);
-      expect(metadataDto.permissions.sharedToGroups).toHaveLength(1);
-      expect(
-        metadataDto.permissions.sharedToGroups[0].group.displayName,
-      ).toEqual(group.displayName);
-      expect(metadataDto.permissions.sharedToGroups[0].canEdit).toEqual(true);
-      expect(metadataDto.tags).toHaveLength(1);
-      expect(metadataDto.tags[0]).toEqual(note.tags[0].name);
-      expect(metadataDto.updateTime).toEqual(revisions[0].createdAt);
-      expect(metadataDto.updateUser.userName).toEqual(user.userName);
-      expect(metadataDto.viewCount).toEqual(note.viewCount);
+      it('new note', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementation(async (note: Note): Promise<Note> => note);
+        const note = await service.createNote(content);
+        const revisions = await note.revisions;
+        revisions[0].authorships = [
+          {
+            user: otherUser,
+            revisions: revisions,
+            startPos: 0,
+            endPos: 1,
+            updatedAt: new Date(1549312452000),
+          } as Authorship,
+          {
+            user: user,
+            revisions: revisions,
+            startPos: 0,
+            endPos: 1,
+            updatedAt: new Date(1549312452001),
+          } as Authorship,
+        ];
+        revisions[0].createdAt = new Date(1549312452000);
+        jest.spyOn(revisionRepo, 'findOne').mockResolvedValue(revisions[0]);
+        note.id = 'testId';
+        note.alias = 'testAlias';
+        note.version = 2;
+        note.title = 'testTitle';
+        note.description = 'testDescription';
+        note.authorColors = [
+          {
+            note: note,
+            user: user,
+            color: 'red',
+          } as AuthorColor,
+        ];
+        note.owner = user;
+        note.userPermissions = [
+          {
+            note: note,
+            user: user,
+            canEdit: true,
+          },
+        ];
+        note.groupPermissions = [
+          {
+            note: note,
+            group: group,
+            canEdit: true,
+          },
+        ];
+        note.tags = [
+          {
+            id: 1,
+            name: 'testTag',
+            notes: [note],
+          },
+        ];
+        note.viewCount = 1337;
+        const metadataDto = await service.toNoteMetadataDto(note);
+        expect(metadataDto.id).toEqual(note.id);
+        expect(metadataDto.alias).toEqual(note.alias);
+        expect(metadataDto.version).toEqual(2);
+        expect(metadataDto.title).toEqual(note.title);
+        expect(metadataDto.createTime).toEqual(revisions[0].createdAt);
+        expect(metadataDto.description).toEqual(note.description);
+        expect(metadataDto.editedBy).toHaveLength(1);
+        expect(metadataDto.editedBy[0]).toEqual(user.userName);
+        expect(metadataDto.permissions.owner.userName).toEqual(user.userName);
+        expect(metadataDto.permissions.sharedToUsers).toHaveLength(1);
+        expect(metadataDto.permissions.sharedToUsers[0].user.userName).toEqual(
+          user.userName,
+        );
+        expect(metadataDto.permissions.sharedToUsers[0].canEdit).toEqual(true);
+        expect(metadataDto.permissions.sharedToGroups).toHaveLength(1);
+        expect(
+          metadataDto.permissions.sharedToGroups[0].group.displayName,
+        ).toEqual(group.displayName);
+        expect(metadataDto.permissions.sharedToGroups[0].canEdit).toEqual(true);
+        expect(metadataDto.tags).toHaveLength(1);
+        expect(metadataDto.tags[0]).toEqual(note.tags[0].name);
+        expect(metadataDto.updateTime).toEqual(revisions[0].createdAt);
+        expect(metadataDto.updateUser.userName).toEqual(user.userName);
+        expect(metadataDto.viewCount).toEqual(note.viewCount);
+      });
+      it('v1 note', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementation(async (note: Note): Promise<Note> => note);
+        const note = await service.createNote(content);
+        const revisions = await note.revisions;
+        revisions[0].authorships = [
+          {
+            user: otherUser,
+            revisions: revisions,
+            startPos: 0,
+            endPos: 1,
+            updatedAt: new Date(1549312452000),
+          } as Authorship,
+          {
+            user: user,
+            revisions: revisions,
+            startPos: 0,
+            endPos: 1,
+            updatedAt: new Date(1549312452001),
+          } as Authorship,
+        ];
+        revisions[0].createdAt = new Date(1549312452000);
+        jest.spyOn(revisionRepo, 'findOne').mockResolvedValue(revisions[0]);
+        note.version = 1;
+        const metadataDto = await service.toNoteMetadataDto(note);
+        expect(metadataDto.version).toEqual(1);
+      });
     });
   });
 
@@ -780,6 +812,7 @@ describe('NotesService', () => {
         .mockResolvedValue(revisions[0]);
       note.id = 'testId';
       note.alias = 'testAlias';
+      note.version = 2;
       note.title = 'testTitle';
       note.description = 'testDescription';
       note.authorColors = [
@@ -815,6 +848,7 @@ describe('NotesService', () => {
       const noteDto = await service.toNoteDto(note);
       expect(noteDto.metadata.id).toEqual(note.id);
       expect(noteDto.metadata.alias).toEqual(note.alias);
+      expect(noteDto.metadata.version).toEqual(2);
       expect(noteDto.metadata.title).toEqual(note.title);
       expect(noteDto.metadata.createTime).toEqual(revisions[0].createdAt);
       expect(noteDto.metadata.description).toEqual(note.description);
