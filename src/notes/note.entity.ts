@@ -37,6 +37,10 @@ export class Note {
     nullable: true,
   })
   alias?: string;
+  @Column({
+    default: 2, // Every new note should have version 2 as it was created with HedgeDoc 2
+  })
+  version: number;
   @OneToMany(
     (_) => NoteGroupPermission,
     (groupPermission) => groupPermission.note,
