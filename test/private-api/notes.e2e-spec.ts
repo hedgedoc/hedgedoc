@@ -92,6 +92,7 @@ describe('Notes', () => {
       .expect('Content-Type', /json/)
       .expect(201);
     expect(response.body.metadata?.id).toBeDefined();
+    expect(response.body.metadata.version).toEqual(2);
     expect(
       await notesService.getNoteContent(
         await notesService.getNoteByIdOrAlias(response.body.metadata.id),
@@ -108,6 +109,7 @@ describe('Notes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
       expect(response.body.content).toEqual(content);
+      expect(response.body.metadata.version).toEqual(2);
     });
     it('fails with an non-existing note', async () => {
       // check if a missing note correctly returns 404
@@ -127,6 +129,7 @@ describe('Notes', () => {
         .expect('Content-Type', /json/)
         .expect(201);
       expect(response.body.metadata?.id).toBeDefined();
+      expect(response.body.metadata.version).toEqual(2);
       return expect(
         await notesService.getNoteContent(
           await notesService.getNoteByIdOrAlias(response.body.metadata?.id),
