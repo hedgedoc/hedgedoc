@@ -34,6 +34,14 @@ export class NoteMetadataDto {
   alias: string;
 
   /**
+   * The version of HedgeDoc the note was created with
+   * @example 2
+   */
+  @IsNumber()
+  @ApiProperty()
+  version: number;
+
+  /**
    * Title of the note
    * Does not contain any markup but might be empty
    * @example "Shopping List"

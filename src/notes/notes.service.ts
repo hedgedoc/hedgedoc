@@ -356,6 +356,7 @@ export class NotesService {
       // TODO: Convert DB UUID to base64
       id: note.id,
       alias: note.alias,
+      version: note.version,
       title: note.title ?? '',
       createTime: (await this.getFirstRevision(note)).createdAt,
       description: note.description ?? '',
