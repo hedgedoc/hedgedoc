@@ -233,8 +233,8 @@ describe('Notes', () => {
         .expect(200);
       expect(typeof metadata.body.id).toEqual('string');
       expect(metadata.body.alias).toEqual('test5');
-      expect(metadata.body.title).toBeNull();
-      expect(metadata.body.description).toBeNull();
+      expect(metadata.body.title).toEqual('');
+      expect(metadata.body.description).toEqual('');
       expect(typeof metadata.body.createTime).toEqual('string');
       expect(metadata.body.editedBy).toEqual([]);
       expect(metadata.body.permissions.owner.userName).toEqual('hardcoded');
