@@ -34,7 +34,7 @@
     "@types/uuid": "8.3.0",
     "@typescript-eslint/eslint-plugin": "4.22.0",
     "@typescript-eslint/parser": "4.22.0",
-    "abcjs": "6.0.0-beta.32",
+    "abcjs": "6.0.0-beta.33",
     "bootstrap": "4.6.0",
     "codemirror": "5.60.0",
     "copy-webpack-plugin": "6.4.1",
