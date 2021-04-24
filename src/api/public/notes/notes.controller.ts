@@ -34,13 +34,13 @@ import {
 } from '../../../notes/note-permissions.dto';
 import { NotesService } from '../../../notes/notes.service';
 import { RevisionsService } from '../../../revisions/revisions.service';
+import { FullApi } from '../../utils/fullapi-decorator';
 import { MarkdownBody } from '../../utils/markdownbody-decorator';
 import { TokenAuthGuard } from '../../../auth/token-auth.guard';
 import {
   ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiNoContentResponse,
-  ApiNotFoundResponse,
   ApiOkResponse,
   ApiProduces,
   ApiSecurity,
@@ -57,7 +57,6 @@ import { Note } from '../../../notes/note.entity';
 import { Request } from 'express';
 import {
   forbiddenDescription,
-  notFoundDescription,
   successfullyDeletedDescription,
   unauthorizedDescription,
 } from '../../utils/descriptions';
@@ -109,9 +108,7 @@ export class NotesController {
     description: 'Get information about the newly created note',
     type: NoteDto,
   })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiForbiddenResponse({ description: forbiddenDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
+  @FullApi
   async getNote(
     @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
@@ -180,9 +177,7 @@ export class NotesController {
   @Delete(':noteIdOrAlias')
   @HttpCode(204)
   @ApiNoContentResponse({ description: successfullyDeletedDescription })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiForbiddenResponse({ description: forbiddenDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
+  @FullApi
   async deleteNote(
     @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
@@ -226,9 +221,7 @@ export class NotesController {
     description: 'The new, changed note',
     type: NoteDto,
   })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiForbiddenResponse({ description: forbiddenDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
+  @FullApi
   async updateNote(
     @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
@@ -264,9 +257,7 @@ export class NotesController {
   @ApiOkResponse({
     description: 'The raw markdown content of the note',
   })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiForbiddenResponse({ description: forbiddenDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
+  @FullApi
   @Header('content-type', 'text/markdown')
   async getNoteContent(
     @Req() req: Request,
@@ -299,9 +290,7 @@ export class NotesController {
     description: 'The metadata of the note',
     type: NoteMetadataDto,
   })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiForbiddenResponse({ description: forbiddenDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
+  @FullApi
   async getNoteMetadata(
     @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
@@ -336,9 +325,7 @@ export class NotesController {
     description: 'The updated permissions of the note',
     type: NotePermissionsDto,
   })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiForbiddenResponse({ description: forbiddenDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
+  @FullApi
   async updateNotePermissions(
     @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
@@ -374,9 +361,7 @@ export class NotesController {
     isArray: true,
     type: RevisionMetadataDto,
   })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiForbiddenResponse({ description: forbiddenDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
+  @FullApi
   async getNoteRevisions(
     @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
@@ -413,9 +398,7 @@ export class NotesController {
     description: 'Revision of the note for the given id or alias',
     type: RevisionDto,
   })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiForbiddenResponse({ description: forbiddenDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
+  @FullApi
   async getNoteRevision(
     @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,

@@ -39,7 +39,6 @@ import {
   ApiForbiddenResponse,
   ApiHeader,
   ApiNoContentResponse,
-  ApiNotFoundResponse,
   ApiSecurity,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -47,10 +46,10 @@ import {
 import { MediaUploadUrlDto } from '../../../media/media-upload-url.dto';
 import {
   forbiddenDescription,
-  notFoundDescription,
   successfullyDeletedDescription,
   unauthorizedDescription,
 } from '../../utils/descriptions';
+import { FullApi } from '../../utils/fullapi-decorator';
 
 @ApiTags('media')
 @ApiSecurity('token')
@@ -127,9 +126,7 @@ export class MediaController {
   @Delete(':filename')
   @HttpCode(204)
   @ApiNoContentResponse({ description: successfullyDeletedDescription })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiForbiddenResponse({ description: forbiddenDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
+  @FullApi
   async deleteMedia(
     @Req() req: Request,
     @Param('filename') filename: string,
