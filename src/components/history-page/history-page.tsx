@@ -10,7 +10,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../redux'
 import { HistoryContent } from './history-content/history-content'
-import { HistoryToolbar, HistoryToolbarState, initState as toolbarInitState } from './history-toolbar/history-toolbar'
+import { HistoryToolbar, HistoryToolbarState, initToolbarState } from './history-toolbar/history-toolbar'
 import { sortAndFilterEntries } from './utils'
 import { refreshHistoryState } from '../../redux/history/methods'
 import { HistoryEntry } from '../../redux/history/types'
@@ -20,7 +20,7 @@ export const HistoryPage: React.FC = () => {
   const { t } = useTranslation()
 
   const allEntries = useSelector((state: ApplicationState) => state.history)
-  const [toolbarState, setToolbarState] = useState<HistoryToolbarState>(toolbarInitState)
+  const [toolbarState, setToolbarState] = useState<HistoryToolbarState>(initToolbarState)
 
   const entriesToShow = useMemo<HistoryEntry[]>(() =>
       sortAndFilterEntries(allEntries, toolbarState),

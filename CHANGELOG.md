@@ -71,6 +71,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - Improved security by wrapping the markdown rendering into an iframe.
 - The intro page content can be changed by editing `public/intro.md`.
 - When pasting tables (e.g. from LibreOffice Calc or MS Excel) they get reformatted to markdown tables.
+- The history page supports URL parameters that allow bookmarking of a specific search of tags filter.
 
 ### Changed
 
