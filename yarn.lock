@@ -2288,10 +2288,10 @@
   resolved "https://registry.yarnpkg.com/@types/js-cookie/-/js-cookie-2.2.6.tgz#f1a1cb35aff47bc5cfb05cb0c441ca91e914c26f"
   integrity sha512-+oY0FDTO2GYKEV0YPvSshGq9t7YozVkgvXLty7zogQNuCxBhT9/3INX9Q7H1aRZ4SUDRXAKlJuA4EA5nTt7SNw==
 
-"@types/js-yaml@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@types/js-yaml/-/js-yaml-4.0.0.tgz#d1a11688112091f2c711674df3a65ea2f47b5dfb"
-  integrity sha512-4vlpCM5KPCL5CfGmTbpjwVKbISRYhduEJvvUWsH5EB7QInhEj94XPZ3ts/9FPiLZFqYO0xoW4ZL8z2AabTGgJA==
+"@types/js-yaml@4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/js-yaml/-/js-yaml-4.0.1.tgz#5544730b65a480b18ace6b6ce914e519cec2d43b"
+  integrity sha512-xdOvNmXmrZqqPy3kuCQ+fz6wA0xU5pji9cd1nDrflWaAWtYLLGk5ykW0H6yg5TVyehHP1pfmuuSaZkhP+kspVA==
 
 "@types/json-schema@*", "@types/json-schema@^7.0.3", "@types/json-schema@^7.0.5", "@types/json-schema@^7.0.6":
   version "7.0.7"
@@ -2341,10 +2341,10 @@
   resolved "https://registry.yarnpkg.com/@types/mdurl/-/mdurl-1.0.2.tgz#e2ce9d83a613bacf284c7be7d491945e39e1f8e9"
   integrity sha512-eC4U9MlIcu2q0KQmXszyn5Akca/0jrQmwDRgpAMJai7qBWq4amIQhZyNau4VYGtCeALvW1/NtjzJJ567aZxfKA==
 
-"@types/mermaid@8.2.4":
-  version "8.2.4"
-  resolved "https://registry.yarnpkg.com/@types/mermaid/-/mermaid-8.2.4.tgz#70a2132143e8f0c498e66dce841bca62ae580d26"
-  integrity sha512-AWyenHxCkPhlGV1QEZfO9mFrtpTO1e89dG0EqTjB0IeDo0P8xRwpnuie2L+El/ZmGsiH59e4v1Dl2DLHjCV8ag==
+"@types/mermaid@8.2.5":
+  version "8.2.5"
+  resolved "https://registry.yarnpkg.com/@types/mermaid/-/mermaid-8.2.5.tgz#85ef5be8a1532c0f596a920972a6242f009a6ce8"
+  integrity sha512-sVKakt9BN2T2qaEHsmQPtV77QAyu5kZh0CErCEaUW4ThBn4VJ47xYuLuvJttmeuSeKfdP/ACi5h184H4gWt4gA==
 
 "@types/minimatch@*":
   version "3.0.4"
