@@ -352,9 +352,9 @@ export class NotesService {
       // TODO: Convert DB UUID to base64
       id: note.id,
       alias: note.alias,
-      title: note.title,
+      title: note.title ?? '',
       createTime: (await this.getFirstRevision(note)).createdAt,
-      description: note.description,
+      description: note.description ?? '',
       editedBy: note.authorColors.map(
         (authorColor) => authorColor.user.userName,
       ),
