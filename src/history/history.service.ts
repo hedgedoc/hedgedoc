@@ -168,7 +168,7 @@ export class HistoryService {
       identifier: entry.note.alias ? entry.note.alias : entry.note.id,
       lastVisited: entry.updatedAt,
       tags: this.notesService.toTagList(entry.note),
-      title: entry.note.title,
+      title: entry.note.title ?? '',
       pinStatus: entry.pinStatus,
     };
   }
