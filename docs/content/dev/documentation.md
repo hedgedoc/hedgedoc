@@ -27,4 +27,4 @@ The documentation is deployed with [mkdocs][mkdocs].
 
 The repository [docs.hedgedoc.org](https://github.com/hedgedoc/docs.hedgedoc.org) is used to deploy the actual website to github.io. Currently only the `master` branch is deployed as it contains the latest release.
 
-[mkdocs]: (https://www.mkdocs.org)
+[mkdocs]: https://www.mkdocs.org
