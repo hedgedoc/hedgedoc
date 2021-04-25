@@ -55,6 +55,13 @@ async function bootstrap(): Promise<void> {
       prefix: '/uploads/',
     });
   }
+  logger.log(
+    `Serving the local folder 'public' under '/public'`,
+    'AppBootstrap',
+  );
+  app.useStaticAssets('public', {
+    prefix: '/public/',
+  });
   await app.listen(appConfig.port);
   logger.log(`Listening on port ${appConfig.port}`, 'AppBootstrap');
 }

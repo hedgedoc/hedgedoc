@@ -41,5 +41,6 @@ dist
 
 public/uploads/*
 !public/uploads/.gitkeep
+!public/.gitkeep
 uploads
 test_uploads
