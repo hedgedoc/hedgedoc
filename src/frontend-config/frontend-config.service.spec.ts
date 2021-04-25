@@ -276,10 +276,6 @@ describe('FrontendConfigService', () => {
                               authConfig.oauth2.length !== 0,
                             );
                             expect(config.allowAnonymous).toEqual(false);
-                            expect(config.banner.text).toEqual('');
-                            expect(config.banner.updateTime).toEqual(
-                              new Date(0),
-                            );
                             expect(config.branding.name).toEqual(customName);
                             expect(config.branding.logo).toEqual(
                               customLogo ? new URL(customLogo) : undefined,
