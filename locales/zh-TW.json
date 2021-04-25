@@ -119,12 +119,12 @@
     "Help us translating": "幫助我們改進翻譯",
     "Join the community": "加入社群",
     "Imprint": "版本說明",
-    "Freely - Anyone can edit": "Freely - Anyone can edit",
-    "Editable - Signed-in people can edit": "Editable - Signed-in people can edit",
-    "Limited - Signed-in people can edit (forbid guests)": "Limited - Signed-in people can edit (forbid guests)",
-    "Locked - Only owner can edit": "Locked - Only owner can edit",
-    "Protected - Only owner can edit (forbid guests)": "Protected - Only owner can edit (forbid guests)",
-    "Private - Only owner can view & edit": "Private - Only owner can view & edit",
-    "changed": "changed",
-    "created": "created"
+    "Freely - Anyone can edit": "無限制 - 所有人都可以編輯",
+    "Editable - Signed-in people can edit": "可編輯 - 登錄即可編輯",
+    "Limited - Signed-in people can edit (forbid guests)": "限制 - 登錄即可編輯 (禁止訪客)",
+    "Locked - Only owner can edit": "鎖定 - 只有擁有者可以編輯",
+    "Protected - Only owner can edit (forbid guests)": "保護 - 只有擁有者可以編輯 (禁止訪客)",
+    "Private - Only owner can view & edit": "私人 - 只有擁有者可以檢視和編輯",
+    "changed": "更改",
+    "created": "建立"
 }
