@@ -1,5 +1,8 @@
 # Release Notes
 ## <i class="fa fa-tag"></i> 1.8.0 <i class="fa fa-calendar-o"></i> UNRELEASED
+
+**Please note:** This release dropped support for Node 10, which is end-of-life since April 2021. You now need at least Node 12 to run HedgeDoc, but we recommend running [the latest LTS release](https://nodejs.org/en/about/releases/).
+
 ### Features
 - Database migrations are now automatically applied on application startup.  
   The separate `.sequelizerc` configuration file is no longer necessary and can be safely deleted.
