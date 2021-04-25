@@ -1,7 +1,8 @@
 /* eslint-env browser, jquery */
 /* global Cookies */
 
-const supported = ['en', 'zh-CN', 'zh-TW', 'fr', 'de', 'ja', 'es', 'ca', 'el', 'pt', 'it', 'tr', 'ru', 'nl', 'hr', 'pl', 'uk', 'hi', 'sv', 'eo', 'da', 'ko', 'id', 'sr', 'vi', 'ar', 'cs', 'sk']
+const supported = ['en', 'zh-CN', 'zh-TW', 'fr', 'de', 'ja', 'es', 'ca', 'el', 'pt', 'it', 'tr', 'ru', 'nl', 'hr', 'pl',
+  'uk', 'hi', 'sv', 'eo', 'da', 'ko', 'id', 'sr', 'vi', 'ar', 'cs', 'sk', 'ml', 'bg', 'fa', 'gl', 'he', 'hu', 'oc', 'pt-br']
 
 function detectLang () {
   if (Cookies.get('locale')) {
