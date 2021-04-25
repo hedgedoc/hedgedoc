@@ -24,6 +24,7 @@ backups/
 # ignore config files
 config.json
 .sequelizerc
+.env
 
 # ignore webpack build
 public/build
