@@ -7,7 +7,6 @@
 import {
   IsArray,
   IsBoolean,
-  IsDate,
   IsNumber,
   IsOptional,
   IsString,
@@ -76,22 +75,6 @@ export class AuthProviders {
    */
   @IsBoolean()
   internal: boolean;
-}
-
-export class BannerDto {
-  /**
-   * The text that is shown in the banner
-   * @example This is a test banner
-   */
-  @IsString()
-  text: string;
-
-  /**
-   * When the banner was last changed
-   * @example "2020-12-01 12:23:34"
-   */
-  @IsDate()
-  updateTime: Date;
 }
 
 export class BrandingDto {
@@ -226,12 +209,6 @@ export class FrontendConfigDto {
    */
   @ValidateNested()
   branding: BrandingDto;
-
-  /**
-   * An optional banner that will be shown
-   */
-  @ValidateNested()
-  banner: BannerDto;
 
   /**
    * The custom names of auth providers, which can be specified multiple times
