@@ -1,4 +1,4 @@
-![HedgeDoc Logo](docs/content/images/hedgedoc_logo_horizontal.svg)
+![HedgeDoc Logo](docs/content/images/hedgedoc_logo_black.svg)
 
 # HedgeDoc
 
