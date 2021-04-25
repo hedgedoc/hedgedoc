@@ -47,7 +47,7 @@ Files: docs/content/images/logo.svg
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: LicenseRef-HedgeDoc-Icon-Usgae-Guidelines
 
-Files: docs/content/images/hedgedoc_logo_horizontal.svg
+Files: docs/content/images/hedgedoc_logo_*.svg
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: LicenseRef-HedgeDoc-Icon-Usgae-Guidelines
 

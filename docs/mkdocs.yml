@@ -30,9 +30,21 @@ theme:
   favicon: images/favicon.png
   logo: images/logo.svg
   palette:
-    scheme: light
-    primary: 'hedgedoc'
-    accent: 'hedgedoc'
+    - media: "(prefers-color-scheme: light)"
+      scheme: light
+      primary: 'hedgedoc'
+      accent: 'hedgedoc'
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: 'hedgedoc'
+      accent: 'hedgedoc'
+      toggle:
+        icon: material/lightbulb
+        name: Switch to light mode
   features:
     - navigation.tabs
     - navigation.sections
