@@ -11,7 +11,21 @@
   
 ### Enhancements
 - Removed dependency on external imgur library
- 
+
+### Contributors
+- Amit Upadhyay (translator)
+- Atef Ben Ali (translator)
+- Edi Feschiyan (translator)
+- Gabriel Santiago Macedo (translator)
+- Longyklee (translator)
+- Nika. zhenya (translator)
+- Nis (translator)
+- rogerio-ar-costa (translator)
+- sanami (translator)
+- Tom Dereszynski (translator)
+- 상규 (translator)
+- uıʞǝʇuɐϽ (translator)
+- UwYFmLpoKtYn (translator)
 
 ## <i class="fa fa-tag"></i> 1.7.2 <i class="fa fa-calendar-o"></i> 2021-01-15
 This release fixes a security issue. We recommend upgrading as soon as possible.
