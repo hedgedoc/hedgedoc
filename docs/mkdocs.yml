@@ -7,6 +7,14 @@ docs_dir: content
 edit_uri: https://github.com/hedgedoc/hedgedoc/edit/master/docs/content/
 nav:
   - Home: index.md
+  - Configuration:
+      - Configuration: config/index.md
+      - Media:
+        - Azure: config/media/azure.md
+        - Filesystem: config/media/filesystem.md
+        - imgur: config/media/imgur.md
+        - S3: config/media/s3.md
+        - WebDAV: config/media/webdav.md
   - Interface:
       Toolbar: interface/toolbar.md
   - References:
