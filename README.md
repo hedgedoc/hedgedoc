@@ -4,8 +4,7 @@ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-HedgeDoc
-===
+![HedgeDoc Logo](docs/content/images/hedgedoc_logo_black.svg)
 
 [![#HedgeDoc on matrix.org][matrix.org-image]][matrix.org-url]
 [![version][github-version-badge]][github-release-page]
