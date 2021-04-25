@@ -18,6 +18,7 @@ const passportSocketIo = require('passport.socketio')
 const helmet = require('helmet')
 const i18n = require('i18n')
 const flash = require('connect-flash')
+const apiMetrics = require('prometheus-api-metrics')
 
 // core
 const config = require('./lib/config')
@@ -25,6 +26,7 @@ const logger = require('./lib/logger')
 const errors = require('./lib/errors')
 const models = require('./lib/models')
 const csp = require('./lib/csp')
+const metrics = require('./lib/prometheus')
 
 // server setup
 const app = express()
@@ -62,6 +64,10 @@ if (!config.useSSL && config.protocolUseSSL) {
 app.use(morgan('combined', {
   stream: logger.stream
 }))
+
+// Register prometheus metrics endpoint
+app.use(apiMetrics())
+metrics.setupCustomPrometheusMetrics()
 
 // socket io
 const io = require('socket.io')(server, { cookie: false })
