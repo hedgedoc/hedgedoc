@@ -8,7 +8,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import {
   AuthProviders,
-  BannerDto,
   BrandingDto,
   CustomAuthNamesDto,
   FrontendConfigDto,
@@ -24,8 +23,6 @@ import externalServicesConfiguration, {
   ExternalServicesConfig,
 } from '../config/external-services.config';
 import { getServerVersionFromPackageJson } from '../utils/serverVersion';
-import { promises as fs, Stats } from 'fs';
-import { join } from 'path';
 
 @Injectable()
 export class FrontendConfigService {
@@ -49,7 +46,6 @@ export class FrontendConfigService {
       allowAnonymous: false,
       allowRegister: this.authConfig.email.enableRegister,
       authProviders: this.getAuthProviders(),
-      banner: await FrontendConfigService.getBanner(),
       branding: this.getBranding(),
       customAuthNames: this.getCustomAuthNames(),
       iframeCommunication: this.getIframeCommunication(),
@@ -137,24 +133,5 @@ export class FrontendConfigService {
         ? new URL(this.appConfig.rendererOrigin)
         : new URL(this.appConfig.domain),
     };
-  }
-
-  private static async getBanner(): Promise<BannerDto> {
-    const path = join(__dirname, '../../banner.md');
-    try {
-      const bannerContent: string = await fs.readFile(path, {
-        encoding: 'utf8',
-      });
-      const fileStats: Stats = await fs.stat(path);
-      return {
-        text: bannerContent,
-        updateTime: fileStats.mtime,
-      };
-    } catch (e) {
-      return {
-        text: '',
-        updateTime: new Date(0),
-      };
-    }
   }
 }
