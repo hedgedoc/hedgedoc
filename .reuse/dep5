@@ -45,11 +45,11 @@ License: CC-BY-SA-4.0
 
 Files: docs/content/images/logo.svg
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
-License: LicenseRef-HedgeDoc-Icon-Usgae-Guidelines
+License: LicenseRef-HedgeDoc-Icon-Usage-Guidelines
 
 Files: docs/content/images/hedgedoc_logo_*.svg
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
-License: LicenseRef-HedgeDoc-Icon-Usgae-Guidelines
+License: LicenseRef-HedgeDoc-Icon-Usage-Guidelines
 
 Files: docs/content/legal/developer-certificate-of-origin.txt
 Copyright: 2004, 2006 The Linux Foundation and its contributors.
