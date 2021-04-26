@@ -114,17 +114,17 @@
     "Export user data": "Export user data",
     "Help us translating on %s": "Help us translating on %s",
     "Source Code": "Source Code",
-    "Register": "Register",
+    "Register": "Registriĝi",
     "Powered by %s": "Powered by %s",
     "Help us translating": "Help us translating",
     "Join the community": "Join the community",
-    "Imprint": "Imprint",
+    "Imprint": "Kolofono",
     "Freely - Anyone can edit": "Libere - Iu ajn povas redakti",
     "Editable - Signed-in people can edit": "Editable - Signed-in people can edit",
     "Limited - Signed-in people can edit (forbid guests)": "Limited - Signed-in people can edit (forbid guests)",
     "Locked - Only owner can edit": "Ŝlosita - Nur la mastro rajtas redakti",
     "Protected - Only owner can edit (forbid guests)": "Protektita - Nur la mastro rajtas redakti (gastoj estas malpermesitaj)",
     "Private - Only owner can view & edit": "Privata - Nur la mastro rajtas vidi & redakti",
-    "changed": "changed",
-    "created": "created"
+    "changed": "verkita",
+    "created": "kreita"
 }

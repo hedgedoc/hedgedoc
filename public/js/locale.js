@@ -1,7 +1,6 @@
 /* eslint-env browser, jquery */
 /* global Cookies */
-
-const supported = ['en', 'zh-CN', 'zh-TW', 'fr', 'de', 'ja', 'es', 'ca', 'el', 'pt', 'it', 'tr', 'ru', 'nl', 'hr', 'pl', 'uk', 'hi', 'sv', 'eo', 'da', 'ko', 'id', 'sr', 'vi', 'ar', 'cs', 'sk']
+const supportedLanguages = require('../../locales/_supported.json')
 
 function detectLang () {
   if (Cookies.get('locale')) {
@@ -13,9 +12,10 @@ function detectLang () {
   }
   const userLang = navigator.language || navigator.userLanguage
   const userLangCode = userLang.split('-')[0]
-  if (supported.includes(userLangCode)) {
+  const supportedLanguagesList = Object.keys(supportedLanguages)
+  if (supportedLanguagesList.includes(userLangCode)) {
     return userLangCode
-  } else if (supported.includes(userLang)) {
+  } else if (supportedLanguagesList.includes(userLang)) {
     return userLang
   }
   return 'en'
@@ -23,6 +23,9 @@ function detectLang () {
 
 const lang = detectLang()
 const localeSelector = $('.ui-locale')
+Object.entries(supportedLanguages).forEach(function ([isoCode, nativeName]) {
+  localeSelector.append(`<option value="${isoCode}">${nativeName}</option>`)
+})
 
 // the following condition is needed as the selector is only available in the intro/history page
 if (localeSelector.length > 0) {

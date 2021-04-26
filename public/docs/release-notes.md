@@ -1,17 +1,55 @@
 # Release Notes
-## <i class="fa fa-tag"></i> 1.8.0 <i class="fa fa-calendar-o"></i> UNRELEASED
+## <i class="fa fa-tag"></i> 1.8.0-rc1 <i class="fa fa-calendar-o"></i> 2021-04-26
+
+This release fixes a security issue. We recommend upgrading as soon as possible.
 
 **Please note:** This release dropped support for Node 10, which is end-of-life since April 2021. You now need at least Node 12 to run HedgeDoc, but we recommend running [the latest LTS release](https://nodejs.org/en/about/releases/).
 
+### Security Fixes
+- [CVE-2021-29474: Relative path traversal Attack on note creation](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-p528-555r-pf87)
+
+We also published an advisory for [CVE-2021-29475: PDF export allows arbitrary file reads](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-pxxg-px9v-6qf3),  
+which has already been fixed since HedgeDoc 1.6.0.
+
 ### Features
-- Database migrations are now automatically applied on application startup.  
-  The separate `.sequelizerc` configuration file is no longer necessary and can be safely deleted.
+- Database migrations are now automatically applied on application startup  
+  The separate `.sequelizerc` configuration file is no longer necessary and can be safely deleted
 - A Prometheus-endpoint is now available at `/metrics`, exposing the same stats as `/status`
-  in addition to various Node.js performance figures.
-  
+  in addition to various Node.js performance figures
+- Add a config option to require authentication in FreeURL mode ([#755](https://github.com/hedgedoc/hedgedoc/pull/755) by [@nidico](https://github.com/nidico))
+
 ### Enhancements
 - Removed dependency on external imgur library
- 
+- HTML language tags are now set up in a way that stops Google Translate from translating note contents while editing
+- Removed `yahoo.com` from the default content security policy
+- New translations for Bulgarian, Persian, Galician, Hebrew, Hungarian, Occitan and Brazilian Portuguese  
+  Updated translations for Arabic, English, Esperanto, Spanish, Hindi, Japanese, Korean, Polish, Portuguese, Turkish and Traditional Chinese
+  Thanks to all translators!
+- Various dependency updates
+
+### Bugfixes
+- Improve readability of diagrams & embeddings in night-mode
+- Use the default template for new notes in FreeURL mode
+- Fix frontend-crash in slide-mode if no `slideOptions` are present in the frontmatter
+- Return 404 on the `/download` route for non-existent notes in FreeURL mode
+- Properly clean up the UNIX socket on application exit
+- Don't overwrite existing notes on POST-requests to `/new/<alias>` in FreeURL mode
+
+### Contributors
+- Amit Upadhyay (translator)
+- Atef Ben Ali (translator)
+- Edi Feschiyan (translator)
+- Gabriel Santiago Macedo (translator)
+- Longyklee (translator)
+- Nika. zhenya (translator)
+- [Nicolas Dietrich](https://github.com/nidico)
+- Nis (translator)
+- rogerio-ar-costa (translator)
+- sanami (translator)
+- Tom Dereszynski (translator)
+- 상규 (translator)
+- uıʞǝʇuɐϽ (translator)
+- UwYFmLpoKtYn (translator)
 
 ## <i class="fa fa-tag"></i> 1.7.2 <i class="fa fa-calendar-o"></i> 2021-01-15
 This release fixes a security issue. We recommend upgrading as soon as possible.
