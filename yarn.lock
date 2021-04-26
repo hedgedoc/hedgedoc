@@ -9451,11 +9451,6 @@ script-loader@0.7.2:
   dependencies:
     raw-loader "~0.5.1"
 
-scrypt-async@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/scrypt-async/-/scrypt-async-2.0.1.tgz#4318dae48a8b7cc3b8fe05f75f4164a7d973d25d"
-  integrity sha512-wHR032jldwZNy7Tzrfu7RccOgGf8r5hyDMSP2uV6DpLiBUsR8JsDcx/in73o2UGVVrH5ivRFdNsFPcjtl3LErQ==
-
 scrypt-kdf@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/scrypt-kdf/-/scrypt-kdf-2.0.1.tgz#3355224c52d398331b2cbf2b70a7be26b52c53e6"
