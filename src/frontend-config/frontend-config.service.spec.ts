@@ -21,6 +21,7 @@ import { Loglevel } from '../config/loglevel.enum';
  */
 
 describe('FrontendConfigService', () => {
+  const domain = 'http://md.example.com';
   const emptyAuthConfig: AuthConfig = {
     email: {
       enableLogin: false,
@@ -183,8 +184,8 @@ describe('FrontendConfigService', () => {
                         ]) {
                           it(`combination #${index} works`, async () => {
                             const appConfig: AppConfig = {
-                              domain: 'http://md.example.com',
-                              rendererOrigin: renderOrigin,
+                              domain: domain,
+                              rendererOrigin: renderOrigin ?? domain,
                               port: 3000,
                               loglevel: Loglevel.ERROR,
                               forbiddenNoteIds: [],
