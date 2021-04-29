@@ -4,10 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { IsArray, IsBoolean, IsString, ValidateNested } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { UserInfoDto } from '../users/user-info.dto';
 import { GroupInfoDto } from '../groups/group-info.dto';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class NoteUserPermissionEntryDto {
   /**
@@ -84,8 +90,9 @@ export class NotePermissionsDto {
    * User this permission applies to
    */
   @ValidateNested()
-  @ApiProperty({ type: UserInfoDto })
-  owner: UserInfoDto;
+  @ApiPropertyOptional({ type: UserInfoDto })
+  @IsOptional()
+  owner?: UserInfoDto;
 
   /**
    * List of users the note is shared with
