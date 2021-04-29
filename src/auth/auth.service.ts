@@ -184,6 +184,8 @@ export class AuthService {
       label: authToken.label,
       keyId: authToken.keyId,
       createdAt: authToken.createdAt,
+      validUntil: null,
+      lastUsed: null,
     };
 
     if (authToken.validUntil) {
