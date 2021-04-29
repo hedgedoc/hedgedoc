@@ -26,7 +26,7 @@ export class MediaUpload {
   @ManyToOne((_) => Note, (note) => note.mediaUploads, {
     nullable: true,
   })
-  note: Note;
+  note: Note | null;
 
   @ManyToOne((_) => User, (user) => user.mediaUploads, {
     nullable: false,
@@ -44,7 +44,7 @@ export class MediaUpload {
   @Column({
     nullable: true,
   })
-  backendData: BackendData;
+  backendData: BackendData | null;
 
   @CreateDateColumn()
   createdAt: Date;

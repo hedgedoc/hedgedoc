@@ -41,12 +41,12 @@ export class User {
   @Column({
     nullable: true,
   })
-  photo?: string;
+  photo: string | null;
 
   @Column({
     nullable: true,
   })
-  email?: string;
+  email: string | null;
 
   @OneToMany((_) => Note, (note) => note.owner)
   ownedNotes: Note[];

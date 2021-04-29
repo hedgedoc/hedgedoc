@@ -153,7 +153,7 @@ describe('NotesService', () => {
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
         expect(newNote.owner).toBeUndefined();
-        expect(newNote.alias).toBeUndefined();
+        expect(newNote.alias).toBeNull();
       });
       it('without alias, with owner', async () => {
         const newNote = await service.createNote(content, undefined, user);
@@ -166,7 +166,7 @@ describe('NotesService', () => {
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
         expect(newNote.owner).toEqual(user);
-        expect(newNote.alias).toBeUndefined();
+        expect(newNote.alias).toBeNull();
       });
       it('with alias, without owner', async () => {
         const newNote = await service.createNote(content, alias);
