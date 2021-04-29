@@ -173,14 +173,7 @@ export class AuthService {
     await this.authTokenRepository.remove(token);
   }
 
-  toAuthTokenDto(authToken: AuthToken): AuthTokenDto | null {
-    if (!authToken) {
-      this.logger.warn(
-        `Recieved ${String(authToken)} argument!`,
-        'toAuthTokenDto',
-      );
-      return null;
-    }
+  toAuthTokenDto(authToken: AuthToken): AuthTokenDto {
     const tokenDto: AuthTokenDto = {
       lastUsed: null,
       validUntil: null,
