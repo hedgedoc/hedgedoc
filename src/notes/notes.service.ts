@@ -102,14 +102,18 @@ export class NotesService {
     }
     try {
       return await this.noteRepository.save(newNote);
-    } catch {
-      this.logger.debug(
-        `A note with the alias '${alias}' already exists.`,
-        'createNote',
-      );
-      throw new AlreadyInDBError(
-        `A note with the alias '${alias}' already exists.`,
-      );
+    } catch (e) {
+      if (alias) {
+        this.logger.debug(
+          `A note with the alias '${alias}' already exists.`,
+          'createNote',
+        );
+        throw new AlreadyInDBError(
+          `A note with the alias '${alias}' already exists.`,
+        );
+      } else {
+        throw e;
+      }
     }
   }
 
@@ -304,7 +308,7 @@ export class NotesService {
    * @param {Note} note - the note to use
    * @return {User} user to be used as updateUser in the NoteDto
    */
-  async calculateUpdateUser(note: Note): Promise<User> {
+  async calculateUpdateUser(note: Note): Promise<User | null> {
     const lastRevision = await this.getLatestRevision(note);
     if (lastRevision && lastRevision.authorships) {
       // Sort the last Revisions Authorships by their updatedAt Date to get the latest one
@@ -333,7 +337,7 @@ export class NotesService {
    */
   toNotePermissionsDto(note: Note): NotePermissionsDto {
     return {
-      owner: this.usersService.toUserDto(note.owner),
+      owner: note.owner ? this.usersService.toUserDto(note.owner) : undefined,
       sharedToUsers: note.userPermissions.map((noteUserPermission) => ({
         user: this.usersService.toUserDto(noteUserPermission.user),
         canEdit: noteUserPermission.canEdit,
