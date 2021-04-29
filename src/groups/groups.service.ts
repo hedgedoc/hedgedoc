@@ -43,11 +43,7 @@ export class GroupsService {
    * @param {Group} group - the group to use
    * @return {GroupInfoDto} the built GroupInfoDto
    */
-  toGroupDto(group: Group | null | undefined): GroupInfoDto | null {
-    if (!group) {
-      this.logger.warn(`Recieved ${String(group)} argument!`, 'toGroupDto');
-      return null;
-    }
+  toGroupDto(group: Group): GroupInfoDto {
     return {
       name: group.name,
       displayName: group.displayName,
