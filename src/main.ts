@@ -26,6 +26,11 @@ async function bootstrap(): Promise<void> {
   const appConfig = configService.get<AppConfig>('appConfig');
   const mediaConfig = configService.get<MediaConfig>('mediaConfig');
 
+  if (!appConfig || !mediaConfig) {
+    logger.error('Could not initialize config, aborting.', 'AppBootstrap');
+    process.exit(1);
+  }
+
   setupPublicApiDocs(app);
   logger.log(
     `Serving OpenAPI docs for public api under '/apidoc'`,
