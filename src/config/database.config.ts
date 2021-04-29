@@ -7,7 +7,7 @@
 import * as Joi from 'joi';
 import { DatabaseDialect } from './database-dialect.enum';
 import { registerAs } from '@nestjs/config';
-import { buildErrorMessage } from './utils';
+import { buildErrorMessage, parseOptionalInt } from './utils';
 
 export interface DatabaseConfig {
   username: string;
@@ -62,7 +62,7 @@ export default registerAs('databaseConfig', () => {
       password: process.env.HD_DATABASE_PASS,
       database: process.env.HD_DATABASE_NAME,
       host: process.env.HD_DATABASE_HOST,
-      port: parseInt(process.env.HD_DATABASE_PORT) || undefined,
+      port: parseOptionalInt(process.env.HD_DATABASE_PORT),
       storage: process.env.HD_DATABASE_STORAGE,
       dialect: process.env.HD_DATABASE_DIALECT,
     },
