@@ -152,7 +152,7 @@ describe('NotesService', () => {
         expect(newNote.userPermissions).toHaveLength(0);
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
-        expect(newNote.owner).toBeUndefined();
+        expect(newNote.owner).toBeNull();
         expect(newNote.alias).toBeNull();
       });
       it('without alias, with owner', async () => {
@@ -177,7 +177,7 @@ describe('NotesService', () => {
         expect(newNote.userPermissions).toHaveLength(0);
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
-        expect(newNote.owner).toBeUndefined();
+        expect(newNote.owner).toBeNull();
         expect(newNote.alias).toEqual(alias);
       });
       it('with alias, with owner', async () => {
