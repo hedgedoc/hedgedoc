@@ -198,9 +198,9 @@ export class AuthService {
   }
 
   toAuthTokenWithSecretDto(
-    authToken: AuthToken | null | undefined,
+    authToken: AuthToken,
     secret: string,
-  ): AuthTokenWithSecretDto | null {
+  ): AuthTokenWithSecretDto {
     const tokenDto = this.toAuthTokenDto(authToken);
     return {
       ...tokenDto,
