@@ -9,7 +9,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { promises as fs } from 'fs';
-import * as request from 'supertest';
+import request from 'supertest';
 import mediaConfigMock from '../../src/config/mock/media.config.mock';
 import appConfigMock from '../../src/config/mock/app.config.mock';
 import authConfigMock from '../../src/config/mock/auth.config.mock';

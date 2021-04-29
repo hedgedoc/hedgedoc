@@ -11,7 +11,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { ApiBody, ApiConsumes } from '@nestjs/swagger';
-import * as getRawBody from 'raw-body';
+import getRawBody from 'raw-body';
 
 /**
  * Extract the raw markdown from the request body and create a new note with it

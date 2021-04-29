@@ -6,7 +6,7 @@
 
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import * as request from 'supertest';
+import request from 'supertest';
 import { HistoryService } from '../../src/history/history.service';
 import { NotesService } from '../../src/notes/notes.service';
 import { HistoryEntryUpdateDto } from '../../src/history/history-entry-update.dto';
