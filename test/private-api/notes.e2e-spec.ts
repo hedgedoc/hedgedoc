@@ -8,7 +8,7 @@ import { INestApplication } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import * as request from 'supertest';
+import request from 'supertest';
 import mediaConfigMock from '../../src/config/mock/media.config.mock';
 import appConfigMock from '../../src/config/mock/app.config.mock';
 import authConfigMock from '../../src/config/mock/auth.config.mock';
