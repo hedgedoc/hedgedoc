@@ -64,7 +64,7 @@ export class AuthService {
 
   randomString(length: number): Buffer {
     if (length <= 0) {
-      return null;
+      throw new Error('randomString cannot have a length < 1');
     }
     return randomBytes(length);
   }
