@@ -113,3 +113,10 @@ function transformLoglevelToInt(loglevel: Loglevel): number {
       return 1;
   }
 }
+
+export function parseOptionalInt(value?: string): number | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+  return parseInt(value);
+}

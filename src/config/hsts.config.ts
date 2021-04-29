@@ -6,7 +6,7 @@
 
 import * as Joi from 'joi';
 import { registerAs } from '@nestjs/config';
-import { buildErrorMessage } from './utils';
+import { buildErrorMessage, parseOptionalInt } from './utils';
 
 export interface HstsConfig {
   enable: boolean;
@@ -32,7 +32,7 @@ export default registerAs('hstsConfig', () => {
   const hstsConfig = hstsSchema.validate(
     {
       enable: process.env.HD_HSTS_ENABLE,
-      maxAgeSeconds: parseInt(process.env.HD_HSTS_MAX_AGE) || undefined,
+      maxAgeSeconds: parseOptionalInt(process.env.HD_HSTS_MAX_AGE),
       includeSubdomains: process.env.HD_HSTS_INCLUDE_SUBDOMAINS,
       preload: process.env.HD_HSTS_PRELOAD,
     },
