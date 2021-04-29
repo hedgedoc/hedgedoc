@@ -69,13 +69,5 @@ describe('GroupsService', () => {
       expect(groupDto.name).toEqual(group.name);
       expect(groupDto.special).toBeFalsy();
     });
-    it('fails with null parameter', () => {
-      const groupDto = service.toGroupDto(null);
-      expect(groupDto).toBeNull();
-    });
-    it('fails with undefined parameter', () => {
-      const groupDto = service.toGroupDto(undefined);
-      expect(groupDto).toBeNull();
-    });
   });
 });
