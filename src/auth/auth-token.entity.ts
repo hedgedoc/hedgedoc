@@ -64,6 +64,7 @@ export class AuthToken {
     newToken.accessTokenHash = accessToken;
     newToken.createdAt = new Date();
     newToken.validUntil = validUntil;
+    newToken.lastUsed = null;
     return newToken;
   }
 }
