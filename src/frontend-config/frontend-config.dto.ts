@@ -84,7 +84,7 @@ export class BrandingDto {
    */
   @IsString()
   @IsOptional()
-  name: string;
+  name?: string;
 
   /**
    * The logo to be displayed next to the HedgeDoc logo
@@ -92,7 +92,7 @@ export class BrandingDto {
    */
   @IsUrl()
   @IsOptional()
-  logo: URL;
+  logo?: URL;
 }
 
 export class CustomAuthEntry {
@@ -148,7 +148,7 @@ export class SpecialUrlsDto {
    */
   @IsUrl()
   @IsOptional()
-  privacy: URL;
+  privacy?: URL;
 
   /**
    * A link to the terms of use
@@ -156,7 +156,7 @@ export class SpecialUrlsDto {
    */
   @IsUrl()
   @IsOptional()
-  termsOfUse: URL;
+  termsOfUse?: URL;
 
   /**
    * A link to the imprint
@@ -164,7 +164,7 @@ export class SpecialUrlsDto {
    */
   @IsUrl()
   @IsOptional()
-  imprint: URL;
+  imprint?: URL;
 }
 
 export class IframeCommunicationDto {
@@ -174,7 +174,7 @@ export class IframeCommunicationDto {
    */
   @IsUrl()
   @IsOptional()
-  editorOrigin: URL;
+  editorOrigin?: URL;
 
   /**
    * The origin under which the renderer page will be served
@@ -182,7 +182,7 @@ export class IframeCommunicationDto {
    */
   @IsUrl()
   @IsOptional()
-  rendererOrigin: URL;
+  rendererOrigin?: URL;
 }
 
 export class FrontendConfigDto {
@@ -239,7 +239,7 @@ export class FrontendConfigDto {
    */
   @IsUrl()
   @IsOptional()
-  plantUmlServer: URL;
+  plantUmlServer?: URL;
 
   /**
    * The maximal length of each document
