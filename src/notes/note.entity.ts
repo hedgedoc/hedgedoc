@@ -35,6 +35,7 @@ export class Note {
   @Column({
     unique: true,
     nullable: true,
+    type: 'text',
   })
   alias: string | null;
   @OneToMany(
@@ -70,10 +71,12 @@ export class Note {
 
   @Column({
     nullable: true,
+    type: 'text',
   })
   description: string | null;
   @Column({
     nullable: true,
+    type: 'text',
   })
   title: string | null;
 

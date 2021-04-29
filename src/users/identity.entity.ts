@@ -38,16 +38,19 @@ export class Identity {
 
   @Column({
     nullable: true,
+    type: 'text',
   })
   providerUserId: string | null;
 
   @Column({
     nullable: true,
+    type: 'text',
   })
   oAuthAccessToken: string | null;
 
   @Column({
     nullable: true,
+    type: 'text',
   })
   passwordHash: string | null;
 }

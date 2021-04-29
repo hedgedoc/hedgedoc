@@ -37,11 +37,13 @@ export class AuthToken {
 
   @Column({
     nullable: true,
+    type: 'date',
   })
   validUntil: Date | null;
 
   @Column({
     nullable: true,
+    type: 'date',
   })
   lastUsed: Date | null;
 

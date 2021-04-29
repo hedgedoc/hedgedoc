@@ -43,6 +43,7 @@ export class MediaUpload {
 
   @Column({
     nullable: true,
+    type: 'text',
   })
   backendData: BackendData | null;
 

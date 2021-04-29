@@ -40,11 +40,13 @@ export class User {
 
   @Column({
     nullable: true,
+    type: 'text',
   })
   photo: string | null;
 
   @Column({
     nullable: true,
+    type: 'text',
   })
   email: string | null;
 
