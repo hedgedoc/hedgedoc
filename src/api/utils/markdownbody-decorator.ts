@@ -42,15 +42,20 @@ export const MarkdownBody = createParamDecorator(
   },
   [
     (target, key): void => {
-      ApiConsumes('text/markdown')(
+      const ownPropertyDescriptor = Object.getOwnPropertyDescriptor(
         target,
         key,
-        Object.getOwnPropertyDescriptor(target, key),
       );
+      if (!ownPropertyDescriptor) {
+        throw new Error(
+          `Could not get property descriptor for target ${target.toString()} and key ${key.toString()}`,
+        );
+      }
+      ApiConsumes('text/markdown')(target, key, ownPropertyDescriptor);
       ApiBody({
         required: true,
         schema: { example: '# Markdown Body' },
-      })(target, key, Object.getOwnPropertyDescriptor(target, key));
+      })(target, key, ownPropertyDescriptor);
     },
   ],
 );
