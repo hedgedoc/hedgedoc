@@ -39,15 +39,15 @@ export class Identity {
   @Column({
     nullable: true,
   })
-  providerUserId?: string;
+  providerUserId: string | null;
 
   @Column({
     nullable: true,
   })
-  oAuthAccessToken?: string;
+  oAuthAccessToken: string | null;
 
   @Column({
     nullable: true,
   })
-  passwordHash?: string;
+  passwordHash: string | null;
 }

@@ -38,12 +38,12 @@ export class AuthToken {
   @Column({
     nullable: true,
   })
-  validUntil: Date;
+  validUntil: Date | null;
 
   @Column({
     nullable: true,
   })
-  lastUsed: Date;
+  lastUsed: Date | null;
 
   public static create(
     user: User,

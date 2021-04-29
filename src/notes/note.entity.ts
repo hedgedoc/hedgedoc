@@ -36,7 +36,7 @@ export class Note {
     unique: true,
     nullable: true,
   })
-  alias?: string;
+  alias: string | null;
   @OneToMany(
     (_) => NoteGroupPermission,
     (groupPermission) => groupPermission.note,
@@ -70,11 +70,11 @@ export class Note {
   @Column({
     nullable: true,
   })
-  description?: string;
+  description: string | null;
   @Column({
     nullable: true,
   })
-  title?: string;
+  title: string | null;
 
   @ManyToMany((_) => Tag, (tag) => tag.notes, { eager: true, cascade: true })
   @JoinTable()
