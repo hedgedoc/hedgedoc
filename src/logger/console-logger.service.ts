@@ -14,7 +14,7 @@ import { needToLog } from '../config/utils';
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class ConsoleLoggerService {
-  private classContext: string;
+  private classContext: string | undefined;
   private lastTimestamp: number;
 
   constructor(
@@ -83,7 +83,7 @@ export class ConsoleLoggerService {
     }
   }
 
-  private makeContextString(functionContext: string): string {
+  private makeContextString(functionContext?: string): string {
     let context = this.classContext;
     if (!context) {
       context = 'HedgeDoc';
