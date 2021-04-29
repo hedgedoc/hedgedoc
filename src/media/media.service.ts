@@ -227,7 +227,7 @@ export class MediaService {
   toMediaUploadDto(mediaUpload: MediaUpload): MediaUploadDto {
     return {
       url: mediaUpload.fileUrl,
-      noteId: mediaUpload.note?.id,
+      noteId: mediaUpload.note?.id ?? null,
       createdAt: mediaUpload.createdAt,
       userName: mediaUpload.user.userName,
     };
