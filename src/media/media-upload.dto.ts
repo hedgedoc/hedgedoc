@@ -23,7 +23,7 @@ export class MediaUploadDto {
   @IsString()
   @IsOptional()
   @ApiProperty()
-  noteId?: string;
+  noteId: string | null;
 
   /**
    * The date when the upload objects was created.
