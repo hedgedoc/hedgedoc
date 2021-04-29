@@ -319,4 +319,10 @@ describe('AuthService', () => {
       );
     });
   });
+  describe('randomString', () => {
+    it('throws on invalid lenght parameter', () => {
+      expect(() => service.randomString(0)).toThrow();
+      expect(() => service.randomString(-1)).toThrow();
+    });
+  });
 });
