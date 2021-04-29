@@ -356,10 +356,11 @@ export class NotesService {
    * @return {NoteMetadataDto} the built NoteMetadataDto
    */
   async toNoteMetadataDto(note: Note): Promise<NoteMetadataDto> {
+    const updateUser = await this.calculateUpdateUser(note);
     return {
       // TODO: Convert DB UUID to base64
       id: note.id,
-      alias: note.alias,
+      alias: note.alias ?? undefined,
       title: note.title ?? '',
       createTime: (await this.getFirstRevision(note)).createdAt,
       description: note.description ?? '',
@@ -369,9 +370,9 @@ export class NotesService {
       permissions: this.toNotePermissionsDto(note),
       tags: this.toTagList(note),
       updateTime: (await this.getLatestRevision(note)).createdAt,
-      updateUser: this.usersService.toUserDto(
-        await this.calculateUpdateUser(note),
-      ),
+      updateUser: updateUser
+        ? this.usersService.toUserDto(updateUser)
+        : undefined,
       viewCount: note.viewCount,
     };
   }
