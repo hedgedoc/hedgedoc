@@ -181,8 +181,6 @@ export class AuthService {
 
   toAuthTokenDto(authToken: AuthToken): AuthTokenDto {
     const tokenDto: AuthTokenDto = {
-      lastUsed: null,
-      validUntil: null,
       label: authToken.label,
       keyId: authToken.keyId,
       createdAt: authToken.createdAt,

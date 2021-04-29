@@ -251,7 +251,7 @@ describe('AuthService', () => {
         });
         jest.spyOn(authTokenRepo, 'save').mockImplementationOnce(
           async (authTokenSaved: AuthToken, _): Promise<AuthToken> => {
-            expect(authTokenSaved.lastUsed).toBeUndefined();
+            expect(authTokenSaved.lastUsed).toBeNull();
             return authTokenSaved;
           },
         );
@@ -275,7 +275,7 @@ describe('AuthService', () => {
         });
         jest.spyOn(authTokenRepo, 'save').mockImplementationOnce(
           async (authTokenSaved: AuthToken, _): Promise<AuthToken> => {
-            expect(authTokenSaved.lastUsed).toBeUndefined();
+            expect(authTokenSaved.lastUsed).toBeNull();
             return authTokenSaved;
           },
         );
