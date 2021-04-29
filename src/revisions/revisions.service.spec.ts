@@ -6,6 +6,8 @@
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
 import { AuthorColor } from '../notes/author-color.entity';
 import { Note } from '../notes/note.entity';
@@ -25,6 +27,7 @@ import appConfigMock from '../config/mock/app.config.mock';
 
 describe('RevisionsService', () => {
   let service: RevisionsService;
+  let revisionRepo: Repository<Revision>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -32,7 +35,7 @@ describe('RevisionsService', () => {
         RevisionsService,
         {
           provide: getRepositoryToken(Revision),
-          useValue: {},
+          useClass: Repository,
         },
       ],
       imports: [
@@ -57,7 +60,7 @@ describe('RevisionsService', () => {
       .overrideProvider(getRepositoryToken(Note))
       .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
-      .useValue({})
+      .useClass(Repository)
       .overrideProvider(getRepositoryToken(Tag))
       .useValue({})
       .overrideProvider(getRepositoryToken(NoteGroupPermission))
@@ -69,9 +72,26 @@ describe('RevisionsService', () => {
       .compile();
 
     service = module.get<RevisionsService>(RevisionsService);
+    revisionRepo = module.get<Repository<Revision>>(
+      getRepositoryToken(Revision),
+    );
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  describe('getRevision', () => {
+    it('returns a revision', async () => {
+      const revision = Revision.create('', '');
+      jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revision);
+      expect(await service.getRevision({} as Note, 1)).toEqual(revision);
+    });
+    it('throws if the revision is not in the databse', async () => {
+      jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(undefined);
+      await expect(service.getRevision({} as Note, 1)).rejects.toThrow(
+        NotInDBError,
+      );
+    });
   });
 });

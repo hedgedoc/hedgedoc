@@ -13,6 +13,7 @@ import { RevisionMetadataDto } from './revision-metadata.dto';
 import { RevisionDto } from './revision.dto';
 import { Revision } from './revision.entity';
 import { Note } from '../notes/note.entity';
+import { NotInDBError } from '../errors/errors';
 
 @Injectable()
 export class RevisionsService {
@@ -34,16 +35,22 @@ export class RevisionsService {
   }
 
   async getRevision(note: Note, revisionId: number): Promise<Revision> {
-    return await this.revisionRepository.findOne({
+    const revision = await this.revisionRepository.findOne({
       where: {
         id: revisionId,
         note: note,
       },
     });
+    if (revision === undefined) {
+      throw new NotInDBError(
+        `Revision with ID ${revisionId} for note ${note.id} not found.`,
+      );
+    }
+    return revision;
   }
 
   async getLatestRevision(noteId: string): Promise<Revision> {
-    return await this.revisionRepository.findOne({
+    const revision = await this.revisionRepository.findOne({
       where: {
         note: noteId,
       },
@@ -52,10 +59,14 @@ export class RevisionsService {
         id: 'DESC',
       },
     });
+    if (revision === undefined) {
+      throw new NotInDBError(`Revision for note ${noteId} not found.`);
+    }
+    return revision;
   }
 
   async getFirstRevision(noteId: string): Promise<Revision> {
-    return await this.revisionRepository.findOne({
+    const revision = await this.revisionRepository.findOne({
       where: {
         note: noteId,
       },
@@ -63,6 +74,10 @@ export class RevisionsService {
         createdAt: 'ASC',
       },
     });
+    if (revision === undefined) {
+      throw new NotInDBError(`Revision for note ${noteId} not found.`);
+    }
+    return revision;
   }
 
   toRevisionMetadataDto(revision: Revision): RevisionMetadataDto {
