@@ -6,7 +6,7 @@
 
 import { Loglevel } from './loglevel.enum';
 
-export function toArrayConfig(configValue: string, separator = ','): string[] {
+export function toArrayConfig(configValue?: string, separator = ','): string[] {
   if (!configValue) {
     return [];
   }
