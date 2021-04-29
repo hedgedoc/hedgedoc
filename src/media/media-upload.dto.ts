@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { IsDate, IsString } from 'class-validator';
+import { IsDate, IsOptional, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class MediaUploadDto {
@@ -21,8 +21,9 @@ export class MediaUploadDto {
    * @example "noteId" TODO how looks a note id?
    */
   @IsString()
+  @IsOptional()
   @ApiProperty()
-  noteId: string;
+  noteId?: string;
 
   /**
    * The date when the upload objects was created.
