@@ -64,6 +64,7 @@
     "@nestjs/cli": "7.6.0",
     "@nestjs/schematics": "7.3.1",
     "@nestjs/testing": "7.6.15",
+    "@tsconfig/node12": "^1.0.7",
     "@types/cli-color": "2.0.0",
     "@types/express": "4.17.11",
     "@types/jest": "26.0.23",
