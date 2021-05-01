@@ -6,7 +6,6 @@
 
 import { DateTime } from 'luxon'
 import { Reducer } from 'redux'
-import { Note } from '../../api/notes'
 import {
   NoteFrontmatter,
   NoteTextDirection,
@@ -22,6 +21,7 @@ import {
   SetNoteFrontmatterFromRenderingAction,
   UpdateNoteTitleByFirstHeadingAction
 } from './types'
+import { noteDtoToNoteDetails } from '../../api/notes/dto-methods'
 
 export const initialState: NoteDetails = {
   markdownContent: '',
@@ -29,10 +29,9 @@ export const initialState: NoteDetails = {
   createTime: DateTime.fromSeconds(0),
   lastChange: {
     timestamp: DateTime.fromSeconds(0),
-    userId: ''
+    userName: ''
   },
   alias: '',
-  preVersionTwoNote: false,
   viewCount: 0,
   authorship: [],
   noteTitle: '',
@@ -67,7 +66,7 @@ export const NoteDetailsReducer: Reducer<NoteDetails, NoteDetailsAction> = (stat
         noteTitle: generateNoteTitle(state.frontmatter, (action as UpdateNoteTitleByFirstHeadingAction).firstHeading)
       }
     case NoteDetailsActionType.SET_NOTE_DATA_FROM_SERVER:
-      return convertNoteToNoteDetails((action as SetNoteDetailsFromServerAction).note)
+      return noteDtoToNoteDetails((action as SetNoteDetailsFromServerAction).note)
     case NoteDetailsActionType.SET_NOTE_FRONTMATTER:
       return {
         ...state,
@@ -111,21 +110,4 @@ const generateNoteTitle = (frontmatter: NoteFrontmatter, firstHeading?: string) 
   }
 }
 
-const convertNoteToNoteDetails = (note: Note): NoteDetails => {
-  return {
-    markdownContent: note.content,
-    frontmatter: initialState.frontmatter,
-    id: note.id,
-    noteTitle: initialState.noteTitle,
-    createTime: DateTime.fromSeconds(note.createTime),
-    lastChange: {
-      userId: note.lastChange.userId,
-      timestamp: DateTime.fromSeconds(note.lastChange.timestamp)
-    },
-    firstHeading: initialState.firstHeading,
-    preVersionTwoNote: note.preVersionTwoNote,
-    viewCount: note.viewCount,
-    alias: note.alias,
-    authorship: note.authorship
-  }
-}
+

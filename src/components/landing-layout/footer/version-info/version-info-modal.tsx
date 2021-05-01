@@ -4,17 +4,32 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { CommonModal, CommonModalProps } from '../../../common/modals/common-modal'
 import { Modal, Row } from 'react-bootstrap'
 import { VersionInfoModalColumn } from './version-info-modal-column'
 import frontendVersion from '../../../../version.json'
+import links from '../../../../links.json'
 import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../../../redux'
 import equal from 'fast-deep-equal'
+import { BackendVersion } from '../../../../api/config/types'
 
 export const VersionInfoModal: React.FC<CommonModalProps> = ({ onHide, show }) => {
-  const serverVersion = useSelector((state: ApplicationState) => state.config.version, equal)
+  const serverVersion: BackendVersion = useSelector((state: ApplicationState) => state.config.version, equal)
+  const backendVersion = useMemo(() => {
+    const version = `${serverVersion.major}.${serverVersion.minor}.${serverVersion.patch}`
+
+    if (serverVersion.preRelease) {
+      return `${version}-${serverVersion.preRelease}`
+    }
+
+    if (serverVersion.commit) {
+      return serverVersion.commit
+    }
+    return version
+  }, [serverVersion])
+
 
   return (
     <CommonModal data-cy={ 'version-modal' } show={ show } onHide={ onHide } closeButton={ true }
@@ -23,9 +38,9 @@ export const VersionInfoModal: React.FC<CommonModalProps> = ({ onHide, show }) =
         <Row>
           <VersionInfoModalColumn
             titleI18nKey={ 'landing.versionInfo.serverVersion' }
-            version={ serverVersion.version }
-            issueTrackerLink={ serverVersion.issueTrackerUrl }
-            sourceCodeLink={ serverVersion.sourceCodeUrl }/>
+            version={ backendVersion }
+            issueTrackerLink={ links.backendIssues }
+            sourceCodeLink={ links.backendSourceCode }/>
           <VersionInfoModalColumn
             titleI18nKey={ 'landing.versionInfo.clientVersion' }
             version={ frontendVersion.version }

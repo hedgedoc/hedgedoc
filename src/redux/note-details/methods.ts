@@ -5,7 +5,7 @@
  */
 
 import { store } from '..'
-import { Note } from '../../api/notes'
+import { NoteDto } from '../../api/notes/types'
 import { NoteFrontmatter } from '../../components/editor-page/note-frontmatter/note-frontmatter'
 import { initialState } from './reducers'
 import {
@@ -24,7 +24,7 @@ export const setNoteMarkdownContent = (content: string): void => {
   } as SetNoteDetailsAction)
 }
 
-export const setNoteDataFromServer = (apiResponse: Note): void => {
+export const setNoteDataFromServer = (apiResponse: NoteDto): void => {
   store.dispatch({
     type: NoteDetailsActionType.SET_NOTE_DATA_FROM_SERVER,
     note: apiResponse

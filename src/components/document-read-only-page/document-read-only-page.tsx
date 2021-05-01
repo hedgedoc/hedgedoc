@@ -48,7 +48,7 @@ export const DocumentReadOnlyPage: React.FC = () => {
       </div>
       <ShowIf condition={ !error && !loading }>
         <DocumentInfobar
-          changedAuthor={ noteDetails.lastChange.userId ?? '' }
+          changedAuthor={ noteDetails.lastChange.userName ?? '' }
           changedTime={ noteDetails.lastChange.timestamp }
           createdAuthor={ 'Test' }
           createdTime={ noteDetails.createTime }

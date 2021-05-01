@@ -18,16 +18,21 @@ Cypress.Commands.add('visitTestEditor', (query?: string) => {
 
 beforeEach(() => {
   cy.intercept(`/api/private/notes/${ testNoteId }-get`, {
-    'id': 'ABC123',
-    'alias': 'banner',
-    'lastChange': {
-      'userId': 'test',
-      'timestamp': 1600033920
-    },
-    'viewCount': 0,
-    'createTime': 1600033920,
-    'content': '',
-    'authorship': [],
-    'preVersionTwoNote': true
+    "content": "",
+    "metadata": {
+      "id": "ABC11",
+      "alias": "banner",
+      "version": 2,
+      "viewCount": 0,
+      "updateTime": "2021-04-24T09:27:51.000Z",
+      "updateUser": {
+        "userName": "test",
+        "displayName": "Testy",
+        "photo": "",
+        "email": ""
+      },
+      "createTime": "2021-04-24T09:27:51.000Z",
+      "editedBy": []
+    }
   })
 })

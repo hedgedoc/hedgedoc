@@ -22,7 +22,7 @@ import { store } from './redux'
 import * as serviceWorkerRegistration from './service-worker-registration'
 import './style/dark.scss'
 import './style/index.scss'
-import { isTestMode } from './utils/is-test-mode'
+import { isTestMode } from './utils/test-modes'
 
 const EditorPage = React.lazy(() => import(/* webpackPrefetch: true *//* webpackChunkName: "editor" */ './components/editor-page/editor-page'))
 const RenderPage = React.lazy(() => import (/* webpackPrefetch: true *//* webpackChunkName: "renderPage" */ './components/render-page/render-page'))

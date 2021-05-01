@@ -8,7 +8,7 @@ import { Reducer } from 'redux'
 import { BannerActions, BannerActionType, BannerState, SetBannerAction } from './types'
 
 export const initialState: BannerState = {
-  show: true,
+  show: false,
   text: '',
   timestamp: ''
 }

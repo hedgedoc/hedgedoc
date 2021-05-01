@@ -91,8 +91,8 @@ export const toggleHistoryEntryPinning = async (noteId: string): Promise<void> =
     updateLocalHistoryEntry(noteId, entryToUpdate)
   } else {
     const historyUpdateDto = historyEntryToHistoryEntryUpdateDto(entryToUpdate)
-    updateHistoryEntryRedux(noteId, entryToUpdate)
     await updateHistoryEntryPinStatus(noteId, historyUpdateDto)
+    updateHistoryEntryRedux(noteId, entryToUpdate)
   }
 }
 

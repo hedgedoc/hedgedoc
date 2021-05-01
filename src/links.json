@@ -3,6 +3,8 @@
   "community": "https://community.hedgedoc.org",
   "faq": "https://hedgedoc.org/faq/",
   "githubOrg": "https://github.com/hedgedoc/",
+  "backendSourceCode": "https://github.com/hedgedoc/hedgedoc",
+  "backendIssues": "https://github.com/hedgedoc/hedgedoc/issues",
   "mastodon": "https://social.hedgedoc.org",
   "translate": "https://translate.hedgedoc.org",
   "webpage": "https://hedgedoc.org"

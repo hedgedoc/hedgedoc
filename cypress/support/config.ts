@@ -45,7 +45,7 @@ export const config = {
     saml: 'aufSAMLn.de'
   },
   maxDocumentLength: 200,
-  specialLinks: {
+  specialUrls: {
     privacy: 'https://example.com/privacy',
     termsOfUse: 'https://example.com/termsOfUse',
     imprint: 'https://example.com/imprint'
@@ -57,8 +57,8 @@ export const config = {
     issueTrackerUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
   },
   'iframeCommunication': {
-    'editorOrigin': 'http://127.0.0.1:3001',
-    'rendererOrigin': 'http://127.0.0.1:3001'
+    'editorOrigin': 'http://127.0.0.1:3001/',
+    'rendererOrigin': 'http://127.0.0.1:3001/'
   }
 }
 

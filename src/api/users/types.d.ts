@@ -12,3 +12,10 @@ export interface UserResponse {
   photo: string
   provider: LoginProvider
 }
+
+export interface UserInfoDto {
+  userName: string
+  displayName: string
+  photo: string
+  email: string
+}

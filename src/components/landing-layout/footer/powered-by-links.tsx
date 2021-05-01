@@ -18,7 +18,7 @@ import equal from 'fast-deep-equal'
 export const PoweredByLinks: React.FC = () => {
   useTranslation()
 
-  const specialLinks = useSelector((state: ApplicationState) => Object.entries(state.config.specialLinks) as [string, string][], equal)
+  const specialUrls: [string, string][] = useSelector((state: ApplicationState) => Object.entries(state.config.specialUrls) as [string, string][], equal)
 
   return (
     <p>
@@ -28,7 +28,7 @@ export const PoweredByLinks: React.FC = () => {
       &nbsp;|&nbsp;
       <TranslatedInternalLink href='/n/release-notes' i18nKey='landing.footer.releases'/>
       {
-        specialLinks.map(([i18nKey, href]) =>
+        specialUrls.map(([i18nKey, href]) =>
           <Fragment key={ i18nKey }>
             &nbsp;|&nbsp;
             <TranslatedExternalLink href={ href } i18nKey={ 'landing.footer.' + i18nKey }/>

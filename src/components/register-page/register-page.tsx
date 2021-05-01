@@ -14,6 +14,7 @@ import { ApplicationState } from '../../redux'
 import { TranslatedExternalLink } from '../common/links/translated-external-link'
 import { ShowIf } from '../common/show-if/show-if'
 import { getAndSetUser } from '../login-page/auth/utils'
+import { SpecialUrls } from '../../api/config/types'
 
 export enum RegisterError {
   NONE = 'none',
@@ -24,7 +25,7 @@ export enum RegisterError {
 export const RegisterPage: React.FC = () => {
   const { t } = useTranslation()
   const allowRegister = useSelector((state: ApplicationState) => state.config.allowRegister)
-  const specialLinks = useSelector((state: ApplicationState) => state.config.specialLinks)
+  const specialUrls: SpecialUrls = useSelector((state: ApplicationState) => state.config.specialUrls)
   const userExists = useSelector((state: ApplicationState) => !!state.user)
 
   const [username, setUsername] = useState('')
@@ -112,17 +113,17 @@ export const RegisterPage: React.FC = () => {
                     required
                   />
                 </Form.Group>
-                <ShowIf condition={ !!specialLinks?.termsOfUse || !!specialLinks?.privacy }>
+                <ShowIf condition={ !!specialUrls?.termsOfUse || !!specialUrls?.privacy }>
                   <Trans i18nKey='login.register.infoTermsPrivacy'/>
                   <ul>
-                    <ShowIf condition={ !!specialLinks?.termsOfUse }>
+                    <ShowIf condition={ !!specialUrls?.termsOfUse }>
                       <li>
-                        <TranslatedExternalLink i18nKey='landing.footer.termsOfUse' href={ specialLinks.termsOfUse }/>
+                        <TranslatedExternalLink i18nKey='landing.footer.termsOfUse' href={ specialUrls.termsOfUse }/>
                       </li>
                     </ShowIf>
-                    <ShowIf condition={ !!specialLinks?.privacy }>
+                    <ShowIf condition={ !!specialUrls?.privacy }>
                       <li>
-                        <TranslatedExternalLink i18nKey='landing.footer.privacy' href={ specialLinks.privacy }/>
+                        <TranslatedExternalLink i18nKey='landing.footer.privacy' href={ specialUrls.privacy }/>
                       </li>
                     </ShowIf>
                   </ul>

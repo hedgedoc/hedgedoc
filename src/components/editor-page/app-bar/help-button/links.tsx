@@ -7,16 +7,13 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import links from '../../../../links.json'
-import { ApplicationState } from '../../../../redux'
 import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
 import { TranslatedInternalLink } from '../../../common/links/translated-internal-link'
 
 export const Links: React.FC = () => {
   useTranslation()
 
-  const backendIssueTracker = useSelector((state: ApplicationState) => state.config.version.issueTrackerUrl)
   return (
     <Row className={ 'justify-content-center pt-4' }>
       <Col lg={ 4 }>
@@ -43,7 +40,7 @@ export const Links: React.FC = () => {
             <li>
               <TranslatedExternalLink
                 i18nKey='editor.help.contacts.reportIssue'
-                href={ backendIssueTracker }
+                href={ links.backendIssues }
                 icon='tag'
                 className='text-primary'
               />

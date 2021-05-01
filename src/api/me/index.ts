@@ -6,9 +6,10 @@
 
 import { UserResponse } from '../users/types'
 import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
+import { isMockMode } from '../../utils/test-modes'
 
 export const getMe = async (): Promise<UserResponse> => {
-  const response = await fetch(getApiUrl() + '/me', {
+  const response = await fetch(getApiUrl() + `/me${ isMockMode() ? '-get' : '' }`, {
     ...defaultFetchConfig
   })
   expectResponseCode(response)

@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { Fragment, useCallback, useState } from 'react'
@@ -46,23 +46,19 @@ export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entri
   const [lastPageIndex, setLastPageIndex] = useState(0)
 
   const onPinClick = useCallback((noteId: string) => {
-    toggleHistoryEntryPinning(noteId).catch(
-      showErrorNotification(t('landing.history.error.updateEntry.text'))
-    )
+    toggleHistoryEntryPinning(noteId)
+      .catch(showErrorNotification(t('landing.history.error.updateEntry.text')))
   }, [t])
 
   const onDeleteClick = useCallback((noteId: string) => {
-    deleteNote(noteId).then(() => {
-      return removeHistoryEntry(noteId)
-    }).catch(
-      showErrorNotification(t('landing.history.error.deleteNote.text'))
-    )
+    deleteNote(noteId)
+      .then(() => removeHistoryEntry(noteId))
+      .catch(showErrorNotification(t('landing.history.error.deleteNote.text')))
   }, [t])
 
   const onRemoveClick = useCallback((noteId: string) => {
-    removeHistoryEntry(noteId).catch(
-      showErrorNotification(t('landing.history.error.deleteEntry.text'))
-    )
+    removeHistoryEntry(noteId)
+      .catch(showErrorNotification(t('landing.history.error.deleteEntry.text')))
   }, [t])
 
   if (entries.length === 0) {

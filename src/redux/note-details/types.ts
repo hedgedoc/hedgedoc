@@ -6,8 +6,8 @@
 
 import { DateTime } from 'luxon'
 import { Action } from 'redux'
-import { Note } from '../../api/notes'
 import { NoteFrontmatter } from '../../components/editor-page/note-frontmatter/note-frontmatter'
+import { NoteDto } from '../../api/notes/types'
 
 export enum NoteDetailsActionType {
   SET_DOCUMENT_CONTENT = 'note-details/set',
@@ -18,7 +18,7 @@ export enum NoteDetailsActionType {
 }
 
 interface LastChange {
-  userId: string
+  userName: string
   timestamp: DateTime
 }
 
@@ -27,10 +27,9 @@ export interface NoteDetails {
   id: string
   createTime: DateTime
   lastChange: LastChange
-  preVersionTwoNote: boolean
   viewCount: number
   alias: string
-  authorship: number[]
+  authorship: string[]
   noteTitle: string
   firstHeading?: string
   frontmatter: NoteFrontmatter
@@ -47,7 +46,7 @@ export interface SetNoteDetailsAction extends NoteDetailsAction {
 
 export interface SetNoteDetailsFromServerAction extends NoteDetailsAction {
   type: NoteDetailsActionType.SET_NOTE_DATA_FROM_SERVER
-  note: Note
+  note: NoteDto
 }
 
 export interface UpdateNoteTitleByFirstHeadingAction extends NoteDetailsAction {

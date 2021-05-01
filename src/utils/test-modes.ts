@@ -7,3 +7,7 @@
 export const isTestMode = (): boolean => {
   return !!process.env.REACT_APP_TEST_MODE
 }
+
+export const isMockMode = (): boolean => {
+  return process.env.REACT_APP_BACKEND === undefined
+}

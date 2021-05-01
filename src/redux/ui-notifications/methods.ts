@@ -39,9 +39,7 @@ export const dismissUiNotification = (notificationId: number): void => {
   } as DismissUiNotificationAction)
 }
 
-// Promises catch errors as any.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
-export const showErrorNotification = (message: string) => (error: any): void => {
+export const showErrorNotification = (message: string) => (error: Error): void => {
   console.error(message, error)
   dispatchUiNotification(i18n.t('common.errorOccurred'), message, DEFAULT_DURATION_IN_SECONDS, 'exclamation-triangle')
 }
