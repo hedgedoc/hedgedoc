@@ -7,7 +7,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { NotesController } from './notes.controller';
 import { NotesService } from '../../../notes/notes.service';
-import { getRepositoryToken } from '@nestjs/typeorm';
+import {
+  getConnectionToken,
+  getRepositoryToken,
+  TypeOrmModule,
+} from '@nestjs/typeorm';
 import { Note } from '../../../notes/note.entity';
 import { Tag } from '../../../notes/tag.entity';
 import { RevisionsModule } from '../../../revisions/revisions.module';
@@ -61,8 +65,11 @@ describe('NotesController', () => {
           isGlobal: true,
           load: [appConfigMock, mediaConfigMock],
         }),
+        TypeOrmModule.forRoot(),
       ],
     })
+      .overrideProvider(getConnectionToken())
+      .useValue({})
       .overrideProvider(getRepositoryToken(Note))
       .useValue({})
       .overrideProvider(getRepositoryToken(Revision))

@@ -10,7 +10,11 @@ import { LoggerModule } from '../../../../logger/logger.module';
 import { UsersModule } from '../../../../users/users.module';
 import { HistoryModule } from '../../../../history/history.module';
 import { NotesModule } from '../../../../notes/notes.module';
-import { getRepositoryToken } from '@nestjs/typeorm';
+import {
+  getConnectionToken,
+  getRepositoryToken,
+  TypeOrmModule,
+} from '@nestjs/typeorm';
 import { User } from '../../../../users/user.entity';
 import { Note } from '../../../../notes/note.entity';
 import { AuthToken } from '../../../../auth/auth-token.entity';
@@ -41,8 +45,11 @@ describe('HistoryController', () => {
           isGlobal: true,
           load: [appConfigMock],
         }),
+        TypeOrmModule.forRoot(),
       ],
     })
+      .overrideProvider(getConnectionToken())
+      .useValue({})
       .overrideProvider(getRepositoryToken(User))
       .useValue({})
       .overrideProvider(getRepositoryToken(Note))

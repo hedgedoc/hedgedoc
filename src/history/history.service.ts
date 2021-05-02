@@ -8,19 +8,22 @@ import { Injectable } from '@nestjs/common';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { HistoryEntryUpdateDto } from './history-entry-update.dto';
 import { HistoryEntryDto } from './history-entry.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
+import { Connection, Repository } from 'typeorm';
 import { HistoryEntry } from './history-entry.entity';
 import { UsersService } from '../users/users.service';
 import { NotesService } from '../notes/notes.service';
 import { User } from '../users/user.entity';
 import { Note } from '../notes/note.entity';
 import { NotInDBError } from '../errors/errors';
+import { HistoryEntryImportDto } from './history-entry-import.dto';
 
 @Injectable()
 export class HistoryService {
   constructor(
     private readonly logger: ConsoleLoggerService,
+    @InjectConnection()
+    private connection: Connection,
     @InjectRepository(HistoryEntry)
     private historyEntryRepository: Repository<HistoryEntry>,
     private usersService: UsersService,
@@ -80,25 +83,15 @@ export class HistoryService {
    * Create or update a history entry by the user and note. If the entry is merely updated the updatedAt date is set to the current date.
    * @param {Note} note - the note that the history entry belongs to
    * @param {User} user - the user that the history entry belongs to
-   * @param {boolean} pinStatus - if the pinStatus of the history entry should be set
-   * @param {Date} lastVisited - the last time the associated note was accessed
    * @return {HistoryEntry} the requested history entry
    */
   async createOrUpdateHistoryEntry(
     note: Note,
     user: User,
-    pinStatus?: boolean,
-    lastVisited?: Date,
   ): Promise<HistoryEntry> {
     let entry = await this.getEntryByNote(note, user);
     if (!entry) {
       entry = HistoryEntry.create(user, note);
-      if (pinStatus !== undefined) {
-        entry.pinStatus = pinStatus;
-      }
-      if (lastVisited !== undefined) {
-        entry.updatedAt = lastVisited;
-      }
     } else {
       entry.updatedAt = new Date();
     }
@@ -156,6 +149,54 @@ export class HistoryService {
     for (const entry of entries) {
       await this.historyEntryRepository.remove(entry);
     }
+  }
+
+  /**
+   * @async
+   * Replace the user history with the provided history
+   * @param {User} user - the user that get's their history replaces
+   * @param {HistoryEntryImportDto[]} history
+   * @throws {ForbiddenIdError} one of the note ids or alias in the new history are forbidden
+   */
+  async setHistory(
+    user: User,
+    history: HistoryEntryImportDto[],
+  ): Promise<void> {
+    await this.connection.transaction(async (manager) => {
+      const currentHistory = await manager.find<HistoryEntry>(HistoryEntry, {
+        where: { user: user },
+        relations: ['note', 'user'],
+      });
+      for (const entry of currentHistory) {
+        await manager.remove<HistoryEntry>(entry);
+      }
+      for (const historyEntry of history) {
+        this.notesService.checkNoteIdOrAlias(historyEntry.note);
+        const note = await manager.findOne<Note>(Note, {
+          where: [
+            {
+              id: historyEntry.note,
+            },
+            {
+              alias: historyEntry.note,
+            },
+          ],
+        });
+        if (note === undefined) {
+          this.logger.debug(
+            `Could not find note '${historyEntry.note}'`,
+            'setHistory',
+          );
+          throw new NotInDBError(
+            `Note with id/alias '${historyEntry.note}' not found.`,
+          );
+        }
+        const entry = HistoryEntry.create(user, note);
+        entry.pinStatus = historyEntry.pinStatus;
+        entry.updatedAt = historyEntry.lastVisited;
+        await manager.save<HistoryEntry>(entry);
+      }
+    });
   }
 
   /**
