@@ -20,7 +20,10 @@ export interface AppConfig {
 
 const schema = Joi.object({
   domain: Joi.string().label('HD_DOMAIN'),
-  rendererOrigin: Joi.string().optional().label('HD_RENDERER_ORIGIN'),
+  rendererOrigin: Joi.string()
+    .default(Joi.ref('domain'))
+    .optional()
+    .label('HD_RENDERER_ORIGIN'),
   port: Joi.number().default(3000).optional().label('PORT'),
   loglevel: Joi.string()
     .valid(...Object.values(Loglevel))

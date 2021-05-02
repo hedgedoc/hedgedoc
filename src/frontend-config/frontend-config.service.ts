@@ -129,9 +129,7 @@ export class FrontendConfigService {
   private getIframeCommunication(): IframeCommunicationDto {
     return {
       editorOrigin: new URL(this.appConfig.domain),
-      rendererOrigin: this.appConfig.rendererOrigin
-        ? new URL(this.appConfig.rendererOrigin)
-        : new URL(this.appConfig.domain),
+      rendererOrigin: new URL(this.appConfig.rendererOrigin),
     };
   }
 }
