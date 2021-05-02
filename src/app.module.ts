@@ -38,6 +38,10 @@ const routes: Routes = [
     path: '/api/v2',
     module: PublicApiModule,
   },
+  {
+    path: '/api/private',
+    module: PrivateApiModule,
+  },
 ];
 
 @Module({
