@@ -2963,6 +2963,11 @@ eslint-plugin-jest@24.3.6:
   dependencies:
     "@typescript-eslint/experimental-utils" "^4.0.1"
 
+eslint-plugin-local-rules@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-local-rules/-/eslint-plugin-local-rules-1.1.0.tgz#5f934f685b08c96eed40b92aee7b02f03cf55f7b"
+  integrity sha512-FdPyzxakUKgZkeNM3x/vvRcB6nCjTNbui5gWALhvcaH1R6aCiD37fWtdesagcyBpEe9S9XRHAJ8CJ4rUJ3K9tQ==
+
 eslint-scope@^5.0.0, eslint-scope@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-5.1.1.tgz#e786e59a66cb92b3f6c1fb0d508aab174848f48c"
