@@ -78,7 +78,7 @@ export class ImgurBackend implements MediaBackend {
           headers: { Authorization: `Client-ID ${this.config.clientID}` },
         },
       ).then((res) => ImgurBackend.checkStatus(res));
-      this.logger.debug(`Response: ${result.toString()}`, 'saveFile');
+      this.logger.debug(`Response: ${result.toString()}`, 'deleteFile');
       this.logger.log(`Deleted ${fileName}`, 'deleteFile');
       return;
     } catch (e) {
