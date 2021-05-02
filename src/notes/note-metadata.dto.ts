@@ -31,7 +31,7 @@ export class NoteMetadataDto {
   @IsString()
   @IsOptional()
   @ApiPropertyOptional()
-  alias?: string;
+  alias: string | null;
 
   /**
    * Title of the note
@@ -74,7 +74,7 @@ export class NoteMetadataDto {
   @ValidateNested()
   @ApiPropertyOptional({ type: UserInfoDto })
   @IsOptional()
-  updateUser?: UserInfoDto;
+  updateUser: UserInfoDto | null;
 
   /**
    * Counts how many times the published note has been viewed

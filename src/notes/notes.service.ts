@@ -337,7 +337,7 @@ export class NotesService {
    */
   toNotePermissionsDto(note: Note): NotePermissionsDto {
     return {
-      owner: note.owner ? this.usersService.toUserDto(note.owner) : undefined,
+      owner: note.owner ? this.usersService.toUserDto(note.owner) : null,
       sharedToUsers: note.userPermissions.map((noteUserPermission) => ({
         user: this.usersService.toUserDto(noteUserPermission.user),
         canEdit: noteUserPermission.canEdit,
@@ -360,7 +360,7 @@ export class NotesService {
     return {
       // TODO: Convert DB UUID to base64
       id: note.id,
-      alias: note.alias ?? undefined,
+      alias: note.alias ?? null,
       title: note.title ?? '',
       createTime: (await this.getFirstRevision(note)).createdAt,
       description: note.description ?? '',
@@ -370,9 +370,7 @@ export class NotesService {
       permissions: this.toNotePermissionsDto(note),
       tags: this.toTagList(note),
       updateTime: (await this.getLatestRevision(note)).createdAt,
-      updateUser: updateUser
-        ? this.usersService.toUserDto(updateUser)
-        : undefined,
+      updateUser: updateUser ? this.usersService.toUserDto(updateUser) : null,
       viewCount: note.viewCount,
     };
   }

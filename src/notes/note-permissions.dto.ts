@@ -92,7 +92,7 @@ export class NotePermissionsDto {
   @ValidateNested()
   @ApiPropertyOptional({ type: UserInfoDto })
   @IsOptional()
-  owner?: UserInfoDto;
+  owner: UserInfoDto | null;
 
   /**
    * List of users the note is shared with
