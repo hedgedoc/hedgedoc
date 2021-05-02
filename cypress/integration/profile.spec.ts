@@ -7,7 +7,7 @@
 describe('profile page', () => {
   beforeEach(() => {
     cy.intercept({
-      url: '/api/private/tokens',
+      url: '/mock-backend/api/private/tokens',
       method: 'GET'
     }, {
       body: [
@@ -18,7 +18,7 @@ describe('profile page', () => {
       ]
     })
     cy.intercept({
-      url: '/api/private/tokens',
+      url: '/mock-backend/api/private/tokens',
       method: 'POST'
     }, {
       body: {
@@ -28,7 +28,7 @@ describe('profile page', () => {
       }
     })
     cy.intercept({
-      url: '/api/private/tokens/1601991518',
+      url: '/mock-backend/api/private/tokens/1601991518',
       method: 'DELETE'
     }, {
       body: []

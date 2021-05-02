@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 import { doInternalLogin } from '../../../api/auth'
 import { ApplicationState } from '../../../redux'
 import { ShowIf } from '../../common/show-if/show-if'
-import { getAndSetUser } from './utils'
+import { fetchAndSetUser } from './utils'
 
 export const ViaInternal: React.FC = () => {
   const { t } = useTranslation()
@@ -23,7 +23,7 @@ export const ViaInternal: React.FC = () => {
 
   const onLoginSubmit = useCallback((event: FormEvent) => {
     doInternalLogin(username, password)
-      .then(() => getAndSetUser())
+      .then(() => fetchAndSetUser())
       .catch(() => setError(true))
     event.preventDefault()
   }, [username, password])

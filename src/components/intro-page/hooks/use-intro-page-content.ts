@@ -6,8 +6,8 @@
 
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { getFrontPageContent } from '../requests'
-import { useFrontendBaseUrl } from '../../../hooks/common/use-frontend-base-url'
+import { fetchFrontPageContent } from '../requests'
+import { useCustomizeAssetsUrl } from '../../../hooks/common/use-customize-assets-url'
 
 const MARKDOWN_WHILE_LOADING = ':zzz: {message}'
 const MARKDOWN_IF_ERROR = ':::danger\n' +
@@ -17,13 +17,13 @@ const MARKDOWN_IF_ERROR = ':::danger\n' +
 export const useIntroPageContent = (): string => {
   const { t } = useTranslation()
   const [content, setContent] = useState<string>(() => MARKDOWN_WHILE_LOADING.replace('{message}', t('landing.intro.markdownWhileLoading')))
-  const frontendBaseUrl = useFrontendBaseUrl()
+  const customizeAssetsUrl = useCustomizeAssetsUrl()
 
   useEffect(() => {
-    getFrontPageContent(frontendBaseUrl)
+    fetchFrontPageContent(customizeAssetsUrl)
       .then((content) => setContent(content))
       .catch(() => setContent(MARKDOWN_IF_ERROR.replace('{message}', t('landing.intro.markdownLoadingError'))))
-  }, [frontendBaseUrl, t])
+  }, [customizeAssetsUrl, t])
 
   return content
 }

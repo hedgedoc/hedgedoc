@@ -1,6 +1,6 @@
 {
   "id": "mrdrogdrog",
-  "photo": "/img/avatar.png",
+  "photo": "/mock-backend/public/img/avatar.png",
   "name": "Tilman",
   "status": "ok",
   "provider": "internal"

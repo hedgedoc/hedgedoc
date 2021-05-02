@@ -83,7 +83,7 @@ describe('When logged-out ', () => {
       cy.get('[data-cy=sign-in-button]')
         .should('be.visible')
         // The absolute URL is used because it is defined as API base URL absolute.
-        .should('have.attr', 'href', 'http://127.0.0.1:3001/api/private/auth/saml')
+        .should('have.attr', 'href', '/mock-backend/api/private/auth/saml')
     })
   })
 

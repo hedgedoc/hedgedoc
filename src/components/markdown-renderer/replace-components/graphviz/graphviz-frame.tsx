@@ -7,6 +7,7 @@
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { ShowIf } from '../../../common/show-if/show-if'
+import { useFrontendBaseUrl } from '../../../../hooks/common/use-frontend-base-url'
 
 export interface GraphvizFrameProps {
   code: string
@@ -26,6 +27,8 @@ export const GraphvizFrame: React.FC<GraphvizFrameProps> = ({ code }) => {
              .forEach(child => child.remove())
   }, [])
 
+  const frontendBaseUrl = useFrontendBaseUrl()
+
   useEffect(() => {
     if (!container.current) {
       return
@@ -34,7 +37,7 @@ export const GraphvizFrame: React.FC<GraphvizFrameProps> = ({ code }) => {
 
     import(/* webpackChunkName: "d3-graphviz" */'@hpcc-js/wasm')
       .then((wasmPlugin) => {
-        wasmPlugin.wasmFolder('/static/js')
+        wasmPlugin.wasmFolder(`${ frontendBaseUrl }/static/js`)
       })
       .then(() => import(/* webpackChunkName: "d3-graphviz" */ 'd3-graphviz'))
       .then((graphvizImport) => {
@@ -53,7 +56,7 @@ export const GraphvizFrame: React.FC<GraphvizFrameProps> = ({ code }) => {
       .catch(() => {
         console.error('error while loading graphviz')
       })
-  }, [code, error, showError])
+  }, [code, error, frontendBaseUrl, showError])
 
   return (
     <Fragment>

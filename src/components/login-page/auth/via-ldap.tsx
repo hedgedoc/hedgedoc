@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { FormEvent, useCallback, useState } from 'react'
@@ -11,7 +11,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { doLdapLogin } from '../../../api/auth'
 import { ApplicationState } from '../../../redux'
-import { getAndSetUser } from './utils'
+import { fetchAndSetUser } from './utils'
 
 export const ViaLdap: React.FC = () => {
   const { t } = useTranslation()
@@ -25,7 +25,7 @@ export const ViaLdap: React.FC = () => {
 
   const onLoginSubmit = useCallback((event: FormEvent) => {
     doLdapLogin(username, password)
-      .then(() => getAndSetUser())
+      .then(() => fetchAndSetUser())
       .catch(() => setError(true))
     event.preventDefault()
   }, [username, password])

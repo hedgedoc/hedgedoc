@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
@@ -10,7 +10,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { updateDisplayName } from '../../../api/me'
 import { ApplicationState } from '../../../redux'
-import { getAndSetUser } from '../../login-page/auth/utils'
+import { fetchAndSetUser } from '../../login-page/auth/utils'
 
 export const ProfileDisplayName: React.FC = () => {
   const regexInvalidDisplayName = /^\s*$/
@@ -37,7 +37,7 @@ export const ProfileDisplayName: React.FC = () => {
 
   const doAsyncChange = async () => {
     await updateDisplayName(displayName)
-    await getAndSetUser()
+    await fetchAndSetUser()
   }
 
   const changeNameSubmit = (event: FormEvent) => {

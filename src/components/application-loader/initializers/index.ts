@@ -4,9 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { loadAllConfig } from './configLoader'
 import { setUpI18n } from './i18n'
 import { refreshHistoryState } from '../../../redux/history/methods'
+import { setApiUrl } from '../../../redux/api-url/methods'
+import { fetchAndSetUser } from '../../login-page/auth/utils'
+import { fetchFrontendConfig } from './fetch-frontend-config'
 
 const customDelay: () => Promise<void> = async () => {
   if (window.localStorage.getItem('customDelay')) {
@@ -21,13 +23,20 @@ export interface InitTask {
   task: Promise<void>
 }
 
-export const createSetUpTaskList = (baseUrl: string): InitTask[] => {
+export const createSetUpTaskList = (frontendAssetsUrl: string, customizeAssetsUrl: string, backendBaseUrl: string): InitTask[] => {
+  setApiUrl({
+    apiUrl: `${ backendBaseUrl }/api/private`
+  })
+
   return [{
     name: 'Load Translations',
-    task: setUpI18n()
+    task: setUpI18n(frontendAssetsUrl)
   }, {
     name: 'Load config',
-    task: loadAllConfig(baseUrl)
+    task: fetchFrontendConfig()
+  }, {
+    name: 'Fetch user information',
+    task: fetchAndSetUser()
   }, {
     name: 'Load history state',
     task: refreshHistoryState()

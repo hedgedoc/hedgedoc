@@ -9,5 +9,5 @@ export const isTestMode = (): boolean => {
 }
 
 export const isMockMode = (): boolean => {
-  return process.env.REACT_APP_BACKEND === undefined
+  return process.env.REACT_APP_BACKEND_BASE_URL === undefined
 }

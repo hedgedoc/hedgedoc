@@ -7,7 +7,7 @@
 import { getMe } from '../../../api/me'
 import { setUser } from '../../../redux/user/methods'
 
-export const getAndSetUser: () => (Promise<void>) = async () => {
+export const fetchAndSetUser: () => (Promise<void>) = async () => {
   const me = await getMe()
   setUser({
     id: me.id,

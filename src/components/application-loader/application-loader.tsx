@@ -1,21 +1,24 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { Suspense, useCallback, useEffect, useState } from 'react'
-import { useFrontendBaseUrl } from '../../hooks/common/use-frontend-base-url'
+import { useBackendBaseUrl } from '../../hooks/common/use-backend-base-url'
 import './application-loader.scss'
 import { createSetUpTaskList, InitTask } from './initializers'
 import { LoadingScreen } from './loading-screen'
+import { useCustomizeAssetsUrl } from '../../hooks/common/use-customize-assets-url'
+import { useFrontendAssetsUrl } from '../../hooks/common/use-frontend-assets-url'
 
 export const ApplicationLoader: React.FC = ({ children }) => {
-  const frontendUrl = useFrontendBaseUrl()
+  const frontendAssetsUrl = useFrontendAssetsUrl()
+  const backendBaseUrl = useBackendBaseUrl()
+  const customizeAssetsUrl = useCustomizeAssetsUrl()
 
-  const setUpTasks = useCallback(() => {
-    return createSetUpTaskList(frontendUrl)
-  }, [frontendUrl])
+  const setUpTasks = useCallback(() => createSetUpTaskList(frontendAssetsUrl, customizeAssetsUrl, backendBaseUrl),
+    [backendBaseUrl, customizeAssetsUrl, frontendAssetsUrl])
 
   const [failedTitle, setFailedTitle] = useState<string>('')
   const [doneTasks, setDoneTasks] = useState<number>(0)

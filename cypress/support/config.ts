@@ -17,7 +17,7 @@ export const banner = {
 
 export const branding = {
   name: 'DEMO Corp',
-  logo: '/img/demo.png'
+  logo: '/mock-backend/public/img/demo.png'
 }
 
 export const authProviders = {
@@ -63,7 +63,7 @@ export const config = {
 }
 
 Cypress.Commands.add('loadConfig', (additionalConfig?: Partial<typeof config>) => {
-  return cy.intercept('/api/private/config', {
+  return cy.intercept('/mock-backend/api/private/config', {
     statusCode: 200,
     body: {
       ...config,

@@ -16,11 +16,11 @@
   "allowRegister": true,
   "branding": {
     "name": "DEMO Corp",
-    "logo": "/img/demo.png"
+    "logo": "/mock-backend/public/img/demo.png"
   },
   "banner": {
-      "text": "This is the test banner text",
-      "timestamp": "2020-05-22T20:46:08.962Z"
+    "text": "This is the test banner text",
+    "timestamp": "2020-05-22T20:46:08.962Z"
   },
   "customAuthNames": {
     "ldap": "FooBar",

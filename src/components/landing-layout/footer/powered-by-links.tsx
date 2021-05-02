@@ -26,7 +26,7 @@ export const PoweredByLinks: React.FC = () => {
         <ExternalLink href={ links.webpage } text="HedgeDoc"/>
       </Trans>
       &nbsp;|&nbsp;
-      <TranslatedInternalLink href='/n/release-notes' i18nKey='landing.footer.releases'/>
+      <TranslatedInternalLink href="/n/release-notes" i18nKey="landing.footer.releases"/>
       {
         specialUrls.map(([i18nKey, href]) =>
           <Fragment key={ i18nKey }>

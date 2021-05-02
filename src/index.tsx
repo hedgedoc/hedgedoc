@@ -27,10 +27,11 @@ import { isTestMode } from './utils/test-modes'
 const EditorPage = React.lazy(() => import(/* webpackPrefetch: true *//* webpackChunkName: "editor" */ './components/editor-page/editor-page'))
 const RenderPage = React.lazy(() => import (/* webpackPrefetch: true *//* webpackChunkName: "renderPage" */ './components/render-page/render-page'))
 const DocumentReadOnlyPage = React.lazy(() => import (/* webpackPrefetch: true *//* webpackChunkName: "documentReadOnly" */ './components/document-read-only-page/document-read-only-page'))
+const baseUrl = new URL(document.head.baseURI).pathname
 
 ReactDOM.render(
   <Provider store={ store }>
-    <Router>
+    <Router basename={ baseUrl }>
       <ApplicationLoader>
         <ErrorBoundary>
           <Switch>
@@ -93,4 +94,3 @@ if (isTestMode()) {
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorkerRegistration.unregister()
-

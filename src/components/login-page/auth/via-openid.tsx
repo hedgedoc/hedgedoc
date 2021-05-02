@@ -1,14 +1,14 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { FormEvent, useState } from 'react'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { doOpenIdLogin } from '../../../api/auth'
-import { getAndSetUser } from './utils'
+import { fetchAndSetUser } from './utils'
 
 export const ViaOpenId: React.FC = () => {
   useTranslation()
@@ -16,7 +16,7 @@ export const ViaOpenId: React.FC = () => {
   const [error, setError] = useState(false)
   const doAsyncLogin: (() => Promise<void>) = async () => {
     await doOpenIdLogin(openId)
-    await getAndSetUser()
+    await fetchAndSetUser()
   }
 
   const onFormSubmit = (event: FormEvent) => {

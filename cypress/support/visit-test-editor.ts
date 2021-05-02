@@ -17,7 +17,7 @@ Cypress.Commands.add('visitTestEditor', (query?: string) => {
 })
 
 beforeEach(() => {
-  cy.intercept(`/api/private/notes/${ testNoteId }-get`, {
+  cy.intercept(`/mock-backend/api/private/notes/${ testNoteId }-get`, {
     "content": "",
     "metadata": {
       "id": "ABC11",

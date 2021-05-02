@@ -10,7 +10,7 @@ import Backend from 'i18next-http-backend'
 import { Settings } from 'luxon'
 import { initReactI18next } from 'react-i18next'
 
-export const setUpI18n = async (): Promise<void> => {
+export const setUpI18n = async (frontendAssetsUrl: string): Promise<void> => {
   await i18n
     .use(Backend)
     .use(LanguageDetector)
@@ -19,7 +19,7 @@ export const setUpI18n = async (): Promise<void> => {
       fallbackLng: 'en',
       debug: process.env.NODE_ENV !== 'production',
       backend: {
-        loadPath: '/locales/{{lng}}.json'
+        loadPath: `${ frontendAssetsUrl }/locales/{{lng}}.json`
       },
 
       interpolation: {
