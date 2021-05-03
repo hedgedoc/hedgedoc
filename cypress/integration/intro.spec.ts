@@ -11,10 +11,19 @@ describe('Intro page', () => {
     cy.visit('/')
   })
 
-  describe('content', () => {
+  describe('customizable content', () => {
     it('fetches and shows the correct intro page content', () => {
       cy.getMarkdownBody()
         .contains('test content')
+    })
+
+    it('won\'t show anything if no content was found', () => {
+      cy.intercept('/mock-backend/public/intro.md', {
+        statusCode: 404
+      })
+
+      cy.get(`iframe[data-cy="documentIframe"]`)
+        .should('not.exist')
     })
   })
 
