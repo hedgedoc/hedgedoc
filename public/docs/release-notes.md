@@ -1,12 +1,14 @@
 # Release Notes
-## <i class="fa fa-tag"></i> 1.8.0-rc1 <i class="fa fa-calendar-o"></i> 2021-04-26
+## <i class="fa fa-tag"></i> 1.8.0 <i class="fa fa-calendar-o"></i> 2021-05-03
 
-This release fixes a security issue. We recommend upgrading as soon as possible.
+This release fixes multiple security issues. We recommend upgrading as soon as possible.
 
 **Please note:** This release dropped support for Node 10, which is end-of-life since April 2021. You now need at least Node 12 to run HedgeDoc, but we recommend running [the latest LTS release](https://nodejs.org/en/about/releases/).
 
 ### Security Fixes
 - [CVE-2021-29474: Relative path traversal Attack on note creation](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-p528-555r-pf87)
+- [CVE-2021-21306: Underscore ReDoS](https://github.com/markedjs/marked/security/advisories/GHSA-4r62-v4vq-hr96) in the `marked` library  
+  This issue allowed an attacker to hang HedgeDoc by inserting a malicious string into a note. Thanks to Ralph Krimmel for reporting!
 
 We also published an advisory for [CVE-2021-29475: PDF export allows arbitrary file reads](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-pxxg-px9v-6qf3),  
 which has already been fixed since HedgeDoc 1.6.0.
