@@ -28,10 +28,6 @@ export const initialState: Config = {
     name: '',
     logo: ''
   },
-  banner: {
-    text: '',
-    timestamp: ''
-  },
   customAuthNames: {
     ldap: '',
     oauth2: '',

@@ -15,11 +15,11 @@ export interface BannerActions extends Action<BannerActionType> {
 }
 
 export interface SetBannerAction extends BannerActions {
+  type: BannerActionType.SET_BANNER
   state: BannerState;
 }
 
 export interface BannerState {
-  show: boolean
-  text: string
-  timestamp: string
+  text: string | undefined
+  lastModified: string | null
 }

@@ -8,9 +8,8 @@ import { Reducer } from 'redux'
 import { BannerActions, BannerActionType, BannerState, SetBannerAction } from './types'
 
 export const initialState: BannerState = {
-  show: false,
-  text: '',
-  timestamp: ''
+  text: undefined,
+  lastModified: null
 }
 
 export const BannerReducer: Reducer<BannerState, BannerActions> = (state: BannerState = initialState, action: BannerActions) => {

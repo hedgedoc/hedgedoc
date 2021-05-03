@@ -5,7 +5,6 @@
  */
 
 import { getConfig } from '../../../api/config'
-import { setBanner } from '../../../redux/banner/methods'
 import { setConfig } from '../../../redux/config/methods'
 
 export const fetchFrontendConfig = async (): Promise<void> => {
@@ -14,13 +13,4 @@ export const fetchFrontendConfig = async (): Promise<void> => {
     return Promise.reject(new Error('Config empty!'))
   }
   setConfig(config)
-
-  const banner = config.banner
-  if (banner.text !== '') {
-    const lastAcknowledgedTimestamp = window.localStorage.getItem('bannerTimeStamp') || ''
-    setBanner({
-      ...banner,
-      show: banner.text !== '' && banner.timestamp !== lastAcknowledgedTimestamp
-    })
-  }
 }

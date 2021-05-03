@@ -9,7 +9,6 @@ export interface Config {
   allowRegister: boolean,
   authProviders: AuthProvidersState,
   branding: BrandingConfig,
-  banner: BannerConfig,
   customAuthNames: CustomAuthNames,
   useImageProxy: boolean,
   specialUrls: SpecialUrls,
@@ -27,11 +26,6 @@ export interface iframeCommunicationConfig {
 export interface BrandingConfig {
   name: string,
   logo: string,
-}
-
-export interface BannerConfig {
-  text: string
-  timestamp: string
 }
 
 export interface BackendVersion {
@@ -63,7 +57,7 @@ export interface CustomAuthNames {
 }
 
 export interface SpecialUrls {
-  privacy: string,
-  termsOfUse: string,
-  imprint: string,
+  privacy?: string,
+  termsOfUse?: string,
+  imprint?: string,
 }

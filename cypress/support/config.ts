@@ -10,11 +10,6 @@ declare namespace Cypress {
   }
 }
 
-export const banner = {
-  text: 'This is the mock banner call',
-  timestamp: '2020-05-22T20:46:08.962Z'
-}
-
 export const branding = {
   name: 'DEMO Corp',
   logo: '/mock-backend/public/img/demo.png'
@@ -38,7 +33,6 @@ export const config = {
   allowAnonymous: true,
   authProviders: authProviders,
   branding: branding,
-  banner: banner,
   customAuthNames: {
     ldap: 'FooBar',
     oauth2: 'Olaf2',
