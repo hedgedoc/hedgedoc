@@ -72,6 +72,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - The intro page content can be changed by editing `public/intro.md`.
 - When pasting tables (e.g. from LibreOffice Calc or MS Excel) they get reformatted to markdown tables.
 - The history page supports URL parameters that allow bookmarking of a specific search of tags filter.
+- Users can change the pinning state of a note directly from the editor.
 
 ### Changed
 

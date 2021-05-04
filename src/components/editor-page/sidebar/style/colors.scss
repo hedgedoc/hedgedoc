@@ -33,6 +33,10 @@
         background: $entry-hover-bg;
       }
     }
+
+    &.icon-highlighted > .sidebar-icon {
+      color: $orange
+    }
   }
 }
 

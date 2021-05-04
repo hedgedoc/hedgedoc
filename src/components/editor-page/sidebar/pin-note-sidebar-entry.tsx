@@ -4,20 +4,40 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { SidebarButton } from './sidebar-button'
 import { SpecificSidebarEntryProps } from './types'
+import { useParams } from 'react-router-dom'
+import { EditorPagePathParams } from '../editor-page'
+import { useSelector } from 'react-redux'
+import { ApplicationState } from '../../../redux'
+import { toggleHistoryEntryPinning } from '../../../redux/history/methods'
+import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 
 export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
-  useTranslation()
+  const { t } = useTranslation()
+  const { id } = useParams<EditorPagePathParams>()
+  const history = useSelector((state: ApplicationState) => state.history)
 
-  const isPinned = true
-  const i18nKey = isPinned ? 'editor.documentBar.pinNoteToHistory' : 'editor.documentBar.pinnedToHistory'
+  const isPinned = useMemo(() => {
+    const entry = history.find(entry => entry.identifier === id)
+    if (!entry) {
+      return false
+    }
+    return entry.pinStatus
+  }, [id, history])
+
+  const onPinClicked = useCallback(() => {
+    toggleHistoryEntryPinning(id).catch(
+      showErrorNotification(t('landing.history.error.updateEntry.text'))
+    )
+  }, [id, t])
 
   return (
-    <SidebarButton icon={ 'thumb-tack' } className={ className } hide={ hide }>
-      <Trans i18nKey={ i18nKey }/>
+    <SidebarButton icon={ 'thumb-tack' } hide={ hide } onClick={ onPinClicked }
+                   className={ `${ className ?? '' } ${ isPinned ? 'icon-highlighted' : '' }` }>
+      <Trans i18nKey={ isPinned ? 'editor.documentBar.pinnedToHistory' : 'editor.documentBar.pinNoteToHistory' }/>
     </SidebarButton>
   )
 }
