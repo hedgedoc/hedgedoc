@@ -87,7 +87,7 @@ export const NoteDetailsReducer: Reducer<NoteDetails, NoteDetailsAction> = (stat
   }
 }
 
-const TASK_REGEX = /(\s*[-*] )(\[[ xX]])( .*)/
+const TASK_REGEX = /(\s*(?:[-*+]|\d+[.)]) )(\[[ xX]])( .*)/
 const setCheckboxInMarkdownContent = (markdownContent: string, lineInMarkdown: number, checked: boolean): string => {
   const lines = markdownContent.split('\n')
   const results = TASK_REGEX.exec(lines[lineInMarkdown])
