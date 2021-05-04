@@ -271,21 +271,38 @@ function startListen () {
   }
 }
 
-// sync db then start listen
-models.sequelize.authenticate().then(function () {
-  models.runMigrations().then(() => {
-    sessionStore.sync()
-    // check if realtime is ready
-    if (realtime.isReady()) {
-      models.Revision.checkAllNotesRevision(function (err, notes) {
-        if (err) throw new Error(err)
-        if (!notes || notes.length <= 0) return startListen()
-      })
+const maxDBTries = 30
+let currentDBTry = 1
+function syncAndListen () {
+  // sync db then start listen
+  models.sequelize.authenticate().then(function () {
+    models.runMigrations().then(() => {
+      sessionStore.sync()
+      // check if realtime is ready
+      if (realtime.isReady()) {
+        models.Revision.checkAllNotesRevision(function (err, notes) {
+          if (err) throw new Error(err)
+          if (!notes || notes.length <= 0) return startListen()
+        })
+      } else {
+        logger.error('server still not ready after db synced')
+        process.exit(1)
+      }
+    })
+  }).catch(() => {
+    if (currentDBTry < maxDBTries) {
+      logger.warn(`Database cannot be reached. Try ${currentDBTry} of ${maxDBTries}.`)
+      currentDBTry++
+      setTimeout(function () {
+        syncAndListen()
+      }, 1000)
     } else {
-      throw new Error('server still not ready after db synced')
+      logger.error('Cannot reach database! Exiting.')
+      process.exit(1)
     }
   })
-})
+}
+syncAndListen()
 
 // log uncaught exception
 process.on('uncaughtException', function (err) {
