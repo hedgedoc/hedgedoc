@@ -266,9 +266,9 @@ export function finishView (view) {
     li.innerHTML = html
     let disabled = 'disabled'
     if (typeof editor !== 'undefined' && window.havePermission()) { disabled = '' }
-    if (/^\s*\[[x ]\]\s*/.test(html)) {
-      li.innerHTML = html.replace(/^\s*\[ \]\s*/, `<input type="checkbox" class="task-list-item-checkbox "${disabled}><label></label>`)
-        .replace(/^\s*\[x\]\s*/, `<input type="checkbox" class="task-list-item-checkbox" checked ${disabled}><label></label>`)
+    if (/^\s*\[[xX ]]\s*/.test(html)) {
+      li.innerHTML = html.replace(/^\s*\[ ]\s*/, `<input type="checkbox" class="task-list-item-checkbox" ${disabled}><label></label>`)
+        .replace(/^\s*\[[xX]]\s*/, `<input type="checkbox" class="task-list-item-checkbox" checked ${disabled}><label></label>`)
       if (li.tagName.toLowerCase() !== 'li') {
         li.parentElement.setAttribute('class', 'task-list-item')
       } else {
@@ -705,11 +705,11 @@ $.fn.sortByDepth = function () {
 function toggleTodoEvent (e) {
   const startline = $(this).closest('li').attr('data-startline') - 1
   const line = window.editor.getLine(startline)
-  const matches = line.match(/^[>\s-]*[-+*]\s\[([x ])\]/)
+  const matches = line.match(/^[>\s-]*(?:[-+*]|\d+[.)])\s\[([xX ])]/)
   if (matches && matches.length >= 2) {
     let checked = null
-    if (matches[1] === 'x') { checked = true } else if (matches[1] === ' ') { checked = false }
-    const replacements = matches[0].match(/(^[>\s-]*[-+*]\s\[)([x ])(\])/)
+    if (matches[1].toLowerCase() === 'x') { checked = true } else if (matches[1] === ' ') { checked = false }
+    const replacements = matches[0].match(/(^[>\s-]*(?:[-+*]|\d+[.)])\s\[)([xX ])(])/)
     window.editor.replaceRange(checked ? ' ' : 'x', {
       line: startline,
       ch: replacements[1].length
