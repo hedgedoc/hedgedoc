@@ -114,7 +114,7 @@
     "serve:build": "http-server build/ -s -p 3001 -P \"http://localhost:3001?\"",
     "build:test": "cross-env REACT_APP_TEST_MODE=true craco build",
     "build:mock": "cross-env craco build",
-    "build:production": "bash -c \"[[ -v REACT_APP_BACKEND_BASE_URL ]]\" && (cross-env craco build) || (echo -e '\n==============\nREACT_APP_BACKEND_BASE_URL not set.\nUse this task only if you want to create a production build with a real backend. Otherwise use build:mock\n==============\n'; exit 1)",
+    "build:production": "(cross-env node check-build-env-vars.js) && (cross-env craco build)",
     "analyze": "cross-env ANALYZE=true yarn build:mock",
     "test": "craco test",
     "lint": "eslint --max-warnings=0 --ext .ts,.tsx src",
