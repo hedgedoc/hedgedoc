@@ -1,4 +1,5 @@
 const wrapSymbols = ['*', '_', '~', '^', '+', '=']
+
 export function wrapTextWith (editor, cm, symbol) {
   if (!cm.getSelection()) {
     return CodeMirror.Pass
@@ -106,12 +107,14 @@ export function insertOnStartOfLines (cm, symbol) {
   for (let i = 0; i < ranges.length; i++) {
     const range = ranges[i]
     if (!range.empty()) {
-      const from = range.from()
-      const to = range.to()
-      let selection = cm.getRange({ line: from.line, ch: 0 }, to)
+      const cursorFrom = range.from()
+      const cursorTo = range.to()
+      const firstLineStart = { line: cursorFrom.line, ch: 0 }
+      const lastLineEnd = { line: cursorTo.line, ch: cm.getLine(cursorTo.line).length }
+      let selection = cm.getRange(firstLineStart, lastLineEnd)
       selection = selection.replace(/\n/g, '\n' + symbol)
       selection = symbol + selection
-      cm.replaceRange(selection, from, to)
+      cm.replaceRange(selection, firstLineStart, lastLineEnd)
     } else {
       cm.replaceRange(symbol, { line: cursor.line, ch: 0 }, { line: cursor.line, ch: 0 })
     }
