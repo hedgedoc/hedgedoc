@@ -1,5 +1,8 @@
-FROM node:lts as builder
+FROM node:lts-alpine as base
+FROM base as builder
 WORKDIR /home/node/app
+
+RUN apk update && apk add git
 
 # Install dependencies first to not invalidate the cache on every source change
 COPY package.json yarn.lock ./
@@ -17,7 +20,7 @@ RUN yarn run build
 RUN yarn install --production=true --pure-lockfile
 
 # Production container
-FROM node:lts-slim
+FROM base
 
 # Setup various metadata
 WORKDIR /home/node/app
