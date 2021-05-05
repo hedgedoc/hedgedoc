@@ -8,7 +8,7 @@ import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 import { Config } from './types'
 
 export const getConfig = async (): Promise<Config> => {
-  const response = await fetch(getApiUrl() + '/config', {
+  const response = await fetch(getApiUrl() + 'config', {
     ...defaultFetchConfig
   })
   expectResponseCode(response)

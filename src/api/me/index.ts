@@ -9,7 +9,7 @@ import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 import { isMockMode } from '../../utils/test-modes'
 
 export const getMe = async (): Promise<UserResponse> => {
-  const response = await fetch(getApiUrl() + `/me${ isMockMode() ? '-get' : '' }`, {
+  const response = await fetch(getApiUrl() + `me${ isMockMode() ? '-get' : '' }`, {
     ...defaultFetchConfig
   })
   expectResponseCode(response)
@@ -17,7 +17,7 @@ export const getMe = async (): Promise<UserResponse> => {
 }
 
 export const updateDisplayName = async (displayName: string): Promise<void> => {
-  const response = await fetch(getApiUrl() + '/me', {
+  const response = await fetch(getApiUrl() + 'me', {
     ...defaultFetchConfig,
     method: 'POST',
     body: JSON.stringify({
@@ -29,7 +29,7 @@ export const updateDisplayName = async (displayName: string): Promise<void> => {
 }
 
 export const changePassword = async (oldPassword: string, newPassword: string): Promise<void> => {
-  const response = await fetch(getApiUrl() + '/me/password', {
+  const response = await fetch(getApiUrl() + 'me/password', {
     ...defaultFetchConfig,
     method: 'POST',
     body: JSON.stringify({
@@ -42,7 +42,7 @@ export const changePassword = async (oldPassword: string, newPassword: string): 
 }
 
 export const deleteUser = async (): Promise<void> => {
-  const response = await fetch(getApiUrl() + '/me', {
+  const response = await fetch(getApiUrl() + 'me', {
     ...defaultFetchConfig,
     method: 'DELETE'
   })

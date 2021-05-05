@@ -8,7 +8,7 @@ import { ImageProxyResponse } from '../../components/markdown-renderer/replace-c
 import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 
 export const getProxiedUrl = async (imageUrl: string): Promise<ImageProxyResponse> => {
-  const response = await fetch(getApiUrl() + '/media/proxy', {
+  const response = await fetch(getApiUrl() + 'media/proxy', {
     ...defaultFetchConfig,
     method: 'POST',
     body: JSON.stringify({
@@ -24,7 +24,7 @@ export interface UploadedMedia {
 }
 
 export const uploadFile = async (noteId: string, contentType: string, media: Blob): Promise<UploadedMedia> => {
-  const response = await fetch(getApiUrl() + '/media/upload', {
+  const response = await fetch(getApiUrl() + 'media/upload', {
     ...defaultFetchConfig,
     headers: {
       'Content-Type': contentType,

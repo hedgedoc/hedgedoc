@@ -11,7 +11,7 @@ export const BANNER_LOCAL_STORAGE_KEY = 'banner.lastModified'
 
 export const fetchAndSetBanner = async (customizeAssetsUrl: string): Promise<void> => {
   const cachedLastModified = window.localStorage.getItem(BANNER_LOCAL_STORAGE_KEY)
-  const bannerUrl = `${ customizeAssetsUrl }/banner.txt`
+  const bannerUrl = `${ customizeAssetsUrl }banner.txt`
 
   if (cachedLastModified) {
     const response = await fetch(bannerUrl, {

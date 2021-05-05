@@ -26,7 +26,7 @@ export interface InitTask {
 
 export const createSetUpTaskList = (frontendAssetsUrl: string, customizeAssetsUrl: string, backendBaseUrl: string): InitTask[] => {
   setApiUrl({
-    apiUrl: `${ backendBaseUrl }/api/private`
+    apiUrl: `${ backendBaseUrl }api/private/`
   })
 
   return [{

@@ -30,7 +30,7 @@ export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props })
     const activeOneClickProviders = activeProviders.filter(entry => !INTERACTIVE_LOGIN_METHODS.includes(entry))
 
     if (activeProviders.length === 1 && activeOneClickProviders.length === 1) {
-      return `${ getApiUrl() }/auth/${ activeOneClickProviders[0] }`
+      return `${ getApiUrl() }auth/${ activeOneClickProviders[0] }`
     }
     return '/login'
   }, [authProviders])

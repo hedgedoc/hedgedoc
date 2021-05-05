@@ -11,5 +11,5 @@ export const useFrontendBaseUrl = (): string => {
   const location = window.location
   const cleanedPathName = location.pathname.replace(pathname, '')
 
-  return `${ location.protocol }//${ location.host }${ cleanedPathName }`
+  return `${ location.protocol }//${ location.host }${ cleanedPathName }/`
 }

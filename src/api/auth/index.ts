@@ -10,7 +10,7 @@ import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 export const INTERACTIVE_LOGIN_METHODS = ['internal', 'ldap', 'openid']
 
 export const doInternalLogin = async (username: string, password: string): Promise<void> => {
-  const response = await fetch(getApiUrl() + '/auth/internal', {
+  const response = await fetch(getApiUrl() + 'auth/internal', {
     ...defaultFetchConfig,
     method: 'POST',
     body: JSON.stringify({
@@ -23,7 +23,7 @@ export const doInternalLogin = async (username: string, password: string): Promi
 }
 
 export const doInternalRegister = async (username: string, password: string): Promise<void> => {
-  const response = await fetch(getApiUrl() + '/auth/register', {
+  const response = await fetch(getApiUrl() + 'auth/register', {
     ...defaultFetchConfig,
     method: 'POST',
     body: JSON.stringify({
@@ -40,7 +40,7 @@ export const doInternalRegister = async (username: string, password: string): Pr
 }
 
 export const doLdapLogin = async (username: string, password: string): Promise<void> => {
-  const response = await fetch(getApiUrl() + '/auth/ldap', {
+  const response = await fetch(getApiUrl() + 'auth/ldap', {
     ...defaultFetchConfig,
     method: 'POST',
     body: JSON.stringify({
@@ -53,7 +53,7 @@ export const doLdapLogin = async (username: string, password: string): Promise<v
 }
 
 export const doOpenIdLogin = async (openId: string): Promise<void> => {
-  const response = await fetch(getApiUrl() + '/auth/openid', {
+  const response = await fetch(getApiUrl() + 'auth/openid', {
     ...defaultFetchConfig,
     method: 'POST',
     body: JSON.stringify({

@@ -7,7 +7,7 @@
 import { defaultFetchConfig, expectResponseCode } from '../../api/utils'
 
 export const fetchFrontPageContent = async (customizeAssetsUrl: string): Promise<string> => {
-  const response = await fetch(customizeAssetsUrl + '/intro.md', {
+  const response = await fetch(customizeAssetsUrl + 'intro.md', {
     ...defaultFetchConfig,
     method: 'GET'
   })

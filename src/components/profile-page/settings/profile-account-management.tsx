@@ -63,7 +63,7 @@ export const ProfileAccountManagement: React.FC = () => {
       <Card className="bg-dark mb-4">
         <Card.Body>
           <Card.Title><Trans i18nKey="profile.accountManagement"/></Card.Title>
-          <Button variant="secondary" block href={ getApiUrl() + '/me/export' } className="mb-2">
+          <Button variant="secondary" block href={ getApiUrl() + 'me/export' } className="mb-2">
             <ForkAwesomeIcon icon="cloud-download" fixedWidth={ true } className="mx-2"/>
             <Trans i18nKey="profile.exportUserData"/>
           </Button>

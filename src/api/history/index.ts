@@ -8,13 +8,13 @@ import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 import { HistoryEntryDto, HistoryEntryPutDto, HistoryEntryUpdateDto } from './types'
 
 export const getHistory = async (): Promise<HistoryEntryDto[]> => {
-  const response = await fetch(getApiUrl() + '/me/history')
+  const response = await fetch(getApiUrl() + 'me/history')
   expectResponseCode(response)
   return await response.json() as Promise<HistoryEntryDto[]>
 }
 
 export const postHistory = async (entries: HistoryEntryPutDto[]): Promise<void> => {
-  const response = await fetch(getApiUrl() + '/me/history', {
+  const response = await fetch(getApiUrl() + 'me/history', {
     ...defaultFetchConfig,
     method: 'POST',
     body: JSON.stringify(entries)
@@ -23,7 +23,7 @@ export const postHistory = async (entries: HistoryEntryPutDto[]): Promise<void> 
 }
 
 export const updateHistoryEntryPinStatus = async (noteId: string, entry: HistoryEntryUpdateDto): Promise<void> => {
-  const response = await fetch(getApiUrl() + '/me/history/' + noteId, {
+  const response = await fetch(getApiUrl() + 'me/history/' + noteId, {
     ...defaultFetchConfig,
     method: 'PUT',
     body: JSON.stringify(entry)
@@ -32,7 +32,7 @@ export const updateHistoryEntryPinStatus = async (noteId: string, entry: History
 }
 
 export const deleteHistoryEntry = async (noteId: string): Promise<void> => {
-  const response = await fetch(getApiUrl() + '/me/history/' + noteId, {
+  const response = await fetch(getApiUrl() + 'me/history/' + noteId, {
     ...defaultFetchConfig,
     method: 'DELETE'
   })
@@ -40,7 +40,7 @@ export const deleteHistoryEntry = async (noteId: string): Promise<void> => {
 }
 
 export const deleteHistory = async (): Promise<void> => {
-  const response = await fetch(getApiUrl() + '/me/history', {
+  const response = await fetch(getApiUrl() + 'me/history', {
     ...defaultFetchConfig,
     method: 'DELETE'
   })
