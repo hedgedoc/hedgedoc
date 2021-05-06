@@ -11,7 +11,7 @@ This release fixes multiple security issues. We recommend upgrading as soon as p
   This issue allowed an attacker to hang HedgeDoc by inserting a malicious string into a note. Thanks to Ralph Krimmel for reporting!
 
 We also published an advisory for [CVE-2021-29475: PDF export allows arbitrary file reads](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-pxxg-px9v-6qf3),  
-which has already been fixed since HedgeDoc 1.6.0.
+which has already been fixed since HedgeDoc 1.5.0.
 
 ### Features
 - Database migrations are now automatically applied on application startup  
