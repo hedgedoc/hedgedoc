@@ -8,17 +8,15 @@
     },
     "development": {
         "loglevel": "debug",
-        "hsts": {
-            "enable": false
-        },
         "db": {
             "dialect": "sqlite",
             "storage": "./db.hedgedoc.sqlite"
         },
-        "linkifyHeaderStyle": "gfm"
+        "domain": "localhost",
+        "urlAddPort": true
     },
     "production": {
-        "domain": "localhost",
+        "domain": "change this",
         "loglevel": "info",
         "hsts": {
             "enable": true,
@@ -126,7 +124,6 @@
         {
           "connectionString": "change this",
           "container": "change this"
-        },
-        "linkifyHeaderStyle": "gfm"
+        }
     }
 }

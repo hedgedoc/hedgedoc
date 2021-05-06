@@ -1,6 +1,6 @@
 {
   "name": "HedgeDoc",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "The best platform to write and share markdown.",
   "main": "app.js",
   "license": "AGPL-3.0",
@@ -131,6 +131,10 @@
       "name": "Christoph (Sheogorath) Kern",
       "email": "codimd@sheogorath.shivering-isles.com",
       "url": "https://shivering-isles.com"
+    },
+    {
+      "name":"David Mehren",
+      "email": "hedgedoc@herrmehren.de"
     }
   ],
   "repository": {
