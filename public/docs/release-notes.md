@@ -1,4 +1,21 @@
 # Release Notes
+## <i class="fa fa-tag"></i> 1.8.1 <i class="fa fa-calendar-o"></i> 2021-05-06
+### Enhancements
+- Speed up `yarn install` in production mode (as performed by `bin/setup`) by marking frontend-only dependencies as dev-dependencies.
+  This also reduces the size of the docker container
+- Speed up the frontend-build by using `esbuild` instead of `terser` to minify JavaScript
+- Improve behavior of the 'Quote', 'List', 'Unordered List' and 'Check List' buttons in the editor to automatically
+  apply to the complete first and last line of the selection
+
+### Bugfixes
+- Correct the 1.8.0 release notes to state that CVE-2021-29475 has been fixed since HedgeDoc 1.5.0.
+- Fix crash on startup when `useSSL` or `csp.upgradeInsecureRequests` is enabled (thanks to [@mdegat01](https://github.com/mdegat01) for reporting)
+- Automatically enable `protocolUseSSL` when `useSSL` is also enabled
+- Fix the 'Quote', 'List', 'Unordered List' and 'Check List' buttons in the editor to not duplicate content
+  when only parts of a line are selected (thanks to [@AnomalRoli](https://github.com/AnomalRoil) for reporting)
+- Fix click handler for numbered task lists (thanks to [@xoriade](https://github.com/xoriade) for reporting)
+
+
 ## <i class="fa fa-tag"></i> 1.8.0 <i class="fa fa-calendar-o"></i> 2021-05-03
 
 This release fixes multiple security issues. We recommend upgrading as soon as possible.
