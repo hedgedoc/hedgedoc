@@ -12,7 +12,7 @@
 - Fix crash on startup when `useSSL` or `csp.upgradeInsecureRequests` is enabled (thanks to [@mdegat01](https://github.com/mdegat01) for reporting)
 - Automatically enable `protocolUseSSL` when `useSSL` is also enabled
 - Fix the 'Quote', 'List', 'Unordered List' and 'Check List' buttons in the editor to not duplicate content
-  when only parts of a line are selected (thanks to [@AnomalRoli](https://github.com/AnomalRoil) for reporting)
+  when only parts of a line are selected (thanks to [@AnomalRoil](https://github.com/AnomalRoil) for reporting)
 - Fix click handler for numbered task lists (thanks to [@xoriade](https://github.com/xoriade) for reporting)
 
 
