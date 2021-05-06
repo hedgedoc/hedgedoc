@@ -47,8 +47,7 @@ if [ ! -f config.json ]; then
 fi
 
 echo "Installing packages..."
-yarn install --pure-lockfile
-yarn install --production=false --pure-lockfile
+yarn install --production=true --pure-lockfile
 
 cat << EOF
 
