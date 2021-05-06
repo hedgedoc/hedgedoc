@@ -2,8 +2,7 @@
   "presets": [
     ["env", {
       "targets": {
-        "node": "8",
-        "uglify": true
+        "browsers": "defaults"
       }
     }]
   ],
