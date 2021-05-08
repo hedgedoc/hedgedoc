@@ -34,7 +34,7 @@
    It's also possible to use environment variables.
    For details, have a look at [the configuration documentation](../configuration.md).
 5. *:octicons-light-bulb-16: If you use the release tarball for 1.7.0 or newer, this step can be skipped.*  
-   Build the frontend bundle by running `yarn run build`.
+   Build the frontend bundle by running `yarn install` and then `yarn build`. The extra `yarn install` is necessary as `bin/setup` does not install the build dependencies.
 6. It is recommended to start your server manually once:  
    ```shell
    NODE_ENV=production yarn start
@@ -61,7 +61,7 @@ If you want to upgrade HedgeDoc from an older version, follow these steps:
    <small>If you use Git, you can check out the new tag with e.g. `git fetch origin && git checkout 1.8.1`</small>
 5. Run `bin/setup`. This will take care of installing dependencies. It is safe to run on an existing installation.
 6. *:octicons-light-bulb-16: If you used the release tarball for 1.7.0 or newer, this step can be skipped.*  
-   Build the frontend bundle by running `yarn run build`.
+   Build the frontend bundle by running `yarn install` and `yarn build`. The extra `yarn install` is necessary as `bin/setup` does not install the       build dependencies.
 7. It is recommended to start your server manually once:
    ```shell
    NODE_ENV=production yarn start
