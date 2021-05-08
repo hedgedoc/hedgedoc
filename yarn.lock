@@ -5004,10 +5004,10 @@ cypress-commands@1.1.0:
   resolved "https://registry.yarnpkg.com/cypress-commands/-/cypress-commands-1.1.0.tgz#9248190168783deb8ab27ae7c722e3e01d172c97"
   integrity sha512-Q8Jr25pHJQFXwln6Hp8O+Hgs8Z506Y2wA9F1Te2cTajjc5L9gtt9WPOcw1Ogh+OgyqaMHF+uq31vdfImRTio5Q==
 
-cypress-file-upload@5.0.6:
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/cypress-file-upload/-/cypress-file-upload-5.0.6.tgz#90a4a49ac4d147f955a642a25b6b3f0706a767b5"
-  integrity sha512-Zop7M8xhP9WSoc5tVYJcUUn+iPn3RpsOEzHaTUKFQPiqxD5Bz19azO/BwiyuNJ5m82zPMd0i+KY/ubVog8cyGQ==
+cypress-file-upload@5.0.7:
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/cypress-file-upload/-/cypress-file-upload-5.0.7.tgz#acf24fe08a92b2d0c892a58b56811fb933d34ea9"
+  integrity sha512-cgWsWx7igxjyyVm9/VJ9ukdy69jL00I7z0lrwUWtXXLPvX4neO+8JAZ054Ax8Xf+mdV9OerenXzb9nqRoafjHA==
 
 cypress@7.2.0:
   version "7.2.0"
