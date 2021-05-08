@@ -105,15 +105,14 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
     if (!editor || !onScroll || !editorScroll) {
       return
     }
-    const scrollEventValue = editorScroll.top as number
-    const line = editor.lineAtHeight(scrollEventValue, 'local')
+    const line = editor.lineAtHeight(editorScroll.top, 'local')
     const startYOfLine = editor.heightAtLine(line, 'local')
     const lineInfo = editor.lineInfo(line)
     if (lineInfo === null) {
       return
     }
     const heightOfLine = (lineInfo.handle as { height: number }).height
-    const percentageRaw = (Math.max(scrollEventValue - startYOfLine, 0)) / heightOfLine
+    const percentageRaw = (Math.max(editorScroll.top - startYOfLine, 0)) / heightOfLine
     const percentage = Math.floor(percentageRaw * 100)
 
     const newScrollState: ScrollState = { firstLineInView: line + 1, scrolledPercentage: percentage }
