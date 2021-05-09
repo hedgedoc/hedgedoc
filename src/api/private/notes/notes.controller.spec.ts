@@ -70,8 +70,6 @@ describe('NotesController', () => {
     })
       .overrideProvider(getConnectionToken())
       .useValue({})
-      .overrideProvider(getRepositoryToken(Note))
-      .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})
       .overrideProvider(getRepositoryToken(Authorship))

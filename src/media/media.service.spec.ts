@@ -58,8 +58,6 @@ describe('MediaService', () => {
     })
       .overrideProvider(getRepositoryToken(AuthorColor))
       .useValue({})
-      .overrideProvider(getRepositoryToken(MediaUpload))
-      .useValue({})
       .overrideProvider(getRepositoryToken(Authorship))
       .useValue({})
       .overrideProvider(getRepositoryToken(AuthToken))
