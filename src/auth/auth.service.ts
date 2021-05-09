@@ -127,6 +127,9 @@ export class AuthService {
     const accessToken = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
     });
+    if (accessToken === undefined) {
+      throw new NotInDBError(`AuthToken for key '${keyId}' not found`);
+    }
     accessToken.lastUsed = new Date();
     await this.authTokenRepository.save(accessToken);
   }
@@ -170,6 +173,9 @@ export class AuthService {
     const token = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
     });
+    if (token === undefined) {
+      throw new NotInDBError(`AuthToken for key '${keyId}' not found`);
+    }
     await this.authTokenRepository.remove(token);
   }
 
