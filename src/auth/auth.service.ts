@@ -184,13 +184,9 @@ export class AuthService {
       label: authToken.label,
       keyId: authToken.keyId,
       createdAt: authToken.createdAt,
-      validUntil: null,
+      validUntil: authToken.validUntil,
       lastUsed: null,
     };
-
-    if (authToken.validUntil) {
-      tokenDto.validUntil = new Date(authToken.validUntil);
-    }
 
     if (authToken.lastUsed) {
       tokenDto.lastUsed = new Date(authToken.lastUsed);

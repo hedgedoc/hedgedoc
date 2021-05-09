@@ -35,11 +35,8 @@ export class AuthToken {
   @Column({ unique: true })
   accessTokenHash: string;
 
-  @Column({
-    nullable: true,
-    type: 'date',
-  })
-  validUntil: Date | null;
+  @Column()
+  validUntil: Date;
 
   @Column({
     nullable: true,
