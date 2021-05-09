@@ -15,6 +15,7 @@ import {
   Put,
   UseGuards,
   Req,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { HistoryEntryUpdateDto } from '../../../history/history-entry-update.dto';
 import { HistoryService } from '../../../history/history.service';
@@ -65,6 +66,10 @@ export class MeController {
   })
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getMe(@Req() req: Request): Promise<UserInfoDto> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     return this.usersService.toUserDto(
       await this.usersService.getUserByUsername(req.user.userName),
     );
@@ -79,6 +84,10 @@ export class MeController {
   })
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getUserHistory(@Req() req: Request): Promise<HistoryEntryDto[]> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     const foundEntries = await this.historyService.getEntriesByUser(req.user);
     return await Promise.all(
       foundEntries.map((entry) => this.historyService.toHistoryEntryDto(entry)),
@@ -97,6 +106,10 @@ export class MeController {
     @Req() req: Request,
     @Param('note') note: string,
   ): Promise<HistoryEntryDto> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     try {
       const foundEntry = await this.historyService.getEntryByNoteIdOrAlias(
         note,
@@ -124,6 +137,10 @@ export class MeController {
     @Param('note') note: string,
     @Body() entryUpdateDto: HistoryEntryUpdateDto,
   ): Promise<HistoryEntryDto> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     // ToDo: Check if user is allowed to pin this history entry
     try {
       return this.historyService.toHistoryEntryDto(
@@ -151,6 +168,10 @@ export class MeController {
     @Req() req: Request,
     @Param('note') note: string,
   ): Promise<void> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     // ToDo: Check if user is allowed to delete note
     try {
       await this.historyService.deleteHistoryEntry(note, req.user);
@@ -171,6 +192,10 @@ export class MeController {
   })
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getMyNotes(@Req() req: Request): Promise<NoteMetadataDto[]> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     const notes = this.notesService.getUserNotes(req.user);
     return await Promise.all(
       (await notes).map((note) => this.notesService.toNoteMetadataDto(note)),
@@ -186,6 +211,10 @@ export class MeController {
   })
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getMyMedia(@Req() req: Request): Promise<MediaUploadDto[]> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     const media = await this.mediaService.listUploadsByUser(req.user);
     return media.map((media) => this.mediaService.toMediaUploadDto(media));
   }

@@ -6,7 +6,7 @@
 
 import { Loglevel } from './loglevel.enum';
 
-export function toArrayConfig(configValue: string, separator = ','): string[] {
+export function toArrayConfig(configValue?: string, separator = ','): string[] {
   if (!configValue) {
     return [];
   }
@@ -112,4 +112,11 @@ function transformLoglevelToInt(loglevel: Loglevel): number {
     case Loglevel.ERROR:
       return 1;
   }
+}
+
+export function parseOptionalInt(value?: string): number | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+  return parseInt(value);
 }

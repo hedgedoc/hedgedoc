@@ -64,7 +64,7 @@ export class AuthService {
 
   randomString(length: number): Buffer {
     if (length <= 0) {
-      return null;
+      throw new Error('randomString cannot have a length < 1');
     }
     return randomBytes(length);
   }
@@ -127,6 +127,9 @@ export class AuthService {
     const accessToken = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
     });
+    if (accessToken === undefined) {
+      throw new NotInDBError(`AuthToken for key '${keyId}' not found`);
+    }
     accessToken.lastUsed = new Date();
     await this.authTokenRepository.save(accessToken);
   }
@@ -170,23 +173,19 @@ export class AuthService {
     const token = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
     });
+    if (token === undefined) {
+      throw new NotInDBError(`AuthToken for key '${keyId}' not found`);
+    }
     await this.authTokenRepository.remove(token);
   }
 
-  toAuthTokenDto(authToken: AuthToken): AuthTokenDto | null {
-    if (!authToken) {
-      this.logger.warn(
-        `Recieved ${String(authToken)} argument!`,
-        'toAuthTokenDto',
-      );
-      return null;
-    }
+  toAuthTokenDto(authToken: AuthToken): AuthTokenDto {
     const tokenDto: AuthTokenDto = {
-      lastUsed: null,
-      validUntil: null,
       label: authToken.label,
       keyId: authToken.keyId,
       createdAt: authToken.createdAt,
+      validUntil: null,
+      lastUsed: null,
     };
 
     if (authToken.validUntil) {
@@ -201,9 +200,9 @@ export class AuthService {
   }
 
   toAuthTokenWithSecretDto(
-    authToken: AuthToken | null | undefined,
+    authToken: AuthToken,
     secret: string,
-  ): AuthTokenWithSecretDto | null {
+  ): AuthTokenWithSecretDto {
     const tokenDto = this.toAuthTokenDto(authToken);
     return {
       ...tokenDto,

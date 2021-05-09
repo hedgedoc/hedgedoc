@@ -40,13 +40,15 @@ export class User {
 
   @Column({
     nullable: true,
+    type: 'text',
   })
-  photo?: string;
+  photo: string | null;
 
   @Column({
     nullable: true,
+    type: 'text',
   })
-  email?: string;
+  email: string | null;
 
   @OneToMany((_) => Note, (note) => note.owner)
   ownedNotes: Note[];

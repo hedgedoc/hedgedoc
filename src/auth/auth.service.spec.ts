@@ -168,6 +168,12 @@ describe('AuthService', () => {
       );
       await service.setLastUsedToken(authToken.keyId);
     });
+    it('throws if the token is not in the database', async () => {
+      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(undefined);
+      await expect(service.setLastUsedToken(authToken.keyId)).rejects.toThrow(
+        NotInDBError,
+      );
+    });
   });
 
   describe('validateToken', () => {
@@ -227,6 +233,12 @@ describe('AuthService', () => {
       );
       await service.removeToken(authToken.keyId);
     });
+    it('throws if the token is not in the database', async () => {
+      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(undefined);
+      await expect(service.removeToken(authToken.keyId)).rejects.toThrow(
+        NotInDBError,
+      );
+    });
   });
 
   describe('createTokenForUser', () => {
@@ -239,7 +251,7 @@ describe('AuthService', () => {
         });
         jest.spyOn(authTokenRepo, 'save').mockImplementationOnce(
           async (authTokenSaved: AuthToken, _): Promise<AuthToken> => {
-            expect(authTokenSaved.lastUsed).toBeUndefined();
+            expect(authTokenSaved.lastUsed).toBeNull();
             return authTokenSaved;
           },
         );
@@ -263,7 +275,7 @@ describe('AuthService', () => {
         });
         jest.spyOn(authTokenRepo, 'save').mockImplementationOnce(
           async (authTokenSaved: AuthToken, _): Promise<AuthToken> => {
-            expect(authTokenSaved.lastUsed).toBeUndefined();
+            expect(authTokenSaved.lastUsed).toBeNull();
             return authTokenSaved;
           },
         );
@@ -305,6 +317,12 @@ describe('AuthService', () => {
       expect(tokenDto.createdAt.getTime()).toEqual(
         authToken.createdAt.getTime(),
       );
+    });
+  });
+  describe('randomString', () => {
+    it('throws on invalid lenght parameter', () => {
+      expect(() => service.randomString(0)).toThrow();
+      expect(() => service.randomString(-1)).toThrow();
     });
   });
 });

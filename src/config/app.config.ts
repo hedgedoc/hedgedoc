@@ -7,7 +7,7 @@
 import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
 import { Loglevel } from './loglevel.enum';
-import { buildErrorMessage, toArrayConfig } from './utils';
+import { buildErrorMessage, parseOptionalInt, toArrayConfig } from './utils';
 
 export interface AppConfig {
   domain: string;
@@ -46,11 +46,10 @@ export default registerAs('appConfig', () => {
     {
       domain: process.env.HD_DOMAIN,
       rendererOrigin: process.env.HD_RENDERER_ORIGIN,
-      port: parseInt(process.env.PORT) || undefined,
+      port: parseOptionalInt(process.env.PORT),
       loglevel: process.env.HD_LOGLEVEL,
       forbiddenNoteIds: toArrayConfig(process.env.HD_FORBIDDEN_NOTE_IDS, ','),
-      maxDocumentLength:
-        parseInt(process.env.HD_MAX_DOCUMENT_LENGTH) || undefined,
+      maxDocumentLength: parseOptionalInt(process.env.HD_MAX_DOCUMENT_LENGTH),
     },
     {
       abortEarly: false,

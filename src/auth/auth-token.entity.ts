@@ -37,13 +37,15 @@ export class AuthToken {
 
   @Column({
     nullable: true,
+    type: 'date',
   })
-  validUntil: Date;
+  validUntil: Date | null;
 
   @Column({
     nullable: true,
+    type: 'date',
   })
-  lastUsed: Date;
+  lastUsed: Date | null;
 
   public static create(
     user: User,
@@ -62,6 +64,7 @@ export class AuthToken {
     newToken.accessTokenHash = accessToken;
     newToken.createdAt = new Date();
     newToken.validUntil = validUntil;
+    newToken.lastUsed = null;
     return newToken;
   }
 }

@@ -134,7 +134,7 @@ describe('Media', () => {
       'hardcoded',
       'test_upload_media',
     );
-    const filename = url.split('/').pop();
+    const filename = url.split('/').pop() || '';
     await request(app.getHttpServer())
       .delete('/media/' + filename)
       .expect(204);

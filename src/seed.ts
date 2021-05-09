@@ -56,7 +56,16 @@ createConnection({
     user.ownedNotes = [note];
     await connection.manager.save([user, note, revision]);
     const foundUser = await connection.manager.findOne(User);
+    if (!foundUser) {
+      throw new Error('Could not find freshly seeded user. Aborting.');
+    }
     const foundNote = await connection.manager.findOne(Note);
+    if (!foundNote) {
+      throw new Error('Could not find freshly seeded note. Aborting.');
+    }
+    if (!foundNote.alias) {
+      throw new Error('Could not find alias of freshly seeded note. Aborting.');
+    }
     const historyEntry = HistoryEntry.create(foundUser, foundNote);
     await connection.manager.save(historyEntry);
     console.log(`Created User '${foundUser.userName}'`);

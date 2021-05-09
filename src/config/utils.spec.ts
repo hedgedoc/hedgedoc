@@ -6,6 +6,7 @@
 
 import {
   needToLog,
+  parseOptionalInt,
   replaceAuthErrorsWithEnvironmentVariables,
   toArrayConfig,
 } from './utils';
@@ -82,6 +83,14 @@ describe('config utils', () => {
       expect(needToLog(currentLevel, Loglevel.INFO)).toBeTruthy();
       expect(needToLog(currentLevel, Loglevel.DEBUG)).toBeTruthy();
       expect(needToLog(currentLevel, Loglevel.TRACE)).toBeTruthy();
+    });
+  });
+  describe('parseOptionalInt', () => {
+    it('returns undefined on undefined parameter', () => {
+      expect(parseOptionalInt(undefined)).toEqual(undefined);
+    });
+    it('correctly parses a string', () => {
+      expect(parseOptionalInt('42')).toEqual(42);
     });
   });
 });

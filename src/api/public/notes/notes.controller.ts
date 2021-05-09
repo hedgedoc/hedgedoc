@@ -12,6 +12,7 @@ import {
   Get,
   Header,
   HttpCode,
+  InternalServerErrorException,
   NotFoundException,
   Param,
   Post,
@@ -88,6 +89,10 @@ export class NotesController {
     @Req() req: Request,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     // ToDo: provide user for createNoteDto
     if (!this.permissionsService.mayCreate(req.user)) {
       throw new UnauthorizedException('Creating note denied!');
@@ -111,6 +116,10 @@ export class NotesController {
     @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<NoteDto> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     let note: Note;
     try {
       note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
@@ -144,6 +153,10 @@ export class NotesController {
     @Param('noteAlias') noteAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     if (!this.permissionsService.mayCreate(req.user)) {
       throw new UnauthorizedException('Creating note denied!');
     }
@@ -175,6 +188,10 @@ export class NotesController {
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @Body() noteMediaDeletionDto: NoteMediaDeletionDto,
   ): Promise<void> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
       if (!this.permissionsService.isOwner(req.user, note)) {
@@ -217,6 +234,10 @@ export class NotesController {
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
       if (!this.permissionsService.mayWrite(req.user, note)) {
@@ -251,6 +272,10 @@ export class NotesController {
     @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<string> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
       if (!this.permissionsService.mayRead(req.user, note)) {
@@ -281,6 +306,10 @@ export class NotesController {
     @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<NoteMetadataDto> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
       if (!this.permissionsService.mayRead(req.user, note)) {
@@ -315,6 +344,10 @@ export class NotesController {
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @Body() updateDto: NotePermissionsUpdateDto,
   ): Promise<NotePermissionsDto> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
       if (!this.permissionsService.isOwner(req.user, note)) {
@@ -348,6 +381,10 @@ export class NotesController {
     @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<RevisionMetadataDto[]> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
       if (!this.permissionsService.mayRead(req.user, note)) {
@@ -384,6 +421,10 @@ export class NotesController {
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @Param('revisionId') revisionId: number,
   ): Promise<RevisionDto> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
       if (!this.permissionsService.mayRead(req.user, note)) {
@@ -415,6 +456,10 @@ export class NotesController {
     @Req() req: Request,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<MediaUploadDto[]> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
       if (!this.permissionsService.mayRead(req.user, note)) {

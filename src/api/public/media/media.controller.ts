@@ -94,6 +94,10 @@ export class MediaController {
     @UploadedFile() file: MulterFile,
     @Headers('HedgeDoc-Note') noteId: string,
   ): Promise<MediaUploadUrlDto> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     const username = req.user.userName;
     this.logger.debug(
       `Recieved filename '${file.originalname}' for note '${noteId}' from user '${username}'`,
@@ -130,6 +134,10 @@ export class MediaController {
     @Req() req: Request,
     @Param('filename') filename: string,
   ): Promise<void> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
     const username = req.user.userName;
     try {
       this.logger.debug(

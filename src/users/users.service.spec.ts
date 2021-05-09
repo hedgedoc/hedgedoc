@@ -149,9 +149,5 @@ describe('UsersService', () => {
       expect(userDto.photo).toEqual('');
       expect(userDto.email).toEqual('');
     });
-    it('fails if no user is provided', () => {
-      expect(service.toUserDto(null)).toBeNull();
-      expect(service.toUserDto(undefined)).toBeNull();
-    });
   });
 });

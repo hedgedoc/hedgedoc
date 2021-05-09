@@ -202,6 +202,10 @@ export class MediaService {
         return BackendType.S3;
       case 'webdav':
         return BackendType.WEBDAV;
+      default:
+        throw new Error(
+          `Unexpected media backend ${this.mediaConfig.backend.use}`,
+        );
     }
   }
 
@@ -223,7 +227,7 @@ export class MediaService {
   toMediaUploadDto(mediaUpload: MediaUpload): MediaUploadDto {
     return {
       url: mediaUpload.fileUrl,
-      noteId: mediaUpload.note.id,
+      noteId: mediaUpload.note?.id ?? null,
       createdAt: mediaUpload.createdAt,
       userName: mediaUpload.user.userName,
     };

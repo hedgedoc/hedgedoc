@@ -185,7 +185,7 @@ describe('History', () => {
     const entry = await historyService.createOrUpdateHistoryEntry(note2, user);
     expect(entry.pinStatus).toBeFalsy();
     await request(app.getHttpServer())
-      .put(`/me/history/${entry.note.alias}`)
+      .put(`/me/history/${entry.note.alias || 'undefined'}`)
       .send({ pinStatus: true })
       .expect(200);
     const userEntries = await historyService.getEntriesByUser(user);
@@ -199,7 +199,7 @@ describe('History', () => {
     const entry2 = await historyService.createOrUpdateHistoryEntry(note, user);
     const entryDto = historyService.toHistoryEntryDto(entry2);
     await request(app.getHttpServer())
-      .delete(`/me/history/${entry.note.alias}`)
+      .delete(`/me/history/${entry.note.alias || 'undefined'}`)
       .expect(200);
     const userEntries = await historyService.getEntriesByUser(user);
     expect(userEntries.length).toEqual(1);

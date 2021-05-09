@@ -108,13 +108,9 @@ export class UsersService {
   /**
    * Build UserInfoDto from a user.
    * @param {User=} user - the user to use
-   * @return {(UserInfoDto|null)} the built UserInfoDto
+   * @return {(UserInfoDto)} the built UserInfoDto
    */
-  toUserDto(user: User | null | undefined): UserInfoDto | null {
-    if (!user) {
-      this.logger.warn(`Recieved ${String(user)} argument!`, 'toUserDto');
-      return null;
-    }
+  toUserDto(user: User): UserInfoDto {
     return {
       userName: user.userName,
       displayName: user.displayName,
