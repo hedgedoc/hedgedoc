@@ -34,7 +34,7 @@
     "@nestjs/schedule": "0.4.3",
     "@nestjs/swagger": "4.8.0",
     "@nestjs/typeorm": "7.1.5",
-    "@types/bcrypt": "3.0.1",
+    "@types/bcrypt": "5.0.0",
     "@types/cron": "1.7.2",
     "@types/minio": "7.0.7",
     "@types/node-fetch": "2.5.10",
