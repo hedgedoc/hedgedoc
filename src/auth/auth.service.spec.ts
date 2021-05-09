@@ -168,6 +168,12 @@ describe('AuthService', () => {
       );
       await service.setLastUsedToken(authToken.keyId);
     });
+    it('throws if the token is not in the database', async () => {
+      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(undefined);
+      await expect(service.setLastUsedToken(authToken.keyId)).rejects.toThrow(
+        NotInDBError,
+      );
+    });
   });
 
   describe('validateToken', () => {
@@ -226,6 +232,12 @@ describe('AuthService', () => {
         },
       );
       await service.removeToken(authToken.keyId);
+    });
+    it('throws if the token is not in the database', async () => {
+      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(undefined);
+      await expect(service.removeToken(authToken.keyId)).rejects.toThrow(
+        NotInDBError,
+      );
     });
   });
 
