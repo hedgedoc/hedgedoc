@@ -62,7 +62,7 @@ export class S3Backend implements MediaBackend {
     try {
       await this.client.removeObject(this.config.bucket, fileName);
       const url = this.getUrl(fileName);
-      this.logger.log(`Deleted ${url}`, 'saveFile');
+      this.logger.log(`Deleted ${url}`, 'deleteFile');
       return;
     } catch (e) {
       this.logger.error((e as Error).message, (e as Error).stack, 'saveFile');

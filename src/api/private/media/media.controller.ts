@@ -45,7 +45,7 @@ export class MediaController {
     const username = 'hardcoded';
     this.logger.debug(
       `Recieved filename '${file.originalname}' for note '${noteId}' from user '${username}'`,
-      'uploadImage',
+      'uploadMedia',
     );
     try {
       const url = await this.mediaService.saveFile(

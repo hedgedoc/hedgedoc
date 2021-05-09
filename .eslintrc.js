@@ -33,7 +33,7 @@ module.exports = {
       },
     },
   ],
-  plugins: ['@typescript-eslint', 'jest'],
+  plugins: ['@typescript-eslint', 'jest', 'eslint-plugin-local-rules'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
@@ -46,6 +46,7 @@ module.exports = {
     jest: true,
   },
   rules: {
+    'local-rules/correct-logger-context': 'error',
     'func-style': ['error', 'declaration'],
     '@typescript-eslint/no-unused-vars': [
       'warn',
