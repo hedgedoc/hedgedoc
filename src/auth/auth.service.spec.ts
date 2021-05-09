@@ -309,11 +309,14 @@ describe('AuthService', () => {
       authToken.keyId = 'testKeyId';
       authToken.label = 'testLabel';
       authToken.createdAt = new Date();
+      authToken.validUntil = new Date();
       const tokenDto = service.toAuthTokenDto(authToken);
       expect(tokenDto.keyId).toEqual(authToken.keyId);
       expect(tokenDto.lastUsed).toBeNull();
       expect(tokenDto.label).toEqual(authToken.label);
-      expect(tokenDto.validUntil).toBeNull();
+      expect(tokenDto.validUntil.getTime()).toEqual(
+        authToken.createdAt.getTime(),
+      );
       expect(tokenDto.createdAt.getTime()).toEqual(
         authToken.createdAt.getTime(),
       );
