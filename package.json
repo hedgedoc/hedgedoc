@@ -187,7 +187,7 @@
     "mathjax": "2.7.9",
     "mermaid": "8.9.3",
     "mini-css-extract-plugin": "1.6.0",
-    "mocha": "8.3.2",
+    "mocha": "8.4.0",
     "mock-require": "3.0.3",
     "optimize-css-assets-webpack-plugin": "5.0.4",
     "prismjs": "1.23.0",
