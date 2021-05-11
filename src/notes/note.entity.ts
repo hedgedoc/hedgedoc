@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { generate as shortIdGenerate } from 'shortid';
 import {
   Column,
   Entity,
@@ -27,11 +26,6 @@ import { MediaUpload } from '../media/media-upload.entity';
 export class Note {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-  @Column({
-    nullable: false,
-    unique: true,
-  })
-  shortid: string;
   @Column({
     unique: true,
     nullable: true,
@@ -87,12 +81,8 @@ export class Note {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  public static create(owner?: User, alias?: string, shortid?: string): Note {
-    if (!shortid) {
-      shortid = shortIdGenerate();
-    }
+  public static create(owner?: User, alias?: string): Note {
     const newNote = new Note();
-    newNote.shortid = shortid;
     newNote.alias = alias ?? null;
     newNote.viewCount = 0;
     newNote.owner = owner ?? null;
