@@ -45,7 +45,7 @@ createConnection({
 })
   .then(async (connection) => {
     const user = User.create('hardcoded', 'Test User');
-    const note = Note.create(undefined, 'test', 'abc');
+    const note = Note.create(undefined, 'test');
     const revision = Revision.create(
       'This is a test note',
       'This is a test note',
