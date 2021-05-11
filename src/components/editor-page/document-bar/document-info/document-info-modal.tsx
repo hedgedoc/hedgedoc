@@ -12,6 +12,7 @@ import { CommonModal } from '../../../common/modals/common-modal'
 import { DocumentInfoLine } from './document-info-line'
 import { DocumentInfoLineWithTimeMode, DocumentInfoTimeLine } from './document-info-time-line'
 import { UnitalicBoldText } from './unitalic-bold-text'
+import { useCustomizeAssetsUrl } from '../../../../hooks/common/use-customize-assets-url'
 
 export interface DocumentInfoModalProps {
   show: boolean,
@@ -19,6 +20,9 @@ export interface DocumentInfoModalProps {
 }
 
 export const DocumentInfoModal: React.FC<DocumentInfoModalProps> = ({ show, onHide }) => {
+  const assetsBaseUrl = useCustomizeAssetsUrl()
+
+  // TODO Replace hardcoded mock data with real/mock API requests
   return (
     <CommonModal
       show={ show }
@@ -34,7 +38,7 @@ export const DocumentInfoModal: React.FC<DocumentInfoModalProps> = ({ show, onHi
               time={ DateTime.local()
                              .minus({ days: 11 }) }
               userName={ 'Tilman' }
-              profileImageSrc={ '/img/avatar.png' }/>
+              profileImageSrc={ `${ assetsBaseUrl }img/avatar.png` }/>
           </ListGroup.Item>
           <ListGroup.Item>
             <DocumentInfoTimeLine
@@ -43,7 +47,7 @@ export const DocumentInfoModal: React.FC<DocumentInfoModalProps> = ({ show, onHi
               time={ DateTime.local()
                              .minus({ minutes: 3 }) }
               userName={ 'Philip' }
-              profileImageSrc={ '/img/avatar.png' }/>
+              profileImageSrc={ `${ assetsBaseUrl }img/avatar.png` }/>
           </ListGroup.Item>
           <ListGroup.Item>
             <DocumentInfoLine icon={ 'users' } size={ '2x' }>

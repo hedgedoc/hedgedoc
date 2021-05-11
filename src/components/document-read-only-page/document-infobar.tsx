@@ -14,6 +14,7 @@ import {
   DocumentInfoTimeLine
 } from '../editor-page/document-bar/document-info/document-info-time-line'
 import './document-infobar.scss'
+import { useCustomizeAssetsUrl } from '../../hooks/common/use-customize-assets-url'
 
 export interface DocumentInfobarProps {
   changedAuthor: string
@@ -35,6 +36,7 @@ export const DocumentInfobar: React.FC<DocumentInfobarProps> = ({
   viewCount
 }) => {
   const { t } = useTranslation()
+  const assetsBaseUrl = useCustomizeAssetsUrl()
 
   return (
     <div className={ 'd-flex flex-row my-3 document-infobar' }>
@@ -45,12 +47,12 @@ export const DocumentInfobar: React.FC<DocumentInfobarProps> = ({
             mode={ DocumentInfoLineWithTimeMode.CREATED }
             time={ createdTime }
             userName={ createdAuthor }
-            profileImageSrc={ '/img/avatar.png' }/>
+            profileImageSrc={ `${ assetsBaseUrl }/img/avatar.png` }/>
           <DocumentInfoTimeLine
             mode={ DocumentInfoLineWithTimeMode.EDITED }
             time={ changedTime }
             userName={ changedAuthor }
-            profileImageSrc={ '/img/avatar.png' }/>
+            profileImageSrc={ `${ assetsBaseUrl }/img/avatar.png` }/>
           <hr/>
         </div>
         <span className={ 'ml-auto' }>
