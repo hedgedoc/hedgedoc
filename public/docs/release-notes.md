@@ -1,4 +1,12 @@
 # Release Notes
+## <i class="fa fa-tag"></i> 1.8.2 <i class="fa fa-calendar-o"></i> 2021-05-11
+
+This release fixes two security issues. We recommend upgrading as soon as possible.
+
+### Security Fixes
+- [CVE-2021-29503: Improper Neutralization of Script-Related HTML Tags in Notes](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-gjg7-4j2h-94fq)
+- Fix a potential XSS-vector in the handling of usernames and profile pictures
+
 ## <i class="fa fa-tag"></i> 1.8.1 <i class="fa fa-calendar-o"></i> 2021-05-06
 ### Enhancements
 - Speed up `yarn install` in production mode (as performed by `bin/setup`) by marking frontend-only dependencies as dev-dependencies.
