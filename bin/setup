@@ -50,7 +50,10 @@ echo "Installing packages..."
 yarn install --production=true --pure-lockfile
 
 cat << EOF
-If you want to build the frontend yourself, you need to run 'yarn install' before 'yarn build' to install the devDependencies for the build process.
+##########
+If you have pulled HedgeDoc via git (or have changed the frontend files) then you need to run 'yarn install' and then 'yarn build' to install the necessary dependencies and build the frontend.
+This step is mandatory if you use git and can be skipped if you use the release tarball or the docker container.
+##########
 
 Edit the following config file to setup HedgeDoc server and client.
 Read more info at https://docs.hedgedoc.org/configuration/
