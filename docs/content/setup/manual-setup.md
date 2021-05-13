@@ -33,8 +33,8 @@
    ```
    It's also possible to use environment variables.
    For details, have a look at [the configuration documentation](../configuration.md).
-5. *:octicons-light-bulb-16: If you use the release tarball for 1.7.0 or newer, this step can be skipped.*  
-   Build the frontend bundle by running `yarn install` and then `yarn build`. The extra `yarn install` is necessary as `bin/setup` does not install the build dependencies.
+5. *:octicons-light-bulb-16: If you use the release tarball for 1.7.0 or newer, this step can be skipped. If you use git then this step is mandatory!*  
+   Build the frontend bundle by running `yarn install` and then `yarn build`. The extra `yarn install` is necessary because `bin/setup` doesn't install the build dependencies for the frontend.
 6. It is recommended to start your server manually once:  
    ```shell
    NODE_ENV=production yarn start
