@@ -250,12 +250,14 @@ describe('HistoryService', () => {
       const historyEntry = HistoryEntry.create(user, note);
       it('with an entry', async () => {
         jest.spyOn(historyRepo, 'find').mockResolvedValueOnce([historyEntry]);
-        jest.spyOn(historyRepo, 'remove').mockImplementationOnce(
-          async (entry: HistoryEntry): Promise<HistoryEntry> => {
-            expect(entry).toEqual(historyEntry);
-            return entry;
-          },
-        );
+        jest
+          .spyOn(historyRepo, 'remove')
+          .mockImplementationOnce(
+            async (entry: HistoryEntry): Promise<HistoryEntry> => {
+              expect(entry).toEqual(historyEntry);
+              return entry;
+            },
+          );
         await service.deleteHistory(user);
       });
       it('with multiple entries', async () => {
@@ -298,12 +300,14 @@ describe('HistoryService', () => {
         const historyEntry = HistoryEntry.create(user, note);
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(historyEntry);
         jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
-        jest.spyOn(historyRepo, 'remove').mockImplementation(
-          async (entry: HistoryEntry): Promise<HistoryEntry> => {
-            expect(entry).toEqual(historyEntry);
-            return entry;
-          },
-        );
+        jest
+          .spyOn(historyRepo, 'remove')
+          .mockImplementation(
+            async (entry: HistoryEntry): Promise<HistoryEntry> => {
+              expect(entry).toEqual(historyEntry);
+              return entry;
+            },
+          );
         await service.deleteHistoryEntry(alias, user);
       });
     });

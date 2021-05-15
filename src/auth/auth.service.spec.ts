@@ -159,13 +159,15 @@ describe('AuthService', () => {
         user: user,
         lastUsed: new Date(1549312452000),
       });
-      jest.spyOn(authTokenRepo, 'save').mockImplementationOnce(
-        async (authTokenSaved, _): Promise<AuthToken> => {
-          expect(authTokenSaved.keyId).toEqual(authToken.keyId);
-          expect(authTokenSaved.lastUsed).not.toEqual(1549312452000);
-          return authToken;
-        },
-      );
+      jest
+        .spyOn(authTokenRepo, 'save')
+        .mockImplementationOnce(
+          async (authTokenSaved, _): Promise<AuthToken> => {
+            expect(authTokenSaved.keyId).toEqual(authToken.keyId);
+            expect(authTokenSaved.lastUsed).not.toEqual(1549312452000);
+            return authToken;
+          },
+        );
       await service.setLastUsedToken(authToken.keyId);
     });
     it('throws if the token is not in the database', async () => {
@@ -189,11 +191,11 @@ describe('AuthService', () => {
         user: user,
         accessTokenHash: accessTokenHash,
       });
-      jest.spyOn(authTokenRepo, 'save').mockImplementationOnce(
-        async (_, __): Promise<AuthToken> => {
+      jest
+        .spyOn(authTokenRepo, 'save')
+        .mockImplementationOnce(async (_, __): Promise<AuthToken> => {
           return authToken;
-        },
-      );
+        });
       const userByToken = await service.validateToken(
         `${authToken.keyId}.${token}`,
       );
@@ -222,15 +224,15 @@ describe('AuthService', () => {
         ...authToken,
         user: user,
       });
-      jest.spyOn(authTokenRepo, 'remove').mockImplementationOnce(
-        async (token, __): Promise<AuthToken> => {
+      jest
+        .spyOn(authTokenRepo, 'remove')
+        .mockImplementationOnce(async (token, __): Promise<AuthToken> => {
           expect(token).toEqual({
             ...authToken,
             user: user,
           });
           return authToken;
-        },
-      );
+        });
       await service.removeToken(authToken.keyId);
     });
     it('throws if the token is not in the database', async () => {
@@ -249,12 +251,14 @@ describe('AuthService', () => {
           ...user,
           authTokens: [authToken],
         });
-        jest.spyOn(authTokenRepo, 'save').mockImplementationOnce(
-          async (authTokenSaved: AuthToken, _): Promise<AuthToken> => {
-            expect(authTokenSaved.lastUsed).toBeNull();
-            return authTokenSaved;
-          },
-        );
+        jest
+          .spyOn(authTokenRepo, 'save')
+          .mockImplementationOnce(
+            async (authTokenSaved: AuthToken, _): Promise<AuthToken> => {
+              expect(authTokenSaved.lastUsed).toBeNull();
+              return authTokenSaved;
+            },
+          );
         const token = await service.createTokenForUser(
           user.userName,
           identifier,
@@ -273,12 +277,14 @@ describe('AuthService', () => {
           ...user,
           authTokens: [authToken],
         });
-        jest.spyOn(authTokenRepo, 'save').mockImplementationOnce(
-          async (authTokenSaved: AuthToken, _): Promise<AuthToken> => {
-            expect(authTokenSaved.lastUsed).toBeNull();
-            return authTokenSaved;
-          },
-        );
+        jest
+          .spyOn(authTokenRepo, 'save')
+          .mockImplementationOnce(
+            async (authTokenSaved: AuthToken, _): Promise<AuthToken> => {
+              expect(authTokenSaved.lastUsed).toBeNull();
+              return authTokenSaved;
+            },
+          );
         const validUntil = new Date().getTime() + 30000;
         const token = await service.createTokenForUser(
           user.userName,
