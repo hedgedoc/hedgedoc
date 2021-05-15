@@ -294,14 +294,14 @@ export function finishView (view) {
       imgPlayiframe(this, '//player.vimeo.com/video/')
     })
     .each((key, value) => {
+      const vimeoLink = `https://vimeo.com/${$(value).attr('data-videoid')}`
       $.ajax({
         type: 'GET',
-        url: `//vimeo.com/api/v2/video/${$(value).attr('data-videoid')}.json`,
+        url: `https://vimeo.com/api/oembed.json?url=${encodeURIComponent(vimeoLink)}`,
         jsonp: 'callback',
         dataType: 'jsonp',
         success (data) {
-          const thumbnailSrc = data[0].thumbnail_large
-          const image = `<img src="${thumbnailSrc}" />`
+          const image = `<img src="${data.thumbnail_url}" />`
           $(value).prepend(image)
           if (window.viewAjaxCallback) window.viewAjaxCallback()
         }
