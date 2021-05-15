@@ -210,12 +210,13 @@ describe('FrontendConfigService', () => {
                                 imprint: imprintLink,
                               },
                             };
-                            const externalServicesConfig: ExternalServicesConfig = {
-                              plantUmlServer: plantUmlServer,
-                              imageProxy: imageProxy,
-                            };
-                            const module: TestingModule = await Test.createTestingModule(
+                            const externalServicesConfig: ExternalServicesConfig =
                               {
+                                plantUmlServer: plantUmlServer,
+                                imageProxy: imageProxy,
+                              };
+                            const module: TestingModule =
+                              await Test.createTestingModule({
                                 imports: [
                                   ConfigModule.forRoot({
                                     isGlobal: true,
@@ -238,8 +239,7 @@ describe('FrontendConfigService', () => {
                                   LoggerModule,
                                 ],
                                 providers: [FrontendConfigService],
-                              },
-                            ).compile();
+                              }).compile();
 
                             const service = module.get(FrontendConfigService);
                             const config = await service.getFrontendConfig();

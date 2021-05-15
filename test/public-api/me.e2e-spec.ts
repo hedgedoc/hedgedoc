@@ -122,18 +122,15 @@ describe('Me', () => {
     it('works with an existing note', async () => {
       const noteName = 'testGetNoteHistory2';
       const note = await notesService.createNote('', noteName);
-      const createdHistoryEntry = await historyService.createOrUpdateHistoryEntry(
-        note,
-        user,
-      );
+      const createdHistoryEntry =
+        await historyService.createOrUpdateHistoryEntry(note, user);
       const response = await request(app.getHttpServer())
         .get(`/me/history/${noteName}`)
         .expect('Content-Type', /json/)
         .expect(200);
       const historyEntry = <HistoryEntryDto>response.body;
-      const historyEntryDto = historyService.toHistoryEntryDto(
-        createdHistoryEntry,
-      );
+      const historyEntryDto =
+        historyService.toHistoryEntryDto(createdHistoryEntry);
       expect(historyEntry.identifier).toEqual(historyEntryDto.identifier);
       expect(historyEntry.title).toEqual(historyEntryDto.title);
       expect(historyEntry.tags).toEqual(historyEntryDto.tags);

@@ -33,9 +33,9 @@ export class TokensController {
   @Get()
   async getUserTokens(): Promise<AuthTokenDto[]> {
     // ToDo: Get real userName
-    return (
-      await this.authService.getTokensByUsername('hardcoded')
-    ).map((token) => this.authService.toAuthTokenDto(token));
+    return (await this.authService.getTokensByUsername('hardcoded')).map(
+      (token) => this.authService.toAuthTokenDto(token),
+    );
   }
 
   @Post()
