@@ -16,12 +16,12 @@ import {
   TokenNotValidError,
   TooManyTokensError,
 } from '../errors/errors';
-import { randomBytes } from 'crypto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { TimestampMillis } from '../utils/timestamp';
 import { Cron, Timeout } from '@nestjs/schedule';
+import { randomBytes } from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -62,13 +62,6 @@ export class AuthService {
     return await compare(cleartext, password);
   }
 
-  randomString(length: number): Buffer {
-    if (length <= 0) {
-      throw new Error('randomString cannot have a length < 1');
-    }
-    return randomBytes(length);
-  }
-
   bufferToBase64Url(text: Buffer): string {
     // This is necessary as the is no base64url encoding in the toString method
     // but as can be seen on https://tools.ietf.org/html/rfc4648#page-7
@@ -93,8 +86,8 @@ export class AuthService {
         `User '${user.userName}' has already 200 tokens and can't have anymore`,
       );
     }
-    const secret = this.bufferToBase64Url(this.randomString(54));
-    const keyId = this.bufferToBase64Url(this.randomString(8));
+    const secret = this.bufferToBase64Url(randomBytes(54));
+    const keyId = this.bufferToBase64Url(randomBytes(8));
     const accessToken = await this.hashPassword(secret);
     let token;
     // Tokens can only be valid for a maximum of 2 years
