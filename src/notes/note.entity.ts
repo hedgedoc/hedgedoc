@@ -26,6 +26,8 @@ import { MediaUpload } from '../media/media-upload.entity';
 export class Note {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+  @Column({ type: 'text' })
+  publicId: string;
   @Column({
     unique: true,
     nullable: true,
