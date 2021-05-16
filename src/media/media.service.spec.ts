@@ -112,15 +112,17 @@ describe('MediaService', () => {
           fileId = entry.id;
           return entry;
         });
-      jest.spyOn(service.mediaBackend, 'saveFile').mockImplementationOnce(
-        async (
-          buffer: Buffer,
-          fileName: string,
-        ): Promise<[string, BackendData]> => {
-          expect(buffer).toEqual(testImage);
-          return [fileName, null];
-        },
-      );
+      jest
+        .spyOn(service.mediaBackend, 'saveFile')
+        .mockImplementationOnce(
+          async (
+            buffer: Buffer,
+            fileName: string,
+          ): Promise<[string, BackendData]> => {
+            expect(buffer).toEqual(testImage);
+            return [fileName, null];
+          },
+        );
       const url = await service.saveFile(testImage, 'hardcoded', 'test');
       expect(url).toEqual(fileId);
     });
@@ -150,12 +152,14 @@ describe('MediaService', () => {
           userName: 'hardcoded',
         } as User,
       } as MediaUpload;
-      jest.spyOn(service.mediaBackend, 'deleteFile').mockImplementationOnce(
-        async (fileName: string, backendData: BackendData): Promise<void> => {
-          expect(fileName).toEqual(mockMediaUploadEntry.id);
-          expect(backendData).toEqual(mockMediaUploadEntry.backendData);
-        },
-      );
+      jest
+        .spyOn(service.mediaBackend, 'deleteFile')
+        .mockImplementationOnce(
+          async (fileName: string, backendData: BackendData): Promise<void> => {
+            expect(fileName).toEqual(mockMediaUploadEntry.id);
+            expect(backendData).toEqual(mockMediaUploadEntry.backendData);
+          },
+        );
       jest
         .spyOn(mediaRepo, 'remove')
         .mockImplementationOnce(async (entry, _) => {

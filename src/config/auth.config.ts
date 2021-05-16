@@ -229,20 +229,18 @@ const authSchema = Joi.object({
 
 export default registerAs('authConfig', () => {
   // ToDo: Validate these with Joi to prevent duplicate entries?
-  const gitlabNames = toArrayConfig(
-    process.env.HD_AUTH_GITLABS,
-    ',',
-  ).map((name) => name.toUpperCase());
+  const gitlabNames = toArrayConfig(process.env.HD_AUTH_GITLABS, ',').map(
+    (name) => name.toUpperCase(),
+  );
   const ldapNames = toArrayConfig(process.env.HD_AUTH_LDAPS, ',').map((name) =>
     name.toUpperCase(),
   );
   const samlNames = toArrayConfig(process.env.HD_AUTH_SAMLS, ',').map((name) =>
     name.toUpperCase(),
   );
-  const oauth2Names = toArrayConfig(
-    process.env.HD_AUTH_OAUTH2S,
-    ',',
-  ).map((name) => name.toUpperCase());
+  const oauth2Names = toArrayConfig(process.env.HD_AUTH_OAUTH2S, ',').map(
+    (name) => name.toUpperCase(),
+  );
 
   const gitlabs = gitlabNames.map((gitlabName) => {
     return {

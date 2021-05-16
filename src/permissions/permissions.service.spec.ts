@@ -462,9 +462,8 @@ describe('PermissionsService', () => {
 
   describe('check if groups work with', () => {
     const guestPermission = GuestPermission.WRITE;
-    const rawPermissions = createNoteGroupPermissionsCombinations(
-      guestPermission,
-    );
+    const rawPermissions =
+      createNoteGroupPermissionsCombinations(guestPermission);
     const permissions = permuteNoteGroupPermissions(rawPermissions);
     let i = 0;
     for (const permission of permissions) {

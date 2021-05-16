@@ -42,9 +42,8 @@ export class AzureBackend implements MediaBackend {
     buffer: Buffer,
     fileName: string,
   ): Promise<[string, BackendData]> {
-    const blockBlobClient: BlockBlobClient = this.client.getBlockBlobClient(
-      fileName,
-    );
+    const blockBlobClient: BlockBlobClient =
+      this.client.getBlockBlobClient(fileName);
     try {
       await blockBlobClient.upload(buffer, buffer.length);
       const url = this.getUrl(fileName);
@@ -61,9 +60,8 @@ export class AzureBackend implements MediaBackend {
   }
 
   async deleteFile(fileName: string, _: BackendData): Promise<void> {
-    const blockBlobClient: BlockBlobClient = this.client.getBlockBlobClient(
-      fileName,
-    );
+    const blockBlobClient: BlockBlobClient =
+      this.client.getBlockBlobClient(fileName);
     try {
       await blockBlobClient.delete();
       const url = this.getUrl(fileName);
