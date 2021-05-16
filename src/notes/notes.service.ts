@@ -32,6 +32,8 @@ import { NoteGroupPermission } from '../permissions/note-group-permission.entity
 import { GroupsService } from '../groups/groups.service';
 import { checkArrayForDuplicates } from '../utils/arrayDuplicatCheck';
 import appConfiguration, { AppConfig } from '../config/app.config';
+import base32Encode from 'base32-encode';
+import { randomBytes } from 'crypto';
 
 @Injectable()
 export class NotesService {
@@ -92,6 +94,7 @@ export class NotesService {
     newNote.revisions = Promise.resolve([
       Revision.create(noteContent, noteContent),
     ]);
+    newNote.publicId = this.generatePublicId();
     if (alias) {
       newNote.alias = alias;
       this.checkNoteIdOrAlias(alias);
@@ -164,7 +167,7 @@ export class NotesService {
     const note = await this.noteRepository.findOne({
       where: [
         {
-          id: noteIdOrAlias,
+          publicId: noteIdOrAlias,
         },
         {
           alias: noteIdOrAlias,
@@ -208,6 +211,15 @@ export class NotesService {
         `A note with the alias '${noteIdOrAlias}' is forbidden by the administrator.`,
       );
     }
+  }
+
+  /**
+   * Generate publicId for a note.
+   * This is a randomly generated 128-bit value encoded with base32-encode using the crockford variant and converted to lowercase.
+   */
+  generatePublicId(): string {
+    const randomId = randomBytes(128);
+    return base32Encode(randomId, 'Crockford').toLowerCase();
   }
 
   /**
@@ -358,8 +370,7 @@ export class NotesService {
   async toNoteMetadataDto(note: Note): Promise<NoteMetadataDto> {
     const updateUser = await this.calculateUpdateUser(note);
     return {
-      // TODO: Convert DB UUID to base64
-      id: note.id,
+      id: note.publicId,
       alias: note.alias ?? null,
       title: note.title ?? '',
       createTime: (await this.getFirstRevision(note)).createdAt,
