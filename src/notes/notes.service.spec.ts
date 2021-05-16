@@ -684,7 +684,7 @@ describe('NotesService', () => {
       ];
       revisions[0].createdAt = new Date(1549312452000);
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValue(revisions[0]);
-      note.id = 'testId';
+      note.publicId = 'testId';
       note.alias = 'testAlias';
       note.title = 'testTitle';
       note.description = 'testDescription';
@@ -719,7 +719,7 @@ describe('NotesService', () => {
       ];
       note.viewCount = 1337;
       const metadataDto = await service.toNoteMetadataDto(note);
-      expect(metadataDto.id).toEqual(note.id);
+      expect(metadataDto.id).toEqual(note.publicId);
       expect(metadataDto.alias).toEqual(note.alias);
       expect(metadataDto.title).toEqual(note.title);
       expect(metadataDto.createTime).toEqual(revisions[0].createdAt);
@@ -778,7 +778,7 @@ describe('NotesService', () => {
         .spyOn(revisionRepo, 'findOne')
         .mockResolvedValue(revisions[0])
         .mockResolvedValue(revisions[0]);
-      note.id = 'testId';
+      note.publicId = 'testId';
       note.alias = 'testAlias';
       note.title = 'testTitle';
       note.description = 'testDescription';
@@ -813,7 +813,7 @@ describe('NotesService', () => {
       ];
       note.viewCount = 1337;
       const noteDto = await service.toNoteDto(note);
-      expect(noteDto.metadata.id).toEqual(note.id);
+      expect(noteDto.metadata.id).toEqual(note.publicId);
       expect(noteDto.metadata.alias).toEqual(note.alias);
       expect(noteDto.metadata.title).toEqual(note.title);
       expect(noteDto.metadata.createTime).toEqual(revisions[0].createdAt);

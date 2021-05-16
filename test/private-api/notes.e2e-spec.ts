@@ -261,25 +261,27 @@ describe('Notes', () => {
 
   describe('GET /notes/{note}/media', () => {
     it('works', async () => {
-      const note = await notesService.createNote(content, 'test6', user);
-      const extraNote = await notesService.createNote(content, 'test7', user);
+      const alias = 'test6';
+      const extraAlias = 'test7';
+      await notesService.createNote(content, alias, user);
+      await notesService.createNote(content, extraAlias, user);
       const httpServer = app.getHttpServer();
       const response = await request(httpServer)
-        .get(`/notes/${note.id}/media/`)
+        .get(`/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(200);
       expect(response.body).toHaveLength(0);
 
       const testImage = await fs.readFile('test/private-api/fixtures/test.png');
-      const url0 = await mediaService.saveFile(testImage, 'hardcoded', note.id);
+      const url0 = await mediaService.saveFile(testImage, 'hardcoded', alias);
       const url1 = await mediaService.saveFile(
         testImage,
         'hardcoded',
-        extraNote.id,
+        extraAlias,
       );
 
       const responseAfter = await request(httpServer)
-        .get(`/notes/${note.id}/media/`)
+        .get(`/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(200);
       expect(responseAfter.body).toHaveLength(1);
@@ -299,13 +301,10 @@ describe('Notes', () => {
         .expect(404);
     });
     it("fails, when user can't read note", async () => {
-      const note = await notesService.createNote(
-        'This is a test note.',
-        'test11',
-        user2,
-      );
+      const alias = 'test11';
+      await notesService.createNote('This is a test note.', alias, user2);
       await request(app.getHttpServer())
-        .get(`/notes/${note.id}/media/`)
+        .get(`/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(401);
     });
