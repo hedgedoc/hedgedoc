@@ -204,7 +204,9 @@ describe('Notes', () => {
       ];
       updateNotePermission.sharedToGroups = [];
       await notesService.updateNotePermissions(note, updateNotePermission);
-      const updatedNote = await notesService.getNoteByIdOrAlias(note.alias);
+      const updatedNote = await notesService.getNoteByIdOrAlias(
+        note.alias ?? '',
+      );
       expect(updatedNote.userPermissions).toHaveLength(1);
       expect(updatedNote.userPermissions[0].canEdit).toEqual(
         updateNotePermission.sharedToUsers[0].canEdit,
@@ -391,25 +393,27 @@ describe('Notes', () => {
 
   describe('GET /notes/{note}/media', () => {
     it('works', async () => {
-      const note = await notesService.createNote(content, 'test9', user);
-      const extraNote = await notesService.createNote(content, 'test10', user);
+      const alias = 'test9';
+      const extraAlias = 'test10';
+      await notesService.createNote(content, alias, user);
+      await notesService.createNote(content, extraAlias, user);
       const httpServer = app.getHttpServer();
       const response = await request(httpServer)
-        .get(`/notes/${note.id}/media/`)
+        .get(`/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(200);
       expect(response.body).toHaveLength(0);
 
       const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-      const url0 = await mediaService.saveFile(testImage, 'hardcoded', note.id);
+      const url0 = await mediaService.saveFile(testImage, 'hardcoded', alias);
       const url1 = await mediaService.saveFile(
         testImage,
         'hardcoded',
-        extraNote.id,
+        extraAlias,
       );
 
       const responseAfter = await request(httpServer)
-        .get(`/notes/${note.id}/media/`)
+        .get(`/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(200);
       expect(responseAfter.body).toHaveLength(1);
@@ -429,13 +433,10 @@ describe('Notes', () => {
         .expect(404);
     });
     it("fails, when user can't read note", async () => {
-      const note = await notesService.createNote(
-        'This is a test note.',
-        'test11',
-        user2,
-      );
+      const alias = 'test11';
+      await notesService.createNote('This is a test note.', alias, user2);
       await request(app.getHttpServer())
-        .get(`/notes/${note.id}/media/`)
+        .get(`/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(401);
     });
