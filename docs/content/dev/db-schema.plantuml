@@ -5,6 +5,7 @@ skinparam nodesep 60
 entity "note" {
   *id : uuid <<generated>>
   --
+  publicId: text
   alias : text
   *viewCount : number
   *ownerId : uuid <<FK user>>
