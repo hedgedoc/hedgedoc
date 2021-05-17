@@ -111,10 +111,26 @@ describe('Me', () => {
     expect(responseBefore.body).toHaveLength(0);
 
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-    const url0 = await mediaService.saveFile(testImage, 'hardcoded', note1.id);
-    const url1 = await mediaService.saveFile(testImage, 'hardcoded', note1.id);
-    const url2 = await mediaService.saveFile(testImage, 'hardcoded', note2.id);
-    const url3 = await mediaService.saveFile(testImage, 'hardcoded', note2.id);
+    const url0 = await mediaService.saveFile(
+      testImage,
+      'hardcoded',
+      note1.publicId,
+    );
+    const url1 = await mediaService.saveFile(
+      testImage,
+      'hardcoded',
+      note1.publicId,
+    );
+    const url2 = await mediaService.saveFile(
+      testImage,
+      'hardcoded',
+      note2.alias ?? '',
+    );
+    const url3 = await mediaService.saveFile(
+      testImage,
+      'hardcoded',
+      note2.alias ?? '',
+    );
 
     const response = await request(httpServer)
       .get('/me/media/')
@@ -147,7 +163,11 @@ describe('Me', () => {
 
   it('DELETE /me', async () => {
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-    const url0 = await mediaService.saveFile(testImage, 'hardcoded', note1.id);
+    const url0 = await mediaService.saveFile(
+      testImage,
+      'hardcoded',
+      note1.publicId,
+    );
     const dbUser = await userService.getUserByUsername('hardcoded');
     expect(dbUser).toBeInstanceOf(User);
     const mediaUploads = await mediaService.listUploadsByUser(dbUser);

@@ -17,6 +17,7 @@ import { NotInDBError, TokenNotValidError } from '../errors/errors';
 import { Repository } from 'typeorm';
 import { ConfigModule } from '@nestjs/config';
 import appConfigMock from '../config/mock/app.config.mock';
+import { randomBytes } from 'crypto';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -79,7 +80,7 @@ describe('AuthService', () => {
         .then((result) => expect(result).toBeTruthy());
     });
     it('fails, if secret is too short', async () => {
-      const secret = service.bufferToBase64Url(service.randomString(54));
+      const secret = service.bufferToBase64Url(randomBytes(54));
       const hash = await service.hashPassword(secret);
       await service
         .checkPassword(secret, hash)
@@ -326,12 +327,6 @@ describe('AuthService', () => {
       expect(tokenDto.createdAt.getTime()).toEqual(
         authToken.createdAt.getTime(),
       );
-    });
-  });
-  describe('randomString', () => {
-    it('throws on invalid lenght parameter', () => {
-      expect(() => service.randomString(0)).toThrow();
-      expect(() => service.randomString(-1)).toThrow();
     });
   });
 });
