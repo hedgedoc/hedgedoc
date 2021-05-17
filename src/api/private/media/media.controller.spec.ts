@@ -16,7 +16,6 @@ import externalConfigMock from '../../../config/mock/external-services.config.mo
 import { MediaModule } from '../../../media/media.module';
 import { NotesModule } from '../../../notes/notes.module';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { AuthorColor } from '../../../notes/author-color.entity';
 import { Authorship } from '../../../revisions/authorship.entity';
 import { AuthToken } from '../../../auth/auth-token.entity';
 import { Identity } from '../../../users/identity.entity';
@@ -51,8 +50,6 @@ describe('MediaController', () => {
       ],
       controllers: [MediaController],
     })
-      .overrideProvider(getRepositoryToken(AuthorColor))
-      .useValue({})
       .overrideProvider(getRepositoryToken(Authorship))
       .useValue({})
       .overrideProvider(getRepositoryToken(AuthToken))

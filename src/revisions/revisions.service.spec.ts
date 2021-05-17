@@ -9,7 +9,6 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
-import { AuthorColor } from '../notes/author-color.entity';
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
 import { AuthToken } from '../auth/auth-token.entity';
@@ -48,8 +47,6 @@ describe('RevisionsService', () => {
       ],
     })
       .overrideProvider(getRepositoryToken(Authorship))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(AuthorColor))
       .useValue({})
       .overrideProvider(getRepositoryToken(User))
       .useValue({})

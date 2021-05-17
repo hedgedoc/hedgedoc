@@ -14,7 +14,6 @@ import { AuthToken } from '../auth/auth-token.entity';
 import { Identity } from '../users/identity.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
-import { AuthorColor } from './author-color.entity';
 import { Note } from './note.entity';
 import { NotesService } from './notes.service';
 import { Repository } from 'typeorm';
@@ -79,8 +78,6 @@ describe('NotesService', () => {
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
       .overrideProvider(getRepositoryToken(Authorship))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(AuthorColor))
       .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
       .useClass(Repository)
@@ -688,13 +685,6 @@ describe('NotesService', () => {
       note.alias = 'testAlias';
       note.title = 'testTitle';
       note.description = 'testDescription';
-      note.authorColors = [
-        {
-          note: note,
-          user: user,
-          color: 'red',
-        } as AuthorColor,
-      ];
       note.owner = user;
       note.userPermissions = [
         {
@@ -782,13 +772,6 @@ describe('NotesService', () => {
       note.alias = 'testAlias';
       note.title = 'testTitle';
       note.description = 'testDescription';
-      note.authorColors = [
-        {
-          note: note,
-          user: user,
-          color: 'red',
-        } as AuthorColor,
-      ];
       note.owner = user;
       note.userPermissions = [
         {

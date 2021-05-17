@@ -12,7 +12,6 @@ import { NotesModule } from '../notes/notes.module';
 import { getConnectionToken, getRepositoryToken } from '@nestjs/typeorm';
 import { Identity } from '../users/identity.entity';
 import { User } from '../users/user.entity';
-import { AuthorColor } from '../notes/author-color.entity';
 import { Authorship } from '../revisions/authorship.entity';
 import { HistoryEntry } from './history-entry.entity';
 import { Note } from '../notes/note.entity';
@@ -74,8 +73,6 @@ describe('HistoryService', () => {
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
       .overrideProvider(getRepositoryToken(Authorship))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(AuthorColor))
       .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})

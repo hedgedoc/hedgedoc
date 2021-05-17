@@ -26,7 +26,6 @@ import appConfigMock from '../../../config/mock/app.config.mock';
 import mediaConfigMock from '../../../config/mock/media.config.mock';
 import { Revision } from '../../../revisions/revision.entity';
 import { Authorship } from '../../../revisions/authorship.entity';
-import { AuthorColor } from '../../../notes/author-color.entity';
 import { User } from '../../../users/user.entity';
 import { AuthToken } from '../../../auth/auth-token.entity';
 import { Identity } from '../../../users/identity.entity';
@@ -74,8 +73,7 @@ describe('NotesController', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Authorship))
       .useValue({})
-      .overrideProvider(getRepositoryToken(AuthorColor))
-      .useValue({})
+
       .overrideProvider(getRepositoryToken(User))
       .useValue({})
       .overrideProvider(getRepositoryToken(AuthToken))

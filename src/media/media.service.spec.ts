@@ -9,7 +9,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import mediaConfigMock from '../config/mock/media.config.mock';
 import { LoggerModule } from '../logger/logger.module';
-import { AuthorColor } from '../notes/author-color.entity';
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
@@ -56,8 +55,6 @@ describe('MediaService', () => {
         UsersModule,
       ],
     })
-      .overrideProvider(getRepositoryToken(AuthorColor))
-      .useValue({})
       .overrideProvider(getRepositoryToken(Authorship))
       .useValue({})
       .overrideProvider(getRepositoryToken(AuthToken))

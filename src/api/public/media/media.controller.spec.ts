@@ -12,7 +12,6 @@ import mediaConfigMock from '../../../config/mock/media.config.mock';
 import { LoggerModule } from '../../../logger/logger.module';
 import { MediaUpload } from '../../../media/media-upload.entity';
 import { MediaModule } from '../../../media/media.module';
-import { AuthorColor } from '../../../notes/author-color.entity';
 import { Note } from '../../../notes/note.entity';
 import { NotesModule } from '../../../notes/notes.module';
 import { Tag } from '../../../notes/tag.entity';
@@ -42,8 +41,6 @@ describe('Media Controller', () => {
         NotesModule,
       ],
     })
-      .overrideProvider(getRepositoryToken(AuthorColor))
-      .useValue({})
       .overrideProvider(getRepositoryToken(Authorship))
       .useValue({})
       .overrideProvider(getRepositoryToken(AuthToken))
