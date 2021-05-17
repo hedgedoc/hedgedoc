@@ -7668,20 +7668,20 @@ passport-oauth@^1.0.0:
     passport-oauth1 "1.x.x"
     passport-oauth2 "1.x.x"
 
-passport-saml@^2.0.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/passport-saml/-/passport-saml-2.2.0.tgz#dbea6743cf06644cfb3f0d486e43d3c8812b150a"
-  integrity sha512-Qkr9WbhGY1AAAgslJ4yFn7ObQp/cLu2L1bubwXvl8vsvXQujPemKYhD3SwdilEIllZ/EPTlHgld+4wiPRYxd8Q==
+passport-saml@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/passport-saml/-/passport-saml-3.0.0.tgz#9acdae8388f58bdc95f6620f14c57a8a41b76d48"
+  integrity sha512-NLR2nVCaZ6a9AG/XmKOs4uuRRlWutybZ8BbzixdbBor8S/dMtmgZFJ6h8sdRSSuS5wMfjqUSaJ/BwDdbiU/zWg==
   dependencies:
     debug "^4.3.1"
-    passport-strategy "*"
-    xml-crypto "^2.1.1"
-    xml-encryption "^1.2.3"
+    passport-strategy "^1.0.0"
+    xml-crypto "^2.1.2"
+    xml-encryption "^1.2.4"
     xml2js "^0.4.23"
     xmlbuilder "^15.1.1"
-    xmldom "0.5.x"
+    xmldom "^0.6.0"
 
-passport-strategy@*, passport-strategy@1.x.x, passport-strategy@^1.0.0:
+passport-strategy@1.x.x, passport-strategy@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/passport-strategy/-/passport-strategy-1.0.0.tgz#b5539aa8fc225a3d1ad179476ddf236b440f52e4"
   integrity sha1-tVOaqPwiWj0a0XlHbd8ja0QPUuQ=
@@ -11221,7 +11221,7 @@ wurl@2.5.4:
   resolved "https://registry.yarnpkg.com/wurl/-/wurl-2.5.4.tgz#6af35a6c623296c4a0c607c4651d01b8f4e3fdec"
   integrity sha512-Vuo550m5YbqRcM/69zz3jVNsCUvFTWLRYQcYvnqNWQ4d0Bjg7aoaofbcsPTe4rM9A2/4xjd8uIf9viIUV9EMXQ==
 
-xml-crypto@^2.1.1:
+xml-crypto@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/xml-crypto/-/xml-crypto-2.1.2.tgz#501506d42e466f6cd908c5a03182217231b4e4b8"
   integrity sha512-DBhZXtBjENtLwJmeJhLUBwUm9YWNjCRvAx6ESP4VJyM9PDuKqZu2Fp5Y5HKqcdJT7vV7eI25Z4UBMezji6QloQ==
@@ -11229,7 +11229,7 @@ xml-crypto@^2.1.1:
     xmldom "^0.6.0"
     xpath "0.0.32"
 
-xml-encryption@^1.2.3:
+xml-encryption@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/xml-encryption/-/xml-encryption-1.2.4.tgz#767d13f9ff2f979ff5657b93bd72aa729d34b66c"
   integrity sha512-+4aSBIv/lwmv5PntfYsZyelOnCcyDmCt/MNxXUukRGlcWW8DObJ26obbVX3iXYRdqkLqbv3AKk8ntNCGKIq/UQ==
@@ -11286,11 +11286,6 @@ xmldom@0.1.x:
   version "0.1.31"
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.31.tgz#b76c9a1bd9f0a9737e5a72dc37231cf38375e2ff"
   integrity sha512-yS2uJflVQs6n+CyjHoaBmVSqIDevTAWrzMmjG1Gc7h1qQ7uVozNhEPJAwZXWyGQ/Gafo3fCwrcaokezLPupVyQ==
-
-xmldom@0.5.x:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.5.0.tgz#193cb96b84aa3486127ea6272c4596354cb4962e"
-  integrity sha512-Foaj5FXVzgn7xFzsKeNIde9g6aFBxTPi37iwsno8QvApmtg7KYrr+OPyRHcJF7dud2a5nGRBXK3n0dL62Gf7PA==
 
 "xmldom@>= 0.1.x", xmldom@^0.6.0, xmldom@~0.6.0:
   version "0.6.0"
