@@ -6,12 +6,14 @@
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Author } from '../authors/author.entity';
 import { LoggerModule } from '../logger/logger.module';
 import { Authorship } from '../revisions/authorship.entity';
 import { Revision } from '../revisions/revision.entity';
 import { RevisionsModule } from '../revisions/revisions.module';
 import { AuthToken } from '../auth/auth-token.entity';
 import { Identity } from '../users/identity.entity';
+import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { Note } from './note.entity';
@@ -87,6 +89,10 @@ describe('NotesService', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
       .useClass(Repository)
+      .overrideProvider(getRepositoryToken(Session))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Author))
+      .useValue({})
       .compile();
 
     const config = module.get<ConfigService>(ConfigService);

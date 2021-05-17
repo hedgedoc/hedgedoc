@@ -10,6 +10,7 @@ import {
   getRepositoryToken,
   TypeOrmModule,
 } from '@nestjs/typeorm';
+import { Author } from '../../../authors/author.entity';
 import { HistoryModule } from '../../../history/history.module';
 import { LoggerModule } from '../../../logger/logger.module';
 import { Note } from '../../../notes/note.entity';
@@ -19,6 +20,7 @@ import { Authorship } from '../../../revisions/authorship.entity';
 import { Revision } from '../../../revisions/revision.entity';
 import { AuthToken } from '../../../auth/auth-token.entity';
 import { Identity } from '../../../users/identity.entity';
+import { Session } from '../../../users/session.entity';
 import { User } from '../../../users/user.entity';
 import { UsersModule } from '../../../users/users.module';
 import { MeController } from './me.controller';
@@ -76,6 +78,10 @@ describe('Me Controller', () => {
       .overrideProvider(getRepositoryToken(Group))
       .useValue({})
       .overrideProvider(getRepositoryToken(MediaUpload))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Session))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Author))
       .useValue({})
       .compile();
 

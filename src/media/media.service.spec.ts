@@ -7,6 +7,7 @@
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Author } from '../authors/author.entity';
 import mediaConfigMock from '../config/mock/media.config.mock';
 import { LoggerModule } from '../logger/logger.module';
 import { Note } from '../notes/note.entity';
@@ -16,6 +17,7 @@ import { Authorship } from '../revisions/authorship.entity';
 import { Revision } from '../revisions/revision.entity';
 import { AuthToken } from '../auth/auth-token.entity';
 import { Identity } from '../users/identity.entity';
+import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { FilesystemBackend } from './backends/filesystem-backend';
@@ -76,6 +78,10 @@ describe('MediaService', () => {
       .overrideProvider(getRepositoryToken(MediaUpload))
       .useClass(Repository)
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Session))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Author))
       .useValue({})
       .compile();
 

@@ -5,6 +5,7 @@
  */
 
 import { Test, TestingModule } from '@nestjs/testing';
+import { Session } from '../users/session.entity';
 import { AuthService } from './auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -49,6 +50,8 @@ describe('AuthService', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(User))
       .useClass(Repository)
+      .overrideProvider(getRepositoryToken(Session))
+      .useValue({})
       .compile();
 
     service = module.get<AuthService>(AuthService);

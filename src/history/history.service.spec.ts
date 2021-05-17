@@ -5,7 +5,9 @@
  */
 
 import { Test, TestingModule } from '@nestjs/testing';
+import { Author } from '../authors/author.entity';
 import { LoggerModule } from '../logger/logger.module';
+import { Session } from '../users/session.entity';
 import { HistoryService } from './history.service';
 import { UsersModule } from '../users/users.module';
 import { NotesModule } from '../notes/notes.module';
@@ -85,6 +87,10 @@ describe('HistoryService', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Session))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Author))
       .useValue({})
       .compile();
 
