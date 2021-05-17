@@ -5,6 +5,9 @@
  */
 
 import { Test, TestingModule } from '@nestjs/testing';
+import { Author } from '../../../authors/author.entity';
+import { Session } from '../../../users/session.entity';
+import { UsersModule } from '../../../users/users.module';
 import { MediaController } from './media.controller';
 import { LoggerModule } from '../../../logger/logger.module';
 import { ConfigModule } from '@nestjs/config';
@@ -47,6 +50,7 @@ describe('MediaController', () => {
             externalConfigMock,
           ],
         }),
+        UsersModule,
       ],
       controllers: [MediaController],
     })
@@ -71,6 +75,10 @@ describe('MediaController', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Session))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Author))
       .useValue({})
       .compile();
 

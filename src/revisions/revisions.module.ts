@@ -6,6 +6,7 @@
 
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthorsModule } from '../authors/authors.module';
 import { LoggerModule } from '../logger/logger.module';
 import { NotesModule } from '../notes/notes.module';
 import { Authorship } from './authorship.entity';
@@ -19,6 +20,7 @@ import { ConfigModule } from '@nestjs/config';
     forwardRef(() => NotesModule),
     LoggerModule,
     ConfigModule,
+    AuthorsModule,
   ],
   providers: [RevisionsService],
   exports: [RevisionsService],

@@ -5,6 +5,7 @@
  */
 
 import { Test, TestingModule } from '@nestjs/testing';
+import { Session } from '../../../users/session.entity';
 import { TokensController } from './tokens.controller';
 import { LoggerModule } from '../../../logger/logger.module';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -35,6 +36,8 @@ describe('TokensController', () => {
       .overrideProvider(getRepositoryToken(AuthToken))
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Session))
       .useValue({})
       .compile();
 

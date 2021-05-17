@@ -5,6 +5,8 @@
  */
 
 import { Test, TestingModule } from '@nestjs/testing';
+import { Author } from '../../../../authors/author.entity';
+import { Session } from '../../../../users/session.entity';
 import { HistoryController } from './history.controller';
 import { LoggerModule } from '../../../../logger/logger.module';
 import { UsersModule } from '../../../../users/users.module';
@@ -70,6 +72,10 @@ describe('HistoryController', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Author))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Session))
       .useValue({})
       .compile();
 

@@ -10,6 +10,7 @@ import {
   getRepositoryToken,
   TypeOrmModule,
 } from '@nestjs/typeorm';
+import { Author } from '../../../authors/author.entity';
 import { LoggerModule } from '../../../logger/logger.module';
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
@@ -19,6 +20,7 @@ import { Revision } from '../../../revisions/revision.entity';
 import { RevisionsModule } from '../../../revisions/revisions.module';
 import { AuthToken } from '../../../auth/auth-token.entity';
 import { Identity } from '../../../users/identity.entity';
+import { Session } from '../../../users/session.entity';
 import { User } from '../../../users/user.entity';
 import { UsersModule } from '../../../users/users.module';
 import { NotesController } from './notes.controller';
@@ -49,6 +51,10 @@ describe('Notes Controller', () => {
         },
         {
           provide: getRepositoryToken(Tag),
+          useValue: {},
+        },
+        {
+          provide: getRepositoryToken(User),
           useValue: {},
         },
       ],
@@ -94,6 +100,10 @@ describe('Notes Controller', () => {
       .overrideProvider(getRepositoryToken(Group))
       .useValue({})
       .overrideProvider(getRepositoryToken(MediaUpload))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Session))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Author))
       .useValue({})
       .compile();
 

@@ -5,6 +5,8 @@
  */
 
 import { Test, TestingModule } from '@nestjs/testing';
+import { Author } from '../../../authors/author.entity';
+import { Session } from '../../../users/session.entity';
 import { MeController } from './me.controller';
 import { UsersModule } from '../../../users/users.module';
 import { LoggerModule } from '../../../logger/logger.module';
@@ -68,6 +70,10 @@ describe('MeController', () => {
       .overrideProvider(getRepositoryToken(Authorship))
       .useValue({})
       .overrideProvider(getRepositoryToken(MediaUpload))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Session))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Author))
       .useValue({})
       .compile();
 
