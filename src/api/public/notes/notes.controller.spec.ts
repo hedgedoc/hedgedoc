@@ -11,7 +11,6 @@ import {
   TypeOrmModule,
 } from '@nestjs/typeorm';
 import { LoggerModule } from '../../../logger/logger.module';
-import { AuthorColor } from '../../../notes/author-color.entity';
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
 import { Tag } from '../../../notes/tag.entity';
@@ -75,8 +74,6 @@ describe('Notes Controller', () => {
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})
       .overrideProvider(getRepositoryToken(Authorship))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(AuthorColor))
       .useValue({})
       .overrideProvider(getRepositoryToken(User))
       .useValue({})

@@ -12,7 +12,6 @@ import { Authorship } from './revisions/authorship.entity';
 import { NoteGroupPermission } from './permissions/note-group-permission.entity';
 import { NoteUserPermission } from './permissions/note-user-permission.entity';
 import { Group } from './groups/group.entity';
-import { AuthorColor } from './notes/author-color.entity';
 import { HistoryEntry } from './history/history-entry.entity';
 import { MediaUpload } from './media/media-upload.entity';
 import { Tag } from './notes/tag.entity';
@@ -33,7 +32,6 @@ createConnection({
     NoteGroupPermission,
     NoteUserPermission,
     Group,
-    AuthorColor,
     HistoryEntry,
     MediaUpload,
     Tag,

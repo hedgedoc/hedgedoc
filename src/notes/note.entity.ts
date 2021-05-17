@@ -17,7 +17,6 @@ import { NoteGroupPermission } from '../permissions/note-group-permission.entity
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Revision } from '../revisions/revision.entity';
 import { User } from '../users/user.entity';
-import { AuthorColor } from './author-color.entity';
 import { Tag } from './tag.entity';
 import { HistoryEntry } from '../history/history-entry.entity';
 import { MediaUpload } from '../media/media-upload.entity';
@@ -59,8 +58,6 @@ export class Note {
   owner: User | null;
   @OneToMany((_) => Revision, (revision) => revision.note, { cascade: true })
   revisions: Promise<Revision[]>;
-  @OneToMany((_) => AuthorColor, (authorColor) => authorColor.note)
-  authorColors: AuthorColor[];
   @OneToMany((_) => HistoryEntry, (historyEntry) => historyEntry.user)
   historyEntries: HistoryEntry[];
   @OneToMany((_) => MediaUpload, (mediaUpload) => mediaUpload.note)
@@ -90,7 +87,6 @@ export class Note {
     newNote.alias = alias ?? null;
     newNote.viewCount = 0;
     newNote.owner = owner ?? null;
-    newNote.authorColors = [];
     newNote.userPermissions = [];
     newNote.groupPermissions = [];
     newNote.revisions = Promise.resolve([]) as Promise<Revision[]>;

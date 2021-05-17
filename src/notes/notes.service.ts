@@ -60,13 +60,7 @@ export class NotesService {
   async getUserNotes(user: User): Promise<Note[]> {
     const notes = await this.noteRepository.find({
       where: { owner: user },
-      relations: [
-        'owner',
-        'userPermissions',
-        'groupPermissions',
-        'authorColors',
-        'tags',
-      ],
+      relations: ['owner', 'userPermissions', 'groupPermissions', 'tags'],
     });
     if (notes === undefined) {
       return [];
@@ -173,7 +167,6 @@ export class NotesService {
         },
       ],
       relations: [
-        'authorColors',
         'owner',
         'groupPermissions',
         'groupPermissions.group',
@@ -365,9 +358,7 @@ export class NotesService {
       title: note.title ?? '',
       createTime: (await this.getFirstRevision(note)).createdAt,
       description: note.description ?? '',
-      editedBy: note.authorColors.map(
-        (authorColor) => authorColor.user.userName,
-      ),
+      editedBy: [], // TODO temporary placeholder,
       permissions: this.toNotePermissionsDto(note),
       tags: this.toTagList(note),
       updateTime: (await this.getLatestRevision(note)).createdAt,

@@ -5,24 +5,22 @@
  */
 
 import { forwardRef, Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GroupsModule } from '../groups/groups.module';
 import { LoggerModule } from '../logger/logger.module';
+import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
+import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { RevisionsModule } from '../revisions/revisions.module';
 import { UsersModule } from '../users/users.module';
-import { AuthorColor } from './author-color.entity';
 import { Note } from './note.entity';
 import { NotesService } from './notes.service';
 import { Tag } from './tag.entity';
-import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
-import { NoteUserPermission } from '../permissions/note-user-permission.entity';
-import { GroupsModule } from '../groups/groups.module';
-import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       Note,
-      AuthorColor,
       Tag,
       NoteGroupPermission,
       NoteUserPermission,

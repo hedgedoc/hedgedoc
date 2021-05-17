@@ -12,7 +12,6 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../../../users/user.entity';
 import { Identity } from '../../../users/identity.entity';
 import { MediaModule } from '../../../media/media.module';
-import { AuthorColor } from '../../../notes/author-color.entity';
 import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
 import { Authorship } from '../../../revisions/authorship.entity';
@@ -61,8 +60,6 @@ describe('MeController', () => {
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(AuthorColor))
       .useValue({})
       .overrideProvider(getRepositoryToken(NoteGroupPermission))
       .useValue({})
