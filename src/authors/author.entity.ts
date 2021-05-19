@@ -54,4 +54,18 @@ export class Author {
    */
   @OneToMany(() => Authorship, (authorship) => authorship.author)
   authorships: Authorship[];
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private constructor() {}
+
+  public static create(
+    color: number,
+  ): Pick<Author, 'color' | 'sessions' | 'user' | 'authorships'> {
+    const newAuthor = new Author();
+    newAuthor.color = color;
+    newAuthor.sessions = [];
+    newAuthor.user = null;
+    newAuthor.authorships = [];
+    return newAuthor;
+  }
 }
