@@ -5,6 +5,8 @@
  */
 
 import { createConnection } from 'typeorm';
+import { Author } from './authors/author.entity';
+import { Session } from './users/session.entity';
 import { User } from './users/user.entity';
 import { Note } from './notes/note.entity';
 import { Revision } from './revisions/revision.entity';
@@ -37,22 +39,45 @@ createConnection({
     Tag,
     AuthToken,
     Identity,
+    Author,
+    Session,
   ],
   synchronize: true,
   logging: false,
+  dropSchema: true,
 })
   .then(async (connection) => {
-    const user = User.create('hardcoded', 'Test User');
-    const note = Note.create(undefined, 'test');
-    const revision = Revision.create(
-      'This is a test note',
-      'This is a test note',
-    );
-    note.revisions = Promise.all([revision]);
-    note.userPermissions = [];
-    note.groupPermissions = [];
-    user.ownedNotes = [note];
-    await connection.manager.save([user, note, revision]);
+    const users = [];
+    users.push(User.create('hardcoded', 'Test User 1'));
+    users.push(User.create('hardcoded_2', 'Test User 2'));
+    users.push(User.create('hardcoded_3', 'Test User 3'));
+    const notes: Note[] = [];
+    notes.push(Note.create(undefined, 'test'));
+    notes.push(Note.create(undefined, 'test2'));
+    notes.push(Note.create(undefined, 'test3'));
+
+    for (let i = 0; i < 3; i++) {
+      const author = connection.manager.create(Author, Author.create(1));
+      const user = connection.manager.create(User, users[i]);
+      author.user = user;
+      const revision = Revision.create(
+        'This is a test note',
+        'This is a test note',
+      );
+      const authorship = Authorship.create(author, 1, 42);
+      revision.authorships = [authorship];
+      notes[i].revisions = Promise.all([revision]);
+      notes[i].userPermissions = [];
+      notes[i].groupPermissions = [];
+      user.ownedNotes = [notes[i]];
+      await connection.manager.save([
+        notes[i],
+        user,
+        revision,
+        authorship,
+        author,
+      ]);
+    }
     const foundUser = await connection.manager.findOne(User);
     if (!foundUser) {
       throw new Error('Could not find freshly seeded user. Aborting.');
