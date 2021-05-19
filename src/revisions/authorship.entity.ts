@@ -13,11 +13,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from '../users/user.entity';
+import { Author } from '../authors/author.entity';
 import { Revision } from './revision.entity';
 
 /**
- * This class stores which parts of a revision were edited by a particular user.
+ * The Authorship represents a change in the content of a note by a particular {@link Author}
  */
 @Entity()
 export class Authorship {
@@ -31,10 +31,10 @@ export class Authorship {
   revisions: Revision[];
 
   /**
-   * User this authorship represents
+   * Author that created the change
    */
-  @ManyToOne((_) => User)
-  user: User;
+  @ManyToOne(() => Author, (author) => author.authorships)
+  author: Author;
 
   @Column()
   startPos: number;
@@ -47,4 +47,15 @@ export class Authorship {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private constructor() {}
+
+  public static create(author: Author, startPos: number, endPos: number) {
+    const newAuthorship = new Authorship();
+    newAuthorship.author = author;
+    newAuthorship.startPos = startPos;
+    newAuthorship.endPos = endPos;
+    return newAuthorship;
+  }
 }
