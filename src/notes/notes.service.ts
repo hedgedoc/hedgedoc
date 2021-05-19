@@ -310,7 +310,7 @@ export class NotesService {
       // the user of that Authorship is the updateUser
       return lastRevision.authorships.sort(
         (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime(),
-      )[0].user;
+      )[0].author.user;
     }
     // If there are no Authorships, the owner is the updateUser
     return note.owner;

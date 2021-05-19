@@ -655,7 +655,8 @@ describe('NotesService', () => {
   describe('toNoteMetadataDto', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
-      const otherUser = User.create('other hardcoded', 'Testy2') as User;
+      const author = Author.create(1);
+      author.user = user;
       const group = Group.create('testGroup', 'testGroup');
       const content = 'testContent';
       jest
@@ -665,18 +666,18 @@ describe('NotesService', () => {
       const revisions = await note.revisions;
       revisions[0].authorships = [
         {
-          user: otherUser,
           revisions: revisions,
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452000),
+          author: author,
         } as Authorship,
         {
-          user: user,
           revisions: revisions,
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452001),
+          author: author,
         } as Authorship,
       ];
       revisions[0].createdAt = new Date(1549312452000);
@@ -738,6 +739,8 @@ describe('NotesService', () => {
   describe('toNoteDto', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
+      const author = Author.create(1);
+      author.user = user;
       const otherUser = User.create('other hardcoded', 'Testy2') as User;
       otherUser.userName = 'other hardcoded user';
       const group = Group.create('testGroup', 'testGroup');
@@ -749,18 +752,18 @@ describe('NotesService', () => {
       const revisions = await note.revisions;
       revisions[0].authorships = [
         {
-          user: otherUser,
           revisions: revisions,
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452000),
+          author: author,
         } as Authorship,
         {
-          user: user,
           revisions: revisions,
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452001),
+          author: author,
         } as Authorship,
       ];
       revisions[0].createdAt = new Date(1549312452000);
