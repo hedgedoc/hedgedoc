@@ -21,6 +21,7 @@ import { AuthorColor } from './author-color.entity';
 import { Tag } from './tag.entity';
 import { HistoryEntry } from '../history/history-entry.entity';
 import { MediaUpload } from '../media/media-upload.entity';
+import { generatePublicId } from './utils';
 
 @Entity()
 export class Note {
@@ -85,6 +86,7 @@ export class Note {
 
   public static create(owner?: User, alias?: string): Note {
     const newNote = new Note();
+    newNote.publicId = generatePublicId();
     newNote.alias = alias ?? null;
     newNote.viewCount = 0;
     newNote.owner = owner ?? null;

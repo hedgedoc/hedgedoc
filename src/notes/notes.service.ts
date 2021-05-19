@@ -94,7 +94,6 @@ export class NotesService {
     newNote.revisions = Promise.resolve([
       Revision.create(noteContent, noteContent),
     ]);
-    newNote.publicId = this.generatePublicId();
     if (alias) {
       newNote.alias = alias;
       this.checkNoteIdOrAlias(alias);
@@ -211,15 +210,6 @@ export class NotesService {
         `A note with the alias '${noteIdOrAlias}' is forbidden by the administrator.`,
       );
     }
-  }
-
-  /**
-   * Generate publicId for a note.
-   * This is a randomly generated 128-bit value encoded with base32-encode using the crockford variant and converted to lowercase.
-   */
-  generatePublicId(): string {
-    const randomId = randomBytes(128);
-    return base32Encode(randomId, 'Crockford').toLowerCase();
   }
 
   /**
