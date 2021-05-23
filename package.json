@@ -22,7 +22,7 @@
     "@types/markdown-it-container": "2.0.3",
     "@types/markdown-it-plantuml": "1.4.0",
     "@types/mermaid": "8.2.5",
-    "@types/node": "12.20.13",
+    "@types/node": "14.17.0",
     "@types/node-sass": "4.11.1",
     "@types/react": "17.0.5",
     "@types/react-bootstrap-typeahead": "5.1.4",
