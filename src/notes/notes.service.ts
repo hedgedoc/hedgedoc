@@ -41,6 +41,7 @@ export class NotesService {
     private readonly logger: ConsoleLoggerService,
     @InjectRepository(Note) private noteRepository: Repository<Note>,
     @InjectRepository(Tag) private tagRepository: Repository<Tag>,
+    @InjectRepository(User) private userRepository: Repository<User>,
     @Inject(UsersService) private usersService: UsersService,
     @Inject(GroupsService) private groupsService: GroupsService,
     @Inject(forwardRef(() => RevisionsService))
@@ -186,6 +187,22 @@ export class NotesService {
     }
     this.logger.debug(`Found note '${noteIdOrAlias}'`, 'getNoteByIdOrAlias');
     return note;
+  }
+
+  /**
+   * @async
+   * Get all users that ever appeared as an author for the given note
+   * @param note The note to search authors for
+   */
+  async getAuthorUsers(note: Note): Promise<User[]> {
+    return await this.userRepository
+      .createQueryBuilder('user')
+      .innerJoin('user.authors', 'author')
+      .innerJoin('author.authorships', 'authorship')
+      .innerJoin('authorship.revisions', 'revision')
+      .innerJoin('revision.note', 'note')
+      .where('note.id = :id', { id: note.id })
+      .getMany();
   }
 
   /**
@@ -358,7 +375,7 @@ export class NotesService {
       title: note.title ?? '',
       createTime: (await this.getFirstRevision(note)).createdAt,
       description: note.description ?? '',
-      editedBy: [], // TODO temporary placeholder,
+      editedBy: (await this.getAuthorUsers(note)).map((user) => user.userName),
       permissions: this.toNotePermissionsDto(note),
       tags: this.toTagList(note),
       updateTime: (await this.getLatestRevision(note)).createdAt,

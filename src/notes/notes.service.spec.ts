@@ -46,6 +46,12 @@ describe('NotesService', () => {
   let forbiddenNoteId: string;
 
   beforeEach(async () => {
+    /**
+     * We need to have *one* userRepo for both the providers array and
+     * the overrideProvider call, as otherwise we have two instances
+     * and the mock of createQueryBuilder replaces the wrong one
+     * **/
+    userRepo = new Repository<User>();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         NotesService,
@@ -56,6 +62,10 @@ describe('NotesService', () => {
         {
           provide: getRepositoryToken(Tag),
           useClass: Repository,
+        },
+        {
+          provide: getRepositoryToken(User),
+          useValue: userRepo,
         },
       ],
       imports: [
@@ -74,7 +84,7 @@ describe('NotesService', () => {
       .overrideProvider(getRepositoryToken(Tag))
       .useClass(Repository)
       .overrideProvider(getRepositoryToken(User))
-      .useClass(Repository)
+      .useValue(userRepo)
       .overrideProvider(getRepositoryToken(AuthToken))
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
@@ -688,6 +698,16 @@ describe('NotesService', () => {
       ];
       revisions[0].createdAt = new Date(1549312452000);
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValue(revisions[0]);
+      const createQueryBuilder = {
+        innerJoin: () => createQueryBuilder,
+        where: () => createQueryBuilder,
+        getMany: () => [user],
+      };
+      jest
+        .spyOn(userRepo, 'createQueryBuilder')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementation(() => createQueryBuilder);
       note.publicId = 'testId';
       note.alias = 'testAlias';
       note.title = 'testTitle';
@@ -777,6 +797,16 @@ describe('NotesService', () => {
         .spyOn(revisionRepo, 'findOne')
         .mockResolvedValue(revisions[0])
         .mockResolvedValue(revisions[0]);
+      const createQueryBuilder = {
+        innerJoin: () => createQueryBuilder,
+        where: () => createQueryBuilder,
+        getMany: () => [user],
+      };
+      jest
+        .spyOn(userRepo, 'createQueryBuilder')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementation(() => createQueryBuilder);
       note.publicId = 'testId';
       note.alias = 'testAlias';
       note.title = 'testTitle';

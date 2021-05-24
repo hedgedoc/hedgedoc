@@ -12,6 +12,7 @@ import { LoggerModule } from '../logger/logger.module';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { RevisionsModule } from '../revisions/revisions.module';
+import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { Note } from './note.entity';
 import { NotesService } from './notes.service';
@@ -24,6 +25,7 @@ import { Tag } from './tag.entity';
       Tag,
       NoteGroupPermission,
       NoteUserPermission,
+      User,
     ]),
     forwardRef(() => RevisionsModule),
     UsersModule,
