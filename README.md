@@ -15,7 +15,7 @@ This is the new, improved and better looking frontend for HedgeDoc 2.0.
 Our goal is to recreate the current frontend in react and to improve it.
 
 ## Preparation
-You'll need at least Node 12. We use [yarn](https://yarnpkg.com/) for our dependencies.
+You need at least Node 12 (we recommend Node 16) and [yarn](https://yarnpkg.com/).
 
 ## Development mode
 
