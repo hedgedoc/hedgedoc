@@ -4,18 +4,20 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { IsDate, IsNumber, IsString, Min } from 'class-validator';
+import { IsDate, IsNumber, IsOptional, IsString, Min } from 'class-validator';
 import { UserInfoDto } from '../users/user-info.dto';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class EditDto {
   /**
    * Username of the user who authored this section
+   * Is `null` if the user is anonymous
    * @example "john.smith"
    */
   @IsString()
-  @ApiProperty()
-  userName: UserInfoDto['userName'];
+  @IsOptional()
+  @ApiPropertyOptional()
+  userName: UserInfoDto['userName'] | null;
 
   /**
    * Character index of the start of this section
