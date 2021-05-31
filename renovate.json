@@ -2,7 +2,8 @@
   "extends": [
     "config:base",
     ":gitSignOff",
-    ":maintainLockFilesWeekly"
+    ":maintainLockFilesWeekly",
+    ":dependencyDashboard"
   ],
   "labels": [
     "type: maintenance"
