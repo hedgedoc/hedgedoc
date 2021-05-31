@@ -7,13 +7,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Author } from '../authors/author.entity';
+import { AuthorsModule } from '../authors/authors.module';
 import { NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
-import { AuthorColor } from '../notes/author-color.entity';
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
 import { AuthToken } from '../auth/auth-token.entity';
 import { Identity } from '../users/identity.entity';
+import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { Authorship } from './authorship.entity';
 import { Revision } from './revision.entity';
@@ -49,8 +51,6 @@ describe('RevisionsService', () => {
     })
       .overrideProvider(getRepositoryToken(Authorship))
       .useValue({})
-      .overrideProvider(getRepositoryToken(AuthorColor))
-      .useValue({})
       .overrideProvider(getRepositoryToken(User))
       .useValue({})
       .overrideProvider(getRepositoryToken(AuthToken))
@@ -68,6 +68,10 @@ describe('RevisionsService', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Session))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Author))
       .useValue({})
       .compile();
 

@@ -5,6 +5,8 @@
  */
 
 import { Test, TestingModule } from '@nestjs/testing';
+import { Author } from '../../../authors/author.entity';
+import { Session } from '../../../users/session.entity';
 import { NotesController } from './notes.controller';
 import { NotesService } from '../../../notes/notes.service';
 import {
@@ -26,7 +28,6 @@ import appConfigMock from '../../../config/mock/app.config.mock';
 import mediaConfigMock from '../../../config/mock/media.config.mock';
 import { Revision } from '../../../revisions/revision.entity';
 import { Authorship } from '../../../revisions/authorship.entity';
-import { AuthorColor } from '../../../notes/author-color.entity';
 import { User } from '../../../users/user.entity';
 import { AuthToken } from '../../../auth/auth-token.entity';
 import { Identity } from '../../../users/identity.entity';
@@ -52,6 +53,10 @@ describe('NotesController', () => {
           provide: getRepositoryToken(Tag),
           useValue: {},
         },
+        {
+          provide: getRepositoryToken(User),
+          useValue: {},
+        },
       ],
       imports: [
         RevisionsModule,
@@ -74,8 +79,6 @@ describe('NotesController', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Authorship))
       .useValue({})
-      .overrideProvider(getRepositoryToken(AuthorColor))
-      .useValue({})
       .overrideProvider(getRepositoryToken(User))
       .useValue({})
       .overrideProvider(getRepositoryToken(AuthToken))
@@ -95,6 +98,10 @@ describe('NotesController', () => {
       .overrideProvider(getRepositoryToken(Group))
       .useValue({})
       .overrideProvider(getRepositoryToken(MediaUpload))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Session))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Author))
       .useValue({})
       .compile();
 

@@ -5,6 +5,8 @@
  */
 
 import { Test, TestingModule } from '@nestjs/testing';
+import { Author } from '../../../../authors/author.entity';
+import { Session } from '../../../../users/session.entity';
 import { HistoryController } from './history.controller';
 import { LoggerModule } from '../../../../logger/logger.module';
 import { UsersModule } from '../../../../users/users.module';
@@ -19,7 +21,6 @@ import { User } from '../../../../users/user.entity';
 import { Note } from '../../../../notes/note.entity';
 import { AuthToken } from '../../../../auth/auth-token.entity';
 import { Identity } from '../../../../users/identity.entity';
-import { AuthorColor } from '../../../../notes/author-color.entity';
 import { Authorship } from '../../../../revisions/authorship.entity';
 import { Revision } from '../../../../revisions/revision.entity';
 import { Tag } from '../../../../notes/tag.entity';
@@ -58,8 +59,6 @@ describe('HistoryController', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
-      .overrideProvider(getRepositoryToken(AuthorColor))
-      .useValue({})
       .overrideProvider(getRepositoryToken(Authorship))
       .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
@@ -73,6 +72,10 @@ describe('HistoryController', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Author))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Session))
       .useValue({})
       .compile();
 

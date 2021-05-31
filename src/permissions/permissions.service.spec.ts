@@ -7,15 +7,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { AuthToken } from '../auth/auth-token.entity';
+import { Author } from '../authors/author.entity';
 import { Group } from '../groups/group.entity';
 import { LoggerModule } from '../logger/logger.module';
-import { AuthorColor } from '../notes/author-color.entity';
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
 import { Authorship } from '../revisions/authorship.entity';
 import { Revision } from '../revisions/revision.entity';
 import { Identity } from '../users/identity.entity';
+import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { NoteGroupPermission } from './note-group-permission.entity';
@@ -50,8 +51,6 @@ describe('PermissionsService', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Authorship))
       .useValue({})
-      .overrideProvider(getRepositoryToken(AuthorColor))
-      .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})
       .overrideProvider(getRepositoryToken(Note))
@@ -63,6 +62,10 @@ describe('PermissionsService', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Session))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Author))
       .useValue({})
       .compile();
     permissionsService = module.get<PermissionsService>(PermissionsService);

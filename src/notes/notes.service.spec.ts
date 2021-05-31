@@ -6,15 +6,16 @@
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Author } from '../authors/author.entity';
 import { LoggerModule } from '../logger/logger.module';
 import { Authorship } from '../revisions/authorship.entity';
 import { Revision } from '../revisions/revision.entity';
 import { RevisionsModule } from '../revisions/revisions.module';
 import { AuthToken } from '../auth/auth-token.entity';
 import { Identity } from '../users/identity.entity';
+import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
-import { AuthorColor } from './author-color.entity';
 import { Note } from './note.entity';
 import { NotesService } from './notes.service';
 import { Repository } from 'typeorm';
@@ -45,6 +46,12 @@ describe('NotesService', () => {
   let forbiddenNoteId: string;
 
   beforeEach(async () => {
+    /**
+     * We need to have *one* userRepo for both the providers array and
+     * the overrideProvider call, as otherwise we have two instances
+     * and the mock of createQueryBuilder replaces the wrong one
+     * **/
+    userRepo = new Repository<User>();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         NotesService,
@@ -55,6 +62,10 @@ describe('NotesService', () => {
         {
           provide: getRepositoryToken(Tag),
           useClass: Repository,
+        },
+        {
+          provide: getRepositoryToken(User),
+          useValue: userRepo,
         },
       ],
       imports: [
@@ -73,14 +84,12 @@ describe('NotesService', () => {
       .overrideProvider(getRepositoryToken(Tag))
       .useClass(Repository)
       .overrideProvider(getRepositoryToken(User))
-      .useClass(Repository)
+      .useValue(userRepo)
       .overrideProvider(getRepositoryToken(AuthToken))
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
       .overrideProvider(getRepositoryToken(Authorship))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(AuthorColor))
       .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
       .useClass(Repository)
@@ -90,6 +99,10 @@ describe('NotesService', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
       .useClass(Repository)
+      .overrideProvider(getRepositoryToken(Session))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Author))
+      .useValue({})
       .compile();
 
     const config = module.get<ConfigService>(ConfigService);
@@ -658,7 +671,8 @@ describe('NotesService', () => {
   describe('toNoteMetadataDto', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
-      const otherUser = User.create('other hardcoded', 'Testy2') as User;
+      const author = Author.create(1);
+      author.user = user;
       const group = Group.create('testGroup', 'testGroup');
       const content = 'testContent';
       jest
@@ -668,33 +682,36 @@ describe('NotesService', () => {
       const revisions = await note.revisions;
       revisions[0].authorships = [
         {
-          user: otherUser,
           revisions: revisions,
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452000),
+          author: author,
         } as Authorship,
         {
-          user: user,
           revisions: revisions,
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452001),
+          author: author,
         } as Authorship,
       ];
       revisions[0].createdAt = new Date(1549312452000);
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValue(revisions[0]);
+      const createQueryBuilder = {
+        innerJoin: () => createQueryBuilder,
+        where: () => createQueryBuilder,
+        getMany: () => [user],
+      };
+      jest
+        .spyOn(userRepo, 'createQueryBuilder')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementation(() => createQueryBuilder);
       note.publicId = 'testId';
       note.alias = 'testAlias';
       note.title = 'testTitle';
       note.description = 'testDescription';
-      note.authorColors = [
-        {
-          note: note,
-          user: user,
-          color: 'red',
-        } as AuthorColor,
-      ];
       note.owner = user;
       note.userPermissions = [
         {
@@ -748,6 +765,8 @@ describe('NotesService', () => {
   describe('toNoteDto', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
+      const author = Author.create(1);
+      author.user = user;
       const otherUser = User.create('other hardcoded', 'Testy2') as User;
       otherUser.userName = 'other hardcoded user';
       const group = Group.create('testGroup', 'testGroup');
@@ -759,18 +778,18 @@ describe('NotesService', () => {
       const revisions = await note.revisions;
       revisions[0].authorships = [
         {
-          user: otherUser,
           revisions: revisions,
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452000),
+          author: author,
         } as Authorship,
         {
-          user: user,
           revisions: revisions,
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452001),
+          author: author,
         } as Authorship,
       ];
       revisions[0].createdAt = new Date(1549312452000);
@@ -778,17 +797,20 @@ describe('NotesService', () => {
         .spyOn(revisionRepo, 'findOne')
         .mockResolvedValue(revisions[0])
         .mockResolvedValue(revisions[0]);
+      const createQueryBuilder = {
+        innerJoin: () => createQueryBuilder,
+        where: () => createQueryBuilder,
+        getMany: () => [user],
+      };
+      jest
+        .spyOn(userRepo, 'createQueryBuilder')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementation(() => createQueryBuilder);
       note.publicId = 'testId';
       note.alias = 'testAlias';
       note.title = 'testTitle';
       note.description = 'testDescription';
-      note.authorColors = [
-        {
-          note: note,
-          user: user,
-          color: 'red',
-        } as AuthorColor,
-      ];
       note.owner = user;
       note.userPermissions = [
         {

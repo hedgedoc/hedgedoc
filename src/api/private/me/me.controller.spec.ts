@@ -5,6 +5,8 @@
  */
 
 import { Test, TestingModule } from '@nestjs/testing';
+import { Author } from '../../../authors/author.entity';
+import { Session } from '../../../users/session.entity';
 import { MeController } from './me.controller';
 import { UsersModule } from '../../../users/users.module';
 import { LoggerModule } from '../../../logger/logger.module';
@@ -12,7 +14,6 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../../../users/user.entity';
 import { Identity } from '../../../users/identity.entity';
 import { MediaModule } from '../../../media/media.module';
-import { AuthorColor } from '../../../notes/author-color.entity';
 import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
 import { Authorship } from '../../../revisions/authorship.entity';
@@ -62,8 +63,6 @@ describe('MeController', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
       .useValue({})
-      .overrideProvider(getRepositoryToken(AuthorColor))
-      .useValue({})
       .overrideProvider(getRepositoryToken(NoteGroupPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(NoteUserPermission))
@@ -71,6 +70,10 @@ describe('MeController', () => {
       .overrideProvider(getRepositoryToken(Authorship))
       .useValue({})
       .overrideProvider(getRepositoryToken(MediaUpload))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Session))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Author))
       .useValue({})
       .compile();
 

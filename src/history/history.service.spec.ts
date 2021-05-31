@@ -5,14 +5,15 @@
  */
 
 import { Test, TestingModule } from '@nestjs/testing';
+import { Author } from '../authors/author.entity';
 import { LoggerModule } from '../logger/logger.module';
+import { Session } from '../users/session.entity';
 import { HistoryService } from './history.service';
 import { UsersModule } from '../users/users.module';
 import { NotesModule } from '../notes/notes.module';
 import { getConnectionToken, getRepositoryToken } from '@nestjs/typeorm';
 import { Identity } from '../users/identity.entity';
 import { User } from '../users/user.entity';
-import { AuthorColor } from '../notes/author-color.entity';
 import { Authorship } from '../revisions/authorship.entity';
 import { HistoryEntry } from './history-entry.entity';
 import { Note } from '../notes/note.entity';
@@ -75,8 +76,6 @@ describe('HistoryService', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Authorship))
       .useValue({})
-      .overrideProvider(getRepositoryToken(AuthorColor))
-      .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})
       .overrideProvider(getRepositoryToken(Note))
@@ -88,6 +87,10 @@ describe('HistoryService', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Session))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Author))
       .useValue({})
       .compile();
 
