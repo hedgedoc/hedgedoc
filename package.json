@@ -161,12 +161,12 @@
     ]
   },
   "devDependencies": {
-    "@cypress/webpack-preprocessor": "5.8.0",
+    "@cypress/webpack-preprocessor": "5.9.0",
     "@testing-library/cypress": "7.0.6",
     "@types/redux-devtools": "3.0.47",
     "@types/redux-devtools-extension": "2.13.2",
     "cross-env": "7.0.3",
-    "cypress": "7.3.0",
+    "cypress": "7.4.0",
     "cypress-commands": "1.1.0",
     "cypress-file-upload": "5.0.7",
     "eslint-plugin-chai-friendly": "0.7.1",
@@ -178,7 +178,7 @@
     "webpack-bundle-analyzer": "4.4.2"
   },
   "resolutions": {
-    "cypress": "7.3.0",
+    "cypress": "7.4.0",
     "katex": "0.13.11"
   }
 }
