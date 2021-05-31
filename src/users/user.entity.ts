@@ -12,6 +12,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Column, OneToMany } from 'typeorm';
+import { Author } from '../authors/author.entity';
 import { Note } from '../notes/note.entity';
 import { AuthToken } from '../auth/auth-token.entity';
 import { Identity } from './identity.entity';
@@ -67,6 +68,9 @@ export class User {
 
   @OneToMany((_) => MediaUpload, (mediaUpload) => mediaUpload.user)
   mediaUploads: MediaUpload[];
+
+  @OneToMany(() => Author, (author) => author.user)
+  authors: Author[];
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}

@@ -5,7 +5,8 @@
  */
 
 import { ISession } from 'connect-typeorm';
-import { Column, Entity, Index, PrimaryColumn } from 'typeorm';
+import { Column, Entity, Index, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Author } from '../authors/author.entity';
 
 @Entity()
 export class Session implements ISession {
@@ -18,4 +19,7 @@ export class Session implements ISession {
 
   @Column('text')
   public json = '';
+
+  @ManyToOne(() => Author, (author) => author.sessions)
+  author: Author;
 }
