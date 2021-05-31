@@ -13,7 +13,7 @@ import { LoggerModule } from '../logger/logger.module';
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
-import { Authorship } from '../revisions/authorship.entity';
+import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
 import { Identity } from '../users/identity.entity';
 import { Session } from '../users/session.entity';
@@ -49,7 +49,7 @@ describe('PermissionsService', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
-      .overrideProvider(getRepositoryToken(Authorship))
+      .overrideProvider(getRepositoryToken(Edit))
       .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})

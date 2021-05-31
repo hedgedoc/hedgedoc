@@ -13,7 +13,7 @@ import { LoggerModule } from '../logger/logger.module';
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
-import { Authorship } from '../revisions/authorship.entity';
+import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
 import { AuthToken } from '../auth/auth-token.entity';
 import { Identity } from '../users/identity.entity';
@@ -57,7 +57,7 @@ describe('MediaService', () => {
         UsersModule,
       ],
     })
-      .overrideProvider(getRepositoryToken(Authorship))
+      .overrideProvider(getRepositoryToken(Edit))
       .useValue({})
       .overrideProvider(getRepositoryToken(AuthToken))
       .useValue({})

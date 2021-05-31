@@ -26,7 +26,7 @@ export class NoteDto {
   metadata: NoteMetadataDto;
 
   /**
-   * Authorship information of this note
+   * Edit information of this note
    */
   @IsArray()
   @ValidateNested({ each: true })

@@ -21,7 +21,7 @@ import { User } from '../../../../users/user.entity';
 import { Note } from '../../../../notes/note.entity';
 import { AuthToken } from '../../../../auth/auth-token.entity';
 import { Identity } from '../../../../users/identity.entity';
-import { Authorship } from '../../../../revisions/authorship.entity';
+import { Edit } from '../../../../revisions/edit.entity';
 import { Revision } from '../../../../revisions/revision.entity';
 import { Tag } from '../../../../notes/tag.entity';
 import { HistoryEntry } from '../../../../history/history-entry.entity';
@@ -59,7 +59,7 @@ describe('HistoryController', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
-      .overrideProvider(getRepositoryToken(Authorship))
+      .overrideProvider(getRepositoryToken(Edit))
       .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})

@@ -17,7 +17,7 @@ import { AuthToken } from '../auth/auth-token.entity';
 import { Identity } from '../users/identity.entity';
 import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
-import { Authorship } from './authorship.entity';
+import { Edit } from './edit.entity';
 import { Revision } from './revision.entity';
 import { RevisionsService } from './revisions.service';
 import { Tag } from '../notes/tag.entity';
@@ -49,7 +49,7 @@ describe('RevisionsService', () => {
         }),
       ],
     })
-      .overrideProvider(getRepositoryToken(Authorship))
+      .overrideProvider(getRepositoryToken(Edit))
       .useValue({})
       .overrideProvider(getRepositoryToken(User))
       .useValue({})

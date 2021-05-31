@@ -8,7 +8,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Author } from '../authors/author.entity';
 import { LoggerModule } from '../logger/logger.module';
-import { Authorship } from '../revisions/authorship.entity';
+import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
 import { RevisionsModule } from '../revisions/revisions.module';
 import { AuthToken } from '../auth/auth-token.entity';
@@ -89,7 +89,7 @@ describe('NotesService', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
-      .overrideProvider(getRepositoryToken(Authorship))
+      .overrideProvider(getRepositoryToken(Edit))
       .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
       .useClass(Repository)
@@ -680,21 +680,21 @@ describe('NotesService', () => {
         .mockImplementation(async (note: Note): Promise<Note> => note);
       const note = await service.createNote(content);
       const revisions = await note.revisions;
-      revisions[0].authorships = [
+      revisions[0].edits = [
         {
           revisions: revisions,
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452000),
           author: author,
-        } as Authorship,
+        } as Edit,
         {
           revisions: revisions,
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452001),
           author: author,
-        } as Authorship,
+        } as Edit,
       ];
       revisions[0].createdAt = new Date(1549312452000);
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValue(revisions[0]);
@@ -776,21 +776,21 @@ describe('NotesService', () => {
         .mockImplementation(async (note: Note): Promise<Note> => note);
       const note = await service.createNote(content);
       const revisions = await note.revisions;
-      revisions[0].authorships = [
+      revisions[0].edits = [
         {
           revisions: revisions,
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452000),
           author: author,
-        } as Authorship,
+        } as Edit,
         {
           revisions: revisions,
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452001),
           author: author,
-        } as Authorship,
+        } as Edit,
       ];
       revisions[0].createdAt = new Date(1549312452000);
       jest

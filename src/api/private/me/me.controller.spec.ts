@@ -16,7 +16,7 @@ import { Identity } from '../../../users/identity.entity';
 import { MediaModule } from '../../../media/media.module';
 import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
-import { Authorship } from '../../../revisions/authorship.entity';
+import { Edit } from '../../../revisions/edit.entity';
 import { ConfigModule } from '@nestjs/config';
 import appConfigMock from '../../../config/mock/app.config.mock';
 import authConfigMock from '../../../config/mock/auth.config.mock';
@@ -67,7 +67,7 @@ describe('MeController', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
-      .overrideProvider(getRepositoryToken(Authorship))
+      .overrideProvider(getRepositoryToken(Edit))
       .useValue({})
       .overrideProvider(getRepositoryToken(MediaUpload))
       .useValue({})

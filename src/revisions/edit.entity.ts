@@ -17,23 +17,23 @@ import { Author } from '../authors/author.entity';
 import { Revision } from './revision.entity';
 
 /**
- * The Authorship represents a change in the content of a note by a particular {@link Author}
+ * The Edit represents a change in the content of a note by a particular {@link Author}
  */
 @Entity()
-export class Authorship {
+export class Edit {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   /**
-   * Revisions this authorship appears in
+   * Revisions this edit appears in
    */
-  @ManyToMany((_) => Revision, (revision) => revision.authorships)
+  @ManyToMany((_) => Revision, (revision) => revision.edits)
   revisions: Revision[];
 
   /**
    * Author that created the change
    */
-  @ManyToOne(() => Author, (author) => author.authorships)
+  @ManyToOne(() => Author, (author) => author.edits)
   author: Author;
 
   @Column()
@@ -52,10 +52,10 @@ export class Authorship {
   private constructor() {}
 
   public static create(author: Author, startPos: number, endPos: number) {
-    const newAuthorship = new Authorship();
-    newAuthorship.author = author;
-    newAuthorship.startPos = startPos;
-    newAuthorship.endPos = endPos;
-    return newAuthorship;
+    const newEdit = new Edit();
+    newEdit.author = author;
+    newEdit.startPos = startPos;
+    newEdit.endPos = endPos;
+    return newEdit;
   }
 }
