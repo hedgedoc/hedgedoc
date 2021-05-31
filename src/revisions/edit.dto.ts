@@ -8,7 +8,7 @@ import { IsDate, IsNumber, IsString, Min } from 'class-validator';
 import { UserInfoDto } from '../users/user-info.dto';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class NoteAuthorshipDto {
+export class EditDto {
   /**
    * Username of the user who authored this section
    * @example "john.smith"
