@@ -198,8 +198,8 @@ export class NotesService {
     return await this.userRepository
       .createQueryBuilder('user')
       .innerJoin('user.authors', 'author')
-      .innerJoin('author.authorships', 'authorship')
-      .innerJoin('authorship.revisions', 'revision')
+      .innerJoin('author.edits', 'edit')
+      .innerJoin('edit.revisions', 'revision')
       .innerJoin('revision.note', 'note')
       .where('note.id = :id', { id: note.id })
       .getMany();
@@ -322,14 +322,14 @@ export class NotesService {
    */
   async calculateUpdateUser(note: Note): Promise<User | null> {
     const lastRevision = await this.getLatestRevision(note);
-    if (lastRevision && lastRevision.authorships) {
-      // Sort the last Revisions Authorships by their updatedAt Date to get the latest one
-      // the user of that Authorship is the updateUser
-      return lastRevision.authorships.sort(
+    if (lastRevision && lastRevision.edits) {
+      // Sort the last Revisions Edits by their updatedAt Date to get the latest one
+      // the user of that Edit is the updateUser
+      return lastRevision.edits.sort(
         (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime(),
       )[0].author.user;
     }
-    // If there are no Authorships, the owner is the updateUser
+    // If there are no Edits, the owner is the updateUser
     return note.owner;
   }
 

@@ -27,7 +27,7 @@ import { ConfigModule } from '@nestjs/config';
 import appConfigMock from '../../../config/mock/app.config.mock';
 import mediaConfigMock from '../../../config/mock/media.config.mock';
 import { Revision } from '../../../revisions/revision.entity';
-import { Authorship } from '../../../revisions/authorship.entity';
+import { Edit } from '../../../revisions/edit.entity';
 import { User } from '../../../users/user.entity';
 import { AuthToken } from '../../../auth/auth-token.entity';
 import { Identity } from '../../../users/identity.entity';
@@ -77,7 +77,7 @@ describe('NotesController', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})
-      .overrideProvider(getRepositoryToken(Authorship))
+      .overrideProvider(getRepositoryToken(Edit))
       .useValue({})
       .overrideProvider(getRepositoryToken(User))
       .useValue({})

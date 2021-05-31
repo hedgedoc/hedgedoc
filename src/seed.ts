@@ -10,7 +10,7 @@ import { Session } from './users/session.entity';
 import { User } from './users/user.entity';
 import { Note } from './notes/note.entity';
 import { Revision } from './revisions/revision.entity';
-import { Authorship } from './revisions/authorship.entity';
+import { Edit } from './revisions/edit.entity';
 import { NoteGroupPermission } from './permissions/note-group-permission.entity';
 import { NoteUserPermission } from './permissions/note-user-permission.entity';
 import { Group } from './groups/group.entity';
@@ -30,7 +30,7 @@ createConnection({
     User,
     Note,
     Revision,
-    Authorship,
+    Edit,
     NoteGroupPermission,
     NoteUserPermission,
     Group,
@@ -64,19 +64,13 @@ createConnection({
         'This is a test note',
         'This is a test note',
       );
-      const authorship = Authorship.create(author, 1, 42);
-      revision.authorships = [authorship];
+      const edit = Edit.create(author, 1, 42);
+      revision.edits = [edit];
       notes[i].revisions = Promise.all([revision]);
       notes[i].userPermissions = [];
       notes[i].groupPermissions = [];
       user.ownedNotes = [notes[i]];
-      await connection.manager.save([
-        notes[i],
-        user,
-        revision,
-        authorship,
-        author,
-      ]);
+      await connection.manager.save([notes[i], user, revision, edit, author]);
     }
     const foundUser = await connection.manager.findOne(User);
     if (!foundUser) {
