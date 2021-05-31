@@ -5,7 +5,7 @@
  */
 
 import { IsArray, IsString, ValidateNested } from 'class-validator';
-import { NoteAuthorshipDto } from './note-authorship.dto';
+import { EditDto } from '../revisions/edit.dto';
 import { NoteMetadataDto } from './note-metadata.dto';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -26,10 +26,10 @@ export class NoteDto {
   metadata: NoteMetadataDto;
 
   /**
-   * Authorship information of this note
+   * Edit information of this note
    */
   @IsArray()
   @ValidateNested({ each: true })
-  @ApiProperty({ isArray: true, type: NoteAuthorshipDto })
-  editedByAtPosition: NoteAuthorshipDto[];
+  @ApiProperty({ isArray: true, type: EditDto })
+  editedByAtPosition: EditDto[];
 }

@@ -15,7 +15,7 @@ import { LoggerModule } from '../../../logger/logger.module';
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
 import { Tag } from '../../../notes/tag.entity';
-import { Authorship } from '../../../revisions/authorship.entity';
+import { Edit } from '../../../revisions/edit.entity';
 import { Revision } from '../../../revisions/revision.entity';
 import { RevisionsModule } from '../../../revisions/revisions.module';
 import { AuthToken } from '../../../auth/auth-token.entity';
@@ -79,7 +79,7 @@ describe('Notes Controller', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})
-      .overrideProvider(getRepositoryToken(Authorship))
+      .overrideProvider(getRepositoryToken(Edit))
       .useValue({})
       .overrideProvider(getRepositoryToken(User))
       .useValue({})

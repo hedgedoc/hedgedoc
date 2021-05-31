@@ -9,14 +9,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthorsModule } from '../authors/authors.module';
 import { LoggerModule } from '../logger/logger.module';
 import { NotesModule } from '../notes/notes.module';
-import { Authorship } from './authorship.entity';
+import { Edit } from './edit.entity';
 import { Revision } from './revision.entity';
 import { RevisionsService } from './revisions.service';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Revision, Authorship]),
+    TypeOrmModule.forFeature([Revision, Edit]),
     forwardRef(() => NotesModule),
     LoggerModule,
     ConfigModule,

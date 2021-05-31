@@ -13,7 +13,7 @@ import {
 } from 'typeorm';
 import { JoinTable, ManyToMany } from 'typeorm';
 import { Note } from '../notes/note.entity';
-import { Authorship } from './authorship.entity';
+import { Edit } from './edit.entity';
 
 /**
  * The state of a note at a particular point in time,
@@ -59,11 +59,11 @@ export class Revision {
   @ManyToOne((_) => Note, (note) => note.revisions, { onDelete: 'CASCADE' })
   note: Note;
   /**
-   * All authorship objects which are used in the revision.
+   * All edit objects which are used in the revision.
    */
-  @ManyToMany((_) => Authorship, (authorship) => authorship.revisions)
+  @ManyToMany((_) => Edit, (edit) => edit.revisions)
   @JoinTable()
-  authorships: Authorship[];
+  edits: Edit[];
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}

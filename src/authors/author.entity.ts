@@ -11,7 +11,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Authorship } from '../revisions/authorship.entity';
+import { Edit } from '../revisions/edit.entity';
 import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 
@@ -20,7 +20,7 @@ export type AuthorColor = number;
 /**
  * The author represents a single user editing a note.
  * A 'user' can either be a registered and logged-in user or a browser session identified by its cookie.
- * All edits (aka authorships) of one user in a note must belong to the same author, so that the same color can be displayed.
+ * All edits of one user in a note must belong to the same author, so that the same color can be displayed.
  */
 @Entity()
 export class Author {
@@ -49,23 +49,23 @@ export class Author {
   user: User | null;
 
   /**
-   * List of authorships that this author created
-   * All authorships must belong to the same note
+   * List of edits that this author created
+   * All edits must belong to the same note
    */
-  @OneToMany(() => Authorship, (authorship) => authorship.author)
-  authorships: Authorship[];
+  @OneToMany(() => Edit, (edit) => edit.author)
+  edits: Edit[];
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
   public static create(
     color: number,
-  ): Pick<Author, 'color' | 'sessions' | 'user' | 'authorships'> {
+  ): Pick<Author, 'color' | 'sessions' | 'user' | 'edits'> {
     const newAuthor = new Author();
     newAuthor.color = color;
     newAuthor.sessions = [];
     newAuthor.user = null;
-    newAuthor.authorships = [];
+    newAuthor.edits = [];
     return newAuthor;
   }
 }
