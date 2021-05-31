@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "dependencies": {
     "@craco/craco": "6.1.2",
-    "@fontsource/source-sans-pro": "4.3.0",
+    "@fontsource/source-sans-pro": "4.4.2",
     "@hedgedoc/markdown-it-task-lists": "1.0.0",
     "@matejmazur/react-katex": "3.1.3",
     "@testing-library/jest-dom": "5.12.0",
