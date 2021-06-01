@@ -26,7 +26,6 @@ import bash from 'highlight.js/lib/languages/bash'
 import basic from 'highlight.js/lib/languages/basic'
 import bnf from 'highlight.js/lib/languages/bnf'
 import brainfuck from 'highlight.js/lib/languages/brainfuck'
-import c_like from 'highlight.js/lib/languages/c-like'
 import c from 'highlight.js/lib/languages/c'
 import cal from 'highlight.js/lib/languages/cal'
 import capnproto from 'highlight.js/lib/languages/capnproto'
@@ -83,7 +82,6 @@ import handlebars from 'highlight.js/lib/languages/handlebars'
 import haskell from 'highlight.js/lib/languages/haskell'
 import haxe from 'highlight.js/lib/languages/haxe'
 import hsp from 'highlight.js/lib/languages/hsp'
-import htmlbars from 'highlight.js/lib/languages/htmlbars'
 import http from 'highlight.js/lib/languages/http'
 import hy from 'highlight.js/lib/languages/hy'
 import inform7 from 'highlight.js/lib/languages/inform7'
@@ -193,6 +191,8 @@ import x86asm from 'highlight.js/lib/languages/x86asm'
 import xl from 'highlight.js/lib/languages/xl'
 import xquery from 'highlight.js/lib/languages/xquery'
 import zephir from 'highlight.js/lib/languages/zephir'
+import wasm from 'highlight.js/lib/languages/wasm'
+import nestedtext from 'highlight.js/lib/languages/nestedtext'
 
 hljs.registerLanguage('abnf', abnf)
 hljs.registerLanguage('accesslog', accesslog)
@@ -216,7 +216,6 @@ hljs.registerLanguage('bash', bash)
 hljs.registerLanguage('basic', basic)
 hljs.registerLanguage('bnf', bnf)
 hljs.registerLanguage('brainfuck', brainfuck)
-hljs.registerLanguage('c-like', c_like)
 hljs.registerLanguage('c', c)
 hljs.registerLanguage('cal', cal)
 hljs.registerLanguage('capnproto', capnproto)
@@ -274,7 +273,6 @@ hljs.registerLanguage('haskell', haskell)
 hljs.registerLanguage('haxe', haxe)
 hljs.registerLanguage('hsp', hsp)
 hljs.registerLanguage('html', xml)
-hljs.registerLanguage('htmlbars', htmlbars)
 hljs.registerLanguage('http', http)
 hljs.registerLanguage('hy', hy)
 hljs.registerLanguage('inform7', inform7)
@@ -312,6 +310,7 @@ hljs.registerLanguage('perl', perl)
 hljs.registerLanguage('mojolicious', mojolicious)
 hljs.registerLanguage('monkey', monkey)
 hljs.registerLanguage('moonscript', moonscript)
+hljs.registerLanguage('nestedtext', nestedtext)
 hljs.registerLanguage('n1ql', n1ql)
 hljs.registerLanguage('nginx', nginx)
 hljs.registerLanguage('nim', nim)
@@ -385,5 +384,6 @@ hljs.registerLanguage('x86asm', x86asm)
 hljs.registerLanguage('xl', xl)
 hljs.registerLanguage('xquery', xquery)
 hljs.registerLanguage('zephir', zephir)
+hljs.registerLanguage('wasmn', wasm)
 
 export default hljs
