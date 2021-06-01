@@ -6024,10 +6024,10 @@ emittery@^0.7.1:
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.7.2.tgz#25595908e13af0f5674ab419396e2fb394cdfa82"
   integrity sha512-A8OG5SR/ij3SsJdWDJdkkSYUjQdCUx6APQXem0SaEePBSRg4eymGYwBkKo1Y6DU+af/Jn2dBQqDBvjnr9Vi8nQ==
 
-emoji-picker-element@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/emoji-picker-element/-/emoji-picker-element-1.4.0.tgz#d69561e8d17bbeb1f0ac464f4bef70780a5bf248"
-  integrity sha512-ZwjedtXzaQ+1JF76zIhlpb4JpEl5xoSVP5WHbW9SviO7QulyMQORC4CNntAY9KNT5jmkeY7ciV7H6jCFaAdQzQ==
+emoji-picker-element@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/emoji-picker-element/-/emoji-picker-element-1.5.0.tgz#eb5aa5b3a33118292a52970152f63221c890b308"
+  integrity sha512-yC5v7FAqCTS/aiNDMONhnJffA1ry9CJX7t2ZXFHBcR4vf0a11VEaeBfhBKdoUGEOoZivfTZ1GOMRBrVU0uX+Dg==
 
 emoji-regex@^7.0.1:
   version "7.0.3"
