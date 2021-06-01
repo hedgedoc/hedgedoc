@@ -5,6 +5,11 @@ configs that you'll have to do.
 
 This documentation will cover HTTPS setup, with comments for HTTP setup.
 
+## Cloudflare
+!!! warning "Requirements on your server"
+    If you use Cloudflare as reverse proxy then you **MUST** disable the minify features for HTML, CSS and JS, or your HedgeDoc instance may be broken.
+    For more information please read the [Cloudflare documentation](https://support.cloudflare.com/hc/en-us/articles/200168196-How-do-I-minify-HTML-CSS-and-JavaScript-to-optimize-my-site-).
+
 ## HedgeDoc config
 
 [Full explanation of the configuration options](../configuration.md)
@@ -92,4 +97,3 @@ Here is an example config snippet:
   Include /etc/letsencrypt/options-ssl-apache.conf
 </VirtualHost>
 ```
-
