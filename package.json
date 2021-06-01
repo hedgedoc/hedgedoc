@@ -70,7 +70,7 @@
     "@types/cli-color": "2.0.0",
     "@types/express": "4.17.12",
     "@types/jest": "26.0.23",
-    "@types/node": "13.13.52",
+    "@types/node": "14.17.1",
     "@types/supertest": "2.0.11",
     "@typescript-eslint/eslint-plugin": "4.26.0",
     "@typescript-eslint/parser": "4.26.0",
