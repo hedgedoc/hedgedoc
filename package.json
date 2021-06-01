@@ -57,7 +57,7 @@
     "raw-body": "2.4.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
-    "rxjs": "7.0.1",
+    "rxjs": "7.1.0",
     "sqlite3": "5.0.2",
     "swagger-ui-express": "4.1.6",
     "typeorm": "0.2.32"
