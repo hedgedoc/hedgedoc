@@ -20,7 +20,8 @@ module.exports = {
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       'moment': 'moment',
-      'Handlebars': 'handlebars'
+      'Handlebars': 'handlebars',
+      CodeMirror: 'codemirror/lib/codemirror.js'
     }),
     new HtmlWebpackPlugin({
       template: 'public/views/includes/header.ejs',
@@ -215,10 +216,8 @@ module.exports = {
       'script-loader!jquery-ui-resizable',
       'script-loader!Idle.Js',
       'expose-loader?exposes=LZString!lz-string',
-      'script-loader!codemirror',
       'script-loader!inlineAttachment',
       'script-loader!jqueryTextcomplete',
-      'script-loader!codemirrorSpellChecker',
       'script-loader!codemirrorInlineAttachment',
       'script-loader!ot',
       'flowchart.js',
@@ -265,10 +264,8 @@ module.exports = {
       'script-loader!Idle.Js',
       'script-loader!gist-embed',
       'expose-loader?exposes=LZString!lz-string',
-      'script-loader!codemirror',
       'script-loader!inlineAttachment',
       'script-loader!jqueryTextcomplete',
-      'script-loader!codemirrorSpellChecker',
       'script-loader!codemirrorInlineAttachment',
       'script-loader!ot',
       'flowchart.js',
@@ -364,10 +361,8 @@ module.exports = {
     modules: ['node_modules'],
     extensions: ['.js'],
     alias: {
-      codemirror: path.join(__dirname, 'node_modules/codemirror/codemirror.min.js'),
       inlineAttachment: path.join(__dirname, 'public/vendor/inlineAttachment/inline-attachment.js'),
       jqueryTextcomplete: path.join(__dirname, 'public/vendor/jquery-textcomplete/jquery.textcomplete.js'),
-      codemirrorSpellChecker: path.join(__dirname, 'public/vendor/codemirror-spell-checker/spell-checker.min.js'),
       codemirrorInlineAttachment: path.join(__dirname, 'public/vendor/inlineAttachment/codemirror.inline-attachment.js'),
       ot: path.join(__dirname, 'public/vendor/ot/ot.min.js'),
       mermaid: path.join(__dirname, 'node_modules/mermaid/dist/mermaid.min.js'),
@@ -392,78 +387,88 @@ module.exports = {
   },
 
   module: {
-    rules: [{
-      test: /\.js$/,
-      use: [{ loader: 'babel-loader' }],
-      exclude: [/node_modules/, /public\/vendor/]
-    }, {
-      test: /\.css$/,
-      use: [
-        {
-          loader: MiniCssExtractPlugin.loader,
+    rules: [
+      {
+        test: require.resolve(path.join(__dirname, 'public/vendor/codemirror-spell-checker/spell-checker.min.js')),
+        use: {
+          loader: 'imports-loader',
           options: {
-            publicPath: '',
+            imports: ['default codemirror CodeMirror']
           }
-        },
-        'css-loader'
-      ]
-    }, {
-      test: /\.less$/,
-      use: [
-        MiniCssExtractPlugin.loader,
-        {
-          loader: 'css-loader',
-          options: {
-            importLoaders: 1
-          }
-        },
-        'less-loader'
-      ]
-    }, {
-      test: require.resolve('js-sequence-diagrams'),
-      use: [{
-        loader: 'imports-loader',
-        options: {
-          imports: ['default lodash _', 'default raphael Raphael', 'default eve eve']
         }
+      },
+      {
+        test: /\.js$/,
+        use: [{ loader: 'babel-loader' }],
+        exclude: [/node_modules/, /public\/vendor/]
+      }, {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '',
+            }
+          },
+          'css-loader'
+        ]
+      }, {
+        test: /\.less$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
+          },
+          'less-loader'
+        ]
+      }, {
+        test: require.resolve('js-sequence-diagrams'),
+        use: [{
+          loader: 'imports-loader',
+          options: {
+            imports: ['default lodash _', 'default raphael Raphael', 'default eve eve']
+          }
+        }]
+      }, {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{ loader: 'file-loader' }]
+      }, {
+        test: /\.html$/,
+        use: [{ loader: 'string-loader' }]
+      }, {
+        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: 'url-loader',
+          options: { prefix: 'font/', limit: '5000' }
+        }]
+      }, {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: 'url-loader',
+          options: { limit: '5000', mimetype: 'application/octet-stream' }
+        }]
+      }, {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: 'url-loader',
+          options: { limit: '10000', mimetype: 'svg+xml' }
+        }]
+      }, {
+        test: /\.png(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: 'url-loader',
+          options: { limit: '10000', mimetype: 'image/png' }
+        }]
+      }, {
+        test: /\.gif(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: 'url-loader',
+          options: { limit: '10000', mimetype: 'image/gif' }
+        }]
       }]
-    }, {
-      test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-      use: [{ loader: 'file-loader' }]
-    }, {
-      test: /\.html$/,
-      use: [{ loader: 'string-loader' }]
-    }, {
-      test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-      use: [{
-        loader: 'url-loader',
-        options: { prefix: 'font/', limit: '5000' }
-      }]
-    }, {
-      test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-      use: [{
-        loader: 'url-loader',
-        options: { limit: '5000', mimetype: 'application/octet-stream' }
-      }]
-    }, {
-      test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-      use: [{
-        loader: 'url-loader',
-        options: { limit: '10000', mimetype: 'svg+xml' }
-      }]
-    }, {
-      test: /\.png(\?v=\d+\.\d+\.\d+)?$/,
-      use: [{
-        loader: 'url-loader',
-        options: { limit: '10000', mimetype: 'image/png' }
-      }]
-    }, {
-      test: /\.gif(\?v=\d+\.\d+\.\d+)?$/,
-      use: [{
-        loader: 'url-loader',
-        options: { limit: '10000', mimetype: 'image/gif' }
-      }]
-    }]
   },
   node: {
     fs: 'empty'
