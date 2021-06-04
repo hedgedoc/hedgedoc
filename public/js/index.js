@@ -1,6 +1,6 @@
 /* eslint-env browser, jquery */
 /* eslint no-console: ["error", { allow: ["warn", "error", "debug"] }] */
-/* global Cookies, moment, Idle, serverurl,
+/* global Cookies, moment, serverurl,
    key, Dropbox, ot, hex2rgb, Visibility */
 
 import TurndownService from 'turndown'
@@ -8,6 +8,8 @@ import CodeMirror from 'codemirror/lib/codemirror.js'
 
 import 'jquery-ui/ui/widgets/resizable'
 import 'jquery-ui/themes/base/resizable.css'
+
+import Idle from 'Idle.Js'
 
 import { saveAs } from 'file-saver'
 import randomColor from 'randomcolor'

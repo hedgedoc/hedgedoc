@@ -213,7 +213,6 @@ module.exports = {
     ],
     index: [
       'babel-polyfill',
-      'script-loader!Idle.Js',
       'expose-loader?exposes=LZString!lz-string',
       'script-loader!inlineAttachment',
       'script-loader!jqueryTextcomplete',
@@ -258,7 +257,6 @@ module.exports = {
       'script-loader!handlebars',
       'expose-loader?exposes=hljs!highlight.js',
       'expose-loader?exposes=emojify!emojify.js',
-      'script-loader!Idle.Js',
       'script-loader!gist-embed',
       'expose-loader?exposes=LZString!lz-string',
       'script-loader!inlineAttachment',
@@ -391,6 +389,13 @@ module.exports = {
           options: {
             imports: ['default codemirror CodeMirror']
           }
+        }
+      },
+      {
+        // Idle.js must be imported as CommonJS, as its AMD export is broken
+        test: require.resolve('Idle.Js'),
+        parser: {
+          amd: false
         }
       },
       {
