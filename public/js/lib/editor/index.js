@@ -34,6 +34,9 @@ import 'codemirror/addon/fold/xml-fold.js'
 import 'codemirror/addon/merge/merge.js'
 import '../../../vendor/codemirror-spell-checker/spell-checker.min.js'
 
+import '../../../vendor/inlineAttachment/inline-attachment'
+import '../../../vendor/inlineAttachment/codemirror.inline-attachment'
+
 import * as utils from './utils'
 import config from './config'
 import statusBarTemplate from './statusbar.html'
