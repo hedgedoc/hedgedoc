@@ -213,7 +213,6 @@ module.exports = {
     ],
     index: [
       'babel-polyfill',
-      'script-loader!jquery-ui-resizable',
       'script-loader!Idle.Js',
       'expose-loader?exposes=LZString!lz-string',
       'script-loader!inlineAttachment',
@@ -226,7 +225,6 @@ module.exports = {
       path.join(__dirname, 'public/js/index.js')
     ],
     'index-styles': [
-      path.join(__dirname, 'public/vendor/jquery-ui/jquery-ui.min.css'),
       path.join(__dirname, 'public/vendor/codemirror-spell-checker/spell-checker.min.css'),
       path.join(__dirname, 'node_modules/codemirror/lib/codemirror.css'),
       path.join(__dirname, 'node_modules/codemirror/addon/fold/foldgutter.css'),
@@ -253,7 +251,6 @@ module.exports = {
     ],
     'index-pack': [
       'babel-polyfill',
-      'script-loader!jquery-ui-resizable',
       'bootstrap-validator',
       'expose-loader?exposes=jsyaml!js-yaml',
       'script-loader!mermaid',
@@ -367,7 +364,6 @@ module.exports = {
       ot: path.join(__dirname, 'public/vendor/ot/ot.min.js'),
       mermaid: path.join(__dirname, 'node_modules/mermaid/dist/mermaid.min.js'),
       handlebars: path.join(__dirname, 'node_modules/handlebars/dist/handlebars.min.js'),
-      'jquery-ui-resizable': path.join(__dirname, 'public/vendor/jquery-ui/jquery-ui.min.js'),
       'gist-embed': path.join(__dirname, 'node_modules/gist-embed/gist-embed.min.js'),
       'bootstrap-tooltip': path.join(__dirname, 'public/vendor/bootstrap/tooltip.min.js'),
       'reveal-markdown': path.join(__dirname, 'public/js/reveal-markdown.js'),

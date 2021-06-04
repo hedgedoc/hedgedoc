@@ -6,6 +6,9 @@
 import TurndownService from 'turndown'
 import CodeMirror from 'codemirror/lib/codemirror.js'
 
+import 'jquery-ui/ui/widgets/resizable'
+import 'jquery-ui/themes/base/resizable.css'
+
 import { saveAs } from 'file-saver'
 import randomColor from 'randomcolor'
 import store from 'store'
