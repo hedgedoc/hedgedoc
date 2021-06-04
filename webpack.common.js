@@ -214,7 +214,6 @@ module.exports = {
     index: [
       'babel-polyfill',
       'expose-loader?exposes=LZString!lz-string',
-      'script-loader!jqueryTextcomplete',
       'script-loader!ot',
       'flowchart.js',
       'js-sequence-diagrams',
@@ -257,7 +256,6 @@ module.exports = {
       'expose-loader?exposes=emojify!emojify.js',
       'script-loader!gist-embed',
       'expose-loader?exposes=LZString!lz-string',
-      'script-loader!jqueryTextcomplete',
       'script-loader!ot',
       'flowchart.js',
       'js-sequence-diagrams',
@@ -352,7 +350,6 @@ module.exports = {
     modules: ['node_modules'],
     extensions: ['.js'],
     alias: {
-      jqueryTextcomplete: path.join(__dirname, 'public/vendor/jquery-textcomplete/jquery.textcomplete.js'),
       ot: path.join(__dirname, 'public/vendor/ot/ot.min.js'),
       mermaid: path.join(__dirname, 'node_modules/mermaid/dist/mermaid.min.js'),
       handlebars: path.join(__dirname, 'node_modules/handlebars/dist/handlebars.min.js'),

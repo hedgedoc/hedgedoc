@@ -11,6 +11,8 @@ import 'jquery-ui/themes/base/resizable.css'
 
 import Idle from 'Idle.Js'
 
+import '../vendor/jquery-textcomplete/jquery.textcomplete'
+
 import { saveAs } from 'file-saver'
 import randomColor from 'randomcolor'
 import store from 'store'
