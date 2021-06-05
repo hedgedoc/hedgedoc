@@ -36,7 +36,7 @@ export const emojiPickerConfig = {
 
 const twemojiStyle = (): HTMLStyleElement => {
   const style = document.createElement('style')
-  style.textContent = 'section.picker { --font-family: "Twemoji Mozilla" !important; }'
+  style.textContent = 'section.picker { --font-family: "Twemoji" !important; }'
   return style
 }
 
