@@ -42,7 +42,7 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
     import(/* webpackChunkName: "highlight.js" */ '../../../../common/hljs/hljs').then((hljs) => {
       const languageSupported = (lang: string) => hljs.default.listLanguages()
                                                       .includes(lang)
-      const unreplacedCode = !!language && languageSupported(language) ? hljs.default.highlight(language, code).value : escapeHtml(code)
+      const unreplacedCode = !!language && languageSupported(language) ? hljs.default.highlight(code, { language }).value : escapeHtml(code)
       const replacedDom = replaceCode(unreplacedCode)
         .map((line, index) => (
           <Fragment key={ index }>
