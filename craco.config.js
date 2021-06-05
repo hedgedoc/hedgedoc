@@ -16,7 +16,7 @@ module.exports = {
           patterns: [
             { from: 'node_modules/@hpcc-js/wasm/dist/graphvizlib.wasm', to: 'static/js' },
             { from: 'node_modules/@hpcc-js/wasm/dist/expatlib.wasm', to: 'static/js' },
-            { from: 'node_modules/emojibase-data/en/data.json', to: 'static/js/emoji-data.json' }
+            { from: 'node_modules/emoji-picker-element-data/en/emojibase/data.json', to: 'static/js/emoji-data.json' }
           ],
         }),
         ...when(Boolean(process.env.ANALYZE), () => [

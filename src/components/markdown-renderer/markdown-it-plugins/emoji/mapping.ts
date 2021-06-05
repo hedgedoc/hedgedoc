@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import emojiData from 'emojibase-data/en/compact.json'
+import emojiData from 'emoji-picker-element-data/en/emojibase/data.json'
 import { ForkAwesomeIcons } from '../../../editor-page/editor-pane/tool-bar/emoji-picker/icon-names'
 
 interface EmojiEntry {
   shortcodes: string[]
-  unicode: string
+  emoji: string
 }
 
 type ShortCodeMap = { [key: string]: string }
@@ -17,7 +17,7 @@ type ShortCodeMap = { [key: string]: string }
 const shortCodeMap = (emojiData as unknown as EmojiEntry[])
   .reduce((reduceObject, emoji) => {
     emoji.shortcodes.forEach(shortcode => {
-      reduceObject[shortcode] = emoji.unicode
+      reduceObject[shortcode] = emoji.emoji
     })
     return reduceObject
   }, {} as ShortCodeMap)
