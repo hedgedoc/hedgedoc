@@ -1358,10 +1358,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fontsource/source-sans-pro@4.4.2":
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/@fontsource/source-sans-pro/-/source-sans-pro-4.4.2.tgz#3fc42b2512c12f2e305a807804f8e194f205ea33"
-  integrity sha512-tvC3so7mWEoNeIxJbcGOpc5Gdhr30Fip056mRBmBO/F96AfleP8CjLiKRRjoMpzq9XExUB9TDKF8ayCbdsFYFw==
+"@fontsource/source-sans-pro@4.4.5":
+  version "4.4.5"
+  resolved "https://registry.yarnpkg.com/@fontsource/source-sans-pro/-/source-sans-pro-4.4.5.tgz#cc4a930ab11d09c90a497429d57abd312c76159b"
+  integrity sha512-WMAz713kgSnI4Re+6h4oBcmcl3ogq2RDLN8yZhP8GRXgR1wCEPZQKo6VC26ifofxdFu1kft0N3fYszQfKwJH0Q==
 
 "@hapi/address@2.x.x":
   version "2.1.4"
