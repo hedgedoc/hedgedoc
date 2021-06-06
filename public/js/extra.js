@@ -17,7 +17,6 @@ import markdownitContainer from 'markdown-it-container'
 /* Defined regex markdown it plugins */
 import Plugin from 'markdown-it-regexp'
 
-import handlebars from 'handlebars'
 import 'gist-embed'
 import abcjs from 'abcjs'
 
@@ -669,19 +668,15 @@ export function exportToHTML (view) {
   tocAffix.find('*').removeClass('active').find("a[href^='#'][smoothhashscroll]").removeAttr('smoothhashscroll')
   // generate html via template
   $.get(`${serverurl}/build/html.min.css`, css => {
-    $.get(`${serverurl}/views/html.hbs`, data => {
-      const template = handlebars.compile(data)
-      const context = {
-        url: serverurl,
-        title,
-        css,
-        html: src[0].outerHTML,
-        'ui-toc': toc.html(),
-        'ui-toc-affix': tocAffix.html(),
-        lang: (md && md.meta && md.meta.lang) ? `lang="${md.meta.lang}"` : null,
-        dir: (md && md.meta && md.meta.dir) ? `dir="${md.meta.dir}"` : null
-      }
-      const html = template(context)
+    $.get(`${serverurl}/views/html.hbs`, template => {
+      let html = template.replace('{{{url}}}', serverurl)
+      html = html.replace('{{title}}', title)
+      html = html.replace('{{{css}}}', css)
+      html = html.replace('{{{html}}}', src[0].outerHTML)
+      html = html.replace('{{{ui-toc}}}', toc.html())
+      html = html.replace('{{{ui-toc-affix}}}', tocAffix.html())
+      html = html.replace('{{{lang}}}', (md && md.meta && md.meta.lang) ? `lang="${md.meta.lang}"` : '')
+      html = html.replace('{{{dir}}}', (md && md.meta && md.meta.dir) ? `dir="${md.meta.dir}"` : '')
       const blob = new Blob([html], {
         type: 'text/html;charset=utf-8'
       })
