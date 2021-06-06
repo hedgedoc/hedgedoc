@@ -18,7 +18,6 @@ import markdownitContainer from 'markdown-it-container'
 import Plugin from 'markdown-it-regexp'
 
 import 'gist-embed'
-import abcjs from 'abcjs'
 
 require('prismjs/themes/prism.css')
 require('prismjs/components/prism-wiki')
@@ -412,14 +411,15 @@ export function finishView (view) {
     try {
       $value = $(value)
       const $ele = $(value).parent().parent()
-
-      abcjs.renderAbc(value, $value.text())
-
-      $ele.addClass('abc')
-      $value.children().unwrap().unwrap()
-      const svg = $ele.find('> svg')
-      svg[0].setAttribute('viewBox', `0 0 ${svg.attr('width')} ${svg.attr('height')}`)
-      svg[0].setAttribute('preserveAspectRatio', 'xMidYMid meet')
+      require.ensure([], function (require) {
+        const abcjs = require('abcjs')
+        abcjs.renderAbc(value, $value.text())
+        $ele.addClass('abc')
+        $value.children().unwrap().unwrap()
+        const svg = $ele.find('> svg')
+        svg[0].setAttribute('viewBox', `0 0 ${svg.attr('width')} ${svg.attr('height')}`)
+        svg[0].setAttribute('preserveAspectRatio', 'xMidYMid meet')
+      })
     } catch (err) {
       $value.unwrap()
       $value.parent().append(`<div class="alert alert-warning">${escapeHTML(err)}</div>`)
@@ -496,7 +496,7 @@ export function finishView (view) {
       const langDiv = $(value)
       if (langDiv.length > 0) {
         const reallang = langDiv[0].className.replace(/hljs|wrap/g, '').trim()
-        if (reallang === 'mermaid') {
+        if (reallang === 'mermaid' || reallang === 'abc') {
           return
         }
         const codeDiv = langDiv.find('.code')
