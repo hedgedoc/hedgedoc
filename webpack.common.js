@@ -214,7 +214,6 @@ module.exports = {
     index: [
       'babel-polyfill',
       'expose-loader?exposes=LZString!lz-string',
-      'script-loader!ot',
       'flowchart.js',
       'js-sequence-diagrams',
       'expose-loader?exposes=RevealMarkdown!reveal-markdown',
@@ -256,7 +255,6 @@ module.exports = {
       'expose-loader?exposes=emojify!emojify.js',
       'script-loader!gist-embed',
       'expose-loader?exposes=LZString!lz-string',
-      'script-loader!ot',
       'flowchart.js',
       'js-sequence-diagrams',
       'expose-loader?exposes=Viz!viz.js',
@@ -350,7 +348,6 @@ module.exports = {
     modules: ['node_modules'],
     extensions: ['.js'],
     alias: {
-      ot: path.join(__dirname, 'public/vendor/ot/ot.min.js'),
       mermaid: path.join(__dirname, 'node_modules/mermaid/dist/mermaid.min.js'),
       handlebars: path.join(__dirname, 'node_modules/handlebars/dist/handlebars.min.js'),
       'gist-embed': path.join(__dirname, 'node_modules/gist-embed/gist-embed.min.js'),
@@ -380,6 +377,19 @@ module.exports = {
           options: {
             imports: ['default codemirror CodeMirror']
           }
+        }
+      },
+      {
+        test: require.resolve(path.join(__dirname, 'public/vendor/ot/ot.min.js')),
+        use: {
+          loader: 'exports-loader',
+          options: {
+            type: 'commonjs',
+            exports: ['ot']
+          }
+        },
+        parser: {
+          amd: false
         }
       },
       {
