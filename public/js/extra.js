@@ -18,6 +18,7 @@ import markdownitContainer from 'markdown-it-container'
 import Plugin from 'markdown-it-regexp'
 
 import mermaid from 'mermaid'
+import handlebars from 'handlebars'
 
 require('prismjs/themes/prism.css')
 require('prismjs/components/prism-wiki')
@@ -666,7 +667,7 @@ export function exportToHTML (view) {
   // generate html via template
   $.get(`${serverurl}/build/html.min.css`, css => {
     $.get(`${serverurl}/views/html.hbs`, data => {
-      const template = window.Handlebars.compile(data)
+      const template = handlebars.compile(data)
       const context = {
         url: serverurl,
         title,

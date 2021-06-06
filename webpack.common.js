@@ -20,7 +20,6 @@ module.exports = {
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       'moment': 'moment',
-      'Handlebars': 'handlebars',
       CodeMirror: 'codemirror/lib/codemirror.js'
     }),
     new HtmlWebpackPlugin({
@@ -249,7 +248,6 @@ module.exports = {
       'bootstrap-validator',
       'expose-loader?exposes=jsyaml!js-yaml',
       'expose-loader?exposes=moment!moment',
-      'script-loader!handlebars',
       'expose-loader?exposes=hljs!highlight.js',
       'expose-loader?exposes=emojify!emojify.js',
       'script-loader!gist-embed',
@@ -284,7 +282,6 @@ module.exports = {
       'babel-polyfill',
       'expose-loader?exposes=jsyaml!js-yaml',
       'expose-loader?exposes=moment!moment',
-      'script-loader!handlebars',
       'expose-loader?exposes=hljs!highlight.js',
       'expose-loader?exposes=emojify!emojify.js',
       'script-loader!gist-embed',
@@ -321,7 +318,6 @@ module.exports = {
       'bootstrap-tooltip',
       'expose-loader?exposes=jsyaml!js-yaml',
       'expose-loader?exposes=moment!moment',
-      'script-loader!handlebars',
       'expose-loader?exposes=hljs!highlight.js',
       'expose-loader?exposes=emojify!emojify.js',
       'script-loader!gist-embed',
@@ -345,7 +341,6 @@ module.exports = {
     modules: ['node_modules'],
     extensions: ['.js'],
     alias: {
-      handlebars: path.join(__dirname, 'node_modules/handlebars/dist/handlebars.min.js'),
       'gist-embed': path.join(__dirname, 'node_modules/gist-embed/gist-embed.min.js'),
       'bootstrap-tooltip': path.join(__dirname, 'public/vendor/bootstrap/tooltip.min.js'),
       'reveal-markdown': path.join(__dirname, 'public/js/reveal-markdown.js'),
@@ -359,7 +354,6 @@ module.exports = {
     'socket.io-client': 'io',
     'jquery': '$',
     'moment': 'moment',
-    'handlebars': 'Handlebars',
     'highlight.js': 'hljs',
     'select2': 'select2'
   },
