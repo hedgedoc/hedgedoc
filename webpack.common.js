@@ -254,7 +254,6 @@ module.exports = {
       'flowchart.js',
       'js-sequence-diagrams',
       'expose-loader?exposes=Viz!viz.js',
-      'script-loader!abcjs',
       'expose-loader?exposes=io!socket.io-client',
       'expose-loader?exposes=RevealMarkdown!reveal-markdown',
       path.join(__dirname, 'public/js/index.js')
@@ -286,7 +285,6 @@ module.exports = {
       'flowchart.js',
       'js-sequence-diagrams',
       'expose-loader?exposes=Viz!viz.js',
-      'script-loader!abcjs',
       'expose-loader?exposes=RevealMarkdown!reveal-markdown',
       path.join(__dirname, 'public/js/pretty.js')
     ],
@@ -321,7 +319,6 @@ module.exports = {
       'flowchart.js',
       'js-sequence-diagrams',
       'expose-loader?exposes=Viz!viz.js',
-      'script-loader!abcjs',
       'expose-loader?exposes=Reveal!reveal.js',
       'expose-loader?exposes=RevealMarkdown!reveal-markdown',
       path.join(__dirname, 'public/js/slide.js')
@@ -340,7 +337,6 @@ module.exports = {
     alias: {
       'bootstrap-tooltip': path.join(__dirname, 'public/vendor/bootstrap/tooltip.min.js'),
       'reveal-markdown': path.join(__dirname, 'public/js/reveal-markdown.js'),
-      abcjs: path.join(__dirname, 'public/vendor/abcjs_basic_3.1.1-min.js'),
       raphael: path.join(__dirname, 'node_modules/raphael/raphael.no-deps.js')
     }
   },

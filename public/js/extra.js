@@ -20,6 +20,7 @@ import Plugin from 'markdown-it-regexp'
 import mermaid from 'mermaid'
 import handlebars from 'handlebars'
 import 'gist-embed'
+import abcjs from 'abcjs'
 
 require('prismjs/themes/prism.css')
 require('prismjs/components/prism-wiki')
@@ -415,7 +416,7 @@ export function finishView (view) {
       $value = $(value)
       const $ele = $(value).parent().parent()
 
-      window.ABCJS.renderAbc(value, $value.text())
+      abcjs.renderAbc(value, $value.text())
 
       $ele.addClass('abc')
       $value.children().unwrap().unwrap()
