@@ -24,6 +24,7 @@ import { RevisionsService } from '../revisions/revisions.service';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { checkArrayForDuplicates } from '../utils/arrayDuplicatCheck';
+import { Alias } from './alias.entity';
 import { NoteMetadataDto } from './note-metadata.dto';
 import {
   NotePermissionsDto,
@@ -32,6 +33,7 @@ import {
 import { NoteDto } from './note.dto';
 import { Note } from './note.entity';
 import { Tag } from './tag.entity';
+import { getPrimaryAlias } from './utils';
 
 @Injectable()
 export class NotesService {
@@ -39,6 +41,7 @@ export class NotesService {
     private readonly logger: ConsoleLoggerService,
     @InjectRepository(Note) private noteRepository: Repository<Note>,
     @InjectRepository(Tag) private tagRepository: Repository<Tag>,
+    @InjectRepository(Alias) private aliasRepository: Repository<Alias>,
     @InjectRepository(User) private userRepository: Repository<User>,
     @Inject(UsersService) private usersService: UsersService,
     @Inject(GroupsService) private groupsService: GroupsService,
@@ -59,7 +62,13 @@ export class NotesService {
   async getUserNotes(user: User): Promise<Note[]> {
     const notes = await this.noteRepository.find({
       where: { owner: user },
-      relations: ['owner', 'userPermissions', 'groupPermissions', 'tags'],
+      relations: [
+        'owner',
+        'userPermissions',
+        'groupPermissions',
+        'tags',
+        'aliases',
+      ],
     });
     if (notes === undefined) {
       return [];
@@ -79,21 +88,19 @@ export class NotesService {
    */
   async createNote(
     noteContent: string,
-    alias?: NoteMetadataDto['alias'],
+    alias?: string,
     owner?: User,
   ): Promise<Note> {
-    const newNote = Note.create();
+    if (alias) {
+      this.checkNoteIdOrAlias(alias);
+    }
+    const newNote = Note.create(owner, alias);
     //TODO: Calculate patch
     newNote.revisions = Promise.resolve([
       Revision.create(noteContent, noteContent),
     ]);
-    if (alias) {
-      newNote.alias = alias;
-      this.checkNoteIdOrAlias(alias);
-    }
     if (owner) {
       newNote.historyEntries = [HistoryEntry.create(owner)];
-      newNote.owner = owner;
     }
     try {
       return await this.noteRepository.save(newNote);
@@ -156,24 +163,33 @@ export class NotesService {
       'getNoteByIdOrAlias',
     );
     this.checkNoteIdOrAlias(noteIdOrAlias);
-    const note = await this.noteRepository.findOne({
-      where: [
-        {
-          publicId: noteIdOrAlias,
-        },
-        {
-          alias: noteIdOrAlias,
-        },
-      ],
-      relations: [
-        'owner',
-        'groupPermissions',
-        'groupPermissions.group',
-        'userPermissions',
-        'userPermissions.user',
-        'tags',
-      ],
-    });
+
+    /**
+     * This query gets the note's aliases, owner, groupPermissions (and the groups), userPermissions (and the users) and tags and
+     * then only gets the note, that either has a publicId :noteIdOrAlias or has any alias with this name.
+     **/
+    const note = await this.noteRepository
+      .createQueryBuilder('note')
+      .leftJoinAndSelect('note.aliases', 'alias')
+      .leftJoinAndSelect('note.owner', 'owner')
+      .leftJoinAndSelect('note.groupPermissions', 'group_permission')
+      .leftJoinAndSelect('group_permission.group', 'group')
+      .leftJoinAndSelect('note.userPermissions', 'user_permission')
+      .leftJoinAndSelect('user_permission.user', 'user')
+      .leftJoinAndSelect('note.tags', 'tag')
+      .where('note.publicId = :noteIdOrAlias')
+      .orWhere((queryBuilder) => {
+        const subQuery = queryBuilder
+          .subQuery()
+          .select('alias.noteId')
+          .from(Alias, 'alias')
+          .where('alias.name = :noteIdOrAlias')
+          .getQuery();
+        return 'note.id IN ' + subQuery;
+      })
+      .setParameter('noteIdOrAlias', noteIdOrAlias)
+      .getOne();
+
     if (note === undefined) {
       this.logger.debug(
         `Could not find note '${noteIdOrAlias}'`,
@@ -369,7 +385,8 @@ export class NotesService {
     const updateUser = await this.calculateUpdateUser(note);
     return {
       id: note.publicId,
-      alias: note.alias ?? null,
+      aliases: note.aliases.map((alias) => alias.name),
+      primaryAlias: getPrimaryAlias(note) ?? null,
       title: note.title ?? '',
       createTime: (await this.getFirstRevision(note)).createdAt,
       description: note.description ?? '',
