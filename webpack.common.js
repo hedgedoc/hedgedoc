@@ -248,7 +248,6 @@ module.exports = {
       'bootstrap-validator',
       'expose-loader?exposes=jsyaml!js-yaml',
       'expose-loader?exposes=moment!moment',
-      'expose-loader?exposes=hljs!highlight.js',
       'expose-loader?exposes=emojify!emojify.js',
       'expose-loader?exposes=LZString!lz-string',
       'flowchart.js',
@@ -279,7 +278,6 @@ module.exports = {
       'babel-polyfill',
       'expose-loader?exposes=jsyaml!js-yaml',
       'expose-loader?exposes=moment!moment',
-      'expose-loader?exposes=hljs!highlight.js',
       'expose-loader?exposes=emojify!emojify.js',
       'flowchart.js',
       'js-sequence-diagrams',
@@ -312,7 +310,6 @@ module.exports = {
       'bootstrap-tooltip',
       'expose-loader?exposes=jsyaml!js-yaml',
       'expose-loader?exposes=moment!moment',
-      'expose-loader?exposes=hljs!highlight.js',
       'expose-loader?exposes=emojify!emojify.js',
       'flowchart.js',
       'js-sequence-diagrams',
@@ -342,7 +339,6 @@ module.exports = {
     'socket.io-client': 'io',
     'jquery': '$',
     'moment': 'moment',
-    'highlight.js': 'hljs',
     'select2': 'select2'
   },
 

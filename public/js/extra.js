@@ -3,7 +3,6 @@
 /* global moment, serverurl */
 
 import Prism from 'prismjs'
-import hljs from 'highlight.js'
 import PDFObject from 'pdfobject'
 import S from 'string'
 import { saveAs } from 'file-saver'
@@ -525,13 +524,19 @@ export function finishView (view) {
             value: Prism.highlight(code, Prism.languages.makefile)
           }
         } else {
-          code = S(code).unescapeHTML().s
-          const languages = hljs.listLanguages()
-          if (!languages.includes(reallang)) {
-            result = hljs.highlightAuto(code)
-          } else {
-            result = hljs.highlight(reallang, code)
-          }
+          require.ensure([], function (require) {
+            const hljs = require('highlight.js')
+            code = S(code).unescapeHTML().s
+            const languages = hljs.listLanguages()
+            if (!languages.includes(reallang)) {
+              result = hljs.highlightAuto(code)
+            } else {
+              result = hljs.highlight(reallang, code)
+            }
+            if (codeDiv.length > 0) codeDiv.html(result.value)
+            else langDiv.html(result.value)
+          })
+          return
         }
         if (codeDiv.length > 0) codeDiv.html(result.value)
         else langDiv.html(result.value)
