@@ -248,7 +248,6 @@ module.exports = {
       'babel-polyfill',
       'bootstrap-validator',
       'expose-loader?exposes=jsyaml!js-yaml',
-      'script-loader!mermaid',
       'expose-loader?exposes=moment!moment',
       'script-loader!handlebars',
       'expose-loader?exposes=hljs!highlight.js',
@@ -284,7 +283,6 @@ module.exports = {
     'pretty-pack': [
       'babel-polyfill',
       'expose-loader?exposes=jsyaml!js-yaml',
-      'script-loader!mermaid',
       'expose-loader?exposes=moment!moment',
       'script-loader!handlebars',
       'expose-loader?exposes=hljs!highlight.js',
@@ -322,7 +320,6 @@ module.exports = {
       'imports-loader?imports=default|jquery|$!jquery-mousewheel',
       'bootstrap-tooltip',
       'expose-loader?exposes=jsyaml!js-yaml',
-      'script-loader!mermaid',
       'expose-loader?exposes=moment!moment',
       'script-loader!handlebars',
       'expose-loader?exposes=hljs!highlight.js',
@@ -348,7 +345,6 @@ module.exports = {
     modules: ['node_modules'],
     extensions: ['.js'],
     alias: {
-      mermaid: path.join(__dirname, 'node_modules/mermaid/dist/mermaid.min.js'),
       handlebars: path.join(__dirname, 'node_modules/handlebars/dist/handlebars.min.js'),
       'gist-embed': path.join(__dirname, 'node_modules/gist-embed/gist-embed.min.js'),
       'bootstrap-tooltip': path.join(__dirname, 'public/vendor/bootstrap/tooltip.min.js'),

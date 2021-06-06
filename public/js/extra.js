@@ -17,6 +17,8 @@ import markdownitContainer from 'markdown-it-container'
 /* Defined regex markdown it plugins */
 import Plugin from 'markdown-it-regexp'
 
+import mermaid from 'mermaid'
+
 require('prismjs/themes/prism.css')
 require('prismjs/components/prism-wiki')
 require('prismjs/components/prism-haskell')
@@ -248,7 +250,7 @@ function replaceExtraTags (html) {
   return html
 }
 
-if (typeof window.mermaid !== 'undefined' && window.mermaid) window.mermaid.startOnLoad = false
+mermaid.startOnLoad = false
 
 // dynamic event or object binding here
 export function finishView (view) {
@@ -388,10 +390,10 @@ export function finishView (view) {
       $value = $(value)
       const $ele = $(value).closest('pre')
 
-      window.mermaid.mermaidAPI.parse($value.text())
+      mermaid.mermaidAPI.parse($value.text())
       $ele.addClass('mermaid')
       $ele.text($value.text())
-      window.mermaid.init(undefined, $ele)
+      mermaid.init(undefined, $ele)
     } catch (err) {
       let errormessage = err
       if (err.str) {
