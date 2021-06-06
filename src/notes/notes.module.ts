@@ -14,6 +14,7 @@ import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { RevisionsModule } from '../revisions/revisions.module';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
+import { Alias } from './alias.entity';
 import { Note } from './note.entity';
 import { NotesService } from './notes.service';
 import { Tag } from './tag.entity';
@@ -26,6 +27,7 @@ import { Tag } from './tag.entity';
       NoteGroupPermission,
       NoteUserPermission,
       User,
+      Alias,
     ]),
     forwardRef(() => RevisionsModule),
     UsersModule,

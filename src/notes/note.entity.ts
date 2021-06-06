@@ -19,6 +19,7 @@ import { NoteGroupPermission } from '../permissions/note-group-permission.entity
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Revision } from '../revisions/revision.entity';
 import { User } from '../users/user.entity';
+import { Alias } from './alias.entity';
 import { Tag } from './tag.entity';
 import { generatePublicId } from './utils';
 
@@ -28,12 +29,12 @@ export class Note {
   id: string;
   @Column({ type: 'text' })
   publicId: string;
-  @Column({
-    unique: true,
-    nullable: true,
-    type: 'text',
-  })
-  alias: string | null;
+  @OneToMany(
+    (_) => Alias,
+    (alias) => alias.note,
+    { cascade: true }, // This ensures that embedded Aliases are automatically saved to the database
+  )
+  aliases: Alias[];
   @OneToMany(
     (_) => NoteGroupPermission,
     (groupPermission) => groupPermission.note,
@@ -84,7 +85,7 @@ export class Note {
   public static create(owner?: User, alias?: string): Note {
     const newNote = new Note();
     newNote.publicId = generatePublicId();
-    newNote.alias = alias ?? null;
+    newNote.aliases = alias ? [Alias.create(alias, true)] : [];
     newNote.viewCount = 0;
     newNote.owner = owner ?? null;
     newNote.userPermissions = [];
