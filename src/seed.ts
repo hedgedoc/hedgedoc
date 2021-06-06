@@ -12,6 +12,7 @@ import { HistoryEntry } from './history/history-entry.entity';
 import { Identity } from './identity/identity.entity';
 import { ProviderType } from './identity/provider-type.enum';
 import { MediaUpload } from './media/media-upload.entity';
+import { Alias } from './notes/alias.entity';
 import { Note } from './notes/note.entity';
 import { Tag } from './notes/tag.entity';
 import { NoteGroupPermission } from './permissions/note-group-permission.entity';
@@ -43,6 +44,7 @@ createConnection({
     Identity,
     Author,
     Session,
+    Alias,
   ],
   synchronize: true,
   logging: false,
@@ -89,12 +91,14 @@ createConnection({
     if (!foundUsers) {
       throw new Error('Could not find freshly seeded users. Aborting.');
     }
-    const foundNotes = await connection.manager.find(Note);
+    const foundNotes = await connection.manager.find(Note, {
+      relations: ['aliases'],
+    });
     if (!foundNotes) {
       throw new Error('Could not find freshly seeded notes. Aborting.');
     }
     for (const note of foundNotes) {
-      if (!note.alias) {
+      if (!note.aliases[0]) {
         throw new Error(
           'Could not find alias of freshly seeded notes. Aborting.',
         );
@@ -106,7 +110,7 @@ createConnection({
       );
     }
     for (const note of foundNotes) {
-      console.log(`Created Note '${note.alias ?? ''}'`);
+      console.log(`Created Note '${note.aliases[0].name ?? ''}'`);
     }
     for (const user of foundUsers) {
       for (const note of foundNotes) {
@@ -114,7 +118,7 @@ createConnection({
         await connection.manager.save(historyEntry);
         console.log(
           `Created HistoryEntry for user '${user.userName}' and note '${
-            note.alias ?? ''
+            note.aliases[0].name ?? ''
           }'`,
         );
       }
