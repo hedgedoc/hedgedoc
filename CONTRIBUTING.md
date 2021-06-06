@@ -14,14 +14,14 @@ Please note we have a [code of conduct][code-of-conduct], please follow it in al
 
 ### Do you have questions about the project?
 
-* Feel free to post your question on our [community forum](community-forum) or join
+* Feel free to post your question on our [community forum][community-forum] or join
   our [matrix community chat][matrix-support].
 
 ### Did you find a bug?
 
-* **Ensure the bug wasn't already reported** by searching on GitHub under [Issues](issues).
+* **Ensure the bug wasn't already reported** by searching on GitHub under [Issues][issues].
 
-* If you're unable to find an open issue addressing the problem, [open a new one](new_issue). Be sure to use one of the
+* If you're unable to find an open issue addressing the problem, [open a new one][new_issue]. Be sure to use one of the
   templates we provide if your request applies to them.
 
 ### Did you write a patch that fixes a bug?
@@ -47,7 +47,7 @@ Please note we have a [code of conduct][code-of-conduct], please follow it in al
 
 ### Do you want to work on translations?
 
-* If you want to improve a translation or add a new translation altogether, we handle those via [POEditor](poeditor).
+* If you want to improve a translation or add a new translation altogether, we handle those via [POEditor][poeditor].
 
 HedgeDoc is a volunteer effort. We encourage you to pitch in and help us to make this project even better.
 
