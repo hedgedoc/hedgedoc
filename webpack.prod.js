@@ -18,7 +18,10 @@ module.exports = [
         new ESBuildMinifyPlugin({
           target: 'es2015'
         })
-      ]
+      ],
+      splitChunks: {
+        chunks: 'all'
+      }
     }
   }),
   merge(htmlexport, {
