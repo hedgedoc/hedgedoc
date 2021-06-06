@@ -29,6 +29,7 @@ import { RevisionsModule } from '../revisions/revisions.module';
 import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
+import { Alias } from './alias.entity';
 import {
   NoteGroupPermissionUpdateDto,
   NoteUserPermissionUpdateDto,
@@ -64,6 +65,10 @@ describe('NotesService', () => {
           useClass: Repository,
         },
         {
+          provide: getRepositoryToken(Alias),
+          useClass: Repository,
+        },
+        {
           provide: getRepositoryToken(User),
           useValue: userRepo,
         },
@@ -82,6 +87,8 @@ describe('NotesService', () => {
       .overrideProvider(getRepositoryToken(Note))
       .useClass(Repository)
       .overrideProvider(getRepositoryToken(Tag))
+      .useClass(Repository)
+      .overrideProvider(getRepositoryToken(Alias))
       .useClass(Repository)
       .overrideProvider(getRepositoryToken(User))
       .useValue(userRepo)
@@ -166,7 +173,7 @@ describe('NotesService', () => {
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
         expect(newNote.owner).toBeNull();
-        expect(newNote.alias).toBeNull();
+        expect(newNote.aliases).toHaveLength(0);
       });
       it('without alias, with owner', async () => {
         const newNote = await service.createNote(content, undefined, user);
@@ -179,7 +186,7 @@ describe('NotesService', () => {
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
         expect(newNote.owner).toEqual(user);
-        expect(newNote.alias).toBeNull();
+        expect(newNote.aliases).toHaveLength(0);
       });
       it('with alias, without owner', async () => {
         const newNote = await service.createNote(content, alias);
@@ -191,7 +198,7 @@ describe('NotesService', () => {
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
         expect(newNote.owner).toBeNull();
-        expect(newNote.alias).toEqual(alias);
+        expect(newNote.aliases).toHaveLength(1);
       });
       it('with alias, with owner', async () => {
         const newNote = await service.createNote(content, alias, user);
@@ -204,7 +211,8 @@ describe('NotesService', () => {
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
         expect(newNote.owner).toEqual(user);
-        expect(newNote.alias).toEqual(alias);
+        expect(newNote.aliases).toHaveLength(1);
+        expect(newNote.aliases[0].name).toEqual(alias);
       });
     });
     describe('fails:', () => {
@@ -276,19 +284,40 @@ describe('NotesService', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const note = Note.create(user);
-      jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
+      const createQueryBuilder = {
+        leftJoinAndSelect: () => createQueryBuilder,
+        where: () => createQueryBuilder,
+        orWhere: () => createQueryBuilder,
+        setParameter: () => createQueryBuilder,
+        getOne: () => note,
+      };
+      jest
+        .spyOn(noteRepo, 'createQueryBuilder')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementation(() => createQueryBuilder);
       const foundNote = await service.getNoteByIdOrAlias('noteThatExists');
       expect(foundNote).toEqual(note);
     });
     describe('fails:', () => {
       it('no note found', async () => {
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
+        const createQueryBuilder = {
+          leftJoinAndSelect: () => createQueryBuilder,
+          where: () => createQueryBuilder,
+          orWhere: () => createQueryBuilder,
+          setParameter: () => createQueryBuilder,
+          getOne: () => undefined,
+        };
+        jest
+          .spyOn(noteRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => createQueryBuilder);
         await expect(
           service.getNoteByIdOrAlias('noteThatDoesNoteExist'),
         ).rejects.toThrow(NotInDBError);
       });
       it('id is forbidden', async () => {
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
         await expect(
           service.getNoteByIdOrAlias(forbiddenNoteId),
         ).rejects.toThrow(ForbiddenIdError);
@@ -709,7 +738,7 @@ describe('NotesService', () => {
         // @ts-ignore
         .mockImplementation(() => createQueryBuilder);
       note.publicId = 'testId';
-      note.alias = 'testAlias';
+      note.aliases = [Alias.create('testAlias', true)];
       note.title = 'testTitle';
       note.description = 'testDescription';
       note.owner = user;
@@ -737,7 +766,8 @@ describe('NotesService', () => {
       note.viewCount = 1337;
       const metadataDto = await service.toNoteMetadataDto(note);
       expect(metadataDto.id).toEqual(note.publicId);
-      expect(metadataDto.alias).toEqual(note.alias);
+      expect(metadataDto.aliases).toHaveLength(1);
+      expect(metadataDto.aliases[0]).toEqual(note.aliases[0].name);
       expect(metadataDto.title).toEqual(note.title);
       expect(metadataDto.createTime).toEqual(revisions[0].createdAt);
       expect(metadataDto.description).toEqual(note.description);
@@ -808,7 +838,7 @@ describe('NotesService', () => {
         // @ts-ignore
         .mockImplementation(() => createQueryBuilder);
       note.publicId = 'testId';
-      note.alias = 'testAlias';
+      note.aliases = [Alias.create('testAlias', true)];
       note.title = 'testTitle';
       note.description = 'testDescription';
       note.owner = user;
@@ -836,7 +866,8 @@ describe('NotesService', () => {
       note.viewCount = 1337;
       const noteDto = await service.toNoteDto(note);
       expect(noteDto.metadata.id).toEqual(note.publicId);
-      expect(noteDto.metadata.alias).toEqual(note.alias);
+      expect(noteDto.metadata.aliases).toHaveLength(1);
+      expect(noteDto.metadata.aliases[0]).toEqual(note.aliases[0].name);
       expect(noteDto.metadata.title).toEqual(note.title);
       expect(noteDto.metadata.createTime).toEqual(revisions[0].createdAt);
       expect(noteDto.metadata.description).toEqual(note.description);

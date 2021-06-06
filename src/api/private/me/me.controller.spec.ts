@@ -18,6 +18,7 @@ import { Identity } from '../../../identity/identity.entity';
 import { LoggerModule } from '../../../logger/logger.module';
 import { MediaUpload } from '../../../media/media-upload.entity';
 import { MediaModule } from '../../../media/media.module';
+import { Alias } from '../../../notes/alias.entity';
 import { Note } from '../../../notes/note.entity';
 import { Tag } from '../../../notes/tag.entity';
 import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
@@ -70,6 +71,8 @@ describe('MeController', () => {
       .overrideProvider(getRepositoryToken(Edit))
       .useValue({})
       .overrideProvider(getRepositoryToken(MediaUpload))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .overrideProvider(getRepositoryToken(Session))
       .useValue({})

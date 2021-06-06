@@ -19,6 +19,7 @@ import { HistoryEntry } from '../../../../history/history-entry.entity';
 import { HistoryModule } from '../../../../history/history.module';
 import { Identity } from '../../../../identity/identity.entity';
 import { LoggerModule } from '../../../../logger/logger.module';
+import { Alias } from '../../../../notes/alias.entity';
 import { Note } from '../../../../notes/note.entity';
 import { NotesModule } from '../../../../notes/notes.module';
 import { Tag } from '../../../../notes/tag.entity';
@@ -72,6 +73,8 @@ describe('HistoryController', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .overrideProvider(getRepositoryToken(Author))
       .useValue({})

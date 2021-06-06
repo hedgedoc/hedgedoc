@@ -17,6 +17,7 @@ import { ClientError, NotInDBError } from '../errors/errors';
 import { Group } from '../groups/group.entity';
 import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
+import { Alias } from '../notes/alias.entity';
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
@@ -83,6 +84,8 @@ describe('MediaService', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Author))
       .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
+      .useValue({})
       .compile();
 
     service = module.get<MediaService>(MediaService);
@@ -105,7 +108,18 @@ describe('MediaService', () => {
       const alias = 'alias';
       note = Note.create(user, alias);
       jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
-      jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
+      const createQueryBuilder = {
+        leftJoinAndSelect: () => createQueryBuilder,
+        where: () => createQueryBuilder,
+        orWhere: () => createQueryBuilder,
+        setParameter: () => createQueryBuilder,
+        getOne: () => note,
+      };
+      jest
+        .spyOn(noteRepo, 'createQueryBuilder')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementation(() => createQueryBuilder);
     });
 
     it('works', async () => {
@@ -279,7 +293,7 @@ describe('MediaService', () => {
         id: 'testMediaUpload',
         backendData: 'testBackendData',
         note: {
-          alias: 'test',
+          aliases: [Alias.create('test', true)],
         } as Note,
         user: {
           userName: 'hardcoded',
