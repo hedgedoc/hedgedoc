@@ -31,7 +31,6 @@ require('prismjs/components/prism-gherkin')
 require('./lib/common/login')
 require('./locale')
 require('../vendor/md-toc')
-const Viz = require('viz.js')
 const ui = getUIElements()
 
 // auto update last change
@@ -367,13 +366,15 @@ export function finishView (view) {
     try {
       $value = $(value)
       const $ele = $(value).parent().parent()
+      require.ensure([], function (require) {
+        const Viz = require('viz.js')
+        const graphviz = Viz($value.text())
+        if (!graphviz) throw Error('viz.js output empty graph')
+        $value.html(graphviz)
 
-      const graphviz = Viz($value.text())
-      if (!graphviz) throw Error('viz.js output empty graph')
-      $value.html(graphviz)
-
-      $ele.addClass('graphviz')
-      $value.children().unwrap().unwrap()
+        $ele.addClass('graphviz')
+        $value.children().unwrap().unwrap()
+      })
     } catch (err) {
       $value.unwrap()
       $value.parent().append(`<div class="alert alert-warning">${escapeHTML(err)}</div>`)
@@ -496,7 +497,7 @@ export function finishView (view) {
       const langDiv = $(value)
       if (langDiv.length > 0) {
         const reallang = langDiv[0].className.replace(/hljs|wrap/g, '').trim()
-        if (reallang === 'mermaid' || reallang === 'abc') {
+        if (reallang === 'mermaid' || reallang === 'abc' || reallang === 'graphviz') {
           return
         }
         const codeDiv = langDiv.find('.code')

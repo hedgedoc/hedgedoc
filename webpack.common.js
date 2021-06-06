@@ -253,7 +253,6 @@ module.exports = {
       'expose-loader?exposes=LZString!lz-string',
       'flowchart.js',
       'js-sequence-diagrams',
-      'expose-loader?exposes=Viz!viz.js',
       'expose-loader?exposes=io!socket.io-client',
       'expose-loader?exposes=RevealMarkdown!reveal-markdown',
       path.join(__dirname, 'public/js/index.js')
@@ -284,7 +283,6 @@ module.exports = {
       'expose-loader?exposes=emojify!emojify.js',
       'flowchart.js',
       'js-sequence-diagrams',
-      'expose-loader?exposes=Viz!viz.js',
       'expose-loader?exposes=RevealMarkdown!reveal-markdown',
       path.join(__dirname, 'public/js/pretty.js')
     ],
@@ -318,7 +316,6 @@ module.exports = {
       'expose-loader?exposes=emojify!emojify.js',
       'flowchart.js',
       'js-sequence-diagrams',
-      'expose-loader?exposes=Viz!viz.js',
       'expose-loader?exposes=Reveal!reveal.js',
       'expose-loader?exposes=RevealMarkdown!reveal-markdown',
       path.join(__dirname, 'public/js/slide.js')
@@ -342,7 +339,6 @@ module.exports = {
   },
 
   externals: {
-    'viz.js': 'Viz',
     'socket.io-client': 'io',
     'jquery': '$',
     'moment': 'moment',
