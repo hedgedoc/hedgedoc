@@ -17,7 +17,6 @@ import markdownitContainer from 'markdown-it-container'
 /* Defined regex markdown it plugins */
 import Plugin from 'markdown-it-regexp'
 
-import mermaid from 'mermaid'
 import handlebars from 'handlebars'
 import 'gist-embed'
 import abcjs from 'abcjs'
@@ -253,8 +252,6 @@ function replaceExtraTags (html) {
   return html
 }
 
-mermaid.startOnLoad = false
-
 // dynamic event or object binding here
 export function finishView (view) {
   // todo list
@@ -388,25 +385,26 @@ export function finishView (view) {
   // mermaid
   const mermaids = view.find('div.mermaid.raw').removeClass('raw')
   mermaids.each((key, value) => {
-    let $value
-    try {
-      $value = $(value)
-      const $ele = $(value).closest('pre')
-
-      mermaid.mermaidAPI.parse($value.text())
-      $ele.addClass('mermaid')
-      $ele.text($value.text())
-      mermaid.init(undefined, $ele)
-    } catch (err) {
-      let errormessage = err
-      if (err.str) {
-        errormessage = err.str
+    const $value = $(value)
+    const $ele = $(value).closest('pre')
+    require.ensure([], function (require) {
+      try {
+        const mermaid = require('mermaid')
+        mermaid.startOnLoad = false
+        mermaid.mermaidAPI.parse($value.text())
+        $ele.addClass('mermaid')
+        $ele.text($value.text())
+        mermaid.init(undefined, $ele)
+      } catch (err) {
+        let errormessage = err
+        if (err.str) {
+          errormessage = err.str
+        }
+        $value.unwrap()
+        $value.parent().append(`<div class="alert alert-warning">${escapeHTML(errormessage)}</div>`)
+        console.warn(errormessage)
       }
-
-      $value.unwrap()
-      $value.parent().append(`<div class="alert alert-warning">${escapeHTML(errormessage)}</div>`)
-      console.warn(errormessage)
-    }
+    })
   })
   // abc.js
   const abcs = view.find('div.abc.raw').removeClass('raw')
@@ -499,6 +497,9 @@ export function finishView (view) {
       const langDiv = $(value)
       if (langDiv.length > 0) {
         const reallang = langDiv[0].className.replace(/hljs|wrap/g, '').trim()
+        if (reallang === 'mermaid') {
+          return
+        }
         const codeDiv = langDiv.find('.code')
         let code = ''
         if (codeDiv.length > 0) code = codeDiv.html()
