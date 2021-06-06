@@ -197,7 +197,6 @@
     "remark-cli": "9.0.0",
     "remark-preset-lint-markdown-style-guide": "4.0.0",
     "reveal.js": "3.9.2",
-    "script-loader": "0.7.2",
     "select2": "3.5.2-browserify",
     "socket.io-client": "2.4.0",
     "spin.js": "4.1.0",
