@@ -19,6 +19,7 @@ import Plugin from 'markdown-it-regexp'
 
 import mermaid from 'mermaid'
 import handlebars from 'handlebars'
+import 'gist-embed'
 
 require('prismjs/themes/prism.css')
 require('prismjs/components/prism-wiki')
