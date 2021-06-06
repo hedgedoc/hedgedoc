@@ -13,6 +13,7 @@ import appConfigMock from '../config/mock/app.config.mock';
 import { Group } from '../groups/group.entity';
 import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
+import { Alias } from '../notes/alias.entity';
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
@@ -66,6 +67,8 @@ describe('PermissionsService', () => {
       .overrideProvider(getRepositoryToken(Session))
       .useValue({})
       .overrideProvider(getRepositoryToken(Author))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .compile();
     permissionsService = module.get<PermissionsService>(PermissionsService);

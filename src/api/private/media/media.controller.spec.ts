@@ -19,6 +19,7 @@ import { Identity } from '../../../identity/identity.entity';
 import { LoggerModule } from '../../../logger/logger.module';
 import { MediaUpload } from '../../../media/media-upload.entity';
 import { MediaModule } from '../../../media/media.module';
+import { Alias } from '../../../notes/alias.entity';
 import { Note } from '../../../notes/note.entity';
 import { NotesModule } from '../../../notes/notes.module';
 import { Tag } from '../../../notes/tag.entity';
@@ -75,6 +76,8 @@ describe('MediaController', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .overrideProvider(getRepositoryToken(Session))
       .useValue({})
