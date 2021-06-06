@@ -12,7 +12,7 @@ info:
     url: https://github.com/hedgedoc/hedgedoc/blob/master/LICENSE
 
 externalDocs:
-  url: https://github.com/hedgedoc/hedgedoc/blob/master/docs/dev/api.md
+  url: https://docs.hedgedoc.org/dev/api/
 
 
 paths:
