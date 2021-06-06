@@ -12,8 +12,9 @@ export const useTrimmedContent = (content: string): [trimmedContent: string, con
   const maxLength = useSelector((state: ApplicationState) => state.config.maxDocumentLength)
   const contentExceedsLimit = content.length > maxLength
 
-  const trimmedContent = useMemo(() => contentExceedsLimit ? content.substr(0, maxLength) : content, [content,
-    contentExceedsLimit,
-    maxLength])
+  const trimmedContent = useMemo(
+    () => (contentExceedsLimit ? content.substr(0, maxLength) : content),
+    [content, contentExceedsLimit, maxLength]
+  )
   return [trimmedContent, contentExceedsLimit]
 }

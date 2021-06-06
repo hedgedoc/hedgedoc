@@ -30,22 +30,27 @@ export const VersionInfoModal: React.FC<CommonModalProps> = ({ onHide, show }) =
     return version
   }, [serverVersion])
 
-
   return (
-    <CommonModal data-cy={ 'version-modal' } show={ show } onHide={ onHide } closeButton={ true }
-                 titleI18nKey={ 'landing.versionInfo.title' }>
+    <CommonModal
+      data-cy={'version-modal'}
+      show={show}
+      onHide={onHide}
+      closeButton={true}
+      titleI18nKey={'landing.versionInfo.title'}>
       <Modal.Body>
         <Row>
           <VersionInfoModalColumn
-            titleI18nKey={ 'landing.versionInfo.serverVersion' }
-            version={ backendVersion }
-            issueTrackerLink={ links.backendIssues }
-            sourceCodeLink={ links.backendSourceCode }/>
+            titleI18nKey={'landing.versionInfo.serverVersion'}
+            version={backendVersion}
+            issueTrackerLink={links.backendIssues}
+            sourceCodeLink={links.backendSourceCode}
+          />
           <VersionInfoModalColumn
-            titleI18nKey={ 'landing.versionInfo.clientVersion' }
-            version={ frontendVersion.version }
-            issueTrackerLink={ frontendVersion.issueTrackerUrl }
-            sourceCodeLink={ frontendVersion.sourceCodeUrl }/>
+            titleI18nKey={'landing.versionInfo.clientVersion'}
+            version={frontendVersion.version}
+            issueTrackerLink={frontendVersion.issueTrackerUrl}
+            sourceCodeLink={frontendVersion.sourceCodeUrl}
+          />
         </Row>
       </Modal.Body>
     </CommonModal>

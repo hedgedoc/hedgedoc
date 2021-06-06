@@ -5,7 +5,7 @@
  */
 
 export interface LineKeys {
-  line: string,
+  line: string
   id: number
 }
 
@@ -15,6 +15,6 @@ export interface LineMarkerPosition {
 }
 
 export interface AdditionalMarkdownRendererProps {
-  className?: string,
+  className?: string
   content: string
 }

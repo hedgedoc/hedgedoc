@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-
 import { Reducer } from 'redux'
 import {
   DismissUiNotificationAction,
@@ -14,7 +13,10 @@ import {
   UiNotificationState
 } from './types'
 
-export const UiNotificationReducer: Reducer<UiNotificationState, UiNotificationAction> = (state: UiNotificationState = [], action: UiNotificationAction) => {
+export const UiNotificationReducer: Reducer<UiNotificationState, UiNotificationAction> = (
+  state: UiNotificationState = [],
+  action: UiNotificationAction
+) => {
   switch (action.type) {
     case UiNotificationActionType.DISPATCH_NOTIFICATION:
       return state.concat((action as DispatchUiNotificationAction).notification)
@@ -25,7 +27,10 @@ export const UiNotificationReducer: Reducer<UiNotificationState, UiNotificationA
   }
 }
 
-const dismissNotification = (notificationState: UiNotificationState, notificationIndex: number): UiNotificationState => {
+const dismissNotification = (
+  notificationState: UiNotificationState,
+  notificationIndex: number
+): UiNotificationState => {
   const newArray = [...notificationState]
   const oldNotification = newArray[notificationIndex]
   newArray[notificationIndex] = {

@@ -18,25 +18,24 @@ import { ShowOnPropChangeImageLightbox } from './show-on-prop-change-image-light
 
 export interface RenderIframeProps extends RendererProps {
   onRendererReadyChange?: (rendererReady: boolean) => void
-  rendererType: RendererType,
+  rendererType: RendererType
   forcedDarkMode?: boolean
   frameClasses?: string
 }
 
-export const RenderIframe: React.FC<RenderIframeProps> = (
-  {
-    markdownContent,
-    onTaskCheckedChange,
-    onFrontmatterChange,
-    scrollState,
-    onFirstHeadingChange,
-    onScroll,
-    onMakeScrollSource,
-    frameClasses,
-    onRendererReadyChange,
-    rendererType,
-    forcedDarkMode
-  }) => {
+export const RenderIframe: React.FC<RenderIframeProps> = ({
+  markdownContent,
+  onTaskCheckedChange,
+  onFrontmatterChange,
+  scrollState,
+  onFirstHeadingChange,
+  onScroll,
+  onMakeScrollSource,
+  frameClasses,
+  onRendererReadyChange,
+  rendererType,
+  forcedDarkMode
+}) => {
   const savedDarkMode = useIsDarkModeActivated()
   const darkMode = forcedDarkMode ?? savedDarkMode
   const [rendererReady, setRendererReady] = useState<boolean>(false)
@@ -44,10 +43,16 @@ export const RenderIframe: React.FC<RenderIframeProps> = (
 
   const frameReference = useRef<HTMLIFrameElement>(null)
   const rendererOrigin = useSelector((state: ApplicationState) => state.config.iframeCommunication.rendererOrigin)
-  const renderPageUrl = `${ rendererOrigin }render`
+  const renderPageUrl = `${rendererOrigin}render`
   const resetRendererReady = useCallback(() => setRendererReady(false), [])
   const iframeCommunicator = useContextOrStandaloneIframeCommunicator()
-  const onIframeLoad = useOnIframeLoad(frameReference, iframeCommunicator, rendererOrigin, renderPageUrl, resetRendererReady)
+  const onIframeLoad = useOnIframeLoad(
+    frameReference,
+    iframeCommunicator,
+    rendererOrigin,
+    renderPageUrl,
+    resetRendererReady
+  )
   const [frameHeight, setFrameHeight] = useState<number>(0)
 
   useEffect(() => {
@@ -55,23 +60,35 @@ export const RenderIframe: React.FC<RenderIframeProps> = (
   }, [onRendererReadyChange, rendererReady])
 
   useEffect(() => () => iframeCommunicator.unregisterEventListener(), [iframeCommunicator])
-  useEffect(() => iframeCommunicator.onFirstHeadingChange(onFirstHeadingChange), [iframeCommunicator,
-    onFirstHeadingChange])
-  useEffect(() => iframeCommunicator.onFrontmatterChange(onFrontmatterChange), [iframeCommunicator,
-    onFrontmatterChange])
+  useEffect(
+    () => iframeCommunicator.onFirstHeadingChange(onFirstHeadingChange),
+    [iframeCommunicator, onFirstHeadingChange]
+  )
+  useEffect(
+    () => iframeCommunicator.onFrontmatterChange(onFrontmatterChange),
+    [iframeCommunicator, onFrontmatterChange]
+  )
   useEffect(() => iframeCommunicator.onSetScrollState(onScroll), [iframeCommunicator, onScroll])
-  useEffect(() => iframeCommunicator.onSetScrollSourceToRenderer(onMakeScrollSource), [iframeCommunicator,
-    onMakeScrollSource])
-  useEffect(() => iframeCommunicator.onTaskCheckboxChange(onTaskCheckedChange), [iframeCommunicator,
-    onTaskCheckedChange])
+  useEffect(
+    () => iframeCommunicator.onSetScrollSourceToRenderer(onMakeScrollSource),
+    [iframeCommunicator, onMakeScrollSource]
+  )
+  useEffect(
+    () => iframeCommunicator.onTaskCheckboxChange(onTaskCheckedChange),
+    [iframeCommunicator, onTaskCheckedChange]
+  )
   useEffect(() => iframeCommunicator.onImageClicked(setLightboxDetails), [iframeCommunicator])
-  useEffect(() => iframeCommunicator.onRendererReady(() => {
-    iframeCommunicator.sendSetBaseConfiguration({
-      baseUrl: window.location.toString(),
-      rendererType
-    })
-    setRendererReady(true)
-  }), [darkMode, rendererType, iframeCommunicator, rendererReady, scrollState])
+  useEffect(
+    () =>
+      iframeCommunicator.onRendererReady(() => {
+        iframeCommunicator.sendSetBaseConfiguration({
+          baseUrl: window.location.toString(),
+          rendererType
+        })
+        setRendererReady(true)
+      }),
+    [darkMode, rendererType, iframeCommunicator, rendererReady, scrollState]
+  )
   useEffect(() => iframeCommunicator.onHeightChange(setFrameHeight), [iframeCommunicator])
 
   useEffect(() => {
@@ -94,11 +111,19 @@ export const RenderIframe: React.FC<RenderIframeProps> = (
     }
   }, [iframeCommunicator, markdownContent, rendererReady])
 
-  return <Fragment>
-    <ShowOnPropChangeImageLightbox details={ lightboxDetails }/>
-    <iframe style={ { height: `${ frameHeight }px` } } data-cy={ 'documentIframe' } onLoad={ onIframeLoad }
-            title="render" src={ renderPageUrl }
-            { ...isTestMode() ? {} : { sandbox: 'allow-downloads allow-same-origin allow-scripts allow-popups' } }
-            ref={ frameReference } className={ `border-0 ${ frameClasses ?? '' }` }/>
-  </Fragment>
+  return (
+    <Fragment>
+      <ShowOnPropChangeImageLightbox details={lightboxDetails} />
+      <iframe
+        style={{ height: `${frameHeight}px` }}
+        data-cy={'documentIframe'}
+        onLoad={onIframeLoad}
+        title='render'
+        src={renderPageUrl}
+        {...(isTestMode() ? {} : { sandbox: 'allow-downloads allow-same-origin allow-scripts allow-popups' })}
+        ref={frameReference}
+        className={`border-0 ${frameClasses ?? ''}`}
+      />
+    </Fragment>
+  )
 }

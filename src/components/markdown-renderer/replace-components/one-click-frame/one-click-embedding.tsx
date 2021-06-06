@@ -22,7 +22,17 @@ interface OneClickFrameProps {
   onActivate?: () => void
 }
 
-export const OneClickEmbedding: React.FC<OneClickFrameProps> = ({ previewContainerClassName, containerClassName, onImageFetch, loadingImageUrl, children, tooltip, hoverIcon, hoverTextI18nKey, onActivate }) => {
+export const OneClickEmbedding: React.FC<OneClickFrameProps> = ({
+  previewContainerClassName,
+  containerClassName,
+  onImageFetch,
+  loadingImageUrl,
+  children,
+  tooltip,
+  hoverIcon,
+  hoverTextI18nKey,
+  onActivate
+}) => {
   const [showFrame, setShowFrame] = useState(false)
   const [previewImageUrl, setPreviewImageUrl] = useState(loadingImageUrl)
 
@@ -47,22 +57,24 @@ export const OneClickEmbedding: React.FC<OneClickFrameProps> = ({ previewContain
   }, [onImageFetch])
 
   return (
-    <span className={ containerClassName }>
-      <ShowIf condition={ showFrame }>
-        { children }
-      </ShowIf>
-      <ShowIf condition={ !showFrame }>
-        <span className={ `one-click-embedding ${ previewContainerClassName || '' }` } onClick={ showChildren }>
-          <ShowIf condition={ !!previewImageUrl }>
-            <ProxyImageFrame className={ 'one-click-embedding-preview' } src={ previewImageUrl } alt={ tooltip || '' }
-                             title={ tooltip || '' }/>
+    <span className={containerClassName}>
+      <ShowIf condition={showFrame}>{children}</ShowIf>
+      <ShowIf condition={!showFrame}>
+        <span className={`one-click-embedding ${previewContainerClassName || ''}`} onClick={showChildren}>
+          <ShowIf condition={!!previewImageUrl}>
+            <ProxyImageFrame
+              className={'one-click-embedding-preview'}
+              src={previewImageUrl}
+              alt={tooltip || ''}
+              title={tooltip || ''}
+            />
           </ShowIf>
-          <ShowIf condition={ !!hoverIcon }>
+          <ShowIf condition={!!hoverIcon}>
             <span className='one-click-embedding-icon text-center'>
-              <i className={ `fa fa-${ hoverIcon as string } fa-5x mb-2` }/>
-              <ShowIf condition={ !!hoverTextI18nKey }>
-                <br/>
-                <Trans i18nKey={ hoverTextI18nKey }/>
+              <i className={`fa fa-${hoverIcon as string} fa-5x mb-2`} />
+              <ShowIf condition={!!hoverTextI18nKey}>
+                <br />
+                <Trans i18nKey={hoverTextI18nKey} />
               </ShowIf>
             </span>
           </ShowIf>

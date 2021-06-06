@@ -18,44 +18,36 @@ export interface PermissionGroupEntryProps {
 export enum GroupMode {
   NONE,
   VIEW,
-  EDIT,
+  EDIT
 }
 
 export const PermissionGroupEntry: React.FC<PermissionGroupEntryProps> = ({ title, editMode, onChangeEditMode }) => {
   const { t } = useTranslation()
 
   return (
-    <li className={ 'list-group-item d-flex flex-row justify-content-between align-items-center' }>
-      <Trans i18nKey={ title }/>
-      <ToggleButtonGroup
-        type='radio'
-        name='edit-mode'
-        value={ editMode }
-        onChange={ onChangeEditMode }
-      >
+    <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
+      <Trans i18nKey={title} />
+      <ToggleButtonGroup type='radio' name='edit-mode' value={editMode} onChange={onChangeEditMode}>
         <ToggleButton
-          title={ t('editor.modal.permissions.denyGroup', { name: t(title) }) }
-          variant={ 'light' }
-          className={ 'text-secondary' }
-          value={ GroupMode.NONE }
-        >
-          <ForkAwesomeIcon icon='ban'/>
+          title={t('editor.modal.permissions.denyGroup', { name: t(title) })}
+          variant={'light'}
+          className={'text-secondary'}
+          value={GroupMode.NONE}>
+          <ForkAwesomeIcon icon='ban' />
         </ToggleButton>
         <ToggleButton
-          title={ t('editor.modal.permissions.viewOnlyGroup', { name: t(title) }) }
-          variant={ 'light' }
-          className={ 'text-secondary' }
-          value={ GroupMode.VIEW }
-        >
-          <ForkAwesomeIcon icon='eye'/>
+          title={t('editor.modal.permissions.viewOnlyGroup', { name: t(title) })}
+          variant={'light'}
+          className={'text-secondary'}
+          value={GroupMode.VIEW}>
+          <ForkAwesomeIcon icon='eye' />
         </ToggleButton>
         <ToggleButton
-          title={ t('editor.modal.permissions.editGroup', { name: t(title) }) }
-          variant={ 'light' }
-          className={ 'text-secondary' }
-          value={ GroupMode.EDIT }
-        >
-          <ForkAwesomeIcon icon='pencil'/>
+          title={t('editor.modal.permissions.editGroup', { name: t(title) })}
+          variant={'light'}
+          className={'text-secondary'}
+          value={GroupMode.EDIT}>
+          <ForkAwesomeIcon icon='pencil' />
         </ToggleButton>
       </ToggleButtonGroup>
     </li>

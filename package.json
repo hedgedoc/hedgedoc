@@ -118,6 +118,9 @@
     "analyze": "cross-env ANALYZE=true yarn build:mock",
     "test": "craco test",
     "lint": "eslint --max-warnings=0 --ext .ts,.tsx src",
+    "lint:fix": "eslint --fix --ext .ts,.tsx src",
+    "format": "prettier -c \"src/**/*.{ts,tsx,js}\"",
+    "format:fix": "prettier -w \"src/**/*.{ts,tsx,js}\"",
     "eject": "react-scripts eject",
     "cy:open": "cypress open",
     "cy:run:chrome": "cypress run --browser chrome",
@@ -145,8 +148,20 @@
       "plugin:@typescript-eslint/recommended",
       "plugin:@typescript-eslint/recommended-requiring-type-checking",
       "plugin:import/recommended",
-      "plugin:import/typescript"
+      "plugin:import/typescript",
+      "prettier"
     ]
+  },
+  "prettier": {
+    "parser": "typescript",
+    "singleQuote": true,
+    "jsxSingleQuote": true,
+    "semi": false,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "bracketSpacing": true,
+    "jsxBracketSameLine": true,
+    "arrowParens": "always"
   },
   "browserslist": {
     "production": [
@@ -169,9 +184,11 @@
     "cypress": "7.4.0",
     "cypress-commands": "1.1.0",
     "cypress-file-upload": "5.0.7",
+    "eslint-config-prettier": "8.3.0",
     "eslint-plugin-chai-friendly": "0.7.1",
     "eslint-plugin-cypress": "2.11.3",
     "http-server": "0.12.3",
+    "prettier": "2.3.0",
     "redux-devtools": "3.7.0",
     "redux-devtools-extension": "2.13.9",
     "ts-loader": "9.2.2",

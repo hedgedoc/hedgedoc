@@ -19,28 +19,33 @@ export interface EditorPreferenceBooleanProps {
 }
 
 export const EditorPreferenceBooleanProperty: React.FC<EditorPreferenceBooleanProps> = ({ property }) => {
-  const preference = useSelector((state: ApplicationState) => state.editorConfig.preferences[property]?.toString() || '', equal)
+  const preference = useSelector(
+    (state: ApplicationState) => state.editorConfig.preferences[property]?.toString() || '',
+    equal
+  )
 
   const { t } = useTranslation()
-  const selectItem = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
-    const selectedItem: boolean = event.target.value === 'true'
+  const selectItem = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      const selectedItem: boolean = event.target.value === 'true'
 
-    mergeEditorPreferences({
-      [property]: selectedItem
-    } as EditorConfiguration)
-  }, [property])
+      mergeEditorPreferences({
+        [property]: selectedItem
+      } as EditorConfiguration)
+    },
+    [property]
+  )
 
-  const i18nPrefix = `editor.modal.preferences.${ property }`
+  const i18nPrefix = `editor.modal.preferences.${property}`
 
   return (
-    <EditorPreferenceInput onChange={ selectItem } property={ property } type={ EditorPreferenceInputType.SELECT }
-                           value={ preference }>
-      <option value={ 'true' }>
-        { t(`${ i18nPrefix }.on`) }
-      </option>
-      <option value={ 'false' }>
-        { t(`${ i18nPrefix }.off`) }
-      </option>
+    <EditorPreferenceInput
+      onChange={selectItem}
+      property={property}
+      type={EditorPreferenceInputType.SELECT}
+      value={preference}>
+      <option value={'true'}>{t(`${i18nPrefix}.on`)}</option>
+      <option value={'false'}>{t(`${i18nPrefix}.off`)}</option>
     </EditorPreferenceInput>
   )
 }

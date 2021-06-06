@@ -13,8 +13,8 @@ export const NewNoteButton: React.FC = () => {
   useTranslation()
 
   return (
-    <Button className="mx-2" size="sm" variant="primary">
-      <ForkAwesomeIcon icon="plus"/> <Trans i18nKey="editor.appBar.new"/>
+    <Button className='mx-2' size='sm' variant='primary'>
+      <ForkAwesomeIcon icon='plus' /> <Trans i18nKey='editor.appBar.new' />
     </Button>
   )
 }

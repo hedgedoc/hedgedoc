@@ -16,10 +16,10 @@ export const DocumentInfoSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ 
 
   return (
     <Fragment>
-      <SidebarButton hide={ hide } className={ className } icon={ 'line-chart' } onClick={ () => setShowModal(true) }>
-        <Trans i18nKey={ 'editor.modal.documentInfo.title' }/>
+      <SidebarButton hide={hide} className={className} icon={'line-chart'} onClick={() => setShowModal(true)}>
+        <Trans i18nKey={'editor.modal.documentInfo.title'} />
       </SidebarButton>
-      <DocumentInfoModal show={ showModal } onHide={ () => setShowModal(false) }/>
+      <DocumentInfoModal show={showModal} onHide={() => setShowModal(false)} />
     </Fragment>
   )
 }

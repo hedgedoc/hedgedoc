@@ -18,7 +18,8 @@ export const useConvertMarkdownToReactDom = (
   baseReplacers: () => ComponentReplacer[],
   additionalReplacers?: () => ComponentReplacer[],
   onBeforeRendering?: () => void,
-  onAfterRendering?: () => void): ReactElement[] => {
+  onAfterRendering?: () => void
+): ReactElement[] => {
   const oldMarkdownLineKeys = useRef<LineKeys[]>()
   const lastUsedLineId = useRef<number>(0)
 
@@ -28,15 +29,15 @@ export const useConvertMarkdownToReactDom = (
     }
     const html = markdownIt.render(markdownCode)
     const contentLines = markdownCode.split('\n')
-    const {
-      lines: newLines,
-      lastUsedLineId: newLastUsedLineId
-    } = calculateNewLineNumberMapping(contentLines, oldMarkdownLineKeys.current ?? [], lastUsedLineId.current)
+    const { lines: newLines, lastUsedLineId: newLastUsedLineId } = calculateNewLineNumberMapping(
+      contentLines,
+      oldMarkdownLineKeys.current ?? [],
+      lastUsedLineId.current
+    )
     oldMarkdownLineKeys.current = newLines
     lastUsedLineId.current = newLastUsedLineId
 
-    const replacers = baseReplacers()
-      .concat(additionalReplacers ? additionalReplacers() : [])
+    const replacers = baseReplacers().concat(additionalReplacers ? additionalReplacers() : [])
     const transformer = replacers.length > 0 ? buildTransformer(newLines, replacers) : undefined
     const rendering = ReactHtmlParser(html, { transform: transformer })
     if (onAfterRendering) {

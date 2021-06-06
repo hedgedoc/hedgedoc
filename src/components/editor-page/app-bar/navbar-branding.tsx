@@ -20,11 +20,12 @@ export const NavbarBranding: React.FC = () => {
 
   return (
     <Navbar.Brand>
-      <Link to="/intro" className="text-secondary text-decoration-none d-flex align-items-center">
+      <Link to='/intro' className='text-secondary text-decoration-none d-flex align-items-center'>
         <HedgeDocLogoWithText
-          logoType={ darkModeActivated ? HedgeDocLogoType.WB_HORIZONTAL : HedgeDocLogoType.BW_HORIZONTAL }
-          size={ HedgeDocLogoSize.SMALL }/>
-        <Branding inline={ true }/>
+          logoType={darkModeActivated ? HedgeDocLogoType.WB_HORIZONTAL : HedgeDocLogoType.BW_HORIZONTAL}
+          size={HedgeDocLogoSize.SMALL}
+        />
+        <Branding inline={true} />
       </Link>
     </Navbar.Brand>
   )

@@ -14,8 +14,8 @@ export interface TranslatedIconButtonProps extends IconButtonProps {
 
 export const TranslatedIconButton: React.FC<TranslatedIconButtonProps> = ({ i18nKey, ...props }) => {
   return (
-    <IconButton { ...props }>
-      <Trans i18nKey={ i18nKey }/>
+    <IconButton {...props}>
+      <Trans i18nKey={i18nKey} />
     </IconButton>
   )
 }

@@ -11,10 +11,10 @@ import { SocialLink } from './social-links'
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="text-light-50 small">
-      <LanguagePicker/>
-      <PoweredByLinks/>
-      <SocialLink/>
+    <footer className='text-light-50 small'>
+      <LanguagePicker />
+      <PoweredByLinks />
+      <SocialLink />
     </footer>
   )
 }

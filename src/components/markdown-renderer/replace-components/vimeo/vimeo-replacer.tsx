@@ -24,7 +24,7 @@ export class VimeoReplacer extends ComponentReplacer {
     const attributes = getAttributesFromHedgeDocTag(node, 'vimeo')
     if (attributes && attributes.id) {
       const videoId = attributes.id
-      return <VimeoFrame id={ videoId }/>
+      return <VimeoFrame id={videoId} />
     }
   }
 }

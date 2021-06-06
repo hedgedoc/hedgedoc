@@ -18,7 +18,7 @@ interface resizeEvent {
 
 export const GistFrame: React.FC<GistFrameProps> = ({ id }) => {
   const iframeHtml = useMemo(() => {
-    return (`
+    return `
       <html lang="en">
         <head>
           <base target="_parent">
@@ -29,7 +29,7 @@ export const GistFrame: React.FC<GistFrameProps> = ({ id }) => {
           </style>
           <script type="text/javascript">
             function doLoad() {
-                window.parent.postMessage({eventType: 'gistResize', size: document.body.scrollHeight, id: '${ id }'}, '*')
+                window.parent.postMessage({eventType: 'gistResize', size: document.body.scrollHeight, id: '${id}'}, '*')
                 tweakLinks();
             }
             function tweakLinks() {
@@ -41,20 +41,23 @@ export const GistFrame: React.FC<GistFrameProps> = ({ id }) => {
           </script>
         </head>
         <body onload="doLoad()">
-          <script type="text/javascript" src="https://gist.github.com/${ id }.js"></script>
+          <script type="text/javascript" src="https://gist.github.com/${id}.js"></script>
         </body>
-      </html>`)
+      </html>`
   }, [id])
 
   const [frameHeight, setFrameHeight] = useState(0)
 
-  const sizeMessage = useCallback((message: MessageEvent) => {
-    const data = message.data as resizeEvent
-    if (data.id !== id) {
-      return
-    }
-    setFrameHeight(data.size)
-  }, [id])
+  const sizeMessage = useCallback(
+    (message: MessageEvent) => {
+      const data = message.data as resizeEvent
+      if (data.id !== id) {
+        return
+      }
+      setFrameHeight(data.size)
+    },
+    [id]
+  )
 
   useEffect(() => {
     window.addEventListener('message', sizeMessage)
@@ -65,12 +68,13 @@ export const GistFrame: React.FC<GistFrameProps> = ({ id }) => {
 
   return (
     <iframe
-      sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups"
-      data-cy={ 'gh-gist' }
+      sandbox='allow-scripts allow-top-navigation-by-user-activation allow-popups'
+      data-cy={'gh-gist'}
       width='100%'
-      height={ `${ frameHeight }px` }
+      height={`${frameHeight}px`}
       frameBorder='0'
-      title={ `gist ${ id }` }
-      src={ `data:text/html;base64,${ btoa(iframeHtml) }` }/>
+      title={`gist ${id}`}
+      src={`data:text/html;base64,${btoa(iframeHtml)}`}
+    />
   )
 }

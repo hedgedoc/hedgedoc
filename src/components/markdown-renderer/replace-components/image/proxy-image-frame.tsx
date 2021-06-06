@@ -9,13 +9,7 @@ import { useSelector } from 'react-redux'
 import { getProxiedUrl } from '../../../../api/media'
 import { ApplicationState } from '../../../../redux'
 
-export const ProxyImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = (
-  {
-    src,
-    title,
-    alt,
-    ...props
-  }) => {
+export const ProxyImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ src, title, alt, ...props }) => {
   const [imageUrl, setImageUrl] = useState('')
   const imageProxyEnabled = useSelector((state: ApplicationState) => state.config.useImageProxy)
 
@@ -24,10 +18,9 @@ export const ProxyImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>
       return
     }
     getProxiedUrl(src)
-      .then(proxyResponse => setImageUrl(proxyResponse.src))
-      .catch(err => console.error(err))
+      .then((proxyResponse) => setImageUrl(proxyResponse.src))
+      .catch((err) => console.error(err))
   }, [imageProxyEnabled, src])
 
-  return <img src={ imageProxyEnabled ? imageUrl : (src ?? '') } title={ title ?? alt ?? '' } alt={ alt } { ...props }/>
+  return <img src={imageProxyEnabled ? imageUrl : src ?? ''} title={title ?? alt ?? ''} alt={alt} {...props} />
 }
-

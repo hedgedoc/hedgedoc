@@ -14,7 +14,8 @@ export interface TimeFromNowProps {
 
 export const TimeFromNow: React.FC<TimeFromNowProps> = ({ time }) => {
   return (
-    <time className={ 'mx-1' } title={ time.toFormat('DDDD T') }
-          dateTime={ time.toString() }>{ time.toRelative() }</time>
+    <time className={'mx-1'} title={time.toFormat('DDDD T')} dateTime={time.toString()}>
+      {time.toRelative()}
+    </time>
   )
 }

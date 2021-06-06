@@ -20,9 +20,7 @@ describe('yaml frontmatter', () => {
     })
     md.use(frontmatter, (rawMeta: string) => {
       const parsedFrontmatter = yaml.load(rawMeta) as RawNoteFrontmatter | undefined
-      expect(parsedFrontmatter)
-        .not
-        .toBe(undefined)
+      expect(parsedFrontmatter).not.toBe(undefined)
       if (parsedFrontmatter === undefined) {
         fail('Parsed frontmatter is undefined')
       }
@@ -44,8 +42,7 @@ describe('yaml frontmatter', () => {
     ___
     `)
 
-    expect(noteFrontmatter.title)
-      .toEqual('test')
+    expect(noteFrontmatter.title).toEqual('test')
   })
 
   it('should parse "robots"', () => {
@@ -54,8 +51,7 @@ describe('yaml frontmatter', () => {
     ___
     `)
 
-    expect(noteFrontmatter.robots)
-      .toEqual('index, follow')
+    expect(noteFrontmatter.robots).toEqual('index, follow')
   })
 
   it('should parse the deprecated tags syntax', () => {
@@ -64,10 +60,8 @@ describe('yaml frontmatter', () => {
     ___
     `)
 
-    expect(noteFrontmatter.tags)
-      .toEqual(['test123', 'abc'])
-    expect(noteFrontmatter.deprecatedTagsSyntax)
-      .toEqual(true)
+    expect(noteFrontmatter.tags).toEqual(['test123', 'abc'])
+    expect(noteFrontmatter.deprecatedTagsSyntax).toEqual(true)
   })
 
   it('should parse the tags list syntax', () => {
@@ -78,10 +72,8 @@ describe('yaml frontmatter', () => {
     ___
     `)
 
-    expect(noteFrontmatter.tags)
-      .toEqual(['test123', 'abc'])
-    expect(noteFrontmatter.deprecatedTagsSyntax)
-      .toEqual(false)
+    expect(noteFrontmatter.tags).toEqual(['test123', 'abc'])
+    expect(noteFrontmatter.deprecatedTagsSyntax).toEqual(false)
   })
 
   it('should parse the tag inline-list syntax', () => {
@@ -90,10 +82,8 @@ describe('yaml frontmatter', () => {
     ___
     `)
 
-    expect(noteFrontmatter.tags)
-      .toEqual(['test123', 'abc'])
-    expect(noteFrontmatter.deprecatedTagsSyntax)
-      .toEqual(false)
+    expect(noteFrontmatter.tags).toEqual(['test123', 'abc'])
+    expect(noteFrontmatter.deprecatedTagsSyntax).toEqual(false)
   })
 
   it('should parse "breaks"', () => {
@@ -102,8 +92,7 @@ describe('yaml frontmatter', () => {
     ___
     `)
 
-    expect(noteFrontmatter.breaks)
-      .toEqual(false)
+    expect(noteFrontmatter.breaks).toEqual(false)
   })
 
   /*
@@ -171,8 +160,7 @@ describe('yaml frontmatter', () => {
     ___
     `)
 
-    expect(noteFrontmatter.opengraph)
-      .toEqual(new Map<string, string>())
+    expect(noteFrontmatter.opengraph).toEqual(new Map<string, string>())
   })
 
   it('should parse an opengraph title', () => {
@@ -182,8 +170,7 @@ describe('yaml frontmatter', () => {
     ___
     `)
 
-    expect(noteFrontmatter.opengraph.get('title'))
-      .toEqual('Testtitle')
+    expect(noteFrontmatter.opengraph.get('title')).toEqual('Testtitle')
   })
 
   it('should opengraph values', () => {
@@ -195,11 +182,8 @@ describe('yaml frontmatter', () => {
     ___
     `)
 
-    expect(noteFrontmatter.opengraph.get('title'))
-      .toEqual('Testtitle')
-    expect(noteFrontmatter.opengraph.get('image'))
-      .toEqual('https://dummyimage.com/48.png')
-    expect(noteFrontmatter.opengraph.get('image:type'))
-      .toEqual('image/png')
+    expect(noteFrontmatter.opengraph.get('title')).toEqual('Testtitle')
+    expect(noteFrontmatter.opengraph.get('image')).toEqual('https://dummyimage.com/48.png')
+    expect(noteFrontmatter.opengraph.get('image:type')).toEqual('image/png')
   })
 })

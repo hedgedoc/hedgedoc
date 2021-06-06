@@ -26,25 +26,32 @@ import { VegaReplacer } from '../replace-components/vega-lite/vega-replacer'
 import { VimeoReplacer } from '../replace-components/vimeo/vimeo-replacer'
 import { YoutubeReplacer } from '../replace-components/youtube/youtube-replacer'
 
-export const useComponentReplacers = (onTaskCheckedChange?: TaskCheckedChangeHandler, onImageClick?: ImageClickHandler, baseUrl?: string): () => ComponentReplacer[] =>
-  useCallback(() => [
-    new LinemarkerReplacer(),
-    new GistReplacer(),
-    new YoutubeReplacer(),
-    new VimeoReplacer(),
-    new AsciinemaReplacer(),
-    new AbcReplacer(),
-    new ImageReplacer(onImageClick),
-    new SequenceDiagramReplacer(),
-    new CsvReplacer(),
-    new FlowchartReplacer(),
-    new MermaidReplacer(),
-    new GraphvizReplacer(),
-    new MarkmapReplacer(),
-    new VegaReplacer(),
-    new HighlightedCodeReplacer(),
-    new ColoredBlockquoteReplacer(),
-    new KatexReplacer(),
-    new TaskListReplacer(onTaskCheckedChange),
-    new LinkReplacer(baseUrl)
-  ], [onImageClick, onTaskCheckedChange, baseUrl])
+export const useComponentReplacers = (
+  onTaskCheckedChange?: TaskCheckedChangeHandler,
+  onImageClick?: ImageClickHandler,
+  baseUrl?: string
+): (() => ComponentReplacer[]) =>
+  useCallback(
+    () => [
+      new LinemarkerReplacer(),
+      new GistReplacer(),
+      new YoutubeReplacer(),
+      new VimeoReplacer(),
+      new AsciinemaReplacer(),
+      new AbcReplacer(),
+      new ImageReplacer(onImageClick),
+      new SequenceDiagramReplacer(),
+      new CsvReplacer(),
+      new FlowchartReplacer(),
+      new MermaidReplacer(),
+      new GraphvizReplacer(),
+      new MarkmapReplacer(),
+      new VegaReplacer(),
+      new HighlightedCodeReplacer(),
+      new ColoredBlockquoteReplacer(),
+      new KatexReplacer(),
+      new TaskListReplacer(onTaskCheckedChange),
+      new LinkReplacer(baseUrl)
+    ],
+    [onImageClick, onTaskCheckedChange, baseUrl]
+  )

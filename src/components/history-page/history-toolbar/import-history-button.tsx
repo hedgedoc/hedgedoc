@@ -39,15 +39,16 @@ export const ImportHistoryButton: React.FC = () => {
     setShow(false)
   }, [])
 
-  const onImportHistory = useCallback((entries: HistoryEntry[]): void => {
-    entries.forEach(entry => entry.origin = userExists ? HistoryEntryOrigin.REMOTE : HistoryEntryOrigin.LOCAL)
-    importHistoryEntries(mergeHistoryEntries(historyState, entries)).catch(error => {
-      showErrorNotification(t('landing.history.error.setHistory.text'))(error)
-      refreshHistoryState().catch(
-        showErrorNotification(t('landing.history.error.getHistory.text'))
-      )
-    })
-  }, [historyState, userExists, t])
+  const onImportHistory = useCallback(
+    (entries: HistoryEntry[]): void => {
+      entries.forEach((entry) => (entry.origin = userExists ? HistoryEntryOrigin.REMOTE : HistoryEntryOrigin.LOCAL))
+      importHistoryEntries(mergeHistoryEntries(historyState, entries)).catch((error) => {
+        showErrorNotification(t('landing.history.error.setHistory.text'))(error)
+        refreshHistoryState().catch(showErrorNotification(t('landing.history.error.getHistory.text')))
+      })
+    },
+    [historyState, userExists, t]
+  )
 
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { validity, files } = event.target
@@ -90,21 +91,20 @@ export const ImportHistoryButton: React.FC = () => {
 
   return (
     <div>
-      <input type='file' className="d-none" accept=".json" onChange={ handleUpload } ref={ uploadInput }/>
-      <Button variant={ 'light' }
-              title={ t('landing.history.toolbar.import') }
-              onClick={ () => uploadInput.current?.click() }
-      >
-        <ForkAwesomeIcon icon='upload'/>
+      <input type='file' className='d-none' accept='.json' onChange={handleUpload} ref={uploadInput} />
+      <Button
+        variant={'light'}
+        title={t('landing.history.toolbar.import')}
+        onClick={() => uploadInput.current?.click()}>
+        <ForkAwesomeIcon icon='upload' />
       </Button>
       <ErrorModal
-        show={ show }
-        onHide={ handleClose }
+        show={show}
+        onHide={handleClose}
         titleI18nKey='landing.history.modal.importHistoryError.title'
-        icon='exclamation-circle'
-      >
+        icon='exclamation-circle'>
         <h5>
-          <Trans i18nKey={ i18nKey } values={ fileName !== '' ? { fileName: fileName } : {} }/>
+          <Trans i18nKey={i18nKey} values={fileName !== '' ? { fileName: fileName } : {}} />
         </h5>
       </ErrorModal>
     </div>

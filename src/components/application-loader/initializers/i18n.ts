@@ -19,7 +19,7 @@ export const setUpI18n = async (frontendAssetsUrl: string): Promise<void> => {
       fallbackLng: 'en',
       debug: process.env.NODE_ENV !== 'production',
       backend: {
-        loadPath: `${ frontendAssetsUrl }locales/{{lng}}.json`
+        loadPath: `${frontendAssetsUrl}locales/{{lng}}.json`
       },
 
       interpolation: {

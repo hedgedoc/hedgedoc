@@ -14,11 +14,13 @@ export const ErrorWhileLoadingNoteAlert: React.FC<SimpleAlertProps> = ({ show })
   useTranslation()
 
   return (
-    <ShowIf condition={ show }>
-      <Alert variant={ 'danger' } className={ 'my-2' }>
-        <b><Trans i18nKey={ 'views.readOnly.error.title' }/></b>
-        <br/>
-        <Trans i18nKey={ 'views.readOnly.error.description' }/>
+    <ShowIf condition={show}>
+      <Alert variant={'danger'} className={'my-2'}>
+        <b>
+          <Trans i18nKey={'views.readOnly.error.title'} />
+        </b>
+        <br />
+        <Trans i18nKey={'views.readOnly.error.description'} />
       </Alert>
     </ShowIf>
   )

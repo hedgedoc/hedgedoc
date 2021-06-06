@@ -15,7 +15,10 @@ import {
   RenderIframeMessageType
 } from './rendering-message'
 
-export class IframeEditorToRendererCommunicator extends IframeCommunicator<EditorToRendererIframeMessage, RendererToEditorIframeMessage> {
+export class IframeEditorToRendererCommunicator extends IframeCommunicator<
+  EditorToRendererIframeMessage,
+  RendererToEditorIframeMessage
+> {
   private onSetScrollSourceToRendererHandler?: () => void
   private onTaskCheckboxChangeHandler?: (lineInMarkdown: number, checked: boolean) => void
   private onFirstHeadingChangeHandler?: (heading?: string) => void

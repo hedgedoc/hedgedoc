@@ -9,8 +9,8 @@ import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
 
 export const WaitSpinner: React.FC = () => {
   return (
-    <div className={ 'm-3 d-flex align-items-center justify-content-center' }>
-      <ForkAwesomeIcon icon={ 'spinner' } className={ 'fa-spin' }/>
+    <div className={'m-3 d-flex align-items-center justify-content-center'}>
+      <ForkAwesomeIcon icon={'spinner'} className={'fa-spin'} />
     </div>
   )
 }

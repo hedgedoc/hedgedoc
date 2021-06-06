@@ -25,7 +25,6 @@ import { LoadingNoteAlert } from './LoadingNoteAlert'
 import { RendererType } from '../render-page/rendering-message'
 
 export const DocumentReadOnlyPage: React.FC = () => {
-
   useTranslation()
   const { id } = useParams<EditorPagePathParams>()
 
@@ -39,28 +38,30 @@ export const DocumentReadOnlyPage: React.FC = () => {
   const noteDetails = useSelector((state: ApplicationState) => state.noteDetails)
 
   return (
-    <div className={ 'd-flex flex-column mvh-100 bg-light' }>
-      <MotdBanner/>
-      <AppBar mode={ AppBarMode.BASIC }/>
-      <div className={ 'container' }>
-        <ErrorWhileLoadingNoteAlert show={ error }/>
-        <LoadingNoteAlert show={ loading }/>
+    <div className={'d-flex flex-column mvh-100 bg-light'}>
+      <MotdBanner />
+      <AppBar mode={AppBarMode.BASIC} />
+      <div className={'container'}>
+        <ErrorWhileLoadingNoteAlert show={error} />
+        <LoadingNoteAlert show={loading} />
       </div>
-      <ShowIf condition={ !error && !loading }>
+      <ShowIf condition={!error && !loading}>
         <DocumentInfobar
-          changedAuthor={ noteDetails.lastChange.userName ?? '' }
-          changedTime={ noteDetails.lastChange.timestamp }
-          createdAuthor={ 'Test' }
-          createdTime={ noteDetails.createTime }
-          editable={ true }
-          noteId={ id }
-          viewCount={ noteDetails.viewCount }
+          changedAuthor={noteDetails.lastChange.userName ?? ''}
+          changedTime={noteDetails.lastChange.timestamp}
+          createdAuthor={'Test'}
+          createdTime={noteDetails.createTime}
+          editable={true}
+          noteId={id}
+          viewCount={noteDetails.viewCount}
         />
-        <RenderIframe frameClasses={ 'flex-fill h-100 w-100' }
-                      markdownContent={ markdownContent }
-                      onFirstHeadingChange={ onFirstHeadingChange }
-                      onFrontmatterChange={ onFrontmatterChange }
-                      rendererType={RendererType.DOCUMENT}/>
+        <RenderIframe
+          frameClasses={'flex-fill h-100 w-100'}
+          markdownContent={markdownContent}
+          onFirstHeadingChange={onFirstHeadingChange}
+          onFrontmatterChange={onFrontmatterChange}
+          rendererType={RendererType.DOCUMENT}
+        />
       </ShowIf>
     </div>
   )

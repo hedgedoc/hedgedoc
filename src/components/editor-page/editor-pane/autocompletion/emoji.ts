@@ -40,7 +40,7 @@ const convertEmojiEventToHint = (emojiData: EmojiClickEventDetail): Hint | undef
     text: shortCode,
     render: (parent: HTMLLIElement) => {
       const wrapper = document.createElement('div')
-      wrapper.innerHTML = `${ getEmojiIcon(emojiData) }   ${ shortCode }`
+      wrapper.innerHTML = `${getEmojiIcon(emojiData)}   ${shortCode}`
       parent.appendChild(wrapper)
     }
   }
@@ -56,17 +56,15 @@ const generateEmojiHints = async (editor: Editor): Promise<Hints | null> => {
   const cursor = editor.getCursor()
   const skinTone = await emojiIndex.getPreferredSkinTone()
   const emojiEventDetails: EmojiClickEventDetail[] = suggestionList
-    .filter(emoji => !!emoji.shortcodes)
+    .filter((emoji) => !!emoji.shortcodes)
     .map((emoji) => ({
       emoji,
       skinTone: skinTone,
-      unicode: ((emoji as NativeEmoji).unicode ? (emoji as NativeEmoji).unicode : undefined),
+      unicode: (emoji as NativeEmoji).unicode ? (emoji as NativeEmoji).unicode : undefined,
       name: emoji.name
     }))
 
-  const hints = emojiEventDetails
-    .map(convertEmojiEventToHint)
-    .filter(o => !!o) as Hint[]
+  const hints = emojiEventDetails.map(convertEmojiEventToHint).filter((o) => !!o) as Hint[]
   return {
     list: hints,
     from: Pos(cursor.line, searchTerm.start),

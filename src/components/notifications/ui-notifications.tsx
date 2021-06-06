@@ -15,20 +15,10 @@ export const UiNotifications: React.FC = () => {
   const notifications = useSelector((state: ApplicationState) => state.uiNotifications, equal)
 
   return (
-    <div
-      className={ 'notifications-area' }
-      aria-live="polite"
-      aria-atomic="true">
-      {
-        notifications.map((notification, notificationIndex) =>
-          <UiNotificationToast
-            key={ notificationIndex }
-            notificationId={ notificationIndex }
-            { ...notification }/>)
-      }
+    <div className={'notifications-area'} aria-live='polite' aria-atomic='true'>
+      {notifications.map((notification, notificationIndex) => (
+        <UiNotificationToast key={notificationIndex} notificationId={notificationIndex} {...notification} />
+      ))}
     </div>
   )
 }
-
-
-

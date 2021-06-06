@@ -30,7 +30,7 @@ export interface HistoryContentProps {
 }
 
 export interface HistoryEntryProps {
-  entry: HistoryEntry,
+  entry: HistoryEntry
 }
 
 export interface HistoryEntriesProps {
@@ -45,27 +45,34 @@ export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entri
   const [pageIndex, setPageIndex] = useState(0)
   const [lastPageIndex, setLastPageIndex] = useState(0)
 
-  const onPinClick = useCallback((noteId: string) => {
-    toggleHistoryEntryPinning(noteId)
-      .catch(showErrorNotification(t('landing.history.error.updateEntry.text')))
-  }, [t])
+  const onPinClick = useCallback(
+    (noteId: string) => {
+      toggleHistoryEntryPinning(noteId).catch(showErrorNotification(t('landing.history.error.updateEntry.text')))
+    },
+    [t]
+  )
 
-  const onDeleteClick = useCallback((noteId: string) => {
-    deleteNote(noteId)
-      .then(() => removeHistoryEntry(noteId))
-      .catch(showErrorNotification(t('landing.history.error.deleteNote.text')))
-  }, [t])
+  const onDeleteClick = useCallback(
+    (noteId: string) => {
+      deleteNote(noteId)
+        .then(() => removeHistoryEntry(noteId))
+        .catch(showErrorNotification(t('landing.history.error.deleteNote.text')))
+    },
+    [t]
+  )
 
-  const onRemoveClick = useCallback((noteId: string) => {
-    removeHistoryEntry(noteId)
-      .catch(showErrorNotification(t('landing.history.error.deleteEntry.text')))
-  }, [t])
+  const onRemoveClick = useCallback(
+    (noteId: string) => {
+      removeHistoryEntry(noteId).catch(showErrorNotification(t('landing.history.error.deleteEntry.text')))
+    },
+    [t]
+  )
 
   if (entries.length === 0) {
     return (
-      <Row className={ 'justify-content-center' }>
-        <Alert variant={ 'secondary' }>
-          <Trans i18nKey={ 'landing.history.noHistory' }/>
+      <Row className={'justify-content-center'}>
+        <Alert variant={'secondary'}>
+          <Trans i18nKey={'landing.history.noHistory'} />
         </Alert>
       </Row>
     )
@@ -74,29 +81,41 @@ export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entri
   const mapViewStateToComponent = (viewState: ViewStateEnum) => {
     switch (viewState) {
       case ViewStateEnum.TABLE:
-        return <HistoryTable entries={ entries }
-                             onPinClick={ onPinClick }
-                             onRemoveClick={ onRemoveClick }
-                             onDeleteClick={ onDeleteClick }
-                             pageIndex={ pageIndex }
-                             onLastPageIndexChange={ setLastPageIndex }/>
+        return (
+          <HistoryTable
+            entries={entries}
+            onPinClick={onPinClick}
+            onRemoveClick={onRemoveClick}
+            onDeleteClick={onDeleteClick}
+            pageIndex={pageIndex}
+            onLastPageIndexChange={setLastPageIndex}
+          />
+        )
       case ViewStateEnum.CARD:
       default:
-        return <HistoryCardList entries={ entries }
-                                onPinClick={ onPinClick }
-                                onRemoveClick={ onRemoveClick }
-                                onDeleteClick={ onDeleteClick }
-                                pageIndex={ pageIndex }
-                                onLastPageIndexChange={ setLastPageIndex }/>
+        return (
+          <HistoryCardList
+            entries={entries}
+            onPinClick={onPinClick}
+            onRemoveClick={onRemoveClick}
+            onDeleteClick={onDeleteClick}
+            pageIndex={pageIndex}
+            onLastPageIndexChange={setLastPageIndex}
+          />
+        )
     }
   }
 
   return (
     <Fragment>
-      { mapViewStateToComponent(viewState) }
-      <Row className="justify-content-center">
-        <PagerPagination numberOfPageButtonsToShowAfterAndBeforeCurrent={ 2 } lastPageIndex={ lastPageIndex }
-                         onPageChange={ setPageIndex }/>
+      {mapViewStateToComponent(viewState)}
+      <Row className='justify-content-center'>
+        <PagerPagination
+          numberOfPageButtonsToShowAfterAndBeforeCurrent={2}
+          lastPageIndex={lastPageIndex}
+          onPageChange={setPageIndex}
+        />
       </Row>
-    </Fragment>)
+    </Fragment>
+  )
 }

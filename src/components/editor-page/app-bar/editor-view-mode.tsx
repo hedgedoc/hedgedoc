@@ -23,20 +23,20 @@ export const EditorViewMode: React.FC = () => {
   const editorMode = useSelector((state: ApplicationState) => state.editorConfig.editorMode)
   return (
     <ToggleButtonGroup
-      type="radio"
-      name="options"
-      value={ editorMode }
-      onChange={ (value: EditorMode) => {
+      type='radio'
+      name='options'
+      value={editorMode}
+      onChange={(value: EditorMode) => {
         setEditorMode(value)
-      } }>
-      <ToggleButton value={ EditorMode.PREVIEW } variant="outline-secondary" title={ t('editor.viewMode.view') }>
-        <ForkAwesomeIcon icon="eye"/>
+      }}>
+      <ToggleButton value={EditorMode.PREVIEW} variant='outline-secondary' title={t('editor.viewMode.view')}>
+        <ForkAwesomeIcon icon='eye' />
       </ToggleButton>
-      <ToggleButton value={ EditorMode.BOTH } variant="outline-secondary" title={ t('editor.viewMode.both') }>
-        <ForkAwesomeIcon icon="columns"/>
+      <ToggleButton value={EditorMode.BOTH} variant='outline-secondary' title={t('editor.viewMode.both')}>
+        <ForkAwesomeIcon icon='columns' />
       </ToggleButton>
-      <ToggleButton value={ EditorMode.EDITOR } variant="outline-secondary" title={ t('editor.viewMode.edit') }>
-        <ForkAwesomeIcon icon="pencil"/>
+      <ToggleButton value={EditorMode.EDITOR} variant='outline-secondary' title={t('editor.viewMode.edit')}>
+        <ForkAwesomeIcon icon='pencil' />
       </ToggleButton>
     </ToggleButtonGroup>
   )

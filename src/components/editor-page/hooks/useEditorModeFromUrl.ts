@@ -14,8 +14,7 @@ export const useEditorModeFromUrl = (): void => {
 
   useEffect(() => {
     const requestedMode = search.substr(1)
-    const mode = Object.values(EditorMode)
-                       .find(mode => mode === requestedMode)
+    const mode = Object.values(EditorMode).find((mode) => mode === requestedMode)
     if (mode) {
       setEditorMode(mode)
     }

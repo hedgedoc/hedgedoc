@@ -24,7 +24,7 @@ export class YoutubeReplacer extends ComponentReplacer {
     const attributes = getAttributesFromHedgeDocTag(node, 'youtube')
     if (attributes && attributes.id) {
       const videoId = attributes.id
-      return <YouTubeFrame id={ videoId }/>
+      return <YouTubeFrame id={videoId} />
     }
   }
 }

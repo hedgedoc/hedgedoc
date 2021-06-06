@@ -31,22 +31,18 @@ export const MotdBanner: React.FC = () => {
   }
 
   if (!bannerState.text) {
-    return <span data-cy={ 'no-motd-banner' }/>
+    return <span data-cy={'no-motd-banner'} />
   }
 
   return (
-    <Alert data-cy={ 'motd-banner' } variant="primary" dir="auto"
-           className="mb-0 text-center d-flex flex-row justify-content-center">
-      <span className="flex-grow-1 align-self-center text-black">
-        { bannerState.text }
-      </span>
-      <Button
-        data-cy={ 'motd-dismiss' }
-        variant="outline-primary"
-        size="sm"
-        className="mx-2"
-        onClick={ dismissBanner }>
-        <ForkAwesomeIcon icon="times"/>
+    <Alert
+      data-cy={'motd-banner'}
+      variant='primary'
+      dir='auto'
+      className='mb-0 text-center d-flex flex-row justify-content-center'>
+      <span className='flex-grow-1 align-self-center text-black'>{bannerState.text}</span>
+      <Button data-cy={'motd-dismiss'} variant='outline-primary' size='sm' className='mx-2' onClick={dismissBanner}>
+        <ForkAwesomeIcon icon='times' />
       </Button>
     </Alert>
   )

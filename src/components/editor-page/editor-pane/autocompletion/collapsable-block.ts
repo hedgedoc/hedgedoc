@@ -23,9 +23,11 @@ const collapsableBlockHint = (editor: Editor): Promise<Hints | null> => {
       resolve(null)
     } else {
       resolve({
-        list: suggestions.map((suggestion: string): Hint => ({
-          text: suggestion
-        })),
+        list: suggestions.map(
+          (suggestion: string): Hint => ({
+            text: suggestion
+          })
+        ),
         from: Pos(cursor.line, searchTerm.start),
         to: Pos(cursor.line, searchTerm.end + 1)
       })

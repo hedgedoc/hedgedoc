@@ -15,10 +15,13 @@ export const useNotificationTest = (): void => {
       return
     }
     console.debug('[Notifications] Dispatched test notification')
-    dispatchUiNotification('Notification-Test!', 'It Works!', DEFAULT_DURATION_IN_SECONDS, 'info-circle', [{
-      label: 'Don\'t show again', onClick: () => {
-        window.localStorage.setItem(localStorageKey, '1')
+    dispatchUiNotification('Notification-Test!', 'It Works!', DEFAULT_DURATION_IN_SECONDS, 'info-circle', [
+      {
+        label: "Don't show again",
+        onClick: () => {
+          window.localStorage.setItem(localStorageKey, '1')
+        }
       }
-    }])
+    ])
   }, [])
 }

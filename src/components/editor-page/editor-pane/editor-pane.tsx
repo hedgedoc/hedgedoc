@@ -64,16 +64,22 @@ const onChange = (editor: Editor) => {
 }
 
 interface DropEvent {
-  pageX: number,
-  pageY: number,
+  pageX: number
+  pageY: number
   dataTransfer: {
-                  files: FileList
-                  effectAllowed: string
-                } | null
+    files: FileList
+    effectAllowed: string
+  } | null
   preventDefault: () => void
 }
 
-export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentChange, content, scrollState, onScroll, onMakeScrollSource }) => {
+export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({
+  onContentChange,
+  content,
+  scrollState,
+  onScroll,
+  onMakeScrollSource
+}) => {
   const { t } = useTranslation()
   const maxLength = useSelector((state: ApplicationState) => state.config.maxDocumentLength)
   const smartPasteEnabled = useSelector((state: ApplicationState) => state.editorConfig.smartPaste)
@@ -88,18 +94,21 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
   const [editorScroll, setEditorScroll] = useState<ScrollInfo>()
   const onEditorScroll = useCallback((editor: Editor, data: ScrollInfo) => setEditorScroll(data), [])
 
-  const onPaste = useCallback((pasteEditor: Editor, event: PasteEvent) => {
-    if (!event || !event.clipboardData) {
-      return
-    }
-    if (smartPasteEnabled) {
-      const tableInserted = handleTablePaste(event, pasteEditor)
-      if (tableInserted) {
+  const onPaste = useCallback(
+    (pasteEditor: Editor, event: PasteEvent) => {
+      if (!event || !event.clipboardData) {
         return
       }
-    }
-    handleFilePaste(event, pasteEditor)
-  }, [smartPasteEnabled])
+      if (smartPasteEnabled) {
+        const tableInserted = handleTablePaste(event, pasteEditor)
+        if (tableInserted) {
+          return
+        }
+      }
+      handleFilePaste(event, pasteEditor)
+    },
+    [smartPasteEnabled]
+  )
 
   useEffect(() => {
     if (!editor || !onScroll || !editorScroll) {
@@ -112,7 +121,7 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
       return
     }
     const heightOfLine = (lineInfo.handle as { height: number }).height
-    const percentageRaw = (Math.max(editorScroll.top - startYOfLine, 0)) / heightOfLine
+    const percentageRaw = Math.max(editorScroll.top - startYOfLine, 0) / heightOfLine
     const percentage = Math.floor(percentageRaw * 100)
 
     const newScrollState: ScrollState = { firstLineInView: line + 1, scrolledPercentage: percentage }
@@ -125,7 +134,7 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
     }
     const startYOfLine = editor.heightAtLine(scrollState.firstLineInView - 1, 'local')
     const heightOfLine = (editor.lineInfo(scrollState.firstLineInView - 1).handle as { height: number }).height
-    const newPositionRaw = startYOfLine + (heightOfLine * scrollState.scrolledPercentage / 100)
+    const newPositionRaw = startYOfLine + (heightOfLine * scrollState.scrolledPercentage) / 100
     const newPosition = Math.floor(newPositionRaw)
     if (newPosition !== lastScrollPosition.current) {
       lastScrollPosition.current = newPosition
@@ -133,28 +142,44 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
     }
   }, [editor, scrollState])
 
-  const onBeforeChange = useCallback((editor: Editor, data: EditorChange, value: string) => {
-    if (value.length > maxLength && !maxLengthWarningAlreadyShown.current) {
-      setShowMaxLengthWarning(true)
-      maxLengthWarningAlreadyShown.current = true
-    }
-    if (value.length <= maxLength) {
-      maxLengthWarningAlreadyShown.current = false
-    }
-    onContentChange(value)
-  }, [onContentChange, maxLength, maxLengthWarningAlreadyShown])
-  const onEditorDidMount = useCallback(mountedEditor => {
-    setStatusBarInfo(createStatusInfo(mountedEditor, maxLength))
-    setEditor(mountedEditor)
-  }, [maxLength])
+  const onBeforeChange = useCallback(
+    (editor: Editor, data: EditorChange, value: string) => {
+      if (value.length > maxLength && !maxLengthWarningAlreadyShown.current) {
+        setShowMaxLengthWarning(true)
+        maxLengthWarningAlreadyShown.current = true
+      }
+      if (value.length <= maxLength) {
+        maxLengthWarningAlreadyShown.current = false
+      }
+      onContentChange(value)
+    },
+    [onContentChange, maxLength, maxLengthWarningAlreadyShown]
+  )
+  const onEditorDidMount = useCallback(
+    (mountedEditor) => {
+      setStatusBarInfo(createStatusInfo(mountedEditor, maxLength))
+      setEditor(mountedEditor)
+    },
+    [maxLength]
+  )
 
-  const onCursorActivity = useCallback((editorWithActivity) => {
-    setStatusBarInfo(createStatusInfo(editorWithActivity, maxLength))
-  }, [maxLength])
+  const onCursorActivity = useCallback(
+    (editorWithActivity) => {
+      setStatusBarInfo(createStatusInfo(editorWithActivity, maxLength))
+    },
+    [maxLength]
+  )
 
   const onDrop = useCallback((dropEditor: Editor, event: DropEvent) => {
-    if (event && dropEditor && event.pageX && event.pageY && event.dataTransfer &&
-      event.dataTransfer.files && event.dataTransfer.files.length >= 1) {
+    if (
+      event &&
+      dropEditor &&
+      event.pageX &&
+      event.pageY &&
+      event.dataTransfer &&
+      event.dataTransfer.files &&
+      event.dataTransfer.files.length >= 1
+    ) {
       event.preventDefault()
       const top: number = event.pageY
       const left: number = event.pageX
@@ -167,53 +192,52 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({ onContentC
 
   const onMaxLengthHide = useCallback(() => setShowMaxLengthWarning(false), [])
 
-  const codeMirrorOptions: EditorConfiguration = useMemo<EditorConfiguration>(() => ({
-    ...editorPreferences,
-    mode: 'gfm',
-    viewportMargin: 20,
-    styleActiveLine: true,
-    lineNumbers: true,
-    lineWrapping: true,
-    showCursorWhenSelecting: true,
-    highlightSelectionMatches: true,
-    inputStyle: 'textarea',
-    matchBrackets: true,
-    autoCloseBrackets: true,
-    matchTags: {
-      bothTags: true
-    },
-    autoCloseTags: true,
-    foldGutter: true,
-    gutters: [
-      'CodeMirror-linenumbers',
-      'authorship-gutters',
-      'CodeMirror-foldgutter'
-    ],
-    extraKeys: defaultKeyMap,
-    flattenSpans: true,
-    addModeClass: true,
-    autoRefresh: true,
-    // otherCursors: true,
-    placeholder: t('editor.placeholder')
-  }), [t, editorPreferences])
+  const codeMirrorOptions: EditorConfiguration = useMemo<EditorConfiguration>(
+    () => ({
+      ...editorPreferences,
+      mode: 'gfm',
+      viewportMargin: 20,
+      styleActiveLine: true,
+      lineNumbers: true,
+      lineWrapping: true,
+      showCursorWhenSelecting: true,
+      highlightSelectionMatches: true,
+      inputStyle: 'textarea',
+      matchBrackets: true,
+      autoCloseBrackets: true,
+      matchTags: {
+        bothTags: true
+      },
+      autoCloseTags: true,
+      foldGutter: true,
+      gutters: ['CodeMirror-linenumbers', 'authorship-gutters', 'CodeMirror-foldgutter'],
+      extraKeys: defaultKeyMap,
+      flattenSpans: true,
+      addModeClass: true,
+      autoRefresh: true,
+      // otherCursors: true,
+      placeholder: t('editor.placeholder')
+    }),
+    [t, editorPreferences]
+  )
 
   return (
-    <div className={ 'd-flex flex-column h-100 position-relative' } onMouseEnter={ onMakeScrollSource }>
-      <MaxLengthWarningModal show={ showMaxLengthWarning } onHide={ onMaxLengthHide } maxLength={ maxLength }/>
-      <ToolBar editor={ editor }/>
+    <div className={'d-flex flex-column h-100 position-relative'} onMouseEnter={onMakeScrollSource}>
+      <MaxLengthWarningModal show={showMaxLengthWarning} onHide={onMaxLengthHide} maxLength={maxLength} />
+      <ToolBar editor={editor} />
       <ControlledCodeMirror
-        className={ `overflow-hidden w-100 flex-fill ${ ligaturesEnabled ? '' : 'no-ligatures' }` }
-        value={ content }
-        options={ codeMirrorOptions }
-        onChange={ onChange }
-        onPaste={ onPaste }
-        onDrop={ onDrop }
-        onCursorActivity={ onCursorActivity }
-        editorDidMount={ onEditorDidMount }
-        onBeforeChange={ onBeforeChange }
-        onScroll={ onEditorScroll }
+        className={`overflow-hidden w-100 flex-fill ${ligaturesEnabled ? '' : 'no-ligatures'}`}
+        value={content}
+        options={codeMirrorOptions}
+        onChange={onChange}
+        onPaste={onPaste}
+        onDrop={onDrop}
+        onCursorActivity={onCursorActivity}
+        editorDidMount={onEditorDidMount}
+        onBeforeChange={onBeforeChange}
+        onScroll={onEditorScroll}
       />
-      <StatusBar { ...statusBarInfo } />
+      <StatusBar {...statusBarInfo} />
     </div>
   )
 }

@@ -22,20 +22,21 @@ export const CopyOverlay: React.FC<CopyOverlayProps> = ({ content, clickComponen
   const [tooltipId] = useState<string>(() => uuid())
 
   const copyToClipboard = useCallback((content: string) => {
-    navigator.clipboard.writeText(content)
-             .then(() => {
-               setError(false)
-             })
-             .catch(() => {
-               setError(true)
-               console.error('couldn\'t copy')
-             })
-             .finally(() => {
-               setShowCopiedTooltip(true)
-               setTimeout(() => {
-                 setShowCopiedTooltip(false)
-               }, 2000)
-             })
+    navigator.clipboard
+      .writeText(content)
+      .then(() => {
+        setError(false)
+      })
+      .catch(() => {
+        setError(true)
+        console.error("couldn't copy")
+      })
+      .finally(() => {
+        setShowCopiedTooltip(true)
+        setTimeout(() => {
+          setShowCopiedTooltip(false)
+        }, 2000)
+      })
   }, [])
 
   useEffect(() => {
@@ -51,17 +52,17 @@ export const CopyOverlay: React.FC<CopyOverlayProps> = ({ content, clickComponen
   }, [clickComponent, copyToClipboard, content])
 
   return (
-    <Overlay target={ clickComponent } show={ showCopiedTooltip } placement="top">
-      { (props) => (
-        <Tooltip id={ `copied_${ tooltipId }` } { ...props }>
-          <ShowIf condition={ error }>
-            <Trans i18nKey={ 'common.copyError' }/>
+    <Overlay target={clickComponent} show={showCopiedTooltip} placement='top'>
+      {(props) => (
+        <Tooltip id={`copied_${tooltipId}`} {...props}>
+          <ShowIf condition={error}>
+            <Trans i18nKey={'common.copyError'} />
           </ShowIf>
-          <ShowIf condition={ !error }>
-            <Trans i18nKey={ 'common.successfullyCopied' }/>
+          <ShowIf condition={!error}>
+            <Trans i18nKey={'common.successfullyCopied'} />
           </ShowIf>
         </Tooltip>
-      ) }
+      )}
     </Overlay>
   )
 }

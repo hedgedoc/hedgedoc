@@ -21,7 +21,7 @@ export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
   const history = useSelector((state: ApplicationState) => state.history)
 
   const isPinned = useMemo(() => {
-    const entry = history.find(entry => entry.identifier === id)
+    const entry = history.find((entry) => entry.identifier === id)
     if (!entry) {
       return false
     }
@@ -29,15 +29,16 @@ export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
   }, [id, history])
 
   const onPinClicked = useCallback(() => {
-    toggleHistoryEntryPinning(id).catch(
-      showErrorNotification(t('landing.history.error.updateEntry.text'))
-    )
+    toggleHistoryEntryPinning(id).catch(showErrorNotification(t('landing.history.error.updateEntry.text')))
   }, [id, t])
 
   return (
-    <SidebarButton icon={ 'thumb-tack' } hide={ hide } onClick={ onPinClicked }
-                   className={ `${ className ?? '' } ${ isPinned ? 'icon-highlighted' : '' }` }>
-      <Trans i18nKey={ isPinned ? 'editor.documentBar.pinnedToHistory' : 'editor.documentBar.pinNoteToHistory' }/>
+    <SidebarButton
+      icon={'thumb-tack'}
+      hide={hide}
+      onClick={onPinClicked}
+      className={`${className ?? ''} ${isPinned ? 'icon-highlighted' : ''}`}>
+      <Trans i18nKey={isPinned ? 'editor.documentBar.pinnedToHistory' : 'editor.documentBar.pinNoteToHistory'} />
     </SidebarButton>
   )
 }

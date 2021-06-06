@@ -24,8 +24,8 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   useTranslation()
 
   useEffect(() => {
-    const value = `${ counter }`
-    buttonRef.current?.style.setProperty('--users-online', `"${ value }"`)
+    const value = `${counter}`
+    buttonRef.current?.style.setProperty('--users-online', `"${value}"`)
   }, [counter])
 
   const hide = selectedMenuId !== DocumentSidebarMenuSelection.NONE && selectedMenuId !== menuId
@@ -36,19 +36,26 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
 
   return (
     <Fragment>
-      <SidebarButton hide={ hide } buttonRef={ buttonRef } onClick={ onClickHandler }
-                     icon={ expand ? 'arrow-left' : 'users' }
-                     variant={ 'primary' } className={ `online-entry ${ className ?? '' }` }>
-        <Trans i18nKey={ 'editor.onlineStatus.online' }/>
+      <SidebarButton
+        hide={hide}
+        buttonRef={buttonRef}
+        onClick={onClickHandler}
+        icon={expand ? 'arrow-left' : 'users'}
+        variant={'primary'}
+        className={`online-entry ${className ?? ''}`}>
+        <Trans i18nKey={'editor.onlineStatus.online'} />
       </SidebarButton>
-      <SidebarMenu expand={ expand }>
+      <SidebarMenu expand={expand}>
         <SidebarButton>
-          <UserLine name="Philip Molares" photo="/img/avatar.png" color="red"
-                    status={ ActiveIndicatorStatus.INACTIVE }/>
+          <UserLine name='Philip Molares' photo='/img/avatar.png' color='red' status={ActiveIndicatorStatus.INACTIVE} />
         </SidebarButton>
         <SidebarButton>
-          <UserLine name="Tilman Vatteroth" photo="/img/avatar.png" color="blue"
-                    status={ ActiveIndicatorStatus.ACTIVE }/>
+          <UserLine
+            name='Tilman Vatteroth'
+            photo='/img/avatar.png'
+            color='blue'
+            status={ActiveIndicatorStatus.ACTIVE}
+          />
         </SidebarButton>
       </SidebarMenu>
     </Fragment>

@@ -11,7 +11,9 @@ const subdomainRegex = /(?:www.)?/
 const pathRegex = /(?:youtube(?:-nocookie)?\.com\/(?:[^\\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)/
 const idRegex = /([^"&?\\/\s]{11})/
 const tailRegex = /(?:[?&#].*)?/
-const youtubeVideoUrlRegex = new RegExp(`(?:${protocolRegex.source}${subdomainRegex.source}${pathRegex.source}${idRegex.source}${tailRegex.source})`)
+const youtubeVideoUrlRegex = new RegExp(
+  `(?:${protocolRegex.source}${subdomainRegex.source}${pathRegex.source}${idRegex.source}${tailRegex.source})`
+)
 const linkRegex = new RegExp(`^${youtubeVideoUrlRegex.source}$`, 'i')
 
 export const replaceYouTubeLink: RegexOptions = {
@@ -20,6 +22,6 @@ export const replaceYouTubeLink: RegexOptions = {
   replace: (match) => {
     // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
     // noinspection CheckTagEmptyBody
-    return `<app-youtube id="${ match }"></app-youtube>`
+    return `<app-youtube id="${match}"></app-youtube>`
   }
 }

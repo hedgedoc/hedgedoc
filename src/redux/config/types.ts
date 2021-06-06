@@ -12,9 +12,9 @@ export enum ConfigActionType {
 }
 
 export interface ConfigActions extends Action<ConfigActionType> {
-  type: ConfigActionType;
+  type: ConfigActionType
 }
 
 export interface SetConfigAction extends ConfigActions {
-  state: Config;
+  state: Config
 }

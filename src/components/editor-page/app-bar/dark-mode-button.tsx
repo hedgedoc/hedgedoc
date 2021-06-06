@@ -21,27 +21,20 @@ const DarkModeButton: React.FC = () => {
   const darkModeEnabled = useIsDarkModeActivated() ? DarkModeState.DARK : DarkModeState.LIGHT
 
   return (
-    <ToggleButtonGroup
-      type="radio"
-      name="dark-mode"
-      value={ darkModeEnabled }
-      className="ml-2"
-    >
+    <ToggleButtonGroup type='radio' name='dark-mode' value={darkModeEnabled} className='ml-2'>
       <ToggleButton
-        value={ DarkModeState.DARK }
-        variant="outline-secondary"
-        title={ t('editor.darkMode.switchToDark') }
-        onChange={ () => setDarkMode(true) }
-      >
-        <ForkAwesomeIcon icon="moon"/>
+        value={DarkModeState.DARK}
+        variant='outline-secondary'
+        title={t('editor.darkMode.switchToDark')}
+        onChange={() => setDarkMode(true)}>
+        <ForkAwesomeIcon icon='moon' />
       </ToggleButton>
       <ToggleButton
-        value={ DarkModeState.LIGHT }
-        variant="outline-secondary"
-        title={ t('editor.darkMode.switchToLight') }
-        onChange={ () => setDarkMode(false) }
-      >
-        <ForkAwesomeIcon icon="sun-o"/>
+        value={DarkModeState.LIGHT}
+        variant='outline-secondary'
+        title={t('editor.darkMode.switchToLight')}
+        onChange={() => setDarkMode(false)}>
+        <ForkAwesomeIcon icon='sun-o' />
       </ToggleButton>
     </ToggleButtonGroup>
   )

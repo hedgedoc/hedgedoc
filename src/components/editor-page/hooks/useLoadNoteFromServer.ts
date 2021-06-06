@@ -18,7 +18,7 @@ export const useLoadNoteFromServer = (): [boolean, boolean] => {
 
   useEffect(() => {
     getNote(id)
-      .then(note => {
+      .then((note) => {
         setNoteDataFromServer(note)
       })
       .catch((e) => {

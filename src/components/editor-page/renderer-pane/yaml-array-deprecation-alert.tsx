@@ -15,17 +15,21 @@ import { ShowIf } from '../../common/show-if/show-if'
 
 export const YamlArrayDeprecationAlert: React.FC = () => {
   useTranslation()
-  const yamlDeprecatedTags = useSelector((state: ApplicationState) => state.noteDetails.frontmatter.deprecatedTagsSyntax)
+  const yamlDeprecatedTags = useSelector(
+    (state: ApplicationState) => state.noteDetails.frontmatter.deprecatedTagsSyntax
+  )
 
-  return <ShowIf condition={ yamlDeprecatedTags }>
-    <Alert data-cy={ 'yamlArrayDeprecationAlert' } className={ 'text-wrap' } variant='warning' dir='auto'>
-        <span className={ 'text-wrap' }>
-          <span className={ 'text-wrap' }>
-        <Trans i18nKey='editor.deprecatedTags'/>
+  return (
+    <ShowIf condition={yamlDeprecatedTags}>
+      <Alert data-cy={'yamlArrayDeprecationAlert'} className={'text-wrap'} variant='warning' dir='auto'>
+        <span className={'text-wrap'}>
+          <span className={'text-wrap'}>
+            <Trans i18nKey='editor.deprecatedTags' />
+          </span>
         </span>
-      </span>
-      <br/>
-      <TranslatedExternalLink i18nKey={ 'common.readForMoreInfo' } href={ links.faq } className={ 'text-primary' }/>
-    </Alert>
-  </ShowIf>
+        <br />
+        <TranslatedExternalLink i18nKey={'common.readForMoreInfo'} href={links.faq} className={'text-primary'} />
+      </Alert>
+    </ShowIf>
+  )
 }

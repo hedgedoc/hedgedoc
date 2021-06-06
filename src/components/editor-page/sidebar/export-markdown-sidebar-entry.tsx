@@ -17,12 +17,12 @@ export const ExportMarkdownSidebarEntry: React.FC = () => {
   const markdownContent = useNoteMarkdownContent()
   const onClick = useCallback(() => {
     const sanitized = sanitize(store.getState().noteDetails.noteTitle)
-    download(markdownContent, `${ sanitized !== '' ? sanitized : t('editor.untitledNote') }.md`, 'text/markdown')
+    download(markdownContent, `${sanitized !== '' ? sanitized : t('editor.untitledNote')}.md`, 'text/markdown')
   }, [markdownContent, t])
 
   return (
-    <SidebarButton data-cy={ 'menu-export-markdown' } onClick={ onClick } icon={ 'file-text' }>
-      <Trans i18nKey={ 'editor.export.markdown-file' }/>
+    <SidebarButton data-cy={'menu-export-markdown'} onClick={onClick} icon={'file-text'}>
+      <Trans i18nKey={'editor.export.markdown-file'} />
     </SidebarButton>
   )
 }

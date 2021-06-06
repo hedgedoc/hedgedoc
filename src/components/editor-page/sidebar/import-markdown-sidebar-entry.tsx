@@ -15,35 +15,42 @@ export const ImportMarkdownSidebarEntry: React.FC = () => {
   const markdownContent = useNoteMarkdownContent()
   useTranslation()
 
-  const onImportMarkdown = useCallback((file: File) => {
-    return new Promise<void>((resolve, reject) => {
-      const fileReader = new FileReader()
-      fileReader.addEventListener('load', () => {
-        const newContent = fileReader.result as string
-        setNoteMarkdownContent(markdownContent.length === 0 ? newContent : `${ markdownContent }\n${ newContent }`)
+  const onImportMarkdown = useCallback(
+    (file: File) => {
+      return new Promise<void>((resolve, reject) => {
+        const fileReader = new FileReader()
+        fileReader.addEventListener('load', () => {
+          const newContent = fileReader.result as string
+          setNoteMarkdownContent(markdownContent.length === 0 ? newContent : `${markdownContent}\n${newContent}`)
+        })
+        fileReader.addEventListener('loadend', () => {
+          resolve()
+        })
+        fileReader.addEventListener('error', (error) => {
+          reject(error)
+        })
+        fileReader.readAsText(file)
       })
-      fileReader.addEventListener('loadend', () => {
-        resolve()
-      })
-      fileReader.addEventListener('error', (error) => {
-        reject(error)
-      })
-      fileReader.readAsText(file)
-    })
-  }, [markdownContent])
+    },
+    [markdownContent]
+  )
 
-  const clickRef = useRef<(() => void)>()
+  const clickRef = useRef<() => void>()
   const buttonClick = useCallback(() => {
     clickRef.current?.()
   }, [])
 
   return (
     <Fragment>
-      <SidebarButton data-cy={ 'menu-import-markdown' } icon={ 'file-text-o' } onClick={ buttonClick }>
-        <Trans i18nKey={ 'editor.import.file' }/>
+      <SidebarButton data-cy={'menu-import-markdown'} icon={'file-text-o'} onClick={buttonClick}>
+        <Trans i18nKey={'editor.import.file'} />
       </SidebarButton>
-      <UploadInput onLoad={ onImportMarkdown } data-cy={ 'menu-import-markdown-input' }
-                   acceptedFiles={ '.md, text/markdown, text/plain' } onClickRef={ clickRef }/>
+      <UploadInput
+        onLoad={onImportMarkdown}
+        data-cy={'menu-import-markdown-input'}
+        acceptedFiles={'.md, text/markdown, text/plain'}
+        onClickRef={clickRef}
+      />
     </Fragment>
   )
 }

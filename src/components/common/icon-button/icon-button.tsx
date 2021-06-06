@@ -18,17 +18,23 @@ export interface IconButtonProps extends ButtonProps {
   iconFixedWidth?: boolean
 }
 
-export const IconButton: React.FC<IconButtonProps> = ({ icon, children, iconFixedWidth = false, border = false, className, ...props }) => {
+export const IconButton: React.FC<IconButtonProps> = ({
+  icon,
+  children,
+  iconFixedWidth = false,
+  border = false,
+  className,
+  ...props
+}) => {
   return (
-    <Button { ...props }
-            className={ `btn-icon p-0 d-inline-flex align-items-stretch ${ border ? 'with-border' : '' } ${ className ?? '' }` }>
-      <span className="icon-part d-flex align-items-center">
-        <ForkAwesomeIcon icon={ icon } fixedWidth={ iconFixedWidth } className={ 'icon' }/>
+    <Button
+      {...props}
+      className={`btn-icon p-0 d-inline-flex align-items-stretch ${border ? 'with-border' : ''} ${className ?? ''}`}>
+      <span className='icon-part d-flex align-items-center'>
+        <ForkAwesomeIcon icon={icon} fixedWidth={iconFixedWidth} className={'icon'} />
       </span>
-      <ShowIf condition={ !!children }>
-        <span className="text-part d-flex align-items-center">
-          { children }
-        </span>
+      <ShowIf condition={!!children}>
+        <span className='text-part d-flex align-items-center'>{children}</span>
       </ShowIf>
     </Button>
   )

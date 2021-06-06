@@ -7,8 +7,13 @@
 import { RefObject, useCallback, useRef } from 'react'
 import { IframeEditorToRendererCommunicator } from '../../../render-page/iframe-editor-to-renderer-communicator'
 
-export const useOnIframeLoad = (frameReference: RefObject<HTMLIFrameElement>, iframeCommunicator: IframeEditorToRendererCommunicator,
-  rendererOrigin: string, renderPageUrl: string, onNavigateAway: () => void): () => void => {
+export const useOnIframeLoad = (
+  frameReference: RefObject<HTMLIFrameElement>,
+  iframeCommunicator: IframeEditorToRendererCommunicator,
+  rendererOrigin: string,
+  renderPageUrl: string,
+  onNavigateAway: () => void
+): (() => void) => {
   const sendToRenderPage = useRef<boolean>(true)
 
   return useCallback(() => {

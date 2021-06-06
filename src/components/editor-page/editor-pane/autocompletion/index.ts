@@ -15,13 +15,13 @@ import { LinkAndExtraTagHinter } from './link-and-extra-tag'
 import { PDFHinter } from './pdf'
 
 interface findWordAtCursorResponse {
-  start: number,
-  end: number,
+  start: number
+  end: number
   text: string
 }
 
 export interface Hinter {
-  wordRegExp: RegExp,
+  wordRegExp: RegExp
   hint: (editor: Editor) => Promise<Hints | null>
 }
 
@@ -40,8 +40,7 @@ export const findWordAtCursor = (editor: Editor): findWordAtCursorResponse => {
   }
 
   return {
-    text: line.slice(start, end)
-              .toLowerCase(),
+    text: line.slice(start, end).toLowerCase(),
     start: start,
     end: end
   }
@@ -49,9 +48,8 @@ export const findWordAtCursor = (editor: Editor): findWordAtCursorResponse => {
 
 export const search = (term: string, list: string[]): string[] => {
   const suggestions: string[] = []
-  list.forEach(item => {
-    if (item.toLowerCase()
-            .startsWith(term.toLowerCase())) {
+  list.forEach((item) => {
+    if (item.toLowerCase().startsWith(term.toLowerCase())) {
       suggestions.push(item)
     }
   })

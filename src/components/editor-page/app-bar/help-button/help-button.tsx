@@ -17,11 +17,15 @@ export const HelpButton: React.FC = () => {
 
   return (
     <Fragment>
-      <Button title={ t('editor.documentBar.help') } className='ml-2 text-secondary' size='sm' variant='outline-light'
-              onClick={ () => setShow(true) }>
-        <ForkAwesomeIcon icon="question-circle"/>
+      <Button
+        title={t('editor.documentBar.help')}
+        className='ml-2 text-secondary'
+        size='sm'
+        variant='outline-light'
+        onClick={() => setShow(true)}>
+        <ForkAwesomeIcon icon='question-circle' />
       </Button>
-      <HelpModal show={ show } onHide={ onHide }/>
+      <HelpModal show={show} onHide={onHide} />
     </Fragment>
   )
 }

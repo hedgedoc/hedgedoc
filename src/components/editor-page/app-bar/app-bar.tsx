@@ -36,31 +36,31 @@ export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
   const noteFrontmatter = useSelector((state: ApplicationState) => state.noteDetails.frontmatter, equal)
 
   return (
-    <Navbar bg={ 'light' }>
-      <Nav className="mr-auto d-flex align-items-center">
-        <NavbarBranding/>
-        <ShowIf condition={ mode === AppBarMode.EDITOR }>
-          <EditorViewMode/>
-          <SyncScrollButtons/>
+    <Navbar bg={'light'}>
+      <Nav className='mr-auto d-flex align-items-center'>
+        <NavbarBranding />
+        <ShowIf condition={mode === AppBarMode.EDITOR}>
+          <EditorViewMode />
+          <SyncScrollButtons />
         </ShowIf>
-        <DarkModeButton/>
-        <ShowIf condition={ mode === AppBarMode.EDITOR }>
+        <DarkModeButton />
+        <ShowIf condition={mode === AppBarMode.EDITOR}>
           <ShowIf condition={noteFrontmatter.type === NoteType.SLIDE}>
-            <SlideModeButton/>
+            <SlideModeButton />
           </ShowIf>
           <ShowIf condition={noteFrontmatter.type !== NoteType.SLIDE}>
-            <ReadOnlyModeButton/>
+            <ReadOnlyModeButton />
           </ShowIf>
-          <HelpButton/>
+          <HelpButton />
         </ShowIf>
       </Nav>
-      <Nav className="d-flex align-items-center text-secondary">
-        <NewNoteButton/>
-        <ShowIf condition={ !userExists }>
-          <SignInButton size={ 'sm' }/>
+      <Nav className='d-flex align-items-center text-secondary'>
+        <NewNoteButton />
+        <ShowIf condition={!userExists}>
+          <SignInButton size={'sm'} />
         </ShowIf>
-        <ShowIf condition={ userExists }>
-          <UserDropdown/>
+        <ShowIf condition={userExists}>
+          <UserDropdown />
         </ShowIf>
       </Nav>
     </Navbar>

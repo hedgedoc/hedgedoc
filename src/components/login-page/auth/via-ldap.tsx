@@ -21,53 +21,55 @@ export const ViaLdap: React.FC = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(false)
 
-  const name = ldapCustomName ? `${ ldapCustomName } (LDAP)` : 'LDAP'
+  const name = ldapCustomName ? `${ldapCustomName} (LDAP)` : 'LDAP'
 
-  const onLoginSubmit = useCallback((event: FormEvent) => {
-    doLdapLogin(username, password)
-      .then(() => fetchAndSetUser())
-      .catch(() => setError(true))
-    event.preventDefault()
-  }, [username, password])
+  const onLoginSubmit = useCallback(
+    (event: FormEvent) => {
+      doLdapLogin(username, password)
+        .then(() => fetchAndSetUser())
+        .catch(() => setError(true))
+      event.preventDefault()
+    },
+    [username, password]
+  )
 
   return (
-    <Card className="bg-dark mb-4">
+    <Card className='bg-dark mb-4'>
       <Card.Body>
         <Card.Title>
-          <Trans i18nKey="login.signInVia" values={ { service: name } }/>
+          <Trans i18nKey='login.signInVia' values={{ service: name }} />
         </Card.Title>
-        <Form onSubmit={ onLoginSubmit }>
-          <Form.Group controlId="ldap-username">
+        <Form onSubmit={onLoginSubmit}>
+          <Form.Group controlId='ldap-username'>
             <Form.Control
-              isInvalid={ error }
-              type="text"
-              size="sm"
-              placeholder={ t('login.auth.username') }
-              onChange={ (event) => setUsername(event.currentTarget.value) } className="bg-dark text-light"
+              isInvalid={error}
+              type='text'
+              size='sm'
+              placeholder={t('login.auth.username')}
+              onChange={(event) => setUsername(event.currentTarget.value)}
+              className='bg-dark text-light'
               autoComplete='username'
             />
           </Form.Group>
 
-          <Form.Group controlId="ldap-password">
+          <Form.Group controlId='ldap-password'>
             <Form.Control
-              isInvalid={ error }
-              type="password"
-              size="sm"
-              placeholder={ t('login.auth.password') }
-              onChange={ (event) => setPassword(event.currentTarget.value) }
-              className="bg-dark text-light"
+              isInvalid={error}
+              type='password'
+              size='sm'
+              placeholder={t('login.auth.password')}
+              onChange={(event) => setPassword(event.currentTarget.value)}
+              className='bg-dark text-light'
               autoComplete='current-password'
             />
           </Form.Group>
 
-          <Alert className="small" show={ error } variant="danger">
-            <Trans i18nKey="login.auth.error.usernamePassword"/>
+          <Alert className='small' show={error} variant='danger'>
+            <Trans i18nKey='login.auth.error.usernamePassword' />
           </Alert>
 
-          <Button
-            type="submit"
-            variant="primary">
-            <Trans i18nKey="login.signIn"/>
+          <Button type='submit' variant='primary'>
+            <Trans i18nKey='login.signIn' />
           </Button>
         </Form>
       </Card.Body>

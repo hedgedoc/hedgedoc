@@ -44,7 +44,7 @@ export const initialState: Config = {
   version: {
     major: -1,
     minor: -1,
-    patch: -1,
+    patch: -1
   },
   iframeCommunication: {
     editorOrigin: '',

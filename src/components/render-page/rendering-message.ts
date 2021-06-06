@@ -25,7 +25,7 @@ export interface RendererToEditorSimpleMessage {
 }
 
 export interface SetDarkModeMessage {
-  type: RenderIframeMessageType.SET_DARKMODE,
+  type: RenderIframeMessageType.SET_DARKMODE
   activated: boolean
 }
 
@@ -36,60 +36,60 @@ export interface ImageDetails {
 }
 
 export interface SetBaseUrlMessage {
-  type: RenderIframeMessageType.SET_BASE_CONFIGURATION,
+  type: RenderIframeMessageType.SET_BASE_CONFIGURATION
   baseConfiguration: BaseConfiguration
 }
 
 export interface ImageClickedMessage {
-  type: RenderIframeMessageType.IMAGE_CLICKED,
+  type: RenderIframeMessageType.IMAGE_CLICKED
   details: ImageDetails
 }
 
 export interface SetMarkdownContentMessage {
-  type: RenderIframeMessageType.SET_MARKDOWN_CONTENT,
+  type: RenderIframeMessageType.SET_MARKDOWN_CONTENT
   content: string
 }
 
 export interface SetScrollStateMessage {
-  type: RenderIframeMessageType.SET_SCROLL_STATE,
+  type: RenderIframeMessageType.SET_SCROLL_STATE
   scrollState: ScrollState
 }
 
 export interface OnTaskCheckboxChangeMessage {
-  type: RenderIframeMessageType.ON_TASK_CHECKBOX_CHANGE,
-  lineInMarkdown: number,
+  type: RenderIframeMessageType.ON_TASK_CHECKBOX_CHANGE
+  lineInMarkdown: number
   checked: boolean
 }
 
 export interface OnFirstHeadingChangeMessage {
-  type: RenderIframeMessageType.ON_FIRST_HEADING_CHANGE,
+  type: RenderIframeMessageType.ON_FIRST_HEADING_CHANGE
   firstHeading: string | undefined
 }
 
 export interface OnFrontmatterChangeMessage {
-  type: RenderIframeMessageType.ON_SET_FRONTMATTER,
+  type: RenderIframeMessageType.ON_SET_FRONTMATTER
   frontmatter: NoteFrontmatter | undefined
 }
 
 export interface OnHeightChangeMessage {
-  type: RenderIframeMessageType.ON_HEIGHT_CHANGE,
+  type: RenderIframeMessageType.ON_HEIGHT_CHANGE
   height: number
 }
 
 export type EditorToRendererIframeMessage =
-  SetMarkdownContentMessage |
-  SetDarkModeMessage |
-  SetScrollStateMessage |
-  SetBaseUrlMessage
+  | SetMarkdownContentMessage
+  | SetDarkModeMessage
+  | SetScrollStateMessage
+  | SetBaseUrlMessage
 
 export type RendererToEditorIframeMessage =
-  RendererToEditorSimpleMessage |
-  OnFirstHeadingChangeMessage |
-  OnTaskCheckboxChangeMessage |
-  OnFrontmatterChangeMessage |
-  SetScrollStateMessage |
-  ImageClickedMessage |
-  OnHeightChangeMessage
+  | RendererToEditorSimpleMessage
+  | OnFirstHeadingChangeMessage
+  | OnTaskCheckboxChangeMessage
+  | OnFrontmatterChangeMessage
+  | SetScrollStateMessage
+  | ImageClickedMessage
+  | OnHeightChangeMessage
 
 export enum RendererType {
   DOCUMENT,

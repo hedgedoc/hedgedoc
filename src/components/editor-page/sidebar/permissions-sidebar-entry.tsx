@@ -16,10 +16,10 @@ export const PermissionsSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ c
 
   return (
     <Fragment>
-      <SidebarButton hide={ hide } className={ className } icon={ 'lock' } onClick={ () => setShowModal(true) }>
-        <Trans i18nKey={ 'editor.modal.permissions.title' }/>
+      <SidebarButton hide={hide} className={className} icon={'lock'} onClick={() => setShowModal(true)}>
+        <Trans i18nKey={'editor.modal.permissions.title'} />
       </SidebarButton>
-      <PermissionModal show={ showModal } onHide={ () => setShowModal(false) }/>
+      <PermissionModal show={showModal} onHide={() => setShowModal(false)} />
     </Fragment>
   )
 }

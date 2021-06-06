@@ -19,8 +19,7 @@ const createSpoilerContainer = (): RenderContainerReturn => {
 
     if (tokens[index].nesting === 1 && matches && matches[1]) {
       // opening tag
-      return `<details><summary>${ escapeHtml(matches[1]) }</summary>`
-
+      return `<details><summary>${escapeHtml(matches[1])}</summary>`
     } else {
       // closing tag
       return '</details>\n'

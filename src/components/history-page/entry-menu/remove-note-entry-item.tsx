@@ -15,13 +15,14 @@ export interface RemoveNoteEntryItemProps {
 export const RemoveNoteEntryItem: React.FC<RemoveNoteEntryItemProps> = ({ noteTitle, onConfirm }) => {
   return (
     <DropdownItemWithDeletionModal
-      onConfirm={ onConfirm }
-      itemI18nKey={ 'landing.history.menu.removeEntry' }
-      modalButtonI18nKey={ 'landing.history.modal.removeNote.button' }
-      modalIcon={ 'archive' }
-      modalTitleI18nKey={ 'landing.history.modal.removeNote.title' }
-      modalQuestionI18nKey={ 'landing.history.modal.removeNote.question' }
-      modalWarningI18nKey={ 'landing.history.modal.removeNote.warning' }
-      noteTitle={ noteTitle }/>
+      onConfirm={onConfirm}
+      itemI18nKey={'landing.history.menu.removeEntry'}
+      modalButtonI18nKey={'landing.history.modal.removeNote.button'}
+      modalIcon={'archive'}
+      modalTitleI18nKey={'landing.history.modal.removeNote.title'}
+      modalQuestionI18nKey={'landing.history.modal.removeNote.question'}
+      modalWarningI18nKey={'landing.history.modal.removeNote.warning'}
+      noteTitle={noteTitle}
+    />
   )
 }

@@ -23,7 +23,7 @@ import { HistoryEntryOrigin } from '../../../redux/history/types'
 import { importHistoryEntries, refreshHistoryState, setHistoryEntries } from '../../../redux/history/methods'
 import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 
-export type HistoryToolbarChange = (newState: HistoryToolbarState) => void;
+export type HistoryToolbarChange = (newState: HistoryToolbarState) => void
 
 interface ToolbarSortState {
   titleSortDirection: SortModeEnum
@@ -65,8 +65,7 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
   const userExists = useSelector((state: ApplicationState) => !!state.user)
 
   const tags = useMemo<string[]>(() => {
-    const allTags = historyEntries.map(entry => entry.tags)
-                                  .flat()
+    const allTags = historyEntries.map((entry) => entry.tags).flat()
     return [...new Set(allTags)]
   }, [historyEntries])
 
@@ -76,57 +75,69 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
   const [viewState, setViewState] = useState(initToolbarState.viewState)
   const [sortState, setSortState] = useState<ToolbarSortState>(initSortState)
 
-  const titleSortChanged = useCallback((direction: SortModeEnum) => {
-    setSortState({
-      lastVisitedSortDirection: SortModeEnum.no,
-      titleSortDirection: direction
-    })
-  }, [setSortState])
+  const titleSortChanged = useCallback(
+    (direction: SortModeEnum) => {
+      setSortState({
+        lastVisitedSortDirection: SortModeEnum.no,
+        titleSortDirection: direction
+      })
+    },
+    [setSortState]
+  )
 
-  const lastVisitedSortChanged = useCallback((direction: SortModeEnum) => {
-    setSortState({
-      lastVisitedSortDirection: direction,
-      titleSortDirection: SortModeEnum.no
-    })
-  }, [setSortState])
+  const lastVisitedSortChanged = useCallback(
+    (direction: SortModeEnum) => {
+      setSortState({
+        lastVisitedSortDirection: direction,
+        titleSortDirection: SortModeEnum.no
+      })
+    },
+    [setSortState]
+  )
 
-  const keywordSearchChanged = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setSearchState(event.currentTarget.value ?? '')
-  }, [setSearchState])
+  const keywordSearchChanged = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setSearchState(event.currentTarget.value ?? '')
+    },
+    [setSearchState]
+  )
 
-  const toggleViewChanged = useCallback((newViewState: ViewStateEnum) => {
-    setViewState(newViewState)
-  }, [setViewState])
+  const toggleViewChanged = useCallback(
+    (newViewState: ViewStateEnum) => {
+      setViewState(newViewState)
+    },
+    [setViewState]
+  )
 
-  const selectedTagsChanged = useCallback((selected: string[]) => {
-    setTagsState(selected)
-  }, [setTagsState])
+  const selectedTagsChanged = useCallback(
+    (selected: string[]) => {
+      setTagsState(selected)
+    },
+    [setTagsState]
+  )
 
   const refreshHistory = useCallback(() => {
-    refreshHistoryState()
-      .catch(
-        showErrorNotification(t('landing.history.error.getHistory.text'))
-      )
+    refreshHistoryState().catch(showErrorNotification(t('landing.history.error.getHistory.text')))
   }, [t])
 
   const onUploadAllToRemote = useCallback(() => {
     if (!userExists) {
       return
     }
-    const localEntries = historyEntries.filter(entry => entry.origin === HistoryEntryOrigin.LOCAL)
-                                       .map(entry => entry.identifier)
-    historyEntries.forEach(entry => entry.origin = HistoryEntryOrigin.REMOTE)
-    importHistoryEntries(historyEntries)
-      .catch(error => {
-        showErrorNotification(t('landing.history.error.setHistory.text'))(error)
-        historyEntries.forEach(entry => {
-          if (localEntries.includes(entry.identifier)) {
-            entry.origin = HistoryEntryOrigin.LOCAL
-          }
-        })
-        setHistoryEntries(historyEntries)
-        refreshHistory()
+    const localEntries = historyEntries
+      .filter((entry) => entry.origin === HistoryEntryOrigin.LOCAL)
+      .map((entry) => entry.identifier)
+    historyEntries.forEach((entry) => (entry.origin = HistoryEntryOrigin.REMOTE))
+    importHistoryEntries(historyEntries).catch((error) => {
+      showErrorNotification(t('landing.history.error.setHistory.text'))(error)
+      historyEntries.forEach((entry) => {
+        if (localEntries.includes(entry.identifier)) {
+          entry.origin = HistoryEntryOrigin.LOCAL
+        }
       })
+      setHistoryEntries(historyEntries)
+      refreshHistory()
+    })
   }, [userExists, historyEntries, t, refreshHistory])
 
   useEffect(() => {
@@ -146,64 +157,74 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
   }, [onSettingsChange, tagsState, searchState, viewState, sortState])
 
   return (
-    <Form inline={ true }>
-      <InputGroup className={ 'mr-1 mb-1' }>
-        <Typeahead id={ 'tagsSelection' } options={ tags } multiple={ true }
-                   placeholder={ t('landing.history.toolbar.selectTags') }
-                   onChange={ selectedTagsChanged }
-                   selected={ tagsState }
+    <Form inline={true}>
+      <InputGroup className={'mr-1 mb-1'}>
+        <Typeahead
+          id={'tagsSelection'}
+          options={tags}
+          multiple={true}
+          placeholder={t('landing.history.toolbar.selectTags')}
+          onChange={selectedTagsChanged}
+          selected={tagsState}
         />
       </InputGroup>
-      <InputGroup className={ 'mr-1 mb-1' }>
+      <InputGroup className={'mr-1 mb-1'}>
         <FormControl
-          placeholder={ t('landing.history.toolbar.searchKeywords') }
-          aria-label={ t('landing.history.toolbar.searchKeywords') }
-          onChange={ keywordSearchChanged }
-          value={ searchState }
+          placeholder={t('landing.history.toolbar.searchKeywords')}
+          aria-label={t('landing.history.toolbar.searchKeywords')}
+          onChange={keywordSearchChanged}
+          value={searchState}
         />
       </InputGroup>
-      <InputGroup className={ 'mr-1 mb-1' }>
-        <SortButton onDirectionChange={ titleSortChanged } direction={ sortState.titleSortDirection }
-                    variant={ 'light' }><Trans
-          i18nKey={ 'landing.history.toolbar.sortByTitle' }/></SortButton>
+      <InputGroup className={'mr-1 mb-1'}>
+        <SortButton onDirectionChange={titleSortChanged} direction={sortState.titleSortDirection} variant={'light'}>
+          <Trans i18nKey={'landing.history.toolbar.sortByTitle'} />
+        </SortButton>
       </InputGroup>
-      <InputGroup className={ 'mr-1 mb-1' }>
-        <SortButton onDirectionChange={ lastVisitedSortChanged } direction={ sortState.lastVisitedSortDirection }
-                    variant={ 'light' }><Trans i18nKey={ 'landing.history.toolbar.sortByLastVisited' }/></SortButton>
+      <InputGroup className={'mr-1 mb-1'}>
+        <SortButton
+          onDirectionChange={lastVisitedSortChanged}
+          direction={sortState.lastVisitedSortDirection}
+          variant={'light'}>
+          <Trans i18nKey={'landing.history.toolbar.sortByLastVisited'} />
+        </SortButton>
       </InputGroup>
-      <InputGroup className={ 'mr-1 mb-1' }>
-        <ExportHistoryButton/>
+      <InputGroup className={'mr-1 mb-1'}>
+        <ExportHistoryButton />
       </InputGroup>
-      <InputGroup className={ 'mr-1 mb-1' }>
-        <ImportHistoryButton/>
+      <InputGroup className={'mr-1 mb-1'}>
+        <ImportHistoryButton />
       </InputGroup>
-      <InputGroup className={ 'mr-1 mb-1' }>
-        <ClearHistoryButton/>
+      <InputGroup className={'mr-1 mb-1'}>
+        <ClearHistoryButton />
       </InputGroup>
-      <InputGroup className={ 'mr-1 mb-1' }>
-        <Button variant={ 'light' } title={ t('landing.history.toolbar.refresh') } onClick={ refreshHistory }>
-          <ForkAwesomeIcon icon="refresh"/>
+      <InputGroup className={'mr-1 mb-1'}>
+        <Button variant={'light'} title={t('landing.history.toolbar.refresh')} onClick={refreshHistory}>
+          <ForkAwesomeIcon icon='refresh' />
         </Button>
       </InputGroup>
-      <ShowIf condition={ userExists }>
-        <InputGroup className={ 'mr-1 mb-1' }>
-          <Button variant={ 'light' } title={ t('landing.history.toolbar.uploadAll') } onClick={ onUploadAllToRemote }>
-            <ForkAwesomeIcon icon="cloud-upload"/>
+      <ShowIf condition={userExists}>
+        <InputGroup className={'mr-1 mb-1'}>
+          <Button variant={'light'} title={t('landing.history.toolbar.uploadAll')} onClick={onUploadAllToRemote}>
+            <ForkAwesomeIcon icon='cloud-upload' />
           </Button>
         </InputGroup>
       </ShowIf>
-      <InputGroup className={ 'mr-1 mb-1' }>
-        <ToggleButtonGroup type="radio" name="options" dir="ltr" value={ viewState } className={ 'button-height' }
-                           onChange={ (newViewState: ViewStateEnum) => {
-                             toggleViewChanged(newViewState)
-                           } }>
-          <ToggleButton className={ 'btn-light' } value={ ViewStateEnum.CARD }
-                        title={ t('landing.history.toolbar.cards') }>
-            <ForkAwesomeIcon icon={ 'sticky-note' } className={ 'fa-fix-line-height' }/>
+      <InputGroup className={'mr-1 mb-1'}>
+        <ToggleButtonGroup
+          type='radio'
+          name='options'
+          dir='ltr'
+          value={viewState}
+          className={'button-height'}
+          onChange={(newViewState: ViewStateEnum) => {
+            toggleViewChanged(newViewState)
+          }}>
+          <ToggleButton className={'btn-light'} value={ViewStateEnum.CARD} title={t('landing.history.toolbar.cards')}>
+            <ForkAwesomeIcon icon={'sticky-note'} className={'fa-fix-line-height'} />
           </ToggleButton>
-          <ToggleButton className={ 'btn-light' } value={ ViewStateEnum.TABLE }
-                        title={ t('landing.history.toolbar.table') }>
-            <ForkAwesomeIcon icon={ 'table' } className={ 'fa-fix-line-height' }/>
+          <ToggleButton className={'btn-light'} value={ViewStateEnum.TABLE} title={t('landing.history.toolbar.table')}>
+            <ForkAwesomeIcon icon={'table'} className={'fa-fix-line-height'} />
           </ToggleButton>
         </ToggleButtonGroup>
       </InputGroup>

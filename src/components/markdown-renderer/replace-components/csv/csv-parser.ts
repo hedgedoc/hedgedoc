@@ -10,6 +10,5 @@ export const parseCsv = (csvText: string, csvColumnDelimiter: string): string[][
     return []
   }
   const splitRegex = new RegExp(`${csvColumnDelimiter}(?=(?:[^"]*"[^"]*")*[^"]*$)`)
-  return rows.filter(row => row !== '')
-             .map(row => row.split(splitRegex))
+  return rows.filter((row) => row !== '').map((row) => row.split(splitRegex))
 }

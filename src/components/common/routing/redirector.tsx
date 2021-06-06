@@ -26,10 +26,10 @@ export const Redirector: React.FC = () => {
   }, [id])
 
   if (error) {
-    return (<NotFoundErrorScreen/>)
+    return <NotFoundErrorScreen />
   } else if (!error && error != null) {
-    return (<Redirect to={ `/n/${ id }` }/>)
+    return <Redirect to={`/n/${id}`} />
   } else {
-    return (<span>Loading</span>)
+    return <span>Loading</span>
   }
 }

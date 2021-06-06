@@ -18,23 +18,19 @@ export interface TableOfContentsProps {
   baseUrl?: string
 }
 
-export const TableOfContents: React.FC<TableOfContentsProps> = ({
-  ast,
-  maxDepth = 3,
-  className,
-  baseUrl
-}) => {
+export const TableOfContents: React.FC<TableOfContentsProps> = ({ ast, maxDepth = 3, className, baseUrl }) => {
   useTranslation()
-  const tocTree = useMemo(() => buildReactDomFromTocAst(ast, maxDepth, new Map<string, number>(), false, baseUrl), [ast,
-    maxDepth,
-    baseUrl])
+  const tocTree = useMemo(
+    () => buildReactDomFromTocAst(ast, maxDepth, new Map<string, number>(), false, baseUrl),
+    [ast, maxDepth, baseUrl]
+  )
 
   return (
-    <div className={ `markdown-toc ${ className ?? '' }` }>
-      <ShowIf condition={ ast.c.length === 0 }>
-        <Trans i18nKey={ 'editor.infoToc' }/>
+    <div className={`markdown-toc ${className ?? ''}`}>
+      <ShowIf condition={ast.c.length === 0}>
+        <Trans i18nKey={'editor.infoToc'} />
       </ShowIf>
-      { tocTree }
+      {tocTree}
     </div>
   )
 }

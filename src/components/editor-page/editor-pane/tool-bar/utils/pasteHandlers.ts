@@ -14,9 +14,9 @@ type ClipboardDataFormats = 'text' | 'url' | 'text/plain' | 'text/uri-list' | 't
 
 export interface PasteEvent {
   clipboardData: {
-    files: FileList,
+    files: FileList
     getData: (format: ClipboardDataFormats) => string
-  },
+  }
   preventDefault: () => void
 }
 

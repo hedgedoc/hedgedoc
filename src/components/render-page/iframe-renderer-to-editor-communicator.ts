@@ -15,11 +15,14 @@ import {
   RenderIframeMessageType
 } from './rendering-message'
 
-export class IframeRendererToEditorCommunicator extends IframeCommunicator<RendererToEditorIframeMessage, EditorToRendererIframeMessage> {
-  private onSetMarkdownContentHandler?: ((markdownContent: string) => void)
-  private onSetDarkModeHandler?: ((darkModeActivated: boolean) => void)
-  private onSetScrollStateHandler?: ((scrollState: ScrollState) => void)
-  private onSetBaseConfigurationHandler?: ((baseConfiguration: BaseConfiguration) => void)
+export class IframeRendererToEditorCommunicator extends IframeCommunicator<
+  RendererToEditorIframeMessage,
+  EditorToRendererIframeMessage
+> {
+  private onSetMarkdownContentHandler?: (markdownContent: string) => void
+  private onSetDarkModeHandler?: (darkModeActivated: boolean) => void
+  private onSetScrollStateHandler?: (scrollState: ScrollState) => void
+  private onSetBaseConfigurationHandler?: (baseConfiguration: BaseConfiguration) => void
 
   public onSetBaseConfiguration(handler?: (baseConfiguration: BaseConfiguration) => void): void {
     this.onSetBaseConfigurationHandler = handler

@@ -15,7 +15,7 @@ import { UnitalicBoldText } from './unitalic-bold-text'
 import { useCustomizeAssetsUrl } from '../../../../hooks/common/use-customize-assets-url'
 
 export interface DocumentInfoModalProps {
-  show: boolean,
+  show: boolean
   onHide: () => void
 }
 
@@ -24,42 +24,38 @@ export const DocumentInfoModal: React.FC<DocumentInfoModalProps> = ({ show, onHi
 
   // TODO Replace hardcoded mock data with real/mock API requests
   return (
-    <CommonModal
-      show={ show }
-      onHide={ onHide }
-      closeButton={ true }
-      titleI18nKey={ 'editor.modal.documentInfo.title' }>
+    <CommonModal show={show} onHide={onHide} closeButton={true} titleI18nKey={'editor.modal.documentInfo.title'}>
       <Modal.Body>
         <ListGroup>
           <ListGroup.Item>
             <DocumentInfoTimeLine
-              size={ '2x' }
-              mode={ DocumentInfoLineWithTimeMode.CREATED }
-              time={ DateTime.local()
-                             .minus({ days: 11 }) }
-              userName={ 'Tilman' }
-              profileImageSrc={ `${ assetsBaseUrl }img/avatar.png` }/>
+              size={'2x'}
+              mode={DocumentInfoLineWithTimeMode.CREATED}
+              time={DateTime.local().minus({ days: 11 })}
+              userName={'Tilman'}
+              profileImageSrc={`${assetsBaseUrl}img/avatar.png`}
+            />
           </ListGroup.Item>
           <ListGroup.Item>
             <DocumentInfoTimeLine
-              size={ '2x' }
-              mode={ DocumentInfoLineWithTimeMode.EDITED }
-              time={ DateTime.local()
-                             .minus({ minutes: 3 }) }
-              userName={ 'Philip' }
-              profileImageSrc={ `${ assetsBaseUrl }img/avatar.png` }/>
+              size={'2x'}
+              mode={DocumentInfoLineWithTimeMode.EDITED}
+              time={DateTime.local().minus({ minutes: 3 })}
+              userName={'Philip'}
+              profileImageSrc={`${assetsBaseUrl}img/avatar.png`}
+            />
           </ListGroup.Item>
           <ListGroup.Item>
-            <DocumentInfoLine icon={ 'users' } size={ '2x' }>
+            <DocumentInfoLine icon={'users'} size={'2x'}>
               <Trans i18nKey='editor.modal.documentInfo.usersContributed'>
-                <UnitalicBoldText text={ '42' }/>
+                <UnitalicBoldText text={'42'} />
               </Trans>
             </DocumentInfoLine>
           </ListGroup.Item>
           <ListGroup.Item>
-            <DocumentInfoLine icon={ 'history' } size={ '2x' }>
+            <DocumentInfoLine icon={'history'} size={'2x'}>
               <Trans i18nKey='editor.modal.documentInfo.revisions'>
-                <UnitalicBoldText text={ '192' }/>
+                <UnitalicBoldText text={'192'} />
               </Trans>
             </DocumentInfoLine>
           </ListGroup.Item>

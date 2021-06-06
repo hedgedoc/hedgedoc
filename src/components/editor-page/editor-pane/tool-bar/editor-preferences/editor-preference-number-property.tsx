@@ -18,18 +18,28 @@ export interface EditorPreferenceNumberProps {
 }
 
 export const EditorPreferenceNumberProperty: React.FC<EditorPreferenceNumberProps> = ({ property }) => {
-  const preference = useSelector((state: ApplicationState) => state.editorConfig.preferences[property]?.toString() || '', equal)
+  const preference = useSelector(
+    (state: ApplicationState) => state.editorConfig.preferences[property]?.toString() || '',
+    equal
+  )
 
-  const selectItem = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
-    const selectedItem: number = Number.parseInt(event.target.value)
+  const selectItem = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      const selectedItem: number = Number.parseInt(event.target.value)
 
-    mergeEditorPreferences({
-      [property]: selectedItem
-    } as EditorConfiguration)
-  }, [property])
+      mergeEditorPreferences({
+        [property]: selectedItem
+      } as EditorConfiguration)
+    },
+    [property]
+  )
 
   return (
-    <EditorPreferenceInput onChange={ selectItem } property={ property } type={ EditorPreferenceInputType.NUMBER }
-                           value={ preference }/>
+    <EditorPreferenceInput
+      onChange={selectItem}
+      property={property}
+      type={EditorPreferenceInputType.NUMBER}
+      value={preference}
+    />
   )
 }

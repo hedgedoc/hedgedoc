@@ -19,7 +19,7 @@ export interface SplitterProps {
 
 export const Splitter: React.FC<SplitterProps> = ({ containerClassName, left, right, showLeft, showRight }) => {
   const [split, setSplit] = useState(50)
-  const realSplit = Math.max(0, Math.min(100, (showRight ? split : 100)))
+  const realSplit = Math.max(0, Math.min(100, showRight ? split : 100))
   const [doResizing, setDoResizing] = useState(false)
   const splitContainer = useRef<HTMLDivElement>(null)
 
@@ -37,37 +37,45 @@ export const Splitter: React.FC<SplitterProps> = ({ containerClassName, left, ri
     setDoResizing(false)
   }, [])
 
-  const onMouseMove = useCallback((mouseEvent: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (doResizing) {
-      recalculateSize(mouseEvent.pageX)
-      mouseEvent.preventDefault()
-    }
-  }, [doResizing])
+  const onMouseMove = useCallback(
+    (mouseEvent: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      if (doResizing) {
+        recalculateSize(mouseEvent.pageX)
+        mouseEvent.preventDefault()
+      }
+    },
+    [doResizing]
+  )
 
-  const onTouchMove = useCallback((touchEvent: React.TouchEvent<HTMLDivElement>) => {
-    if (doResizing) {
-      recalculateSize(touchEvent.touches[0].pageX)
-      touchEvent.preventDefault()
-    }
-  }, [doResizing])
+  const onTouchMove = useCallback(
+    (touchEvent: React.TouchEvent<HTMLDivElement>) => {
+      if (doResizing) {
+        recalculateSize(touchEvent.touches[0].pageX)
+        touchEvent.preventDefault()
+      }
+    },
+    [doResizing]
+  )
 
   const onGrab = useCallback(() => setDoResizing(true), [])
 
   return (
-    <div ref={ splitContainer } className={ `flex-fill flex-row d-flex ${ containerClassName || '' }` }
-         onMouseUp={ stopResizing } onTouchEnd={ stopResizing } onMouseMove={ onMouseMove } onTouchMove={ onTouchMove }>
-      <div className={ `splitter left ${ !showLeft ? 'd-none' : '' }` }
-           style={ { flexBasis: `calc(${ realSplit }% - 5px)` } }>
-        { left }
+    <div
+      ref={splitContainer}
+      className={`flex-fill flex-row d-flex ${containerClassName || ''}`}
+      onMouseUp={stopResizing}
+      onTouchEnd={stopResizing}
+      onMouseMove={onMouseMove}
+      onTouchMove={onTouchMove}>
+      <div className={`splitter left ${!showLeft ? 'd-none' : ''}`} style={{ flexBasis: `calc(${realSplit}% - 5px)` }}>
+        {left}
       </div>
-      <ShowIf condition={ showLeft && showRight }>
+      <ShowIf condition={showLeft && showRight}>
         <div className='splitter separator'>
-          <SplitDivider onGrab={ onGrab }/>
+          <SplitDivider onGrab={onGrab} />
         </div>
       </ShowIf>
-      <div className={ `splitter right ${ !showRight ? 'd-none' : '' }` }>
-        { right }
-      </div>
+      <div className={`splitter right ${!showRight ? 'd-none' : ''}`}>{right}</div>
     </div>
   )
 }

@@ -12,18 +12,26 @@ import { SidebarEntryProps } from './types'
 
 export type SidebarEntryVariant = 'primary'
 
-export const SidebarButton: React.FC<SidebarEntryProps> = ({ children, icon, className, variant, buttonRef, hide, ...props }) => {
+export const SidebarButton: React.FC<SidebarEntryProps> = ({
+  children,
+  icon,
+  className,
+  variant,
+  buttonRef,
+  hide,
+  ...props
+}) => {
   return (
-    <button ref={ buttonRef }
-            className={ `sidebar-entry ${ hide ? 'hide' : '' } ${ variant ? `sidebar-entry-${ variant }` : '' } ${ className ?? '' }` } { ...props } >
-      <ShowIf condition={ !!icon }>
-        <span className={ 'sidebar-icon' }>
-          <ForkAwesomeIcon icon={ icon as IconName }/>
+    <button
+      ref={buttonRef}
+      className={`sidebar-entry ${hide ? 'hide' : ''} ${variant ? `sidebar-entry-${variant}` : ''} ${className ?? ''}`}
+      {...props}>
+      <ShowIf condition={!!icon}>
+        <span className={'sidebar-icon'}>
+          <ForkAwesomeIcon icon={icon as IconName} />
         </span>
       </ShowIf>
-      <span className={ 'sidebar-text' }>
-        { children }
-      </span>
+      <span className={'sidebar-text'}>{children}</span>
     </button>
   )
 }

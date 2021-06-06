@@ -13,11 +13,14 @@ const spoilerSuggestion: Hint = {
   text: ':::spoiler Toggle label\nToggled content\n::: \n',
   displayText: 'spoiler'
 }
-const suggestions = validAlertLevels.map((suggestion: string): Hint => ({
-  text: ':::' + suggestion + '\n\n::: \n',
-  displayText: suggestion
-}))
-                                    .concat(spoilerSuggestion)
+const suggestions = validAlertLevels
+  .map(
+    (suggestion: string): Hint => ({
+      text: ':::' + suggestion + '\n\n::: \n',
+      displayText: suggestion
+    })
+  )
+  .concat(spoilerSuggestion)
 
 const containerHint = (editor: Editor): Promise<Hints | null> => {
   return new Promise((resolve) => {

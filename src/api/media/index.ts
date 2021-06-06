@@ -16,7 +16,7 @@ export const getProxiedUrl = async (imageUrl: string): Promise<ImageProxyRespons
     })
   })
   expectResponseCode(response)
-  return await response.json() as Promise<ImageProxyResponse>
+  return (await response.json()) as Promise<ImageProxyResponse>
 }
 
 export interface UploadedMedia {
@@ -34,5 +34,5 @@ export const uploadFile = async (noteId: string, contentType: string, media: Blo
     body: media
   })
   expectResponseCode(response, 201)
-  return await response.json() as Promise<UploadedMedia>
+  return (await response.json()) as Promise<UploadedMedia>
 }

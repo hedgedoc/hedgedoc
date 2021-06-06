@@ -29,7 +29,7 @@ export interface V1HistoryEntry {
 }
 
 export interface HistoryExportJson {
-  version: number,
+  version: number
   entries: HistoryEntry[]
 }
 

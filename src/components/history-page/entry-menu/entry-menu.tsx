@@ -17,10 +17,10 @@ import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../../redux'
 
 export interface EntryMenuProps {
-  id: string;
+  id: string
   title: string
   origin: HistoryEntryOrigin
-  isDark: boolean;
+  isDark: boolean
   onRemove: () => void
   onDelete: () => void
   className?: string
@@ -32,35 +32,36 @@ export const EntryMenu: React.FC<EntryMenuProps> = ({ id, title, origin, isDark,
   const userExists = useSelector((state: ApplicationState) => !!state.user)
 
   return (
-    <Dropdown className={ `d-inline-flex ${ className || '' }` }>
-      <Dropdown.Toggle variant={ isDark ? 'secondary' : 'light' } id={ `dropdown-card-${ id }` }
-                       className='no-arrow history-menu d-inline-flex align-items-center'>
-        <ForkAwesomeIcon icon="ellipsis-v" fixedWidth={ true }/>
+    <Dropdown className={`d-inline-flex ${className || ''}`}>
+      <Dropdown.Toggle
+        variant={isDark ? 'secondary' : 'light'}
+        id={`dropdown-card-${id}`}
+        className='no-arrow history-menu d-inline-flex align-items-center'>
+        <ForkAwesomeIcon icon='ellipsis-v' fixedWidth={true} />
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-
         <Dropdown.Header>
-          <Trans i18nKey="landing.history.menu.recentNotes"/>
+          <Trans i18nKey='landing.history.menu.recentNotes' />
         </Dropdown.Header>
 
-        <ShowIf condition={ origin === HistoryEntryOrigin.LOCAL }>
+        <ShowIf condition={origin === HistoryEntryOrigin.LOCAL}>
           <Dropdown.Item disabled>
-            <ForkAwesomeIcon icon="laptop" fixedWidth={ true } className="mx-2"/>
-            <Trans i18nKey="landing.history.menu.entryLocal"/>
+            <ForkAwesomeIcon icon='laptop' fixedWidth={true} className='mx-2' />
+            <Trans i18nKey='landing.history.menu.entryLocal' />
           </Dropdown.Item>
         </ShowIf>
-        <ShowIf condition={ origin === HistoryEntryOrigin.REMOTE }>
+        <ShowIf condition={origin === HistoryEntryOrigin.REMOTE}>
           <Dropdown.Item disabled>
-            <ForkAwesomeIcon icon="cloud" fixedWidth={ true } className="mx-2"/>
-            <Trans i18nKey="landing.history.menu.entryRemote"/>
+            <ForkAwesomeIcon icon='cloud' fixedWidth={true} className='mx-2' />
+            <Trans i18nKey='landing.history.menu.entryRemote' />
           </Dropdown.Item>
         </ShowIf>
-        <RemoveNoteEntryItem onConfirm={ onRemove } noteTitle={ title }/>
+        <RemoveNoteEntryItem onConfirm={onRemove} noteTitle={title} />
 
-        <ShowIf condition={ userExists }>
-          <Dropdown.Divider/>
-          <DeleteNoteItem onConfirm={ onDelete } noteTitle={ title }/>
+        <ShowIf condition={userExists}>
+          <Dropdown.Divider />
+          <DeleteNoteItem onConfirm={onDelete} noteTitle={title} />
         </ShowIf>
       </Dropdown.Menu>
     </Dropdown>

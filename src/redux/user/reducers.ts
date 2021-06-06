@@ -7,7 +7,10 @@
 import { Reducer } from 'redux'
 import { MaybeUserState, SetUserAction, UserActions, UserActionType } from './types'
 
-export const UserReducer: Reducer<MaybeUserState, UserActions> = (state: MaybeUserState = null, action: UserActions) => {
+export const UserReducer: Reducer<MaybeUserState, UserActions> = (
+  state: MaybeUserState = null,
+  action: UserActions
+) => {
   switch (action.type) {
     case UserActionType.SET_USER:
       return (action as SetUserAction).state

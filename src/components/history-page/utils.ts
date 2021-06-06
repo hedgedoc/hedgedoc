@@ -13,33 +13,27 @@ export const formatHistoryDate = (date: string): string => DateTime.fromISO(date
 
 export const sortAndFilterEntries = (entries: HistoryEntry[], toolbarState: HistoryToolbarState): HistoryEntry[] => {
   const filteredBySelectedTagsEntries = filterBySelectedTags(entries, toolbarState.selectedTags)
-  const filteredByKeywordSearchEntries = filterByKeywordSearch(filteredBySelectedTagsEntries, toolbarState.keywordSearch)
+  const filteredByKeywordSearchEntries = filterByKeywordSearch(
+    filteredBySelectedTagsEntries,
+    toolbarState.keywordSearch
+  )
   return sortEntries(filteredByKeywordSearchEntries, toolbarState)
 }
 
 const filterBySelectedTags = (entries: HistoryEntry[], selectedTags: string[]): HistoryEntry[] => {
-  return entries.filter(entry => {
-      return (selectedTags.length === 0 || arrayCommonCheck(entry.tags, selectedTags))
-    }
-  )
+  return entries.filter((entry) => {
+    return selectedTags.length === 0 || arrayCommonCheck(entry.tags, selectedTags)
+  })
 }
 
-const arrayCommonCheck = <T> (array1: T[], array2: T[]): boolean => {
-  const foundElement = array1.find((element1) =>
-    array2.find((element2) =>
-      element2 === element1
-    )
-  )
+const arrayCommonCheck = <T>(array1: T[], array2: T[]): boolean => {
+  const foundElement = array1.find((element1) => array2.find((element2) => element2 === element1))
   return !!foundElement
 }
 
 const filterByKeywordSearch = (entries: HistoryEntry[], keywords: string): HistoryEntry[] => {
   const searchTerm = keywords.toLowerCase()
-  return entries.filter(
-    entry => entry.title
-                  .toLowerCase()
-                  .includes(searchTerm)
-  )
+  return entries.filter((entry) => entry.title.toLowerCase().includes(searchTerm))
 }
 
 const sortEntries = (entries: HistoryEntry[], viewState: HistoryToolbarState): HistoryEntry[] => {

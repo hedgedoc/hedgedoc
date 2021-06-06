@@ -11,7 +11,7 @@ import { ComponentReplacer, NativeRenderer, SubNodeTransform } from '../replace-
 import { LineKeys } from '../types'
 
 export interface TextDifferenceResult {
-  lines: LineKeys[],
+  lines: LineKeys[]
   lastUsedLineId: number
 }
 
@@ -44,10 +44,15 @@ export const calculateKeyFromLineMarker = (node: DomElement, lineKeys?: LineKeys
     return
   }
 
-  return `${ startLine.id }_${ endLine.id }`
+  return `${startLine.id}_${endLine.id}`
 }
 
-export const findNodeReplacement = (node: DomElement, allReplacers: ComponentReplacer[], subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer): ReactElement | null | undefined => {
+export const findNodeReplacement = (
+  node: DomElement,
+  allReplacers: ComponentReplacer[],
+  subNodeTransform: SubNodeTransform,
+  nativeRenderer: NativeRenderer
+): ReactElement | null | undefined => {
   return allReplacers
     .map((componentReplacer) => componentReplacer.getReplacement(node, subNodeTransform, nativeRenderer))
     .find((replacement) => replacement !== undefined)
@@ -62,7 +67,7 @@ export const renderNativeNode = (node: DomElement, key: string, transform: Trans
   return convertNodeToElement(node, key as unknown as number, transform)
 }
 
-export const buildTransformer = (lineKeys: (LineKeys[] | undefined), allReplacers: ComponentReplacer[]): Transform => {
+export const buildTransformer = (lineKeys: LineKeys[] | undefined, allReplacers: ComponentReplacer[]): Transform => {
   const transform: Transform = (node, index) => {
     const nativeRenderer: NativeRenderer = () => renderNativeNode(node, key, transform)
     const subNodeTransform: SubNodeTransform = (subNode, subIndex) => transform(subNode, subIndex, transform)
@@ -74,9 +79,11 @@ export const buildTransformer = (lineKeys: (LineKeys[] | undefined), allReplacer
     } else if (tryReplacement === undefined) {
       return nativeRenderer()
     } else {
-      return <Suspense key={ key } fallback={ <span>Loading...</span> }>
-        { tryReplacement }
-      </Suspense>
+      return (
+        <Suspense key={key} fallback={<span>Loading...</span>}>
+          {tryReplacement}
+        </Suspense>
+      )
     }
   }
   return transform

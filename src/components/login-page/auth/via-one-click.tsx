@@ -22,18 +22,19 @@ export enum OneClickType {
 }
 
 interface OneClickMetadata {
-  name: string,
-  icon: IconName,
-  className: string,
+  name: string
+  icon: IconName
+  className: string
   url: string
 }
 
 const buildBackendAuthUrl = (backendUrl: string, backendName: string): string => {
-  return `${ backendUrl }/auth/${ backendName }`
+  return `${backendUrl}/auth/${backendName}`
 }
 
 const getMetadata = (backendUrl: string, oneClickType: OneClickType): OneClickMetadata => {
-  const buildBackendAuthUrlWithFirstParameterSet = (backendName: string): string => buildBackendAuthUrl(backendUrl, backendName)
+  const buildBackendAuthUrlWithFirstParameterSet = (backendName: string): string =>
+    buildBackendAuthUrl(backendUrl, backendName)
   switch (oneClickType) {
     case OneClickType.DROPBOX:
       return {
@@ -102,8 +103,8 @@ const getMetadata = (backendUrl: string, oneClickType: OneClickType): OneClickMe
 }
 
 export interface ViaOneClickProps {
-  oneClickType: OneClickType;
-  optionalName?: string;
+  oneClickType: OneClickType
+  optionalName?: string
 }
 
 export const ViaOneClick: React.FC<ViaOneClickProps> = ({ oneClickType, optionalName }) => {
@@ -112,13 +113,8 @@ export const ViaOneClick: React.FC<ViaOneClickProps> = ({ oneClickType, optional
   const text = optionalName || name
 
   return (
-    <SocialLinkButton
-      backgroundClass={ className }
-      icon={ icon }
-      href={ url }
-      title={ text }
-    >
-      { text }
+    <SocialLinkButton backgroundClass={className} icon={icon} href={url} title={text}>
+      {text}
     </SocialLinkButton>
   )
 }

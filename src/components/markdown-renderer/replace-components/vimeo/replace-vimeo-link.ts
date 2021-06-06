@@ -10,7 +10,9 @@ const protocolRegex = /(?:http(?:s)?:\/\/)?/
 const domainRegex = /(?:player\.)?(?:vimeo\.com\/)(?:(?:channels|album|ondemand|groups)\/\w+\/)?(?:video\/)?/
 const idRegex = /([\d]{6,11})/
 const tailRegex = /(?:[?#].*)?/
-const vimeoVideoUrlRegex = new RegExp(`(?:${protocolRegex.source}${domainRegex.source}${idRegex.source}${tailRegex.source})`)
+const vimeoVideoUrlRegex = new RegExp(
+  `(?:${protocolRegex.source}${domainRegex.source}${idRegex.source}${tailRegex.source})`
+)
 const linkRegex = new RegExp(`^${vimeoVideoUrlRegex.source}$`, 'i')
 
 export const replaceVimeoLink: RegexOptions = {
@@ -19,6 +21,6 @@ export const replaceVimeoLink: RegexOptions = {
   replace: (match) => {
     // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
     // noinspection CheckTagEmptyBody
-    return `<app-vimeo id="${ match }"></app-vimeo>`
+    return `<app-vimeo id="${match}"></app-vimeo>`
   }
 }

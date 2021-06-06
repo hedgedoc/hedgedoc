@@ -10,20 +10,26 @@ import { Pager } from '../../common/pagination/pager'
 import { HistoryEntriesProps, HistoryEventHandlers } from '../history-content/history-content'
 import { HistoryCard } from './history-card'
 
-export const HistoryCardList: React.FC<HistoryEntriesProps & HistoryEventHandlers> = ({ entries, onPinClick, onRemoveClick, onDeleteClick, pageIndex, onLastPageIndexChange }) => {
+export const HistoryCardList: React.FC<HistoryEntriesProps & HistoryEventHandlers> = ({
+  entries,
+  onPinClick,
+  onRemoveClick,
+  onDeleteClick,
+  pageIndex,
+  onLastPageIndexChange
+}) => {
   return (
-    <Row className="justify-content-start">
-      <Pager numberOfElementsPerPage={ 9 } pageIndex={ pageIndex } onLastPageIndexChange={ onLastPageIndexChange }>
-        {
-          entries.map((entry) => (
-            <HistoryCard
-              key={ entry.identifier }
-              entry={ entry }
-              onPinClick={ onPinClick }
-              onRemoveClick={ onRemoveClick }
-              onDeleteClick={ onDeleteClick }
-            />))
-        }
+    <Row className='justify-content-start'>
+      <Pager numberOfElementsPerPage={9} pageIndex={pageIndex} onLastPageIndexChange={onLastPageIndexChange}>
+        {entries.map((entry) => (
+          <HistoryCard
+            key={entry.identifier}
+            entry={entry}
+            onPinClick={onPinClick}
+            onRemoveClick={onRemoveClick}
+            onDeleteClick={onDeleteClick}
+          />
+        ))}
       </Pager>
     </Row>
   )

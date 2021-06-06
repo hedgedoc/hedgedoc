@@ -17,10 +17,13 @@ export const ReadOnlyModeButton: React.FC = () => {
   const { id } = useParams<EditorPagePathParams>()
 
   return (
-    <Link to={ `/s/${ id }` } target='_blank'>
-      <Button title={ t('editor.documentBar.readOnlyMode') } className="ml-2 text-secondary" size="sm"
-              variant="outline-light">
-        <ForkAwesomeIcon icon="file-text-o"/>
+    <Link to={`/s/${id}`} target='_blank'>
+      <Button
+        title={t('editor.documentBar.readOnlyMode')}
+        className='ml-2 text-secondary'
+        size='sm'
+        variant='outline-light'>
+        <ForkAwesomeIcon icon='file-text-o' />
       </Button>
     </Link>
   )

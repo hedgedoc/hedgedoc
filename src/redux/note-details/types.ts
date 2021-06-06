@@ -60,7 +60,7 @@ export interface SetNoteFrontmatterFromRenderingAction extends NoteDetailsAction
 }
 
 export interface SetCheckboxInMarkdownContentAction extends NoteDetailsAction {
-  type: NoteDetailsActionType.SET_CHECKBOX_IN_MARKDOWN_CONTENT,
-  lineInMarkdown: number,
+  type: NoteDetailsActionType.SET_CHECKBOX_IN_MARKDOWN_CONTENT
+  lineInMarkdown: number
   checked: boolean
 }

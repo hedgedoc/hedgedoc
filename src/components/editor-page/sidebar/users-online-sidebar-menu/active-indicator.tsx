@@ -13,11 +13,9 @@ export enum ActiveIndicatorStatus {
 }
 
 export interface ActiveIndicatorProps {
-  status: ActiveIndicatorStatus;
+  status: ActiveIndicatorStatus
 }
 
 export const ActiveIndicator: React.FC<ActiveIndicatorProps> = ({ status }) => {
-  return (
-    <span className={ `activeIndicator ${ status }` }/>
-  )
+  return <span className={`activeIndicator ${status}`} />
 }

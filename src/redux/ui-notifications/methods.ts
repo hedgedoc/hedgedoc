@@ -17,7 +17,13 @@ import { IconName } from '../../components/common/fork-awesome/types'
 
 export const DEFAULT_DURATION_IN_SECONDS = 10
 
-export const dispatchUiNotification = (title: string, content: string, durationInSecond = DEFAULT_DURATION_IN_SECONDS, icon?: IconName, buttons?: UiNotificationButton[]): void => {
+export const dispatchUiNotification = (
+  title: string,
+  content: string,
+  durationInSecond = DEFAULT_DURATION_IN_SECONDS,
+  icon?: IconName,
+  buttons?: UiNotificationButton[]
+): void => {
   store.dispatch({
     type: UiNotificationActionType.DISPATCH_NOTIFICATION,
     notification: {
@@ -39,7 +45,9 @@ export const dismissUiNotification = (notificationId: number): void => {
   } as DismissUiNotificationAction)
 }
 
-export const showErrorNotification = (message: string) => (error: Error): void => {
-  console.error(message, error)
-  dispatchUiNotification(i18n.t('common.errorOccurred'), message, DEFAULT_DURATION_IN_SECONDS, 'exclamation-triangle')
-}
+export const showErrorNotification =
+  (message: string) =>
+  (error: Error): void => {
+    console.error(message, error)
+    dispatchUiNotification(i18n.t('common.errorOccurred'), message, DEFAULT_DURATION_IN_SECONDS, 'exclamation-triangle')
+  }

@@ -16,43 +16,35 @@ export const isTable = (text: string): boolean => {
     return false
   }
 
-  const lines = text.split(/\r?\n/)
-                    .filter(line => line.trim() !== '')
+  const lines = text.split(/\r?\n/).filter((line) => line.trim() !== '')
 
   // Tab-indented text should not be matched as a table
-  if (lines.every(line => line.startsWith('\t'))) {
+  if (lines.every((line) => line.startsWith('\t'))) {
     return false
   }
   // Every line should have the same amount of tabs (table columns)
-  const tabsPerLines = lines.map(line => line.match(/\t/g)?.length ?? 0)
-  return tabsPerLines.every(line => line === tabsPerLines[0])
+  const tabsPerLines = lines.map((line) => line.match(/\t/g)?.length ?? 0)
+  return tabsPerLines.every((line) => line === tabsPerLines[0])
 }
 
 export const convertClipboardTableToMarkdown = (pasteData: string): string => {
   if (pasteData.trim() === '') {
     return ''
   }
-  const tableRows = pasteData.split(/\r?\n/)
-                             .filter(row => row.trim() !== '')
+  const tableRows = pasteData.split(/\r?\n/).filter((row) => row.trim() !== '')
   const tableCells = tableRows.reduce((cellsInRow, row, index) => {
     cellsInRow[index] = row.split('\t')
     return cellsInRow
   }, [] as string[][])
   const arrayMaxRows = createNumberRangeArray(tableCells.length)
-  const arrayMaxColumns = createNumberRangeArray(Math.max(...tableCells.map(row => row.length)))
+  const arrayMaxColumns = createNumberRangeArray(Math.max(...tableCells.map((row) => row.length)))
 
-  const headRow1 = arrayMaxColumns
-    .map(col => `| #${ col + 1 } `)
-    .join('') + '|'
-  const headRow2 = arrayMaxColumns
-    .map(col => `| -${ '-'.repeat((col + 1).toString().length) } `)
-    .join('') + '|'
+  const headRow1 = arrayMaxColumns.map((col) => `| #${col + 1} `).join('') + '|'
+  const headRow2 = arrayMaxColumns.map((col) => `| -${'-'.repeat((col + 1).toString().length)} `).join('') + '|'
   const body = arrayMaxRows
-    .map(row => {
-      return arrayMaxColumns
-        .map(col => '| ' + tableCells[row][col] + ' ')
-        .join('') + '|'
+    .map((row) => {
+      return arrayMaxColumns.map((col) => '| ' + tableCells[row][col] + ' ').join('') + '|'
     })
     .join('\n')
-  return `${ headRow1 }\n${ headRow2 }\n${ body }`
+  return `${headRow1}\n${headRow2}\n${body}`
 }

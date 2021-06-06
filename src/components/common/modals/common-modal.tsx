@@ -23,24 +23,38 @@ export interface CommonModalProps {
   'data-cy'?: string
 }
 
-export const CommonModal: React.FC<CommonModalProps> = ({ show, onHide, titleI18nKey, title, closeButton, icon, additionalClasses, size, children, ...props }) => {
+export const CommonModal: React.FC<CommonModalProps> = ({
+  show,
+  onHide,
+  titleI18nKey,
+  title,
+  closeButton,
+  icon,
+  additionalClasses,
+  size,
+  children,
+  ...props
+}) => {
   useTranslation()
 
   return (
-    <Modal data-cy={ props['data-cy'] } show={ show } onHide={ onHide } animation={ true }
-           dialogClassName={ `text-dark ${ additionalClasses ?? '' }` } size={ size }>
-      <Modal.Header closeButton={ !!closeButton }>
+    <Modal
+      data-cy={props['data-cy']}
+      show={show}
+      onHide={onHide}
+      animation={true}
+      dialogClassName={`text-dark ${additionalClasses ?? ''}`}
+      size={size}>
+      <Modal.Header closeButton={!!closeButton}>
         <Modal.Title>
-          <ShowIf condition={ !!icon }>
-            <ForkAwesomeIcon icon={ icon as IconName }/>&nbsp;
+          <ShowIf condition={!!icon}>
+            <ForkAwesomeIcon icon={icon as IconName} />
+            &nbsp;
           </ShowIf>
-          { titleI18nKey
-            ? <Trans i18nKey={ titleI18nKey }/>
-            : <span>{ title }</span>
-          }
+          {titleI18nKey ? <Trans i18nKey={titleI18nKey} /> : <span>{title}</span>}
         </Modal.Title>
       </Modal.Header>
-      { children }
+      {children}
     </Modal>
   )
 }

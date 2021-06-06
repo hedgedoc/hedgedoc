@@ -5,7 +5,5 @@
  */
 
 export const tocSlugify = (content: string): string => {
-  return encodeURIComponent(content.trim()
-                                   .toLowerCase()
-                                   .replace(/\s+/g, '-'))
+  return encodeURIComponent(content.trim().toLowerCase().replace(/\s+/g, '-'))
 }

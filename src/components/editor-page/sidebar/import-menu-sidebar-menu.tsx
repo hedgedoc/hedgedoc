@@ -11,14 +11,12 @@ import { SidebarButton } from './sidebar-button'
 import { SidebarMenu } from './sidebar-menu'
 import { DocumentSidebarMenuSelection, SpecificSidebarMenuProps } from './types'
 
-export const ImportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = (
-  {
-    className,
-    menuId,
-    onClick,
-    selectedMenuId
-  }) => {
-
+export const ImportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
+  className,
+  menuId,
+  onClick,
+  selectedMenuId
+}) => {
   useTranslation()
 
   const hide = selectedMenuId !== DocumentSidebarMenuSelection.NONE && selectedMenuId !== menuId
@@ -29,21 +27,21 @@ export const ImportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = (
 
   return (
     <Fragment>
-      <SidebarButton data-cy={ 'menu-import' } hide={ hide } icon={ expand ? 'arrow-left' : 'cloud-upload' }
-                     className={ className } onClick={ onClickHandler }>
-        <Trans i18nKey={ 'editor.documentBar.import' }/>
+      <SidebarButton
+        data-cy={'menu-import'}
+        hide={hide}
+        icon={expand ? 'arrow-left' : 'cloud-upload'}
+        className={className}
+        onClick={onClickHandler}>
+        <Trans i18nKey={'editor.documentBar.import'} />
       </SidebarButton>
-      <SidebarMenu expand={ expand }>
-        <SidebarButton icon={ 'github' }>
-          Gist
+      <SidebarMenu expand={expand}>
+        <SidebarButton icon={'github'}>Gist</SidebarButton>
+        <SidebarButton icon={'gitlab'}>Gitlab Snippet</SidebarButton>
+        <SidebarButton icon={'clipboard'}>
+          <Trans i18nKey={'editor.import.clipboard'} />
         </SidebarButton>
-        <SidebarButton icon={ 'gitlab' }>
-          Gitlab Snippet
-        </SidebarButton>
-        <SidebarButton icon={ 'clipboard' }>
-          <Trans i18nKey={ 'editor.import.clipboard' }/>
-        </SidebarButton>
-        <ImportMarkdownSidebarEntry/>
+        <ImportMarkdownSidebarEntry />
       </SidebarMenu>
     </Fragment>
   )

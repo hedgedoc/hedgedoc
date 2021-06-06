@@ -52,7 +52,10 @@ export const initialState: NoteDetails = {
   }
 }
 
-export const NoteDetailsReducer: Reducer<NoteDetails, NoteDetailsAction> = (state: NoteDetails = initialState, action: NoteDetailsAction) => {
+export const NoteDetailsReducer: Reducer<NoteDetails, NoteDetailsAction> = (
+  state: NoteDetails = initialState,
+  action: NoteDetailsAction
+) => {
   switch (action.type) {
     case NoteDetailsActionType.SET_DOCUMENT_CONTENT:
       return {
@@ -94,7 +97,7 @@ const setCheckboxInMarkdownContent = (markdownContent: string, lineInMarkdown: n
   if (results) {
     const before = results[1]
     const after = results[3]
-    lines[lineInMarkdown] = `${ before }[${ checked ? 'x' : ' ' }]${ after }`
+    lines[lineInMarkdown] = `${before}[${checked ? 'x' : ' '}]${after}`
     return lines.join('\n')
   }
   return markdownContent
@@ -103,11 +106,13 @@ const setCheckboxInMarkdownContent = (markdownContent: string, lineInMarkdown: n
 const generateNoteTitle = (frontmatter: NoteFrontmatter, firstHeading?: string) => {
   if (frontmatter?.title && frontmatter?.title !== '') {
     return frontmatter.title.trim()
-  } else if (frontmatter?.opengraph && frontmatter?.opengraph.get('title') && frontmatter?.opengraph.get('title') !== '') {
+  } else if (
+    frontmatter?.opengraph &&
+    frontmatter?.opengraph.get('title') &&
+    frontmatter?.opengraph.get('title') !== ''
+  ) {
     return (frontmatter?.opengraph.get('title') ?? firstHeading ?? '').trim()
   } else {
     return (firstHeading ?? firstHeading ?? '').trim()
   }
 }
-
-

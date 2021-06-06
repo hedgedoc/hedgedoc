@@ -6,7 +6,11 @@
 
 import React, { useCallback, useEffect, useRef } from 'react'
 
-export const useExtractFirstHeadline = (documentElement: React.RefObject<HTMLDivElement>, content: string, onFirstHeadingChange?: (firstHeading: string | undefined) => void): void => {
+export const useExtractFirstHeadline = (
+  documentElement: React.RefObject<HTMLDivElement>,
+  content: string,
+  onFirstHeadingChange?: (firstHeading: string | undefined) => void
+): void => {
   const extractInnerText = useCallback((node: ChildNode | null): string => {
     if (!node) {
       return ''
@@ -34,10 +38,8 @@ export const useExtractFirstHeadline = (documentElement: React.RefObject<HTMLDiv
 
   useEffect(() => {
     if (onFirstHeadingChange && documentElement.current) {
-      const firstHeading = documentElement.current.getElementsByTagName('h1')
-                                          .item(0)
-      const headingText = extractInnerText(firstHeading)
-        .trim()
+      const firstHeading = documentElement.current.getElementsByTagName('h1').item(0)
+      const headingText = extractInnerText(firstHeading).trim()
       if (headingText !== lastFirstHeading.current) {
         lastFirstHeading.current = headingText
         onFirstHeadingChange(headingText)

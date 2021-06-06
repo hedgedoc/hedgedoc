@@ -27,7 +27,7 @@ export class Cache<K, V> {
       return false
     }
     const entry = this.store.get(key)
-    return (!!entry && entry.entryCreated >= (Date.now() - this.entryLifetime * 1000))
+    return !!entry && entry.entryCreated >= Date.now() - this.entryLifetime * 1000
   }
 
   get(key: K): V {
@@ -40,8 +40,7 @@ export class Cache<K, V> {
 
   put(key: K, value: V): void {
     if (this.maxEntries > 0 && this.store.size === this.maxEntries) {
-      this.store.delete(this.store.keys()
-                            .next().value)
+      this.store.delete(this.store.keys().next().value)
     }
     this.store.set(key, {
       entryCreated: Date.now(),

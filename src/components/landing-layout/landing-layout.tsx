@@ -17,15 +17,13 @@ export const LandingLayout: React.FC = ({ children }) => {
 
   return (
     <Fragment>
-      <UiNotifications/>
-      <Container className="text-light d-flex flex-column mvh-100">
-        <MotdBanner/>
-        <HeaderBar/>
-        <div className={ 'd-flex flex-column justify-content-between flex-fill text-center' }>
-          <main>
-            { children }
-          </main>
-          <Footer/>
+      <UiNotifications />
+      <Container className='text-light d-flex flex-column mvh-100'>
+        <MotdBanner />
+        <HeaderBar />
+        <div className={'d-flex flex-column justify-content-between flex-fill text-center'}>
+          <main>{children}</main>
+          <Footer />
         </div>
       </Container>
     </Fragment>

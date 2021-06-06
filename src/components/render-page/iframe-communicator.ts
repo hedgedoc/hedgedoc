@@ -32,12 +32,11 @@ export abstract class IframeCommunicator<SEND, RECEIVE> {
 
   protected sendMessageToOtherSide(message: SEND): void {
     if (this.otherSide === undefined || this.otherOrigin === undefined) {
-      console.error('Can\'t send message because otherSide is null', message)
+      console.error("Can't send message because otherSide is null", message)
       return
     }
     this.otherSide.postMessage(message, this.otherOrigin)
   }
 
-  protected abstract handleEvent(event: MessageEvent<RECEIVE>): void;
+  protected abstract handleEvent(event: MessageEvent<RECEIVE>): void
 }
-

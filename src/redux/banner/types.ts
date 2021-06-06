@@ -7,16 +7,16 @@
 import { Action } from 'redux'
 
 export enum BannerActionType {
-  SET_BANNER = 'banner/set',
+  SET_BANNER = 'banner/set'
 }
 
 export interface BannerActions extends Action<BannerActionType> {
-  type: BannerActionType;
+  type: BannerActionType
 }
 
 export interface SetBannerAction extends BannerActions {
   type: BannerActionType.SET_BANNER
-  state: BannerState;
+  state: BannerState
 }
 
 export interface BannerState {

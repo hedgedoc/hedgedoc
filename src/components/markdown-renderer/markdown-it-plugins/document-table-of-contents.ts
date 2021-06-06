@@ -8,6 +8,6 @@ import MarkdownIt from 'markdown-it/lib'
 import { TocAst } from 'markdown-it-toc-done-right'
 import { documentToc } from './document-toc'
 
-export const documentTableOfContents = (onTocChange: ((toc: TocAst) => void)): MarkdownIt.PluginSimple => {
+export const documentTableOfContents = (onTocChange: (toc: TocAst) => void): MarkdownIt.PluginSimple => {
   return (markdownIt) => documentToc(markdownIt, onTocChange)
 }

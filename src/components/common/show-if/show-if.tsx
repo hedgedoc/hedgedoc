@@ -11,5 +11,5 @@ export interface ShowIfProps {
 }
 
 export const ShowIf: React.FC<ShowIfProps> = ({ children, condition }) => {
-  return condition ? <Fragment>{ children }</Fragment> : null
+  return condition ? <Fragment>{children}</Fragment> : null
 }

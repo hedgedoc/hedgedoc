@@ -12,31 +12,45 @@ import { HistoryEntriesProps, HistoryEventHandlers } from '../history-content/hi
 import { HistoryTableRow } from './history-table-row'
 import './history-table.scss'
 
-export const HistoryTable: React.FC<HistoryEntriesProps & HistoryEventHandlers> = ({ entries, onPinClick, onRemoveClick, onDeleteClick, pageIndex, onLastPageIndexChange }) => {
+export const HistoryTable: React.FC<HistoryEntriesProps & HistoryEventHandlers> = ({
+  entries,
+  onPinClick,
+  onRemoveClick,
+  onDeleteClick,
+  pageIndex,
+  onLastPageIndexChange
+}) => {
   useTranslation()
   return (
-    <Table striped bordered hover size="sm" variant="dark" className={ 'history-table' }>
+    <Table striped bordered hover size='sm' variant='dark' className={'history-table'}>
       <thead>
-      <tr>
-        <th><Trans i18nKey={ 'landing.history.tableHeader.title' }/></th>
-        <th><Trans i18nKey={ 'landing.history.tableHeader.lastVisit' }/></th>
-        <th><Trans i18nKey={ 'landing.history.tableHeader.tags' }/></th>
-        <th><Trans i18nKey={ 'landing.history.tableHeader.actions' }/></th>
-      </tr>
+        <tr>
+          <th>
+            <Trans i18nKey={'landing.history.tableHeader.title'} />
+          </th>
+          <th>
+            <Trans i18nKey={'landing.history.tableHeader.lastVisit'} />
+          </th>
+          <th>
+            <Trans i18nKey={'landing.history.tableHeader.tags'} />
+          </th>
+          <th>
+            <Trans i18nKey={'landing.history.tableHeader.actions'} />
+          </th>
+        </tr>
       </thead>
       <tbody>
-      <Pager numberOfElementsPerPage={ 12 } pageIndex={ pageIndex } onLastPageIndexChange={ onLastPageIndexChange }>
-        {
-          entries.map((entry) =>
+        <Pager numberOfElementsPerPage={12} pageIndex={pageIndex} onLastPageIndexChange={onLastPageIndexChange}>
+          {entries.map((entry) => (
             <HistoryTableRow
-              key={ entry.identifier }
-              entry={ entry }
-              onPinClick={ onPinClick }
-              onRemoveClick={ onRemoveClick }
-              onDeleteClick={ onDeleteClick }
-            />)
-        }
-      </Pager>
+              key={entry.identifier}
+              entry={entry}
+              onPinClick={onPinClick}
+              onRemoveClick={onRemoveClick}
+              onDeleteClick={onDeleteClick}
+            />
+          ))}
+        </Pager>
       </tbody>
     </Table>
   )

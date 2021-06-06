@@ -10,12 +10,12 @@ import frontmatter from 'markdown-it-front-matter'
 import { RawNoteFrontmatter } from '../../editor-page/note-frontmatter/note-frontmatter'
 
 interface FrontmatterPluginOptions {
-  onParseError: (error: boolean) => void,
-  onRawMetaChange: (rawMeta: RawNoteFrontmatter) => void,
+  onParseError: (error: boolean) => void
+  onRawMetaChange: (rawMeta: RawNoteFrontmatter) => void
 }
 
-export const frontmatterExtract: (options: FrontmatterPluginOptions) => MarkdownIt.PluginSimple = (options) =>
-  (markdownIt) => {
+export const frontmatterExtract: (options: FrontmatterPluginOptions) => MarkdownIt.PluginSimple =
+  (options) => (markdownIt) => {
     frontmatter(markdownIt, (rawMeta: string) => {
       try {
         const meta: RawNoteFrontmatter = yaml.load(rawMeta) as RawNoteFrontmatter

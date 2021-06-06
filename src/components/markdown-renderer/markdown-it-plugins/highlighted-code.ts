@@ -10,7 +10,7 @@ const highlightRegex = /^ *([\w-]*)(.*)$/
 
 export const highlightedCode: MarkdownIt.PluginSimple = (md: MarkdownIt) => {
   md.core.ruler.push('highlighted-code', (state) => {
-    state.tokens.forEach(token => {
+    state.tokens.forEach((token) => {
       if (token.type === 'fence') {
         const highlightInfos = highlightRegex.exec(token.info)
         if (!highlightInfos) {

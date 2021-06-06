@@ -29,11 +29,15 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButtonProps> = ({
 
   return (
     <Fragment>
-      <Button ref={ button } size={ size } variant={ variant } title={ t('renderer.highlightCode.copyCode') }
-              data-cy={ props['data-cy'] }>
-        <ForkAwesomeIcon icon='files-o'/>
+      <Button
+        ref={button}
+        size={size}
+        variant={variant}
+        title={t('renderer.highlightCode.copyCode')}
+        data-cy={props['data-cy']}>
+        <ForkAwesomeIcon icon='files-o' />
       </Button>
-      <CopyOverlay content={ content } clickComponent={ button }/>
+      <CopyOverlay content={content} clickComponent={button} />
     </Fragment>
   )
 }

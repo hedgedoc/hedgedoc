@@ -11,8 +11,7 @@ import { setEditorLigatures } from '../../../../../redux/editor/methods'
 import { EditorPreferenceInput, EditorPreferenceInputType } from './editor-preference-input'
 
 export const EditorPreferenceLigaturesSelect: React.FC = () => {
-  const ligaturesEnabled = useSelector((state: ApplicationState) => Boolean(state.editorConfig.ligatures)
-    .toString())
+  const ligaturesEnabled = useSelector((state: ApplicationState) => Boolean(state.editorConfig.ligatures).toString())
   const saveLigatures = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
     const ligaturesActivated: boolean = event.target.value === 'true'
     setEditorLigatures(ligaturesActivated)
@@ -20,10 +19,13 @@ export const EditorPreferenceLigaturesSelect: React.FC = () => {
   const { t } = useTranslation()
 
   return (
-    <EditorPreferenceInput onChange={ saveLigatures } value={ ligaturesEnabled } property={ 'ligatures' }
-                           type={ EditorPreferenceInputType.BOOLEAN }>
-      <option value='true'>{ t(`common.yes`) }</option>
-      <option value='false'>{ t(`common.no`) }</option>
+    <EditorPreferenceInput
+      onChange={saveLigatures}
+      value={ligaturesEnabled}
+      property={'ligatures'}
+      type={EditorPreferenceInputType.BOOLEAN}>
+      <option value='true'>{t(`common.yes`)}</option>
+      <option value='false'>{t(`common.no`)}</option>
     </EditorPreferenceInput>
   )
 }

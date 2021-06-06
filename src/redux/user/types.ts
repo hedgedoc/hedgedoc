@@ -12,20 +12,20 @@ export enum UserActionType {
 }
 
 export interface UserActions extends Action<UserActionType> {
-  type: UserActionType;
+  type: UserActionType
 }
 
 export interface SetUserAction extends UserActions {
-  state: UserState;
+  state: UserState
 }
 
 export type ClearUserAction = UserActions
 
 export interface UserState {
-  id: string;
-  name: string;
-  photo: string;
-  provider: LoginProvider;
+  id: string
+  name: string
+  photo: string
+  provider: LoginProvider
 }
 
 export enum LoginProvider {
@@ -42,4 +42,4 @@ export enum LoginProvider {
   OPENID = 'openid'
 }
 
-export type MaybeUserState = (UserState | null)
+export type MaybeUserState = UserState | null

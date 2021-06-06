@@ -15,7 +15,7 @@ import {
   underlineSelection
 } from './tool-bar/utils/toolbarButtonUtils'
 
-const isVim = (keyMapName?: string) => (keyMapName?.substr(0, 3) === 'vim')
+const isVim = (keyMapName?: string) => keyMapName?.substr(0, 3) === 'vim'
 
 const f10 = (editor: Editor): void | typeof Pass => editor.setOption('fullScreen', !editor.getOption('fullScreen'))
 const esc = (editor: Editor): void | typeof Pass => {
@@ -30,8 +30,7 @@ const tab = (editor: Editor) => {
   const tab = '\t'
 
   // contruct x length spaces
-  const spaces = Array((editor.getOption('indentUnit') ?? 0) + 1)
-    .join(' ')
+  const spaces = Array((editor.getOption('indentUnit') ?? 0) + 1).join(' ')
 
   // auto indent whole line when in list or blockquote
   const cursor = editor.getCursor()
@@ -44,9 +43,7 @@ const tab = (editor: Editor) => {
   const regex = /^(\s*)(>[> ]*|[*+-]\s|(\d+)([.)]))/
 
   let match
-  const multiple = editor.getSelection()
-                         .split('\n').length > 1 ||
-    editor.getSelections().length > 1
+  const multiple = editor.getSelection().split('\n').length > 1 || editor.getSelections().length > 1
 
   if (multiple) {
     editor.execCommand('defaultTab')
@@ -72,35 +69,35 @@ const tab = (editor: Editor) => {
 
 export const defaultKeyMap: KeyMap = !isMac
   ? {
-    F9: suppressKey,
-    F10: f10,
-    Esc: esc,
-    'Ctrl-S': suppressKey,
-    Enter: 'newlineAndIndentContinueMarkdownList',
-    Tab: tab,
-    Home: 'goLineLeftSmart',
-    End: 'goLineRight',
-    'Ctrl-I': makeSelectionItalic,
-    'Ctrl-B': makeSelectionBold,
-    'Ctrl-U': underlineSelection,
-    'Ctrl-D': strikeThroughSelection,
-    'Ctrl-M': markSelection,
-    'Ctrl-K': addLink
-  }
+      F9: suppressKey,
+      F10: f10,
+      Esc: esc,
+      'Ctrl-S': suppressKey,
+      Enter: 'newlineAndIndentContinueMarkdownList',
+      Tab: tab,
+      Home: 'goLineLeftSmart',
+      End: 'goLineRight',
+      'Ctrl-I': makeSelectionItalic,
+      'Ctrl-B': makeSelectionBold,
+      'Ctrl-U': underlineSelection,
+      'Ctrl-D': strikeThroughSelection,
+      'Ctrl-M': markSelection,
+      'Ctrl-K': addLink
+    }
   : {
-    F9: suppressKey,
-    F10: f10,
-    Esc: esc,
-    'Cmd-S': suppressKey,
-    Enter: 'newlineAndIndentContinueMarkdownList',
-    Tab: tab,
-    'Cmd-Left': 'goLineLeftSmart',
-    'Cmd-Right': 'goLineRight',
-    Home: 'goLineLeftSmart',
-    End: 'goLineRight',
-    'Cmd-I': makeSelectionItalic,
-    'Cmd-B': makeSelectionBold,
-    'Cmd-U': underlineSelection,
-    'Cmd-D': strikeThroughSelection,
-    'Cmd-M': markSelection
-  }
+      F9: suppressKey,
+      F10: f10,
+      Esc: esc,
+      'Cmd-S': suppressKey,
+      Enter: 'newlineAndIndentContinueMarkdownList',
+      Tab: tab,
+      'Cmd-Left': 'goLineLeftSmart',
+      'Cmd-Right': 'goLineRight',
+      Home: 'goLineLeftSmart',
+      End: 'goLineRight',
+      'Cmd-I': makeSelectionItalic,
+      'Cmd-B': makeSelectionBold,
+      'Cmd-U': underlineSelection,
+      'Cmd-D': strikeThroughSelection,
+      'Cmd-M': markSelection
+    }

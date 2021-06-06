@@ -20,29 +20,30 @@ export const ClearHistoryButton: React.FC = () => {
   const handleClose = () => setShow(false)
 
   const onConfirm = useCallback(() => {
-    deleteAllHistoryEntries().catch(error => {
+    deleteAllHistoryEntries().catch((error) => {
       showErrorNotification(t('landing.history.error.deleteEntry.text'))(error)
-      refreshHistoryState().catch(
-        showErrorNotification(t('landing.history.error.getHistory.text'))
-      )
+      refreshHistoryState().catch(showErrorNotification(t('landing.history.error.getHistory.text')))
     })
     handleClose()
   }, [t])
 
   return (
     <Fragment>
-      <Button variant={ 'light' } title={ t('landing.history.toolbar.clear') } onClick={ handleShow }>
-        <ForkAwesomeIcon icon={ 'trash' }/>
+      <Button variant={'light'} title={t('landing.history.toolbar.clear')} onClick={handleShow}>
+        <ForkAwesomeIcon icon={'trash'} />
       </Button>
       <DeletionModal
-        onConfirm={ onConfirm }
-        deletionButtonI18nKey={ 'landing.history.toolbar.clear' }
-        show={ show }
-        onHide={ handleClose }
-        titleI18nKey={ 'landing.history.modal.clearHistory.title' }
-      >
-        <h5><Trans i18nKey={ 'landing.history.modal.clearHistory.question' }/></h5>
-        <h6><Trans i18nKey={ 'landing.history.modal.clearHistory.disclaimer' }/></h6>
+        onConfirm={onConfirm}
+        deletionButtonI18nKey={'landing.history.toolbar.clear'}
+        show={show}
+        onHide={handleClose}
+        titleI18nKey={'landing.history.modal.clearHistory.title'}>
+        <h5>
+          <Trans i18nKey={'landing.history.modal.clearHistory.question'} />
+        </h5>
+        <h6>
+          <Trans i18nKey={'landing.history.modal.clearHistory.disclaimer'} />
+        </h6>
       </DeletionModal>
     </Fragment>
   )

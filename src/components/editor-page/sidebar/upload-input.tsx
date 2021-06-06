@@ -41,7 +41,6 @@ export const UploadInput: React.FC<UploadInputProps> = ({ onLoad, acceptedFiles,
   })
 
   return (
-    <input data-cy={ props['data-cy'] } type='file' ref={ fileInputReference } className='d-none'
-           accept={ acceptedFiles }/>
+    <input data-cy={props['data-cy']} type='file' ref={fileInputReference} className='d-none' accept={acceptedFiles} />
   )
 }

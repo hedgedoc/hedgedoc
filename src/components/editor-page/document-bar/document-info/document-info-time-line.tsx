@@ -14,7 +14,7 @@ import { TimeFromNow } from './time-from-now'
 
 export interface DocumentInfoLineWithTimeProps {
   size?: '2x' | '3x' | '4x' | '5x' | undefined
-  time: DateTime,
+  time: DateTime
   mode: DocumentInfoLineWithTimeMode
   userName: string
   profileImageSrc: string
@@ -25,18 +25,31 @@ export enum DocumentInfoLineWithTimeMode {
   EDITED
 }
 
-export const DocumentInfoTimeLine: React.FC<DocumentInfoLineWithTimeProps> = ({ time, mode, userName, profileImageSrc, size }) => {
+export const DocumentInfoTimeLine: React.FC<DocumentInfoLineWithTimeProps> = ({
+  time,
+  mode,
+  userName,
+  profileImageSrc,
+  size
+}) => {
   useTranslation()
 
-  const i18nKey = mode === DocumentInfoLineWithTimeMode.CREATED ? 'editor.modal.documentInfo.created' : 'editor.modal.documentInfo.edited'
+  const i18nKey =
+    mode === DocumentInfoLineWithTimeMode.CREATED
+      ? 'editor.modal.documentInfo.created'
+      : 'editor.modal.documentInfo.edited'
   const icon: IconName = mode === DocumentInfoLineWithTimeMode.CREATED ? 'plus' : 'pencil'
 
   return (
-    <DocumentInfoLine icon={ icon } size={ size }>
-      <Trans i18nKey={ i18nKey }>
-        <UserAvatar photo={ profileImageSrc } additionalClasses={ 'font-style-normal bold font-weight-bold' }
-                    name={ userName } size={ size ? 'lg' : undefined }/>
-        <TimeFromNow time={ time }/>
+    <DocumentInfoLine icon={icon} size={size}>
+      <Trans i18nKey={i18nKey}>
+        <UserAvatar
+          photo={profileImageSrc}
+          additionalClasses={'font-style-normal bold font-weight-bold'}
+          name={userName}
+          size={size ? 'lg' : undefined}
+        />
+        <TimeFromNow time={time} />
       </Trans>
     </DocumentInfoLine>
   )

@@ -17,33 +17,25 @@ import './cover-buttons.scss'
 export const CoverButtons: React.FC = () => {
   useTranslation()
   const userExists = useSelector((state: ApplicationState) => !!state.user)
-  const anyAuthProviderActivated = useSelector((state: ApplicationState) => Object.values(state.config.authProviders)
-                                                                                  .includes(true))
+  const anyAuthProviderActivated = useSelector((state: ApplicationState) =>
+    Object.values(state.config.authProviders).includes(true)
+  )
 
   if (userExists) {
     return null
   }
 
   return (
-    <div className="mb-5">
-      <SignInButton
-        className="cover-button"
-        variant="success"
-        size="lg"
-      />
-      <ShowIf condition={ anyAuthProviderActivated }>
-        <span className="m-2">
-          <Trans i18nKey="common.or"/>
+    <div className='mb-5'>
+      <SignInButton className='cover-button' variant='success' size='lg' />
+      <ShowIf condition={anyAuthProviderActivated}>
+        <span className='m-2'>
+          <Trans i18nKey='common.or' />
         </span>
       </ShowIf>
-      <Link to="/n/features">
-        <Button
-          data-cy={ 'features-button' }
-          className="cover-button"
-          variant="primary"
-          size="lg"
-        >
-          <Trans i18nKey="landing.intro.exploreFeatures"/>
+      <Link to='/n/features'>
+        <Button data-cy={'features-button'} className='cover-button' variant='primary' size='lg'>
+          <Trans i18nKey='landing.intro.exploreFeatures' />
         </Button>
       </Link>
     </div>

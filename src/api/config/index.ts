@@ -12,5 +12,5 @@ export const getConfig = async (): Promise<Config> => {
     ...defaultFetchConfig
   })
   expectResponseCode(response)
-  return await response.json() as Promise<Config>
+  return (await response.json()) as Promise<Config>
 }

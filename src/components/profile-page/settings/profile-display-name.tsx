@@ -27,7 +27,7 @@ export const ProfileDisplayName: React.FC = () => {
   }, [userName])
 
   if (!userName) {
-    return <Alert variant={ 'danger' }>User not logged in</Alert>
+    return <Alert variant={'danger'}>User not logged in</Alert>
   }
 
   const changeNameField = (event: ChangeEvent<HTMLInputElement>) => {
@@ -41,39 +41,39 @@ export const ProfileDisplayName: React.FC = () => {
   }
 
   const changeNameSubmit = (event: FormEvent) => {
-    doAsyncChange()
-      .catch(() => setError(true))
+    doAsyncChange().catch(() => setError(true))
     event.preventDefault()
   }
 
   return (
-    <Card className="bg-dark mb-4">
+    <Card className='bg-dark mb-4'>
       <Card.Body>
         <Card.Title>
-          <Trans i18nKey="profile.userProfile"/>
+          <Trans i18nKey='profile.userProfile' />
         </Card.Title>
-        <Form onSubmit={ changeNameSubmit } className="text-left">
-          <Form.Group controlId="displayName">
-            <Form.Label><Trans i18nKey="profile.displayName"/></Form.Label>
+        <Form onSubmit={changeNameSubmit} className='text-left'>
+          <Form.Group controlId='displayName'>
+            <Form.Label>
+              <Trans i18nKey='profile.displayName' />
+            </Form.Label>
             <Form.Control
-              type="text"
-              size="sm"
-              placeholder={ t('profile.displayName') }
-              value={ displayName }
-              className="bg-dark text-light"
-              onChange={ changeNameField }
-              isValid={ submittable }
-              isInvalid={ error }
+              type='text'
+              size='sm'
+              placeholder={t('profile.displayName')}
+              value={displayName}
+              className='bg-dark text-light'
+              onChange={changeNameField}
+              isValid={submittable}
+              isInvalid={error}
               required
             />
-            <Form.Text><Trans i18nKey="profile.displayNameInfo"/></Form.Text>
+            <Form.Text>
+              <Trans i18nKey='profile.displayNameInfo' />
+            </Form.Text>
           </Form.Group>
 
-          <Button
-            type="submit"
-            variant="primary"
-            disabled={ !submittable }>
-            <Trans i18nKey="common.save"/>
+          <Button type='submit' variant='primary' disabled={!submittable}>
+            <Trans i18nKey='common.save' />
           </Button>
         </Form>
       </Card.Body>

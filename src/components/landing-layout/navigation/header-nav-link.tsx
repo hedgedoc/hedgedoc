@@ -16,8 +16,10 @@ export interface HeaderNavLinkProps {
 export const HeaderNavLink: React.FC<HeaderNavLinkProps> = ({ to, id, children }) => {
   return (
     <Nav.Item>
-      <LinkContainer to={ to }>
-        <Nav.Link id={ id } className="text-light" href={ to }>{ children }</Nav.Link>
+      <LinkContainer to={to}>
+        <Nav.Link id={id} className='text-light' href={to}>
+          {children}
+        </Nav.Link>
       </LinkContainer>
     </Nav.Item>
   )

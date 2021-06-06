@@ -9,15 +9,18 @@ import { ImageClickHandler } from '../../markdown-renderer/replace-components/im
 import { IframeRendererToEditorCommunicator } from '../iframe-renderer-to-editor-communicator'
 
 export const useImageClickHandler = (iframeCommunicator: IframeRendererToEditorCommunicator): ImageClickHandler => {
-  return useCallback((event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
-    const image = event.target as HTMLImageElement
-    if (image.src === '') {
-      return
-    }
-    iframeCommunicator.sendClickedImageUrl({
-      src: image.src,
-      alt: image.alt,
-      title: image.title
-    })
-  }, [iframeCommunicator])
+  return useCallback(
+    (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
+      const image = event.target as HTMLImageElement
+      if (image.src === '') {
+        return
+      }
+      iframeCommunicator.sendClickedImageUrl({
+        src: image.src,
+        alt: image.alt,
+        title: image.title
+      })
+    },
+    [iframeCommunicator]
+  )
 }

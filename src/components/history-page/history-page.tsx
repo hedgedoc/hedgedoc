@@ -22,30 +22,24 @@ export const HistoryPage: React.FC = () => {
   const allEntries = useSelector((state: ApplicationState) => state.history)
   const [toolbarState, setToolbarState] = useState<HistoryToolbarState>(initToolbarState)
 
-  const entriesToShow = useMemo<HistoryEntry[]>(() =>
-      sortAndFilterEntries(allEntries, toolbarState),
-    [allEntries, toolbarState])
+  const entriesToShow = useMemo<HistoryEntry[]>(
+    () => sortAndFilterEntries(allEntries, toolbarState),
+    [allEntries, toolbarState]
+  )
 
   useEffect(() => {
-    refreshHistoryState().catch(
-      showErrorNotification(t('landing.history.error.getHistory.text'))
-    )
+    refreshHistoryState().catch(showErrorNotification(t('landing.history.error.getHistory.text')))
   }, [t])
 
   return (
     <Fragment>
-      <h1 className="mb-4">
-        <Trans i18nKey="landing.navigation.history"/>
+      <h1 className='mb-4'>
+        <Trans i18nKey='landing.navigation.history' />
       </h1>
-      <Row className={ 'justify-content-center mt-5 mb-3' }>
-        <HistoryToolbar
-          onSettingsChange={ setToolbarState }
-        />
+      <Row className={'justify-content-center mt-5 mb-3'}>
+        <HistoryToolbar onSettingsChange={setToolbarState} />
       </Row>
-      <HistoryContent
-        viewState={ toolbarState.viewState }
-        entries={ entriesToShow }
-      />
+      <HistoryContent viewState={toolbarState.viewState} entries={entriesToShow} />
     </Fragment>
   )
 }

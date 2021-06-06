@@ -14,44 +14,41 @@ export const ViaOpenId: React.FC = () => {
   useTranslation()
   const [openId, setOpenId] = useState('')
   const [error, setError] = useState(false)
-  const doAsyncLogin: (() => Promise<void>) = async () => {
+  const doAsyncLogin: () => Promise<void> = async () => {
     await doOpenIdLogin(openId)
     await fetchAndSetUser()
   }
 
   const onFormSubmit = (event: FormEvent) => {
-    doAsyncLogin()
-      .catch(() => setError(true))
+    doAsyncLogin().catch(() => setError(true))
     event.preventDefault()
   }
 
   return (
-    <Card className="bg-dark mb-4">
+    <Card className='bg-dark mb-4'>
       <Card.Body>
         <Card.Title>
-          <Trans i18nKey="login.signInVia" values={ { service: 'OpenID' } }/>
+          <Trans i18nKey='login.signInVia' values={{ service: 'OpenID' }} />
         </Card.Title>
 
-        <Form onSubmit={ onFormSubmit }>
-          <Form.Group controlId="openid">
+        <Form onSubmit={onFormSubmit}>
+          <Form.Group controlId='openid'>
             <Form.Control
-              isInvalid={ error }
-              type="text"
-              size="sm"
-              placeholder={ 'OpenID' }
-              onChange={ (event) => setOpenId(event.currentTarget.value) }
-              className="bg-dark text-light"
+              isInvalid={error}
+              type='text'
+              size='sm'
+              placeholder={'OpenID'}
+              onChange={(event) => setOpenId(event.currentTarget.value)}
+              className='bg-dark text-light'
             />
           </Form.Group>
 
-          <Alert className="small" show={ error } variant="danger">
-            <Trans i18nKey="login.auth.error.openIdLogin"/>
+          <Alert className='small' show={error} variant='danger'>
+            <Trans i18nKey='login.auth.error.openIdLogin' />
           </Alert>
 
-          <Button
-            type="submit"
-            variant="primary">
-            <Trans i18nKey="login.signIn"/>
+          <Button type='submit' variant='primary'>
+            <Trans i18nKey='login.signIn' />
           </Button>
         </Form>
       </Card.Body>

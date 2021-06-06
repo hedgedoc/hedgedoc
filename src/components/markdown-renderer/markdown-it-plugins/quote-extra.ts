@@ -10,7 +10,7 @@ import { IconName } from '../../common/fork-awesome/types'
 
 export const quoteExtra: (quoteLabel: string, icon: IconName) => MarkdownIt.PluginSimple =
   (quoteLabel: string, icon: IconName) => (md) => {
-    md.inline.ruler.push(`extraQuote_${ quoteLabel }`, (state) => {
+    md.inline.ruler.push(`extraQuote_${quoteLabel}`, (state) => {
       const quoteExtraTagValues = parseQuoteExtraTag(state.src, state.pos, state.posMax)
 
       if (!quoteExtraTagValues || quoteExtraTagValues.label !== quoteLabel) {
@@ -19,12 +19,7 @@ export const quoteExtra: (quoteLabel: string, icon: IconName) => MarkdownIt.Plug
       state.pos = quoteExtraTagValues.valueEndIndex + 1
 
       const tokens: Token[] = []
-      state.md.inline.parse(
-        quoteExtraTagValues.value,
-        state.md,
-        state.env,
-        tokens
-      )
+      state.md.inline.parse(quoteExtraTagValues.value, state.md, state.env, tokens)
 
       const token = state.push('quote-extra', '', 0)
       token.attrSet('icon', icon)
@@ -46,16 +41,16 @@ export const quoteExtra: (quoteLabel: string, icon: IconName) => MarkdownIt.Plug
       }
 
       const innerHtml = md.renderer.renderInline(innerTokens, options, env)
-      return `<span class="quote-extra"><i class="fa fa-${ token.attrGet('icon') ?? '' } mx-1"></i>${ innerHtml }</span>`
+      return `<span class="quote-extra"><i class="fa fa-${token.attrGet('icon') ?? ''} mx-1"></i>${innerHtml}</span>`
     }
   }
 
 export interface QuoteExtraTagValues {
-  labelStartIndex: number,
-  labelEndIndex: number,
-  valueStartIndex: number,
-  valueEndIndex: number,
-  label: string,
+  labelStartIndex: number
+  labelEndIndex: number
+  valueStartIndex: number
+  valueEndIndex: number
+  label: string
   value: string
 }
 

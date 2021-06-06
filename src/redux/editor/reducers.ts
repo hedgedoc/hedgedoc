@@ -35,7 +35,10 @@ const getInitialState = (): EditorConfig => {
   return { ...initialState, ...loadFromLocalStorage() }
 }
 
-export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (state: EditorConfig = getInitialState(), action: EditorConfigActions) => {
+export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (
+  state: EditorConfig = getInitialState(),
+  action: EditorConfigActions
+) => {
   let newState: EditorConfig
   switch (action.type) {
     case EditorConfigActionType.SET_EDITOR_VIEW_MODE:
@@ -70,7 +73,8 @@ export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (
       newState = {
         ...state,
         preferences: {
-          ...state.preferences, ...(action as SetEditorPreferencesAction).preferences
+          ...state.preferences,
+          ...(action as SetEditorPreferencesAction).preferences
         }
       }
       saveToLocalStorage(newState)

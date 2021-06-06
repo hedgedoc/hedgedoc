@@ -25,24 +25,21 @@ export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props })
 
   const loginLink = useMemo(() => {
     const activeProviders = Object.entries(authProviders)
-                                  .filter((entry: [string, boolean]) => entry[1])
-                                  .map(entry => entry[0])
-    const activeOneClickProviders = activeProviders.filter(entry => !INTERACTIVE_LOGIN_METHODS.includes(entry))
+      .filter((entry: [string, boolean]) => entry[1])
+      .map((entry) => entry[0])
+    const activeOneClickProviders = activeProviders.filter((entry) => !INTERACTIVE_LOGIN_METHODS.includes(entry))
 
     if (activeProviders.length === 1 && activeOneClickProviders.length === 1) {
-      return `${ getApiUrl() }auth/${ activeOneClickProviders[0] }`
+      return `${getApiUrl()}auth/${activeOneClickProviders[0]}`
     }
     return '/login'
   }, [authProviders])
 
   return (
-    <ShowIf condition={ authEnabled }>
-      <LinkContainer to={ loginLink } title={ t('login.signIn') }>
-        <Button
-          data-cy={ 'sign-in-button' }
-          variant={ variant || 'success' }
-          { ...props }>
-          <Trans i18nKey="login.signIn"/>
+    <ShowIf condition={authEnabled}>
+      <LinkContainer to={loginLink} title={t('login.signIn')}>
+        <Button data-cy={'sign-in-button'} variant={variant || 'success'} {...props}>
+          <Trans i18nKey='login.signIn' />
         </Button>
       </LinkContainer>
     </ShowIf>

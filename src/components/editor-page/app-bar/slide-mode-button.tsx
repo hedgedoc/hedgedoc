@@ -17,10 +17,13 @@ export const SlideModeButton: React.FC = () => {
   const { id } = useParams<EditorPagePathParams>()
 
   return (
-    <Link to={ `/p/${ id }` } target='_blank'>
-      <Button title={ t('editor.documentBar.slideMode') } className="ml-2 text-secondary" size="sm"
-              variant="outline-light">
-        <ForkAwesomeIcon icon="television"/>
+    <Link to={`/p/${id}`} target='_blank'>
+      <Button
+        title={t('editor.documentBar.slideMode')}
+        className='ml-2 text-secondary'
+        size='sm'
+        variant='outline-light'>
+        <ForkAwesomeIcon icon='television' />
       </Button>
     </Link>
   )

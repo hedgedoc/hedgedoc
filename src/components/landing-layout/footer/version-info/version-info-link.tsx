@@ -16,10 +16,10 @@ export const VersionInfoLink: React.FC = () => {
 
   return (
     <Fragment>
-      <Link data-cy={ 'show-version-modal' } to={ '#' } className={ 'text-light' } onClick={ showModal }>
-        <Trans i18nKey={ 'landing.versionInfo.versionInfo' }/>
+      <Link data-cy={'show-version-modal'} to={'#'} className={'text-light'} onClick={showModal}>
+        <Trans i18nKey={'landing.versionInfo.versionInfo'} />
       </Link>
-      <VersionInfoModal onHide={ closeModal } show={ show }/>
+      <VersionInfoModal onHide={closeModal} show={show} />
     </Fragment>
   )
 }

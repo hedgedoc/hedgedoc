@@ -11,12 +11,19 @@ import { VegaChart } from './vega-chart'
 
 export class VegaReplacer implements ComponentReplacer {
   getReplacement(codeNode: DomElement): React.ReactElement | undefined {
-    if (codeNode.name !== 'code' || !codeNode.attribs || !codeNode.attribs['data-highlight-language'] || codeNode.attribs['data-highlight-language'] !== 'vega-lite' || !codeNode.children || !codeNode.children[0]) {
+    if (
+      codeNode.name !== 'code' ||
+      !codeNode.attribs ||
+      !codeNode.attribs['data-highlight-language'] ||
+      codeNode.attribs['data-highlight-language'] !== 'vega-lite' ||
+      !codeNode.children ||
+      !codeNode.children[0]
+    ) {
       return
     }
 
     const code = codeNode.children[0].data as string
 
-    return <VegaChart code={ code }/>
+    return <VegaChart code={code} />
   }
 }

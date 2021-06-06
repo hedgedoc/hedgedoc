@@ -15,10 +15,10 @@ export const RevisionSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ clas
 
   return (
     <Fragment>
-      <SidebarButton hide={ hide } className={ className } icon={ 'history' } onClick={ () => setShowModal(true) }>
-        <Trans i18nKey={ 'editor.modal.revision.title' }/>
+      <SidebarButton hide={hide} className={className} icon={'history'} onClick={() => setShowModal(true)}>
+        <Trans i18nKey={'editor.modal.revision.title'} />
       </SidebarButton>
-      <RevisionModal show={ showModal } onHide={ () => setShowModal(false) }/>
+      <RevisionModal show={showModal} onHide={() => setShowModal(false)} />
     </Fragment>
   )
 }

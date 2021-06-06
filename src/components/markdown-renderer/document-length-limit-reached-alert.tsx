@@ -18,9 +18,10 @@ export const DocumentLengthLimitReachedAlert: React.FC<SimpleAlertProps> = ({ sh
   const maxLength = useSelector((state: ApplicationState) => state.config.maxDocumentLength)
 
   return (
-    <ShowIf condition={ show }>
-      <Alert variant='danger' dir={ 'auto' } data-cy={ 'limitReachedMessage' }>
-        <Trans i18nKey={ 'editor.error.limitReached.description' } values={ { maxLength } }/>
+    <ShowIf condition={show}>
+      <Alert variant='danger' dir={'auto'} data-cy={'limitReachedMessage'}>
+        <Trans i18nKey={'editor.error.limitReached.description'} values={{ maxLength }} />
       </Alert>
-    </ShowIf>)
+    </ShowIf>
+  )
 }

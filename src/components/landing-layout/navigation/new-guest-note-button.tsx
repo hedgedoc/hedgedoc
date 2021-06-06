@@ -13,15 +13,13 @@ import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 export const NewGuestNoteButton: React.FC = () => {
   const { t } = useTranslation()
   return (
-    <LinkContainer to={ '/new' } title={ t('landing.navigation.newGuestNote') }>
-      <Button
-        variant="primary"
-        size="sm"
-        className="d-inline-flex align-items-center">
-        <ForkAwesomeIcon icon="plus" className="mx-1"/>
+    <LinkContainer to={'/new'} title={t('landing.navigation.newGuestNote')}>
+      <Button variant='primary' size='sm' className='d-inline-flex align-items-center'>
+        <ForkAwesomeIcon icon='plus' className='mx-1' />
         <span>
-          <Trans i18nKey='landing.navigation.newGuestNote'/>
+          <Trans i18nKey='landing.navigation.newGuestNote' />
         </span>
       </Button>
-    </LinkContainer>)
+    </LinkContainer>
+  )
 }

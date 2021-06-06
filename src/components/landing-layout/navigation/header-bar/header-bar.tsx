@@ -21,30 +21,31 @@ const HeaderBar: React.FC = () => {
   const userExists = useSelector((state: ApplicationState) => !!state.user)
 
   return (
-    <Navbar className="justify-content-between">
-      <div className="nav header-nav">
-        <HeaderNavLink to="/intro" id='navLinkIntro'>
-          <Trans i18nKey="landing.navigation.intro"/>
+    <Navbar className='justify-content-between'>
+      <div className='nav header-nav'>
+        <HeaderNavLink to='/intro' id='navLinkIntro'>
+          <Trans i18nKey='landing.navigation.intro' />
         </HeaderNavLink>
-        <HeaderNavLink to="/history" id='navLinkHistory'>
-          <Trans i18nKey="landing.navigation.history"/>
+        <HeaderNavLink to='/history' id='navLinkHistory'>
+          <Trans i18nKey='landing.navigation.history' />
         </HeaderNavLink>
       </div>
-      <div className="d-inline-flex">
-        { !userExists
-          ? <Fragment>
-              <span className={ 'mx-1 d-flex' }>
-                <NewGuestNoteButton/>
-              </span>
-            <SignInButton size="sm"/>
+      <div className='d-inline-flex'>
+        {!userExists ? (
+          <Fragment>
+            <span className={'mx-1 d-flex'}>
+              <NewGuestNoteButton />
+            </span>
+            <SignInButton size='sm' />
           </Fragment>
-          : <Fragment>
-              <span className={ 'mx-1 d-flex' }>
-                <NewUserNoteButton/>
-              </span>
-            <UserDropdown/>
+        ) : (
+          <Fragment>
+            <span className={'mx-1 d-flex'}>
+              <NewUserNoteButton />
+            </span>
+            <UserDropdown />
           </Fragment>
-        }
+        )}
       </div>
     </Navbar>
   )

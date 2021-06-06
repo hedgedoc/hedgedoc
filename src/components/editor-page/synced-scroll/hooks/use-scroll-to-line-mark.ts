@@ -9,18 +9,26 @@ import { LineMarkerPosition } from '../../../markdown-renderer/types'
 import { ScrollState } from '../scroll-props'
 import { findLineMarks } from '../utils'
 
-export const useScrollToLineMark = (scrollState: ScrollState | undefined, lineMarks: LineMarkerPosition[] | undefined, contentLineCount: number, scrollContainer: RefObject<HTMLElement>): void => {
+export const useScrollToLineMark = (
+  scrollState: ScrollState | undefined,
+  lineMarks: LineMarkerPosition[] | undefined,
+  contentLineCount: number,
+  scrollContainer: RefObject<HTMLElement>
+): void => {
   const lastScrollPosition = useRef<number>()
 
-  const scrollTo = useCallback((targetPosition: number): void => {
-    if (!scrollContainer.current || targetPosition === lastScrollPosition.current) {
-      return
-    }
-    lastScrollPosition.current = targetPosition
-    scrollContainer.current.scrollTo({
-      top: targetPosition
-    })
-  }, [scrollContainer])
+  const scrollTo = useCallback(
+    (targetPosition: number): void => {
+      if (!scrollContainer.current || targetPosition === lastScrollPosition.current) {
+        return
+      }
+      lastScrollPosition.current = targetPosition
+      scrollContainer.current.scrollTo({
+        top: targetPosition
+      })
+    },
+    [scrollContainer]
+  )
 
   useEffect(() => {
     if (!scrollContainer.current || !lineMarks || lineMarks.length === 0 || !scrollState) {
@@ -42,7 +50,10 @@ export const useScrollToLineMark = (scrollState: ScrollState | undefined, lineMa
     const linesBetweenMarkers = firstMarkAfterLine - lastMarkBeforeLine
     const blockHeight = positionAfter - positionBefore
     const lineHeight = blockHeight / linesBetweenMarkers
-    const position = positionBefore + (scrollState.firstLineInView - lastMarkBeforeLine) * lineHeight + scrollState.scrolledPercentage / 100 * lineHeight
+    const position =
+      positionBefore +
+      (scrollState.firstLineInView - lastMarkBeforeLine) * lineHeight +
+      (scrollState.scrolledPercentage / 100) * lineHeight
     const correctedPosition = Math.floor(position)
     scrollTo(correctedPosition)
   }, [contentLineCount, lineMarks, scrollContainer, scrollState, scrollTo])

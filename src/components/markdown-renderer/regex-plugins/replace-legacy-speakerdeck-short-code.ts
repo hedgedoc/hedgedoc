@@ -11,11 +11,10 @@ const finalRegex = /^{%speakerdeck (\w+\/[\w-]+) ?%}$/
 
 export const legacySpeakerdeckShortCode: MarkdownIt.PluginSimple = (markdownIt) => {
   markdownItRegex(markdownIt, {
-      name: 'legacy-speakerdeck-short-code',
-      regex: finalRegex,
-      replace: (match: string) => {
-        return `<a target="_blank" rel="noopener noreferrer" href="https://speakerdeck.com/${ match }">https://speakerdeck.com/${ match }</a>`
-      }
+    name: 'legacy-speakerdeck-short-code',
+    regex: finalRegex,
+    replace: (match: string) => {
+      return `<a target="_blank" rel="noopener noreferrer" href="https://speakerdeck.com/${match}">https://speakerdeck.com/${match}</a>`
     }
-  )
+  })
 }

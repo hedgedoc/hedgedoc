@@ -24,47 +24,55 @@ import { EditorPreferenceSmartPasteSelect } from './editor-preference-smart-past
 export const EditorPreferences: React.FC = () => {
   const { t } = useTranslation()
   const [showModal, setShowModal] = useState(false)
-  const indentWithTabs = useSelector((state: ApplicationState) => state.editorConfig.preferences.indentWithTabs ?? false, equal)
+  const indentWithTabs = useSelector(
+    (state: ApplicationState) => state.editorConfig.preferences.indentWithTabs ?? false,
+    equal
+  )
 
   return (
     <Fragment>
-      <Button variant='light' onClick={ () => setShowModal(true) } title={ t('editor.editorToolbar.preferences') }>
-        <ForkAwesomeIcon icon="wrench"/>
+      <Button variant='light' onClick={() => setShowModal(true)} title={t('editor.editorToolbar.preferences')}>
+        <ForkAwesomeIcon icon='wrench' />
       </Button>
       <CommonModal
-        show={ showModal }
-        onHide={ () => setShowModal(false) }
-        titleI18nKey={ 'editor.modal.preferences.title' }
-        closeButton={ true }
-        icon={ 'wrench' }>
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        titleI18nKey={'editor.modal.preferences.title'}
+        closeButton={true}
+        icon={'wrench'}>
         <Form>
           <ListGroup>
             <ListGroup.Item>
-              <EditorPreferenceSelectProperty property={ EditorPreferenceProperty.THEME }
-                                              selections={ ['one-dark', 'neat'] }/>
+              <EditorPreferenceSelectProperty
+                property={EditorPreferenceProperty.THEME}
+                selections={['one-dark', 'neat']}
+              />
             </ListGroup.Item>
             <ListGroup.Item>
-              <EditorPreferenceSelectProperty property={ EditorPreferenceProperty.KEYMAP }
-                                              selections={ ['sublime', 'emacs', 'vim'] }/>
+              <EditorPreferenceSelectProperty
+                property={EditorPreferenceProperty.KEYMAP}
+                selections={['sublime', 'emacs', 'vim']}
+              />
             </ListGroup.Item>
             <ListGroup.Item>
-              <EditorPreferenceBooleanProperty property={ EditorPreferenceProperty.INDENT_WITH_TABS }/>
+              <EditorPreferenceBooleanProperty property={EditorPreferenceProperty.INDENT_WITH_TABS} />
             </ListGroup.Item>
-            <ShowIf condition={ !indentWithTabs }>
+            <ShowIf condition={!indentWithTabs}>
               <ListGroup.Item>
-                <EditorPreferenceNumberProperty property={ EditorPreferenceProperty.INDENT_UNIT }/>
+                <EditorPreferenceNumberProperty property={EditorPreferenceProperty.INDENT_UNIT} />
               </ListGroup.Item>
             </ShowIf>
             <ListGroup.Item>
-              <EditorPreferenceLigaturesSelect/>
+              <EditorPreferenceLigaturesSelect />
             </ListGroup.Item>
             <ListGroup.Item>
-              <EditorPreferenceSmartPasteSelect/>
+              <EditorPreferenceSmartPasteSelect />
             </ListGroup.Item>
             <ListGroup.Item>
-              <EditorPreferenceInput onChange={ () => alert('This feature is not yet implemented.') }
-                                     property={ EditorPreferenceProperty.SPELL_CHECK }
-                                     type={ EditorPreferenceInputType.SELECT }>
+              <EditorPreferenceInput
+                onChange={() => alert('This feature is not yet implemented.')}
+                property={EditorPreferenceProperty.SPELL_CHECK}
+                type={EditorPreferenceInputType.SELECT}>
                 <option value='off'>Off</option>
                 <option value='en'>English</option>
               </EditorPreferenceInput>

@@ -7,7 +7,7 @@
 import { Action } from 'redux'
 
 export enum DarkModeConfigActionType {
-  SET_DARK_MODE = 'dark-mode/set',
+  SET_DARK_MODE = 'dark-mode/set'
 }
 
 export interface DarkModeConfig {

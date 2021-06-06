@@ -28,11 +28,11 @@ export class GistReplacer extends ComponentReplacer {
       const gistId = attributes.id
       return (
         <OneClickEmbedding
-          previewContainerClassName={ 'gist-frame' }
-          loadingImageUrl={ preview }
-          hoverIcon={ 'github' }
-          tooltip={ 'click to load gist' }>
-          <GistFrame id={ gistId }/>
+          previewContainerClassName={'gist-frame'}
+          loadingImageUrl={preview}
+          hoverIcon={'github'}
+          tooltip={'click to load gist'}>
+          <GistFrame id={gistId} />
         </OneClickEmbedding>
       )
     }

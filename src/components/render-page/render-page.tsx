@@ -42,32 +42,47 @@ export const RenderPage: React.FC = () => {
   useEffect(() => iframeCommunicator.onSetDarkMode(setDarkMode), [iframeCommunicator])
   useEffect(() => iframeCommunicator.onSetScrollState(setScrollState), [iframeCommunicator, scrollState])
 
-  const onTaskCheckedChange = useCallback((lineInMarkdown: number, checked: boolean) => {
-    iframeCommunicator.sendTaskCheckBoxChange(lineInMarkdown, checked)
-  }, [iframeCommunicator])
+  const onTaskCheckedChange = useCallback(
+    (lineInMarkdown: number, checked: boolean) => {
+      iframeCommunicator.sendTaskCheckBoxChange(lineInMarkdown, checked)
+    },
+    [iframeCommunicator]
+  )
 
-  const onFirstHeadingChange = useCallback((firstHeading?: string) => {
-    iframeCommunicator.sendFirstHeadingChanged(firstHeading)
-  }, [iframeCommunicator])
+  const onFirstHeadingChange = useCallback(
+    (firstHeading?: string) => {
+      iframeCommunicator.sendFirstHeadingChanged(firstHeading)
+    },
+    [iframeCommunicator]
+  )
 
   const onMakeScrollSource = useCallback(() => {
     iframeCommunicator.sendSetScrollSourceToRenderer()
   }, [iframeCommunicator])
 
-  const onFrontmatterChange = useCallback((frontmatter?: NoteFrontmatter) => {
-    setNoteFrontmatter(frontmatter)
-    iframeCommunicator.sendSetFrontmatter(frontmatter)
-  }, [iframeCommunicator])
+  const onFrontmatterChange = useCallback(
+    (frontmatter?: NoteFrontmatter) => {
+      setNoteFrontmatter(frontmatter)
+      iframeCommunicator.sendSetFrontmatter(frontmatter)
+    },
+    [iframeCommunicator]
+  )
 
-  const onScroll = useCallback((scrollState: ScrollState) => {
-    iframeCommunicator.sendSetScrollState(scrollState)
-  }, [iframeCommunicator])
+  const onScroll = useCallback(
+    (scrollState: ScrollState) => {
+      iframeCommunicator.sendSetScrollState(scrollState)
+    },
+    [iframeCommunicator]
+  )
 
   const onImageClick: ImageClickHandler = useImageClickHandler(iframeCommunicator)
 
-  const onHeightChange = useCallback((height: number) => {
-    iframeCommunicator.sendHeightChange(height)
-  }, [iframeCommunicator])
+  const onHeightChange = useCallback(
+    (height: number) => {
+      iframeCommunicator.sendHeightChange(height)
+    },
+    [iframeCommunicator]
+  )
 
   if (!baseConfiguration) {
     return null
@@ -77,26 +92,28 @@ export const RenderPage: React.FC = () => {
     case RendererType.DOCUMENT:
       return (
         <MarkdownDocument
-          additionalOuterContainerClasses={ 'vh-100 bg-light' }
-          markdownContent={ markdownContent }
-          onTaskCheckedChange={ onTaskCheckedChange }
-          onFirstHeadingChange={ onFirstHeadingChange }
-          onMakeScrollSource={ onMakeScrollSource }
-          onFrontmatterChange={ onFrontmatterChange }
-          scrollState={ scrollState }
-          onScroll={ onScroll }
-          baseUrl={ baseConfiguration.baseUrl }
-          onImageClick={ onImageClick }/>
+          additionalOuterContainerClasses={'vh-100 bg-light'}
+          markdownContent={markdownContent}
+          onTaskCheckedChange={onTaskCheckedChange}
+          onFirstHeadingChange={onFirstHeadingChange}
+          onMakeScrollSource={onMakeScrollSource}
+          onFrontmatterChange={onFrontmatterChange}
+          scrollState={scrollState}
+          onScroll={onScroll}
+          baseUrl={baseConfiguration.baseUrl}
+          onImageClick={onImageClick}
+        />
       )
     case RendererType.INTRO:
       return (
         <MarkdownDocument
-          additionalOuterContainerClasses={ 'vh-100 bg-light overflow-y-hidden' }
-          markdownContent={ markdownContent }
-          baseUrl={ baseConfiguration.baseUrl }
-          onImageClick={ onImageClick }
-          disableToc={ true }
-          onHeightChange={ onHeightChange }/>
+          additionalOuterContainerClasses={'vh-100 bg-light overflow-y-hidden'}
+          markdownContent={markdownContent}
+          baseUrl={baseConfiguration.baseUrl}
+          onImageClick={onImageClick}
+          disableToc={true}
+          onHeightChange={onHeightChange}
+        />
       )
     default:
       return null

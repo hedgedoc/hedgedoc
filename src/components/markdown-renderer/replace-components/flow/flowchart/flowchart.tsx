@@ -46,17 +46,17 @@ export const FlowChart: React.FC<FlowChartProps> = ({ code }) => {
       .catch(() => console.error('error while loading flowchart.js'))
 
     return () => {
-      Array.from(currentDiagramRef.children)
-           .forEach(value => value.remove())
+      Array.from(currentDiagramRef.children).forEach((value) => value.remove())
     }
   }, [code, darkModeActivated])
 
   if (error) {
     return (
-      <Alert variant={ 'danger' }>
-        <Trans i18nKey={ 'renderer.flowchart.invalidSyntax' }/>
-      </Alert>)
+      <Alert variant={'danger'}>
+        <Trans i18nKey={'renderer.flowchart.invalidSyntax'} />
+      </Alert>
+    )
   } else {
-    return <div ref={ diagramRef } data-cy={ 'flowchart' } className={ 'text-center' }/>
+    return <div ref={diagramRef} data-cy={'flowchart'} className={'text-center'} />
   }
 }

@@ -19,28 +19,41 @@ export interface EditorPreferenceSelectPropertyProps {
   selections: string[]
 }
 
-export const EditorPreferenceSelectProperty: React.FC<EditorPreferenceSelectPropertyProps> = ({ property, selections }) => {
-  const preference = useSelector((state: ApplicationState) => state.editorConfig.preferences[property]?.toString() || '', equal)
+export const EditorPreferenceSelectProperty: React.FC<EditorPreferenceSelectPropertyProps> = ({
+  property,
+  selections
+}) => {
+  const preference = useSelector(
+    (state: ApplicationState) => state.editorConfig.preferences[property]?.toString() || '',
+    equal
+  )
 
   const { t } = useTranslation()
 
-  const selectItem = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
-    const selectedItem: string = event.target.value
+  const selectItem = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      const selectedItem: string = event.target.value
 
-    mergeEditorPreferences({
-      [property]: selectedItem
-    } as EditorConfiguration)
-  }, [property])
+      mergeEditorPreferences({
+        [property]: selectedItem
+      } as EditorConfiguration)
+    },
+    [property]
+  )
 
-  const i18nPrefix = `editor.modal.preferences.${ property }`
+  const i18nPrefix = `editor.modal.preferences.${property}`
 
   return (
-    <EditorPreferenceInput onChange={ selectItem } property={ property } type={ EditorPreferenceInputType.SELECT }
-                           value={ preference }>
-      { selections.map(selection =>
-        <option key={ selection } value={ selection }>
-          { t(`${ i18nPrefix }.${ selection }`) }
-        </option>) }
+    <EditorPreferenceInput
+      onChange={selectItem}
+      property={property}
+      type={EditorPreferenceInputType.SELECT}
+      value={preference}>
+      {selections.map((selection) => (
+        <option key={selection} value={selection}>
+          {t(`${i18nPrefix}.${selection}`)}
+        </option>
+      ))}
     </EditorPreferenceInput>
   )
 }

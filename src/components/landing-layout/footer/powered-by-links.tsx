@@ -18,25 +18,26 @@ import equal from 'fast-deep-equal'
 export const PoweredByLinks: React.FC = () => {
   useTranslation()
 
-  const specialUrls: [string, string][] = useSelector((state: ApplicationState) => Object.entries(state.config.specialUrls) as [string, string][], equal)
+  const specialUrls: [string, string][] = useSelector(
+    (state: ApplicationState) => Object.entries(state.config.specialUrls) as [string, string][],
+    equal
+  )
 
   return (
     <p>
-      <Trans i18nKey="landing.footer.poweredBy">
-        <ExternalLink href={ links.webpage } text="HedgeDoc"/>
+      <Trans i18nKey='landing.footer.poweredBy'>
+        <ExternalLink href={links.webpage} text='HedgeDoc' />
       </Trans>
       &nbsp;|&nbsp;
-      <TranslatedInternalLink href="/n/release-notes" i18nKey="landing.footer.releases"/>
-      {
-        specialUrls.map(([i18nKey, href]) =>
-          <Fragment key={ i18nKey }>
-            &nbsp;|&nbsp;
-            <TranslatedExternalLink href={ href } i18nKey={ 'landing.footer.' + i18nKey }/>
-          </Fragment>
-        )
-      }
+      <TranslatedInternalLink href='/n/release-notes' i18nKey='landing.footer.releases' />
+      {specialUrls.map(([i18nKey, href]) => (
+        <Fragment key={i18nKey}>
+          &nbsp;|&nbsp;
+          <TranslatedExternalLink href={href} i18nKey={'landing.footer.' + i18nKey} />
+        </Fragment>
+      ))}
       &nbsp;|&nbsp;
-      <VersionInfoLink/>
+      <VersionInfoLink />
     </p>
   )
 }

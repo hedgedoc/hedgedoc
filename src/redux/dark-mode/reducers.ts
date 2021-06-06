@@ -9,14 +9,18 @@ import { determineDarkModeBrowserSetting, loadFromLocalStorage, saveToLocalStora
 import { DarkModeConfig, DarkModeConfigActions, DarkModeConfigActionType, SetDarkModeConfigAction } from './types'
 
 export const getInitialState = (): DarkModeConfig => {
-  const initialMode = loadFromLocalStorage() ?? determineDarkModeBrowserSetting() ?? {
-    darkMode: false
-  }
+  const initialMode = loadFromLocalStorage() ??
+    determineDarkModeBrowserSetting() ?? {
+      darkMode: false
+    }
   saveToLocalStorage(initialMode)
   return initialMode
 }
 
-export const DarkModeConfigReducer: Reducer<DarkModeConfig, DarkModeConfigActions> = (state: DarkModeConfig = getInitialState(), action: DarkModeConfigActions) => {
+export const DarkModeConfigReducer: Reducer<DarkModeConfig, DarkModeConfigActions> = (
+  state: DarkModeConfig = getInitialState(),
+  action: DarkModeConfigActions
+) => {
   let darkModeConfigState: DarkModeConfig
   switch (action.type) {
     case DarkModeConfigActionType.SET_DARK_MODE:

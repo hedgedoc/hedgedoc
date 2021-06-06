@@ -30,7 +30,7 @@ export const useUpdateLocalHistoryEntry = (updateReady: boolean): void => {
       return
     }
     const history = store.getState().history
-    const entry: HistoryEntry = history.find(entry => entry.identifier === id) ?? {
+    const entry: HistoryEntry = history.find((entry) => entry.identifier === id) ?? {
       identifier: id,
       title: '',
       pinStatus: false,

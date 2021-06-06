@@ -16,7 +16,7 @@ export enum HedgeDocLogoSize {
 }
 
 export interface HedgeDocLogoProps {
-  size?: HedgeDocLogoSize | number,
+  size?: HedgeDocLogoSize | number
   logoType: HedgeDocLogoType
 }
 
@@ -29,11 +29,11 @@ export enum HedgeDocLogoType {
 export const HedgeDocLogoWithText: React.FC<HedgeDocLogoProps> = ({ size = HedgeDocLogoSize.MEDIUM, logoType }) => {
   switch (logoType) {
     case HedgeDocLogoType.COLOR_VERTICAL:
-      return <LogoColorVertical className={ 'w-auto' } title={ 'HedgeDoc logo with text' } style={ { height: size } }/>
+      return <LogoColorVertical className={'w-auto'} title={'HedgeDoc logo with text'} style={{ height: size }} />
     case HedgeDocLogoType.BW_HORIZONTAL:
-      return <LogoBwHorizontal className={ 'w-auto' } title={ 'HedgeDoc logo with text' } style={ { height: size } }/>
+      return <LogoBwHorizontal className={'w-auto'} title={'HedgeDoc logo with text'} style={{ height: size }} />
     case HedgeDocLogoType.WB_HORIZONTAL:
-      return <LogoWbHorizontal className={ 'w-auto' } title={ 'HedgeDoc logo with text' } style={ { height: size } }/>
+      return <LogoWbHorizontal className={'w-auto'} title={'HedgeDoc logo with text'} style={{ height: size }} />
     default:
       return null
   }

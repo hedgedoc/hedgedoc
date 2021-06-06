@@ -15,7 +15,13 @@ export interface CsvTableProps {
   tableColumnClassName?: string
 }
 
-export const CsvTable: React.FC<CsvTableProps> = ({ code, delimiter, showHeader, tableRowClassName, tableColumnClassName }) => {
+export const CsvTable: React.FC<CsvTableProps> = ({
+  code,
+  delimiter,
+  showHeader,
+  tableRowClassName,
+  tableColumnClassName
+}) => {
   const { rowsWithColumns, headerRow } = useMemo(() => {
     const rowsWithColumns = parseCsv(code.trim(), delimiter)
     let headerRow: string[] = []
@@ -29,17 +35,11 @@ export const CsvTable: React.FC<CsvTableProps> = ({ code, delimiter, showHeader,
     if (row !== []) {
       return (
         <thead>
-        <tr>
-          {
-            row.map((column, columnNumber) => (
-              <th
-                key={ `header-${ columnNumber }` }
-              >
-                { column }
-              </th>
-            ))
-          }
-        </tr>
+          <tr>
+            {row.map((column, columnNumber) => (
+              <th key={`header-${columnNumber}`}>{column}</th>
+            ))}
+          </tr>
         </thead>
       )
     }
@@ -48,30 +48,23 @@ export const CsvTable: React.FC<CsvTableProps> = ({ code, delimiter, showHeader,
   const renderTableBody = (rows: string[][]) => {
     return (
       <tbody>
-      {
-        rows.map((row, rowNumber) => (
-          <tr className={ tableRowClassName } key={ `row-${ rowNumber }` }>
-            {
-              row.map((column, columnIndex) => (
-                <td
-                  className={ tableColumnClassName }
-                  key={ `cell-${ rowNumber }-${ columnIndex }` }
-                >
-                  { column.replace(/^"|"$/g, '') }
-                </td>
-              ))
-            }
+        {rows.map((row, rowNumber) => (
+          <tr className={tableRowClassName} key={`row-${rowNumber}`}>
+            {row.map((column, columnIndex) => (
+              <td className={tableColumnClassName} key={`cell-${rowNumber}-${columnIndex}`}>
+                {column.replace(/^"|"$/g, '')}
+              </td>
+            ))}
           </tr>
-        ))
-      }
+        ))}
       </tbody>
     )
   }
 
   return (
-    <table className={ 'csv-html-table table-striped' }>
-      { renderTableHeader(headerRow) }
-      { renderTableBody(rowsWithColumns) }
+    <table className={'csv-html-table table-striped'}>
+      {renderTableHeader(headerRow)}
+      {renderTableBody(rowsWithColumns)}
     </table>
   )
 }

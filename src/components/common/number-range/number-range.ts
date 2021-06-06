@@ -5,6 +5,5 @@
  */
 
 export const createNumberRangeArray = (length: number): number[] => {
-  return Array.from(Array(length)
-    .keys())
+  return Array.from(Array(length).keys())
 }

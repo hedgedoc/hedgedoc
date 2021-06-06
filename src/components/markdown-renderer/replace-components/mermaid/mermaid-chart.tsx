@@ -27,7 +27,7 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ code }) => {
 
   useEffect(() => {
     if (!mermaidInitialized) {
-      import(/* webpackChunkName: "mermaid" */'mermaid')
+      import(/* webpackChunkName: "mermaid" */ 'mermaid')
         .then((mermaid) => {
           mermaid.default.initialize({ startOnLoad: false })
           mermaidInitialized = true
@@ -38,21 +38,23 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ code }) => {
     }
   }, [])
 
-  const showError = useCallback((error: string) => {
-    setError(error)
-    console.error(error)
-    if (!diagramContainer.current) {
-      return
-    }
-    diagramContainer.current.querySelectorAll('svg')
-                    .forEach(child => child.remove())
-  }, [setError])
+  const showError = useCallback(
+    (error: string) => {
+      setError(error)
+      console.error(error)
+      if (!diagramContainer.current) {
+        return
+      }
+      diagramContainer.current.querySelectorAll('svg').forEach((child) => child.remove())
+    },
+    [setError]
+  )
 
   useEffect(() => {
     if (!diagramContainer.current) {
       return
     }
-    import(/* webpackChunkName: "mermaid" */'mermaid')
+    import(/* webpackChunkName: "mermaid" */ 'mermaid')
       .then((mermaid) => {
         try {
           if (!diagramContainer.current) {
@@ -71,10 +73,12 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ code }) => {
       .catch(() => showError('Error while loading mermaid'))
   }, [code, showError, t])
 
-  return <Fragment>
-    <ShowIf condition={ !!error }>
-      <Alert variant={ 'warning' }>{ error }</Alert>
-    </ShowIf>
-    <div className={ 'text-center mermaid text-black' } ref={ diagramContainer }/>
-  </Fragment>
+  return (
+    <Fragment>
+      <ShowIf condition={!!error}>
+        <Alert variant={'warning'}>{error}</Alert>
+      </ShowIf>
+      <div className={'text-center mermaid text-black'} ref={diagramContainer} />
+    </Fragment>
+  )
 }

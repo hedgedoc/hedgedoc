@@ -15,11 +15,9 @@ export interface DocumentInfoLineProps {
 
 export const DocumentInfoLine: React.FC<DocumentInfoLineProps> = ({ icon, size, children }) => {
   return (
-    <span className={ 'd-flex align-items-center' }>
-      <ForkAwesomeIcon icon={ icon } size={ size } fixedWidth={ true } className={ 'mx-2' }/>
-      <i className={ 'd-flex align-items-center' }>
-        { children }
-      </i>
+    <span className={'d-flex align-items-center'}>
+      <ForkAwesomeIcon icon={icon} size={size} fixedWidth={true} className={'mx-2'} />
+      <i className={'d-flex align-items-center'}>{children}</i>
     </span>
   )
 }

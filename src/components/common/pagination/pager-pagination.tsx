@@ -15,7 +15,11 @@ export interface PaginationProps {
   lastPageIndex: number
 }
 
-export const PagerPagination: React.FC<PaginationProps> = ({ numberOfPageButtonsToShowAfterAndBeforeCurrent, onPageChange, lastPageIndex }) => {
+export const PagerPagination: React.FC<PaginationProps> = ({
+  numberOfPageButtonsToShowAfterAndBeforeCurrent,
+  onPageChange,
+  lastPageIndex
+}) => {
   if (numberOfPageButtonsToShowAfterAndBeforeCurrent % 2 !== 0) {
     throw new Error('number of pages to show must be even!')
   }
@@ -29,55 +33,38 @@ export const PagerPagination: React.FC<PaginationProps> = ({ numberOfPageButtons
     onPageChange(pageIndex)
   }, [onPageChange, pageIndex])
 
-  const correctedLowerPageIndex =
-    Math.min(
-      Math.max(
-        Math.min(
-          wantedLowerPageIndex,
-          wantedLowerPageIndex + lastPageIndex - wantedUpperPageIndex
-        ),
-        0
-      ),
-      lastPageIndex
-    )
+  const correctedLowerPageIndex = Math.min(
+    Math.max(Math.min(wantedLowerPageIndex, wantedLowerPageIndex + lastPageIndex - wantedUpperPageIndex), 0),
+    lastPageIndex
+  )
 
-  const correctedUpperPageIndex =
-    Math.max(
-      Math.min(
-        Math.max(
-          wantedUpperPageIndex,
-          wantedUpperPageIndex - wantedLowerPageIndex
-        ),
-        lastPageIndex
-      ),
-      0
-    )
+  const correctedUpperPageIndex = Math.max(
+    Math.min(Math.max(wantedUpperPageIndex, wantedUpperPageIndex - wantedLowerPageIndex), lastPageIndex),
+    0
+  )
 
-  const paginationItemsBefore = Array.from(new Array(correctedPageIndex - correctedLowerPageIndex))
-                                     .map((k, index) => {
-                                       const itemIndex = correctedLowerPageIndex + index
-                                       return <PagerItem key={ itemIndex } index={ itemIndex }
-                                                         onClick={ setPageIndex }/>
-                                     })
+  const paginationItemsBefore = Array.from(new Array(correctedPageIndex - correctedLowerPageIndex)).map((k, index) => {
+    const itemIndex = correctedLowerPageIndex + index
+    return <PagerItem key={itemIndex} index={itemIndex} onClick={setPageIndex} />
+  })
 
-  const paginationItemsAfter = Array.from(new Array(correctedUpperPageIndex - correctedPageIndex))
-                                    .map((k, index) => {
-                                      const itemIndex = correctedPageIndex + index + 1
-                                      return <PagerItem key={ itemIndex } index={ itemIndex } onClick={ setPageIndex }/>
-                                    })
+  const paginationItemsAfter = Array.from(new Array(correctedUpperPageIndex - correctedPageIndex)).map((k, index) => {
+    const itemIndex = correctedPageIndex + index + 1
+    return <PagerItem key={itemIndex} index={itemIndex} onClick={setPageIndex} />
+  })
 
   return (
     <Pagination dir='ltr'>
-      <ShowIf condition={ correctedLowerPageIndex > 0 }>
-        <PagerItem key={ 0 } index={ 0 } onClick={ setPageIndex }/>
-        <Pagination.Ellipsis disabled/>
+      <ShowIf condition={correctedLowerPageIndex > 0}>
+        <PagerItem key={0} index={0} onClick={setPageIndex} />
+        <Pagination.Ellipsis disabled />
       </ShowIf>
-      { paginationItemsBefore }
-      <Pagination.Item active>{ correctedPageIndex + 1 }</Pagination.Item>
-      { paginationItemsAfter }
-      <ShowIf condition={ correctedUpperPageIndex < lastPageIndex }>
-        <Pagination.Ellipsis disabled/>
-        <PagerItem key={ lastPageIndex } index={ lastPageIndex } onClick={ setPageIndex }/>
+      {paginationItemsBefore}
+      <Pagination.Item active>{correctedPageIndex + 1}</Pagination.Item>
+      {paginationItemsAfter}
+      <ShowIf condition={correctedUpperPageIndex < lastPageIndex}>
+        <Pagination.Ellipsis disabled />
+        <PagerItem key={lastPageIndex} index={lastPageIndex} onClick={setPageIndex} />
       </ShowIf>
     </Pagination>
   )

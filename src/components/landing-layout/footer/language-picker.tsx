@@ -49,43 +49,38 @@ const languages = {
  *
  * @param wantedLanguage an ISO 639-1 standard language code
  */
-const findLanguageCode = (wantedLanguage: string): string => (
-  (
-    Object.keys(languages)
-          .find((supportedLanguage) => wantedLanguage === supportedLanguage)
-  ) ?? (
-    Object.keys(languages)
-          .find((supportedLanguage) => wantedLanguage.substr(0, 2) === supportedLanguage)
-  ) ?? ''
-)
+const findLanguageCode = (wantedLanguage: string): string =>
+  Object.keys(languages).find((supportedLanguage) => wantedLanguage === supportedLanguage) ??
+  Object.keys(languages).find((supportedLanguage) => wantedLanguage.substr(0, 2) === supportedLanguage) ??
+  ''
 
 export const LanguagePicker: React.FC = () => {
   const { i18n } = useTranslation()
 
-  const onChangeLang = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
-    const language = event.currentTarget.value
-    Settings.defaultLocale = language
-    i18n.changeLanguage(language)
-        .catch(error => console.error('Error while switching language', error))
-  }, [i18n])
+  const onChangeLang = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      const language = event.currentTarget.value
+      Settings.defaultLocale = language
+      i18n.changeLanguage(language).catch((error) => console.error('Error while switching language', error))
+    },
+    [i18n]
+  )
 
   const languageCode = useMemo(() => findLanguageCode(i18n.language), [i18n.language])
 
-  const languageOptions = useMemo(() =>
-    Object.entries(languages)
-          .map(([language, languageName]) =>
-            <option key={ language } value={ language }>{ languageName }</option>), [])
+  const languageOptions = useMemo(
+    () =>
+      Object.entries(languages).map(([language, languageName]) => (
+        <option key={language} value={language}>
+          {languageName}
+        </option>
+      )),
+    []
+  )
 
   return (
-    <Form.Control
-      as="select"
-      size="sm"
-      className="mb-2 mx-auto w-auto"
-      value={ languageCode }
-      onChange={ onChangeLang }>
-      {
-        languageOptions
-      }
+    <Form.Control as='select' size='sm' className='mb-2 mx-auto w-auto' value={languageCode} onChange={onChangeLang}>
+      {languageOptions}
     </Form.Control>
   )
 }

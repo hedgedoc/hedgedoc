@@ -11,8 +11,7 @@ import { setEditorSmartPaste } from '../../../../../redux/editor/methods'
 import { EditorPreferenceInput, EditorPreferenceInputType } from './editor-preference-input'
 
 export const EditorPreferenceSmartPasteSelect: React.FC = () => {
-  const smartPasteEnabled = useSelector((state: ApplicationState) => Boolean(state.editorConfig.smartPaste)
-    .toString())
+  const smartPasteEnabled = useSelector((state: ApplicationState) => Boolean(state.editorConfig.smartPaste).toString())
   const saveSmartPaste = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
     const smartPasteActivated: boolean = event.target.value === 'true'
     setEditorSmartPaste(smartPasteActivated)
@@ -21,13 +20,12 @@ export const EditorPreferenceSmartPasteSelect: React.FC = () => {
 
   return (
     <EditorPreferenceInput
-      onChange={ saveSmartPaste }
-      value={ smartPasteEnabled }
-      property={ 'smartPaste' }
-      type={ EditorPreferenceInputType.BOOLEAN }
-    >
-      <option value='true'>{ t(`common.yes`) }</option>
-      <option value='false'>{ t(`common.no`) }</option>
+      onChange={saveSmartPaste}
+      value={smartPasteEnabled}
+      property={'smartPaste'}
+      type={EditorPreferenceInputType.BOOLEAN}>
+      <option value='true'>{t(`common.yes`)}</option>
+      <option value='false'>{t(`common.no`)}</option>
     </EditorPreferenceInput>
   )
 }

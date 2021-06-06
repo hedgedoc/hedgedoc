@@ -14,7 +14,7 @@ export enum UiNotificationActionType {
 }
 
 export interface UiNotificationButton {
-  label: string,
+  label: string
   onClick: () => void
 }
 

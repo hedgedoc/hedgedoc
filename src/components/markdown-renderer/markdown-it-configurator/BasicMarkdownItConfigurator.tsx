@@ -39,10 +39,10 @@ import { documentTableOfContents } from '../markdown-it-plugins/document-table-o
 import { frontmatterExtract } from '../markdown-it-plugins/frontmatter'
 
 export interface ConfiguratorDetails {
-  useFrontmatter: boolean,
-  onParseError: (error: boolean) => void,
-  onRawMetaChange: (rawMeta: RawNoteFrontmatter) => void,
-  onToc: (toc: TocAst) => void,
+  useFrontmatter: boolean
+  onParseError: (error: boolean) => void
+  onRawMetaChange: (rawMeta: RawNoteFrontmatter) => void
+  onToc: (toc: TocAst) => void
   onLineMarkers?: (lineMarkers: LineMarkers[]) => void
   useAlternativeBreaks?: boolean
 }
@@ -102,22 +102,22 @@ export class BasicMarkdownItConfigurator<T extends ConfiguratorDetails> {
       imsize,
       tasksLists,
       alertContainer,
-      spoilerContainer)
+      spoilerContainer
+    )
 
     if (this.options.useFrontmatter) {
-      this.configurations.push(frontmatterExtract({
-        onParseError: this.options.onParseError,
-        onRawMetaChange: this.options.onRawMetaChange
-      }))
+      this.configurations.push(
+        frontmatterExtract({
+          onParseError: this.options.onParseError,
+          onRawMetaChange: this.options.onRawMetaChange
+        })
+      )
     }
 
     if (this.options.onLineMarkers) {
       this.configurations.push(lineNumberMarker(this.options.onLineMarkers))
     }
 
-    this.postConfigurations.push(
-      linkifyExtra,
-      MarkdownItParserDebugger
-    )
+    this.postConfigurations.push(linkifyExtra, MarkdownItParserDebugger)
   }
 }

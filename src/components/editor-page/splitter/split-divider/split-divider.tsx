@@ -12,10 +12,5 @@ export interface SplitDividerProps {
 }
 
 export const SplitDivider: React.FC<SplitDividerProps> = ({ onGrab }) => {
-  return (
-    <div
-      onMouseDown={ () => onGrab() }
-      onTouchStart={ () => onGrab() }
-      className={ 'split-divider' }/>
-  )
+  return <div onMouseDown={() => onGrab()} onTouchStart={() => onGrab()} className={'split-divider'} />
 }

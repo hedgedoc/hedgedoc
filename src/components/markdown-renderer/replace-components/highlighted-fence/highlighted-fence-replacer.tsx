@@ -13,7 +13,13 @@ export class HighlightedCodeReplacer extends ComponentReplacer {
   private lastLineNumber = 0
 
   public getReplacement(codeNode: DomElement): React.ReactElement | undefined {
-    if (codeNode.name !== 'code' || !codeNode.attribs || !codeNode.attribs['data-highlight-language'] || !codeNode.children || !codeNode.children[0]) {
+    if (
+      codeNode.name !== 'code' ||
+      !codeNode.attribs ||
+      !codeNode.attribs['data-highlight-language'] ||
+      !codeNode.children ||
+      !codeNode.children[0]
+    ) {
       return
     }
 
@@ -31,18 +37,21 @@ export class HighlightedCodeReplacer extends ComponentReplacer {
       wrapLines = extraInfos[3] === '!'
     }
 
-    const startLineNumber = startLineNumberAttribute === '+' ? this.lastLineNumber : (parseInt(startLineNumberAttribute) || 1)
+    const startLineNumber =
+      startLineNumberAttribute === '+' ? this.lastLineNumber : parseInt(startLineNumberAttribute) || 1
     const code = codeNode.children[0].data as string
 
     if (showLineNumbers) {
-      this.lastLineNumber = startLineNumber + code.split('\n')
-                                                  .filter(line => !!line).length
+      this.lastLineNumber = startLineNumber + code.split('\n').filter((line) => !!line).length
     }
 
-    return <HighlightedCode
-      language={ language }
-      startLineNumber={ showLineNumbers ? startLineNumber : undefined }
-      wrapLines={ wrapLines }
-      code={ code }/>
+    return (
+      <HighlightedCode
+        language={language}
+        startLineNumber={showLineNumbers ? startLineNumber : undefined}
+        wrapLines={wrapLines}
+        code={code}
+      />
+    )
   }
 }

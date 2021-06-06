@@ -20,23 +20,23 @@ export const ProfilePage: React.FC = () => {
   const userProvider = useSelector((state: ApplicationState) => state.user?.provider)
 
   if (!userProvider) {
-    return (
-      <Redirect to={ '/login' }/>
-    )
+    return <Redirect to={'/login'} />
   }
 
-  return <Fragment>
-    <div className="my-3">
-      <Row className="h-100 flex justify-content-center">
-        <Col lg={ 6 }>
-          <ProfileDisplayName/>
-          <ShowIf condition={ userProvider === LoginProvider.INTERNAL }>
-            <ProfileChangePassword/>
-          </ShowIf>
-          <ProfileAccessTokens/>
-          <ProfileAccountManagement/>
-        </Col>
-      </Row>
-    </div>
-  </Fragment>
+  return (
+    <Fragment>
+      <div className='my-3'>
+        <Row className='h-100 flex justify-content-center'>
+          <Col lg={6}>
+            <ProfileDisplayName />
+            <ShowIf condition={userProvider === LoginProvider.INTERNAL}>
+              <ProfileChangePassword />
+            </ShowIf>
+            <ProfileAccessTokens />
+            <ProfileAccountManagement />
+          </Col>
+        </Row>
+      </div>
+    </Fragment>
+  )
 }

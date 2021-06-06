@@ -24,66 +24,75 @@ import './style/dark.scss'
 import './style/index.scss'
 import { isTestMode } from './utils/test-modes'
 
-const EditorPage = React.lazy(() => import(/* webpackPrefetch: true *//* webpackChunkName: "editor" */ './components/editor-page/editor-page'))
-const RenderPage = React.lazy(() => import (/* webpackPrefetch: true *//* webpackChunkName: "renderPage" */ './components/render-page/render-page'))
-const DocumentReadOnlyPage = React.lazy(() => import (/* webpackPrefetch: true *//* webpackChunkName: "documentReadOnly" */ './components/document-read-only-page/document-read-only-page'))
+const EditorPage = React.lazy(
+  () => import(/* webpackPrefetch: true */ /* webpackChunkName: "editor" */ './components/editor-page/editor-page')
+)
+const RenderPage = React.lazy(
+  () => import(/* webpackPrefetch: true */ /* webpackChunkName: "renderPage" */ './components/render-page/render-page')
+)
+const DocumentReadOnlyPage = React.lazy(
+  () =>
+    import(
+      /* webpackPrefetch: true */ /* webpackChunkName: "documentReadOnly" */ './components/document-read-only-page/document-read-only-page'
+    )
+)
 const baseUrl = new URL(document.head.baseURI).pathname
 
 ReactDOM.render(
-  <Provider store={ store }>
-    <Router basename={ baseUrl }>
+  <Provider store={store}>
+    <Router basename={baseUrl}>
       <ApplicationLoader>
         <ErrorBoundary>
           <Switch>
-            <Route path="/history">
+            <Route path='/history'>
               <LandingLayout>
-                <HistoryPage/>
+                <HistoryPage />
               </LandingLayout>
             </Route>
-            <Route path="/intro">
+            <Route path='/intro'>
               <LandingLayout>
-                <IntroPage/>
+                <IntroPage />
               </LandingLayout>
             </Route>
-            <Route path="/login">
+            <Route path='/login'>
               <LandingLayout>
-                <LoginPage/>
+                <LoginPage />
               </LandingLayout>
             </Route>
-            <Route path="/register">
+            <Route path='/register'>
               <LandingLayout>
-                <RegisterPage/>
+                <RegisterPage />
               </LandingLayout>
             </Route>
-            <Route path="/profile">
+            <Route path='/profile'>
               <LandingLayout>
-                <ProfilePage/>
+                <ProfilePage />
               </LandingLayout>
             </Route>
-            <Route path="/render">
-              <RenderPage/>
+            <Route path='/render'>
+              <RenderPage />
             </Route>
-            <Route path="/n/:id">
-              <EditorPage/>
+            <Route path='/n/:id'>
+              <EditorPage />
             </Route>
-            <Route path="/s/:id">
-              <DocumentReadOnlyPage/>
+            <Route path='/s/:id'>
+              <DocumentReadOnlyPage />
             </Route>
-            <Route path="/:id">
-              <Redirector/>
+            <Route path='/:id'>
+              <Redirector />
             </Route>
-            <Route path="/">
-              <Redirect to="/intro"/>
+            <Route path='/'>
+              <Redirect to='/intro' />
             </Route>
             <Route>
-              <NotFoundErrorScreen/>
+              <NotFoundErrorScreen />
             </Route>
           </Switch>
         </ErrorBoundary>
       </ApplicationLoader>
     </Router>
-  </Provider>
-  , document.getElementById('root')
+  </Provider>,
+  document.getElementById('root')
 )
 
 if (isTestMode()) {

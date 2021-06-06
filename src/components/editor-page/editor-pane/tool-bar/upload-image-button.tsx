@@ -19,17 +19,20 @@ export interface UploadImageButtonProps {
 
 export const UploadImageButton: React.FC<UploadImageButtonProps> = ({ editor }) => {
   const { t } = useTranslation()
-  const clickRef = useRef<(() => void)>()
+  const clickRef = useRef<() => void>()
   const buttonClick = useCallback(() => {
     clickRef.current?.()
   }, [])
 
-  const onUploadImage = useCallback((file: File) => {
-    if (editor) {
-      handleUpload(file, editor)
-    }
-    return Promise.resolve()
-  }, [editor])
+  const onUploadImage = useCallback(
+    (file: File) => {
+      if (editor) {
+        handleUpload(file, editor)
+      }
+      return Promise.resolve()
+    },
+    [editor]
+  )
 
   if (!editor) {
     return null
@@ -37,10 +40,10 @@ export const UploadImageButton: React.FC<UploadImageButtonProps> = ({ editor }) 
 
   return (
     <Fragment>
-      <Button variant='light' onClick={ buttonClick } title={ t('editor.editorToolbar.uploadImage') }>
-        <ForkAwesomeIcon icon={ 'upload' }/>
+      <Button variant='light' onClick={buttonClick} title={t('editor.editorToolbar.uploadImage')}>
+        <ForkAwesomeIcon icon={'upload'} />
       </Button>
-      <UploadInput onLoad={ onUploadImage } acceptedFiles={ supportedMimeTypesJoined } onClickRef={ clickRef }/>
+      <UploadInput onLoad={onUploadImage} acceptedFiles={supportedMimeTypesJoined} onClickRef={clickRef} />
     </Fragment>
   )
 }

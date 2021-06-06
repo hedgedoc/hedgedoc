@@ -13,28 +13,28 @@ import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
 export const FeatureLinks: React.FC = () => {
   useTranslation()
   return (
-    <Row className="mb-5 d-flex flex-row justify-content-center">
-      <Col md={ 3 }>
-        <Link to={ '/n/features#Share-Notes' } className="text-light">
-          <ForkAwesomeIcon icon="bolt" size="2x"/>
+    <Row className='mb-5 d-flex flex-row justify-content-center'>
+      <Col md={3}>
+        <Link to={'/n/features#Share-Notes'} className='text-light'>
+          <ForkAwesomeIcon icon='bolt' size='2x' />
           <h6>
-            <Trans i18nKey="landing.intro.features.collaboration"/>
+            <Trans i18nKey='landing.intro.features.collaboration' />
           </h6>
         </Link>
       </Col>
-      <Col md={ 3 }>
-        <Link to={ '/n/features#MathJax' } className="text-light">
-          <ForkAwesomeIcon icon="bar-chart" size="2x"/>
+      <Col md={3}>
+        <Link to={'/n/features#MathJax'} className='text-light'>
+          <ForkAwesomeIcon icon='bar-chart' size='2x' />
           <h6>
-            <Trans i18nKey="landing.intro.features.katex"/>
+            <Trans i18nKey='landing.intro.features.katex' />
           </h6>
         </Link>
       </Col>
-      <Col md={ 3 }>
-        <Link to={ '/n/features#Slide-Mode' } className="text-light">
-          <ForkAwesomeIcon icon="television" size="2x"/>
+      <Col md={3}>
+        <Link to={'/n/features#Slide-Mode'} className='text-light'>
+          <ForkAwesomeIcon icon='television' size='2x' />
           <h6>
-            <Trans i18nKey="landing.intro.features.slides"/>
+            <Trans i18nKey='landing.intro.features.slides' />
           </h6>
         </Link>
       </Col>

@@ -23,8 +23,7 @@ export const GraphvizFrame: React.FC<GraphvizFrameProps> = ({ code }) => {
     }
     setError(error)
     console.error(error)
-    container.current.querySelectorAll('svg')
-             .forEach(child => child.remove())
+    container.current.querySelectorAll('svg').forEach((child) => child.remove())
   }, [])
 
   const frontendBaseUrl = useFrontendBaseUrl()
@@ -35,20 +34,21 @@ export const GraphvizFrame: React.FC<GraphvizFrameProps> = ({ code }) => {
     }
     const actualContainer = container.current
 
-    import(/* webpackChunkName: "d3-graphviz" */'@hpcc-js/wasm')
+    import(/* webpackChunkName: "d3-graphviz" */ '@hpcc-js/wasm')
       .then((wasmPlugin) => {
-        wasmPlugin.wasmFolder(`${ frontendBaseUrl }/static/js`)
+        wasmPlugin.wasmFolder(`${frontendBaseUrl}/static/js`)
       })
       .then(() => import(/* webpackChunkName: "d3-graphviz" */ 'd3-graphviz'))
       .then((graphvizImport) => {
         try {
           setError(undefined)
-          graphvizImport.graphviz(actualContainer, {
-            useWorker: false,
-            zoom: false
-          })
-                        .onerror(showError)
-                        .renderDot(code)
+          graphvizImport
+            .graphviz(actualContainer, {
+              useWorker: false,
+              zoom: false
+            })
+            .onerror(showError)
+            .renderDot(code)
         } catch (error) {
           showError(error)
         }
@@ -60,10 +60,10 @@ export const GraphvizFrame: React.FC<GraphvizFrameProps> = ({ code }) => {
 
   return (
     <Fragment>
-      <ShowIf condition={ !!error }>
-        <Alert variant={ 'warning' }>{ error }</Alert>
+      <ShowIf condition={!!error}>
+        <Alert variant={'warning'}>{error}</Alert>
       </ShowIf>
-      <div className={ 'text-center overflow-x-auto' } data-cy={ 'graphviz' } ref={ container }/>
+      <div className={'text-center overflow-x-auto'} data-cy={'graphviz'} ref={container} />
     </Fragment>
   )
 }

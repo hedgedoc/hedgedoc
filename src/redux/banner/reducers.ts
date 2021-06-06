@@ -12,7 +12,10 @@ export const initialState: BannerState = {
   lastModified: null
 }
 
-export const BannerReducer: Reducer<BannerState, BannerActions> = (state: BannerState = initialState, action: BannerActions) => {
+export const BannerReducer: Reducer<BannerState, BannerActions> = (
+  state: BannerState = initialState,
+  action: BannerActions
+) => {
   switch (action.type) {
     case BannerActionType.SET_BANNER:
       return (action as SetBannerAction).state

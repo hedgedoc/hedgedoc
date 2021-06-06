@@ -25,31 +25,32 @@ export const UserDropdown: React.FC = () => {
 
   return (
     <Dropdown alignRight>
-      <Dropdown.Toggle size="sm" variant="dark" id="dropdown-user" className={ 'd-flex align-items-center' }>
-        <UserAvatar name={ user.name } photo={ user.photo }/>
+      <Dropdown.Toggle size='sm' variant='dark' id='dropdown-user' className={'d-flex align-items-center'}>
+        <UserAvatar name={user.name} photo={user.photo} />
       </Dropdown.Toggle>
 
       <Dropdown.Menu className='text-start'>
-        <LinkContainer to={ '/n/features' }>
+        <LinkContainer to={'/n/features'}>
           <Dropdown.Item dir='auto'>
-            <ForkAwesomeIcon icon="bolt" fixedWidth={ true } className="mx-2"/>
-            <Trans i18nKey="editor.help.documents.features"/>
+            <ForkAwesomeIcon icon='bolt' fixedWidth={true} className='mx-2' />
+            <Trans i18nKey='editor.help.documents.features' />
           </Dropdown.Item>
         </LinkContainer>
-        <LinkContainer to={ '/profile' }>
+        <LinkContainer to={'/profile'}>
           <Dropdown.Item dir='auto'>
-            <ForkAwesomeIcon icon="user" fixedWidth={ true } className="mx-2"/>
-            <Trans i18nKey="profile.userProfile"/>
+            <ForkAwesomeIcon icon='user' fixedWidth={true} className='mx-2' />
+            <Trans i18nKey='profile.userProfile' />
           </Dropdown.Item>
         </LinkContainer>
         <Dropdown.Item
           dir='auto'
-          onClick={ () => {
+          onClick={() => {
             clearUser()
-          } }>
-          <ForkAwesomeIcon icon="sign-out" fixedWidth={ true } className="mx-2"/>
-          <Trans i18nKey="login.signOut"/>
+          }}>
+          <ForkAwesomeIcon icon='sign-out' fixedWidth={true} className='mx-2' />
+          <Trans i18nKey='login.signOut' />
         </Dropdown.Item>
       </Dropdown.Menu>
-    </Dropdown>)
+    </Dropdown>
+  )
 }

@@ -11,11 +11,11 @@ export enum ApiUrlActionType {
 }
 
 export interface ApiUrlActions extends Action<ApiUrlActionType> {
-  type: ApiUrlActionType;
+  type: ApiUrlActionType
 }
 
 export interface SetApiUrlAction extends ApiUrlActions {
-  state: ApiUrlObject;
+  state: ApiUrlObject
 }
 
 export interface ApiUrlObject {

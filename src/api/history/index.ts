@@ -10,7 +10,7 @@ import { HistoryEntryDto, HistoryEntryPutDto, HistoryEntryUpdateDto } from './ty
 export const getHistory = async (): Promise<HistoryEntryDto[]> => {
   const response = await fetch(getApiUrl() + 'me/history')
   expectResponseCode(response)
-  return await response.json() as Promise<HistoryEntryDto[]>
+  return (await response.json()) as Promise<HistoryEntryDto[]>
 }
 
 export const postHistory = async (entries: HistoryEntryPutDto[]): Promise<void> => {

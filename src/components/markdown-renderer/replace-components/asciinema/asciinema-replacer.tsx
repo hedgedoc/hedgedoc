@@ -22,9 +22,7 @@ export class AsciinemaReplacer extends ComponentReplacer {
     const attributes = getAttributesFromHedgeDocTag(node, 'asciinema')
     if (attributes && attributes.id) {
       const asciinemaId = attributes.id
-      return (
-        <AsciinemaFrame id={ asciinemaId }/>
-      )
+      return <AsciinemaFrame id={asciinemaId} />
     }
   }
 }

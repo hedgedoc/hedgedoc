@@ -19,7 +19,6 @@ import { DocumentSidebarMenuSelection } from './types'
 import { UsersOnlineSidebarMenu } from './users-online-sidebar-menu/users-online-sidebar-menu'
 
 export const Sidebar: React.FC = () => {
-
   const sideBarRef = useRef<HTMLDivElement>(null)
   const [selectedMenu, setSelectedMenu] = useState<DocumentSidebarMenuSelection>(DocumentSidebarMenuSelection.NONE)
 
@@ -27,28 +26,40 @@ export const Sidebar: React.FC = () => {
     setSelectedMenu(DocumentSidebarMenuSelection.NONE)
   })
 
-  const toggleValue = useCallback((toggleValue: DocumentSidebarMenuSelection): void => {
-    const newValue = selectedMenu === toggleValue ? DocumentSidebarMenuSelection.NONE : toggleValue
-    setSelectedMenu(newValue)
-  }, [selectedMenu])
+  const toggleValue = useCallback(
+    (toggleValue: DocumentSidebarMenuSelection): void => {
+      const newValue = selectedMenu === toggleValue ? DocumentSidebarMenuSelection.NONE : toggleValue
+      setSelectedMenu(newValue)
+    },
+    [selectedMenu]
+  )
 
   const selectionIsNotNone = selectedMenu !== DocumentSidebarMenuSelection.NONE
 
   return (
-    <div className="slide-sidebar">
-      <div ref={ sideBarRef } className={ `sidebar-inner ${ selectionIsNotNone ? 'show' : '' }` }>
-        <UsersOnlineSidebarMenu menuId={ DocumentSidebarMenuSelection.USERS_ONLINE }
-                                selectedMenuId={ selectedMenu } onClick={ toggleValue }/>
-        <DocumentInfoSidebarEntry hide={ selectionIsNotNone }/>
-        <RevisionSidebarEntry hide={ selectionIsNotNone }/>
-        <PermissionsSidebarEntry hide={ selectionIsNotNone }/>
-        <ImportMenuSidebarMenu menuId={ DocumentSidebarMenuSelection.IMPORT }
-                               selectedMenuId={ selectedMenu } onClick={ toggleValue }/>
-        <ExportMenuSidebarMenu menuId={ DocumentSidebarMenuSelection.EXPORT }
-                               selectedMenuId={ selectedMenu } onClick={ toggleValue }/>
-        <ShareSidebarEntry hide={ selectionIsNotNone }/>
-        <DeleteNoteSidebarEntry hide={ selectionIsNotNone }/>
-        <PinNoteSidebarEntry hide={ selectionIsNotNone }/>
+    <div className='slide-sidebar'>
+      <div ref={sideBarRef} className={`sidebar-inner ${selectionIsNotNone ? 'show' : ''}`}>
+        <UsersOnlineSidebarMenu
+          menuId={DocumentSidebarMenuSelection.USERS_ONLINE}
+          selectedMenuId={selectedMenu}
+          onClick={toggleValue}
+        />
+        <DocumentInfoSidebarEntry hide={selectionIsNotNone} />
+        <RevisionSidebarEntry hide={selectionIsNotNone} />
+        <PermissionsSidebarEntry hide={selectionIsNotNone} />
+        <ImportMenuSidebarMenu
+          menuId={DocumentSidebarMenuSelection.IMPORT}
+          selectedMenuId={selectedMenu}
+          onClick={toggleValue}
+        />
+        <ExportMenuSidebarMenu
+          menuId={DocumentSidebarMenuSelection.EXPORT}
+          selectedMenuId={selectedMenu}
+          onClick={toggleValue}
+        />
+        <ShareSidebarEntry hide={selectionIsNotNone} />
+        <DeleteNoteSidebarEntry hide={selectionIsNotNone} />
+        <PinNoteSidebarEntry hide={selectionIsNotNone} />
       </div>
     </div>
   )

@@ -6,7 +6,10 @@
 
 import { LineMarkerPosition } from '../../markdown-renderer/types'
 
-export const findLineMarks = (lineMarks: LineMarkerPosition[], lineNumber: number): { lastMarkBefore: LineMarkerPosition | undefined, firstMarkAfter: LineMarkerPosition | undefined } => {
+export const findLineMarks = (
+  lineMarks: LineMarkerPosition[],
+  lineNumber: number
+): { lastMarkBefore: LineMarkerPosition | undefined; firstMarkAfter: LineMarkerPosition | undefined } => {
   let lastMarkBefore
   let firstMarkAfter
   for (let i = 0; i < lineMarks.length; i++) {

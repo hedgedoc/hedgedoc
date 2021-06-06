@@ -18,5 +18,5 @@ export interface HedgeDocLogoProps {
 }
 
 export const HedgeDocLogo: React.FC<HedgeDocLogoProps> = ({ size = HedgeDocLogoSize.MEDIUM }) => {
-  return <LogoColor className={ 'w-auto' } title={ 'HedgeDoc logo with text' } style={ { height: size } }/>
+  return <LogoColor className={'w-auto'} title={'HedgeDoc logo with text'} style={{ height: size }} />
 }

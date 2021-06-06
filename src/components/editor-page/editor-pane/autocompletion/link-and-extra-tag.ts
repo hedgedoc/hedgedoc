@@ -22,7 +22,6 @@ const allSupportedLinks = [
   'name',
   'time',
   '[color=#FFFFFF]'
-
 ]
 
 const linkAndExtraTagHint = (editor: Editor): Promise<Hints | null> => {
@@ -46,13 +45,12 @@ const linkAndExtraTagHint = (editor: Editor): Promise<Hints | null> => {
             case 'name':
               // Get the user when a completion happens, this prevents to early calls resulting in 'Anonymous'
               return {
-                text: `[name=${ userName }]`
+                text: `[name=${userName}]`
               }
             case 'time':
               // show the current time when the autocompletion is opened and not when the function is loaded
               return {
-                text: `[time=${ DateTime.local()
-                                        .toFormat('DDDD T') }]`
+                text: `[time=${DateTime.local().toFormat('DDDD T')}]`
               }
             default:
               return {

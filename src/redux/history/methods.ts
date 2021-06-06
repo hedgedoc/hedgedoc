@@ -66,7 +66,7 @@ export const updateLocalHistoryEntry = (noteId: string, newEntry: HistoryEntry):
 }
 
 export const removeHistoryEntry = async (noteId: string): Promise<void> => {
-  const entryToDelete = store.getState().history.find(entry => entry.identifier === noteId)
+  const entryToDelete = store.getState().history.find((entry) => entry.identifier === noteId)
   if (entryToDelete && entryToDelete.origin === HistoryEntryOrigin.REMOTE) {
     await deleteHistoryEntry(noteId)
   }
@@ -79,9 +79,9 @@ export const removeHistoryEntry = async (noteId: string): Promise<void> => {
 
 export const toggleHistoryEntryPinning = async (noteId: string): Promise<void> => {
   const state = store.getState().history
-  const entryToUpdate = state.find(entry => entry.identifier === noteId)
+  const entryToUpdate = state.find((entry) => entry.identifier === noteId)
   if (!entryToUpdate) {
-    return Promise.reject(`History entry for note '${ noteId }' not found`)
+    return Promise.reject(`History entry for note '${noteId}' not found`)
   }
   if (entryToUpdate.pinStatus === undefined) {
     entryToUpdate.pinStatus = false
@@ -105,21 +105,20 @@ export const downloadHistory = (): void => {
     version: 2,
     entries: history
   } as HistoryExportJson)
-  download(json, `history_${ Date.now() }.json`, 'application/json')
+  download(json, `history_${Date.now()}.json`, 'application/json')
 }
 
 export const mergeHistoryEntries = (a: HistoryEntry[], b: HistoryEntry[]): HistoryEntry[] => {
-  const noDuplicates = a.filter(entryA => !b.some(entryB => entryA.identifier === entryB.identifier))
+  const noDuplicates = a.filter((entryA) => !b.some((entryB) => entryA.identifier === entryB.identifier))
   return noDuplicates.concat(b)
 }
 
 export const convertV1History = (oldHistory: V1HistoryEntry[]): HistoryEntry[] => {
-  return oldHistory.map(entry => ({
+  return oldHistory.map((entry) => ({
     identifier: entry.id,
     title: entry.text,
     tags: entry.tags,
-    lastVisited: DateTime.fromMillis(entry.time)
-                         .toISO(),
+    lastVisited: DateTime.fromMillis(entry.time).toISO(),
     pinStatus: entry.pinned,
     origin: HistoryEntryOrigin.LOCAL
   }))
@@ -138,8 +137,8 @@ export const refreshHistoryState = async (): Promise<void> => {
 
 export const storeLocalHistory = (): void => {
   const history = store.getState().history
-  const localEntries = history.filter(entry => entry.origin === HistoryEntryOrigin.LOCAL)
-  const entriesWithoutOrigin = localEntries.map(entry => ({
+  const localEntries = history.filter((entry) => entry.origin === HistoryEntryOrigin.LOCAL)
+  const entriesWithoutOrigin = localEntries.map((entry) => ({
     ...entry,
     origin: undefined
   }))
@@ -151,7 +150,7 @@ export const storeRemoteHistory = (): Promise<void> => {
     return Promise.resolve()
   }
   const history = store.getState().history
-  const remoteEntries = history.filter(entry => entry.origin === HistoryEntryOrigin.REMOTE)
+  const remoteEntries = history.filter((entry) => entry.origin === HistoryEntryOrigin.REMOTE)
   const remoteEntryDtos = remoteEntries.map(historyEntryToHistoryEntryPutDto)
   return postHistory(remoteEntryDtos)
 }
@@ -164,7 +163,7 @@ const loadLocalHistory = (): HistoryEntry[] => {
       window.localStorage.removeItem('notehistory')
       return convertV1History(localV1History)
     } catch (error) {
-      console.error(`Error converting old history entries: ${ String(error) }`)
+      console.error(`Error converting old history entries: ${String(error)}`)
       return []
     }
   }
@@ -176,12 +175,12 @@ const loadLocalHistory = (): HistoryEntry[] => {
 
   try {
     const localHistory = JSON.parse(localJson) as HistoryEntry[]
-    localHistory.forEach(entry => {
+    localHistory.forEach((entry) => {
       entry.origin = HistoryEntryOrigin.LOCAL
     })
     return localHistory
   } catch (error) {
-    console.error(`Error parsing local stored history entries: ${ String(error) }`)
+    console.error(`Error parsing local stored history entries: ${String(error)}`)
     return []
   }
 }
@@ -191,7 +190,7 @@ const loadRemoteHistory = async (): Promise<HistoryEntry[]> => {
     const remoteHistory = await getHistory()
     return remoteHistory.map(historyEntryDtoToHistoryEntry)
   } catch (error) {
-    console.error(`Error fetching history entries from server: ${ String(error) }`)
+    console.error(`Error fetching history entries from server: ${String(error)}`)
     return []
   }
 }

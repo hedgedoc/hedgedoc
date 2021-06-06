@@ -24,7 +24,7 @@ import { InvalidYamlAlert } from './invalid-yaml-alert'
 import { useTrimmedContent } from './hooks/use-trimmed-content'
 
 export interface BasicMarkdownRendererProps {
-  additionalReplacers?: () => ComponentReplacer[],
+  additionalReplacers?: () => ComponentReplacer[]
   onBeforeRendering?: () => void
   onAfterRendering?: () => void
   onFirstHeadingChange?: (firstHeading: string | undefined) => void
@@ -38,23 +38,22 @@ export interface BasicMarkdownRendererProps {
   useAlternativeBreaks?: boolean
 }
 
-export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & AdditionalMarkdownRendererProps> = (
-  {
-    className,
-    content,
-    additionalReplacers,
-    onBeforeRendering,
-    onAfterRendering,
-    onFirstHeadingChange,
-    onLineMarkerPositionChanged,
-    onFrontmatterChange,
-    onTaskCheckedChange,
-    onTocChange,
-    baseUrl,
-    onImageClick,
-    outerContainerRef,
-    useAlternativeBreaks
-  }) => {
+export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & AdditionalMarkdownRendererProps> = ({
+  className,
+  content,
+  additionalReplacers,
+  onBeforeRendering,
+  onAfterRendering,
+  onFirstHeadingChange,
+  onLineMarkerPositionChanged,
+  onFrontmatterChange,
+  onTaskCheckedChange,
+  onTocChange,
+  baseUrl,
+  onImageClick,
+  outerContainerRef,
+  useAlternativeBreaks
+}) => {
   const rawMetaRef = useRef<RawNoteFrontmatter>()
   const markdownBodyRef = useRef<HTMLDivElement>(null)
   const currentLineMarkers = useRef<LineMarkers[]>()
@@ -63,16 +62,21 @@ export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & Additi
   const [showYamlError, setShowYamlError] = useState(false)
   const [trimmedContent, contentExceedsLimit] = useTrimmedContent(content)
 
-  const markdownIt = useMemo(() =>
-    new BasicMarkdownItConfigurator({
-      useFrontmatter: !!onFrontmatterChange,
-      onParseError: errorState => hasNewYamlError.current = errorState,
-      onRawMetaChange: rawMeta => rawMetaRef.current = rawMeta,
-      onToc: toc => tocAst.current = toc,
-      onLineMarkers: onLineMarkerPositionChanged === undefined ? undefined
-        : lineMarkers => currentLineMarkers.current = lineMarkers,
-      useAlternativeBreaks
-    }).buildConfiguredMarkdownIt(), [onFrontmatterChange, onLineMarkerPositionChanged, useAlternativeBreaks])
+  const markdownIt = useMemo(
+    () =>
+      new BasicMarkdownItConfigurator({
+        useFrontmatter: !!onFrontmatterChange,
+        onParseError: (errorState) => (hasNewYamlError.current = errorState),
+        onRawMetaChange: (rawMeta) => (rawMetaRef.current = rawMeta),
+        onToc: (toc) => (tocAst.current = toc),
+        onLineMarkers:
+          onLineMarkerPositionChanged === undefined
+            ? undefined
+            : (lineMarkers) => (currentLineMarkers.current = lineMarkers),
+        useAlternativeBreaks
+      }).buildConfiguredMarkdownIt(),
+    [onFrontmatterChange, onLineMarkerPositionChanged, useAlternativeBreaks]
+  )
 
   const clearFrontmatter = useCallback(() => {
     hasNewYamlError.current = false
@@ -86,10 +90,22 @@ export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & Additi
   }, [onAfterRendering])
 
   const baseReplacers = useComponentReplacers(onTaskCheckedChange, onImageClick, baseUrl)
-  const markdownReactDom = useConvertMarkdownToReactDom(trimmedContent, markdownIt, baseReplacers, additionalReplacers, clearFrontmatter, checkYamlErrorState)
+  const markdownReactDom = useConvertMarkdownToReactDom(
+    trimmedContent,
+    markdownIt,
+    baseReplacers,
+    additionalReplacers,
+    clearFrontmatter,
+    checkYamlErrorState
+  )
 
   useTranslation()
-  useCalculateLineMarkerPosition(markdownBodyRef, currentLineMarkers.current, onLineMarkerPositionChanged, markdownBodyRef.current?.offsetTop ?? 0)
+  useCalculateLineMarkerPosition(
+    markdownBodyRef,
+    currentLineMarkers.current,
+    onLineMarkerPositionChanged,
+    markdownBodyRef.current?.offsetTop ?? 0
+  )
   useExtractFirstHeadline(markdownBodyRef, content, onFirstHeadingChange)
   useOnRefChange(tocAst, onTocChange)
   useOnRefChange(rawMetaRef, (newValue) => {
@@ -101,12 +117,13 @@ export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & Additi
   })
 
   return (
-    <div ref={ outerContainerRef } className={ 'position-relative' }>
-      <InvalidYamlAlert show={ showYamlError }/>
-      <DocumentLengthLimitReachedAlert show={ contentExceedsLimit }/>
-      <div ref={ markdownBodyRef }
-           className={ `${ className ?? '' } markdown-body w-100 d-flex flex-column align-items-center` }>
-        { markdownReactDom }
+    <div ref={outerContainerRef} className={'position-relative'}>
+      <InvalidYamlAlert show={showYamlError} />
+      <DocumentLengthLimitReachedAlert show={contentExceedsLimit} />
+      <div
+        ref={markdownBodyRef}
+        className={`${className ?? ''} markdown-body w-100 d-flex flex-column align-items-center`}>
+        {markdownReactDom}
       </div>
     </div>
   )

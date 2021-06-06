@@ -25,15 +25,15 @@ import { HistoryEntry } from './history/types'
 import { HistoryReducer } from './history/reducers'
 
 export interface ApplicationState {
-  user: MaybeUserState;
-  config: Config;
-  banner: BannerState;
-  history: HistoryEntry[];
-  apiUrl: ApiUrlObject;
-  editorConfig: EditorConfig;
-  darkMode: DarkModeConfig;
-  noteDetails: NoteDetails;
-  uiNotifications: UiNotificationState;
+  user: MaybeUserState
+  config: Config
+  banner: BannerState
+  history: HistoryEntry[]
+  apiUrl: ApiUrlObject
+  editorConfig: EditorConfig
+  darkMode: DarkModeConfig
+  noteDetails: NoteDetails
+  uiNotifications: UiNotificationState
 }
 
 export const allReducers: Reducer<ApplicationState> = combineReducers<ApplicationState>({

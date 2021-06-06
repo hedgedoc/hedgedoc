@@ -15,10 +15,10 @@ export const InvalidYamlAlert: React.FC<SimpleAlertProps> = ({ show }) => {
   useTranslation()
 
   return (
-    <ShowIf condition={ show }>
+    <ShowIf condition={show}>
       <Alert variant='warning' dir='auto'>
         <Trans i18nKey='editor.invalidYaml'>
-          <InternalLink text='yaml-metadata' href='/n/yaml-metadata' className='text-primary'/>
+          <InternalLink text='yaml-metadata' href='/n/yaml-metadata' className='text-primary' />
         </Trans>
       </Alert>
     </ShowIf>

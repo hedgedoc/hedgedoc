@@ -39,20 +39,21 @@ export const VegaChart: React.FC<VegaChartProps> = ({ code }) => {
           }
 
           const spec = JSON.parse(code) as VisualizationSpec
-          embed.default(diagramContainer.current, spec, {
-            actions: {
-              export: true,
-              source: false,
-              compiled: false,
-              editor: false
-            },
-            i18n: {
-              PNG_ACTION: t('renderer.vega-lite.png'),
-              SVG_ACTION: t('renderer.vega-lite.svg')
-            }
-          })
-               .then(() => setError(undefined))
-               .catch((error: Error) => showError(error.message))
+          embed
+            .default(diagramContainer.current, spec, {
+              actions: {
+                export: true,
+                source: false,
+                compiled: false,
+                editor: false
+              },
+              i18n: {
+                PNG_ACTION: t('renderer.vega-lite.png'),
+                SVG_ACTION: t('renderer.vega-lite.svg')
+              }
+            })
+            .then(() => setError(undefined))
+            .catch((error: Error) => showError(error.message))
         } catch (error) {
           showError(t('renderer.vega-lite.errorJson'))
         }
@@ -62,12 +63,14 @@ export const VegaChart: React.FC<VegaChartProps> = ({ code }) => {
       })
   }, [code, showError, t])
 
-  return <Fragment>
-    <ShowIf condition={ !!error }>
-      <Alert variant={ 'danger' }>{ error }</Alert>
-    </ShowIf>
-    <div className={ 'text-center' }>
-      <div ref={ diagramContainer }/>
-    </div>
-  </Fragment>
+  return (
+    <Fragment>
+      <ShowIf condition={!!error}>
+        <Alert variant={'danger'}>{error}</Alert>
+      </ShowIf>
+      <div className={'text-center'}>
+        <div ref={diagramContainer} />
+      </div>
+    </Fragment>
+  )
 }

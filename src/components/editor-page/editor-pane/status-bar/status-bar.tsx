@@ -34,11 +34,17 @@ export const createStatusInfo = (editor: Editor, maxDocumentLength: number): Sta
   remainingCharacters: maxDocumentLength - editor.getValue().length,
   linesInDocument: editor.lineCount(),
   selectedColumns: editor.getSelection().length,
-  selectedLines: editor.getSelection()
-                       .split('\n').length
+  selectedLines: editor.getSelection().split('\n').length
 })
 
-export const StatusBar: React.FC<StatusBarInfo> = ({ position, selectedColumns, selectedLines, charactersInDocument, linesInDocument, remainingCharacters }) => {
+export const StatusBar: React.FC<StatusBarInfo> = ({
+  position,
+  selectedColumns,
+  selectedLines,
+  charactersInDocument,
+  linesInDocument,
+  remainingCharacters
+}) => {
   const { t } = useTranslation()
 
   const getLengthTooltip = useMemo(() => {
@@ -52,27 +58,26 @@ export const StatusBar: React.FC<StatusBarInfo> = ({ position, selectedColumns, 
   }, [remainingCharacters, t])
 
   return (
-    <div className="d-flex flex-row status-bar px-2">
+    <div className='d-flex flex-row status-bar px-2'>
       <div>
-        <span>{ t('editor.statusBar.cursor', { line: position.line + 1, columns: position.ch + 1 }) }</span>
-        <ShowIf condition={ selectedColumns !== 0 && selectedLines !== 0 }>
-          <ShowIf condition={ selectedLines === 1 }>
-            <span>&nbsp;–&nbsp;{ t('editor.statusBar.selection.column', { count: selectedColumns }) }</span>
+        <span>{t('editor.statusBar.cursor', { line: position.line + 1, columns: position.ch + 1 })}</span>
+        <ShowIf condition={selectedColumns !== 0 && selectedLines !== 0}>
+          <ShowIf condition={selectedLines === 1}>
+            <span>&nbsp;–&nbsp;{t('editor.statusBar.selection.column', { count: selectedColumns })}</span>
           </ShowIf>
-          <ShowIf condition={ selectedLines > 1 }>
-            <span>&nbsp;–&nbsp;{ t('editor.statusBar.selection.line', { count: selectedLines }) }</span>
+          <ShowIf condition={selectedLines > 1}>
+            <span>&nbsp;–&nbsp;{t('editor.statusBar.selection.line', { count: selectedLines })}</span>
           </ShowIf>
         </ShowIf>
       </div>
-      <div className="ml-auto">
-        <span>{ t('editor.statusBar.lines', { lines: linesInDocument }) }</span>
+      <div className='ml-auto'>
+        <span>{t('editor.statusBar.lines', { lines: linesInDocument })}</span>
         &nbsp;–&nbsp;
         <span
-          data-cy={ 'remainingCharacters' }
-          title={ getLengthTooltip }
-          className={ remainingCharacters <= 0 ? 'text-danger' : remainingCharacters <= 100 ? 'text-warning' : '' }
-        >
-          { t('editor.statusBar.length', { length: charactersInDocument }) }
+          data-cy={'remainingCharacters'}
+          title={getLengthTooltip}
+          className={remainingCharacters <= 0 ? 'text-danger' : remainingCharacters <= 100 ? 'text-warning' : ''}>
+          {t('editor.statusBar.length', { length: charactersInDocument })}
         </span>
       </div>
     </div>

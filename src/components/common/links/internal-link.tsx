@@ -11,17 +11,21 @@ import { IconName } from '../fork-awesome/types'
 import { ShowIf } from '../show-if/show-if'
 import { LinkWithTextProps } from './types'
 
-export const InternalLink: React.FC<LinkWithTextProps> = ({ href, text, icon, id, className = 'text-light', title }) => {
+export const InternalLink: React.FC<LinkWithTextProps> = ({
+  href,
+  text,
+  icon,
+  id,
+  className = 'text-light',
+  title
+}) => {
   return (
-    <Link
-      to={ href }
-      className={ className }
-      id={ id }
-      title={ title }>
-      <ShowIf condition={ !!icon }>
-        <ForkAwesomeIcon icon={ icon as IconName } fixedWidth={ true }/>&nbsp;
+    <Link to={href} className={className} id={id} title={title}>
+      <ShowIf condition={!!icon}>
+        <ForkAwesomeIcon icon={icon as IconName} fixedWidth={true} />
+        &nbsp;
       </ShowIf>
-      { text }
+      {text}
     </Link>
   )
 }

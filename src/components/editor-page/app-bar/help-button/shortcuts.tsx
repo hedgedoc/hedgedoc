@@ -29,31 +29,30 @@ export const Shortcut: React.FC = () => {
     }
   }
   return (
-    <Row className={ 'justify-content-center pt-4' }>
-      { Object.keys(shortcutMap)
-              .map(category => {
+    <Row className={'justify-content-center pt-4'}>
+      {Object.keys(shortcutMap).map((category) => {
+        return (
+          <Card key={category} className={'m-2 w-50'}>
+            <Card.Header>{category}</Card.Header>
+            <ListGroup variant='flush'>
+              {Object.entries(shortcutMap[category]).map(([functionName, shortcuts]) => {
                 return (
-                  <Card key={ category } className={ 'm-2 w-50' }>
-                    <Card.Header>{ category }</Card.Header>
-                    <ListGroup variant="flush">
-                      { Object.entries(shortcutMap[category])
-                              .map(([functionName, shortcuts]) => {
-                                return (
-                                  <ListGroup.Item key={ functionName } className={ 'd-flex justify-content-between' }>
-                                    <span><Trans i18nKey={ functionName }/></span>
-                                    <span>
-                      {
-                        shortcuts.map((shortcut, shortcutIndex) =>
-                          <Fragment key={ shortcutIndex }>{ shortcut }</Fragment>)
-                      }
+                  <ListGroup.Item key={functionName} className={'d-flex justify-content-between'}>
+                    <span>
+                      <Trans i18nKey={functionName} />
                     </span>
-                                  </ListGroup.Item>
-                                )
-                              }) }
-                    </ListGroup>
-                  </Card>)
-              })
-      }
+                    <span>
+                      {shortcuts.map((shortcut, shortcutIndex) => (
+                        <Fragment key={shortcutIndex}>{shortcut}</Fragment>
+                      ))}
+                    </span>
+                  </ListGroup.Item>
+                )
+              })}
+            </ListGroup>
+          </Card>
+        )
+      })}
     </Row>
   )
 }

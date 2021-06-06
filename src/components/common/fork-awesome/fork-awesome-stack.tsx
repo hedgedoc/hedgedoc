@@ -15,15 +15,13 @@ export interface ForkAwesomeStackProps {
 
 export const ForkAwesomeStack: React.FC<ForkAwesomeStackProps> = ({ size, children }) => {
   return (
-    <span className={ `fa-stack ${ size ? 'fa-' : '' }${ size ?? '' }` }>
-      {
-        React.Children.map(children, (child) => {
-          if (!React.isValidElement<ForkAwesomeIconProps>(child)) {
-            return null
-          }
-          return <ForkAwesomeIcon { ...child.props } stacked={ true }/>
-        })
-      }
+    <span className={`fa-stack ${size ? 'fa-' : ''}${size ?? ''}`}>
+      {React.Children.map(children, (child) => {
+        if (!React.isValidElement<ForkAwesomeIconProps>(child)) {
+          return null
+        }
+        return <ForkAwesomeIcon {...child.props} stacked={true} />
+      })}
     </span>
   )
 }

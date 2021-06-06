@@ -60,31 +60,35 @@ export const ProfileAccountManagement: React.FC = () => {
 
   return (
     <Fragment>
-      <Card className="bg-dark mb-4">
+      <Card className='bg-dark mb-4'>
         <Card.Body>
-          <Card.Title><Trans i18nKey="profile.accountManagement"/></Card.Title>
-          <Button variant="secondary" block href={ getApiUrl() + 'me/export' } className="mb-2">
-            <ForkAwesomeIcon icon="cloud-download" fixedWidth={ true } className="mx-2"/>
-            <Trans i18nKey="profile.exportUserData"/>
+          <Card.Title>
+            <Trans i18nKey='profile.accountManagement' />
+          </Card.Title>
+          <Button variant='secondary' block href={getApiUrl() + 'me/export'} className='mb-2'>
+            <ForkAwesomeIcon icon='cloud-download' fixedWidth={true} className='mx-2' />
+            <Trans i18nKey='profile.exportUserData' />
           </Button>
-          <Button variant="danger" block onClick={ handleModalOpen }>
-            <ForkAwesomeIcon icon="trash" fixedWidth={ true } className="mx-2"/>
-            <Trans i18nKey="profile.deleteUser"/>
+          <Button variant='danger' block onClick={handleModalOpen}>
+            <ForkAwesomeIcon icon='trash' fixedWidth={true} className='mx-2' />
+            <Trans i18nKey='profile.deleteUser' />
           </Button>
         </Card.Body>
       </Card>
 
-      <Modal show={ showDeleteModal } onHide={ handleModalClose } animation={ true }>
-        <Modal.Body className="text-dark">
-          <h3 dir="auto"><Trans i18nKey="profile.modal.deleteUser.message"/></h3>
-          <Trans i18nKey="profile.modal.deleteUser.subMessage"/>
+      <Modal show={showDeleteModal} onHide={handleModalClose} animation={true}>
+        <Modal.Body className='text-dark'>
+          <h3 dir='auto'>
+            <Trans i18nKey='profile.modal.deleteUser.message' />
+          </h3>
+          <Trans i18nKey='profile.modal.deleteUser.subMessage' />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={ handleModalClose }>
-            <Trans i18nKey="common.close"/>
+          <Button variant='secondary' onClick={handleModalClose}>
+            <Trans i18nKey='common.close' />
           </Button>
-          <Button variant="danger" onClick={ deleteUserAccount } disabled={ !deletionButtonActive }>
-            { deletionButtonActive ? <Trans i18nKey={ 'profile.modal.deleteUser.title' }/> : countdown }
+          <Button variant='danger' onClick={deleteUserAccount} disabled={!deletionButtonActive}>
+            {deletionButtonActive ? <Trans i18nKey={'profile.modal.deleteUser.title'} /> : countdown}
           </Button>
         </Modal.Footer>
       </Modal>
