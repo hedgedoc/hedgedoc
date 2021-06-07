@@ -6,20 +6,18 @@
 
 import { TocAst } from 'markdown-it-toc-done-right'
 import React, { MutableRefObject, useEffect, useMemo, useRef, useState } from 'react'
-import { Dropdown } from 'react-bootstrap'
 import useResizeObserver from 'use-resize-observer'
-import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
-import { ShowIf } from '../common/show-if/show-if'
 import { NoteFrontmatter } from '../editor-page/note-frontmatter/note-frontmatter'
 import { YamlArrayDeprecationAlert } from '../editor-page/renderer-pane/yaml-array-deprecation-alert'
 import { useSyncedScrolling } from '../editor-page/synced-scroll/hooks/use-synced-scrolling'
 import { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
-import { TableOfContents } from '../editor-page/table-of-contents/table-of-contents'
 import { BasicMarkdownRenderer } from '../markdown-renderer/basic-markdown-renderer'
 import { ImageClickHandler } from '../markdown-renderer/replace-components/image/image-replacer'
 import './markdown-document.scss'
 import { useSelector } from 'react-redux'
 import { ApplicationState } from '../../redux'
+import { WidthBasedTableOfContents } from './width-based-table-of-contents'
+import { ShowIf } from '../common/show-if/show-if'
 
 export interface RendererProps extends ScrollProps {
   onFirstHeadingChange?: (firstHeading: string | undefined) => void
@@ -27,15 +25,15 @@ export interface RendererProps extends ScrollProps {
   onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
   documentRenderPaneRef?: MutableRefObject<HTMLDivElement | null>
   markdownContent: string
-  baseUrl?: string
   onImageClick?: ImageClickHandler
   onHeightChange?: (height: number) => void
-  disableToc?: boolean
 }
 
 export interface MarkdownDocumentProps extends RendererProps {
   additionalOuterContainerClasses?: string
   additionalRendererClasses?: string
+  disableToc?: boolean
+  baseUrl: string
 }
 
 export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
@@ -105,23 +103,7 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
       </div>
       <div className={'markdown-document-side pt-4'}>
         <ShowIf condition={!!tocAst && !disableToc}>
-          <ShowIf condition={containerWidth >= 1100}>
-            <TableOfContents ast={tocAst as TocAst} className={'sticky'} baseUrl={baseUrl} />
-          </ShowIf>
-          <ShowIf condition={containerWidth < 1100}>
-            <div className={'markdown-toc-sidebar-button'}>
-              <Dropdown drop={'up'}>
-                <Dropdown.Toggle id='toc-overlay-button' variant={'secondary'} className={'no-arrow'}>
-                  <ForkAwesomeIcon icon={'list-ol'} />
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <div className={'p-2'}>
-                    <TableOfContents ast={tocAst as TocAst} baseUrl={baseUrl} />
-                  </div>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </ShowIf>
+          <WidthBasedTableOfContents tocAst={tocAst as TocAst} baseUrl={baseUrl} width={containerWidth} />
         </ShowIf>
       </div>
     </div>

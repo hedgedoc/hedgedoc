@@ -44,7 +44,6 @@ export const IntroPage: React.FC = () => {
           <RenderIframe
             frameClasses={'w-100 overflow-y-hidden'}
             markdownContent={introPageContent as string}
-            disableToc={true}
             onRendererReadyChange={setRendererReady}
             rendererType={RendererType.INTRO}
             forcedDarkMode={true}
