@@ -17,6 +17,11 @@ import markdownitContainer from 'markdown-it-container'
 /* Defined regex markdown it plugins */
 import Plugin from 'markdown-it-regexp'
 
+import mermaid from 'mermaid'
+import handlebars from 'handlebars'
+import 'gist-embed'
+import abcjs from 'abcjs'
+
 require('prismjs/themes/prism.css')
 require('prismjs/components/prism-wiki')
 require('prismjs/components/prism-haskell')
@@ -248,7 +253,7 @@ function replaceExtraTags (html) {
   return html
 }
 
-if (typeof window.mermaid !== 'undefined' && window.mermaid) window.mermaid.startOnLoad = false
+mermaid.startOnLoad = false
 
 // dynamic event or object binding here
 export function finishView (view) {
@@ -388,10 +393,10 @@ export function finishView (view) {
       $value = $(value)
       const $ele = $(value).closest('pre')
 
-      window.mermaid.mermaidAPI.parse($value.text())
+      mermaid.mermaidAPI.parse($value.text())
       $ele.addClass('mermaid')
       $ele.text($value.text())
-      window.mermaid.init(undefined, $ele)
+      mermaid.init(undefined, $ele)
     } catch (err) {
       let errormessage = err
       if (err.str) {
@@ -411,7 +416,7 @@ export function finishView (view) {
       $value = $(value)
       const $ele = $(value).parent().parent()
 
-      window.ABCJS.renderAbc(value, $value.text())
+      abcjs.renderAbc(value, $value.text())
 
       $ele.addClass('abc')
       $value.children().unwrap().unwrap()
@@ -664,7 +669,7 @@ export function exportToHTML (view) {
   // generate html via template
   $.get(`${serverurl}/build/html.min.css`, css => {
     $.get(`${serverurl}/views/html.hbs`, data => {
-      const template = window.Handlebars.compile(data)
+      const template = handlebars.compile(data)
       const context = {
         url: serverurl,
         title,

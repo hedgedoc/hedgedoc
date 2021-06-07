@@ -1,9 +1,19 @@
 /* eslint-env browser, jquery */
 /* eslint no-console: ["error", { allow: ["warn", "error", "debug"] }] */
-/* global CodeMirror, Cookies, moment, Idle, serverurl,
-   key, Dropbox, ot, hex2rgb, Visibility */
+/* global Cookies, moment, serverurl,
+   key, Dropbox, hex2rgb, Visibility */
 
 import TurndownService from 'turndown'
+import CodeMirror from 'codemirror/lib/codemirror.js'
+
+import 'jquery-ui/ui/widgets/resizable'
+import 'jquery-ui/themes/base/resizable.css'
+
+import Idle from 'Idle.Js'
+
+import '../vendor/jquery-textcomplete/jquery.textcomplete'
+
+import { ot } from '../vendor/ot/ot.min.js'
 
 import { saveAs } from 'file-saver'
 import randomColor from 'randomcolor'
