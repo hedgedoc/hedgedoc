@@ -4538,6 +4538,16 @@ lodash.clonedeep@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
   integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
 
+lodash.compact@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/lodash.compact/-/lodash.compact-3.0.1.tgz#540ce3837745975807471e16b4a2ba21e7256ca5"
+  integrity sha1-VAzjg3dFl1gHRx4WtKK6IeclbKU=
+
+lodash.flattendeep@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/lodash.flattendeep/-/lodash.flattendeep-4.4.0.tgz#fb030917f86a3134e5bc9bec0d69e0013ddfedb2"
+  integrity sha1-+wMJF/hqMTTlvJvsDWngAT3f7bI=
+
 lodash.get@4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
@@ -4867,6 +4877,14 @@ nest-router@1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/nest-router/-/nest-router-1.0.9.tgz#cbe814dadf90b765e0a5b77c562479d5d523a485"
   integrity sha512-ZyRdSVs9GczI+39B7tNXsxfBXQOYnEF6l/q2aLYG8wSEvRHRDXAlzZ1SIosDibM02pLahGkDNLFC+nZ8uzJGDQ==
+
+nestjs-command@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/nestjs-command/-/nestjs-command-2.0.0.tgz#b0a04904e8962c6dfa2e058a5f72fad52e45c03f"
+  integrity sha512-OdoOZ00PcXFEsuPSSmOGVr1UuYBZL4d799JdSwPR3r1pNtHay7azmaiiVP6QxoyVxXYFo2RC0dgqYlqoncZe/w==
+  dependencies:
+    lodash.compact "^3.0.1"
+    lodash.flattendeep "^4.4.0"
 
 next-tick@1, next-tick@^1.1.0:
   version "1.1.0"

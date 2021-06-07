@@ -92,6 +92,24 @@ export class UsersService {
   }
 
   /**
+   * @async
+   * Get all users
+   * @return {User[]} the users
+   */
+  async listUsers(): Promise<User[]> {
+    return await this.userRepository.find();
+  }
+
+  /**
+   * @async
+   * Get all users
+   * @return {User[]} the users
+   */
+  async countUsers(): Promise<number> {
+    return await this.userRepository.count();
+  }
+
+  /**
    * Extract the photoUrl of the user or in case no photo url is present generate a deterministic user photo
    * @param {User} user - the specified User
    * @return the url of the photo
