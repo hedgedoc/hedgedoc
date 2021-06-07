@@ -68,6 +68,15 @@ describe('Content security policies', function () {
     assert(!csp.computeDirectives().scriptSrc.includes('https://www.google-analytics.com'))
   })
 
+  it('Enable Google Analytics', function () {
+    const testconfig = defaultConfig
+    testconfig.csp.addGoogleAnalytics = true
+    mock('../lib/config', testconfig)
+    csp = mock.reRequire('../lib/csp')
+
+    assert(csp.computeDirectives().scriptSrc.includes('https://www.google-analytics.com'))
+  })
+
   it('Disable Disqus', function () {
     const testconfig = defaultConfig
     testconfig.csp.addDisqus = false
@@ -79,6 +88,19 @@ describe('Content security policies', function () {
     assert(!csp.computeDirectives().scriptSrc.includes('https://*.disquscdn.com'))
     assert(!csp.computeDirectives().styleSrc.includes('https://*.disquscdn.com'))
     assert(!csp.computeDirectives().fontSrc.includes('https://*.disquscdn.com'))
+  })
+
+  it('Enable Disqus', function () {
+    const testconfig = defaultConfig
+    testconfig.csp.addDisqus = true
+    mock('../lib/config', testconfig)
+    csp = mock.reRequire('../lib/csp')
+
+    assert(csp.computeDirectives().scriptSrc.includes('https://disqus.com'))
+    assert(csp.computeDirectives().scriptSrc.includes('https://*.disqus.com'))
+    assert(csp.computeDirectives().scriptSrc.includes('https://*.disquscdn.com'))
+    assert(csp.computeDirectives().styleSrc.includes('https://*.disquscdn.com'))
+    assert(csp.computeDirectives().fontSrc.includes('https://*.disquscdn.com'))
   })
 
   it('Include dropbox if configured', function () {
