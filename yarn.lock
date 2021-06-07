@@ -6466,10 +6466,10 @@ tree-kill@1.2.2:
   resolved "https://registry.yarnpkg.com/tree-kill/-/tree-kill-1.2.2.tgz#4ca09a9092c88b73a7cdc5e8a01b507b0790a0cc"
   integrity sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==
 
-ts-jest@27.0.2:
-  version "27.0.2"
-  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-27.0.2.tgz#acc1525d5fd25c107c777c3b80a11365db579aa1"
-  integrity sha512-pozjHOOfm+sbv9kXCvTFVyDntWvuJztzkNFql/akD75hSMZ2jsbidVauOhBRImAopXohqcLtPK/NTTIS8Y49Ug==
+ts-jest@27.0.3:
+  version "27.0.3"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-27.0.3.tgz#808492f022296cde19390bb6ad627c8126bf93f8"
+  integrity sha512-U5rdMjnYam9Ucw+h0QvtNDbc5+88nxt7tbIvqaZUhFrfG4+SkWhMXjejCLVGcpILTPuV+H3W/GZDZrnZFpPeXw==
   dependencies:
     bs-logger "0.x"
     buffer-from "1.x"
