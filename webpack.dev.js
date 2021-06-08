@@ -6,9 +6,9 @@ module.exports = [
   // merge common config
   merge(common, {
     mode: 'development',
-    devtool: 'eval-cheap-module-source-map'
+    devtool: 'cheap-module-source-map'
   }),
   merge(htmlexport, {
     mode: 'development',
-    devtool: 'eval-cheap-module-source-map'
+    devtool: 'cheap-module-source-map'
   })]
