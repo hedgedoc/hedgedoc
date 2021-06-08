@@ -1,4 +1,12 @@
 # Release Notes
+## <i class="fa fa-tag"></i> 1.9.0 <i class="fa fa-calendar-o"></i> UNRELEASED
+### Security Fixes
+- This release removes Google Analytics and Disqus domains from our default Content Security Policy, because
+  they were repeatedly used to exploit security vulnerabilities.  
+  If you want to continue using Google Analytics or Disqus, you can re-enable them in the config.
+  See [the docs](https://docs.hedgedoc.org/configuration/#web-security-aspects) for details.
+  
+
 ## <i class="fa fa-tag"></i> 1.8.2 <i class="fa fa-calendar-o"></i> 2021-05-11
 
 This release fixes two security issues. We recommend upgrading as soon as possible.
