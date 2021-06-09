@@ -11,11 +11,13 @@ import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { UploadInput } from '../../sidebar/upload-input'
 import { handleUpload } from '../upload-handler'
-import { supportedMimeTypesJoined } from './utils/upload-image-mimetypes'
+import { supportedMimeTypes } from '../../../common/upload-image-mimetypes'
 
 export interface UploadImageButtonProps {
   editor?: Editor
 }
+
+const acceptedMimeTypes = supportedMimeTypes.join(', ')
 
 export const UploadImageButton: React.FC<UploadImageButtonProps> = ({ editor }) => {
   const { t } = useTranslation()
@@ -43,7 +45,7 @@ export const UploadImageButton: React.FC<UploadImageButtonProps> = ({ editor }) 
       <Button variant='light' onClick={buttonClick} title={t('editor.editorToolbar.uploadImage')}>
         <ForkAwesomeIcon icon={'upload'} />
       </Button>
-      <UploadInput onLoad={onUploadImage} acceptedFiles={supportedMimeTypesJoined} onClickRef={clickRef} />
+      <UploadInput onLoad={onUploadImage} acceptedFiles={acceptedMimeTypes} onClickRef={clickRef} />
     </Fragment>
   )
 }

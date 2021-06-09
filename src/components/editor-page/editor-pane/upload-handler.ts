@@ -8,7 +8,7 @@ import { Editor } from 'codemirror'
 import i18n from 'i18next'
 import { uploadFile } from '../../../api/media'
 import { store } from '../../../redux'
-import { supportedMimeTypes } from './tool-bar/utils/upload-image-mimetypes'
+import { supportedMimeTypes } from '../../common/upload-image-mimetypes'
 
 export const handleUpload = (file: File, editor: Editor): void => {
   if (!file) {
@@ -25,7 +25,7 @@ export const handleUpload = (file: File, editor: Editor): void => {
   uploadFile(noteId, file)
     .then(({ link }) => {
       editor.replaceRange(
-        getCorrectSyntaxForLink(mimeType, link),
+        `![](${link})`,
         cursor,
         {
           line: cursor.line,
@@ -45,13 +45,4 @@ export const handleUpload = (file: File, editor: Editor): void => {
         '+input'
       )
     })
-}
-
-const getCorrectSyntaxForLink = (mimeType: string, link: string): string => {
-  switch (mimeType) {
-    case 'application/pdf':
-      return `{%pdf ${link} %}`
-    default:
-      return `![](${link})`
-  }
 }

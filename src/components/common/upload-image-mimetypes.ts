@@ -5,7 +5,6 @@
  */
 
 export const supportedMimeTypes: string[] = [
-  'application/pdf',
   'image/apng',
   'image/bmp',
   'image/gif',
@@ -19,5 +18,3 @@ export const supportedMimeTypes: string[] = [
   'image/tiff',
   'image/webp'
 ]
-
-export const supportedMimeTypesJoined = supportedMimeTypes.join(', ')
