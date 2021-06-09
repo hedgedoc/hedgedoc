@@ -5,6 +5,7 @@
  */
 
 import { ImageProxyResponse } from '../../components/markdown-renderer/replace-components/image/types'
+import { isMockMode } from '../../utils/test-modes'
 import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 
 export const getProxiedUrl = async (imageUrl: string): Promise<ImageProxyResponse> => {
@@ -23,16 +24,16 @@ export interface UploadedMedia {
   link: string
 }
 
-export const uploadFile = async (noteId: string, contentType: string, media: Blob): Promise<UploadedMedia> => {
-  const response = await fetch(getApiUrl() + 'media/upload', {
+export const uploadFile = async (noteId: string, media: Blob): Promise<UploadedMedia> => {
+  const response = await fetch(`${getApiUrl()}media/upload${isMockMode() ? '-post' : ''}`, {
     ...defaultFetchConfig,
     headers: {
-      'Content-Type': contentType,
+      'Content-Type': media.type,
       'HedgeDoc-Note': noteId
     },
-    method: 'POST',
-    body: media
+    method: isMockMode() ? 'GET' : 'POST',
+    body: isMockMode() ? undefined : media
   })
-  expectResponseCode(response, 201)
+  expectResponseCode(response, isMockMode() ? 200 : 201)
   return (await response.json()) as Promise<UploadedMedia>
 }

@@ -14,8 +14,7 @@ export const handleUpload = (file: File, editor: Editor): void => {
   if (!file) {
     return
   }
-  const mimeType = file.type
-  if (!supportedMimeTypes.includes(mimeType)) {
+  if (!supportedMimeTypes.includes(file.type)) {
     // this mimetype is not supported
     return
   }
@@ -23,7 +22,7 @@ export const handleUpload = (file: File, editor: Editor): void => {
   const uploadPlaceholder = `![${i18n.t('editor.upload.uploadFile', { fileName: file.name })}]()`
   const noteId = store.getState().noteDetails.id
   editor.replaceRange(uploadPlaceholder, cursor, cursor, '+input')
-  uploadFile(noteId, mimeType, file)
+  uploadFile(noteId, file)
     .then(({ link }) => {
       editor.replaceRange(
         getCorrectSyntaxForLink(mimeType, link),
