@@ -21,28 +21,16 @@ export const handleUpload = (file: File, editor: Editor): void => {
   const cursor = editor.getCursor()
   const uploadPlaceholder = `![${i18n.t('editor.upload.uploadFile', { fileName: file.name })}]()`
   const noteId = store.getState().noteDetails.id
+  const insertCode = (replacement: string) => {
+    editor.replaceRange(replacement, cursor, { line: cursor.line, ch: cursor.ch + uploadPlaceholder.length }, '+input')
+  }
   editor.replaceRange(uploadPlaceholder, cursor, cursor, '+input')
   uploadFile(noteId, file)
     .then(({ link }) => {
-      editor.replaceRange(
-        `![](${link})`,
-        cursor,
-        {
-          line: cursor.line,
-          ch: cursor.ch + uploadPlaceholder.length
-        },
-        '+input'
-      )
+      insertCode(`![](${link})`)
     })
-    .catch(() => {
-      editor.replaceRange(
-        '',
-        cursor,
-        {
-          line: cursor.line,
-          ch: cursor.ch + uploadPlaceholder.length
-        },
-        '+input'
-      )
+    .catch((error) => {
+      console.error('error while uploading file', error)
+      insertCode('')
     })
 }
