@@ -5,13 +5,12 @@
  */
 import React, { ChangeEvent, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../../../redux'
 import { setEditorLigatures } from '../../../../../redux/editor/methods'
 import { EditorPreferenceInput, EditorPreferenceInputType } from './editor-preference-input'
+import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 
 export const EditorPreferenceLigaturesSelect: React.FC = () => {
-  const ligaturesEnabled = useSelector((state: ApplicationState) => Boolean(state.editorConfig.ligatures).toString())
+  const ligaturesEnabled = useApplicationState((state) => Boolean(state.editorConfig.ligatures).toString())
   const saveLigatures = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
     const ligaturesActivated: boolean = event.target.value === 'true'
     setEditorLigatures(ligaturesActivated)

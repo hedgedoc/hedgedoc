@@ -7,10 +7,9 @@
 import React, { FormEvent, Fragment, useCallback, useEffect, useState } from 'react'
 import { Alert, Button, Card, Col, Form, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
 import { doInternalRegister } from '../../api/auth'
-import { ApplicationState } from '../../redux'
+import { useApplicationState } from '../../hooks/common/use-application-state'
 import { TranslatedExternalLink } from '../common/links/translated-external-link'
 import { ShowIf } from '../common/show-if/show-if'
 import { fetchAndSetUser } from '../login-page/auth/utils'
@@ -23,9 +22,9 @@ export enum RegisterError {
 
 export const RegisterPage: React.FC = () => {
   const { t } = useTranslation()
-  const allowRegister = useSelector((state: ApplicationState) => state.config.allowRegister)
-  const specialUrls = useSelector((state: ApplicationState) => state.config.specialUrls)
-  const userExists = useSelector((state: ApplicationState) => !!state.user)
+  const allowRegister = useApplicationState((state) => state.config.allowRegister)
+  const specialUrls = useApplicationState((state) => state.config.specialUrls)
+  const userExists = useApplicationState((state) => !!state.user)
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')

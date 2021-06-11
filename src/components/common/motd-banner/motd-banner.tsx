@@ -4,17 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import equal from 'fast-deep-equal'
 import React, { useCallback } from 'react'
 import { Alert, Button } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../redux'
 import { setBanner } from '../../../redux/banner/methods'
 import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
 import { BANNER_LOCAL_STORAGE_KEY } from '../../application-loader/initializers/fetch-and-set-banner'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export const MotdBanner: React.FC = () => {
-  const bannerState = useSelector((state: ApplicationState) => state.banner, equal)
+  const bannerState = useApplicationState((state) => state.banner)
 
   const dismissBanner = useCallback(() => {
     if (bannerState.lastModified) {

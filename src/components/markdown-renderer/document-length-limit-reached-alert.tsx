@@ -7,15 +7,14 @@
 import React from 'react'
 import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../redux'
+import { useApplicationState } from '../../hooks/common/use-application-state'
 import { ShowIf } from '../common/show-if/show-if'
 import { SimpleAlertProps } from '../common/simple-alert/simple-alert-props'
 
 export const DocumentLengthLimitReachedAlert: React.FC<SimpleAlertProps> = ({ show }) => {
   useTranslation()
 
-  const maxLength = useSelector((state: ApplicationState) => state.config.maxDocumentLength)
+  const maxLength = useApplicationState((state) => state.config.maxDocumentLength)
 
   return (
     <ShowIf condition={show}>

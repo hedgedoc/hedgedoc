@@ -4,9 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../redux'
+import { useApplicationState } from './use-application-state'
 
 export const useNoteMarkdownContent = (): string => {
-  return useSelector((state: ApplicationState) => state.noteDetails.markdownContent)
+  return useApplicationState((state) => state.noteDetails.markdownContent)
 }

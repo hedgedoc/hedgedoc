@@ -7,19 +7,18 @@
 import React, { FormEvent, useCallback, useState } from 'react'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { doInternalLogin } from '../../../api/auth'
-import { ApplicationState } from '../../../redux'
 import { ShowIf } from '../../common/show-if/show-if'
 import { fetchAndSetUser } from './utils'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export const ViaInternal: React.FC = () => {
   const { t } = useTranslation()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(false)
-  const allowRegister = useSelector((state: ApplicationState) => state.config.allowRegister)
+  const allowRegister = useApplicationState((state) => state.config.allowRegister)
 
   const onLoginSubmit = useCallback(
     (event: FormEvent) => {

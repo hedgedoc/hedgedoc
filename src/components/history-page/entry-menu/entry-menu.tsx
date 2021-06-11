@@ -13,8 +13,7 @@ import { DeleteNoteItem } from './delete-note-item'
 import './entry-menu.scss'
 import { RemoveNoteEntryItem } from './remove-note-entry-item'
 import { HistoryEntryOrigin } from '../../../redux/history/types'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../redux'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export interface EntryMenuProps {
   id: string
@@ -29,7 +28,7 @@ export interface EntryMenuProps {
 export const EntryMenu: React.FC<EntryMenuProps> = ({ id, title, origin, isDark, onRemove, onDelete, className }) => {
   useTranslation()
 
-  const userExists = useSelector((state: ApplicationState) => !!state.user)
+  const userExists = useApplicationState((state) => !!state.user)
 
   return (
     <Dropdown className={`d-inline-flex ${className || ''}`}>

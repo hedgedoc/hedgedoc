@@ -5,13 +5,12 @@
  */
 import React, { ChangeEvent, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../../../redux'
+import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { setEditorSmartPaste } from '../../../../../redux/editor/methods'
 import { EditorPreferenceInput, EditorPreferenceInputType } from './editor-preference-input'
 
 export const EditorPreferenceSmartPasteSelect: React.FC = () => {
-  const smartPasteEnabled = useSelector((state: ApplicationState) => Boolean(state.editorConfig.smartPaste).toString())
+  const smartPasteEnabled = useApplicationState((state) => Boolean(state.editorConfig.smartPaste).toString())
   const saveSmartPaste = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
     const smartPasteActivated: boolean = event.target.value === 'true'
     setEditorSmartPaste(smartPasteActivated)

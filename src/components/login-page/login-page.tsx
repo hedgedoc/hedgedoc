@@ -4,25 +4,23 @@
  SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import equal from 'fast-deep-equal'
 import React, { Fragment } from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
-import { ApplicationState } from '../../redux'
 import { ShowIf } from '../common/show-if/show-if'
 import { ViaInternal } from './auth/via-internal'
 import { ViaLdap } from './auth/via-ldap'
 import { OneClickType, ViaOneClick } from './auth/via-one-click'
 import { ViaOpenId } from './auth/via-openid'
+import { useApplicationState } from '../../hooks/common/use-application-state'
 
 export const LoginPage: React.FC = () => {
   useTranslation()
-  const authProviders = useSelector((state: ApplicationState) => state.config.authProviders, equal)
-  const customSamlAuthName = useSelector((state: ApplicationState) => state.config.customAuthNames.saml)
-  const customOauthAuthName = useSelector((state: ApplicationState) => state.config.customAuthNames.oauth2)
-  const userLoggedIn = useSelector((state: ApplicationState) => !!state.user)
+  const authProviders = useApplicationState((state) => state.config.authProviders)
+  const customSamlAuthName = useApplicationState((state) => state.config.customAuthNames.saml)
+  const customOauthAuthName = useApplicationState((state) => state.config.customAuthNames.oauth2)
+  const userLoggedIn = useApplicationState((state) => !!state.user)
 
   const oneClickProviders = [
     authProviders.dropbox,

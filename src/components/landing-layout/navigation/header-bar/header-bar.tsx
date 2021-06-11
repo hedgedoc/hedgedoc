@@ -7,8 +7,7 @@
 import React, { Fragment } from 'react'
 import { Navbar } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../../redux'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { HeaderNavLink } from '../header-nav-link'
 import { NewGuestNoteButton } from '../new-guest-note-button'
 import { NewUserNoteButton } from '../new-user-note-button'
@@ -18,7 +17,7 @@ import './header-bar.scss'
 
 const HeaderBar: React.FC = () => {
   useTranslation()
-  const userExists = useSelector((state: ApplicationState) => !!state.user)
+  const userExists = useApplicationState((state) => !!state.user)
 
   return (
     <Navbar className='justify-content-between'>

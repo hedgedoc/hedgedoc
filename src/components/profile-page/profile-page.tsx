@@ -6,9 +6,8 @@
 
 import React, { Fragment } from 'react'
 import { Col, Row } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
-import { ApplicationState } from '../../redux'
+import { useApplicationState } from '../../hooks/common/use-application-state'
 import { LoginProvider } from '../../redux/user/types'
 import { ShowIf } from '../common/show-if/show-if'
 import { ProfileAccessTokens } from './access-tokens/profile-access-tokens'
@@ -17,7 +16,7 @@ import { ProfileChangePassword } from './settings/profile-change-password'
 import { ProfileDisplayName } from './settings/profile-display-name'
 
 export const ProfilePage: React.FC = () => {
-  const userProvider = useSelector((state: ApplicationState) => state.user?.provider)
+  const userProvider = useApplicationState((state) => state.user?.provider)
 
   if (!userProvider) {
     return <Redirect to={'/login'} />

@@ -4,9 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useApplicationState } from '../../hooks/common/use-application-state'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
-import { ApplicationState } from '../../redux'
 import { setDarkMode } from '../../redux/dark-mode/methods'
 import { setNoteFrontmatter } from '../../redux/note-details/methods'
 import { NoteFrontmatter } from '../editor-page/note-frontmatter/note-frontmatter'
@@ -24,7 +23,7 @@ export const RenderPage: React.FC = () => {
   const [scrollState, setScrollState] = useState<ScrollState>({ firstLineInView: 1, scrolledPercentage: 0 })
   const [baseConfiguration, setBaseConfiguration] = useState<BaseConfiguration | undefined>(undefined)
 
-  const editorOrigin = useSelector((state: ApplicationState) => state.config.iframeCommunication.editorOrigin)
+  const editorOrigin = useApplicationState((state) => state.config.iframeCommunication.editorOrigin)
 
   const iframeCommunicator = useMemo(() => {
     const newCommunicator = new IframeRendererToEditorCommunicator()

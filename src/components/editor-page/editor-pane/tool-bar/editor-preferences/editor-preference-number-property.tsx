@@ -5,23 +5,18 @@
  */
 
 import { EditorConfiguration } from 'codemirror'
-import equal from 'fast-deep-equal'
 import React, { ChangeEvent, useCallback } from 'react'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../../../redux'
 import { mergeEditorPreferences } from '../../../../../redux/editor/methods'
 import { EditorPreferenceInput, EditorPreferenceInputType } from './editor-preference-input'
 import { EditorPreferenceProperty } from './editor-preference-property'
+import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 
 export interface EditorPreferenceNumberProps {
   property: EditorPreferenceProperty
 }
 
 export const EditorPreferenceNumberProperty: React.FC<EditorPreferenceNumberProps> = ({ property }) => {
-  const preference = useSelector(
-    (state: ApplicationState) => state.editorConfig.preferences[property]?.toString() || '',
-    equal
-  )
+  const preference = useApplicationState((state) => state.editorConfig.preferences[property]?.toString() ?? '')
 
   const selectItem = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {

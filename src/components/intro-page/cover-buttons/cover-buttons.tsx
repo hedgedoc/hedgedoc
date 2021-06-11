@@ -7,17 +7,16 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { ApplicationState } from '../../../redux'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SignInButton } from '../../landing-layout/navigation/sign-in-button'
 import './cover-buttons.scss'
 
 export const CoverButtons: React.FC = () => {
   useTranslation()
-  const userExists = useSelector((state: ApplicationState) => !!state.user)
-  const anyAuthProviderActivated = useSelector((state: ApplicationState) =>
+  const userExists = useApplicationState((state) => !!state.user)
+  const anyAuthProviderActivated = useApplicationState((state) =>
     Object.values(state.config.authProviders).includes(true)
   )
 

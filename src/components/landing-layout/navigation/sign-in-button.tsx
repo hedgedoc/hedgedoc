@@ -4,23 +4,21 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import equal from 'fast-deep-equal'
 import React, { useMemo } from 'react'
 import { Button } from 'react-bootstrap'
 import { ButtonProps } from 'react-bootstrap/Button'
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
-import { ApplicationState } from '../../../redux'
 import { ShowIf } from '../../common/show-if/show-if'
 import { getApiUrl } from '../../../api/utils'
 import { INTERACTIVE_LOGIN_METHODS } from '../../../api/auth'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export type SignInButtonProps = Omit<ButtonProps, 'href'>
 
 export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props }) => {
   const { t } = useTranslation()
-  const authProviders = useSelector((state: ApplicationState) => state.config.authProviders, equal)
+  const authProviders = useApplicationState((state) => state.config.authProviders)
   const authEnabled = useMemo(() => Object.values(authProviders).includes(true), [authProviders])
 
   const loginLink = useMemo(() => {

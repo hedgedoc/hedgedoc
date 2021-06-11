@@ -6,11 +6,9 @@
 
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { useDocumentTitleWithNoteTitle } from '../../hooks/common/use-document-title-with-note-title'
 import { useNoteMarkdownContent } from '../../hooks/common/use-note-markdown-content'
-import { ApplicationState } from '../../redux'
 import {
   SetCheckboxInMarkdownContent,
   setNoteFrontmatter,
@@ -36,6 +34,7 @@ import { UiNotifications } from '../notifications/ui-notifications'
 import { useNotificationTest } from './use-notification-test'
 import { IframeCommunicatorContextProvider } from './render-context/iframe-communicator-context-provider'
 import { useUpdateLocalHistoryEntry } from './hooks/useUpdateLocalHistoryEntry'
+import { useApplicationState } from '../../hooks/common/use-application-state'
 
 export interface EditorPagePathParams {
   id: string
@@ -51,8 +50,8 @@ export const EditorPage: React.FC = () => {
   const markdownContent = useNoteMarkdownContent()
   const scrollSource = useRef<ScrollSource>(ScrollSource.EDITOR)
 
-  const editorMode: EditorMode = useSelector((state: ApplicationState) => state.editorConfig.editorMode)
-  const editorSyncScroll: boolean = useSelector((state: ApplicationState) => state.editorConfig.syncScroll)
+  const editorMode: EditorMode = useApplicationState((state) => state.editorConfig.editorMode)
+  const editorSyncScroll: boolean = useApplicationState((state) => state.editorConfig.syncScroll)
 
   const [scrollState, setScrollState] = useState<DualScrollState>(() => ({
     editorScrollState: { firstLineInView: 1, scrolledPercentage: 0 },

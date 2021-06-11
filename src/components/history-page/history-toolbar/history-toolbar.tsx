@@ -9,9 +9,7 @@ import React, { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState }
 import { Button, Form, FormControl, InputGroup, ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
 import { Typeahead } from 'react-bootstrap-typeahead'
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { useQueryState } from 'react-router-use-location-state'
-import { ApplicationState } from '../../../redux'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SortButton, SortModeEnum } from '../sort-button/sort-button'
@@ -22,6 +20,7 @@ import './typeahead-hacks.scss'
 import { HistoryEntryOrigin } from '../../../redux/history/types'
 import { importHistoryEntries, refreshHistoryState, setHistoryEntries } from '../../../redux/history/methods'
 import { showErrorNotification } from '../../../redux/ui-notifications/methods'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export type HistoryToolbarChange = (newState: HistoryToolbarState) => void
 
@@ -61,8 +60,8 @@ export const initToolbarState: HistoryToolbarState = {
 
 export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange }) => {
   const { t } = useTranslation()
-  const historyEntries = useSelector((state: ApplicationState) => state.history)
-  const userExists = useSelector((state: ApplicationState) => !!state.user)
+  const historyEntries = useApplicationState((state) => state.history)
+  const userExists = useApplicationState((state) => !!state.user)
 
   const tags = useMemo<string[]>(() => {
     const allTags = historyEntries.map((entry) => entry.tags).flat()

@@ -7,15 +7,14 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { updateDisplayName } from '../../../api/me'
-import { ApplicationState } from '../../../redux'
 import { fetchAndSetUser } from '../../login-page/auth/utils'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export const ProfileDisplayName: React.FC = () => {
   const regexInvalidDisplayName = /^\s*$/
   const { t } = useTranslation()
-  const userName = useSelector((state: ApplicationState) => state.user?.name)
+  const userName = useApplicationState((state) => state.user?.name)
   const [submittable, setSubmittable] = useState(false)
   const [error, setError] = useState(false)
   const [displayName, setDisplayName] = useState('')

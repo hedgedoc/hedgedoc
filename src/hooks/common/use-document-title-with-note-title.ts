@@ -5,14 +5,13 @@
  */
 
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../redux'
+import { useApplicationState } from './use-application-state'
 import { useDocumentTitle } from './use-document-title'
 
 export const useDocumentTitleWithNoteTitle = (): void => {
   const { t } = useTranslation()
   const untitledNote = t('editor.untitledNote')
-  const noteTitle = useSelector((state: ApplicationState) => state.noteDetails.noteTitle)
+  const noteTitle = useApplicationState((state) => state.noteDetails.noteTitle)
 
   useDocumentTitle(noteTitle === '' ? untitledNote : noteTitle)
 }

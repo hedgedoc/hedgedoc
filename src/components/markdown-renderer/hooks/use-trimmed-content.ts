@@ -4,12 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../redux'
 import { useMemo } from 'react'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export const useTrimmedContent = (content: string): [trimmedContent: string, contentExceedsLimit: boolean] => {
-  const maxLength = useSelector((state: ApplicationState) => state.config.maxDocumentLength)
+  const maxLength = useApplicationState((state) => state.config.maxDocumentLength)
   const contentExceedsLimit = content.length > maxLength
 
   const trimmedContent = useMemo(

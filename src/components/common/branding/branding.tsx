@@ -4,12 +4,10 @@
  SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import equal from 'fast-deep-equal'
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../redux'
+import React, { useMemo } from 'react'
 import { ShowIf } from '../show-if/show-if'
 import './branding.scss'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export interface BrandingProps {
   inline?: boolean
@@ -17,24 +15,30 @@ export interface BrandingProps {
 }
 
 export const Branding: React.FC<BrandingProps> = ({ inline = false, delimiter = true }) => {
-  const branding = useSelector((state: ApplicationState) => state.config.branding, equal)
+  const branding = useApplicationState((state) => state.config.branding)
   const showBranding = !!branding.name || !!branding.logo
 
-  return (
-    <ShowIf condition={showBranding}>
-      <ShowIf condition={delimiter}>
-        <strong className={`mx-1 ${inline ? 'inline-size' : 'regular-size'}`}>@</strong>
-      </ShowIf>
-      {branding.logo ? (
+  const brandingDom = useMemo(() => {
+    if (branding.logo) {
+      return (
         <img
           src={branding.logo}
           alt={branding.name}
           title={branding.name}
           className={inline ? 'inline-size' : 'regular-size'}
         />
-      ) : (
-        branding.name
-      )}
+      )
+    } else {
+      return branding.name
+    }
+  }, [branding.logo, branding.name, inline])
+
+  return (
+    <ShowIf condition={showBranding}>
+      <ShowIf condition={delimiter}>
+        <strong className={`mx-1 ${inline ? 'inline-size' : 'regular-size'}`}>@</strong>
+      </ShowIf>
+      {brandingDom}
     </ShowIf>
   )
 }

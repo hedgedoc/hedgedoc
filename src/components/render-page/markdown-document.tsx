@@ -14,10 +14,9 @@ import { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import { BasicMarkdownRenderer } from '../markdown-renderer/basic-markdown-renderer'
 import { ImageClickHandler } from '../markdown-renderer/replace-components/image/image-replacer'
 import './markdown-document.scss'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../redux'
 import { WidthBasedTableOfContents } from './width-based-table-of-contents'
 import { ShowIf } from '../common/show-if/show-if'
+import { useApplicationState } from '../../hooks/common/use-application-state'
 
 export interface RendererProps extends ScrollProps {
   onFirstHeadingChange?: (firstHeading: string | undefined) => void
@@ -60,7 +59,7 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
 
   const [tocAst, setTocAst] = useState<TocAst>()
 
-  const useAlternativeBreaks = useSelector((state: ApplicationState) => state.noteDetails.frontmatter.breaks)
+  const useAlternativeBreaks = useApplicationState((state) => state.noteDetails.frontmatter.breaks)
 
   useEffect(() => {
     if (!onHeightChange) {

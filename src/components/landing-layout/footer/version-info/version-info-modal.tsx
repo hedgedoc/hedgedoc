@@ -10,13 +10,11 @@ import { Modal, Row } from 'react-bootstrap'
 import { VersionInfoModalColumn } from './version-info-modal-column'
 import frontendVersion from '../../../../version.json'
 import links from '../../../../links.json'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../../redux'
-import equal from 'fast-deep-equal'
 import { BackendVersion } from '../../../../api/config/types'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 export const VersionInfoModal: React.FC<CommonModalProps> = ({ onHide, show }) => {
-  const serverVersion: BackendVersion = useSelector((state: ApplicationState) => state.config.version, equal)
+  const serverVersion: BackendVersion = useApplicationState((state) => state.config.version)
   const backendVersion = useMemo(() => {
     const version = `${serverVersion.major}.${serverVersion.minor}.${serverVersion.patch}`
 

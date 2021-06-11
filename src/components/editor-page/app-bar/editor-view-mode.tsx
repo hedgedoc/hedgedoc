@@ -7,10 +7,9 @@
 import React from 'react'
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../redux'
 import { setEditorMode } from '../../../redux/editor/methods'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export enum EditorMode {
   PREVIEW = 'view',
@@ -20,7 +19,8 @@ export enum EditorMode {
 
 export const EditorViewMode: React.FC = () => {
   const { t } = useTranslation()
-  const editorMode = useSelector((state: ApplicationState) => state.editorConfig.editorMode)
+  const editorMode = useApplicationState((state) => state.editorConfig.editorMode)
+
   return (
     <ToggleButtonGroup
       type='radio'

@@ -5,10 +5,7 @@
  */
 
 import React from 'react'
-import equal from 'fast-deep-equal'
 import { Nav, Navbar } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../redux'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SignInButton } from '../../landing-layout/navigation/sign-in-button'
 import { UserDropdown } from '../../landing-layout/navigation/user-dropdown'
@@ -21,6 +18,7 @@ import { NoteType } from '../note-frontmatter/note-frontmatter'
 import { SlideModeButton } from './slide-mode-button'
 import { ReadOnlyModeButton } from './read-only-mode-button'
 import { NewNoteButton } from './new-note-button'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export enum AppBarMode {
   BASIC,
@@ -32,8 +30,8 @@ export interface AppBarProps {
 }
 
 export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
-  const userExists = useSelector((state: ApplicationState) => !!state.user)
-  const noteFrontmatter = useSelector((state: ApplicationState) => state.noteDetails.frontmatter, equal)
+  const userExists = useApplicationState((state) => !!state.user)
+  const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)
 
   return (
     <Navbar bg={'light'}>

@@ -8,14 +8,13 @@ import React, { FormEvent, useCallback, useState } from 'react'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
 
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { doLdapLogin } from '../../../api/auth'
-import { ApplicationState } from '../../../redux'
 import { fetchAndSetUser } from './utils'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export const ViaLdap: React.FC = () => {
   const { t } = useTranslation()
-  const ldapCustomName = useSelector((state: ApplicationState) => state.config.customAuthNames.ldap)
+  const ldapCustomName = useApplicationState((state) => state.config.customAuthNames.ldap)
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')

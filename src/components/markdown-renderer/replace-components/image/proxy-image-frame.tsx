@@ -5,13 +5,12 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { getProxiedUrl } from '../../../../api/media'
-import { ApplicationState } from '../../../../redux'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 export const ProxyImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ src, title, alt, ...props }) => {
   const [imageUrl, setImageUrl] = useState('')
-  const imageProxyEnabled = useSelector((state: ApplicationState) => state.config.useImageProxy)
+  const imageProxyEnabled = useApplicationState((state) => state.config.useImageProxy)
 
   useEffect(() => {
     if (!imageProxyEnabled || !src) {

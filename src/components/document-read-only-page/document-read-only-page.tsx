@@ -6,12 +6,10 @@
 
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { useDocumentTitleWithNoteTitle } from '../../hooks/common/use-document-title-with-note-title'
 import { useNoteMarkdownContent } from '../../hooks/common/use-note-markdown-content'
-import { ApplicationState } from '../../redux'
 import { setNoteFrontmatter, updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
 import { ShowIf } from '../common/show-if/show-if'
@@ -23,6 +21,7 @@ import { DocumentInfobar } from './document-infobar'
 import { ErrorWhileLoadingNoteAlert } from './ErrorWhileLoadingNoteAlert'
 import { LoadingNoteAlert } from './LoadingNoteAlert'
 import { RendererType } from '../render-page/rendering-message'
+import { useApplicationState } from '../../hooks/common/use-application-state'
 
 export const DocumentReadOnlyPage: React.FC = () => {
   useTranslation()
@@ -35,7 +34,7 @@ export const DocumentReadOnlyPage: React.FC = () => {
   const onFrontmatterChange = useCallback(setNoteFrontmatter, [])
   const [error, loading] = useLoadNoteFromServer()
   const markdownContent = useNoteMarkdownContent()
-  const noteDetails = useSelector((state: ApplicationState) => state.noteDetails)
+  const noteDetails = useApplicationState((state) => state.noteDetails)
 
   return (
     <div className={'d-flex flex-column mvh-100 bg-light'}>

@@ -16,14 +16,13 @@ import {
   mergeHistoryEntries,
   refreshHistoryState
 } from '../../../redux/history/methods'
-import { ApplicationState } from '../../../redux'
-import { useSelector } from 'react-redux'
 import { showErrorNotification } from '../../../redux/ui-notifications/methods'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export const ImportHistoryButton: React.FC = () => {
   const { t } = useTranslation()
-  const userExists = useSelector((state: ApplicationState) => !!state.user)
-  const historyState = useSelector((state: ApplicationState) => state.history)
+  const userExists = useApplicationState((state) => !!state.user)
+  const historyState = useApplicationState((state) => state.history)
   const uploadInput = useRef<HTMLInputElement>(null)
   const [show, setShow] = useState(false)
   const [fileName, setFilename] = useState('')

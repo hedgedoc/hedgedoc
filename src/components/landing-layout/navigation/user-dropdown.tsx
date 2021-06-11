@@ -4,20 +4,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import equal from 'fast-deep-equal'
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
-import { ApplicationState } from '../../../redux'
 import { clearUser } from '../../../redux/user/methods'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { UserAvatar } from '../../common/user-avatar/user-avatar'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export const UserDropdown: React.FC = () => {
   useTranslation()
-  const user = useSelector((state: ApplicationState) => state.user, equal)
+  const user = useApplicationState((state) => state.user)
 
   if (!user) {
     return null

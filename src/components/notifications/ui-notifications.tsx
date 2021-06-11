@@ -7,12 +7,10 @@
 import React from 'react'
 import { UiNotificationToast } from './ui-notification-toast'
 import './notifications.scss'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../redux'
-import equal from 'fast-deep-equal'
+import { useApplicationState } from '../../hooks/common/use-application-state'
 
 export const UiNotifications: React.FC = () => {
-  const notifications = useSelector((state: ApplicationState) => state.uiNotifications, equal)
+  const notifications = useApplicationState((state) => state.uiNotifications)
 
   return (
     <div className={'notifications-area'} aria-live='polite' aria-atomic='true'>

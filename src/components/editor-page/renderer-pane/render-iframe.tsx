@@ -5,9 +5,8 @@
  */
 import equal from 'fast-deep-equal'
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { useIsDarkModeActivated } from '../../../hooks/common/use-is-dark-mode-activated'
-import { ApplicationState } from '../../../redux'
 import { isTestMode } from '../../../utils/test-modes'
 import { RendererProps } from '../../render-page/markdown-document'
 import { ImageDetails, RendererType } from '../../render-page/rendering-message'
@@ -42,7 +41,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   const [lightboxDetails, setLightboxDetails] = useState<ImageDetails | undefined>(undefined)
 
   const frameReference = useRef<HTMLIFrameElement>(null)
-  const rendererOrigin = useSelector((state: ApplicationState) => state.config.iframeCommunication.rendererOrigin)
+  const rendererOrigin = useApplicationState((state) => state.config.iframeCommunication.rendererOrigin)
   const renderPageUrl = `${rendererOrigin}render`
   const resetRendererReady = useCallback(() => setRendererReady(false), [])
   const iframeCommunicator = useContextOrStandaloneIframeCommunicator()

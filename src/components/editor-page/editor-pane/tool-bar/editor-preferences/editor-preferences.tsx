@@ -4,12 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import equal from 'fast-deep-equal'
 import React, { Fragment, useState } from 'react'
 import { Button, Form, ListGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../../../redux'
 import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
 import { CommonModal } from '../../../../common/modals/common-modal'
 import { ShowIf } from '../../../../common/show-if/show-if'
@@ -20,14 +17,12 @@ import { EditorPreferenceNumberProperty } from './editor-preference-number-prope
 import { EditorPreferenceProperty } from './editor-preference-property'
 import { EditorPreferenceSelectProperty } from './editor-preference-select-property'
 import { EditorPreferenceSmartPasteSelect } from './editor-preference-smart-paste-select'
+import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 
 export const EditorPreferences: React.FC = () => {
   const { t } = useTranslation()
   const [showModal, setShowModal] = useState(false)
-  const indentWithTabs = useSelector(
-    (state: ApplicationState) => state.editorConfig.preferences.indentWithTabs ?? false,
-    equal
-  )
+  const indentWithTabs = useApplicationState((state) => state.editorConfig.preferences.indentWithTabs ?? false)
 
   return (
     <Fragment>

@@ -5,8 +5,7 @@
  */
 
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../redux'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { IconName } from '../../common/fork-awesome/types'
 import { SocialLinkButton } from './social-link-button/social-link-button'
 
@@ -108,7 +107,7 @@ export interface ViaOneClickProps {
 }
 
 export const ViaOneClick: React.FC<ViaOneClickProps> = ({ oneClickType, optionalName }) => {
-  const backendUrl = useSelector((state: ApplicationState) => state.apiUrl.apiUrl)
+  const backendUrl = useApplicationState((state) => state.apiUrl.apiUrl)
   const { name, icon, className, url } = getMetadata(backendUrl, oneClickType)
   const text = optionalName || name
 

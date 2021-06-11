@@ -6,18 +6,18 @@
 
 import equal from 'fast-deep-equal'
 import { useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
-import { ApplicationState, store } from '../../../redux'
+import { store } from '../../../redux'
 import { useParams } from 'react-router-dom'
 import { EditorPagePathParams } from '../editor-page'
 import { HistoryEntry, HistoryEntryOrigin } from '../../../redux/history/types'
 import { updateLocalHistoryEntry } from '../../../redux/history/methods'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export const useUpdateLocalHistoryEntry = (updateReady: boolean): void => {
   const { id } = useParams<EditorPagePathParams>()
-  const userExists = useSelector((state: ApplicationState) => !!state.user)
-  const currentNoteTitle = useSelector((state: ApplicationState) => state.noteDetails.noteTitle)
-  const currentNoteTags = useSelector((state: ApplicationState) => state.noteDetails.frontmatter.tags)
+  const userExists = useApplicationState((state) => !!state.user)
+  const currentNoteTitle = useApplicationState((state) => state.noteDetails.noteTitle)
+  const currentNoteTags = useApplicationState((state) => state.noteDetails.frontmatter.tags)
 
   const lastNoteTitle = useRef('')
   const lastNoteTags = useRef<string[]>([])

@@ -10,15 +10,14 @@ import { SidebarButton } from './sidebar-button'
 import { SpecificSidebarEntryProps } from './types'
 import { useParams } from 'react-router-dom'
 import { EditorPagePathParams } from '../editor-page'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../redux'
 import { toggleHistoryEntryPinning } from '../../../redux/history/methods'
 import { showErrorNotification } from '../../../redux/ui-notifications/methods'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
   const { t } = useTranslation()
   const { id } = useParams<EditorPagePathParams>()
-  const history = useSelector((state: ApplicationState) => state.history)
+  const history = useApplicationState((state) => state.history)
 
   const isPinned = useMemo(() => {
     const entry = history.find((entry) => entry.identifier === id)

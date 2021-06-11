@@ -6,21 +6,18 @@
 
 import React, { Fragment } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import links from '../../../links.json'
-import { ApplicationState } from '../../../redux'
 import { ExternalLink } from '../../common/links/external-link'
 import { TranslatedExternalLink } from '../../common/links/translated-external-link'
 import { TranslatedInternalLink } from '../../common/links/translated-internal-link'
 import { VersionInfoLink } from './version-info/version-info-link'
-import equal from 'fast-deep-equal'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export const PoweredByLinks: React.FC = () => {
   useTranslation()
 
-  const specialUrls: [string, string][] = useSelector(
-    (state: ApplicationState) => Object.entries(state.config.specialUrls) as [string, string][],
-    equal
+  const specialUrls: [string, string][] = useApplicationState((state) =>
+    Object.entries(state.config.specialUrls).map(([i18nkey, url]) => [i18nkey, String(url)])
   )
 
   return (

@@ -27,12 +27,9 @@ import 'codemirror/keymap/emacs'
 import 'codemirror/keymap/sublime'
 import 'codemirror/keymap/vim'
 import 'codemirror/mode/gfm/gfm'
-import equal from 'fast-deep-equal'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Controlled as ControlledCodeMirror } from 'react-codemirror2'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../redux'
 import { MaxLengthWarningModal } from '../editor-modals/max-length-warning-modal'
 import { ScrollProps, ScrollState } from '../synced-scroll/scroll-props'
 import { allHinters, findWordAtCursor } from './autocompletion'
@@ -42,6 +39,7 @@ import { createStatusInfo, defaultState, StatusBar, StatusBarInfo } from './stat
 import { ToolBar } from './tool-bar/tool-bar'
 import { handleUpload } from './upload-handler'
 import { handleFilePaste, handleTablePaste, PasteEvent } from './tool-bar/utils/pasteHandlers'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export interface EditorPaneProps {
   onContentChange: (content: string) => void
@@ -81,14 +79,14 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({
   onMakeScrollSource
 }) => {
   const { t } = useTranslation()
-  const maxLength = useSelector((state: ApplicationState) => state.config.maxDocumentLength)
-  const smartPasteEnabled = useSelector((state: ApplicationState) => state.editorConfig.smartPaste)
+  const maxLength = useApplicationState((state) => state.config.maxDocumentLength)
+  const smartPasteEnabled = useApplicationState((state) => state.editorConfig.smartPaste)
   const [showMaxLengthWarning, setShowMaxLengthWarning] = useState(false)
   const maxLengthWarningAlreadyShown = useRef(false)
   const [editor, setEditor] = useState<Editor>()
   const [statusBarInfo, setStatusBarInfo] = useState<StatusBarInfo>(defaultState)
-  const editorPreferences = useSelector((state: ApplicationState) => state.editorConfig.preferences, equal)
-  const ligaturesEnabled = useSelector((state: ApplicationState) => state.editorConfig.ligatures, equal)
+  const editorPreferences = useApplicationState((state) => state.editorConfig.preferences)
+  const ligaturesEnabled = useApplicationState((state) => state.editorConfig.ligatures)
 
   const lastScrollPosition = useRef<number>()
   const [editorScroll, setEditorScroll] = useState<ScrollInfo>()

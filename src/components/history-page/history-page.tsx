@@ -7,19 +7,18 @@
 import React, { Fragment, useEffect, useMemo, useState } from 'react'
 import { Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../redux'
 import { HistoryContent } from './history-content/history-content'
 import { HistoryToolbar, HistoryToolbarState, initToolbarState } from './history-toolbar/history-toolbar'
 import { sortAndFilterEntries } from './utils'
 import { refreshHistoryState } from '../../redux/history/methods'
 import { HistoryEntry } from '../../redux/history/types'
 import { showErrorNotification } from '../../redux/ui-notifications/methods'
+import { useApplicationState } from '../../hooks/common/use-application-state'
 
 export const HistoryPage: React.FC = () => {
   const { t } = useTranslation()
 
-  const allEntries = useSelector((state: ApplicationState) => state.history)
+  const allEntries = useApplicationState((state) => state.history)
   const [toolbarState, setToolbarState] = useState<HistoryToolbarState>(initToolbarState)
 
   const entriesToShow = useMemo<HistoryEntry[]>(

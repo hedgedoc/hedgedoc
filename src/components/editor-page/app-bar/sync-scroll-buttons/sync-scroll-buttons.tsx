@@ -7,12 +7,11 @@
 import React from 'react'
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../../../redux'
 import { setEditorSyncScroll } from '../../../../redux/editor/methods'
 import { ReactComponent as DisabledScrollIcon } from './disabledScroll.svg'
 import { ReactComponent as EnabledScrollIcon } from './enabledScroll.svg'
 import './sync-scroll-buttons.scss'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 enum SyncScrollState {
   SYNCED,
@@ -20,7 +19,7 @@ enum SyncScrollState {
 }
 
 export const SyncScrollButtons: React.FC = () => {
-  const syncScrollEnabled = useSelector((state: ApplicationState) => state.editorConfig.syncScroll)
+  const syncScrollEnabled = useApplicationState((state) => state.editorConfig.syncScroll)
     ? SyncScrollState.SYNCED
     : SyncScrollState.UNSYNCED
   const { t } = useTranslation()

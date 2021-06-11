@@ -4,19 +4,17 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import equal from 'fast-deep-equal'
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { useFrontendBaseUrl } from '../../../../hooks/common/use-frontend-base-url'
-import { ApplicationState } from '../../../../redux'
 import { CopyableField } from '../../../common/copyable/copyable-field/copyable-field'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { EditorPagePathParams } from '../../editor-page'
 import { NoteType } from '../../note-frontmatter/note-frontmatter'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 export interface ShareModalProps {
   show: boolean
@@ -25,8 +23,8 @@ export interface ShareModalProps {
 
 export const ShareModal: React.FC<ShareModalProps> = ({ show, onHide }) => {
   useTranslation()
-  const noteFrontmatter = useSelector((state: ApplicationState) => state.noteDetails.frontmatter, equal)
-  const editorMode = useSelector((state: ApplicationState) => state.editorConfig.editorMode)
+  const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)
+  const editorMode = useApplicationState((state) => state.editorConfig.editorMode)
   const baseUrl = useFrontendBaseUrl()
   const { id } = useParams<EditorPagePathParams>()
 
