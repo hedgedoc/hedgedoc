@@ -11,6 +11,17 @@
   font-family: 'Source Sans Pro', "Twemoji", sans-serif;
   word-break: break-word;
 
+  .svg-container {
+    overflow-x: auto;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+
+    svg {
+      max-width: 100%;
+    }
+  }
+
   .alert > p, .alert > ul {
     margin-bottom: 0;
   }

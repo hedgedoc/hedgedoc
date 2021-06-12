@@ -48,7 +48,7 @@ export const setNoteFrontmatter = (frontmatter: NoteFrontmatter | undefined): vo
   } as SetNoteFrontmatterFromRenderingAction)
 }
 
-export const SetCheckboxInMarkdownContent = (lineInMarkdown: number, checked: boolean): void => {
+export const setCheckboxInMarkdownContent = (lineInMarkdown: number, checked: boolean): void => {
   store.dispatch({
     type: NoteDetailsActionType.SET_CHECKBOX_IN_MARKDOWN_CONTENT,
     checked: checked,

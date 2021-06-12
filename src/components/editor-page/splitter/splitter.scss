@@ -6,12 +6,7 @@
 
 .splitter {
   &.left {
-    flex: 0 1 100%;
     min-width: 200px;
-  }
-
-  &.right {
-    flex: 1 0 200px;
   }
 
   &.separator {
