@@ -7,8 +7,9 @@
 import React, { useContext, useMemo } from 'react'
 import { IframeEditorToRendererCommunicator } from '../../render-page/iframe-editor-to-renderer-communicator'
 
-const IFrameEditorToRendererCommunicatorContext =
-  React.createContext<IframeEditorToRendererCommunicator | undefined>(undefined)
+const IFrameEditorToRendererCommunicatorContext = React.createContext<IframeEditorToRendererCommunicator | undefined>(
+  undefined
+)
 
 export const useIFrameEditorToRendererCommunicator: () => IframeEditorToRendererCommunicator | undefined = () =>
   useContext(IFrameEditorToRendererCommunicatorContext)
