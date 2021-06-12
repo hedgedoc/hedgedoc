@@ -33,7 +33,7 @@ describe('File upload', () => {
         method: 'GET',
         url: '/mock-backend/api/private/media/upload-post'
       }, {
-        statusCode: 201,
+        statusCode: 200,
         body: {
           link: imageUrl
         }
