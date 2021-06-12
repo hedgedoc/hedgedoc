@@ -3,7 +3,6 @@
 /* global moment, serverurl */
 
 import Prism from 'prismjs'
-import hljs from 'highlight.js'
 import PDFObject from 'pdfobject'
 import S from 'string'
 import { saveAs } from 'file-saver'
@@ -17,10 +16,7 @@ import markdownitContainer from 'markdown-it-container'
 /* Defined regex markdown it plugins */
 import Plugin from 'markdown-it-regexp'
 
-import mermaid from 'mermaid'
-import handlebars from 'handlebars'
 import 'gist-embed'
-import abcjs from 'abcjs'
 
 require('prismjs/themes/prism.css')
 require('prismjs/components/prism-wiki')
@@ -34,7 +30,6 @@ require('prismjs/components/prism-gherkin')
 require('./lib/common/login')
 require('./locale')
 require('../vendor/md-toc')
-const Viz = require('viz.js')
 const ui = getUIElements()
 
 // auto update last change
@@ -253,8 +248,6 @@ function replaceExtraTags (html) {
   return html
 }
 
-mermaid.startOnLoad = false
-
 // dynamic event or object binding here
 export function finishView (view) {
   // todo list
@@ -372,13 +365,15 @@ export function finishView (view) {
     try {
       $value = $(value)
       const $ele = $(value).parent().parent()
+      require.ensure([], function (require) {
+        const Viz = require('viz.js')
+        const graphviz = Viz($value.text())
+        if (!graphviz) throw Error('viz.js output empty graph')
+        $value.html(graphviz)
 
-      const graphviz = Viz($value.text())
-      if (!graphviz) throw Error('viz.js output empty graph')
-      $value.html(graphviz)
-
-      $ele.addClass('graphviz')
-      $value.children().unwrap().unwrap()
+        $ele.addClass('graphviz')
+        $value.children().unwrap().unwrap()
+      })
     } catch (err) {
       $value.unwrap()
       $value.parent().append(`<div class="alert alert-warning">${escapeHTML(err)}</div>`)
@@ -388,25 +383,26 @@ export function finishView (view) {
   // mermaid
   const mermaids = view.find('div.mermaid.raw').removeClass('raw')
   mermaids.each((key, value) => {
-    let $value
-    try {
-      $value = $(value)
-      const $ele = $(value).closest('pre')
-
-      mermaid.mermaidAPI.parse($value.text())
-      $ele.addClass('mermaid')
-      $ele.text($value.text())
-      mermaid.init(undefined, $ele)
-    } catch (err) {
-      let errormessage = err
-      if (err.str) {
-        errormessage = err.str
+    const $value = $(value)
+    const $ele = $(value).closest('pre')
+    require.ensure([], function (require) {
+      try {
+        const mermaid = require('mermaid')
+        mermaid.startOnLoad = false
+        mermaid.mermaidAPI.parse($value.text())
+        $ele.addClass('mermaid')
+        $ele.text($value.text())
+        mermaid.init(undefined, $ele)
+      } catch (err) {
+        let errormessage = err
+        if (err.str) {
+          errormessage = err.str
+        }
+        $value.unwrap()
+        $value.parent().append(`<div class="alert alert-warning">${escapeHTML(errormessage)}</div>`)
+        console.warn(errormessage)
       }
-
-      $value.unwrap()
-      $value.parent().append(`<div class="alert alert-warning">${escapeHTML(errormessage)}</div>`)
-      console.warn(errormessage)
-    }
+    })
   })
   // abc.js
   const abcs = view.find('div.abc.raw').removeClass('raw')
@@ -415,14 +411,15 @@ export function finishView (view) {
     try {
       $value = $(value)
       const $ele = $(value).parent().parent()
-
-      abcjs.renderAbc(value, $value.text())
-
-      $ele.addClass('abc')
-      $value.children().unwrap().unwrap()
-      const svg = $ele.find('> svg')
-      svg[0].setAttribute('viewBox', `0 0 ${svg.attr('width')} ${svg.attr('height')}`)
-      svg[0].setAttribute('preserveAspectRatio', 'xMidYMid meet')
+      require.ensure([], function (require) {
+        const abcjs = require('abcjs')
+        abcjs.renderAbc(value, $value.text())
+        $ele.addClass('abc')
+        $value.children().unwrap().unwrap()
+        const svg = $ele.find('> svg')
+        svg[0].setAttribute('viewBox', `0 0 ${svg.attr('width')} ${svg.attr('height')}`)
+        svg[0].setAttribute('preserveAspectRatio', 'xMidYMid meet')
+      })
     } catch (err) {
       $value.unwrap()
       $value.parent().append(`<div class="alert alert-warning">${escapeHTML(err)}</div>`)
@@ -499,6 +496,9 @@ export function finishView (view) {
       const langDiv = $(value)
       if (langDiv.length > 0) {
         const reallang = langDiv[0].className.replace(/hljs|wrap/g, '').trim()
+        if (reallang === 'mermaid' || reallang === 'abc' || reallang === 'graphviz') {
+          return
+        }
         const codeDiv = langDiv.find('.code')
         let code = ''
         if (codeDiv.length > 0) code = codeDiv.html()
@@ -524,13 +524,19 @@ export function finishView (view) {
             value: Prism.highlight(code, Prism.languages.makefile)
           }
         } else {
-          code = S(code).unescapeHTML().s
-          const languages = hljs.listLanguages()
-          if (!languages.includes(reallang)) {
-            result = hljs.highlightAuto(code)
-          } else {
-            result = hljs.highlight(reallang, code)
-          }
+          require.ensure([], function (require) {
+            const hljs = require('highlight.js')
+            code = S(code).unescapeHTML().s
+            const languages = hljs.listLanguages()
+            if (!languages.includes(reallang)) {
+              result = hljs.highlightAuto(code)
+            } else {
+              result = hljs.highlight(reallang, code)
+            }
+            if (codeDiv.length > 0) codeDiv.html(result.value)
+            else langDiv.html(result.value)
+          })
+          return
         }
         if (codeDiv.length > 0) codeDiv.html(result.value)
         else langDiv.html(result.value)
@@ -668,19 +674,15 @@ export function exportToHTML (view) {
   tocAffix.find('*').removeClass('active').find("a[href^='#'][smoothhashscroll]").removeAttr('smoothhashscroll')
   // generate html via template
   $.get(`${serverurl}/build/html.min.css`, css => {
-    $.get(`${serverurl}/views/html.hbs`, data => {
-      const template = handlebars.compile(data)
-      const context = {
-        url: serverurl,
-        title,
-        css,
-        html: src[0].outerHTML,
-        'ui-toc': toc.html(),
-        'ui-toc-affix': tocAffix.html(),
-        lang: (md && md.meta && md.meta.lang) ? `lang="${md.meta.lang}"` : null,
-        dir: (md && md.meta && md.meta.dir) ? `dir="${md.meta.dir}"` : null
-      }
-      const html = template(context)
+    $.get(`${serverurl}/views/html.hbs`, template => {
+      let html = template.replace('{{{url}}}', serverurl)
+      html = html.replace('{{title}}', title)
+      html = html.replace('{{{css}}}', css)
+      html = html.replace('{{{html}}}', src[0].outerHTML)
+      html = html.replace('{{{ui-toc}}}', toc.html())
+      html = html.replace('{{{ui-toc-affix}}}', tocAffix.html())
+      html = html.replace('{{{lang}}}', (md && md.meta && md.meta.lang) ? `lang="${md.meta.lang}"` : '')
+      html = html.replace('{{{dir}}}', (md && md.meta && md.meta.dir) ? `dir="${md.meta.dir}"` : '')
       const blob = new Blob([html], {
         type: 'text/html;charset=utf-8'
       })

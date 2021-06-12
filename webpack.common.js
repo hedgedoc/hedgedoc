@@ -248,12 +248,10 @@ module.exports = {
       'bootstrap-validator',
       'expose-loader?exposes=jsyaml!js-yaml',
       'expose-loader?exposes=moment!moment',
-      'expose-loader?exposes=hljs!highlight.js',
       'expose-loader?exposes=emojify!emojify.js',
       'expose-loader?exposes=LZString!lz-string',
       'flowchart.js',
       'js-sequence-diagrams',
-      'expose-loader?exposes=Viz!viz.js',
       'expose-loader?exposes=io!socket.io-client',
       'expose-loader?exposes=RevealMarkdown!reveal-markdown',
       path.join(__dirname, 'public/js/index.js')
@@ -280,11 +278,9 @@ module.exports = {
       'babel-polyfill',
       'expose-loader?exposes=jsyaml!js-yaml',
       'expose-loader?exposes=moment!moment',
-      'expose-loader?exposes=hljs!highlight.js',
       'expose-loader?exposes=emojify!emojify.js',
       'flowchart.js',
       'js-sequence-diagrams',
-      'expose-loader?exposes=Viz!viz.js',
       'expose-loader?exposes=RevealMarkdown!reveal-markdown',
       path.join(__dirname, 'public/js/pretty.js')
     ],
@@ -314,11 +310,9 @@ module.exports = {
       'bootstrap-tooltip',
       'expose-loader?exposes=jsyaml!js-yaml',
       'expose-loader?exposes=moment!moment',
-      'expose-loader?exposes=hljs!highlight.js',
       'expose-loader?exposes=emojify!emojify.js',
       'flowchart.js',
       'js-sequence-diagrams',
-      'expose-loader?exposes=Viz!viz.js',
       'expose-loader?exposes=Reveal!reveal.js',
       'expose-loader?exposes=RevealMarkdown!reveal-markdown',
       path.join(__dirname, 'public/js/slide.js')
@@ -342,11 +336,9 @@ module.exports = {
   },
 
   externals: {
-    'viz.js': 'Viz',
     'socket.io-client': 'io',
     'jquery': '$',
     'moment': 'moment',
-    'highlight.js': 'hljs',
     'select2': 'select2'
   },
 
