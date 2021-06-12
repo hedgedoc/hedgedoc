@@ -9,7 +9,7 @@ import { IframeEditorToRendererCommunicator } from '../../../render-page/iframe-
 
 export const useOnIframeLoad = (
   frameReference: RefObject<HTMLIFrameElement>,
-  iframeCommunicator: IframeEditorToRendererCommunicator,
+  iframeCommunicator: IframeEditorToRendererCommunicator | undefined,
   rendererOrigin: string,
   renderPageUrl: string,
   onNavigateAway: () => void
@@ -19,12 +19,12 @@ export const useOnIframeLoad = (
   return useCallback(() => {
     const frame = frameReference.current
     if (!frame || !frame.contentWindow) {
-      iframeCommunicator.unsetOtherSide()
+      iframeCommunicator?.unsetOtherSide()
       return
     }
 
     if (sendToRenderPage.current) {
-      iframeCommunicator.setOtherSide(frame.contentWindow, rendererOrigin)
+      iframeCommunicator?.setOtherSide(frame.contentWindow, rendererOrigin)
       sendToRenderPage.current = false
       return
     } else {

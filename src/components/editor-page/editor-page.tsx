@@ -32,7 +32,7 @@ import { RendererType } from '../render-page/rendering-message'
 import { useEditorModeFromUrl } from './hooks/useEditorModeFromUrl'
 import { UiNotifications } from '../notifications/ui-notifications'
 import { useNotificationTest } from './use-notification-test'
-import { IframeCommunicatorContextProvider } from './render-context/iframe-communicator-context-provider'
+import { IframeEditorToRendererCommunicatorContextProvider } from './render-context/iframe-editor-to-renderer-communicator-context-provider'
 import { useUpdateLocalHistoryEntry } from './hooks/useUpdateLocalHistoryEntry'
 import { useApplicationState } from '../../hooks/common/use-application-state'
 
@@ -126,7 +126,7 @@ export const EditorPage: React.FC = () => {
   )
 
   return (
-    <IframeCommunicatorContextProvider>
+    <IframeEditorToRendererCommunicatorContextProvider>
       <UiNotifications />
       <MotdBanner />
       <div className={'d-flex flex-column vh-100'}>
@@ -148,7 +148,7 @@ export const EditorPage: React.FC = () => {
           </div>
         </ShowIf>
       </div>
-    </IframeCommunicatorContextProvider>
+    </IframeEditorToRendererCommunicatorContextProvider>
   )
 }
 

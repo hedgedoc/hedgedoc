@@ -10,18 +10,10 @@ import { IframeEditorToRendererCommunicator } from '../../render-page/iframe-edi
 const IFrameEditorToRendererCommunicatorContext =
   React.createContext<IframeEditorToRendererCommunicator | undefined>(undefined)
 
-export const useIFrameCommunicator: () => IframeEditorToRendererCommunicator | undefined = () =>
+export const useIFrameEditorToRendererCommunicator: () => IframeEditorToRendererCommunicator | undefined = () =>
   useContext(IFrameEditorToRendererCommunicatorContext)
 
-export const useContextOrStandaloneIframeCommunicator: () => IframeEditorToRendererCommunicator = () => {
-  const contextCommunicator = useIFrameCommunicator()
-  return useMemo(
-    () => (contextCommunicator ? contextCommunicator : new IframeEditorToRendererCommunicator()),
-    [contextCommunicator]
-  )
-}
-
-export const IframeCommunicatorContextProvider: React.FC = ({ children }) => {
+export const IframeEditorToRendererCommunicatorContextProvider: React.FC = ({ children }) => {
   const currentIFrameCommunicator = useMemo<IframeEditorToRendererCommunicator>(
     () => new IframeEditorToRendererCommunicator(),
     []

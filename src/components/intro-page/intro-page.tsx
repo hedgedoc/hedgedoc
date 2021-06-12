@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import { Trans } from 'react-i18next'
 import { Branding } from '../common/branding/branding'
 import {
@@ -19,13 +19,14 @@ import { useIntroPageContent } from './hooks/use-intro-page-content'
 import { ShowIf } from '../common/show-if/show-if'
 import { RendererType } from '../render-page/rendering-message'
 import { WaitSpinner } from '../common/wait-spinner/wait-spinner'
+import { IframeEditorToRendererCommunicatorContextProvider } from '../editor-page/render-context/iframe-editor-to-renderer-communicator-context-provider'
 
 export const IntroPage: React.FC = () => {
   const introPageContent = useIntroPageContent()
   const [rendererReady, setRendererReady] = useState<boolean>(true)
 
   return (
-    <Fragment>
+    <IframeEditorToRendererCommunicatorContextProvider>
       <div className={'flex-fill mt-3'}>
         <h1 dir='auto' className={'align-items-center d-flex justify-content-center flex-column'}>
           <HedgeDocLogoWithText logoType={HedgeDocLogoType.COLOR_VERTICAL} size={HedgeDocLogoSize.BIG} />
@@ -52,6 +53,6 @@ export const IntroPage: React.FC = () => {
         <hr className={'mb-5'} />
       </div>
       <FeatureLinks />
-    </Fragment>
+    </IframeEditorToRendererCommunicatorContextProvider>
   )
 }
