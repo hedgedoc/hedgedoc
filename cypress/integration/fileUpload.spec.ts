@@ -85,7 +85,7 @@ describe('File upload', () => {
 
   it('upload fails', () => {
     cy.intercept({
-      method: 'POST',
+      method: 'GET',
       url: '/mock-backend/api/private/media/upload-post'
     }, {
       statusCode: 400
