@@ -5,7 +5,7 @@
  */
 
 import { Editor, Hint, Hints, Pos } from 'codemirror'
-import { findWordAtCursor, Hinter, search } from './index'
+import { findWordAtCursor, generateHintListByPrefix, Hinter } from './index'
 
 const wordRegExp = /^(\s{0,3})(#{1,6})$/
 const allSupportedHeaders = ['# h1', '## h2', '### h3', '#### h4', '##### h5', '###### h6', '###### tags: `example`']
@@ -24,7 +24,7 @@ const headerHint = (editor: Editor): Promise<Hints | null> => {
       resolve(null)
       return
     }
-    const suggestions = search(term, allSupportedHeaders)
+    const suggestions = generateHintListByPrefix(term, allSupportedHeaders)
     const cursor = editor.getCursor()
     if (!suggestions) {
       resolve(null)

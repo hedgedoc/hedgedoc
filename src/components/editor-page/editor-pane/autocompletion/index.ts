@@ -46,14 +46,15 @@ export const findWordAtCursor = (editor: Editor): findWordAtCursorResponse => {
   }
 }
 
-export const search = (term: string, list: string[]): string[] => {
-  const suggestions: string[] = []
-  list.forEach((item) => {
-    if (item.toLowerCase().startsWith(term.toLowerCase())) {
-      suggestions.push(item)
-    }
-  })
-  return suggestions.slice(0, 7)
+/**
+ * Generates a list (with max 8 entries) of hints for the autocompletion.
+ *
+ * @param prefix This is the case insensitive prefix that every hint must have
+ * @param hintCandidates The list of hint candidates
+ */
+export const generateHintListByPrefix = (prefix: string, hintCandidates: string[]): string[] => {
+  const searchTerm = prefix.toLowerCase()
+  return hintCandidates.filter((item) => item.toLowerCase().startsWith(searchTerm)).slice(0, 7)
 }
 
 export const allHinters: Hinter[] = [

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Button, ProgressBar, Toast } from 'react-bootstrap'
 import { UiNotification } from '../../redux/ui-notifications/types'
 import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
@@ -88,6 +88,17 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
     [buttons, dismissThisNotification]
   )
 
+  const contentDom = useMemo(() => {
+    return content.split('\n').map((value) => {
+      return (
+        <Fragment>
+          {value}
+          <br />
+        </Fragment>
+      )
+    })
+  }, [content])
+
   return (
     <Toast show={!dismissed && eta !== undefined} onClose={dismissThisNotification}>
       <Toast.Header>
@@ -99,7 +110,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
         </strong>
         <small>{date.toRelative({ style: 'short' })}</small>
       </Toast.Header>
-      <Toast.Body>{content}</Toast.Body>
+      <Toast.Body>{contentDom}</Toast.Body>
       <ProgressBar variant={'info'} now={eta} max={durationInSecond * STEPS_PER_SECOND} min={0} />
       <div>{buttonsDom}</div>
     </Toast>

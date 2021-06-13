@@ -18,15 +18,15 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v2
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
       - name: Cache build
         uses: actions/cache@v2.1.6
         with:
           path: build
           key: build
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Cache node_modules
         uses: actions/cache@v2
@@ -57,6 +57,9 @@ jobs:
     name: Perform E2E Test in ${{ matrix.browser }}
     needs: build-frontend
     runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node14.16.0-chrome90-ff88
+      options: --user 1001 --shm-size=2g
     strategy:
       matrix:
         browser: [ 'chrome', 'firefox' ]
