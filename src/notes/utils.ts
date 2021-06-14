@@ -12,6 +12,6 @@ import { randomBytes } from 'crypto';
  * This is a randomly generated 128-bit value encoded with base32-encode using the crockford variant and converted to lowercase.
  */
 export function generatePublicId(): string {
-  const randomId = randomBytes(128);
+  const randomId = randomBytes(16);
   return base32Encode(randomId, 'Crockford').toLowerCase();
 }
