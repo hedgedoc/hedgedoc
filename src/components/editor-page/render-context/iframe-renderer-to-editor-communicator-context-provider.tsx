@@ -13,8 +13,19 @@ const IFrameRendererToEditorCommunicatorContext = createContext<IframeRendererTo
   undefined
 )
 
-export const useIFrameRendererToEditorCommunicator: () => IframeRendererToEditorCommunicator | undefined = () =>
-  useContext(IFrameRendererToEditorCommunicatorContext)
+/**
+ * Provides the {@link IframeRendererToEditorCommunicator renderer to editor iframe communicator} that is set by a {@link IframeRendererToEditorCommunicatorContextProvider context provider}.
+ *
+ * @return the received communicator
+ * @throws Error if no communicator was received
+ */
+export const useIFrameRendererToEditorCommunicator: () => IframeRendererToEditorCommunicator = () => {
+  const communicatorFromContext = useContext(IFrameRendererToEditorCommunicatorContext)
+  if (!communicatorFromContext) {
+    throw new Error('No renderer-to-editor-iframe-communicator received. Did you forget to use the provider component?')
+  }
+  return communicatorFromContext
+}
 
 export const IframeRendererToEditorCommunicatorContextProvider: React.FC = ({ children }) => {
   const editorOrigin = useSelector((state: ApplicationState) => state.config.iframeCommunication.editorOrigin)

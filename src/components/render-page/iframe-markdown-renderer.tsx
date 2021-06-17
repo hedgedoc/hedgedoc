@@ -26,17 +26,17 @@ export const IframeMarkdownRenderer: React.FC = () => {
   const countWordsInRenderedDocument = useCallback(() => {
     const documentContainer = document.querySelector('.markdown-body')
     if (!documentContainer) {
-      iframeCommunicator?.sendWordCountCalculated(0)
+      iframeCommunicator.sendWordCountCalculated(0)
       return
     }
     const wordCount = countWords(documentContainer)
-    iframeCommunicator?.sendWordCountCalculated(wordCount)
+    iframeCommunicator.sendWordCountCalculated(wordCount)
   }, [iframeCommunicator])
 
-  useEffect(() => iframeCommunicator?.onSetBaseConfiguration(setBaseConfiguration), [iframeCommunicator])
-  useEffect(() => iframeCommunicator?.onSetMarkdownContent(setMarkdownContent), [iframeCommunicator])
-  useEffect(() => iframeCommunicator?.onSetDarkMode(setDarkMode), [iframeCommunicator])
-  useEffect(() => iframeCommunicator?.onSetScrollState(setScrollState), [iframeCommunicator, scrollState])
+  useEffect(() => iframeCommunicator.onSetBaseConfiguration(setBaseConfiguration), [iframeCommunicator])
+  useEffect(() => iframeCommunicator.onSetMarkdownContent(setMarkdownContent), [iframeCommunicator])
+  useEffect(() => iframeCommunicator.onSetDarkMode(setDarkMode), [iframeCommunicator])
+  useEffect(() => iframeCommunicator.onSetScrollState(setScrollState), [iframeCommunicator, scrollState])
   useEffect(
     () => iframeCommunicator?.onGetWordCount(countWordsInRenderedDocument),
     [iframeCommunicator, countWordsInRenderedDocument]
@@ -44,33 +44,33 @@ export const IframeMarkdownRenderer: React.FC = () => {
 
   const onTaskCheckedChange = useCallback(
     (lineInMarkdown: number, checked: boolean) => {
-      iframeCommunicator?.sendTaskCheckBoxChange(lineInMarkdown, checked)
+      iframeCommunicator.sendTaskCheckBoxChange(lineInMarkdown, checked)
     },
     [iframeCommunicator]
   )
 
   const onFirstHeadingChange = useCallback(
     (firstHeading?: string) => {
-      iframeCommunicator?.sendFirstHeadingChanged(firstHeading)
+      iframeCommunicator.sendFirstHeadingChanged(firstHeading)
     },
     [iframeCommunicator]
   )
 
   const onMakeScrollSource = useCallback(() => {
-    iframeCommunicator?.sendSetScrollSourceToRenderer()
+    iframeCommunicator.sendSetScrollSourceToRenderer()
   }, [iframeCommunicator])
 
   const onFrontmatterChange = useCallback(
     (frontmatter?: NoteFrontmatter) => {
       setNoteFrontmatter(frontmatter)
-      iframeCommunicator?.sendSetFrontmatter(frontmatter)
+      iframeCommunicator.sendSetFrontmatter(frontmatter)
     },
     [iframeCommunicator]
   )
 
   const onScroll = useCallback(
     (scrollState: ScrollState) => {
-      iframeCommunicator?.sendSetScrollState(scrollState)
+      iframeCommunicator.sendSetScrollState(scrollState)
     },
     [iframeCommunicator]
   )
@@ -79,7 +79,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
 
   const onHeightChange = useCallback(
     (height: number) => {
-      iframeCommunicator?.sendHeightChange(height)
+      iframeCommunicator.sendHeightChange(height)
     },
     [iframeCommunicator]
   )
