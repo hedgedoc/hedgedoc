@@ -14,6 +14,7 @@ import { ImageClickHandler } from '../markdown-renderer/replace-components/image
 import { useImageClickHandler } from './hooks/use-image-click-handler'
 import { MarkdownDocument } from './markdown-document'
 import { useIFrameRendererToEditorCommunicator } from '../editor-page/render-context/iframe-renderer-to-editor-communicator-context-provider'
+import { countWords } from './word-counter'
 
 export const IframeMarkdownRenderer: React.FC = () => {
   const [markdownContent, setMarkdownContent] = useState('')
@@ -22,10 +23,24 @@ export const IframeMarkdownRenderer: React.FC = () => {
 
   const iframeCommunicator = useIFrameRendererToEditorCommunicator()
 
+  const countWordsInRenderedDocument = useCallback(() => {
+    const documentContainer = document.querySelector('.markdown-body')
+    if (!documentContainer) {
+      iframeCommunicator?.sendWordCountCalculated(0)
+      return
+    }
+    const wordCount = countWords(documentContainer)
+    iframeCommunicator?.sendWordCountCalculated(wordCount)
+  }, [iframeCommunicator])
+
   useEffect(() => iframeCommunicator?.onSetBaseConfiguration(setBaseConfiguration), [iframeCommunicator])
   useEffect(() => iframeCommunicator?.onSetMarkdownContent(setMarkdownContent), [iframeCommunicator])
   useEffect(() => iframeCommunicator?.onSetDarkMode(setDarkMode), [iframeCommunicator])
   useEffect(() => iframeCommunicator?.onSetScrollState(setScrollState), [iframeCommunicator, scrollState])
+  useEffect(
+    () => iframeCommunicator?.onGetWordCount(countWordsInRenderedDocument),
+    [iframeCommunicator, countWordsInRenderedDocument]
+  )
 
   const onTaskCheckedChange = useCallback(
     (lineInMarkdown: number, checked: boolean) => {

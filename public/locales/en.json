@@ -347,7 +347,8 @@
                 "created": "<0></0> created this note <1></1>",
                 "edited": "<0></0> was the last editor <1></1>",
                 "usersContributed": "<0></0> users contributed to this document",
-                "revisions": "<0></0> revisions are saved"
+                "revisions": "<0></0> revisions are saved",
+                "words": "<0></0> words in document"
             },
             "gistImport": {
                 "title": "Import from Gist",
@@ -458,6 +459,7 @@
         "and": "and",
         "avatarOf": "avatar of '{{name}}'",
         "why": "Why?",
+        "loading": "Loading ...",
         "successfullyCopied": "Copied!",
         "copyError": "Error while copying!",
         "errorOccurred": "An error occurred",

@@ -105,7 +105,8 @@
     "uuid": "8.3.2",
     "vega": "5.20.2",
     "vega-embed": "6.17.0",
-    "vega-lite": "5.0.0"
+    "vega-lite": "5.0.0",
+    "words-count": "1.0.8"
   },
   "scripts": {
     "start": "cross-env PORT=3001 craco start",

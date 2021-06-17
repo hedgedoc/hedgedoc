@@ -23,6 +23,7 @@ export class IframeRendererToEditorCommunicator extends IframeCommunicator<
   private onSetDarkModeHandler?: (darkModeActivated: boolean) => void
   private onSetScrollStateHandler?: (scrollState: ScrollState) => void
   private onSetBaseConfigurationHandler?: (baseConfiguration: BaseConfiguration) => void
+  private onGetWordCountHandler?: () => void
 
   public onSetBaseConfiguration(handler?: (baseConfiguration: BaseConfiguration) => void): void {
     this.onSetBaseConfigurationHandler = handler
@@ -38,6 +39,10 @@ export class IframeRendererToEditorCommunicator extends IframeCommunicator<
 
   public onSetScrollState(handler?: (scrollState: ScrollState) => void): void {
     this.onSetScrollStateHandler = handler
+  }
+
+  public onGetWordCount(handler?: () => void): void {
+    this.onGetWordCountHandler = handler
   }
 
   public sendRendererReady(): void {
@@ -95,6 +100,13 @@ export class IframeRendererToEditorCommunicator extends IframeCommunicator<
     })
   }
 
+  public sendWordCountCalculated(words: number): void {
+    this.sendMessageToOtherSide({
+      type: RenderIframeMessageType.ON_WORD_COUNT_CALCULATED,
+      words
+    })
+  }
+
   protected handleEvent(event: MessageEvent<EditorToRendererIframeMessage>): boolean | undefined {
     const renderMessage = event.data
     switch (renderMessage.type) {
@@ -109,6 +121,9 @@ export class IframeRendererToEditorCommunicator extends IframeCommunicator<
         return false
       case RenderIframeMessageType.SET_BASE_CONFIGURATION:
         this.onSetBaseConfigurationHandler?.(renderMessage.baseConfiguration)
+        return false
+      case RenderIframeMessageType.GET_WORD_COUNT:
+        this.onGetWordCountHandler?.()
         return false
     }
   }

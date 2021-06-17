@@ -27,6 +27,7 @@ export class IframeEditorToRendererCommunicator extends IframeCommunicator<
   private onRendererReadyHandler?: () => void
   private onImageClickedHandler?: (details: ImageDetails) => void
   private onHeightChangeHandler?: (height: number) => void
+  private onWordCountCalculatedHandler?: (words: number) => void
 
   public onHeightChange(handler?: (height: number) => void): void {
     this.onHeightChangeHandler = handler
@@ -60,6 +61,10 @@ export class IframeEditorToRendererCommunicator extends IframeCommunicator<
     this.onSetScrollStateHandler = handler
   }
 
+  public onWordCountCalculated(handler?: (words: number) => void): void {
+    this.onWordCountCalculatedHandler = handler
+  }
+
   public sendSetBaseConfiguration(baseConfiguration: BaseConfiguration): void {
     this.sendMessageToOtherSide({
       type: RenderIframeMessageType.SET_BASE_CONFIGURATION,
@@ -91,6 +96,12 @@ export class IframeEditorToRendererCommunicator extends IframeCommunicator<
     })
   }
 
+  public sendGetWordCount(): void {
+    this.sendMessageToOtherSide({
+      type: RenderIframeMessageType.GET_WORD_COUNT
+    })
+  }
+
   protected handleEvent(event: MessageEvent<RendererToEditorIframeMessage>): boolean | undefined {
     const renderMessage = event.data
     switch (renderMessage.type) {
@@ -117,6 +128,9 @@ export class IframeEditorToRendererCommunicator extends IframeCommunicator<
         return false
       case RenderIframeMessageType.ON_HEIGHT_CHANGE:
         this.onHeightChangeHandler?.(renderMessage.height)
+        return false
+      case RenderIframeMessageType.ON_WORD_COUNT_CALCULATED:
+        this.onWordCountCalculatedHandler?.(renderMessage.words)
         return false
     }
   }

@@ -73,6 +73,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - When pasting tables (e.g. from LibreOffice Calc or MS Excel) they get reformatted to markdown tables.
 - The history page supports URL parameters that allow bookmarking of a specific search of tags filter.
 - Users can change the pinning state of a note directly from the editor.
+- Note information dialog containing word count, revision count, last editor and creation time.
 
 ### Changed
 

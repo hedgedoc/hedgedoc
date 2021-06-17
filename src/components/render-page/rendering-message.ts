@@ -17,7 +17,9 @@ export enum RenderIframeMessageType {
   ON_SET_FRONTMATTER = 'ON_SET_FRONTMATTER',
   IMAGE_CLICKED = 'IMAGE_CLICKED',
   ON_HEIGHT_CHANGE = 'ON_HEIGHT_CHANGE',
-  SET_BASE_CONFIGURATION = 'SET_BASE_CONFIGURATION'
+  SET_BASE_CONFIGURATION = 'SET_BASE_CONFIGURATION',
+  GET_WORD_COUNT = 'GET_WORD_COUNT',
+  ON_WORD_COUNT_CALCULATED = 'ON_WORD_COUNT_CALCULATED'
 }
 
 export interface RendererToEditorSimpleMessage {
@@ -38,6 +40,10 @@ export interface ImageDetails {
 export interface SetBaseUrlMessage {
   type: RenderIframeMessageType.SET_BASE_CONFIGURATION
   baseConfiguration: BaseConfiguration
+}
+
+export interface GetWordCountMessage {
+  type: RenderIframeMessageType.GET_WORD_COUNT
 }
 
 export interface ImageClickedMessage {
@@ -76,11 +82,17 @@ export interface OnHeightChangeMessage {
   height: number
 }
 
+export interface OnWordCountCalculatedMessage {
+  type: RenderIframeMessageType.ON_WORD_COUNT_CALCULATED
+  words: number
+}
+
 export type EditorToRendererIframeMessage =
   | SetMarkdownContentMessage
   | SetDarkModeMessage
   | SetScrollStateMessage
   | SetBaseUrlMessage
+  | GetWordCountMessage
 
 export type RendererToEditorIframeMessage =
   | RendererToEditorSimpleMessage
@@ -90,6 +102,7 @@ export type RendererToEditorIframeMessage =
   | SetScrollStateMessage
   | ImageClickedMessage
   | OnHeightChangeMessage
+  | OnWordCountCalculatedMessage
 
 export enum RendererType {
   DOCUMENT,
