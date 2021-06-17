@@ -26,11 +26,11 @@
   },
   "dependencies": {
     "@azure/storage-blob": "12.6.0",
-    "@nestjs/common": "7.6.17",
+    "@nestjs/common": "7.6.18",
     "@nestjs/config": "0.6.3",
-    "@nestjs/core": "7.6.17",
+    "@nestjs/core": "7.6.18",
     "@nestjs/passport": "7.1.5",
-    "@nestjs/platform-express": "7.6.17",
+    "@nestjs/platform-express": "7.6.18",
     "@nestjs/schedule": "0.4.3",
     "@nestjs/swagger": "4.8.0",
     "@nestjs/typeorm": "7.1.5",
@@ -65,7 +65,7 @@
   "devDependencies": {
     "@nestjs/cli": "7.6.0",
     "@nestjs/schematics": "7.3.1",
-    "@nestjs/testing": "7.6.17",
+    "@nestjs/testing": "7.6.18",
     "@tsconfig/node12": "1.0.8",
     "@types/cli-color": "2.0.0",
     "@types/express": "4.17.12",
