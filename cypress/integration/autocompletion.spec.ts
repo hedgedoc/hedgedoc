@@ -93,8 +93,6 @@ describe('Autocompletion', () => {
           .should('not.exist')
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
           .should('have.text', ':hedgehog:')
-        cy.getMarkdownBody()
-          .should('have.text', '🦔')
       })
       it('via doubleclick', () => {
         cy.codemirrorFill(':hedg')
@@ -105,8 +103,6 @@ describe('Autocompletion', () => {
           .should('not.exist')
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
           .should('have.text', ':hedgehog:')
-        cy.getMarkdownBody()
-          .should('have.text', '🦔')
       })
     })
 
@@ -121,9 +117,6 @@ describe('Autocompletion', () => {
           .should('not.exist')
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
           .should('have.text', ':fa-facebook:')
-        cy.getMarkdownBody()
-          .find('p > i.fa.fa-facebook')
-          .should('exist')
       })
       it('via doubleclick', () => {
         cy.codemirrorFill(':fa-face')
@@ -134,9 +127,6 @@ describe('Autocompletion', () => {
           .should('not.exist')
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
           .should('have.text', ':fa-facebook:')
-        cy.getMarkdownBody()
-          .find('p > i.fa.fa-facebook')
-          .should('exist')
       })
     })
   })
