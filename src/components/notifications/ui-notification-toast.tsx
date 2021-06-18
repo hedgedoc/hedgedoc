@@ -74,13 +74,13 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
 
   const buttonsDom = useMemo(
     () =>
-      buttons?.map((button) => {
+      buttons?.map((button, buttonIndex) => {
         const buttonClick = () => {
           button.onClick()
           dismissThisNotification()
         }
         return (
-          <Button key={button.label} size={'sm'} onClick={buttonClick} variant={'link'}>
+          <Button key={buttonIndex} size={'sm'} onClick={buttonClick} variant={'link'}>
             {button.label}
           </Button>
         )
@@ -89,9 +89,9 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
   )
 
   const contentDom = useMemo(() => {
-    return content.split('\n').map((value) => {
+    return content.split('\n').map((value, lineNumber) => {
       return (
-        <Fragment>
+        <Fragment key={lineNumber}>
           {value}
           <br />
         </Fragment>
