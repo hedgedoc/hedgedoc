@@ -38,7 +38,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
   useEffect(() => iframeCommunicator.onSetDarkMode(setDarkMode), [iframeCommunicator])
   useEffect(() => iframeCommunicator.onSetScrollState(setScrollState), [iframeCommunicator, scrollState])
   useEffect(
-    () => iframeCommunicator?.onGetWordCount(countWordsInRenderedDocument),
+    () => iframeCommunicator.onGetWordCount(countWordsInRenderedDocument),
     [iframeCommunicator, countWordsInRenderedDocument]
   )
 

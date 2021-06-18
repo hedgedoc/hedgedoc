@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useState } from 'react'
+import React from 'react'
 import { Trans } from 'react-i18next'
 import { Branding } from '../common/branding/branding'
 import {
@@ -20,10 +20,11 @@ import { ShowIf } from '../common/show-if/show-if'
 import { RendererType } from '../render-page/rendering-message'
 import { WaitSpinner } from '../common/wait-spinner/wait-spinner'
 import { IframeEditorToRendererCommunicatorContextProvider } from '../editor-page/render-context/iframe-editor-to-renderer-communicator-context-provider'
+import { useApplicationState } from '../../hooks/common/use-application-state'
 
 export const IntroPage: React.FC = () => {
   const introPageContent = useIntroPageContent()
-  const [rendererReady, setRendererReady] = useState<boolean>(true)
+  const rendererReady = useApplicationState((state) => state.editorConfig.rendererReady)
 
   return (
     <IframeEditorToRendererCommunicatorContextProvider>
@@ -45,7 +46,6 @@ export const IntroPage: React.FC = () => {
           <RenderIframe
             frameClasses={'w-100 overflow-y-hidden'}
             markdownContent={introPageContent as string}
-            onRendererReadyChange={setRendererReady}
             rendererType={RendererType.INTRO}
             forcedDarkMode={true}
           />

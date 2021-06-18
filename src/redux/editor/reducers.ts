@@ -15,7 +15,8 @@ import {
   SetEditorLigaturesAction,
   SetEditorPreferencesAction,
   SetEditorSmartPasteAction,
-  SetEditorSyncScrollAction
+  SetEditorSyncScrollAction,
+  SetRendererReadyAction
 } from './types'
 
 const initialState: EditorConfig = {
@@ -23,6 +24,7 @@ const initialState: EditorConfig = {
   ligatures: true,
   syncScroll: true,
   smartPaste: true,
+  rendererReady: false,
   preferences: {
     theme: 'one-dark',
     keyMap: 'sublime',
@@ -55,6 +57,11 @@ export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (
       }
       saveToLocalStorage(newState)
       return newState
+    case EditorConfigActionType.SET_RENDERER_READY:
+      return {
+        ...state,
+        rendererReady: (action as SetRendererReadyAction).rendererReady
+      }
     case EditorConfigActionType.SET_LIGATURES:
       newState = {
         ...state,

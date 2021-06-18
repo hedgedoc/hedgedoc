@@ -10,6 +10,7 @@ import { ShowIf } from '../../../common/show-if/show-if'
 import { DocumentInfoLine } from './document-info-line'
 import { UnitalicBoldText } from './unitalic-bold-text'
 import { useIFrameEditorToRendererCommunicator } from '../../render-context/iframe-editor-to-renderer-communicator-context-provider'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 /**
  * Creates a new info line for the document information dialog that holds the
@@ -19,16 +20,22 @@ export const DocumentInfoLineWordCount: React.FC = () => {
   useTranslation()
   const iframeEditorToRendererCommunicator = useIFrameEditorToRendererCommunicator()
   const [wordCount, setWordCount] = useState<number | null>(null)
+  const rendererReady = useApplicationState((state) => state.editorConfig.rendererReady)
 
   useEffect(() => {
-    iframeEditorToRendererCommunicator?.onWordCountCalculated((words) => {
+    iframeEditorToRendererCommunicator.onWordCountCalculated((words) => {
       setWordCount(words)
     })
-    iframeEditorToRendererCommunicator?.sendGetWordCount()
     return () => {
-      iframeEditorToRendererCommunicator?.onWordCountCalculated(undefined)
+      iframeEditorToRendererCommunicator.onWordCountCalculated(undefined)
     }
   }, [iframeEditorToRendererCommunicator, setWordCount])
+
+  useEffect(() => {
+    if (rendererReady) {
+      iframeEditorToRendererCommunicator.sendGetWordCount()
+    }
+  }, [iframeEditorToRendererCommunicator, rendererReady])
 
   return (
     <DocumentInfoLine icon={'align-left'} size={'2x'}>

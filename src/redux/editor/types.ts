@@ -13,7 +13,8 @@ export enum EditorConfigActionType {
   SET_SYNC_SCROLL = 'editor/syncScroll/set',
   MERGE_EDITOR_PREFERENCES = 'editor/preferences/merge',
   SET_LIGATURES = 'editor/preferences/setLigatures',
-  SET_SMART_PASTE = 'editor/preferences/setSmartPaste'
+  SET_SMART_PASTE = 'editor/preferences/setSmartPaste',
+  SET_RENDERER_READY = 'editor/rendererReady/set'
 }
 
 export interface EditorConfig {
@@ -21,11 +22,16 @@ export interface EditorConfig {
   syncScroll: boolean
   ligatures: boolean
   smartPaste: boolean
+  rendererReady: boolean
   preferences: EditorConfiguration
 }
 
 export interface EditorConfigActions extends Action<EditorConfigActionType> {
   type: EditorConfigActionType
+}
+
+export interface SetRendererReadyAction extends EditorConfigActions {
+  rendererReady: boolean
 }
 
 export interface SetEditorSyncScrollAction extends EditorConfigActions {

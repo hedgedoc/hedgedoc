@@ -46,6 +46,7 @@ export class IframeRendererToEditorCommunicator extends IframeCommunicator<
   }
 
   public sendRendererReady(): void {
+    this.enableCommunication()
     this.sendMessageToOtherSide({
       type: RenderIframeMessageType.RENDERER_READY
     })

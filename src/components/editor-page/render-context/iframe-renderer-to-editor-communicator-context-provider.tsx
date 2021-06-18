@@ -31,7 +31,7 @@ export const IframeRendererToEditorCommunicatorContextProvider: React.FC = ({ ch
   const editorOrigin = useSelector((state: ApplicationState) => state.config.iframeCommunication.editorOrigin)
   const currentIFrameCommunicator = useMemo<IframeRendererToEditorCommunicator>(() => {
     const newCommunicator = new IframeRendererToEditorCommunicator()
-    newCommunicator.setOtherSide(window.parent, editorOrigin)
+    newCommunicator.setMessageTarget(window.parent, editorOrigin)
     return newCommunicator
   }, [editorOrigin])
 

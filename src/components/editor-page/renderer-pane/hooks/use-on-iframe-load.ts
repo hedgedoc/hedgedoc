@@ -19,12 +19,12 @@ export const useOnIframeLoad = (
   return useCallback(() => {
     const frame = frameReference.current
     if (!frame || !frame.contentWindow) {
-      iframeCommunicator.unsetOtherSide()
+      iframeCommunicator.unsetMessageTarget()
       return
     }
 
     if (sendToRenderPage.current) {
-      iframeCommunicator.setOtherSide(frame.contentWindow, rendererOrigin)
+      iframeCommunicator.setMessageTarget(frame.contentWindow, rendererOrigin)
       sendToRenderPage.current = false
       return
     } else {

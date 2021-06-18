@@ -106,6 +106,7 @@ export class IframeEditorToRendererCommunicator extends IframeCommunicator<
     const renderMessage = event.data
     switch (renderMessage.type) {
       case RenderIframeMessageType.RENDERER_READY:
+        this.enableCommunication()
         this.onRendererReadyHandler?.()
         return false
       case RenderIframeMessageType.SET_SCROLL_SOURCE_TO_RENDERER:
