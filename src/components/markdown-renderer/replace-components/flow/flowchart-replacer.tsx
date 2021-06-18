@@ -4,13 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { DomElement } from 'domhandler'
+import { Element } from 'domhandler'
 import React from 'react'
 import { ComponentReplacer } from '../ComponentReplacer'
 import { FlowChart } from './flowchart/flowchart'
 
+/**
+ * Detects code blocks with "flow" as language and renders them as flow chart.
+ */
 export class FlowchartReplacer extends ComponentReplacer {
-  public getReplacement(codeNode: DomElement): React.ReactElement | undefined {
+  public getReplacement(codeNode: Element): React.ReactElement | undefined {
     if (
       codeNode.name !== 'code' ||
       !codeNode.attribs ||
@@ -22,7 +25,7 @@ export class FlowchartReplacer extends ComponentReplacer {
       return
     }
 
-    const code = codeNode.children[0].data as string
+    const code = ComponentReplacer.extractTextChildContent(codeNode)
 
     return <FlowChart code={code} />
   }

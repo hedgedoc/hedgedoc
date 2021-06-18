@@ -5,7 +5,7 @@
  */
 
 import React, { Fragment, ReactElement, useEffect, useState } from 'react'
-import ReactHtmlParser from 'react-html-parser'
+import convertHtmlToReact from '@hedgedoc/html-to-react'
 import { CopyToClipboardButton } from '../../../../common/copyable/copy-to-clipboard-button/copy-to-clipboard-button'
 import '../../../utils/button-inside.scss'
 import './highlighted-code.scss'
@@ -29,11 +29,11 @@ const escapeHtml = (unsafe: string): string => {
     .replaceAll(/'/g, '&#039;')
 }
 
-const replaceCode = (code: string): ReactElement[][] => {
+const replaceCode = (code: string): (ReactElement | null | string)[][] => {
   return code
     .split('\n')
     .filter((line) => !!line)
-    .map((line) => ReactHtmlParser(line))
+    .map((line) => convertHtmlToReact(line, {}))
 }
 
 export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language, startLineNumber, wrapLines }) => {

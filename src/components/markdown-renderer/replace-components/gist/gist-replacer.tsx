@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { DomElement } from 'domhandler'
+import { Element } from 'domhandler'
 import MarkdownIt from 'markdown-it'
 import markdownItRegex from 'markdown-it-regex'
 import React from 'react'
@@ -16,13 +16,16 @@ import preview from './gist-preview.png'
 import { replaceGistLink } from './replace-gist-link'
 import { replaceLegacyGistShortCode } from './replace-legacy-gist-short-code'
 
+/**
+ * Detects "app-gist" tags and renders them as gist frames.
+ */
 export class GistReplacer extends ComponentReplacer {
   public static readonly markdownItPlugin: MarkdownIt.PluginSimple = (markdownIt) => {
     markdownItRegex(markdownIt, replaceGistLink)
     markdownItRegex(markdownIt, replaceLegacyGistShortCode)
   }
 
-  public getReplacement(node: DomElement): React.ReactElement | undefined {
+  public getReplacement(node: Element): React.ReactElement | undefined {
     const attributes = getAttributesFromHedgeDocTag(node, 'gist')
     if (attributes && attributes.id) {
       const gistId = attributes.id

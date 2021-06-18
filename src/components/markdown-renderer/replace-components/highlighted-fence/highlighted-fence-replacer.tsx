@@ -4,15 +4,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { DomElement } from 'domhandler'
+import { Element } from 'domhandler'
 import React from 'react'
 import { ComponentReplacer } from '../ComponentReplacer'
 import { HighlightedCode } from './highlighted-code/highlighted-code'
 
+/**
+ * Detects code blocks and renders them as highlighted code blocks
+ */
 export class HighlightedCodeReplacer extends ComponentReplacer {
   private lastLineNumber = 0
 
-  public getReplacement(codeNode: DomElement): React.ReactElement | undefined {
+  public getReplacement(codeNode: Element): React.ReactElement | undefined {
     if (
       codeNode.name !== 'code' ||
       !codeNode.attribs ||
@@ -39,7 +42,7 @@ export class HighlightedCodeReplacer extends ComponentReplacer {
 
     const startLineNumber =
       startLineNumberAttribute === '+' ? this.lastLineNumber : parseInt(startLineNumberAttribute) || 1
-    const code = codeNode.children[0].data as string
+    const code = ComponentReplacer.extractTextChildContent(codeNode)
 
     if (showLineNumbers) {
       this.lastLineNumber = startLineNumber + code.split('\n').filter((line) => !!line).length

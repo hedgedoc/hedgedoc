@@ -5,21 +5,30 @@
  */
 
 import MarkdownIt from 'markdown-it/lib'
-import { ReactElement, useMemo, useRef } from 'react'
-import ReactHtmlParser from 'react-html-parser'
-import { ComponentReplacer } from '../replace-components/ComponentReplacer'
+import { useMemo, useRef } from 'react'
+import { ComponentReplacer, ValidReactDomElement } from '../replace-components/ComponentReplacer'
 import { LineKeys } from '../types'
 import { buildTransformer } from '../utils/html-react-transformer'
 import { calculateNewLineNumberMapping } from '../utils/line-number-mapping'
+import convertHtmlToReact from '@hedgedoc/html-to-react'
 
+/**
+ * Renders markdown code into react elements
+ *
+ * @param markdownCode The markdown code that should be rendered
+ * @param markdownIt The configured {@link MarkdownIt markdown it} instance that should render the code
+ * @param replacers A function that provides a list of {@link ComponentReplacer component replacers}
+ * @param onBeforeRendering A callback that gets executed before the rendering
+ * @param onAfterRendering A callback that gets executed after the rendering
+ * @return The React DOM that represents the rendered markdown code
+ */
 export const useConvertMarkdownToReactDom = (
   markdownCode: string,
   markdownIt: MarkdownIt,
-  baseReplacers: () => ComponentReplacer[],
-  additionalReplacers?: () => ComponentReplacer[],
+  replacers: () => ComponentReplacer[],
   onBeforeRendering?: () => void,
   onAfterRendering?: () => void
-): ReactElement[] => {
+): ValidReactDomElement[] => {
   const oldMarkdownLineKeys = useRef<LineKeys[]>()
   const lastUsedLineId = useRef<number>(0)
 
@@ -37,12 +46,12 @@ export const useConvertMarkdownToReactDom = (
     oldMarkdownLineKeys.current = newLines
     lastUsedLineId.current = newLastUsedLineId
 
-    const replacers = baseReplacers().concat(additionalReplacers ? additionalReplacers() : [])
-    const transformer = replacers.length > 0 ? buildTransformer(newLines, replacers) : undefined
-    const rendering = ReactHtmlParser(html, { transform: transformer })
+    const currentReplacers = replacers()
+    const transformer = currentReplacers.length > 0 ? buildTransformer(newLines, currentReplacers) : undefined
+    const rendering = convertHtmlToReact(html, { transform: transformer })
     if (onAfterRendering) {
       onAfterRendering()
     }
     return rendering
-  }, [onBeforeRendering, markdownIt, markdownCode, baseReplacers, additionalReplacers, onAfterRendering])
+  }, [onBeforeRendering, markdownIt, markdownCode, replacers, onAfterRendering])
 }

@@ -144,7 +144,7 @@ describe('Autocompletion', () => {
         .should('have.text', '# ')
       cy.getMarkdownBody()
         .find('h1 ')
-        .should('have.text', ' ')
+        .should('have.text', '\n ')
     })
     it('via doubleclick', () => {
       cy.codemirrorFill('#')
@@ -157,7 +157,7 @@ describe('Autocompletion', () => {
         .should('have.text', '# ')
       cy.getMarkdownBody()
         .find('h1')
-        .should('have.text', ' ')
+        .should('have.text', '\n ')
     })
   })
 

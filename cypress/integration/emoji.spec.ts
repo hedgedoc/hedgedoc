@@ -6,7 +6,7 @@
 
 describe('emojis', () => {
 
-  const HEDGEHOG_UNICODE_CHARACTER = '🦔'
+  const HEDGEHOG_UNICODE_CHARACTER = '\n🦔\n'
 
   beforeEach(() => {
     cy.visitTestEditor()

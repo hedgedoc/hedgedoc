@@ -26,6 +26,15 @@ import { VegaReplacer } from '../replace-components/vega-lite/vega-replacer'
 import { VimeoReplacer } from '../replace-components/vimeo/vimeo-replacer'
 import { YoutubeReplacer } from '../replace-components/youtube/youtube-replacer'
 
+/**
+ * Provides a function that creates a list of {@link ComponentReplacer component replacer} instances.
+ *
+ * @param onTaskCheckedChange A callback that gets executed if a task checkbox gets clicked
+ * @param onImageClick A callback that should be executed if an image gets clicked
+ * @param baseUrl The base url for relative links
+ *
+ * @return the created list
+ */
 export const useComponentReplacers = (
   onTaskCheckedChange?: TaskCheckedChangeHandler,
   onImageClick?: ImageClickHandler,

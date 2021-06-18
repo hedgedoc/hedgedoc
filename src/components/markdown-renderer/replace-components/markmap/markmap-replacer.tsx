@@ -4,13 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { DomElement } from 'domhandler'
+import { Element } from 'domhandler'
 import React from 'react'
 import { ComponentReplacer } from '../ComponentReplacer'
 import { MarkmapFrame } from './markmap-frame'
 
-export class MarkmapReplacer implements ComponentReplacer {
-  getReplacement(codeNode: DomElement): React.ReactElement | undefined {
+/**
+ * Detects code blocks with 'markmap' as language and renders them with Markmap.
+ */
+export class MarkmapReplacer extends ComponentReplacer {
+  getReplacement(codeNode: Element): React.ReactElement | undefined {
     if (
       codeNode.name !== 'code' ||
       !codeNode.attribs ||
@@ -22,7 +25,7 @@ export class MarkmapReplacer implements ComponentReplacer {
       return
     }
 
-    const code = codeNode.children[0].data as string
+    const code = ComponentReplacer.extractTextChildContent(codeNode)
 
     return <MarkmapFrame code={code} />
   }

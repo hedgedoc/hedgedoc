@@ -4,13 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { DomElement } from 'domhandler'
+import { Element } from 'domhandler'
 import React from 'react'
 import { ComponentReplacer } from '../ComponentReplacer'
 import { ProxyImageFrame } from './proxy-image-frame'
 
 export type ImageClickHandler = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => void
 
+/**
+ * Detects image tags and loads them via image proxy if configured.
+ */
 export class ImageReplacer extends ComponentReplacer {
   private readonly clickHandler?: ImageClickHandler
 
@@ -19,7 +22,7 @@ export class ImageReplacer extends ComponentReplacer {
     this.clickHandler = clickHandler
   }
 
-  public getReplacement(node: DomElement): React.ReactElement | undefined {
+  public getReplacement(node: Element): React.ReactElement | undefined {
     if (node.name === 'img' && node.attribs) {
       return (
         <ProxyImageFrame

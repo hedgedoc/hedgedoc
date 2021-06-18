@@ -90,11 +90,15 @@ export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & Additi
   }, [onAfterRendering])
 
   const baseReplacers = useComponentReplacers(onTaskCheckedChange, onImageClick, baseUrl)
+  const replacers = useCallback(
+    () => baseReplacers().concat(additionalReplacers ? additionalReplacers() : []),
+    [additionalReplacers, baseReplacers]
+  )
+
   const markdownReactDom = useConvertMarkdownToReactDom(
     trimmedContent,
     markdownIt,
-    baseReplacers,
-    additionalReplacers,
+    replacers,
     clearFrontmatter,
     checkYamlErrorState
   )

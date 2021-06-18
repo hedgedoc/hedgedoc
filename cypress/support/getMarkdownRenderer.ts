@@ -13,16 +13,16 @@ declare namespace Cypress {
 }
 
 Cypress.Commands.add('getMarkdownRenderer', () => {
-  return cy.get(`iframe[data-cy="documentIframe"]`)
-           .should('be.visible')
-           .its('0.contentDocument')
-           .should('exist')
-           .its('body')
-           .should('not.be.undefined')
-           .then(cy.wrap.bind(cy))
+  return cy
+    .get(`iframe[data-cy="documentIframe"]`)
+    .should('be.visible')
+    .its('0.contentDocument')
+    .should('exist')
+    .its('body')
+    .should('not.be.undefined')
+    .then(cy.wrap.bind(cy))
 })
 
 Cypress.Commands.add('getMarkdownBody', () => {
-  return cy.getMarkdownRenderer()
-           .find('.markdown-body')
+  return cy.getMarkdownRenderer().find('.markdown-body')
 })

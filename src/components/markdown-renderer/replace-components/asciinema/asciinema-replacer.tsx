@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { DomElement } from 'domhandler'
+import { Element } from 'domhandler'
 import MarkdownIt from 'markdown-it'
 import markdownItRegex from 'markdown-it-regex'
 import React from 'react'
@@ -13,12 +13,15 @@ import { getAttributesFromHedgeDocTag } from '../utils'
 import { AsciinemaFrame } from './asciinema-frame'
 import { replaceAsciinemaLink } from './replace-asciinema-link'
 
+/**
+ * Detects code blocks with "asciinema" as language and renders them Asciinema frame
+ */
 export class AsciinemaReplacer extends ComponentReplacer {
   public static readonly markdownItPlugin: MarkdownIt.PluginSimple = (markdownIt) => {
     markdownItRegex(markdownIt, replaceAsciinemaLink)
   }
 
-  public getReplacement(node: DomElement): React.ReactElement | undefined {
+  public getReplacement(node: Element): React.ReactElement | undefined {
     const attributes = getAttributesFromHedgeDocTag(node, 'asciinema')
     if (attributes && attributes.id) {
       const asciinemaId = attributes.id

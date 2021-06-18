@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { DomElement } from 'domhandler'
+import { Element } from 'domhandler'
 import MarkdownIt from 'markdown-it'
 import markdownItRegex from 'markdown-it-regex'
 import React from 'react'
@@ -14,13 +14,16 @@ import { replaceLegacyYoutubeShortCode } from './replace-legacy-youtube-short-co
 import { replaceYouTubeLink } from './replace-youtube-link'
 import { YouTubeFrame } from './youtube-frame'
 
+/**
+ * Detects 'app-youtube' tags and renders them as youtube embedding.
+ */
 export class YoutubeReplacer extends ComponentReplacer {
   public static readonly markdownItPlugin: MarkdownIt.PluginSimple = (markdownIt) => {
     markdownItRegex(markdownIt, replaceYouTubeLink)
     markdownItRegex(markdownIt, replaceLegacyYoutubeShortCode)
   }
 
-  public getReplacement(node: DomElement): React.ReactElement | undefined {
+  public getReplacement(node: Element): React.ReactElement | undefined {
     const attributes = getAttributesFromHedgeDocTag(node, 'youtube')
     if (attributes && attributes.id) {
       const videoId = attributes.id

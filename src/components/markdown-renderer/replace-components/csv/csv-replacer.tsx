@@ -4,13 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { DomElement } from 'domhandler'
+import { Element } from 'domhandler'
 import React from 'react'
 import { ComponentReplacer } from '../ComponentReplacer'
 import { CsvTable } from './csv-table'
 
+/**
+ * Detects code blocks with "csv" as language and renders them as table.
+ */
 export class CsvReplacer extends ComponentReplacer {
-  public getReplacement(codeNode: DomElement): React.ReactElement | undefined {
+  public getReplacement(codeNode: Element): React.ReactElement | undefined {
     if (
       codeNode.name !== 'code' ||
       !codeNode.attribs ||
@@ -22,7 +25,7 @@ export class CsvReplacer extends ComponentReplacer {
       return
     }
 
-    const code = codeNode.children[0].data as string
+    const code = ComponentReplacer.extractTextChildContent(codeNode)
 
     const extraData = codeNode.attribs['data-extra']
     const extraRegex = /\s*(delimiter=([^\s]*))?\s*(header)?/
