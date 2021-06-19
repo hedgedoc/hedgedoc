@@ -15026,10 +15026,10 @@ word-wrap@^1.2.3, word-wrap@~1.2.3:
   resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.3.tgz#610636f6b1f703891bd34771ccb17fb93b47079c"
   integrity sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==
 
-words-count@1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/words-count/-/words-count-1.0.8.tgz#c048de08d49dd68e42d2aa47bcc43993a479b4f3"
-  integrity sha512-t/uFU5+JgvAm2MCeA9kqWZdNqkNLuzn1+k0gkY3HJ/l/2unEUU8Wrs8opB+BzTERKdH2QMcRU5UI4TJSnhMngA==
+words-count@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/words-count/-/words-count-2.0.1.tgz#2d41a9ed2fc72d2e7cd7c3b115e8db271ff15d16"
+  integrity sha512-wJrIXIzhho7ixukCiVcyEtwOcisazyiBdzKhXE6IK7RgD8R2qq49XaescT6/puru/l2NvxST45rO7H8fS0r9/Q==
 
 workbox-background-sync@^5.1.4:
   version "5.1.4"
