@@ -8,13 +8,12 @@ import MarkdownIt from 'markdown-it'
 import anchor from 'markdown-it-anchor'
 
 export const headlineAnchors: MarkdownIt.PluginSimple = (markdownIt) => {
-  const options: anchor.AnchorOptions = {
-    permalink: true,
-    permalinkBefore: true,
-    permalinkClass: 'heading-anchor text-dark',
-    permalinkSymbol: '<i class="fa fa-link"></i>',
-    permalinkHref: (slug: string): string => `#${slug}`
-  }
-
-  anchor(markdownIt, options)
+  anchor(markdownIt, {
+    permalink: anchor.permalink.ariaHidden({
+      symbol: '<i class="fa fa-link"></i>',
+      class: 'heading-anchor text-dark',
+      renderHref: (slug: string): string => `#${slug}`,
+      placement: 'before'
+    })
+  })
 }
