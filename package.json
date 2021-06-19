@@ -25,7 +25,7 @@
     "@types/node-sass": "4.11.1",
     "@types/react": "17.0.11",
     "@types/react-bootstrap-typeahead": "5.1.5",
-    "@types/react-dom": "17.0.7",
+    "@types/react-dom": "17.0.8",
     "@types/react-router": "5.1.15",
     "@types/react-router-bootstrap": "0.24.5",
     "@types/react-router-dom": "5.1.7",
