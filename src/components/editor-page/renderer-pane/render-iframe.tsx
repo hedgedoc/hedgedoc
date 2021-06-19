@@ -140,6 +140,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
         {...(isTestMode() ? {} : { sandbox: 'allow-downloads allow-same-origin allow-scripts allow-popups' })}
         ref={frameReference}
         className={`border-0 ${frameClasses ?? ''}`}
+        data-content-ready={rendererReady}
       />
     </Fragment>
   )
