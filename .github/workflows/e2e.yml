@@ -20,17 +20,20 @@ jobs:
 
       - name: Cache build
         uses: actions/cache@v2.1.6
+        id: build-cache
         with:
           path: build
-          key: build-${{ hashFiles('src/**') }}
+          key: build-${{ github.sha }}
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
+        if: steps.build-cache.outputs.cache-hit != 'true'
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Cache yarn cache
         uses: actions/cache@v2
         id: yarn-cache
+        if: steps.build-cache.outputs.cache-hit != 'true'
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-16-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -38,14 +41,17 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Set up NodeJS
+        if: steps.build-cache.outputs.cache-hit != 'true'
         uses: actions/setup-node@v2
         with:
           node-version: 16
 
       - name: Install dependencies
+        if: steps.build-cache.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile --prefer-offline
 
       - name: Build test production build
+        if: steps.build-cache.outputs.cache-hit != 'true'
         run: yarn build:test
 
       - uses: actions/upload-artifact@master
