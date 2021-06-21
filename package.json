@@ -32,7 +32,7 @@
     "@nestjs/passport": "7.1.5",
     "@nestjs/platform-express": "7.6.18",
     "@nestjs/schedule": "0.4.3",
-    "@nestjs/swagger": "4.8.0",
+    "@nestjs/swagger": "4.8.1",
     "@nestjs/typeorm": "7.1.5",
     "@types/bcrypt": "5.0.0",
     "@types/cron": "1.7.2",
