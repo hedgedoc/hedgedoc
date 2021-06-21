@@ -20,7 +20,7 @@ export const DocumentInfoLineWordCount: React.FC = () => {
   useTranslation()
   const iframeEditorToRendererCommunicator = useIFrameEditorToRendererCommunicator()
   const [wordCount, setWordCount] = useState<number | null>(null)
-  const rendererReady = useApplicationState((state) => state.editorConfig.rendererReady)
+  const rendererReady = useApplicationState((state) => state.rendererStatus.rendererReady)
 
   useEffect(() => {
     iframeEditorToRendererCommunicator.onWordCountCalculated((words) => {

@@ -24,7 +24,7 @@ import { useApplicationState } from '../../hooks/common/use-application-state'
 
 export const IntroPage: React.FC = () => {
   const introPageContent = useIntroPageContent()
-  const rendererReady = useApplicationState((state) => state.editorConfig.rendererReady)
+  const rendererReady = useApplicationState((state) => state.rendererStatus.rendererReady)
 
   return (
     <IframeEditorToRendererCommunicatorContextProvider>

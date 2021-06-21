@@ -23,6 +23,8 @@ import { UiNotificationState } from './ui-notifications/types'
 import { UiNotificationReducer } from './ui-notifications/reducers'
 import { HistoryEntry } from './history/types'
 import { HistoryReducer } from './history/reducers'
+import { RendererStatusReducer } from './renderer-status/reducers'
+import { RendererStatus } from './renderer-status/types'
 
 export interface ApplicationState {
   user: MaybeUserState
@@ -34,6 +36,7 @@ export interface ApplicationState {
   darkMode: DarkModeConfig
   noteDetails: NoteDetails
   uiNotifications: UiNotificationState
+  rendererStatus: RendererStatus
 }
 
 export const allReducers: Reducer<ApplicationState> = combineReducers<ApplicationState>({
@@ -45,7 +48,8 @@ export const allReducers: Reducer<ApplicationState> = combineReducers<Applicatio
   editorConfig: EditorConfigReducer,
   darkMode: DarkModeConfigReducer,
   noteDetails: NoteDetailsReducer,
-  uiNotifications: UiNotificationReducer
+  uiNotifications: UiNotificationReducer,
+  rendererStatus: RendererStatusReducer
 })
 
 export const store = createStore(allReducers)

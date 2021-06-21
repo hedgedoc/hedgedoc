@@ -14,8 +14,7 @@ import {
   SetEditorLigaturesAction,
   SetEditorPreferencesAction,
   SetEditorSmartPasteAction,
-  SetEditorSyncScrollAction,
-  SetRendererReadyAction
+  SetEditorSyncScrollAction
 } from './types'
 
 export const loadFromLocalStorage = (): EditorConfig | undefined => {
@@ -43,19 +42,6 @@ export const setEditorMode = (editorMode: EditorMode): void => {
   const action: SetEditorConfigAction = {
     type: EditorConfigActionType.SET_EDITOR_VIEW_MODE,
     mode: editorMode
-  }
-  store.dispatch(action)
-}
-
-/**
- * Dispatches a global application state change for the "renderer ready" state.
- *
- * @param rendererReady The new renderer ready state.
- */
-export const setRendererReady = (rendererReady: boolean): void => {
-  const action: SetRendererReadyAction = {
-    type: EditorConfigActionType.SET_RENDERER_READY,
-    rendererReady
   }
   store.dispatch(action)
 }

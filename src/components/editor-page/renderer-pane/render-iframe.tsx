@@ -7,7 +7,6 @@ import equal from 'fast-deep-equal'
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { useIsDarkModeActivated } from '../../../hooks/common/use-is-dark-mode-activated'
-import { setRendererReady } from '../../../redux/editor/methods'
 import { isTestMode } from '../../../utils/test-modes'
 import { RendererProps } from '../../render-page/markdown-document'
 import { ImageDetails, RendererType } from '../../render-page/rendering-message'
@@ -15,6 +14,7 @@ import { useIFrameEditorToRendererCommunicator } from '../render-context/iframe-
 import { ScrollState } from '../synced-scroll/scroll-props'
 import { useOnIframeLoad } from './hooks/use-on-iframe-load'
 import { ShowOnPropChangeImageLightbox } from './show-on-prop-change-image-lightbox'
+import { setRendererStatus } from '../../../redux/renderer-status/methods'
 
 export interface RenderIframeProps extends RendererProps {
   rendererType: RendererType
@@ -41,7 +41,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   const frameReference = useRef<HTMLIFrameElement>(null)
   const rendererOrigin = useApplicationState((state) => state.config.iframeCommunication.rendererOrigin)
   const renderPageUrl = `${rendererOrigin}render`
-  const resetRendererReady = useCallback(() => setRendererReady(false), [])
+  const resetRendererReady = useCallback(() => setRendererStatus(false), [])
   const iframeCommunicator = useIFrameEditorToRendererCommunicator()
   const onIframeLoad = useOnIframeLoad(
     frameReference,
@@ -52,12 +52,12 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   )
   const [frameHeight, setFrameHeight] = useState<number>(0)
 
-  const rendererReady = useApplicationState((state) => state.editorConfig.rendererReady)
+  const rendererReady = useApplicationState((state) => state.rendererStatus.rendererReady)
 
   useEffect(
     () => () => {
       iframeCommunicator.unregisterEventListener()
-      setRendererReady(false)
+      setRendererStatus(false)
     },
     [iframeCommunicator]
   )
@@ -103,7 +103,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
         baseUrl: window.location.toString(),
         rendererType
       })
-      setRendererReady(true)
+      setRendererStatus(true)
     })
     return () => iframeCommunicator.onRendererReady(undefined)
   }, [iframeCommunicator, rendererType])
