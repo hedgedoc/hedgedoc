@@ -8,6 +8,7 @@ import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'r
 import { ShowIf } from '../../common/show-if/show-if'
 import { SplitDivider } from './split-divider/split-divider'
 import './splitter.scss'
+import { useAdjustedRelativeSplitValue } from './hooks/use-adjusted-relative-split-value'
 
 export interface SplitterProps {
   left: ReactElement
@@ -62,7 +63,7 @@ export const Splitter: React.FC<SplitterProps> = ({
   showRight
 }) => {
   const [relativeSplitValue, setRelativeSplitValue] = useState(50)
-  const cappedRelativeSplitValue = Math.max(0, Math.min(100, showRight ? relativeSplitValue : 100))
+  const adjustedRelativeSplitValue = useAdjustedRelativeSplitValue(showLeft, showRight, relativeSplitValue)
   const resizingInProgress = useRef(false)
   const splitContainer = useRef<HTMLDivElement>(null)
 
@@ -129,7 +130,7 @@ export const Splitter: React.FC<SplitterProps> = ({
     <div ref={splitContainer} className={`flex-fill flex-row d-flex ${additionalContainerClassName || ''}`}>
       <div
         className={`splitter left ${!showLeft ? 'd-none' : ''}`}
-        style={{ width: `calc(${cappedRelativeSplitValue}% - 5px)` }}>
+        style={{ width: `calc(${adjustedRelativeSplitValue}% - 5px)` }}>
         {left}
       </div>
       <ShowIf condition={showLeft && showRight}>
@@ -139,7 +140,7 @@ export const Splitter: React.FC<SplitterProps> = ({
       </ShowIf>
       <div
         className={`splitter right ${!showRight ? 'd-none' : ''}`}
-        style={{ width: `calc(100% - ${cappedRelativeSplitValue}%)` }}>
+        style={{ width: `calc(100% - ${adjustedRelativeSplitValue}%)` }}>
         {right}
       </div>
     </div>

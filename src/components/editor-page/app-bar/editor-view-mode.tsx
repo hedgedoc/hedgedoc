@@ -29,13 +29,25 @@ export const EditorViewMode: React.FC = () => {
       onChange={(value: EditorMode) => {
         setEditorMode(value)
       }}>
-      <ToggleButton value={EditorMode.PREVIEW} variant='outline-secondary' title={t('editor.viewMode.view')}>
+      <ToggleButton
+        data-cy={'view-mode-preview'}
+        value={EditorMode.PREVIEW}
+        variant='outline-secondary'
+        title={t('editor.viewMode.view')}>
         <ForkAwesomeIcon icon='eye' />
       </ToggleButton>
-      <ToggleButton value={EditorMode.BOTH} variant='outline-secondary' title={t('editor.viewMode.both')}>
+      <ToggleButton
+        data-cy={'view-mode-both'}
+        value={EditorMode.BOTH}
+        variant='outline-secondary'
+        title={t('editor.viewMode.both')}>
         <ForkAwesomeIcon icon='columns' />
       </ToggleButton>
-      <ToggleButton value={EditorMode.EDITOR} variant='outline-secondary' title={t('editor.viewMode.edit')}>
+      <ToggleButton
+        data-cy={'view-mode-editor'}
+        value={EditorMode.EDITOR}
+        variant='outline-secondary'
+        title={t('editor.viewMode.edit')}>
         <ForkAwesomeIcon icon='pencil' />
       </ToggleButton>
     </ToggleButtonGroup>
