@@ -132,7 +132,6 @@ module.exports = {
   ],
 
   entry: {
-    font: path.join(__dirname, 'public/css/google-font.css'),
     'font-pack': path.join(__dirname, 'public/css/font.css'),
     common: [
       'expose-loader?exposes[]=$&exposes[]=jQuery!jquery',
