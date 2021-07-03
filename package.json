@@ -190,7 +190,7 @@
     "mini-css-extract-plugin": "1.6.2",
     "mocha": "9.0.1",
     "mock-require": "3.0.3",
-    "optimize-css-assets-webpack-plugin": "6.0.0",
+    "optimize-css-assets-webpack-plugin": "6.0.1",
     "prismjs": "1.24.0",
     "raphael": "2.3.0",
     "remark-cli": "9.0.0",
