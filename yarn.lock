@@ -7270,10 +7270,10 @@ openid@2.x.x:
   dependencies:
     request "^2.88.2"
 
-optimize-css-assets-webpack-plugin@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/optimize-css-assets-webpack-plugin/-/optimize-css-assets-webpack-plugin-6.0.0.tgz#00acd99d420715ad96ed3d8ad65a8a4df1be233b"
-  integrity sha512-XKVxJuCBSslP1Eyuf1uVtZT3Pkp6jEIkmg7BMcNU/pq6XAnDXTINkYFWmiQWt8+j//FO4dIDd4v+gn0m5VWJIw==
+optimize-css-assets-webpack-plugin@6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/optimize-css-assets-webpack-plugin/-/optimize-css-assets-webpack-plugin-6.0.1.tgz#7719bceabba1f3891ec3ae04efb81a1cc99cd793"
+  integrity sha512-BshV2UZPfggZLdUfN3zFBbG4sl/DynUI+YCB6fRRDWaqO2OiWN8GPcp4Y0/fEV6B3k9Hzyk3czve3V/8B/SzKQ==
   dependencies:
     cssnano "^5.0.2"
     last-call-webpack-plugin "^3.0.0"
