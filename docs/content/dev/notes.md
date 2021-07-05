@@ -18,7 +18,7 @@ Each note in HedgeDoc 2 contains the following information:
 
 The `publicId` is the default possibility of identifying a note. It will be a randomly generated 128-bit value encoded with [base32-encode](https://www.npmjs.com/package/base32-encode) using the crockford variant and converted to lowercase. This variant of base32 is used, because that results in ids that only use one case of alpha-numeric characters and other url safe characters. We convert the id to lowercase, because we want to minimize case confusion.
 
-`aliases` are the other way of identifying a note. There can be any number of them, and the owner of the note is able to add or remove them. All aliases are just strings (especially to accommodate the old identifier from HedgeDoc 1 [see below](#conversion-of-hedgedoc-1-notes)), but new aliases added with HedgeDoc 2 will only allow characters matching this regex: `[a-z0-9\-_]`. This is done to once again prevent case confusion.
+`aliases` are the other way of identifying a note. There can be any number of them, and the owner of the note is able to add or remove them. All aliases are just strings (especially to accommodate the old identifier from HedgeDoc 1 [see below](#conversion-of-hedgedoc-1-notes)), but new aliases added with HedgeDoc 2 will only allow characters matching this regex: `[a-z0-9\-_]`. This is done to once again prevent case confusion. One of the aliases can be set as the primary alias, which will be used as the identifier for the history entry.
 
 `groupPermissions` and `userPermissions` each hold a list of the appropriate permissions.
 Each permission holds a reference to a note and a user/group and specify what the user/group is allowed to do.

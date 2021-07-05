@@ -25,13 +25,17 @@ export class NoteMetadataDto {
   id: string;
 
   /**
-   * Alias of the note
-   * Can be null
+   * Aliases of the note
+   */
+  @IsArray()
+  @IsString({ each: true })
+  aliases: string[];
+
+  /**
+   * The primary alias of the note
    */
   @IsString()
-  @IsOptional()
-  @ApiPropertyOptional()
-  alias: string | null;
+  primaryAlias: string | null;
 
   /**
    * Title of the note

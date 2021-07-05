@@ -6,11 +6,18 @@ entity "note" {
   *id : uuid <<generated>>
   --
   publicId: text
-  alias : text
   *viewCount : number
   *ownerId : uuid <<FK user>>
   description: text
   title: text
+}
+
+entity "alias" {
+  *id: uuid <<generated>>
+  ---
+  name: text
+  ' If the alias is primary. Can be NULL, which means it's not primary
+  primary: boolean
 }
 
 entity "user" {
@@ -168,6 +175,7 @@ media_upload "0..*"  -- "1" note
 note "1" -d- "1..*" revision
 note "1" - "0..*" history_entry
 note "0..*" -l- "0..*" tag
+note "1" - "0..*" alias
 note "0..*" -- "0..*" group
 user "1..*" -- "0..*" group
 

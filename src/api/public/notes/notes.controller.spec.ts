@@ -36,6 +36,7 @@ import { MediaModule } from '../../../media/media.module';
 import { MediaUpload } from '../../../media/media-upload.entity';
 import appConfigMock from '../../../config/mock/app.config.mock';
 import mediaConfigMock from '../../../config/mock/media.config.mock';
+import { Alias } from '../../../notes/alias.entity';
 
 describe('Notes Controller', () => {
   let controller: NotesController;
@@ -51,6 +52,10 @@ describe('Notes Controller', () => {
         },
         {
           provide: getRepositoryToken(Tag),
+          useValue: {},
+        },
+        {
+          provide: getRepositoryToken(Alias),
           useValue: {},
         },
         {
@@ -100,6 +105,8 @@ describe('Notes Controller', () => {
       .overrideProvider(getRepositoryToken(Group))
       .useValue({})
       .overrideProvider(getRepositoryToken(MediaUpload))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .overrideProvider(getRepositoryToken(Session))
       .useValue({})

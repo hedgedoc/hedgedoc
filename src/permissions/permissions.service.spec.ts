@@ -25,6 +25,7 @@ import { PermissionsModule } from './permissions.module';
 import { GuestPermission, PermissionsService } from './permissions.service';
 import { ConfigModule } from '@nestjs/config';
 import appConfigMock from '../config/mock/app.config.mock';
+import { Alias } from '../notes/alias.entity';
 
 describe('PermissionsService', () => {
   let permissionsService: PermissionsService;
@@ -66,6 +67,8 @@ describe('PermissionsService', () => {
       .overrideProvider(getRepositoryToken(Session))
       .useValue({})
       .overrideProvider(getRepositoryToken(Author))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .compile();
     permissionsService = module.get<PermissionsService>(PermissionsService);

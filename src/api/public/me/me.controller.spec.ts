@@ -33,6 +33,7 @@ import { MediaUpload } from '../../../media/media-upload.entity';
 import { ConfigModule } from '@nestjs/config';
 import mediaConfigMock from '../../../config/mock/media.config.mock';
 import appConfigMock from '../../../config/mock/app.config.mock';
+import { Alias } from '../../../notes/alias.entity';
 
 describe('Me Controller', () => {
   let controller: MeController;
@@ -78,6 +79,8 @@ describe('Me Controller', () => {
       .overrideProvider(getRepositoryToken(Group))
       .useValue({})
       .overrideProvider(getRepositoryToken(MediaUpload))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .overrideProvider(getRepositoryToken(Session))
       .useValue({})

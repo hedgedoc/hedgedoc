@@ -14,6 +14,8 @@ import {
   NotFoundException,
   Param,
   Post,
+  Put,
+  Req,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Note } from '../../../notes/note.entity';
@@ -35,6 +37,8 @@ import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { MarkdownBody } from '../../utils/markdownbody-decorator';
 import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
+import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
+import { Request } from 'express';
 
 @Controller('notes')
 export class NotesController {
@@ -163,6 +167,82 @@ export class NotesController {
       await this.noteService.deleteNote(note);
       this.logger.debug('Successfully deleted ' + noteIdOrAlias, 'deleteNote');
       return;
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
+      }
+      throw e;
+    }
+  }
+
+  @Post(':noteIdOrAlias/metadata/alias/:newAlias')
+  async addAlias(
+    @Req() req: Request,
+    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('newAlias') newAlias: string,
+  ): Promise<NoteMetadataDto> {
+    try {
+      // ToDo: use actual user here
+      const user = await this.userService.getUserByUsername('hardcoded');
+      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
+      if (!this.permissionsService.isOwner(user, note)) {
+        throw new UnauthorizedException('Reading note denied!');
+      }
+      const updatedNote = await this.noteService.addAlias(note, newAlias);
+      return await this.noteService.toNoteMetadataDto(updatedNote);
+    } catch (e) {
+      if (e instanceof AlreadyInDBError) {
+        throw new BadRequestException(e.message);
+      }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
+      }
+      throw e;
+    }
+  }
+
+  @Put(':alias/metadata/alias')
+  async makeAliasPrimary(
+    @Req() req: Request,
+    @Param('alias') alias: string,
+  ): Promise<NoteMetadataDto> {
+    try {
+      // ToDo: use actual user here
+      const user = await this.userService.getUserByUsername('hardcoded');
+      const note = await this.noteService.getNoteByIdOrAlias(alias);
+      if (!this.permissionsService.isOwner(user, note)) {
+        throw new UnauthorizedException('Reading note denied!');
+      }
+      const updatedNote = await this.noteService.makeAliasPrimary(note, alias);
+      return await this.noteService.toNoteMetadataDto(updatedNote);
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
+      }
+      throw e;
+    }
+  }
+
+  @Delete(':alias/metadata/alias')
+  async removeAlias(
+    @Req() req: Request,
+    @Param('alias') alias: string,
+  ): Promise<NoteMetadataDto> {
+    try {
+      // ToDo: use actual user here
+      const user = await this.userService.getUserByUsername('hardcoded');
+      const note = await this.noteService.getNoteByIdOrAlias(alias);
+      if (!this.permissionsService.isOwner(user, note)) {
+        throw new UnauthorizedException('Reading note denied!');
+      }
+      const updatedNote = await this.noteService.removeAlias(note, alias);
+      return await this.noteService.toNoteMetadataDto(updatedNote);
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);

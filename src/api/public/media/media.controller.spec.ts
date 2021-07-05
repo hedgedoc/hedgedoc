@@ -26,6 +26,7 @@ import { MediaController } from './media.controller';
 import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
 import { Group } from '../../../groups/group.entity';
+import { Alias } from '../../../notes/alias.entity';
 
 describe('Media Controller', () => {
   let controller: MediaController;
@@ -64,6 +65,8 @@ describe('Media Controller', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .overrideProvider(getRepositoryToken(Session))
       .useValue({})

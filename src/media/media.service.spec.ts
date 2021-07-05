@@ -30,6 +30,7 @@ import { NoteGroupPermission } from '../permissions/note-group-permission.entity
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Group } from '../groups/group.entity';
 import appConfigMock from '../../src/config/mock/app.config.mock';
+import { Alias } from '../notes/alias.entity';
 
 describe('MediaService', () => {
   let service: MediaService;
@@ -83,6 +84,8 @@ describe('MediaService', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Author))
       .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
+      .useValue({})
       .compile();
 
     service = module.get<MediaService>(MediaService);
@@ -103,7 +106,18 @@ describe('MediaService', () => {
       const alias = 'alias';
       const note = Note.create(user, alias);
       jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
-      jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
+      const createQueryBuilder = {
+        leftJoinAndSelect: () => createQueryBuilder,
+        where: () => createQueryBuilder,
+        orWhere: () => createQueryBuilder,
+        setParameter: () => createQueryBuilder,
+        getOne: () => note,
+      };
+      jest
+        .spyOn(noteRepo, 'createQueryBuilder')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementation(() => createQueryBuilder);
     });
 
     it('works', async () => {
@@ -277,7 +291,7 @@ describe('MediaService', () => {
         id: 'testMediaUpload',
         backendData: 'testBackendData',
         note: {
-          alias: 'test',
+          aliases: [Alias.create('test', true)],
         } as Note,
         user: {
           userName: 'hardcoded',

@@ -45,6 +45,7 @@ describe('Me', () => {
   let user: User;
   let content: string;
   let note1: Note;
+  let alias2: string;
   let note2: Note;
 
   beforeAll(async () => {
@@ -88,8 +89,9 @@ describe('Me', () => {
     user = await userService.createUser('hardcoded', 'Testy');
     const notesService = moduleRef.get(NotesService);
     content = 'This is a test note.';
-    note1 = await notesService.createNote(content, null, user);
-    note2 = await notesService.createNote(content, 'note2', user);
+    alias2 = 'note2';
+    note1 = await notesService.createNote(content, undefined, user);
+    note2 = await notesService.createNote(content, alias2, user);
   });
 
   it('GET /me', async () => {
@@ -121,16 +123,8 @@ describe('Me', () => {
       'hardcoded',
       note1.publicId,
     );
-    const url2 = await mediaService.saveFile(
-      testImage,
-      'hardcoded',
-      note2.alias ?? '',
-    );
-    const url3 = await mediaService.saveFile(
-      testImage,
-      'hardcoded',
-      note2.alias ?? '',
-    );
+    const url2 = await mediaService.saveFile(testImage, 'hardcoded', alias2);
+    const url3 = await mediaService.saveFile(testImage, 'hardcoded', alias2);
 
     const response = await request(httpServer)
       .get('/me/media/')

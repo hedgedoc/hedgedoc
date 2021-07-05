@@ -8,7 +8,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Author } from '../authors/author.entity';
-import { AuthorsModule } from '../authors/authors.module';
 import { NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
 import { Note } from '../notes/note.entity';
@@ -26,6 +25,7 @@ import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Group } from '../groups/group.entity';
 import { ConfigModule } from '@nestjs/config';
 import appConfigMock from '../config/mock/app.config.mock';
+import { Alias } from '../notes/alias.entity';
 
 describe('RevisionsService', () => {
   let service: RevisionsService;
@@ -68,6 +68,8 @@ describe('RevisionsService', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .overrideProvider(getRepositoryToken(Session))
       .useValue({})

@@ -26,14 +26,13 @@ import {
 import { NoteDto } from './note.dto';
 import { Note } from './note.entity';
 import { Tag } from './tag.entity';
+import { Alias } from './alias.entity';
 import { HistoryEntry } from '../history/history-entry.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { GroupsService } from '../groups/groups.service';
 import { checkArrayForDuplicates } from '../utils/arrayDuplicatCheck';
 import appConfiguration, { AppConfig } from '../config/app.config';
-import base32Encode from 'base32-encode';
-import { randomBytes } from 'crypto';
 
 @Injectable()
 export class NotesService {
@@ -41,6 +40,7 @@ export class NotesService {
     private readonly logger: ConsoleLoggerService,
     @InjectRepository(Note) private noteRepository: Repository<Note>,
     @InjectRepository(Tag) private tagRepository: Repository<Tag>,
+    @InjectRepository(Alias) private aliasRepository: Repository<Alias>,
     @InjectRepository(User) private userRepository: Repository<User>,
     @Inject(UsersService) private usersService: UsersService,
     @Inject(GroupsService) private groupsService: GroupsService,
@@ -61,7 +61,13 @@ export class NotesService {
   async getUserNotes(user: User): Promise<Note[]> {
     const notes = await this.noteRepository.find({
       where: { owner: user },
-      relations: ['owner', 'userPermissions', 'groupPermissions', 'tags'],
+      relations: [
+        'owner',
+        'userPermissions',
+        'groupPermissions',
+        'tags',
+        'aliases',
+      ],
     });
     if (notes === undefined) {
       return [];
@@ -81,7 +87,7 @@ export class NotesService {
    */
   async createNote(
     noteContent: string,
-    alias?: NoteMetadataDto['alias'],
+    alias?: string,
     owner?: User,
   ): Promise<Note> {
     const newNote = Note.create();
@@ -90,8 +96,10 @@ export class NotesService {
       Revision.create(noteContent, noteContent),
     ]);
     if (alias) {
-      newNote.alias = alias;
       this.checkNoteIdOrAlias(alias);
+      newNote.aliases = [Alias.create(alias, true)];
+    } else {
+      newNote.aliases = [];
     }
     if (owner) {
       newNote.historyEntries = [HistoryEntry.create(owner)];
@@ -158,24 +166,29 @@ export class NotesService {
       'getNoteByIdOrAlias',
     );
     this.checkNoteIdOrAlias(noteIdOrAlias);
-    const note = await this.noteRepository.findOne({
-      where: [
-        {
-          publicId: noteIdOrAlias,
-        },
-        {
-          alias: noteIdOrAlias,
-        },
-      ],
-      relations: [
-        'owner',
-        'groupPermissions',
-        'groupPermissions.group',
-        'userPermissions',
-        'userPermissions.user',
-        'tags',
-      ],
-    });
+
+    const note = await this.noteRepository
+      .createQueryBuilder('note')
+      .leftJoinAndSelect('note.aliases', 'alias')
+      .leftJoinAndSelect('note.owner', 'owner')
+      .leftJoinAndSelect('note.groupPermissions', 'group_permission')
+      .leftJoinAndSelect('group_permission.group', 'group')
+      .leftJoinAndSelect('note.userPermissions', 'user_permission')
+      .leftJoinAndSelect('user_permission.user', 'user')
+      .leftJoinAndSelect('note.tags', 'tag')
+      .where('note.publicId = :noteIdOrAlias')
+      .orWhere((queryBuilder) => {
+        const subQuery = queryBuilder
+          .subQuery()
+          .select('alias.noteId')
+          .from(Alias, 'alias')
+          .where('alias.name = :noteIdOrAlias')
+          .getQuery();
+        return 'note.id IN ' + subQuery;
+      })
+      .setParameter('noteIdOrAlias', noteIdOrAlias)
+      .getOne();
+
     if (note === undefined) {
       this.logger.debug(
         `Could not find note '${noteIdOrAlias}'`,
@@ -334,6 +347,104 @@ export class NotesService {
   }
 
   /**
+   * @async
+   * Add the specified alias to the note.
+   * @param {Note} note - the note to add the alias to
+   * @param {string} alias - the alias to add to the note
+   * @throws {AlreadyInDBError} the alias is already in use.
+   */
+  async addAlias(note: Note, alias: string): Promise<Note> {
+    this.checkNoteIdOrAlias(alias);
+
+    const foundAlias = await this.aliasRepository.findOne({
+      where: { name: alias },
+    });
+    if (foundAlias !== undefined) {
+      this.logger.debug(`The alias '${alias}' is already used.`, 'addAlias');
+      throw new AlreadyInDBError(`The alias '${alias}' is already used.`);
+    }
+
+    note.aliases.push(Alias.create(alias));
+
+    return await this.noteRepository.save(note);
+  }
+
+  /**
+   * @async
+   * Set the specified alias as the primary alias of the note.
+   * @param {Note} note - the note to change the primary alias
+   * @param {string} alias - the alias to be the new primary alias of the note
+   * @throws {NotInDBError} the alias is not part of this note.
+   */
+  async makeAliasPrimary(note: Note, alias: string): Promise<Note> {
+    let newPrimaryFound = false;
+    let oldPrimaryId = '';
+    let newPrimaryId = '';
+
+    for (const anAlias of note.aliases) {
+      // found old primary
+      if (anAlias.primary) {
+        oldPrimaryId = anAlias.id;
+      }
+
+      // found new primary
+      if (anAlias.name === alias) {
+        newPrimaryFound = true;
+        newPrimaryId = anAlias.id;
+      }
+    }
+
+    if (!newPrimaryFound) {
+      // the provided alias is not already an alias of this note
+      this.logger.debug(
+        `The alias '${alias}' is not used by this note.`,
+        'makeAliasPrimary',
+      );
+      throw new NotInDBError(`The alias '${alias}' is not used by this note.`);
+    }
+
+    const oldPrimary = await this.aliasRepository.findOne(oldPrimaryId);
+    const newPrimary = await this.aliasRepository.findOne(newPrimaryId);
+
+    if (!oldPrimary || !newPrimary) {
+      throw new Error('This should not happen!');
+    }
+
+    oldPrimary.primary = false;
+    newPrimary.primary = true;
+
+    await this.aliasRepository.save(oldPrimary);
+    await this.aliasRepository.save(newPrimary);
+
+    return await this.getNoteByIdOrAlias(note.publicId);
+  }
+
+  /**
+   * @async
+   * Remove the specified alias from the note.
+   * @param {Note} note - the note to remove the alias from
+   * @param {string} alias - the alias to remove from the note
+   * @throws {NotInDBError} the alias is not part of this note.
+   */
+  async removeAlias(note: Note, alias: string): Promise<Note> {
+    const filteredAliases = note.aliases.filter(
+      (anAlias) =>
+        anAlias.name !== alias || (anAlias.name === alias && anAlias.primary),
+    );
+    if (note.aliases.length === filteredAliases.length) {
+      this.logger.debug(
+        `The alias '${alias}' is not used by this note or is the primary alias, that can't be removed.`,
+        'removeAlias',
+      );
+      throw new NotInDBError(
+        `The alias '${alias}' is not used by this note or is the primary alias, that can't be removed.`,
+      );
+    }
+    note.aliases = filteredAliases;
+    return await this.noteRepository.save(note);
+  }
+
+  /**
    * Map the tags of a note to a string array of the tags names.
    * @param {Note} note - the note to use
    * @return {string[]} string array of tags names
@@ -371,7 +482,11 @@ export class NotesService {
     const updateUser = await this.calculateUpdateUser(note);
     return {
       id: note.publicId,
-      alias: note.alias ?? null,
+      aliases: note.aliases.map((alias) => alias.name),
+      primaryAlias:
+        note.aliases.length !== 0
+          ? note.aliases.filter((alias) => alias.primary)[0].name
+          : null,
       title: note.title ?? '',
       createTime: (await this.getFirstRevision(note)).createdAt,
       description: note.description ?? '',

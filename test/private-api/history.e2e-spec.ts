@@ -77,7 +77,7 @@ describe('History', () => {
     const userService = moduleRef.get(UsersService);
     user = await userService.createUser('hardcoded', 'Testy');
     const notesService = moduleRef.get(NotesService);
-    note = await notesService.createNote(content, null, user);
+    note = await notesService.createNote(content, 'note', user);
     note2 = await notesService.createNote(content, 'note2', user);
   });
 
@@ -109,7 +109,9 @@ describe('History', () => {
       const pinStatus = true;
       const lastVisited = new Date('2020-12-01 12:23:34');
       const postEntryDto = new HistoryEntryImportDto();
-      postEntryDto.note = note2.alias;
+      postEntryDto.note = note2.aliases.filter(
+        (alias) => alias.primary,
+      )[0].name;
       postEntryDto.pinStatus = pinStatus;
       postEntryDto.lastVisited = lastVisited;
       await request(app.getHttpServer())
@@ -119,7 +121,7 @@ describe('History', () => {
         .expect(201);
       const userEntries = await historyService.getEntriesByUser(user);
       expect(userEntries.length).toEqual(1);
-      expect(userEntries[0].note.alias).toEqual(note2.alias);
+      expect(userEntries[0].note.aliases).toEqual(note2.aliases);
       expect(userEntries[0].user.userName).toEqual(user.userName);
       expect(userEntries[0].pinStatus).toEqual(pinStatus);
       expect(userEntries[0].updatedAt).toEqual(lastVisited);
@@ -136,7 +138,9 @@ describe('History', () => {
         pinStatus = !previousHistory[0].pinStatus;
         lastVisited = new Date('2020-12-01 23:34:45');
         postEntryDto = new HistoryEntryImportDto();
-        postEntryDto.note = note2.alias;
+        postEntryDto.note = note2.aliases.filter(
+          (alias) => alias.primary,
+        )[0].name;
         postEntryDto.pinStatus = pinStatus;
         postEntryDto.lastVisited = lastVisited;
       });
@@ -165,7 +169,7 @@ describe('History', () => {
       afterEach(async () => {
         const historyEntries = await historyService.getEntriesByUser(user);
         expect(historyEntries).toHaveLength(1);
-        expect(historyEntries[0].note.alias).toEqual(prevEntry.note.alias);
+        expect(historyEntries[0].note.aliases).toEqual(prevEntry.note.aliases);
         expect(historyEntries[0].user.userName).toEqual(
           prevEntry.user.userName,
         );
@@ -184,22 +188,24 @@ describe('History', () => {
   it('PUT /me/history/:note', async () => {
     const entry = await historyService.createOrUpdateHistoryEntry(note2, user);
     expect(entry.pinStatus).toBeFalsy();
+    const alias = entry.note.aliases.filter((alias) => alias.primary)[0].name;
     await request(app.getHttpServer())
-      .put(`/me/history/${entry.note.alias || 'undefined'}`)
+      .put(`/me/history/${alias || 'undefined'}`)
       .send({ pinStatus: true })
       .expect(200);
     const userEntries = await historyService.getEntriesByUser(user);
     expect(userEntries.length).toEqual(1);
     expect(userEntries[0].pinStatus).toBeTruthy();
-    await historyService.deleteHistoryEntry(note2.alias, user);
+    await historyService.deleteHistoryEntry(alias, user);
   });
 
   it('DELETE /me/history/:note', async () => {
     const entry = await historyService.createOrUpdateHistoryEntry(note2, user);
+    const alias = entry.note.aliases.filter((alias) => alias.primary)[0].name;
     const entry2 = await historyService.createOrUpdateHistoryEntry(note, user);
     const entryDto = historyService.toHistoryEntryDto(entry2);
     await request(app.getHttpServer())
-      .delete(`/me/history/${entry.note.alias || 'undefined'}`)
+      .delete(`/me/history/${alias || 'undefined'}`)
       .expect(200);
     const userEntries = await historyService.getEntriesByUser(user);
     expect(userEntries.length).toEqual(1);

@@ -7,6 +7,7 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Alias } from './alias.entity';
 import { GroupsModule } from '../groups/groups.module';
 import { LoggerModule } from '../logger/logger.module';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
@@ -26,6 +27,7 @@ import { Tag } from './tag.entity';
       NoteGroupPermission,
       NoteUserPermission,
       User,
+      Alias,
     ]),
     forwardRef(() => RevisionsModule),
     UsersModule,

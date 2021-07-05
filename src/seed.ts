@@ -19,6 +19,7 @@ import { MediaUpload } from './media/media-upload.entity';
 import { Tag } from './notes/tag.entity';
 import { AuthToken } from './auth/auth-token.entity';
 import { Identity } from './users/identity.entity';
+import { Alias } from './notes/alias.entity';
 
 /**
  * This function creates and populates a sqlite db for manual testing
@@ -41,6 +42,7 @@ createConnection({
     Identity,
     Author,
     Session,
+    Alias,
   ],
   synchronize: true,
   logging: false,
@@ -76,17 +78,19 @@ createConnection({
     if (!foundUser) {
       throw new Error('Could not find freshly seeded user. Aborting.');
     }
-    const foundNote = await connection.manager.findOne(Note);
+    const foundNote = await connection.manager.findOne(Note, {
+      relations: ['aliases'],
+    });
     if (!foundNote) {
       throw new Error('Could not find freshly seeded note. Aborting.');
     }
-    if (!foundNote.alias) {
+    if (!foundNote.aliases[0]) {
       throw new Error('Could not find alias of freshly seeded note. Aborting.');
     }
     const historyEntry = HistoryEntry.create(foundUser, foundNote);
     await connection.manager.save(historyEntry);
     console.log(`Created User '${foundUser.userName}'`);
-    console.log(`Created Note '${foundNote.alias}'`);
+    console.log(`Created Note '${foundNote.aliases[0].name}'`);
     console.log(`Created HistoryEntry`);
   })
   .catch((error) => console.log(error));

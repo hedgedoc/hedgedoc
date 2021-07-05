@@ -28,6 +28,7 @@ import { Note } from '../../../notes/note.entity';
 import { Tag } from '../../../notes/tag.entity';
 import { Revision } from '../../../revisions/revision.entity';
 import { Group } from '../../../groups/group.entity';
+import { Alias } from '../../../notes/alias.entity';
 
 describe('MeController', () => {
   let controller: MeController;
@@ -70,6 +71,8 @@ describe('MeController', () => {
       .overrideProvider(getRepositoryToken(Edit))
       .useValue({})
       .overrideProvider(getRepositoryToken(MediaUpload))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .overrideProvider(getRepositoryToken(Session))
       .useValue({})

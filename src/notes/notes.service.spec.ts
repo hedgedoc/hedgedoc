@@ -36,6 +36,7 @@ import { GroupsModule } from '../groups/groups.module';
 import { Group } from '../groups/group.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import appConfigMock from '../config/mock/app.config.mock';
+import { Alias } from './alias.entity';
 
 describe('NotesService', () => {
   let service: NotesService;
@@ -43,6 +44,7 @@ describe('NotesService', () => {
   let revisionRepo: Repository<Revision>;
   let userRepo: Repository<User>;
   let groupRepo: Repository<Group>;
+  let aliasRepo: Repository<Alias>;
   let forbiddenNoteId: string;
 
   beforeEach(async () => {
@@ -64,6 +66,10 @@ describe('NotesService', () => {
           useClass: Repository,
         },
         {
+          provide: getRepositoryToken(Alias),
+          useClass: Repository,
+        },
+        {
           provide: getRepositoryToken(User),
           useValue: userRepo,
         },
@@ -82,6 +88,8 @@ describe('NotesService', () => {
       .overrideProvider(getRepositoryToken(Note))
       .useClass(Repository)
       .overrideProvider(getRepositoryToken(Tag))
+      .useClass(Repository)
+      .overrideProvider(getRepositoryToken(Alias))
       .useClass(Repository)
       .overrideProvider(getRepositoryToken(User))
       .useValue(userRepo)
@@ -114,6 +122,7 @@ describe('NotesService', () => {
     );
     userRepo = module.get<Repository<User>>(getRepositoryToken(User));
     groupRepo = module.get<Repository<Group>>(getRepositoryToken(Group));
+    aliasRepo = module.get<Repository<Alias>>(getRepositoryToken(Alias));
   });
 
   it('should be defined', () => {
@@ -166,7 +175,7 @@ describe('NotesService', () => {
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
         expect(newNote.owner).toBeNull();
-        expect(newNote.alias).toBeNull();
+        expect(newNote.aliases).toHaveLength(0);
       });
       it('without alias, with owner', async () => {
         const newNote = await service.createNote(content, undefined, user);
@@ -179,7 +188,7 @@ describe('NotesService', () => {
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
         expect(newNote.owner).toEqual(user);
-        expect(newNote.alias).toBeNull();
+        expect(newNote.aliases).toHaveLength(0);
       });
       it('with alias, without owner', async () => {
         const newNote = await service.createNote(content, alias);
@@ -191,7 +200,7 @@ describe('NotesService', () => {
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
         expect(newNote.owner).toBeNull();
-        expect(newNote.alias).toEqual(alias);
+        expect(newNote.aliases).toHaveLength(1);
       });
       it('with alias, with owner', async () => {
         const newNote = await service.createNote(content, alias, user);
@@ -204,7 +213,8 @@ describe('NotesService', () => {
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
         expect(newNote.owner).toEqual(user);
-        expect(newNote.alias).toEqual(alias);
+        expect(newNote.aliases).toHaveLength(1);
+        expect(newNote.aliases[0].name).toEqual(alias);
       });
     });
     describe('fails:', () => {
@@ -276,19 +286,40 @@ describe('NotesService', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const note = Note.create(user);
-      jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
+      const createQueryBuilder = {
+        leftJoinAndSelect: () => createQueryBuilder,
+        where: () => createQueryBuilder,
+        orWhere: () => createQueryBuilder,
+        setParameter: () => createQueryBuilder,
+        getOne: () => note,
+      };
+      jest
+        .spyOn(noteRepo, 'createQueryBuilder')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementation(() => createQueryBuilder);
       const foundNote = await service.getNoteByIdOrAlias('noteThatExists');
       expect(foundNote).toEqual(note);
     });
     describe('fails:', () => {
       it('no note found', async () => {
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
+        const createQueryBuilder = {
+          leftJoinAndSelect: () => createQueryBuilder,
+          where: () => createQueryBuilder,
+          orWhere: () => createQueryBuilder,
+          setParameter: () => createQueryBuilder,
+          getOne: () => undefined,
+        };
+        jest
+          .spyOn(noteRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => createQueryBuilder);
         await expect(
           service.getNoteByIdOrAlias('noteThatDoesNoteExist'),
         ).rejects.toThrow(NotInDBError);
       });
       it('id is forbidden', async () => {
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
         await expect(
           service.getNoteByIdOrAlias(forbiddenNoteId),
         ).rejects.toThrow(ForbiddenIdError);
@@ -620,6 +651,122 @@ describe('NotesService', () => {
     });
   });
 
+  describe('addAlias', () => {
+    const alias = 'testAlias';
+    const alias2 = 'testAlias2';
+    const user = User.create('hardcoded', 'Testy') as User;
+    const note = Note.create(user, alias);
+    it('works', async () => {
+      jest
+        .spyOn(noteRepo, 'save')
+        .mockImplementationOnce(async (note: Note): Promise<Note> => note);
+      jest.spyOn(aliasRepo, 'findOne').mockResolvedValueOnce(undefined);
+      const savedNote = await service.addAlias(note, alias2);
+      expect(savedNote.aliases).toHaveLength(2);
+      expect(savedNote.aliases[0].name).toEqual(alias);
+      expect(savedNote.aliases[0].primary).toBeTruthy();
+      expect(savedNote.aliases[1].name).toEqual(alias2);
+    });
+    describe('fails', () => {
+      it('because of a already used alias', async () => {
+        jest
+          .spyOn(aliasRepo, 'findOne')
+          .mockResolvedValueOnce(Alias.create(alias2));
+        await expect(service.addAlias(note, alias2)).rejects.toThrow(
+          AlreadyInDBError,
+        );
+      });
+      it('because the alias is forbidden', async () => {
+        await expect(service.addAlias(note, forbiddenNoteId)).rejects.toThrow(
+          ForbiddenIdError,
+        );
+      });
+    });
+  });
+
+  describe('removeAlias', () => {
+    const alias = 'testAlias';
+    const alias2 = 'testAlias2';
+    const user = User.create('hardcoded', 'Testy') as User;
+    const note = Note.create(user, alias);
+    note.aliases.push(Alias.create(alias2));
+    it('works', async () => {
+      jest
+        .spyOn(noteRepo, 'save')
+        .mockImplementationOnce(async (note: Note): Promise<Note> => note);
+      const savedNote = await service.removeAlias(note, alias2);
+      expect(savedNote.aliases).toHaveLength(1);
+      expect(savedNote.aliases[0].name).toEqual(alias);
+      expect(savedNote.aliases[0].primary).toBeTruthy();
+    });
+    describe('fails', () => {
+      it('because of a non-existent alias', async () => {
+        await expect(service.removeAlias(note, alias2)).rejects.toThrow(
+          NotInDBError,
+        );
+      });
+      it('because the alias to be removed is primary', async () => {
+        await expect(service.removeAlias(note, alias)).rejects.toThrow(
+          NotInDBError,
+        );
+      });
+    });
+  });
+
+  describe('makeAliasPrimary', () => {
+    const alias = Alias.create('testAlias', true);
+    const alias2 = Alias.create('testAlias2');
+    const user = User.create('hardcoded', 'Testy') as User;
+    const note = Note.create(user, alias.name);
+    note.aliases.push(alias2);
+    it('works', async () => {
+      jest
+        .spyOn(aliasRepo, 'findOne')
+        .mockResolvedValueOnce(alias)
+        .mockResolvedValueOnce(alias2);
+      jest
+        .spyOn(aliasRepo, 'save')
+        .mockImplementationOnce(async (alias: Alias): Promise<Alias> => alias)
+        .mockImplementationOnce(async (alias: Alias): Promise<Alias> => alias);
+      const createQueryBuilder = {
+        leftJoinAndSelect: () => createQueryBuilder,
+        where: () => createQueryBuilder,
+        orWhere: () => createQueryBuilder,
+        setParameter: () => createQueryBuilder,
+        getOne: () => {
+          return {
+            ...note,
+            aliases: note.aliases.map((anAlias) => {
+              if (anAlias.primary) {
+                anAlias.primary = false;
+              }
+              if (anAlias.name === alias2.name) {
+                anAlias.primary = true;
+              }
+              return anAlias;
+            }),
+          };
+        },
+      };
+      jest
+        .spyOn(noteRepo, 'createQueryBuilder')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementation(() => createQueryBuilder);
+      const savedNote = await service.makeAliasPrimary(note, alias2.name);
+      expect(savedNote.aliases).toHaveLength(2);
+      expect(savedNote.aliases[0].name).toEqual(alias.name);
+      expect(savedNote.aliases[0].primary).toBeFalsy();
+      expect(savedNote.aliases[1].name).toEqual(alias2.name);
+      expect(savedNote.aliases[1].primary).toBeTruthy();
+    });
+    it('fails, because of a non-existent alias', async () => {
+      await expect(
+        service.makeAliasPrimary(note, 'i_dont_exist'),
+      ).rejects.toThrow(NotInDBError);
+    });
+  });
+
   describe('toTagList', () => {
     it('works', async () => {
       const note = {} as Note;
@@ -709,7 +856,7 @@ describe('NotesService', () => {
         // @ts-ignore
         .mockImplementation(() => createQueryBuilder);
       note.publicId = 'testId';
-      note.alias = 'testAlias';
+      note.aliases = [Alias.create('testAlias', true)];
       note.title = 'testTitle';
       note.description = 'testDescription';
       note.owner = user;
@@ -737,7 +884,8 @@ describe('NotesService', () => {
       note.viewCount = 1337;
       const metadataDto = await service.toNoteMetadataDto(note);
       expect(metadataDto.id).toEqual(note.publicId);
-      expect(metadataDto.alias).toEqual(note.alias);
+      expect(metadataDto.aliases).toHaveLength(1);
+      expect(metadataDto.aliases[0]).toEqual(note.aliases[0].name);
       expect(metadataDto.title).toEqual(note.title);
       expect(metadataDto.createTime).toEqual(revisions[0].createdAt);
       expect(metadataDto.description).toEqual(note.description);
@@ -808,7 +956,7 @@ describe('NotesService', () => {
         // @ts-ignore
         .mockImplementation(() => createQueryBuilder);
       note.publicId = 'testId';
-      note.alias = 'testAlias';
+      note.aliases = [Alias.create('testAlias', true)];
       note.title = 'testTitle';
       note.description = 'testDescription';
       note.owner = user;
@@ -836,7 +984,8 @@ describe('NotesService', () => {
       note.viewCount = 1337;
       const noteDto = await service.toNoteDto(note);
       expect(noteDto.metadata.id).toEqual(note.publicId);
-      expect(noteDto.metadata.alias).toEqual(note.alias);
+      expect(noteDto.metadata.aliases).toHaveLength(1);
+      expect(noteDto.metadata.aliases[0]).toEqual(note.aliases[0].name);
       expect(noteDto.metadata.title).toEqual(note.title);
       expect(noteDto.metadata.createTime).toEqual(revisions[0].createdAt);
       expect(noteDto.metadata.description).toEqual(note.description);

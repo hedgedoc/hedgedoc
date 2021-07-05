@@ -355,6 +355,106 @@ export class NotesController {
   }
 
   @UseGuards(TokenAuthGuard)
+  @Post(':noteIdOrAlias/metadata/alias/:newAlias')
+  @ApiOkResponse({
+    description: 'The metadata of the note',
+    type: NoteMetadataDto,
+  })
+  @FullApi
+  async addAlias(
+    @Req() req: Request,
+    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('newAlias') newAlias: string,
+  ): Promise<NoteMetadataDto> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
+    try {
+      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
+      if (!this.permissionsService.isOwner(req.user, note)) {
+        throw new UnauthorizedException('Reading note denied!');
+      }
+      const updatedNote = await this.noteService.addAlias(note, newAlias);
+      return await this.noteService.toNoteMetadataDto(updatedNote);
+    } catch (e) {
+      if (e instanceof AlreadyInDBError) {
+        throw new BadRequestException(e.message);
+      }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
+      }
+      throw e;
+    }
+  }
+
+  @UseGuards(TokenAuthGuard)
+  @Put(':alias/metadata/alias')
+  @ApiOkResponse({
+    description: 'The metadata of the note',
+    type: NoteMetadataDto,
+  })
+  @FullApi
+  async makeAliasPrimary(
+    @Req() req: Request,
+    @Param('alias') alias: string,
+  ): Promise<NoteMetadataDto> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
+    try {
+      const note = await this.noteService.getNoteByIdOrAlias(alias);
+      if (!this.permissionsService.isOwner(req.user, note)) {
+        throw new UnauthorizedException('Reading note denied!');
+      }
+      const updatedNote = await this.noteService.makeAliasPrimary(note, alias);
+      return await this.noteService.toNoteMetadataDto(updatedNote);
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
+      }
+      throw e;
+    }
+  }
+
+  @UseGuards(TokenAuthGuard)
+  @Delete(':alias/metadata/alias')
+  @ApiOkResponse({
+    description: 'The metadata of the note',
+    type: NoteMetadataDto,
+  })
+  @FullApi
+  async removeAlias(
+    @Req() req: Request,
+    @Param('alias') alias: string,
+  ): Promise<NoteMetadataDto> {
+    if (!req.user) {
+      // We should never reach this, as the TokenAuthGuard handles missing user info
+      throw new InternalServerErrorException('Request did not specify user');
+    }
+    try {
+      const note = await this.noteService.getNoteByIdOrAlias(alias);
+      if (!this.permissionsService.isOwner(req.user, note)) {
+        throw new UnauthorizedException('Reading note denied!');
+      }
+      const updatedNote = await this.noteService.removeAlias(note, alias);
+      return await this.noteService.toNoteMetadataDto(updatedNote);
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
+      }
+      throw e;
+    }
+  }
+
+  @UseGuards(TokenAuthGuard)
   @Get(':noteIdOrAlias/revisions')
   @ApiOkResponse({
     description: 'Revisions of the note',

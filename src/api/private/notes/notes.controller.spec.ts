@@ -36,6 +36,7 @@ import { NoteGroupPermission } from '../../../permissions/note-group-permission.
 import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
 import { Group } from '../../../groups/group.entity';
 import { MediaUpload } from '../../../media/media-upload.entity';
+import { Alias } from '../../../notes/alias.entity';
 
 describe('NotesController', () => {
   let controller: NotesController;
@@ -51,6 +52,10 @@ describe('NotesController', () => {
         },
         {
           provide: getRepositoryToken(Tag),
+          useValue: {},
+        },
+        {
+          provide: getRepositoryToken(Alias),
           useValue: {},
         },
         {
@@ -98,6 +103,8 @@ describe('NotesController', () => {
       .overrideProvider(getRepositoryToken(Group))
       .useValue({})
       .overrideProvider(getRepositoryToken(MediaUpload))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .overrideProvider(getRepositoryToken(Session))
       .useValue({})

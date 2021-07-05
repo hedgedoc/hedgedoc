@@ -30,6 +30,7 @@ import { NoteUserPermission } from '../../../../permissions/note-user-permission
 import { Group } from '../../../../groups/group.entity';
 import { ConfigModule } from '@nestjs/config';
 import appConfigMock from '../../../../config/mock/app.config.mock';
+import { Alias } from '../../../../notes/alias.entity';
 
 describe('HistoryController', () => {
   let controller: HistoryController;
@@ -72,6 +73,8 @@ describe('HistoryController', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .overrideProvider(getRepositoryToken(Author))
       .useValue({})

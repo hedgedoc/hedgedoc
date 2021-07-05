@@ -11,7 +11,6 @@ import { HistoryService } from '../../src/history/history.service';
 import { NotesService } from '../../src/notes/notes.service';
 import { HistoryEntryUpdateDto } from '../../src/history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../src/history/history-entry.dto';
-import { HistoryEntry } from '../../src/history/history-entry.entity';
 import { UsersService } from '../../src/users/users.service';
 import { TokenAuthGuard } from '../../src/auth/token-auth.guard';
 import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
@@ -159,15 +158,15 @@ describe('Me', () => {
         .send(historyEntryUpdateDto)
         .expect(200);
       const history = await historyService.getEntriesByUser(user);
-      let historyEntry: HistoryEntryDto = response.body;
+      const historyEntry: HistoryEntryDto = response.body;
       expect(historyEntry.pinStatus).toEqual(true);
-      historyEntry = null;
-      for (const e of history) {
-        if (e.note.alias === noteName) {
-          historyEntry = historyService.toHistoryEntryDto(e);
+      let theEntry: HistoryEntryDto;
+      for (const entry of history) {
+        if (entry.note.aliases.find((element) => element.name === noteName)) {
+          theEntry = historyService.toHistoryEntryDto(entry);
         }
       }
-      expect(historyEntry.pinStatus).toEqual(true);
+      expect(theEntry.pinStatus).toEqual(true);
     });
     it('fails with a non-existing note', async () => {
       await request(app.getHttpServer())
@@ -187,13 +186,11 @@ describe('Me', () => {
         .expect(204);
       expect(response.body).toEqual({});
       const history = await historyService.getEntriesByUser(user);
-      let historyEntry: HistoryEntry = null;
-      for (const e of history) {
-        if (e.note.alias === noteName) {
-          historyEntry = e;
+      for (const entry of history) {
+        if (entry.note.aliases.find((element) => element.name === noteName)) {
+          throw new Error('Deleted history entry still in history');
         }
       }
-      return expect(historyEntry).toBeNull();
     });
     describe('fails', () => {
       it('with a non-existing note', async () => {
@@ -220,8 +217,8 @@ describe('Me', () => {
       .expect(200);
     const noteMetaDtos = response.body as NoteMetadataDto[];
     expect(noteMetaDtos).toHaveLength(1);
-    expect(noteMetaDtos[0].alias).toEqual(noteName);
-    expect(noteMetaDtos[0].updateUser.userName).toEqual(user.userName);
+    expect(noteMetaDtos[0].primaryAlias).toEqual(noteName);
+    expect(noteMetaDtos[0].updateUser?.userName).toEqual(user.userName);
   });
 
   it('GET /me/media', async () => {

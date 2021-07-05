@@ -21,6 +21,7 @@ import { Tag } from './tag.entity';
 import { HistoryEntry } from '../history/history-entry.entity';
 import { MediaUpload } from '../media/media-upload.entity';
 import { generatePublicId } from './utils';
+import { Alias } from './alias.entity';
 
 @Entity()
 export class Note {
@@ -28,12 +29,12 @@ export class Note {
   id: string;
   @Column({ type: 'text' })
   publicId: string;
-  @Column({
-    unique: true,
-    nullable: true,
-    type: 'text',
-  })
-  alias: string | null;
+  @OneToMany(
+    (_) => Alias,
+    (alias) => alias.note,
+    { cascade: true }, // This ensures that embedded Aliases are automatically saved to the database
+  )
+  aliases: Alias[];
   @OneToMany(
     (_) => NoteGroupPermission,
     (groupPermission) => groupPermission.note,
@@ -84,7 +85,7 @@ export class Note {
   public static create(owner?: User, alias?: string): Note {
     const newNote = new Note();
     newNote.publicId = generatePublicId();
-    newNote.alias = alias ?? null;
+    newNote.aliases = alias ? [Alias.create(alias, true)] : [];
     newNote.viewCount = 0;
     newNote.owner = owner ?? null;
     newNote.userPermissions = [];

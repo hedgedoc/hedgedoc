@@ -210,6 +210,82 @@ describe('Notes', () => {
     });
   });
 
+  describe('POST /notes/{note}/metadata/alias/{alias}', () => {
+    const testAlias = 'aliasTest';
+    beforeAll(async () => {
+      await notesService.createNote(content, testAlias, user);
+    });
+
+    it('works with normal alias', async () => {
+      const newAlias = 'normalAlias';
+      const metadata = await request(app.getHttpServer())
+        .post(`/notes/${testAlias}/metadata/alias/${newAlias}`)
+        .expect(201);
+      expect(metadata.body.aliases).toContain(newAlias);
+      expect(metadata.body.aliases).toContain(testAlias);
+      expect(metadata.body.primaryAlias).not.toEqual(newAlias);
+    });
+
+    it('fails with a forbidden alias', async () => {
+      await request(app.getHttpServer())
+        .post(`/notes/${testAlias}/metadata/alias/${forbiddenNoteId}`)
+        .expect(400);
+    });
+  });
+
+  describe('PUT /notes/{note}/metadata/alias/{alias}', () => {
+    const testAlias = 'aliasTest2';
+    const newAlias = 'normalAlias2';
+    beforeAll(async () => {
+      const note = await notesService.createNote(content, testAlias, user);
+      await notesService.addAlias(note, newAlias);
+    });
+
+    it('works with normal alias', async () => {
+      const metadata = await request(app.getHttpServer())
+        .put(`/notes/${newAlias}/metadata/alias`)
+        .expect(200);
+      expect(metadata.body.aliases).toContain(newAlias);
+      expect(metadata.body.aliases).toContain(testAlias);
+      expect(metadata.body.primaryAlias).toEqual(newAlias);
+    });
+
+    it('fails with unknown alias', async () => {
+      await request(app.getHttpServer())
+        .put(`/notes/i_dont_exist/metadata/alias`)
+        .expect(404);
+    });
+  });
+
+  describe('DELETE /notes/{note}/metadata/alias', () => {
+    const testAlias = 'aliasTest3';
+    const newAlias = 'normalAlias3';
+    beforeAll(async () => {
+      const note = await notesService.createNote(content, testAlias, user);
+      await notesService.addAlias(note, newAlias);
+    });
+
+    it('works with normal alias', async () => {
+      const metadata = await request(app.getHttpServer())
+        .delete(`/notes/${newAlias}/metadata/alias`)
+        .expect(200);
+      expect(metadata.body.aliases).toContain(testAlias);
+      expect(metadata.body.primaryAlias).toEqual(testAlias);
+    });
+
+    it('fails with unknown alias', async () => {
+      await request(app.getHttpServer())
+        .delete(`/notes/i_dont_exist/metadata/alias/`)
+        .expect(404);
+    });
+
+    it('fails with primary alias', async () => {
+      await request(app.getHttpServer())
+        .delete(`/notes/${testAlias}/metadata/alias`)
+        .expect(404);
+    });
+  });
+
   describe('GET /notes/{note}/revisions', () => {
     it('works with existing alias', async () => {
       await notesService.createNote(content, 'test4', user);

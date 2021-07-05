@@ -30,6 +30,7 @@ import { Tag } from '../../../notes/tag.entity';
 import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
 import { Group } from '../../../groups/group.entity';
+import { Alias } from '../../../notes/alias.entity';
 
 describe('MediaController', () => {
   let controller: MediaController;
@@ -75,6 +76,8 @@ describe('MediaController', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .overrideProvider(getRepositoryToken(Session))
       .useValue({})
