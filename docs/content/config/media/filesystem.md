@@ -9,4 +9,4 @@ HD_MEDIA_BACKEND="filesystem"
 HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH="<DIRECTORY>"
 ```
 
-Please make sure that the user that runs HedgeDoc is able to write to the uploads directory. 
+Please make sure that the user that runs HedgeDoc is able to write to the `uploads` directory. 
