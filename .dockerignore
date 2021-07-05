@@ -1,0 +1,5 @@
+docs
+node_modules
+public/build
+public/views/build
+test
