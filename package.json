@@ -38,7 +38,7 @@
     "copy-webpack-plugin": "6.4.1",
     "d3-graphviz": "3.2.0",
     "diff": "5.0.0",
-    "emoji-picker-element": "1.5.0",
+    "emoji-picker-element": "1.6.1",
     "emoji-picker-element-data": "1.2.0",
     "eslint-config-react-app": "6.0.0",
     "eslint-plugin-flowtype": "5.8.0",
