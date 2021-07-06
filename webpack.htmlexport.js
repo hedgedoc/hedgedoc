@@ -1,5 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   name: 'save-as-html',
@@ -10,6 +11,14 @@ module.exports = {
     rules: [{
       test: /\.css$/,
       use: [MiniCssExtractPlugin.loader, 'css-loader']
+    },
+    {
+      test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+      use: [
+        {
+          loader: 'url-loader'
+        }
+      ]
     }]
   },
   output: {
@@ -18,8 +27,13 @@ module.exports = {
     filename: '[name].js'
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'html.min.css'
-    })
+    new HtmlWebpackPlugin({
+      // Load a custom template (uses lodash templating)
+      template: 'public/views/htmlexport.ejs',
+      filename: 'htmlexport.html',
+      inject: false,
+      cache: false
+    }),
+    new MiniCssExtractPlugin({ filename: 'htmlexport.css' })
   ]
 }

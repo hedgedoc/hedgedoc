@@ -92,7 +92,6 @@ these are rarely used for various reasons.
 | config file     | environment          | **default** and example value | description                                                                                                                                                                    |
 | --------------- | -------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `allowGravatar` | `CMD_ALLOW_GRAVATAR` | **`true`** or `false`         | set to `false` to disable [Libravatar](https://www.libravatar.org/) as profile picture source on your instance. Libravatar is a federated open-source alternative to Gravatar. |
-| `useCDN`        | `CMD_USECDN`         | **`false`** or `true`         | set to use CDN resources or not (default is `false`)                                                                                                                           |
 
 ## Users and Privileges
 

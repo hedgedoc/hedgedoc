@@ -24,13 +24,6 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: 'public/views/includes/header.ejs',
-      chunks: ['font', 'index-styles', 'index'],
-      filename: path.join(__dirname, 'public/views/build/index-header.ejs'),
-      inject: false,
-      chunksSortMode: 'manual'
-    }),
-    new HtmlWebpackPlugin({
-      template: 'public/views/includes/header.ejs',
       chunks: ['font-pack', 'index-styles-pack', 'index-styles', 'index'],
       filename: path.join(__dirname, 'public/views/build/index-pack-header.ejs'),
       inject: false,
@@ -38,21 +31,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: 'public/views/includes/scripts.ejs',
-      chunks: ['index'],
-      filename: path.join(__dirname, 'public/views/build/index-scripts.ejs'),
-      inject: false
-    }),
-    new HtmlWebpackPlugin({
-      template: 'public/views/includes/scripts.ejs',
       chunks: ['common', 'index-pack'],
       filename: path.join(__dirname, 'public/views/build/index-pack-scripts.ejs'),
-      inject: false,
-      chunksSortMode: 'manual'
-    }),
-    new HtmlWebpackPlugin({
-      template: 'public/views/includes/header.ejs',
-      chunks: ['font', 'cover'],
-      filename: path.join(__dirname, 'public/views/build/cover-header.ejs'),
       inject: false,
       chunksSortMode: 'manual'
     }),
@@ -65,21 +45,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: 'public/views/includes/scripts.ejs',
-      chunks: ['cover'],
-      filename: path.join(__dirname, 'public/views/build/cover-scripts.ejs'),
-      inject: false
-    }),
-    new HtmlWebpackPlugin({
-      template: 'public/views/includes/scripts.ejs',
       chunks: ['common', 'cover-pack'],
       filename: path.join(__dirname, 'public/views/build/cover-pack-scripts.ejs'),
-      inject: false,
-      chunksSortMode: 'manual'
-    }),
-    new HtmlWebpackPlugin({
-      template: 'public/views/includes/header.ejs',
-      chunks: ['font', 'pretty-styles', 'pretty'],
-      filename: path.join(__dirname, 'public/views/build/pretty-header.ejs'),
       inject: false,
       chunksSortMode: 'manual'
     }),
@@ -92,21 +59,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: 'public/views/includes/scripts.ejs',
-      chunks: ['pretty'],
-      filename: path.join(__dirname, 'public/views/build/pretty-scripts.ejs'),
-      inject: false
-    }),
-    new HtmlWebpackPlugin({
-      template: 'public/views/includes/scripts.ejs',
       chunks: ['common', 'pretty-pack'],
       filename: path.join(__dirname, 'public/views/build/pretty-pack-scripts.ejs'),
-      inject: false,
-      chunksSortMode: 'manual'
-    }),
-    new HtmlWebpackPlugin({
-      template: 'public/views/includes/header.ejs',
-      chunks: ['font', 'slide-styles', 'slide'],
-      filename: path.join(__dirname, 'public/views/build/slide-header.ejs'),
       inject: false,
       chunksSortMode: 'manual'
     }),
@@ -116,12 +70,6 @@ module.exports = {
       filename: path.join(__dirname, 'public/views/build/slide-pack-header.ejs'),
       inject: false,
       chunksSortMode: 'manual'
-    }),
-    new HtmlWebpackPlugin({
-      template: 'public/views/includes/scripts.ejs',
-      chunks: ['slide'],
-      filename: path.join(__dirname, 'public/views/build/slide-scripts.ejs'),
-      inject: false
     }),
     new HtmlWebpackPlugin({
       template: 'public/views/includes/scripts.ejs',
@@ -184,7 +132,6 @@ module.exports = {
   ],
 
   entry: {
-    font: path.join(__dirname, 'public/css/google-font.css'),
     'font-pack': path.join(__dirname, 'public/css/font.css'),
     common: [
       'expose-loader?exposes[]=$&exposes[]=jQuery!jquery',

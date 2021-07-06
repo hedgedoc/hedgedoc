@@ -673,21 +673,18 @@ export function exportToHTML (view) {
   const tocAffix = $('#ui-toc-affix').clone()
   tocAffix.find('*').removeClass('active').find("a[href^='#'][smoothhashscroll]").removeAttr('smoothhashscroll')
   // generate html via template
-  $.get(`${serverurl}/build/html.min.css`, css => {
-    $.get(`${serverurl}/views/html.hbs`, template => {
-      let html = template.replace('{{{url}}}', serverurl)
-      html = html.replace('{{title}}', title)
-      html = html.replace('{{{css}}}', css)
-      html = html.replace('{{{html}}}', src[0].outerHTML)
-      html = html.replace('{{{ui-toc}}}', toc.html())
-      html = html.replace('{{{ui-toc-affix}}}', tocAffix.html())
-      html = html.replace('{{{lang}}}', (md && md.meta && md.meta.lang) ? `lang="${md.meta.lang}"` : '')
-      html = html.replace('{{{dir}}}', (md && md.meta && md.meta.dir) ? `dir="${md.meta.dir}"` : '')
-      const blob = new Blob([html], {
-        type: 'text/html;charset=utf-8'
-      })
-      saveAs(blob, filename, true)
+  $.get(`${serverurl}/build/htmlexport.html`, template => {
+    let html = template.replace('{{{url}}}', serverurl)
+    html = html.replace('{{title}}', title)
+    html = html.replace('{{{html}}}', src[0].outerHTML)
+    html = html.replace('{{{ui-toc}}}', toc.html())
+    html = html.replace('{{{ui-toc-affix}}}', tocAffix.html())
+    html = html.replace('{{{lang}}}', (md && md.meta && md.meta.lang) ? `lang="${md.meta.lang}"` : '')
+    html = html.replace('{{{dir}}}', (md && md.meta && md.meta.dir) ? `dir="${md.meta.dir}"` : '')
+    const blob = new Blob([html], {
+      type: 'text/html;charset=utf-8'
     })
+    saveAs(blob, filename, true)
   })
 }
 

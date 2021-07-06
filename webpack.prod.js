@@ -29,6 +29,9 @@ module.exports = [
     mode: 'production',
     optimization: {
       minimizer: [
+        new ESBuildMinifyPlugin({
+          target: 'es2015'
+        }),
         new OptimizeCSSAssetsPlugin({})
       ]
     }
