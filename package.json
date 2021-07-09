@@ -86,7 +86,7 @@
     "react-codemirror2": "7.2.1",
     "react-diff-viewer": "3.1.1",
     "react-dom": "17.0.2",
-    "react-i18next": "11.11.0",
+    "react-i18next": "11.11.1",
     "react-redux": "7.2.4",
     "react-router": "5.2.0",
     "react-router-bootstrap": "0.25.0",
