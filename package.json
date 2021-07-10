@@ -104,7 +104,7 @@
     "vega": "5.20.2",
     "vega-embed": "6.17.0",
     "vega-lite": "5.0.0",
-    "words-count": "2.0.1"
+    "words-count": "2.0.2"
   },
   "scripts": {
     "start": "cross-env PORT=3001 craco start",
