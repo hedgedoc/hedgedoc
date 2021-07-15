@@ -47,7 +47,7 @@
     "connect-typeorm": "1.1.4",
     "eslint-plugin-jest": "24.3.6",
     "eslint-plugin-local-rules": "1.1.0",
-    "file-type": "16.5.0",
+    "file-type": "16.5.1",
     "joi": "17.4.0",
     "minio": "7.0.18",
     "nest-router": "1.0.9",
