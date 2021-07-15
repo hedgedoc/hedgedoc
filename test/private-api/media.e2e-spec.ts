@@ -71,9 +71,9 @@ describe('Media', () => {
     const logger = await app.resolve(ConsoleLoggerService);
     logger.log('Switching logger', 'AppBootstrap');
     app.useLogger(logger);
-    const notesService: NotesService = moduleRef.get('NotesService');
+    const notesService: NotesService = moduleRef.get(NotesService);
     await notesService.createNote('test content', 'test_upload_media');
-    const userService: UsersService = moduleRef.get('UsersService');
+    const userService: UsersService = moduleRef.get(UsersService);
     await userService.createUser('hardcoded', 'Testy');
   });
 
