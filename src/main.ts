@@ -18,6 +18,7 @@ import { ConsoleLoggerService } from './logger/console-logger.service';
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger: ['error', 'warn', 'log'] as LogLevel[],
+    bufferLogs: true,
   });
   const logger = await app.resolve(ConsoleLoggerService);
   logger.log('Switching logger', 'AppBootstrap');
