@@ -30,6 +30,7 @@ nav:
           - GitHub: guides/auth/github.md
           - GitLab: guides/auth/gitlab-self-hosted.md
           - Keycloak: guides/auth/keycloak.md
+          - Mattermost: guides/auth/mattermost-self-hosted.md
           - Nextcloud: guides/auth/nextcloud.md
           - Twitter: guides/auth/twitter.md
       - Media Backend:
