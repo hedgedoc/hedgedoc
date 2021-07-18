@@ -9,7 +9,9 @@
     ":prHourlyLimitNone",
     ":dependencyDashboard",
     ":rebaseStalePrs",
-    ":maintainLockFilesWeekly"
+    ":maintainLockFilesWeekly",
+    ":automergePatch",
+    ":automergeBranch"
   ],
   "baseBranches": [
     "master",
