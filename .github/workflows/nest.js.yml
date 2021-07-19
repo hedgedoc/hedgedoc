@@ -83,7 +83,7 @@ jobs:
             ${{ runner.os }}-yarn-
       - run: yarn --frozen-lockfile --prefer-offline
       - run: yarn run test:cov
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v2
         with:
           directory: coverage
           flags: integration-tests
@@ -110,7 +110,7 @@ jobs:
             ${{ runner.os }}-yarn-
       - run: yarn --frozen-lockfile --prefer-offline
       - run: yarn run test:e2e:cov
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v2
         with:
           directory: coverage-e2e
           flags: e2e-tests
