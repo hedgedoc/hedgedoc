@@ -27,6 +27,7 @@ const errors = require('./lib/errors')
 const models = require('./lib/models')
 const csp = require('./lib/csp')
 const metrics = require('./lib/prometheus')
+const { useUnless } = require('./lib/utils')
 
 const supportedLocalesList = Object.keys(require('./locales/_supported.json'))
 
@@ -147,7 +148,7 @@ app.use('/uploads', express.static(path.resolve(__dirname, config.uploadsPath), 
 app.use('/default.md', express.static(path.resolve(__dirname, config.defaultNotePath), { maxAge: config.staticCacheTime }))
 
 // session
-app.use(session({
+app.use(useUnless(['/status', '/metrics'], session({
   name: config.sessionName,
   secret: config.sessionSecret,
   resave: false, // don't save session if unmodified
@@ -159,7 +160,7 @@ app.use(session({
     secure: config.useSSL || config.protocolUseSSL || false
   },
   store: sessionStore
-}))
+})))
 
 // session resumption
 const tlsSessionStore = {}
