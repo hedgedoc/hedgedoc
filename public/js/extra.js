@@ -574,7 +574,7 @@ export function postProcess (code) {
   // link should open in new window or tab
   // also add noopener to prevent clickjacking
   // See details: https://mathiasbynens.github.io/rel-noopener/
-  result.find('a:not([href^="#"]):not([target])').attr('target', '_blank').attr('rel', 'noopener')
+  result.find('a:not([href^="#"]):not([href^="."]):not([target])').attr('target', '_blank').attr('rel', 'noopener')
   // update continue line numbers
   const linenumberdivs = result.find('.gutter.linenumber').toArray()
   for (let i = 0; i < linenumberdivs.length; i++) {
