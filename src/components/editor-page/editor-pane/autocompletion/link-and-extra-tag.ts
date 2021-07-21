@@ -6,8 +6,8 @@
 
 import { Editor, Hint, Hints, Pos } from 'codemirror'
 import { DateTime } from 'luxon'
-import { getUser } from '../../../../redux/user/methods'
 import { findWordAtCursor, Hinter } from './index'
+import { store } from '../../../../redux'
 
 const wordRegExp = /^(\[(.*])?)$/
 const allSupportedLinks = [
@@ -24,6 +24,11 @@ const allSupportedLinks = [
   '[color=#FFFFFF]'
 ]
 
+const getUserName = (): string => {
+  const user = store.getState().user
+  return user ? user.name : 'Anonymous'
+}
+
 const linkAndExtraTagHint = (editor: Editor): Promise<Hints | null> => {
   return new Promise((resolve) => {
     const searchTerm = findWordAtCursor(editor)
@@ -39,13 +44,11 @@ const linkAndExtraTagHint = (editor: Editor): Promise<Hints | null> => {
     } else {
       resolve({
         list: suggestions.map((suggestion: string): Hint => {
-          const user = getUser()
-          const userName = user ? user.name : 'Anonymous'
           switch (suggestion) {
             case 'name':
               // Get the user when a completion happens, this prevents to early calls resulting in 'Anonymous'
               return {
-                text: `[name=${userName}]`
+                text: `[name=${getUserName()}]`
               }
             case 'time':
               // show the current time when the autocompletion is opened and not when the function is loaded

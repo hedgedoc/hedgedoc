@@ -9,7 +9,7 @@ import { Action } from 'redux'
 import { EditorMode } from '../../components/editor-page/app-bar/editor-view-mode'
 
 export enum EditorConfigActionType {
-  SET_EDITOR_VIEW_MODE = 'editor/mode/set',
+  SET_EDITOR_VIEW_MODE = 'editor/view-mode/set',
   SET_SYNC_SCROLL = 'editor/syncScroll/set',
   MERGE_EDITOR_PREFERENCES = 'editor/preferences/merge',
   SET_LIGATURES = 'editor/preferences/setLigatures',
@@ -24,26 +24,34 @@ export interface EditorConfig {
   preferences: EditorConfiguration
 }
 
-export interface EditorConfigActions extends Action<EditorConfigActionType> {
-  type: EditorConfigActionType
-}
+export type EditorConfigActions =
+  | SetEditorSyncScrollAction
+  | SetEditorLigaturesAction
+  | SetEditorSmartPasteAction
+  | SetEditorViewModeAction
+  | SetEditorPreferencesAction
 
-export interface SetEditorSyncScrollAction extends EditorConfigActions {
+export interface SetEditorSyncScrollAction extends Action<EditorConfigActionType> {
+  type: EditorConfigActionType.SET_SYNC_SCROLL
   syncScroll: boolean
 }
 
-export interface SetEditorLigaturesAction extends EditorConfigActions {
+export interface SetEditorLigaturesAction extends Action<EditorConfigActionType> {
+  type: EditorConfigActionType.SET_LIGATURES
   ligatures: boolean
 }
 
-export interface SetEditorSmartPasteAction extends EditorConfigActions {
+export interface SetEditorSmartPasteAction extends Action<EditorConfigActionType> {
+  type: EditorConfigActionType.SET_SMART_PASTE
   smartPaste: boolean
 }
 
-export interface SetEditorConfigAction extends EditorConfigActions {
+export interface SetEditorViewModeAction extends Action<EditorConfigActionType> {
+  type: EditorConfigActionType.SET_EDITOR_VIEW_MODE
   mode: EditorMode
 }
 
-export interface SetEditorPreferencesAction extends EditorConfigActions {
+export interface SetEditorPreferencesAction extends Action<EditorConfigActionType> {
+  type: EditorConfigActionType.MERGE_EDITOR_PREFERENCES
   preferences: EditorConfiguration
 }

@@ -35,31 +35,34 @@ export interface NoteDetails {
   frontmatter: NoteFrontmatter
 }
 
-export interface NoteDetailsAction extends Action<NoteDetailsActionType> {
-  type: NoteDetailsActionType
-}
+export type NoteDetailsActions =
+  | SetNoteDetailsAction
+  | SetNoteDetailsFromServerAction
+  | UpdateNoteTitleByFirstHeadingAction
+  | SetNoteFrontmatterFromRenderingAction
+  | SetCheckboxInMarkdownContentAction
 
-export interface SetNoteDetailsAction extends NoteDetailsAction {
+export interface SetNoteDetailsAction extends Action<NoteDetailsActionType> {
   type: NoteDetailsActionType.SET_DOCUMENT_CONTENT
   content: string
 }
 
-export interface SetNoteDetailsFromServerAction extends NoteDetailsAction {
+export interface SetNoteDetailsFromServerAction extends Action<NoteDetailsActionType> {
   type: NoteDetailsActionType.SET_NOTE_DATA_FROM_SERVER
   note: NoteDto
 }
 
-export interface UpdateNoteTitleByFirstHeadingAction extends NoteDetailsAction {
+export interface UpdateNoteTitleByFirstHeadingAction extends Action<NoteDetailsActionType> {
   type: NoteDetailsActionType.UPDATE_NOTE_TITLE_BY_FIRST_HEADING
   firstHeading?: string
 }
 
-export interface SetNoteFrontmatterFromRenderingAction extends NoteDetailsAction {
+export interface SetNoteFrontmatterFromRenderingAction extends Action<NoteDetailsActionType> {
   type: NoteDetailsActionType.SET_NOTE_FRONTMATTER
   frontmatter: NoteFrontmatter
 }
 
-export interface SetCheckboxInMarkdownContentAction extends NoteDetailsAction {
+export interface SetCheckboxInMarkdownContentAction extends Action<NoteDetailsActionType> {
   type: NoteDetailsActionType.SET_CHECKBOX_IN_MARKDOWN_CONTENT
   lineInMarkdown: number
   checked: boolean

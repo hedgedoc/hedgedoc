@@ -10,11 +10,9 @@ export enum BannerActionType {
   SET_BANNER = 'banner/set'
 }
 
-export interface BannerActions extends Action<BannerActionType> {
-  type: BannerActionType
-}
+export type BannerActions = SetBannerAction
 
-export interface SetBannerAction extends BannerActions {
+export interface SetBannerAction extends Action<BannerActionType> {
   type: BannerActionType.SET_BANNER
   state: BannerState
 }

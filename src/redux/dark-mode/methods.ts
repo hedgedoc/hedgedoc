@@ -8,11 +8,10 @@ import { store } from '..'
 import { DarkModeConfig, DarkModeConfigActionType, SetDarkModeConfigAction } from './types'
 
 export const setDarkMode = (darkMode: boolean): void => {
-  const action: SetDarkModeConfigAction = {
+  store.dispatch({
     type: DarkModeConfigActionType.SET_DARK_MODE,
     darkMode: darkMode
-  }
-  store.dispatch(action)
+  } as SetDarkModeConfigAction)
 }
 
 export const saveToLocalStorage = (darkModeConfig: DarkModeConfig): void => {

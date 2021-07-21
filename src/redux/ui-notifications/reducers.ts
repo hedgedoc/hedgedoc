@@ -5,23 +5,17 @@
  */
 
 import { Reducer } from 'redux'
-import {
-  DismissUiNotificationAction,
-  DispatchUiNotificationAction,
-  UiNotificationAction,
-  UiNotificationActionType,
-  UiNotificationState
-} from './types'
+import { UiNotificationActions, UiNotificationActionType, UiNotificationState } from './types'
 
-export const UiNotificationReducer: Reducer<UiNotificationState, UiNotificationAction> = (
+export const UiNotificationReducer: Reducer<UiNotificationState, UiNotificationActions> = (
   state: UiNotificationState = [],
-  action: UiNotificationAction
+  action: UiNotificationActions
 ) => {
   switch (action.type) {
     case UiNotificationActionType.DISPATCH_NOTIFICATION:
-      return state.concat((action as DispatchUiNotificationAction).notification)
+      return state.concat(action.notification)
     case UiNotificationActionType.DISMISS_NOTIFICATION:
-      return dismissNotification(state, (action as DismissUiNotificationAction).notificationId)
+      return dismissNotification(state, action.notificationId)
     default:
       return state
   }

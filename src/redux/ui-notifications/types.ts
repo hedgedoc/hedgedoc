@@ -28,16 +28,14 @@ export interface UiNotification {
   buttons?: UiNotificationButton[]
 }
 
-export interface UiNotificationAction extends Action<UiNotificationActionType> {
-  type: UiNotificationActionType
-}
+export type UiNotificationActions = DispatchUiNotificationAction | DismissUiNotificationAction
 
-export interface DispatchUiNotificationAction extends UiNotificationAction {
+export interface DispatchUiNotificationAction extends Action<UiNotificationActionType> {
   type: UiNotificationActionType.DISPATCH_NOTIFICATION
   notification: UiNotification
 }
 
-export interface DismissUiNotificationAction extends UiNotificationAction {
+export interface DismissUiNotificationAction extends Action<UiNotificationActionType> {
   type: UiNotificationActionType.DISMISS_NOTIFICATION
   notificationId: number
 }

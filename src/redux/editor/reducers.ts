@@ -7,16 +7,7 @@
 import { Reducer } from 'redux'
 import { EditorMode } from '../../components/editor-page/app-bar/editor-view-mode'
 import { loadFromLocalStorage, saveToLocalStorage } from './methods'
-import {
-  EditorConfig,
-  EditorConfigActions,
-  EditorConfigActionType,
-  SetEditorConfigAction,
-  SetEditorLigaturesAction,
-  SetEditorPreferencesAction,
-  SetEditorSmartPasteAction,
-  SetEditorSyncScrollAction
-} from './types'
+import { EditorConfig, EditorConfigActions, EditorConfigActionType } from './types'
 
 const initialState: EditorConfig = {
   editorMode: EditorMode.BOTH,
@@ -44,28 +35,28 @@ export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (
     case EditorConfigActionType.SET_EDITOR_VIEW_MODE:
       newState = {
         ...state,
-        editorMode: (action as SetEditorConfigAction).mode
+        editorMode: action.mode
       }
       saveToLocalStorage(newState)
       return newState
     case EditorConfigActionType.SET_SYNC_SCROLL:
       newState = {
         ...state,
-        syncScroll: (action as SetEditorSyncScrollAction).syncScroll
+        syncScroll: action.syncScroll
       }
       saveToLocalStorage(newState)
       return newState
     case EditorConfigActionType.SET_LIGATURES:
       newState = {
         ...state,
-        ligatures: (action as SetEditorLigaturesAction).ligatures
+        ligatures: action.ligatures
       }
       saveToLocalStorage(newState)
       return newState
     case EditorConfigActionType.SET_SMART_PASTE:
       newState = {
         ...state,
-        smartPaste: (action as SetEditorSmartPasteAction).smartPaste
+        smartPaste: action.smartPaste
       }
       saveToLocalStorage(newState)
       return newState
@@ -74,7 +65,7 @@ export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (
         ...state,
         preferences: {
           ...state.preferences,
-          ...(action as SetEditorPreferencesAction).preferences
+          ...action.preferences
         }
       }
       saveToLocalStorage(newState)

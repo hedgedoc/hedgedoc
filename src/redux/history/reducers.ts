@@ -5,33 +5,23 @@
  */
 
 import { Reducer } from 'redux'
-import {
-  HistoryAction,
-  HistoryActionType,
-  HistoryEntry,
-  RemoveEntryAction,
-  SetEntriesAction,
-  UpdateEntryAction
-} from './types'
+import { HistoryActions, HistoryActionType, HistoryEntry } from './types'
 
 // Q: Why is the reducer initialized with an empty array instead of the actual history entries like in the config reducer?
 // A: The history reducer will be created without entries because of async entry retrieval.
 //    Entries will be added after reducer initialization.
 
-export const HistoryReducer: Reducer<HistoryEntry[], HistoryAction> = (
+export const HistoryReducer: Reducer<HistoryEntry[], HistoryActions> = (
   state: HistoryEntry[] = [],
-  action: HistoryAction
+  action: HistoryActions
 ) => {
   switch (action.type) {
     case HistoryActionType.SET_ENTRIES:
-      return (action as SetEntriesAction).entries
+      return action.entries
     case HistoryActionType.UPDATE_ENTRY:
-      return [
-        ...state.filter((entry) => entry.identifier !== (action as UpdateEntryAction).noteId),
-        (action as UpdateEntryAction).newEntry
-      ]
+      return [...state.filter((entry) => entry.identifier !== action.noteId), action.newEntry]
     case HistoryActionType.REMOVE_ENTRY:
-      return state.filter((entry) => entry.identifier !== (action as RemoveEntryAction).noteId)
+      return state.filter((entry) => entry.identifier !== action.noteId)
     default:
       return state
   }

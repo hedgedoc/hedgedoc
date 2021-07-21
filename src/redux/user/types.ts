@@ -11,15 +11,16 @@ export enum UserActionType {
   CLEAR_USER = 'user/clear'
 }
 
-export interface UserActions extends Action<UserActionType> {
-  type: UserActionType
-}
+export type UserActions = SetUserAction | ClearUserAction
 
-export interface SetUserAction extends UserActions {
+export interface SetUserAction extends Action<UserActionType> {
+  type: UserActionType.SET_USER
   state: UserState
 }
 
-export type ClearUserAction = UserActions
+export interface ClearUserAction extends Action<UserActionType> {
+  type: UserActionType.CLEAR_USER
+}
 
 export interface UserState {
   id: string
@@ -42,4 +43,4 @@ export enum LoginProvider {
   OPENID = 'openid'
 }
 
-export type MaybeUserState = UserState | null
+export type OptionalUserState = UserState | null

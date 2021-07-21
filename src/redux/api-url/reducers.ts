@@ -5,7 +5,7 @@
  */
 
 import { Reducer } from 'redux'
-import { ApiUrlActions, ApiUrlActionType, ApiUrlObject, SetApiUrlAction } from './types'
+import { ApiUrlActions, ApiUrlActionType, ApiUrlObject } from './types'
 
 export const initialState: ApiUrlObject = {
   apiUrl: ''
@@ -17,7 +17,7 @@ export const ApiUrlReducer: Reducer<ApiUrlObject, ApiUrlActions> = (
 ) => {
   switch (action.type) {
     case ApiUrlActionType.SET_API_URL:
-      return (action as SetApiUrlAction).state
+      return action.state
     default:
       return state
   }

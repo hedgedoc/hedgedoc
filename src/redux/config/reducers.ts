@@ -6,7 +6,7 @@
 
 import { Reducer } from 'redux'
 import { Config } from '../../api/config/types'
-import { ConfigActions, ConfigActionType, SetConfigAction } from './types'
+import { ConfigActions, ConfigActionType } from './types'
 
 export const initialState: Config = {
   allowAnonymous: true,
@@ -55,7 +55,7 @@ export const initialState: Config = {
 export const ConfigReducer: Reducer<Config, ConfigActions> = (state: Config = initialState, action: ConfigActions) => {
   switch (action.type) {
     case ConfigActionType.SET_CONFIG:
-      return (action as SetConfigAction).state
+      return action.state
     default:
       return state
   }

@@ -14,10 +14,9 @@ export interface DarkModeConfig {
   darkMode: boolean
 }
 
-export interface DarkModeConfigActions extends Action<DarkModeConfigActionType> {
-  type: DarkModeConfigActionType
-}
+export type DarkModeConfigActions = SetDarkModeConfigAction
 
-export interface SetDarkModeConfigAction extends DarkModeConfigActions {
+export interface SetDarkModeConfigAction extends Action<DarkModeConfigActionType> {
+  type: DarkModeConfigActionType.SET_DARK_MODE
   darkMode: boolean
 }

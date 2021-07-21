@@ -47,7 +47,7 @@ export const deleteAllHistoryEntries = (): Promise<void> => {
   store.dispatch({
     type: HistoryActionType.SET_ENTRIES,
     entries: []
-  })
+  } as SetEntriesAction)
   storeLocalHistory()
   return deleteHistory()
 }

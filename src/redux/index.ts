@@ -18,7 +18,7 @@ import { EditorConfig } from './editor/types'
 import { NoteDetailsReducer } from './note-details/reducers'
 import { NoteDetails } from './note-details/types'
 import { UserReducer } from './user/reducers'
-import { MaybeUserState } from './user/types'
+import { OptionalUserState } from './user/types'
 import { UiNotificationState } from './ui-notifications/types'
 import { UiNotificationReducer } from './ui-notifications/reducers'
 import { HistoryEntry } from './history/types'
@@ -27,7 +27,7 @@ import { RendererStatusReducer } from './renderer-status/reducers'
 import { RendererStatus } from './renderer-status/types'
 
 export interface ApplicationState {
-  user: MaybeUserState
+  user: OptionalUserState
   config: Config
   banner: BannerState
   history: HistoryEntry[]

@@ -11,16 +11,7 @@ import {
   NoteTextDirection,
   NoteType
 } from '../../components/editor-page/note-frontmatter/note-frontmatter'
-import {
-  NoteDetails,
-  NoteDetailsAction,
-  NoteDetailsActionType,
-  SetCheckboxInMarkdownContentAction,
-  SetNoteDetailsAction,
-  SetNoteDetailsFromServerAction,
-  SetNoteFrontmatterFromRenderingAction,
-  UpdateNoteTitleByFirstHeadingAction
-} from './types'
+import { NoteDetails, NoteDetailsActions, NoteDetailsActionType } from './types'
 import { noteDtoToNoteDetails } from '../../api/notes/dto-methods'
 
 export const initialState: NoteDetails = {
@@ -52,38 +43,34 @@ export const initialState: NoteDetails = {
   }
 }
 
-export const NoteDetailsReducer: Reducer<NoteDetails, NoteDetailsAction> = (
+export const NoteDetailsReducer: Reducer<NoteDetails, NoteDetailsActions> = (
   state: NoteDetails = initialState,
-  action: NoteDetailsAction
+  action: NoteDetailsActions
 ) => {
   switch (action.type) {
     case NoteDetailsActionType.SET_DOCUMENT_CONTENT:
       return {
         ...state,
-        markdownContent: (action as SetNoteDetailsAction).content
+        markdownContent: action.content
       }
     case NoteDetailsActionType.UPDATE_NOTE_TITLE_BY_FIRST_HEADING:
       return {
         ...state,
-        firstHeading: (action as UpdateNoteTitleByFirstHeadingAction).firstHeading,
-        noteTitle: generateNoteTitle(state.frontmatter, (action as UpdateNoteTitleByFirstHeadingAction).firstHeading)
+        firstHeading: action.firstHeading,
+        noteTitle: generateNoteTitle(state.frontmatter, action.firstHeading)
       }
     case NoteDetailsActionType.SET_NOTE_DATA_FROM_SERVER:
-      return noteDtoToNoteDetails((action as SetNoteDetailsFromServerAction).note)
+      return noteDtoToNoteDetails(action.note)
     case NoteDetailsActionType.SET_NOTE_FRONTMATTER:
       return {
         ...state,
-        frontmatter: (action as SetNoteFrontmatterFromRenderingAction).frontmatter,
-        noteTitle: generateNoteTitle((action as SetNoteFrontmatterFromRenderingAction).frontmatter, state.firstHeading)
+        frontmatter: action.frontmatter,
+        noteTitle: generateNoteTitle(action.frontmatter, state.firstHeading)
       }
     case NoteDetailsActionType.SET_CHECKBOX_IN_MARKDOWN_CONTENT:
       return {
         ...state,
-        markdownContent: setCheckboxInMarkdownContent(
-          state.markdownContent,
-          (action as SetCheckboxInMarkdownContentAction).lineInMarkdown,
-          (action as SetCheckboxInMarkdownContentAction).checked
-        )
+        markdownContent: setCheckboxInMarkdownContent(state.markdownContent, action.lineInMarkdown, action.checked)
       }
     default:
       return state

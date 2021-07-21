@@ -10,11 +10,11 @@ import { EditorMode } from '../../components/editor-page/app-bar/editor-view-mod
 import {
   EditorConfig,
   EditorConfigActionType,
-  SetEditorConfigAction,
   SetEditorLigaturesAction,
   SetEditorPreferencesAction,
   SetEditorSmartPasteAction,
-  SetEditorSyncScrollAction
+  SetEditorSyncScrollAction,
+  SetEditorViewModeAction
 } from './types'
 
 export const loadFromLocalStorage = (): EditorConfig | undefined => {
@@ -39,7 +39,7 @@ export const saveToLocalStorage = (editorConfig: EditorConfig): void => {
 }
 
 export const setEditorMode = (editorMode: EditorMode): void => {
-  const action: SetEditorConfigAction = {
+  const action: SetEditorViewModeAction = {
     type: EditorConfigActionType.SET_EDITOR_VIEW_MODE,
     mode: editorMode
   }

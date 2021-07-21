@@ -9,9 +9,8 @@ import { Config } from '../../api/config/types'
 import { ConfigActionType, SetConfigAction } from './types'
 
 export const setConfig = (state: Config): void => {
-  const action: SetConfigAction = {
+  store.dispatch({
     type: ConfigActionType.SET_CONFIG,
     state: state
-  }
-  store.dispatch(action)
+  } as SetConfigAction)
 }

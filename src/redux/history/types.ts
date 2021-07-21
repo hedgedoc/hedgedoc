@@ -40,21 +40,19 @@ export enum HistoryActionType {
   REMOVE_ENTRY = 'REMOVE_ENTRY'
 }
 
-export interface HistoryAction extends Action<HistoryActionType> {
-  type: HistoryActionType
-}
+export type HistoryActions = SetEntriesAction | AddEntryAction | UpdateEntryAction | RemoveEntryAction
 
-export interface SetEntriesAction extends HistoryAction {
+export interface SetEntriesAction extends Action<HistoryActionType> {
   type: HistoryActionType.SET_ENTRIES
   entries: HistoryEntry[]
 }
 
-export interface AddEntryAction extends HistoryAction {
+export interface AddEntryAction extends Action<HistoryActionType> {
   type: HistoryActionType.ADD_ENTRY
   newEntry: HistoryEntry
 }
 
-export interface UpdateEntryAction extends HistoryAction {
+export interface UpdateEntryAction extends Action<HistoryActionType> {
   type: HistoryActionType.UPDATE_ENTRY
   noteId: string
   newEntry: HistoryEntry

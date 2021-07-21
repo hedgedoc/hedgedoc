@@ -11,10 +11,9 @@ export enum ConfigActionType {
   SET_CONFIG = 'config/set'
 }
 
-export interface ConfigActions extends Action<ConfigActionType> {
-  type: ConfigActionType
-}
+export type ConfigActions = SetConfigAction
 
-export interface SetConfigAction extends ConfigActions {
+export interface SetConfigAction extends Action<ConfigActionType> {
+  type: ConfigActionType.SET_CONFIG
   state: Config
 }

@@ -10,11 +10,10 @@ export enum ApiUrlActionType {
   SET_API_URL = 'api-url/set'
 }
 
-export interface ApiUrlActions extends Action<ApiUrlActionType> {
-  type: ApiUrlActionType
-}
+export type ApiUrlActions = SetApiUrlAction
 
-export interface SetApiUrlAction extends ApiUrlActions {
+export interface SetApiUrlAction extends Action<ApiUrlActionType> {
+  type: ApiUrlActionType.SET_API_URL
   state: ApiUrlObject
 }
 

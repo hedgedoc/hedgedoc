@@ -5,7 +5,7 @@
  */
 
 import { Reducer } from 'redux'
-import { BannerActions, BannerActionType, BannerState, SetBannerAction } from './types'
+import { BannerActions, BannerActionType, BannerState } from './types'
 
 export const initialState: BannerState = {
   text: undefined,
@@ -18,7 +18,7 @@ export const BannerReducer: Reducer<BannerState, BannerActions> = (
 ) => {
   switch (action.type) {
     case BannerActionType.SET_BANNER:
-      return (action as SetBannerAction).state
+      return action.state
     default:
       return state
   }
