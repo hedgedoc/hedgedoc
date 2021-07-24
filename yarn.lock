@@ -13504,10 +13504,10 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
   integrity sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=
 
-twemoji-colr-font@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/twemoji-colr-font/-/twemoji-colr-font-0.0.2.tgz#15ab35df2d140e04cf08187efd0e99d43c2ecb02"
-  integrity sha512-VUt3THR04+z2xhWp3WR88bjpvaJqjmGz5+DNIkQVNzNzzGtTJFaJcjHHtyji0A1ZPY2WWpAXFMjfdWufWzvlcg==
+twemoji-colr-font@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/twemoji-colr-font/-/twemoji-colr-font-0.0.4.tgz#24167a6cac509c73880011bdc0d580ad47128524"
+  integrity sha512-xp0tosUIj5t02cv9ufnRZY/05CLilNNISYcday9Zl9u2Os4NZuqc4i1V44KYT/XgXTGzoGJkD/DglaHYRpv93A==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
