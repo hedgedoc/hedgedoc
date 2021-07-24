@@ -2419,10 +2419,10 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.5.tgz#75a2a8e7d8ab4b230414505d92335d1dcb53a6df"
   integrity sha512-L28j2FcJfSZOnL1WBjDYp2vUHCeIFlyYI/53EwD/rKUBQ7MtUUfbQWiyKJGpcnv4/WgrhWsFKrcPstcAt/J0tQ==
 
-"@types/react-bootstrap-typeahead@5.1.6":
-  version "5.1.6"
-  resolved "https://registry.yarnpkg.com/@types/react-bootstrap-typeahead/-/react-bootstrap-typeahead-5.1.6.tgz#e29cd369f985cc965813e3be24058c1ae2e66fee"
-  integrity sha512-GcH0P5vywScImSlt95za6eheIYV4ZU3TI/QEGTYcrtsSZcLv+qAxu3Lhv3q56k6jIRzv6riwCf4JlUJ7BbhkMg==
+"@types/react-bootstrap-typeahead@5.1.7":
+  version "5.1.7"
+  resolved "https://registry.yarnpkg.com/@types/react-bootstrap-typeahead/-/react-bootstrap-typeahead-5.1.7.tgz#9ecb328ac98b9991091d4ee3cdd8341615739326"
+  integrity sha512-KDmd7eRzlwhCSipwMo90ato/VYufCNY+4Qh3LOZabjv9VKI4BspFShLu34Nz1kIjvTHbG5SXbgxj0lYDzdNdPw==
   dependencies:
     "@types/react" "*"
 
@@ -2475,10 +2475,19 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@17.0.14", "@types/react@>=16.14.8", "@types/react@>=16.9.11", "@types/react@^17.0.11":
+"@types/react@*", "@types/react@>=16.14.8", "@types/react@>=16.9.11", "@types/react@^17.0.11":
   version "17.0.14"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.14.tgz#f0629761ca02945c4e8fea99b8177f4c5c61fb0f"
   integrity sha512-0WwKHUbWuQWOce61UexYuWTGuGY/8JvtUe/dtQ6lR4sZ3UiylHotJeWpf3ArP9+DSGUoLY3wbU59VyMrJps5VQ==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@17.0.15":
+  version "17.0.15"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.15.tgz#c7533dc38025677e312606502df7656a6ea626d0"
+  integrity sha512-uTKHDK9STXFHLaKv6IMnwp52fm0hwU+N89w/p9grdUqcFA6WuqDyPhaWopbNyE1k/VhgzmHl8pu1L4wITtmlLw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
