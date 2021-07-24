@@ -55,7 +55,7 @@
     "i18next-browser-languagedetector": "6.1.2",
     "i18next-http-backend": "1.2.6",
     "js-yaml": "4.1.0",
-    "katex": "0.13.11",
+    "katex": "0.13.13",
     "luxon": "1.28.0",
     "markdown-it": "12.1.0",
     "markdown-it-abbr": "1.0.4",
@@ -195,6 +195,6 @@
   },
   "resolutions": {
     "cypress": "7.7.0",
-    "katex": "0.13.11"
+    "katex": "0.13.13"
   }
 }
