@@ -2,7 +2,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
+      - renovate/master-*
   pull_request:
     branches: [master]
 
