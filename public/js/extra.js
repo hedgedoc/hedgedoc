@@ -575,6 +575,14 @@ export function postProcess (code) {
   // also add noopener to prevent clickjacking
   // See details: https://mathiasbynens.github.io/rel-noopener/
   result.find('a:not([href^="#"]):not([target])').attr('target', '_blank').attr('rel', 'noopener')
+
+  // If it's hashtag link then make it base uri independent
+  result.find('a[href^="#"]').each((index, linkTag) => {
+    const currentLocation = new URL(window.location)
+    currentLocation.hash = linkTag.hash
+    linkTag.href = currentLocation.toString()
+  })
+
   // update continue line numbers
   const linenumberdivs = result.find('.gutter.linenumber').toArray()
   for (let i = 0; i < linenumberdivs.length; i++) {
