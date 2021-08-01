@@ -10,8 +10,7 @@
     ":dependencyDashboard",
     ":rebaseStalePrs",
     ":maintainLockFilesWeekly",
-    ":automergePatch",
-    ":automergeBranch"
+    ":automergePatch"
   ],
   "baseBranches": [
     "master",
