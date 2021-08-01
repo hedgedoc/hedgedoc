@@ -63,7 +63,7 @@
     "typeorm": "0.2.34"
   },
   "devDependencies": {
-    "@nestjs/cli": "8.0.2",
+    "@nestjs/cli": "8.1.0",
     "@nestjs/schematics": "8.0.2",
     "@nestjs/testing": "8.0.4",
     "@tsconfig/node12": "1.0.9",
