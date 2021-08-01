@@ -48,7 +48,7 @@
     "eslint-plugin-jest": "24.4.0",
     "eslint-plugin-local-rules": "1.1.0",
     "file-type": "16.5.2",
-    "joi": "17.4.1",
+    "joi": "17.4.2",
     "minio": "7.0.18",
     "nest-router": "1.0.9",
     "node-fetch": "2.6.1",
