@@ -25,7 +25,7 @@
     "seed": "ts-node src/seed.ts"
   },
   "dependencies": {
-    "@azure/storage-blob": "12.6.0",
+    "@azure/storage-blob": "12.7.0",
     "@nestjs/common": "8.0.5",
     "@nestjs/config": "1.0.1",
     "@nestjs/core": "8.0.5",
