@@ -620,6 +620,18 @@ export function removeDOMEvents (view) {
 }
 window.removeDOMEvents = removeDOMEvents
 
+function toDataURL (url, callback) {
+  fetch(url).then(response => {
+    const fr = new FileReader()
+    fr.onload = function () {
+      callback(this.result)
+    }
+    response.blob().then(blob => {
+      fr.readAsDataURL(blob)
+    })
+  })
+}
+
 function generateCleanHTML (view) {
   const src = view.clone()
   const eles = src.find('*')
@@ -634,10 +646,9 @@ function generateCleanHTML (view) {
   src.find('input.task-list-item-checkbox').attr('disabled', '')
   // replace emoji image path
   src.find('img.emoji').each((key, value) => {
-    let name = $(value).attr('alt')
-    name = name.substr(1)
-    name = name.slice(0, name.length - 1)
-    $(value).attr('src', `https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/images/basic/${name}.png`)
+    toDataURL($(value).attr('src'), dataURL => {
+      $(value).attr('src', dataURL)
+    })
   })
   // replace video to iframe
   src.find('div[data-videoid]').each((key, value) => {
