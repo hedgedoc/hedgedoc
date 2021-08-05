@@ -193,7 +193,7 @@
     "optimize-css-assets-webpack-plugin": "6.0.1",
     "prismjs": "1.24.1",
     "raphael": "2.3.0",
-    "remark-cli": "9.0.0",
+    "remark-cli": "10.0.0",
     "remark-preset-lint-markdown-style-guide": "4.0.0",
     "reveal.js": "3.9.2",
     "select2": "3.5.2-browserify",
