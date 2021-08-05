@@ -730,10 +730,10 @@
     webpack "5.45.1"
     webpack-node-externals "3.0.0"
 
-"@nestjs/common@8.0.5":
-  version "8.0.5"
-  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-8.0.5.tgz#d79a0f5c5e8b875b07757effb77aa66898a13718"
-  integrity sha512-RThK+LS10jN14Ly7L7v8IXZyoa9e+dGTEcqxZnYHWH5atufundo2K7wgtRJVlzUmYeHAh7Ra2HCo4tGI2g8o3g==
+"@nestjs/common@8.0.6":
+  version "8.0.6"
+  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-8.0.6.tgz#52157de0bde7a439b2248ffd6d5e221fd593bc93"
+  integrity sha512-mSD000iYJDN2wjL2hbygCVNVvzvi3VW5EDc25gK1Bj3wUU2HR8m1qOAUBqcCaGIuvBb2cD/pnVkKklnsY0rKhw==
   dependencies:
     axios "0.21.1"
     iterare "1.2.1"
@@ -752,10 +752,10 @@
     lodash.set "4.3.2"
     uuid "8.3.2"
 
-"@nestjs/core@8.0.5":
-  version "8.0.5"
-  resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-8.0.5.tgz#e11b6e2483099774f6ab20cc681c23f0f2d88fa4"
-  integrity sha512-PzPWcGcTKb/LoXViviFa3qp8GyVx8dd0fRVSXOr48tK/GR5SiIiZ9hhYGonKf02mE9+WY8yn9mI5xAsglN49Yg==
+"@nestjs/core@8.0.6":
+  version "8.0.6"
+  resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-8.0.6.tgz#ff403a0713f9f7874e3a91ef5416fe6e96872635"
+  integrity sha512-PIGL4TMjVkAsiv5hJinaTx3WdoftYh7pJDwIUQPvRZPLhboGbOJlVapN0Cw5SL7XgNWojQiAsbgLmnGJVDO3Sw==
   dependencies:
     "@nuxtjs/opencollective" "0.3.2"
     fast-safe-stringify "2.0.8"
@@ -775,10 +775,10 @@
   resolved "https://registry.yarnpkg.com/@nestjs/passport/-/passport-8.0.1.tgz#f1ed39a19489f794d1fe3fef592b4523bc48da68"
   integrity sha512-vn/ZJLXQKvSf9D0BvEoNFJLfzl9AVqfGtDyQMfWDLbaNpoEB2FyeaHGxdiX6H71oLSrQV78c/yuhfantzwdjdg==
 
-"@nestjs/platform-express@8.0.5":
-  version "8.0.5"
-  resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-8.0.5.tgz#b8443886ec4ac0f5c75e580004c8b32a834c9dca"
-  integrity sha512-ystcQWv1Hm/V2IoiDrAYzOxZ+fi0HWUM+A4boI+8Vjl8aBqvMC1PwI1+QxhXnVsnR0nT8OJuJ2z77a9WvfT9uA==
+"@nestjs/platform-express@8.0.6":
+  version "8.0.6"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-8.0.6.tgz#fee8baca5eb37c5e17f350a6e514318876bd5f56"
+  integrity sha512-1nIWd2w3aq3k0UNThDI6VWLqurc0Fvw3FO6BHWHK+Y7H/z9KFHZ0W/HdD9IJH05m4Smp/2neZoMkKdlXeh9wpQ==
   dependencies:
     body-parser "1.19.0"
     cors "2.8.5"
@@ -814,10 +814,10 @@
     lodash "4.17.21"
     path-to-regexp "3.2.0"
 
-"@nestjs/testing@8.0.5":
-  version "8.0.5"
-  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-8.0.5.tgz#9b595a1896470dfe0858e3a146261d7064ad23c3"
-  integrity sha512-MfpIEgGh1nNGkCB/Ss7VitnxcjHIDlSTULaUFRB4jTHiD1IADQ550M/IaM8i/Tk8MlwFTkyxxeSoE2QxK+vAMg==
+"@nestjs/testing@8.0.6":
+  version "8.0.6"
+  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-8.0.6.tgz#c6f160ce9ced24f00c653d5a284dc35dd5162dd8"
+  integrity sha512-HRXGM5RlGa+o+kxWI9DQCALndSvL3Remjg1cZVFp2w2s5eXRPpiFMo9puXtu9DSc4tz78xYcQGmEaeYNTB7gvg==
   dependencies:
     optional "0.1.4"
     tslib "2.3.0"
