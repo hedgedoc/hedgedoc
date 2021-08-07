@@ -15,6 +15,7 @@ import { RevisionsModule } from '../revisions/revisions.module';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { Alias } from './alias.entity';
+import { AliasService } from './alias.service';
 import { Note } from './note.entity';
 import { NotesService } from './notes.service';
 import { Tag } from './tag.entity';
@@ -36,7 +37,7 @@ import { Tag } from './tag.entity';
     ConfigModule,
   ],
   controllers: [],
-  providers: [NotesService],
-  exports: [NotesService],
+  providers: [NotesService, AliasService],
+  exports: [NotesService, AliasService],
 })
 export class NotesModule {}
