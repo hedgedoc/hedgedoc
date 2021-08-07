@@ -190,7 +190,7 @@
     "prettier": "2.3.2",
     "redux-devtools": "3.7.0",
     "redux-devtools-extension": "2.13.9",
-    "ts-loader": "9.2.4",
+    "ts-loader": "9.2.5",
     "webpack-bundle-analyzer": "4.4.2"
   },
   "resolutions": {
