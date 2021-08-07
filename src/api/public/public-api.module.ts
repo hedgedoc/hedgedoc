@@ -13,6 +13,7 @@ import { NotesModule } from '../../notes/notes.module';
 import { PermissionsModule } from '../../permissions/permissions.module';
 import { RevisionsModule } from '../../revisions/revisions.module';
 import { UsersModule } from '../../users/users.module';
+import { AliasController } from './alias/alias.controller';
 import { MeController } from './me/me.controller';
 import { MediaController } from './media/media.controller';
 import { MonitoringController } from './monitoring/monitoring.controller';
@@ -30,6 +31,7 @@ import { NotesController } from './notes/notes.controller';
     PermissionsModule,
   ],
   controllers: [
+    AliasController,
     MeController,
     NotesController,
     MediaController,
