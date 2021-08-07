@@ -39,3 +39,7 @@ export class PermissionsUpdateInconsistentError extends Error {
 export class MediaBackendError extends Error {
   name = 'MediaBackendError';
 }
+
+export class PrimaryAliasDeletionForbiddenError extends Error {
+  name = 'PrimaryAliasDeletionForbiddenError';
+}
