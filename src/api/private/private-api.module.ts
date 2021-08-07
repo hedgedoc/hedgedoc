@@ -15,6 +15,7 @@ import { NotesModule } from '../../notes/notes.module';
 import { PermissionsModule } from '../../permissions/permissions.module';
 import { RevisionsModule } from '../../revisions/revisions.module';
 import { UsersModule } from '../../users/users.module';
+import { AliasController } from './alias/alias.controller';
 import { AuthController } from './auth/auth.controller';
 import { ConfigController } from './config/config.controller';
 import { HistoryController } from './me/history/history.controller';
@@ -43,6 +44,7 @@ import { TokensController } from './tokens/tokens.controller';
     HistoryController,
     MeController,
     NotesController,
+    AliasController,
     AuthController,
   ],
 })
