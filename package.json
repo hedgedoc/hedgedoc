@@ -94,7 +94,7 @@
     "react-router-use-location-state": "2.5.0",
     "react-scripts": "4.0.3",
     "react-use": "17.2.4",
-    "redux": "4.1.0",
+    "redux": "4.1.1",
     "sanitize-filename": "1.6.3",
     "ts-mockery": "1.2.0",
     "twemoji-colr-font": "0.0.4",
