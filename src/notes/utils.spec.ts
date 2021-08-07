@@ -5,19 +5,36 @@
  */
 import { randomBytes } from 'crypto';
 
-import { generatePublicId } from './utils';
+import { User } from '../users/user.entity';
+import { Alias } from './alias.entity';
+import { Note } from './note.entity';
+import { generatePublicId, getPrimaryAlias } from './utils';
 
 jest.mock('crypto');
+const random128bitBuffer = Buffer.from([
+  0xe1, 0x75, 0x86, 0xb7, 0xc3, 0xfb, 0x03, 0xa9, 0x26, 0x9f, 0xc9, 0xd6, 0x8c,
+  0x2d, 0x7b, 0x7b,
+]);
+const mockRandomBytes = randomBytes as jest.MockedFunction<typeof randomBytes>;
+mockRandomBytes.mockImplementation((_) => random128bitBuffer);
 
 it('generatePublicId', () => {
-  const random128bitBuffer = Buffer.from([
-    0xe1, 0x75, 0x86, 0xb7, 0xc3, 0xfb, 0x03, 0xa9, 0x26, 0x9f, 0xc9, 0xd6,
-    0x8c, 0x2d, 0x7b, 0x7b,
-  ]);
-  const mockRandomBytes = randomBytes as jest.MockedFunction<
-    typeof randomBytes
-  >;
-  mockRandomBytes.mockImplementationOnce((_) => random128bitBuffer);
-
   expect(generatePublicId()).toEqual('w5trddy3zc1tj9mzs7b8rbbvfc');
+});
+
+describe('getPrimaryAlias', () => {
+  const alias = 'alias';
+  let note: Note;
+  beforeEach(() => {
+    const user = User.create('hardcoded', 'Testy') as User;
+    note = Note.create(user, alias);
+  });
+  it('finds correct primary alias', () => {
+    note.aliases.push(Alias.create('annother', false));
+    expect(getPrimaryAlias(note)).toEqual(alias);
+  });
+  it('returns undefined if there is no alias', () => {
+    note.aliases[0].primary = false;
+    expect(getPrimaryAlias(note)).toEqual(undefined);
+  });
 });
