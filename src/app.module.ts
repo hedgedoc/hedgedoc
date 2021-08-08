@@ -25,6 +25,7 @@ import { FrontendConfigModule } from './frontend-config/frontend-config.module';
 import { FrontendConfigService } from './frontend-config/frontend-config.service';
 import { GroupsModule } from './groups/groups.module';
 import { HistoryModule } from './history/history.module';
+import { IdentityModule } from './identity/identity.module';
 import { LoggerModule } from './logger/logger.module';
 import { MediaModule } from './media/media.module';
 import { MonitoringModule } from './monitoring/monitoring.module';
@@ -81,6 +82,7 @@ const routes: Routes = [
     MediaModule,
     AuthModule,
     FrontendConfigModule,
+    IdentityModule,
   ],
   controllers: [],
   providers: [FrontendConfigService],
