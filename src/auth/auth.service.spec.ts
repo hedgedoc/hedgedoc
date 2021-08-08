@@ -7,16 +7,16 @@ import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { randomBytes } from 'crypto';
 import { Repository } from 'typeorm';
 
 import appConfigMock from '../config/mock/app.config.mock';
 import { NotInDBError, TokenNotValidError } from '../errors/errors';
+import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
-import { Identity } from '../users/identity.entity';
 import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
+import { hashPassword } from '../utils/password';
 import { AuthToken } from './auth-token.entity';
 import { AuthService } from './auth.service';
 
@@ -74,26 +74,6 @@ describe('AuthService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('checkPassword', () => {
-    it('works', async () => {
-      const testPassword = 'thisIsATestPassword';
-      const hash = await service.hashPassword(testPassword);
-      await service
-        .checkPassword(testPassword, hash)
-        .then((result) => expect(result).toBeTruthy());
-    });
-    it('fails, if secret is too short', async () => {
-      const secret = service.bufferToBase64Url(randomBytes(54));
-      const hash = await service.hashPassword(secret);
-      await service
-        .checkPassword(secret, hash)
-        .then((result) => expect(result).toBeTruthy());
-      await service
-        .checkPassword(secret.substr(0, secret.length - 1), hash)
-        .then((result) => expect(result).toBeFalsy());
-    });
-  });
-
   describe('getTokensByUsername', () => {
     it('works', async () => {
       jest
@@ -108,7 +88,7 @@ describe('AuthService', () => {
   describe('getAuthToken', () => {
     const token = 'testToken';
     it('works', async () => {
-      const accessTokenHash = await service.hashPassword(token);
+      const accessTokenHash = await hashPassword(token);
       jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
         ...authToken,
         user: user,
@@ -142,7 +122,7 @@ describe('AuthService', () => {
         ).rejects.toThrow(TokenNotValidError);
       });
       it('AuthToken has wrong validUntil Date', async () => {
-        const accessTokenHash = await service.hashPassword(token);
+        const accessTokenHash = await hashPassword(token);
         jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
           ...authToken,
           user: user,
@@ -185,7 +165,7 @@ describe('AuthService', () => {
   describe('validateToken', () => {
     it('works', async () => {
       const token = 'testToken';
-      const accessTokenHash = await service.hashPassword(token);
+      const accessTokenHash = await hashPassword(token);
       jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce({
         ...user,
         authTokens: [authToken],
@@ -300,16 +280,6 @@ describe('AuthService', () => {
         expect(token.lastUsed).toBeNull();
         expect(token.secret.startsWith(token.keyId)).toBeTruthy();
       });
-    });
-  });
-
-  describe('bufferToBase64Url', () => {
-    it('works', () => {
-      expect(
-        service.bufferToBase64Url(
-          Buffer.from('testsentence is a test sentence'),
-        ),
-      ).toEqual('dGVzdHNlbnRlbmNlIGlzIGEgdGVzdCBzZW50ZW5jZQ');
     });
   });
 
