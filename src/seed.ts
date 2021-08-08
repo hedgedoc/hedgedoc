@@ -9,6 +9,7 @@ import { AuthToken } from './auth/auth-token.entity';
 import { Author } from './authors/author.entity';
 import { Group } from './groups/group.entity';
 import { HistoryEntry } from './history/history-entry.entity';
+import { Identity } from './identity/identity.entity';
 import { MediaUpload } from './media/media-upload.entity';
 import { Note } from './notes/note.entity';
 import { Tag } from './notes/tag.entity';
@@ -16,7 +17,6 @@ import { NoteGroupPermission } from './permissions/note-group-permission.entity'
 import { NoteUserPermission } from './permissions/note-user-permission.entity';
 import { Edit } from './revisions/edit.entity';
 import { Revision } from './revisions/revision.entity';
-import { Identity } from './users/identity.entity';
 import { Session } from './users/session.entity';
 import { User } from './users/user.entity';
 
