@@ -17,6 +17,7 @@ import appConfigMock from '../../../../config/mock/app.config.mock';
 import { Group } from '../../../../groups/group.entity';
 import { HistoryEntry } from '../../../../history/history-entry.entity';
 import { HistoryModule } from '../../../../history/history.module';
+import { Identity } from '../../../../identity/identity.entity';
 import { LoggerModule } from '../../../../logger/logger.module';
 import { Note } from '../../../../notes/note.entity';
 import { NotesModule } from '../../../../notes/notes.module';
@@ -25,7 +26,6 @@ import { NoteGroupPermission } from '../../../../permissions/note-group-permissi
 import { NoteUserPermission } from '../../../../permissions/note-user-permission.entity';
 import { Edit } from '../../../../revisions/edit.entity';
 import { Revision } from '../../../../revisions/revision.entity';
-import { Identity } from '../../../../users/identity.entity';
 import { Session } from '../../../../users/session.entity';
 import { User } from '../../../../users/user.entity';
 import { UsersModule } from '../../../../users/users.module';

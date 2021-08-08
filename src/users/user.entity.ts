@@ -17,9 +17,9 @@ import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
 import { Group } from '../groups/group.entity';
 import { HistoryEntry } from '../history/history-entry.entity';
+import { Identity } from '../identity/identity.entity';
 import { MediaUpload } from '../media/media-upload.entity';
 import { Note } from '../notes/note.entity';
-import { Identity } from './identity.entity';
 
 @Entity()
 export class User {

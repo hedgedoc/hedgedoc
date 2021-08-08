@@ -14,6 +14,7 @@ import customizationConfigMock from '../../../config/mock/customization.config.m
 import externalServicesConfigMock from '../../../config/mock/external-services.config.mock';
 import mediaConfigMock from '../../../config/mock/media.config.mock';
 import { Group } from '../../../groups/group.entity';
+import { Identity } from '../../../identity/identity.entity';
 import { LoggerModule } from '../../../logger/logger.module';
 import { MediaUpload } from '../../../media/media-upload.entity';
 import { MediaModule } from '../../../media/media.module';
@@ -23,7 +24,6 @@ import { NoteGroupPermission } from '../../../permissions/note-group-permission.
 import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
 import { Edit } from '../../../revisions/edit.entity';
 import { Revision } from '../../../revisions/revision.entity';
-import { Identity } from '../../../users/identity.entity';
 import { Session } from '../../../users/session.entity';
 import { User } from '../../../users/user.entity';
 import { UsersModule } from '../../../users/users.module';
