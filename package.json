@@ -186,7 +186,7 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-chai-friendly": "0.7.2",
     "eslint-plugin-cypress": "2.11.3",
-    "http-server": "0.13.0",
+    "http-server": "13.0.0",
     "prettier": "2.3.2",
     "redux-devtools": "3.7.0",
     "redux-devtools-extension": "2.13.9",
