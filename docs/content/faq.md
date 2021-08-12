@@ -45,3 +45,9 @@ If you still want to allow embedding via iframe, ensure that:
 - `cookiePolicy` / `CMD_COOKIE_POLICY` is set to `none` (Otherwise you will get a `AUTH failed: No cookie transmitted` error.)
 - `csp.allowFraming` / `CMD_CSP_ALLOW_FRAMING` is set to `true`
 
+## I can't upload images or the upload gets stuck
+This problem is typically accompanied by the error `Invalid URL: /uploads/` in the log and is often caused by a missing
+`domain` / `CMD_DOMAIN` config option or an incorrect reverse proxy config.  
+Have a look at our [reverse proxy documentation](https://docs.hedgedoc.org/guides/reverse-proxy/)
+and make sure that `protocolUseSSL` / `CMD_PROTOCOL_USESSL` is set to `true` if you serve HedgeDoc via HTTPS.
+
