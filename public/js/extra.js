@@ -284,12 +284,12 @@ export function finishView (view) {
   // youtube
   view.find('div.youtube.raw').removeClass('raw')
     .click(function () {
-      imgPlayiframe(this, '//www.youtube.com/embed/')
+      imgPlayiframe(this, 'https://www.youtube.com/embed/')
     })
     // vimeo
   view.find('div.vimeo.raw').removeClass('raw')
     .click(function () {
-      imgPlayiframe(this, '//player.vimeo.com/video/')
+      imgPlayiframe(this, 'https://player.vimeo.com/video/')
     })
     .each((key, value) => {
       const vimeoLink = `https://vimeo.com/${$(value).attr('data-videoid')}`
@@ -1118,7 +1118,7 @@ const youtubePlugin = new Plugin(
     if (!videoid) return
     const div = $('<div class="youtube raw"></div>')
     div.attr('data-videoid', videoid)
-    const thumbnailSrc = `//img.youtube.com/vi/${videoid}/hqdefault.jpg`
+    const thumbnailSrc = `https://img.youtube.com/vi/${videoid}/hqdefault.jpg`
     const image = `<img src="${thumbnailSrc}" />`
     div.append(image)
     const icon = '<i class="icon fa fa-youtube-play fa-5x"></i>'
