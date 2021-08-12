@@ -51,3 +51,6 @@ This problem is typically accompanied by the error `Invalid URL: /uploads/` in t
 Have a look at our [reverse proxy documentation](https://docs.hedgedoc.org/guides/reverse-proxy/)
 and make sure that `protocolUseSSL` / `CMD_PROTOCOL_USESSL` is set to `true` if you serve HedgeDoc via HTTPS.
 
+## HedgeDoc fails executing migrations and does not start
+Unfortunately, older versions of HedgeDoc had some bugs regarding migrations and didn't always record that a migration was executed.  
+Have a look at the *[Troubleshooting Migrations](/guides/migration-troubleshooting/)* guide for more information.
