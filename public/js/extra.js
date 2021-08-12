@@ -453,7 +453,7 @@ export function finishView (view) {
     .each((key, value) => {
       $.ajax({
         type: 'GET',
-        url: `//www.slideshare.net/api/oembed/2?url=http://www.slideshare.net/${$(value).attr('data-slideshareid')}&format=json`,
+        url: `https://www.slideshare.net/api/oembed/2?url=https://www.slideshare.net/${$(value).attr('data-slideshareid')}&format=json`,
         jsonp: 'callback',
         dataType: 'jsonp',
         success (data) {
