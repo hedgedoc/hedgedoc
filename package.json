@@ -23,7 +23,7 @@
     "@types/mermaid": "8.2.7",
     "@types/node": "15.6.0",
     "@types/sass": "1.16.1",
-    "@types/react": "17.0.17",
+    "@types/react": "17.0.18",
     "@types/react-bootstrap-typeahead": "5.1.7",
     "@types/react-dom": "17.0.9",
     "@types/react-router": "5.1.16",
