@@ -34,7 +34,8 @@ if (localeSelector.length > 0) {
   localeSelector.change(function () {
     Cookies.set('locale', $(this).val(), {
       expires: 365,
-      sameSite: window.cookiePolicy
+      sameSite: window.cookiePolicy,
+      secure: window.location.protocol === 'https:'
     })
     window.location.reload()
   })
