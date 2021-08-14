@@ -6159,10 +6159,10 @@ emoji-picker-element-data@1.2.0:
   resolved "https://registry.yarnpkg.com/emoji-picker-element-data/-/emoji-picker-element-data-1.2.0.tgz#755790b7e3ff5f62ae51220692b0359b704f4fd1"
   integrity sha512-ziHcTY/7SFbk4KI0rQ6cb/KZo9A5ow0N3QT9bPTGGRxYAJd5gFQjShaM0OkW12rpLlKekOSOMT2hOlJB5QGqWQ==
 
-emoji-picker-element@1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/emoji-picker-element/-/emoji-picker-element-1.7.0.tgz#d21fbd950c434d6c6cd59e68f796b9d7bab38a96"
-  integrity sha512-s16zyK5yaW5G25MzdBRXOUMMepbur5GtZCuUm2xxftHWEopSedjmk5tX6/ZdjXDPMeb5NfKUi7V9DgAPTwIpWg==
+emoji-picker-element@1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/emoji-picker-element/-/emoji-picker-element-1.7.1.tgz#4d4269f1bbde105d11dd0d6156e226be3047ed15"
+  integrity sha512-Onv1JJsMkXixKM8dnYa9YsRAHhzd7vosPEVUPpJGNPf1zH6bKt8Kjl4sw8vcwlMWCHTWIRiU6uEBm7KsduDGdg==
 
 emoji-regex@^7.0.1:
   version "7.0.3"
