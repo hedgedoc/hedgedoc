@@ -74,10 +74,6 @@ metrics.setupCustomPrometheusMetrics()
 
 // socket io
 const io = require('socket.io')(server, { cookie: false })
-io.engine.ws = new (require('ws').Server)({
-  noServer: true,
-  perMessageDeflate: false
-})
 
 // others
 const realtime = require('./lib/realtime.js')
