@@ -17,7 +17,7 @@
     "@types/jest": "26.0.24",
     "@types/js-yaml": "4.0.2",
     "@types/luxon": "2.0.0",
-    "@types/markdown-it": "12.0.3",
+    "@types/markdown-it": "12.2.0",
     "@types/markdown-it-container": "2.0.4",
     "@types/markdown-it-plantuml": "1.4.1",
     "@types/mermaid": "8.2.7",
