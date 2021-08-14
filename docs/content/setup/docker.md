@@ -18,7 +18,7 @@ The easiest way to get started with HedgeDoc and Docker is to use the following 
 version: '3'
 services:
   database:
-    image: postgres:9.6-alpine
+    image: postgres:13.4-alpine
     environment:
       - POSTGRES_USER=hedgedoc
       - POSTGRES_PASSWORD=password
