@@ -331,17 +331,28 @@ function handleTermSignals () {
       }
     })
   }
+  const maxCleanTries = 30
+  let currentCleanTry = 1
   const checkCleanTimer = setInterval(function () {
     if (realtime.isReady()) {
       models.Revision.checkAllNotesRevision(function (err, notes) {
-        if (err) return logger.error(err)
+        if (err) {
+          logger.error('Error while saving note revisions: ' + err)
+          if (currentCleanTry <= maxCleanTries) {
+            logger.warn(`Trying again. Try ${currentCleanTry} of ${maxCleanTries}`)
+            currentCleanTry++
+            return null
+          }
+          logger.error(`Could not save note revisions after ${maxCleanTries} tries! Exiting.`)
+          process.exit(1)
+        }
         if (!notes || notes.length <= 0) {
           clearInterval(checkCleanTimer)
-          return process.exit(0)
+          process.exit(0)
         }
       })
     }
-  }, 100)
+  }, 200)
 }
 process.on('SIGINT', handleTermSignals)
 process.on('SIGTERM', handleTermSignals)
