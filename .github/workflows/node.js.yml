@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [12, 14, 16]
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [12, 14, 16]
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -56,7 +56,7 @@ jobs:
       - run: yarn --frozen-lockfile --prefer-offline
       - run: yarn run build
       - uses: actions/upload-artifact@v2
-        if: github.ref == 'refs/heads/master' && matrix.node-version == '16.x'
+        if: github.ref == 'refs/heads/master' && matrix.node-version == '16'
         with:
           name: Prebuild with Node.js ${{ matrix.node-version }}
           path: |
