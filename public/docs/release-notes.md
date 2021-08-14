@@ -8,6 +8,11 @@
 
 ### Features
 - HedgeDoc now automatically retries connecting to the database up to 30 times on startup.
+- This release introduces the `csp.allowFraming` config option, which controls whether embedding a HedgeDoc instance
+  in other webpages is allowed. We **strongly recommend disabling** this option to reduce the risk of XSS attacks.
+- This release introduces the `csp.allowPDFEmbed` config option, which controls whether embedding PDFs inside HedgeDoc
+  notes is allowed. We recommend disabling this option if you don't use the feature, to reduce the attack surface of
+  XSS attacks.
 
 ### Bugfixes
 - Fix crash when trying to read the current Git commit on startup 

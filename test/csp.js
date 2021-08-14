@@ -144,7 +144,7 @@ describe('Content security policies', function () {
     const variations = ['default', 'script', 'img', 'style', 'font', 'object', 'media', 'child', 'connect']
 
     for (let i = 0; i < variations.length; i++) {
-      assert.strictEqual(csp.computeDirectives()[variations[i] + 'Src'].toString(), ['https://' + variations[i] + '.example.com'].concat(unextendedCSP[variations[i] + 'Src']).toString())
+      assert.strictEqual(csp.computeDirectives()[variations[i] + 'Src'].toString(), ['https://' + variations[i] + '.example.com'].concat(unextendedCSP[variations[i] + 'Src']).filter(x => x != null).toString())
     }
   })
 
