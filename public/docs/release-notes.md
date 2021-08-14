@@ -6,6 +6,8 @@
   If you want to continue using Google Analytics or Disqus, you can re-enable them in the config.
   See [the docs](https://docs.hedgedoc.org/configuration/#web-security-aspects) for details.
   
+### Bugfixes
+- Fix crash when trying to read the current Git commit on startup 
 
 ## <i class="fa fa-tag"></i> 1.8.2 <i class="fa fa-calendar-o"></i> 2021-05-11
 
