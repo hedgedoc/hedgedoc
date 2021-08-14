@@ -35,7 +35,7 @@ See [Mozillas docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-
 Also note that the `X-Frame-Options` header [is being obsoleted](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors)
 by the `frame-ancestors` statement in the `Content-Security-Policy` header.
 
-## Why can I not embed a HedgeDoc note in other pages using iframes?
+## Why can't I embed a HedgeDoc note in other pages using iframes?
 Allowing your HedgeDoc instance to be embedded in other pages increases the risk of [clickjacking](https://en.wikipedia.org/wiki/Clickjacking),
 [XSS](https://en.wikipedia.org/wiki/Cross-site_scripting) and other attacks.
 Therefore, **we recommend to not enable** this option.  
