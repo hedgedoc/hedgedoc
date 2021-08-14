@@ -11,6 +11,7 @@
 
 ### Bugfixes
 - Fix crash when trying to read the current Git commit on startup 
+- Fix endless loop on shutdown when HedgeDoc can't connect to the database
 
 ## <i class="fa fa-tag"></i> 1.8.2 <i class="fa fa-calendar-o"></i> 2021-05-11
 
