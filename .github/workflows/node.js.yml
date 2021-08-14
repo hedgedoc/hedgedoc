@@ -18,10 +18,10 @@ jobs:
           - sudo apt install -y jq && yarn run jsonlint
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 14
+      - name: Use Node.js 16
         uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 16
           cache: yarn
       - run: yarn --frozen-lockfile --prefer-offline
       - run: ${{matrix.command}}
@@ -56,7 +56,7 @@ jobs:
       - run: yarn --frozen-lockfile --prefer-offline
       - run: yarn run build
       - uses: actions/upload-artifact@v2
-        if: github.ref == 'refs/heads/master' && matrix.node-version == '14.x'
+        if: github.ref == 'refs/heads/master' && matrix.node-version == '16.x'
         with:
           name: Prebuild with Node.js ${{ matrix.node-version }}
           path: |
