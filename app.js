@@ -309,9 +309,15 @@ process.on('uncaughtException', function (err) {
   process.exit(1)
 })
 
+let alreadyHandlingTermSignals = false
 // install exit handler
 function handleTermSignals () {
+  if (alreadyHandlingTermSignals) {
+    logger.info('Forcefully exiting.')
+    process.exit(1)
+  }
   logger.info('HedgeDoc has been killed by signal, try to exit gracefully...')
+  alreadyHandlingTermSignals = true
   realtime.maintenance = true
   // disconnect all socket.io clients
   Object.keys(io.sockets.sockets).forEach(function (key) {
