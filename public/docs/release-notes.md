@@ -5,7 +5,10 @@
   they were repeatedly used to exploit security vulnerabilities.  
   If you want to continue using Google Analytics or Disqus, you can re-enable them in the config.
   See [the docs](https://docs.hedgedoc.org/configuration/#web-security-aspects) for details.
-  
+
+### Features
+- HedgeDoc now automatically retries connecting to the database up to 30 times on startup.
+
 ### Bugfixes
 - Fix crash when trying to read the current Git commit on startup 
 
