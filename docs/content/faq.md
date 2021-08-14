@@ -45,6 +45,8 @@ If you still want to allow embedding via iframe, ensure that:
 - `cookiePolicy` / `CMD_COOKIE_POLICY` is set to `none` (Otherwise you will get a `AUTH failed: No cookie transmitted` error.)
 - `csp.allowFraming` / `CMD_CSP_ALLOW_FRAMING` is set to `true`
 
+See also the [configuration docs](/configuration/#web-security-aspects) for more information about these options.
+
 ## I can't upload images or the upload gets stuck
 This problem is typically accompanied by the error `Invalid URL: /uploads/` in the log and is often caused by a missing
 `domain` / `CMD_DOMAIN` config option or an incorrect reverse proxy config.  
