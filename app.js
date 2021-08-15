@@ -65,6 +65,12 @@ if (!config.useSSL && config.protocolUseSSL) {
 
 // logger
 app.use(morgan('combined', {
+  skip: function(req, res) {
+    // skip logging if specified
+    // unless the app is running in debug mode
+    // or throws an error
+    return req.skipLogging && config.loglevel !== "debug" && res.statusCode < 400
+  },
   stream: logger.stream
 }))
 
