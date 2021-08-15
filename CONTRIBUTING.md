@@ -51,6 +51,16 @@ If you set your `user.name` and `user.email` git configs, you can sign your comm
 You can also use git [aliases](https://git-scm.com/book/tr/v2/Git-Basics-Git-Aliases) like `git config --global alias.ci 'commit -s'`.
 Now you can commit with `git ci` and the commit will be signed.
 
+## Changelog snippets
+
+PRs that fix a bug or add a new feature or enhancement should add a corresponding changelog entry.
+The changelog can be found at `public/docs/release-notes.md`. If there is no section for the next release yet, just add
+one using `## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED`. The version and date will
+be filled later by the maintainers.  
+Add a short description for your change in the `Features`, `Enhancements` or `Bugfixes` section, creating the section
+if needed. Have a look at previous entries for inspiration.
+You are welcome to add a `(by [@your_username](https://github.com/your_username))` note to your entry.
+
 ## Submitting a Pull Request
 
 1. Submit an issue describing your proposed change.
