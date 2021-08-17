@@ -10172,10 +10172,10 @@ remark-parse@^10.0.0:
     mdast-util-from-markdown "^1.0.0"
     unified "^10.0.0"
 
-remark-preset-lint-markdown-style-guide@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/remark-preset-lint-markdown-style-guide/-/remark-preset-lint-markdown-style-guide-5.0.0.tgz#d6958970f9a4d9d1bd8103e37cbfd7b3aac2847d"
-  integrity sha512-CZPphHB3A7H+mtWfZkRrICMTBAdKTClIWrTmlaIdOqd1gHgagOUIJ0y/QFU/NPyJCq/PSjGMJBwZlvrkWX1zkA==
+remark-preset-lint-markdown-style-guide@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/remark-preset-lint-markdown-style-guide/-/remark-preset-lint-markdown-style-guide-5.0.1.tgz#a53018e4e44f4417b911968ee1ecc49aa3cff6a7"
+  integrity sha512-O/Es5sDhBcfwKu+9aQHs6Wj3NT3tb3bPGbSxw0cBaHdVAhNQV1+1yeQWzpoIk53vN5+7S4SeQwAx/Rsw1Youqw==
   dependencies:
     "@types/mdast" "^3.0.0"
     remark-lint "^9.0.0"
