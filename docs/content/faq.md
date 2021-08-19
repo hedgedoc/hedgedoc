@@ -1,3 +1,5 @@
+# FAQ
+
 This page collects Frequently Asked Questions of the community.  
 If you have any questions that aren't answered here, feel free to ask us on [Matrix][matrix.org-url] or stop by our [community forums][hedgedoc-community].
 
