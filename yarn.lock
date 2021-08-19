@@ -4265,7 +4265,7 @@ eslint-config-standard@16.0.3:
   resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-16.0.3.tgz#6c8761e544e96c531ff92642eeb87842b8488516"
   integrity sha512-x4fmJL5hGqNJKGHSjnLdgA6U6h1YW/G2dW9fA+cyVur4SK6lyue8+UgNKWlZtUDTXvgKDD/Oa3GQjmB5kjtVvg==
 
-eslint-import-resolver-node@^0.3.5:
+eslint-import-resolver-node@^0.3.6:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/eslint-import-resolver-node/-/eslint-import-resolver-node-0.3.6.tgz#4048b958395da89668252001dbd9eca6b83bacbd"
   integrity sha512-0En0w03NRVMn9Uiyn8YRPDKvWjxCWkslUEhGNTdGx15RvPJYQ+lbOlqrlNI2vEAs4pDYK4f/HN2TbDmk5TP0iw==
@@ -4289,26 +4289,26 @@ eslint-plugin-es@^3.0.0:
     eslint-utils "^2.0.0"
     regexpp "^3.0.0"
 
-eslint-plugin-import@2.24.0:
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.24.0.tgz#697ffd263e24da5e84e03b282f5fb62251777177"
-  integrity sha512-Kc6xqT9hiYi2cgybOc0I2vC9OgAYga5o/rAFinam/yF/t5uBqxQbauNPMC6fgb640T/89P0gFoO27FOilJ/Cqg==
+eslint-plugin-import@2.24.1:
+  version "2.24.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.24.1.tgz#64aba8b567a1ba9921d5465586e86c491b8e2135"
+  integrity sha512-KSFWhNxPH8OGJwpRJJs+Z7I0a13E2iFQZJIvSnCu6KUs4qmgAm3xN9GYBCSoiGWmwA7gERZPXqYQjcoCROnYhQ==
   dependencies:
     array-includes "^3.1.3"
     array.prototype.flat "^1.2.4"
     debug "^2.6.9"
     doctrine "^2.1.0"
-    eslint-import-resolver-node "^0.3.5"
+    eslint-import-resolver-node "^0.3.6"
     eslint-module-utils "^2.6.2"
     find-up "^2.0.0"
     has "^1.0.3"
-    is-core-module "^2.4.0"
+    is-core-module "^2.6.0"
     minimatch "^3.0.4"
-    object.values "^1.1.3"
+    object.values "^1.1.4"
     pkg-up "^2.0.0"
     read-pkg-up "^3.0.0"
     resolve "^1.20.0"
-    tsconfig-paths "^3.9.0"
+    tsconfig-paths "^3.10.1"
 
 eslint-plugin-node@11.1.0:
   version "11.1.0"
@@ -5936,10 +5936,17 @@ is-color-stop@^1.1.0:
     rgb-regex "^1.0.1"
     rgba-regex "^1.0.0"
 
-is-core-module@^2.2.0, is-core-module@^2.4.0:
+is-core-module@^2.2.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.5.0.tgz#f754843617c70bfd29b7bd87327400cda5c18491"
   integrity sha512-TXCMSDsEHMEEZ6eCA8rwRDbLu55MRGmrctljsBX/2v1d9/GzqHOxW5c5oPSgrUt2vBFXebu9rGqckXGPWOlYpg==
+  dependencies:
+    has "^1.0.3"
+
+is-core-module@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.6.0.tgz#d7553b2526fe59b92ba3e40c8df757ec8a709e19"
+  integrity sha512-wShG8vs60jKfPWpF2KZRaAtvt3a20OAn7+IJ6hLPECpSABLcKtFKTTI4ZtH5QcBruBHlq+WsdHWyz0BCZW7svQ==
   dependencies:
     has "^1.0.3"
 
@@ -8207,7 +8214,7 @@ object.pick@^1.3.0:
   dependencies:
     isobject "^3.0.1"
 
-object.values@^1.1.3:
+object.values@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/object.values/-/object.values-1.1.4.tgz#0d273762833e816b693a637d30073e7051535b30"
   integrity sha512-TnGo7j4XSnKQoK3MfvkzqKCi0nVe/D9I9IjwTNYdb/fxYHpjrluHVOgw0AF6jrRFGMPHdfuidR09tIDiIvnaSg==
@@ -11549,7 +11556,7 @@ trough@^2.0.0:
   resolved "https://registry.yarnpkg.com/trough/-/trough-2.0.2.tgz#94a3aa9d5ce379fc561f6244905b3f36b7458d96"
   integrity sha512-FnHq5sTMxC0sk957wHDzRnemFnNBvt/gSY99HzK8F7UP5WAbvP70yX5bd7CjEQkN+TjdxwI7g7lJ6podqrG2/w==
 
-tsconfig-paths@^3.9.0:
+tsconfig-paths@^3.10.1:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/tsconfig-paths/-/tsconfig-paths-3.10.1.tgz#79ae67a68c15289fdf5c51cb74f397522d795ed7"
   integrity sha512-rETidPDgCpltxF7MjBZlAFPUHv5aHH2MymyPvh+vEyWAED4Eb/WeMbsnD/JDr4OKPOA1TssDHgIcpTN5Kh0p6Q==
