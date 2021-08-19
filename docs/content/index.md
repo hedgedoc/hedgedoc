@@ -15,6 +15,6 @@ If you have any questions that aren't answered here, feel free to ask us on [Mat
 
 [hedgedoc-demo]: https://demo.hedgedoc.org
 [hedgedoc-history]: https://hedgedoc.org/history
-[hedgedoc-faq]: https://hedgedoc.org/faq
+[hedgedoc-faq]: /faq
 [matrix.org-url]: https://chat.hedgedoc.org
 [hedgedoc-community]: https://community.hedgedoc.org

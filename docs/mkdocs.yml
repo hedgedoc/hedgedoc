@@ -48,7 +48,7 @@ nav:
       - 'Operational Transformation': dev/ot.md
       - Webpack: dev/webpack.md
       - 'Documentation': dev/documentation.md
-  - FAQ: https://hedgedoc.org/faq
+  - FAQ: faq.md
 markdown_extensions:
   - toc:
       permalink: true
