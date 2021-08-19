@@ -4222,12 +4222,12 @@ es6-error@^4.1.1:
   resolved "https://registry.yarnpkg.com/es6-error/-/es6-error-4.1.1.tgz#9e3af407459deed47e9a91f9b885a84eb05c561d"
   integrity sha512-Um/+FxMr9CISWh0bi5Zv0iOD+4cFh5qLeks1qhAopKVAJw3drgKbKySikp7wGhDL0HPeaja0P5ULZrxLkniUVg==
 
-esbuild-loader@2.15.0:
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/esbuild-loader/-/esbuild-loader-2.15.0.tgz#4ac059f20dc08965c9dfee20463c0ea9aa84363a"
-  integrity sha512-wgysEJkQGrb4goa8cArl5Pivd1xGbfpTQIQOQhfbiprJxNltwXuN34wVlmj0/OGhIFtESSOry5NwQ6RxjAjByw==
+esbuild-loader@2.15.1:
+  version "2.15.1"
+  resolved "https://registry.yarnpkg.com/esbuild-loader/-/esbuild-loader-2.15.1.tgz#5a3940f5d20317f1a35720efa33e933f97c923e9"
+  integrity sha512-JRBL6uTeWplMbylNBt9gxLKMjD8wKnqGq786QV/cm/nPBSNA9/kC7/vNwCXTDPfYqHoWsjyfH7ub9ekN0kdAYQ==
   dependencies:
-    esbuild "^0.12.19"
+    esbuild "^0.12.21"
     joycon "^3.0.1"
     json5 "^2.2.0"
     loader-utils "^2.0.0"
@@ -4235,10 +4235,10 @@ esbuild-loader@2.15.0:
     type-fest "^1.4.0"
     webpack-sources "^2.2.0"
 
-esbuild@^0.12.19:
-  version "0.12.20"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.12.20.tgz#4d3c9d83c99a4031e027b42a4c398c23b6827cb0"
-  integrity sha512-u7+0qTo9Z64MD9PhooEngCmzyEYJ6ovFhPp8PLNh3UasR5Ihjv6HWVXqm8uHmasdQlpsAf0IsY4U0YVUfCpt4Q==
+esbuild@^0.12.21:
+  version "0.12.21"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.12.21.tgz#7ff32a9ac73ce4310f9cb61ea4c3da9756570d46"
+  integrity sha512-7hyXbU3g94aREufI/5nls7Xcc+RGQeZWZApm6hoBaFvt2BPtpT4TjFMQ9Tb1jU8XyBGz00ShmiyflCogphMHFQ==
 
 escalade@^3.1.1:
   version "3.1.1"
