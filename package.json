@@ -49,7 +49,7 @@
     "eslint-plugin-local-rules": "1.1.0",
     "file-type": "16.5.3",
     "joi": "17.4.2",
-    "minio": "7.0.18",
+    "minio": "7.0.19",
     "nest-router": "1.0.9",
     "node-fetch": "2.6.1",
     "passport": "0.4.1",
