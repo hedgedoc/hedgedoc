@@ -2,7 +2,7 @@
 
 !!! info "Requirements on your server"
     - Node.js 12 or higher
-    - Database (PostgreSQL, MySQL, MariaDB, SQLite, MSSQL)  
+    - Database (PostgreSQL, MySQL, MariaDB, SQLite)  
       The database must use charset `utf8`. This is typically the default in PostgreSQL and SQLite.  
       In MySQL and MariaDB UTF-8 might need to be set with `alter database <DBNAME> character set utf8 collate utf8_bin;`  
       Be aware of older MySQL and MariaDB versions which sometimes use shorter representations of UTF-8 than 4 bytes.

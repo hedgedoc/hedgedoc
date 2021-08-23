@@ -20,6 +20,9 @@
 - Ensure that all cookies are set with the `secure` flag, if HedgeDoc is loaded via HTTPS
 - Fix font display issues when having some variants of fonts used by HedgeDoc installed locally
 
+### Miscellaneous
+- Removed MSSQL support, as migrations from 2018 are broken with SQL Server and nobody seems to use it
+
 ## <i class="fa fa-tag"></i> 1.8.2 <i class="fa fa-calendar-o"></i> 2021-05-11
 
 This release fixes two security issues. We recommend upgrading as soon as possible.
