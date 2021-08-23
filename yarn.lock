@@ -795,7 +795,18 @@
     cron "1.7.2"
     uuid "8.3.2"
 
-"@nestjs/schematics@8.0.2", "@nestjs/schematics@^8.0.0":
+"@nestjs/schematics@8.0.3":
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/@nestjs/schematics/-/schematics-8.0.3.tgz#b2247e6f5e8dd38e67969a662437f61b48841456"
+  integrity sha512-A5qyS9yv6v2RIBqbsyYG57NfYA8Jm/aypRV1nc7JXjhdfDHwWKqCsgQ/7/82vVjhlvVAfr5x/dpCWqcF3XYd7w==
+  dependencies:
+    "@angular-devkit/core" "12.0.5"
+    "@angular-devkit/schematics" "12.0.5"
+    fs-extra "10.0.0"
+    jsonc-parser "3.0.0"
+    pluralize "8.0.0"
+
+"@nestjs/schematics@^8.0.0":
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/@nestjs/schematics/-/schematics-8.0.2.tgz#ff0d92fcdfd885e66f69132d4ebbd97e4ab56ef5"
   integrity sha512-iWtpXfn1Zh4Vm37BzY8OSJ60Y9TqNOjk8J+KLIwcql9EuP+0C/C4WUn+vIQMfmnut3MxRmAYFE2B/LFYrjGC5Q==
