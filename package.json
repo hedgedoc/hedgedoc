@@ -64,7 +64,7 @@
   },
   "devDependencies": {
     "@nestjs/cli": "8.1.1",
-    "@nestjs/schematics": "8.0.2",
+    "@nestjs/schematics": "8.0.3",
     "@nestjs/testing": "8.0.6",
     "@tsconfig/node12": "1.0.9",
     "@types/cli-color": "2.0.1",
