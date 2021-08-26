@@ -1174,10 +1174,10 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-1.3.2.tgz#93e25bf9ee75fe0fd80b594bc4feb0e862111b5a"
   integrity sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==
 
-"@types/minio@7.0.9":
-  version "7.0.9"
-  resolved "https://registry.yarnpkg.com/@types/minio/-/minio-7.0.9.tgz#23591f7cdd8aba27fc1a1da2d63767d9fcef4d58"
-  integrity sha512-aMalbSDDB+TV9m3fVMD4E2vJR3XVAtOcf9t5Iq+PHnc5D0ti3LMXjaxGKXmllicliaBrh0gzURLrs44n/Jl43g==
+"@types/minio@7.0.10":
+  version "7.0.10"
+  resolved "https://registry.yarnpkg.com/@types/minio/-/minio-7.0.10.tgz#2cd2bfd684fdc7f7553a4869d98ee9aa256aa406"
+  integrity sha512-PLzP2UYmS6GPZHWoiiFB7lwkFvfLR275UpqsXEAAihSb6+GWA3ZXGxq8ktYyvxgz/dYN7y2Esa+b1quI3v3S8w==
   dependencies:
     "@types/node" "*"
 
