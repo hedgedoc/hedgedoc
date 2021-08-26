@@ -16,4 +16,4 @@ To regenerate, use `git log --format='%aN <%aE>' | LC_ALL=C.UTF-8 sort -uf`.
 - Jakob Klepp <jakob-github@truh.in>
 - Philip Molares <philip.molares@udo.edu>
 - Christoph Kern <sheogorath@shivering-isles.com>
-- Tilman Vatteroth <tilman.vatteroth@tu-dortmund.de>
+- Tilman Vatteroth <git@tilmanvatteroth.de>
