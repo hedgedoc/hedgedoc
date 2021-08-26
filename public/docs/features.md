@@ -71,14 +71,6 @@ There are four possible options:
 
 **Only the owner of the note can change the note's permissions.**
 
-### Embed a Note
-
-Notes can be embedded as follows:
-
-```xml
-<iframe width="100%" height="500" src="https://demo.hedgedoc.org/features" frameborder="0"></iframe>
-```
-
 ### [Slide Mode](./slide-example)
 
 You can use a special syntax to organize your note into slides.
