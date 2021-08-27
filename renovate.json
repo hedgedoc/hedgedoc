@@ -3,17 +3,13 @@
     "config:base",
     ":gitSignOff",
     ":maintainLockFilesWeekly",
-    ":dependencyDashboard"
+    ":dependencyDashboard",
+    ":pinVersions"
   ],
   "labels": [
     "type: maintenance"
   ],
   "packageRules": [
-    {
-      "updateTypes": [
-        "pin"
-      ]
-    },
     {
       "groupName": "linters",
       "extends": "packages:linters"
