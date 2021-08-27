@@ -50,7 +50,7 @@ export const GraphvizFrame: React.FC<GraphvizFrameProps> = ({ code }) => {
             .onerror(showError)
             .renderDot(code)
         } catch (error) {
-          showError(error)
+          showError(error as string)
         }
       })
       .catch(() => {
