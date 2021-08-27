@@ -71,14 +71,6 @@ There are four possible options:
 
 **Only the owner of the note can change the note's permissions.**
 
-### Embed a Note
-
-Notes can be embedded as follows:
-
-```xml
-<iframe width="100%" height="500" src="https://demo.hedgedoc.org/features" frameborder="0"></iframe>
-```
-
 ### [Slide Mode](./slide-example)
 
 You can use a special syntax to organize your note into slides.
@@ -253,7 +245,7 @@ When you’re a carpenter making a beautiful chest of drawers, you’re not goin
 #### PDF
 
 **Caution: this might be blocked by your browser if not using an `https` URL.**
-Note that not all servers allow embedding their content. See [our FAQ](https://hedgedoc.org/faq/#why-cant-i-embed-some-pdfs) for details.
+Note that not all servers allow embedding their content. See [our FAQ](https://docs.hedgedoc.org/faq/#why-cant-i-embed-some-pdfs) for details.
 {%pdf https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf %}
 
 ### MathJax
