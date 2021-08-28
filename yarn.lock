@@ -1629,6 +1629,11 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
+"@juggle/resize-observer@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.3.1.tgz#b50a781709c81e10701004214340f25475a171a0"
+  integrity sha512-zMM9Ds+SawiUkakS7y94Ymqx+S0ORzpG3frZirN3l+UlXUmSUR7hF4wxCVqW+ei94JzV5kt0uXBcoOEAuiydrw==
+
 "@matejmazur/react-katex@3.1.3":
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/@matejmazur/react-katex/-/react-katex-3.1.3.tgz#f07404c848b93bfef9ed9653a4bb080dc8bf2bf0"
@@ -14011,12 +14016,12 @@ use-location-state@^2.5.0:
   dependencies:
     query-state-core "^2.5.0"
 
-use-resize-observer@7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/use-resize-observer/-/use-resize-observer-7.0.1.tgz#82b13d462e7fb5e3ec953bde48d6e02b9aae660d"
-  integrity sha512-tJESENDoVXfzkv1Cl9dJ13ySgENcKjvEKSU7QwjckjxjXg/MV2zW1CjEUtLpmXY084womIxJROUR3L1SuqlvOw==
+use-resize-observer@8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/use-resize-observer/-/use-resize-observer-8.0.0.tgz#69bd80c1ddd94f3758563fe107efb25fed85067a"
+  integrity sha512-n0iKSeiQpJCyaFh5JA0qsVLBIovsF4EIIR1G6XiBwKJN66ZrD4Oj62bjcuTAATPKiSp6an/2UZZxCf/67fk3sQ==
   dependencies:
-    resize-observer-polyfill "^1.5.1"
+    "@juggle/resize-observer" "^3.3.1"
 
 use@^3.1.0:
   version "3.1.1"
