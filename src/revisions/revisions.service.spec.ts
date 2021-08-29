@@ -10,7 +10,6 @@ import { Repository } from 'typeorm';
 
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
-import { AuthorsModule } from '../authors/authors.module';
 import appConfigMock from '../config/mock/app.config.mock';
 import { NotInDBError } from '../errors/errors';
 import { Group } from '../groups/group.entity';

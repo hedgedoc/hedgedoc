@@ -12,6 +12,7 @@ import { UsersService } from '../users/users.service';
 @Injectable()
 export class MockAuthGuard {
   private user: User;
+
   constructor(private usersService: UsersService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
