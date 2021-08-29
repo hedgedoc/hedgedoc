@@ -149,7 +149,7 @@ export class MeController {
   @ApiNotFoundResponse({ description: notFoundDescription })
   async deleteHistoryEntry(
     @RequestUser() user: User,
-    @Param('note') note: string,
+    @Param('note', GetNotePipe) note: Note,
   ): Promise<void> {
     // ToDo: Check if user is allowed to delete note
     try {
