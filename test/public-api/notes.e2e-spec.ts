@@ -161,8 +161,8 @@ describe('Notes', () => {
     describe('works', () => {
       it('with an existing alias and keepMedia false', async () => {
         const noteId = 'test3';
-        await notesService.createNote(content, noteId, user);
-        await mediaService.saveFile(testImage, user.userName, noteId);
+        const note = await notesService.createNote(content, noteId, user);
+        await mediaService.saveFile(testImage, user, note);
         await request(app.getHttpServer())
           .delete(`/notes/${noteId}`)
           .set('Content-Type', 'application/json')
@@ -177,12 +177,8 @@ describe('Notes', () => {
       });
       it('with an existing alias and keepMedia true', async () => {
         const noteId = 'test3a';
-        await notesService.createNote(content, noteId, user);
-        const url = await mediaService.saveFile(
-          testImage,
-          user.userName,
-          noteId,
-        );
+        const note = await notesService.createNote(content, noteId, user);
+        const url = await mediaService.saveFile(testImage, user, note);
         await request(app.getHttpServer())
           .delete(`/notes/${noteId}`)
           .set('Content-Type', 'application/json')
@@ -402,8 +398,8 @@ describe('Notes', () => {
     it('works', async () => {
       const alias = 'test9';
       const extraAlias = 'test10';
-      await notesService.createNote(content, alias, user);
-      await notesService.createNote(content, extraAlias, user);
+      const note1 = await notesService.createNote(content, alias, user);
+      const note2 = await notesService.createNote(content, extraAlias, user);
       const httpServer = app.getHttpServer();
       const response = await request(httpServer)
         .get(`/notes/${alias}/media/`)
@@ -412,12 +408,8 @@ describe('Notes', () => {
       expect(response.body).toHaveLength(0);
 
       const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-      const url0 = await mediaService.saveFile(testImage, 'hardcoded', alias);
-      const url1 = await mediaService.saveFile(
-        testImage,
-        'hardcoded',
-        extraAlias,
-      );
+      const url0 = await mediaService.saveFile(testImage, user, note1);
+      const url1 = await mediaService.saveFile(testImage, user, note2);
 
       const responseAfter = await request(httpServer)
         .get(`/notes/${alias}/media/`)
