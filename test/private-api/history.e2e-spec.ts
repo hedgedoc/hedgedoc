@@ -87,7 +87,7 @@ describe('History', () => {
       .expect('Content-Type', /json/)
       .expect(200);
     expect(emptyResponse.body.length).toEqual(0);
-    const entry = await historyService.createOrUpdateHistoryEntry(note, user);
+    const entry = await historyService.updateHistoryEntryTimestamp(note, user);
     const entryDto = historyService.toHistoryEntryDto(entry);
     const response = await request(app.getHttpServer())
       .get('/me/history')
@@ -182,7 +182,7 @@ describe('History', () => {
   });
 
   it('PUT /me/history/:note', async () => {
-    const entry = await historyService.createOrUpdateHistoryEntry(note2, user);
+    const entry = await historyService.updateHistoryEntryTimestamp(note2, user);
     expect(entry.pinStatus).toBeFalsy();
     await request(app.getHttpServer())
       .put(`/me/history/${entry.note.alias || 'undefined'}`)
@@ -195,8 +195,8 @@ describe('History', () => {
   });
 
   it('DELETE /me/history/:note', async () => {
-    const entry = await historyService.createOrUpdateHistoryEntry(note2, user);
-    const entry2 = await historyService.createOrUpdateHistoryEntry(note, user);
+    const entry = await historyService.updateHistoryEntryTimestamp(note2, user);
+    const entry2 = await historyService.updateHistoryEntryTimestamp(note, user);
     const entryDto = historyService.toHistoryEntryDto(entry2);
     await request(app.getHttpServer())
       .delete(`/me/history/${entry.note.alias || 'undefined'}`)

@@ -159,7 +159,7 @@ describe('HistoryService', () => {
     });
   });
 
-  describe('createOrUpdateHistoryEntry', () => {
+  describe('updateHistoryEntryTimestamp', () => {
     describe('works', () => {
       const user = {} as User;
       const alias = 'alias';
@@ -171,7 +171,7 @@ describe('HistoryService', () => {
           .mockImplementation(
             async (entry: HistoryEntry): Promise<HistoryEntry> => entry,
           );
-        const createHistoryEntry = await service.createOrUpdateHistoryEntry(
+        const createHistoryEntry = await service.updateHistoryEntryTimestamp(
           Note.create(user, alias),
           user,
         );
@@ -188,7 +188,7 @@ describe('HistoryService', () => {
           .mockImplementation(
             async (entry: HistoryEntry): Promise<HistoryEntry> => entry,
           );
-        const createHistoryEntry = await service.createOrUpdateHistoryEntry(
+        const createHistoryEntry = await service.updateHistoryEntryTimestamp(
           Note.create(user, alias),
           user,
         );

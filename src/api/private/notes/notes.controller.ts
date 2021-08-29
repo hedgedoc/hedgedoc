@@ -60,7 +60,7 @@ export class NotesController {
     if (!this.permissionsService.mayRead(user, note)) {
       throw new UnauthorizedException('Reading note denied!');
     }
-    await this.historyService.createOrUpdateHistoryEntry(note, user);
+    await this.historyService.updateHistoryEntryTimestamp(note, user);
     return await this.noteService.toNoteDto(note);
   }
 
