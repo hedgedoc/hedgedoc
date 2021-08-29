@@ -96,7 +96,7 @@ describe('Me', () => {
   it(`GET /me/history`, async () => {
     const noteName = 'testGetNoteHistory1';
     const note = await notesService.createNote('', noteName);
-    const createdHistoryEntry = await historyService.createOrUpdateHistoryEntry(
+    const createdHistoryEntry = await historyService.updateHistoryEntryTimestamp(
       note,
       user,
     );
@@ -123,7 +123,7 @@ describe('Me', () => {
       const noteName = 'testGetNoteHistory2';
       const note = await notesService.createNote('', noteName);
       const createdHistoryEntry =
-        await historyService.createOrUpdateHistoryEntry(note, user);
+        await historyService.updateHistoryEntryTimestamp(note, user);
       const response = await request(app.getHttpServer())
         .get(`/me/history/${noteName}`)
         .expect('Content-Type', /json/)
@@ -151,7 +151,7 @@ describe('Me', () => {
     it('works', async () => {
       const noteName = 'testGetNoteHistory3';
       const note = await notesService.createNote('', noteName);
-      await historyService.createOrUpdateHistoryEntry(note, user);
+      await historyService.updateHistoryEntryTimestamp(note, user);
       const historyEntryUpdateDto = new HistoryEntryUpdateDto();
       historyEntryUpdateDto.pinStatus = true;
       const response = await request(app.getHttpServer())
@@ -181,7 +181,7 @@ describe('Me', () => {
     it('works', async () => {
       const noteName = 'testGetNoteHistory4';
       const note = await notesService.createNote('', noteName);
-      await historyService.createOrUpdateHistoryEntry(note, user);
+      await historyService.updateHistoryEntryTimestamp(note, user);
       const response = await request(app.getHttpServer())
         .delete(`/me/history/${noteName}`)
         .expect(204);

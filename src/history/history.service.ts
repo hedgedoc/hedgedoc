@@ -86,12 +86,13 @@ export class HistoryService {
 
   /**
    * @async
-   * Create or update a history entry by the user and note. If the entry is merely updated the updatedAt date is set to the current date.
+   * Updates the updatedAt timestamp of a HistoryEntry.
+   * If no history entry exists, it will be created.
    * @param {Note} note - the note that the history entry belongs to
    * @param {User} user - the user that the history entry belongs to
    * @return {HistoryEntry} the requested history entry
    */
-  async createOrUpdateHistoryEntry(
+  async updateHistoryEntryTimestamp(
     note: Note,
     user: User,
   ): Promise<HistoryEntry> {

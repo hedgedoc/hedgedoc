@@ -34,7 +34,6 @@ import {
   AlreadyInDBError,
   ForbiddenIdError,
   NotInDBError,
-  PermissionsUpdateInconsistentError,
 } from '../../../errors/errors';
 import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
@@ -112,7 +111,7 @@ export class NotesController {
     if (!this.permissionsService.mayRead(user, note)) {
       throw new UnauthorizedException('Reading note denied!');
     }
-    await this.historyService.createOrUpdateHistoryEntry(note, user);
+    await this.historyService.updateHistoryEntryTimestamp(note, user);
     return await this.noteService.toNoteDto(note);
   }
 
