@@ -69,24 +69,18 @@ export class MediaService {
    * @async
    * Save the given buffer to the configured MediaBackend and create a MediaUploadEntity to track where the file is, who uploaded it and to which note.
    * @param {Buffer} fileBuffer - the buffer of the file to save.
-   * @param {string} username - the username of the user who uploaded this file
-   * @param {string} noteId - the id or alias of the note which will be associated with the new file.
+   * @param {User} user - the user who uploaded this file
+   * @param {Note} note - the note which will be associated with the new file.
    * @return {string} the url of the saved file
    * @throws {ClientError} the MIME type of the file is not supported.
    * @throws {NotInDBError} - the note or user is not in the database
    * @throws {MediaBackendError} - there was an error saving the file
    */
-  async saveFile(
-    fileBuffer: Buffer,
-    username: string,
-    noteId: string,
-  ): Promise<string> {
+  async saveFile(fileBuffer: Buffer, user: User, note: Note): Promise<string> {
     this.logger.debug(
-      `Saving file for note '${noteId}' and user '${username}'`,
+      `Saving file for note '${note.id}' and user '${user.userName}'`,
       'saveFile',
     );
-    const note = await this.notesService.getNoteByIdOrAlias(noteId);
-    const user = await this.usersService.getUserByUsername(username);
     const fileTypeResult = await FileType.fromBuffer(fileBuffer);
     if (!fileTypeResult) {
       throw new ClientError('Could not detect file type.');

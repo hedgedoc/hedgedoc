@@ -241,26 +241,10 @@ describe('Me', () => {
     expect(response1.body).toHaveLength(0);
 
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-    const url0 = await mediaService.saveFile(
-      testImage,
-      'hardcoded',
-      note1.publicId,
-    );
-    const url1 = await mediaService.saveFile(
-      testImage,
-      'hardcoded',
-      note1.publicId,
-    );
-    const url2 = await mediaService.saveFile(
-      testImage,
-      'hardcoded',
-      note2.publicId,
-    );
-    const url3 = await mediaService.saveFile(
-      testImage,
-      'hardcoded',
-      note2.publicId,
-    );
+    const url0 = await mediaService.saveFile(testImage, user, note1);
+    const url1 = await mediaService.saveFile(testImage, user, note1);
+    const url2 = await mediaService.saveFile(testImage, user, note2);
+    const url3 = await mediaService.saveFile(testImage, user, note2);
 
     const response = await request(httpServer)
       .get('/me/media/')
