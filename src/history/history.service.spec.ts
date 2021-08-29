@@ -311,7 +311,7 @@ describe('HistoryService', () => {
               return entry;
             },
           );
-        await service.deleteHistoryEntry(alias, user);
+        await service.deleteHistoryEntry(note, user);
       });
     });
     describe('fails', () => {
@@ -321,7 +321,7 @@ describe('HistoryService', () => {
         const note = Note.create(user, alias);
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
         jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
-        await expect(service.deleteHistoryEntry(alias, user)).rejects.toThrow(
+        await expect(service.deleteHistoryEntry(note, user)).rejects.toThrow(
           NotInDBError,
         );
       });

@@ -96,10 +96,8 @@ describe('Me', () => {
   it(`GET /me/history`, async () => {
     const noteName = 'testGetNoteHistory1';
     const note = await notesService.createNote('', noteName);
-    const createdHistoryEntry = await historyService.updateHistoryEntryTimestamp(
-      note,
-      user,
-    );
+    const createdHistoryEntry =
+      await historyService.updateHistoryEntryTimestamp(note, user);
     const response = await request(app.getHttpServer())
       .get('/me/history')
       .expect('Content-Type', /json/)

@@ -130,12 +130,12 @@ export class HistoryService {
   /**
    * @async
    * Delete the history entry identified by the user and a note id or alias
-   * @param {string} noteIdOrAlias - the note that the history entry belongs to
+   * @param {Note} note - the note that the history entry belongs to
    * @param {User} user - the user that the history entry belongs to
    * @throws {NotInDBError} the specified history entry does not exist
    */
-  async deleteHistoryEntry(noteIdOrAlias: string, user: User): Promise<void> {
-    const entry = await this.getEntryByNoteIdOrAlias(noteIdOrAlias, user);
+  async deleteHistoryEntry(note: Note, user: User): Promise<void> {
+    const entry = await this.getEntryByNote(note, user);
     await this.historyEntryRepository.remove(entry);
     return;
   }

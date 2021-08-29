@@ -191,7 +191,7 @@ describe('History', () => {
     const userEntries = await historyService.getEntriesByUser(user);
     expect(userEntries.length).toEqual(1);
     expect(userEntries[0].pinStatus).toBeTruthy();
-    await historyService.deleteHistoryEntry(note2.alias, user);
+    await historyService.deleteHistoryEntry(note2, user);
   });
 
   it('DELETE /me/history/:note', async () => {
