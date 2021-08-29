@@ -218,7 +218,7 @@ describe('HistoryService', () => {
             async (entry: HistoryEntry): Promise<HistoryEntry> => entry,
           );
         const updatedHistoryEntry = await service.updateHistoryEntry(
-          alias,
+          note,
           user,
           {
             pinStatus: true,
@@ -237,7 +237,7 @@ describe('HistoryService', () => {
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
         jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
         await expect(
-          service.updateHistoryEntry(alias, user, {
+          service.updateHistoryEntry(note, user, {
             pinStatus: true,
           }),
         ).rejects.toThrow(NotInDBError);

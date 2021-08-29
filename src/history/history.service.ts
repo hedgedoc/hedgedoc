@@ -112,17 +112,17 @@ export class HistoryService {
   /**
    * @async
    * Update a history entry identified by the user and a note id or alias
-   * @param {string} noteIdOrAlias - the note that the history entry belongs to
+   * @param {Note} note - the note that the history entry belongs to
    * @param {User} user - the user that the history entry belongs to
    * @param {HistoryEntryUpdateDto} updateDto - the change that should be applied to the history entry
    * @return {HistoryEntry} the requested history entry
    */
   async updateHistoryEntry(
-    noteIdOrAlias: string,
+    note: Note,
     user: User,
     updateDto: HistoryEntryUpdateDto,
   ): Promise<HistoryEntry> {
-    const entry = await this.getEntryByNoteIdOrAlias(noteIdOrAlias, user);
+    const entry = await this.getEntryByNote(note, user);
     entry.pinStatus = updateDto.pinStatus;
     return await this.historyEntryRepository.save(entry);
   }
