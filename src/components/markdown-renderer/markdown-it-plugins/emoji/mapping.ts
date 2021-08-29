@@ -5,7 +5,7 @@
  */
 
 import emojiData from 'emoji-picker-element-data/en/emojibase/data.json'
-import { ForkAwesomeIcons } from '../../../editor-page/editor-pane/tool-bar/emoji-picker/icon-names'
+import { ForkAwesomeIcons } from '../../../common/fork-awesome/fork-awesome-icons'
 
 interface EmojiEntry {
   shortcodes: string[]
@@ -29,10 +29,10 @@ const emojiSkinToneModifierMap = [1, 2, 3, 4, 5].reduce((reduceObject, modifierV
   return reduceObject
 }, {} as ShortCodeMap)
 
-const forkAwesomeIconMap = Object.keys(ForkAwesomeIcons).reduce((reduceObject, icon) => {
+const forkAwesomeIconMap = ForkAwesomeIcons.reduce((reduceObject, icon) => {
   const shortcode = `fa-${icon}`
   // noinspection CheckTagEmptyBody
-  reduceObject[shortcode] = `<i class="fa fa-${icon}"></i>`
+  reduceObject[shortcode] = `<i class='fa fa-${icon}'></i>`
   return reduceObject
 }, {} as ShortCodeMap)
 

@@ -11,7 +11,7 @@ import { useClickAway } from 'react-use'
 import { useIsDarkModeActivated } from '../../../../../hooks/common/use-is-dark-mode-activated'
 import './emoji-picker.scss'
 import forkawesomeIcon from './forkawesome.png'
-import { ForkAwesomeIcons } from './icon-names'
+import { ForkAwesomeIcons } from '../../../../common/fork-awesome/fork-awesome-icons'
 
 export interface EmojiPickerProps {
   show: boolean
@@ -19,7 +19,7 @@ export interface EmojiPickerProps {
   onDismiss: () => void
 }
 
-export const customEmojis: CustomEmoji[] = Object.keys(ForkAwesomeIcons).map((name) => ({
+export const customEmojis: CustomEmoji[] = ForkAwesomeIcons.map((name) => ({
   name: `fa-${name}`,
   shortcodes: [`fa-${name.toLowerCase()}`],
   url: forkawesomeIcon,
