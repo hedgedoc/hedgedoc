@@ -25,6 +25,7 @@ import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
+import { GetNotePipe } from '../../../notes/get-note.pipe';
 import { NoteDto } from '../../../notes/note.dto';
 import { Note } from '../../../notes/note.entity';
 import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
@@ -52,22 +53,10 @@ export class NotesController {
 
   @Get(':noteIdOrAlias')
   async getNote(
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<NoteDto> {
     // ToDo: use actual user here
     const user = await this.userService.getUserByUsername('hardcoded');
-    let note: Note;
-    try {
-      note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
-    }
     if (!this.permissionsService.mayRead(user, note)) {
       throw new UnauthorizedException('Reading note denied!');
     }
@@ -77,12 +66,11 @@ export class NotesController {
 
   @Get(':noteIdOrAlias/media')
   async getNotesMedia(
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<MediaUploadDto[]> {
     try {
       // ToDo: use actual user here
       const user = await this.userService.getUserByUsername('hardcoded');
-      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
       if (!this.permissionsService.mayRead(user, note)) {
         throw new UnauthorizedException('Reading note denied!');
       }
@@ -141,13 +129,12 @@ export class NotesController {
   @Delete(':noteIdOrAlias')
   @HttpCode(204)
   async deleteNote(
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('noteIdOrAlias', GetNotePipe) note: Note,
     @Body() noteMediaDeletionDto: NoteMediaDeletionDto,
   ): Promise<void> {
     try {
       // ToDo: use actual user here
       const user = await this.userService.getUserByUsername('hardcoded');
-      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
       if (!this.permissionsService.isOwner(user, note)) {
         throw new UnauthorizedException('Deleting note denied!');
       }
@@ -159,16 +146,13 @@ export class NotesController {
           await this.mediaService.removeNoteFromMediaUpload(mediaUpload);
         }
       }
-      this.logger.debug('Deleting note: ' + noteIdOrAlias, 'deleteNote');
+      this.logger.debug('Deleting note: ' + note.id, 'deleteNote');
       await this.noteService.deleteNote(note);
-      this.logger.debug('Successfully deleted ' + noteIdOrAlias, 'deleteNote');
+      this.logger.debug('Successfully deleted ' + note.id, 'deleteNote');
       return;
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
       }
       throw e;
     }
@@ -176,12 +160,11 @@ export class NotesController {
 
   @Get(':noteIdOrAlias/revisions')
   async getNoteRevisions(
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<RevisionMetadataDto[]> {
     try {
       // ToDo: use actual user here
       const user = await this.userService.getUserByUsername('hardcoded');
-      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
       if (!this.permissionsService.mayRead(user, note)) {
         throw new UnauthorizedException('Reading note denied!');
       }
@@ -195,22 +178,18 @@ export class NotesController {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
       }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
       throw e;
     }
   }
 
   @Get(':noteIdOrAlias/revisions/:revisionId')
   async getNoteRevision(
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('noteIdOrAlias', GetNotePipe) note: Note,
     @Param('revisionId') revisionId: number,
   ): Promise<RevisionDto> {
     try {
       // ToDo: use actual user here
       const user = await this.userService.getUserByUsername('hardcoded');
-      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
       if (!this.permissionsService.mayRead(user, note)) {
         throw new UnauthorizedException('Reading note denied!');
       }
@@ -220,9 +199,6 @@ export class NotesController {
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
       }
       throw e;
     }
