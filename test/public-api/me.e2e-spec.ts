@@ -3,36 +3,36 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { INestApplication } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { promises as fs } from 'fs';
+import { join } from 'path';
 import request from 'supertest';
-import { HistoryService } from '../../src/history/history.service';
-import { NotesService } from '../../src/notes/notes.service';
+
+import { PublicApiModule } from '../../src/api/public/public-api.module';
+import { AuthModule } from '../../src/auth/auth.module';
+import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
+import { TokenAuthGuard } from '../../src/auth/token-auth.guard';
+import appConfigMock from '../../src/config/mock/app.config.mock';
+import mediaConfigMock from '../../src/config/mock/media.config.mock';
+import { GroupsModule } from '../../src/groups/groups.module';
 import { HistoryEntryUpdateDto } from '../../src/history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../src/history/history-entry.dto';
 import { HistoryEntry } from '../../src/history/history-entry.entity';
-import { UsersService } from '../../src/users/users.service';
-import { TokenAuthGuard } from '../../src/auth/token-auth.guard';
-import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { PublicApiModule } from '../../src/api/public/public-api.module';
-import { NotesModule } from '../../src/notes/notes.module';
-import { PermissionsModule } from '../../src/permissions/permissions.module';
-import { GroupsModule } from '../../src/groups/groups.module';
-import { LoggerModule } from '../../src/logger/logger.module';
-import { AuthModule } from '../../src/auth/auth.module';
-import { UsersModule } from '../../src/users/users.module';
 import { HistoryModule } from '../../src/history/history.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import mediaConfigMock from '../../src/config/mock/media.config.mock';
-import appConfigMock from '../../src/config/mock/app.config.mock';
-import { User } from '../../src/users/user.entity';
-import { MediaService } from '../../src/media/media.service';
+import { HistoryService } from '../../src/history/history.service';
+import { LoggerModule } from '../../src/logger/logger.module';
 import { MediaModule } from '../../src/media/media.module';
-import { promises as fs } from 'fs';
+import { MediaService } from '../../src/media/media.service';
 import { NoteMetadataDto } from '../../src/notes/note-metadata.dto';
-import { join } from 'path';
+import { NotesModule } from '../../src/notes/notes.module';
+import { NotesService } from '../../src/notes/notes.service';
+import { PermissionsModule } from '../../src/permissions/permissions.module';
+import { User } from '../../src/users/user.entity';
+import { UsersModule } from '../../src/users/users.module';
+import { UsersService } from '../../src/users/users.service';
 
 // TODO Tests have to be reworked using UserService functions
 
@@ -104,7 +104,7 @@ describe('Me', () => {
       .get('/me/history')
       .expect('Content-Type', /json/)
       .expect(200);
-    const history = <HistoryEntryDto[]>response.body;
+    const history: HistoryEntryDto[] = response.body;
     expect(history.length).toEqual(1);
     const historyDto = historyService.toHistoryEntryDto(createdHistoryEntry);
     for (const historyEntry of history) {
@@ -128,7 +128,7 @@ describe('Me', () => {
         .get(`/me/history/${noteName}`)
         .expect('Content-Type', /json/)
         .expect(200);
-      const historyEntry = <HistoryEntryDto>response.body;
+      const historyEntry: HistoryEntryDto = response.body;
       const historyEntryDto =
         historyService.toHistoryEntryDto(createdHistoryEntry);
       expect(historyEntry.identifier).toEqual(historyEntryDto.identifier);

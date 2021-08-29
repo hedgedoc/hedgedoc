@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsArray,
   IsDate,
@@ -12,9 +12,9 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
+
 import { UserInfoDto } from '../users/user-info.dto';
 import { NotePermissionsDto } from './note-permissions.dto';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class NoteMetadataDto {
   /**

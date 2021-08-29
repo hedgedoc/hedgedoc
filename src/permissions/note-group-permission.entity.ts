@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Column, Entity, ManyToOne } from 'typeorm';
+
 import { Group } from '../groups/group.entity';
 import { Note } from '../notes/note.entity';
 

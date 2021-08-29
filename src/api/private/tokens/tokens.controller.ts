@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import {
   Body,
   Controller,
@@ -13,12 +12,13 @@ import {
   Param,
   Post,
 } from '@nestjs/common';
-import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { AuthService } from '../../../auth/auth.service';
-import { TimestampMillis } from '../../../utils/timestamp';
-import { AuthTokenDto } from '../../../auth/auth-token.dto';
-import { AuthTokenWithSecretDto } from '../../../auth/auth-token-with-secret.dto';
 import { ApiTags } from '@nestjs/swagger';
+
+import { AuthTokenWithSecretDto } from '../../../auth/auth-token-with-secret.dto';
+import { AuthTokenDto } from '../../../auth/auth-token.dto';
+import { AuthService } from '../../../auth/auth.service';
+import { ConsoleLoggerService } from '../../../logger/console-logger.service';
+import { TimestampMillis } from '../../../utils/timestamp';
 
 @ApiTags('tokens')
 @Controller('tokens')

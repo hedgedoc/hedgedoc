@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Injectable } from '@nestjs/common';
-import { ServerStatusDto } from './server-status.dto';
+
 import { getServerVersionFromPackageJson } from '../utils/serverVersion';
+import { ServerStatusDto } from './server-status.dto';
 
 @Injectable()
 export class MonitoringService {

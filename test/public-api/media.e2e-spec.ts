@@ -3,28 +3,28 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { promises as fs } from 'fs';
+import { join } from 'path';
 import request from 'supertest';
+
 import { PublicApiModule } from '../../src/api/public/public-api.module';
-import mediaConfigMock from '../../src/config/mock/media.config.mock';
+import { AuthModule } from '../../src/auth/auth.module';
+import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
+import { TokenAuthGuard } from '../../src/auth/token-auth.guard';
 import appConfigMock from '../../src/config/mock/app.config.mock';
+import mediaConfigMock from '../../src/config/mock/media.config.mock';
 import { GroupsModule } from '../../src/groups/groups.module';
+import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
 import { LoggerModule } from '../../src/logger/logger.module';
 import { MediaModule } from '../../src/media/media.module';
 import { MediaService } from '../../src/media/media.service';
 import { NotesModule } from '../../src/notes/notes.module';
 import { NotesService } from '../../src/notes/notes.service';
 import { PermissionsModule } from '../../src/permissions/permissions.module';
-import { AuthModule } from '../../src/auth/auth.module';
-import { TokenAuthGuard } from '../../src/auth/token-auth.guard';
-import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
-import { join } from 'path';
-import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
 import { ensureDeleted } from '../utils';
 
 describe('Media', () => {

@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { MonitoringService } from './monitoring.service';
 
 describe('MonitoringService', () => {

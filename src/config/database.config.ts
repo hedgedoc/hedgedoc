@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import * as Joi from 'joi';
-import { DatabaseDialect } from './database-dialect.enum';
 import { registerAs } from '@nestjs/config';
+import * as Joi from 'joi';
+
+import { DatabaseDialect } from './database-dialect.enum';
 import { buildErrorMessage, parseOptionalInt } from './utils';
 
 export interface DatabaseConfig {

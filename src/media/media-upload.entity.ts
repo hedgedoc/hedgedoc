@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import * as crypto from 'crypto';
 import {
   Column,
@@ -12,6 +11,7 @@ import {
   ManyToOne,
   PrimaryColumn,
 } from 'typeorm';
+
 import { Note } from '../notes/note.entity';
 import { User } from '../users/user.entity';
 import { BackendType } from './backends/backend-type.enum';

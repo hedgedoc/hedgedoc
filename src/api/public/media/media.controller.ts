@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import {
   BadRequestException,
   Controller,
@@ -21,17 +20,6 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Request } from 'express';
-import {
-  ClientError,
-  MediaBackendError,
-  NotInDBError,
-  PermissionError,
-} from '../../../errors/errors';
-import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { MediaService } from '../../../media/media.service';
-import { MulterFile } from '../../../media/multer-file.interface';
-import { TokenAuthGuard } from '../../../auth/token-auth.guard';
 import {
   ApiBody,
   ApiConsumes,
@@ -43,7 +31,19 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { Request } from 'express';
+
+import { TokenAuthGuard } from '../../../auth/token-auth.guard';
+import {
+  ClientError,
+  MediaBackendError,
+  NotInDBError,
+  PermissionError,
+} from '../../../errors/errors';
+import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadUrlDto } from '../../../media/media-upload-url.dto';
+import { MediaService } from '../../../media/media.service';
+import { MulterFile } from '../../../media/multer-file.interface';
 import {
   forbiddenDescription,
   successfullyDeletedDescription,

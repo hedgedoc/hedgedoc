@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsString, ValidateNested } from 'class-validator';
+
 import { EditDto } from '../revisions/edit.dto';
 import { NoteMetadataDto } from './note-metadata.dto';
-import { ApiProperty } from '@nestjs/swagger';
 
 export class NoteDto {
   /**

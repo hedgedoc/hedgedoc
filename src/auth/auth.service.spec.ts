@@ -3,22 +3,22 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { Test, TestingModule } from '@nestjs/testing';
-import { Session } from '../users/session.entity';
-import { AuthService } from './auth.service';
+import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
+import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { randomBytes } from 'crypto';
+import { Repository } from 'typeorm';
+
+import appConfigMock from '../config/mock/app.config.mock';
+import { NotInDBError, TokenNotValidError } from '../errors/errors';
+import { LoggerModule } from '../logger/logger.module';
+import { Identity } from '../users/identity.entity';
+import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
-import { Identity } from '../users/identity.entity';
-import { LoggerModule } from '../logger/logger.module';
 import { AuthToken } from './auth-token.entity';
-import { NotInDBError, TokenNotValidError } from '../errors/errors';
-import { Repository } from 'typeorm';
-import { ConfigModule } from '@nestjs/config';
-import appConfigMock from '../config/mock/app.config.mock';
-import { randomBytes } from 'crypto';
+import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
   let service: AuthService;

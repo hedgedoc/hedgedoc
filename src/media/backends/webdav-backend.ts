@@ -3,16 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Inject, Injectable } from '@nestjs/common';
+import fetch, { Response } from 'node-fetch';
+
 import mediaConfiguration from '../../config/media.config';
+import { MediaConfig } from '../../config/media.config';
+import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
 import { BackendData } from '../media-upload.entity';
-import { MediaConfig } from '../../config/media.config';
-import { MediaBackendError } from '../../errors/errors';
 import { BackendType } from './backend-type.enum';
-import fetch, { Response } from 'node-fetch';
 
 @Injectable()
 export class WebdavBackend implements MediaBackend {

@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Injectable } from '@nestjs/common';
-import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Group } from './group.entity';
+
 import { NotInDBError } from '../errors/errors';
+import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { GroupInfoDto } from './group-info.dto';
+import { Group } from './group.entity';
 
 @Injectable()
 export class GroupsService {

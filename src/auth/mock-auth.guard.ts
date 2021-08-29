@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { ExecutionContext, Injectable } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
-import { User } from '../users/user.entity';
 import { Request } from 'express';
+
+import { User } from '../users/user.entity';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class MockAuthGuard {

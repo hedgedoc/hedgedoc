@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Loglevel } from './loglevel.enum';
 
 export function toArrayConfig(configValue?: string, separator = ','): string[] {

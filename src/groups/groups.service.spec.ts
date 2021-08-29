@@ -3,16 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { GroupsService } from './groups.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Group } from './group.entity';
+
+import appConfigMock from '../config/mock/app.config.mock';
 import { NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
-import { ConfigModule } from '@nestjs/config';
-import appConfigMock from '../config/mock/app.config.mock';
+import { Group } from './group.entity';
+import { GroupsService } from './groups.service';
 
 describe('GroupsService', () => {
   let service: GroupsService;

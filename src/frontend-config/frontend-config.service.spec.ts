@@ -3,18 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { Test, TestingModule } from '@nestjs/testing';
-import { FrontendConfigService } from './frontend-config.service';
 import { ConfigModule, registerAs } from '@nestjs/config';
-import { LoggerModule } from '../logger/logger.module';
-import { AuthConfig } from '../config/auth.config';
-import { GitlabScope, GitlabVersion } from '../config/gitlab.enum';
-import { getServerVersionFromPackageJson } from '../utils/serverVersion';
-import { CustomizationConfig } from '../config/customization.config';
+import { Test, TestingModule } from '@nestjs/testing';
+
 import { AppConfig } from '../config/app.config';
+import { AuthConfig } from '../config/auth.config';
+import { CustomizationConfig } from '../config/customization.config';
 import { ExternalServicesConfig } from '../config/external-services.config';
+import { GitlabScope, GitlabVersion } from '../config/gitlab.enum';
 import { Loglevel } from '../config/loglevel.enum';
+import { LoggerModule } from '../logger/logger.module';
+import { getServerVersionFromPackageJson } from '../utils/serverVersion';
+import { FrontendConfigService } from './frontend-config.service';
 
 /* eslint-disable
  jest/no-conditional-expect

@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { IsBoolean, IsDate, IsString } from 'class-validator';
 
 export class HistoryEntryImportDto {

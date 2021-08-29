@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { Loglevel } from './loglevel.enum';
 import {
   needToLog,
   parseOptionalInt,
   replaceAuthErrorsWithEnvironmentVariables,
   toArrayConfig,
 } from './utils';
-import { Loglevel } from './loglevel.enum';
 
 describe('config utils', () => {
   describe('toArrayConfig', () => {
