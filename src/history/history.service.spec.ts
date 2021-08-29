@@ -135,30 +135,6 @@ describe('HistoryService', () => {
     });
   });
 
-  describe('getEntryByNoteIdOrAlias', () => {
-    const user = {} as User;
-    const alias = 'alias';
-    describe('works', () => {
-      it('with history entry', async () => {
-        const note = Note.create(user, alias);
-        const historyEntry = HistoryEntry.create(user, note);
-        jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(historyEntry);
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
-        expect(await service.getEntryByNoteIdOrAlias(alias, user)).toEqual(
-          historyEntry,
-        );
-      });
-    });
-    describe('fails', () => {
-      it('with an non-existing note', async () => {
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
-        await expect(
-          service.getEntryByNoteIdOrAlias(alias, {} as User),
-        ).rejects.toThrow(NotInDBError);
-      });
-    });
-  });
-
   describe('updateHistoryEntryTimestamp', () => {
     describe('works', () => {
       const user = {} as User;
@@ -324,12 +300,6 @@ describe('HistoryService', () => {
         await expect(service.deleteHistoryEntry(note, user)).rejects.toThrow(
           NotInDBError,
         );
-      });
-      it('without a note', async () => {
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
-        await expect(
-          service.getEntryByNoteIdOrAlias(alias, {} as User),
-        ).rejects.toThrow(NotInDBError);
       });
     });
   });
