@@ -49,10 +49,10 @@ export class RevisionsService {
     return revision;
   }
 
-  async getLatestRevision(noteId: string): Promise<Revision> {
+  async getLatestRevision(note: Note): Promise<Revision> {
     const revision = await this.revisionRepository.findOne({
       where: {
-        note: noteId,
+        note: note,
       },
       order: {
         createdAt: 'DESC',
@@ -60,22 +60,22 @@ export class RevisionsService {
       },
     });
     if (revision === undefined) {
-      throw new NotInDBError(`Revision for note ${noteId} not found.`);
+      throw new NotInDBError(`Revision for note ${note.id} not found.`);
     }
     return revision;
   }
 
-  async getFirstRevision(noteId: string): Promise<Revision> {
+  async getFirstRevision(note: Note): Promise<Revision> {
     const revision = await this.revisionRepository.findOne({
       where: {
-        note: noteId,
+        note: note,
       },
       order: {
         createdAt: 'ASC',
       },
     });
     if (revision === undefined) {
-      throw new NotInDBError(`Revision for note ${noteId} not found.`);
+      throw new NotInDBError(`Revision for note ${note.id} not found.`);
     }
     return revision;
   }

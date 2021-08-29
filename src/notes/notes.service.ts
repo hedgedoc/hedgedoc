@@ -129,7 +129,7 @@ export class NotesService {
    * @return {Revision} the first revision of the note
    */
   async getLatestRevision(note: Note): Promise<Revision> {
-    return await this.revisionsService.getLatestRevision(note.id);
+    return await this.revisionsService.getLatestRevision(note);
   }
 
   /**
@@ -139,7 +139,7 @@ export class NotesService {
    * @return {Revision} the last revision of the note
    */
   async getFirstRevision(note: Note): Promise<Revision> {
-    return await this.revisionsService.getFirstRevision(note.id);
+    return await this.revisionsService.getFirstRevision(note);
   }
 
   /**
