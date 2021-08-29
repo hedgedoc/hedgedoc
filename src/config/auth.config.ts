@@ -3,15 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
+
 import { GitlabScope, GitlabVersion } from './gitlab.enum';
 import {
   buildErrorMessage,
   replaceAuthErrorsWithEnvironmentVariables,
   toArrayConfig,
 } from './utils';
-import { registerAs } from '@nestjs/config';
 
 export interface AuthConfig {
   email: {

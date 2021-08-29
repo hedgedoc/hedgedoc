@@ -1,4 +1,6 @@
 {
   "singleQuote": true,
-  "trailingComma": "all"
+  "trailingComma": "all",
+  "importOrder": ["^[./]"],
+  "importOrderSeparation": true
 }

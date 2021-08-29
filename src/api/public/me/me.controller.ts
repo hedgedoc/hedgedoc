@@ -3,27 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import {
   Body,
   Controller,
   Delete,
   Get,
   HttpCode,
+  InternalServerErrorException,
   NotFoundException,
   Param,
   Put,
-  UseGuards,
   Req,
-  InternalServerErrorException,
+  UseGuards,
 } from '@nestjs/common';
-import { HistoryEntryUpdateDto } from '../../../history/history-entry-update.dto';
-import { HistoryService } from '../../../history/history.service';
-import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
-import { NotesService } from '../../../notes/notes.service';
-import { UsersService } from '../../../users/users.service';
-import { TokenAuthGuard } from '../../../auth/token-auth.guard';
 import {
   ApiNoContentResponse,
   ApiNotFoundResponse,
@@ -32,12 +24,20 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { HistoryEntryDto } from '../../../history/history-entry.dto';
-import { UserInfoDto } from '../../../users/user-info.dto';
-import { NotInDBError } from '../../../errors/errors';
 import { Request } from 'express';
-import { MediaService } from '../../../media/media.service';
+
+import { TokenAuthGuard } from '../../../auth/token-auth.guard';
+import { NotInDBError } from '../../../errors/errors';
+import { HistoryEntryUpdateDto } from '../../../history/history-entry-update.dto';
+import { HistoryEntryDto } from '../../../history/history-entry.dto';
+import { HistoryService } from '../../../history/history.service';
+import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
+import { MediaService } from '../../../media/media.service';
+import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
+import { NotesService } from '../../../notes/notes.service';
+import { UserInfoDto } from '../../../users/user-info.dto';
+import { UsersService } from '../../../users/users.service';
 import {
   notFoundDescription,
   successfullyDeletedDescription,

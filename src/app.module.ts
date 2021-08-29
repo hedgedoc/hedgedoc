@@ -3,12 +3,26 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { RouterModule, Routes } from 'nest-router';
+
+import { PrivateApiModule } from './api/private/private-api.module';
 import { PublicApiModule } from './api/public/public-api.module';
+import { AuthModule } from './auth/auth.module';
 import { AuthorsModule } from './authors/authors.module';
+import appConfig from './config/app.config';
+import authConfig from './config/auth.config';
+import cspConfig from './config/csp.config';
+import customizationConfig from './config/customization.config';
+import databaseConfig from './config/database.config';
+import externalConfig from './config/external-services.config';
+import hstsConfig from './config/hsts.config';
+import mediaConfig from './config/media.config';
+import { FrontendConfigModule } from './frontend-config/frontend-config.module';
+import { FrontendConfigService } from './frontend-config/frontend-config.service';
 import { GroupsModule } from './groups/groups.module';
 import { HistoryModule } from './history/history.module';
 import { LoggerModule } from './logger/logger.module';
@@ -18,20 +32,6 @@ import { NotesModule } from './notes/notes.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { RevisionsModule } from './revisions/revisions.module';
 import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
-import appConfig from './config/app.config';
-import mediaConfig from './config/media.config';
-import hstsConfig from './config/hsts.config';
-import cspConfig from './config/csp.config';
-import databaseConfig from './config/database.config';
-import authConfig from './config/auth.config';
-import customizationConfig from './config/customization.config';
-import externalConfig from './config/external-services.config';
-import { PrivateApiModule } from './api/private/private-api.module';
-import { ScheduleModule } from '@nestjs/schedule';
-import { RouterModule, Routes } from 'nest-router';
-import { FrontendConfigService } from './frontend-config/frontend-config.service';
-import { FrontendConfigModule } from './frontend-config/frontend-config.module';
 
 const routes: Routes = [
   {

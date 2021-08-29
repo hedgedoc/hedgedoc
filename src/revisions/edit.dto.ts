@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { IsDate, IsNumber, IsOptional, IsString, Min } from 'class-validator';
-import { UserInfoDto } from '../users/user-info.dto';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsDate, IsNumber, IsOptional, IsString, Min } from 'class-validator';
+
+import { UserInfoDto } from '../users/user-info.dto';
 
 export class EditDto {
   /**

@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Inject, Injectable } from '@nestjs/common';
 import { promises as fs } from 'fs';
 import { join } from 'path';
-import mediaConfiguration from '../../config/media.config';
+
+import mediaConfiguration, { MediaConfig } from '../../config/media.config';
+import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
 import { BackendData } from '../media-upload.entity';
-import { MediaConfig } from '../../config/media.config';
-import { MediaBackendError } from '../../errors/errors';
 
 @Injectable()
 export class FilesystemBackend implements MediaBackend {

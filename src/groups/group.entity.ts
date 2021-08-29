@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import {
   Column,
   Entity,
@@ -11,6 +10,7 @@ import {
   ManyToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+
 import { User } from '../users/user.entity';
 
 @Entity()

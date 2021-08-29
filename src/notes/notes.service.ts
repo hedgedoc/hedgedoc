@@ -3,21 +3,27 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
+import appConfiguration, { AppConfig } from '../config/app.config';
 import {
   AlreadyInDBError,
   ForbiddenIdError,
   NotInDBError,
   PermissionsUpdateInconsistentError,
 } from '../errors/errors';
+import { GroupsService } from '../groups/groups.service';
+import { HistoryEntry } from '../history/history-entry.entity';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
+import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Revision } from '../revisions/revision.entity';
 import { RevisionsService } from '../revisions/revisions.service';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
+import { checkArrayForDuplicates } from '../utils/arrayDuplicatCheck';
 import { NoteMetadataDto } from './note-metadata.dto';
 import {
   NotePermissionsDto,
@@ -26,14 +32,6 @@ import {
 import { NoteDto } from './note.dto';
 import { Note } from './note.entity';
 import { Tag } from './tag.entity';
-import { HistoryEntry } from '../history/history-entry.entity';
-import { NoteUserPermission } from '../permissions/note-user-permission.entity';
-import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
-import { GroupsService } from '../groups/groups.service';
-import { checkArrayForDuplicates } from '../utils/arrayDuplicatCheck';
-import appConfiguration, { AppConfig } from '../config/app.config';
-import base32Encode from 'base32-encode';
-import { randomBytes } from 'crypto';
 
 @Injectable()
 export class NotesService {

@@ -3,15 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { JoinTable, ManyToMany } from 'typeorm';
+
 import { Note } from '../notes/note.entity';
 import { Edit } from './edit.entity';
 

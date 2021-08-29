@@ -3,9 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Inject, Injectable } from '@nestjs/common';
+
+import appConfiguration, { AppConfig } from '../config/app.config';
+import authConfiguration, { AuthConfig } from '../config/auth.config';
+import customizationConfiguration, {
+  CustomizationConfig,
+} from '../config/customization.config';
+import externalServicesConfiguration, {
+  ExternalServicesConfig,
+} from '../config/external-services.config';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { getServerVersionFromPackageJson } from '../utils/serverVersion';
 import {
   AuthProviders,
   BrandingDto,
@@ -14,15 +23,6 @@ import {
   IframeCommunicationDto,
   SpecialUrlsDto,
 } from './frontend-config.dto';
-import authConfiguration, { AuthConfig } from '../config/auth.config';
-import customizationConfiguration, {
-  CustomizationConfig,
-} from '../config/customization.config';
-import appConfiguration, { AppConfig } from '../config/app.config';
-import externalServicesConfiguration, {
-  ExternalServicesConfig,
-} from '../config/external-services.config';
-import { getServerVersionFromPackageJson } from '../utils/serverVersion';
 
 @Injectable()
 export class FrontendConfigService {

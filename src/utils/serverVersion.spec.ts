@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { promises as fs } from 'fs';
+
 import { getServerVersionFromPackageJson } from './serverVersion';
 
 it('getServerVersionFromPackageJson works', async () => {

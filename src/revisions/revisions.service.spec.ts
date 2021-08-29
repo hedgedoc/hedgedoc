@@ -3,29 +3,28 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
+import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
-import { AuthorsModule } from '../authors/authors.module';
+import appConfigMock from '../config/mock/app.config.mock';
 import { NotInDBError } from '../errors/errors';
+import { Group } from '../groups/group.entity';
 import { LoggerModule } from '../logger/logger.module';
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
-import { AuthToken } from '../auth/auth-token.entity';
+import { Tag } from '../notes/tag.entity';
+import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
+import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Identity } from '../users/identity.entity';
 import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { Edit } from './edit.entity';
 import { Revision } from './revision.entity';
 import { RevisionsService } from './revisions.service';
-import { Tag } from '../notes/tag.entity';
-import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
-import { NoteUserPermission } from '../permissions/note-user-permission.entity';
-import { Group } from '../groups/group.entity';
-import { ConfigModule } from '@nestjs/config';
-import appConfigMock from '../config/mock/app.config.mock';
 
 describe('RevisionsService', () => {
   let service: RevisionsService;

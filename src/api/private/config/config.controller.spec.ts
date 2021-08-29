@@ -3,16 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { Test, TestingModule } from '@nestjs/testing';
-import { ConfigController } from './config.controller';
-import { LoggerModule } from '../../../logger/logger.module';
-import { FrontendConfigModule } from '../../../frontend-config/frontend-config.module';
 import { ConfigModule } from '@nestjs/config';
+import { Test, TestingModule } from '@nestjs/testing';
+
 import appConfigMock from '../../../config/mock/app.config.mock';
 import authConfigMock from '../../../config/mock/auth.config.mock';
 import customizationConfigMock from '../../../config/mock/customization.config.mock';
 import externalConfigMock from '../../../config/mock/external-services.config.mock';
+import { FrontendConfigModule } from '../../../frontend-config/frontend-config.module';
+import { LoggerModule } from '../../../logger/logger.module';
+import { ConfigController } from './config.controller';
 
 describe('ConfigController', () => {
   let controller: ConfigController;

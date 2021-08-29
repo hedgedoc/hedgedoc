@@ -3,15 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Module } from '@nestjs/common';
-import { LoggerModule } from '../logger/logger.module';
-import { HistoryService } from './history.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { HistoryEntry } from './history-entry.entity';
-import { UsersModule } from '../users/users.module';
-import { NotesModule } from '../notes/notes.module';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { LoggerModule } from '../logger/logger.module';
+import { NotesModule } from '../notes/notes.module';
+import { UsersModule } from '../users/users.module';
+import { HistoryEntry } from './history-entry.entity';
+import { HistoryService } from './history.service';
 
 @Module({
   providers: [HistoryService],

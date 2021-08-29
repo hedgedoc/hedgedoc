@@ -3,39 +3,39 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import {
   getConnectionToken,
   getRepositoryToken,
   TypeOrmModule,
 } from '@nestjs/typeorm';
+
+import { AuthToken } from '../../../auth/auth-token.entity';
 import { Author } from '../../../authors/author.entity';
+import appConfigMock from '../../../config/mock/app.config.mock';
+import mediaConfigMock from '../../../config/mock/media.config.mock';
+import { Group } from '../../../groups/group.entity';
+import { GroupsModule } from '../../../groups/groups.module';
+import { HistoryEntry } from '../../../history/history-entry.entity';
+import { HistoryModule } from '../../../history/history.module';
 import { LoggerModule } from '../../../logger/logger.module';
+import { MediaUpload } from '../../../media/media-upload.entity';
+import { MediaModule } from '../../../media/media.module';
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
 import { Tag } from '../../../notes/tag.entity';
+import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
+import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
+import { PermissionsModule } from '../../../permissions/permissions.module';
 import { Edit } from '../../../revisions/edit.entity';
 import { Revision } from '../../../revisions/revision.entity';
 import { RevisionsModule } from '../../../revisions/revisions.module';
-import { AuthToken } from '../../../auth/auth-token.entity';
 import { Identity } from '../../../users/identity.entity';
 import { Session } from '../../../users/session.entity';
 import { User } from '../../../users/user.entity';
 import { UsersModule } from '../../../users/users.module';
 import { NotesController } from './notes.controller';
-import { PermissionsModule } from '../../../permissions/permissions.module';
-import { HistoryModule } from '../../../history/history.module';
-import { HistoryEntry } from '../../../history/history-entry.entity';
-import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
-import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
-import { Group } from '../../../groups/group.entity';
-import { GroupsModule } from '../../../groups/groups.module';
-import { ConfigModule } from '@nestjs/config';
-import { MediaModule } from '../../../media/media.module';
-import { MediaUpload } from '../../../media/media-upload.entity';
-import appConfigMock from '../../../config/mock/app.config.mock';
-import mediaConfigMock from '../../../config/mock/media.config.mock';
 
 describe('Notes Controller', () => {
   let controller: NotesController;

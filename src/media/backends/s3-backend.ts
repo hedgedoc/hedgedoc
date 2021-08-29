@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Inject, Injectable } from '@nestjs/common';
-import mediaConfiguration from '../../config/media.config';
+import { Client } from 'minio';
+
+import mediaConfiguration, { MediaConfig } from '../../config/media.config';
+import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
 import { BackendData } from '../media-upload.entity';
-import { MediaConfig } from '../../config/media.config';
-import { Client } from 'minio';
 import { BackendType } from './backend-type.enum';
-import { MediaBackendError } from '../../errors/errors';
 
 @Injectable()
 export class S3Backend implements MediaBackend {

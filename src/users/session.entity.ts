@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { ISession } from 'connect-typeorm';
 import { Column, Entity, Index, ManyToOne, PrimaryColumn } from 'typeorm';
+
 import { Author } from '../authors/author.entity';
 
 @Entity()

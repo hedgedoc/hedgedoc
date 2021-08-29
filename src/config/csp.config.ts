@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import * as Joi from 'joi';
 import { registerAs } from '@nestjs/config';
+import * as Joi from 'joi';
+
 import { buildErrorMessage } from './utils';
 
 export interface CspConfig {

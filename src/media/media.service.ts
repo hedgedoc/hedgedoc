@@ -3,29 +3,29 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Inject, Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as FileType from 'file-type';
 import { Repository } from 'typeorm';
+
 import mediaConfiguration, { MediaConfig } from '../config/media.config';
 import { ClientError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { Note } from '../notes/note.entity';
 import { NotesService } from '../notes/notes.service';
+import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
+import { AzureBackend } from './backends/azure-backend';
 import { BackendType } from './backends/backend-type.enum';
 import { FilesystemBackend } from './backends/filesystem-backend';
-import { MediaBackend } from './media-backend.interface';
-import { MediaUpload } from './media-upload.entity';
-import { MediaUploadUrlDto } from './media-upload-url.dto';
-import { S3Backend } from './backends/s3-backend';
-import { AzureBackend } from './backends/azure-backend';
 import { ImgurBackend } from './backends/imgur-backend';
-import { User } from '../users/user.entity';
-import { MediaUploadDto } from './media-upload.dto';
-import { Note } from '../notes/note.entity';
+import { S3Backend } from './backends/s3-backend';
 import { WebdavBackend } from './backends/webdav-backend';
+import { MediaBackend } from './media-backend.interface';
+import { MediaUploadUrlDto } from './media-upload-url.dto';
+import { MediaUploadDto } from './media-upload.dto';
+import { MediaUpload } from './media-upload.entity';
 
 @Injectable()
 export class MediaService {

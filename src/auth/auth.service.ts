@@ -3,25 +3,25 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Injectable } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
-import { User } from '../users/user.entity';
-import { AuthToken } from './auth-token.entity';
-import { AuthTokenDto } from './auth-token.dto';
-import { AuthTokenWithSecretDto } from './auth-token-with-secret.dto';
+import { Cron, Timeout } from '@nestjs/schedule';
+import { InjectRepository } from '@nestjs/typeorm';
 import { compare, hash } from 'bcrypt';
+import { randomBytes } from 'crypto';
+import { Repository } from 'typeorm';
+
 import {
   NotInDBError,
   TokenNotValidError,
   TooManyTokensError,
 } from '../errors/errors';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { User } from '../users/user.entity';
+import { UsersService } from '../users/users.service';
 import { TimestampMillis } from '../utils/timestamp';
-import { Cron, Timeout } from '@nestjs/schedule';
-import { randomBytes } from 'crypto';
+import { AuthTokenWithSecretDto } from './auth-token-with-secret.dto';
+import { AuthTokenDto } from './auth-token.dto';
+import { AuthToken } from './auth-token.entity';
 
 @Injectable()
 export class AuthService {

@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { IsBoolean } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsBoolean } from 'class-validator';
 
 export class NoteMediaDeletionDto {
   /**

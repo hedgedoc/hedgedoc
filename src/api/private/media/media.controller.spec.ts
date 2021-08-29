@@ -3,33 +3,33 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { Test, TestingModule } from '@nestjs/testing';
-import { Author } from '../../../authors/author.entity';
-import { Session } from '../../../users/session.entity';
-import { UsersModule } from '../../../users/users.module';
-import { MediaController } from './media.controller';
-import { LoggerModule } from '../../../logger/logger.module';
 import { ConfigModule } from '@nestjs/config';
-import mediaConfigMock from '../../../config/mock/media.config.mock';
+import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+
+import { AuthToken } from '../../../auth/auth-token.entity';
+import { Author } from '../../../authors/author.entity';
 import appConfigMock from '../../../config/mock/app.config.mock';
 import authConfigMock from '../../../config/mock/auth.config.mock';
 import customizationConfigMock from '../../../config/mock/customization.config.mock';
 import externalConfigMock from '../../../config/mock/external-services.config.mock';
-import { MediaModule } from '../../../media/media.module';
-import { NotesModule } from '../../../notes/notes.module';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { Edit } from '../../../revisions/edit.entity';
-import { AuthToken } from '../../../auth/auth-token.entity';
-import { Identity } from '../../../users/identity.entity';
+import mediaConfigMock from '../../../config/mock/media.config.mock';
+import { Group } from '../../../groups/group.entity';
+import { LoggerModule } from '../../../logger/logger.module';
 import { MediaUpload } from '../../../media/media-upload.entity';
+import { MediaModule } from '../../../media/media.module';
 import { Note } from '../../../notes/note.entity';
-import { Revision } from '../../../revisions/revision.entity';
-import { User } from '../../../users/user.entity';
+import { NotesModule } from '../../../notes/notes.module';
 import { Tag } from '../../../notes/tag.entity';
 import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
-import { Group } from '../../../groups/group.entity';
+import { Edit } from '../../../revisions/edit.entity';
+import { Revision } from '../../../revisions/revision.entity';
+import { Identity } from '../../../users/identity.entity';
+import { Session } from '../../../users/session.entity';
+import { User } from '../../../users/user.entity';
+import { UsersModule } from '../../../users/users.module';
+import { MediaController } from './media.controller';
 
 describe('MediaController', () => {
   let controller: MediaController;

@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Module } from '@nestjs/common';
-import { LoggerModule } from '../logger/logger.module';
 import { ConfigModule } from '@nestjs/config';
+
+import { LoggerModule } from '../logger/logger.module';
 import { FrontendConfigService } from './frontend-config.service';
 
 @Module({

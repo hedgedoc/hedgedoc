@@ -3,31 +3,31 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Author } from '../../../authors/author.entity';
-import { Session } from '../../../users/session.entity';
-import { MeController } from './me.controller';
-import { UsersModule } from '../../../users/users.module';
-import { LoggerModule } from '../../../logger/logger.module';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from '../../../users/user.entity';
-import { Identity } from '../../../users/identity.entity';
+
+import { Author } from '../../../authors/author.entity';
+import appConfigMock from '../../../config/mock/app.config.mock';
+import authConfigMock from '../../../config/mock/auth.config.mock';
+import customizationConfigMock from '../../../config/mock/customization.config.mock';
+import externalServicesConfigMock from '../../../config/mock/external-services.config.mock';
+import mediaConfigMock from '../../../config/mock/media.config.mock';
+import { Group } from '../../../groups/group.entity';
+import { LoggerModule } from '../../../logger/logger.module';
+import { MediaUpload } from '../../../media/media-upload.entity';
 import { MediaModule } from '../../../media/media.module';
+import { Note } from '../../../notes/note.entity';
+import { Tag } from '../../../notes/tag.entity';
 import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
 import { Edit } from '../../../revisions/edit.entity';
-import { ConfigModule } from '@nestjs/config';
-import appConfigMock from '../../../config/mock/app.config.mock';
-import authConfigMock from '../../../config/mock/auth.config.mock';
-import mediaConfigMock from '../../../config/mock/media.config.mock';
-import customizationConfigMock from '../../../config/mock/customization.config.mock';
-import externalServicesConfigMock from '../../../config/mock/external-services.config.mock';
-import { MediaUpload } from '../../../media/media-upload.entity';
-import { Note } from '../../../notes/note.entity';
-import { Tag } from '../../../notes/tag.entity';
 import { Revision } from '../../../revisions/revision.entity';
-import { Group } from '../../../groups/group.entity';
+import { Identity } from '../../../users/identity.entity';
+import { Session } from '../../../users/session.entity';
+import { User } from '../../../users/user.entity';
+import { UsersModule } from '../../../users/users.module';
+import { MeController } from './me.controller';
 
 describe('MeController', () => {
   let controller: MeController;

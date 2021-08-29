@@ -3,20 +3,20 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Injectable } from '@nestjs/common';
-import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { HistoryEntryUpdateDto } from './history-entry-update.dto';
-import { HistoryEntryDto } from './history-entry.dto';
 import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
-import { HistoryEntry } from './history-entry.entity';
-import { UsersService } from '../users/users.service';
+
+import { NotInDBError } from '../errors/errors';
+import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { Note } from '../notes/note.entity';
 import { NotesService } from '../notes/notes.service';
 import { User } from '../users/user.entity';
-import { Note } from '../notes/note.entity';
-import { NotInDBError } from '../errors/errors';
+import { UsersService } from '../users/users.service';
 import { HistoryEntryImportDto } from './history-entry-import.dto';
+import { HistoryEntryUpdateDto } from './history-entry-update.dto';
+import { HistoryEntryDto } from './history-entry.dto';
+import { HistoryEntry } from './history-entry.entity';
 
 @Injectable()
 export class HistoryService {

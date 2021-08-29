@@ -3,22 +3,22 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { createConnection } from 'typeorm';
+
+import { AuthToken } from './auth/auth-token.entity';
 import { Author } from './authors/author.entity';
-import { Session } from './users/session.entity';
-import { User } from './users/user.entity';
-import { Note } from './notes/note.entity';
-import { Revision } from './revisions/revision.entity';
-import { Edit } from './revisions/edit.entity';
-import { NoteGroupPermission } from './permissions/note-group-permission.entity';
-import { NoteUserPermission } from './permissions/note-user-permission.entity';
 import { Group } from './groups/group.entity';
 import { HistoryEntry } from './history/history-entry.entity';
 import { MediaUpload } from './media/media-upload.entity';
+import { Note } from './notes/note.entity';
 import { Tag } from './notes/tag.entity';
-import { AuthToken } from './auth/auth-token.entity';
+import { NoteGroupPermission } from './permissions/note-group-permission.entity';
+import { NoteUserPermission } from './permissions/note-user-permission.entity';
+import { Edit } from './revisions/edit.entity';
+import { Revision } from './revisions/revision.entity';
 import { Identity } from './users/identity.entity';
+import { Session } from './users/session.entity';
+import { User } from './users/user.entity';
 
 /**
  * This function creates and populates a sqlite db for manual testing

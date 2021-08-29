@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import {
   BadRequestException,
   Body,
@@ -16,13 +15,14 @@ import {
   Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { UsersService } from '../../../../users/users.service';
-import { HistoryEntryDto } from '../../../../history/history-entry.dto';
+
 import { ForbiddenIdError, NotInDBError } from '../../../../errors/errors';
 import { HistoryEntryImportDto } from '../../../../history/history-entry-import.dto';
 import { HistoryEntryUpdateDto } from '../../../../history/history-entry-update.dto';
-import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
+import { HistoryEntryDto } from '../../../../history/history-entry.dto';
 import { HistoryService } from '../../../../history/history.service';
+import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
+import { UsersService } from '../../../../users/users.service';
 
 @ApiTags('history')
 @Controller('/me/history')

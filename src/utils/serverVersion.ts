@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { ServerVersion } from '../monitoring/server-status.dto';
 import { promises as fs } from 'fs';
 import { join as joinPath } from 'path';
+
+import { ServerVersion } from '../monitoring/server-status.dto';
 
 let versionCache: ServerVersion;
 

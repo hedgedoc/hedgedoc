@@ -3,31 +3,31 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { INestApplication } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { promises as fs } from 'fs';
+import { join } from 'path';
 import request from 'supertest';
-import mediaConfigMock from '../../src/config/mock/media.config.mock';
+
+import { PrivateApiModule } from '../../src/api/private/private-api.module';
+import { AuthModule } from '../../src/auth/auth.module';
 import appConfigMock from '../../src/config/mock/app.config.mock';
 import authConfigMock from '../../src/config/mock/auth.config.mock';
 import customizationConfigMock from '../../src/config/mock/customization.config.mock';
 import externalConfigMock from '../../src/config/mock/external-services.config.mock';
+import mediaConfigMock from '../../src/config/mock/media.config.mock';
 import { NotInDBError } from '../../src/errors/errors';
 import { GroupsModule } from '../../src/groups/groups.module';
 import { LoggerModule } from '../../src/logger/logger.module';
+import { MediaService } from '../../src/media/media.service';
 import { NotesModule } from '../../src/notes/notes.module';
 import { NotesService } from '../../src/notes/notes.service';
 import { PermissionsModule } from '../../src/permissions/permissions.module';
-import { AuthModule } from '../../src/auth/auth.module';
-import { UsersService } from '../../src/users/users.service';
 import { User } from '../../src/users/user.entity';
 import { UsersModule } from '../../src/users/users.module';
-import { promises as fs } from 'fs';
-import { MediaService } from '../../src/media/media.service';
-import { PrivateApiModule } from '../../src/api/private/private-api.module';
-import { join } from 'path';
+import { UsersService } from '../../src/users/users.service';
 
 describe('Notes', () => {
   let app: INestApplication;

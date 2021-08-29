@@ -3,18 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Session } from '../../../users/session.entity';
-import { TokensController } from './tokens.controller';
-import { LoggerModule } from '../../../logger/logger.module';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Identity } from '../../../users/identity.entity';
-import { User } from '../../../users/user.entity';
+
 import { AuthToken } from '../../../auth/auth-token.entity';
 import { AuthModule } from '../../../auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
 import appConfigMock from '../../../config/mock/app.config.mock';
+import { LoggerModule } from '../../../logger/logger.module';
+import { Identity } from '../../../users/identity.entity';
+import { Session } from '../../../users/session.entity';
+import { User } from '../../../users/user.entity';
+import { TokensController } from './tokens.controller';
 
 describe('TokensController', () => {
   let controller: TokensController;

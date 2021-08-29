@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import {
   Inject,
   Injectable,
@@ -12,11 +11,13 @@ import {
   Scope,
 } from '@nestjs/common';
 import { isObject } from '@nestjs/common/utils/shared.utils';
-import clc = require('cli-color');
-import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
+
 import appConfiguration, { AppConfig } from '../config/app.config';
 import { Loglevel } from '../config/loglevel.enum';
 import { needToLog } from '../config/utils';
+
+import clc = require('cli-color');
+import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class ConsoleLoggerService implements LoggerService {
