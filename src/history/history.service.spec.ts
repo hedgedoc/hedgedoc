@@ -3,31 +3,31 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Author } from '../authors/author.entity';
-import { LoggerModule } from '../logger/logger.module';
-import { Session } from '../users/session.entity';
-import { HistoryService } from './history.service';
-import { UsersModule } from '../users/users.module';
-import { NotesModule } from '../notes/notes.module';
 import { getConnectionToken, getRepositoryToken } from '@nestjs/typeorm';
-import { Identity } from '../users/identity.entity';
-import { User } from '../users/user.entity';
-import { Edit } from '../revisions/edit.entity';
-import { HistoryEntry } from './history-entry.entity';
-import { Note } from '../notes/note.entity';
-import { Tag } from '../notes/tag.entity';
-import { AuthToken } from '../auth/auth-token.entity';
-import { Revision } from '../revisions/revision.entity';
 import { Connection, Repository } from 'typeorm';
+
+import { AuthToken } from '../auth/auth-token.entity';
+import { Author } from '../authors/author.entity';
+import appConfigMock from '../config/mock/app.config.mock';
 import { NotInDBError } from '../errors/errors';
+import { Group } from '../groups/group.entity';
+import { LoggerModule } from '../logger/logger.module';
+import { Note } from '../notes/note.entity';
+import { NotesModule } from '../notes/notes.module';
+import { Tag } from '../notes/tag.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
-import { Group } from '../groups/group.entity';
-import { ConfigModule } from '@nestjs/config';
-import appConfigMock from '../config/mock/app.config.mock';
+import { Edit } from '../revisions/edit.entity';
+import { Revision } from '../revisions/revision.entity';
+import { Identity } from '../users/identity.entity';
+import { Session } from '../users/session.entity';
+import { User } from '../users/user.entity';
+import { UsersModule } from '../users/users.module';
 import { HistoryEntryImportDto } from './history-entry-import.dto';
+import { HistoryEntry } from './history-entry.entity';
+import { HistoryService } from './history.service';
 
 describe('HistoryService', () => {
   let service: HistoryService;

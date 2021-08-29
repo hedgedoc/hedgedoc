@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
 import { PrivateApiModule } from '../api/private/private-api.module';
 import { PublicApiModule } from '../api/public/public-api.module';
 

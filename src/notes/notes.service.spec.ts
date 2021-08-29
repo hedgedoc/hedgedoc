@@ -3,39 +3,39 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Author } from '../authors/author.entity';
-import { LoggerModule } from '../logger/logger.module';
-import { Edit } from '../revisions/edit.entity';
-import { Revision } from '../revisions/revision.entity';
-import { RevisionsModule } from '../revisions/revisions.module';
-import { AuthToken } from '../auth/auth-token.entity';
-import { Identity } from '../users/identity.entity';
-import { Session } from '../users/session.entity';
-import { User } from '../users/user.entity';
-import { UsersModule } from '../users/users.module';
-import { Note } from './note.entity';
-import { NotesService } from './notes.service';
 import { Repository } from 'typeorm';
-import { Tag } from './tag.entity';
+
+import { AuthToken } from '../auth/auth-token.entity';
+import { Author } from '../authors/author.entity';
+import appConfigMock from '../config/mock/app.config.mock';
 import {
   AlreadyInDBError,
   ForbiddenIdError,
   NotInDBError,
   PermissionsUpdateInconsistentError,
 } from '../errors/errors';
+import { Group } from '../groups/group.entity';
+import { GroupsModule } from '../groups/groups.module';
+import { LoggerModule } from '../logger/logger.module';
+import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
+import { NoteUserPermission } from '../permissions/note-user-permission.entity';
+import { Edit } from '../revisions/edit.entity';
+import { Revision } from '../revisions/revision.entity';
+import { RevisionsModule } from '../revisions/revisions.module';
+import { Identity } from '../users/identity.entity';
+import { Session } from '../users/session.entity';
+import { User } from '../users/user.entity';
+import { UsersModule } from '../users/users.module';
 import {
   NoteGroupPermissionUpdateDto,
   NoteUserPermissionUpdateDto,
 } from './note-permissions.dto';
-import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
-import { NoteUserPermission } from '../permissions/note-user-permission.entity';
-import { GroupsModule } from '../groups/groups.module';
-import { Group } from '../groups/group.entity';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import appConfigMock from '../config/mock/app.config.mock';
+import { Note } from './note.entity';
+import { NotesService } from './notes.service';
+import { Tag } from './tag.entity';
 
 describe('NotesService', () => {
   let service: NotesService;

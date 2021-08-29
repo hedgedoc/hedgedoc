@@ -3,17 +3,17 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { LogLevel, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+
 import { AppModule } from './app.module';
 import { AppConfig } from './config/app.config';
 import { MediaConfig } from './config/media.config';
-import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
-import { BackendType } from './media/backends/backend-type.enum';
 import { ConsoleLoggerService } from './logger/console-logger.service';
+import { BackendType } from './media/backends/backend-type.enum';
+import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {

@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import {
   BadRequestException,
   Body,
@@ -22,22 +21,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
-  AlreadyInDBError,
-  ForbiddenIdError,
-  NotInDBError,
-  PermissionsUpdateInconsistentError,
-} from '../../../errors/errors';
-import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import {
-  NotePermissionsDto,
-  NotePermissionsUpdateDto,
-} from '../../../notes/note-permissions.dto';
-import { NotesService } from '../../../notes/notes.service';
-import { RevisionsService } from '../../../revisions/revisions.service';
-import { FullApi } from '../../utils/fullapi-decorator';
-import { MarkdownBody } from '../../utils/markdownbody-decorator';
-import { TokenAuthGuard } from '../../../auth/token-auth.guard';
-import {
   ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiNoContentResponse,
@@ -47,22 +30,39 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { Request } from 'express';
+
+import { TokenAuthGuard } from '../../../auth/token-auth.guard';
+import {
+  AlreadyInDBError,
+  ForbiddenIdError,
+  NotInDBError,
+  PermissionsUpdateInconsistentError,
+} from '../../../errors/errors';
 import { HistoryService } from '../../../history/history.service';
-import { NoteDto } from '../../../notes/note.dto';
+import { ConsoleLoggerService } from '../../../logger/console-logger.service';
+import { MediaUploadDto } from '../../../media/media-upload.dto';
+import { MediaService } from '../../../media/media.service';
 import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
+import {
+  NotePermissionsDto,
+  NotePermissionsUpdateDto,
+} from '../../../notes/note-permissions.dto';
+import { NoteDto } from '../../../notes/note.dto';
+import { Note } from '../../../notes/note.entity';
+import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
+import { NotesService } from '../../../notes/notes.service';
+import { PermissionsService } from '../../../permissions/permissions.service';
 import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
-import { PermissionsService } from '../../../permissions/permissions.service';
-import { Note } from '../../../notes/note.entity';
-import { Request } from 'express';
+import { RevisionsService } from '../../../revisions/revisions.service';
 import {
   forbiddenDescription,
   successfullyDeletedDescription,
   unauthorizedDescription,
 } from '../../utils/descriptions';
-import { MediaUploadDto } from '../../../media/media-upload.dto';
-import { MediaService } from '../../../media/media.service';
-import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
+import { FullApi } from '../../utils/fullapi-decorator';
+import { MarkdownBody } from '../../utils/markdownbody-decorator';
 
 @ApiTags('notes')
 @ApiSecurity('token')

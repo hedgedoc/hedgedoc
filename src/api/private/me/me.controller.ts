@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Body, Controller, Delete, Get, HttpCode, Post } from '@nestjs/common';
-import { UserInfoDto } from '../../../users/user-info.dto';
+
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { UsersService } from '../../../users/users.service';
-import { MediaService } from '../../../media/media.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
+import { MediaService } from '../../../media/media.service';
+import { UserInfoDto } from '../../../users/user-info.dto';
+import { UsersService } from '../../../users/users.service';
 
 @Controller('me')
 export class MeController {

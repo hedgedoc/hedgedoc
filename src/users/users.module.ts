@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { LoggerModule } from '../logger/logger.module';
 import { Identity } from './identity.entity';
 import { Session } from './session.entity';

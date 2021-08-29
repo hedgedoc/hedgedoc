@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+
 import { Note } from './note.entity';
 
 @Entity()

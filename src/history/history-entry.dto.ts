@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { IsArray, IsBoolean, IsDate, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsArray, IsBoolean, IsDate, IsString } from 'class-validator';
 
 export class HistoryEntryDto {
   /**

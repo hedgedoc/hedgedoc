@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Injectable } from '@nestjs/common';
-import { User } from '../users/user.entity';
+
 import { Note } from '../notes/note.entity';
+import { User } from '../users/user.entity';
 
 // TODO move to config or remove
 export enum GuestPermission {

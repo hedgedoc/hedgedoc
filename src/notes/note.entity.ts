@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import {
   Column,
   Entity,
@@ -13,13 +12,14 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+
+import { HistoryEntry } from '../history/history-entry.entity';
+import { MediaUpload } from '../media/media-upload.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Revision } from '../revisions/revision.entity';
 import { User } from '../users/user.entity';
 import { Tag } from './tag.entity';
-import { HistoryEntry } from '../history/history-entry.entity';
-import { MediaUpload } from '../media/media-upload.entity';
 import { generatePublicId } from './utils';
 
 @Entity()

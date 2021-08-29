@@ -3,11 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
+import appConfigMock from '../config/mock/app.config.mock';
 import { Group } from '../groups/group.entity';
 import { LoggerModule } from '../logger/logger.module';
 import { Note } from '../notes/note.entity';
@@ -23,8 +25,6 @@ import { NoteGroupPermission } from './note-group-permission.entity';
 import { NoteUserPermission } from './note-user-permission.entity';
 import { PermissionsModule } from './permissions.module';
 import { GuestPermission, PermissionsService } from './permissions.service';
-import { ConfigModule } from '@nestjs/config';
-import appConfigMock from '../config/mock/app.config.mock';
 
 describe('PermissionsService', () => {
   let permissionsService: PermissionsService;

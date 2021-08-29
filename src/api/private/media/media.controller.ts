@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import {
   BadRequestException,
   Controller,
@@ -14,16 +13,17 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { MediaService } from '../../../media/media.service';
-import { MulterFile } from '../../../media/multer-file.interface';
-import { MediaUploadUrlDto } from '../../../media/media-upload-url.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+
 import {
   ClientError,
   MediaBackendError,
   NotInDBError,
 } from '../../../errors/errors';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { ConsoleLoggerService } from '../../../logger/console-logger.service';
+import { MediaUploadUrlDto } from '../../../media/media-upload-url.dto';
+import { MediaService } from '../../../media/media.service';
+import { MulterFile } from '../../../media/multer-file.interface';
 
 @Controller('media')
 export class MediaController {

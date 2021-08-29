@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import {
   BadRequestException,
   Body,
@@ -16,25 +15,26 @@ import {
   Post,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Note } from '../../../notes/note.entity';
+
 import {
   AlreadyInDBError,
   ForbiddenIdError,
   NotInDBError,
 } from '../../../errors/errors';
-import { NoteDto } from '../../../notes/note.dto';
-import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { NotesService } from '../../../notes/notes.service';
-import { PermissionsService } from '../../../permissions/permissions.service';
 import { HistoryService } from '../../../history/history.service';
-import { UsersService } from '../../../users/users.service';
+import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
+import { NoteDto } from '../../../notes/note.dto';
+import { Note } from '../../../notes/note.entity';
+import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
+import { NotesService } from '../../../notes/notes.service';
+import { PermissionsService } from '../../../permissions/permissions.service';
 import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
+import { UsersService } from '../../../users/users.service';
 import { MarkdownBody } from '../../utils/markdownbody-decorator';
-import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
 
 @Controller('notes')
 export class NotesController {

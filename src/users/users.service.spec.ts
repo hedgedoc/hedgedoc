@@ -3,16 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import appConfigMock from '../config/mock/app.config.mock';
+import { AlreadyInDBError, NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
-import { Repository } from 'typeorm';
-import { AlreadyInDBError, NotInDBError } from '../errors/errors';
-import { ConfigModule } from '@nestjs/config';
-import appConfigMock from '../config/mock/app.config.mock';
 
 describe('UsersService', () => {
   let service: UsersService;

@@ -3,29 +3,29 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+
+import { AuthToken } from '../../../auth/auth-token.entity';
 import { Author } from '../../../authors/author.entity';
 import appConfigMock from '../../../config/mock/app.config.mock';
 import mediaConfigMock from '../../../config/mock/media.config.mock';
+import { Group } from '../../../groups/group.entity';
 import { LoggerModule } from '../../../logger/logger.module';
 import { MediaUpload } from '../../../media/media-upload.entity';
 import { MediaModule } from '../../../media/media.module';
 import { Note } from '../../../notes/note.entity';
 import { NotesModule } from '../../../notes/notes.module';
 import { Tag } from '../../../notes/tag.entity';
+import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
+import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
 import { Edit } from '../../../revisions/edit.entity';
 import { Revision } from '../../../revisions/revision.entity';
-import { AuthToken } from '../../../auth/auth-token.entity';
 import { Identity } from '../../../users/identity.entity';
 import { Session } from '../../../users/session.entity';
 import { User } from '../../../users/user.entity';
 import { MediaController } from './media.controller';
-import { NoteGroupPermission } from '../../../permissions/note-group-permission.entity';
-import { NoteUserPermission } from '../../../permissions/note-user-permission.entity';
-import { Group } from '../../../groups/group.entity';
 
 describe('Media Controller', () => {
   let controller: MediaController;

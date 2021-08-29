@@ -3,33 +3,33 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Author } from '../../../../authors/author.entity';
-import { Session } from '../../../../users/session.entity';
-import { HistoryController } from './history.controller';
-import { LoggerModule } from '../../../../logger/logger.module';
-import { UsersModule } from '../../../../users/users.module';
-import { HistoryModule } from '../../../../history/history.module';
-import { NotesModule } from '../../../../notes/notes.module';
 import {
   getConnectionToken,
   getRepositoryToken,
   TypeOrmModule,
 } from '@nestjs/typeorm';
-import { User } from '../../../../users/user.entity';
-import { Note } from '../../../../notes/note.entity';
+
 import { AuthToken } from '../../../../auth/auth-token.entity';
-import { Identity } from '../../../../users/identity.entity';
-import { Edit } from '../../../../revisions/edit.entity';
-import { Revision } from '../../../../revisions/revision.entity';
-import { Tag } from '../../../../notes/tag.entity';
+import { Author } from '../../../../authors/author.entity';
+import appConfigMock from '../../../../config/mock/app.config.mock';
+import { Group } from '../../../../groups/group.entity';
 import { HistoryEntry } from '../../../../history/history-entry.entity';
+import { HistoryModule } from '../../../../history/history.module';
+import { LoggerModule } from '../../../../logger/logger.module';
+import { Note } from '../../../../notes/note.entity';
+import { NotesModule } from '../../../../notes/notes.module';
+import { Tag } from '../../../../notes/tag.entity';
 import { NoteGroupPermission } from '../../../../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../../../../permissions/note-user-permission.entity';
-import { Group } from '../../../../groups/group.entity';
-import { ConfigModule } from '@nestjs/config';
-import appConfigMock from '../../../../config/mock/app.config.mock';
+import { Edit } from '../../../../revisions/edit.entity';
+import { Revision } from '../../../../revisions/revision.entity';
+import { Identity } from '../../../../users/identity.entity';
+import { Session } from '../../../../users/session.entity';
+import { User } from '../../../../users/user.entity';
+import { UsersModule } from '../../../../users/users.module';
+import { HistoryController } from './history.controller';
 
 describe('HistoryController', () => {
   let controller: HistoryController;

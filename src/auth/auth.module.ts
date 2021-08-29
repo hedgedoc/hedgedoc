@@ -3,15 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { UsersModule } from '../users/users.module';
 import { PassportModule } from '@nestjs/passport';
-import { TokenStrategy } from './token.strategy';
-import { LoggerModule } from '../logger/logger.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { LoggerModule } from '../logger/logger.module';
+import { UsersModule } from '../users/users.module';
 import { AuthToken } from './auth-token.entity';
+import { AuthService } from './auth.service';
+import { TokenStrategy } from './token.strategy';
 
 @Module({
   imports: [

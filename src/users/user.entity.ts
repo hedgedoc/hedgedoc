@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import {
   CreateDateColumn,
   Entity,
@@ -12,13 +11,14 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Column, OneToMany } from 'typeorm';
-import { Author } from '../authors/author.entity';
-import { Note } from '../notes/note.entity';
+
 import { AuthToken } from '../auth/auth-token.entity';
-import { Identity } from './identity.entity';
+import { Author } from '../authors/author.entity';
 import { Group } from '../groups/group.entity';
 import { HistoryEntry } from '../history/history-entry.entity';
 import { MediaUpload } from '../media/media-upload.entity';
+import { Note } from '../notes/note.entity';
+import { Identity } from './identity.entity';
 
 @Entity()
 export class User {
