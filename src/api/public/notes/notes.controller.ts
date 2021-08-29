@@ -226,17 +226,10 @@ export class NotesController {
     @RequestUser() user: User,
     @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<NoteMetadataDto> {
-    try {
-      if (!this.permissionsService.mayRead(user, note)) {
-        throw new UnauthorizedException('Reading note denied!');
-      }
-      return await this.noteService.toNoteMetadataDto(note);
-    } catch (e) {
-      if (e instanceof PermissionsUpdateInconsistentError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
+    if (!this.permissionsService.mayRead(user, note)) {
+      throw new UnauthorizedException('Reading note denied!');
     }
+    return await this.noteService.toNoteMetadataDto(note);
   }
 
   @UseGuards(TokenAuthGuard)
