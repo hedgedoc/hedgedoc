@@ -47,28 +47,12 @@ export class HistoryService {
 
   /**
    * @async
-   * Get a history entry by the user and note, which is specified via id or alias
-   * @param {string} noteIdOrAlias - the id or alias specifying the note
-   * @param {User} user - the user that the note belongs to
-   * @throws {NotInDBError} the specified note does not exist
-   * @return {HistoryEntry} the requested history entry
-   */
-  async getEntryByNoteIdOrAlias(
-    noteIdOrAlias: string,
-    user: User,
-  ): Promise<HistoryEntry> {
-    const note = await this.notesService.getNoteByIdOrAlias(noteIdOrAlias);
-    return await this.getEntryByNote(note, user);
-  }
-
-  /**
-   * @async
    * Get a history entry by the user and note
    * @param {Note} note - the note that the history entry belongs to
    * @param {User} user - the user that the history entry belongs to
    * @return {HistoryEntry} the requested history entry
    */
-  private async getEntryByNote(note: Note, user: User): Promise<HistoryEntry> {
+  async getEntryByNote(note: Note, user: User): Promise<HistoryEntry> {
     const entry = await this.historyEntryRepository.findOne({
       where: {
         note: note,

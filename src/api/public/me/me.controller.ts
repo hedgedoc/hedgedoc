@@ -95,13 +95,10 @@ export class MeController {
   @ApiNotFoundResponse({ description: notFoundDescription })
   async getHistoryEntry(
     @RequestUser() user: User,
-    @Param('note') note: string,
+    @Param('note', GetNotePipe) note: Note,
   ): Promise<HistoryEntryDto> {
     try {
-      const foundEntry = await this.historyService.getEntryByNoteIdOrAlias(
-        note,
-        user,
-      );
+      const foundEntry = await this.historyService.getEntryByNote(note, user);
       return this.historyService.toHistoryEntryDto(foundEntry);
     } catch (e) {
       if (e instanceof NotInDBError) {
