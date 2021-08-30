@@ -34,6 +34,27 @@ export class RevisionsService {
     });
   }
 
+  /**
+   * @async
+   * Purge revision history of a note.
+   * @param {Note} note - the note to purge the history
+   * @return {Revision[]} an array of purged revisions
+   */
+  async purgeRevisions(note: Note): Promise<Revision[]> {
+    const revisions = await this.revisionRepository.find({
+      where: {
+        note: note,
+      },
+    });
+    const latestRevison = await this.getLatestRevision(note);
+    // get all revisions except the latest
+    const oldRevisions = revisions.filter(
+      (item) => item.id !== latestRevison.id,
+    );
+    // delete the old revisions
+    return await this.revisionRepository.remove(oldRevisions);
+  }
+
   async getRevision(note: Note, revisionId: number): Promise<Revision> {
     const revision = await this.revisionRepository.findOne({
       where: {
