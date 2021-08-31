@@ -42,11 +42,11 @@ export const ImportHistoryButton: React.FC = () => {
     (entries: HistoryEntry[]): void => {
       entries.forEach((entry) => (entry.origin = userExists ? HistoryEntryOrigin.REMOTE : HistoryEntryOrigin.LOCAL))
       importHistoryEntries(mergeHistoryEntries(historyState, entries)).catch((error) => {
-        showErrorNotification(t('landing.history.error.setHistory.text'))(error)
-        refreshHistoryState().catch(showErrorNotification(t('landing.history.error.getHistory.text')))
+        showErrorNotification('landing.history.error.setHistory.text')(error)
+        refreshHistoryState().catch(showErrorNotification('landing.history.error.getHistory.text'))
       })
     },
-    [historyState, userExists, t]
+    [historyState, userExists]
   )
 
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {

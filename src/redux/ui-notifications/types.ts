@@ -7,6 +7,7 @@
 import { Action } from 'redux'
 import { DateTime } from 'luxon'
 import { IconName } from '../../components/common/fork-awesome/types'
+import { TOptions } from 'i18next'
 
 export enum UiNotificationActionType {
   DISPATCH_NOTIFICATION = 'notification/dispatch',
@@ -18,14 +19,19 @@ export interface UiNotificationButton {
   onClick: () => void
 }
 
-export interface UiNotification {
-  title: string
-  date: DateTime
-  content: string
-  dismissed: boolean
-  icon?: IconName
+export interface DispatchOptions {
+  titleI18nOptions: TOptions | string
+  contentI18nOptions: TOptions | string
   durationInSecond: number
-  buttons?: UiNotificationButton[]
+  icon?: IconName
+  buttons: UiNotificationButton[]
+}
+
+export interface UiNotification extends DispatchOptions {
+  titleI18nKey: string
+  contentI18nKey: string
+  date: DateTime
+  dismissed: boolean
 }
 
 export type UiNotificationActions = DispatchUiNotificationAction | DismissUiNotificationAction
@@ -33,6 +39,7 @@ export type UiNotificationActions = DispatchUiNotificationAction | DismissUiNoti
 export interface DispatchUiNotificationAction extends Action<UiNotificationActionType> {
   type: UiNotificationActionType.DISPATCH_NOTIFICATION
   notification: UiNotification
+  notificationIdCallback: (notificationId: number) => void
 }
 
 export interface DismissUiNotificationAction extends Action<UiNotificationActionType> {

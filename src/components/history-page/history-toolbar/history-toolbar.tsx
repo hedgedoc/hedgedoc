@@ -116,8 +116,8 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
   )
 
   const refreshHistory = useCallback(() => {
-    refreshHistoryState().catch(showErrorNotification(t('landing.history.error.getHistory.text')))
-  }, [t])
+    refreshHistoryState().catch(showErrorNotification('landing.history.error.getHistory.text'))
+  }, [])
 
   const onUploadAllToRemote = useCallback(() => {
     if (!userExists) {
@@ -128,7 +128,7 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
       .map((entry) => entry.identifier)
     historyEntries.forEach((entry) => (entry.origin = HistoryEntryOrigin.REMOTE))
     importHistoryEntries(historyEntries).catch((error) => {
-      showErrorNotification(t('landing.history.error.setHistory.text'))(error)
+      showErrorNotification('landing.history.error.setHistory.text')(error)
       historyEntries.forEach((entry) => {
         if (localEntries.includes(entry.identifier)) {
           entry.origin = HistoryEntryOrigin.LOCAL
@@ -137,7 +137,7 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
       setHistoryEntries(historyEntries)
       refreshHistory()
     })
-  }, [userExists, historyEntries, t, refreshHistory])
+  }, [userExists, historyEntries, refreshHistory])
 
   useEffect(() => {
     const newState: HistoryToolbarState = {

@@ -5,23 +5,29 @@
  */
 
 import { useEffect } from 'react'
-import { DEFAULT_DURATION_IN_SECONDS, dispatchUiNotification } from '../../redux/ui-notifications/methods'
+import { dispatchUiNotification } from '../../redux/ui-notifications/methods'
 
 const localStorageKey = 'dontshowtestnotification'
 
+/**
+ * Spawns a notification to test the system. Only for tech demo show case.
+ */
 export const useNotificationTest = (): void => {
   useEffect(() => {
     if (window.localStorage.getItem(localStorageKey)) {
       return
     }
     console.debug('[Notifications] Dispatched test notification')
-    dispatchUiNotification('Notification-Test!', 'It Works!', DEFAULT_DURATION_IN_SECONDS, 'info-circle', [
-      {
-        label: "Don't show again",
-        onClick: () => {
-          window.localStorage.setItem(localStorageKey, '1')
+    void dispatchUiNotification('notificationTest.title', 'notificationTest.content', {
+      icon: 'info-circle',
+      buttons: [
+        {
+          label: "Don't show again",
+          onClick: () => {
+            window.localStorage.setItem(localStorageKey, '1')
+          }
         }
-      }
-    ])
+      ]
+    })
   }, [])
 }

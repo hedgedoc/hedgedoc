@@ -16,7 +16,7 @@ import { showErrorNotification } from '../../redux/ui-notifications/methods'
 import { useApplicationState } from '../../hooks/common/use-application-state'
 
 export const HistoryPage: React.FC = () => {
-  const { t } = useTranslation()
+  useTranslation()
 
   const allEntries = useApplicationState((state) => state.history)
   const [toolbarState, setToolbarState] = useState<HistoryToolbarState>(initToolbarState)
@@ -27,8 +27,8 @@ export const HistoryPage: React.FC = () => {
   )
 
   useEffect(() => {
-    refreshHistoryState().catch(showErrorNotification(t('landing.history.error.getHistory.text')))
-  }, [t])
+    refreshHistoryState().catch(showErrorNotification('landing.history.error.getHistory.text'))
+  }, [])
 
   return (
     <Fragment>

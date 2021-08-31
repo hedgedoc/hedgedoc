@@ -6,8 +6,7 @@
 
 import { Editor, Hint, Hints, Pos } from 'codemirror'
 import { findWordAtCursor, generateHintListByPrefix, Hinter } from './index'
-import { DEFAULT_DURATION_IN_SECONDS, dispatchUiNotification } from '../../../../redux/ui-notifications/methods'
-import i18n from 'i18next'
+import { showErrorNotification } from '../../../../redux/ui-notifications/methods'
 
 type highlightJsImport = typeof import('../../../common/hljs/hljs')
 
@@ -22,12 +21,7 @@ const loadHighlightJs = async (): Promise<highlightJsImport | null> => {
   try {
     return await import('../../../common/hljs/hljs')
   } catch (error) {
-    dispatchUiNotification(
-      i18n.t('common.errorOccurred'),
-      i18n.t('common.errorWhileLoadingLibrary', { name: 'highlight.js' }),
-      DEFAULT_DURATION_IN_SECONDS,
-      'exclamation-circle'
-    )
+    showErrorNotification('common.errorWhileLoadingLibrary', { name: 'highlight.js' })(error as Error)
     console.error("can't load highlight js", error)
     return null
   }

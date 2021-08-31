@@ -5,7 +5,7 @@
  */
 
 import { Reducer } from 'redux'
-import { UiNotificationActions, UiNotificationActionType, UiNotificationState } from './types'
+import { UiNotification, UiNotificationActions, UiNotificationActionType, UiNotificationState } from './types'
 
 export const UiNotificationReducer: Reducer<UiNotificationState, UiNotificationActions> = (
   state: UiNotificationState = [],
@@ -13,12 +13,29 @@ export const UiNotificationReducer: Reducer<UiNotificationState, UiNotificationA
 ) => {
   switch (action.type) {
     case UiNotificationActionType.DISPATCH_NOTIFICATION:
-      return state.concat(action.notification)
+      return addNewNotification(state, action.notification, action.notificationIdCallback)
     case UiNotificationActionType.DISMISS_NOTIFICATION:
       return dismissNotification(state, action.notificationId)
     default:
       return state
   }
+}
+
+/**
+ * Creates a new {@link UiNotificationState notification state} by appending the given {@link UiNotification}.
+ * @param state The current ui notification state
+ * @param notification The new notification
+ * @param notificationIdCallback This callback is executed with the id of the new notification
+ * @return The new {@link UiNotificationState notification state}
+ */
+const addNewNotification = (
+  state: UiNotificationState,
+  notification: UiNotification,
+  notificationIdCallback: (notificationId: number) => void
+): UiNotificationState => {
+  const newState = [...state, notification]
+  notificationIdCallback(newState.length - 1)
+  return newState
 }
 
 const dismissNotification = (

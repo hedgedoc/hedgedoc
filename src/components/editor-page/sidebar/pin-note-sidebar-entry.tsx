@@ -15,7 +15,7 @@ import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
-  const { t } = useTranslation()
+  useTranslation()
   const { id } = useParams<EditorPagePathParams>()
   const history = useApplicationState((state) => state.history)
 
@@ -28,8 +28,8 @@ export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
   }, [id, history])
 
   const onPinClicked = useCallback(() => {
-    toggleHistoryEntryPinning(id).catch(showErrorNotification(t('landing.history.error.updateEntry.text')))
-  }, [id, t])
+    toggleHistoryEntryPinning(id).catch(showErrorNotification('landing.history.error.updateEntry.text'))
+  }, [id])
 
   return (
     <SidebarButton

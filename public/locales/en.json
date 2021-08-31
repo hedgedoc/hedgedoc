@@ -3,6 +3,10 @@
         "slogan": "The best platform to write and share markdown.",
         "title": "Collaborative markdown notes"
     },
+    "notificationTest": {
+      "title": "Test",
+      "content": "It works!"
+    },
     "renderer": {
         "highlightCode": {
             "copyCode": "Copy code to clipboard"

@@ -11,6 +11,7 @@ import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../common/show-if/show-if'
 import { IconName } from '../common/fork-awesome/types'
 import { dismissUiNotification } from '../../redux/ui-notifications/methods'
+import { Trans, useTranslation } from 'react-i18next'
 
 const STEPS_PER_SECOND = 10
 
@@ -19,8 +20,10 @@ export interface UiNotificationProps extends UiNotification {
 }
 
 export const UiNotificationToast: React.FC<UiNotificationProps> = ({
-  title,
-  content,
+  titleI18nKey,
+  contentI18nKey,
+  titleI18nOptions,
+  contentI18nOptions,
   date,
   icon,
   dismissed,
@@ -28,6 +31,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
   durationInSecond,
   buttons
 }) => {
+  const { t } = useTranslation()
   const [eta, setEta] = useState<number>()
   const interval = useRef<NodeJS.Timeout | undefined>(undefined)
 
@@ -89,15 +93,17 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
   )
 
   const contentDom = useMemo(() => {
-    return content.split('\n').map((value, lineNumber) => {
-      return (
-        <Fragment key={lineNumber}>
-          {value}
-          <br />
-        </Fragment>
-      )
-    })
-  }, [content])
+    return t(contentI18nKey, contentI18nOptions)
+      .split('\n')
+      .map((value, lineNumber) => {
+        return (
+          <Fragment key={lineNumber}>
+            {value}
+            <br />
+          </Fragment>
+        )
+      })
+  }, [contentI18nKey, contentI18nOptions, t])
 
   return (
     <Toast show={!dismissed && eta !== undefined} onClose={dismissThisNotification}>
@@ -106,7 +112,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
           <ShowIf condition={!!icon}>
             <ForkAwesomeIcon icon={icon as IconName} fixedWidth={true} className={'mr-1'} />
           </ShowIf>
-          {title}
+          <Trans i18nKey={titleI18nKey} tOptions={titleI18nOptions} />
         </strong>
         <small>{date.toRelative({ style: 'short' })}</small>
       </Toast.Header>

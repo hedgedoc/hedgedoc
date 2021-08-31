@@ -40,33 +40,23 @@ export interface HistoryEntriesProps {
 }
 
 export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entries }) => {
-  const { t } = useTranslation()
-
+  useTranslation()
   const [pageIndex, setPageIndex] = useState(0)
   const [lastPageIndex, setLastPageIndex] = useState(0)
 
-  const onPinClick = useCallback(
-    (noteId: string) => {
-      toggleHistoryEntryPinning(noteId).catch(showErrorNotification(t('landing.history.error.updateEntry.text')))
-    },
-    [t]
-  )
+  const onPinClick = useCallback((noteId: string) => {
+    toggleHistoryEntryPinning(noteId).catch(showErrorNotification('landing.history.error.updateEntry.text'))
+  }, [])
 
-  const onDeleteClick = useCallback(
-    (noteId: string) => {
-      deleteNote(noteId)
-        .then(() => removeHistoryEntry(noteId))
-        .catch(showErrorNotification(t('landing.history.error.deleteNote.text')))
-    },
-    [t]
-  )
+  const onDeleteClick = useCallback((noteId: string) => {
+    deleteNote(noteId)
+      .then(() => removeHistoryEntry(noteId))
+      .catch(showErrorNotification('landing.history.error.deleteNote.text'))
+  }, [])
 
-  const onRemoveClick = useCallback(
-    (noteId: string) => {
-      removeHistoryEntry(noteId).catch(showErrorNotification(t('landing.history.error.deleteEntry.text')))
-    },
-    [t]
-  )
+  const onRemoveClick = useCallback((noteId: string) => {
+    removeHistoryEntry(noteId).catch(showErrorNotification('landing.history.error.deleteEntry.text'))
+  }, [])
 
   if (entries.length === 0) {
     return (
