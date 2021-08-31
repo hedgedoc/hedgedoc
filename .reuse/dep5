@@ -15,7 +15,7 @@ Files: public/icons/*
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: LicenseRef-HedgeDoc-Icon-Usage-Guidelines
 
-Files: public/locales/*
+Files: locales/*
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC-BY-SA-4.0
 
