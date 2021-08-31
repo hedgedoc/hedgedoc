@@ -91,6 +91,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - Change editor font to "Fira Code"
 - Note tags can be set as yaml-array in frontmatter.
 - If only one external login provider is configured, the sign-in button will directly link to it.
+- Links in Gist-Frames work only if explicitly opened in new tabs.
 
 ---
 
