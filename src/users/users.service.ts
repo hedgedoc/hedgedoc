@@ -10,6 +10,7 @@ import { Repository } from 'typeorm';
 import { AlreadyInDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { UserInfoDto } from './user-info.dto';
+import { UserRelationEnum } from './user-relation.enum';
 import { User } from './user.entity';
 
 @Injectable()
@@ -73,17 +74,16 @@ export class UsersService {
    * @async
    * Get the user specified by the username
    * @param {string} userName the username by which the user is specified
-   * @param {boolean} [withTokens=false] if the returned user object should contain authTokens
+   * @param {UserRelationEnum[]} [withRelations=[]] if the returned user object should contain certain relations
    * @return {User} the specified user
    */
-  async getUserByUsername(userName: string, withTokens = false): Promise<User> {
-    const relations: string[] = [];
-    if (withTokens) {
-      relations.push('authTokens');
-    }
+  async getUserByUsername(
+    userName: string,
+    withRelations: UserRelationEnum[] = [],
+  ): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { userName: userName },
-      relations: relations,
+      relations: withRelations,
     });
     if (user === undefined) {
       throw new NotInDBError(`User with username '${userName}' not found`);

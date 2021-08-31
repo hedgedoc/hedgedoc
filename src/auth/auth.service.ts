@@ -20,6 +20,7 @@ import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import {
   bufferToBase64Url,
+  checkPassword,
   hashPassword,
 } from '../utils/password';
 import { TimestampMillis } from '../utils/timestamp';
