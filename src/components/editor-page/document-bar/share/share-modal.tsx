@@ -13,7 +13,7 @@ import { CopyableField } from '../../../common/copyable/copyable-field/copyable-
 import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { EditorPagePathParams } from '../../editor-page'
-import { NoteType } from '../../note-frontmatter/note-frontmatter'
+import { NoteType } from '../../../common/note-frontmatter/types'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 export interface ShareModalProps {

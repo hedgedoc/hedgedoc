@@ -32,13 +32,15 @@ import { YoutubeReplacer } from '../replace-components/youtube/youtube-replacer'
  * @param onTaskCheckedChange A callback that gets executed if a task checkbox gets clicked
  * @param onImageClick A callback that should be executed if an image gets clicked
  * @param baseUrl The base url for relative links
+ * @param frontmatterLinesToSkip The number of lines of the frontmatter part to add this as offset to line-numbers.
  *
  * @return the created list
  */
 export const useComponentReplacers = (
   onTaskCheckedChange?: TaskCheckedChangeHandler,
   onImageClick?: ImageClickHandler,
-  baseUrl?: string
+  baseUrl?: string,
+  frontmatterLinesToSkip?: number
 ): (() => ComponentReplacer[]) =>
   useCallback(
     () => [
@@ -59,8 +61,8 @@ export const useComponentReplacers = (
       new HighlightedCodeReplacer(),
       new ColoredBlockquoteReplacer(),
       new KatexReplacer(),
-      new TaskListReplacer(onTaskCheckedChange),
+      new TaskListReplacer(onTaskCheckedChange, frontmatterLinesToSkip),
       new LinkReplacer(baseUrl)
     ],
-    [onImageClick, onTaskCheckedChange, baseUrl]
+    [onImageClick, onTaskCheckedChange, baseUrl, frontmatterLinesToSkip]
   )

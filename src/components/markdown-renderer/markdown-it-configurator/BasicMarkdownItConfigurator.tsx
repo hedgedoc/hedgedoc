@@ -19,7 +19,6 @@ import { MarkdownItParserDebugger } from '../markdown-it-plugins/parser-debugger
 import { spoilerContainer } from '../markdown-it-plugins/spoiler-container'
 import { tasksLists } from '../markdown-it-plugins/tasks-lists'
 import { twitterEmojis } from '../markdown-it-plugins/twitter-emojis'
-import { RawNoteFrontmatter } from '../../editor-page/note-frontmatter/note-frontmatter'
 import { TocAst } from 'markdown-it-toc-done-right'
 import { LineMarkers, lineNumberMarker } from '../replace-components/linemarker/line-number-marker'
 import { plantumlWithError } from '../markdown-it-plugins/plantuml'
@@ -36,15 +35,13 @@ import { highlightedCode } from '../markdown-it-plugins/highlighted-code'
 import { quoteExtraColor } from '../markdown-it-plugins/quote-extra-color'
 import { quoteExtra } from '../markdown-it-plugins/quote-extra'
 import { documentTableOfContents } from '../markdown-it-plugins/document-table-of-contents'
-import { frontmatterExtract } from '../markdown-it-plugins/frontmatter'
 
 export interface ConfiguratorDetails {
-  useFrontmatter: boolean
   onParseError: (error: boolean) => void
-  onRawMetaChange: (rawMeta: RawNoteFrontmatter) => void
   onToc: (toc: TocAst) => void
   onLineMarkers?: (lineMarkers: LineMarkers[]) => void
   useAlternativeBreaks?: boolean
+  offsetLines?: number
 }
 
 export class BasicMarkdownItConfigurator<T extends ConfiguratorDetails> {
@@ -105,17 +102,8 @@ export class BasicMarkdownItConfigurator<T extends ConfiguratorDetails> {
       spoilerContainer
     )
 
-    if (this.options.useFrontmatter) {
-      this.configurations.push(
-        frontmatterExtract({
-          onParseError: this.options.onParseError,
-          onRawMetaChange: this.options.onRawMetaChange
-        })
-      )
-    }
-
     if (this.options.onLineMarkers) {
-      this.configurations.push(lineNumberMarker(this.options.onLineMarkers))
+      this.configurations.push(lineNumberMarker(this.options.onLineMarkers, this.options.offsetLines ?? 0))
     }
 
     this.postConfigurations.push(linkifyExtra, MarkdownItParserDebugger)

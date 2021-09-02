@@ -15,16 +15,18 @@ export type TaskCheckedChangeHandler = (lineInMarkdown: number, checked: boolean
  */
 export class TaskListReplacer extends ComponentReplacer {
   onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
+  private readonly frontmatterLinesOffset
 
-  constructor(onTaskCheckedChange?: TaskCheckedChangeHandler) {
+  constructor(onTaskCheckedChange?: TaskCheckedChangeHandler, frontmatterLinesOffset?: number) {
     super()
     this.onTaskCheckedChange = onTaskCheckedChange
+    this.frontmatterLinesOffset = frontmatterLinesOffset ?? 0
   }
 
   handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const lineNum = Number(event.currentTarget.dataset.line)
     if (this.onTaskCheckedChange) {
-      this.onTaskCheckedChange(lineNum, event.currentTarget.checked)
+      this.onTaskCheckedChange(lineNum + this.frontmatterLinesOffset, event.currentTarget.checked)
     }
   }
 

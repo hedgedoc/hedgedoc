@@ -25,7 +25,6 @@ export interface RenderIframeProps extends RendererProps {
 export const RenderIframe: React.FC<RenderIframeProps> = ({
   markdownContent,
   onTaskCheckedChange,
-  onFrontmatterChange,
   scrollState,
   onFirstHeadingChange,
   onScroll,
@@ -39,6 +38,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   const [lightboxDetails, setLightboxDetails] = useState<ImageDetails | undefined>(undefined)
 
   const frameReference = useRef<HTMLIFrameElement>(null)
+  const frontmatterInfo = useApplicationState((state) => state.noteDetails.frontmatterRendererInfo)
   const rendererOrigin = useApplicationState((state) => state.config.iframeCommunication.rendererOrigin)
   const renderPageUrl = `${rendererOrigin}render`
   const resetRendererReady = useCallback(() => setRendererStatus(false), [])
@@ -66,11 +66,6 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
     iframeCommunicator.onFirstHeadingChange(onFirstHeadingChange)
     return () => iframeCommunicator.onFirstHeadingChange(undefined)
   }, [iframeCommunicator, onFirstHeadingChange])
-
-  useEffect(() => {
-    iframeCommunicator.onFrontmatterChange(onFrontmatterChange)
-    return () => iframeCommunicator.onFrontmatterChange(undefined)
-  }, [iframeCommunicator, onFrontmatterChange])
 
   useEffect(() => {
     iframeCommunicator.onSetScrollState(onScroll)
@@ -127,6 +122,12 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
       iframeCommunicator.sendSetMarkdownContent(markdownContent)
     }
   }, [iframeCommunicator, markdownContent, rendererReady])
+
+  useEffect(() => {
+    if (rendererReady && frontmatterInfo !== undefined) {
+      iframeCommunicator.sendSetFrontmatterInfo(frontmatterInfo)
+    }
+  }, [iframeCommunicator, rendererReady, frontmatterInfo])
 
   return (
     <Fragment>

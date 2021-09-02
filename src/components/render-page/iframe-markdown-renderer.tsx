@@ -8,18 +8,22 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { ScrollState } from '../editor-page/synced-scroll/scroll-props'
 import { BaseConfiguration, RendererType } from './rendering-message'
 import { setDarkMode } from '../../redux/dark-mode/methods'
-import { NoteFrontmatter } from '../editor-page/note-frontmatter/note-frontmatter'
-import { setNoteFrontmatter } from '../../redux/note-details/methods'
 import { ImageClickHandler } from '../markdown-renderer/replace-components/image/image-replacer'
 import { useImageClickHandler } from './hooks/use-image-click-handler'
 import { MarkdownDocument } from './markdown-document'
 import { useIFrameRendererToEditorCommunicator } from '../editor-page/render-context/iframe-renderer-to-editor-communicator-context-provider'
 import { countWords } from './word-counter'
+import { RendererFrontmatterInfo } from '../common/note-frontmatter/types'
 
 export const IframeMarkdownRenderer: React.FC = () => {
   const [markdownContent, setMarkdownContent] = useState('')
   const [scrollState, setScrollState] = useState<ScrollState>({ firstLineInView: 1, scrolledPercentage: 0 })
   const [baseConfiguration, setBaseConfiguration] = useState<BaseConfiguration | undefined>(undefined)
+  const [frontmatterInfo, setFrontmatterInfo] = useState<RendererFrontmatterInfo>({
+    offsetLines: 0,
+    frontmatterInvalid: false,
+    deprecatedSyntax: false
+  })
 
   const iframeCommunicator = useIFrameRendererToEditorCommunicator()
 
@@ -37,6 +41,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
   useEffect(() => iframeCommunicator.onSetMarkdownContent(setMarkdownContent), [iframeCommunicator])
   useEffect(() => iframeCommunicator.onSetDarkMode(setDarkMode), [iframeCommunicator])
   useEffect(() => iframeCommunicator.onSetScrollState(setScrollState), [iframeCommunicator, scrollState])
+  useEffect(() => iframeCommunicator.onSetFrontmatterInfo(setFrontmatterInfo), [iframeCommunicator, setFrontmatterInfo])
   useEffect(
     () => iframeCommunicator.onGetWordCount(countWordsInRenderedDocument),
     [iframeCommunicator, countWordsInRenderedDocument]
@@ -59,14 +64,6 @@ export const IframeMarkdownRenderer: React.FC = () => {
   const onMakeScrollSource = useCallback(() => {
     iframeCommunicator.sendSetScrollSourceToRenderer()
   }, [iframeCommunicator])
-
-  const onFrontmatterChange = useCallback(
-    (frontmatter?: NoteFrontmatter) => {
-      setNoteFrontmatter(frontmatter)
-      iframeCommunicator.sendSetFrontmatter(frontmatter)
-    },
-    [iframeCommunicator]
-  )
 
   const onScroll = useCallback(
     (scrollState: ScrollState) => {
@@ -97,11 +94,11 @@ export const IframeMarkdownRenderer: React.FC = () => {
           onTaskCheckedChange={onTaskCheckedChange}
           onFirstHeadingChange={onFirstHeadingChange}
           onMakeScrollSource={onMakeScrollSource}
-          onFrontmatterChange={onFrontmatterChange}
           scrollState={scrollState}
           onScroll={onScroll}
           baseUrl={baseConfiguration.baseUrl}
           onImageClick={onImageClick}
+          frontmatterInfo={frontmatterInfo}
         />
       )
     case RendererType.INTRO:

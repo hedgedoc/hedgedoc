@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { NoteFrontmatter } from '../editor-page/note-frontmatter/note-frontmatter'
 import { ScrollState } from '../editor-page/synced-scroll/scroll-props'
 import { IframeCommunicator } from './iframe-communicator'
 import {
@@ -14,6 +13,7 @@ import {
   RendererToEditorIframeMessage,
   RenderIframeMessageType
 } from './rendering-message'
+import { RendererFrontmatterInfo } from '../common/note-frontmatter/types'
 
 export class IframeRendererToEditorCommunicator extends IframeCommunicator<
   RendererToEditorIframeMessage,
@@ -24,6 +24,7 @@ export class IframeRendererToEditorCommunicator extends IframeCommunicator<
   private onSetScrollStateHandler?: (scrollState: ScrollState) => void
   private onSetBaseConfigurationHandler?: (baseConfiguration: BaseConfiguration) => void
   private onGetWordCountHandler?: () => void
+  private onSetFrontmatterInfoHandler?: (frontmatterInfo: RendererFrontmatterInfo) => void
 
   public onSetBaseConfiguration(handler?: (baseConfiguration: BaseConfiguration) => void): void {
     this.onSetBaseConfigurationHandler = handler
@@ -43,6 +44,10 @@ export class IframeRendererToEditorCommunicator extends IframeCommunicator<
 
   public onGetWordCount(handler?: () => void): void {
     this.onGetWordCountHandler = handler
+  }
+
+  public onSetFrontmatterInfo(handler?: (frontmatterInfo: RendererFrontmatterInfo) => void): void {
+    this.onSetFrontmatterInfoHandler = handler
   }
 
   public sendRendererReady(): void {
@@ -70,13 +75,6 @@ export class IframeRendererToEditorCommunicator extends IframeCommunicator<
   public sendSetScrollSourceToRenderer(): void {
     this.sendMessageToOtherSide({
       type: RenderIframeMessageType.SET_SCROLL_SOURCE_TO_RENDERER
-    })
-  }
-
-  public sendSetFrontmatter(frontmatter: NoteFrontmatter | undefined): void {
-    this.sendMessageToOtherSide({
-      type: RenderIframeMessageType.ON_SET_FRONTMATTER,
-      frontmatter: frontmatter
     })
   }
 
@@ -125,6 +123,9 @@ export class IframeRendererToEditorCommunicator extends IframeCommunicator<
         return false
       case RenderIframeMessageType.GET_WORD_COUNT:
         this.onGetWordCountHandler?.()
+        return false
+      case RenderIframeMessageType.SET_FRONTMATTER_INFO:
+        this.onSetFrontmatterInfoHandler?.(renderMessage.frontmatterInfo)
         return false
     }
   }

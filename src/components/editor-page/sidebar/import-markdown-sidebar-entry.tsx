@@ -7,7 +7,7 @@
 import React, { Fragment, useCallback, useRef } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { useNoteMarkdownContent } from '../../../hooks/common/use-note-markdown-content'
-import { setNoteMarkdownContent } from '../../../redux/note-details/methods'
+import { setNoteContent } from '../../../redux/note-details/methods'
 import { SidebarButton } from './sidebar-button'
 import { UploadInput } from './upload-input'
 
@@ -21,7 +21,7 @@ export const ImportMarkdownSidebarEntry: React.FC = () => {
         const fileReader = new FileReader()
         fileReader.addEventListener('load', () => {
           const newContent = fileReader.result as string
-          setNoteMarkdownContent(markdownContent.length === 0 ? newContent : `${markdownContent}\n${newContent}`)
+          setNoteContent(markdownContent.length === 0 ? newContent : `${markdownContent}\n${newContent}`)
         })
         fileReader.addEventListener('loadend', () => {
           resolve()

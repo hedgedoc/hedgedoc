@@ -6,31 +6,40 @@
 
 import { store } from '..'
 import { NoteDto } from '../../api/notes/types'
-import { NoteFrontmatter } from '../../components/editor-page/note-frontmatter/note-frontmatter'
-import { initialState } from './reducers'
 import {
   NoteDetailsActionType,
-  SetCheckboxInMarkdownContentAction,
-  SetNoteDetailsAction,
   SetNoteDetailsFromServerAction,
-  SetNoteFrontmatterFromRenderingAction,
-  UpdateNoteTitleByFirstHeadingAction
+  SetNoteDocumentContentAction,
+  UpdateNoteTitleByFirstHeadingAction,
+  UpdateTaskListCheckboxAction
 } from './types'
 
-export const setNoteMarkdownContent = (content: string): void => {
+/**
+ * Sets the content of the current note, extracts and parses the frontmatter and extracts the markdown content part.
+ * @param content The note content as it is written inside the editor pane.
+ */
+export const setNoteContent = (content: string): void => {
   store.dispatch({
     type: NoteDetailsActionType.SET_DOCUMENT_CONTENT,
-    content
-  } as SetNoteDetailsAction)
+    content: content
+  } as SetNoteDocumentContentAction)
 }
 
+/**
+ * Sets the note metadata for the current note from an API response DTO to the redux.
+ * @param apiResponse The NoteDTO received from the API to store into redux.
+ */
 export const setNoteDataFromServer = (apiResponse: NoteDto): void => {
   store.dispatch({
     type: NoteDetailsActionType.SET_NOTE_DATA_FROM_SERVER,
-    note: apiResponse
+    dto: apiResponse
   } as SetNoteDetailsFromServerAction)
 }
 
+/**
+ * Updates the note title in the redux by the first heading found in the markdown content.
+ * @param firstHeading The content of the first heading found in the markdown content.
+ */
 export const updateNoteTitleByFirstHeading = (firstHeading?: string): void => {
   store.dispatch({
     type: NoteDetailsActionType.UPDATE_NOTE_TITLE_BY_FIRST_HEADING,
@@ -38,20 +47,15 @@ export const updateNoteTitleByFirstHeading = (firstHeading?: string): void => {
   } as UpdateNoteTitleByFirstHeadingAction)
 }
 
-export const setNoteFrontmatter = (frontmatter: NoteFrontmatter | undefined): void => {
-  if (!frontmatter) {
-    frontmatter = initialState.frontmatter
-  }
+/**
+ * Changes a checkbox state in the note document content. Triggered when a checkbox in the rendering is clicked.
+ * @param lineInDocumentContent The line in the document content to change.
+ * @param checked true if the checkbox is checked, false otherwise.
+ */
+export const setCheckboxInMarkdownContent = (lineInDocumentContent: number, checked: boolean): void => {
   store.dispatch({
-    type: NoteDetailsActionType.SET_NOTE_FRONTMATTER,
-    frontmatter: frontmatter
-  } as SetNoteFrontmatterFromRenderingAction)
-}
-
-export const setCheckboxInMarkdownContent = (lineInMarkdown: number, checked: boolean): void => {
-  store.dispatch({
-    type: NoteDetailsActionType.SET_CHECKBOX_IN_MARKDOWN_CONTENT,
-    checked: checked,
-    lineInMarkdown: lineInMarkdown
-  } as SetCheckboxInMarkdownContentAction)
+    type: NoteDetailsActionType.UPDATE_TASK_LIST_CHECKBOX,
+    checkboxChecked: checked,
+    changedLine: lineInDocumentContent
+  } as UpdateTaskListCheckboxAction)
 }

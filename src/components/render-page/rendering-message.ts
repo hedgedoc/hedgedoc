@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { NoteFrontmatter } from '../editor-page/note-frontmatter/note-frontmatter'
 import { ScrollState } from '../editor-page/synced-scroll/scroll-props'
+import { RendererFrontmatterInfo } from '../common/note-frontmatter/types'
 
 export enum RenderIframeMessageType {
   SET_MARKDOWN_CONTENT = 'SET_MARKDOWN_CONTENT',
@@ -14,12 +14,12 @@ export enum RenderIframeMessageType {
   ON_FIRST_HEADING_CHANGE = 'ON_FIRST_HEADING_CHANGE',
   SET_SCROLL_SOURCE_TO_RENDERER = 'SET_SCROLL_SOURCE_TO_RENDERER',
   SET_SCROLL_STATE = 'SET_SCROLL_STATE',
-  ON_SET_FRONTMATTER = 'ON_SET_FRONTMATTER',
   IMAGE_CLICKED = 'IMAGE_CLICKED',
   ON_HEIGHT_CHANGE = 'ON_HEIGHT_CHANGE',
   SET_BASE_CONFIGURATION = 'SET_BASE_CONFIGURATION',
   GET_WORD_COUNT = 'GET_WORD_COUNT',
-  ON_WORD_COUNT_CALCULATED = 'ON_WORD_COUNT_CALCULATED'
+  ON_WORD_COUNT_CALCULATED = 'ON_WORD_COUNT_CALCULATED',
+  SET_FRONTMATTER_INFO = 'SET_FRONTMATTER_INFO'
 }
 
 export interface RendererToEditorSimpleMessage {
@@ -72,9 +72,9 @@ export interface OnFirstHeadingChangeMessage {
   firstHeading: string | undefined
 }
 
-export interface OnFrontmatterChangeMessage {
-  type: RenderIframeMessageType.ON_SET_FRONTMATTER
-  frontmatter: NoteFrontmatter | undefined
+export interface SetFrontmatterInfoMessage {
+  type: RenderIframeMessageType.SET_FRONTMATTER_INFO
+  frontmatterInfo: RendererFrontmatterInfo
 }
 
 export interface OnHeightChangeMessage {
@@ -93,12 +93,12 @@ export type EditorToRendererIframeMessage =
   | SetScrollStateMessage
   | SetBaseUrlMessage
   | GetWordCountMessage
+  | SetFrontmatterInfoMessage
 
 export type RendererToEditorIframeMessage =
   | RendererToEditorSimpleMessage
   | OnFirstHeadingChangeMessage
   | OnTaskCheckboxChangeMessage
-  | OnFrontmatterChangeMessage
   | SetScrollStateMessage
   | ImageClickedMessage
   | OnHeightChangeMessage

@@ -10,14 +10,13 @@ import { Trans, useTranslation } from 'react-i18next'
 import links from '../../../links.json'
 import { TranslatedExternalLink } from '../../common/links/translated-external-link'
 import { ShowIf } from '../../common/show-if/show-if'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { CommonModalProps } from '../../common/modals/common-modal'
 
-export const YamlArrayDeprecationAlert: React.FC = () => {
+export const YamlArrayDeprecationAlert: React.FC<Partial<CommonModalProps>> = ({ show }) => {
   useTranslation()
-  const yamlDeprecatedTags = useApplicationState((state) => state.noteDetails.frontmatter.deprecatedTagsSyntax)
 
   return (
-    <ShowIf condition={yamlDeprecatedTags}>
+    <ShowIf condition={!!show}>
       <Alert data-cy={'yamlArrayDeprecationAlert'} className={'text-wrap'} variant='warning' dir='auto'>
         <span className={'text-wrap'}>
           <span className={'text-wrap'}>

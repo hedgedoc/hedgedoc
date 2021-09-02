@@ -4,7 +4,23 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-// import { RevealOptions } from 'reveal.js'
+export type FrontmatterExtractionResult = PresentFrontmatterExtractionResult | NonPresentFrontmatterExtractionResult
+
+export interface RendererFrontmatterInfo {
+  offsetLines: number
+  frontmatterInvalid: boolean
+  deprecatedSyntax: boolean
+}
+
+export interface PresentFrontmatterExtractionResult {
+  frontmatterPresent: true
+  rawFrontmatterText: string
+  frontmatterLines: number
+}
+
+interface NonPresentFrontmatterExtractionResult {
+  frontmatterPresent: false
+}
 
 export interface RawNoteFrontmatter {
   title: string | undefined
@@ -234,53 +250,4 @@ export enum NoteType {
 export enum NoteTextDirection {
   LTR = 'ltr',
   RTL = 'rtl'
-}
-
-export class NoteFrontmatter {
-  title: string
-  description: string
-  tags: string[]
-  deprecatedTagsSyntax: boolean
-  robots: string
-  lang: typeof ISO6391[number]
-  dir: NoteTextDirection
-  breaks: boolean
-  GA: string
-  disqus: string
-  type: NoteType
-  // slideOptions: RevealOptions
-  opengraph: Map<string, string>
-
-  constructor(rawData: RawNoteFrontmatter) {
-    this.title = rawData.title ?? ''
-    this.description = rawData.description ?? ''
-    this.robots = rawData.robots ?? ''
-    this.breaks = rawData.breaks ?? true
-    this.GA = rawData.GA ?? ''
-    this.disqus = rawData.disqus ?? ''
-    this.lang = (rawData.lang ? ISO6391.find((lang) => lang === rawData.lang) : undefined) ?? 'en'
-    this.type =
-      (rawData.type ? Object.values(NoteType).find((type) => type === rawData.type) : undefined) ?? NoteType.DOCUMENT
-    this.dir =
-      (rawData.dir ? Object.values(NoteTextDirection).find((dir) => dir === rawData.dir) : undefined) ??
-      NoteTextDirection.LTR
-
-    /* this.slideOptions = (rawData?.slideOptions as RevealOptions) ?? {
-     transition: 'none',
-     theme: 'white'
-     } */
-    if (typeof rawData?.tags === 'string') {
-      this.tags = rawData?.tags?.split(',').map((entry) => entry.trim()) ?? []
-      this.deprecatedTagsSyntax = true
-    } else if (typeof rawData?.tags === 'object') {
-      this.tags = rawData?.tags?.filter((tag) => tag !== null) ?? []
-      this.deprecatedTagsSyntax = false
-    } else {
-      this.tags = []
-      this.deprecatedTagsSyntax = false
-    }
-    this.opengraph = rawData?.opengraph
-      ? new Map<string, string>(Object.entries(rawData.opengraph))
-      : new Map<string, string>()
-  }
 }

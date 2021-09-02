@@ -10,7 +10,7 @@ import { useParams } from 'react-router'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { useDocumentTitleWithNoteTitle } from '../../hooks/common/use-document-title-with-note-title'
 import { useNoteMarkdownContent } from '../../hooks/common/use-note-markdown-content'
-import { setNoteFrontmatter, updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
+import { updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
 import { ShowIf } from '../common/show-if/show-if'
 import { AppBar, AppBarMode } from '../editor-page/app-bar/app-bar'
@@ -32,7 +32,6 @@ export const DocumentReadOnlyPage: React.FC = () => {
   useDocumentTitleWithNoteTitle()
 
   const onFirstHeadingChange = useCallback(updateNoteTitleByFirstHeading, [])
-  const onFrontmatterChange = useCallback(setNoteFrontmatter, [])
   const [error, loading] = useLoadNoteFromServer()
   const markdownContent = useNoteMarkdownContent()
   const noteDetails = useApplicationState((state) => state.noteDetails)
@@ -60,7 +59,6 @@ export const DocumentReadOnlyPage: React.FC = () => {
             frameClasses={'flex-fill h-100 w-100'}
             markdownContent={markdownContent}
             onFirstHeadingChange={onFirstHeadingChange}
-            onFrontmatterChange={onFrontmatterChange}
             rendererType={RendererType.DOCUMENT}
           />
         </ShowIf>
