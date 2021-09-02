@@ -90,7 +90,7 @@ Instead of this uncommon syntax, HFM2 uses just plain links to external content 
 ## HTML
 Besides the basic HTML typography elements (`<p>`, `<a>`, `<b>`, `<ins>`, `<del>`) the following more special HTML elements are supported by some specification.
 
-|    Feature    | HedgeDocMark 1 | HedgeDocMark 2 | CommonMark | GFM |
+|    Feature    | HFM 1 | HFM 2 | CommonMark | GFM |
 |:-------------:|:--------------:|:--------------:|:----------:|:---:|
 |   `<title>`   |                |                | :ballot_box_with_check:          |     |
 |  `<textarea>` |                | :ballot_box_with_check:              | :ballot_box_with_check:          |     |
