@@ -59,7 +59,7 @@ export class User {
   authTokens: AuthToken[];
 
   @OneToMany((_) => Identity, (identity) => identity.user)
-  identities: Identity[];
+  identities: Promise<Identity[]>;
 
   @ManyToMany((_) => Group, (group) => group.members)
   groups: Group[];
