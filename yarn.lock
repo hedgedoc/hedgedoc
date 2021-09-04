@@ -1406,10 +1406,10 @@
     react "^17.0.2"
     react-dom "^17.0.2"
 
-"@hedgedoc/markdown-it-task-lists@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@hedgedoc/markdown-it-task-lists/-/markdown-it-task-lists-1.0.0.tgz#6514c411fb582d3de58ded393a3c4f69ba762028"
-  integrity sha512-MylwOQHrSak6hLa7WsHWN4kEUwCW5Wkfj6tKlbpo0uX4e1DkslA/XijX3jy3lwga1T60Htljh8WXu70Wz4je4A==
+"@hedgedoc/markdown-it-task-lists@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@hedgedoc/markdown-it-task-lists/-/markdown-it-task-lists-1.0.2.tgz#3e140fad624fba0d066ebab0b6d25da9e210b98b"
+  integrity sha512-E0sCN3BkWUY9SGD+h5qQsjmsnQBrBOyfIdlTi5Gs6K3eCSanCCm9caJfnRAJCCWyfqBTP30p4LfR+dGosyYajw==
 
 "@hpcc-js/wasm@1.4.1":
   version "1.4.1"
