@@ -11,12 +11,10 @@ import {
   Get,
   Header,
   HttpCode,
-  InternalServerErrorException,
   NotFoundException,
   Param,
   Post,
   Put,
-  Req,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
@@ -30,7 +28,6 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { Request } from 'express';
 
 import { TokenAuthGuard } from '../../../auth/token-auth.guard';
 import {
@@ -56,6 +53,7 @@ import { PermissionsService } from '../../../permissions/permissions.service';
 import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
+import { User } from '../../../users/user.entity';
 import {
   forbiddenDescription,
   successfullyDeletedDescription,
@@ -63,6 +61,7 @@ import {
 } from '../../utils/descriptions';
 import { FullApi } from '../../utils/fullapi-decorator';
 import { MarkdownBody } from '../../utils/markdownbody-decorator';
+import { RequestUser } from '../../utils/request-user.decorator';
 
 @ApiTags('notes')
 @ApiSecurity('token')
@@ -85,20 +84,16 @@ export class NotesController {
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   @ApiForbiddenResponse({ description: forbiddenDescription })
   async createNote(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
-    if (!req.user) {
-      // We should never reach this, as the TokenAuthGuard handles missing user info
-      throw new InternalServerErrorException('Request did not specify user');
-    }
     // ToDo: provide user for createNoteDto
-    if (!this.permissionsService.mayCreate(req.user)) {
+    if (!this.permissionsService.mayCreate(user)) {
       throw new UnauthorizedException('Creating note denied!');
     }
     this.logger.debug('Got raw markdown:\n' + text);
     return await this.noteService.toNoteDto(
-      await this.noteService.createNote(text, undefined, req.user),
+      await this.noteService.createNote(text, undefined, user),
     );
   }
 
@@ -110,13 +105,9 @@ export class NotesController {
   })
   @FullApi
   async getNote(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<NoteDto> {
-    if (!req.user) {
-      // We should never reach this, as the TokenAuthGuard handles missing user info
-      throw new InternalServerErrorException('Request did not specify user');
-    }
     let note: Note;
     try {
       note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
@@ -129,10 +120,10 @@ export class NotesController {
       }
       throw e;
     }
-    if (!this.permissionsService.mayRead(req.user, note)) {
+    if (!this.permissionsService.mayRead(user, note)) {
       throw new UnauthorizedException('Reading note denied!');
     }
-    await this.historyService.createOrUpdateHistoryEntry(note, req.user);
+    await this.historyService.createOrUpdateHistoryEntry(note, user);
     return await this.noteService.toNoteDto(note);
   }
 
@@ -146,21 +137,17 @@ export class NotesController {
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   @ApiForbiddenResponse({ description: forbiddenDescription })
   async createNamedNote(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @Param('noteAlias') noteAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
-    if (!req.user) {
-      // We should never reach this, as the TokenAuthGuard handles missing user info
-      throw new InternalServerErrorException('Request did not specify user');
-    }
-    if (!this.permissionsService.mayCreate(req.user)) {
+    if (!this.permissionsService.mayCreate(user)) {
       throw new UnauthorizedException('Creating note denied!');
     }
     this.logger.debug('Got raw markdown:\n' + text, 'createNamedNote');
     try {
       return await this.noteService.toNoteDto(
-        await this.noteService.createNote(text, noteAlias, req.user),
+        await this.noteService.createNote(text, noteAlias, user),
       );
     } catch (e) {
       if (e instanceof AlreadyInDBError) {
@@ -179,17 +166,13 @@ export class NotesController {
   @ApiNoContentResponse({ description: successfullyDeletedDescription })
   @FullApi
   async deleteNote(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @Body() noteMediaDeletionDto: NoteMediaDeletionDto,
   ): Promise<void> {
-    if (!req.user) {
-      // We should never reach this, as the TokenAuthGuard handles missing user info
-      throw new InternalServerErrorException('Request did not specify user');
-    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.isOwner(req.user, note)) {
+      if (!this.permissionsService.isOwner(user, note)) {
         throw new UnauthorizedException('Deleting note denied!');
       }
       const mediaUploads = await this.mediaService.listUploadsByNote(note);
@@ -223,17 +206,13 @@ export class NotesController {
   })
   @FullApi
   async updateNote(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
-    if (!req.user) {
-      // We should never reach this, as the TokenAuthGuard handles missing user info
-      throw new InternalServerErrorException('Request did not specify user');
-    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.mayWrite(req.user, note)) {
+      if (!this.permissionsService.mayWrite(user, note)) {
         throw new UnauthorizedException('Updating note denied!');
       }
       this.logger.debug('Got raw markdown:\n' + text, 'updateNote');
@@ -260,16 +239,12 @@ export class NotesController {
   @FullApi
   @Header('content-type', 'text/markdown')
   async getNoteContent(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<string> {
-    if (!req.user) {
-      // We should never reach this, as the TokenAuthGuard handles missing user info
-      throw new InternalServerErrorException('Request did not specify user');
-    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.mayRead(req.user, note)) {
+      if (!this.permissionsService.mayRead(user, note)) {
         throw new UnauthorizedException('Reading note denied!');
       }
       return await this.noteService.getNoteContent(note);
@@ -292,16 +267,12 @@ export class NotesController {
   })
   @FullApi
   async getNoteMetadata(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<NoteMetadataDto> {
-    if (!req.user) {
-      // We should never reach this, as the TokenAuthGuard handles missing user info
-      throw new InternalServerErrorException('Request did not specify user');
-    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.mayRead(req.user, note)) {
+      if (!this.permissionsService.mayRead(user, note)) {
         throw new UnauthorizedException('Reading note denied!');
       }
       return await this.noteService.toNoteMetadataDto(note);
@@ -327,17 +298,13 @@ export class NotesController {
   })
   @FullApi
   async updateNotePermissions(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @Body() updateDto: NotePermissionsUpdateDto,
   ): Promise<NotePermissionsDto> {
-    if (!req.user) {
-      // We should never reach this, as the TokenAuthGuard handles missing user info
-      throw new InternalServerErrorException('Request did not specify user');
-    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.isOwner(req.user, note)) {
+      if (!this.permissionsService.isOwner(user, note)) {
         throw new UnauthorizedException('Updating note denied!');
       }
       return this.noteService.toNotePermissionsDto(
@@ -363,16 +330,12 @@ export class NotesController {
   })
   @FullApi
   async getNoteRevisions(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<RevisionMetadataDto[]> {
-    if (!req.user) {
-      // We should never reach this, as the TokenAuthGuard handles missing user info
-      throw new InternalServerErrorException('Request did not specify user');
-    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.mayRead(req.user, note)) {
+      if (!this.permissionsService.mayRead(user, note)) {
         throw new UnauthorizedException('Reading note denied!');
       }
       const revisions = await this.revisionsService.getAllRevisions(note);
@@ -400,17 +363,13 @@ export class NotesController {
   })
   @FullApi
   async getNoteRevision(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
     @Param('revisionId') revisionId: number,
   ): Promise<RevisionDto> {
-    if (!req.user) {
-      // We should never reach this, as the TokenAuthGuard handles missing user info
-      throw new InternalServerErrorException('Request did not specify user');
-    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.mayRead(req.user, note)) {
+      if (!this.permissionsService.mayRead(user, note)) {
         throw new UnauthorizedException('Reading note denied!');
       }
       return this.revisionsService.toRevisionDto(
@@ -436,16 +395,12 @@ export class NotesController {
   })
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getNotesMedia(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @Param('noteIdOrAlias') noteIdOrAlias: string,
   ): Promise<MediaUploadDto[]> {
-    if (!req.user) {
-      // We should never reach this, as the TokenAuthGuard handles missing user info
-      throw new InternalServerErrorException('Request did not specify user');
-    }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.mayRead(req.user, note)) {
+      if (!this.permissionsService.mayRead(user, note)) {
         throw new UnauthorizedException('Reading note denied!');
       }
       const media = await this.mediaService.listUploadsByNote(note);

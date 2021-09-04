@@ -13,7 +13,6 @@ import {
   NotFoundException,
   Param,
   Post,
-  Req,
   UnauthorizedException,
   UploadedFile,
   UseGuards,
@@ -31,7 +30,6 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { Request } from 'express';
 
 import { TokenAuthGuard } from '../../../auth/token-auth.guard';
 import {
@@ -44,12 +42,14 @@ import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadUrlDto } from '../../../media/media-upload-url.dto';
 import { MediaService } from '../../../media/media.service';
 import { MulterFile } from '../../../media/multer-file.interface';
+import { User } from '../../../users/user.entity';
 import {
   forbiddenDescription,
   successfullyDeletedDescription,
   unauthorizedDescription,
 } from '../../utils/descriptions';
 import { FullApi } from '../../utils/fullapi-decorator';
+import { RequestUser } from '../../utils/request-user.decorator';
 
 @ApiTags('media')
 @ApiSecurity('token')
@@ -89,15 +89,11 @@ export class MediaController {
   @UseInterceptors(FileInterceptor('file'))
   @HttpCode(201)
   async uploadMedia(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @UploadedFile() file: MulterFile,
     @Headers('HedgeDoc-Note') noteId: string,
   ): Promise<MediaUploadUrlDto> {
-    if (!req.user) {
-      // We should never reach this, as the TokenAuthGuard handles missing user info
-      throw new InternalServerErrorException('Request did not specify user');
-    }
-    const username = req.user.userName;
+    const username = user.userName;
     this.logger.debug(
       `Recieved filename '${file.originalname}' for note '${noteId}' from user '${username}'`,
       'uploadMedia',
@@ -128,14 +124,10 @@ export class MediaController {
   @ApiNoContentResponse({ description: successfullyDeletedDescription })
   @FullApi
   async deleteMedia(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @Param('filename') filename: string,
   ): Promise<void> {
-    if (!req.user) {
-      // We should never reach this, as the TokenAuthGuard handles missing user info
-      throw new InternalServerErrorException('Request did not specify user');
-    }
-    const username = req.user.userName;
+    const username = user.userName;
     try {
       this.logger.debug(
         `Deleting '${filename}' for user '${username}'`,
