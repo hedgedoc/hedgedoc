@@ -8,9 +8,9 @@ import { registerAs } from '@nestjs/config';
 export default registerAs('authConfig', () => ({
   session: {
     secret: 'my_secret',
-    lifeTime: 1209600000,
+    lifetime: 1209600000,
   },
-  email: {
+  local: {
     enableLogin: true,
     enableRegister: true,
   },

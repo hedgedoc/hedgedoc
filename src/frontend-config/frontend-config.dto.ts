@@ -71,10 +71,10 @@ export class AuthProviders {
   oauth2: boolean;
 
   /**
-   * Is internal auth available?
+   * Is local auth available?
    */
   @IsBoolean()
-  internal: boolean;
+  local: boolean;
 }
 
 export class BrandingDto {
