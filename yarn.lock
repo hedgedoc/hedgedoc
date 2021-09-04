@@ -9135,10 +9135,10 @@ jsprim@^1.2.2:
     array-includes "^3.1.2"
     object.assign "^4.1.2"
 
-katex@0.13.16, katex@^0.12.0:
-  version "0.13.16"
-  resolved "https://registry.yarnpkg.com/katex/-/katex-0.13.16.tgz#551b901a949445fcc19eacacd8369f9d6d8ca49a"
-  integrity sha512-Q+odt4vx4Og/B5CbuMqE1uiTLnS5EWUFic40xsx8drbqYYiuPPHct7PNj84dFiJ5AFxSZhNPkeBULAtxzEndNg==
+katex@0.13.18, katex@^0.12.0:
+  version "0.13.18"
+  resolved "https://registry.yarnpkg.com/katex/-/katex-0.13.18.tgz#ba89e8e4b70cc2325e25e019a62b9fe71e5c2931"
+  integrity sha512-a3dC4NSVSDU3O1WZbTnOiA8rVNJ2lSiomOl0kmckCIGObccIHXof7gAseIY0o1gjEspe+34ZeSEX2D1ChFKIvA==
   dependencies:
     commander "^6.0.0"
 
