@@ -33,7 +33,7 @@ import {
 } from '@nestjs/swagger';
 import { Request } from 'express';
 
-import { TokenAuthGuard } from '../../../auth/token-auth.guard';
+import { TokenAuthGuard } from '../../../auth/token.strategy';
 import {
   ClientError,
   MediaBackendError,
