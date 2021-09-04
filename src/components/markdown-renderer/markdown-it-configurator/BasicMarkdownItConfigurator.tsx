@@ -8,7 +8,7 @@ import MarkdownIt from 'markdown-it'
 import abbreviation from 'markdown-it-abbr'
 import definitionList from 'markdown-it-deflist'
 import footnote from 'markdown-it-footnote'
-import imsize from 'markdown-it-imsize'
+import { imageSize } from '@hedgedoc/markdown-it-image-size'
 import inserted from 'markdown-it-ins'
 import marked from 'markdown-it-mark'
 import subscript from 'markdown-it-sub'
@@ -96,7 +96,7 @@ export class BasicMarkdownItConfigurator<T extends ConfiguratorDetails> {
       inserted,
       marked,
       footnote,
-      imsize,
+      imageSize,
       tasksLists,
       alertContainer,
       spoilerContainer

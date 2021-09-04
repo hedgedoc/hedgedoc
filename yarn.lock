@@ -1406,6 +1406,11 @@
     react "^17.0.2"
     react-dom "^17.0.2"
 
+"@hedgedoc/markdown-it-image-size@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@hedgedoc/markdown-it-image-size/-/markdown-it-image-size-1.0.1.tgz#c785aa544b9f392cac742ec660c8dfc7459c2585"
+  integrity sha512-kqqXIb0NfUp4cl0kN7UlOL/zwe+OgESfZ69luPSRTMObdO54C3dCumKoIodbQau8HE8fkN44uQSFhMt6mSdsLg==
+
 "@hedgedoc/markdown-it-task-lists@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@hedgedoc/markdown-it-task-lists/-/markdown-it-task-lists-1.0.2.tgz#3e140fad624fba0d066ebab0b6d25da9e210b98b"
@@ -9528,11 +9533,6 @@ markdown-it-footnote@3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/markdown-it-footnote/-/markdown-it-footnote-3.0.3.tgz#e0e4c0d67390a4c5f0c75f73be605c7c190ca4d8"
   integrity sha512-YZMSuCGVZAjzKMn+xqIco9d1cLGxbELHZ9do/TSYVzraooV8ypsppKNmUJ0fVH5ljkCInQAtFpm8Rb3eXSrt5w==
-
-markdown-it-imsize@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/markdown-it-imsize/-/markdown-it-imsize-2.0.1.tgz#cca0427905d05338a247cb9ca9d968c5cddd5170"
-  integrity sha1-zKBCeQXQUziiR8ucqdloxc3dUXA=
 
 markdown-it-ins@3.0.1:
   version "3.0.1"
