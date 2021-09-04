@@ -9,11 +9,16 @@ import * as Joi from 'joi';
 import { GitlabScope, GitlabVersion } from './gitlab.enum';
 import {
   buildErrorMessage,
+  parseOptionalInt,
   replaceAuthErrorsWithEnvironmentVariables,
   toArrayConfig,
 } from './utils';
 
 export interface AuthConfig {
+  session: {
+    secret: string;
+    lifeTime: number;
+  };
   email: {
     enableLogin: boolean;
     enableRegister: boolean;
@@ -101,6 +106,13 @@ export interface AuthConfig {
 }
 
 const authSchema = Joi.object({
+  session: {
+    secret: Joi.string().label('HD_SESSION_SECRET'),
+    lifeTime: Joi.number()
+      .default(100000)
+      .optional()
+      .label('HD_SESSION_LIFE_TIME'),
+  },
   email: {
     enableLogin: Joi.boolean()
       .default(false)
@@ -332,6 +344,10 @@ export default registerAs('authConfig', () => {
 
   const authConfig = authSchema.validate(
     {
+      session: {
+        secret: process.env.HD_SESSION_SECRET,
+        lifeTime: parseOptionalInt(process.env.HD_SESSION_LIFE_TIME),
+      },
       email: {
         enableLogin: process.env.HD_AUTH_EMAIL_ENABLE_LOGIN,
         enableRegister: process.env.HD_AUTH_EMAIL_ENABLE_REGISTER,

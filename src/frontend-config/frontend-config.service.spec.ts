@@ -23,6 +23,10 @@ import { FrontendConfigService } from './frontend-config.service';
 describe('FrontendConfigService', () => {
   const domain = 'http://md.example.com';
   const emptyAuthConfig: AuthConfig = {
+    session: {
+      secret: 'my-secret',
+      lifeTime: 1209600000,
+    },
     email: {
       enableLogin: false,
       enableRegister: false,
