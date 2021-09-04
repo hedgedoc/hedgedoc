@@ -14,7 +14,7 @@ import request from 'supertest';
 import { PublicApiModule } from '../../src/api/public/public-api.module';
 import { AuthModule } from '../../src/auth/auth.module';
 import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
-import { TokenAuthGuard } from '../../src/auth/token-auth.guard';
+import { TokenAuthGuard } from '../../src/auth/token.strategy';
 import appConfigMock from '../../src/config/mock/app.config.mock';
 import mediaConfigMock from '../../src/config/mock/media.config.mock';
 import { GroupsModule } from '../../src/groups/groups.module';
