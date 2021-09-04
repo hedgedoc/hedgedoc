@@ -2368,10 +2368,10 @@
   resolved "https://registry.yarnpkg.com/@types/linkify-it/-/linkify-it-3.0.2.tgz#fd2cd2edbaa7eaac7e7f3c1748b52a19143846c9"
   integrity sha512-HZQYqbiFVWufzCwexrvh694SOim8z2d+xJl5UNamcvQFejLY/2YUtzXHYi3cHdI7PMlS8ejH2slRAOJQ32aNbA==
 
-"@types/luxon@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-2.0.1.tgz#4be7e91283de747ca061a071ef0c3747a710bda1"
-  integrity sha512-EqwKd+cuzQ6Jz/zsFYOofHzSfZSh1x3eBBj9+2IYk5vF3I1JnysPFK/I0YnkJ0artgvVY3jJYf2fGdIzoK0UIA==
+"@types/luxon@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-2.0.2.tgz#89db62ab8299ed3a703e75eef525d6bdf94349bc"
+  integrity sha512-CUrDlIVYv7TNkdQV8YfT2WGAHyMAwFIT1PXoUcQhX2EFMVL20lxEQHWc73gdJfRtMsI6Vc22HvR7eUN0jkx6+w==
 
 "@types/markdown-it-container@2.0.4":
   version "2.0.4"
