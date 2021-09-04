@@ -17,9 +17,9 @@ import {
 export interface AuthConfig {
   session: {
     secret: string;
-    lifeTime: number;
+    lifetime: number;
   };
-  email: {
+  local: {
     enableLogin: boolean;
     enableRegister: boolean;
   };
@@ -108,20 +108,20 @@ export interface AuthConfig {
 const authSchema = Joi.object({
   session: {
     secret: Joi.string().label('HD_SESSION_SECRET'),
-    lifeTime: Joi.number()
-      .default(100000)
+    lifetime: Joi.number()
+      .default(1209600000) // 14 * 24 * 60 * 60 * 1000ms = 14 days
       .optional()
-      .label('HD_SESSION_LIFE_TIME'),
+      .label('HD_SESSION_LIFETIME'),
   },
-  email: {
+  local: {
     enableLogin: Joi.boolean()
       .default(false)
       .optional()
-      .label('HD_AUTH_EMAIL_ENABLE_LOGIN'),
+      .label('HD_AUTH_LOCAL_ENABLE_LOGIN'),
     enableRegister: Joi.boolean()
       .default(false)
       .optional()
-      .label('HD_AUTH_EMAIL_ENABLE_REGISTER'),
+      .label('HD_AUTH_LOCAL_ENABLE_REGISTER'),
   },
   facebook: {
     clientID: Joi.string().optional().label('HD_AUTH_FACEBOOK_CLIENT_ID'),
@@ -211,7 +211,7 @@ const authSchema = Joi.object({
         attribute: {
           id: Joi.string().default('NameId').optional(),
           username: Joi.string().default('NameId').optional(),
-          email: Joi.string().default('NameId').optional(),
+          local: Joi.string().default('NameId').optional(),
         },
       }).optional(),
     )
@@ -309,7 +309,7 @@ export default registerAs('authConfig', () => {
       attribute: {
         id: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_ID`],
         username: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_USERNAME`],
-        email: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_USERNAME`],
+        local: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_USERNAME`],
       },
     };
   });
@@ -346,11 +346,11 @@ export default registerAs('authConfig', () => {
     {
       session: {
         secret: process.env.HD_SESSION_SECRET,
-        lifeTime: parseOptionalInt(process.env.HD_SESSION_LIFE_TIME),
+        lifetime: parseOptionalInt(process.env.HD_SESSION_LIFETIME),
       },
-      email: {
-        enableLogin: process.env.HD_AUTH_EMAIL_ENABLE_LOGIN,
-        enableRegister: process.env.HD_AUTH_EMAIL_ENABLE_REGISTER,
+      local: {
+        enableLogin: process.env.HD_AUTH_LOCAL_ENABLE_LOGIN,
+        enableRegister: process.env.HD_AUTH_LOCAL_ENABLE_REGISTER,
       },
       facebook: {
         clientID: process.env.HD_AUTH_FACEBOOK_CLIENT_ID,

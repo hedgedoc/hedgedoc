@@ -44,7 +44,7 @@ export class FrontendConfigService {
     return {
       // ToDo: use actual value here
       allowAnonymous: false,
-      allowRegister: this.authConfig.email.enableRegister,
+      allowRegister: this.authConfig.local.enableRegister,
       authProviders: this.getAuthProviders(),
       branding: this.getBranding(),
       customAuthNames: this.getCustomAuthNames(),
@@ -66,7 +66,7 @@ export class FrontendConfigService {
       github: !!this.authConfig.github.clientID,
       gitlab: this.authConfig.gitlab.length !== 0,
       google: !!this.authConfig.google.clientID,
-      internal: this.authConfig.email.enableLogin,
+      local: this.authConfig.local.enableLogin,
       ldap: this.authConfig.ldap.length !== 0,
       oauth2: this.authConfig.oauth2.length !== 0,
       saml: this.authConfig.saml.length !== 0,
