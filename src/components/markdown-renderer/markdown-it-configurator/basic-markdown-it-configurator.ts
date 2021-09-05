@@ -37,7 +37,6 @@ import { quoteExtra } from '../markdown-it-plugins/quote-extra'
 import { documentTableOfContents } from '../markdown-it-plugins/document-table-of-contents'
 
 export interface ConfiguratorDetails {
-  onParseError: (error: boolean) => void
   onToc: (toc: TocAst) => void
   onLineMarkers?: (lineMarkers: LineMarkers[]) => void
   useAlternativeBreaks?: boolean

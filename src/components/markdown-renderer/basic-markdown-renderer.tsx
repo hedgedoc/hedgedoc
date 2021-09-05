@@ -17,7 +17,7 @@ import { useCalculateLineMarkerPosition } from './utils/calculate-line-marker-po
 import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
 import { TocAst } from 'markdown-it-toc-done-right'
 import { useOnRefChange } from './hooks/use-on-ref-change'
-import { BasicMarkdownItConfigurator } from './markdown-it-configurator/BasicMarkdownItConfigurator'
+import { BasicMarkdownItConfigurator } from './markdown-it-configurator/basic-markdown-it-configurator'
 import { ImageClickHandler } from './replace-components/image/image-replacer'
 import { useTrimmedContent } from './hooks/use-trimmed-content'
 
@@ -52,14 +52,12 @@ export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & Additi
 }) => {
   const markdownBodyRef = useRef<HTMLDivElement>(null)
   const currentLineMarkers = useRef<LineMarkers[]>()
-  const hasNewYamlError = useRef(false)
   const tocAst = useRef<TocAst>()
   const [trimmedContent, contentExceedsLimit] = useTrimmedContent(content)
 
   const markdownIt = useMemo(
     () =>
       new BasicMarkdownItConfigurator({
-        onParseError: (errorState) => (hasNewYamlError.current = errorState),
         onToc: (toc) => (tocAst.current = toc),
         onLineMarkers:
           onLineMarkerPositionChanged === undefined
