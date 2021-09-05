@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { useDocumentTitleWithNoteTitle } from '../../hooks/common/use-document-title-with-note-title'
-import { useNoteMarkdownContent } from '../../hooks/common/use-note-markdown-content'
 import { updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
 import { ShowIf } from '../common/show-if/show-if'
@@ -23,6 +22,7 @@ import { LoadingNoteAlert } from './LoadingNoteAlert'
 import { RendererType } from '../render-page/rendering-message'
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { IframeEditorToRendererCommunicatorContextProvider } from '../editor-page/render-context/iframe-editor-to-renderer-communicator-context-provider'
+import { useNoteMarkdownContentWithoutFrontmatter } from '../../hooks/common/use-note-markdown-content-without-frontmatter'
 
 export const DocumentReadOnlyPage: React.FC = () => {
   useTranslation()
@@ -33,7 +33,7 @@ export const DocumentReadOnlyPage: React.FC = () => {
 
   const onFirstHeadingChange = useCallback(updateNoteTitleByFirstHeading, [])
   const [error, loading] = useLoadNoteFromServer()
-  const markdownContent = useNoteMarkdownContent()
+  const markdownContent = useNoteMarkdownContentWithoutFrontmatter()
   const noteDetails = useApplicationState((state) => state.noteDetails)
 
   return (

@@ -6,6 +6,10 @@
 
 import { useApplicationState } from './use-application-state'
 
+/**
+ * Extracts the markdown content of the current note from the global application state.
+ * @return the markdown content of the note
+ */
 export const useNoteMarkdownContent = (): string => {
   return useApplicationState((state) => state.noteDetails.markdownContent)
 }

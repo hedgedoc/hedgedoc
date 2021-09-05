@@ -8,12 +8,7 @@ import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { useDocumentTitleWithNoteTitle } from '../../hooks/common/use-document-title-with-note-title'
-import { useNoteMarkdownContent } from '../../hooks/common/use-note-markdown-content'
-import {
-  setCheckboxInMarkdownContent,
-  setNoteContent,
-  updateNoteTitleByFirstHeading
-} from '../../redux/note-details/methods'
+import { setCheckboxInMarkdownContent, updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
 import { MotdBanner } from '../common/motd-banner/motd-banner'
 import { ShowIf } from '../common/show-if/show-if'
 import { ErrorWhileLoadingNoteAlert } from '../document-read-only-page/ErrorWhileLoadingNoteAlert'
@@ -23,7 +18,6 @@ import { EditorMode } from './app-bar/editor-view-mode'
 import { EditorPane } from './editor-pane/editor-pane'
 import { useLoadNoteFromServer } from './hooks/useLoadNoteFromServer'
 import { useViewModeShortcuts } from './hooks/useViewModeShortcuts'
-import { RenderIframe } from './renderer-pane/render-iframe'
 import { Sidebar } from './sidebar/sidebar'
 import { Splitter } from './splitter/splitter'
 import { DualScrollState, ScrollState } from './synced-scroll/scroll-props'
@@ -34,6 +28,7 @@ import { useNotificationTest } from './use-notification-test'
 import { IframeEditorToRendererCommunicatorContextProvider } from './render-context/iframe-editor-to-renderer-communicator-context-provider'
 import { useUpdateLocalHistoryEntry } from './hooks/useUpdateLocalHistoryEntry'
 import { useApplicationState } from '../../hooks/common/use-application-state'
+import { EditorDocumentRenderer } from './editor-document-renderer/editor-document-renderer'
 
 export interface EditorPagePathParams {
   id: string
@@ -46,10 +41,7 @@ export enum ScrollSource {
 
 export const EditorPage: React.FC = () => {
   useTranslation()
-  const markdownContent = useNoteMarkdownContent()
   const scrollSource = useRef<ScrollSource>(ScrollSource.EDITOR)
-
-  const documentContent = useApplicationState((state) => state.noteDetails.documentContent)
   const editorMode: EditorMode = useApplicationState((state) => state.editorConfig.editorMode)
   const editorSyncScroll: boolean = useApplicationState((state) => state.editorConfig.syncScroll)
 
@@ -98,21 +90,18 @@ export const EditorPage: React.FC = () => {
   const leftPane = useMemo(
     () => (
       <EditorPane
-        onContentChange={setNoteContent}
-        content={documentContent}
         scrollState={scrollState.editorScrollState}
         onScroll={onEditorScroll}
         onMakeScrollSource={setEditorToScrollSource}
       />
     ),
-    [documentContent, onEditorScroll, scrollState.editorScrollState, setEditorToScrollSource]
+    [onEditorScroll, scrollState.editorScrollState, setEditorToScrollSource]
   )
 
   const rightPane = useMemo(
     () => (
-      <RenderIframe
+      <EditorDocumentRenderer
         frameClasses={'h-100 w-100'}
-        markdownContent={markdownContent}
         onMakeScrollSource={setRendererToScrollSource}
         onFirstHeadingChange={updateNoteTitleByFirstHeading}
         onTaskCheckedChange={setCheckboxInMarkdownContent}
@@ -121,7 +110,7 @@ export const EditorPage: React.FC = () => {
         rendererType={RendererType.DOCUMENT}
       />
     ),
-    [markdownContent, onMarkdownRendererScroll, scrollState.rendererScrollState, setRendererToScrollSource]
+    [onMarkdownRendererScroll, scrollState.rendererScrollState, setRendererToScrollSource]
   )
 
   return (

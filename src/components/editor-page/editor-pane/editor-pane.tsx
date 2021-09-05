@@ -19,6 +19,8 @@ import { handleUpload } from './upload-handler'
 import { handleFilePaste, handleTablePaste, PasteEvent } from './tool-bar/utils/pasteHandlers'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import './codemirror-imports'
+import { setNoteContent } from '../../../redux/note-details/methods'
+import { useNoteMarkdownContent } from '../../../hooks/common/use-note-markdown-content'
 
 export interface EditorPaneProps {
   onContentChange: (content: string) => void
@@ -50,13 +52,8 @@ interface DropEvent {
   preventDefault: () => void
 }
 
-export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({
-  onContentChange,
-  content,
-  scrollState,
-  onScroll,
-  onMakeScrollSource
-}) => {
+export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMakeScrollSource }) => {
+  const markdownContent = useNoteMarkdownContent()
   const { t } = useTranslation()
   const maxLength = useApplicationState((state) => state.config.maxDocumentLength)
   const smartPasteEnabled = useApplicationState((state) => state.editorConfig.smartPaste)
@@ -128,10 +125,11 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({
       if (value.length <= maxLength) {
         maxLengthWarningAlreadyShown.current = false
       }
-      onContentChange(value)
+      setNoteContent(value)
     },
-    [onContentChange, maxLength, maxLengthWarningAlreadyShown]
+    [maxLength]
   )
+
   const onEditorDidMount = useCallback(
     (mountedEditor: Editor) => {
       setStatusBarInfo(createStatusInfo(mountedEditor, maxLength))
@@ -204,7 +202,7 @@ export const EditorPane: React.FC<EditorPaneProps & ScrollProps> = ({
       <ToolBar editor={editor} />
       <ControlledCodeMirror
         className={`overflow-hidden w-100 flex-fill ${ligaturesEnabled ? '' : 'no-ligatures'}`}
-        value={content}
+        value={markdownContent}
         options={codeMirrorOptions}
         onChange={onChange}
         onPaste={onPaste}

@@ -9,7 +9,6 @@ import { DateTime } from 'luxon'
 import { NoteTextDirection, NoteType } from '../../components/common/note-frontmatter/types'
 
 export const initialState: NoteDetails = {
-  documentContent: '',
   markdownContent: '',
   rawFrontmatter: '',
   frontmatterRendererInfo: {

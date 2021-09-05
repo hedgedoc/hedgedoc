@@ -10,15 +10,15 @@ import { store } from '../../../redux'
 import { Trans, useTranslation } from 'react-i18next'
 import { download } from '../../common/download/download'
 import { SidebarButton } from './sidebar-button'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { useNoteMarkdownContent } from '../../../hooks/common/use-note-markdown-content'
 
 export const ExportMarkdownSidebarEntry: React.FC = () => {
   const { t } = useTranslation()
-  const documentContent = useApplicationState((state) => state.noteDetails.documentContent)
+  const markdownContent = useNoteMarkdownContent()
   const onClick = useCallback(() => {
     const sanitized = sanitize(store.getState().noteDetails.noteTitle)
-    download(documentContent, `${sanitized !== '' ? sanitized : t('editor.untitledNote')}.md`, 'text/markdown')
-  }, [documentContent, t])
+    download(markdownContent, `${sanitized !== '' ? sanitized : t('editor.untitledNote')}.md`, 'text/markdown')
+  }, [markdownContent, t])
 
   return (
     <SidebarButton data-cy={'menu-export-markdown'} onClick={onClick} icon={'file-text'}>

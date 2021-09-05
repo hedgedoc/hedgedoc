@@ -25,7 +25,6 @@ interface LastChange {
  * Redux state containing the currently loaded note with its content and metadata.
  */
 export interface NoteDetails {
-  documentContent: string
   markdownContent: string
   rawFrontmatter: string
   frontmatter: NoteFrontmatter

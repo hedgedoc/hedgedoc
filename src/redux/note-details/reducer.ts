@@ -19,7 +19,7 @@ export const NoteDetailsReducer: Reducer<NoteDetails, NoteDetailsActions> = (
 ) => {
   switch (action.type) {
     case NoteDetailsActionType.SET_DOCUMENT_CONTENT:
-      return buildStateFromDocumentContentUpdate(state, action.content)
+      return buildStateFromMarkdownContentUpdate(state, action.content)
     case NoteDetailsActionType.UPDATE_NOTE_TITLE_BY_FIRST_HEADING:
       return buildStateFromFirstHeadingUpdate(state, action.firstHeading)
     case NoteDetailsActionType.SET_NOTE_DATA_FROM_SERVER:
@@ -40,7 +40,7 @@ const TASK_REGEX = /(\s*(?:[-*+]|\d+[.)]) )(\[[ xX]])( .*)/
  */
 const buildStateFromServerDto = (dto: NoteDto): NoteDetails => {
   const newState = convertNoteDtoToNoteDetails(dto)
-  return buildStateFromDocumentContentUpdate(newState, newState.documentContent)
+  return buildStateFromMarkdownContentUpdate(newState, newState.markdownContent)
 }
 
 /**
@@ -55,13 +55,13 @@ const buildStateFromTaskListUpdate = (
   changedLine: number,
   checkboxChecked: boolean
 ): NoteDetails => {
-  const lines = state.documentContent.split('\n')
+  const lines = state.markdownContent.split('\n')
   const results = TASK_REGEX.exec(lines[changedLine])
   if (results) {
     const before = results[1]
     const after = results[3]
     lines[changedLine] = `${before}[${checkboxChecked ? 'x' : ' '}]${after}`
-    return buildStateFromDocumentContentUpdate(state, lines.join('\n'))
+    return buildStateFromMarkdownContentUpdate(state, lines.join('\n'))
   }
   return state
 }
@@ -69,17 +69,17 @@ const buildStateFromTaskListUpdate = (
 /**
  * Builds a {@link NoteDetails} redux state from a fresh document content.
  * @param state The previous redux state.
- * @param documentContent The fresh document content consisting of the frontmatter and markdown part.
+ * @param markdownContent The fresh document content consisting of the frontmatter and markdown part.
  * @return An updated {@link NoteDetails} redux state.
  */
-const buildStateFromDocumentContentUpdate = (state: NoteDetails, documentContent: string): NoteDetails => {
-  const frontmatterExtraction = extractFrontmatter(documentContent)
+const buildStateFromMarkdownContentUpdate = (state: NoteDetails, markdownContent: string): NoteDetails => {
+  const frontmatterExtraction = extractFrontmatter(markdownContent)
   if (!frontmatterExtraction.frontmatterPresent) {
     return {
       ...state,
-      documentContent: documentContent,
-      markdownContent: documentContent,
+      markdownContent: markdownContent,
       rawFrontmatter: '',
+      noteTitle: generateNoteTitle(initialState.frontmatter, state.firstHeading),
       frontmatter: initialState.frontmatter,
       frontmatterRendererInfo: initialState.frontmatterRendererInfo
     }
@@ -87,8 +87,7 @@ const buildStateFromDocumentContentUpdate = (state: NoteDetails, documentContent
   return buildStateFromFrontmatterUpdate(
     {
       ...state,
-      documentContent: documentContent,
-      markdownContent: documentContent.split('\n').slice(frontmatterExtraction.frontmatterLines).join('\n')
+      markdownContent: markdownContent
     },
     frontmatterExtraction
   )
@@ -113,7 +112,7 @@ const buildStateFromFrontmatterUpdate = (
       ...state,
       rawFrontmatter: frontmatterExtraction.rawFrontmatterText,
       frontmatter: frontmatter,
-      noteTitle: generateNoteTitle(frontmatter),
+      noteTitle: generateNoteTitle(frontmatter, state.firstHeading),
       frontmatterRendererInfo: {
         offsetLines: frontmatterExtraction.frontmatterLines,
         deprecatedSyntax: frontmatter.deprecatedTagsSyntax,
@@ -123,6 +122,7 @@ const buildStateFromFrontmatterUpdate = (
   } catch (e) {
     return {
       ...state,
+      noteTitle: generateNoteTitle(initialState.frontmatter, state.firstHeading),
       rawFrontmatter: frontmatterExtraction.rawFrontmatterText,
       frontmatter: initialState.frontmatter,
       frontmatterRendererInfo: {
@@ -170,8 +170,7 @@ const generateNoteTitle = (frontmatter: NoteFrontmatter, firstHeading?: string) 
  */
 const convertNoteDtoToNoteDetails = (note: NoteDto): NoteDetails => {
   return {
-    documentContent: note.content,
-    markdownContent: '',
+    markdownContent: note.content,
     rawFrontmatter: '',
     frontmatterRendererInfo: {
       frontmatterInvalid: false,
