@@ -69,7 +69,7 @@ the [github repository](https://github.com/hedgedoc/hedgedoc-logo).
 
 [poeditor-url]: https://poeditor.com/join/project/1OpGjF2Jir
 
-[hedgedoc-demo]: https://demo.hedgedoc.org
+[hedgedoc-demo]: https://hedgedoc.org/demo/
 
 [hedgedoc-demo-features]: https://demo.hedgedoc.org/features
 
