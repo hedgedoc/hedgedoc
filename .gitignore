@@ -44,3 +44,12 @@ public/uploads/*
 !public/.gitkeep
 uploads
 test_uploads
+
+# Yarn 2 without zero-installs
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
