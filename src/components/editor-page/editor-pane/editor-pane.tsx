@@ -22,11 +22,6 @@ import './codemirror-imports'
 import { setNoteContent } from '../../../redux/note-details/methods'
 import { useNoteMarkdownContent } from '../../../hooks/common/use-note-markdown-content'
 
-export interface EditorPaneProps {
-  onContentChange: (content: string) => void
-  content: string
-}
-
 const onChange = (editor: Editor) => {
   for (const hinter of allHinters) {
     const searchTerm = findWordAtCursor(editor)
