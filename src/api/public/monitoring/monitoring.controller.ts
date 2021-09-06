@@ -13,7 +13,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
-import { TokenAuthGuard } from '../../../auth/token-auth.guard';
+import { TokenAuthGuard } from '../../../auth/token.strategy';
 import { MonitoringService } from '../../../monitoring/monitoring.service';
 import { ServerStatusDto } from '../../../monitoring/server-status.dto';
 import {

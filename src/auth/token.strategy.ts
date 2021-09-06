@@ -4,12 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
+import { AuthGuard, PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-http-bearer';
 
 import { NotInDBError, TokenNotValidError } from '../errors/errors';
 import { User } from '../users/user.entity';
 import { AuthService } from './auth.service';
+
+@Injectable()
+export class TokenAuthGuard extends AuthGuard('token') {}
 
 @Injectable()
 export class TokenStrategy extends PassportStrategy(Strategy, 'token') {
