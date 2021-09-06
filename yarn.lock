@@ -1798,6 +1798,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/source-map-support@npm:^0":
+  version: 0.5.4
+  resolution: "@types/source-map-support@npm:0.5.4"
+  dependencies:
+    source-map: ^0.6.0
+  checksum: 160ff77e8a101b18d9915cb5320fd73d484679aef8518ce007b9b5988e333631778730196c4bb15517ff881bee805663fd8640c0ce2ebfab65f061103c452369
+  languageName: node
+  linkType: hard
+
 "@types/stack-utils@npm:^2.0.0":
   version: 2.0.1
   resolution: "@types/stack-utils@npm:2.0.1"
@@ -5046,6 +5055,7 @@ __metadata:
     "@types/node-fetch": 2.5.12
     "@types/passport-http-bearer": 1.0.37
     "@types/passport-local": 1.0.34
+    "@types/source-map-support": ^0
     "@types/supertest": 2.0.11
     "@typescript-eslint/eslint-plugin": 4.31.2
     "@typescript-eslint/parser": 4.31.2
@@ -5076,6 +5086,7 @@ __metadata:
     reflect-metadata: 0.1.13
     rimraf: 3.0.2
     rxjs: 7.3.0
+    source-map-support: ^0.5.19
     sqlite3: 5.0.2
     supertest: 6.1.6
     swagger-ui-express: 4.1.6
@@ -8599,7 +8610,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-support@npm:^0.5.6, source-map-support@npm:~0.5.20":
+"source-map-support@npm:^0.5.19, source-map-support@npm:^0.5.6, source-map-support@npm:~0.5.20":
   version: 0.5.20
   resolution: "source-map-support@npm:0.5.20"
   dependencies:
