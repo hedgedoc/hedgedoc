@@ -12,6 +12,7 @@ import {
   IsUrl,
   ValidateNested,
 } from 'class-validator';
+import { URL } from 'url';
 
 import { ServerVersion } from '../monitoring/server-status.dto';
 

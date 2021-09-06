@@ -5,6 +5,7 @@
  */
 import { Inject, Injectable } from '@nestjs/common';
 import { Client } from 'minio';
+import { URL } from 'url';
 
 import mediaConfiguration, { MediaConfig } from '../../config/media.config';
 import { MediaBackendError } from '../../errors/errors';
