@@ -98,10 +98,12 @@ describe('MediaService', () => {
   });
 
   describe('saveFile', () => {
+    let user: User;
+    let note: Note;
     beforeEach(() => {
-      const user = User.create('hardcoded', 'Testy') as User;
+      user = User.create('hardcoded', 'Testy') as User;
       const alias = 'alias';
-      const note = Note.create(user, alias);
+      note = Note.create(user, alias);
       jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
       jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
     });
@@ -126,22 +128,22 @@ describe('MediaService', () => {
             return [fileName, null];
           },
         );
-      const url = await service.saveFile(testImage, 'hardcoded', 'test');
+      const url = await service.saveFile(testImage, user, note);
       expect(url).toEqual(fileId);
     });
 
     describe('fails:', () => {
       it('MIME type not identifiable', async () => {
         await expect(
-          service.saveFile(Buffer.alloc(1), 'hardcoded', 'test'),
+          service.saveFile(Buffer.alloc(1), user, note),
         ).rejects.toThrow(ClientError);
       });
 
       it('MIME type not supported', async () => {
         const testText = await fs.readFile('test/public-api/fixtures/test.zip');
-        await expect(
-          service.saveFile(testText, 'hardcoded', 'test'),
-        ).rejects.toThrow(ClientError);
+        await expect(service.saveFile(testText, user, note)).rejects.toThrow(
+          ClientError,
+        );
       });
     });
   });

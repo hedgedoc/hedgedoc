@@ -22,6 +22,8 @@ import { HistoryEntryUpdateDto } from '../../../../history/history-entry-update.
 import { HistoryEntryDto } from '../../../../history/history-entry.dto';
 import { HistoryService } from '../../../../history/history.service';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
+import { GetNotePipe } from '../../../../notes/get-note.pipe';
+import { Note } from '../../../../notes/note.entity';
 import { UsersService } from '../../../../users/users.service';
 
 @ApiTags('history')
@@ -84,14 +86,14 @@ export class HistoryController {
 
   @Put(':note')
   async updateHistoryEntry(
-    @Param('note') noteId: string,
+    @Param('note', GetNotePipe) note: Note,
     @Body() entryUpdateDto: HistoryEntryUpdateDto,
   ): Promise<HistoryEntryDto> {
     try {
       // ToDo: use actual user here
       const user = await this.userService.getUserByUsername('hardcoded');
       const newEntry = await this.historyService.updateHistoryEntry(
-        noteId,
+        note,
         user,
         entryUpdateDto,
       );
@@ -105,11 +107,13 @@ export class HistoryController {
   }
 
   @Delete(':note')
-  async deleteHistoryEntry(@Param('note') noteId: string): Promise<void> {
+  async deleteHistoryEntry(
+    @Param('note', GetNotePipe) note: Note,
+  ): Promise<void> {
     try {
       // ToDo: use actual user here
       const user = await this.userService.getUserByUsername('hardcoded');
-      await this.historyService.deleteHistoryEntry(noteId, user);
+      await this.historyService.deleteHistoryEntry(note, user);
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);

@@ -31,7 +31,9 @@ import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
+import { GetNotePipe } from '../../../notes/get-note.pipe';
 import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
+import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
 import { UserInfoDto } from '../../../users/user-info.dto';
 import { User } from '../../../users/user.entity';
@@ -93,13 +95,10 @@ export class MeController {
   @ApiNotFoundResponse({ description: notFoundDescription })
   async getHistoryEntry(
     @RequestUser() user: User,
-    @Param('note') note: string,
+    @Param('note', GetNotePipe) note: Note,
   ): Promise<HistoryEntryDto> {
     try {
-      const foundEntry = await this.historyService.getEntryByNoteIdOrAlias(
-        note,
-        user,
-      );
+      const foundEntry = await this.historyService.getEntryByNote(note, user);
       return this.historyService.toHistoryEntryDto(foundEntry);
     } catch (e) {
       if (e instanceof NotInDBError) {
@@ -119,7 +118,7 @@ export class MeController {
   @ApiNotFoundResponse({ description: notFoundDescription })
   async updateHistoryEntry(
     @RequestUser() user: User,
-    @Param('note') note: string,
+    @Param('note', GetNotePipe) note: Note,
     @Body() entryUpdateDto: HistoryEntryUpdateDto,
   ): Promise<HistoryEntryDto> {
     // ToDo: Check if user is allowed to pin this history entry
@@ -147,7 +146,7 @@ export class MeController {
   @ApiNotFoundResponse({ description: notFoundDescription })
   async deleteHistoryEntry(
     @RequestUser() user: User,
-    @Param('note') note: string,
+    @Param('note', GetNotePipe) note: Note,
   ): Promise<void> {
     // ToDo: Check if user is allowed to delete note
     try {

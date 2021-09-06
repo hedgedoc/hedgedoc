@@ -34,12 +34,12 @@ import {
   AlreadyInDBError,
   ForbiddenIdError,
   NotInDBError,
-  PermissionsUpdateInconsistentError,
 } from '../../../errors/errors';
 import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
+import { GetNotePipe } from '../../../notes/get-note.pipe';
 import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
 import {
   NotePermissionsDto,
@@ -106,24 +106,12 @@ export class NotesController {
   @FullApi
   async getNote(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<NoteDto> {
-    let note: Note;
-    try {
-      note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
-    }
     if (!this.permissionsService.mayRead(user, note)) {
       throw new UnauthorizedException('Reading note denied!');
     }
-    await this.historyService.createOrUpdateHistoryEntry(note, user);
+    await this.historyService.updateHistoryEntryTimestamp(note, user);
     return await this.noteService.toNoteDto(note);
   }
 
@@ -167,35 +155,24 @@ export class NotesController {
   @FullApi
   async deleteNote(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('noteIdOrAlias', GetNotePipe) note: Note,
     @Body() noteMediaDeletionDto: NoteMediaDeletionDto,
   ): Promise<void> {
-    try {
-      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.isOwner(user, note)) {
-        throw new UnauthorizedException('Deleting note denied!');
-      }
-      const mediaUploads = await this.mediaService.listUploadsByNote(note);
-      for (const mediaUpload of mediaUploads) {
-        if (!noteMediaDeletionDto.keepMedia) {
-          await this.mediaService.deleteFile(mediaUpload);
-        } else {
-          await this.mediaService.removeNoteFromMediaUpload(mediaUpload);
-        }
-      }
-      this.logger.debug('Deleting note: ' + noteIdOrAlias, 'deleteNote');
-      await this.noteService.deleteNote(note);
-      this.logger.debug('Successfully deleted ' + noteIdOrAlias, 'deleteNote');
-      return;
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
+    if (!this.permissionsService.isOwner(user, note)) {
+      throw new UnauthorizedException('Deleting note denied!');
     }
+    const mediaUploads = await this.mediaService.listUploadsByNote(note);
+    for (const mediaUpload of mediaUploads) {
+      if (!noteMediaDeletionDto.keepMedia) {
+        await this.mediaService.deleteFile(mediaUpload);
+      } else {
+        await this.mediaService.removeNoteFromMediaUpload(mediaUpload);
+      }
+    }
+    this.logger.debug('Deleting note: ' + note.id, 'deleteNote');
+    await this.noteService.deleteNote(note);
+    this.logger.debug('Successfully deleted ' + note.id, 'deleteNote');
+    return;
   }
 
   @UseGuards(TokenAuthGuard)
@@ -207,27 +184,16 @@ export class NotesController {
   @FullApi
   async updateNote(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('noteIdOrAlias', GetNotePipe) note: Note,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
-    try {
-      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.mayWrite(user, note)) {
-        throw new UnauthorizedException('Updating note denied!');
-      }
-      this.logger.debug('Got raw markdown:\n' + text, 'updateNote');
-      return await this.noteService.toNoteDto(
-        await this.noteService.updateNote(note, text),
-      );
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
+    if (!this.permissionsService.mayWrite(user, note)) {
+      throw new UnauthorizedException('Updating note denied!');
     }
+    this.logger.debug('Got raw markdown:\n' + text, 'updateNote');
+    return await this.noteService.toNoteDto(
+      await this.noteService.updateNote(note, text),
+    );
   }
 
   @UseGuards(TokenAuthGuard)
@@ -240,23 +206,12 @@ export class NotesController {
   @Header('content-type', 'text/markdown')
   async getNoteContent(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<string> {
-    try {
-      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.mayRead(user, note)) {
-        throw new UnauthorizedException('Reading note denied!');
-      }
-      return await this.noteService.getNoteContent(note);
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
+    if (!this.permissionsService.mayRead(user, note)) {
+      throw new UnauthorizedException('Reading note denied!');
     }
+    return await this.noteService.getNoteContent(note);
   }
 
   @UseGuards(TokenAuthGuard)
@@ -268,26 +223,12 @@ export class NotesController {
   @FullApi
   async getNoteMetadata(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<NoteMetadataDto> {
-    try {
-      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.mayRead(user, note)) {
-        throw new UnauthorizedException('Reading note denied!');
-      }
-      return await this.noteService.toNoteMetadataDto(note);
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      if (e instanceof PermissionsUpdateInconsistentError) {
-        throw new BadRequestException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
+    if (!this.permissionsService.mayRead(user, note)) {
+      throw new UnauthorizedException('Reading note denied!');
     }
+    return await this.noteService.toNoteMetadataDto(note);
   }
 
   @UseGuards(TokenAuthGuard)
@@ -299,26 +240,15 @@ export class NotesController {
   @FullApi
   async updateNotePermissions(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('noteIdOrAlias', GetNotePipe) note: Note,
     @Body() updateDto: NotePermissionsUpdateDto,
   ): Promise<NotePermissionsDto> {
-    try {
-      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.isOwner(user, note)) {
-        throw new UnauthorizedException('Updating note denied!');
-      }
-      return this.noteService.toNotePermissionsDto(
-        await this.noteService.updateNotePermissions(note, updateDto),
-      );
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
+    if (!this.permissionsService.isOwner(user, note)) {
+      throw new UnauthorizedException('Updating note denied!');
     }
+    return this.noteService.toNotePermissionsDto(
+      await this.noteService.updateNotePermissions(note, updateDto),
+    );
   }
 
   @UseGuards(TokenAuthGuard)
@@ -331,28 +261,17 @@ export class NotesController {
   @FullApi
   async getNoteRevisions(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<RevisionMetadataDto[]> {
-    try {
-      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.mayRead(user, note)) {
-        throw new UnauthorizedException('Reading note denied!');
-      }
-      const revisions = await this.revisionsService.getAllRevisions(note);
-      return await Promise.all(
-        revisions.map((revision) =>
-          this.revisionsService.toRevisionMetadataDto(revision),
-        ),
-      );
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
+    if (!this.permissionsService.mayRead(user, note)) {
+      throw new UnauthorizedException('Reading note denied!');
     }
+    const revisions = await this.revisionsService.getAllRevisions(note);
+    return await Promise.all(
+      revisions.map((revision) =>
+        this.revisionsService.toRevisionMetadataDto(revision),
+      ),
+    );
   }
 
   @UseGuards(TokenAuthGuard)
@@ -364,23 +283,19 @@ export class NotesController {
   @FullApi
   async getNoteRevision(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('noteIdOrAlias', GetNotePipe) note: Note,
     @Param('revisionId') revisionId: number,
   ): Promise<RevisionDto> {
+    if (!this.permissionsService.mayRead(user, note)) {
+      throw new UnauthorizedException('Reading note denied!');
+    }
     try {
-      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.mayRead(user, note)) {
-        throw new UnauthorizedException('Reading note denied!');
-      }
       return this.revisionsService.toRevisionDto(
         await this.revisionsService.getRevision(note, revisionId),
       );
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
       }
       throw e;
     }
@@ -396,20 +311,12 @@ export class NotesController {
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getNotesMedia(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<MediaUploadDto[]> {
-    try {
-      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.mayRead(user, note)) {
-        throw new UnauthorizedException('Reading note denied!');
-      }
-      const media = await this.mediaService.listUploadsByNote(note);
-      return media.map((media) => this.mediaService.toMediaUploadDto(media));
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      throw e;
+    if (!this.permissionsService.mayRead(user, note)) {
+      throw new UnauthorizedException('Reading note denied!');
     }
+    const media = await this.mediaService.listUploadsByNote(note);
+    return media.map((media) => this.mediaService.toMediaUploadDto(media));
   }
 }

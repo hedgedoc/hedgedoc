@@ -47,28 +47,12 @@ export class HistoryService {
 
   /**
    * @async
-   * Get a history entry by the user and note, which is specified via id or alias
-   * @param {string} noteIdOrAlias - the id or alias specifying the note
-   * @param {User} user - the user that the note belongs to
-   * @throws {NotInDBError} the specified note does not exist
-   * @return {HistoryEntry} the requested history entry
-   */
-  async getEntryByNoteIdOrAlias(
-    noteIdOrAlias: string,
-    user: User,
-  ): Promise<HistoryEntry> {
-    const note = await this.notesService.getNoteByIdOrAlias(noteIdOrAlias);
-    return await this.getEntryByNote(note, user);
-  }
-
-  /**
-   * @async
    * Get a history entry by the user and note
    * @param {Note} note - the note that the history entry belongs to
    * @param {User} user - the user that the history entry belongs to
    * @return {HistoryEntry} the requested history entry
    */
-  private async getEntryByNote(note: Note, user: User): Promise<HistoryEntry> {
+  async getEntryByNote(note: Note, user: User): Promise<HistoryEntry> {
     const entry = await this.historyEntryRepository.findOne({
       where: {
         note: note,
@@ -86,12 +70,13 @@ export class HistoryService {
 
   /**
    * @async
-   * Create or update a history entry by the user and note. If the entry is merely updated the updatedAt date is set to the current date.
+   * Updates the updatedAt timestamp of a HistoryEntry.
+   * If no history entry exists, it will be created.
    * @param {Note} note - the note that the history entry belongs to
    * @param {User} user - the user that the history entry belongs to
    * @return {HistoryEntry} the requested history entry
    */
-  async createOrUpdateHistoryEntry(
+  async updateHistoryEntryTimestamp(
     note: Note,
     user: User,
   ): Promise<HistoryEntry> {
@@ -111,17 +96,17 @@ export class HistoryService {
   /**
    * @async
    * Update a history entry identified by the user and a note id or alias
-   * @param {string} noteIdOrAlias - the note that the history entry belongs to
+   * @param {Note} note - the note that the history entry belongs to
    * @param {User} user - the user that the history entry belongs to
    * @param {HistoryEntryUpdateDto} updateDto - the change that should be applied to the history entry
    * @return {HistoryEntry} the requested history entry
    */
   async updateHistoryEntry(
-    noteIdOrAlias: string,
+    note: Note,
     user: User,
     updateDto: HistoryEntryUpdateDto,
   ): Promise<HistoryEntry> {
-    const entry = await this.getEntryByNoteIdOrAlias(noteIdOrAlias, user);
+    const entry = await this.getEntryByNote(note, user);
     entry.pinStatus = updateDto.pinStatus;
     return await this.historyEntryRepository.save(entry);
   }
@@ -129,12 +114,12 @@ export class HistoryService {
   /**
    * @async
    * Delete the history entry identified by the user and a note id or alias
-   * @param {string} noteIdOrAlias - the note that the history entry belongs to
+   * @param {Note} note - the note that the history entry belongs to
    * @param {User} user - the user that the history entry belongs to
    * @throws {NotInDBError} the specified history entry does not exist
    */
-  async deleteHistoryEntry(noteIdOrAlias: string, user: User): Promise<void> {
-    const entry = await this.getEntryByNoteIdOrAlias(noteIdOrAlias, user);
+  async deleteHistoryEntry(note: Note, user: User): Promise<void> {
+    const entry = await this.getEntryByNote(note, user);
     await this.historyEntryRepository.remove(entry);
     return;
   }
