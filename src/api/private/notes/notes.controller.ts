@@ -182,6 +182,39 @@ export class NotesController {
     }
   }
 
+  @Delete(':noteIdOrAlias/revisions')
+  @HttpCode(204)
+  async purgeNoteRevisions(
+    @Param('noteIdOrAlias') noteIdOrAlias: string,
+  ): Promise<void> {
+    try {
+      // ToDo: use actual user here
+      const user = await this.userService.getUserByUsername('hardcoded');
+      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
+      if (!this.permissionsService.mayRead(user, note)) {
+        throw new UnauthorizedException('Reading note denied!');
+      }
+      this.logger.debug(
+        'Purging history of note: ' + noteIdOrAlias,
+        'purgeNoteRevisions',
+      );
+      await this.revisionsService.purgeRevisions(note);
+      this.logger.debug(
+        'Successfully purged history of note ' + noteIdOrAlias,
+        'purgeNoteRevisions',
+      );
+      return;
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+      if (e instanceof ForbiddenIdError) {
+        throw new BadRequestException(e.message);
+      }
+      throw e;
+    }
+  }
+
   @Get(':noteIdOrAlias/revisions/:revisionId')
   async getNoteRevision(
     @Param('noteIdOrAlias', GetNotePipe) note: Note,

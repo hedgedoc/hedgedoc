@@ -97,4 +97,63 @@ describe('RevisionsService', () => {
       );
     });
   });
+
+  describe('purgeRevisions', () => {
+    it('purges the revision history', async () => {
+      const note = {} as Note;
+      note.id = 'test';
+      let revisions: Revision[] = [];
+      const revision1 = Revision.create('a', 'a');
+      revision1.id = 1;
+      const revision2 = Revision.create('b', 'b');
+      revision2.id = 2;
+      const revision3 = Revision.create('c', 'c');
+      revision3.id = 3;
+      revisions.push(revision1, revision2, revision3);
+      note.revisions = Promise.resolve(revisions);
+      jest.spyOn(revisionRepo, 'find').mockResolvedValueOnce(revisions);
+      jest.spyOn(service, 'getLatestRevision').mockResolvedValueOnce(revision3);
+      revisionRepo.remove = jest
+        .fn()
+        .mockImplementation((deleteList: Revision[]) => {
+          revisions = revisions.filter(
+            (item: Revision) => !deleteList.includes(item),
+          );
+          return Promise.resolve(deleteList);
+        });
+
+      // expected to return all the purged revisions
+      expect(await service.purgeRevisions(note)).toHaveLength(2);
+
+      // expected to have only the latest revision
+      const updatedRevisions: Revision[] = [revision3];
+      expect(revisions).toEqual(updatedRevisions);
+    });
+    it('has no effect on revision history when a single revision is present', async () => {
+      const note = {} as Note;
+      note.id = 'test';
+      let revisions: Revision[] = [];
+      const revision1 = Revision.create('a', 'a');
+      revision1.id = 1;
+      revisions.push(revision1);
+      note.revisions = Promise.resolve(revisions);
+      jest.spyOn(revisionRepo, 'find').mockResolvedValueOnce(revisions);
+      jest.spyOn(service, 'getLatestRevision').mockResolvedValueOnce(revision1);
+      revisionRepo.remove = jest
+        .fn()
+        .mockImplementation((deleteList: Revision[]) => {
+          revisions = revisions.filter(
+            (item: Revision) => !deleteList.includes(item),
+          );
+          return Promise.resolve(deleteList);
+        });
+
+      // expected to return all the purged revisions
+      expect(await service.purgeRevisions(note)).toHaveLength(0);
+
+      // expected to have only the latest revision
+      const updatedRevisions: Revision[] = [revision1];
+      expect(revisions).toEqual(updatedRevisions);
+    });
+  });
 });

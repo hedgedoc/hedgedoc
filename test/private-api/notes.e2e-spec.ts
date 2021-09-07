@@ -231,6 +231,40 @@ describe('Notes', () => {
     });
   });
 
+  describe('DELETE /notes/{note}/revisions', () => {
+    it('works with an existing alias', async () => {
+      const noteId = 'test8';
+      const note = await notesService.createNote(content, noteId, user);
+      await notesService.updateNote(note, 'update');
+      const responseBeforeDeleting = await request(app.getHttpServer())
+        .get('/notes/test8/revisions')
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(responseBeforeDeleting.body).toHaveLength(2);
+      await request(app.getHttpServer())
+        .delete(`/notes/${noteId}/revisions`)
+        .set('Content-Type', 'application/json')
+        .expect(204);
+      const responseAfterDeleting = await request(app.getHttpServer())
+        .get('/notes/test8/revisions')
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(responseAfterDeleting.body).toHaveLength(1);
+    });
+    it('fails with a forbidden alias', async () => {
+      await request(app.getHttpServer())
+        .delete(`/notes/${forbiddenNoteId}/revisions`)
+        .expect(400);
+    });
+    it('fails with non-existing alias', async () => {
+      // check if a missing note correctly returns 404
+      await request(app.getHttpServer())
+        .delete('/notes/i_dont_exist/revisions')
+        .expect('Content-Type', /json/)
+        .expect(404);
+    });
+  });
+
   describe('GET /notes/{note}/revisions/{revision-id}', () => {
     it('works with an existing alias', async () => {
       const note = await notesService.createNote(content, 'test5', user);
