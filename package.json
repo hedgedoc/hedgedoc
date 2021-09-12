@@ -3,7 +3,7 @@
   "license": "AGPL-3.0",
   "version": "0.1.0",
   "dependencies": {
-    "@craco/craco": "6.2.0",
+    "@craco/craco": "6.3.0",
     "@fontsource/source-sans-pro": "4.5.0",
     "@hedgedoc/html-to-react": "1.1.0",
     "@hedgedoc/markdown-it-task-lists": "1.0.2",
