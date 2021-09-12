@@ -7949,10 +7949,10 @@ i18next-resources-to-backend@1.0.0:
   dependencies:
     "@babel/runtime" "7.14.0"
 
-i18next@20.6.0:
-  version "20.6.0"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-20.6.0.tgz#1021e267c8760b03b1b9fbcc5ef734b28d83ea3c"
-  integrity sha512-sgt7AkvxUQbW5dsA7p5AYq7tBOIdm9K7c4wAppsbt5l0Hynqs7FTsa0bA0Exy+PUR17+IOcg3KVCaILc1OAOxQ==
+i18next@20.6.1:
+  version "20.6.1"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-20.6.1.tgz#535e5f6e5baeb685c7d25df70db63bf3cc0aa345"
+  integrity sha512-yCMYTMEJ9ihCwEQQ3phLo7I/Pwycf8uAx+sRHwwk5U9Aui/IZYgQRyMqXafQOw5QQ7DM1Z+WyEXWIqSuJHhG2A==
   dependencies:
     "@babel/runtime" "^7.12.0"
 
@@ -11848,10 +11848,10 @@ react-error-overlay@^6.0.9:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
   integrity sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
 
-react-i18next@11.11.4:
-  version "11.11.4"
-  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.11.4.tgz#f6f9a1c827e7a5271377de2bf14db04cb1c9e5ce"
-  integrity sha512-ayWFlu8Sc7GAxW1PzMaPtzq+yiozWMxs0P1WeITNVzXAVRhC0Httkzw/IiODBta6seJRBCLrtUeFUSXhAIxlRg==
+react-i18next@11.12.0:
+  version "11.12.0"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.12.0.tgz#2a053321b9b7a876d5baa7af55a12d986117bffc"
+  integrity sha512-M9BT+hqVG03ywrl+L7CK74ugK+4jIo7AeKJ17+g9BoqJz2+/aVbs8SIVXT4KMQ1rjIdcw+GcSRDy1CXjcz6tLQ==
   dependencies:
     "@babel/runtime" "^7.14.5"
     html-parse-stringify "^3.0.1"
