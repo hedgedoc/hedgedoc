@@ -157,7 +157,7 @@
     "tabWidth": 2,
     "trailingComma": "none",
     "bracketSpacing": true,
-    "jsxBracketSameLine": true,
+    "bracketSameLine": true,
     "arrowParens": "always"
   },
   "browserslist": {
@@ -185,7 +185,7 @@
     "eslint-plugin-chai-friendly": "0.7.2",
     "eslint-plugin-cypress": "2.11.3",
     "http-server": "13.0.1",
-    "prettier": "2.3.2",
+    "prettier": "2.4.0",
     "redux-devtools": "3.7.0",
     "redux-devtools-extension": "2.13.9",
     "ts-loader": "9.2.5",
