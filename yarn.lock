@@ -6484,7 +6484,7 @@ messageformat@^2.3.0:
 
 "meta-marked@git+https://github.com/hedgedoc/meta-marked":
   version "0.4.5"
-  resolved "git+https://github.com/hedgedoc/meta-marked#324be363b98af0bb0f34c0b6a48623f572481421"
+  resolved "git+https://github.com/hedgedoc/meta-marked#6b3653c53a1727f697d0719626c55037b2f03753"
   dependencies:
     js-yaml "~4.1.0"
     marked "~2.1.0"
