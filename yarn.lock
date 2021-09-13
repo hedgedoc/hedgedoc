@@ -585,7 +585,6 @@
 
 "Idle.Js@git+https://github.com/shawnmclean/Idle.js":
   version "0.0.1"
-  uid "2b57cc6e49d177b7ddce0cca00ef5cbe07453541"
   resolved "git+https://github.com/shawnmclean/Idle.js#2b57cc6e49d177b7ddce0cca00ef5cbe07453541"
 
 JSV@^4.0.x:
@@ -603,7 +602,7 @@ abcjs@5.10.3:
   resolved "https://registry.yarnpkg.com/abcjs/-/abcjs-5.10.3.tgz#294702140ec1caa292859ba9d2af0452f7e9e046"
   integrity sha512-YGmW4CUWd7T2/HqZa/SQOTE+lXg7Z68HwwpJhHJBvdHqLi1uLCiYva1ZRGhB/MPyl1QKqJMfF+LQ1jGAEK69XQ==
   dependencies:
-    midi "git+https://github.com/paulrosen/MIDI.js.git#abcjs"
+    midi "https://github.com/paulrosen/MIDI.js.git#abcjs"
 
 abcjs@5.11.0:
   version "5.11.0"
@@ -611,7 +610,7 @@ abcjs@5.11.0:
   integrity sha512-kLehHwwttcTCVhKQaDkmqYbWBLAWmfyzYSbUQoEDAOTOX5RzDGakX8tXpzlsNHw6Lh8W8odZw44e0siwbG4TKA==
   dependencies:
     abcjs "5.10.3"
-    midi "git+https://github.com/paulrosen/MIDI.js.git#abcjs"
+    midi "https://github.com/paulrosen/MIDI.js.git#abcjs"
 
 abcjs@5.12.0:
   version "5.12.0"
@@ -619,7 +618,7 @@ abcjs@5.12.0:
   integrity sha512-pvi7SjOAKT7cRyRtywUSwYB0SNtRHKLxZUZ9Oc4E+nvpBHr8Z2/M9Pfyv3oIaiEpxlWTFK+B/H5t/DckiNFgpg==
   dependencies:
     abcjs "5.11.0"
-    midi "git+https://github.com/paulrosen/MIDI.js.git#abcjs"
+    midi "https://github.com/paulrosen/MIDI.js.git#abcjs"
 
 abstract-logging@^2.0.0:
   version "2.0.1"
@@ -971,10 +970,10 @@ available-typed-arrays@^1.0.5:
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
-aws-sdk@^2.977.0:
-  version "2.983.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.983.0.tgz#4c6d98d802b2cf159acbc105979b892b427b5fb3"
-  integrity sha512-i4QMJt5hEYzhoDzmbo0v+aAuHQPXM6ah15GBKObbxwYxmzK9wjMG+FH3DiWZZHdFsf3C+p1zDg4rIr63jmOeBw==
+aws-sdk@^2.987.0:
+  version "2.987.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.987.0.tgz#a6e952ae3d3adf352516402d88397fbe2b9e3480"
+  integrity sha512-XgMrHWHE3aKg11D4QSlpyLvsGw6mHHiUQuowbswd11k89Q6wEfA+jMbYMC7/jsx3LrH9EKti70qhfZyw/wQIfg==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
@@ -2277,7 +2276,6 @@ code-point-at@^1.0.0:
 
 "codemirror@git+https://github.com/hedgedoc/CodeMirror.git":
   version "5.58.2"
-  uid f780b569b3717cdff4c8507538cc63101bfa02e1
   resolved "git+https://github.com/hedgedoc/CodeMirror.git#f780b569b3717cdff4c8507538cc63101bfa02e1"
 
 collection-visit@^1.0.0:
@@ -3260,7 +3258,6 @@ detect-libc@^1.0.2:
 
 "diff-match-patch@git+https://github.com/hackmdio/diff-match-patch.git":
   version "1.1.1"
-  uid c2f8fb9d69aa9490b764850aa86ba442c93ccf78
   resolved "git+https://github.com/hackmdio/diff-match-patch.git#c2f8fb9d69aa9490b764850aa86ba442c93ccf78"
 
 diff@5.0.0:
@@ -5626,7 +5623,6 @@ js-cookie@3.0.1:
 
 "js-sequence-diagrams@git+https://github.com/hedgedoc/js-sequence-diagrams.git":
   version "2.0.1"
-  uid bda0e49b6c2754f3c7158b1dfb9ccf26efc24b39
   resolved "git+https://github.com/hedgedoc/js-sequence-diagrams.git#bda0e49b6c2754f3c7158b1dfb9ccf26efc24b39"
   dependencies:
     lodash "4.17.x"
@@ -6184,7 +6180,6 @@ lutim@^1.0.2:
 
 "lz-string@git+https://github.com/hackmdio/lz-string.git":
   version "1.4.4"
-  uid efd1f64676264d6d8871b01f4f375fc6ef4f9022
   resolved "git+https://github.com/hackmdio/lz-string.git#efd1f64676264d6d8871b01f4f375fc6ef4f9022"
 
 make-dir@^1.0.0:
@@ -6489,7 +6484,6 @@ messageformat@^2.3.0:
 
 "meta-marked@git+https://github.com/hedgedoc/meta-marked":
   version "0.4.5"
-  uid "324be363b98af0bb0f34c0b6a48623f572481421"
   resolved "git+https://github.com/hedgedoc/meta-marked#324be363b98af0bb0f34c0b6a48623f572481421"
   dependencies:
     js-yaml "~4.1.0"
@@ -6738,7 +6732,6 @@ micromatch@^4.0.4:
 
 "midi@git+https://github.com/paulrosen/MIDI.js.git#abcjs":
   version "0.4.2"
-  uid e593ffef81a0350f99448e3ab8111957145ff6b2
   resolved "git+https://github.com/paulrosen/MIDI.js.git#e593ffef81a0350f99448e3ab8111957145ff6b2"
 
 miller-rabin@^4.0.0:
