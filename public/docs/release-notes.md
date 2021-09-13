@@ -34,6 +34,17 @@
 ### Miscellaneous
 - Removed MSSQL support, as migrations from 2018 are broken with SQL Server and nobody seems to use it
 
+### Contributors
+- Bogdan Cuza (translator)
+- Heimen Stoffels (translator)
+- igg17 (translator)
+- Klorophatu (translator)
+- Martin (translator)
+- Matija (translator)
+- Matthieu Devillers (translator)
+- Mindaugas (translator)
+- Quentin Pagès (translator)
+
 ## <i class="fa fa-tag"></i> 1.8.2 <i class="fa fa-calendar-o"></i> 2021-05-11
 
 This release fixes two security issues. We recommend upgrading as soon as possible.
