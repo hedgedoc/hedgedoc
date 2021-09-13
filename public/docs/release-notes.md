@@ -1,21 +1,19 @@
 # Release Notes
-## <i class="fa fa-tag"></i> 1.9.0-rc1 <i class="fa fa-calendar-o"></i> 2021-08-29
+## <i class="fa fa-tag"></i> 1.9.0 <i class="fa fa-calendar-o"></i> 2021-09-13
 ### Security Fixes
 - [CVE-2021-39175: XSS vector in slide mode speaker-view](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-j748-779h-9697)
-- This release removes Google Analytics and Disqus domains from our default Content Security Policy, because
-  they were repeatedly used to exploit security vulnerabilities.  
+- This release removes Google Analytics and Disqus domains from our default Content Security Policy, because they were repeatedly used to exploit security vulnerabilities.  
   If you want to continue using Google Analytics or Disqus, you can re-enable them in the config.
   See [the docs](https://docs.hedgedoc.org/configuration/#web-security-aspects) for details
 
 ### Features
 - HedgeDoc now automatically retries connecting to the database up to 30 times on startup
-- This release introduces the `csp.allowFraming` config option, which controls whether embedding a HedgeDoc instance
-  in other webpages is allowed. We **strongly recommend disabling** this option to reduce the risk of XSS attacks
-- This release introduces the `csp.allowPDFEmbed` config option, which controls whether embedding PDFs inside HedgeDoc
-  notes is allowed. We recommend disabling this option if you don't use the feature, to reduce the attack surface of
-  XSS attacks
+- This release introduces the `csp.allowFraming` config option, which controls whether embedding a HedgeDoc instance in other webpages is allowed.
+  We **strongly recommend disabling** this option to reduce the risk of XSS attacks
+- This release introduces the `csp.allowPDFEmbed` config option, which controls whether embedding PDFs inside HedgeDoc notes is allowed.
+  We recommend disabling this option if you don't use the feature, to reduce the attack surface of XSS attacks
 - Add additional environment variables to configure the database.
-  This allows easier configuration in containerised environments, such as Kubernetes
+  This allows easier configuration in containerized environments, such as Kubernetes
 
 ### Enhancements
 - Further improvements to the frontend build process, reducing the initial bundle size by 60%
