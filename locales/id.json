@@ -119,12 +119,12 @@
     "Help us translating": "Bantu kami menerjemahkan",
     "Join the community": "Bergabung dengan komunitas",
     "Imprint": "Jejak",
-    "Freely - Anyone can edit": "Freely - Anyone can edit",
-    "Editable - Signed-in people can edit": "Editable - Signed-in people can edit",
-    "Limited - Signed-in people can edit (forbid guests)": "Limited - Signed-in people can edit (forbid guests)",
-    "Locked - Only owner can edit": "Locked - Only owner can edit",
-    "Protected - Only owner can edit (forbid guests)": "Protected - Only owner can edit (forbid guests)",
-    "Private - Only owner can view & edit": "Private - Only owner can view & edit",
-    "changed": "changed",
-    "created": "created"
+    "Freely - Anyone can edit": "Gratis - Siapa pun dapat mengedit",
+    "Editable - Signed-in people can edit": "Dapat diedit - Orang yang masuk dapat mengedit",
+    "Limited - Signed-in people can edit (forbid guests)": "Terbatas - Orang yang masuk dapat mengedit (melarang tamu)",
+    "Locked - Only owner can edit": "Terkunci - Hanya pemilik yang dapat mengedit",
+    "Protected - Only owner can edit (forbid guests)": "Dilindungi - Hanya pemilik yang dapat mengedit (melarang tamu)",
+    "Private - Only owner can view & edit": "Pribadi - Hanya pemilik yang dapat melihat & mengedit",
+    "changed": "berubah",
+    "created": "dibuat"
 }
