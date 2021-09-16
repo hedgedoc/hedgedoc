@@ -26,9 +26,7 @@ describe('Autocompletion', () => {
         .should('have.text', '```abnf')
       cy.get('.CodeMirror-code > div:nth-of-type(3) > .CodeMirror-line > span  span')
         .should('have.text', '```')
-      cy.getMarkdownBody()
-        .find('pre > code')
-        .should('exist')
+      cy.getMarkdownBody().find('.code-highlighter').should('exist')
     })
     it('via doubleclick', () => {
       cy.codemirrorFill('```')
@@ -41,9 +39,7 @@ describe('Autocompletion', () => {
         .should('have.text', '```abnf')
       cy.get('.CodeMirror-code > div:nth-of-type(3) > .CodeMirror-line > span  span')
         .should('have.text', '```')
-      cy.getMarkdownBody()
-        .find('pre > code')
-        .should('exist')
+      cy.getMarkdownBody().find('.code-highlighter').should('exist')
     })
   })
 

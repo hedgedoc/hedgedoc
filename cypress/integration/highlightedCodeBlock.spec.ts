@@ -5,9 +5,7 @@
  */
 
 const findHljsCodeBlock = () => {
-  return cy.getMarkdownBody()
-           .find('pre > code.hljs')
-           .should('be.visible')
+  return cy.getMarkdownBody().find('.code-highlighter > code.hljs').should('be.visible')
 }
 
 describe('Code', () => {

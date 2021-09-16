@@ -61,14 +61,14 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
   }, [code, language, startLineNumber])
 
   return (
-    <Fragment>
+    <div className={'code-highlighter'}>
       <code className={`hljs ${startLineNumber !== undefined ? 'showGutter' : ''} ${wrapLines ? 'wrapLines' : ''}`}>
         {dom}
       </code>
       <div className={'text-right button-inside'}>
         <CopyToClipboardButton content={code} data-cy='copy-code-button' />
       </div>
-    </Fragment>
+    </div>
   )
 }
 
