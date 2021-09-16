@@ -8,7 +8,7 @@
   @import '../../../../../../node_modules/highlight.js/styles/github';
 
   body.dark & {
-    @import '../../../../../../node_modules/highlight.js/styles/tomorrow-night-blue';
+    @import '../../../../../../node_modules/highlight.js/styles/github-dark';
   }
 
   pre code.hljs {
