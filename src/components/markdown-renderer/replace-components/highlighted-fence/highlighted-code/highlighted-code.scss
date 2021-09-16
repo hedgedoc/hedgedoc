@@ -11,53 +11,55 @@
     @import '../../../../../../node_modules/highlight.js/styles/github-dark';
   }
 
-  pre code.hljs {
-    overflow-x: auto;
-    background-color: rgba(27, 31, 35, .05);
+  pre, & {
+    code.hljs {
+      overflow-x: auto;
+      background-color: rgba(27, 31, 35, .05);
 
-    body.dark & {
-      background-color: rgb(27, 31, 35);
-    }
-
-    body.dark &, & {
-      padding: 16px;
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-
-      .codeline {
-        grid-column: 2;
-        white-space: pre;
+      body.dark & {
+        background-color: rgb(27, 31, 35);
       }
 
-      .linenumber {
-        grid-column: 1;
-        position: relative;
-        cursor: default;
-        z-index: 4;
-        padding: 0 8px 0 0;
-        min-width: 20px;
-        box-sizing: content-box;
-        color: #afafaf;
-        border-right: 3px solid #6ce26c;
-        flex-direction: column;
-        overflow: hidden;
-        user-select: none;
-        align-items: flex-end;
-        display: none;
-      }
+      body.dark &, & {
+        padding: 16px;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
 
-      &.showGutter {
-        .linenumber {
-          display: flex;
+        .codeline {
+          grid-column: 2;
+          white-space: pre;
         }
-      }
 
-      &.showGutter .codeline {
-        margin: 0 0 0 16px;
-      }
+        .linenumber {
+          grid-column: 1;
+          position: relative;
+          cursor: default;
+          z-index: 4;
+          padding: 0 8px 0 0;
+          min-width: 20px;
+          box-sizing: content-box;
+          color: #afafaf;
+          border-right: 3px solid #6ce26c;
+          flex-direction: column;
+          overflow: hidden;
+          user-select: none;
+          align-items: flex-end;
+          display: none;
+        }
 
-      &.wrapLines .codeline {
-        white-space: pre-wrap;
+        &.showGutter {
+          .linenumber {
+            display: flex;
+          }
+        }
+
+        &.showGutter .codeline {
+          margin: 0 0 0 16px;
+        }
+
+        &.wrapLines .codeline {
+          white-space: pre-wrap;
+        }
       }
     }
   }
