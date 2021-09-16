@@ -41,7 +41,7 @@ export const HelpModal: React.FC<HelpModalProps> = ({ show, onHide }) => {
   const tabTitle = useMemo(() => t('editor.documentBar.help') + ' - ' + t(`editor.help.${tab}`), [t, tab])
 
   return (
-    <CommonModal icon={'question-circle'} show={show} onHide={onHide} title={tabTitle}>
+    <CommonModal size={'lg'} icon={'question-circle'} show={show} onHide={onHide} title={tabTitle}>
       <Modal.Body>
         <nav className='nav nav-tabs'>
           <Button
