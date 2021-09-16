@@ -10,9 +10,11 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 
 import { AppModule } from './app.module';
 import { AppConfig } from './config/app.config';
+import { AuthConfig } from './config/auth.config';
 import { MediaConfig } from './config/media.config';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { BackendType } from './media/backends/backend-type.enum';
+import { setupSessionMiddleware } from './utils/session';
 import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
 
 async function bootstrap(): Promise<void> {
@@ -25,9 +27,10 @@ async function bootstrap(): Promise<void> {
   app.useLogger(logger);
   const configService = app.get(ConfigService);
   const appConfig = configService.get<AppConfig>('appConfig');
+  const authConfig = configService.get<AuthConfig>('authConfig');
   const mediaConfig = configService.get<MediaConfig>('mediaConfig');
 
-  if (!appConfig || !mediaConfig) {
+  if (!appConfig || !authConfig || !mediaConfig) {
     logger.error('Could not initialize config, aborting.', 'AppBootstrap');
     process.exit(1);
   }
@@ -44,6 +47,8 @@ async function bootstrap(): Promise<void> {
       'AppBootstrap',
     );
   }
+
+  setupSessionMiddleware(app, authConfig);
 
   app.enableCors({
     origin: appConfig.rendererOrigin,

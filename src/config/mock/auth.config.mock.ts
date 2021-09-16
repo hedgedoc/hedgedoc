@@ -6,7 +6,11 @@
 import { registerAs } from '@nestjs/config';
 
 export default registerAs('authConfig', () => ({
-  email: {
+  session: {
+    secret: 'my_secret',
+    lifetime: 1209600000,
+  },
+  local: {
     enableLogin: true,
     enableRegister: true,
   },

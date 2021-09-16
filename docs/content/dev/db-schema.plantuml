@@ -40,8 +40,9 @@ entity "identity" {
   *id : number
   --
   *userId : uuid <<FK user>>
+  *providerType: text
   ' Identifies the external login provider and is set in the config
-  *providerName : text
+  providerName : text
   *syncSource : boolean
   *createdAt : date
   *updatedAt : date

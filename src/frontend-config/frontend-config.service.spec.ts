@@ -23,7 +23,11 @@ import { FrontendConfigService } from './frontend-config.service';
 describe('FrontendConfigService', () => {
   const domain = 'http://md.example.com';
   const emptyAuthConfig: AuthConfig = {
-    email: {
+    session: {
+      secret: 'my-secret',
+      lifetime: 1209600000,
+    },
+    local: {
       enableLogin: false,
       enableRegister: false,
     },
@@ -193,7 +197,7 @@ describe('FrontendConfigService', () => {
                             };
                             const authConfig: AuthConfig = {
                               ...emptyAuthConfig,
-                              email: {
+                              local: {
                                 enableLogin,
                                 enableRegister,
                               },
@@ -258,7 +262,7 @@ describe('FrontendConfigService', () => {
                             expect(config.authProviders.google).toEqual(
                               !!authConfig.google.clientID,
                             );
-                            expect(config.authProviders.internal).toEqual(
+                            expect(config.authProviders.local).toEqual(
                               enableLogin,
                             );
                             expect(config.authProviders.twitter).toEqual(
