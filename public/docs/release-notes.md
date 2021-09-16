@@ -1,4 +1,9 @@
 # Release Notes
+
+## <i class="fa fa-tag"></i> Unreleased
+### Bugfixes
+- Add workaround for incorrect CSP handling in Safari
+
 ## <i class="fa fa-tag"></i> 1.9.0 <i class="fa fa-calendar-o"></i> 2021-09-13
 ### Security Fixes
 - [CVE-2021-39175: XSS vector in slide mode speaker-view](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-j748-779h-9697)
