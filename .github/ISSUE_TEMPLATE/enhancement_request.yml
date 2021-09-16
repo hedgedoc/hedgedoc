@@ -1,0 +1,46 @@
+name: Enhancement request
+description: Suggest an enhancement of an existing feature.
+title: ""
+labels: ["type: enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        - If you want to report a bug or an error, then please consider filling out a "bug report" instead!
+        - If you're requesting a new feature, that isn't part of this project yet, then please consider filling out a "feature request" instead!
+  - type: input
+    id: part
+    attributes:
+      label: Which part of the project should be enhanced?
+      description: A clean and concise description of which part should be modified.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Is your enhancement request related to a problem? Please describe.
+      description: A clear and concise description of what the problem is.
+      placeholder: I'm always frustrated when [...]
+    validations:
+      required: false
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you'd like
+      description: A clear and concise description of what you want to happen and why.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Describe alternatives you've considered
+      description: A clear and concise description of any alternative solutions or features you've considered.
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add any other context or screenshots about the enhancement request here.
+    validations:
+      required: false
