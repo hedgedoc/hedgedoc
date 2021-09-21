@@ -74,7 +74,7 @@
     "@types/express": "4.17.13",
     "@types/express-session": "1.17.4",
     "@types/jest": "27.0.2",
-    "@types/node": "14.17.17",
+    "@types/node": "14.17.18",
     "@types/passport-local": "1.0.34",
     "@types/supertest": "2.0.11",
     "@typescript-eslint/eslint-plugin": "4.31.2",
