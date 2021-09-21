@@ -1,6 +1,6 @@
 name: Feature request
 description: Suggest a new feature for this project, which isn't existing yet.
-title: ""
+title: "type a short title of your feature request here"
 labels: ["type: feature"]
 body:
   - type: markdown
