@@ -1,6 +1,6 @@
 name: Enhancement request
 description: Suggest an enhancement of an existing feature.
-title: ""
+title: "type a short title of your enhancement request here"
 labels: ["type: enhancement"]
 body:
   - type: markdown
