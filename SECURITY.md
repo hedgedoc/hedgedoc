@@ -8,7 +8,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## Supported Versions
 
-Only the latest release of CodiMD is supported. We don't have the
+Only the latest release of HedgeDoc is supported. We don't have the
 ressources to maintain multiple versions.
 
 ## Reporting a Vulnerability
@@ -22,7 +22,7 @@ which will take care of the encryption for you.
 
 We'll get back to you as soon as possible. You can expect an answer within
 3 days, in rare cases within a month. If you don't get a reply within a month,
-please reach out for other contact addresses in the [community chat](https://riot.im/app/#/room/#codimd:matrix.org).
+please reach out for other contact addresses in the [community chat](https://chat.hedgedoc.org).
 
 When your findings are accepted as a security issue, we'll work an a fix or
 at least a workaround for the next release. With the release that contained
@@ -31,8 +31,8 @@ the fix, we want to encurage you to publish your findings as you like.
 We'll also credit you in the release notes.
 
 When your findings are not accepted as a security issue, feel free to write
-a fix yourself and contribute it to CodiMD, as well as publish them as you
-like and allow people to make in informed decision about using CodiMD.
+a fix yourself and contribute it to HedgeDoc, as well as publish them as you
+like and allow people to make in informed decision about using HedgeDoc.
 
 If you have any further questions, feel free to reach out to the
-[community chat](https://riot.im/app/#/room/#codimd:matrix.org) or the mentioned contacts above.
+[community chat](https://chat.hedgedoc.org) or the mentioned contacts above.
