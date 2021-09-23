@@ -13,10 +13,9 @@ import {
   Param,
   Post,
   Put,
-  Req,
   UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
-import { Request } from 'express';
 
 import {
   AlreadyInDBError,
@@ -24,6 +23,7 @@ import {
   NotInDBError,
   PrimaryAliasDeletionForbiddenError,
 } from '../../../errors/errors';
+import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { AliasCreateDto } from '../../../notes/alias-create.dto';
 import { AliasUpdateDto } from '../../../notes/alias-update.dto';
@@ -31,8 +31,11 @@ import { AliasDto } from '../../../notes/alias.dto';
 import { AliasService } from '../../../notes/alias.service';
 import { NotesService } from '../../../notes/notes.service';
 import { PermissionsService } from '../../../permissions/permissions.service';
+import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
+import { RequestUser } from '../../utils/request-user.decorator';
 
+@UseGuards(SessionGuard)
 @Controller('alias')
 export class AliasController {
   constructor(
@@ -44,15 +47,12 @@ export class AliasController {
   ) {
     this.logger.setContext(AliasController.name);
   }
-
   @Post()
   async addAlias(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @Body() newAliasDto: AliasCreateDto,
   ): Promise<AliasDto> {
     try {
-      // ToDo: use actual user here
-      const user = await this.userService.getUserByUsername('hardcoded');
       const note = await this.noteService.getNoteByIdOrAlias(
         newAliasDto.noteIdOrAlias,
       );
@@ -77,7 +77,7 @@ export class AliasController {
 
   @Put(':alias')
   async makeAliasPrimary(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @Param('alias') alias: string,
     @Body() changeAliasDto: AliasUpdateDto,
   ): Promise<AliasDto> {
@@ -87,8 +87,6 @@ export class AliasController {
       );
     }
     try {
-      // ToDo: use actual user here
-      const user = await this.userService.getUserByUsername('hardcoded');
       const note = await this.noteService.getNoteByIdOrAlias(alias);
       if (!this.permissionsService.isOwner(user, note)) {
         throw new UnauthorizedException('Reading note denied!');
@@ -112,12 +110,10 @@ export class AliasController {
   @Delete(':alias')
   @HttpCode(204)
   async removeAlias(
-    @Req() req: Request,
+    @RequestUser() user: User,
     @Param('alias') alias: string,
   ): Promise<void> {
     try {
-      // ToDo: use actual user here
-      const user = await this.userService.getUserByUsername('hardcoded');
       const note = await this.noteService.getNoteByIdOrAlias(alias);
       if (!this.permissionsService.isOwner(user, note)) {
         throw new UnauthorizedException('Reading note denied!');
