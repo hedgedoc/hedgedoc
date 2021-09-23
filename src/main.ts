@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { LogLevel, ValidationPipe } from '@nestjs/common';
+import { LogLevel } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -15,6 +15,7 @@ import { MediaConfig } from './config/media.config';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { BackendType } from './media/backends/backend-type.enum';
 import { setupSessionMiddleware } from './utils/session';
+import { setupValidationPipe } from './utils/setup-pipes';
 import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
 
 async function bootstrap(): Promise<void> {
@@ -55,13 +56,7 @@ async function bootstrap(): Promise<void> {
   });
   logger.log(`Enabling CORS for '${appConfig.rendererOrigin}'`, 'AppBootstrap');
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      forbidUnknownValues: true,
-      skipMissingProperties: false,
-      transform: true,
-    }),
-  );
+  app.useGlobalPipes(setupValidationPipe(logger));
   if (mediaConfig.backend.use === BackendType.FILESYSTEM) {
     logger.log(
       `Serving the local folder '${mediaConfig.backend.filesystem.uploadPath}' under '/uploads'`,
