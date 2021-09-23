@@ -13,6 +13,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -21,27 +22,27 @@ import { HistoryEntryImportDto } from '../../../../history/history-entry-import.
 import { HistoryEntryUpdateDto } from '../../../../history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../../../history/history-entry.dto';
 import { HistoryService } from '../../../../history/history.service';
+import { SessionGuard } from '../../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { GetNotePipe } from '../../../../notes/get-note.pipe';
 import { Note } from '../../../../notes/note.entity';
-import { UsersService } from '../../../../users/users.service';
+import { User } from '../../../../users/user.entity';
+import { RequestUser } from '../../../utils/request-user.decorator';
 
+@UseGuards(SessionGuard)
 @ApiTags('history')
 @Controller('/me/history')
 export class HistoryController {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private historyService: HistoryService,
-    private userService: UsersService,
   ) {
     this.logger.setContext(HistoryController.name);
   }
 
   @Get()
-  async getHistory(): Promise<HistoryEntryDto[]> {
-    // ToDo: use actual user here
+  async getHistory(@RequestUser() user: User): Promise<HistoryEntryDto[]> {
     try {
-      const user = await this.userService.getUserByUsername('hardcoded');
       const foundEntries = await this.historyService.getEntriesByUser(user);
       return foundEntries.map((entry) =>
         this.historyService.toHistoryEntryDto(entry),
@@ -56,11 +57,10 @@ export class HistoryController {
 
   @Post()
   async setHistory(
+    @RequestUser() user: User,
     @Body('history') history: HistoryEntryImportDto[],
   ): Promise<void> {
     try {
-      // ToDo: use actual user here
-      const user = await this.userService.getUserByUsername('hardcoded');
       await this.historyService.setHistory(user, history);
     } catch (e) {
       if (e instanceof NotInDBError || e instanceof ForbiddenIdError) {
@@ -71,10 +71,8 @@ export class HistoryController {
   }
 
   @Delete()
-  async deleteHistory(): Promise<void> {
+  async deleteHistory(@RequestUser() user: User): Promise<void> {
     try {
-      // ToDo: use actual user here
-      const user = await this.userService.getUserByUsername('hardcoded');
       await this.historyService.deleteHistory(user);
     } catch (e) {
       if (e instanceof NotInDBError) {
@@ -87,11 +85,10 @@ export class HistoryController {
   @Put(':note')
   async updateHistoryEntry(
     @Param('note', GetNotePipe) note: Note,
+    @RequestUser() user: User,
     @Body() entryUpdateDto: HistoryEntryUpdateDto,
   ): Promise<HistoryEntryDto> {
     try {
-      // ToDo: use actual user here
-      const user = await this.userService.getUserByUsername('hardcoded');
       const newEntry = await this.historyService.updateHistoryEntry(
         note,
         user,
@@ -109,10 +106,9 @@ export class HistoryController {
   @Delete(':note')
   async deleteHistoryEntry(
     @Param('note', GetNotePipe) note: Note,
+    @RequestUser() user: User,
   ): Promise<void> {
     try {
-      // ToDo: use actual user here
-      const user = await this.userService.getUserByUsername('hardcoded');
       await this.historyService.deleteHistoryEntry(note, user);
     } catch (e) {
       if (e instanceof NotInDBError) {

@@ -14,6 +14,7 @@ import { Identity } from '../../../identity/identity.entity';
 import { LoggerModule } from '../../../logger/logger.module';
 import { Session } from '../../../users/session.entity';
 import { User } from '../../../users/user.entity';
+import { UsersModule } from '../../../users/users.module';
 import { TokensController } from './tokens.controller';
 
 describe('TokensController', () => {
@@ -29,6 +30,7 @@ describe('TokensController', () => {
         }),
         LoggerModule,
         AuthModule,
+        UsersModule,
       ],
     })
       .overrideProvider(getRepositoryToken(User))

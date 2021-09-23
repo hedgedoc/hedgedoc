@@ -9,17 +9,25 @@ import {
   Delete,
   Get,
   HttpCode,
+  NotFoundException,
   Param,
   Post,
+  UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { AuthTokenWithSecretDto } from '../../../auth/auth-token-with-secret.dto';
 import { AuthTokenDto } from '../../../auth/auth-token.dto';
 import { AuthService } from '../../../auth/auth.service';
+import { NotInDBError } from '../../../errors/errors';
+import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
+import { User } from '../../../users/user.entity';
 import { TimestampMillis } from '../../../utils/timestamp';
+import { RequestUser } from '../../utils/request-user.decorator';
 
+@UseGuards(SessionGuard)
 @ApiTags('tokens')
 @Controller('tokens')
 export class TokensController {
@@ -31,9 +39,8 @@ export class TokensController {
   }
 
   @Get()
-  async getUserTokens(): Promise<AuthTokenDto[]> {
-    // ToDo: Get real userName
-    return (await this.authService.getTokensByUsername('hardcoded')).map(
+  async getUserTokens(@RequestUser() user: User): Promise<AuthTokenDto[]> {
+    return (await this.authService.getTokensByUsername(user.userName)).map(
       (token) => this.authService.toAuthTokenDto(token),
     );
   }
@@ -42,10 +49,10 @@ export class TokensController {
   async postTokenRequest(
     @Body('label') label: string,
     @Body('validUntil') validUntil: TimestampMillis,
+    @RequestUser() user: User,
   ): Promise<AuthTokenWithSecretDto> {
-    // ToDo: Get real userName
     return await this.authService.createTokenForUser(
-      'hardcoded',
+      user.userName,
       label,
       validUntil,
     );
@@ -53,7 +60,24 @@ export class TokensController {
 
   @Delete('/:keyId')
   @HttpCode(204)
-  async deleteToken(@Param('keyId') keyId: string): Promise<void> {
-    return await this.authService.removeToken(keyId);
+  async deleteToken(
+    @RequestUser() user: User,
+    @Param('keyId') keyId: string,
+  ): Promise<void> {
+    const tokens = await this.authService.getTokensByUsername(user.userName);
+    try {
+      for (const token of tokens) {
+        if (token.keyId == keyId) {
+          return await this.authService.removeToken(keyId);
+        }
+      }
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
+      }
+    }
+    throw new UnauthorizedException(
+      'User is not authorized to delete this token',
+    );
   }
 }
