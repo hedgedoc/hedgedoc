@@ -10,10 +10,6 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "typeRoots": [
-      "./types",
-      "./node_modules/@types"
-    ],
     "strict": true,
     "strictPropertyInitialization": false
   }

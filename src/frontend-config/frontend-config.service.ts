@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Inject, Injectable } from '@nestjs/common';
+import { URL } from 'url';
 
 import appConfiguration, { AppConfig } from '../config/app.config';
 import authConfiguration, { AuthConfig } from '../config/auth.config';
