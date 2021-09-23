@@ -5086,7 +5086,7 @@ __metadata:
     reflect-metadata: 0.1.13
     rimraf: 3.0.2
     rxjs: 7.3.0
-    source-map-support: ^0.5.19
+    source-map-support: 0.5.20
     sqlite3: 5.0.2
     supertest: 6.1.6
     swagger-ui-express: 4.1.6
@@ -8609,7 +8609,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-support@npm:^0.5.19, source-map-support@npm:^0.5.6, source-map-support@npm:~0.5.20":
+"source-map-support@npm:0.5.20, source-map-support@npm:^0.5.6, source-map-support@npm:~0.5.20":
   version: 0.5.20
   resolution: "source-map-support@npm:0.5.20"
   dependencies:
