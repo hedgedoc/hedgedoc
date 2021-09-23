@@ -11,12 +11,14 @@ import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
 import { NotesService } from '../notes/notes.service';
+import { getPrimaryAlias } from '../notes/utils';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { HistoryEntryImportDto } from './history-entry-import.dto';
 import { HistoryEntryUpdateDto } from './history-entry-update.dto';
 import { HistoryEntryDto } from './history-entry.dto';
 import { HistoryEntry } from './history-entry.entity';
+import { getIdentifier } from './utils';
 
 @Injectable()
 export class HistoryService {
@@ -41,7 +43,7 @@ export class HistoryService {
   async getEntriesByUser(user: User): Promise<HistoryEntry[]> {
     return await this.historyEntryRepository.find({
       where: { user: user },
-      relations: ['note', 'user'],
+      relations: ['note', 'note.aliases', 'user'],
     });
   }
 
@@ -58,7 +60,7 @@ export class HistoryService {
         note: note,
         user: user,
       },
-      relations: ['note', 'user'],
+      relations: ['note', 'note.aliases', 'user'],
     });
     if (!entry) {
       throw new NotInDBError(
@@ -150,23 +152,19 @@ export class HistoryService {
     await this.connection.transaction(async (manager) => {
       const currentHistory = await manager.find<HistoryEntry>(HistoryEntry, {
         where: { user: user },
-        relations: ['note', 'user'],
+        relations: ['note', 'note.aliases', 'user'],
       });
       for (const entry of currentHistory) {
         await manager.remove<HistoryEntry>(entry);
       }
       for (const historyEntry of history) {
         this.notesService.checkNoteIdOrAlias(historyEntry.note);
-        const note = await manager.findOne<Note>(Note, {
-          where: [
-            {
-              id: historyEntry.note,
-            },
-            {
-              alias: historyEntry.note,
-            },
-          ],
-        });
+        const note = await manager
+          .createQueryBuilder<Note>(Note, 'note')
+          .innerJoin('note.aliases', 'alias')
+          .where('note.id = :id', { id: historyEntry.note })
+          .orWhere('alias.name = :id', { id: historyEntry.note })
+          .getOne();
         if (note === undefined) {
           this.logger.debug(
             `Could not find note '${historyEntry.note}'`,
@@ -191,7 +189,7 @@ export class HistoryService {
    */
   toHistoryEntryDto(entry: HistoryEntry): HistoryEntryDto {
     return {
-      identifier: entry.note.alias ? entry.note.alias : entry.note.id,
+      identifier: getIdentifier(entry),
       lastVisited: entry.updatedAt,
       tags: this.notesService.toTagList(entry.note),
       title: entry.note.title ?? '',

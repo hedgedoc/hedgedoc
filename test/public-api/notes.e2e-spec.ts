@@ -208,7 +208,7 @@ describe('Notes', () => {
       updateNotePermission.sharedToGroups = [];
       await notesService.updateNotePermissions(note, updateNotePermission);
       const updatedNote = await notesService.getNoteByIdOrAlias(
-        note.alias ?? '',
+        note.aliases.filter((alias) => alias.primary)[0].name,
       );
       expect(updatedNote.userPermissions).toHaveLength(1);
       expect(updatedNote.userPermissions[0].canEdit).toEqual(
@@ -274,7 +274,8 @@ describe('Notes', () => {
         .get('/notes/test5/metadata')
         .expect(200);
       expect(typeof metadata.body.id).toEqual('string');
-      expect(metadata.body.alias).toEqual('test5');
+      expect(metadata.body.aliases).toEqual(['test5']);
+      expect(metadata.body.primaryAlias).toEqual('test5');
       expect(metadata.body.title).toEqual('');
       expect(metadata.body.description).toEqual('');
       expect(typeof metadata.body.createTime).toEqual('string');

@@ -15,6 +15,7 @@ import { NotInDBError } from '../errors/errors';
 import { Group } from '../groups/group.entity';
 import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
+import { Alias } from '../notes/alias.entity';
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
@@ -34,6 +35,7 @@ describe('HistoryService', () => {
   let historyRepo: Repository<HistoryEntry>;
   let connection;
   let noteRepo: Repository<Note>;
+  let aliasRepo: Repository<Alias>;
 
   type MockConnection = {
     transaction: () => void;
@@ -92,12 +94,15 @@ describe('HistoryService', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Author))
       .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
+      .useClass(Repository)
       .compile();
 
     service = module.get<HistoryService>(HistoryService);
     historyRepo = module.get<Repository<HistoryEntry>>(
       getRepositoryToken(HistoryEntry),
     );
+    aliasRepo = module.get<Repository<Alias>>(getRepositoryToken(Alias));
     connection = module.get<Connection>(Connection);
     noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
   });
@@ -151,7 +156,8 @@ describe('HistoryService', () => {
           Note.create(user, alias),
           user,
         );
-        expect(createHistoryEntry.note.alias).toEqual(alias);
+        expect(createHistoryEntry.note.aliases).toHaveLength(1);
+        expect(createHistoryEntry.note.aliases[0].name).toEqual(alias);
         expect(createHistoryEntry.note.owner).toEqual(user);
         expect(createHistoryEntry.user).toEqual(user);
         expect(createHistoryEntry.pinStatus).toEqual(false);
@@ -168,7 +174,8 @@ describe('HistoryService', () => {
           Note.create(user, alias),
           user,
         );
-        expect(createHistoryEntry.note.alias).toEqual(alias);
+        expect(createHistoryEntry.note.aliases).toHaveLength(1);
+        expect(createHistoryEntry.note.aliases[0].name).toEqual(alias);
         expect(createHistoryEntry.note.owner).toEqual(user);
         expect(createHistoryEntry.user).toEqual(user);
         expect(createHistoryEntry.pinStatus).toEqual(false);
@@ -180,14 +187,27 @@ describe('HistoryService', () => {
   });
 
   describe('updateHistoryEntry', () => {
+    const user = {} as User;
+    const alias = 'alias';
+    const note = Note.create(user, alias);
+    beforeEach(() => {
+      const createQueryBuilder = {
+        leftJoinAndSelect: () => createQueryBuilder,
+        where: () => createQueryBuilder,
+        orWhere: () => createQueryBuilder,
+        setParameter: () => createQueryBuilder,
+        getOne: () => note,
+      };
+      jest
+        .spyOn(noteRepo, 'createQueryBuilder')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementation(() => createQueryBuilder);
+    });
     describe('works', () => {
       it('with an entry', async () => {
-        const user = {} as User;
-        const alias = 'alias';
-        const note = Note.create(user, alias);
         const historyEntry = HistoryEntry.create(user, note);
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(historyEntry);
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
         jest
           .spyOn(historyRepo, 'save')
           .mockImplementation(
@@ -200,18 +220,15 @@ describe('HistoryService', () => {
             pinStatus: true,
           },
         );
-        expect(updatedHistoryEntry.note.alias).toEqual(alias);
+        expect(updatedHistoryEntry.note.aliases).toHaveLength(1);
+        expect(updatedHistoryEntry.note.aliases[0].name).toEqual(alias);
         expect(updatedHistoryEntry.note.owner).toEqual(user);
         expect(updatedHistoryEntry.user).toEqual(user);
         expect(updatedHistoryEntry.pinStatus).toEqual(true);
       });
 
       it('without an entry', async () => {
-        const user = {} as User;
-        const alias = 'alias';
-        const note = Note.create(user, alias);
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
         await expect(
           service.updateHistoryEntry(note, user, {
             pinStatus: true,
@@ -278,7 +295,18 @@ describe('HistoryService', () => {
         const note = Note.create(user, alias);
         const historyEntry = HistoryEntry.create(user, note);
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(historyEntry);
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
+        const createQueryBuilder = {
+          leftJoinAndSelect: () => createQueryBuilder,
+          where: () => createQueryBuilder,
+          orWhere: () => createQueryBuilder,
+          setParameter: () => createQueryBuilder,
+          getOne: () => note,
+        };
+        jest
+          .spyOn(noteRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => createQueryBuilder);
         jest
           .spyOn(historyRepo, 'remove')
           .mockImplementation(
@@ -295,8 +323,19 @@ describe('HistoryService', () => {
       const alias = 'alias';
       it('without an entry', async () => {
         const note = Note.create(user, alias);
+        const createQueryBuilder = {
+          leftJoinAndSelect: () => createQueryBuilder,
+          where: () => createQueryBuilder,
+          orWhere: () => createQueryBuilder,
+          setParameter: () => createQueryBuilder,
+          getOne: () => note,
+        };
+        jest
+          .spyOn(noteRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => createQueryBuilder);
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
         await expect(service.deleteHistoryEntry(note, user)).rejects.toThrow(
           NotInDBError,
         );
@@ -320,15 +359,24 @@ describe('HistoryService', () => {
         pinStatus: historyEntryImport.pinStatus,
         updatedAt: historyEntryImport.lastVisited,
       };
+      const createQueryBuilder = {
+        innerJoin: () => createQueryBuilder,
+        where: () => createQueryBuilder,
+        orWhere: () => createQueryBuilder,
+        getOne: () => note,
+      };
       const mockedManager = {
         find: jest.fn().mockResolvedValueOnce([historyEntry]),
-        findOne: jest.fn().mockResolvedValueOnce(note),
+        createQueryBuilder: () => createQueryBuilder,
         remove: jest.fn().mockImplementationOnce((entry: HistoryEntry) => {
-          expect(entry.note.alias).toEqual(alias);
+          expect(entry.note.aliases).toHaveLength(1);
+          expect(entry.note.aliases[0].name).toEqual(alias);
           expect(entry.pinStatus).toEqual(false);
         }),
         save: jest.fn().mockImplementationOnce((entry: HistoryEntry) => {
-          expect(entry.note.alias).toEqual(newlyCreatedHistoryEntry.note.alias);
+          expect(entry.note.aliases).toEqual(
+            newlyCreatedHistoryEntry.note.aliases,
+          );
           expect(entry.pinStatus).toEqual(newlyCreatedHistoryEntry.pinStatus);
           expect(entry.updatedAt).toEqual(newlyCreatedHistoryEntry.updatedAt);
         }),
@@ -358,33 +406,20 @@ describe('HistoryService', () => {
         });
         const historyEntry = HistoryEntry.create(user, note);
         historyEntry.pinStatus = true;
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
+        const createQueryBuilder = {
+          leftJoinAndSelect: () => createQueryBuilder,
+          where: () => createQueryBuilder,
+          orWhere: () => createQueryBuilder,
+          getOne: () => note,
+        };
+        jest
+          .spyOn(noteRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => createQueryBuilder);
         const historyEntryDto = service.toHistoryEntryDto(historyEntry);
         expect(historyEntryDto.pinStatus).toEqual(true);
         expect(historyEntryDto.identifier).toEqual(alias);
-        expect(historyEntryDto.tags).toEqual(tags);
-        expect(historyEntryDto.title).toEqual(title);
-      });
-
-      it('with regular note', async () => {
-        const user = {} as User;
-        const title = 'title';
-        const id = 'id';
-        const tags = ['tag1', 'tag2'];
-        const note = Note.create(user);
-        note.title = title;
-        note.id = id;
-        note.tags = tags.map((tag) => {
-          const newTag = new Tag();
-          newTag.name = tag;
-          return newTag;
-        });
-        const historyEntry = HistoryEntry.create(user, note);
-        historyEntry.pinStatus = true;
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(note);
-        const historyEntryDto = service.toHistoryEntryDto(historyEntry);
-        expect(historyEntryDto.pinStatus).toEqual(true);
-        expect(historyEntryDto.identifier).toEqual(id);
         expect(historyEntryDto.tags).toEqual(tags);
         expect(historyEntryDto.title).toEqual(title);
       });

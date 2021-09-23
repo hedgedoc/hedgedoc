@@ -23,6 +23,7 @@ import { Identity } from '../../../identity/identity.entity';
 import { LoggerModule } from '../../../logger/logger.module';
 import { MediaUpload } from '../../../media/media-upload.entity';
 import { MediaModule } from '../../../media/media.module';
+import { Alias } from '../../../notes/alias.entity';
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
 import { Tag } from '../../../notes/tag.entity';
@@ -51,6 +52,10 @@ describe('Notes Controller', () => {
         },
         {
           provide: getRepositoryToken(Tag),
+          useValue: {},
+        },
+        {
+          provide: getRepositoryToken(Alias),
           useValue: {},
         },
         {
@@ -100,6 +105,8 @@ describe('Notes Controller', () => {
       .overrideProvider(getRepositoryToken(Group))
       .useValue({})
       .overrideProvider(getRepositoryToken(MediaUpload))
+      .useValue({})
+      .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .overrideProvider(getRepositoryToken(Session))
       .useValue({})
