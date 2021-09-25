@@ -97,10 +97,12 @@ export class NotesService {
     const newNote = Note.create(owner, alias);
     //TODO: Calculate patch
     newNote.revisions = Promise.resolve([
-      Revision.create(noteContent, noteContent),
+      Revision.create(noteContent, noteContent, newNote as Note) as Revision,
     ]);
     if (owner) {
-      newNote.historyEntries = [HistoryEntry.create(owner)];
+      newNote.historyEntries = [
+        HistoryEntry.create(owner, newNote as Note) as HistoryEntry,
+      ];
     }
     try {
       return await this.noteRepository.save(newNote);
@@ -258,7 +260,7 @@ export class NotesService {
   async updateNote(note: Note, noteContent: string): Promise<Note> {
     const revisions = await note.revisions;
     //TODO: Calculate patch
-    revisions.push(Revision.create(noteContent, noteContent));
+    revisions.push(Revision.create(noteContent, noteContent, note) as Revision);
     note.revisions = Promise.resolve(revisions);
     note.userPermissions = [];
     note.groupPermissions = [];
@@ -306,6 +308,7 @@ export class NotesService {
       );
       const createdPermission = NoteUserPermission.create(
         user,
+        note,
         newUserPermission.canEdit,
       );
       createdPermission.note = note;
@@ -319,6 +322,7 @@ export class NotesService {
       );
       const createdPermission = NoteGroupPermission.create(
         group,
+        note,
         newGroupPermission.canEdit,
       );
       createdPermission.note = note;
