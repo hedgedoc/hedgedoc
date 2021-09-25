@@ -28,9 +28,14 @@ export class NoteGroupPermission {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  public static create(group: Group, canEdit: boolean): NoteGroupPermission {
+  public static create(
+    group: Group,
+    note: Note,
+    canEdit: boolean,
+  ): NoteGroupPermission {
     const groupPermission = new NoteGroupPermission();
     groupPermission.group = group;
+    groupPermission.note = note;
     groupPermission.canEdit = canEdit;
     return groupPermission;
   }

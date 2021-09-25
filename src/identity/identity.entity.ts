@@ -101,11 +101,15 @@ export class Identity {
     user: User,
     providerType: ProviderType,
     syncSource = false,
-  ): Identity {
+  ): Omit<Identity, 'id' | 'createdAt' | 'updatedAt'> {
     const newIdentity = new Identity();
     newIdentity.user = user;
     newIdentity.providerType = providerType;
+    newIdentity.providerName = null;
     newIdentity.syncSource = syncSource;
+    newIdentity.providerUserId = null;
+    newIdentity.oAuthAccessToken = null;
+    newIdentity.passwordHash = null;
     return newIdentity;
   }
 }

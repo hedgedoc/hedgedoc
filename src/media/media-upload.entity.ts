@@ -59,7 +59,7 @@ export class MediaUpload {
     extension: string,
     backendType: BackendType,
     backendData?: string,
-  ): MediaUpload {
+  ): Omit<MediaUpload, 'createdAt'> {
     const upload = new MediaUpload();
     const randomBytes = crypto.randomBytes(16);
     upload.id = randomBytes.toString('hex') + '.' + extension;
