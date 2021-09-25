@@ -79,17 +79,17 @@ export class AuthService {
       new Date().getTime() + 2 * 365 * 24 * 60 * 60 * 1000;
     if (validUntil === 0 || validUntil > maximumTokenValidity) {
       token = AuthToken.create(
+        keyId,
         user,
         identifier,
-        keyId,
         accessToken,
         new Date(maximumTokenValidity),
       );
     } else {
       token = AuthToken.create(
+        keyId,
         user,
         identifier,
-        keyId,
         accessToken,
         new Date(validUntil),
       );

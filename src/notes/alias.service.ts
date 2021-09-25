@@ -61,17 +61,17 @@ export class AliasService {
         `The alias '${alias}' is already a public id.`,
       );
     }
-    let newAlias: Alias;
+    let newAlias;
     if (note.aliases.length === 0) {
       // the first alias is automatically made the primary alias
-      newAlias = Alias.create(alias, true);
+      newAlias = Alias.create(alias, note, true);
     } else {
-      newAlias = Alias.create(alias);
+      newAlias = Alias.create(alias, note);
     }
-    note.aliases.push(newAlias);
+    note.aliases.push(newAlias as Alias);
 
     await this.noteRepository.save(note);
-    return newAlias;
+    return newAlias as Alias;
   }
 
   /**

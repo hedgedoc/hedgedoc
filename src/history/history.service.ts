@@ -173,7 +173,7 @@ export class HistoryService {
             `Note with id/alias '${historyEntry.note}' not found.`,
           );
         }
-        const entry = HistoryEntry.create(user, note);
+        const entry = HistoryEntry.create(user, note) as HistoryEntry;
         entry.pinStatus = historyEntry.pinStatus;
         entry.updatedAt = historyEntry.lastVisited;
         await manager.save<HistoryEntry>(entry);
