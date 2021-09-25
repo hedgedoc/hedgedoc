@@ -144,7 +144,10 @@ describe('HistoryService', () => {
     describe('works', () => {
       const user = {} as User;
       const alias = 'alias';
-      const historyEntry = HistoryEntry.create(user, Note.create(user, alias));
+      const historyEntry = HistoryEntry.create(
+        user,
+        Note.create(user, alias) as Note,
+      ) as HistoryEntry;
       it('without an preexisting entry', async () => {
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
         jest
@@ -153,7 +156,7 @@ describe('HistoryService', () => {
             async (entry: HistoryEntry): Promise<HistoryEntry> => entry,
           );
         const createHistoryEntry = await service.updateHistoryEntryTimestamp(
-          Note.create(user, alias),
+          Note.create(user, alias) as Note,
           user,
         );
         expect(createHistoryEntry.note.aliases).toHaveLength(1);
@@ -171,7 +174,7 @@ describe('HistoryService', () => {
             async (entry: HistoryEntry): Promise<HistoryEntry> => entry,
           );
         const createHistoryEntry = await service.updateHistoryEntryTimestamp(
-          Note.create(user, alias),
+          Note.create(user, alias) as Note,
           user,
         );
         expect(createHistoryEntry.note.aliases).toHaveLength(1);
@@ -189,7 +192,7 @@ describe('HistoryService', () => {
   describe('updateHistoryEntry', () => {
     const user = {} as User;
     const alias = 'alias';
-    const note = Note.create(user, alias);
+    const note = Note.create(user, alias) as Note;
     beforeEach(() => {
       const createQueryBuilder = {
         leftJoinAndSelect: () => createQueryBuilder,
@@ -206,7 +209,7 @@ describe('HistoryService', () => {
     });
     describe('works', () => {
       it('with an entry', async () => {
-        const historyEntry = HistoryEntry.create(user, note);
+        const historyEntry = HistoryEntry.create(user, note) as HistoryEntry;
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(historyEntry);
         jest
           .spyOn(historyRepo, 'save')
@@ -242,8 +245,8 @@ describe('HistoryService', () => {
     describe('works', () => {
       const user = {} as User;
       const alias = 'alias';
-      const note = Note.create(user, alias);
-      const historyEntry = HistoryEntry.create(user, note);
+      const note = Note.create(user, alias) as Note;
+      const historyEntry = HistoryEntry.create(user, note) as HistoryEntry;
       it('with an entry', async () => {
         jest.spyOn(historyRepo, 'find').mockResolvedValueOnce([historyEntry]);
         jest
@@ -258,8 +261,8 @@ describe('HistoryService', () => {
       });
       it('with multiple entries', async () => {
         const alias2 = 'alias2';
-        const note2 = Note.create(user, alias2);
-        const historyEntry2 = HistoryEntry.create(user, note2);
+        const note2 = Note.create(user, alias2) as Note;
+        const historyEntry2 = HistoryEntry.create(user, note2) as HistoryEntry;
         jest
           .spyOn(historyRepo, 'find')
           .mockResolvedValueOnce([historyEntry, historyEntry2]);
@@ -292,8 +295,8 @@ describe('HistoryService', () => {
       it('with an entry', async () => {
         const user = {} as User;
         const alias = 'alias';
-        const note = Note.create(user, alias);
-        const historyEntry = HistoryEntry.create(user, note);
+        const note = Note.create(user, alias) as Note;
+        const historyEntry = HistoryEntry.create(user, note) as HistoryEntry;
         jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(historyEntry);
         const createQueryBuilder = {
           leftJoinAndSelect: () => createQueryBuilder,
@@ -322,7 +325,7 @@ describe('HistoryService', () => {
       const user = {} as User;
       const alias = 'alias';
       it('without an entry', async () => {
-        const note = Note.create(user, alias);
+        const note = Note.create(user, alias) as Note;
         const createQueryBuilder = {
           leftJoinAndSelect: () => createQueryBuilder,
           where: () => createQueryBuilder,
@@ -347,7 +350,7 @@ describe('HistoryService', () => {
     it('works', async () => {
       const user = {} as User;
       const alias = 'alias';
-      const note = Note.create(user, alias);
+      const note = Note.create(user, alias) as Note;
       const historyEntry = HistoryEntry.create(user, note);
       const historyEntryImport: HistoryEntryImportDto = {
         lastVisited: new Date('2020-12-01 12:23:34'),
@@ -397,14 +400,14 @@ describe('HistoryService', () => {
         const alias = 'alias';
         const title = 'title';
         const tags = ['tag1', 'tag2'];
-        const note = Note.create(user, alias);
+        const note = Note.create(user, alias) as Note;
         note.title = title;
         note.tags = tags.map((tag) => {
           const newTag = new Tag();
           newTag.name = tag;
           return newTag;
         });
-        const historyEntry = HistoryEntry.create(user, note);
+        const historyEntry = HistoryEntry.create(user, note) as HistoryEntry;
         historyEntry.pinStatus = true;
         const createQueryBuilder = {
           leftJoinAndSelect: () => createQueryBuilder,

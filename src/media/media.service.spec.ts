@@ -106,7 +106,7 @@ describe('MediaService', () => {
     beforeEach(() => {
       user = User.create('hardcoded', 'Testy') as User;
       const alias = 'alias';
-      note = Note.create(user, alias);
+      note = Note.create(user, alias) as Note;
       jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
       const createQueryBuilder = {
         leftJoinAndSelect: () => createQueryBuilder,
@@ -289,12 +289,12 @@ describe('MediaService', () => {
 
   describe('removeNoteFromMediaUpload', () => {
     it('works', async () => {
+      const mockNote = {} as Note;
+      mockNote.aliases = [Alias.create('test', mockNote, true) as Alias];
       const mockMediaUploadEntry = {
         id: 'testMediaUpload',
         backendData: 'testBackendData',
-        note: {
-          aliases: [Alias.create('test', true)],
-        } as Note,
+        note: mockNote,
         user: {
           username: 'hardcoded',
         } as User,

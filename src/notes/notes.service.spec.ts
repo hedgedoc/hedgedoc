@@ -131,7 +131,7 @@ describe('NotesService', () => {
     describe('works', () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const alias = 'alias';
-      const note = Note.create(user, alias);
+      const note = Note.create(user, alias) as Note;
 
       it('with no note', async () => {
         jest.spyOn(noteRepo, 'find').mockResolvedValueOnce(undefined);
@@ -168,7 +168,7 @@ describe('NotesService', () => {
         const revisions = await newNote.revisions;
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
-        expect(newNote.historyEntries).toBeUndefined();
+        expect(newNote.historyEntries).toHaveLength(0);
         expect(newNote.userPermissions).toHaveLength(0);
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
@@ -193,7 +193,7 @@ describe('NotesService', () => {
         const revisions = await newNote.revisions;
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
-        expect(newNote.historyEntries).toBeUndefined();
+        expect(newNote.historyEntries).toHaveLength(0);
         expect(newNote.userPermissions).toHaveLength(0);
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
@@ -328,7 +328,7 @@ describe('NotesService', () => {
   describe('deleteNote', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
-      const note = Note.create(user);
+      const note = Note.create(user) as Note;
       jest
         .spyOn(noteRepo, 'remove')
         .mockImplementationOnce(async (entry, _) => {
@@ -342,7 +342,7 @@ describe('NotesService', () => {
   describe('updateNote', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
-      const note = Note.create(user);
+      const note = Note.create(user) as Note;
       const revisionLength = (await note.revisions).length;
       jest
         .spyOn(noteRepo, 'save')
@@ -365,8 +365,8 @@ describe('NotesService', () => {
     const group = Group.create(
       groupPermissionUpate.groupname,
       groupPermissionUpate.groupname,
-    );
-    const note = Note.create(user);
+    ) as Group;
+    const note = Note.create(user) as Note;
     describe('works', () => {
       it('with empty GroupPermissions and with empty UserPermissions', async () => {
         jest
@@ -668,8 +668,8 @@ describe('NotesService', () => {
   describe('toNotePermissionsDto', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
-      const group = Group.create('testGroup', 'testGroup');
-      const note = Note.create(user);
+      const group = Group.create('testGroup', 'testGroup') as Group;
+      const note = Note.create(user) as Note;
       note.userPermissions = [
         {
           note: note,
@@ -685,7 +685,8 @@ describe('NotesService', () => {
         },
       ];
       const permissions = service.toNotePermissionsDto(note);
-      expect(permissions.owner.username).toEqual(user.username);
+      expect(permissions.owner).not.toEqual(null);
+      expect(permissions.owner?.username).toEqual(user.username);
       expect(permissions.sharedToUsers).toHaveLength(1);
       expect(permissions.sharedToUsers[0].user.username).toEqual(user.username);
       expect(permissions.sharedToUsers[0].canEdit).toEqual(true);
@@ -702,7 +703,7 @@ describe('NotesService', () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const author = Author.create(1);
       author.user = user;
-      const group = Group.create('testGroup', 'testGroup');
+      const group = Group.create('testGroup', 'testGroup') as Group;
       const content = 'testContent';
       jest
         .spyOn(noteRepo, 'save')
@@ -738,7 +739,7 @@ describe('NotesService', () => {
         // @ts-ignore
         .mockImplementation(() => createQueryBuilder);
       note.publicId = 'testId';
-      note.aliases = [Alias.create('testAlias', true)];
+      note.aliases = [Alias.create('testAlias', note, true) as Alias];
       note.title = 'testTitle';
       note.description = 'testDescription';
       note.owner = user;
@@ -799,7 +800,7 @@ describe('NotesService', () => {
       author.user = user;
       const otherUser = User.create('other hardcoded', 'Testy2') as User;
       otherUser.username = 'other hardcoded user';
-      const group = Group.create('testGroup', 'testGroup');
+      const group = Group.create('testGroup', 'testGroup') as Group;
       const content = 'testContent';
       jest
         .spyOn(noteRepo, 'save')
@@ -838,7 +839,7 @@ describe('NotesService', () => {
         // @ts-ignore
         .mockImplementation(() => createQueryBuilder);
       note.publicId = 'testId';
-      note.aliases = [Alias.create('testAlias', true)];
+      note.aliases = [Alias.create('testAlias', note, true) as Alias];
       note.title = 'testTitle';
       note.description = 'testDescription';
       note.owner = user;

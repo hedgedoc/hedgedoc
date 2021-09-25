@@ -89,7 +89,8 @@ describe('RevisionsService', () => {
 
   describe('getRevision', () => {
     it('returns a revision', async () => {
-      const revision = Revision.create('', '');
+      const note = {} as Note;
+      const revision = Revision.create('', '', note) as Revision;
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revision);
       expect(await service.getRevision({} as Note, 1)).toEqual(revision);
     });
@@ -106,11 +107,11 @@ describe('RevisionsService', () => {
       const note = {} as Note;
       note.id = 'test';
       let revisions: Revision[] = [];
-      const revision1 = Revision.create('a', 'a');
+      const revision1 = Revision.create('a', 'a', note) as Revision;
       revision1.id = 1;
-      const revision2 = Revision.create('b', 'b');
+      const revision2 = Revision.create('b', 'b', note) as Revision;
       revision2.id = 2;
-      const revision3 = Revision.create('c', 'c');
+      const revision3 = Revision.create('c', 'c', note) as Revision;
       revision3.id = 3;
       revisions.push(revision1, revision2, revision3);
       note.revisions = Promise.resolve(revisions);
@@ -136,7 +137,7 @@ describe('RevisionsService', () => {
       const note = {} as Note;
       note.id = 'test';
       let revisions: Revision[] = [];
-      const revision1 = Revision.create('a', 'a');
+      const revision1 = Revision.create('a', 'a', note) as Revision;
       revision1.id = 1;
       revisions.push(revision1);
       note.revisions = Promise.resolve(revisions);
