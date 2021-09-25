@@ -28,9 +28,14 @@ export class NoteUserPermission {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  public static create(user: User, canEdit: boolean): NoteUserPermission {
+  public static create(
+    user: User,
+    note: Note,
+    canEdit: boolean,
+  ): NoteUserPermission {
     const userPermission = new NoteUserPermission();
     userPermission.user = user;
+    userPermission.note = note;
     userPermission.canEdit = canEdit;
     return userPermission;
   }

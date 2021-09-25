@@ -51,8 +51,13 @@ export class Edit {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  public static create(author: Author, startPos: number, endPos: number) {
+  public static create(
+    author: Author,
+    startPos: number,
+    endPos: number,
+  ): Omit<Edit, 'id' | 'createdAt' | 'updatedAt'> {
     const newEdit = new Edit();
+    newEdit.revisions = [];
     newEdit.author = author;
     newEdit.startPos = startPos;
     newEdit.endPos = endPos;

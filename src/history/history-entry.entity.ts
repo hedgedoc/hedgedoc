@@ -28,15 +28,21 @@ export class HistoryEntry {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  // The optional note parameter is necessary for the createNote method in the NotesService,
-  // as we create the note then and don't need to add it to the HistoryEntry.
-  public static create(user: User, note?: Note): HistoryEntry {
+  /**
+   * Create a history entry
+   * @param user the user the history entry is associated with
+   * @param note the note the history entry is associated with
+   * @param [pinStatus=false] if the history entry should be pinned
+   */
+  public static create(
+    user: User,
+    note: Note,
+    pinStatus = false,
+  ): Omit<HistoryEntry, 'updatedAt'> {
     const newHistoryEntry = new HistoryEntry();
     newHistoryEntry.user = user;
-    if (note) {
-      newHistoryEntry.note = note;
-    }
-    newHistoryEntry.pinStatus = false;
+    newHistoryEntry.note = note;
+    newHistoryEntry.pinStatus = pinStatus;
     return newHistoryEntry;
   }
 }

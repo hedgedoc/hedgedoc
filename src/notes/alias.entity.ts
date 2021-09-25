@@ -54,10 +54,11 @@ export class Alias {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  static create(name: string, primary = false): Alias {
+  static create(name: string, note: Note, primary = false): Omit<Alias, 'id'> {
     const alias = new Alias();
     alias.name = name;
     alias.primary = primary;
+    alias.note = note;
     return alias;
   }
 }

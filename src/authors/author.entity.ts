@@ -58,9 +58,7 @@ export class Author {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  public static create(
-    color: number,
-  ): Pick<Author, 'color' | 'sessions' | 'user' | 'edits'> {
+  public static create(color: number): Omit<Author, 'id'> {
     const newAuthor = new Author();
     newAuthor.color = color;
     newAuthor.sessions = [];

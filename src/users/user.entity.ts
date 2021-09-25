@@ -79,13 +79,19 @@ export class User {
   public static create(
     username: string,
     displayName: string,
-  ): Pick<
-    User,
-    'username' | 'displayName' | 'ownedNotes' | 'authTokens' | 'identities'
-  > {
+  ): Omit<User, 'id' | 'createdAt' | 'updatedAt'> {
     const newUser = new User();
     newUser.username = username;
     newUser.displayName = displayName;
+    newUser.photo = null;
+    newUser.email = null;
+    newUser.ownedNotes = [];
+    newUser.authTokens = [];
+    newUser.identities = Promise.resolve([]);
+    newUser.groups = [];
+    newUser.historyEntries = [];
+    newUser.mediaUploads = [];
+    newUser.authors = [];
     return newUser;
   }
 }
