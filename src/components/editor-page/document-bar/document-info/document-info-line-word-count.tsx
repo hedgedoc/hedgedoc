@@ -4,13 +4,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { DocumentInfoLine } from './document-info-line'
 import { UnitalicBoldText } from './unitalic-bold-text'
-import { useIFrameEditorToRendererCommunicator } from '../../render-context/iframe-editor-to-renderer-communicator-context-provider'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useEditorToRendererCommunicator } from '../../render-context/editor-to-renderer-communicator-context-provider'
+import {
+  CommunicationMessageType,
+  OnWordCountCalculatedMessage
+} from '../../../render-page/window-post-message-communicator/rendering-message'
+import { useEditorReceiveHandler } from '../../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
+import { useEffectOnRendererReady } from '../../../render-page/window-post-message-communicator/hooks/use-effect-on-renderer-ready'
 
 /**
  * Creates a new info line for the document information dialog that holds the
@@ -18,24 +23,19 @@ import { useApplicationState } from '../../../../hooks/common/use-application-st
  */
 export const DocumentInfoLineWordCount: React.FC = () => {
   useTranslation()
-  const iframeEditorToRendererCommunicator = useIFrameEditorToRendererCommunicator()
+  const editorToRendererCommunicator = useEditorToRendererCommunicator()
   const [wordCount, setWordCount] = useState<number | null>(null)
-  const rendererReady = useApplicationState((state) => state.rendererStatus.rendererReady)
 
-  useEffect(() => {
-    iframeEditorToRendererCommunicator.onWordCountCalculated((words) => {
-      setWordCount(words)
-    })
-    return () => {
-      iframeEditorToRendererCommunicator.onWordCountCalculated(undefined)
-    }
-  }, [iframeEditorToRendererCommunicator, setWordCount])
+  useEditorReceiveHandler(
+    CommunicationMessageType.ON_WORD_COUNT_CALCULATED,
+    useCallback((values: OnWordCountCalculatedMessage) => setWordCount(values.words), [setWordCount])
+  )
 
-  useEffect(() => {
-    if (rendererReady) {
-      iframeEditorToRendererCommunicator.sendGetWordCount()
-    }
-  }, [iframeEditorToRendererCommunicator, rendererReady])
+  useEffectOnRendererReady(
+    useCallback(() => {
+      editorToRendererCommunicator.sendMessageToOtherSide({ type: CommunicationMessageType.GET_WORD_COUNT })
+    }, [editorToRendererCommunicator])
+  )
 
   return (
     <DocumentInfoLine icon={'align-left'} size={'2x'}>

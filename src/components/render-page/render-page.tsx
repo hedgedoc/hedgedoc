@@ -6,15 +6,15 @@
 import React from 'react'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { IframeMarkdownRenderer } from './iframe-markdown-renderer'
-import { IframeRendererToEditorCommunicatorContextProvider } from '../editor-page/render-context/iframe-renderer-to-editor-communicator-context-provider'
+import { RendererToEditorCommunicatorContextProvider } from '../editor-page/render-context/renderer-to-editor-communicator-context-provider'
 
 export const RenderPage: React.FC = () => {
   useApplyDarkMode()
 
   return (
-    <IframeRendererToEditorCommunicatorContextProvider>
+    <RendererToEditorCommunicatorContextProvider>
       <IframeMarkdownRenderer />
-    </IframeRendererToEditorCommunicatorContextProvider>
+    </RendererToEditorCommunicatorContextProvider>
   )
 }
 

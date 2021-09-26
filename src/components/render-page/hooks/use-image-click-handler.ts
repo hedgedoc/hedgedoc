@@ -6,19 +6,23 @@
 
 import React, { useCallback } from 'react'
 import { ImageClickHandler } from '../../markdown-renderer/replace-components/image/image-replacer'
-import { IframeRendererToEditorCommunicator } from '../iframe-renderer-to-editor-communicator'
+import { RendererToEditorCommunicator } from '../window-post-message-communicator/renderer-to-editor-communicator'
+import { CommunicationMessageType } from '../window-post-message-communicator/rendering-message'
 
-export const useImageClickHandler = (iframeCommunicator: IframeRendererToEditorCommunicator): ImageClickHandler => {
+export const useImageClickHandler = (iframeCommunicator: RendererToEditorCommunicator): ImageClickHandler => {
   return useCallback(
     (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
       const image = event.target as HTMLImageElement
       if (image.src === '') {
         return
       }
-      iframeCommunicator.sendClickedImageUrl({
-        src: image.src,
-        alt: image.alt,
-        title: image.title
+      iframeCommunicator.sendMessageToOtherSide({
+        type: CommunicationMessageType.IMAGE_CLICKED,
+        details: {
+          src: image.src,
+          alt: image.alt,
+          title: image.title
+        }
       })
     },
     [iframeCommunicator]

@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ScrollState } from '../editor-page/synced-scroll/scroll-props'
-import { RendererFrontmatterInfo } from '../common/note-frontmatter/types'
+import { ScrollState } from '../../editor-page/synced-scroll/scroll-props'
+import { RendererFrontmatterInfo } from '../../common/note-frontmatter/types'
 
-export enum RenderIframeMessageType {
+export enum CommunicationMessageType {
   SET_MARKDOWN_CONTENT = 'SET_MARKDOWN_CONTENT',
   RENDERER_READY = 'RENDERER_READY',
   SET_DARKMODE = 'SET_DARKMODE',
@@ -22,12 +22,12 @@ export enum RenderIframeMessageType {
   SET_FRONTMATTER_INFO = 'SET_FRONTMATTER_INFO'
 }
 
-export interface RendererToEditorSimpleMessage {
-  type: RenderIframeMessageType.RENDERER_READY | RenderIframeMessageType.SET_SCROLL_SOURCE_TO_RENDERER
+export interface NoPayloadMessage {
+  type: CommunicationMessageType.RENDERER_READY | CommunicationMessageType.SET_SCROLL_SOURCE_TO_RENDERER
 }
 
 export interface SetDarkModeMessage {
-  type: RenderIframeMessageType.SET_DARKMODE
+  type: CommunicationMessageType.SET_DARKMODE
   activated: boolean
 }
 
@@ -38,71 +38,86 @@ export interface ImageDetails {
 }
 
 export interface SetBaseUrlMessage {
-  type: RenderIframeMessageType.SET_BASE_CONFIGURATION
+  type: CommunicationMessageType.SET_BASE_CONFIGURATION
   baseConfiguration: BaseConfiguration
 }
 
 export interface GetWordCountMessage {
-  type: RenderIframeMessageType.GET_WORD_COUNT
+  type: CommunicationMessageType.GET_WORD_COUNT
 }
 
 export interface ImageClickedMessage {
-  type: RenderIframeMessageType.IMAGE_CLICKED
+  type: CommunicationMessageType.IMAGE_CLICKED
   details: ImageDetails
 }
 
 export interface SetMarkdownContentMessage {
-  type: RenderIframeMessageType.SET_MARKDOWN_CONTENT
+  type: CommunicationMessageType.SET_MARKDOWN_CONTENT
   content: string
 }
 
 export interface SetScrollStateMessage {
-  type: RenderIframeMessageType.SET_SCROLL_STATE
+  type: CommunicationMessageType.SET_SCROLL_STATE
   scrollState: ScrollState
 }
 
 export interface OnTaskCheckboxChangeMessage {
-  type: RenderIframeMessageType.ON_TASK_CHECKBOX_CHANGE
+  type: CommunicationMessageType.ON_TASK_CHECKBOX_CHANGE
   lineInMarkdown: number
   checked: boolean
 }
 
 export interface OnFirstHeadingChangeMessage {
-  type: RenderIframeMessageType.ON_FIRST_HEADING_CHANGE
+  type: CommunicationMessageType.ON_FIRST_HEADING_CHANGE
   firstHeading: string | undefined
 }
 
 export interface SetFrontmatterInfoMessage {
-  type: RenderIframeMessageType.SET_FRONTMATTER_INFO
+  type: CommunicationMessageType.SET_FRONTMATTER_INFO
   frontmatterInfo: RendererFrontmatterInfo
 }
 
 export interface OnHeightChangeMessage {
-  type: RenderIframeMessageType.ON_HEIGHT_CHANGE
+  type: CommunicationMessageType.ON_HEIGHT_CHANGE
   height: number
 }
 
 export interface OnWordCountCalculatedMessage {
-  type: RenderIframeMessageType.ON_WORD_COUNT_CALCULATED
+  type: CommunicationMessageType.ON_WORD_COUNT_CALCULATED
   words: number
 }
 
-export type EditorToRendererIframeMessage =
-  | SetMarkdownContentMessage
+export type CommunicationMessages =
+  | NoPayloadMessage
   | SetDarkModeMessage
-  | SetScrollStateMessage
   | SetBaseUrlMessage
   | GetWordCountMessage
-  | SetFrontmatterInfoMessage
-
-export type RendererToEditorIframeMessage =
-  | RendererToEditorSimpleMessage
-  | OnFirstHeadingChangeMessage
-  | OnTaskCheckboxChangeMessage
-  | SetScrollStateMessage
   | ImageClickedMessage
+  | SetMarkdownContentMessage
+  | SetScrollStateMessage
+  | OnTaskCheckboxChangeMessage
+  | OnFirstHeadingChangeMessage
+  | SetFrontmatterInfoMessage
   | OnHeightChangeMessage
   | OnWordCountCalculatedMessage
+
+export type EditorToRendererMessageType =
+  | CommunicationMessageType.SET_MARKDOWN_CONTENT
+  | CommunicationMessageType.SET_DARKMODE
+  | CommunicationMessageType.SET_SCROLL_STATE
+  | CommunicationMessageType.SET_BASE_CONFIGURATION
+  | CommunicationMessageType.GET_WORD_COUNT
+  | CommunicationMessageType.SET_FRONTMATTER_INFO
+
+export type RendererToEditorMessageType =
+  | CommunicationMessageType.RENDERER_READY
+  | CommunicationMessageType.SET_SCROLL_SOURCE_TO_RENDERER
+  | CommunicationMessageType.ON_FIRST_HEADING_CHANGE
+  | CommunicationMessageType.ON_TASK_CHECKBOX_CHANGE
+  | CommunicationMessageType.SET_SCROLL_STATE
+  | CommunicationMessageType.IMAGE_CLICKED
+  | CommunicationMessageType.ON_HEIGHT_CHANGE
+  | CommunicationMessageType.ON_WORD_COUNT_CALCULATED
 
 export enum RendererType {
   DOCUMENT,

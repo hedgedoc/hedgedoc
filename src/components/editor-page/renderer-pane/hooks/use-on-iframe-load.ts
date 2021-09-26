@@ -5,11 +5,11 @@
  */
 
 import { RefObject, useCallback, useRef } from 'react'
-import { IframeEditorToRendererCommunicator } from '../../../render-page/iframe-editor-to-renderer-communicator'
+import { EditorToRendererCommunicator } from '../../../render-page/window-post-message-communicator/editor-to-renderer-communicator'
 
 export const useOnIframeLoad = (
   frameReference: RefObject<HTMLIFrameElement>,
-  iframeCommunicator: IframeEditorToRendererCommunicator,
+  iframeCommunicator: EditorToRendererCommunicator,
   rendererOrigin: string,
   renderPageUrl: string,
   onNavigateAway: () => void

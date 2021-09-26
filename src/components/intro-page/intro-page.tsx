@@ -17,17 +17,17 @@ import { CoverButtons } from './cover-buttons/cover-buttons'
 import { FeatureLinks } from './feature-links'
 import { useIntroPageContent } from './hooks/use-intro-page-content'
 import { ShowIf } from '../common/show-if/show-if'
-import { RendererType } from '../render-page/rendering-message'
+import { RendererType } from '../render-page/window-post-message-communicator/rendering-message'
 import { WaitSpinner } from '../common/wait-spinner/wait-spinner'
-import { IframeEditorToRendererCommunicatorContextProvider } from '../editor-page/render-context/iframe-editor-to-renderer-communicator-context-provider'
 import { useApplicationState } from '../../hooks/common/use-application-state'
+import { EditorToRendererCommunicatorContextProvider } from '../editor-page/render-context/editor-to-renderer-communicator-context-provider'
 
 export const IntroPage: React.FC = () => {
   const introPageContent = useIntroPageContent()
   const rendererReady = useApplicationState((state) => state.rendererStatus.rendererReady)
 
   return (
-    <IframeEditorToRendererCommunicatorContextProvider>
+    <EditorToRendererCommunicatorContextProvider>
       <div className={'flex-fill mt-3'}>
         <h1 dir='auto' className={'align-items-center d-flex justify-content-center flex-column'}>
           <HedgeDocLogoWithText logoType={HedgeDocLogoType.COLOR_VERTICAL} size={HedgeDocLogoSize.BIG} />
@@ -53,6 +53,6 @@ export const IntroPage: React.FC = () => {
         <hr className={'mb-5'} />
       </div>
       <FeatureLinks />
-    </IframeEditorToRendererCommunicatorContextProvider>
+    </EditorToRendererCommunicatorContextProvider>
   )
 }

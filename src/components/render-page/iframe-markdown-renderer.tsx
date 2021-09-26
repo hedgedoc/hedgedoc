@@ -4,16 +4,21 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { ScrollState } from '../editor-page/synced-scroll/scroll-props'
-import { BaseConfiguration, RendererType } from './rendering-message'
+import {
+  BaseConfiguration,
+  CommunicationMessageType,
+  RendererType
+} from './window-post-message-communicator/rendering-message'
 import { setDarkMode } from '../../redux/dark-mode/methods'
 import { ImageClickHandler } from '../markdown-renderer/replace-components/image/image-replacer'
 import { useImageClickHandler } from './hooks/use-image-click-handler'
 import { MarkdownDocument } from './markdown-document'
-import { useIFrameRendererToEditorCommunicator } from '../editor-page/render-context/iframe-renderer-to-editor-communicator-context-provider'
 import { countWords } from './word-counter'
 import { RendererFrontmatterInfo } from '../common/note-frontmatter/types'
+import { useRendererToEditorCommunicator } from '../editor-page/render-context/renderer-to-editor-communicator-context-provider'
+import { useRendererReceiveHandler } from './window-post-message-communicator/hooks/use-renderer-receive-handler'
 
 export const IframeMarkdownRenderer: React.FC = () => {
   const [markdownContent, setMarkdownContent] = useState('')
@@ -25,60 +30,76 @@ export const IframeMarkdownRenderer: React.FC = () => {
     deprecatedSyntax: false
   })
 
-  const iframeCommunicator = useIFrameRendererToEditorCommunicator()
+  const communicator = useRendererToEditorCommunicator()
 
   const countWordsInRenderedDocument = useCallback(() => {
     const documentContainer = document.querySelector('.markdown-body')
-    if (!documentContainer) {
-      iframeCommunicator.sendWordCountCalculated(0)
-      return
-    }
-    const wordCount = countWords(documentContainer)
-    iframeCommunicator.sendWordCountCalculated(wordCount)
-  }, [iframeCommunicator])
+    communicator.sendMessageToOtherSide({
+      type: CommunicationMessageType.ON_WORD_COUNT_CALCULATED,
+      words: documentContainer ? countWords(documentContainer) : 0
+    })
+  }, [communicator])
 
-  useEffect(() => iframeCommunicator.onSetBaseConfiguration(setBaseConfiguration), [iframeCommunicator])
-  useEffect(() => iframeCommunicator.onSetMarkdownContent(setMarkdownContent), [iframeCommunicator])
-  useEffect(() => iframeCommunicator.onSetDarkMode(setDarkMode), [iframeCommunicator])
-  useEffect(() => iframeCommunicator.onSetScrollState(setScrollState), [iframeCommunicator, scrollState])
-  useEffect(() => iframeCommunicator.onSetFrontmatterInfo(setFrontmatterInfo), [iframeCommunicator, setFrontmatterInfo])
-  useEffect(
-    () => iframeCommunicator.onGetWordCount(countWordsInRenderedDocument),
-    [iframeCommunicator, countWordsInRenderedDocument]
+  useRendererReceiveHandler(CommunicationMessageType.SET_BASE_CONFIGURATION, (values) =>
+    setBaseConfiguration(values.baseConfiguration)
   )
+  useRendererReceiveHandler(CommunicationMessageType.SET_MARKDOWN_CONTENT, (values) =>
+    setMarkdownContent(values.content)
+  )
+  useRendererReceiveHandler(CommunicationMessageType.SET_DARKMODE, (values) => setDarkMode(values.activated))
+  useRendererReceiveHandler(CommunicationMessageType.SET_SCROLL_STATE, (values) => setScrollState(values.scrollState))
+  useRendererReceiveHandler(CommunicationMessageType.SET_FRONTMATTER_INFO, (values) =>
+    setFrontmatterInfo(values.frontmatterInfo)
+  )
+  useRendererReceiveHandler(CommunicationMessageType.GET_WORD_COUNT, () => countWordsInRenderedDocument())
 
   const onTaskCheckedChange = useCallback(
     (lineInMarkdown: number, checked: boolean) => {
-      iframeCommunicator.sendTaskCheckBoxChange(lineInMarkdown, checked)
+      communicator.sendMessageToOtherSide({
+        type: CommunicationMessageType.ON_TASK_CHECKBOX_CHANGE,
+        checked,
+        lineInMarkdown
+      })
     },
-    [iframeCommunicator]
+    [communicator]
   )
 
   const onFirstHeadingChange = useCallback(
     (firstHeading?: string) => {
-      iframeCommunicator.sendFirstHeadingChanged(firstHeading)
+      communicator.sendMessageToOtherSide({
+        type: CommunicationMessageType.ON_FIRST_HEADING_CHANGE,
+        firstHeading
+      })
     },
-    [iframeCommunicator]
+    [communicator]
   )
 
   const onMakeScrollSource = useCallback(() => {
-    iframeCommunicator.sendSetScrollSourceToRenderer()
-  }, [iframeCommunicator])
+    communicator.sendMessageToOtherSide({
+      type: CommunicationMessageType.SET_SCROLL_SOURCE_TO_RENDERER
+    })
+  }, [communicator])
 
   const onScroll = useCallback(
     (scrollState: ScrollState) => {
-      iframeCommunicator.sendSetScrollState(scrollState)
+      communicator.sendMessageToOtherSide({
+        type: CommunicationMessageType.SET_SCROLL_STATE,
+        scrollState
+      })
     },
-    [iframeCommunicator]
+    [communicator]
   )
 
-  const onImageClick: ImageClickHandler = useImageClickHandler(iframeCommunicator)
+  const onImageClick: ImageClickHandler = useImageClickHandler(communicator)
 
   const onHeightChange = useCallback(
     (height: number) => {
-      iframeCommunicator.sendHeightChange(height)
+      communicator.sendMessageToOtherSide({
+        type: CommunicationMessageType.ON_HEIGHT_CHANGE,
+        height
+      })
     },
-    [iframeCommunicator]
+    [communicator]
   )
 
   if (!baseConfiguration) {

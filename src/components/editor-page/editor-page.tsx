@@ -21,14 +21,14 @@ import { useViewModeShortcuts } from './hooks/useViewModeShortcuts'
 import { Sidebar } from './sidebar/sidebar'
 import { Splitter } from './splitter/splitter'
 import { DualScrollState, ScrollState } from './synced-scroll/scroll-props'
-import { RendererType } from '../render-page/rendering-message'
+import { RendererType } from '../render-page/window-post-message-communicator/rendering-message'
 import { useEditorModeFromUrl } from './hooks/useEditorModeFromUrl'
 import { UiNotifications } from '../notifications/ui-notifications'
 import { useNotificationTest } from './use-notification-test'
-import { IframeEditorToRendererCommunicatorContextProvider } from './render-context/iframe-editor-to-renderer-communicator-context-provider'
 import { useUpdateLocalHistoryEntry } from './hooks/useUpdateLocalHistoryEntry'
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { EditorDocumentRenderer } from './editor-document-renderer/editor-document-renderer'
+import { EditorToRendererCommunicatorContextProvider } from './render-context/editor-to-renderer-communicator-context-provider'
 
 export interface EditorPagePathParams {
   id: string
@@ -53,7 +53,11 @@ export const EditorPage: React.FC = () => {
   const onMarkdownRendererScroll = useCallback(
     (newScrollState: ScrollState) => {
       if (scrollSource.current === ScrollSource.RENDERER && editorSyncScroll) {
-        setScrollState((old) => ({ editorScrollState: newScrollState, rendererScrollState: old.rendererScrollState }))
+        setScrollState((old) => {
+          const newState = { editorScrollState: newScrollState, rendererScrollState: old.rendererScrollState }
+          console.debug('[EditorPage] set scroll state because of renderer scroll', newState)
+          return newState
+        })
       }
     },
     [editorSyncScroll]
@@ -62,7 +66,11 @@ export const EditorPage: React.FC = () => {
   const onEditorScroll = useCallback(
     (newScrollState: ScrollState) => {
       if (scrollSource.current === ScrollSource.EDITOR && editorSyncScroll) {
-        setScrollState((old) => ({ rendererScrollState: newScrollState, editorScrollState: old.editorScrollState }))
+        setScrollState((old) => {
+          const newState = { rendererScrollState: newScrollState, editorScrollState: old.editorScrollState }
+          console.debug('[EditorPage] set scroll state because of editor scroll', newState)
+          return newState
+        })
       }
     },
     [editorSyncScroll]
@@ -79,10 +87,12 @@ export const EditorPage: React.FC = () => {
 
   const setRendererToScrollSource = useCallback(() => {
     scrollSource.current = ScrollSource.RENDERER
+    console.debug('[EditorPage] Make renderer scroll source')
   }, [])
 
   const setEditorToScrollSource = useCallback(() => {
     scrollSource.current = ScrollSource.EDITOR
+    console.debug('[EditorPage] Make editor scroll source')
   }, [])
 
   useNotificationTest()
@@ -114,7 +124,7 @@ export const EditorPage: React.FC = () => {
   )
 
   return (
-    <IframeEditorToRendererCommunicatorContextProvider>
+    <EditorToRendererCommunicatorContextProvider>
       <UiNotifications />
       <MotdBanner />
       <div className={'d-flex flex-column vh-100'}>
@@ -136,7 +146,7 @@ export const EditorPage: React.FC = () => {
           </div>
         </ShowIf>
       </div>
-    </IframeEditorToRendererCommunicatorContextProvider>
+    </EditorToRendererCommunicatorContextProvider>
   )
 }
 

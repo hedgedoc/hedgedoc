@@ -7,6 +7,7 @@
 import React from 'react'
 import { RenderIframe, RenderIframeProps } from '../renderer-pane/render-iframe'
 import { useNoteMarkdownContentWithoutFrontmatter } from '../../../hooks/common/use-note-markdown-content-without-frontmatter'
+import { useSendFrontmatterInfoFromReduxToRenderer } from '../renderer-pane/hooks/use-send-frontmatter-info-from-redux-to-renderer'
 
 export type EditorDocumentRendererProps = Omit<RenderIframeProps, 'markdownContent'>
 
@@ -17,5 +18,8 @@ export type EditorDocumentRendererProps = Omit<RenderIframeProps, 'markdownConte
  */
 export const EditorDocumentRenderer: React.FC<EditorDocumentRendererProps> = (props) => {
   const markdownContent = useNoteMarkdownContentWithoutFrontmatter()
+
+  useSendFrontmatterInfoFromReduxToRenderer()
+
   return <RenderIframe frameClasses={'h-100 w-100'} markdownContent={markdownContent} {...props} />
 }
