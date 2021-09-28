@@ -8,6 +8,9 @@ import i18n, { TOptions } from 'i18next'
 import { store } from '../index'
 import { DismissUiNotificationAction, DispatchOptions, UiNotificationActionType } from './types'
 import { DateTime } from 'luxon'
+import { Logger } from '../../utils/logger'
+
+const log = new Logger('Redux > Notifications')
 
 export const DEFAULT_DURATION_IN_SECONDS = 10
 
@@ -70,7 +73,7 @@ export const dismissUiNotification = (notificationId: number): void => {
 export const showErrorNotification =
   (messageI18nKey: string, messageI18nOptions?: TOptions | string) =>
   (error: Error): void => {
-    console.error(i18n.t(messageI18nKey, messageI18nOptions), error)
+    log.error(i18n.t(messageI18nKey, messageI18nOptions), error)
     void dispatchUiNotification('common.errorOccurred', messageI18nKey, {
       contentI18nOptions: messageI18nOptions,
       icon: 'exclamation-triangle'

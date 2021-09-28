@@ -6,8 +6,10 @@
 
 import { setBanner } from '../../../redux/banner/methods'
 import { defaultFetchConfig } from '../../../api/utils'
+import { Logger } from '../../../utils/logger'
 
 export const BANNER_LOCAL_STORAGE_KEY = 'banner.lastModified'
+const log = new Logger('Banner')
 
 export const fetchAndSetBanner = async (customizeAssetsUrl: string): Promise<void> => {
   const cachedLastModified = window.localStorage.getItem(BANNER_LOCAL_STORAGE_KEY)
@@ -42,7 +44,7 @@ export const fetchAndSetBanner = async (customizeAssetsUrl: string): Promise<voi
 
   const lastModified = response.headers.get('Last-Modified')
   if (!lastModified) {
-    console.warn("'Last-Modified' not found for banner.txt!")
+    log.warn("'Last-Modified' not found for banner.txt!")
   }
 
   setBanner({

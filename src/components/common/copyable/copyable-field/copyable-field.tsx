@@ -10,12 +10,15 @@ import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../../show-if/show-if'
 import { CopyOverlay } from '../copy-overlay'
+import { Logger } from '../../../../utils/logger'
 
 export interface CopyableFieldProps {
   content: string
   nativeShareButton?: boolean
   url?: string
 }
+
+const log = new Logger('CopyableField')
 
 export const CopyableField: React.FC<CopyableFieldProps> = ({ content, nativeShareButton, url }) => {
   useTranslation()
@@ -27,8 +30,8 @@ export const CopyableField: React.FC<CopyableFieldProps> = ({ content, nativeSha
         text: content,
         url: url
       })
-      .catch((err) => {
-        console.error('Native sharing failed: ', err)
+      .catch((error) => {
+        log.error('Native sharing failed', error)
       })
   }, [content, url])
 

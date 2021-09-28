@@ -19,6 +19,9 @@ import { ExpirationPlugin } from 'workbox-expiration'
 import { createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching'
 import { registerRoute } from 'workbox-routing'
 import { StaleWhileRevalidate } from 'workbox-strategies'
+import { Logger } from './utils/logger'
+
+const log = new Logger('ServiceWorker')
 
 declare const self: ServiceWorkerGlobalScope
 
@@ -80,7 +83,7 @@ registerRoute(
 self.addEventListener('message', (event) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting().catch((e) => console.error(e))
+    self.skipWaiting().catch((e) => log.error(e))
   }
 })
 

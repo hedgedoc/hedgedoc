@@ -6,6 +6,9 @@
 
 import React, { useEffect, useRef } from 'react'
 import './abc.scss'
+import { Logger } from '../../../../utils/logger'
+
+const log = new Logger('AbcFrame')
 
 export interface AbcFrameProps {
   code: string
@@ -23,8 +26,8 @@ export const AbcFrame: React.FC<AbcFrameProps> = ({ code }) => {
       .then((imp) => {
         imp.renderAbc(actualContainer, code, {})
       })
-      .catch(() => {
-        console.error('error while loading abcjs')
+      .catch((error) => {
+        log.error('Error while loading abcjs', error)
       })
   }, [code])
 

@@ -11,6 +11,9 @@ import { createSetUpTaskList, InitTask } from './initializers'
 import { LoadingScreen } from './loading-screen'
 import { useCustomizeAssetsUrl } from '../../hooks/common/use-customize-assets-url'
 import { useFrontendAssetsUrl } from '../../hooks/common/use-frontend-assets-url'
+import { Logger } from '../../utils/logger'
+
+const log = new Logger('ApplicationLoader')
 
 export const ApplicationLoader: React.FC = ({ children }) => {
   const frontendAssetsUrl = useFrontendAssetsUrl()
@@ -36,7 +39,7 @@ export const ApplicationLoader: React.FC = ({ children }) => {
   useEffect(() => {
     for (const task of initTasks) {
       runTask(task.task).catch((reason: Error) => {
-        console.error(reason)
+        log.error('Error while initialising application', reason)
         setFailedTitle(task.name)
       })
     }

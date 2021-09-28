@@ -29,6 +29,7 @@ import { useUpdateLocalHistoryEntry } from './hooks/useUpdateLocalHistoryEntry'
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { EditorDocumentRenderer } from './editor-document-renderer/editor-document-renderer'
 import { EditorToRendererCommunicatorContextProvider } from './render-context/editor-to-renderer-communicator-context-provider'
+import { Logger } from '../../utils/logger'
 
 export interface EditorPagePathParams {
   id: string
@@ -38,6 +39,8 @@ export enum ScrollSource {
   EDITOR,
   RENDERER
 }
+
+const log = new Logger('EditorPage')
 
 export const EditorPage: React.FC = () => {
   useTranslation()
@@ -55,7 +58,7 @@ export const EditorPage: React.FC = () => {
       if (scrollSource.current === ScrollSource.RENDERER && editorSyncScroll) {
         setScrollState((old) => {
           const newState = { editorScrollState: newScrollState, rendererScrollState: old.rendererScrollState }
-          console.debug('[EditorPage] set scroll state because of renderer scroll', newState)
+          log.debug('Set scroll state because of renderer scroll', newState)
           return newState
         })
       }
@@ -68,7 +71,7 @@ export const EditorPage: React.FC = () => {
       if (scrollSource.current === ScrollSource.EDITOR && editorSyncScroll) {
         setScrollState((old) => {
           const newState = { rendererScrollState: newScrollState, editorScrollState: old.editorScrollState }
-          console.debug('[EditorPage] set scroll state because of editor scroll', newState)
+          log.debug('Set scroll state because of editor scroll', newState)
           return newState
         })
       }
@@ -87,12 +90,12 @@ export const EditorPage: React.FC = () => {
 
   const setRendererToScrollSource = useCallback(() => {
     scrollSource.current = ScrollSource.RENDERER
-    console.debug('[EditorPage] Make renderer scroll source')
+    log.debug('Make renderer scroll source')
   }, [])
 
   const setEditorToScrollSource = useCallback(() => {
     scrollSource.current = ScrollSource.EDITOR
-    console.debug('[EditorPage] Make editor scroll source')
+    log.debug('Make editor scroll source')
   }, [])
 
   useNotificationTest()

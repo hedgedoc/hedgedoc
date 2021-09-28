@@ -10,6 +10,9 @@ import { IconName } from '../../../common/fork-awesome/types'
 import { ShowIf } from '../../../common/show-if/show-if'
 import './one-click-embedding.scss'
 import { ProxyImageFrame } from '../image/proxy-image-frame'
+import { Logger } from '../../../../utils/logger'
+
+const log = new Logger('OneClickEmbedding')
 
 interface OneClickFrameProps {
   onImageFetch?: () => Promise<string>
@@ -52,7 +55,7 @@ export const OneClickEmbedding: React.FC<OneClickFrameProps> = ({
         setPreviewImageUrl(imageLink)
       })
       .catch((message) => {
-        console.error(message)
+        log.error(message)
       })
   }, [onImageFetch])
 

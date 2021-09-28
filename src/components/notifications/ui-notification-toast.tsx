@@ -12,8 +12,10 @@ import { ShowIf } from '../common/show-if/show-if'
 import { IconName } from '../common/fork-awesome/types'
 import { dismissUiNotification } from '../../redux/ui-notifications/methods'
 import { Trans, useTranslation } from 'react-i18next'
+import { Logger } from '../../utils/logger'
 
 const STEPS_PER_SECOND = 10
+const log = new Logger('UiNotificationToast')
 
 export interface UiNotificationProps extends UiNotification {
   notificationId: number
@@ -42,7 +44,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
   }, [])
 
   const dismissThisNotification = useCallback(() => {
-    console.debug(`[Notifications] Dismissed notification ${notificationId}`)
+    log.debug(`Dismissed notification ${notificationId}`)
     dismissUiNotification(notificationId)
   }, [notificationId])
 
@@ -50,7 +52,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
     if (dismissed || !!interval.current) {
       return
     }
-    console.debug(`[Notifications] Show notification ${notificationId}`)
+    log.debug(`Show notification ${notificationId}`)
     setEta(durationInSecond * STEPS_PER_SECOND)
     interval.current = setInterval(
       () =>

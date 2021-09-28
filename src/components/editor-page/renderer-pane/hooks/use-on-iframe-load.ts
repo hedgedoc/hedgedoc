@@ -6,6 +6,9 @@
 
 import { RefObject, useCallback, useRef } from 'react'
 import { EditorToRendererCommunicator } from '../../../render-page/window-post-message-communicator/editor-to-renderer-communicator'
+import { Logger } from '../../../../utils/logger'
+
+const log = new Logger('IframeLoader')
 
 export const useOnIframeLoad = (
   frameReference: RefObject<HTMLIFrameElement>,
@@ -29,7 +32,7 @@ export const useOnIframeLoad = (
       return
     } else {
       onNavigateAway()
-      console.error('Navigated away from unknown URL')
+      log.error('Navigated away from unknown URL')
       frame.src = renderPageUrl
       sendToRenderPage.current = true
     }

@@ -29,6 +29,9 @@ import {
   historyEntryToHistoryEntryPutDto,
   historyEntryToHistoryEntryUpdateDto
 } from '../../api/history/dto-methods'
+import { Logger } from '../../utils/logger'
+
+const log = new Logger('Redux > History')
 
 export const setHistoryEntries = (entries: HistoryEntry[]): void => {
   store.dispatch({
@@ -163,7 +166,7 @@ const loadLocalHistory = (): HistoryEntry[] => {
       window.localStorage.removeItem('notehistory')
       return convertV1History(localV1History)
     } catch (error) {
-      console.error(`Error converting old history entries: ${String(error)}`)
+      log.error('Error while converting old history entries', error)
       return []
     }
   }
@@ -180,7 +183,7 @@ const loadLocalHistory = (): HistoryEntry[] => {
     })
     return localHistory
   } catch (error) {
-    console.error(`Error parsing local stored history entries: ${String(error)}`)
+    log.error('Error while parsing locally stored history entries', error)
     return []
   }
 }
@@ -190,7 +193,7 @@ const loadRemoteHistory = async (): Promise<HistoryEntry[]> => {
     const remoteHistory = await getHistory()
     return remoteHistory.map(historyEntryDtoToHistoryEntry)
   } catch (error) {
-    console.error(`Error fetching history entries from server: ${String(error)}`)
+    log.error('Error while fetching history entries from server', error)
     return []
   }
 }

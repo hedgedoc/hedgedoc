@@ -9,7 +9,9 @@ import { Alert } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ShowIf } from '../../../common/show-if/show-if'
 import './mermaid.scss'
+import { Logger } from '../../../../utils/logger'
 
+const log = new Logger('MermaidChart')
 export interface MermaidChartProps {
   code: string
 }
@@ -32,8 +34,8 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ code }) => {
           mermaid.default.initialize({ startOnLoad: false })
           mermaidInitialized = true
         })
-        .catch(() => {
-          console.error('error while loading mermaid')
+        .catch((error) => {
+          log.error('Error while loading mermaid', error)
         })
     }
   }, [])
@@ -41,7 +43,7 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ code }) => {
   const showError = useCallback(
     (error: string) => {
       setError(error)
-      console.error(error)
+      log.error(error)
       if (!diagramContainer.current) {
         return
       }

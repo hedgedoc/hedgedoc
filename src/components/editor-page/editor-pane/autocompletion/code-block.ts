@@ -7,9 +7,11 @@
 import { Editor, Hint, Hints, Pos } from 'codemirror'
 import { findWordAtCursor, generateHintListByPrefix, Hinter } from './index'
 import { showErrorNotification } from '../../../../redux/ui-notifications/methods'
+import { Logger } from '../../../../utils/logger'
 
 type highlightJsImport = typeof import('../../../common/hljs/hljs')
 
+const log = new Logger('Autocompletion > CodeBlock')
 const wordRegExp = /^```((\w|-|_|\+)*)$/
 let allSupportedLanguages: string[] = []
 
@@ -22,7 +24,7 @@ const loadHighlightJs = async (): Promise<highlightJsImport | null> => {
     return await import('../../../common/hljs/hljs')
   } catch (error) {
     showErrorNotification('common.errorWhileLoadingLibrary', { name: 'highlight.js' })(error as Error)
-    console.error("can't load highlight js", error)
+    log.error('Error while loading highlight.js', error)
     return null
   }
 }

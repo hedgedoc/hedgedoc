@@ -13,6 +13,9 @@ import { useApplicationState } from '../../hooks/common/use-application-state'
 import { TranslatedExternalLink } from '../common/links/translated-external-link'
 import { ShowIf } from '../common/show-if/show-if'
 import { fetchAndSetUser } from '../login-page/auth/utils'
+import { Logger } from '../../utils/logger'
+
+const log = new Logger('RegisterPage')
 
 export enum RegisterError {
   NONE = 'none',
@@ -37,7 +40,7 @@ export const RegisterPage: React.FC = () => {
       doInternalRegister(username, password)
         .then(() => fetchAndSetUser())
         .catch((err: Error) => {
-          console.error(err)
+          log.error(err)
           setError(err.message === RegisterError.USERNAME_EXISTING ? err.message : RegisterError.OTHER)
         })
       event.preventDefault()

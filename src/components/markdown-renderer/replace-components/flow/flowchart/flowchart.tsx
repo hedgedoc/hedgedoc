@@ -8,6 +8,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { useIsDarkModeActivated } from '../../../../../hooks/common/use-is-dark-mode-activated'
+import { Logger } from '../../../../../utils/logger'
+
+const log = new Logger('FlowChart')
 
 export interface FlowChartProps {
   code: string
@@ -43,7 +46,7 @@ export const FlowChart: React.FC<FlowChartProps> = ({ code }) => {
           setError(true)
         }
       })
-      .catch(() => console.error('error while loading flowchart.js'))
+      .catch((error) => log.error('Error while loading flowchart.js', error))
 
     return () => {
       Array.from(currentDiagramRef.children).forEach((value) => value.remove())

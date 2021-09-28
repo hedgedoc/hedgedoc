@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { Logger } from '../../../utils/logger'
+
 /**
  * Error that will be thrown if a message couldn't be sent.
  */
@@ -33,11 +35,15 @@ export abstract class WindowPostMessageCommunicator<
   private targetOrigin?: string
   private communicationEnabled: boolean
   private handlers: HandlerMap<MESSAGES, RECEIVE_TYPE> = {}
+  private log
 
   constructor() {
     window.addEventListener('message', this.handleEvent.bind(this))
     this.communicationEnabled = false
+    this.log = this.createLogger()
   }
+
+  protected abstract createLogger(): Logger
 
   /**
    * Removes the message event listener from the {@link window}
@@ -91,7 +97,7 @@ export abstract class WindowPostMessageCommunicator<
         `Communication isn't enabled. Maybe the other side is not ready?\nMessage was: ${JSON.stringify(message)}`
       )
     }
-    console.debug('[WPMC ' + this.generateLogIdentifier() + '] Sent event', message)
+    this.log.debug('Sent event', message)
     this.messageTarget.postMessage(message, this.targetOrigin)
   }
 
@@ -107,12 +113,6 @@ export abstract class WindowPostMessageCommunicator<
   }
 
   /**
-   * Generates a unique identifier that helps to separate log messages in the console from different communicators.
-   * @return the identifier
-   */
-  protected abstract generateLogIdentifier(): string
-
-  /**
    * Receives the message events and calls the handler that is mapped to the correct type.
    *
    * @param event The received event
@@ -125,7 +125,7 @@ export abstract class WindowPostMessageCommunicator<
     if (!handler) {
       return true
     }
-    console.debug('[WPMC ' + this.generateLogIdentifier() + '] Received event ', data)
+    this.log.debug('Received event', data)
     handler(data as Extract<MESSAGES, PostMessage<RECEIVE_TYPE>>)
     return false
   }

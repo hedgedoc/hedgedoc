@@ -8,6 +8,9 @@ import { Revision } from '../../../../api/revisions/types'
 import { getUserById } from '../../../../api/users'
 import { UserResponse } from '../../../../api/users/types'
 import { download } from '../../../common/download/download'
+import { Logger } from '../../../../utils/logger'
+
+const log = new Logger('RevisionsUtils')
 
 export const downloadRevision = (noteId: string, revision: Revision | null): void => {
   if (!revision) {
@@ -26,7 +29,7 @@ export const getUserDataForRevision = (authors: string[]): UserResponse[] => {
       .then((userData) => {
         users.push(userData)
       })
-      .catch((error) => console.error(error))
+      .catch((error) => log.error(error))
   })
   return users
 }

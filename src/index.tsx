@@ -23,6 +23,7 @@ import * as serviceWorkerRegistration from './service-worker-registration'
 import './style/dark.scss'
 import './style/index.scss'
 import { isTestMode } from './utils/test-modes'
+import { Logger } from './utils/logger'
 
 const EditorPage = React.lazy(
   () => import(/* webpackPrefetch: true */ /* webpackChunkName: "editor" */ './components/editor-page/editor-page')
@@ -37,6 +38,9 @@ const DocumentReadOnlyPage = React.lazy(
     )
 )
 const baseUrl = new URL(document.head.baseURI).pathname
+const log = new Logger('Index')
+
+log.info('Starting HedgeDoc!')
 
 ReactDOM.render(
   <Provider store={store}>
@@ -96,7 +100,7 @@ ReactDOM.render(
 )
 
 if (isTestMode()) {
-  console.log('This build runs in test mode. This means:\n - no sandboxed iframe')
+  log.warn('This build runs in test mode. This means:\n - no sandboxed iframe')
 }
 
 // If you want your app to work offline and load faster, you can change

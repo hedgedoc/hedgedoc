@@ -6,6 +6,7 @@
 
 import { WindowPostMessageCommunicator } from './window-post-message-communicator'
 import { CommunicationMessages, EditorToRendererMessageType, RendererToEditorMessageType } from './rendering-message'
+import { Logger } from '../../../utils/logger'
 
 /**
  * The communicator that is used to send messages from the editor to the renderer.
@@ -15,7 +16,7 @@ export class EditorToRendererCommunicator extends WindowPostMessageCommunicator<
   EditorToRendererMessageType,
   CommunicationMessages
 > {
-  protected generateLogIdentifier(): string {
-    return 'E=>R'
+  protected createLogger(): Logger {
+    return new Logger('EditorToRendererCommunicator')
   }
 }

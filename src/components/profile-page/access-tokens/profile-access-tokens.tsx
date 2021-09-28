@@ -15,6 +15,9 @@ import { IconButton } from '../../common/icon-button/icon-button'
 import { CommonModal } from '../../common/modals/common-modal'
 import { DeletionModal } from '../../common/modals/deletion-modal'
 import { ShowIf } from '../../common/show-if/show-if'
+import { Logger } from '../../../utils/logger'
+
+const log = new Logger('ProfileAccessTokens')
 
 export const ProfileAccessTokens: React.FC = () => {
   const { t } = useTranslation()
@@ -37,7 +40,7 @@ export const ProfileAccessTokens: React.FC = () => {
           setNewTokenLabel('')
         })
         .catch((error) => {
-          console.error(error)
+          log.error(error)
           setError(true)
         })
     },
@@ -50,7 +53,7 @@ export const ProfileAccessTokens: React.FC = () => {
         setSelectedForDeletion(0)
       })
       .catch((error) => {
-        console.error(error)
+        log.error(error)
         setError(true)
       })
       .finally(() => {
@@ -74,7 +77,7 @@ export const ProfileAccessTokens: React.FC = () => {
         setAccessTokens(tokens)
       })
       .catch((err) => {
-        console.error(err)
+        log.error(err)
         setError(true)
       })
   }, [showAddedModal])

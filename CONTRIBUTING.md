@@ -79,7 +79,7 @@ We prefer lambda functions over the `function` keyword. Simple functions, that r
 const addTwo = (x: number): number => x + 2
 ```
 
-:-1: Bad: 
+:-1: Bad:
 ```typescript=
 function addTwo (x: number): number {
     return x + 2
@@ -88,7 +88,7 @@ function addTwo (x: number): number {
 
 ### Function naming
 
-Names of functions should 
+Names of functions should
 - be as short as possible while clearly communicating their purpose.
 - not include technical details, if not necessary.
 - avoid abbreviations.
@@ -133,7 +133,7 @@ Example:
 ```typescript=
 /**
  * Calculates the divison of the given divisor and divident.
- * 
+ *
  * @param divisor The divisor for the calculation
  * @param divident The divident for the calculation
  * @return The calculated division.
@@ -162,6 +162,16 @@ React components
 - should be named in [PascalCase](https://en.wikipedia.org/wiki/Pascal_case).
 
 
+### Logging
+
+- Don't log directly to the console. Use our logging class `Logger` in "src/utils".
+- Create one instance of `Logger` per file. Don't pass or share the instances.
+- The first argument of the constructor is the scope. Use the name of the class or component whose behaviour you want to log or choose an explanatory name.
+- If you want to add a sub scope (because e.g. you have two components that are similar or are used together, like the sub-classes of the iframe communicator), separate the main and sub scope with " > ".
+- Scopes should be upper camel case.
+- Log messages should never start with a lowercase letter.
+- Log messages should never end with a colon or white space.
+
 #### Example File: `increment-number-button.tsx`:
 ```typescript=
 
@@ -172,16 +182,21 @@ export interface IncrementNumberButtonProps {
     prefix: string
 }
 
+const logger = new Logger("IncrementNumberButton")
+
 /**
  * Shows a button that contains a text and a number that gets incremented each time you click it.
- * 
- * @param prefix A text that should be added before the number. 
+ *
+ * @param prefix A text that should be added before the number.
  */
 export const IncrementNumberButton: React.FC<IncrementNumberButtonProps> = ({ prefix }) => {
     const [counter, setCounter] = useState(0)
-    
-    const incrementCounter = useCallback(() => setCounter((lastCounter) => lastCounter + 1), [])
-    
+
+    const incrementCounter = useCallback(() => {
+        setCounter((lastCounter) => lastCounter + 1)
+        logger.info("Increased counter")
+    }, [])
+
     return <button onClick={incrementCounter}>{prefix}: {counter}</button>
 }
 ```

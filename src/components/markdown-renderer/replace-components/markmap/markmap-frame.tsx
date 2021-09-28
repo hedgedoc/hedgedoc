@@ -8,6 +8,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LockButton } from '../../../common/lock-button/lock-button'
 import '../../utils/button-inside.scss'
+import { Logger } from '../../../../utils/logger'
+
+const log = new Logger('MarkmapFrame')
 
 export interface MarkmapFrameProps {
   code: string
@@ -54,11 +57,11 @@ export const MarkmapFrame: React.FC<MarkmapFrameProps> = ({ code }) => {
           actualContainer.appendChild(svg)
           markmapLoader(svg, code)
         } catch (error) {
-          console.error(error)
+          log.error(error)
         }
       })
-      .catch(() => {
-        console.error('error while loading markmap')
+      .catch((error) => {
+        log.error('Error while loading markmap', error)
       })
   }, [code])
 

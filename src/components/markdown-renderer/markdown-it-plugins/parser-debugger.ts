@@ -5,11 +5,14 @@
  */
 
 import MarkdownIt from 'markdown-it/lib'
+import { Logger } from '../../../utils/logger'
+
+const log = new Logger('MarkdownItParserDebugger')
 
 export const MarkdownItParserDebugger: MarkdownIt.PluginSimple = (md: MarkdownIt) => {
   if (process.env.NODE_ENV !== 'production') {
     md.core.ruler.push('test', (state) => {
-      console.log(state)
+      log.debug('Current state', state)
       return false
     })
   }

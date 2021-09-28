@@ -9,6 +9,9 @@ import i18n from 'i18next'
 import { uploadFile } from '../../../api/media'
 import { store } from '../../../redux'
 import { supportedMimeTypes } from '../../common/upload-image-mimetypes'
+import { Logger } from '../../../utils/logger'
+
+const log = new Logger('File Uploader Handler')
 
 export const handleUpload = (file: File, editor: Editor): void => {
   if (!file) {
@@ -30,7 +33,7 @@ export const handleUpload = (file: File, editor: Editor): void => {
       insertCode(`![](${link})`)
     })
     .catch((error) => {
-      console.error('error while uploading file', error)
+      log.error('error while uploading file', error)
       insertCode('')
     })
 }

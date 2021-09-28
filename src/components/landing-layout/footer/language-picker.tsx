@@ -8,7 +8,9 @@ import { Settings } from 'luxon'
 import React, { useCallback, useMemo } from 'react'
 import { Form } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
+import { Logger } from '../../../utils/logger'
 
+const log = new Logger('LanguagePicker')
 const languages = {
   en: 'English',
   'zh-CN': '简体中文',
@@ -61,7 +63,7 @@ export const LanguagePicker: React.FC = () => {
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       const language = event.currentTarget.value
       Settings.defaultLocale = language
-      i18n.changeLanguage(language).catch((error) => console.error('Error while switching language', error))
+      i18n.changeLanguage(language).catch((error) => log.error('Error while switching language', error))
     },
     [i18n]
   )

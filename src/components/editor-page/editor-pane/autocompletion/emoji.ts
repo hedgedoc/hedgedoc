@@ -10,9 +10,11 @@ import { Emoji, EmojiClickEventDetail, NativeEmoji } from 'emoji-picker-element/
 import { emojiPickerConfig } from '../tool-bar/emoji-picker/emoji-picker'
 import { getEmojiIcon, getEmojiShortCode } from '../tool-bar/utils/emojiUtils'
 import { findWordAtCursor, Hinter } from './index'
+import { Logger } from '../../../../utils/logger'
 
 const emojiIndex = new Database(emojiPickerConfig)
 const emojiWordRegex = /^:([\w-_+]*)$/
+const log = new Logger('Autocompletion > Emoji')
 
 const findEmojiInDatabase = async (emojiIndex: Database, term: string): Promise<Emoji[]> => {
   try {
@@ -26,7 +28,7 @@ const findEmojiInDatabase = async (emojiIndex: Database, term: string): Promise<
       return queryResult
     }
   } catch (error) {
-    console.error(error)
+    log.error('Error while searching for emoji', term, error)
     return []
   }
 }

@@ -10,6 +10,9 @@ import links from '../../links.json'
 import frontendVersion from '../../version.json'
 import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
 import { ExternalLink } from '../common/links/external-link'
+import { Logger } from '../../utils/logger'
+
+const log = new Logger('ErrorBoundary')
 
 export class ErrorBoundary extends Component {
   state: {
@@ -27,8 +30,7 @@ export class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    console.error('error caught', error)
-    console.error('additional information', errorInfo)
+    log.error('Error catched', error, errorInfo)
   }
 
   refreshPage(): void {

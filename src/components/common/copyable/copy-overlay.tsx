@@ -9,11 +9,14 @@ import { Overlay, Tooltip } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { v4 as uuid } from 'uuid'
 import { ShowIf } from '../show-if/show-if'
+import { Logger } from '../../../utils/logger'
 
 export interface CopyOverlayProps {
   content: string
   clickComponent: RefObject<HTMLElement>
 }
+
+const log = new Logger('CopyOverlay')
 
 export const CopyOverlay: React.FC<CopyOverlayProps> = ({ content, clickComponent }) => {
   useTranslation()
@@ -27,9 +30,9 @@ export const CopyOverlay: React.FC<CopyOverlayProps> = ({ content, clickComponen
       .then(() => {
         setError(false)
       })
-      .catch(() => {
+      .catch((error: Error) => {
         setError(true)
-        console.error("couldn't copy")
+        log.error('Copy failed', error)
       })
       .finally(() => {
         setShowCopiedTooltip(true)
