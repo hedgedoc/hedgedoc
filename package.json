@@ -62,7 +62,7 @@
     "typeorm": "0.2.37"
   },
   "devDependencies": {
-    "@nestjs/cli": "8.1.1",
+    "@nestjs/cli": "8.1.2",
     "@nestjs/schematics": "8.0.3",
     "@nestjs/testing": "8.0.8",
     "@trivago/prettier-plugin-sort-imports": "2.0.4",
