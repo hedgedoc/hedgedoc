@@ -96,7 +96,7 @@ export const buildTransformer = (
       return convertNodeToReactElement(node, index)
     }
     const nativeRenderer: NativeRenderer = () => renderNativeNode(node, key, transform)
-    const subNodeTransform: SubNodeTransform = (subNode, subKey) => transform(subNode, subKey, transform)
+    const subNodeTransform: SubNodeTransform = (subNode, subKey) => transform(subNode, subKey)
 
     const key = calculateKeyFromLineMarker(node, lineKeys) ?? (-index).toString()
     const tryReplacement = findNodeReplacement(node, allReplacers, subNodeTransform, nativeRenderer)

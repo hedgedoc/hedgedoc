@@ -158,7 +158,7 @@ const generateNoteTitle = (frontmatter: NoteFrontmatter, firstHeading?: string) 
   ) {
     return (frontmatter?.opengraph.get('title') ?? firstHeading ?? '').trim()
   } else {
-    return (firstHeading ?? firstHeading ?? '').trim()
+    return (firstHeading ?? '').trim()
   }
 }
 

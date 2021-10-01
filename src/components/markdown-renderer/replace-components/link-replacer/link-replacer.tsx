@@ -36,7 +36,7 @@ export class LinkReplacer extends ComponentReplacer {
     const url = node.attribs.href.trim()
 
     // eslint-disable-next-line no-script-url
-    if (url.startsWith('data:') || url.startsWith('javascript:')) {
+    if (url.startsWith('data:') || url.startsWith('javascript:') || url.startsWith('vbscript:')) {
       return <span>{node.attribs.href}</span>
     }
 

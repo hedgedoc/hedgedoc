@@ -15,9 +15,12 @@ interface RouteParameters {
   id: string
 }
 
-export const Redirector: React.FC = () => {
+/**
+ * Redirects the user to the editor if the link is a root level direct link to a version 1 note.
+ */
+export const NoteDirectLinkRedirector: React.FC = () => {
   const { id } = useParams<RouteParameters>()
-  const [error, setError] = useState<boolean | null>(null)
+  const [error, setError] = useState<boolean | undefined>(undefined)
 
   useEffect(() => {
     getNote(id)
@@ -25,9 +28,9 @@ export const Redirector: React.FC = () => {
       .catch(() => setError(true))
   }, [id])
 
-  if (error) {
+  if (error === true) {
     return <NotFoundErrorScreen />
-  } else if (!error && error != null) {
+  } else if (error === false) {
     return <Redirect to={`/n/${id}`} />
   } else {
     return <span>Loading</span>

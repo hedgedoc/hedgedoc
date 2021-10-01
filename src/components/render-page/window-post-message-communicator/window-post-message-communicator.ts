@@ -121,6 +121,9 @@ export abstract class WindowPostMessageCommunicator<
   protected handleEvent(event: MessageEvent<PostMessage<RECEIVE_TYPE>>): boolean | undefined {
     const data = event.data
 
+    if (!(data.type in this.handlers)) {
+      return true
+    }
     const handler = this.handlers[data.type]
     if (!handler) {
       return true

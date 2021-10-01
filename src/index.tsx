@@ -10,7 +10,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import { ApplicationLoader } from './components/application-loader/application-loader'
 import { NotFoundErrorScreen } from './components/common/routing/not-found-error-screen'
-import { Redirector } from './components/common/routing/redirector'
+import { NoteDirectLinkRedirector } from './components/common/routing/note-direct-link-redirector'
 import { ErrorBoundary } from './components/error-boundary/error-boundary'
 import { HistoryPage } from './components/history-page/history-page'
 import { IntroPage } from './components/intro-page/intro-page'
@@ -83,7 +83,7 @@ ReactDOM.render(
               <DocumentReadOnlyPage />
             </Route>
             <Route path='/:id'>
-              <Redirector />
+              <NoteDirectLinkRedirector />
             </Route>
             <Route path='/'>
               <Redirect to='/intro' />
