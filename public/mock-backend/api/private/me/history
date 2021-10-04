@@ -10,6 +10,17 @@
         ]
     },
     {
+        "identifier": "slide-example",
+        "title": "Slide example",
+        "lastVisited": "2020-05-30T15:20:36.088Z",
+        "pinStatus": true,
+        "tags": [
+            "features",
+            "cool",
+            "updated"
+        ]
+    },
+    {
         "identifier": "features",
         "title": "Features",
         "lastVisited": "2020-05-31T15:20:36.088Z",

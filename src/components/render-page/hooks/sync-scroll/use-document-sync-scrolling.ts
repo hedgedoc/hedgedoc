@@ -6,11 +6,11 @@
 
 import React, { useCallback, useState } from 'react'
 import { LineMarkerPosition } from '../../../markdown-renderer/types'
-import { ScrollState } from '../scroll-props'
+import { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
 import { useOnUserScroll } from './use-on-user-scroll'
 import { useScrollToLineMark } from './use-scroll-to-line-mark'
 
-export const useSyncedScrolling = (
+export const useDocumentSyncScrolling = (
   outerContainerRef: React.RefObject<HTMLElement>,
   rendererRef: React.RefObject<HTMLElement>,
   numberOfLines: number,

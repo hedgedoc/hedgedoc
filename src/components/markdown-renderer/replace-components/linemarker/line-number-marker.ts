@@ -18,13 +18,13 @@ export type LineNumberMarkerOptions = (lineMarkers: LineMarkers[]) => void
  * This plugin adds markers to the dom, that are used to map line numbers to dom elements.
  * It also provides a list of line numbers for the top level dom elements.
  */
-export const lineNumberMarker: (options: LineNumberMarkerOptions, offsetLines: number) => MarkdownIt.PluginSimple =
-  (options, offsetLines = 0) =>
+export const lineNumberMarker: (options: LineNumberMarkerOptions, lineOffset: number) => MarkdownIt.PluginSimple =
+  (options, lineOffset = 0) =>
   (md: MarkdownIt) => {
     // add app_linemarker token before each opening or self-closing level-0 tag
     md.core.ruler.push('line_number_marker', (state) => {
       const lineMarkers: LineMarkers[] = []
-      tagTokens(state.tokens, lineMarkers, offsetLines)
+      tagTokens(state.tokens, lineMarkers, lineOffset)
       if (options) {
         options(lineMarkers)
       }
@@ -57,7 +57,7 @@ export const lineNumberMarker: (options: LineNumberMarkerOptions, offsetLines: n
       tokens.splice(tokenPosition, 0, startToken)
     }
 
-    const tagTokens = (tokens: Token[], lineMarkers: LineMarkers[], offsetLines: number) => {
+    const tagTokens = (tokens: Token[], lineMarkers: LineMarkers[], lineOffset: number) => {
       for (let tokenPosition = 0; tokenPosition < tokens.length; tokenPosition++) {
         const token = tokens[tokenPosition]
         if (token.hidden) {
@@ -72,14 +72,14 @@ export const lineNumberMarker: (options: LineNumberMarkerOptions, offsetLines: n
         const endLineNumber = token.map[1] + 1
 
         if (token.level === 0) {
-          lineMarkers.push({ startLine: startLineNumber + offsetLines, endLine: endLineNumber + offsetLines })
+          lineMarkers.push({ startLine: startLineNumber + lineOffset, endLine: endLineNumber + lineOffset })
         }
 
         insertNewLineMarker(startLineNumber, endLineNumber, tokenPosition, token.level, tokens)
         tokenPosition += 1
 
         if (token.children) {
-          tagTokens(token.children, lineMarkers, offsetLines)
+          tagTokens(token.children, lineMarkers, lineOffset)
         }
       }
     }

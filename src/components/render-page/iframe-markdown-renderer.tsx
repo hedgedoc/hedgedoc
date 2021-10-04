@@ -19,16 +19,14 @@ import { countWords } from './word-counter'
 import { RendererFrontmatterInfo } from '../common/note-frontmatter/types'
 import { useRendererToEditorCommunicator } from '../editor-page/render-context/renderer-to-editor-communicator-context-provider'
 import { useRendererReceiveHandler } from './window-post-message-communicator/hooks/use-renderer-receive-handler'
+import { SlideshowMarkdownRenderer } from '../markdown-renderer/slideshow-markdown-renderer'
+import { initialState } from '../../redux/note-details/initial-state'
 
 export const IframeMarkdownRenderer: React.FC = () => {
   const [markdownContent, setMarkdownContent] = useState('')
   const [scrollState, setScrollState] = useState<ScrollState>({ firstLineInView: 1, scrolledPercentage: 0 })
   const [baseConfiguration, setBaseConfiguration] = useState<BaseConfiguration | undefined>(undefined)
-  const [frontmatterInfo, setFrontmatterInfo] = useState<RendererFrontmatterInfo>({
-    offsetLines: 0,
-    frontmatterInvalid: false,
-    deprecatedSyntax: false
-  })
+  const [frontmatterInfo, setFrontmatterInfo] = useState<RendererFrontmatterInfo>(initialState.frontmatterRendererInfo)
 
   const communicator = useRendererToEditorCommunicator()
 
@@ -120,6 +118,18 @@ export const IframeMarkdownRenderer: React.FC = () => {
           baseUrl={baseConfiguration.baseUrl}
           onImageClick={onImageClick}
           frontmatterInfo={frontmatterInfo}
+        />
+      )
+    case RendererType.SLIDESHOW:
+      return (
+        <SlideshowMarkdownRenderer
+          content={markdownContent}
+          baseUrl={baseConfiguration.baseUrl}
+          onFirstHeadingChange={onFirstHeadingChange}
+          onImageClick={onImageClick}
+          scrollState={scrollState}
+          lineOffset={frontmatterInfo.lineOffset}
+          slideOptions={frontmatterInfo.slideOptions}
         />
       )
     case RendererType.INTRO:

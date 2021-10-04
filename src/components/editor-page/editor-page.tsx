@@ -29,6 +29,7 @@ import { useApplicationState } from '../../hooks/common/use-application-state'
 import { EditorDocumentRenderer } from './editor-document-renderer/editor-document-renderer'
 import { EditorToRendererCommunicatorContextProvider } from './render-context/editor-to-renderer-communicator-context-provider'
 import { Logger } from '../../utils/logger'
+import { NoteType } from '../common/note-frontmatter/types'
 
 export interface EditorPagePathParams {
   id: string
@@ -107,6 +108,7 @@ export const EditorPage: React.FC = () => {
     ),
     [onEditorScroll, scrollState.editorScrollState, setEditorToScrollSource]
   )
+  const noteType: NoteType = useApplicationState((state) => state.noteDetails.frontmatter.type)
 
   const rightPane = useMemo(
     () => (
@@ -117,10 +119,10 @@ export const EditorPage: React.FC = () => {
         onTaskCheckedChange={setCheckboxInMarkdownContent}
         onScroll={onMarkdownRendererScroll}
         scrollState={scrollState.rendererScrollState}
-        rendererType={RendererType.DOCUMENT}
+        rendererType={noteType === NoteType.SLIDE ? RendererType.SLIDESHOW : RendererType.DOCUMENT}
       />
     ),
-    [onMarkdownRendererScroll, scrollState.rendererScrollState, setRendererToScrollSource]
+    [noteType, onMarkdownRendererScroll, scrollState.rendererScrollState, setRendererToScrollSource]
   )
 
   return (

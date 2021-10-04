@@ -21,5 +21,5 @@ export const EditorDocumentRenderer: React.FC<EditorDocumentRendererProps> = (pr
 
   useSendFrontmatterInfoFromReduxToRenderer()
 
-  return <RenderIframe frameClasses={'h-100 w-100'} markdownContent={markdownContent} {...props} />
+  return <RenderIframe markdownContent={markdownContent} {...props} />
 }

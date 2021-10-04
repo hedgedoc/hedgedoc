@@ -14,7 +14,7 @@ import { useMemo } from 'react'
  */
 export const useNoteMarkdownContentWithoutFrontmatter = (): string => {
   const markdownContent = useNoteMarkdownContent()
-  const offsetLines = useApplicationState((state) => state.noteDetails.frontmatterRendererInfo.offsetLines)
+  const lineOffset = useApplicationState((state) => state.noteDetails.frontmatterRendererInfo.lineOffset)
 
-  return useMemo(() => markdownContent.split('\n').slice(offsetLines).join('\n'), [markdownContent, offsetLines])
+  return useMemo(() => markdownContent.split('\n').slice(lineOffset).join('\n'), [markdownContent, lineOffset])
 }

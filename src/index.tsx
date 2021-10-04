@@ -37,6 +37,11 @@ const DocumentReadOnlyPage = React.lazy(
       /* webpackPrefetch: true */ /* webpackChunkName: "documentReadOnly" */ './components/document-read-only-page/document-read-only-page'
     )
 )
+
+const SlideShowPage = React.lazy(
+  () => import(/* webpackPrefetch: true */ './components/slide-show-page/slide-show-page')
+)
+
 const baseUrl = new URL(document.head.baseURI).pathname
 const log = new Logger('Index')
 
@@ -81,6 +86,9 @@ ReactDOM.render(
             </Route>
             <Route path='/s/:id'>
               <DocumentReadOnlyPage />
+            </Route>
+            <Route path='/p/:id'>
+              <SlideShowPage />
             </Route>
             <Route path='/:id'>
               <NoteDirectLinkRedirector />

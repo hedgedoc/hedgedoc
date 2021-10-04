@@ -6,7 +6,15 @@
 
 import { NoteDetails } from './types'
 import { DateTime } from 'luxon'
-import { NoteTextDirection, NoteType } from '../../components/common/note-frontmatter/types'
+import { NoteTextDirection, NoteType, SlideOptions } from '../../components/common/note-frontmatter/types'
+
+export const initialSlideOptions: SlideOptions = {
+  transition: 'zoom',
+  autoSlide: 0,
+  autoSlideStoppable: true,
+  backgroundTransition: 'fade',
+  slideNumber: false
+}
 
 export const initialState: NoteDetails = {
   markdownContent: '',
@@ -14,7 +22,8 @@ export const initialState: NoteDetails = {
   frontmatterRendererInfo: {
     frontmatterInvalid: false,
     deprecatedSyntax: false,
-    offsetLines: 0
+    lineOffset: 0,
+    slideOptions: initialSlideOptions
   },
   id: '',
   createTime: DateTime.fromSeconds(0),
@@ -39,6 +48,7 @@ export const initialState: NoteDetails = {
     GA: '',
     disqus: '',
     type: NoteType.DOCUMENT,
-    opengraph: new Map<string, string>()
+    opengraph: new Map<string, string>(),
+    slideOptions: initialSlideOptions
   }
 }

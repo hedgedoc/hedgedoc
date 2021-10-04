@@ -24,7 +24,7 @@ describe('Import markdown file', () => {
 
   it('import on note with content', () => {
 
-    cy.codemirrorFill('test\nabc')
+    cy.setCodemirrorContent('test\nabc')
     cy.get('[data-cy="menu-import"]')
       .click()
     cy.get('[data-cy="menu-import-markdown"]')

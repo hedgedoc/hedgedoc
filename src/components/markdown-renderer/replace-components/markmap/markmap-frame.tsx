@@ -66,7 +66,7 @@ export const MarkmapFrame: React.FC<MarkmapFrameProps> = ({ code }) => {
   }, [code])
 
   return (
-    <div data-cy={'markmap'}>
+    <div data-cy={'markmap'} className={'position-relative'}>
       <div className={'svg-container'} ref={diagramContainer} />
       <div className={'text-right button-inside'}>
         <LockButton

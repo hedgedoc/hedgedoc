@@ -4,27 +4,27 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { NoteFrontmatter } from './note-frontmatter'
+import { createNoteFrontmatterFromYaml } from './note-frontmatter'
 
 describe('yaml frontmatter', () => {
   it('should parse "title"', () => {
-    const noteFrontmatter = NoteFrontmatter.createFromYaml('title: test')
+    const noteFrontmatter = createNoteFrontmatterFromYaml('title: test')
     expect(noteFrontmatter.title).toEqual('test')
   })
 
   it('should parse "robots"', () => {
-    const noteFrontmatter = NoteFrontmatter.createFromYaml('robots: index, follow')
+    const noteFrontmatter = createNoteFrontmatterFromYaml('robots: index, follow')
     expect(noteFrontmatter.robots).toEqual('index, follow')
   })
 
   it('should parse the deprecated tags syntax', () => {
-    const noteFrontmatter = NoteFrontmatter.createFromYaml('tags: test123, abc')
+    const noteFrontmatter = createNoteFrontmatterFromYaml('tags: test123, abc')
     expect(noteFrontmatter.tags).toEqual(['test123', 'abc'])
     expect(noteFrontmatter.deprecatedTagsSyntax).toEqual(true)
   })
 
   it('should parse the tags list syntax', () => {
-    const noteFrontmatter = NoteFrontmatter.createFromYaml(`tags:
+    const noteFrontmatter = createNoteFrontmatterFromYaml(`tags:
       - test123
       - abc
     `)
@@ -33,30 +33,30 @@ describe('yaml frontmatter', () => {
   })
 
   it('should parse the tag inline-list syntax', () => {
-    const noteFrontmatter = NoteFrontmatter.createFromYaml("tags: ['test123', 'abc']")
+    const noteFrontmatter = createNoteFrontmatterFromYaml("tags: ['test123', 'abc']")
     expect(noteFrontmatter.tags).toEqual(['test123', 'abc'])
     expect(noteFrontmatter.deprecatedTagsSyntax).toEqual(false)
   })
 
   it('should parse "breaks"', () => {
-    const noteFrontmatter = NoteFrontmatter.createFromYaml('breaks: false')
+    const noteFrontmatter = createNoteFrontmatterFromYaml('breaks: false')
     expect(noteFrontmatter.breaks).toEqual(false)
   })
 
   it('should parse an empty opengraph object', () => {
-    const noteFrontmatter = NoteFrontmatter.createFromYaml('opengraph:')
+    const noteFrontmatter = createNoteFrontmatterFromYaml('opengraph:')
     expect(noteFrontmatter.opengraph).toEqual(new Map<string, string>())
   })
 
   it('should parse an opengraph title', () => {
-    const noteFrontmatter = NoteFrontmatter.createFromYaml(`opengraph:
+    const noteFrontmatter = createNoteFrontmatterFromYaml(`opengraph:
       title: Testtitle
     `)
     expect(noteFrontmatter.opengraph.get('title')).toEqual('Testtitle')
   })
 
   it('should parse multiple opengraph values', () => {
-    const noteFrontmatter = NoteFrontmatter.createFromYaml(`opengraph:
+    const noteFrontmatter = createNoteFrontmatterFromYaml(`opengraph:
       title: Testtitle
       image: https://dummyimage.com/48.png
       image:type: image/png

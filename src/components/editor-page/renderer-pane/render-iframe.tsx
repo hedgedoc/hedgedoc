@@ -25,6 +25,7 @@ import { useSendMarkdownToRenderer } from './hooks/use-send-markdown-to-renderer
 import { useSendScrollState } from './hooks/use-send-scroll-state'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { Logger } from '../../../utils/logger'
+import { useEffectOnRenderTypeChange } from './hooks/use-effect-on-render-type-change'
 
 export interface RenderIframeProps extends RendererProps {
   rendererType: RendererType
@@ -50,9 +51,8 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   const iframeCommunicator = useEditorToRendererCommunicator()
   const resetRendererReady = useCallback(() => {
     log.debug('Reset render status')
-    iframeCommunicator.unsetMessageTarget()
     setRendererStatus(false)
-  }, [iframeCommunicator])
+  }, [])
   const rendererReady = useIsRendererReady()
   const onIframeLoad = useForceRenderPageUrlOnIframeLoadCallback(frameReference, rendererOrigin, resetRendererReady)
   const [frameHeight, setFrameHeight] = useState<number>(0)
@@ -64,6 +64,12 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
     },
     [iframeCommunicator]
   )
+
+  useEffect(() => {
+    if (!rendererReady) {
+      iframeCommunicator.unsetMessageTarget()
+    }
+  }, [iframeCommunicator, rendererReady])
 
   useEditorReceiveHandler(
     CommunicationMessageType.ON_FIRST_HEADING_CHANGE,
@@ -123,6 +129,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
     }, [iframeCommunicator, rendererOrigin, rendererType])
   )
 
+  useEffectOnRenderTypeChange(rendererType, onIframeLoad)
   useSendScrollState(scrollState)
   useSendDarkModeStatusToRenderer(forcedDarkMode)
   useSendMarkdownToRenderer(markdownContent)
@@ -136,7 +143,9 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
         onLoad={onIframeLoad}
         title='render'
         {...(isTestMode() ? {} : { sandbox: 'allow-downloads allow-same-origin allow-scripts allow-popups' })}
+        allowFullScreen={true}
         ref={frameReference}
+        referrerPolicy={'no-referrer'}
         className={`border-0 ${frameClasses ?? ''}`}
         data-content-ready={rendererReady}
       />

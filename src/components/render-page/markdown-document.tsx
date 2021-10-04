@@ -8,9 +8,9 @@ import { TocAst } from 'markdown-it-toc-done-right'
 import React, { MutableRefObject, useEffect, useMemo, useRef, useState } from 'react'
 import useResizeObserver from 'use-resize-observer'
 import { YamlArrayDeprecationAlert } from '../editor-page/renderer-pane/yaml-array-deprecation-alert'
-import { useSyncedScrolling } from '../editor-page/synced-scroll/hooks/use-synced-scrolling'
+import { useDocumentSyncScrolling } from './hooks/sync-scroll/use-document-sync-scrolling'
 import { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
-import { BasicMarkdownRenderer } from '../markdown-renderer/basic-markdown-renderer'
+import { DocumentMarkdownRenderer } from '../markdown-renderer/document-markdown-renderer'
 import { ImageClickHandler } from '../markdown-renderer/replace-components/image/image-replacer'
 import './markdown-document.scss'
 import { WidthBasedTableOfContents } from './width-based-table-of-contents'
@@ -70,7 +70,7 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
   }, [rendererSize.height, onHeightChange])
 
   const contentLineCount = useMemo(() => markdownContent.split('\n').length, [markdownContent])
-  const [onLineMarkerPositionChanged, onUserScroll] = useSyncedScrolling(
+  const [onLineMarkerPositionChanged, onUserScroll] = useDocumentSyncScrolling(
     internalDocumentRenderPaneRef,
     rendererRef,
     contentLineCount,
@@ -88,7 +88,7 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
       <div className={'markdown-document-content'}>
         <InvalidYamlAlert show={!!frontmatterInfo?.frontmatterInvalid} />
         <YamlArrayDeprecationAlert show={!!frontmatterInfo?.deprecatedSyntax} />
-        <BasicMarkdownRenderer
+        <DocumentMarkdownRenderer
           outerContainerRef={rendererRef}
           className={`mb-3 ${additionalRendererClasses ?? ''}`}
           content={markdownContent}
@@ -99,7 +99,7 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
           baseUrl={baseUrl}
           onImageClick={onImageClick}
           useAlternativeBreaks={useAlternativeBreaks}
-          frontmatterLineOffset={frontmatterInfo?.offsetLines}
+          lineOffset={frontmatterInfo?.lineOffset}
         />
       </div>
       <div className={'markdown-document-side pt-4'}>

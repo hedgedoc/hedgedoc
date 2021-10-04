@@ -35,12 +35,15 @@ import { highlightedCode } from '../markdown-it-plugins/highlighted-code'
 import { quoteExtraColor } from '../markdown-it-plugins/quote-extra-color'
 import { quoteExtra } from '../markdown-it-plugins/quote-extra'
 import { documentTableOfContents } from '../markdown-it-plugins/document-table-of-contents'
+import { addSlideSectionsMarkdownItPlugin } from '../markdown-it-plugins/reveal-sections'
 
 export interface ConfiguratorDetails {
   onToc: (toc: TocAst) => void
   onLineMarkers?: (lineMarkers: LineMarkers[]) => void
   useAlternativeBreaks?: boolean
-  offsetLines?: number
+  lineOffset?: number
+  headlineAnchors?: boolean
+  slideSections?: boolean
 }
 
 export class BasicMarkdownItConfigurator<T extends ConfiguratorDetails> {
@@ -73,7 +76,6 @@ export class BasicMarkdownItConfigurator<T extends ConfiguratorDetails> {
   protected configure(markdownIt: MarkdownIt): void {
     this.configurations.push(
       plantumlWithError,
-      headlineAnchors,
       KatexReplacer.markdownItPlugin,
       YoutubeReplacer.markdownItPlugin,
       VimeoReplacer.markdownItPlugin,
@@ -101,8 +103,16 @@ export class BasicMarkdownItConfigurator<T extends ConfiguratorDetails> {
       spoilerContainer
     )
 
+    if (this.options.headlineAnchors) {
+      this.configurations.push(headlineAnchors)
+    }
+
+    if (this.options.slideSections) {
+      this.configurations.push(addSlideSectionsMarkdownItPlugin)
+    }
+
     if (this.options.onLineMarkers) {
-      this.configurations.push(lineNumberMarker(this.options.onLineMarkers, this.options.offsetLines ?? 0))
+      this.configurations.push(lineNumberMarker(this.options.onLineMarkers, this.options.lineOffset ?? 0))
     }
 
     this.postConfigurations.push(linkifyExtra, MarkdownItParserDebugger)

@@ -6,7 +6,10 @@
 
 import { Reducer } from 'redux'
 import { PresentFrontmatterExtractionResult } from '../../components/common/note-frontmatter/types'
-import { NoteFrontmatter } from '../../components/common/note-frontmatter/note-frontmatter'
+import {
+  createNoteFrontmatterFromYaml,
+  NoteFrontmatter
+} from '../../components/common/note-frontmatter/note-frontmatter'
 import { NoteDetails, NoteDetailsActions, NoteDetailsActionType } from './types'
 import { extractFrontmatter } from '../../components/common/note-frontmatter/extract-frontmatter'
 import { NoteDto } from '../../api/notes/types'
@@ -31,8 +34,6 @@ export const NoteDetailsReducer: Reducer<NoteDetails, NoteDetailsActions> = (
   }
 }
 
-const TASK_REGEX = /(\s*(?:[-*+]|\d+[.)]) )(\[[ xX]])( .*)/
-
 /**
  * Builds a {@link NoteDetails} redux state from a DTO received as an API response.
  * @param dto The first DTO received from the API containing the relevant information about the note.
@@ -43,6 +44,7 @@ const buildStateFromServerDto = (dto: NoteDto): NoteDetails => {
   return buildStateFromMarkdownContentUpdate(newState, newState.markdownContent)
 }
 
+const TASK_REGEX = /(\s*(?:[-*+]|\d+[.)]) )(\[[ xX]])( .*)/
 /**
  * Builds a {@link NoteDetails} redux state where a checkbox in the markdown content either gets checked or unchecked.
  * @param state The previous redux state.
@@ -74,7 +76,7 @@ const buildStateFromTaskListUpdate = (
  */
 const buildStateFromMarkdownContentUpdate = (state: NoteDetails, markdownContent: string): NoteDetails => {
   const frontmatterExtraction = extractFrontmatter(markdownContent)
-  if (!frontmatterExtraction.frontmatterPresent) {
+  if (!frontmatterExtraction.isPresent) {
     return {
       ...state,
       markdownContent: markdownContent,
@@ -103,32 +105,34 @@ const buildStateFromFrontmatterUpdate = (
   state: NoteDetails,
   frontmatterExtraction: PresentFrontmatterExtractionResult
 ): NoteDetails => {
-  if (frontmatterExtraction.rawFrontmatterText === state.rawFrontmatter) {
+  if (frontmatterExtraction.rawText === state.rawFrontmatter) {
     return state
   }
   try {
-    const frontmatter = NoteFrontmatter.createFromYaml(frontmatterExtraction.rawFrontmatterText)
+    const frontmatter = createNoteFrontmatterFromYaml(frontmatterExtraction.rawText)
     return {
       ...state,
-      rawFrontmatter: frontmatterExtraction.rawFrontmatterText,
+      rawFrontmatter: frontmatterExtraction.rawText,
       frontmatter: frontmatter,
       noteTitle: generateNoteTitle(frontmatter, state.firstHeading),
       frontmatterRendererInfo: {
-        offsetLines: frontmatterExtraction.frontmatterLines,
+        lineOffset: frontmatterExtraction.lineOffset,
         deprecatedSyntax: frontmatter.deprecatedTagsSyntax,
-        frontmatterInvalid: false
+        frontmatterInvalid: false,
+        slideOptions: frontmatter.slideOptions
       }
     }
   } catch (e) {
     return {
       ...state,
       noteTitle: generateNoteTitle(initialState.frontmatter, state.firstHeading),
-      rawFrontmatter: frontmatterExtraction.rawFrontmatterText,
+      rawFrontmatter: frontmatterExtraction.rawText,
       frontmatter: initialState.frontmatter,
       frontmatterRendererInfo: {
-        offsetLines: frontmatterExtraction.frontmatterLines,
+        lineOffset: frontmatterExtraction.lineOffset,
         deprecatedSyntax: false,
-        frontmatterInvalid: true
+        frontmatterInvalid: true,
+        slideOptions: initialState.frontmatterRendererInfo.slideOptions
       }
     }
   }
@@ -172,11 +176,7 @@ const convertNoteDtoToNoteDetails = (note: NoteDto): NoteDetails => {
   return {
     markdownContent: note.content,
     rawFrontmatter: '',
-    frontmatterRendererInfo: {
-      frontmatterInvalid: false,
-      deprecatedSyntax: false,
-      offsetLines: 0
-    },
+    frontmatterRendererInfo: initialState.frontmatterRendererInfo,
     frontmatter: initialState.frontmatter,
     id: note.metadata.id,
     noteTitle: initialState.noteTitle,

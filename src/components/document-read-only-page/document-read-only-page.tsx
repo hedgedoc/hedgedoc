@@ -50,21 +50,7 @@ export const DocumentReadOnlyPage: React.FC = () => {
           <LoadingNoteAlert show={loading} />
         </div>
         <ShowIf condition={!error && !loading}>
-          <DocumentInfobar
-            changedAuthor={noteDetails.lastChange.userName ?? ''}
-            changedTime={noteDetails.lastChange.timestamp}
-            createdAuthor={'Test'}
-            createdTime={noteDetails.createTime}
-            editable={true}
-            noteId={id}
-            viewCount={noteDetails.viewCount}
-          />
-          <RenderIframe
-            frameClasses={'flex-fill h-100 w-100'}
-            markdownContent={markdownContent}
-            onFirstHeadingChange={onFirstHeadingChange}
-            rendererType={RendererType.DOCUMENT}
-          />
+          <DocumentReadOnlyPageContent />
         </ShowIf>
       </div>
     </EditorToRendererCommunicatorContextProvider>

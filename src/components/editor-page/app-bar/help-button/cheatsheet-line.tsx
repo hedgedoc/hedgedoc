@@ -15,7 +15,7 @@ export interface CheatsheetLineProps {
 const HighlightedCode = React.lazy(
   () => import('../../../markdown-renderer/replace-components/highlighted-fence/highlighted-code/highlighted-code')
 )
-const BasicMarkdownRenderer = React.lazy(() => import('../../../markdown-renderer/basic-markdown-renderer'))
+const DocumentMarkdownRenderer = React.lazy(() => import('../../../markdown-renderer/document-markdown-renderer'))
 
 export const CheatsheetLine: React.FC<CheatsheetLineProps> = ({ code, onTaskCheckedChange }) => {
   const checkboxClick = useCallback(
@@ -36,7 +36,11 @@ export const CheatsheetLine: React.FC<CheatsheetLineProps> = ({ code, onTaskChec
       }>
       <tr>
         <td>
-          <BasicMarkdownRenderer content={code} baseUrl={'https://example.org'} onTaskCheckedChange={checkboxClick} />
+          <DocumentMarkdownRenderer
+            content={code}
+            baseUrl={'https://example.org'}
+            onTaskCheckedChange={checkboxClick}
+          />
         </td>
         <td className={'markdown-body'}>
           <HighlightedCode code={code} wrapLines={true} startLineNumber={1} language={'markdown'} />

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace Cypress {
   interface Chainable {
     /**
@@ -13,7 +12,7 @@ declare namespace Cypress {
      */
     fill(value: string): Chainable<Element>
 
-    codemirrorFill(value: string): Chainable<Element>
+    setCodemirrorContent(value: string): Chainable<Element>
   }
 }
 
@@ -25,12 +24,14 @@ Cypress.Commands.add('fill', {
            .trigger('change', { force: true })
 })
 
-Cypress.Commands.add('codemirrorFill', (content: string) => {
+Cypress.Commands.add('setCodemirrorContent', (content: string) => {
   const line = content.split('\n')
                       .find(value => value !== '')
   cy.get('.CodeMirror')
     .click()
     .get('textarea')
+    .type('{ctrl}a')
+    .type('{backspace}')
     .fill(content)
   if (line) {
     cy.get('.CodeMirror')

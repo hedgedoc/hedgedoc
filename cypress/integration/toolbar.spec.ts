@@ -19,7 +19,7 @@ describe('Toolbar Buttons', () => {
 
   describe('for single line text', () => {
     beforeEach(() => {
-      cy.codemirrorFill(testText)
+      cy.setCodemirrorContent(testText)
       cy.get('.CodeMirror-line > span')
         .should('exist')
         .should('have.text', testText)
@@ -182,7 +182,7 @@ describe('Toolbar Buttons', () => {
 
   describe('for single line link with selection', () => {
     beforeEach(() => {
-      cy.codemirrorFill(testLink)
+      cy.setCodemirrorContent(testLink)
       cy.get('.CodeMirror-line > span')
         .should('exist')
         .should('have.text', testLink)

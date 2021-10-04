@@ -6,13 +6,13 @@
 
 declare namespace Cypress {
   interface Chainable {
-    getMarkdownRenderer(): Chainable<Element>
-
+    getIframeBody(): Chainable<Element>
+    getReveal(): Chainable<Element>
     getMarkdownBody(): Chainable<Element>
   }
 }
 
-Cypress.Commands.add('getMarkdownRenderer', () => {
+Cypress.Commands.add('getIframeBody', () => {
   return cy
     .get(`iframe[data-cy="documentIframe"][data-content-ready="true"]`)
     .should('be.visible')
@@ -23,6 +23,10 @@ Cypress.Commands.add('getMarkdownRenderer', () => {
     .then(cy.wrap.bind(cy))
 })
 
+Cypress.Commands.add('getReveal', () => {
+  return cy.getIframeBody().find('.reveal')
+})
+
 Cypress.Commands.add('getMarkdownBody', () => {
-  return cy.getMarkdownRenderer().find('.markdown-body')
+  return cy.getIframeBody().find('.markdown-body')
 })

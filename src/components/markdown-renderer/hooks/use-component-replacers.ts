@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { useCallback } from 'react'
+import { useMemo } from 'react'
 import { AbcReplacer } from '../replace-components/abc/abc-replacer'
 import { AsciinemaReplacer } from '../replace-components/asciinema/asciinema-replacer'
 import { ComponentReplacer } from '../replace-components/ComponentReplacer'
@@ -41,8 +41,8 @@ export const useComponentReplacers = (
   onImageClick?: ImageClickHandler,
   baseUrl?: string,
   frontmatterLinesToSkip?: number
-): (() => ComponentReplacer[]) =>
-  useCallback(
+): ComponentReplacer[] =>
+  useMemo(
     () => [
       new LinemarkerReplacer(),
       new GistReplacer(),

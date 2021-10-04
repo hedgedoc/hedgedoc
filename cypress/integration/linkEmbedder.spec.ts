@@ -12,7 +12,7 @@ describe('Link gets replaced with embedding: ', () => {
   // TODO Add general testing of one-click-embedding component. The tests below just test a specific use of the component.
 
   it('GitHub Gist', () => {
-    cy.codemirrorFill('https://gist.github.com/schacon/1')
+    cy.setCodemirrorContent('https://gist.github.com/schacon/1')
     cy.getMarkdownBody()
       .find('.one-click-embedding.gist-frame')
       .click()
@@ -22,7 +22,7 @@ describe('Link gets replaced with embedding: ', () => {
   })
 
   it('YouTube', () => {
-    cy.codemirrorFill('https://www.youtube.com/watch?v=YE7VzlLtp-4')
+    cy.setCodemirrorContent('https://www.youtube.com/watch?v=YE7VzlLtp-4')
     cy.getMarkdownBody()
       .find('.one-click-embedding-preview')
       .should('have.attr', 'src', 'https://i.ytimg.com/vi/YE7VzlLtp-4/maxresdefault.jpg')
@@ -44,7 +44,7 @@ describe('Link gets replaced with embedding: ', () => {
       },
       body: '[{"thumbnail_large": "https://i.vimeocdn.com/video/503631401_640.jpg"}]'
     })
-    cy.codemirrorFill('https://vimeo.com/23237102')
+    cy.setCodemirrorContent('https://vimeo.com/23237102')
     cy.getMarkdownBody()
       .find('.one-click-embedding-preview')
       .should('have.attr', 'src', 'https://i.vimeocdn.com/video/503631401_640.jpg')
@@ -56,7 +56,7 @@ describe('Link gets replaced with embedding: ', () => {
   })
 
   it('Asciinema', () => {
-    cy.codemirrorFill('https://asciinema.org/a/117928')
+    cy.setCodemirrorContent('https://asciinema.org/a/117928')
     cy.getMarkdownBody()
       .find('.one-click-embedding-preview')
       .should('have.attr', 'src', 'https://asciinema.org/a/117928.png')

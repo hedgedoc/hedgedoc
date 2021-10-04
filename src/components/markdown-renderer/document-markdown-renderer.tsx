@@ -4,12 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Ref, useCallback, useMemo, useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { DocumentLengthLimitReachedAlert } from './document-length-limit-reached-alert'
 import { useConvertMarkdownToReactDom } from './hooks/use-convert-markdown-to-react-dom'
 import './markdown-renderer.scss'
-import { ComponentReplacer } from './replace-components/ComponentReplacer'
-import { AdditionalMarkdownRendererProps, LineMarkerPosition } from './types'
+import { LineMarkerPosition } from './types'
 import { useComponentReplacers } from './hooks/use-component-replacers'
 import { useTranslation } from 'react-i18next'
 import { LineMarkers } from './replace-components/linemarker/line-number-marker'
@@ -18,28 +17,16 @@ import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
 import { TocAst } from 'markdown-it-toc-done-right'
 import { useOnRefChange } from './hooks/use-on-ref-change'
 import { BasicMarkdownItConfigurator } from './markdown-it-configurator/basic-markdown-it-configurator'
-import { ImageClickHandler } from './replace-components/image/image-replacer'
 import { useTrimmedContent } from './hooks/use-trimmed-content'
+import { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 
-export interface BasicMarkdownRendererProps {
-  additionalReplacers?: () => ComponentReplacer[]
-  onBeforeRendering?: () => void
-  onAfterRendering?: () => void
-  onFirstHeadingChange?: (firstHeading: string | undefined) => void
+export interface DocumentMarkdownRendererProps extends CommonMarkdownRendererProps {
   onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void
-  onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
-  onTocChange?: (ast?: TocAst) => void
-  baseUrl?: string
-  onImageClick?: ImageClickHandler
-  outerContainerRef?: Ref<HTMLDivElement>
-  useAlternativeBreaks?: boolean
-  frontmatterLineOffset?: number
 }
 
-export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & AdditionalMarkdownRendererProps> = ({
+export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> = ({
   className,
   content,
-  additionalReplacers,
   onFirstHeadingChange,
   onLineMarkerPositionChanged,
   onTaskCheckedChange,
@@ -48,7 +35,7 @@ export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & Additi
   onImageClick,
   outerContainerRef,
   useAlternativeBreaks,
-  frontmatterLineOffset
+  lineOffset
 }) => {
   const markdownBodyRef = useRef<HTMLDivElement>(null)
   const currentLineMarkers = useRef<LineMarkers[]>()
@@ -64,17 +51,12 @@ export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & Additi
             ? undefined
             : (lineMarkers) => (currentLineMarkers.current = lineMarkers),
         useAlternativeBreaks,
-        offsetLines: frontmatterLineOffset
+        lineOffset,
+        headlineAnchors: true
       }).buildConfiguredMarkdownIt(),
-    [onLineMarkerPositionChanged, useAlternativeBreaks, frontmatterLineOffset]
+    [onLineMarkerPositionChanged, useAlternativeBreaks, lineOffset]
   )
-
-  const baseReplacers = useComponentReplacers(onTaskCheckedChange, onImageClick, baseUrl, frontmatterLineOffset)
-  const replacers = useCallback(
-    () => baseReplacers().concat(additionalReplacers ? additionalReplacers() : []),
-    [additionalReplacers, baseReplacers]
-  )
-
+  const replacers = useComponentReplacers(onTaskCheckedChange, onImageClick, baseUrl, lineOffset)
   const markdownReactDom = useConvertMarkdownToReactDom(trimmedContent, markdownIt, replacers)
 
   useTranslation()
@@ -99,4 +81,4 @@ export const BasicMarkdownRenderer: React.FC<BasicMarkdownRendererProps & Additi
   )
 }
 
-export default BasicMarkdownRenderer
+export default DocumentMarkdownRenderer

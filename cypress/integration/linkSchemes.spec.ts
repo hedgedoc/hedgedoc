@@ -10,7 +10,7 @@ describe('markdown formatted links to', () => {
   })
 
   it('external domains render as external link', () => {
-    cy.codemirrorFill('[external](https://hedgedoc.org/)')
+    cy.setCodemirrorContent('[external](https://hedgedoc.org/)')
     cy.getMarkdownBody()
       .find('a')
       .should('have.attr', 'href', 'https://hedgedoc.org/')
@@ -19,28 +19,28 @@ describe('markdown formatted links to', () => {
   })
 
   it('note anchor references render as anchor link', () => {
-    cy.codemirrorFill('[anchor](#anchor)')
+    cy.setCodemirrorContent('[anchor](#anchor)')
     cy.getMarkdownBody()
       .find('a')
       .should('have.attr', 'href', 'http://127.0.0.1:3001/n/test#anchor')
   })
 
   it('internal pages render as internal link', () => {
-    cy.codemirrorFill('[internal](other-note)')
+    cy.setCodemirrorContent('[internal](other-note)')
     cy.getMarkdownBody()
       .find('a')
       .should('have.attr', 'href', 'http://127.0.0.1:3001/n/other-note')
   })
 
   it('data URIs do not render', () => {
-    cy.codemirrorFill('[data](data:text/plain,evil)')
+    cy.setCodemirrorContent('[data](data:text/plain,evil)')
     cy.getMarkdownBody()
       .find('a')
       .should('not.exist')
   })
 
   it('javascript URIs do not render', () => {
-    cy.codemirrorFill('[js](javascript:alert("evil"))')
+    cy.setCodemirrorContent('[js](javascript:alert("evil"))')
     cy.getMarkdownBody()
       .find('a')
       .should('not.exist')
@@ -53,7 +53,7 @@ describe('HTML anchor element links to', () => {
   })
 
   it('external domains render as external link', () => {
-    cy.codemirrorFill('<a href="https://hedgedoc.org/">external</a>')
+    cy.setCodemirrorContent('<a href="https://hedgedoc.org/">external</a>')
     cy.getMarkdownBody()
       .find('a')
       .should('have.attr', 'href', 'https://hedgedoc.org/')
@@ -62,28 +62,28 @@ describe('HTML anchor element links to', () => {
   })
 
   it('note anchor references render as anchor link', () => {
-    cy.codemirrorFill('<a href="#anchor">anchor</a>')
+    cy.setCodemirrorContent('<a href="#anchor">anchor</a>')
     cy.getMarkdownBody()
       .find('a')
       .should('have.attr', 'href', 'http://127.0.0.1:3001/n/test#anchor')
   })
 
   it('internal pages render as internal link', () => {
-    cy.codemirrorFill('<a href="other-note">internal</a>')
+    cy.setCodemirrorContent('<a href="other-note">internal</a>')
     cy.getMarkdownBody()
       .find('a')
       .should('have.attr', 'href', 'http://127.0.0.1:3001/n/other-note')
   })
 
   it('data URIs do not render', () => {
-    cy.codemirrorFill('<a href="data:text/plain,evil">data</a>')
+    cy.setCodemirrorContent('<a href="data:text/plain,evil">data</a>')
     cy.getMarkdownBody()
       .find('a')
       .should('not.exist')
   })
 
   it('javascript URIs do not render', () => {
-    cy.codemirrorFill('<a href="javascript:alert(\'evil\')">js</a>')
+    cy.setCodemirrorContent('<a href="javascript:alert(\'evil\')">js</a>')
     cy.getMarkdownBody()
       .find('a')
       .should('not.exist')

@@ -13,19 +13,19 @@ describe('emojis', () => {
   })
 
   it('renders an emoji shortcode', () => {
-    cy.codemirrorFill(':hedgehog:')
+    cy.setCodemirrorContent(':hedgehog:')
     cy.getMarkdownBody()
       .should('have.text', HEDGEHOG_UNICODE_CHARACTER)
   })
 
   it('renders an emoji unicode character', () => {
-    cy.codemirrorFill(HEDGEHOG_UNICODE_CHARACTER)
+    cy.setCodemirrorContent(HEDGEHOG_UNICODE_CHARACTER)
     cy.getMarkdownBody()
       .should('have.text', HEDGEHOG_UNICODE_CHARACTER)
   })
 
   it('renders an fork awesome icon', () => {
-    cy.codemirrorFill(':fa-matrix-org:')
+    cy.setCodemirrorContent(':fa-matrix-org:')
     cy.getMarkdownBody()
       .find('i.fa.fa-matrix-org')
       .should('be.visible')

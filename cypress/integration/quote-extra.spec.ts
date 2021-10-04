@@ -11,7 +11,7 @@ describe('Quote extra tags', function () {
 
   describe('Name quote tag', () => {
     it('renders correctly', () => {
-      cy.codemirrorFill('[name=testy mctestface]')
+      cy.setCodemirrorContent('[name=testy mctestface]')
 
       cy.getMarkdownBody()
         .find('.quote-extra')
@@ -28,7 +28,7 @@ describe('Quote extra tags', function () {
 
   describe('Time quote tag', () => {
     it('renders correctly', () => {
-      cy.codemirrorFill(`[time=always]`)
+      cy.setCodemirrorContent(`[time=always]`)
 
       cy.getMarkdownBody()
         .find('.quote-extra')
@@ -45,7 +45,7 @@ describe('Quote extra tags', function () {
 
   describe('Color quote tag', () => {
     it('renders correctly', () => {
-      cy.codemirrorFill(`[color=#b51f08]`)
+      cy.setCodemirrorContent(`[color=#b51f08]`)
 
       cy.getMarkdownBody()
         .find('.quote-extra')
@@ -60,7 +60,7 @@ describe('Quote extra tags', function () {
     })
 
     it('doesn\'t render in a blockquote and dyes the blockquote border', () => {
-      cy.codemirrorFill(`> [color=#b51f08] HedgeDoc`)
+      cy.setCodemirrorContent(`> [color=#b51f08] HedgeDoc`)
 
       cy.getMarkdownBody()
         .find('.quote-extra')

@@ -10,7 +10,7 @@ describe('Test word count with', () => {
   })
 
   it('empty note', () => {
-    cy.codemirrorFill('')
+    cy.setCodemirrorContent('')
     cy.wait(500)
     cy.get('[data-cy="sidebar-btn-document-info"]').click()
     cy.get('[data-cy="document-info-modal"]').should('be.visible')
@@ -18,7 +18,7 @@ describe('Test word count with', () => {
   })
 
   it('simple words', () => {
-    cy.codemirrorFill('five words should be enough')
+    cy.setCodemirrorContent('five words should be enough')
     cy.wait(500)
     cy.get('[data-cy="sidebar-btn-document-info"]').click()
     cy.get('[data-cy="document-info-modal"]').should('be.visible')
@@ -26,7 +26,7 @@ describe('Test word count with', () => {
   })
 
   it('excluded codeblocks', () => {
-    cy.codemirrorFill('```\nthis is should be ignored\n```\n\ntwo `words`')
+    cy.setCodemirrorContent('```\nthis is should be ignored\n```\n\ntwo `words`')
     cy.wait(500)
     cy.get('[data-cy="sidebar-btn-document-info"]').click()
     cy.get('[data-cy="document-info-modal"]').should('be.visible')
@@ -34,7 +34,7 @@ describe('Test word count with', () => {
   })
 
   it('excluded images', () => {
-    cy.codemirrorFill('![ignored alt text](https://dummyimage.com/48) not ignored text')
+    cy.setCodemirrorContent('![ignored alt text](https://dummyimage.com/48) not ignored text')
     cy.wait(500)
     cy.get('[data-cy="sidebar-btn-document-info"]').click()
     cy.get('[data-cy="document-info-modal"]').should('be.visible')

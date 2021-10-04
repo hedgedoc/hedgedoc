@@ -15,7 +15,7 @@ describe('Code', () => {
 
   describe('with just the language', () => {
     it('doesn\'t show a gutter', () => {
-      cy.codemirrorFill('```javascript \nlet x = 0\n```')
+      cy.setCodemirrorContent('```javascript \nlet x = 0\n```')
       findHljsCodeBlock()
         .should('not.have.class', 'showGutter')
 
@@ -26,7 +26,7 @@ describe('Code', () => {
 
     describe('and line wrapping', () => {
       it('doesn\'t show a gutter', () => {
-        cy.codemirrorFill('```javascript! \nlet x = 0\n```')
+        cy.setCodemirrorContent('```javascript! \nlet x = 0\n```')
         findHljsCodeBlock()
           .should('not.have.class', 'showGutter')
           .should('have.class', 'wrapLines')
@@ -40,7 +40,7 @@ describe('Code', () => {
 
   describe('with the language and show gutter', () => {
     it('shows the correct line number', () => {
-      cy.codemirrorFill('```javascript= \nlet x = 0\n```')
+      cy.setCodemirrorContent('```javascript= \nlet x = 0\n```')
       findHljsCodeBlock()
         .should('have.class', 'showGutter')
 
@@ -53,7 +53,7 @@ describe('Code', () => {
 
     describe('and line wrapping', () => {
       it('shows the correct line number', () => {
-        cy.codemirrorFill('```javascript=! \nlet x = 0\n```')
+        cy.setCodemirrorContent('```javascript=! \nlet x = 0\n```')
         findHljsCodeBlock()
           .should('have.class', 'showGutter')
           .should('have.class', 'wrapLines')
@@ -69,7 +69,7 @@ describe('Code', () => {
 
   describe('with the language, show gutter with a start number', () => {
     it('shows the correct line number', () => {
-      cy.codemirrorFill('```javascript=100 \nlet x = 0\n```')
+      cy.setCodemirrorContent('```javascript=100 \nlet x = 0\n```')
       findHljsCodeBlock()
         .should('have.class', 'showGutter')
 
@@ -81,7 +81,7 @@ describe('Code', () => {
     })
 
     it('shows the correct line number and continues in another codeblock', () => {
-      cy.codemirrorFill('```javascript=100 \nlet x = 0\nlet y = 1\n```\n\n```javascript=+\nlet y = 2\n```\n')
+      cy.setCodemirrorContent('```javascript=100 \nlet x = 0\nlet y = 1\n```\n\n```javascript=+\nlet y = 2\n```\n')
       findHljsCodeBlock()
         .should('have.class', 'showGutter')
         .first()
@@ -108,7 +108,7 @@ describe('Code', () => {
 
     describe('and line wrapping', () => {
       it('shows the correct line number', () => {
-        cy.codemirrorFill('```javascript=100! \nlet x = 0\n```')
+        cy.setCodemirrorContent('```javascript=100! \nlet x = 0\n```')
         findHljsCodeBlock()
           .should('have.class', 'showGutter')
           .should('have.class', 'wrapLines')
@@ -120,7 +120,7 @@ describe('Code', () => {
       })
 
       it('shows the correct line number and continues in another codeblock', () => {
-        cy.codemirrorFill('```javascript=100! \nlet x = 0\nlet y = 1\n```\n\n```javascript=+\nlet y = 2\n```\n')
+        cy.setCodemirrorContent('```javascript=100! \nlet x = 0\nlet y = 1\n```\n\n```javascript=+\nlet y = 2\n```\n')
         findHljsCodeBlock()
           .should('have.class', 'showGutter')
           .should('have.class', 'wrapLines')
@@ -149,7 +149,7 @@ describe('Code', () => {
   })
 
   it('has a working copy button', () => {
-    cy.codemirrorFill('```javascript \nlet x = 0\n```')
+    cy.setCodemirrorContent('```javascript \nlet x = 0\n```')
 
     cy.get(`iframe[data-cy="documentIframe"]`)
       .then(($element: JQuery) => {
@@ -162,7 +162,7 @@ describe('Code', () => {
           .as('copy')
       })
 
-    cy.getMarkdownRenderer()
+    cy.getIframeBody()
       .find('[data-cy="copy-code-button"]')
       .click()
 

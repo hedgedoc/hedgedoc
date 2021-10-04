@@ -20,22 +20,22 @@ describe('The status bar text length info', () => {
   })
 
   it('color is set to "warning" on <= 100 characters remaining', () => {
-    cy.codemirrorFill(warningTestContent)
+    cy.setCodemirrorContent(warningTestContent)
     cy.get('.status-bar [data-cy="remainingCharacters"]')
       .should('have.class', 'text-warning')
   })
 
   it('color is set to danger on <= 0 characters remaining', () => {
-    cy.codemirrorFill(dangerTestContent)
+    cy.setCodemirrorContent(dangerTestContent)
     cy.get('.status-bar [data-cy="remainingCharacters"]')
       .should('have.class', 'text-danger')
   })
 
   it('shows a warning and opens a modal', () => {
-    cy.codemirrorFill(tooMuchTestContent)
+    cy.setCodemirrorContent(tooMuchTestContent)
     cy.get('[data-cy="limitReachedModal"]')
       .should('be.visible')
-    cy.getMarkdownRenderer()
+    cy.getIframeBody()
       .find('[data-cy="limitReachedMessage"]')
       .should('be.visible')
   })

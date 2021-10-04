@@ -10,7 +10,7 @@ describe('Diagram codeblock ', () => {
   })
 
   it('renders markmap', () => {
-    cy.codemirrorFill('```markmap\n- pro\n- contra\n```')
+    cy.setCodemirrorContent('```markmap\n- pro\n- contra\n```')
     cy.getMarkdownBody()
       .find('[data-cy=markmap]')
       .children()
@@ -18,7 +18,7 @@ describe('Diagram codeblock ', () => {
   })
 
   it('renders vega-lite', () => {
-    cy.codemirrorFill('```vega-lite\n{"$schema":"https://vega.github.io/schema/vega-lite/v4.json","data":{"values":[{"a":"","b":28}]},"mark":"bar","encoding":{"x":{"field":"a"},"y":{"field":"b"}}}\n```')
+    cy.setCodemirrorContent('```vega-lite\n{"$schema":"https://vega.github.io/schema/vega-lite/v4.json","data":{"values":[{"a":"","b":28}]},"mark":"bar","encoding":{"x":{"field":"a"},"y":{"field":"b"}}}\n```')
     cy.getMarkdownBody()
       .find('.vega-embed')
       .children()
@@ -26,7 +26,7 @@ describe('Diagram codeblock ', () => {
   })
 
   it('renders graphviz', () => {
-    cy.codemirrorFill('```graphviz\ngraph {\na -- b\n}\n```')
+    cy.setCodemirrorContent('```graphviz\ngraph {\na -- b\n}\n```')
     cy.getMarkdownBody()
       .find('[data-cy=graphviz]')
       .children()
@@ -34,7 +34,7 @@ describe('Diagram codeblock ', () => {
   })
 
   it('renders mermaid', () => {
-    cy.codemirrorFill('```mermaid\ngraph TD;\n    A-->B;\n```')
+    cy.setCodemirrorContent('```mermaid\ngraph TD;\n    A-->B;\n```')
     cy.getMarkdownBody()
       .find('.mermaid')
       .children()
@@ -42,7 +42,7 @@ describe('Diagram codeblock ', () => {
   })
 
   it('renders flowcharts', () => {
-    cy.codemirrorFill('```flow\nst=>start: Start\ne=>end: End\nst->e\n```')
+    cy.setCodemirrorContent('```flow\nst=>start: Start\ne=>end: End\nst->e\n```')
     cy.getMarkdownBody()
       .find('[data-cy=flowchart]')
       .children()
@@ -50,7 +50,7 @@ describe('Diagram codeblock ', () => {
   })
 
   it('renders abc scores', () => {
-    cy.codemirrorFill('```abc\nM:4/4\nK:G\n|:GABc dedB:|\n```')
+    cy.setCodemirrorContent('```abc\nM:4/4\nK:G\n|:GABc dedB:|\n```')
     cy.getMarkdownBody()
       .find('.abcjs-score')
       .children()
@@ -58,14 +58,14 @@ describe('Diagram codeblock ', () => {
   })
 
   it('renders csv as table', () => {
-    cy.codemirrorFill('```csv delimiter=; header\na;b;c;d\n1;2;3;4\n```')
+    cy.setCodemirrorContent('```csv delimiter=; header\na;b;c;d\n1;2;3;4\n```')
     cy.getMarkdownBody()
       .find('.csv-html-table')
       .should('be.visible')
   })
 
   it('renders plantuml', () => {
-    cy.codemirrorFill('```plantuml\nclass Example\n```')
+    cy.setCodemirrorContent('```plantuml\nclass Example\n```')
     cy.getMarkdownBody()
       .find('img')
       // PlantUML uses base64 encoded version of zip-deflated PlantUML code in the request URL.

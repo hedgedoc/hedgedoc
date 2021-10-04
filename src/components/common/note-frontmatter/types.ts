@@ -4,22 +4,33 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { RevealOptions } from 'reveal.js'
+
 export type FrontmatterExtractionResult = PresentFrontmatterExtractionResult | NonPresentFrontmatterExtractionResult
 
+export type WantedRevealOptions =
+  | 'autoSlide'
+  | 'autoSlideStoppable'
+  | 'transition'
+  | 'backgroundTransition'
+  | 'slideNumber'
+export type SlideOptions = Required<Pick<RevealOptions, WantedRevealOptions>>
+
 export interface RendererFrontmatterInfo {
-  offsetLines: number
+  lineOffset: number
   frontmatterInvalid: boolean
   deprecatedSyntax: boolean
+  slideOptions: SlideOptions
 }
 
 export interface PresentFrontmatterExtractionResult {
-  frontmatterPresent: true
-  rawFrontmatterText: string
-  frontmatterLines: number
+  isPresent: true
+  rawText: string
+  lineOffset: number
 }
 
 interface NonPresentFrontmatterExtractionResult {
-  frontmatterPresent: false
+  isPresent: false
 }
 
 export interface RawNoteFrontmatter {
@@ -33,7 +44,7 @@ export interface RawNoteFrontmatter {
   GA: string | undefined
   disqus: string | undefined
   type: string | undefined
-  slideOptions: unknown
+  slideOptions: { [key: string]: string } | null
   opengraph: { [key: string]: string } | null
 }
 

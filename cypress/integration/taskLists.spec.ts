@@ -16,21 +16,21 @@ describe('Task lists ', () => {
 
   describe('render with checkboxes ', () => {
     it('when unchecked', () => {
-      cy.codemirrorFill(TEST_STRING_UNCHECKED)
+      cy.setCodemirrorContent(TEST_STRING_UNCHECKED)
       cy.getMarkdownBody()
         .find('input[type=checkbox]')
         .should('have.length', 6)
     })
 
     it('when checked lowercase', () => {
-      cy.codemirrorFill(TEST_STRING_CHECKED_LOWER)
+      cy.setCodemirrorContent(TEST_STRING_CHECKED_LOWER)
       cy.getMarkdownBody()
         .find('input[type=checkbox]')
         .should('have.length', 6)
     })
 
     it('when checked uppercase', () => {
-      cy.codemirrorFill(TEST_STRING_CHECKED_UPPER)
+      cy.setCodemirrorContent(TEST_STRING_CHECKED_UPPER)
       cy.getMarkdownBody()
         .find('input[type=checkbox]')
         .should('have.length', 6)
@@ -38,7 +38,7 @@ describe('Task lists ', () => {
   })
 
   it('do not render as checkboxes when invalid', () => {
-    cy.codemirrorFill(TEST_STRING_INVALID)
+    cy.setCodemirrorContent(TEST_STRING_INVALID)
     cy.getMarkdownBody()
       .find('input[type=checkbox]')
       .should('have.length', 0)
@@ -46,7 +46,7 @@ describe('Task lists ', () => {
 
   describe('are clickable and change the markdown source ', () => {
     it('from unchecked to checked', () => {
-      cy.codemirrorFill(TEST_STRING_UNCHECKED)
+      cy.setCodemirrorContent(TEST_STRING_UNCHECKED)
       cy.getMarkdownBody()
         .find('input[type=checkbox]')
         .each(box => {
@@ -59,7 +59,7 @@ describe('Task lists ', () => {
     })
 
     it('from checked (lowercase) to unchecked', () => {
-      cy.codemirrorFill(TEST_STRING_CHECKED_LOWER)
+      cy.setCodemirrorContent(TEST_STRING_CHECKED_LOWER)
       cy.getMarkdownBody()
         .find('input[type=checkbox]')
         .each(box => {
@@ -72,7 +72,7 @@ describe('Task lists ', () => {
     })
 
     it('from checked (uppercase) to unchecked', () => {
-      cy.codemirrorFill(TEST_STRING_CHECKED_UPPER)
+      cy.setCodemirrorContent(TEST_STRING_CHECKED_UPPER)
       cy.getMarkdownBody()
         .find('input[type=checkbox]')
         .each(box => {

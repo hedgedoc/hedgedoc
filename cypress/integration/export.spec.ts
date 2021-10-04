@@ -10,7 +10,7 @@ describe('Export', () => {
 
   beforeEach(() => {
     cy.visitTestEditor()
-    cy.codemirrorFill(testContent)
+    cy.setCodemirrorContent(testContent)
   })
 
   it('Markdown', () => {

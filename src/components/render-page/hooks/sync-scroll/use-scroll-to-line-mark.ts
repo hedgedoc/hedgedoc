@@ -6,8 +6,8 @@
 
 import { RefObject, useCallback, useEffect, useRef } from 'react'
 import { LineMarkerPosition } from '../../../markdown-renderer/types'
-import { ScrollState } from '../scroll-props'
-import { findLineMarks } from '../utils'
+import { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
+import { findLineMarks } from '../../../editor-page/synced-scroll/utils'
 
 export const useScrollToLineMark = (
   scrollState: ScrollState | undefined,

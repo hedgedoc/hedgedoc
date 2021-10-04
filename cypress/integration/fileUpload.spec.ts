@@ -13,7 +13,7 @@ describe('File upload', () => {
 
   it('doesn\'t prevent drag\'n\'drop of plain text', () => {
     const dataTransfer = new DataTransfer()
-    cy.codemirrorFill('line 1\nline 2\ndragline')
+    cy.setCodemirrorContent('line 1\nline 2\ndragline')
     cy.get('.CodeMirror')
       .click()
     cy.get('.CodeMirror-line > span')
