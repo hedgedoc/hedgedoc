@@ -12,7 +12,7 @@ import { Logger } from '../../../../utils/logger'
 type highlightJsImport = typeof import('../../../common/hljs/hljs')
 
 const log = new Logger('Autocompletion > CodeBlock')
-const wordRegExp = /^```((?:\w|-|_|\+)*)$/
+const wordRegExp = /^```((?:\w|-|\+)*)$/
 let allSupportedLanguages: string[] = []
 
 /**

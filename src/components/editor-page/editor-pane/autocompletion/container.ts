@@ -8,7 +8,7 @@ import { Editor, Hint, Hints, Pos } from 'codemirror'
 import { validAlertLevels } from '../../../markdown-renderer/markdown-it-plugins/alert-container'
 import { findWordAtCursor, Hinter } from './index'
 
-const wordRegExp = /^:::((?:\w|-|_|\+)*)$/
+const wordRegExp = /^:::((?:\w|-|\+)*)$/
 const spoilerSuggestion: Hint = {
   text: ':::spoiler Toggle label\nToggled content\n::: \n',
   displayText: 'spoiler'
