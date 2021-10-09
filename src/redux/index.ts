@@ -8,8 +8,8 @@ import { combineReducers, createStore, Reducer } from 'redux'
 import { Config } from '../api/config/types'
 import { ApiUrlReducer } from './api-url/reducers'
 import { ApiUrlObject } from './api-url/types'
-import { BannerReducer } from './banner/reducers'
-import { BannerState } from './banner/types'
+import { MotdReducer } from './motd/reducers'
+import { OptionalMotdState } from './motd/types'
 import { ConfigReducer } from './config/reducers'
 import { DarkModeConfigReducer } from './dark-mode/reducers'
 import { DarkModeConfig } from './dark-mode/types'
@@ -29,7 +29,7 @@ import { RendererStatus } from './renderer-status/types'
 export interface ApplicationState {
   user: OptionalUserState
   config: Config
-  banner: BannerState
+  motd: OptionalMotdState
   history: HistoryEntry[]
   apiUrl: ApiUrlObject
   editorConfig: EditorConfig
@@ -42,7 +42,7 @@ export interface ApplicationState {
 export const allReducers: Reducer<ApplicationState> = combineReducers<ApplicationState>({
   user: UserReducer,
   config: ConfigReducer,
-  banner: BannerReducer,
+  motd: MotdReducer,
   apiUrl: ApiUrlReducer,
   history: HistoryReducer,
   editorConfig: EditorConfigReducer,

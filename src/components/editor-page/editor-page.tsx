@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { useDocumentTitleWithNoteTitle } from '../../hooks/common/use-document-title-with-note-title'
 import { setCheckboxInMarkdownContent, updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
-import { MotdBanner } from '../common/motd-banner/motd-banner'
+import { MotdModal } from '../common/motd-modal/motd-modal'
 import { ShowIf } from '../common/show-if/show-if'
 import { ErrorWhileLoadingNoteAlert } from '../document-read-only-page/ErrorWhileLoadingNoteAlert'
 import { LoadingNoteAlert } from '../document-read-only-page/LoadingNoteAlert'
@@ -126,7 +126,7 @@ export const EditorPage: React.FC = () => {
   return (
     <EditorToRendererCommunicatorContextProvider>
       <UiNotifications />
-      <MotdBanner />
+      <MotdModal />
       <div className={'d-flex flex-column vh-100'}>
         <AppBar mode={AppBarMode.EDITOR} />
         <div className={'container'}>

@@ -6,7 +6,7 @@
 
 import { setUpI18n } from './i18n/i18n'
 import { refreshHistoryState } from '../../../redux/history/methods'
-import { fetchAndSetBanner } from './fetch-and-set-banner'
+import { fetchMotd } from './fetch-motd'
 import { setApiUrl } from '../../../redux/api-url/methods'
 import { fetchAndSetUser } from '../../login-page/auth/utils'
 import { fetchFrontendConfig } from './fetch-frontend-config'
@@ -47,8 +47,8 @@ export const createSetUpTaskList = (
       task: fetchAndSetUser()
     },
     {
-      name: 'Banner',
-      task: fetchAndSetBanner(customizeAssetsUrl)
+      name: 'Motd',
+      task: fetchMotd(customizeAssetsUrl)
     },
     {
       name: 'Load history state',

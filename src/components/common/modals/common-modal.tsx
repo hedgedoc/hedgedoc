@@ -13,7 +13,7 @@ import { ShowIf } from '../show-if/show-if'
 
 export interface CommonModalProps {
   show: boolean
-  onHide: () => void
+  onHide?: () => void
   titleI18nKey?: string
   title?: string
   closeButton?: boolean

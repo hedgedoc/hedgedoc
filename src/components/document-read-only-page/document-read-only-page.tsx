@@ -10,7 +10,7 @@ import { useParams } from 'react-router'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { useDocumentTitleWithNoteTitle } from '../../hooks/common/use-document-title-with-note-title'
 import { updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
-import { MotdBanner } from '../common/motd-banner/motd-banner'
+import { MotdModal } from '../common/motd-modal/motd-modal'
 import { ShowIf } from '../common/show-if/show-if'
 import { AppBar, AppBarMode } from '../editor-page/app-bar/app-bar'
 import { EditorPagePathParams } from '../editor-page/editor-page'
@@ -24,6 +24,7 @@ import { useApplicationState } from '../../hooks/common/use-application-state'
 import { useNoteMarkdownContentWithoutFrontmatter } from '../../hooks/common/use-note-markdown-content-without-frontmatter'
 import { EditorToRendererCommunicatorContextProvider } from '../editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import { useSendFrontmatterInfoFromReduxToRenderer } from '../editor-page/renderer-pane/hooks/use-send-frontmatter-info-from-redux-to-renderer'
+import { UiNotifications } from '../notifications/ui-notifications'
 
 export const DocumentReadOnlyPage: React.FC = () => {
   useTranslation()
@@ -40,8 +41,9 @@ export const DocumentReadOnlyPage: React.FC = () => {
 
   return (
     <EditorToRendererCommunicatorContextProvider>
+      <UiNotifications />
+      <MotdModal />
       <div className={'d-flex flex-column mvh-100 bg-light'}>
-        <MotdBanner />
         <AppBar mode={AppBarMode.BASIC} />
         <div className={'container'}>
           <ErrorWhileLoadingNoteAlert show={error} />
