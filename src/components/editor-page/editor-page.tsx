@@ -24,7 +24,6 @@ import { DualScrollState, ScrollState } from './synced-scroll/scroll-props'
 import { RendererType } from '../render-page/window-post-message-communicator/rendering-message'
 import { useEditorModeFromUrl } from './hooks/useEditorModeFromUrl'
 import { UiNotifications } from '../notifications/ui-notifications'
-import { useNotificationTest } from './use-notification-test'
 import { useUpdateLocalHistoryEntry } from './hooks/useUpdateLocalHistoryEntry'
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { EditorDocumentRenderer } from './editor-document-renderer/editor-document-renderer'
@@ -97,8 +96,6 @@ export const EditorPage: React.FC = () => {
     scrollSource.current = ScrollSource.EDITOR
     log.debug('Make editor scroll source')
   }, [])
-
-  useNotificationTest()
 
   const leftPane = useMemo(
     () => (
