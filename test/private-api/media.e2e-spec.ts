@@ -13,12 +13,14 @@ import request from 'supertest';
 
 import { PrivateApiModule } from '../../src/api/private/private-api.module';
 import { AuthModule } from '../../src/auth/auth.module';
+import { AuthConfig } from '../../src/config/auth.config';
 import appConfigMock from '../../src/config/mock/app.config.mock';
 import authConfigMock from '../../src/config/mock/auth.config.mock';
 import customizationConfigMock from '../../src/config/mock/customization.config.mock';
 import externalConfigMock from '../../src/config/mock/external-services.config.mock';
 import mediaConfigMock from '../../src/config/mock/media.config.mock';
 import { GroupsModule } from '../../src/groups/groups.module';
+import { IdentityService } from '../../src/identity/identity.service';
 import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
 import { LoggerModule } from '../../src/logger/logger.module';
 import { MediaModule } from '../../src/media/media.module';
@@ -26,11 +28,14 @@ import { NotesModule } from '../../src/notes/notes.module';
 import { NotesService } from '../../src/notes/notes.service';
 import { PermissionsModule } from '../../src/permissions/permissions.module';
 import { UsersService } from '../../src/users/users.service';
+import { setupSessionMiddleware } from '../../src/utils/session';
 import { ensureDeleted } from '../utils';
 
 describe('Media', () => {
+  let identityService: IdentityService;
   let app: NestExpressApplication;
   let uploadPath: string;
+  let agent: request.SuperAgentTest;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -67,19 +72,28 @@ describe('Media', () => {
     app.useStaticAssets(uploadPath, {
       prefix: '/uploads',
     });
+    const authConfig = config.get('authConfig') as AuthConfig;
+    setupSessionMiddleware(app, authConfig);
     await app.init();
     const logger = await app.resolve(ConsoleLoggerService);
     logger.log('Switching logger', 'AppBootstrap');
     app.useLogger(logger);
+    identityService = moduleRef.get(IdentityService);
     const notesService: NotesService = moduleRef.get(NotesService);
     await notesService.createNote('test content', 'test_upload_media');
     const userService: UsersService = moduleRef.get(UsersService);
-    await userService.createUser('hardcoded', 'Testy');
+    const user = await userService.createUser('hardcoded', 'Testy');
+    await identityService.createLocalIdentity(user, 'test');
+    agent = request.agent(app.getHttpServer());
+    await agent
+      .post('/auth/local/login')
+      .send({ username: 'hardcoded', password: 'test' })
+      .expect(201);
   });
 
   describe('POST /media', () => {
     it('works', async () => {
-      const uploadResponse = await request(app.getHttpServer())
+      const uploadResponse = await agent
         .post('/media')
         .attach('file', 'test/private-api/fixtures/test.png')
         .set('HedgeDoc-Note', 'test_upload_media')
@@ -87,7 +101,7 @@ describe('Media', () => {
         .expect(201);
       const path: string = uploadResponse.body.link;
       const testImage = await fs.readFile('test/private-api/fixtures/test.png');
-      const downloadResponse = await request(app.getHttpServer()).get(path);
+      const downloadResponse = await agent.get(path);
       expect(downloadResponse.body).toEqual(testImage);
       // Remove /uploads/ from path as we just need the filename.
       const fileName = path.replace('/uploads/', '');
@@ -99,7 +113,7 @@ describe('Media', () => {
         await ensureDeleted(uploadPath);
       });
       it('MIME type not supported', async () => {
-        await request(app.getHttpServer())
+        await agent
           .post('/media')
           .attach('file', 'test/private-api/fixtures/test.zip')
           .set('HedgeDoc-Note', 'test_upload_media')
@@ -107,7 +121,7 @@ describe('Media', () => {
         await expect(fs.access(uploadPath)).rejects.toBeDefined();
       });
       it('note does not exist', async () => {
-        await request(app.getHttpServer())
+        await agent
           .post('/media')
           .attach('file', 'test/private-api/fixtures/test.zip')
           .set('HedgeDoc-Note', 'i_dont_exist')
@@ -118,7 +132,7 @@ describe('Media', () => {
         await fs.mkdir(uploadPath, {
           mode: '444',
         });
-        await request(app.getHttpServer())
+        await agent
           .post('/media')
           .attach('file', 'test/private-api/fixtures/test.png')
           .set('HedgeDoc-Note', 'test_upload_media')
