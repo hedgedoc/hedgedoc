@@ -140,14 +140,14 @@ export class AuthService {
     return accessToken;
   }
 
-  async getTokensByUsername(userName: string): Promise<AuthToken[]> {
-    const user = await this.usersService.getUserByUsername(userName, [
-      UserRelationEnum.AUTHTOKENS,
-    ]);
-    if (user.authTokens === undefined) {
+  async getTokensByUser(user: User): Promise<AuthToken[]> {
+    const tokens = await this.authTokenRepository.find({
+      where: { user: user },
+    });
+    if (tokens === undefined) {
       return [];
     }
-    return user.authTokens;
+    return tokens;
   }
 
   async removeToken(keyId: string): Promise<void> {
