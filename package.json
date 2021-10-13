@@ -83,7 +83,7 @@
     "eslint-plugin-jest": "25.0.5",
     "eslint-plugin-local-rules": "1.1.0",
     "eslint-plugin-prettier": "4.0.0",
-    "http-proxy-middleware": "^2.0.1",
+    "http-proxy-middleware": "2.0.1",
     "jest": "27.2.5",
     "prettier": "2.4.1",
     "source-map-support": "0.5.20",
