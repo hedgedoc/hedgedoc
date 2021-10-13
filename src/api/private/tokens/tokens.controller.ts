@@ -52,7 +52,7 @@ export class TokensController {
     @RequestUser() user: User,
   ): Promise<AuthTokenWithSecretDto> {
     return await this.authService.createTokenForUser(
-      user.userName,
+      user.username,
       label,
       validUntil,
     );

@@ -106,7 +106,7 @@ createConnection({
     }
     for (const user of foundUsers) {
       console.log(
-        `Created User '${user.userName}' with password '${password}'`,
+        `Created User '${user.username}' with password '${password}'`,
       );
     }
     for (const note of foundNotes) {
@@ -117,7 +117,7 @@ createConnection({
         const historyEntry = HistoryEntry.create(user, note);
         await connection.manager.save(historyEntry);
         console.log(
-          `Created HistoryEntry for user '${user.userName}' and note '${
+          `Created HistoryEntry for user '${user.username}' and note '${
             note.aliases[0].name ?? ''
           }'`,
         );

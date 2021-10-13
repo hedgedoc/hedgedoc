@@ -56,7 +56,7 @@ export class MediaController {
       // TODO: Move getting the Note object into a decorator
       const note: Note = await this.noteService.getNoteByIdOrAlias(noteId);
       this.logger.debug(
-        `Recieved filename '${file.originalname}' for note '${noteId}' from user '${user.userName}'`,
+        `Recieved filename '${file.originalname}' for note '${noteId}' from user '${user.username}'`,
         'uploadMedia',
       );
       const url = await this.mediaService.saveFile(file.buffer, user, note);

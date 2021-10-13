@@ -201,7 +201,7 @@ describe('Notes', () => {
       const updateNotePermission = new NotePermissionsUpdateDto();
       updateNotePermission.sharedToUsers = [
         {
-          username: user.userName,
+          username: user.username,
           canEdit: true,
         },
       ];
@@ -214,8 +214,8 @@ describe('Notes', () => {
       expect(updatedNote.userPermissions[0].canEdit).toEqual(
         updateNotePermission.sharedToUsers[0].canEdit,
       );
-      expect(updatedNote.userPermissions[0].user.userName).toEqual(
-        user.userName,
+      expect(updatedNote.userPermissions[0].user.username).toEqual(
+        user.username,
       );
       expect(updatedNote.groupPermissions).toHaveLength(0);
       await request(app.getHttpServer()).delete('/notes/test3').expect(204);
@@ -280,13 +280,13 @@ describe('Notes', () => {
       expect(metadata.body.description).toEqual('');
       expect(typeof metadata.body.createTime).toEqual('string');
       expect(metadata.body.editedBy).toEqual([]);
-      expect(metadata.body.permissions.owner.userName).toEqual('hardcoded');
+      expect(metadata.body.permissions.owner.username).toEqual('hardcoded');
       expect(metadata.body.permissions.sharedToUsers).toEqual([]);
       expect(metadata.body.permissions.sharedToUsers).toEqual([]);
       expect(metadata.body.tags).toEqual([]);
       expect(typeof metadata.body.updateTime).toEqual('string');
       expect(typeof metadata.body.updateUser.displayName).toEqual('string');
-      expect(typeof metadata.body.updateUser.userName).toEqual('string');
+      expect(typeof metadata.body.updateUser.username).toEqual('string');
       expect(typeof metadata.body.updateUser.email).toEqual('string');
       expect(typeof metadata.body.updateUser.photo).toEqual('string');
       expect(typeof metadata.body.viewCount).toEqual('number');
