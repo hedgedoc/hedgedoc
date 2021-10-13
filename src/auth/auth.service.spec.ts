@@ -74,12 +74,10 @@ describe('AuthService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('getTokensByUsername', () => {
+  describe('getTokensByUser', () => {
     it('works', async () => {
-      jest
-        .spyOn(userRepo, 'findOne')
-        .mockResolvedValueOnce({ ...user, authTokens: [authToken] });
-      const tokens = await service.getTokensByUsername(user.userName);
+      jest.spyOn(authTokenRepo, 'find').mockResolvedValueOnce([authToken]);
+      const tokens = await service.getTokensByUser(user);
       expect(tokens).toHaveLength(1);
       expect(tokens).toEqual([authToken]);
     });
