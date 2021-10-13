@@ -242,7 +242,7 @@ describe('AuthService', () => {
             },
           );
         const token = await service.createTokenForUser(
-          user.userName,
+          user.username,
           identifier,
           0,
         );
@@ -269,7 +269,7 @@ describe('AuthService', () => {
           );
         const validUntil = new Date().getTime() + 30000;
         const token = await service.createTokenForUser(
-          user.userName,
+          user.username,
           identifier,
           validUntil,
         );

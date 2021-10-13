@@ -13,7 +13,7 @@ export class UserInfoDto {
    */
   @IsString()
   @ApiProperty()
-  userName: string;
+  username: string;
 
   /**
    * The display name

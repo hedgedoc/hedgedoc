@@ -390,7 +390,7 @@ export class NotesService {
       title: note.title ?? '',
       createTime: (await this.getFirstRevision(note)).createdAt,
       description: note.description ?? '',
-      editedBy: (await this.getAuthorUsers(note)).map((user) => user.userName),
+      editedBy: (await this.getAuthorUsers(note)).map((user) => user.username),
       permissions: this.toNotePermissionsDto(note),
       tags: this.toTagList(note),
       updateTime: (await this.getLatestRevision(note)).createdAt,

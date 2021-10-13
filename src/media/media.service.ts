@@ -78,7 +78,7 @@ export class MediaService {
    */
   async saveFile(fileBuffer: Buffer, user: User, note: Note): Promise<string> {
     this.logger.debug(
-      `Saving file for note '${note.id}' and user '${user.userName}'`,
+      `Saving file for note '${note.id}' and user '${user.username}'`,
       'saveFile',
     );
     const fileTypeResult = await FileType.fromBuffer(fileBuffer);
@@ -223,7 +223,7 @@ export class MediaService {
       url: mediaUpload.fileUrl,
       noteId: mediaUpload.note?.id ?? null,
       createdAt: mediaUpload.createdAt,
-      userName: mediaUpload.user.userName,
+      username: mediaUpload.user.username,
     };
   }
 

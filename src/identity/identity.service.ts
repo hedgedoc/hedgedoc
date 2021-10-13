@@ -57,7 +57,7 @@ export class IdentityService {
       await getFirstIdentityFromUser(user, ProviderType.LOCAL);
     if (internalIdentity === undefined) {
       this.logger.debug(
-        `The user with the username ${user.userName} does not have a internal identity.`,
+        `The user with the username ${user.username} does not have a internal identity.`,
         'updateLocalPassword',
       );
       throw new NotInDBError('This user has no internal identity.');
@@ -78,14 +78,14 @@ export class IdentityService {
       await getFirstIdentityFromUser(user, ProviderType.LOCAL);
     if (internalIdentity === undefined) {
       this.logger.debug(
-        `The user with the username ${user.userName} does not have a internal identity.`,
+        `The user with the username ${user.username} does not have a internal identity.`,
         'loginWithLocalIdentity',
       );
       throw new NotInDBError();
     }
     if (!(await checkPassword(password, internalIdentity.passwordHash ?? ''))) {
       this.logger.debug(
-        `Password check for ${user.userName} did not succeed.`,
+        `Password check for ${user.username} did not succeed.`,
         'loginWithLocalIdentity',
       );
       throw new NotInDBError();

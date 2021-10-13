@@ -54,7 +54,7 @@ describe('UsersService', () => {
     });
     it('works', async () => {
       const user = await service.createUser(username, displayname);
-      expect(user.userName).toEqual(username);
+      expect(user.username).toEqual(username);
       expect(user.displayName).toEqual(displayname);
     });
     it('fails if username is already taken', async () => {
@@ -110,7 +110,7 @@ describe('UsersService', () => {
     it('works', async () => {
       jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
       const getUser = await service.getUserByUsername(username);
-      expect(getUser.userName).toEqual(username);
+      expect(getUser.username).toEqual(username);
       expect(getUser.displayName).toEqual(displayname);
     });
     it('fails when user does not exits', async () => {
@@ -144,7 +144,7 @@ describe('UsersService', () => {
     const user = User.create(username, displayname) as User;
     it('works if a user is provided', () => {
       const userDto = service.toUserDto(user);
-      expect(userDto.userName).toEqual(username);
+      expect(userDto.username).toEqual(username);
       expect(userDto.displayName).toEqual(displayname);
       expect(userDto.photo).toEqual('');
       expect(userDto.email).toEqual('');

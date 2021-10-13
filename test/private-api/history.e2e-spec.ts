@@ -136,7 +136,7 @@ describe('History', () => {
       const userEntries = await historyService.getEntriesByUser(user);
       expect(userEntries.length).toEqual(1);
       expect(userEntries[0].note.aliases).toEqual(note2.aliases);
-      expect(userEntries[0].user.userName).toEqual(user.userName);
+      expect(userEntries[0].user.username).toEqual(user.username);
       expect(userEntries[0].pinStatus).toEqual(pinStatus);
       expect(userEntries[0].updatedAt).toEqual(lastVisited);
     });
@@ -184,8 +184,8 @@ describe('History', () => {
         const historyEntries = await historyService.getEntriesByUser(user);
         expect(historyEntries).toHaveLength(1);
         expect(historyEntries[0].note.aliases).toEqual(prevEntry.note.aliases);
-        expect(historyEntries[0].user.userName).toEqual(
-          prevEntry.user.userName,
+        expect(historyEntries[0].user.username).toEqual(
+          prevEntry.user.username,
         );
         expect(historyEntries[0].pinStatus).toEqual(prevEntry.pinStatus);
         expect(historyEntries[0].updatedAt).toEqual(prevEntry.updatedAt);

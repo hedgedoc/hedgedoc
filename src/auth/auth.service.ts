@@ -54,22 +54,22 @@ export class AuthService {
     }
     const accessToken = await this.getAuthTokenAndValidate(keyId, secret);
     await this.setLastUsedToken(keyId);
-    return await this.usersService.getUserByUsername(accessToken.user.userName);
+    return await this.usersService.getUserByUsername(accessToken.user.username);
   }
 
   async createTokenForUser(
-    userName: string,
+    username: string,
     identifier: string,
     validUntil: TimestampMillis,
   ): Promise<AuthTokenWithSecretDto> {
-    const user = await this.usersService.getUserByUsername(userName, [
+    const user = await this.usersService.getUserByUsername(username, [
       UserRelationEnum.AUTHTOKENS,
     ]);
     if (user.authTokens.length >= 200) {
       // This is a very high ceiling unlikely to hinder legitimate usage,
       // but should prevent possible attack vectors
       throw new TooManyTokensError(
-        `User '${user.userName}' has already 200 tokens and can't have anymore`,
+        `User '${user.username}' has already 200 tokens and can't have anymore`,
       );
     }
     const secret = bufferToBase64Url(randomBytes(54));
