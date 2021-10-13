@@ -6,20 +6,26 @@
 import {
   BadRequestException,
   Controller,
+  Delete,
   Headers,
   HttpCode,
   InternalServerErrorException,
+  NotFoundException,
+  Param,
   Post,
+  UnauthorizedException,
   UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiNoContentResponse } from '@nestjs/swagger';
 
 import {
   ClientError,
   MediaBackendError,
   NotInDBError,
+  PermissionError,
 } from '../../../errors/errors';
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
@@ -30,6 +36,7 @@ import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
+import { successfullyDeletedDescription } from '../../utils/descriptions';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
@@ -64,6 +71,48 @@ export class MediaController {
     } catch (e) {
       if (e instanceof ClientError || e instanceof NotInDBError) {
         throw new BadRequestException(e.message);
+      }
+      if (e instanceof MediaBackendError) {
+        throw new InternalServerErrorException(
+          'There was an error in the media backend',
+        );
+      }
+      throw e;
+    }
+  }
+
+  @Delete(':filename')
+  @HttpCode(204)
+  @ApiNoContentResponse({ description: successfullyDeletedDescription })
+  async deleteMedia(
+    @RequestUser() user: User,
+    @Param('filename') filename: string,
+  ): Promise<void> {
+    const username = user.userName;
+    try {
+      this.logger.debug(
+        `Deleting '${filename}' for user '${username}'`,
+        'deleteMedia',
+      );
+      const mediaUpload = await this.mediaService.findUploadByFilename(
+        filename,
+      );
+      if (mediaUpload.user.userName !== username) {
+        this.logger.warn(
+          `${username} tried to delete '${filename}', but is not the owner`,
+          'deleteMedia',
+        );
+        throw new PermissionError(
+          `File '${filename}' is not owned by '${username}'`,
+        );
+      }
+      await this.mediaService.deleteFile(mediaUpload);
+    } catch (e) {
+      if (e instanceof PermissionError) {
+        throw new UnauthorizedException(e.message);
+      }
+      if (e instanceof NotInDBError) {
+        throw new NotFoundException(e.message);
       }
       if (e instanceof MediaBackendError) {
         throw new InternalServerErrorException(
