@@ -51,11 +51,7 @@ export class TokensController {
     @Body('validUntil') validUntil: TimestampMillis,
     @RequestUser() user: User,
   ): Promise<AuthTokenWithSecretDto> {
-    return await this.authService.createTokenForUser(
-      user.username,
-      label,
-      validUntil,
-    );
+    return await this.authService.createTokenForUser(user, label, validUntil);
   }
 
   @Delete('/:keyId')

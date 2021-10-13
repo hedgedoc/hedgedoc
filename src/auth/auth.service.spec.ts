@@ -229,10 +229,7 @@ describe('AuthService', () => {
     describe('works', () => {
       const identifier = 'testIdentifier';
       it('with validUntil 0', async () => {
-        jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce({
-          ...user,
-          authTokens: [authToken],
-        });
+        jest.spyOn(authTokenRepo, 'find').mockResolvedValueOnce([authToken]);
         jest
           .spyOn(authTokenRepo, 'save')
           .mockImplementationOnce(
@@ -241,11 +238,7 @@ describe('AuthService', () => {
               return authTokenSaved;
             },
           );
-        const token = await service.createTokenForUser(
-          user.username,
-          identifier,
-          0,
-        );
+        const token = await service.createTokenForUser(user, identifier, 0);
         expect(token.label).toEqual(identifier);
         expect(
           token.validUntil.getTime() -
@@ -255,10 +248,7 @@ describe('AuthService', () => {
         expect(token.secret.startsWith(token.keyId)).toBeTruthy();
       });
       it('with validUntil not 0', async () => {
-        jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce({
-          ...user,
-          authTokens: [authToken],
-        });
+        jest.spyOn(authTokenRepo, 'find').mockResolvedValueOnce([authToken]);
         jest
           .spyOn(authTokenRepo, 'save')
           .mockImplementationOnce(
@@ -269,7 +259,7 @@ describe('AuthService', () => {
           );
         const validUntil = new Date().getTime() + 30000;
         const token = await service.createTokenForUser(
-          user.username,
+          user,
           identifier,
           validUntil,
         );

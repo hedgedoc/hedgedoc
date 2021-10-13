@@ -15,7 +15,6 @@ import {
   TooManyTokensError,
 } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { UserRelationEnum } from '../users/user-relation.enum';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import {
@@ -58,13 +57,12 @@ export class AuthService {
   }
 
   async createTokenForUser(
-    username: string,
+    user: User,
     identifier: string,
     validUntil: TimestampMillis,
   ): Promise<AuthTokenWithSecretDto> {
-    const user = await this.usersService.getUserByUsername(username, [
-      UserRelationEnum.AUTHTOKENS,
-    ]);
+    user.authTokens = await this.getTokensByUser(user);
+
     if (user.authTokens.length >= 200) {
       // This is a very high ceiling unlikely to hinder legitimate usage,
       // but should prevent possible attack vectors
