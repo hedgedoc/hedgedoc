@@ -13,6 +13,7 @@ import request from 'supertest';
 
 import { PrivateApiModule } from '../../src/api/private/private-api.module';
 import { AuthModule } from '../../src/auth/auth.module';
+import { AuthConfig } from '../../src/config/auth.config';
 import appConfigMock from '../../src/config/mock/app.config.mock';
 import authConfigMock from '../../src/config/mock/auth.config.mock';
 import customizationConfigMock from '../../src/config/mock/customization.config.mock';
@@ -20,6 +21,7 @@ import externalConfigMock from '../../src/config/mock/external-services.config.m
 import mediaConfigMock from '../../src/config/mock/media.config.mock';
 import { NotInDBError } from '../../src/errors/errors';
 import { GroupsModule } from '../../src/groups/groups.module';
+import { IdentityService } from '../../src/identity/identity.service';
 import { LoggerModule } from '../../src/logger/logger.module';
 import { MediaService } from '../../src/media/media.service';
 import { NotesModule } from '../../src/notes/notes.module';
@@ -28,17 +30,20 @@ import { PermissionsModule } from '../../src/permissions/permissions.module';
 import { User } from '../../src/users/user.entity';
 import { UsersModule } from '../../src/users/users.module';
 import { UsersService } from '../../src/users/users.service';
+import { setupSessionMiddleware } from '../../src/utils/session';
 
 describe('Notes', () => {
   let app: INestApplication;
   let notesService: NotesService;
   let mediaService: MediaService;
+  let identityService: IdentityService;
   let user: User;
   let user2: User;
   let content: string;
   let forbiddenNoteId: string;
   let uploadPath: string;
   let testImage: Buffer;
+  let agent: request.SuperAgentTest;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -74,18 +79,28 @@ describe('Notes', () => {
     forbiddenNoteId = config.get('appConfig').forbiddenNoteIds[0];
     uploadPath = config.get('mediaConfig').backend.filesystem.uploadPath;
     app = moduleRef.createNestApplication();
+    const authConfig = config.get('authConfig') as AuthConfig;
+    setupSessionMiddleware(app, authConfig);
     await app.init();
     notesService = moduleRef.get(NotesService);
     mediaService = moduleRef.get(MediaService);
+    identityService = moduleRef.get(IdentityService);
     const userService = moduleRef.get(UsersService);
     user = await userService.createUser('hardcoded', 'Testy');
+    await identityService.createLocalIdentity(user, 'test');
     user2 = await userService.createUser('hardcoded2', 'Max Mustermann');
+    await identityService.createLocalIdentity(user2, 'test');
     content = 'This is a test note.';
     testImage = await fs.readFile('test/public-api/fixtures/test.png');
+    agent = request.agent(app.getHttpServer());
+    await agent
+      .post('/auth/local/login')
+      .send({ username: 'hardcoded', password: 'test' })
+      .expect(201);
   });
 
   it('POST /notes', async () => {
-    const response = await request(app.getHttpServer())
+    const response = await agent
       .post('/notes')
       .set('Content-Type', 'text/markdown')
       .send(content)
@@ -103,7 +118,7 @@ describe('Notes', () => {
     it('works with an existing note', async () => {
       // check if we can succefully get a note that exists
       await notesService.createNote(content, 'test1', user);
-      const response = await request(app.getHttpServer())
+      const response = await agent
         .get('/notes/test1')
         .expect('Content-Type', /json/)
         .expect(200);
@@ -111,7 +126,7 @@ describe('Notes', () => {
     });
     it('fails with an non-existing note', async () => {
       // check if a missing note correctly returns 404
-      await request(app.getHttpServer())
+      await agent
         .get('/notes/i_dont_exist')
         .expect('Content-Type', /json/)
         .expect(404);
@@ -120,7 +135,7 @@ describe('Notes', () => {
 
   describe('POST /notes/{note}', () => {
     it('works with a non-existing alias', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await agent
         .post('/notes/test2')
         .set('Content-Type', 'text/markdown')
         .send(content)
@@ -135,7 +150,7 @@ describe('Notes', () => {
     });
 
     it('fails with a forbidden alias', async () => {
-      await request(app.getHttpServer())
+      await agent
         .post(`/notes/${forbiddenNoteId}`)
         .set('Content-Type', 'text/markdown')
         .send(content)
@@ -144,7 +159,7 @@ describe('Notes', () => {
     });
 
     it('fails with a existing alias', async () => {
-      await request(app.getHttpServer())
+      await agent
         .post('/notes/test2')
         .set('Content-Type', 'text/markdown')
         .send(content)
@@ -159,7 +174,7 @@ describe('Notes', () => {
         const noteId = 'test3';
         const note = await notesService.createNote(content, noteId, user);
         await mediaService.saveFile(testImage, user, note);
-        await request(app.getHttpServer())
+        await agent
           .delete(`/notes/${noteId}`)
           .set('Content-Type', 'application/json')
           .send({
@@ -176,7 +191,7 @@ describe('Notes', () => {
         const noteId = 'test3a';
         const note = await notesService.createNote(content, noteId, user);
         const url = await mediaService.saveFile(testImage, user, note);
-        await request(app.getHttpServer())
+        await agent
           .delete(`/notes/${noteId}`)
           .set('Content-Type', 'application/json')
           .send({
@@ -195,21 +210,17 @@ describe('Notes', () => {
       });
     });
     it('fails with a forbidden alias', async () => {
-      await request(app.getHttpServer())
-        .delete(`/notes/${forbiddenNoteId}`)
-        .expect(400);
+      await agent.delete(`/notes/${forbiddenNoteId}`).expect(400);
     });
     it('fails with a non-existing alias', async () => {
-      await request(app.getHttpServer())
-        .delete('/notes/i_dont_exist')
-        .expect(404);
+      await agent.delete('/notes/i_dont_exist').expect(404);
     });
   });
 
   describe('GET /notes/{note}/revisions', () => {
     it('works with existing alias', async () => {
       await notesService.createNote(content, 'test4', user);
-      const response = await request(app.getHttpServer())
+      const response = await agent
         .get('/notes/test4/revisions')
         .expect('Content-Type', /json/)
         .expect(200);
@@ -217,14 +228,12 @@ describe('Notes', () => {
     });
 
     it('fails with a forbidden alias', async () => {
-      await request(app.getHttpServer())
-        .get(`/notes/${forbiddenNoteId}/revisions`)
-        .expect(400);
+      await agent.get(`/notes/${forbiddenNoteId}/revisions`).expect(400);
     });
 
     it('fails with non-existing alias', async () => {
       // check if a missing note correctly returns 404
-      await request(app.getHttpServer())
+      await agent
         .get('/notes/i_dont_exist/revisions')
         .expect('Content-Type', /json/)
         .expect(404);
@@ -236,29 +245,27 @@ describe('Notes', () => {
       const noteId = 'test8';
       const note = await notesService.createNote(content, noteId, user);
       await notesService.updateNote(note, 'update');
-      const responseBeforeDeleting = await request(app.getHttpServer())
+      const responseBeforeDeleting = await agent
         .get('/notes/test8/revisions')
         .expect('Content-Type', /json/)
         .expect(200);
       expect(responseBeforeDeleting.body).toHaveLength(2);
-      await request(app.getHttpServer())
+      await agent
         .delete(`/notes/${noteId}/revisions`)
         .set('Content-Type', 'application/json')
         .expect(204);
-      const responseAfterDeleting = await request(app.getHttpServer())
+      const responseAfterDeleting = await agent
         .get('/notes/test8/revisions')
         .expect('Content-Type', /json/)
         .expect(200);
       expect(responseAfterDeleting.body).toHaveLength(1);
     });
     it('fails with a forbidden alias', async () => {
-      await request(app.getHttpServer())
-        .delete(`/notes/${forbiddenNoteId}/revisions`)
-        .expect(400);
+      await agent.delete(`/notes/${forbiddenNoteId}/revisions`).expect(400);
     });
     it('fails with non-existing alias', async () => {
       // check if a missing note correctly returns 404
-      await request(app.getHttpServer())
+      await agent
         .delete('/notes/i_dont_exist/revisions')
         .expect('Content-Type', /json/)
         .expect(404);
@@ -269,20 +276,18 @@ describe('Notes', () => {
     it('works with an existing alias', async () => {
       const note = await notesService.createNote(content, 'test5', user);
       const revision = await notesService.getLatestRevision(note);
-      const response = await request(app.getHttpServer())
+      const response = await agent
         .get(`/notes/test5/revisions/${revision.id}`)
         .expect('Content-Type', /json/)
         .expect(200);
       expect(response.body.content).toEqual(content);
     });
     it('fails with a forbidden alias', async () => {
-      await request(app.getHttpServer())
-        .get(`/notes/${forbiddenNoteId}/revisions/1`)
-        .expect(400);
+      await agent.get(`/notes/${forbiddenNoteId}/revisions/1`).expect(400);
     });
     it('fails with non-existing alias', async () => {
       // check if a missing note correctly returns 404
-      await request(app.getHttpServer())
+      await agent
         .get('/notes/i_dont_exist/revisions/1')
         .expect('Content-Type', /json/)
         .expect(404);
@@ -295,8 +300,7 @@ describe('Notes', () => {
       const extraAlias = 'test7';
       const note1 = await notesService.createNote(content, alias, user);
       const note2 = await notesService.createNote(content, extraAlias, user);
-      const httpServer = app.getHttpServer();
-      const response = await request(httpServer)
+      const response = await agent
         .get(`/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(200);
@@ -306,7 +310,7 @@ describe('Notes', () => {
       const url0 = await mediaService.saveFile(testImage, user, note1);
       const url1 = await mediaService.saveFile(testImage, user, note2);
 
-      const responseAfter = await request(httpServer)
+      const responseAfter = await agent
         .get(`/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(200);
@@ -321,7 +325,7 @@ describe('Notes', () => {
       await fs.rmdir(uploadPath, { recursive: true });
     });
     it('fails, when note does not exist', async () => {
-      await request(app.getHttpServer())
+      await agent
         .get(`/notes/i_dont_exist/media/`)
         .expect('Content-Type', /json/)
         .expect(404);
@@ -329,7 +333,7 @@ describe('Notes', () => {
     it("fails, when user can't read note", async () => {
       const alias = 'test11';
       await notesService.createNote('This is a test note.', alias, user2);
-      await request(app.getHttpServer())
+      await agent
         .get(`/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(401);

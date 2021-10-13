@@ -11,12 +11,14 @@ import request from 'supertest';
 
 import { PrivateApiModule } from '../../src/api/private/private-api.module';
 import { AuthModule } from '../../src/auth/auth.module';
+import { AuthConfig } from '../../src/config/auth.config';
 import appConfigMock from '../../src/config/mock/app.config.mock';
 import authConfigMock from '../../src/config/mock/auth.config.mock';
 import customizationConfigMock from '../../src/config/mock/customization.config.mock';
 import externalConfigMock from '../../src/config/mock/external-services.config.mock';
 import mediaConfigMock from '../../src/config/mock/media.config.mock';
 import { GroupsModule } from '../../src/groups/groups.module';
+import { IdentityService } from '../../src/identity/identity.service';
 import { LoggerModule } from '../../src/logger/logger.module';
 import { AliasCreateDto } from '../../src/notes/alias-create.dto';
 import { AliasUpdateDto } from '../../src/notes/alias-update.dto';
@@ -27,14 +29,17 @@ import { PermissionsModule } from '../../src/permissions/permissions.module';
 import { User } from '../../src/users/user.entity';
 import { UsersModule } from '../../src/users/users.module';
 import { UsersService } from '../../src/users/users.service';
+import { setupSessionMiddleware } from '../../src/utils/session';
 
 describe('Alias', () => {
   let app: INestApplication;
   let aliasService: AliasService;
   let notesService: NotesService;
+  let identityService: IdentityService;
   let user: User;
   let content: string;
   let forbiddenNoteId: string;
+  let agent: request.SuperAgentTest;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -69,12 +74,21 @@ describe('Alias', () => {
     const config = moduleRef.get<ConfigService>(ConfigService);
     forbiddenNoteId = config.get('appConfig').forbiddenNoteIds[0];
     app = moduleRef.createNestApplication();
+    const authConfig = config.get('authConfig') as AuthConfig;
+    setupSessionMiddleware(app, authConfig);
     await app.init();
     aliasService = moduleRef.get(AliasService);
     notesService = moduleRef.get(NotesService);
+    identityService = moduleRef.get(IdentityService);
     const userService = moduleRef.get(UsersService);
     user = await userService.createUser('hardcoded', 'Testy');
+    await identityService.createLocalIdentity(user, 'test');
     content = 'This is a test note.';
+    agent = request.agent(app.getHttpServer());
+    await agent
+      .post('/auth/local/login')
+      .send({ username: 'hardcoded', password: 'test' })
+      .expect(201);
   });
 
   describe('POST /alias', () => {
@@ -92,7 +106,7 @@ describe('Alias', () => {
     it('create with normal alias', async () => {
       const newAlias = 'normalAlias';
       newAliasDto.newAlias = newAlias;
-      const metadata = await request(app.getHttpServer())
+      const metadata = await agent
         .post(`/alias`)
         .set('Content-Type', 'application/json')
         .send(newAliasDto)
@@ -100,9 +114,7 @@ describe('Alias', () => {
       expect(metadata.body.name).toEqual(newAlias);
       expect(metadata.body.primaryAlias).toBeFalsy();
       expect(metadata.body.noteId).toEqual(publicId);
-      const note = await request(app.getHttpServer())
-        .get(`/notes/${newAlias}`)
-        .expect(200);
+      const note = await agent.get(`/notes/${newAlias}`).expect(200);
       expect(note.body.metadata.aliases).toContain(newAlias);
       expect(note.body.metadata.primaryAlias).toBeTruthy();
       expect(note.body.metadata.id).toEqual(publicId);
@@ -111,7 +123,7 @@ describe('Alias', () => {
     describe('does not create an alias', () => {
       it('because of a forbidden alias', async () => {
         newAliasDto.newAlias = forbiddenNoteId;
-        await request(app.getHttpServer())
+        await agent
           .post(`/alias`)
           .set('Content-Type', 'application/json')
           .send(newAliasDto)
@@ -119,7 +131,7 @@ describe('Alias', () => {
       });
       it('because of a alias that is a public id', async () => {
         newAliasDto.newAlias = publicId;
-        await request(app.getHttpServer())
+        await agent
           .post(`/alias`)
           .set('Content-Type', 'application/json')
           .send(newAliasDto)
@@ -142,7 +154,7 @@ describe('Alias', () => {
     });
 
     it('updates a note with a normal alias', async () => {
-      const metadata = await request(app.getHttpServer())
+      const metadata = await agent
         .put(`/alias/${newAlias}`)
         .set('Content-Type', 'application/json')
         .send(changeAliasDto)
@@ -150,9 +162,7 @@ describe('Alias', () => {
       expect(metadata.body.name).toEqual(newAlias);
       expect(metadata.body.primaryAlias).toBeTruthy();
       expect(metadata.body.noteId).toEqual(publicId);
-      const note = await request(app.getHttpServer())
-        .get(`/notes/${newAlias}`)
-        .expect(200);
+      const note = await agent.get(`/notes/${newAlias}`).expect(200);
       expect(note.body.metadata.aliases).toContain(newAlias);
       expect(note.body.metadata.primaryAlias).toBeTruthy();
       expect(note.body.metadata.id).toEqual(publicId);
@@ -160,7 +170,7 @@ describe('Alias', () => {
 
     describe('does not update', () => {
       it('a note with unknown alias', async () => {
-        await request(app.getHttpServer())
+        await agent
           .put(`/alias/i_dont_exist`)
           .set('Content-Type', 'application/json')
           .send(changeAliasDto)
@@ -168,7 +178,7 @@ describe('Alias', () => {
       });
       it('if the property primaryAlias is false', async () => {
         changeAliasDto.primaryAlias = false;
-        await request(app.getHttpServer())
+        await agent
           .put(`/alias/${newAlias}`)
           .set('Content-Type', 'application/json')
           .send(changeAliasDto)
@@ -186,34 +196,24 @@ describe('Alias', () => {
     });
 
     it('deletes a normal alias', async () => {
-      await request(app.getHttpServer())
-        .delete(`/alias/${newAlias}`)
-        .expect(204);
-      await request(app.getHttpServer()).get(`/notes/${newAlias}`).expect(404);
+      await agent.delete(`/alias/${newAlias}`).expect(204);
+      await agent.get(`/notes/${newAlias}`).expect(404);
     });
 
     it('does not delete an unknown alias', async () => {
-      await request(app.getHttpServer())
-        .delete(`/alias/i_dont_exist`)
-        .expect(404);
+      await agent.delete(`/alias/i_dont_exist`).expect(404);
     });
 
     it('does not delete an primary alias (if it is not the only one)', async () => {
       const note = await notesService.getNoteByIdOrAlias(testAlias);
       await aliasService.addAlias(note, newAlias);
-      await request(app.getHttpServer())
-        .delete(`/alias/${testAlias}`)
-        .expect(400);
-      await request(app.getHttpServer()).get(`/notes/${newAlias}`).expect(200);
+      await agent.delete(`/alias/${testAlias}`).expect(400);
+      await agent.get(`/notes/${newAlias}`).expect(200);
     });
 
     it('deletes a primary alias (if it is the only one)', async () => {
-      await request(app.getHttpServer())
-        .delete(`/alias/${newAlias}`)
-        .expect(204);
-      await request(app.getHttpServer())
-        .delete(`/alias/${testAlias}`)
-        .expect(204);
+      await agent.delete(`/alias/${newAlias}`).expect(204);
+      await agent.delete(`/alias/${testAlias}`).expect(204);
     });
   });
 });
