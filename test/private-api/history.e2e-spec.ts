@@ -11,6 +11,7 @@ import request from 'supertest';
 
 import { PrivateApiModule } from '../../src/api/private/private-api.module';
 import { AuthModule } from '../../src/auth/auth.module';
+import { AuthConfig } from '../../src/config/auth.config';
 import appConfigMock from '../../src/config/mock/app.config.mock';
 import authConfigMock from '../../src/config/mock/auth.config.mock';
 import customizationConfigMock from '../../src/config/mock/customization.config.mock';
@@ -20,6 +21,7 @@ import { GroupsModule } from '../../src/groups/groups.module';
 import { HistoryEntryImportDto } from '../../src/history/history-entry-import.dto';
 import { HistoryEntry } from '../../src/history/history-entry.entity';
 import { HistoryService } from '../../src/history/history.service';
+import { IdentityService } from '../../src/identity/identity.service';
 import { LoggerModule } from '../../src/logger/logger.module';
 import { Note } from '../../src/notes/note.entity';
 import { NotesModule } from '../../src/notes/notes.module';
@@ -28,15 +30,18 @@ import { PermissionsModule } from '../../src/permissions/permissions.module';
 import { User } from '../../src/users/user.entity';
 import { UsersModule } from '../../src/users/users.module';
 import { UsersService } from '../../src/users/users.service';
+import { setupSessionMiddleware } from '../../src/utils/session';
 
 describe('History', () => {
   let app: INestApplication;
   let historyService: HistoryService;
+  let identityService: IdentityService;
   let user: User;
   let note: Note;
   let note2: Note;
   let forbiddenNoteId: string;
   let content: string;
+  let agent: request.SuperAgentTest;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -71,25 +76,34 @@ describe('History', () => {
     const config = moduleRef.get<ConfigService>(ConfigService);
     forbiddenNoteId = config.get('appConfig').forbiddenNoteIds[0];
     app = moduleRef.createNestApplication();
+    const authConfig = config.get('authConfig') as AuthConfig;
+    setupSessionMiddleware(app, authConfig);
     await app.init();
     content = 'This is a test note.';
     historyService = moduleRef.get(HistoryService);
     const userService = moduleRef.get(UsersService);
+    identityService = moduleRef.get(IdentityService);
     user = await userService.createUser('hardcoded', 'Testy');
+    await identityService.createLocalIdentity(user, 'test');
     const notesService = moduleRef.get(NotesService);
     note = await notesService.createNote(content, 'note', user);
     note2 = await notesService.createNote(content, 'note2', user);
+    agent = request.agent(app.getHttpServer());
+    await agent
+      .post('/auth/local/login')
+      .send({ username: 'hardcoded', password: 'test' })
+      .expect(201);
   });
 
   it('GET /me/history', async () => {
-    const emptyResponse = await request(app.getHttpServer())
+    const emptyResponse = await agent
       .get('/me/history')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(emptyResponse.body.length).toEqual(0);
     const entry = await historyService.updateHistoryEntryTimestamp(note, user);
     const entryDto = historyService.toHistoryEntryDto(entry);
-    const response = await request(app.getHttpServer())
+    const response = await agent
       .get('/me/history')
       .expect('Content-Type', /json/)
       .expect(200);
@@ -114,7 +128,7 @@ describe('History', () => {
       )[0].name;
       postEntryDto.pinStatus = pinStatus;
       postEntryDto.lastVisited = lastVisited;
-      await request(app.getHttpServer())
+      await agent
         .post('/me/history')
         .set('Content-Type', 'application/json')
         .send(JSON.stringify({ history: [postEntryDto] }))
@@ -149,7 +163,7 @@ describe('History', () => {
         brokenEntryDto.note = forbiddenNoteId;
         brokenEntryDto.pinStatus = pinStatus;
         brokenEntryDto.lastVisited = lastVisited;
-        await request(app.getHttpServer())
+        await agent
           .post('/me/history')
           .set('Content-Type', 'application/json')
           .send(JSON.stringify({ history: [brokenEntryDto] }))
@@ -160,7 +174,7 @@ describe('History', () => {
         brokenEntryDto.note = 'i_dont_exist';
         brokenEntryDto.pinStatus = pinStatus;
         brokenEntryDto.lastVisited = lastVisited;
-        await request(app.getHttpServer())
+        await agent
           .post('/me/history')
           .set('Content-Type', 'application/json')
           .send(JSON.stringify({ history: [brokenEntryDto] }))
@@ -181,7 +195,7 @@ describe('History', () => {
 
   it('DELETE /me/history', async () => {
     expect((await historyService.getEntriesByUser(user)).length).toEqual(1);
-    await request(app.getHttpServer()).delete('/me/history').expect(200);
+    await agent.delete('/me/history').expect(200);
     expect((await historyService.getEntriesByUser(user)).length).toEqual(0);
   });
 
@@ -189,7 +203,7 @@ describe('History', () => {
     const entry = await historyService.updateHistoryEntryTimestamp(note2, user);
     expect(entry.pinStatus).toBeFalsy();
     const alias = entry.note.aliases.filter((alias) => alias.primary)[0].name;
-    await request(app.getHttpServer())
+    await agent
       .put(`/me/history/${alias || 'undefined'}`)
       .send({ pinStatus: true })
       .expect(200);
@@ -204,9 +218,7 @@ describe('History', () => {
     const alias = entry.note.aliases.filter((alias) => alias.primary)[0].name;
     const entry2 = await historyService.updateHistoryEntryTimestamp(note, user);
     const entryDto = historyService.toHistoryEntryDto(entry2);
-    await request(app.getHttpServer())
-      .delete(`/me/history/${alias || 'undefined'}`)
-      .expect(200);
+    await agent.delete(`/me/history/${alias || 'undefined'}`).expect(200);
     const userEntries = await historyService.getEntriesByUser(user);
     expect(userEntries.length).toEqual(1);
     const userEntryDto = historyService.toHistoryEntryDto(userEntries[0]);
