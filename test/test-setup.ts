@@ -9,6 +9,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { PrivateApiModule } from '../src/api/private/private-api.module';
+import { PublicApiModule } from '../src/api/public/public-api.module';
 import { AuthModule } from '../src/auth/auth.module';
 import { MockAuthGuard } from '../src/auth/mock-auth.guard';
 import { TokenAuthGuard } from '../src/auth/token.strategy';
@@ -22,7 +23,9 @@ import { HistoryModule } from '../src/history/history.module';
 import { IdentityService } from '../src/identity/identity.service';
 import { LoggerModule } from '../src/logger/logger.module';
 import { MediaModule } from '../src/media/media.module';
+import { MediaService } from '../src/media/media.service';
 import { NotesModule } from '../src/notes/notes.module';
+import { NotesService } from '../src/notes/notes.service';
 import { PermissionsModule } from '../src/permissions/permissions.module';
 import { UsersModule } from '../src/users/users.module';
 import { UsersService } from '../src/users/users.service';
@@ -34,6 +37,8 @@ export class TestSetup {
   userService: UsersService;
   configService: ConfigService;
   identityService: IdentityService;
+  notesService: NotesService;
+  mediaService: MediaService;
 
   public static async create(): Promise<TestSetup> {
     const testSetup = new TestSetup();
@@ -50,6 +55,7 @@ export class TestSetup {
             externalServicesConfigMock,
           ],
         }),
+        PublicApiModule,
         PrivateApiModule,
         NotesModule,
         PermissionsModule,
@@ -77,6 +83,10 @@ export class TestSetup {
       testSetup.moduleRef.get<ConfigService>(ConfigService);
     testSetup.identityService =
       testSetup.moduleRef.get<IdentityService>(IdentityService);
+    testSetup.notesService =
+      testSetup.moduleRef.get<NotesService>(NotesService);
+    testSetup.mediaService =
+      testSetup.moduleRef.get<MediaService>(MediaService);
 
     testSetup.app = testSetup.moduleRef.createNestApplication();
 
