@@ -25,6 +25,7 @@ import { IdentityService } from '../src/identity/identity.service';
 import { LoggerModule } from '../src/logger/logger.module';
 import { MediaModule } from '../src/media/media.module';
 import { MediaService } from '../src/media/media.service';
+import { AliasService } from '../src/notes/alias.service';
 import { NotesModule } from '../src/notes/notes.module';
 import { NotesService } from '../src/notes/notes.service';
 import { PermissionsModule } from '../src/permissions/permissions.module';
@@ -41,6 +42,7 @@ export class TestSetup {
   notesService: NotesService;
   mediaService: MediaService;
   historyService: HistoryService;
+  aliasService: AliasService;
 
   public static async create(): Promise<TestSetup> {
     const testSetup = new TestSetup();
@@ -91,6 +93,8 @@ export class TestSetup {
       testSetup.moduleRef.get<MediaService>(MediaService);
     testSetup.historyService =
       testSetup.moduleRef.get<HistoryService>(HistoryService);
+    testSetup.aliasService =
+      testSetup.moduleRef.get<AliasService>(AliasService);
 
     testSetup.app = testSetup.moduleRef.createNestApplication();
 
