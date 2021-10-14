@@ -20,6 +20,7 @@ import externalServicesConfigMock from '../src/config/mock/external-services.con
 import mediaConfigMock from '../src/config/mock/media.config.mock';
 import { GroupsModule } from '../src/groups/groups.module';
 import { HistoryModule } from '../src/history/history.module';
+import { HistoryService } from '../src/history/history.service';
 import { IdentityService } from '../src/identity/identity.service';
 import { LoggerModule } from '../src/logger/logger.module';
 import { MediaModule } from '../src/media/media.module';
@@ -39,6 +40,7 @@ export class TestSetup {
   identityService: IdentityService;
   notesService: NotesService;
   mediaService: MediaService;
+  historyService: HistoryService;
 
   public static async create(): Promise<TestSetup> {
     const testSetup = new TestSetup();
@@ -87,6 +89,8 @@ export class TestSetup {
       testSetup.moduleRef.get<NotesService>(NotesService);
     testSetup.mediaService =
       testSetup.moduleRef.get<MediaService>(MediaService);
+    testSetup.historyService =
+      testSetup.moduleRef.get<HistoryService>(HistoryService);
 
     testSetup.app = testSetup.moduleRef.createNestApplication();
 
