@@ -14,6 +14,7 @@ import { TestSetup } from '../test-setup';
 
 describe('Notes', () => {
   let testSetup: TestSetup;
+
   let user: User;
   let user2: User;
   let content: string;

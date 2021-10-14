@@ -3,40 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { INestApplication } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Test } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import request from 'supertest';
 
-import { PrivateApiModule } from '../../src/api/private/private-api.module';
-import { AuthModule } from '../../src/auth/auth.module';
 import { AuthConfig } from '../../src/config/auth.config';
-import appConfigMock from '../../src/config/mock/app.config.mock';
-import authConfigMock from '../../src/config/mock/auth.config.mock';
-import customizationConfigMock from '../../src/config/mock/customization.config.mock';
-import externalConfigMock from '../../src/config/mock/external-services.config.mock';
-import mediaConfigMock from '../../src/config/mock/media.config.mock';
 import { NotInDBError } from '../../src/errors/errors';
-import { GroupsModule } from '../../src/groups/groups.module';
-import { IdentityService } from '../../src/identity/identity.service';
-import { LoggerModule } from '../../src/logger/logger.module';
-import { MediaService } from '../../src/media/media.service';
-import { NotesModule } from '../../src/notes/notes.module';
-import { NotesService } from '../../src/notes/notes.service';
-import { PermissionsModule } from '../../src/permissions/permissions.module';
 import { User } from '../../src/users/user.entity';
-import { UsersModule } from '../../src/users/users.module';
-import { UsersService } from '../../src/users/users.service';
 import { setupSessionMiddleware } from '../../src/utils/session';
+import { TestSetup } from '../test-setup';
 
 describe('Notes', () => {
-  let app: INestApplication;
-  let notesService: NotesService;
-  let mediaService: MediaService;
-  let identityService: IdentityService;
+  let testSetup: TestSetup;
+
   let user: User;
   let user2: User;
   let content: string;
@@ -46,53 +25,29 @@ describe('Notes', () => {
   let agent: request.SuperAgentTest;
 
   beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({
-      imports: [
-        ConfigModule.forRoot({
-          isGlobal: true,
-          load: [
-            mediaConfigMock,
-            appConfigMock,
-            authConfigMock,
-            customizationConfigMock,
-            externalConfigMock,
-          ],
-        }),
-        PrivateApiModule,
-        NotesModule,
-        PermissionsModule,
-        GroupsModule,
-        TypeOrmModule.forRoot({
-          type: 'sqlite',
-          database: './hedgedoc-e2e-private-notes.sqlite',
-          autoLoadEntities: true,
-          synchronize: true,
-          dropSchema: true,
-        }),
-        LoggerModule,
-        AuthModule,
-        UsersModule,
-      ],
-    }).compile();
+    testSetup = await TestSetup.create();
 
-    const config = moduleRef.get<ConfigService>(ConfigService);
-    forbiddenNoteId = config.get('appConfig').forbiddenNoteIds[0];
-    uploadPath = config.get('mediaConfig').backend.filesystem.uploadPath;
-    app = moduleRef.createNestApplication();
-    const authConfig = config.get('authConfig') as AuthConfig;
-    setupSessionMiddleware(app, authConfig);
-    await app.init();
-    notesService = moduleRef.get(NotesService);
-    mediaService = moduleRef.get(MediaService);
-    identityService = moduleRef.get(IdentityService);
-    const userService = moduleRef.get(UsersService);
-    user = await userService.createUser('hardcoded', 'Testy');
-    await identityService.createLocalIdentity(user, 'test');
-    user2 = await userService.createUser('hardcoded2', 'Max Mustermann');
-    await identityService.createLocalIdentity(user2, 'test');
+    forbiddenNoteId =
+      testSetup.configService.get('appConfig').forbiddenNoteIds[0];
+    uploadPath =
+      testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
+
+    const authConfig = testSetup.configService.get('authConfig') as AuthConfig;
+    setupSessionMiddleware(testSetup.app, authConfig);
+
+    await testSetup.app.init();
+
+    user = await testSetup.userService.createUser('hardcoded', 'Testy');
+    await testSetup.identityService.createLocalIdentity(user, 'test');
+    user2 = await testSetup.userService.createUser(
+      'hardcoded2',
+      'Max Mustermann',
+    );
+    await testSetup.identityService.createLocalIdentity(user2, 'test');
     content = 'This is a test note.';
     testImage = await fs.readFile('test/public-api/fixtures/test.png');
-    agent = request.agent(app.getHttpServer());
+
+    agent = request.agent(testSetup.app.getHttpServer());
     await agent
       .post('/auth/local/login')
       .send({ username: 'hardcoded', password: 'test' })
@@ -108,8 +63,10 @@ describe('Notes', () => {
       .expect(201);
     expect(response.body.metadata?.id).toBeDefined();
     expect(
-      await notesService.getNoteContent(
-        await notesService.getNoteByIdOrAlias(response.body.metadata.id),
+      await testSetup.notesService.getNoteContent(
+        await testSetup.notesService.getNoteByIdOrAlias(
+          response.body.metadata.id,
+        ),
       ),
     ).toEqual(content);
   });
@@ -117,7 +74,7 @@ describe('Notes', () => {
   describe('GET /notes/{note}', () => {
     it('works with an existing note', async () => {
       // check if we can succefully get a note that exists
-      await notesService.createNote(content, 'test1', user);
+      await testSetup.notesService.createNote(content, 'test1', user);
       const response = await agent
         .get('/notes/test1')
         .expect('Content-Type', /json/)
@@ -143,8 +100,10 @@ describe('Notes', () => {
         .expect(201);
       expect(response.body.metadata?.id).toBeDefined();
       return expect(
-        await notesService.getNoteContent(
-          await notesService.getNoteByIdOrAlias(response.body.metadata?.id),
+        await testSetup.notesService.getNoteContent(
+          await testSetup.notesService.getNoteByIdOrAlias(
+            response.body.metadata?.id,
+          ),
         ),
       ).toEqual(content);
     });
@@ -172,8 +131,12 @@ describe('Notes', () => {
     describe('works', () => {
       it('with an existing alias and keepMedia false', async () => {
         const noteId = 'test3';
-        const note = await notesService.createNote(content, noteId, user);
-        await mediaService.saveFile(testImage, user, note);
+        const note = await testSetup.notesService.createNote(
+          content,
+          noteId,
+          user,
+        );
+        await testSetup.mediaService.saveFile(testImage, user, note);
         await agent
           .delete(`/notes/${noteId}`)
           .set('Content-Type', 'application/json')
@@ -181,16 +144,28 @@ describe('Notes', () => {
             keepMedia: false,
           })
           .expect(204);
-        await expect(notesService.getNoteByIdOrAlias(noteId)).rejects.toEqual(
+        await expect(
+          testSetup.notesService.getNoteByIdOrAlias(noteId),
+        ).rejects.toEqual(
           new NotInDBError(`Note with id/alias '${noteId}' not found.`),
         );
-        expect(await mediaService.listUploadsByUser(user)).toHaveLength(0);
+        expect(
+          await testSetup.mediaService.listUploadsByUser(user),
+        ).toHaveLength(0);
         await fs.rmdir(uploadPath);
       });
       it('with an existing alias and keepMedia true', async () => {
         const noteId = 'test3a';
-        const note = await notesService.createNote(content, noteId, user);
-        const url = await mediaService.saveFile(testImage, user, note);
+        const note = await testSetup.notesService.createNote(
+          content,
+          noteId,
+          user,
+        );
+        const url = await testSetup.mediaService.saveFile(
+          testImage,
+          user,
+          note,
+        );
         await agent
           .delete(`/notes/${noteId}`)
           .set('Content-Type', 'application/json')
@@ -198,10 +173,14 @@ describe('Notes', () => {
             keepMedia: true,
           })
           .expect(204);
-        await expect(notesService.getNoteByIdOrAlias(noteId)).rejects.toEqual(
+        await expect(
+          testSetup.notesService.getNoteByIdOrAlias(noteId),
+        ).rejects.toEqual(
           new NotInDBError(`Note with id/alias '${noteId}' not found.`),
         );
-        expect(await mediaService.listUploadsByUser(user)).toHaveLength(1);
+        expect(
+          await testSetup.mediaService.listUploadsByUser(user),
+        ).toHaveLength(1);
         // Remove /upload/ from path as we just need the filename.
         const fileName = url.replace('/uploads/', '');
         // delete the file afterwards
@@ -219,7 +198,7 @@ describe('Notes', () => {
 
   describe('GET /notes/{note}/revisions', () => {
     it('works with existing alias', async () => {
-      await notesService.createNote(content, 'test4', user);
+      await testSetup.notesService.createNote(content, 'test4', user);
       const response = await agent
         .get('/notes/test4/revisions')
         .expect('Content-Type', /json/)
@@ -243,8 +222,12 @@ describe('Notes', () => {
   describe('DELETE /notes/{note}/revisions', () => {
     it('works with an existing alias', async () => {
       const noteId = 'test8';
-      const note = await notesService.createNote(content, noteId, user);
-      await notesService.updateNote(note, 'update');
+      const note = await testSetup.notesService.createNote(
+        content,
+        noteId,
+        user,
+      );
+      await testSetup.notesService.updateNote(note, 'update');
       const responseBeforeDeleting = await agent
         .get('/notes/test8/revisions')
         .expect('Content-Type', /json/)
@@ -274,8 +257,12 @@ describe('Notes', () => {
 
   describe('GET /notes/{note}/revisions/{revision-id}', () => {
     it('works with an existing alias', async () => {
-      const note = await notesService.createNote(content, 'test5', user);
-      const revision = await notesService.getLatestRevision(note);
+      const note = await testSetup.notesService.createNote(
+        content,
+        'test5',
+        user,
+      );
+      const revision = await testSetup.notesService.getLatestRevision(note);
       const response = await agent
         .get(`/notes/test5/revisions/${revision.id}`)
         .expect('Content-Type', /json/)
@@ -298,8 +285,16 @@ describe('Notes', () => {
     it('works', async () => {
       const alias = 'test6';
       const extraAlias = 'test7';
-      const note1 = await notesService.createNote(content, alias, user);
-      const note2 = await notesService.createNote(content, extraAlias, user);
+      const note1 = await testSetup.notesService.createNote(
+        content,
+        alias,
+        user,
+      );
+      const note2 = await testSetup.notesService.createNote(
+        content,
+        extraAlias,
+        user,
+      );
       const response = await agent
         .get(`/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
@@ -307,8 +302,16 @@ describe('Notes', () => {
       expect(response.body).toHaveLength(0);
 
       const testImage = await fs.readFile('test/private-api/fixtures/test.png');
-      const url0 = await mediaService.saveFile(testImage, user, note1);
-      const url1 = await mediaService.saveFile(testImage, user, note2);
+      const url0 = await testSetup.mediaService.saveFile(
+        testImage,
+        user,
+        note1,
+      );
+      const url1 = await testSetup.mediaService.saveFile(
+        testImage,
+        user,
+        note2,
+      );
 
       const responseAfter = await agent
         .get(`/notes/${alias}/media/`)
@@ -332,7 +335,11 @@ describe('Notes', () => {
     });
     it("fails, when user can't read note", async () => {
       const alias = 'test11';
-      await notesService.createNote('This is a test note.', alias, user2);
+      await testSetup.notesService.createNote(
+        'This is a test note.',
+        alias,
+        user2,
+      );
       await agent
         .get(`/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
@@ -341,6 +348,6 @@ describe('Notes', () => {
   });
 
   afterAll(async () => {
-    await app.close();
+    await testSetup.app.close();
   });
 });
