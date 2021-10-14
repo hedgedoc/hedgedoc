@@ -24,9 +24,12 @@ import { IdentityService } from '../../src/identity/identity.service';
 import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
 import { LoggerModule } from '../../src/logger/logger.module';
 import { MediaModule } from '../../src/media/media.module';
+import { MediaService } from '../../src/media/media.service';
+import { Note } from '../../src/notes/note.entity';
 import { NotesModule } from '../../src/notes/notes.module';
 import { NotesService } from '../../src/notes/notes.service';
 import { PermissionsModule } from '../../src/permissions/permissions.module';
+import { User } from '../../src/users/user.entity';
 import { UsersService } from '../../src/users/users.service';
 import { setupSessionMiddleware } from '../../src/utils/session';
 import { ensureDeleted } from '../utils';
@@ -34,8 +37,11 @@ import { ensureDeleted } from '../utils';
 describe('Media', () => {
   let identityService: IdentityService;
   let app: NestExpressApplication;
+  let mediaService: MediaService;
   let uploadPath: string;
   let agent: request.SuperAgentTest;
+  let testNote: Note;
+  let user: User;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -80,9 +86,13 @@ describe('Media', () => {
     app.useLogger(logger);
     identityService = moduleRef.get(IdentityService);
     const notesService: NotesService = moduleRef.get(NotesService);
-    await notesService.createNote('test content', 'test_upload_media');
     const userService: UsersService = moduleRef.get(UsersService);
-    const user = await userService.createUser('hardcoded', 'Testy');
+    user = await userService.createUser('hardcoded', 'Testy');
+    testNote = await notesService.createNote(
+      'test content',
+      'test_upload_media',
+    );
+    mediaService = moduleRef.get(MediaService);
     await identityService.createLocalIdentity(user, 'test');
     agent = request.agent(app.getHttpServer());
     await agent
@@ -143,6 +153,15 @@ describe('Media', () => {
         await ensureDeleted(uploadPath);
       });
     });
+  });
+
+  it('DELETE /media/{filename}', async () => {
+    const testImage = await fs.readFile('test/private-api/fixtures/test.png');
+    const url = await mediaService.saveFile(testImage, user, testNote);
+    const filename = url.split('/').pop() || '';
+    await agent
+      .delete('/media/' + filename)
+      .expect(204);
   });
 
   afterAll(async () => {
