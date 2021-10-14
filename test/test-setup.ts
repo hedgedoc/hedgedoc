@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { INestApplication } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -32,7 +32,7 @@ import { UsersService } from '../src/users/users.service';
 
 export class TestSetup {
   moduleRef: TestingModule;
-  app: INestApplication;
+  app: NestExpressApplication;
 
   userService: UsersService;
   configService: ConfigService;
