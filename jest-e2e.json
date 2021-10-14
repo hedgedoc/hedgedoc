@@ -16,7 +16,7 @@
   "testTimeout": 10000,
   "globals": {
     "ts-jest": {
-      "tsconfig": "tsconfig.test.json"
+      "tsconfig": "test/tsconfig.json"
     }
   }
 }
