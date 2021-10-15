@@ -45,7 +45,7 @@ describe('Media', () => {
   describe('POST /media', () => {
     it('works', async () => {
       const uploadResponse = await request(testSetup.app.getHttpServer())
-        .post('/media')
+        .post('/api/v2/media')
         .attach('file', 'test/public-api/fixtures/test.png')
         .set('HedgeDoc-Note', 'test_upload_media')
         .expect('Content-Type', /json/)
@@ -67,7 +67,7 @@ describe('Media', () => {
       });
       it('MIME type not supported', async () => {
         await request(testSetup.app.getHttpServer())
-          .post('/media')
+          .post('/api/v2/media')
           .attach('file', 'test/public-api/fixtures/test.zip')
           .set('HedgeDoc-Note', 'test_upload_media')
           .expect(400);
@@ -75,7 +75,7 @@ describe('Media', () => {
       });
       it('note does not exist', async () => {
         await request(testSetup.app.getHttpServer())
-          .post('/media')
+          .post('/api/v2/media')
           .attach('file', 'test/public-api/fixtures/test.zip')
           .set('HedgeDoc-Note', 'i_dont_exist')
           .expect(400);
@@ -86,7 +86,7 @@ describe('Media', () => {
           mode: '444',
         });
         await request(testSetup.app.getHttpServer())
-          .post('/media')
+          .post('/api/v2/media')
           .attach('file', 'test/public-api/fixtures/test.png')
           .set('HedgeDoc-Note', 'test_upload_media')
           .expect('Content-Type', /json/)
@@ -107,7 +107,7 @@ describe('Media', () => {
     );
     const filename = url.split('/').pop() || '';
     await request(testSetup.app.getHttpServer())
-      .delete('/media/' + filename)
+      .delete('/api/v2/media/' + filename)
       .expect(204);
   });
 

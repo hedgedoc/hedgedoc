@@ -49,7 +49,7 @@ describe('Notes', () => {
       const newAlias = 'normalAlias';
       newAliasDto.newAlias = newAlias;
       const metadata = await request(testSetup.app.getHttpServer())
-        .post(`/alias`)
+        .post(`/api/v2/alias`)
         .set('Content-Type', 'application/json')
         .send(newAliasDto)
         .expect(201);
@@ -57,7 +57,7 @@ describe('Notes', () => {
       expect(metadata.body.primaryAlias).toBeFalsy();
       expect(metadata.body.noteId).toEqual(publicId);
       const note = await request(testSetup.app.getHttpServer())
-        .get(`/notes/${newAlias}`)
+        .get(`/api/v2/notes/${newAlias}`)
         .expect(200);
       expect(note.body.metadata.aliases).toContain(newAlias);
       expect(note.body.metadata.primaryAlias).toBeTruthy();
@@ -68,7 +68,7 @@ describe('Notes', () => {
       it('because of a forbidden alias', async () => {
         newAliasDto.newAlias = forbiddenNoteId;
         await request(testSetup.app.getHttpServer())
-          .post(`/alias`)
+          .post(`/api/v2/alias`)
           .set('Content-Type', 'application/json')
           .send(newAliasDto)
           .expect(400);
@@ -76,7 +76,7 @@ describe('Notes', () => {
       it('because of a alias that is a public id', async () => {
         newAliasDto.newAlias = publicId;
         await request(testSetup.app.getHttpServer())
-          .post(`/alias`)
+          .post(`/api/v2/alias`)
           .set('Content-Type', 'application/json')
           .send(newAliasDto)
           .expect(400);
@@ -103,7 +103,7 @@ describe('Notes', () => {
 
     it('updates a note with a normal alias', async () => {
       const metadata = await request(testSetup.app.getHttpServer())
-        .put(`/alias/${newAlias}`)
+        .put(`/api/v2/alias/${newAlias}`)
         .set('Content-Type', 'application/json')
         .send(changeAliasDto)
         .expect(200);
@@ -111,7 +111,7 @@ describe('Notes', () => {
       expect(metadata.body.primaryAlias).toBeTruthy();
       expect(metadata.body.noteId).toEqual(publicId);
       const note = await request(testSetup.app.getHttpServer())
-        .get(`/notes/${newAlias}`)
+        .get(`/api/v2/notes/${newAlias}`)
         .expect(200);
       expect(note.body.metadata.aliases).toContain(newAlias);
       expect(note.body.metadata.primaryAlias).toBeTruthy();
@@ -121,7 +121,7 @@ describe('Notes', () => {
     describe('does not update', () => {
       it('a note with unknown alias', async () => {
         await request(testSetup.app.getHttpServer())
-          .put(`/alias/i_dont_exist`)
+          .put(`/api/v2/alias/i_dont_exist`)
           .set('Content-Type', 'application/json')
           .send(changeAliasDto)
           .expect(404);
@@ -129,7 +129,7 @@ describe('Notes', () => {
       it('if the property primaryAlias is false', async () => {
         changeAliasDto.primaryAlias = false;
         await request(testSetup.app.getHttpServer())
-          .put(`/alias/${newAlias}`)
+          .put(`/api/v2/alias/${newAlias}`)
           .set('Content-Type', 'application/json')
           .send(changeAliasDto)
           .expect(400);
@@ -151,16 +151,16 @@ describe('Notes', () => {
 
     it('deletes a normal alias', async () => {
       await request(testSetup.app.getHttpServer())
-        .delete(`/alias/${newAlias}`)
+        .delete(`/api/v2/alias/${newAlias}`)
         .expect(204);
       await request(testSetup.app.getHttpServer())
-        .get(`/notes/${newAlias}`)
+        .get(`/api/v2/notes/${newAlias}`)
         .expect(404);
     });
 
     it('does not delete an unknown alias', async () => {
       await request(testSetup.app.getHttpServer())
-        .delete(`/alias/i_dont_exist`)
+        .delete(`/api/v2/alias/i_dont_exist`)
         .expect(404);
     });
 
@@ -168,19 +168,19 @@ describe('Notes', () => {
       const note = await testSetup.notesService.getNoteByIdOrAlias(testAlias);
       await testSetup.aliasService.addAlias(note, newAlias);
       await request(testSetup.app.getHttpServer())
-        .delete(`/alias/${testAlias}`)
+        .delete(`/api/v2/alias/${testAlias}`)
         .expect(400);
       await request(testSetup.app.getHttpServer())
-        .get(`/notes/${newAlias}`)
+        .get(`/api/v2/notes/${newAlias}`)
         .expect(200);
     });
 
     it('deletes a primary alias (if it is the only one)', async () => {
       await request(testSetup.app.getHttpServer())
-        .delete(`/alias/${newAlias}`)
+        .delete(`/api/v2/alias/${newAlias}`)
         .expect(204);
       await request(testSetup.app.getHttpServer())
-        .delete(`/alias/${testAlias}`)
+        .delete(`/api/v2/alias/${testAlias}`)
         .expect(204);
     });
   });

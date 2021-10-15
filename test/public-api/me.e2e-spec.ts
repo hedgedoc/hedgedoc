@@ -34,7 +34,7 @@ describe('Me', () => {
   it(`GET /me`, async () => {
     const userInfo = testSetup.userService.toUserDto(user);
     const response = await request(testSetup.app.getHttpServer())
-      .get('/me')
+      .get('/api/v2/me')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body).toEqual(userInfo);
@@ -46,7 +46,7 @@ describe('Me', () => {
     const createdHistoryEntry =
       await testSetup.historyService.updateHistoryEntryTimestamp(note, user);
     const response = await request(testSetup.app.getHttpServer())
-      .get('/me/history')
+      .get('/api/v2/me/history')
       .expect('Content-Type', /json/)
       .expect(200);
     const history: HistoryEntryDto[] = response.body;
@@ -71,7 +71,7 @@ describe('Me', () => {
       const createdHistoryEntry =
         await testSetup.historyService.updateHistoryEntryTimestamp(note, user);
       const response = await request(testSetup.app.getHttpServer())
-        .get(`/me/history/${noteName}`)
+        .get(`/api/v2/me/history/${noteName}`)
         .expect('Content-Type', /json/)
         .expect(200);
       const historyEntry: HistoryEntryDto = response.body;
@@ -87,7 +87,7 @@ describe('Me', () => {
     });
     it('fails with a non-existing note', async () => {
       await request(testSetup.app.getHttpServer())
-        .get('/me/history/i_dont_exist')
+        .get('/api/v2/me/history/i_dont_exist')
         .expect('Content-Type', /json/)
         .expect(404);
     });
@@ -101,7 +101,7 @@ describe('Me', () => {
       const historyEntryUpdateDto = new HistoryEntryUpdateDto();
       historyEntryUpdateDto.pinStatus = true;
       const response = await request(testSetup.app.getHttpServer())
-        .put('/me/history/' + noteName)
+        .put('/api/v2/me/history/' + noteName)
         .send(historyEntryUpdateDto)
         .expect(200);
       const history = await testSetup.historyService.getEntriesByUser(user);
@@ -117,7 +117,7 @@ describe('Me', () => {
     });
     it('fails with a non-existing note', async () => {
       await request(testSetup.app.getHttpServer())
-        .put('/me/history/i_dont_exist')
+        .put('/api/v2/me/history/i_dont_exist')
         .expect('Content-Type', /json/)
         .expect(404);
     });
@@ -129,7 +129,7 @@ describe('Me', () => {
       const note = await testSetup.notesService.createNote('', noteName);
       await testSetup.historyService.updateHistoryEntryTimestamp(note, user);
       const response = await request(testSetup.app.getHttpServer())
-        .delete(`/me/history/${noteName}`)
+        .delete(`/api/v2/me/history/${noteName}`)
         .expect(204);
       expect(response.body).toEqual({});
       const history = await testSetup.historyService.getEntriesByUser(user);
@@ -142,14 +142,14 @@ describe('Me', () => {
     describe('fails', () => {
       it('with a non-existing note', async () => {
         await request(testSetup.app.getHttpServer())
-          .delete('/me/history/i_dont_exist')
+          .delete('/api/v2/me/history/i_dont_exist')
           .expect(404);
       });
       it('with a non-existing history entry', async () => {
         const noteName = 'testGetNoteHistory5';
         await testSetup.notesService.createNote('', noteName);
         await request(testSetup.app.getHttpServer())
-          .delete(`/me/history/${noteName}`)
+          .delete(`/api/v2/me/history/${noteName}`)
           .expect(404);
       });
     });
@@ -159,7 +159,7 @@ describe('Me', () => {
     const noteName = 'testNote';
     await testSetup.notesService.createNote('', noteName, user);
     const response = await request(testSetup.app.getHttpServer())
-      .get('/me/notes/')
+      .get('/api/v2/me/notes/')
       .expect('Content-Type', /json/)
       .expect(200);
     const noteMetaDtos = response.body as NoteMetadataDto[];
@@ -181,7 +181,7 @@ describe('Me', () => {
     );
     const httpServer = testSetup.app.getHttpServer();
     const response1 = await request(httpServer)
-      .get('/me/media/')
+      .get('/api/v2/me/media/')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response1.body).toHaveLength(0);
@@ -193,7 +193,7 @@ describe('Me', () => {
     const url3 = await testSetup.mediaService.saveFile(testImage, user, note2);
 
     const response = await request(httpServer)
-      .get('/me/media/')
+      .get('/api/v2/me/media/')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body).toHaveLength(4);
