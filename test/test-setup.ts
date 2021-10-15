@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { RouterModule, Routes } from 'nest-router';
 
 import { PrivateApiModule } from '../src/api/private/private-api.module';
 import { PublicApiModule } from '../src/api/public/public-api.module';
@@ -46,9 +47,27 @@ export class TestSetup {
 
   public static async create(): Promise<TestSetup> {
     const testSetup = new TestSetup();
+    const routes: Routes = [
+      {
+        path: '/api/v2',
+        module: PublicApiModule,
+      },
+      {
+        path: '/api/private',
+        module: PrivateApiModule,
+      },
+    ];
 
     testSetup.moduleRef = await Test.createTestingModule({
       imports: [
+        RouterModule.forRoutes(routes),
+        TypeOrmModule.forRoot({
+          type: 'sqlite',
+          database: ':memory:',
+          autoLoadEntities: true,
+          synchronize: true,
+          dropSchema: true,
+        }),
         ConfigModule.forRoot({
           isGlobal: true,
           load: [
@@ -64,13 +83,6 @@ export class TestSetup {
         NotesModule,
         PermissionsModule,
         GroupsModule,
-        TypeOrmModule.forRoot({
-          type: 'sqlite',
-          database: ':memory:',
-          autoLoadEntities: true,
-          synchronize: true,
-          dropSchema: true,
-        }),
         LoggerModule,
         AuthModule,
         UsersModule,
