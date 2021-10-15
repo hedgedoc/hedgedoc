@@ -7,8 +7,3 @@
 @import "../../../node_modules/reveal.js/css/reveal";
 @import "../../../node_modules/reveal.js/dist/theme/fonts/league-gothic/league-gothic.css";
 @import "slide-theme";
-
-//Fix to make transitions work with bootstrap
-.reveal [hidden] {
-  display: block !important;
-}
