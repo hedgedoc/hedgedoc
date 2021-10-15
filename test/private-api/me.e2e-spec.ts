@@ -44,7 +44,7 @@ describe('Me', () => {
     note2 = await testSetup.notesService.createNote(content, alias2, user);
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
-      .post('/auth/local/login')
+      .post('/api/private/auth/local/login')
       .send({ username: 'hardcoded', password: 'test' })
       .expect(201);
   });
@@ -52,7 +52,7 @@ describe('Me', () => {
   it('GET /me', async () => {
     const userInfo = testSetup.userService.toUserDto(user);
     const response = await agent
-      .get('/me')
+      .get('/api/private/me')
       .expect('Content-Type', /json/)
       .expect(200);
     const gotUser = response.body as UserInfoDto;
@@ -61,7 +61,7 @@ describe('Me', () => {
 
   it('GET /me/media', async () => {
     const responseBefore = await agent
-      .get('/me/media/')
+      .get('/api/private/me/media/')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(responseBefore.body).toHaveLength(0);
@@ -73,7 +73,7 @@ describe('Me', () => {
     const url3 = await testSetup.mediaService.saveFile(testImage, user, note2);
 
     const response = await agent
-      .get('/me/media/')
+      .get('/api/private/me/media/')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body).toHaveLength(4);
@@ -92,7 +92,7 @@ describe('Me', () => {
     const newDisplayName = 'Another name';
     expect(user.displayName).not.toEqual(newDisplayName);
     await agent
-      .post('/me/profile')
+      .post('/api/private/me/profile')
       .send({
         name: newDisplayName,
       })
@@ -109,7 +109,7 @@ describe('Me', () => {
     const mediaUploads = await testSetup.mediaService.listUploadsByUser(dbUser);
     expect(mediaUploads).toHaveLength(1);
     expect(mediaUploads[0].fileUrl).toEqual(url0);
-    await agent.delete('/me').expect(204);
+    await agent.delete('/api/private/me').expect(204);
     await expect(
       testSetup.userService.getUserByUsername('hardcoded'),
     ).rejects.toThrow(NotInDBError);

@@ -54,14 +54,14 @@ describe('History', () => {
     note2 = await notesService.createNote(content, 'note2', user);
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
-      .post('/auth/local/login')
+      .post('/api/private/auth/local/login')
       .send({ username: 'hardcoded', password: 'test' })
       .expect(201);
   });
 
   it('GET /me/history', async () => {
     const emptyResponse = await agent
-      .get('/me/history')
+      .get('/api/private/me/history')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(emptyResponse.body.length).toEqual(0);
@@ -71,7 +71,7 @@ describe('History', () => {
     );
     const entryDto = testSetup.historyService.toHistoryEntryDto(entry);
     const response = await agent
-      .get('/me/history')
+      .get('/api/private/me/history')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body.length).toEqual(1);
@@ -98,7 +98,7 @@ describe('History', () => {
       postEntryDto.pinStatus = pinStatus;
       postEntryDto.lastVisited = lastVisited;
       await agent
-        .post('/me/history')
+        .post('/api/private/me/history')
         .set('Content-Type', 'application/json')
         .send(JSON.stringify({ history: [postEntryDto] }))
         .expect(201);
@@ -135,7 +135,7 @@ describe('History', () => {
         brokenEntryDto.pinStatus = pinStatus;
         brokenEntryDto.lastVisited = lastVisited;
         await agent
-          .post('/me/history')
+          .post('/api/private/me/history')
           .set('Content-Type', 'application/json')
           .send(JSON.stringify({ history: [brokenEntryDto] }))
           .expect(400);
@@ -146,7 +146,7 @@ describe('History', () => {
         brokenEntryDto.pinStatus = pinStatus;
         brokenEntryDto.lastVisited = lastVisited;
         await agent
-          .post('/me/history')
+          .post('/api/private/me/history')
           .set('Content-Type', 'application/json')
           .send(JSON.stringify({ history: [brokenEntryDto] }))
           .expect(400);
@@ -170,7 +170,7 @@ describe('History', () => {
     expect(
       (await testSetup.historyService.getEntriesByUser(user)).length,
     ).toEqual(1);
-    await agent.delete('/me/history').expect(200);
+    await agent.delete('/api/private/me/history').expect(200);
     expect(
       (await testSetup.historyService.getEntriesByUser(user)).length,
     ).toEqual(0);
@@ -184,7 +184,7 @@ describe('History', () => {
     expect(entry.pinStatus).toBeFalsy();
     const alias = entry.note.aliases.filter((alias) => alias.primary)[0].name;
     await agent
-      .put(`/me/history/${alias || 'undefined'}`)
+      .put(`/api/private/me/history/${alias || 'undefined'}`)
       .send({ pinStatus: true })
       .expect(200);
     const userEntries = await testSetup.historyService.getEntriesByUser(user);
@@ -198,7 +198,9 @@ describe('History', () => {
     const alias = entry.note.aliases.filter((alias) => alias.primary)[0].name;
     const entry2 = await historyService.updateHistoryEntryTimestamp(note, user);
     const entryDto = historyService.toHistoryEntryDto(entry2);
-    await agent.delete(`/me/history/${alias || 'undefined'}`).expect(200);
+    await agent
+      .delete(`/api/private/me/history/${alias || 'undefined'}`)
+      .expect(200);
     const userEntries = await historyService.getEntriesByUser(user);
     expect(userEntries.length).toEqual(1);
     const userEntryDto = historyService.toHistoryEntryDto(userEntries[0]);
