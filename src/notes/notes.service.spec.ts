@@ -266,7 +266,7 @@ describe('NotesService', () => {
   describe('getFirstRevision', () => {
     it('works', async () => {
       const user = {} as User;
-      user.userName = 'hardcoded';
+      user.username = 'hardcoded';
       const content = 'testContent';
       jest
         .spyOn(noteRepo, 'save')
@@ -393,7 +393,7 @@ describe('NotesService', () => {
           sharedToGroups: [],
         });
         expect(savedNote.userPermissions).toHaveLength(1);
-        expect(savedNote.userPermissions[0].user.userName).toEqual(
+        expect(savedNote.userPermissions[0].user.username).toEqual(
           userPermissionUpdate.username,
         );
         expect(savedNote.userPermissions[0].canEdit).toEqual(
@@ -421,7 +421,7 @@ describe('NotesService', () => {
           sharedToGroups: [],
         });
         expect(savedNote.userPermissions).toHaveLength(1);
-        expect(savedNote.userPermissions[0].user.userName).toEqual(
+        expect(savedNote.userPermissions[0].user.username).toEqual(
           userPermissionUpdate.username,
         );
         expect(savedNote.userPermissions[0].canEdit).toEqual(
@@ -460,7 +460,7 @@ describe('NotesService', () => {
           sharedToUsers: [userPermissionUpdate],
           sharedToGroups: [groupPermissionUpate],
         });
-        expect(savedNote.userPermissions[0].user.userName).toEqual(
+        expect(savedNote.userPermissions[0].user.username).toEqual(
           userPermissionUpdate.username,
         );
         expect(savedNote.userPermissions[0].canEdit).toEqual(
@@ -496,7 +496,7 @@ describe('NotesService', () => {
             sharedToGroups: [groupPermissionUpate],
           },
         );
-        expect(savedNote.userPermissions[0].user.userName).toEqual(
+        expect(savedNote.userPermissions[0].user.username).toEqual(
           userPermissionUpdate.username,
         );
         expect(savedNote.userPermissions[0].canEdit).toEqual(
@@ -562,7 +562,7 @@ describe('NotesService', () => {
             sharedToGroups: [groupPermissionUpate],
           },
         );
-        expect(savedNote.userPermissions[0].user.userName).toEqual(
+        expect(savedNote.userPermissions[0].user.username).toEqual(
           userPermissionUpdate.username,
         );
         expect(savedNote.userPermissions[0].canEdit).toEqual(
@@ -605,7 +605,7 @@ describe('NotesService', () => {
             sharedToGroups: [groupPermissionUpate],
           },
         );
-        expect(savedNote.userPermissions[0].user.userName).toEqual(
+        expect(savedNote.userPermissions[0].user.username).toEqual(
           userPermissionUpdate.username,
         );
         expect(savedNote.userPermissions[0].canEdit).toEqual(
@@ -685,9 +685,9 @@ describe('NotesService', () => {
         },
       ];
       const permissions = service.toNotePermissionsDto(note);
-      expect(permissions.owner.userName).toEqual(user.userName);
+      expect(permissions.owner.username).toEqual(user.username);
       expect(permissions.sharedToUsers).toHaveLength(1);
-      expect(permissions.sharedToUsers[0].user.userName).toEqual(user.userName);
+      expect(permissions.sharedToUsers[0].user.username).toEqual(user.username);
       expect(permissions.sharedToUsers[0].canEdit).toEqual(true);
       expect(permissions.sharedToGroups).toHaveLength(1);
       expect(permissions.sharedToGroups[0].group.displayName).toEqual(
@@ -772,11 +772,11 @@ describe('NotesService', () => {
       expect(metadataDto.createTime).toEqual(revisions[0].createdAt);
       expect(metadataDto.description).toEqual(note.description);
       expect(metadataDto.editedBy).toHaveLength(1);
-      expect(metadataDto.editedBy[0]).toEqual(user.userName);
-      expect(metadataDto.permissions.owner.userName).toEqual(user.userName);
+      expect(metadataDto.editedBy[0]).toEqual(user.username);
+      expect(metadataDto.permissions.owner.username).toEqual(user.username);
       expect(metadataDto.permissions.sharedToUsers).toHaveLength(1);
-      expect(metadataDto.permissions.sharedToUsers[0].user.userName).toEqual(
-        user.userName,
+      expect(metadataDto.permissions.sharedToUsers[0].user.username).toEqual(
+        user.username,
       );
       expect(metadataDto.permissions.sharedToUsers[0].canEdit).toEqual(true);
       expect(metadataDto.permissions.sharedToGroups).toHaveLength(1);
@@ -787,7 +787,7 @@ describe('NotesService', () => {
       expect(metadataDto.tags).toHaveLength(1);
       expect(metadataDto.tags[0]).toEqual(note.tags[0].name);
       expect(metadataDto.updateTime).toEqual(revisions[0].createdAt);
-      expect(metadataDto.updateUser.userName).toEqual(user.userName);
+      expect(metadataDto.updateUser.username).toEqual(user.username);
       expect(metadataDto.viewCount).toEqual(note.viewCount);
     });
   });
@@ -798,7 +798,7 @@ describe('NotesService', () => {
       const author = Author.create(1);
       author.user = user;
       const otherUser = User.create('other hardcoded', 'Testy2') as User;
-      otherUser.userName = 'other hardcoded user';
+      otherUser.username = 'other hardcoded user';
       const group = Group.create('testGroup', 'testGroup');
       const content = 'testContent';
       jest
@@ -872,14 +872,14 @@ describe('NotesService', () => {
       expect(noteDto.metadata.createTime).toEqual(revisions[0].createdAt);
       expect(noteDto.metadata.description).toEqual(note.description);
       expect(noteDto.metadata.editedBy).toHaveLength(1);
-      expect(noteDto.metadata.editedBy[0]).toEqual(user.userName);
-      expect(noteDto.metadata.permissions.owner.userName).toEqual(
-        user.userName,
+      expect(noteDto.metadata.editedBy[0]).toEqual(user.username);
+      expect(noteDto.metadata.permissions.owner.username).toEqual(
+        user.username,
       );
       expect(noteDto.metadata.permissions.sharedToUsers).toHaveLength(1);
       expect(
-        noteDto.metadata.permissions.sharedToUsers[0].user.userName,
-      ).toEqual(user.userName);
+        noteDto.metadata.permissions.sharedToUsers[0].user.username,
+      ).toEqual(user.username);
       expect(noteDto.metadata.permissions.sharedToUsers[0].canEdit).toEqual(
         true,
       );
@@ -893,7 +893,7 @@ describe('NotesService', () => {
       expect(noteDto.metadata.tags).toHaveLength(1);
       expect(noteDto.metadata.tags[0]).toEqual(note.tags[0].name);
       expect(noteDto.metadata.updateTime).toEqual(revisions[0].createdAt);
-      expect(noteDto.metadata.updateUser.userName).toEqual(user.userName);
+      expect(noteDto.metadata.updateUser.username).toEqual(user.username);
       expect(noteDto.metadata.viewCount).toEqual(note.viewCount);
       expect(noteDto.content).toEqual(content);
     });

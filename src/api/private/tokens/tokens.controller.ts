@@ -40,8 +40,8 @@ export class TokensController {
 
   @Get()
   async getUserTokens(@RequestUser() user: User): Promise<AuthTokenDto[]> {
-    return (await this.authService.getTokensByUsername(user.userName)).map(
-      (token) => this.authService.toAuthTokenDto(token),
+    return (await this.authService.getTokensByUser(user)).map((token) =>
+      this.authService.toAuthTokenDto(token),
     );
   }
 
@@ -51,11 +51,7 @@ export class TokensController {
     @Body('validUntil') validUntil: TimestampMillis,
     @RequestUser() user: User,
   ): Promise<AuthTokenWithSecretDto> {
-    return await this.authService.createTokenForUser(
-      user.userName,
-      label,
-      validUntil,
-    );
+    return await this.authService.createTokenForUser(user, label, validUntil);
   }
 
   @Delete('/:keyId')
@@ -64,7 +60,7 @@ export class TokensController {
     @RequestUser() user: User,
     @Param('keyId') keyId: string,
   ): Promise<void> {
-    const tokens = await this.authService.getTokensByUsername(user.userName);
+    const tokens = await this.authService.getTokensByUser(user);
     try {
       for (const token of tokens) {
         if (token.keyId == keyId) {

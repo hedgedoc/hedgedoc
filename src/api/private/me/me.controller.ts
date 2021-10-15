@@ -50,9 +50,9 @@ export class MeController {
     for (const mediaUpload of mediaUploads) {
       await this.mediaService.deleteFile(mediaUpload);
     }
-    this.logger.debug(`Deleted all media uploads of ${user.userName}`);
+    this.logger.debug(`Deleted all media uploads of ${user.username}`);
     await this.userService.deleteUser(user);
-    this.logger.debug(`Deleted ${user.userName}`);
+    this.logger.debug(`Deleted ${user.username}`);
   }
 
   @Post('profile')

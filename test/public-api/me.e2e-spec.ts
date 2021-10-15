@@ -20,7 +20,6 @@ import mediaConfigMock from '../../src/config/mock/media.config.mock';
 import { GroupsModule } from '../../src/groups/groups.module';
 import { HistoryEntryUpdateDto } from '../../src/history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../src/history/history-entry.dto';
-import { HistoryEntry } from '../../src/history/history-entry.entity';
 import { HistoryModule } from '../../src/history/history.module';
 import { HistoryService } from '../../src/history/history.service';
 import { LoggerModule } from '../../src/logger/logger.module';
@@ -217,7 +216,7 @@ describe('Me', () => {
     const noteMetaDtos = response.body as NoteMetadataDto[];
     expect(noteMetaDtos).toHaveLength(1);
     expect(noteMetaDtos[0].primaryAlias).toEqual(noteName);
-    expect(noteMetaDtos[0].updateUser?.userName).toEqual(user.userName);
+    expect(noteMetaDtos[0].updateUser?.username).toEqual(user.username);
   });
 
   it('GET /me/media', async () => {

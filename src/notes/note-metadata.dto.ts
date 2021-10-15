@@ -105,7 +105,7 @@ export class NoteMetadataDto {
   @IsArray()
   @ValidateNested()
   @ApiProperty()
-  editedBy: UserInfoDto['userName'][];
+  editedBy: UserInfoDto['username'][];
 
   /**
    * Permissions currently in effect for the note

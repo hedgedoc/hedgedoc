@@ -100,7 +100,7 @@ export class MediaController {
       // TODO: Move getting the Note object into a decorator
       const note: Note = await this.noteService.getNoteByIdOrAlias(noteId);
       this.logger.debug(
-        `Recieved filename '${file.originalname}' for note '${noteId}' from user '${user.userName}'`,
+        `Recieved filename '${file.originalname}' for note '${noteId}' from user '${user.username}'`,
         'uploadMedia',
       );
       const url = await this.mediaService.saveFile(file.buffer, user, note);
@@ -127,7 +127,7 @@ export class MediaController {
     @RequestUser() user: User,
     @Param('filename') filename: string,
   ): Promise<void> {
-    const username = user.userName;
+    const username = user.username;
     try {
       this.logger.debug(
         `Deleting '${filename}' for user '${username}'`,
@@ -136,7 +136,7 @@ export class MediaController {
       const mediaUpload = await this.mediaService.findUploadByFilename(
         filename,
       );
-      if (mediaUpload.user.userName !== username) {
+      if (mediaUpload.user.username !== username) {
         this.logger.warn(
           `${username} tried to delete '${filename}', but is not the owner`,
           'deleteMedia',

@@ -17,7 +17,7 @@ export class EditDto {
   @IsString()
   @IsOptional()
   @ApiPropertyOptional()
-  userName: UserInfoDto['userName'] | null;
+  username: UserInfoDto['username'] | null;
 
   /**
    * Character index of the start of this section
