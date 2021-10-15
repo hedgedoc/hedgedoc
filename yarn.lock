@@ -2343,7 +2343,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ansi-regex@npm:^2.0.0, ansi-regex@npm:^2.1.1":
+"ansi-regex@npm:^2.0.0":
   version: 2.1.1
   resolution: "ansi-regex@npm:2.1.1"
   checksum: 190abd03e4ff86794f338a31795d262c1dfe8c91f7e01d04f13f646f1dcb16c5800818f886047876f1272f065570ab86b24b99089f8b68a0e11ff19aed4ca8f1
@@ -3056,17 +3056,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cli-color@npm:2.0.0":
-  version: 2.0.0
-  resolution: "cli-color@npm:2.0.0"
+"cli-color@npm:2.0.1":
+  version: 2.0.1
+  resolution: "cli-color@npm:2.0.1"
   dependencies:
-    ansi-regex: ^2.1.1
     d: ^1.0.1
-    es5-ext: ^0.10.51
+    es5-ext: ^0.10.53
     es6-iterator: ^2.0.3
-    memoizee: ^0.4.14
+    memoizee: ^0.4.15
     timers-ext: ^0.1.7
-  checksum: 1cea606bc6c5c9d8170c28edcd1d234a3fd718271374dae691c22259d73de029d1c617cde575f2a9229772b5b19270c29788b8e1a139da3ddcb62dd7348bb312
+  checksum: d79c118a09eba8566704f3f7e6cfb519f6f142ff08a6a2243f72499ba691ea9bee7a9ffc2ea2a9d61422573c3a6298ec91f1e5ef4967795b4e9f92c9ccd88ce4
   languageName: node
   linkType: hard
 
@@ -3814,7 +3813,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es5-ext@npm:^0.10.35, es5-ext@npm:^0.10.46, es5-ext@npm:^0.10.50, es5-ext@npm:^0.10.51, es5-ext@npm:^0.10.53, es5-ext@npm:~0.10.14, es5-ext@npm:~0.10.2, es5-ext@npm:~0.10.46":
+"es5-ext@npm:^0.10.35, es5-ext@npm:^0.10.46, es5-ext@npm:^0.10.50, es5-ext@npm:^0.10.53, es5-ext@npm:~0.10.14, es5-ext@npm:~0.10.2, es5-ext@npm:~0.10.46":
   version: 0.10.53
   resolution: "es5-ext@npm:0.10.53"
   dependencies:
@@ -4991,7 +4990,7 @@ __metadata:
     bcrypt: 5.0.1
     class-transformer: 0.4.0
     class-validator: 0.13.1
-    cli-color: 2.0.0
+    cli-color: 2.0.1
     connect-typeorm: 1.1.4
     eslint: 8.0.1
     eslint-config-prettier: 8.3.0
@@ -6652,7 +6651,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"memoizee@npm:^0.4.14":
+"memoizee@npm:^0.4.15":
   version: 0.4.15
   resolution: "memoizee@npm:0.4.15"
   dependencies:
