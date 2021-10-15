@@ -30,7 +30,7 @@ describe('Tokens', () => {
 
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
-      .post('/auth/local/login')
+      .post('/api/private/auth/local/login')
       .send({ username: 'hardcoded', password: 'test' })
       .expect(201);
   });
@@ -38,7 +38,7 @@ describe('Tokens', () => {
   it(`POST /tokens`, async () => {
     const tokenName = 'testToken';
     const response = await agent
-      .post('/tokens')
+      .post('/api/private/tokens')
       .send({
         label: tokenName,
       })
@@ -54,7 +54,7 @@ describe('Tokens', () => {
   it(`GET /tokens`, async () => {
     const tokenName = 'testToken';
     const response = await agent
-      .get('/tokens/')
+      .get('/api/private/tokens/')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body[0].label).toBe(tokenName);
@@ -63,12 +63,14 @@ describe('Tokens', () => {
     expect(response.body[0].secret).not.toBeDefined();
   });
   it(`DELETE /tokens/:keyid`, async () => {
-    const response = await agent.delete('/tokens/' + keyId).expect(204);
+    const response = await agent
+      .delete('/api/private/tokens/' + keyId)
+      .expect(204);
     expect(response.body).toStrictEqual({});
   });
   it(`GET /tokens 2`, async () => {
     const response = await agent
-      .get('/tokens/')
+      .get('/api/private/tokens/')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body).toStrictEqual([]);
