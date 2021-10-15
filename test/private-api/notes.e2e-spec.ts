@@ -49,14 +49,14 @@ describe('Notes', () => {
 
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
-      .post('/auth/local/login')
+      .post('/api/private/auth/local/login')
       .send({ username: 'hardcoded', password: 'test' })
       .expect(201);
   });
 
   it('POST /notes', async () => {
     const response = await agent
-      .post('/notes')
+      .post('/api/private/notes')
       .set('Content-Type', 'text/markdown')
       .send(content)
       .expect('Content-Type', /json/)
@@ -76,7 +76,7 @@ describe('Notes', () => {
       // check if we can succefully get a note that exists
       await testSetup.notesService.createNote(content, 'test1', user);
       const response = await agent
-        .get('/notes/test1')
+        .get('/api/private/notes/test1')
         .expect('Content-Type', /json/)
         .expect(200);
       expect(response.body.content).toEqual(content);
@@ -84,7 +84,7 @@ describe('Notes', () => {
     it('fails with an non-existing note', async () => {
       // check if a missing note correctly returns 404
       await agent
-        .get('/notes/i_dont_exist')
+        .get('/api/private/notes/i_dont_exist')
         .expect('Content-Type', /json/)
         .expect(404);
     });
@@ -93,7 +93,7 @@ describe('Notes', () => {
   describe('POST /notes/{note}', () => {
     it('works with a non-existing alias', async () => {
       const response = await agent
-        .post('/notes/test2')
+        .post('/api/private/notes/test2')
         .set('Content-Type', 'text/markdown')
         .send(content)
         .expect('Content-Type', /json/)
@@ -110,7 +110,7 @@ describe('Notes', () => {
 
     it('fails with a forbidden alias', async () => {
       await agent
-        .post(`/notes/${forbiddenNoteId}`)
+        .post(`/api/private/notes/${forbiddenNoteId}`)
         .set('Content-Type', 'text/markdown')
         .send(content)
         .expect('Content-Type', /json/)
@@ -119,7 +119,7 @@ describe('Notes', () => {
 
     it('fails with a existing alias', async () => {
       await agent
-        .post('/notes/test2')
+        .post('/api/private/notes/test2')
         .set('Content-Type', 'text/markdown')
         .send(content)
         .expect('Content-Type', /json/)
@@ -138,7 +138,7 @@ describe('Notes', () => {
         );
         await testSetup.mediaService.saveFile(testImage, user, note);
         await agent
-          .delete(`/notes/${noteId}`)
+          .delete(`/api/private/notes/${noteId}`)
           .set('Content-Type', 'application/json')
           .send({
             keepMedia: false,
@@ -167,7 +167,7 @@ describe('Notes', () => {
           note,
         );
         await agent
-          .delete(`/notes/${noteId}`)
+          .delete(`/api/private/notes/${noteId}`)
           .set('Content-Type', 'application/json')
           .send({
             keepMedia: true,
@@ -189,10 +189,10 @@ describe('Notes', () => {
       });
     });
     it('fails with a forbidden alias', async () => {
-      await agent.delete(`/notes/${forbiddenNoteId}`).expect(400);
+      await agent.delete(`/api/private/notes/${forbiddenNoteId}`).expect(400);
     });
     it('fails with a non-existing alias', async () => {
-      await agent.delete('/notes/i_dont_exist').expect(404);
+      await agent.delete('/api/private/notes/i_dont_exist').expect(404);
     });
   });
 
@@ -200,20 +200,22 @@ describe('Notes', () => {
     it('works with existing alias', async () => {
       await testSetup.notesService.createNote(content, 'test4', user);
       const response = await agent
-        .get('/notes/test4/revisions')
+        .get('/api/private/notes/test4/revisions')
         .expect('Content-Type', /json/)
         .expect(200);
       expect(response.body).toHaveLength(1);
     });
 
     it('fails with a forbidden alias', async () => {
-      await agent.get(`/notes/${forbiddenNoteId}/revisions`).expect(400);
+      await agent
+        .get(`/api/private/notes/${forbiddenNoteId}/revisions`)
+        .expect(400);
     });
 
     it('fails with non-existing alias', async () => {
       // check if a missing note correctly returns 404
       await agent
-        .get('/notes/i_dont_exist/revisions')
+        .get('/api/private/notes/i_dont_exist/revisions')
         .expect('Content-Type', /json/)
         .expect(404);
     });
@@ -229,27 +231,29 @@ describe('Notes', () => {
       );
       await testSetup.notesService.updateNote(note, 'update');
       const responseBeforeDeleting = await agent
-        .get('/notes/test8/revisions')
+        .get('/api/private/notes/test8/revisions')
         .expect('Content-Type', /json/)
         .expect(200);
       expect(responseBeforeDeleting.body).toHaveLength(2);
       await agent
-        .delete(`/notes/${noteId}/revisions`)
+        .delete(`/api/private/notes/${noteId}/revisions`)
         .set('Content-Type', 'application/json')
         .expect(204);
       const responseAfterDeleting = await agent
-        .get('/notes/test8/revisions')
+        .get('/api/private/notes/test8/revisions')
         .expect('Content-Type', /json/)
         .expect(200);
       expect(responseAfterDeleting.body).toHaveLength(1);
     });
     it('fails with a forbidden alias', async () => {
-      await agent.delete(`/notes/${forbiddenNoteId}/revisions`).expect(400);
+      await agent
+        .delete(`/api/private/notes/${forbiddenNoteId}/revisions`)
+        .expect(400);
     });
     it('fails with non-existing alias', async () => {
       // check if a missing note correctly returns 404
       await agent
-        .delete('/notes/i_dont_exist/revisions')
+        .delete('/api/private/notes/i_dont_exist/revisions')
         .expect('Content-Type', /json/)
         .expect(404);
     });
@@ -264,18 +268,20 @@ describe('Notes', () => {
       );
       const revision = await testSetup.notesService.getLatestRevision(note);
       const response = await agent
-        .get(`/notes/test5/revisions/${revision.id}`)
+        .get(`/api/private/notes/test5/revisions/${revision.id}`)
         .expect('Content-Type', /json/)
         .expect(200);
       expect(response.body.content).toEqual(content);
     });
     it('fails with a forbidden alias', async () => {
-      await agent.get(`/notes/${forbiddenNoteId}/revisions/1`).expect(400);
+      await agent
+        .get(`/api/private/notes/${forbiddenNoteId}/revisions/1`)
+        .expect(400);
     });
     it('fails with non-existing alias', async () => {
       // check if a missing note correctly returns 404
       await agent
-        .get('/notes/i_dont_exist/revisions/1')
+        .get('/api/private/notes/i_dont_exist/revisions/1')
         .expect('Content-Type', /json/)
         .expect(404);
     });
@@ -296,7 +302,7 @@ describe('Notes', () => {
         user,
       );
       const response = await agent
-        .get(`/notes/${alias}/media/`)
+        .get(`/api/private/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(200);
       expect(response.body).toHaveLength(0);
@@ -314,7 +320,7 @@ describe('Notes', () => {
       );
 
       const responseAfter = await agent
-        .get(`/notes/${alias}/media/`)
+        .get(`/api/private/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(200);
       expect(responseAfter.body).toHaveLength(1);
@@ -329,7 +335,7 @@ describe('Notes', () => {
     });
     it('fails, when note does not exist', async () => {
       await agent
-        .get(`/notes/i_dont_exist/media/`)
+        .get(`/api/private/notes/i_dont_exist/media/`)
         .expect('Content-Type', /json/)
         .expect(404);
     });
@@ -341,7 +347,7 @@ describe('Notes', () => {
         user2,
       );
       await agent
-        .get(`/notes/${alias}/media/`)
+        .get(`/api/private/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(401);
     });
