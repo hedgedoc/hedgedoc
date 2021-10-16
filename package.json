@@ -194,6 +194,7 @@
   },
   "resolutions": {
     "cypress": "7.7.0",
-    "katex": "0.13.18"
+    "katex": "0.13.18",
+    "eslint-plugin-import": "2.24.2"
   }
 }
