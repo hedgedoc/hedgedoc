@@ -184,9 +184,9 @@ declare module 'reveal.js' {
     public getPlugins(): { [name: string]: Plugin }
 
     // States
-    //  public addEventListener(type: string, listener: (event: any) => void, useCapture?: boolean): void
-
-    //  public removeEventListener(type: string, listener: (event: any) => void, useCapture?: boolean): void
+    // Added only the events we need
+    public addEventListener(type: 'slidechanged', listener: (event: SlideEvent) => void, useCapture?: boolean): void
+    public removeEventListener(type: 'slidechanged', listener: (event: SlideEvent) => void, useCapture?: boolean): void
 
     // State Checks
     public isFirstSlide(): boolean

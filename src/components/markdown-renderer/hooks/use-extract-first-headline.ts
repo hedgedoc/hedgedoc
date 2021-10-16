@@ -8,7 +8,7 @@ import React, { useCallback, useEffect, useRef } from 'react'
 
 export const useExtractFirstHeadline = (
   documentElement: React.RefObject<HTMLDivElement>,
-  content: string,
+  content: string | undefined,
   onFirstHeadingChange?: (firstHeading: string | undefined) => void
 ): void => {
   const extractInnerText = useCallback((node: ChildNode | null): string => {
