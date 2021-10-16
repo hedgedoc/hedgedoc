@@ -64,6 +64,7 @@ jobs:
     needs: build-frontend
     runs-on: ubuntu-latest
     container:
+      # renovate: datasource=docker depName=cypress/browsers versioning=docker
       image: cypress/browsers:node16.5.0-chrome94-ff93
       options: --user 1001 --shm-size=2g
     strategy:

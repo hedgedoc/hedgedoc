@@ -83,5 +83,14 @@
   "prHourlyLimit": 0,
   "schedule": [
     "on Saturday"
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": ["\\.yml$", "\\.yaml$"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s+\\S+:\\s+\"?(?<currentValue>[^\"]*?)\"?\\s"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+    }
   ]
 }
