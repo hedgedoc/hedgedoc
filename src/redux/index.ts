@@ -25,6 +25,7 @@ import { HistoryEntry } from './history/types'
 import { HistoryReducer } from './history/reducers'
 import { RendererStatusReducer } from './renderer-status/reducers'
 import { RendererStatus } from './renderer-status/types'
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 
 export interface ApplicationState {
   user: OptionalUserState
@@ -52,4 +53,4 @@ export const allReducers: Reducer<ApplicationState> = combineReducers<Applicatio
   rendererStatus: RendererStatusReducer
 })
 
-export const store = createStore(allReducers)
+export const store = createStore(allReducers, composeWithDevTools())
