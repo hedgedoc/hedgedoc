@@ -63,7 +63,7 @@ export const LanguagePicker: React.FC = () => {
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       const language = event.currentTarget.value
       Settings.defaultLocale = language
-      i18n.changeLanguage(language).catch((error) => log.error('Error while switching language', error))
+      i18n.changeLanguage(language).catch((error: Error) => log.error('Error while switching language', error))
     },
     [i18n]
   )

@@ -21,7 +21,7 @@ export const GistFrame: React.FC<GistFrameProps> = ({ id }) => {
   const [frameHeight, onStartResizing] = useResizeGistFrame(150)
 
   const onStart = useCallback(
-    (event) => {
+    (event: React.MouseEvent | React.TouchEvent) => {
       onStartResizing(event)
     },
     [onStartResizing]

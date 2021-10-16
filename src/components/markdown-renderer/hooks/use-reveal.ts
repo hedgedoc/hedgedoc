@@ -30,7 +30,7 @@ export const useReveal = (content: string, slideOptions?: SlideOptions): void =>
         setDeck(reveal)
         log.debug('Initialisation finished')
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         log.error('Error while initializing reveal.js', error)
       })
   }, [isInitialized, slideOptions])

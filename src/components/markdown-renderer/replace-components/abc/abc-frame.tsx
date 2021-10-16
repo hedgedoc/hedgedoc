@@ -26,7 +26,7 @@ export const AbcFrame: React.FC<AbcFrameProps> = ({ code }) => {
       .then((imp) => {
         imp.renderAbc(actualContainer, code, {})
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         log.error('Error while loading abcjs', error)
       })
   }, [code])

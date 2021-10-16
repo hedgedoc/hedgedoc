@@ -20,7 +20,7 @@ export const ClearHistoryButton: React.FC = () => {
   const handleClose = () => setShow(false)
 
   const onConfirm = useCallback(() => {
-    deleteAllHistoryEntries().catch((error) => {
+    deleteAllHistoryEntries().catch((error: Error) => {
       showErrorNotification('landing.history.error.deleteEntry.text')(error)
       refreshHistoryState().catch(showErrorNotification('landing.history.error.getHistory.text'))
     })

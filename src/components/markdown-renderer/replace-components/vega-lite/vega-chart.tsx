@@ -61,7 +61,7 @@ export const VegaChart: React.FC<VegaChartProps> = ({ code }) => {
           showError(t('renderer.vega-lite.errorJson'))
         }
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         log.error('Error while loading vega-light', error)
       })
   }, [code, showError, t])

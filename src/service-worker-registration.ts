@@ -109,7 +109,7 @@ function registerValidSW(swUrl: string, config?: Config) {
         }
       }
     })
-    .catch((error) => {
+    .catch((error: Error) => {
       log.error('Error during service worker registration', error)
     })
 }

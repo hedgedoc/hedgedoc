@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import i18n from 'i18next'
+import i18n, { ResourceKey } from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import resourcesToBackend from 'i18next-resources-to-backend'
 import { Settings } from 'luxon'
@@ -15,10 +15,10 @@ export const setUpI18n = async (): Promise<void> => {
     .use(
       resourcesToBackend((language, namespace, callback) => {
         import(`../../../../../locales/${language}.json`)
-          .then((resources) => {
+          .then((resources: ResourceKey) => {
             callback(null, resources)
           })
-          .catch((error) => {
+          .catch((error: Error) => {
             callback(error, null)
           })
       })

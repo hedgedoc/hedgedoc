@@ -40,7 +40,7 @@ export class Cache<K, V> {
 
   put(key: K, value: V): void {
     if (this.maxEntries > 0 && this.store.size === this.maxEntries) {
-      this.store.delete(this.store.keys().next().value)
+      this.store.delete(this.store.keys().next().value as K)
     }
     this.store.set(key, {
       entryCreated: Date.now(),

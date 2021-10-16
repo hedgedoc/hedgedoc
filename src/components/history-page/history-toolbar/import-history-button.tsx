@@ -41,7 +41,7 @@ export const ImportHistoryButton: React.FC = () => {
   const onImportHistory = useCallback(
     (entries: HistoryEntry[]): void => {
       entries.forEach((entry) => (entry.origin = userExists ? HistoryEntryOrigin.REMOTE : HistoryEntryOrigin.LOCAL))
-      importHistoryEntries(mergeHistoryEntries(historyState, entries)).catch((error) => {
+      importHistoryEntries(mergeHistoryEntries(historyState, entries)).catch((error: Error) => {
         showErrorNotification('landing.history.error.setHistory.text')(error)
         refreshHistoryState().catch(showErrorNotification('landing.history.error.getHistory.text'))
       })

@@ -32,7 +32,7 @@ export const UploadInput: React.FC<UploadInputProps> = ({ onLoad, acceptedFiles,
         .then(() => {
           fileInput.value = ''
         })
-        .catch((error) => {
+        .catch((error: Error) => {
           log.error('Error while uploading file', error)
         })
     })

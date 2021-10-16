@@ -29,7 +29,7 @@ export const getUserDataForRevision = (authors: string[]): UserResponse[] => {
       .then((userData) => {
         users.push(userData)
       })
-      .catch((error) => log.error(error))
+      .catch((error: Error) => log.error(error))
   })
   return users
 }

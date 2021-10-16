@@ -162,7 +162,7 @@ const loadLocalHistory = (): HistoryEntry[] => {
   const localV1Json = window.localStorage.getItem('notehistory')
   if (localV1Json) {
     try {
-      const localV1History = JSON.parse(JSON.parse(localV1Json)) as V1HistoryEntry[]
+      const localV1History = JSON.parse(JSON.parse(localV1Json) as string) as V1HistoryEntry[]
       window.localStorage.removeItem('notehistory')
       return convertV1History(localV1History)
     } catch (error) {

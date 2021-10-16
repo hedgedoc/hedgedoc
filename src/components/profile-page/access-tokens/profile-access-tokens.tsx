@@ -39,7 +39,7 @@ export const ProfileAccessTokens: React.FC = () => {
           setShowAddedModal(true)
           setNewTokenLabel('')
         })
-        .catch((error) => {
+        .catch((error: Error) => {
           log.error(error)
           setError(true)
         })
@@ -52,7 +52,7 @@ export const ProfileAccessTokens: React.FC = () => {
       .then(() => {
         setSelectedForDeletion(0)
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         log.error(error)
         setError(true)
       })

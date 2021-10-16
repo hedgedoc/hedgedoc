@@ -127,7 +127,7 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
       .filter((entry) => entry.origin === HistoryEntryOrigin.LOCAL)
       .map((entry) => entry.identifier)
     historyEntries.forEach((entry) => (entry.origin = HistoryEntryOrigin.REMOTE))
-    importHistoryEntries(historyEntries).catch((error) => {
+    importHistoryEntries(historyEntries).catch((error: Error) => {
       showErrorNotification('landing.history.error.setHistory.text')(error)
       historyEntries.forEach((entry) => {
         if (localEntries.includes(entry.identifier)) {

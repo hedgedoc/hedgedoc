@@ -60,7 +60,7 @@ export const MarkmapFrame: React.FC<MarkmapFrameProps> = ({ code }) => {
           log.error(error)
         }
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         log.error('Error while loading markmap', error)
       })
   }, [code])

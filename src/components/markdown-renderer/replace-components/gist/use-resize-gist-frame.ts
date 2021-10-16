@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 /**
  * Determines if the left mouse button is pressed in the given event
@@ -22,7 +22,9 @@ const isLeftMouseButtonPressed = (mouseEvent: MouseEvent): boolean => {
  * @param moveEvent the vertical position of the mouse pointer or the first touch pointer.
  * @return the extracted vertical position.
  */
-const extractVerticalPointerPosition = (moveEvent: MouseEvent | TouchEvent): number => {
+const extractVerticalPointerPosition = (
+  moveEvent: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent
+): number => {
   if (isMouseEvent(moveEvent)) {
     return moveEvent.pageY
   } else {
@@ -31,15 +33,15 @@ const extractVerticalPointerPosition = (moveEvent: MouseEvent | TouchEvent): num
 }
 
 /**
- * Checks if the given {@link Event} is a {@link MouseEvent}
+ * Checks if the given {@link Event} is a {@link MouseEvent} or a {@link React.MouseEvent}
  * @param event the event to check
- * @return {@code true} if the given event is a {@link MouseEvent}
+ * @return {@code true} if the given event is a {@link MouseEvent} or a {@link React.MouseEvent}
  */
-const isMouseEvent = (event: Event): event is MouseEvent => {
+const isMouseEvent = (event: Event | React.UIEvent): event is MouseEvent | React.MouseEvent => {
   return (event as MouseEvent).buttons !== undefined
 }
 
-export type PointerEvent = MouseEvent | TouchEvent
+export type PointerEvent = React.MouseEvent | React.TouchEvent
 export type PointerEventHandler = (event: PointerEvent) => void
 
 /**
@@ -69,7 +71,7 @@ export const useResizeGistFrame = (initialFrameHeight: number): [number, Pointer
     moveEvent.preventDefault()
   }, [])
 
-  const onStartResizing: PointerEventHandler = useCallback((event) => {
+  const onStartResizing = useCallback((event: React.MouseEvent | React.TouchEvent) => {
     lastYPosition.current = extractVerticalPointerPosition(event)
   }, [])
 

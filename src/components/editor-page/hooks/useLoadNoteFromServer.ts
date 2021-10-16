@@ -24,7 +24,7 @@ export const useLoadNoteFromServer = (): [boolean, boolean] => {
       .then((note) => {
         setNoteDataFromServer(note)
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         setError(true)
         log.error('Error while fetching note from server', error)
       })

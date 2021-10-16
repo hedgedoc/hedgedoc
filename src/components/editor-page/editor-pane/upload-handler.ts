@@ -32,7 +32,7 @@ export const handleUpload = (file: File, editor: Editor): void => {
     .then(({ link }) => {
       insertCode(`![](${link})`)
     })
-    .catch((error) => {
+    .catch((error: Error) => {
       log.error('error while uploading file', error)
       insertCode('')
     })
