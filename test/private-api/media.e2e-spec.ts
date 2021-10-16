@@ -159,9 +159,7 @@ describe('Media', () => {
     const testImage = await fs.readFile('test/private-api/fixtures/test.png');
     const url = await mediaService.saveFile(testImage, user, testNote);
     const filename = url.split('/').pop() || '';
-    await agent
-      .delete('/media/' + filename)
-      .expect(204);
+    await agent.delete('/media/' + filename).expect(204);
   });
 
   afterAll(async () => {
