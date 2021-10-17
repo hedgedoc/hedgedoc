@@ -45,7 +45,6 @@ export class MediaController {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private mediaService: MediaService,
-    private userService: UsersService,
     private noteService: NotesService,
   ) {
     this.logger.setContext(MediaController.name);
