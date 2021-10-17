@@ -35,7 +35,6 @@ import { MulterFile } from '../../../media/multer-file.interface';
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
 import { User } from '../../../users/user.entity';
-import { UsersService } from '../../../users/users.service';
 import { successfullyDeletedDescription } from '../../utils/descriptions';
 import { RequestUser } from '../../utils/request-user.decorator';
 
@@ -87,7 +86,7 @@ export class MediaController {
     @RequestUser() user: User,
     @Param('filename') filename: string,
   ): Promise<void> {
-    const username = user.userName;
+    const username = user.username;
     try {
       this.logger.debug(
         `Deleting '${filename}' for user '${username}'`,
@@ -96,7 +95,7 @@ export class MediaController {
       const mediaUpload = await this.mediaService.findUploadByFilename(
         filename,
       );
-      if (mediaUpload.user.userName !== username) {
+      if (mediaUpload.user.username !== username) {
         this.logger.warn(
           `${username} tried to delete '${filename}', but is not the owner`,
           'deleteMedia',
