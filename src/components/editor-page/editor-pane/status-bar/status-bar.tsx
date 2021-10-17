@@ -9,6 +9,7 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ShowIf } from '../../../common/show-if/show-if'
 import './status-bar.scss'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
 export interface StatusBarInfo {
   position: Position
@@ -74,7 +75,7 @@ export const StatusBar: React.FC<StatusBarInfo> = ({
         <span>{t('editor.statusBar.lines', { lines: linesInDocument })}</span>
         &nbsp;–&nbsp;
         <span
-          data-cy={'remainingCharacters'}
+          {...cypressId('remainingCharacters')}
           title={getLengthTooltip}
           className={remainingCharacters <= 0 ? 'text-danger' : remainingCharacters <= 100 ? 'text-warning' : ''}>
           {t('editor.statusBar.length', { length: charactersInDocument })}

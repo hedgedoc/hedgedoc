@@ -12,7 +12,7 @@ describe('Diagram codeblock ', () => {
   it('renders markmap', () => {
     cy.setCodemirrorContent('```markmap\n- pro\n- contra\n```')
     cy.getMarkdownBody()
-      .find('[data-cy=markmap]')
+      .find('[data-cypress-id=markmap]')
       .children()
       .should('be.visible')
   })
@@ -28,7 +28,7 @@ describe('Diagram codeblock ', () => {
   it('renders graphviz', () => {
     cy.setCodemirrorContent('```graphviz\ngraph {\na -- b\n}\n```')
     cy.getMarkdownBody()
-      .find('[data-cy=graphviz]')
+      .find('[data-cypress-id=graphviz]')
       .children()
       .should('be.visible')
   })
@@ -44,7 +44,7 @@ describe('Diagram codeblock ', () => {
   it('renders flowcharts', () => {
     cy.setCodemirrorContent('```flow\nst=>start: Start\ne=>end: End\nst->e\n```')
     cy.getMarkdownBody()
-      .find('[data-cy=flowchart]')
+      .find('[data-cypress-id=flowchart]')
       .children()
       .should('be.visible')
   })

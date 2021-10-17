@@ -32,49 +32,49 @@ describe('Toolbar Buttons', () => {
       })
 
       it('should format as bold', () => {
-        cy.get('.btn-toolbar [data-cy="format-bold"]')
+        cy.get('.btn-toolbar [data-cypress-id="format-bold"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
           .should('have.text', `**${ testText }**`)
       })
 
       it('should format as italic', () => {
-        cy.get('.btn-toolbar [data-cy="format-italic"]')
+        cy.get('.btn-toolbar [data-cypress-id="format-italic"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
           .should('have.text', `*${ testText }*`)
       })
 
       it('should format as underline', () => {
-        cy.get('.btn-toolbar [data-cy="format-underline"]')
+        cy.get('.btn-toolbar [data-cypress-id="format-underline"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
           .should('have.text', `++${ testText }++`)
       })
 
       it('should format as strikethrough', () => {
-        cy.get('.btn-toolbar  [data-cy="format-strikethrough"]')
+        cy.get('.btn-toolbar  [data-cypress-id="format-strikethrough"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
           .should('have.text', `~~${ testText }~~`)
       })
 
       it('should format as subscript', () => {
-        cy.get('.btn-toolbar [data-cy="format-subscript"]')
+        cy.get('.btn-toolbar [data-cypress-id="format-subscript"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
           .should('have.text', `~${ testText }~`)
       })
 
       it('should format as superscript', () => {
-        cy.get('.btn-toolbar [data-cy="format-superscript"]')
+        cy.get('.btn-toolbar [data-cypress-id="format-superscript"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
           .should('have.text', `^${ testText }^`)
       })
 
       it('should format the line as code block', () => {
-        cy.get('.btn-toolbar [data-cy="format-code-block"]')
+        cy.get('.btn-toolbar [data-cypress-id="format-code-block"]')
           .click()
         cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span')
           .should('have.text', '```')
@@ -85,14 +85,14 @@ describe('Toolbar Buttons', () => {
       })
 
       it('should format links', () => {
-        cy.get('.btn-toolbar [data-cy="format-link"]')
+        cy.get('.btn-toolbar [data-cypress-id="format-link"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
           .should('have.text', `[${ testText }](https://)`)
       })
 
       it('should format as image', () => {
-        cy.get('.btn-toolbar [data-cy="format-image"]')
+        cy.get('.btn-toolbar [data-cypress-id="format-image"]')
           .click()
         cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
           .should('have.text', `![${ testText }](https://)`)
@@ -100,7 +100,7 @@ describe('Toolbar Buttons', () => {
     })
 
     it('should format line as heading', () => {
-      cy.get('.btn-toolbar [data-cy="format-heading"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-heading"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `# ${ testText }`)
@@ -111,7 +111,7 @@ describe('Toolbar Buttons', () => {
     })
 
     it('should format the line as code', () => {
-      cy.get('.btn-toolbar [data-cy="format-code-block"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-code-block"]')
         .click()
       cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span')
         .should('have.text', '```')
@@ -122,58 +122,58 @@ describe('Toolbar Buttons', () => {
     })
 
     it('should add a quote', () => {
-      cy.get('.btn-toolbar [data-cy="format-block-quote"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-block-quote"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `> ${ testText }`)
-      cy.get('.btn-toolbar [data-cy="format-block-quote"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-block-quote"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `> > ${ testText }`)
     })
 
     it('should format as unordered list', () => {
-      cy.get('.btn-toolbar [data-cy="format-unordered-list"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-unordered-list"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `- ${ testText }`)
-      cy.get('.btn-toolbar [data-cy="format-unordered-list"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-unordered-list"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `- - ${ testText }`)
     })
 
     it('should format as ordered list', () => {
-      cy.get('.btn-toolbar [data-cy="format-ordered-list"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-ordered-list"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `1. ${ testText }`)
-      cy.get('.btn-toolbar [data-cy="format-ordered-list"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-ordered-list"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `1. 1. ${ testText }`)
     })
 
     it('should format as check list', () => {
-      cy.get('.btn-toolbar [data-cy="format-check-list"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-check-list"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `- [ ] ${ testText }`)
-      cy.get('.btn-toolbar [data-cy="format-check-list"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-check-list"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `- [ ] - [ ] ${ testText }`)
     })
 
     it('should insert links', () => {
-      cy.get('.btn-toolbar [data-cy="format-link"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-link"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `${ testText }[](https://)`)
     })
 
     it('should insert an empty image link', () => {
-      cy.get('.btn-toolbar [data-cy="format-image"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-image"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `${ testText }![](https://)`)
@@ -191,14 +191,14 @@ describe('Toolbar Buttons', () => {
     })
 
     it('should format as link', () => {
-      cy.get('.btn-toolbar [data-cy="format-link"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-link"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `[](${ testLink })`)
     })
 
     it('should format as image', () => {
-      cy.get('.btn-toolbar [data-cy="format-image"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-image"]')
         .click()
       cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
         .should('have.text', `![](${ testLink })`)
@@ -207,7 +207,7 @@ describe('Toolbar Buttons', () => {
 
   describe('for no text', () => {
     it('should add an empty code block', () => {
-      cy.get('.btn-toolbar [data-cy="format-code-block"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-code-block"]')
         .click()
       cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span')
         .should('have.text', '```')
@@ -216,21 +216,21 @@ describe('Toolbar Buttons', () => {
     })
 
     it('should insert lines', () => {
-      cy.get('.btn-toolbar [data-cy="format-add-line"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-add-line"]')
         .click()
       cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span')
         .should('have.text', '----')
     })
 
     it('should add a collapsable block', () => {
-      cy.get('.btn-toolbar [data-cy="format-collapsable-block"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-collapsable-block"]')
         .click()
       cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span')
         .should('have.text', ':::spoiler Toggle label')
     })
 
     it('should add a comment', () => {
-      cy.get('.btn-toolbar [data-cy="format-add-comment"]')
+      cy.get('.btn-toolbar [data-cypress-id="format-add-comment"]')
         .click()
       cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span')
         .should('have.text', '> []')
@@ -241,7 +241,7 @@ describe('Toolbar Buttons', () => {
     beforeEach(() => {
       cy.get('.table-picker-container')
         .should('not.be.visible')
-      cy.get('[data-cy="show-table-overlay"]')
+      cy.get('[data-cypress-id="show-table-overlay"]')
         .last()
         .click()
       cy.get('.table-picker-container')
@@ -262,7 +262,7 @@ describe('Toolbar Buttons', () => {
     it('should open a modal for custom table sizes in the overlay', () => {
       cy.get('.modal-dialog')
         .should('not.exist')
-      cy.get('[data-cy="show-custom-table-modal"]')
+      cy.get('[data-cypress-id="show-custom-table-modal"]')
         .first()
         .click()
       cy.get('.modal-dialog')
@@ -295,7 +295,7 @@ describe('Toolbar Buttons', () => {
     it('should open overlay', () => {
       cy.get('emoji-picker')
         .should('not.be.visible')
-      cy.get('[data-cy="show-emoji-picker"]')
+      cy.get('[data-cypress-id="show-emoji-picker"]')
         .click()
       cy.get('emoji-picker')
         .should('be.visible')

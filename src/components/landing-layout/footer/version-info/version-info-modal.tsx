@@ -13,6 +13,7 @@ import frontendVersion from '../../../../version.json'
 import links from '../../../../links.json'
 import type { BackendVersion } from '../../../../api/config/types'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
 export const VersionInfoModal: React.FC<CommonModalProps> = ({ onHide, show }) => {
   const serverVersion: BackendVersion = useApplicationState((state) => state.config.version)
@@ -31,7 +32,7 @@ export const VersionInfoModal: React.FC<CommonModalProps> = ({ onHide, show }) =
 
   return (
     <CommonModal
-      data-cy={'version-modal'}
+      {...cypressId('version-modal')}
       show={show}
       onHide={onHide}
       closeButton={true}

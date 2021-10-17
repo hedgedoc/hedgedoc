@@ -42,7 +42,7 @@ export const DocumentInfoLineWordCount: React.FC = () => {
       </ShowIf>
       <ShowIf condition={wordCount !== null}>
         <Trans i18nKey={'editor.modal.documentInfo.words'}>
-          <UnitalicBoldText text={wordCount ?? ''} dataCy={'document-info-word-count'} />
+          <UnitalicBoldText text={wordCount ?? ''} data-cypress-id={'document-info-word-count'} />
         </Trans>
       </ShowIf>
     </DocumentInfoLine>

@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
 import { addEmoji } from '../utils/toolbarButtonUtils'
 import { EmojiPicker } from './emoji-picker'
+import { cypressId } from '../../../../../utils/cypress-attribute'
 
 export interface EmojiPickerButtonProps {
   editor: CodeMirror.Editor
@@ -31,7 +32,7 @@ export const EmojiPickerButton: React.FC<EmojiPickerButtonProps> = ({ editor }) 
         onDismiss={() => setShowEmojiPicker(false)}
       />
       <Button
-        data-cy={'show-emoji-picker'}
+        {...cypressId('show-emoji-picker')}
         variant='light'
         onClick={() => setShowEmojiPicker((old) => !old)}
         title={t('editor.editorToolbar.emoji')}>

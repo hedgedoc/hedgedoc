@@ -9,6 +9,7 @@ import { Alert } from 'react-bootstrap'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { useFrontendBaseUrl } from '../../../../hooks/common/use-frontend-base-url'
 import { Logger } from '../../../../utils/logger'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
 const log = new Logger('GraphvizFrame')
 
@@ -66,7 +67,7 @@ export const GraphvizFrame: React.FC<GraphvizFrameProps> = ({ code }) => {
       <ShowIf condition={!!error}>
         <Alert variant={'warning'}>{error}</Alert>
       </ShowIf>
-      <div className={'svg-container'} data-cy={'graphviz'} ref={container} />
+      <div className={'svg-container'} {...cypressId('graphviz')} ref={container} />
     </Fragment>
   )
 }

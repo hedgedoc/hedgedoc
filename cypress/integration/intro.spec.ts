@@ -22,48 +22,48 @@ describe('Intro page', () => {
         statusCode: 404
       })
 
-      cy.get(`iframe[data-cy="documentIframe"]`)
+      cy.get(`iframe[data-cypress-id="documentIframe"]`)
         .should('not.exist')
     })
   })
 
   describe('features button', () => {
     it('is hidden when logged in', () => {
-      cy.get('[data-cy="features-button"]')
+      cy.get('[data-cypress-id="features-button"]')
         .should('not.exist')
     })
 
     it('is visible when logged out', () => {
       cy.logout()
-      cy.get('[data-cy="features-button"]')
+      cy.get('[data-cypress-id="features-button"]')
         .should('exist')
     })
   })
 
   describe('sign in button', () => {
     it('is hidden when logged in', () => {
-      cy.get('[data-cy="sign-in-button"]')
+      cy.get('[data-cypress-id="sign-in-button"]')
         .should('not.exist')
     })
 
     it('is visible when logged out', () => {
       cy.logout()
-      cy.get('[data-cy="sign-in-button"]')
+      cy.get('[data-cypress-id="sign-in-button"]')
         .should('exist')
     })
   })
 
   describe('version dialog', () => {
     it('can be opened and closed', () => {
-      cy.get('[data-cy="version-modal"]')
+      cy.get('[data-cypress-id="version-modal"]')
         .should('not.exist')
-      cy.get('[data-cy="show-version-modal"]')
+      cy.get('[data-cypress-id="show-version-modal"]')
         .click()
-      cy.get('[data-cy="version-modal"]')
+      cy.get('[data-cypress-id="version-modal"]')
         .should('be.visible')
-      cy.get('[data-cy="version-modal"] .modal-header .close')
+      cy.get('[data-cypress-id="version-modal"] .modal-header .close')
         .click()
-      cy.get('[data-cy="version-modal"]')
+      cy.get('[data-cypress-id="version-modal"]')
         .should('not.exist')
     })
   })

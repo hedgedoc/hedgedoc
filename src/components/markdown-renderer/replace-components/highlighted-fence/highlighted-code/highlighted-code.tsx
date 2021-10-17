@@ -11,6 +11,7 @@ import { CopyToClipboardButton } from '../../../../common/copyable/copy-to-clipb
 import '../../../utils/button-inside.scss'
 import './highlighted-code.scss'
 import { Logger } from '../../../../../utils/logger'
+import { cypressId } from '../../../../../utils/cypress-attribute'
 
 const log = new Logger('HighlightedCode')
 
@@ -70,7 +71,7 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
         {dom}
       </code>
       <div className={'text-right button-inside'}>
-        <CopyToClipboardButton content={code} data-cy='copy-code-button' />
+        <CopyToClipboardButton content={code} {...cypressId('copy-code-button')} />
       </div>
     </div>
   )

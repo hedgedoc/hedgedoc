@@ -151,7 +151,7 @@ describe('Code', () => {
   it('has a working copy button', () => {
     cy.setCodemirrorContent('```javascript \nlet x = 0\n```')
 
-    cy.get(`iframe[data-cy="documentIframe"]`)
+    cy.get(`iframe[data-cypress-id="documentIframe"]`)
       .then(($element: JQuery) => {
         const frame = $element[0] as HTMLIFrameElement
         if (frame === null || frame.contentWindow === null) {
@@ -163,7 +163,7 @@ describe('Code', () => {
       })
 
     cy.getIframeBody()
-      .find('[data-cy="copy-code-button"]')
+      .find('[data-cypress-id="copy-code-button"]')
       .click()
 
     cy.get('@copy')

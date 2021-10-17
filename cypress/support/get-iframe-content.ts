@@ -14,7 +14,7 @@ declare namespace Cypress {
 
 Cypress.Commands.add('getIframeBody', () => {
   return cy
-    .get(`iframe[data-cy="documentIframe"][data-content-ready="true"]`)
+    .get(`iframe[data-cypress-id="documentIframe"][data-content-ready="true"]`)
     .should('be.visible')
     .its('0.contentDocument')
     .should('exist')

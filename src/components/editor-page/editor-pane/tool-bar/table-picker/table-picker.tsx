@@ -12,6 +12,7 @@ import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-ic
 import { createNumberRangeArray } from '../../../../common/number-range/number-range'
 import { CustomTableSizeModal } from './custom-table-size-modal'
 import './table-picker.scss'
+import { cypressId } from '../../../../../utils/cypress-attribute'
 
 export interface TablePickerProps {
   show: boolean
@@ -75,7 +76,7 @@ export const TablePicker: React.FC<TablePickerProps> = ({ show, onDismiss, onTab
         )}
       </div>
       <div className='d-flex justify-content-center mt-2'>
-        <Button data-cy={'show-custom-table-modal'} className={'text-center'} onClick={() => setShowDialog(true)}>
+        <Button {...cypressId('show-custom-table-modal')} className={'text-center'} onClick={() => setShowDialog(true)}>
           <ForkAwesomeIcon icon='table' />
           &nbsp;{t('editor.editorToolbar.table.customSize')}
         </Button>

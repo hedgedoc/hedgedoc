@@ -10,6 +10,7 @@ import { CommonModal } from '../modals/common-modal'
 import { Trans, useTranslation } from 'react-i18next'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { dismissMotd } from '../../../redux/motd/methods'
+import { cypressId } from '../../../utils/cypress-attribute'
 
 /**
  * Reads the motd from the global application state and shows it in a modal.
@@ -47,10 +48,10 @@ export const MotdModal: React.FC = () => {
     return null
   } else {
     return (
-      <CommonModal data-cy={'motd'} show={!!motdState} titleI18nKey={'motd.title'}>
+      <CommonModal {...cypressId('motd')} show={!!motdState} titleI18nKey={'motd.title'}>
         <Modal.Body>{domContent}</Modal.Body>
         <Modal.Footer>
-          <Button variant={'success'} onClick={dismiss} data-cy={'motd-dismiss'}>
+          <Button variant={'success'} onClick={dismiss} {...cypressId('motd-dismiss')}>
             <Trans i18nKey={'common.dismiss'} />
           </Button>
         </Modal.Footer>

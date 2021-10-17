@@ -8,6 +8,7 @@ import React, { Fragment, useCallback, useState } from 'react'
 import { Trans } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { VersionInfoModal } from './version-info-modal'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
 export const VersionInfoLink: React.FC = () => {
   const [show, setShow] = useState(false)
@@ -16,7 +17,7 @@ export const VersionInfoLink: React.FC = () => {
 
   return (
     <Fragment>
-      <Link data-cy={'show-version-modal'} to={'#'} className={'text-light'} onClick={showModal}>
+      <Link {...cypressId('show-version-modal')} to={'#'} className={'text-light'} onClick={showModal}>
         <Trans i18nKey={'landing.versionInfo.versionInfo'} />
       </Link>
       <VersionInfoModal onHide={closeModal} show={show} />

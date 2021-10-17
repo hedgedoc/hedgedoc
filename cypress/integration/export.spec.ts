@@ -14,9 +14,9 @@ describe('Export', () => {
   })
 
   it('Markdown', () => {
-    cy.get('[data-cy="menu-export"]')
+    cy.get('[data-cypress-id="menu-export"]')
       .click()
-    cy.get('[data-cy="menu-export-markdown"]')
+    cy.get('[data-cypress-id="menu-export-markdown"]')
       .click()
     cy.get('a[download]')
       .then((anchor) => (

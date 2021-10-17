@@ -9,6 +9,7 @@ import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { useIsDarkModeActivated } from '../../../../../hooks/common/use-is-dark-mode-activated'
 import { Logger } from '../../../../../utils/logger'
+import { cypressId } from '../../../../../utils/cypress-attribute'
 
 const log = new Logger('FlowChart')
 
@@ -60,6 +61,6 @@ export const FlowChart: React.FC<FlowChartProps> = ({ code }) => {
       </Alert>
     )
   } else {
-    return <div ref={diagramRef} data-cy={'flowchart'} className={'text-center'} />
+    return <div ref={diagramRef} {...cypressId('flowchart')} className={'text-center'} />
   }
 }

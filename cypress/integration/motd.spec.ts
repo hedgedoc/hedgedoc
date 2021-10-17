@@ -29,63 +29,63 @@ describe('Motd', () => {
   it('shows the correct alert Motd text', () => {
     mockExistingMotd()
     cy.visit('/')
-    cy.get('[data-cy="motd"]').contains(motdMockContent)
+    cy.get('[data-cypress-id="motd"]').contains(motdMockContent)
   })
 
   it('can be dismissed', () => {
     mockExistingMotd()
     cy.visit('/')
-    cy.get('[data-cy="motd"]').contains(motdMockContent)
-    cy.get('button[data-cy="motd-dismiss"]')
+    cy.get('[data-cypress-id="motd"]').contains(motdMockContent)
+    cy.get('button[data-cypress-id="motd-dismiss"]')
       .click()
       .then(() => {
         expect(localStorage.getItem(MOTD_LOCAL_STORAGE_KEY)).to.equal(MOCK_LAST_MODIFIED)
       })
-    cy.get('[data-cy="motd"]').should('not.exist')
+    cy.get('[data-cypress-id="motd"]').should('not.exist')
   })
 
   it("won't show again after dismiss and reload", () => {
     mockExistingMotd()
     cy.visit('/')
-    cy.get('[data-cy="motd"]').contains(motdMockContent)
-    cy.get('button[data-cy="motd-dismiss"]')
+    cy.get('[data-cypress-id="motd"]').contains(motdMockContent)
+    cy.get('button[data-cypress-id="motd-dismiss"]')
       .click()
       .then(() => {
         expect(localStorage.getItem(MOTD_LOCAL_STORAGE_KEY)).to.equal(MOCK_LAST_MODIFIED)
       })
-    cy.get('[data-cy="motd"]').should('not.exist')
+    cy.get('[data-cypress-id="motd"]').should('not.exist')
     cy.reload()
     cy.get('main').should('exist')
-    cy.get('[data-cy="motd"]').should('not.exist')
+    cy.get('[data-cypress-id="motd"]').should('not.exist')
   })
 
   it("will show again after reload without dismiss", () => {
     mockExistingMotd()
     cy.visit('/')
-    cy.get('[data-cy="motd"]').contains(motdMockContent)
+    cy.get('[data-cypress-id="motd"]').contains(motdMockContent)
     cy.reload()
     cy.get('main').should('exist')
-    cy.get('[data-cy="motd"]').contains(motdMockContent)
+    cy.get('[data-cypress-id="motd"]').contains(motdMockContent)
   })
 
   it("won't show again after dismiss and page navigation", () => {
     mockExistingMotd()
     cy.visit('/')
-    cy.get('[data-cy="motd"]').contains(motdMockContent)
-    cy.get('button[data-cy="motd-dismiss"]')
+    cy.get('[data-cypress-id="motd"]').contains(motdMockContent)
+    cy.get('button[data-cypress-id="motd-dismiss"]')
       .click()
       .then(() => {
         expect(localStorage.getItem(MOTD_LOCAL_STORAGE_KEY)).to.equal(MOCK_LAST_MODIFIED)
       })
-    cy.get('[data-cy="motd"]').should('not.exist')
+    cy.get('[data-cypress-id="motd"]').should('not.exist')
     cy.get('#navLinkHistory').click()
     cy.get('main').should('exist')
-    cy.get('[data-cy="motd"]').should('not.exist')
+    cy.get('[data-cypress-id="motd"]').should('not.exist')
   })
 
   it("won't show if no file exists", () => {
     cy.visit('/')
     cy.get('main').should('exist')
-    cy.get('[data-cy="motd"]').should('not.exist')
+    cy.get('[data-cypress-id="motd"]').should('not.exist')
   })
 })

@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { LockButton } from '../../../common/lock-button/lock-button'
 import '../../utils/button-inside.scss'
 import { Logger } from '../../../../utils/logger'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
 const log = new Logger('MarkmapFrame')
 
@@ -66,7 +67,7 @@ export const MarkmapFrame: React.FC<MarkmapFrameProps> = ({ code }) => {
   }, [code])
 
   return (
-    <div data-cy={'markmap'} className={'position-relative'}>
+    <div {...cypressId('markmap')} className={'position-relative'}>
       <div className={'svg-container'} ref={diagramContainer} />
       <div className={'text-right button-inside'}>
         <LockButton

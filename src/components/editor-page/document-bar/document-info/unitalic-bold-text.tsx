@@ -5,15 +5,16 @@
  */
 
 import React from 'react'
+import type { PropsWithDataCypressId } from '../../../../utils/cypress-attribute'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
-export interface UnitalicBoldTextProps {
+export interface UnitalicBoldTextProps extends PropsWithDataCypressId {
   text: string | number
-  dataCy?: string
 }
 
-export const UnitalicBoldText: React.FC<UnitalicBoldTextProps> = ({ text, dataCy }) => {
+export const UnitalicBoldText: React.FC<UnitalicBoldTextProps> = ({ text, ...props }) => {
   return (
-    <b className={'font-style-normal mr-1'} data-cy={dataCy}>
+    <b className={'font-style-normal mr-1'} {...cypressId(props)}>
       {text}
     </b>
   )

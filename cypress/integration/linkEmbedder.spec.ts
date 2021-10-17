@@ -17,7 +17,7 @@ describe('Link gets replaced with embedding: ', () => {
       .find('.one-click-embedding.gist-frame')
       .click()
     cy.getMarkdownBody()
-      .find('iframe[data-cy=gh-gist]')
+      .find('iframe[data-cypress-id=gh-gist]')
       .should('be.visible')
   })
 

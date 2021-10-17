@@ -12,6 +12,7 @@ import { useApplicationState } from '../../../hooks/common/use-application-state
 import { ShowIf } from '../../common/show-if/show-if'
 import { SignInButton } from '../../landing-layout/navigation/sign-in-button'
 import './cover-buttons.scss'
+import { cypressId } from '../../../utils/cypress-attribute'
 
 export const CoverButtons: React.FC = () => {
   useTranslation()
@@ -33,7 +34,7 @@ export const CoverButtons: React.FC = () => {
         </span>
       </ShowIf>
       <Link to='/n/features'>
-        <Button data-cy={'features-button'} className='cover-button' variant='primary' size='lg'>
+        <Button {...cypressId('features-button')} className='cover-button' variant='primary' size='lg'>
           <Trans i18nKey='landing.intro.exploreFeatures' />
         </Button>
       </Link>
