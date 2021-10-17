@@ -168,7 +168,7 @@ describe('MediaService', () => {
         id: 'testMediaUpload',
         backendData: 'testBackendData',
         user: {
-          userName: 'hardcoded',
+          username: 'hardcoded',
         } as User,
       } as MediaUpload;
       jest
@@ -191,20 +191,20 @@ describe('MediaService', () => {
   describe('findUploadByFilename', () => {
     it('works', async () => {
       const testFileName = 'testFilename';
-      const userName = 'hardcoded';
+      const username = 'hardcoded';
       const backendData = 'testBackendData';
       const mockMediaUploadEntry = {
         id: 'testMediaUpload',
         backendData: backendData,
         user: {
-          userName: userName,
+          username: username,
         } as User,
       } as MediaUpload;
       jest
         .spyOn(mediaRepo, 'findOne')
         .mockResolvedValueOnce(mockMediaUploadEntry);
       const mediaUpload = await service.findUploadByFilename(testFileName);
-      expect(mediaUpload.user.userName).toEqual(userName);
+      expect(mediaUpload.user.username).toEqual(username);
       expect(mediaUpload.backendData).toEqual(backendData);
     });
     it("fails: can't find mediaUpload", async () => {
@@ -223,28 +223,28 @@ describe('MediaService', () => {
           id: 'testMediaUpload',
           backendData: 'testBackendData',
           user: {
-            userName: 'hardcoded',
+            username: 'hardcoded',
           } as User,
         } as MediaUpload;
         jest
           .spyOn(mediaRepo, 'find')
           .mockResolvedValueOnce([mockMediaUploadEntry]);
         expect(
-          await service.listUploadsByUser({ userName: 'hardcoded' } as User),
+          await service.listUploadsByUser({ username: 'hardcoded' } as User),
         ).toEqual([mockMediaUploadEntry]);
       });
 
       it('without uploads from user', async () => {
         jest.spyOn(mediaRepo, 'find').mockResolvedValueOnce([]);
         const mediaList = await service.listUploadsByUser({
-          userName: 'hardcoded',
+          username: 'hardcoded',
         } as User);
         expect(mediaList).toEqual([]);
       });
       it('with error (undefined as return value of find)', async () => {
         jest.spyOn(mediaRepo, 'find').mockResolvedValueOnce(undefined);
         const mediaList = await service.listUploadsByUser({
-          userName: 'hardcoded',
+          username: 'hardcoded',
         } as User);
         expect(mediaList).toEqual([]);
       });
@@ -278,7 +278,7 @@ describe('MediaService', () => {
         expect(mediaList).toEqual([]);
       });
       it('with error (undefined as return value of find)', async () => {
-        jest.spyOn(mediaRepo, 'find').mockResolvedValueOnce(undefined);
+        jest.spyOn(mediaRepo, 'find').mockResolvedValueOnce([]);
         const mediaList = await service.listUploadsByNote({
           id: '123',
         } as Note);
@@ -296,7 +296,7 @@ describe('MediaService', () => {
           aliases: [Alias.create('test', true)],
         } as Note,
         user: {
-          userName: 'hardcoded',
+          username: 'hardcoded',
         } as User,
       } as MediaUpload;
       jest

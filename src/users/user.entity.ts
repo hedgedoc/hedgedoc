@@ -29,7 +29,7 @@ export class User {
   @Column({
     unique: true,
   })
-  userName: string;
+  username: string;
 
   @Column()
   displayName: string;
@@ -77,14 +77,14 @@ export class User {
   private constructor() {}
 
   public static create(
-    userName: string,
+    username: string,
     displayName: string,
   ): Pick<
     User,
-    'userName' | 'displayName' | 'ownedNotes' | 'authTokens' | 'identities'
+    'username' | 'displayName' | 'ownedNotes' | 'authTokens' | 'identities'
   > {
     const newUser = new User();
-    newUser.userName = userName;
+    newUser.username = username;
     newUser.displayName = displayName;
     return newUser;
   }

@@ -24,37 +24,37 @@ export class UsersService {
 
   /**
    * @async
-   * Create a new user with a given userName and displayName
-   * @param userName - the userName the new user shall have
+   * Create a new user with a given username and displayName
+   * @param username - the username the new user shall have
    * @param displayName - the display the new user shall have
    * @return {User} the user
-   * @throws {AlreadyInDBError} the userName is already taken.
+   * @throws {AlreadyInDBError} the username is already taken.
    */
-  async createUser(userName: string, displayName: string): Promise<User> {
-    const user = User.create(userName, displayName);
+  async createUser(username: string, displayName: string): Promise<User> {
+    const user = User.create(username, displayName);
     try {
       return await this.userRepository.save(user);
     } catch {
       this.logger.debug(
-        `A user with the username '${userName}' already exists.`,
+        `A user with the username '${username}' already exists.`,
         'createUser',
       );
       throw new AlreadyInDBError(
-        `A user with the username '${userName}' already exists.`,
+        `A user with the username '${username}' already exists.`,
       );
     }
   }
 
   /**
    * @async
-   * Delete the user with the specified userName
+   * Delete the user with the specified username
    * @param {User} user - the username of the user to be delete
-   * @throws {NotInDBError} the userName has no user associated with it.
+   * @throws {NotInDBError} the username has no user associated with it.
    */
   async deleteUser(user: User): Promise<void> {
     await this.userRepository.remove(user);
     this.logger.debug(
-      `Successfully deleted user with username ${user.userName}`,
+      `Successfully deleted user with username ${user.username}`,
       'deleteUser',
     );
   }
@@ -73,20 +73,20 @@ export class UsersService {
   /**
    * @async
    * Get the user specified by the username
-   * @param {string} userName the username by which the user is specified
+   * @param {string} username the username by which the user is specified
    * @param {UserRelationEnum[]} [withRelations=[]] if the returned user object should contain certain relations
    * @return {User} the specified user
    */
   async getUserByUsername(
-    userName: string,
+    username: string,
     withRelations: UserRelationEnum[] = [],
   ): Promise<User> {
     const user = await this.userRepository.findOne({
-      where: { userName: userName },
+      where: { username: username },
       relations: withRelations,
     });
     if (user === undefined) {
-      throw new NotInDBError(`User with username '${userName}' not found`);
+      throw new NotInDBError(`User with username '${username}' not found`);
     }
     return user;
   }
@@ -112,7 +112,7 @@ export class UsersService {
    */
   toUserDto(user: User): UserInfoDto {
     return {
-      userName: user.userName,
+      username: user.username,
       displayName: user.displayName,
       photo: this.getPhotoUrl(user),
       email: user.email ?? '',

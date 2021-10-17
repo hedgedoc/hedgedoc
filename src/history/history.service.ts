@@ -11,7 +11,6 @@ import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
 import { NotesService } from '../notes/notes.service';
-import { getPrimaryAlias } from '../notes/utils';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { HistoryEntryImportDto } from './history-entry-import.dto';
@@ -64,7 +63,7 @@ export class HistoryService {
     });
     if (!entry) {
       throw new NotInDBError(
-        `User '${user.userName}' has no HistoryEntry for Note with id '${note.id}'`,
+        `User '${user.username}' has no HistoryEntry for Note with id '${note.id}'`,
       );
     }
     return entry;

@@ -15,7 +15,6 @@ import {
   TooManyTokensError,
 } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { UserRelationEnum } from '../users/user-relation.enum';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import {
@@ -54,22 +53,21 @@ export class AuthService {
     }
     const accessToken = await this.getAuthTokenAndValidate(keyId, secret);
     await this.setLastUsedToken(keyId);
-    return await this.usersService.getUserByUsername(accessToken.user.userName);
+    return await this.usersService.getUserByUsername(accessToken.user.username);
   }
 
   async createTokenForUser(
-    userName: string,
+    user: User,
     identifier: string,
     validUntil: TimestampMillis,
   ): Promise<AuthTokenWithSecretDto> {
-    const user = await this.usersService.getUserByUsername(userName, [
-      UserRelationEnum.AUTHTOKENS,
-    ]);
+    user.authTokens = await this.getTokensByUser(user);
+
     if (user.authTokens.length >= 200) {
       // This is a very high ceiling unlikely to hinder legitimate usage,
       // but should prevent possible attack vectors
       throw new TooManyTokensError(
-        `User '${user.userName}' has already 200 tokens and can't have anymore`,
+        `User '${user.username}' has already 200 tokens and can't have anymore`,
       );
     }
     const secret = bufferToBase64Url(randomBytes(54));
@@ -140,14 +138,14 @@ export class AuthService {
     return accessToken;
   }
 
-  async getTokensByUsername(userName: string): Promise<AuthToken[]> {
-    const user = await this.usersService.getUserByUsername(userName, [
-      UserRelationEnum.AUTHTOKENS,
-    ]);
-    if (user.authTokens === undefined) {
+  async getTokensByUser(user: User): Promise<AuthToken[]> {
+    const tokens = await this.authTokenRepository.find({
+      where: { user: user },
+    });
+    if (tokens === undefined) {
       return [];
     }
-    return user.authTokens;
+    return tokens;
   }
 
   async removeToken(keyId: string): Promise<void> {

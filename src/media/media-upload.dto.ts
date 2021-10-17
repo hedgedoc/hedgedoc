@@ -33,10 +33,10 @@ export class MediaUploadDto {
   createdAt: Date;
 
   /**
-   * The userName of the user which uploaded the media file.
+   * The username of the user which uploaded the media file.
    * @example "testuser5"
    */
   @IsString()
   @ApiProperty()
-  userName: string;
+  username: string;
 }
