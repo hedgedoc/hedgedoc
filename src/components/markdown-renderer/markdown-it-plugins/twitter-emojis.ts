@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import MarkdownIt from 'markdown-it'
+import type MarkdownIt from 'markdown-it'
 import emoji from 'markdown-it-emoji/bare'
 import { combinedEmojiData } from './emoji/mapping'
 

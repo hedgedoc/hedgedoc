@@ -5,7 +5,7 @@
  */
 
 import { useSelector } from 'react-redux'
-import { ApplicationState } from '../../redux'
+import type { ApplicationState } from '../../redux'
 import equal from 'fast-deep-equal'
 
 /**

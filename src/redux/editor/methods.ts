@@ -4,18 +4,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { EditorConfiguration } from 'codemirror'
+import type { EditorConfiguration } from 'codemirror'
 import { store } from '..'
-import { EditorMode } from '../../components/editor-page/app-bar/editor-view-mode'
-import {
+import type { EditorMode } from '../../components/editor-page/app-bar/editor-view-mode'
+import type {
   EditorConfig,
-  EditorConfigActionType,
   SetEditorLigaturesAction,
   SetEditorPreferencesAction,
   SetEditorSmartPasteAction,
   SetEditorSyncScrollAction,
   SetEditorViewModeAction
 } from './types'
+import { EditorConfigActionType } from './types'
 import { Logger } from '../../utils/logger'
 
 const log = new Logger('Redux > Editor')

@@ -9,7 +9,7 @@ import { Redirect } from 'react-router'
 import { useParams } from 'react-router-dom'
 import { getNote } from '../../../api/notes'
 import { NotFoundErrorScreen } from './not-found-error-screen'
-import { NoteDto } from '../../../api/notes/types'
+import type { NoteDto } from '../../../api/notes/types'
 
 interface RouteParameters {
   id: string

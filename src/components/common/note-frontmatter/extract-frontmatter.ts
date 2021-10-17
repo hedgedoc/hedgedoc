@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { FrontmatterExtractionResult } from './types'
+import type { FrontmatterExtractionResult } from './types'
 
 const FRONTMATTER_BEGIN_REGEX = /^-{3,}$/
 const FRONTMATTER_END_REGEX = /^(?:-{3,}|\.{3,})$/

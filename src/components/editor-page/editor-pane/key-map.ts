@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import CodeMirror, { Editor, KeyMap, Pass } from 'codemirror'
+import type { Editor, KeyMap, Pass } from 'codemirror'
+import CodeMirror from 'codemirror'
 import { isMac } from '../utils'
 import {
   addLink,

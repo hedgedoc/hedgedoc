@@ -10,10 +10,8 @@ import { ShowIf } from '../../../common/show-if/show-if'
 import { DocumentInfoLine } from './document-info-line'
 import { UnitalicBoldText } from './unitalic-bold-text'
 import { useEditorToRendererCommunicator } from '../../render-context/editor-to-renderer-communicator-context-provider'
-import {
-  CommunicationMessageType,
-  OnWordCountCalculatedMessage
-} from '../../../render-page/window-post-message-communicator/rendering-message'
+import type { OnWordCountCalculatedMessage } from '../../../render-page/window-post-message-communicator/rendering-message'
+import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
 import { useEditorReceiveHandler } from '../../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
 import { useEffectOnRendererReady } from '../../../render-page/window-post-message-communicator/hooks/use-effect-on-renderer-ready'
 

@@ -9,7 +9,8 @@ import { Trans, useTranslation } from 'react-i18next'
 import { ImportMarkdownSidebarEntry } from './import-markdown-sidebar-entry'
 import { SidebarButton } from './sidebar-button'
 import { SidebarMenu } from './sidebar-menu'
-import { DocumentSidebarMenuSelection, SpecificSidebarMenuProps } from './types'
+import type { SpecificSidebarMenuProps } from './types'
+import { DocumentSidebarMenuSelection } from './types'
 
 export const ImportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   className,

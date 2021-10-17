@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Logger } from '../../../utils/logger'
+import type { Logger } from '../../../utils/logger'
 
 /**
  * Error that will be thrown if a message couldn't be sent.

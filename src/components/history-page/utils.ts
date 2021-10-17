@@ -6,8 +6,8 @@
 
 import { DateTime } from 'luxon'
 import { SortModeEnum } from './sort-button/sort-button'
-import { HistoryToolbarState } from './history-toolbar/history-toolbar'
-import { HistoryEntry } from '../../redux/history/types'
+import type { HistoryToolbarState } from './history-toolbar/history-toolbar'
+import type { HistoryEntry } from '../../redux/history/types'
 
 export const formatHistoryDate = (date: string): string => DateTime.fromISO(date).toFormat('DDDD T')
 

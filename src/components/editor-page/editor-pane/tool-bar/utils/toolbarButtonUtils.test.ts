@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import CodeMirror, { Editor, Position, Range } from 'codemirror'
-import { EmojiClickEventDetail } from 'emoji-picker-element/shared'
+import type { Editor, Position, Range } from 'codemirror'
+import type CodeMirror from 'codemirror'
+import type { EmojiClickEventDetail } from 'emoji-picker-element/shared'
 import { Mock } from 'ts-mockery'
 import {
   addCodeFences,

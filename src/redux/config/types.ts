@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Action } from 'redux'
-import { Config } from '../../api/config/types'
+import type { Action } from 'redux'
+import type { Config } from '../../api/config/types'
 
 export enum ConfigActionType {
   SET_CONFIG = 'config/set'

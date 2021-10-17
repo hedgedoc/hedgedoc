@@ -6,7 +6,7 @@
 
 import { Cache } from '../../components/common/cache/cache'
 import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
-import { Revision, RevisionListEntry } from './types'
+import type { Revision, RevisionListEntry } from './types'
 
 const revisionCache = new Cache<string, Revision>(3600)
 

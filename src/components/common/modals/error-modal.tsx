@@ -6,7 +6,8 @@
 
 import React from 'react'
 import { Modal } from 'react-bootstrap'
-import { CommonModal, CommonModalProps } from './common-modal'
+import type { CommonModalProps } from './common-modal'
+import { CommonModal } from './common-modal'
 
 export const ErrorModal: React.FC<CommonModalProps> = ({ show, onHide, titleI18nKey, icon, children }) => {
   return (

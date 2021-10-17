@@ -5,12 +5,13 @@
  */
 
 import React, { useMemo } from 'react'
-import { CommonModal, CommonModalProps } from '../../../common/modals/common-modal'
+import type { CommonModalProps } from '../../../common/modals/common-modal'
+import { CommonModal } from '../../../common/modals/common-modal'
 import { Modal, Row } from 'react-bootstrap'
 import { VersionInfoModalColumn } from './version-info-modal-column'
 import frontendVersion from '../../../../version.json'
 import links from '../../../../links.json'
-import { BackendVersion } from '../../../../api/config/types'
+import type { BackendVersion } from '../../../../api/config/types'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 export const VersionInfoModal: React.FC<CommonModalProps> = ({ onHide, show }) => {

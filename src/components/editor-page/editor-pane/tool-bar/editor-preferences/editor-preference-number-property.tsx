@@ -4,11 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { EditorConfiguration } from 'codemirror'
-import React, { ChangeEvent, useCallback } from 'react'
+import type { EditorConfiguration } from 'codemirror'
+import type { ChangeEvent } from 'react'
+import React, { useCallback } from 'react'
 import { mergeEditorPreferences } from '../../../../../redux/editor/methods'
 import { EditorPreferenceInput, EditorPreferenceInputType } from './editor-preference-input'
-import { EditorPreferenceProperty } from './editor-preference-property'
+import type { EditorPreferenceProperty } from './editor-preference-property'
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 
 export interface EditorPreferenceNumberProps {

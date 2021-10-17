@@ -4,7 +4,8 @@
  SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import type { ChangeEvent, FormEvent } from 'react'
+import React, { useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { changePassword } from '../../../api/me'

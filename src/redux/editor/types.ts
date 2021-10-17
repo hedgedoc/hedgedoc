@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { EditorConfiguration } from 'codemirror'
-import { Action } from 'redux'
-import { EditorMode } from '../../components/editor-page/app-bar/editor-view-mode'
+import type { EditorConfiguration } from 'codemirror'
+import type { Action } from 'redux'
+import type { EditorMode } from '../../components/editor-page/app-bar/editor-view-mode'
 
 export enum EditorConfigActionType {
   SET_EDITOR_VIEW_MODE = 'editor/view-mode/set',

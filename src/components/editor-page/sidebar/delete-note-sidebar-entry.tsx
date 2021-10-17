@@ -8,7 +8,7 @@ import React, { Fragment, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { DeletionModal } from '../../common/modals/deletion-modal'
 import { SidebarButton } from './sidebar-button'
-import { SpecificSidebarEntryProps } from './types'
+import type { SpecificSidebarEntryProps } from './types'
 
 export const DeleteNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ hide, className }) => {
   useTranslation()

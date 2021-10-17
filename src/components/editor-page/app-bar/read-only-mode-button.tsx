@@ -10,7 +10,7 @@ import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
-import { EditorPagePathParams } from '../editor-page'
+import type { EditorPagePathParams } from '../editor-page'
 
 export const ReadOnlyModeButton: React.FC = () => {
   const { t } = useTranslation()

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Editor } from 'codemirror'
+import type { Editor } from 'codemirror'
 
 export const isCursorInCodefence = (editor: Editor): boolean => {
   const currentLine = editor.getCursor().line

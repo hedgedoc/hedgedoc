@@ -7,7 +7,7 @@
 import React from 'react'
 import { Row } from 'react-bootstrap'
 import { Pager } from '../../common/pagination/pager'
-import { HistoryEntriesProps, HistoryEventHandlers } from '../history-content/history-content'
+import type { HistoryEntriesProps, HistoryEventHandlers } from '../history-content/history-content'
 import { HistoryCard } from './history-card'
 
 export const HistoryCardList: React.FC<HistoryEntriesProps & HistoryEventHandlers> = ({

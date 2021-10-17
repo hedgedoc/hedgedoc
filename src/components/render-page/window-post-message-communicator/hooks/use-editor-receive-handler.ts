@@ -5,9 +5,9 @@
  */
 
 import { useEffect } from 'react'
-import { CommunicationMessages, RendererToEditorMessageType } from '../rendering-message'
+import type { CommunicationMessages, RendererToEditorMessageType } from '../rendering-message'
 import { useEditorToRendererCommunicator } from '../../../editor-page/render-context/editor-to-renderer-communicator-context-provider'
-import { Handler } from '../window-post-message-communicator'
+import type { Handler } from '../window-post-message-communicator'
 
 /**
  * Sets the handler for the given message type in the current editor to renderer communicator.

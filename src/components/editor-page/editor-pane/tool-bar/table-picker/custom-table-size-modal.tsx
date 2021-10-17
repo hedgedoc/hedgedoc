@@ -9,7 +9,7 @@ import { Button, Form, ModalFooter } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
 import { CommonModal } from '../../../../common/modals/common-modal'
-import { TableSize } from './table-picker'
+import type { TableSize } from './table-picker'
 
 export interface CustomTableSizeModalProps {
   showModal: boolean

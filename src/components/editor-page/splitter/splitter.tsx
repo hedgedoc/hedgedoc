@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
+import type { ReactElement } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SplitDivider } from './split-divider/split-divider'
 import './splitter.scss'

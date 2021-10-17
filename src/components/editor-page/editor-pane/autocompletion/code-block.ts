@@ -4,8 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Editor, Hint, Hints, Pos } from 'codemirror'
-import { findWordAtCursor, generateHintListByPrefix, Hinter } from './index'
+import type { Editor, Hint, Hints } from 'codemirror'
+import { Pos } from 'codemirror'
+import type { Hinter } from './index'
+import { findWordAtCursor, generateHintListByPrefix } from './index'
 import { showErrorNotification } from '../../../../redux/ui-notifications/methods'
 import { Logger } from '../../../../utils/logger'
 

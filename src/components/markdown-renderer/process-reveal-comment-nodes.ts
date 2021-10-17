@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { DataNode, Document, Element, hasChildren, isComment, isTag, Node } from 'domhandler'
+import type { DataNode, Document, Element, Node } from 'domhandler'
+import { hasChildren, isComment, isTag } from 'domhandler'
 import { Logger } from '../../utils/logger'
 
 const log = new Logger('reveal.js > Comment Node Preprocessor')

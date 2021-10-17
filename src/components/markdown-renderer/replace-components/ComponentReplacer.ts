@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Element, isText, NodeWithChildren } from 'domhandler'
-import MarkdownIt from 'markdown-it'
-import { ReactElement } from 'react'
+import type { Element, NodeWithChildren } from 'domhandler'
+import { isText } from 'domhandler'
+import type MarkdownIt from 'markdown-it'
+import type { ReactElement } from 'react'
 
 export type ValidReactDomElement = ReactElement | string | null
 

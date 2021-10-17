@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { RefObject } from 'react'
-import { IconName } from '../../common/fork-awesome/types'
-import { SidebarEntryVariant } from './sidebar-button'
+import type { RefObject } from 'react'
+import type { IconName } from '../../common/fork-awesome/types'
+import type { SidebarEntryVariant } from './sidebar-button'
 
 export interface SpecificSidebarEntryProps {
   className?: string

@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Element } from 'domhandler'
-import MarkdownIt from 'markdown-it'
+import type { Element } from 'domhandler'
+import type MarkdownIt from 'markdown-it'
 import markdownItRegex from 'markdown-it-regex'
 import React from 'react'
 import { ComponentReplacer } from '../ComponentReplacer'

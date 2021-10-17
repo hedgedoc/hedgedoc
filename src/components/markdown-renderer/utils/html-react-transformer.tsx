@@ -4,17 +4,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Element, isTag } from 'domhandler'
+import type { Element } from 'domhandler'
+import { isTag } from 'domhandler'
 import React, { Suspense } from 'react'
 import { convertNodeToReactElement } from '@hedgedoc/html-to-react/dist/convertNodeToReactElement'
-import {
+import type {
   ComponentReplacer,
   NativeRenderer,
   SubNodeTransform,
   ValidReactDomElement
 } from '../replace-components/ComponentReplacer'
-import { LineKeys } from '../types'
-import { NodeToReactElementTransformer } from '@hedgedoc/html-to-react/dist/NodeToReactElementTransformer'
+import type { LineKeys } from '../types'
+import type { NodeToReactElementTransformer } from '@hedgedoc/html-to-react/dist/NodeToReactElementTransformer'
 
 export interface TextDifferenceResult {
   lines: LineKeys[]

@@ -6,7 +6,8 @@
 
 // import { RevealOptions } from 'reveal.js'
 import { load } from 'js-yaml'
-import { ISO6391, NoteTextDirection, NoteType, RawNoteFrontmatter, SlideOptions } from './types'
+import type { RawNoteFrontmatter, SlideOptions } from './types'
+import { ISO6391, NoteTextDirection, NoteType } from './types'
 import { initialSlideOptions } from '../../../redux/note-details/initial-state'
 
 /**

@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { NoteDetails } from './types'
+import type { NoteDetails } from './types'
 import { DateTime } from 'luxon'
-import { NoteTextDirection, NoteType, SlideOptions } from '../../components/common/note-frontmatter/types'
+import type { SlideOptions } from '../../components/common/note-frontmatter/types'
+import { NoteTextDirection, NoteType } from '../../components/common/note-frontmatter/types'
 
 export const initialSlideOptions: SlideOptions = {
   transition: 'zoom',

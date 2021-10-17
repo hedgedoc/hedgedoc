@@ -9,7 +9,8 @@ import { Button } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { ErrorModal } from '../../common/modals/error-modal'
-import { HistoryEntry, HistoryEntryOrigin, HistoryExportJson, V1HistoryEntry } from '../../../redux/history/types'
+import type { HistoryEntry, HistoryExportJson, V1HistoryEntry } from '../../../redux/history/types'
+import { HistoryEntryOrigin } from '../../../redux/history/types'
 import {
   convertV1History,
   importHistoryEntries,

@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { MutableRefObject, useCallback, useEffect, useRef } from 'react'
+import type { MutableRefObject } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { Logger } from '../../../utils/logger'
 
 const log = new Logger('UploadInput')

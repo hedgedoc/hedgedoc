@@ -10,7 +10,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import links from '../../../links.json'
 import { TranslatedExternalLink } from '../../common/links/translated-external-link'
 import { ShowIf } from '../../common/show-if/show-if'
-import { CommonModalProps } from '../../common/modals/common-modal'
+import type { CommonModalProps } from '../../common/modals/common-modal'
 
 export const YamlArrayDeprecationAlert: React.FC<Partial<CommonModalProps>> = ({ show }) => {
   useTranslation()

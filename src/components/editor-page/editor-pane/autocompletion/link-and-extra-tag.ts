@@ -4,9 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Editor, Hint, Hints, Pos } from 'codemirror'
+import type { Editor, Hint, Hints } from 'codemirror'
+import { Pos } from 'codemirror'
 import { DateTime } from 'luxon'
-import { findWordAtCursor, Hinter } from './index'
+import type { Hinter } from './index'
+import { findWordAtCursor } from './index'
 import { store } from '../../../../redux'
 
 const wordRegExp = /^(\[(.*])?)$/

@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Reducer } from 'redux'
-import { MotdActions, MotdActionType, MotdState, OptionalMotdState } from './types'
+import type { Reducer } from 'redux'
+import type { MotdActions, MotdState, OptionalMotdState } from './types'
+import { MotdActionType } from './types'
 import { MOTD_LOCAL_STORAGE_KEY } from '../../components/application-loader/initializers/fetch-motd'
 
 /**

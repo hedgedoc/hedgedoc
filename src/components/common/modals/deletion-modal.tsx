@@ -7,7 +7,8 @@
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { CommonModal, CommonModalProps } from './common-modal'
+import type { CommonModalProps } from './common-modal'
+import { CommonModal } from './common-modal'
 
 export interface DeletionModalProps extends CommonModalProps {
   onConfirm: () => void

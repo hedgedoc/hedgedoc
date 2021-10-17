@@ -5,7 +5,7 @@
  */
 
 declare module 'markdown-it-footnote' {
-  import MarkdownIt from 'markdown-it/lib'
+  import type MarkdownIt from 'markdown-it/lib'
   const markdownItFootnote: MarkdownIt.PluginSimple
   export = markdownItFootnote
 }

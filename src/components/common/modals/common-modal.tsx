@@ -8,7 +8,7 @@ import React from 'react'
 import { Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
-import { IconName } from '../fork-awesome/types'
+import type { IconName } from '../fork-awesome/types'
 import { ShowIf } from '../show-if/show-if'
 
 export interface CommonModalProps {

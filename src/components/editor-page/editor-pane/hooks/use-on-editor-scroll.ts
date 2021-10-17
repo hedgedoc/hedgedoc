@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { DomEvent } from 'react-codemirror2'
+import type { DomEvent } from 'react-codemirror2'
 import { useCallback, useEffect, useState } from 'react'
-import { Editor, ScrollInfo } from 'codemirror'
-import { ScrollState } from '../../synced-scroll/scroll-props'
+import type { Editor, ScrollInfo } from 'codemirror'
+import type { ScrollState } from '../../synced-scroll/scroll-props'
 
 /**
  * Creates a callback for the scroll binding of the code mirror editor.

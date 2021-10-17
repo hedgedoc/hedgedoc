@@ -41,7 +41,7 @@
     "emoji-picker-element": "1.8.2",
     "emoji-picker-element-data": "1.2.0",
     "eslint-config-react-app": "6.0.0",
-    "eslint-plugin-import": "2.24.2",
+    "eslint-plugin-import": "2.25.2",
     "eslint-plugin-jsx-a11y": "6.4.1",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "5.1.0",
@@ -134,7 +134,14 @@
     "rules": {
       "no-use-before-define": "off",
       "no-debugger": "warn",
-      "default-param-last": "off"
+      "default-param-last": "off",
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
+        {
+          "prefer": "type-imports",
+          "disallowTypeAnnotations": false
+        }
+      ]
     },
     "plugins": [
       "@typescript-eslint"
@@ -193,7 +200,6 @@
   },
   "resolutions": {
     "cypress": "7.7.0",
-    "katex": "0.13.18",
-    "eslint-plugin-import": "2.24.2"
+    "katex": "0.13.18"
   }
 }

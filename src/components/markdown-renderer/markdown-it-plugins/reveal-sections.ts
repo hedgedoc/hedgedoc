@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import MarkdownIt from 'markdown-it/lib'
+import type MarkdownIt from 'markdown-it/lib'
 import Token from 'markdown-it/lib/token'
-import StateCore from 'markdown-it/lib/rules_core/state_core'
+import type StateCore from 'markdown-it/lib/rules_core/state_core'
 
 /**
  * This functions adds a 'section close' token at currentTokenIndex in the state's token array,

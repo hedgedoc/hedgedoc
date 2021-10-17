@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Reducer } from 'redux'
-import { ApiUrlActions, ApiUrlActionType, ApiUrlObject } from './types'
+import type { Reducer } from 'redux'
+import type { ApiUrlActions, ApiUrlObject } from './types'
+import { ApiUrlActionType } from './types'
 
 export const initialState: ApiUrlObject = {
   apiUrl: ''

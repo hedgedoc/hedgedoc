@@ -4,11 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { ReactElement, useState } from 'react'
+import type { ReactElement } from 'react'
+import React, { useState } from 'react'
 import { Button, FormControl, InputGroup, ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import { Principal } from './permission-modal'
+import type { Principal } from './permission-modal'
 
 export interface PermissionListProps {
   list: Principal[]

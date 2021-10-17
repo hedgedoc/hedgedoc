@@ -5,7 +5,8 @@
  */
 
 import { store } from '..'
-import { ClearUserAction, SetUserAction, UserActionType, UserState } from './types'
+import type { ClearUserAction, SetUserAction, UserState } from './types'
+import { UserActionType } from './types'
 
 export const setUser: (state: UserState) => void = (state: UserState) => {
   const action: SetUserAction = {

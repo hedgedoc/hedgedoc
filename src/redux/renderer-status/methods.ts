@@ -5,7 +5,8 @@
  */
 
 import { store } from '..'
-import { RendererStatusActionType, SetRendererStatusAction } from './types'
+import type { SetRendererStatusAction } from './types'
+import { RendererStatusActionType } from './types'
 
 /**
  * Dispatches a global application state change for the "renderer ready" state.

@@ -5,7 +5,8 @@
  */
 
 import React from 'react'
-import { RenderIframe, RenderIframeProps } from '../renderer-pane/render-iframe'
+import type { RenderIframeProps } from '../renderer-pane/render-iframe'
+import { RenderIframe } from '../renderer-pane/render-iframe'
 import { useNoteMarkdownContentWithoutFrontmatter } from '../../../hooks/common/use-note-markdown-content-without-frontmatter'
 import { useSendFrontmatterInfoFromReduxToRenderer } from '../renderer-pane/hooks/use-send-frontmatter-info-from-redux-to-renderer'
 

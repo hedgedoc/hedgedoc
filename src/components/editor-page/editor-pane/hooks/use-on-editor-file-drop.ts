@@ -5,9 +5,9 @@
  */
 
 import { useCallback } from 'react'
-import { Editor } from 'codemirror'
+import type { Editor } from 'codemirror'
 import { handleUpload } from '../upload-handler'
-import { DomEvent } from 'react-codemirror2'
+import type { DomEvent } from 'react-codemirror2'
 
 interface DropEvent {
   pageX: number

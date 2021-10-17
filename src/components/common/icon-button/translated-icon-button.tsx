@@ -6,7 +6,8 @@
 
 import React from 'react'
 import { Trans } from 'react-i18next'
-import { IconButton, IconButtonProps } from './icon-button'
+import type { IconButtonProps } from './icon-button'
+import { IconButton } from './icon-button'
 
 export interface TranslatedIconButtonProps extends IconButtonProps {
   i18nKey: string

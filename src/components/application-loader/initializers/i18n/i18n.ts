@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import i18n, { ResourceKey } from 'i18next'
+import type { ResourceKey } from 'i18next'
+import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import resourcesToBackend from 'i18next-resources-to-backend'
 import { Settings } from 'luxon'

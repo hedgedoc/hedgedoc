@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Action } from 'redux'
+import type { Action } from 'redux'
 
 export enum RendererStatusActionType {
   SET_RENDERER_STATUS = 'renderer-status/set-ready'

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { RegexOptions } from '../../../../external-types/markdown-it-regex/interface'
+import type { RegexOptions } from '../../../../external-types/markdown-it-regex/interface'
 
 export const replaceLegacyVimeoShortCode: RegexOptions = {
   name: 'legacy-vimeo-short-code',

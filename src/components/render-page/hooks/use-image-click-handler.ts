@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback } from 'react'
-import { ImageClickHandler } from '../../markdown-renderer/replace-components/image/image-replacer'
-import { RendererToEditorCommunicator } from '../window-post-message-communicator/renderer-to-editor-communicator'
+import type React from 'react'
+import { useCallback } from 'react'
+import type { ImageClickHandler } from '../../markdown-renderer/replace-components/image/image-replacer'
+import type { RendererToEditorCommunicator } from '../window-post-message-communicator/renderer-to-editor-communicator'
 import { CommunicationMessageType } from '../window-post-message-communicator/rendering-message'
 
 export const useImageClickHandler = (iframeCommunicator: RendererToEditorCommunicator): ImageClickHandler => {

@@ -5,7 +5,11 @@
  */
 
 import { WindowPostMessageCommunicator } from './window-post-message-communicator'
-import { CommunicationMessages, EditorToRendererMessageType, RendererToEditorMessageType } from './rendering-message'
+import type {
+  CommunicationMessages,
+  EditorToRendererMessageType,
+  RendererToEditorMessageType
+} from './rendering-message'
 import { Logger } from '../../../utils/logger'
 
 /**

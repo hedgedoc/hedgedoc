@@ -9,7 +9,7 @@ import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { ShowIf } from '../common/show-if/show-if'
-import { SimpleAlertProps } from '../common/simple-alert/simple-alert-props'
+import type { SimpleAlertProps } from '../common/simple-alert/simple-alert-props'
 
 export const DocumentLengthLimitReachedAlert: React.FC<SimpleAlertProps> = ({ show }) => {
   useTranslation()

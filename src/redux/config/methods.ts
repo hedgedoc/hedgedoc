@@ -5,8 +5,9 @@
  */
 
 import { store } from '..'
-import { Config } from '../../api/config/types'
-import { ConfigActionType, SetConfigAction } from './types'
+import type { Config } from '../../api/config/types'
+import type { SetConfigAction } from './types'
+import { ConfigActionType } from './types'
 
 export const setConfig = (state: Config): void => {
   store.dispatch({

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { LoginProvider } from '../../redux/user/types'
+import type { LoginProvider } from '../../redux/user/types'
 
 export interface UserResponse {
   id: string

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Editor } from 'codemirror'
+import type { Editor } from 'codemirror'
 import { convertClipboardTableToMarkdown, isTable } from '../../table-extractor'
 import { handleUpload } from '../../upload-handler'
 import { insertAtCursor } from './toolbarButtonUtils'

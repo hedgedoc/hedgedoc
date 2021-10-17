@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Editor } from 'codemirror'
+import type { Editor } from 'codemirror'
 import React, { Fragment, useCallback, useRef } from 'react'
 import { Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'

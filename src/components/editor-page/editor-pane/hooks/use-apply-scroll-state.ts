@@ -5,8 +5,8 @@
  */
 
 import { useEffect, useRef } from 'react'
-import { Editor } from 'codemirror'
-import { ScrollState } from '../../synced-scroll/scroll-props'
+import type { Editor } from 'codemirror'
+import type { ScrollState } from '../../synced-scroll/scroll-props'
 
 /**
  * Monitors the given scroll state and scrolls the editor to the state if changed.

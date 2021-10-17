@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Editor, Hints } from 'codemirror'
+import type { Editor, Hints } from 'codemirror'
 import { CodeBlockHinter } from './code-block'
 import { CollapsableBlockHinter } from './collapsable-block'
 import { ContainerHinter } from './container'

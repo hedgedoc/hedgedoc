@@ -4,19 +4,20 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { TocAst } from 'markdown-it-toc-done-right'
-import React, { MutableRefObject, useEffect, useMemo, useRef, useState } from 'react'
+import type { TocAst } from 'markdown-it-toc-done-right'
+import type { MutableRefObject } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import useResizeObserver from 'use-resize-observer'
 import { YamlArrayDeprecationAlert } from '../editor-page/renderer-pane/yaml-array-deprecation-alert'
 import { useDocumentSyncScrolling } from './hooks/sync-scroll/use-document-sync-scrolling'
-import { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
+import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import { DocumentMarkdownRenderer } from '../markdown-renderer/document-markdown-renderer'
-import { ImageClickHandler } from '../markdown-renderer/replace-components/image/image-replacer'
+import type { ImageClickHandler } from '../markdown-renderer/replace-components/image/image-replacer'
 import './markdown-document.scss'
 import { WidthBasedTableOfContents } from './width-based-table-of-contents'
 import { ShowIf } from '../common/show-if/show-if'
 import { useApplicationState } from '../../hooks/common/use-application-state'
-import { RendererFrontmatterInfo } from '../common/note-frontmatter/types'
+import type { RendererFrontmatterInfo } from '../common/note-frontmatter/types'
 import { InvalidYamlAlert } from '../markdown-renderer/invalid-yaml-alert'
 
 export interface RendererProps extends ScrollProps {

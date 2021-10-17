@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { parseQuoteExtraTag, QuoteExtraTagValues } from './quote-extra'
+import type { QuoteExtraTagValues } from './quote-extra'
+import { parseQuoteExtraTag } from './quote-extra'
 
 describe('Quote extra syntax parser', () => {
   it('should parse a valid tag', () => {

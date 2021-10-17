@@ -8,7 +8,7 @@ import React, { Fragment, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ShareModal } from '../document-bar/share/share-modal'
 import { SidebarButton } from './sidebar-button'
-import { SpecificSidebarEntryProps } from './types'
+import type { SpecificSidebarEntryProps } from './types'
 
 export const ShareSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
   const [showModal, setShowModal] = useState(false)

@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import MarkdownIt from 'markdown-it'
+import type MarkdownIt from 'markdown-it'
 import markdownItContainer from 'markdown-it-container'
-import Renderer from 'markdown-it/lib/renderer'
-import Token from 'markdown-it/lib/token'
-import { MarkdownItPlugin } from '../replace-components/ComponentReplacer'
+import type Renderer from 'markdown-it/lib/renderer'
+import type Token from 'markdown-it/lib/token'
+import type { MarkdownItPlugin } from '../replace-components/ComponentReplacer'
 
 export type RenderContainerReturn = (
   tokens: Token[],

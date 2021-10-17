@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { RendererStatus, RendererStatusActions, RendererStatusActionType } from './types'
-import { Reducer } from 'redux'
+import type { RendererStatus, RendererStatusActions } from './types'
+import { RendererStatusActionType } from './types'
+import type { Reducer } from 'redux'
 
 const initialState: RendererStatus = {
   rendererReady: false

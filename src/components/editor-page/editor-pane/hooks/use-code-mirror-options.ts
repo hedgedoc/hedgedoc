@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { EditorConfiguration } from 'codemirror'
+import type { EditorConfiguration } from 'codemirror'
 import { useMemo } from 'react'
 import { defaultKeyMap } from '../key-map'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'

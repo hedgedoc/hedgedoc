@@ -5,15 +5,15 @@
  */
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { isTestMode } from '../../../utils/test-modes'
-import { RendererProps } from '../../render-page/markdown-document'
-import {
-  CommunicationMessageType,
+import type { RendererProps } from '../../render-page/markdown-document'
+import type {
   OnFirstHeadingChangeMessage,
   OnHeightChangeMessage,
   OnTaskCheckboxChangeMessage,
   RendererType,
   SetScrollStateMessage
 } from '../../render-page/window-post-message-communicator/rendering-message'
+import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
 import { useEditorToRendererCommunicator } from '../render-context/editor-to-renderer-communicator-context-provider'
 import { useForceRenderPageUrlOnIframeLoadCallback } from './hooks/use-force-render-page-url-on-iframe-load-callback'
 import { CommunicatorImageLightbox } from './communicator-image-lightbox'

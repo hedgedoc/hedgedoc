@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { ChangeEvent, useCallback } from 'react'
+import type { ChangeEvent } from 'react'
+import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { setEditorLigatures } from '../../../../../redux/editor/methods'
 import { EditorPreferenceInput, EditorPreferenceInputType } from './editor-preference-input'

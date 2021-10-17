@@ -6,7 +6,7 @@
 
 import React from 'react'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { IconName } from '../../common/fork-awesome/types'
+import type { IconName } from '../../common/fork-awesome/types'
 import { SocialLinkButton } from './social-link-button/social-link-button'
 
 export enum OneClickType {

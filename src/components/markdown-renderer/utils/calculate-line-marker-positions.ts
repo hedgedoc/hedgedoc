@@ -5,10 +5,11 @@
  */
 
 import equal from 'fast-deep-equal'
-import { RefObject, useCallback, useEffect, useRef } from 'react'
+import type { RefObject } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import useResizeObserver from 'use-resize-observer'
-import { LineMarkerPosition } from '../types'
-import { LineMarkers } from '../replace-components/linemarker/line-number-marker'
+import type { LineMarkerPosition } from '../types'
+import type { LineMarkers } from '../replace-components/linemarker/line-number-marker'
 
 export const calculateLineMarkerPositions = (
   documentElement: HTMLDivElement,

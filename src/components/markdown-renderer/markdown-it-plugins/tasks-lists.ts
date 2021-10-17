@@ -5,7 +5,7 @@
  */
 
 import markdownItTaskLists from '@hedgedoc/markdown-it-task-lists'
-import MarkdownIt from 'markdown-it'
+import type MarkdownIt from 'markdown-it'
 
 export const tasksLists: MarkdownIt.PluginSimple = (markdownIt) => {
   markdownItTaskLists(markdownIt, {

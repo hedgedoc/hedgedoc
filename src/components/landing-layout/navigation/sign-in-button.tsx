@@ -6,7 +6,7 @@
 
 import React, { useMemo } from 'react'
 import { Button } from 'react-bootstrap'
-import { ButtonProps } from 'react-bootstrap/Button'
+import type { ButtonProps } from 'react-bootstrap/Button'
 import { Trans, useTranslation } from 'react-i18next'
 import { LinkContainer } from 'react-router-bootstrap'
 import { ShowIf } from '../../common/show-if/show-if'

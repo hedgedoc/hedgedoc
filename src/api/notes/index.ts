@@ -5,7 +5,7 @@
  */
 
 import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
-import { NoteDto } from './types'
+import type { NoteDto } from './types'
 import { isMockMode } from '../../utils/test-modes'
 
 export const getNote = async (noteId: string): Promise<NoteDto> => {

@@ -6,9 +6,9 @@
 
 import React from 'react'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
-import { IconName } from '../../common/fork-awesome/types'
+import type { IconName } from '../../common/fork-awesome/types'
 import { ShowIf } from '../../common/show-if/show-if'
-import { SidebarEntryProps } from './types'
+import type { SidebarEntryProps } from './types'
 
 export type SidebarEntryVariant = 'primary'
 

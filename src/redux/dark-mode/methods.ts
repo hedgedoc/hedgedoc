@@ -5,7 +5,8 @@
  */
 
 import { store } from '..'
-import { DarkModeConfig, DarkModeConfigActionType, SetDarkModeConfigAction } from './types'
+import type { DarkModeConfig, SetDarkModeConfigAction } from './types'
+import { DarkModeConfigActionType } from './types'
 import { Logger } from '../../utils/logger'
 
 const log = new Logger('Redux > DarkMode')

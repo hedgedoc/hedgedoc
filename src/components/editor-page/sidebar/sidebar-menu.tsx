@@ -5,7 +5,7 @@
  */
 
 import React from 'react'
-import { SidebarMenuProps } from './types'
+import type { SidebarMenuProps } from './types'
 
 export const SidebarMenu: React.FC<SidebarMenuProps> = ({ children, expand }) => {
   return (

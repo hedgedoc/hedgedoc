@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Reducer } from 'redux'
-import { UiNotification, UiNotificationActions, UiNotificationActionType, UiNotificationState } from './types'
+import type { Reducer } from 'redux'
+import type { UiNotification, UiNotificationActions, UiNotificationState } from './types'
+import { UiNotificationActionType } from './types'
 
 export const UiNotificationReducer: Reducer<UiNotificationState, UiNotificationActions> = (
   state: UiNotificationState = [],

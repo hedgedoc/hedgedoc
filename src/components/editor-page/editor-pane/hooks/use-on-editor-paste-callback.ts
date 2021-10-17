@@ -5,10 +5,11 @@
  */
 
 import { useCallback } from 'react'
-import { Editor } from 'codemirror'
-import { handleFilePaste, handleTablePaste, PasteEvent } from '../tool-bar/utils/pasteHandlers'
+import type { Editor } from 'codemirror'
+import type { PasteEvent } from '../tool-bar/utils/pasteHandlers'
+import { handleFilePaste, handleTablePaste } from '../tool-bar/utils/pasteHandlers'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { DomEvent } from 'react-codemirror2'
+import type { DomEvent } from 'react-codemirror2'
 
 /**
  * Creates a callback that handles the table or file paste action in code mirror.

@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import MarkdownIt from 'markdown-it/lib'
-import Token from 'markdown-it/lib/token'
-import { IconName } from '../../common/fork-awesome/types'
+import type MarkdownIt from 'markdown-it/lib'
+import type Token from 'markdown-it/lib/token'
+import type { IconName } from '../../common/fork-awesome/types'
 
 export const quoteExtra: (quoteLabel: string, icon: IconName) => MarkdownIt.PluginSimple =
   (quoteLabel: string, icon: IconName) => (md) => {

@@ -5,7 +5,8 @@
  */
 
 import equal from 'fast-deep-equal'
-import { MutableRefObject, useEffect, useRef } from 'react'
+import type { MutableRefObject } from 'react'
+import { useEffect, useRef } from 'react'
 
 export const useOnRefChange = <T>(
   reference: MutableRefObject<T | undefined>,

@@ -4,7 +4,8 @@
  SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { RefObject, useCallback, useEffect, useState } from 'react'
+import type { RefObject } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Overlay, Tooltip } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { v4 as uuid } from 'uuid'

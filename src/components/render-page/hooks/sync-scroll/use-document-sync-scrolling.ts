@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useState } from 'react'
-import { LineMarkerPosition } from '../../../markdown-renderer/types'
-import { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
+import type React from 'react'
+import { useCallback, useState } from 'react'
+import type { LineMarkerPosition } from '../../../markdown-renderer/types'
+import type { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
 import { useOnUserScroll } from './use-on-user-scroll'
 import { useScrollToLineMark } from './use-scroll-to-line-mark'
 

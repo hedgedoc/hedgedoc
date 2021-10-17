@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, ReactElement, useEffect, useState } from 'react'
+import type { ReactElement } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import convertHtmlToReact from '@hedgedoc/html-to-react'
 import { CopyToClipboardButton } from '../../../../common/copyable/copy-to-clipboard-button/copy-to-clipboard-button'
 import '../../../utils/button-inside.scss'

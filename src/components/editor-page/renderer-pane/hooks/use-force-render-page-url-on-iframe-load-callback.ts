@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { RefObject, useCallback, useEffect, useMemo, useRef } from 'react'
+import type { RefObject } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { Logger } from '../../../../utils/logger'
 
 const log = new Logger('IframeLoader')

@@ -5,7 +5,8 @@
  */
 
 import { store } from '..'
-import { DismissMotdAction, MotdActionType, SetMotdAction } from './types'
+import type { DismissMotdAction, SetMotdAction } from './types'
+import { MotdActionType } from './types'
 
 /**
  * Sets a not-dismissed motd message in the global application state.

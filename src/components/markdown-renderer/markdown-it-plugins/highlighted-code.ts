@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import MarkdownIt from 'markdown-it/lib'
+import type MarkdownIt from 'markdown-it/lib'
 
 const highlightRegex = /^ *([\w-]*)(.*)$/
 

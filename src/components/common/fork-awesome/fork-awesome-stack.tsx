@@ -4,9 +4,11 @@
  SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { ReactElement } from 'react'
-import { ForkAwesomeIcon, ForkAwesomeIconProps } from './fork-awesome-icon'
-import { IconSize } from './types'
+import type { ReactElement } from 'react'
+import React from 'react'
+import type { ForkAwesomeIconProps } from './fork-awesome-icon'
+import { ForkAwesomeIcon } from './fork-awesome-icon'
+import type { IconSize } from './types'
 
 export interface ForkAwesomeStackProps {
   size?: IconSize

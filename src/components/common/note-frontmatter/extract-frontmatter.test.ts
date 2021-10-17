@@ -5,7 +5,7 @@
  */
 
 import { extractFrontmatter } from './extract-frontmatter'
-import { PresentFrontmatterExtractionResult } from './types'
+import type { PresentFrontmatterExtractionResult } from './types'
 
 describe('frontmatter extraction', () => {
   describe('isPresent property', () => {

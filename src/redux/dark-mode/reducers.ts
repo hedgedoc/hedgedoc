@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Reducer } from 'redux'
+import type { Reducer } from 'redux'
 import { determineDarkModeBrowserSetting, loadFromLocalStorage, saveToLocalStorage } from './methods'
-import { DarkModeConfig, DarkModeConfigActions, DarkModeConfigActionType } from './types'
+import type { DarkModeConfig, DarkModeConfigActions } from './types'
+import { DarkModeConfigActionType } from './types'
 
 export const getInitialState = (): DarkModeConfig => {
   const initialMode = loadFromLocalStorage() ??

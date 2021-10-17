@@ -5,9 +5,9 @@
  */
 
 import { useCallback } from 'react'
-import { CommunicationMessages, EditorToRendererMessageType } from '../rendering-message'
+import type { CommunicationMessages, EditorToRendererMessageType } from '../rendering-message'
 import { useEditorToRendererCommunicator } from '../../../editor-page/render-context/editor-to-renderer-communicator-context-provider'
-import { PostMessage } from '../window-post-message-communicator'
+import type { PostMessage } from '../window-post-message-communicator'
 import { useEffectOnRendererReady } from './use-effect-on-renderer-ready'
 
 export const useSendToRenderer = (

@@ -6,7 +6,8 @@
 
 import React from 'react'
 import { UserAvatar } from '../../../common/user-avatar/user-avatar'
-import { ActiveIndicator, ActiveIndicatorStatus } from './active-indicator'
+import type { ActiveIndicatorStatus } from './active-indicator'
+import { ActiveIndicator } from './active-indicator'
 import './user-line.scss'
 
 export interface UserLineProps {

@@ -12,7 +12,7 @@ import { useFrontendBaseUrl } from '../../../../hooks/common/use-frontend-base-u
 import { CopyableField } from '../../../common/copyable/copyable-field/copyable-field'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
-import { EditorPagePathParams } from '../../editor-page'
+import type { EditorPagePathParams } from '../../editor-page'
 import { NoteType } from '../../../common/note-frontmatter/types'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { UserResponse } from '../users/types'
+import type { UserResponse } from '../users/types'
 import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 import { isMockMode } from '../../utils/test-modes'
 

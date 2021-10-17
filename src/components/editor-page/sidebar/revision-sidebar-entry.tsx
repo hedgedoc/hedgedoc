@@ -8,7 +8,7 @@ import React, { Fragment, useState } from 'react'
 import { Trans } from 'react-i18next'
 import { RevisionModal } from '../document-bar/revisions/revision-modal'
 import { SidebarButton } from './sidebar-button'
-import { SpecificSidebarEntryProps } from './types'
+import type { SpecificSidebarEntryProps } from './types'
 
 export const RevisionSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
   const [showModal, setShowModal] = useState(false)

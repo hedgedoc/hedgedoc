@@ -5,9 +5,10 @@
  */
 
 import React from 'react'
-import { Button, ButtonProps } from 'react-bootstrap'
+import type { ButtonProps } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
-import { IconName } from '../fork-awesome/types'
+import type { IconName } from '../fork-awesome/types'
 import { ShowIf } from '../show-if/show-if'
 import './icon-button.scss'
 

@@ -4,9 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import i18n, { TOptions } from 'i18next'
+import type { TOptions } from 'i18next'
+import i18n from 'i18next'
 import { store } from '../index'
-import { DismissUiNotificationAction, DispatchOptions, UiNotificationActionType } from './types'
+import type { DismissUiNotificationAction, DispatchOptions } from './types'
+import { UiNotificationActionType } from './types'
 import { DateTime } from 'luxon'
 import { Logger } from '../../utils/logger'
 

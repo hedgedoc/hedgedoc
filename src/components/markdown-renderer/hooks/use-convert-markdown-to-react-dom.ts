@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import MarkdownIt from 'markdown-it/lib'
+import type MarkdownIt from 'markdown-it/lib'
 import { useMemo, useRef } from 'react'
-import { ComponentReplacer, ValidReactDomElement } from '../replace-components/ComponentReplacer'
-import { LineKeys } from '../types'
+import type { ComponentReplacer, ValidReactDomElement } from '../replace-components/ComponentReplacer'
+import type { LineKeys } from '../types'
 import { buildTransformer } from '../utils/html-react-transformer'
 import { calculateNewLineNumberMapping } from '../utils/line-number-mapping'
 import convertHtmlToReact from '@hedgedoc/html-to-react'
-import { Document } from 'domhandler'
+import type { Document } from 'domhandler'
 
 /**
  * Renders markdown code into react elements

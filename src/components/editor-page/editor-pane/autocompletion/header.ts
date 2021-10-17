@@ -4,8 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Editor, Hint, Hints, Pos } from 'codemirror'
-import { findWordAtCursor, generateHintListByPrefix, Hinter } from './index'
+import type { Editor, Hint, Hints } from 'codemirror'
+import { Pos } from 'codemirror'
+import type { Hinter } from './index'
+import { findWordAtCursor, generateHintListByPrefix } from './index'
 
 const wordRegExp = /^(\s{0,3})(#{1,6})$/
 const allSupportedHeaders = ['# h1', '## h2', '### h3', '#### h4', '##### h5', '###### h6', '###### tags: `example`']

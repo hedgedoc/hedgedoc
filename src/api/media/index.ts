@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { ImageProxyResponse } from '../../components/markdown-renderer/replace-components/image/types'
+import type { ImageProxyResponse } from '../../components/markdown-renderer/replace-components/image/types'
 import { isMockMode } from '../../utils/test-modes'
 import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 

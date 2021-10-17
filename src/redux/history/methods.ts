@@ -5,16 +5,15 @@
  */
 
 import { store } from '../index'
-import {
-  HistoryActionType,
+import type {
   HistoryEntry,
-  HistoryEntryOrigin,
   HistoryExportJson,
   RemoveEntryAction,
   SetEntriesAction,
   UpdateEntryAction,
   V1HistoryEntry
 } from './types'
+import { HistoryActionType, HistoryEntryOrigin } from './types'
 import { download } from '../../components/common/download/download'
 import { DateTime } from 'luxon'
 import {

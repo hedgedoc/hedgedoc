@@ -4,8 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Element, isTag } from 'domhandler'
-import { ComponentReplacer, NativeRenderer, SubNodeTransform, ValidReactDomElement } from '../ComponentReplacer'
+import type { Element } from 'domhandler'
+import { isTag } from 'domhandler'
+import type { NativeRenderer, SubNodeTransform, ValidReactDomElement } from '../ComponentReplacer'
+import { ComponentReplacer } from '../ComponentReplacer'
 
 /**
  * Checks if the given node is a blockquote color definition

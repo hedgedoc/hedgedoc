@@ -3,9 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Element } from 'domhandler'
+import type { Element } from 'domhandler'
 import React from 'react'
-import { ComponentReplacer, NativeRenderer, SubNodeTransform, ValidReactDomElement } from '../ComponentReplacer'
+import type { NativeRenderer, SubNodeTransform, ValidReactDomElement } from '../ComponentReplacer'
+import { ComponentReplacer } from '../ComponentReplacer'
 
 export const createJumpToMarkClickEventHandler = (id: string) => {
   return (event: React.MouseEvent<HTMLElement, MouseEvent>): void => {

@@ -5,7 +5,7 @@
  */
 
 import { useEffect, useRef } from 'react'
-import { RendererType } from '../../../render-page/window-post-message-communicator/rendering-message'
+import type { RendererType } from '../../../render-page/window-post-message-communicator/rendering-message'
 
 /**
  * Execute the given reload callback if the given render type changes.

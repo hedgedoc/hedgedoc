@@ -6,10 +6,10 @@
 
 import React, { Fragment, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Button, ProgressBar, Toast } from 'react-bootstrap'
-import { UiNotification } from '../../redux/ui-notifications/types'
+import type { UiNotification } from '../../redux/ui-notifications/types'
 import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../common/show-if/show-if'
-import { IconName } from '../common/fork-awesome/types'
+import type { IconName } from '../common/fork-awesome/types'
 import { dismissUiNotification } from '../../redux/ui-notifications/methods'
 import { Trans, useTranslation } from 'react-i18next'
 import { Logger } from '../../utils/logger'

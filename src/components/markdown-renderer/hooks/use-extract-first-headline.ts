@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useEffect, useRef } from 'react'
+import type React from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 export const useExtractFirstHeadline = (
   documentElement: React.RefObject<HTMLDivElement>,

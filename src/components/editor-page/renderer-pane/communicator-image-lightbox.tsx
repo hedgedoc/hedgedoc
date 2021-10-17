@@ -6,11 +6,11 @@
 
 import React, { useCallback, useState } from 'react'
 import { ImageLightboxModal } from '../../markdown-renderer/replace-components/image/image-lightbox-modal'
-import {
-  CommunicationMessageType,
+import type {
   ImageClickedMessage,
   ImageDetails
 } from '../../render-page/window-post-message-communicator/rendering-message'
+import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
 import { useEditorReceiveHandler } from '../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
 
 export const CommunicatorImageLightbox: React.FC = () => {

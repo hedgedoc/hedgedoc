@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ScrollState } from '../../editor-page/synced-scroll/scroll-props'
-import { RendererFrontmatterInfo } from '../../common/note-frontmatter/types'
+import type { ScrollState } from '../../editor-page/synced-scroll/scroll-props'
+import type { RendererFrontmatterInfo } from '../../common/note-frontmatter/types'
 
 export enum CommunicationMessageType {
   SET_MARKDOWN_CONTENT = 'SET_MARKDOWN_CONTENT',

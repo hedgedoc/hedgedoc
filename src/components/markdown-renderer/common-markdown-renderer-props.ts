@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { TocAst } from 'markdown-it-toc-done-right'
-import { ImageClickHandler } from './replace-components/image/image-replacer'
-import { Ref } from 'react'
+import type { TocAst } from 'markdown-it-toc-done-right'
+import type { ImageClickHandler } from './replace-components/image/image-replacer'
+import type { Ref } from 'react'
 
 export interface CommonMarkdownRendererProps {
   onFirstHeadingChange?: (firstHeading: string | undefined) => void

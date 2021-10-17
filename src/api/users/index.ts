@@ -6,7 +6,7 @@
 
 import { Cache } from '../../components/common/cache/cache'
 import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
-import { UserResponse } from './types'
+import type { UserResponse } from './types'
 
 const cache = new Cache<string, UserResponse>(600)
 

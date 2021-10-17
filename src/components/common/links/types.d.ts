@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { StringMap, TOptionsBase } from 'i18next'
-import { IconName } from '../fork-awesome/fork-awesome-icon'
+import type { StringMap, TOptionsBase } from 'i18next'
+import type { IconName } from '../fork-awesome/fork-awesome-icon'
 
 interface GeneralLinkProp {
   href: string

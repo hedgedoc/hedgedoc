@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Reducer } from 'redux'
+import type { Reducer } from 'redux'
 import { EditorMode } from '../../components/editor-page/app-bar/editor-view-mode'
 import { loadFromLocalStorage, saveToLocalStorage } from './methods'
-import { EditorConfig, EditorConfigActions, EditorConfigActionType } from './types'
+import type { EditorConfig, EditorConfigActions } from './types'
+import { EditorConfigActionType } from './types'
 
 const initialState: EditorConfig = {
   editorMode: EditorMode.BOTH,

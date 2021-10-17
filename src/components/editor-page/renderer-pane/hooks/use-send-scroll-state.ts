@@ -5,7 +5,7 @@
  */
 
 import { useCallback, useRef } from 'react'
-import { ScrollState } from '../../synced-scroll/scroll-props'
+import type { ScrollState } from '../../synced-scroll/scroll-props'
 import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
 import { useEffectOnRendererReady } from '../../../render-page/window-post-message-communicator/hooks/use-effect-on-renderer-ready'
 import equal from 'fast-deep-equal'

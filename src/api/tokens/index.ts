@@ -5,7 +5,7 @@
  */
 
 import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
-import { AccessToken, AccessTokenSecret } from './types'
+import type { AccessToken, AccessTokenSecret } from './types'
 
 export const getAccessTokenList = async (): Promise<AccessToken[]> => {
   const response = await fetch(`${getApiUrl()}tokens`, {

@@ -6,7 +6,7 @@
 
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
-import { TocAst } from 'markdown-it-toc-done-right'
+import type { TocAst } from 'markdown-it-toc-done-right'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { TableOfContents } from '../../editor-page/table-of-contents/table-of-contents'
 import './markdown-toc-button.scss'

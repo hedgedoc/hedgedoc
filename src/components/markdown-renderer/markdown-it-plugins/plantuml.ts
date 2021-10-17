@@ -5,11 +5,13 @@
  */
 
 import plantuml from 'markdown-it-plantuml'
-import MarkdownIt, { Options } from 'markdown-it/lib'
-import Renderer, { RenderRule } from 'markdown-it/lib/renderer'
-import Token from 'markdown-it/lib/token'
+import type { Options } from 'markdown-it/lib'
+import type MarkdownIt from 'markdown-it/lib'
+import type { RenderRule } from 'markdown-it/lib/renderer'
+import type Renderer from 'markdown-it/lib/renderer'
+import type Token from 'markdown-it/lib/token'
 import { store } from '../../../redux'
-import { MarkdownItPlugin } from '../replace-components/ComponentReplacer'
+import type { MarkdownItPlugin } from '../replace-components/ComponentReplacer'
 
 export const plantumlWithError: MarkdownItPlugin = (markdownIt: MarkdownIt) => {
   const plantumlServer = store.getState().config.plantumlServer

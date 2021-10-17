@@ -5,7 +5,7 @@
  */
 
 import { Picker } from 'emoji-picker-element'
-import { CustomEmoji, EmojiClickEvent, EmojiClickEventDetail } from 'emoji-picker-element/shared'
+import type { CustomEmoji, EmojiClickEvent, EmojiClickEventDetail } from 'emoji-picker-element/shared'
 import React, { useEffect, useRef } from 'react'
 import { useClickAway } from 'react-use'
 import { useIsDarkModeActivated } from '../../../../../hooks/common/use-is-dark-mode-activated'

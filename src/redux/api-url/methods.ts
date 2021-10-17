@@ -5,7 +5,8 @@
  */
 
 import { store } from '..'
-import { ApiUrlActionType, ApiUrlObject, SetApiUrlAction } from './types'
+import type { ApiUrlObject, SetApiUrlAction } from './types'
+import { ApiUrlActionType } from './types'
 
 export const setApiUrl = (state: ApiUrlObject): void => {
   store.dispatch({

@@ -8,7 +8,7 @@ import React, { Fragment, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { PermissionModal } from '../document-bar/permissions/permission-modal'
 import { SidebarButton } from './sidebar-button'
-import { SpecificSidebarEntryProps } from './types'
+import type { SpecificSidebarEntryProps } from './types'
 
 export const PermissionsSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
   const [showModal, setShowModal] = useState(false)

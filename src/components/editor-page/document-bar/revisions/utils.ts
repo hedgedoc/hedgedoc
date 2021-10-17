@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Revision } from '../../../../api/revisions/types'
+import type { Revision } from '../../../../api/revisions/types'
 import { getUserById } from '../../../../api/users'
-import { UserResponse } from '../../../../api/users/types'
+import type { UserResponse } from '../../../../api/users/types'
 import { download } from '../../../common/download/download'
 import { Logger } from '../../../../utils/logger'
 

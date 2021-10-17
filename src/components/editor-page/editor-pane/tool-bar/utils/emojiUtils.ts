@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { EmojiClickEventDetail, NativeEmoji } from 'emoji-picker-element/shared'
+import type { EmojiClickEventDetail, NativeEmoji } from 'emoji-picker-element/shared'
 
 export const getEmojiIcon = (emoji: EmojiClickEventDetail): string => {
   if (emoji.unicode) {

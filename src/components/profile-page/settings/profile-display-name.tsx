@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import type { ChangeEvent, FormEvent } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { updateDisplayName } from '../../../api/me'

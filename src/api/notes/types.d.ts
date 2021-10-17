@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { UserInfoDto } from '../users/types'
-import { GroupInfoDto } from '../group/types'
+import type { UserInfoDto } from '../users/types'
+import type { GroupInfoDto } from '../group/types'
 
 export interface NoteDto {
   content: string

@@ -10,7 +10,8 @@ import links from '../../../links.json'
 import { ExportMarkdownSidebarEntry } from './export-markdown-sidebar-entry'
 import { SidebarButton } from './sidebar-button'
 import { SidebarMenu } from './sidebar-menu'
-import { DocumentSidebarMenuSelection, SpecificSidebarMenuProps } from './types'
+import type { SpecificSidebarMenuProps } from './types'
+import { DocumentSidebarMenuSelection } from './types'
 
 export const ExportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   className,

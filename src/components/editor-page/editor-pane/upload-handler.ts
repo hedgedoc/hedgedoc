@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Editor } from 'codemirror'
+import type { Editor } from 'codemirror'
 import i18n from 'i18next'
 import { uploadFile } from '../../../api/media'
 import { store } from '../../../redux'

@@ -5,8 +5,8 @@
  */
 
 import { useEffect } from 'react'
-import { CommunicationMessages, EditorToRendererMessageType } from '../rendering-message'
-import { Handler } from '../window-post-message-communicator'
+import type { CommunicationMessages, EditorToRendererMessageType } from '../rendering-message'
+import type { Handler } from '../window-post-message-communicator'
 import { useRendererToEditorCommunicator } from '../../../editor-page/render-context/renderer-to-editor-communicator-context-provider'
 
 /**

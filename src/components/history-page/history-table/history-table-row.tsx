@@ -8,7 +8,7 @@ import React from 'react'
 import { Badge } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { EntryMenu } from '../entry-menu/entry-menu'
-import { HistoryEntryProps, HistoryEventHandlers } from '../history-content/history-content'
+import type { HistoryEntryProps, HistoryEventHandlers } from '../history-content/history-content'
 import { PinButton } from '../pin-button/pin-button'
 import { formatHistoryDate } from '../utils'
 

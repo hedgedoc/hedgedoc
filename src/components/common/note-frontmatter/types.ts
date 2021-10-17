@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { RevealOptions } from 'reveal.js'
+import type { RevealOptions } from 'reveal.js'
 
 export type FrontmatterExtractionResult = PresentFrontmatterExtractionResult | NonPresentFrontmatterExtractionResult
 

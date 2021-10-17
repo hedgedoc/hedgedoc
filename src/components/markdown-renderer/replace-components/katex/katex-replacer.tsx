@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Element, isTag } from 'domhandler'
-import MarkdownIt from 'markdown-it'
+import type { Element } from 'domhandler'
+import { isTag } from 'domhandler'
+import type MarkdownIt from 'markdown-it'
 import mathJax from 'markdown-it-mathjax'
 import React from 'react'
 import { ComponentReplacer } from '../ComponentReplacer'

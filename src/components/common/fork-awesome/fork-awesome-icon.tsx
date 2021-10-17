@@ -5,7 +5,7 @@
  */
 
 import React from 'react'
-import { IconName, IconSize } from './types'
+import type { IconName, IconSize } from './types'
 
 export interface ForkAwesomeIconProps {
   icon: IconName

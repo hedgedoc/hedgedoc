@@ -5,7 +5,7 @@
  */
 
 import markdownItRegex from 'markdown-it-regex'
-import MarkdownIt from 'markdown-it/lib'
+import type MarkdownIt from 'markdown-it/lib'
 
 const finalRegex = /^{%speakerdeck (\w+\/[\w-]+) ?%}$/
 

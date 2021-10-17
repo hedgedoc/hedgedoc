@@ -6,7 +6,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { Trans } from 'react-i18next'
-import { IconName } from '../../../common/fork-awesome/types'
+import type { IconName } from '../../../common/fork-awesome/types'
 import { ShowIf } from '../../../common/show-if/show-if'
 import './one-click-embedding.scss'
 import { ProxyImageFrame } from '../image/proxy-image-frame'

@@ -4,14 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Editor, EditorChange } from 'codemirror'
+import type { Editor, EditorChange } from 'codemirror'
 import React, { useCallback, useRef, useState } from 'react'
 import { Controlled as ControlledCodeMirror } from 'react-codemirror2'
 import { MaxLengthWarningModal } from '../editor-modals/max-length-warning-modal'
-import { ScrollProps } from '../synced-scroll/scroll-props'
+import type { ScrollProps } from '../synced-scroll/scroll-props'
 import { allHinters, findWordAtCursor } from './autocompletion'
 import './editor-pane.scss'
-import { createStatusInfo, defaultState, StatusBar, StatusBarInfo } from './status-bar/status-bar'
+import type { StatusBarInfo } from './status-bar/status-bar'
+import { createStatusInfo, defaultState, StatusBar } from './status-bar/status-bar'
 import { ToolBar } from './tool-bar/tool-bar'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import './codemirror-imports'
