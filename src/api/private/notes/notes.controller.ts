@@ -73,18 +73,11 @@ export class NotesController {
     @Param('noteIdOrAlias', GetNotePipe) note: Note,
     @RequestUser() user: User,
   ): Promise<MediaUploadDto[]> {
-    try {
-      if (!this.permissionsService.mayRead(user, note)) {
-        throw new UnauthorizedException('Reading note denied!');
-      }
-      const media = await this.mediaService.listUploadsByNote(note);
-      return media.map((media) => this.mediaService.toMediaUploadDto(media));
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      throw e;
+    if (!this.permissionsService.mayRead(user, note)) {
+      throw new UnauthorizedException('Reading note denied!');
     }
+    const media = await this.mediaService.listUploadsByNote(note);
+    return media.map((media) => this.mediaService.toMediaUploadDto(media));
   }
 
   @Post()
@@ -135,28 +128,21 @@ export class NotesController {
     @Param('noteIdOrAlias', GetNotePipe) note: Note,
     @Body() noteMediaDeletionDto: NoteMediaDeletionDto,
   ): Promise<void> {
-    try {
-      if (!this.permissionsService.isOwner(user, note)) {
-        throw new UnauthorizedException('Deleting note denied!');
-      }
-      const mediaUploads = await this.mediaService.listUploadsByNote(note);
-      for (const mediaUpload of mediaUploads) {
-        if (!noteMediaDeletionDto.keepMedia) {
-          await this.mediaService.deleteFile(mediaUpload);
-        } else {
-          await this.mediaService.removeNoteFromMediaUpload(mediaUpload);
-        }
-      }
-      this.logger.debug('Deleting note: ' + note.id, 'deleteNote');
-      await this.noteService.deleteNote(note);
-      this.logger.debug('Successfully deleted ' + note.id, 'deleteNote');
-      return;
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      throw e;
+    if (!this.permissionsService.isOwner(user, note)) {
+      throw new UnauthorizedException('Deleting note denied!');
     }
+    const mediaUploads = await this.mediaService.listUploadsByNote(note);
+    for (const mediaUpload of mediaUploads) {
+      if (!noteMediaDeletionDto.keepMedia) {
+        await this.mediaService.deleteFile(mediaUpload);
+      } else {
+        await this.mediaService.removeNoteFromMediaUpload(mediaUpload);
+      }
+    }
+    this.logger.debug('Deleting note: ' + note.id, 'deleteNote');
+    await this.noteService.deleteNote(note);
+    this.logger.debug('Successfully deleted ' + note.id, 'deleteNote');
+    return;
   }
 
   @Get(':noteIdOrAlias/revisions')
@@ -164,54 +150,36 @@ export class NotesController {
     @RequestUser() user: User,
     @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<RevisionMetadataDto[]> {
-    try {
-      if (!this.permissionsService.mayRead(user, note)) {
-        throw new UnauthorizedException('Reading note denied!');
-      }
-      const revisions = await this.revisionsService.getAllRevisions(note);
-      return await Promise.all(
-        revisions.map((revision) =>
-          this.revisionsService.toRevisionMetadataDto(revision),
-        ),
-      );
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      throw e;
+    if (!this.permissionsService.mayRead(user, note)) {
+      throw new UnauthorizedException('Reading note denied!');
     }
+    const revisions = await this.revisionsService.getAllRevisions(note);
+    return await Promise.all(
+      revisions.map((revision) =>
+        this.revisionsService.toRevisionMetadataDto(revision),
+      ),
+    );
   }
 
   @Delete(':noteIdOrAlias/revisions')
   @HttpCode(204)
   async purgeNoteRevisions(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias') noteIdOrAlias: string,
+    @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<void> {
-    try {
-      const note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-      if (!this.permissionsService.mayRead(user, note)) {
-        throw new UnauthorizedException('Reading note denied!');
-      }
-      this.logger.debug(
-        'Purging history of note: ' + noteIdOrAlias,
-        'purgeNoteRevisions',
-      );
-      await this.revisionsService.purgeRevisions(note);
-      this.logger.debug(
-        'Successfully purged history of note ' + noteIdOrAlias,
-        'purgeNoteRevisions',
-      );
-      return;
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
+    if (!this.permissionsService.mayRead(user, note)) {
+      throw new UnauthorizedException('Reading note denied!');
     }
+    this.logger.debug(
+      'Purging history of note: ' + note.id,
+      'purgeNoteRevisions',
+    );
+    await this.revisionsService.purgeRevisions(note);
+    this.logger.debug(
+      'Successfully purged history of note ' + note.id,
+      'purgeNoteRevisions',
+    );
+    return;
   }
 
   @Get(':noteIdOrAlias/revisions/:revisionId')
