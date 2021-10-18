@@ -19,7 +19,15 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiNoContentResponse } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiHeader,
+  ApiNoContentResponse,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
 import {
   ClientError,
@@ -35,7 +43,12 @@ import { MulterFile } from '../../../media/multer-file.interface';
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
 import { User } from '../../../users/user.entity';
-import { successfullyDeletedDescription } from '../../utils/descriptions';
+import {
+  forbiddenDescription,
+  successfullyDeletedDescription,
+  unauthorizedDescription,
+} from '../../utils/descriptions';
+import { FullApi } from '../../utils/fullapi-decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
@@ -50,6 +63,28 @@ export class MediaController {
   }
 
   @Post()
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @ApiHeader({
+    name: 'HedgeDoc-Note',
+    description: 'ID or alias of the parent note',
+  })
+  @ApiCreatedResponse({
+    description: 'The file was uploaded successfully',
+    type: MediaUploadUrlDto,
+  })
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @ApiForbiddenResponse({ description: forbiddenDescription })
   @UseInterceptors(FileInterceptor('file'))
   @HttpCode(201)
   async uploadMedia(
@@ -82,6 +117,7 @@ export class MediaController {
   @Delete(':filename')
   @HttpCode(204)
   @ApiNoContentResponse({ description: successfullyDeletedDescription })
+  @FullApi
   async deleteMedia(
     @RequestUser() user: User,
     @Param('filename') filename: string,
