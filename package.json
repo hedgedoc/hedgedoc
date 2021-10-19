@@ -31,7 +31,7 @@
     "@nestjs/passport": "8.0.1",
     "@nestjs/platform-express": "8.1.1",
     "@nestjs/schedule": "1.0.1",
-    "@nestjs/swagger": "5.1.0",
+    "@nestjs/swagger": "5.1.1",
     "@nestjs/typeorm": "8.0.2",
     "@types/bcrypt": "5.0.0",
     "@types/cron": "1.7.3",
@@ -62,8 +62,8 @@
     "typeorm": "0.2.38"
   },
   "devDependencies": {
-    "@nestjs/cli": "8.1.2",
-    "@nestjs/schematics": "8.0.3",
+    "@nestjs/cli": "8.1.4",
+    "@nestjs/schematics": "8.0.4",
     "@nestjs/testing": "8.1.1",
     "@trivago/prettier-plugin-sort-imports": "2.0.4",
     "@tsconfig/node12": "1.0.9",
