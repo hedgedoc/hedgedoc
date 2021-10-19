@@ -5018,7 +5018,7 @@ __metadata:
     sqlite3: 5.0.2
     supertest: 6.1.6
     swagger-ui-express: 4.1.6
-    ts-jest: 27.0.6
+    ts-jest: 27.0.7
     ts-node: 10.3.0
     tsconfig-paths: 3.11.0
     typeorm: 0.2.38
@@ -9122,9 +9122,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:27.0.6":
-  version: 27.0.6
-  resolution: "ts-jest@npm:27.0.6"
+"ts-jest@npm:27.0.7":
+  version: 27.0.7
+  resolution: "ts-jest@npm:27.0.7"
   dependencies:
     bs-logger: 0.x
     fast-json-stable-stringify: 2.x
@@ -9149,7 +9149,7 @@ __metadata:
       optional: true
   bin:
     ts-jest: cli.js
-  checksum: bbca6486a632c99340f37f0e266335d3763a978274c9a0ece4bb2f451b2e243c5c210870d7092c453463c856d1329ec5ebbf1bdfa19303a9babd6ada5423aaf5
+  checksum: 3711361cb5ae54aac547b00f8ad118ec88333c391af4bff0420497e9faa296eace4e8272c627ecbf4be675af9f68c437e4c2ccc5693c6d744796ec7da6dda131
   languageName: node
   linkType: hard
 
