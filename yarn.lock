@@ -1155,9 +1155,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/swagger@npm:5.1.2":
-  version: 5.1.2
-  resolution: "@nestjs/swagger@npm:5.1.2"
+"@nestjs/swagger@npm:5.1.3":
+  version: 5.1.3
+  resolution: "@nestjs/swagger@npm:5.1.3"
   dependencies:
     "@nestjs/mapped-types": 1.0.0
     lodash: 4.17.21
@@ -1173,7 +1173,7 @@ __metadata:
       optional: true
     swagger-ui-express:
       optional: true
-  checksum: 43092d16a1c13d324f27ba6c5b9044191b32bab7575cdc62bc211cad5cbc0614c376129da3ba76c3551c379704014595f372e065396192647bd6daf8dc27a89f
+  checksum: 4019ef06f748e3b42fcc53c3856dd0dd2d57f7543c8e574d034bad7eb3655bc9aa32dce34ce8b8d04168a59acafc2909d6750e6992423bfc9bc56012bbcc2008
   languageName: node
   linkType: hard
 
@@ -5000,7 +5000,7 @@ __metadata:
     "@nestjs/platform-express": 8.1.1
     "@nestjs/schedule": 1.0.1
     "@nestjs/schematics": 8.0.4
-    "@nestjs/swagger": 5.1.2
+    "@nestjs/swagger": 5.1.3
     "@nestjs/testing": 8.1.1
     "@nestjs/typeorm": 8.0.2
     "@trivago/prettier-plugin-sort-imports": 2.0.4
