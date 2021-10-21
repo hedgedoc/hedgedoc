@@ -110,7 +110,7 @@
     "**/request": "^2.88.0"
   },
   "engines": {
-    "node": ">=12"
+    "node": "12.x || 14.x || 16.x"
   },
   "bugs": "https://github.com/hedgedoc/hedgedoc/issues",
   "keywords": [
