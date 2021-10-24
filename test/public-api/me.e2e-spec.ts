@@ -3,90 +3,38 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { INestApplication } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Test } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import request from 'supertest';
 
-import { PublicApiModule } from '../../src/api/public/public-api.module';
-import { AuthModule } from '../../src/auth/auth.module';
-import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
-import { TokenAuthGuard } from '../../src/auth/token.strategy';
-import appConfigMock from '../../src/config/mock/app.config.mock';
-import mediaConfigMock from '../../src/config/mock/media.config.mock';
-import { GroupsModule } from '../../src/groups/groups.module';
 import { HistoryEntryUpdateDto } from '../../src/history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../src/history/history-entry.dto';
-import { HistoryModule } from '../../src/history/history.module';
-import { HistoryService } from '../../src/history/history.service';
-import { LoggerModule } from '../../src/logger/logger.module';
-import { MediaModule } from '../../src/media/media.module';
-import { MediaService } from '../../src/media/media.service';
 import { NoteMetadataDto } from '../../src/notes/note-metadata.dto';
-import { NotesModule } from '../../src/notes/notes.module';
-import { NotesService } from '../../src/notes/notes.service';
-import { PermissionsModule } from '../../src/permissions/permissions.module';
 import { User } from '../../src/users/user.entity';
-import { UsersModule } from '../../src/users/users.module';
-import { UsersService } from '../../src/users/users.service';
+import { TestSetup } from '../test-setup';
 
 // TODO Tests have to be reworked using UserService functions
 
 describe('Me', () => {
-  let app: INestApplication;
-  let historyService: HistoryService;
-  let notesService: NotesService;
-  let userService: UsersService;
-  let mediaService: MediaService;
+  let testSetup: TestSetup;
+
   let uploadPath: string;
   let user: User;
 
   beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({
-      imports: [
-        ConfigModule.forRoot({
-          isGlobal: true,
-          load: [mediaConfigMock, appConfigMock],
-        }),
-        PublicApiModule,
-        NotesModule,
-        PermissionsModule,
-        GroupsModule,
-        TypeOrmModule.forRoot({
-          type: 'sqlite',
-          database: './hedgedoc-e2e-me.sqlite',
-          autoLoadEntities: true,
-          synchronize: true,
-          dropSchema: true,
-        }),
-        LoggerModule,
-        AuthModule,
-        UsersModule,
-        HistoryModule,
-        MediaModule,
-      ],
-    })
-      .overrideGuard(TokenAuthGuard)
-      .useClass(MockAuthGuard)
-      .compile();
-    const config = moduleRef.get<ConfigService>(ConfigService);
-    uploadPath = config.get('mediaConfig').backend.filesystem.uploadPath;
-    app = moduleRef.createNestApplication();
-    notesService = moduleRef.get(NotesService);
-    historyService = moduleRef.get(HistoryService);
-    userService = moduleRef.get(UsersService);
-    mediaService = moduleRef.get(MediaService);
-    user = await userService.createUser('hardcoded', 'Testy');
-    await app.init();
+    testSetup = await TestSetup.create();
+
+    uploadPath =
+      testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
+
+    user = await testSetup.userService.createUser('hardcoded', 'Testy');
+    await testSetup.app.init();
   });
 
   it(`GET /me`, async () => {
-    const userInfo = userService.toUserDto(user);
-    const response = await request(app.getHttpServer())
-      .get('/me')
+    const userInfo = testSetup.userService.toUserDto(user);
+    const response = await request(testSetup.app.getHttpServer())
+      .get('/api/v2/me')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body).toEqual(userInfo);
@@ -94,16 +42,17 @@ describe('Me', () => {
 
   it(`GET /me/history`, async () => {
     const noteName = 'testGetNoteHistory1';
-    const note = await notesService.createNote('', noteName);
+    const note = await testSetup.notesService.createNote('', noteName);
     const createdHistoryEntry =
-      await historyService.updateHistoryEntryTimestamp(note, user);
-    const response = await request(app.getHttpServer())
-      .get('/me/history')
+      await testSetup.historyService.updateHistoryEntryTimestamp(note, user);
+    const response = await request(testSetup.app.getHttpServer())
+      .get('/api/v2/me/history')
       .expect('Content-Type', /json/)
       .expect(200);
     const history: HistoryEntryDto[] = response.body;
     expect(history.length).toEqual(1);
-    const historyDto = historyService.toHistoryEntryDto(createdHistoryEntry);
+    const historyDto =
+      testSetup.historyService.toHistoryEntryDto(createdHistoryEntry);
     for (const historyEntry of history) {
       expect(historyEntry.identifier).toEqual(historyDto.identifier);
       expect(historyEntry.title).toEqual(historyDto.title);
@@ -118,16 +67,16 @@ describe('Me', () => {
   describe(`GET /me/history/{note}`, () => {
     it('works with an existing note', async () => {
       const noteName = 'testGetNoteHistory2';
-      const note = await notesService.createNote('', noteName);
+      const note = await testSetup.notesService.createNote('', noteName);
       const createdHistoryEntry =
-        await historyService.updateHistoryEntryTimestamp(note, user);
-      const response = await request(app.getHttpServer())
-        .get(`/me/history/${noteName}`)
+        await testSetup.historyService.updateHistoryEntryTimestamp(note, user);
+      const response = await request(testSetup.app.getHttpServer())
+        .get(`/api/v2/me/history/${noteName}`)
         .expect('Content-Type', /json/)
         .expect(200);
       const historyEntry: HistoryEntryDto = response.body;
       const historyEntryDto =
-        historyService.toHistoryEntryDto(createdHistoryEntry);
+        testSetup.historyService.toHistoryEntryDto(createdHistoryEntry);
       expect(historyEntry.identifier).toEqual(historyEntryDto.identifier);
       expect(historyEntry.title).toEqual(historyEntryDto.title);
       expect(historyEntry.tags).toEqual(historyEntryDto.tags);
@@ -137,8 +86,8 @@ describe('Me', () => {
       );
     });
     it('fails with a non-existing note', async () => {
-      await request(app.getHttpServer())
-        .get('/me/history/i_dont_exist')
+      await request(testSetup.app.getHttpServer())
+        .get('/api/v2/me/history/i_dont_exist')
         .expect('Content-Type', /json/)
         .expect(404);
     });
@@ -147,28 +96,28 @@ describe('Me', () => {
   describe(`PUT /me/history/{note}`, () => {
     it('works', async () => {
       const noteName = 'testGetNoteHistory3';
-      const note = await notesService.createNote('', noteName);
-      await historyService.updateHistoryEntryTimestamp(note, user);
+      const note = await testSetup.notesService.createNote('', noteName);
+      await testSetup.historyService.updateHistoryEntryTimestamp(note, user);
       const historyEntryUpdateDto = new HistoryEntryUpdateDto();
       historyEntryUpdateDto.pinStatus = true;
-      const response = await request(app.getHttpServer())
-        .put('/me/history/' + noteName)
+      const response = await request(testSetup.app.getHttpServer())
+        .put('/api/v2/me/history/' + noteName)
         .send(historyEntryUpdateDto)
         .expect(200);
-      const history = await historyService.getEntriesByUser(user);
+      const history = await testSetup.historyService.getEntriesByUser(user);
       const historyEntry: HistoryEntryDto = response.body;
       expect(historyEntry.pinStatus).toEqual(true);
       let theEntry: HistoryEntryDto;
       for (const entry of history) {
         if (entry.note.aliases.find((element) => element.name === noteName)) {
-          theEntry = historyService.toHistoryEntryDto(entry);
+          theEntry = testSetup.historyService.toHistoryEntryDto(entry);
         }
       }
       expect(theEntry.pinStatus).toEqual(true);
     });
     it('fails with a non-existing note', async () => {
-      await request(app.getHttpServer())
-        .put('/me/history/i_dont_exist')
+      await request(testSetup.app.getHttpServer())
+        .put('/api/v2/me/history/i_dont_exist')
         .expect('Content-Type', /json/)
         .expect(404);
     });
@@ -177,13 +126,13 @@ describe('Me', () => {
   describe(`DELETE /me/history/{note}`, () => {
     it('works', async () => {
       const noteName = 'testGetNoteHistory4';
-      const note = await notesService.createNote('', noteName);
-      await historyService.updateHistoryEntryTimestamp(note, user);
-      const response = await request(app.getHttpServer())
-        .delete(`/me/history/${noteName}`)
+      const note = await testSetup.notesService.createNote('', noteName);
+      await testSetup.historyService.updateHistoryEntryTimestamp(note, user);
+      const response = await request(testSetup.app.getHttpServer())
+        .delete(`/api/v2/me/history/${noteName}`)
         .expect(204);
       expect(response.body).toEqual({});
-      const history = await historyService.getEntriesByUser(user);
+      const history = await testSetup.historyService.getEntriesByUser(user);
       for (const entry of history) {
         if (entry.note.aliases.find((element) => element.name === noteName)) {
           throw new Error('Deleted history entry still in history');
@@ -192,15 +141,15 @@ describe('Me', () => {
     });
     describe('fails', () => {
       it('with a non-existing note', async () => {
-        await request(app.getHttpServer())
-          .delete('/me/history/i_dont_exist')
+        await request(testSetup.app.getHttpServer())
+          .delete('/api/v2/me/history/i_dont_exist')
           .expect(404);
       });
       it('with a non-existing history entry', async () => {
         const noteName = 'testGetNoteHistory5';
-        await notesService.createNote('', noteName);
-        await request(app.getHttpServer())
-          .delete(`/me/history/${noteName}`)
+        await testSetup.notesService.createNote('', noteName);
+        await request(testSetup.app.getHttpServer())
+          .delete(`/api/v2/me/history/${noteName}`)
           .expect(404);
       });
     });
@@ -208,9 +157,9 @@ describe('Me', () => {
 
   it(`GET /me/notes/`, async () => {
     const noteName = 'testNote';
-    await notesService.createNote('', noteName, user);
-    const response = await request(app.getHttpServer())
-      .get('/me/notes/')
+    await testSetup.notesService.createNote('', noteName, user);
+    const response = await request(testSetup.app.getHttpServer())
+      .get('/api/v2/me/notes/')
       .expect('Content-Type', /json/)
       .expect(200);
     const noteMetaDtos = response.body as NoteMetadataDto[];
@@ -220,31 +169,31 @@ describe('Me', () => {
   });
 
   it('GET /me/media', async () => {
-    const note1 = await notesService.createNote(
+    const note1 = await testSetup.notesService.createNote(
       'This is a test note.',
       'test8',
-      await userService.getUserByUsername('hardcoded'),
+      await testSetup.userService.getUserByUsername('hardcoded'),
     );
-    const note2 = await notesService.createNote(
+    const note2 = await testSetup.notesService.createNote(
       'This is a test note.',
       'test9',
-      await userService.getUserByUsername('hardcoded'),
+      await testSetup.userService.getUserByUsername('hardcoded'),
     );
-    const httpServer = app.getHttpServer();
+    const httpServer = testSetup.app.getHttpServer();
     const response1 = await request(httpServer)
-      .get('/me/media/')
+      .get('/api/v2/me/media/')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response1.body).toHaveLength(0);
 
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-    const url0 = await mediaService.saveFile(testImage, user, note1);
-    const url1 = await mediaService.saveFile(testImage, user, note1);
-    const url2 = await mediaService.saveFile(testImage, user, note2);
-    const url3 = await mediaService.saveFile(testImage, user, note2);
+    const url0 = await testSetup.mediaService.saveFile(testImage, user, note1);
+    const url1 = await testSetup.mediaService.saveFile(testImage, user, note1);
+    const url2 = await testSetup.mediaService.saveFile(testImage, user, note2);
+    const url3 = await testSetup.mediaService.saveFile(testImage, user, note2);
 
     const response = await request(httpServer)
-      .get('/me/media/')
+      .get('/api/v2/me/media/')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body).toHaveLength(4);
@@ -261,6 +210,6 @@ describe('Me', () => {
   });
 
   afterAll(async () => {
-    await app.close();
+    await testSetup.app.close();
   });
 });

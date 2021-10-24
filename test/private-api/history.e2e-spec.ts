@@ -3,37 +3,23 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { INestApplication } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Test } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigService } from '@nestjs/config';
 import request from 'supertest';
 
-import { PrivateApiModule } from '../../src/api/private/private-api.module';
-import { AuthModule } from '../../src/auth/auth.module';
 import { AuthConfig } from '../../src/config/auth.config';
-import appConfigMock from '../../src/config/mock/app.config.mock';
-import authConfigMock from '../../src/config/mock/auth.config.mock';
-import customizationConfigMock from '../../src/config/mock/customization.config.mock';
-import externalServicesConfigMock from '../../src/config/mock/external-services.config.mock';
-import mediaConfigMock from '../../src/config/mock/media.config.mock';
-import { GroupsModule } from '../../src/groups/groups.module';
 import { HistoryEntryImportDto } from '../../src/history/history-entry-import.dto';
 import { HistoryEntry } from '../../src/history/history-entry.entity';
 import { HistoryService } from '../../src/history/history.service';
 import { IdentityService } from '../../src/identity/identity.service';
-import { LoggerModule } from '../../src/logger/logger.module';
 import { Note } from '../../src/notes/note.entity';
-import { NotesModule } from '../../src/notes/notes.module';
 import { NotesService } from '../../src/notes/notes.service';
-import { PermissionsModule } from '../../src/permissions/permissions.module';
 import { User } from '../../src/users/user.entity';
-import { UsersModule } from '../../src/users/users.module';
 import { UsersService } from '../../src/users/users.service';
 import { setupSessionMiddleware } from '../../src/utils/session';
+import { TestSetup } from '../test-setup';
 
 describe('History', () => {
-  let app: INestApplication;
+  let testSetup: TestSetup;
   let historyService: HistoryService;
   let identityService: IdentityService;
   let user: User;
@@ -44,41 +30,19 @@ describe('History', () => {
   let agent: request.SuperAgentTest;
 
   beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({
-      imports: [
-        ConfigModule.forRoot({
-          isGlobal: true,
-          load: [
-            appConfigMock,
-            mediaConfigMock,
-            authConfigMock,
-            customizationConfigMock,
-            externalServicesConfigMock,
-          ],
-        }),
-        PrivateApiModule,
-        NotesModule,
-        PermissionsModule,
-        GroupsModule,
-        TypeOrmModule.forRoot({
-          type: 'sqlite',
-          database: './hedgedoc-e2e-private-history.sqlite',
-          autoLoadEntities: true,
-          synchronize: true,
-          dropSchema: true,
-        }),
-        LoggerModule,
-        AuthModule,
-        UsersModule,
-      ],
-    }).compile();
+    testSetup = await TestSetup.create();
+
+    forbiddenNoteId =
+      testSetup.configService.get('appConfig').forbiddenNoteIds[0];
+
+    const moduleRef = testSetup.moduleRef;
 
     const config = moduleRef.get<ConfigService>(ConfigService);
     forbiddenNoteId = config.get('appConfig').forbiddenNoteIds[0];
-    app = moduleRef.createNestApplication();
+
     const authConfig = config.get('authConfig') as AuthConfig;
-    setupSessionMiddleware(app, authConfig);
-    await app.init();
+    setupSessionMiddleware(testSetup.app, authConfig);
+    await testSetup.app.init();
     content = 'This is a test note.';
     historyService = moduleRef.get(HistoryService);
     const userService = moduleRef.get(UsersService);
@@ -88,23 +52,26 @@ describe('History', () => {
     const notesService = moduleRef.get(NotesService);
     note = await notesService.createNote(content, 'note', user);
     note2 = await notesService.createNote(content, 'note2', user);
-    agent = request.agent(app.getHttpServer());
+    agent = request.agent(testSetup.app.getHttpServer());
     await agent
-      .post('/auth/local/login')
+      .post('/api/private/auth/local/login')
       .send({ username: 'hardcoded', password: 'test' })
       .expect(201);
   });
 
   it('GET /me/history', async () => {
     const emptyResponse = await agent
-      .get('/me/history')
+      .get('/api/private/me/history')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(emptyResponse.body.length).toEqual(0);
-    const entry = await historyService.updateHistoryEntryTimestamp(note, user);
-    const entryDto = historyService.toHistoryEntryDto(entry);
+    const entry = await testSetup.historyService.updateHistoryEntryTimestamp(
+      note,
+      user,
+    );
+    const entryDto = testSetup.historyService.toHistoryEntryDto(entry);
     const response = await agent
-      .get('/me/history')
+      .get('/api/private/me/history')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body.length).toEqual(1);
@@ -119,7 +86,9 @@ describe('History', () => {
 
   describe('POST /me/history', () => {
     it('works', async () => {
-      expect(await historyService.getEntriesByUser(user)).toHaveLength(1);
+      expect(
+        await testSetup.historyService.getEntriesByUser(user),
+      ).toHaveLength(1);
       const pinStatus = true;
       const lastVisited = new Date('2020-12-01 12:23:34');
       const postEntryDto = new HistoryEntryImportDto();
@@ -129,11 +98,11 @@ describe('History', () => {
       postEntryDto.pinStatus = pinStatus;
       postEntryDto.lastVisited = lastVisited;
       await agent
-        .post('/me/history')
+        .post('/api/private/me/history')
         .set('Content-Type', 'application/json')
         .send(JSON.stringify({ history: [postEntryDto] }))
         .expect(201);
-      const userEntries = await historyService.getEntriesByUser(user);
+      const userEntries = await testSetup.historyService.getEntriesByUser(user);
       expect(userEntries.length).toEqual(1);
       expect(userEntries[0].note.aliases).toEqual(note2.aliases);
       expect(userEntries[0].user.username).toEqual(user.username);
@@ -146,7 +115,9 @@ describe('History', () => {
       let postEntryDto: HistoryEntryImportDto;
       let prevEntry: HistoryEntry;
       beforeAll(async () => {
-        const previousHistory = await historyService.getEntriesByUser(user);
+        const previousHistory = await testSetup.historyService.getEntriesByUser(
+          user,
+        );
         expect(previousHistory).toHaveLength(1);
         prevEntry = previousHistory[0];
         pinStatus = !previousHistory[0].pinStatus;
@@ -164,7 +135,7 @@ describe('History', () => {
         brokenEntryDto.pinStatus = pinStatus;
         brokenEntryDto.lastVisited = lastVisited;
         await agent
-          .post('/me/history')
+          .post('/api/private/me/history')
           .set('Content-Type', 'application/json')
           .send(JSON.stringify({ history: [brokenEntryDto] }))
           .expect(400);
@@ -175,13 +146,15 @@ describe('History', () => {
         brokenEntryDto.pinStatus = pinStatus;
         brokenEntryDto.lastVisited = lastVisited;
         await agent
-          .post('/me/history')
+          .post('/api/private/me/history')
           .set('Content-Type', 'application/json')
           .send(JSON.stringify({ history: [brokenEntryDto] }))
           .expect(400);
       });
       afterEach(async () => {
-        const historyEntries = await historyService.getEntriesByUser(user);
+        const historyEntries = await testSetup.historyService.getEntriesByUser(
+          user,
+        );
         expect(historyEntries).toHaveLength(1);
         expect(historyEntries[0].note.aliases).toEqual(prevEntry.note.aliases);
         expect(historyEntries[0].user.username).toEqual(
@@ -194,23 +167,30 @@ describe('History', () => {
   });
 
   it('DELETE /me/history', async () => {
-    expect((await historyService.getEntriesByUser(user)).length).toEqual(1);
-    await agent.delete('/me/history').expect(200);
-    expect((await historyService.getEntriesByUser(user)).length).toEqual(0);
+    expect(
+      (await testSetup.historyService.getEntriesByUser(user)).length,
+    ).toEqual(1);
+    await agent.delete('/api/private/me/history').expect(200);
+    expect(
+      (await testSetup.historyService.getEntriesByUser(user)).length,
+    ).toEqual(0);
   });
 
   it('PUT /me/history/:note', async () => {
-    const entry = await historyService.updateHistoryEntryTimestamp(note2, user);
+    const entry = await testSetup.historyService.updateHistoryEntryTimestamp(
+      note2,
+      user,
+    );
     expect(entry.pinStatus).toBeFalsy();
     const alias = entry.note.aliases.filter((alias) => alias.primary)[0].name;
     await agent
-      .put(`/me/history/${alias || 'undefined'}`)
+      .put(`/api/private/me/history/${alias || 'undefined'}`)
       .send({ pinStatus: true })
       .expect(200);
-    const userEntries = await historyService.getEntriesByUser(user);
+    const userEntries = await testSetup.historyService.getEntriesByUser(user);
     expect(userEntries.length).toEqual(1);
     expect(userEntries[0].pinStatus).toBeTruthy();
-    await historyService.deleteHistoryEntry(note2, user);
+    await testSetup.historyService.deleteHistoryEntry(note2, user);
   });
 
   it('DELETE /me/history/:note', async () => {
@@ -218,7 +198,9 @@ describe('History', () => {
     const alias = entry.note.aliases.filter((alias) => alias.primary)[0].name;
     const entry2 = await historyService.updateHistoryEntryTimestamp(note, user);
     const entryDto = historyService.toHistoryEntryDto(entry2);
-    await agent.delete(`/me/history/${alias || 'undefined'}`).expect(200);
+    await agent
+      .delete(`/api/private/me/history/${alias || 'undefined'}`)
+      .expect(200);
     const userEntries = await historyService.getEntriesByUser(user);
     expect(userEntries.length).toEqual(1);
     const userEntryDto = historyService.toHistoryEntryDto(userEntries[0]);
@@ -230,6 +212,6 @@ describe('History', () => {
   });
 
   afterAll(async () => {
-    await app.close();
+    await testSetup.app.close();
   });
 });

@@ -3,36 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { INestApplication } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Test } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import request from 'supertest';
 
-import { PublicApiModule } from '../../src/api/public/public-api.module';
-import { AuthModule } from '../../src/auth/auth.module';
-import { MockAuthGuard } from '../../src/auth/mock-auth.guard';
-import { TokenAuthGuard } from '../../src/auth/token.strategy';
-import appConfigMock from '../../src/config/mock/app.config.mock';
-import mediaConfigMock from '../../src/config/mock/media.config.mock';
 import { NotInDBError } from '../../src/errors/errors';
-import { GroupsModule } from '../../src/groups/groups.module';
-import { LoggerModule } from '../../src/logger/logger.module';
-import { MediaService } from '../../src/media/media.service';
 import { NotePermissionsUpdateDto } from '../../src/notes/note-permissions.dto';
-import { NotesModule } from '../../src/notes/notes.module';
-import { NotesService } from '../../src/notes/notes.service';
-import { PermissionsModule } from '../../src/permissions/permissions.module';
 import { User } from '../../src/users/user.entity';
-import { UsersModule } from '../../src/users/users.module';
-import { UsersService } from '../../src/users/users.service';
+import { TestSetup } from '../test-setup';
 
 describe('Notes', () => {
-  let app: INestApplication;
-  let notesService: NotesService;
-  let mediaService: MediaService;
+  let testSetup: TestSetup;
+
   let user: User;
   let user2: User;
   let content: string;
@@ -41,57 +23,37 @@ describe('Notes', () => {
   let testImage: Buffer;
 
   beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({
-      imports: [
-        ConfigModule.forRoot({
-          isGlobal: true,
-          load: [mediaConfigMock, appConfigMock],
-        }),
-        PublicApiModule,
-        NotesModule,
-        PermissionsModule,
-        GroupsModule,
-        TypeOrmModule.forRoot({
-          type: 'sqlite',
-          database: './hedgedoc-e2e-notes.sqlite',
-          autoLoadEntities: true,
-          synchronize: true,
-          dropSchema: true,
-        }),
-        LoggerModule,
-        AuthModule,
-        UsersModule,
-      ],
-    })
-      .overrideGuard(TokenAuthGuard)
-      .useClass(MockAuthGuard)
-      .compile();
+    testSetup = await TestSetup.create();
 
-    const config = moduleRef.get<ConfigService>(ConfigService);
-    forbiddenNoteId = config.get('appConfig').forbiddenNoteIds[0];
-    uploadPath = config.get('mediaConfig').backend.filesystem.uploadPath;
-    app = moduleRef.createNestApplication();
-    await app.init();
-    notesService = moduleRef.get(NotesService);
-    mediaService = moduleRef.get(MediaService);
-    const userService = moduleRef.get(UsersService);
-    user = await userService.createUser('hardcoded', 'Testy');
-    user2 = await userService.createUser('hardcoded2', 'Max Mustermann');
+    forbiddenNoteId =
+      testSetup.configService.get('appConfig').forbiddenNoteIds[0];
+    uploadPath =
+      testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
+
+    await testSetup.app.init();
+
+    user = await testSetup.userService.createUser('hardcoded', 'Testy');
+    user2 = await testSetup.userService.createUser(
+      'hardcoded2',
+      'Max Mustermann',
+    );
     content = 'This is a test note.';
     testImage = await fs.readFile('test/public-api/fixtures/test.png');
   });
 
   it('POST /notes', async () => {
-    const response = await request(app.getHttpServer())
-      .post('/notes')
+    const response = await request(testSetup.app.getHttpServer())
+      .post('/api/v2/notes')
       .set('Content-Type', 'text/markdown')
       .send(content)
       .expect('Content-Type', /json/)
       .expect(201);
     expect(response.body.metadata?.id).toBeDefined();
     expect(
-      await notesService.getNoteContent(
-        await notesService.getNoteByIdOrAlias(response.body.metadata.id),
+      await testSetup.notesService.getNoteContent(
+        await testSetup.notesService.getNoteByIdOrAlias(
+          response.body.metadata.id,
+        ),
       ),
     ).toEqual(content);
   });
@@ -99,24 +61,24 @@ describe('Notes', () => {
   describe('GET /notes/{note}', () => {
     it('works with an existing note', async () => {
       // check if we can succefully get a note that exists
-      await notesService.createNote(content, 'test1', user);
-      const response = await request(app.getHttpServer())
-        .get('/notes/test1')
+      await testSetup.notesService.createNote(content, 'test1', user);
+      const response = await request(testSetup.app.getHttpServer())
+        .get('/api/v2/notes/test1')
         .expect('Content-Type', /json/)
         .expect(200);
       expect(response.body.content).toEqual(content);
     });
     it('fails with an non-existing note', async () => {
       // check if a missing note correctly returns 404
-      await request(app.getHttpServer())
-        .get('/notes/i_dont_exist')
+      await request(testSetup.app.getHttpServer())
+        .get('/api/v2/notes/i_dont_exist')
         .expect('Content-Type', /json/)
         .expect(404);
     });
     it('fails with a forbidden note id', async () => {
       // check if a forbidden note correctly returns 400
-      await request(app.getHttpServer())
-        .get('/notes/forbiddenNoteId')
+      await request(testSetup.app.getHttpServer())
+        .get('/api/v2/notes/forbiddenNoteId')
         .expect('Content-Type', /json/)
         .expect(400);
     });
@@ -124,23 +86,25 @@ describe('Notes', () => {
 
   describe('POST /notes/{note}', () => {
     it('works with a non-existing alias', async () => {
-      const response = await request(app.getHttpServer())
-        .post('/notes/test2')
+      const response = await request(testSetup.app.getHttpServer())
+        .post('/api/v2/notes/test2')
         .set('Content-Type', 'text/markdown')
         .send(content)
         .expect('Content-Type', /json/)
         .expect(201);
       expect(response.body.metadata?.id).toBeDefined();
       return expect(
-        await notesService.getNoteContent(
-          await notesService.getNoteByIdOrAlias(response.body.metadata?.id),
+        await testSetup.notesService.getNoteContent(
+          await testSetup.notesService.getNoteByIdOrAlias(
+            response.body.metadata?.id,
+          ),
         ),
       ).toEqual(content);
     });
 
     it('fails with a forbidden alias', async () => {
-      await request(app.getHttpServer())
-        .post(`/notes/${forbiddenNoteId}`)
+      await request(testSetup.app.getHttpServer())
+        .post(`/api/v2/notes/${forbiddenNoteId}`)
         .set('Content-Type', 'text/markdown')
         .send(content)
         .expect('Content-Type', /json/)
@@ -148,8 +112,8 @@ describe('Notes', () => {
     });
 
     it('fails with a existing alias', async () => {
-      await request(app.getHttpServer())
-        .post('/notes/test2')
+      await request(testSetup.app.getHttpServer())
+        .post('/api/v2/notes/test2')
         .set('Content-Type', 'text/markdown')
         .send(content)
         .expect('Content-Type', /json/)
@@ -161,35 +125,55 @@ describe('Notes', () => {
     describe('works', () => {
       it('with an existing alias and keepMedia false', async () => {
         const noteId = 'test3';
-        const note = await notesService.createNote(content, noteId, user);
-        await mediaService.saveFile(testImage, user, note);
-        await request(app.getHttpServer())
-          .delete(`/notes/${noteId}`)
+        const note = await testSetup.notesService.createNote(
+          content,
+          noteId,
+          user,
+        );
+        await testSetup.mediaService.saveFile(testImage, user, note);
+        await request(testSetup.app.getHttpServer())
+          .delete(`/api/v2/notes/${noteId}`)
           .set('Content-Type', 'application/json')
           .send({
             keepMedia: false,
           })
           .expect(204);
-        await expect(notesService.getNoteByIdOrAlias(noteId)).rejects.toEqual(
+        await expect(
+          testSetup.notesService.getNoteByIdOrAlias(noteId),
+        ).rejects.toEqual(
           new NotInDBError(`Note with id/alias '${noteId}' not found.`),
         );
-        expect(await mediaService.listUploadsByUser(user)).toHaveLength(0);
+        expect(
+          await testSetup.mediaService.listUploadsByUser(user),
+        ).toHaveLength(0);
       });
       it('with an existing alias and keepMedia true', async () => {
         const noteId = 'test3a';
-        const note = await notesService.createNote(content, noteId, user);
-        const url = await mediaService.saveFile(testImage, user, note);
-        await request(app.getHttpServer())
-          .delete(`/notes/${noteId}`)
+        const note = await testSetup.notesService.createNote(
+          content,
+          noteId,
+          user,
+        );
+        const url = await testSetup.mediaService.saveFile(
+          testImage,
+          user,
+          note,
+        );
+        await request(testSetup.app.getHttpServer())
+          .delete(`/api/v2/notes/${noteId}`)
           .set('Content-Type', 'application/json')
           .send({
             keepMedia: true,
           })
           .expect(204);
-        await expect(notesService.getNoteByIdOrAlias(noteId)).rejects.toEqual(
+        await expect(
+          testSetup.notesService.getNoteByIdOrAlias(noteId),
+        ).rejects.toEqual(
           new NotInDBError(`Note with id/alias '${noteId}' not found.`),
         );
-        expect(await mediaService.listUploadsByUser(user)).toHaveLength(1);
+        expect(
+          await testSetup.mediaService.listUploadsByUser(user),
+        ).toHaveLength(1);
         // Remove /upload/ from path as we just need the filename.
         const fileName = url.replace('/uploads/', '');
         // delete the file afterwards
@@ -197,7 +181,11 @@ describe('Notes', () => {
       });
     });
     it('works with an existing alias with permissions', async () => {
-      const note = await notesService.createNote(content, 'test3', user);
+      const note = await testSetup.notesService.createNote(
+        content,
+        'test3',
+        user,
+      );
       const updateNotePermission = new NotePermissionsUpdateDto();
       updateNotePermission.sharedToUsers = [
         {
@@ -206,8 +194,11 @@ describe('Notes', () => {
         },
       ];
       updateNotePermission.sharedToGroups = [];
-      await notesService.updateNotePermissions(note, updateNotePermission);
-      const updatedNote = await notesService.getNoteByIdOrAlias(
+      await testSetup.notesService.updateNotePermissions(
+        note,
+        updateNotePermission,
+      );
+      const updatedNote = await testSetup.notesService.getNoteByIdOrAlias(
         note.aliases.filter((alias) => alias.primary)[0].name,
       );
       expect(updatedNote.userPermissions).toHaveLength(1);
@@ -218,19 +209,23 @@ describe('Notes', () => {
         user.username,
       );
       expect(updatedNote.groupPermissions).toHaveLength(0);
-      await request(app.getHttpServer()).delete('/notes/test3').expect(204);
-      await expect(notesService.getNoteByIdOrAlias('test3')).rejects.toEqual(
+      await request(testSetup.app.getHttpServer())
+        .delete('/api/v2/notes/test3')
+        .expect(204);
+      await expect(
+        testSetup.notesService.getNoteByIdOrAlias('test3'),
+      ).rejects.toEqual(
         new NotInDBError("Note with id/alias 'test3' not found."),
       );
     });
     it('fails with a forbidden alias', async () => {
-      await request(app.getHttpServer())
-        .delete(`/notes/${forbiddenNoteId}`)
+      await request(testSetup.app.getHttpServer())
+        .delete(`/api/v2/notes/${forbiddenNoteId}`)
         .expect(400);
     });
     it('fails with a non-existing alias', async () => {
-      await request(app.getHttpServer())
-        .delete('/notes/i_dont_exist')
+      await request(testSetup.app.getHttpServer())
+        .delete('/api/v2/notes/i_dont_exist')
         .expect(404);
     });
   });
@@ -238,29 +233,29 @@ describe('Notes', () => {
   describe('PUT /notes/{note}', () => {
     const changedContent = 'New note text';
     it('works with existing alias', async () => {
-      await notesService.createNote(content, 'test4', user);
-      const response = await request(app.getHttpServer())
-        .put('/notes/test4')
+      await testSetup.notesService.createNote(content, 'test4', user);
+      const response = await request(testSetup.app.getHttpServer())
+        .put('/api/v2/notes/test4')
         .set('Content-Type', 'text/markdown')
         .send(changedContent)
         .expect(200);
       expect(
-        await notesService.getNoteContent(
-          await notesService.getNoteByIdOrAlias('test4'),
+        await testSetup.notesService.getNoteContent(
+          await testSetup.notesService.getNoteByIdOrAlias('test4'),
         ),
       ).toEqual(changedContent);
       expect(response.body.content).toEqual(changedContent);
     });
     it('fails with a forbidden alias', async () => {
-      await request(app.getHttpServer())
-        .put(`/notes/${forbiddenNoteId}`)
+      await request(testSetup.app.getHttpServer())
+        .put(`/api/v2/notes/${forbiddenNoteId}`)
         .set('Content-Type', 'text/markdown')
         .send(changedContent)
         .expect(400);
     });
     it('fails with a non-existing alias', async () => {
-      await request(app.getHttpServer())
-        .put('/notes/i_dont_exist')
+      await request(testSetup.app.getHttpServer())
+        .put('/api/v2/notes/i_dont_exist')
         .set('Content-Type', 'text/markdown')
         .expect('Content-Type', /json/)
         .expect(404);
@@ -269,9 +264,9 @@ describe('Notes', () => {
 
   describe('GET /notes/{note}/metadata', () => {
     it('returns complete metadata object', async () => {
-      await notesService.createNote(content, 'test5', user);
-      const metadata = await request(app.getHttpServer())
-        .get('/notes/test5/metadata')
+      await testSetup.notesService.createNote(content, 'test5', user);
+      const metadata = await request(testSetup.app.getHttpServer())
+        .get('/api/v2/notes/test5/metadata')
         .expect(200);
       expect(typeof metadata.body.id).toEqual('string');
       expect(metadata.body.aliases).toEqual(['test5']);
@@ -294,30 +289,34 @@ describe('Notes', () => {
     });
 
     it('fails with a forbidden alias', async () => {
-      await request(app.getHttpServer())
-        .get(`/notes/${forbiddenNoteId}/metadata`)
+      await request(testSetup.app.getHttpServer())
+        .get(`/api/v2/notes/${forbiddenNoteId}/metadata`)
         .expect(400);
     });
 
     it('fails with non-existing alias', async () => {
       // check if a missing note correctly returns 404
-      await request(app.getHttpServer())
-        .get('/notes/i_dont_exist/metadata')
+      await request(testSetup.app.getHttpServer())
+        .get('/api/v2/notes/i_dont_exist/metadata')
         .expect('Content-Type', /json/)
         .expect(404);
     });
 
     it('has the correct update/create dates', async () => {
       // create a note
-      const note = await notesService.createNote(content, 'test5a', user);
+      const note = await testSetup.notesService.createNote(
+        content,
+        'test5a',
+        user,
+      );
       // save the creation time
       const createDate = (await note.revisions)[0].createdAt;
       // wait one second
       await new Promise((r) => setTimeout(r, 1000));
       // update the note
-      await notesService.updateNote(note, 'More test content');
-      const metadata = await request(app.getHttpServer())
-        .get('/notes/test5a/metadata')
+      await testSetup.notesService.updateNote(note, 'More test content');
+      const metadata = await request(testSetup.app.getHttpServer())
+        .get('/api/v2/notes/test5a/metadata')
         .expect(200);
       expect(metadata.body.createTime).toEqual(createDate.toISOString());
       expect(metadata.body.updateTime).not.toEqual(createDate.toISOString());
@@ -326,24 +325,24 @@ describe('Notes', () => {
 
   describe('GET /notes/{note}/revisions', () => {
     it('works with existing alias', async () => {
-      await notesService.createNote(content, 'test6', user);
-      const response = await request(app.getHttpServer())
-        .get('/notes/test6/revisions')
+      await testSetup.notesService.createNote(content, 'test6', user);
+      const response = await request(testSetup.app.getHttpServer())
+        .get('/api/v2/notes/test6/revisions')
         .expect('Content-Type', /json/)
         .expect(200);
       expect(response.body).toHaveLength(1);
     });
 
     it('fails with a forbidden alias', async () => {
-      await request(app.getHttpServer())
-        .get(`/notes/${forbiddenNoteId}/revisions`)
+      await request(testSetup.app.getHttpServer())
+        .get(`/api/v2/notes/${forbiddenNoteId}/revisions`)
         .expect(400);
     });
 
     it('fails with non-existing alias', async () => {
       // check if a missing note correctly returns 404
-      await request(app.getHttpServer())
-        .get('/notes/i_dont_exist/revisions')
+      await request(testSetup.app.getHttpServer())
+        .get('/api/v2/notes/i_dont_exist/revisions')
         .expect('Content-Type', /json/)
         .expect(404);
     });
@@ -351,23 +350,27 @@ describe('Notes', () => {
 
   describe('GET /notes/{note}/revisions/{revision-id}', () => {
     it('works with an existing alias', async () => {
-      const note = await notesService.createNote(content, 'test7', user);
-      const revision = await notesService.getLatestRevision(note);
-      const response = await request(app.getHttpServer())
-        .get(`/notes/test7/revisions/${revision.id}`)
+      const note = await testSetup.notesService.createNote(
+        content,
+        'test7',
+        user,
+      );
+      const revision = await testSetup.notesService.getLatestRevision(note);
+      const response = await request(testSetup.app.getHttpServer())
+        .get(`/api/v2/notes/test7/revisions/${revision.id}`)
         .expect('Content-Type', /json/)
         .expect(200);
       expect(response.body.content).toEqual(content);
     });
     it('fails with a forbidden alias', async () => {
-      await request(app.getHttpServer())
-        .get(`/notes/${forbiddenNoteId}/revisions/1`)
+      await request(testSetup.app.getHttpServer())
+        .get(`/api/v2/notes/${forbiddenNoteId}/revisions/1`)
         .expect(400);
     });
     it('fails with non-existing alias', async () => {
       // check if a missing note correctly returns 404
-      await request(app.getHttpServer())
-        .get('/notes/i_dont_exist/revisions/1')
+      await request(testSetup.app.getHttpServer())
+        .get('/api/v2/notes/i_dont_exist/revisions/1')
         .expect('Content-Type', /json/)
         .expect(404);
     });
@@ -375,21 +378,21 @@ describe('Notes', () => {
 
   describe('GET /notes/{note}/content', () => {
     it('works with an existing alias', async () => {
-      await notesService.createNote(content, 'test8', user);
-      const response = await request(app.getHttpServer())
-        .get('/notes/test8/content')
+      await testSetup.notesService.createNote(content, 'test8', user);
+      const response = await request(testSetup.app.getHttpServer())
+        .get('/api/v2/notes/test8/content')
         .expect(200);
       expect(response.text).toEqual(content);
     });
     it('fails with a forbidden alias', async () => {
-      await request(app.getHttpServer())
-        .get(`/notes/${forbiddenNoteId}/content`)
+      await request(testSetup.app.getHttpServer())
+        .get(`/api/v2/notes/${forbiddenNoteId}/content`)
         .expect(400);
     });
     it('fails with non-existing alias', async () => {
       // check if a missing note correctly returns 404
-      await request(app.getHttpServer())
-        .get('/notes/i_dont_exist/content')
+      await request(testSetup.app.getHttpServer())
+        .get('/api/v2/notes/i_dont_exist/content')
         .expect('Content-Type', /text\/markdown/)
         .expect(404);
     });
@@ -399,21 +402,37 @@ describe('Notes', () => {
     it('works', async () => {
       const alias = 'test9';
       const extraAlias = 'test10';
-      const note1 = await notesService.createNote(content, alias, user);
-      const note2 = await notesService.createNote(content, extraAlias, user);
-      const httpServer = app.getHttpServer();
+      const note1 = await testSetup.notesService.createNote(
+        content,
+        alias,
+        user,
+      );
+      const note2 = await testSetup.notesService.createNote(
+        content,
+        extraAlias,
+        user,
+      );
+      const httpServer = testSetup.app.getHttpServer();
       const response = await request(httpServer)
-        .get(`/notes/${alias}/media/`)
+        .get(`/api/v2/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(200);
       expect(response.body).toHaveLength(0);
 
       const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-      const url0 = await mediaService.saveFile(testImage, user, note1);
-      const url1 = await mediaService.saveFile(testImage, user, note2);
+      const url0 = await testSetup.mediaService.saveFile(
+        testImage,
+        user,
+        note1,
+      );
+      const url1 = await testSetup.mediaService.saveFile(
+        testImage,
+        user,
+        note2,
+      );
 
       const responseAfter = await request(httpServer)
-        .get(`/notes/${alias}/media/`)
+        .get(`/api/v2/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(200);
       expect(responseAfter.body).toHaveLength(1);
@@ -427,22 +446,26 @@ describe('Notes', () => {
       await fs.rmdir(uploadPath, { recursive: true });
     });
     it('fails, when note does not exist', async () => {
-      await request(app.getHttpServer())
-        .get(`/notes/i_dont_exist/media/`)
+      await request(testSetup.app.getHttpServer())
+        .get(`/api/v2/notes/i_dont_exist/media/`)
         .expect('Content-Type', /json/)
         .expect(404);
     });
     it("fails, when user can't read note", async () => {
       const alias = 'test11';
-      await notesService.createNote('This is a test note.', alias, user2);
-      await request(app.getHttpServer())
-        .get(`/notes/${alias}/media/`)
+      await testSetup.notesService.createNote(
+        'This is a test note.',
+        alias,
+        user2,
+      );
+      await request(testSetup.app.getHttpServer())
+        .get(`/api/v2/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(401);
     });
   });
 
   afterAll(async () => {
-    await app.close();
+    await testSetup.app.close();
   });
 });
