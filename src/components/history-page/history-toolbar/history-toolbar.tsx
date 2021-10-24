@@ -22,6 +22,7 @@ import { HistoryEntryOrigin } from '../../../redux/history/types'
 import { importHistoryEntries, refreshHistoryState, setHistoryEntries } from '../../../redux/history/methods'
 import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { cypressId } from '../../../utils/cypress-attribute'
 
 export type HistoryToolbarChange = (newState: HistoryToolbarState) => void
 
@@ -223,7 +224,11 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
           <ToggleButton className={'btn-light'} value={ViewStateEnum.CARD} title={t('landing.history.toolbar.cards')}>
             <ForkAwesomeIcon icon={'sticky-note'} className={'fa-fix-line-height'} />
           </ToggleButton>
-          <ToggleButton className={'btn-light'} value={ViewStateEnum.TABLE} title={t('landing.history.toolbar.table')}>
+          <ToggleButton
+            {...cypressId('history-mode-table')}
+            className={'btn-light'}
+            value={ViewStateEnum.TABLE}
+            title={t('landing.history.toolbar.table')}>
             <ForkAwesomeIcon icon={'table'} className={'fa-fix-line-height'} />
           </ToggleButton>
         </ToggleButtonGroup>

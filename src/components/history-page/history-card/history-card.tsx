@@ -14,6 +14,8 @@ import type { HistoryEntryProps, HistoryEventHandlers } from '../history-content
 import { PinButton } from '../pin-button/pin-button'
 import { formatHistoryDate } from '../utils'
 import './history-card.scss'
+import { useHistoryEntryTitle } from '../use-history-entry-title'
+import { cypressId } from '../../../utils/cypress-attribute'
 
 export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = ({
   entry,
@@ -29,6 +31,8 @@ export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = (
     onDeleteClick(entry.identifier)
   }, [onDeleteClick, entry.identifier])
 
+  const entryTitle = useHistoryEntryTitle(entry)
+
   return (
     <div className='p-2 col-xs-12 col-sm-6 col-md-6 col-lg-4'>
       <Card className='card-min-height' text={'dark'} bg={'light'}>
@@ -38,7 +42,9 @@ export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = (
           </div>
           <Link to={`/n/${entry.identifier}`} className='text-decoration-none flex-fill text-dark'>
             <div className={'d-flex flex-column justify-content-between'}>
-              <Card.Title className='m-0 mt-1dot5'>{entry.title}</Card.Title>
+              <Card.Title className='m-0 mt-1dot5' {...cypressId('history-entry-title')}>
+                {entryTitle}
+              </Card.Title>
               <div>
                 <div className='text-black-50 mt-2'>
                   <ForkAwesomeIcon icon='clock-o' /> {DateTime.fromISO(entry.lastVisited).toRelative()}

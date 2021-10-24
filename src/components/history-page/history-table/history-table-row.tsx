@@ -11,6 +11,8 @@ import { EntryMenu } from '../entry-menu/entry-menu'
 import type { HistoryEntryProps, HistoryEventHandlers } from '../history-content/history-content'
 import { PinButton } from '../pin-button/pin-button'
 import { formatHistoryDate } from '../utils'
+import { useHistoryEntryTitle } from '../use-history-entry-title'
+import { cypressId } from '../../../utils/cypress-attribute'
 
 export const HistoryTableRow: React.FC<HistoryEntryProps & HistoryEventHandlers> = ({
   entry,
@@ -18,11 +20,12 @@ export const HistoryTableRow: React.FC<HistoryEntryProps & HistoryEventHandlers>
   onRemoveClick,
   onDeleteClick
 }) => {
+  const entryTitle = useHistoryEntryTitle(entry)
   return (
     <tr>
       <td>
-        <Link to={`/n/${entry.identifier}`} className='text-light'>
-          {entry.title}
+        <Link to={`/n/${entry.identifier}`} className='text-light' {...cypressId('history-entry-title')}>
+          {entryTitle}
         </Link>
       </td>
       <td>{formatHistoryDate(entry.lastVisited)}</td>
@@ -42,7 +45,7 @@ export const HistoryTableRow: React.FC<HistoryEntryProps & HistoryEventHandlers>
         />
         <EntryMenu
           id={entry.identifier}
-          title={entry.title}
+          title={entryTitle}
           origin={entry.origin}
           isDark={true}
           onRemove={() => onRemoveClick(entry.identifier)}

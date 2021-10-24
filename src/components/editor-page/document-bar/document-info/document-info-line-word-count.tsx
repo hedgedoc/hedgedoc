@@ -14,6 +14,7 @@ import type { OnWordCountCalculatedMessage } from '../../../render-page/window-p
 import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
 import { useEditorReceiveHandler } from '../../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
 import { useEffectOnRendererReady } from '../../../render-page/window-post-message-communicator/hooks/use-effect-on-renderer-ready'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
 /**
  * Creates a new info line for the document information dialog that holds the
@@ -42,7 +43,7 @@ export const DocumentInfoLineWordCount: React.FC = () => {
       </ShowIf>
       <ShowIf condition={wordCount !== null}>
         <Trans i18nKey={'editor.modal.documentInfo.words'}>
-          <UnitalicBoldText text={wordCount ?? ''} data-cypress-id={'document-info-word-count'} />
+          <UnitalicBoldText text={wordCount ?? ''} {...cypressId('document-info-word-count')} />
         </Trans>
       </ShowIf>
     </DocumentInfoLine>
