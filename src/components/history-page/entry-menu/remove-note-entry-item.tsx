@@ -6,6 +6,7 @@
 
 import React from 'react'
 import { DropdownItemWithDeletionModal } from './dropdown-item-with-deletion-modal'
+import { cypressId } from '../../../utils/cypress-attribute'
 
 export interface RemoveNoteEntryItemProps {
   onConfirm: () => void
@@ -23,6 +24,7 @@ export const RemoveNoteEntryItem: React.FC<RemoveNoteEntryItemProps> = ({ noteTi
       modalQuestionI18nKey={'landing.history.modal.removeNote.question'}
       modalWarningI18nKey={'landing.history.modal.removeNote.warning'}
       noteTitle={noteTitle}
+      {...cypressId('history-entry-menu-remove-button')}
     />
   )
 }

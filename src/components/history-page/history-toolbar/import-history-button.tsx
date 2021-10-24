@@ -6,9 +6,8 @@
 
 import React, { useCallback, useRef, useState } from 'react'
 import { Button } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
-import { ErrorModal } from '../../common/modals/error-modal'
 import type { HistoryEntry, HistoryExportJson, V1HistoryEntry } from '../../../redux/history/types'
 import { HistoryEntryOrigin } from '../../../redux/history/types'
 import {
@@ -17,27 +16,16 @@ import {
   mergeHistoryEntries,
   refreshHistoryState
 } from '../../../redux/history/methods'
-import { showErrorNotification } from '../../../redux/ui-notifications/methods'
+import { dispatchUiNotification, showErrorNotification } from '../../../redux/ui-notifications/methods'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { cypressId } from '../../../utils/cypress-attribute'
 
 export const ImportHistoryButton: React.FC = () => {
   const { t } = useTranslation()
   const userExists = useApplicationState((state) => !!state.user)
   const historyState = useApplicationState((state) => state.history)
   const uploadInput = useRef<HTMLInputElement>(null)
-  const [show, setShow] = useState(false)
   const [fileName, setFilename] = useState('')
-  const [i18nKey, setI18nKey] = useState('')
-
-  const handleShow = useCallback((key: string) => {
-    setI18nKey(key)
-    setShow(true)
-  }, [])
-
-  const handleClose = useCallback(() => {
-    setI18nKey('')
-    setShow(false)
-  }, [])
 
   const onImportHistory = useCallback(
     (entries: HistoryEntry[]): void => {
@@ -50,17 +38,29 @@ export const ImportHistoryButton: React.FC = () => {
     [historyState, userExists]
   )
 
-  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const resetInputField = useCallback(() => {
+    if (!uploadInput.current) {
+      return
+    }
+    uploadInput.current.value = ''
+  }, [uploadInput])
+
+  const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { validity, files } = event.target
     if (files && files[0] && validity.valid) {
       const file = files[0]
       setFilename(file.name)
       if (file.type !== 'application/json' && file.type !== '') {
-        handleShow('landing.history.modal.importHistoryError.textWithFile')
+        await dispatchUiNotification('common.errorOccurred', 'landing.history.modal.importHistoryError.textWithFile', {
+          contentI18nOptions: {
+            fileName
+          }
+        })
+        resetInputField()
         return
       }
       const fileReader = new FileReader()
-      fileReader.onload = (event) => {
+      fileReader.onload = async (event) => {
         if (event.target && event.target.result) {
           try {
             const result = event.target.result as string
@@ -71,42 +71,63 @@ export const ImportHistoryButton: React.FC = () => {
                   onImportHistory(data.entries)
                 } else {
                   // probably a newer version we can't support
-                  handleShow('landing.history.modal.importHistoryError.tooNewVersion')
+                  await dispatchUiNotification(
+                    'common.errorOccurred',
+                    'landing.history.modal.importHistoryError.tooNewVersion',
+                    {
+                      contentI18nOptions: {
+                        fileName
+                      }
+                    }
+                  )
                 }
               } else {
                 const oldEntries = JSON.parse(result) as V1HistoryEntry[]
                 onImportHistory(convertV1History(oldEntries))
               }
             }
+            resetInputField()
           } catch {
-            handleShow('landing.history.modal.importHistoryError.textWithFile')
+            await dispatchUiNotification(
+              'common.errorOccurred',
+              'landing.history.modal.importHistoryError.textWithFile',
+              {
+                contentI18nOptions: {
+                  fileName
+                }
+              }
+            )
           }
         }
       }
       fileReader.readAsText(file)
     } else {
-      handleShow('landing.history.modal.importHistoryError.textWithOutFile')
+      await dispatchUiNotification(
+        'common.errorOccurred',
+        'landing.history.modal.importHistoryError.textWithOutFile',
+        {}
+      )
+      resetInputField()
     }
   }
 
   return (
     <div>
-      <input type='file' className='d-none' accept='.json' onChange={handleUpload} ref={uploadInput} />
+      <input
+        type='file'
+        className='d-none'
+        accept='.json'
+        onChange={handleUpload}
+        ref={uploadInput}
+        {...cypressId('import-history-file-input')}
+      />
       <Button
         variant={'light'}
         title={t('landing.history.toolbar.import')}
-        onClick={() => uploadInput.current?.click()}>
+        onClick={() => uploadInput.current?.click()}
+        {...cypressId('import-history-file-button')}>
         <ForkAwesomeIcon icon='upload' />
       </Button>
-      <ErrorModal
-        show={show}
-        onHide={handleClose}
-        titleI18nKey='landing.history.modal.importHistoryError.title'
-        icon='exclamation-circle'>
-        <h5>
-          <Trans i18nKey={i18nKey} values={fileName !== '' ? { fileName: fileName } : {}} />
-        </h5>
-      </ErrorModal>
     </div>
   )
 }

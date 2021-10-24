@@ -13,6 +13,7 @@ import type { IconName } from '../common/fork-awesome/types'
 import { dismissUiNotification } from '../../redux/ui-notifications/methods'
 import { Trans, useTranslation } from 'react-i18next'
 import { Logger } from '../../utils/logger'
+import { cypressId } from '../../utils/cypress-attribute'
 
 const STEPS_PER_SECOND = 10
 const log = new Logger('UiNotificationToast')
@@ -108,7 +109,10 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
   }, [contentI18nKey, contentI18nOptions, t])
 
   return (
-    <Toast show={!dismissed && eta !== undefined} onClose={dismissThisNotification}>
+    <Toast
+      show={!dismissed && eta !== undefined}
+      onClose={dismissThisNotification}
+      {...cypressId('notification-toast')}>
       <Toast.Header>
         <strong className='mr-auto'>
           <ShowIf condition={!!icon}>

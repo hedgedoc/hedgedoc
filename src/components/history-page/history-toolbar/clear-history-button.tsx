@@ -11,6 +11,7 @@ import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { DeletionModal } from '../../common/modals/deletion-modal'
 import { deleteAllHistoryEntries, refreshHistoryState } from '../../../redux/history/methods'
 import { showErrorNotification } from '../../../redux/ui-notifications/methods'
+import { cypressId } from '../../../utils/cypress-attribute'
 
 export const ClearHistoryButton: React.FC = () => {
   const { t } = useTranslation()
@@ -29,7 +30,11 @@ export const ClearHistoryButton: React.FC = () => {
 
   return (
     <Fragment>
-      <Button variant={'light'} title={t('landing.history.toolbar.clear')} onClick={handleShow}>
+      <Button
+        variant={'light'}
+        title={t('landing.history.toolbar.clear')}
+        onClick={handleShow}
+        {...cypressId('history-clear-button')}>
         <ForkAwesomeIcon icon={'trash'} />
       </Button>
       <DeletionModal

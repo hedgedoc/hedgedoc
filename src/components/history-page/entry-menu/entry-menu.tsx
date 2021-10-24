@@ -14,6 +14,7 @@ import './entry-menu.scss'
 import { RemoveNoteEntryItem } from './remove-note-entry-item'
 import { HistoryEntryOrigin } from '../../../redux/history/types'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { cypressId } from '../../../utils/cypress-attribute'
 
 export interface EntryMenuProps {
   id: string
@@ -31,7 +32,7 @@ export const EntryMenu: React.FC<EntryMenuProps> = ({ id, title, origin, isDark,
   const userExists = useApplicationState((state) => !!state.user)
 
   return (
-    <Dropdown className={`d-inline-flex ${className || ''}`}>
+    <Dropdown className={`d-inline-flex ${className || ''}`} {...cypressId('history-entry-menu')}>
       <Dropdown.Toggle
         variant={isDark ? 'secondary' : 'light'}
         id={`dropdown-card-${id}`}

@@ -5,7 +5,6 @@
  */
 
 describe('History', () => {
-
   describe('History Mode', () => {
     beforeEach(() => {
       cy.visit('/history')
@@ -123,6 +122,57 @@ describe('History', () => {
         cy.get('.fa-thumb-tack').first().click()
         cy.get('.notifications-area .toast').should('be.visible')
       })
+    })
+  })
+
+  describe('Import', () => {
+    beforeEach(() => {
+      cy.clearLocalStorage('history')
+      cy.intercept('GET', '/mock-backend/api/private/me/history', {
+        body: []
+      })
+      cy.visit('/history')
+      cy.logout()
+    })
+
+    it('works with valid file', () => {
+      cy.get('[data-cypress-id="import-history-file-button"]').click()
+      cy.get('[data-cypress-id="import-history-file-input"]').attachFile({
+        filePath: 'history.json',
+        mimeType: 'application/json'
+      })
+      cy.get('[data-cypress-id="history-entry-title"]')
+        .should('have.length', 1)
+        .contains('cy-Test')
+    })
+
+    it('fails on invalid file', () => {
+      cy.get('[data-cypress-id="import-history-file-button"]').click()
+      cy.get('[data-cypress-id="import-history-file-input"]').attachFile({
+        filePath: 'history.json.license',
+        mimeType: 'text/plain'
+      })
+      cy.get('[data-cypress-id="notification-toast"]').should('be.visible')
+    })
+
+    it('works when selecting two files with the same name', () => {
+      cy.get('[data-cypress-id="import-history-file-button"]').click()
+      cy.get('[data-cypress-id="import-history-file-input"]').attachFile({
+        filePath: 'history.json',
+        mimeType: 'application/json'
+      })
+      cy.get('[data-cypress-id="history-entry-title"]')
+        .should('have.length', 1)
+        .contains('cy-Test')
+      cy.get('[data-cypress-id="import-history-file-button"]').click()
+      cy.get('[data-cypress-id="import-history-file-input"]').attachFile({
+        filePath: 'history-2.json',
+        fileName: 'history.json',
+        mimeType: 'application/json'
+      })
+      cy.get('[data-cypress-id="history-entry-title"]')
+        .should('have.length', 2)
+        .contains('cy-Test2')
     })
   })
 })

@@ -8,7 +8,9 @@ import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 import type { HistoryEntryDto, HistoryEntryPutDto, HistoryEntryUpdateDto } from './types'
 
 export const getHistory = async (): Promise<HistoryEntryDto[]> => {
-  const response = await fetch(getApiUrl() + 'me/history')
+  const response = await fetch(getApiUrl() + 'me/history', {
+    ...defaultFetchConfig
+  })
   expectResponseCode(response)
   return (await response.json()) as Promise<HistoryEntryDto[]>
 }
