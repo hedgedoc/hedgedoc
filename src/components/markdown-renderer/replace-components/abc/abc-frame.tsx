@@ -7,14 +7,11 @@
 import React, { useEffect, useRef } from 'react'
 import './abc.scss'
 import { Logger } from '../../../../utils/logger'
+import type { CodeProps } from '../code-block-component-replacer'
 
 const log = new Logger('AbcFrame')
 
-export interface AbcFrameProps {
-  code: string
-}
-
-export const AbcFrame: React.FC<AbcFrameProps> = ({ code }) => {
+export const AbcFrame: React.FC<CodeProps> = ({ code }) => {
   const container = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -23,8 +20,8 @@ export const AbcFrame: React.FC<AbcFrameProps> = ({ code }) => {
     }
     const actualContainer = container.current
     import(/* webpackChunkName: "abc.js" */ 'abcjs')
-      .then((imp) => {
-        imp.renderAbc(actualContainer, code, {})
+      .then((importedLibrary) => {
+        importedLibrary.renderAbc(actualContainer, code, {})
       })
       .catch((error: Error) => {
         log.error('Error while loading abcjs', error)

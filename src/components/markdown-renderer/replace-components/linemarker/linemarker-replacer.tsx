@@ -5,13 +5,13 @@
  */
 
 import type { Element } from 'domhandler'
-import { ComponentReplacer } from '../ComponentReplacer'
+import { ComponentReplacer } from '../component-replacer'
 
 /**
  * Detects line markers and suppresses them in the resulting DOM.
  */
 export class LinemarkerReplacer extends ComponentReplacer {
-  public getReplacement(codeNode: Element): null | undefined {
+  public replace(codeNode: Element): null | undefined {
     return codeNode.name === 'app-linemarker' ? null : undefined
   }
 }

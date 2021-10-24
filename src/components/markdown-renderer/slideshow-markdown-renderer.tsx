@@ -16,11 +16,11 @@ import { REVEAL_STATUS, useReveal } from './hooks/use-reveal'
 import './slideshow.scss'
 import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import { DocumentLengthLimitReachedAlert } from './document-length-limit-reached-alert'
-import { BasicMarkdownItConfigurator } from './markdown-it-configurator/basic-markdown-it-configurator'
 import type { SlideOptions } from '../common/note-frontmatter/types'
 import { processRevealCommentNodes } from './process-reveal-comment-nodes'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 import { LoadingSlide } from './loading-slide'
+import { SlideshowMarkdownItConfigurator } from './markdown-it-configurator/slideshow-markdown-it-configurator'
 
 export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererProps {
   slideOptions: SlideOptions
@@ -44,12 +44,10 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
 
   const markdownIt = useMemo(
     () =>
-      new BasicMarkdownItConfigurator({
-        onToc: (toc) => (tocAst.current = toc),
+      new SlideshowMarkdownItConfigurator({
+        onTocChange: (toc) => (tocAst.current = toc),
         useAlternativeBreaks,
-        lineOffset,
-        headlineAnchors: false,
-        slideSections: true
+        lineOffset
       }).buildConfiguredMarkdownIt(),
     [lineOffset, useAlternativeBreaks]
   )

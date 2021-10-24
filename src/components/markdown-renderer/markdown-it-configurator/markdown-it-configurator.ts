@@ -20,45 +20,34 @@ import { spoilerContainer } from '../markdown-it-plugins/spoiler-container'
 import { tasksLists } from '../markdown-it-plugins/tasks-lists'
 import { twitterEmojis } from '../markdown-it-plugins/twitter-emojis'
 import type { TocAst } from 'markdown-it-toc-done-right'
-import type { LineMarkers } from '../replace-components/linemarker/line-number-marker'
-import { lineNumberMarker } from '../replace-components/linemarker/line-number-marker'
 import { plantumlWithError } from '../markdown-it-plugins/plantuml'
-import { headlineAnchors } from '../markdown-it-plugins/headline-anchors'
 import { KatexReplacer } from '../replace-components/katex/katex-replacer'
-import { YoutubeReplacer } from '../replace-components/youtube/youtube-replacer'
-import { VimeoReplacer } from '../replace-components/vimeo/vimeo-replacer'
-import { GistReplacer } from '../replace-components/gist/gist-replacer'
 import { legacyPdfShortCode } from '../regex-plugins/replace-legacy-pdf-short-code'
 import { legacySlideshareShortCode } from '../regex-plugins/replace-legacy-slideshare-short-code'
 import { legacySpeakerdeckShortCode } from '../regex-plugins/replace-legacy-speakerdeck-short-code'
-import { AsciinemaReplacer } from '../replace-components/asciinema/asciinema-replacer'
 import { highlightedCode } from '../markdown-it-plugins/highlighted-code'
 import { quoteExtraColor } from '../markdown-it-plugins/quote-extra-color'
 import { quoteExtra } from '../markdown-it-plugins/quote-extra'
 import { documentTableOfContents } from '../markdown-it-plugins/document-table-of-contents'
-import { addSlideSectionsMarkdownItPlugin } from '../markdown-it-plugins/reveal-sections'
+import { youtubeMarkdownItPlugin } from '../replace-components/youtube/youtube-markdown-it-plugin'
+import { vimeoMarkdownItPlugin } from '../replace-components/vimeo/vimeo-markdown-it-plugin'
+import { gistMarkdownItPlugin } from '../replace-components/gist/gist-markdown-it-plugin'
+import { asciinemaMarkdownItPlugin } from '../replace-components/asciinema/replace-asciinema-link'
 
-export interface ConfiguratorDetails {
-  onToc: (toc: TocAst) => void
-  onLineMarkers?: (lineMarkers: LineMarkers[]) => void
+export interface Configuration {
+  onTocChange: (toc: TocAst) => void
   useAlternativeBreaks?: boolean
   lineOffset?: number
-  headlineAnchors?: boolean
-  slideSections?: boolean
 }
 
-export class BasicMarkdownItConfigurator<T extends ConfiguratorDetails> {
+export abstract class MarkdownItConfigurator<T extends Configuration> {
   protected readonly options: T
   protected configurations: MarkdownIt.PluginSimple[] = []
   protected postConfigurations: MarkdownIt.PluginSimple[] = []
 
   constructor(options: T) {
     this.options = options
-  }
-
-  public pushConfig(plugin: MarkdownIt.PluginSimple): this {
-    this.configurations.push(plugin)
-    return this
+    this.configure()
   }
 
   public buildConfiguredMarkdownIt(): MarkdownIt {
@@ -68,28 +57,27 @@ export class BasicMarkdownItConfigurator<T extends ConfiguratorDetails> {
       langPrefix: '',
       typographer: true
     })
-    this.configure(markdownIt)
     this.configurations.forEach((configuration) => markdownIt.use(configuration))
     this.postConfigurations.forEach((postConfiguration) => markdownIt.use(postConfiguration))
     return markdownIt
   }
 
-  protected configure(markdownIt: MarkdownIt): void {
+  protected configure(): void {
     this.configurations.push(
       plantumlWithError,
       KatexReplacer.markdownItPlugin,
-      YoutubeReplacer.markdownItPlugin,
-      VimeoReplacer.markdownItPlugin,
-      GistReplacer.markdownItPlugin,
+      youtubeMarkdownItPlugin,
+      vimeoMarkdownItPlugin,
+      gistMarkdownItPlugin,
+      asciinemaMarkdownItPlugin,
       legacyPdfShortCode,
       legacySlideshareShortCode,
       legacySpeakerdeckShortCode,
-      AsciinemaReplacer.markdownItPlugin,
       highlightedCode,
       quoteExtraColor,
       quoteExtra('name', 'user'),
       quoteExtra('time', 'clock-o'),
-      documentTableOfContents(this.options.onToc),
+      documentTableOfContents(this.options.onTocChange),
       twitterEmojis,
       abbreviation,
       definitionList,
@@ -103,18 +91,6 @@ export class BasicMarkdownItConfigurator<T extends ConfiguratorDetails> {
       alertContainer,
       spoilerContainer
     )
-
-    if (this.options.headlineAnchors) {
-      this.configurations.push(headlineAnchors)
-    }
-
-    if (this.options.slideSections) {
-      this.configurations.push(addSlideSectionsMarkdownItPlugin)
-    }
-
-    if (this.options.onLineMarkers) {
-      this.configurations.push(lineNumberMarker(this.options.onLineMarkers, this.options.lineOffset ?? 0))
-    }
 
     this.postConfigurations.push(linkifyExtra, MarkdownItParserDebugger)
   }

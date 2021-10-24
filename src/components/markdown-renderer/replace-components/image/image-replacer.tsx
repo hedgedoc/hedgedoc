@@ -6,7 +6,7 @@
 
 import type { Element } from 'domhandler'
 import React from 'react'
-import { ComponentReplacer } from '../ComponentReplacer'
+import { ComponentReplacer } from '../component-replacer'
 import { ProxyImageFrame } from './proxy-image-frame'
 
 export type ImageClickHandler = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => void
@@ -22,8 +22,8 @@ export class ImageReplacer extends ComponentReplacer {
     this.clickHandler = clickHandler
   }
 
-  public getReplacement(node: Element): React.ReactElement | undefined {
-    if (node.name === 'img' && node.attribs) {
+  public replace(node: Element): React.ReactElement | undefined {
+    if (node.name === 'img') {
       return (
         <ProxyImageFrame
           id={node.attribs.id}

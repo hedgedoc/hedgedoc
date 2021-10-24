@@ -10,18 +10,15 @@ import { LockButton } from '../../../common/lock-button/lock-button'
 import '../../utils/button-inside.scss'
 import { Logger } from '../../../../utils/logger'
 import { cypressId } from '../../../../utils/cypress-attribute'
+import type { CodeProps } from '../code-block-component-replacer'
 
 const log = new Logger('MarkmapFrame')
-
-export interface MarkmapFrameProps {
-  code: string
-}
 
 const blockHandler = (event: Event): void => {
   event.stopPropagation()
 }
 
-export const MarkmapFrame: React.FC<MarkmapFrameProps> = ({ code }) => {
+export const MarkmapFrame: React.FC<CodeProps> = ({ code }) => {
   const { t } = useTranslation()
   const diagramContainer = useRef<HTMLDivElement>(null)
   const [disablePanAndZoom, setDisablePanAndZoom] = useState(true)

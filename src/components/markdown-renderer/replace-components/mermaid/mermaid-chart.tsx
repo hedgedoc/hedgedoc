@@ -10,11 +10,9 @@ import { useTranslation } from 'react-i18next'
 import { ShowIf } from '../../../common/show-if/show-if'
 import './mermaid.scss'
 import { Logger } from '../../../../utils/logger'
+import type { CodeProps } from '../code-block-component-replacer'
 
 const log = new Logger('MermaidChart')
-export interface MermaidChartProps {
-  code: string
-}
 
 interface MermaidParseError {
   str: string
@@ -22,7 +20,7 @@ interface MermaidParseError {
 
 let mermaidInitialized = false
 
-export const MermaidChart: React.FC<MermaidChartProps> = ({ code }) => {
+export const MermaidChart: React.FC<CodeProps> = ({ code }) => {
   const diagramContainer = useRef<HTMLDivElement>(null)
   const [error, setError] = useState<string>()
   const { t } = useTranslation()

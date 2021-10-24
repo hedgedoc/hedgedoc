@@ -7,7 +7,8 @@
 import type { Element } from 'domhandler'
 import type { ReactElement } from 'react'
 import React from 'react'
-import { ComponentReplacer } from '../ComponentReplacer'
+import { ComponentReplacer } from '../component-replacer'
+import { TaskListCheckbox } from './task-list-checkbox'
 
 export type TaskCheckedChangeHandler = (lineInMarkdown: number, checked: boolean) => void
 
@@ -16,34 +17,30 @@ export type TaskCheckedChangeHandler = (lineInMarkdown: number, checked: boolean
  */
 export class TaskListReplacer extends ComponentReplacer {
   onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
-  private readonly frontmatterLinesOffset
 
-  constructor(onTaskCheckedChange?: TaskCheckedChangeHandler, frontmatterLinesOffset?: number) {
+  constructor(frontmatterLinesToSkip?: number, onTaskCheckedChange?: TaskCheckedChangeHandler) {
     super()
-    this.onTaskCheckedChange = onTaskCheckedChange
-    this.frontmatterLinesOffset = frontmatterLinesOffset ?? 0
-  }
-
-  handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const lineNum = Number(event.currentTarget.dataset.line)
-    if (this.onTaskCheckedChange) {
-      this.onTaskCheckedChange(lineNum + this.frontmatterLinesOffset, event.currentTarget.checked)
+    this.onTaskCheckedChange = (lineInMarkdown, checked) => {
+      if (onTaskCheckedChange === undefined || frontmatterLinesToSkip === undefined) {
+        return
+      }
+      onTaskCheckedChange(frontmatterLinesToSkip + lineInMarkdown, checked)
     }
   }
 
-  public getReplacement(node: Element): ReactElement | undefined {
+  public replace(node: Element): ReactElement | undefined {
     if (node.attribs?.class !== 'task-list-item-checkbox') {
       return
     }
+    const lineInMarkdown = Number(node.attribs['data-line'])
+    if (isNaN(lineInMarkdown)) {
+      return undefined
+    }
     return (
-      <input
-        disabled={this.onTaskCheckedChange === undefined}
-        className='task-list-item-checkbox'
-        type='checkbox'
+      <TaskListCheckbox
+        onTaskCheckedChange={this.onTaskCheckedChange}
         checked={node.attribs.checked !== undefined}
-        onChange={this.handleCheckboxChange}
-        id={node.attribs.id}
-        data-line={node.attribs['data-line']}
+        lineInMarkdown={lineInMarkdown}
       />
     )
   }

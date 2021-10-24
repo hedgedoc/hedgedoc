@@ -7,9 +7,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { useIsDarkModeActivated } from '../../../../../hooks/common/use-is-dark-mode-activated'
-import { Logger } from '../../../../../utils/logger'
-import { cypressId } from '../../../../../utils/cypress-attribute'
+import { useIsDarkModeActivated } from '../../../../hooks/common/use-is-dark-mode-activated'
+import { Logger } from '../../../../utils/logger'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
 const log = new Logger('FlowChart')
 
@@ -30,8 +30,8 @@ export const FlowChart: React.FC<FlowChartProps> = ({ code }) => {
     }
     const currentDiagramRef = diagramRef.current
     import(/* webpackChunkName: "flowchart.js" */ 'flowchart.js')
-      .then((imp) => {
-        const parserOutput = imp.parse(code)
+      .then((importedLibrary) => {
+        const parserOutput = importedLibrary.parse(code)
         try {
           parserOutput.drawSVG(currentDiagramRef, {
             'line-width': 2,

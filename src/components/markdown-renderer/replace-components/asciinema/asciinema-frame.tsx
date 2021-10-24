@@ -6,12 +6,9 @@
 
 import React from 'react'
 import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
+import type { IdProps } from '../custom-tag-with-id-component-replacer'
 
-export interface AsciinemaFrameProps {
-  id: string
-}
-
-export const AsciinemaFrame: React.FC<AsciinemaFrameProps> = ({ id }) => {
+export const AsciinemaFrame: React.FC<IdProps> = ({ id }) => {
   return (
     <OneClickEmbedding
       containerClassName={'embed-responsive embed-responsive-16by9'}

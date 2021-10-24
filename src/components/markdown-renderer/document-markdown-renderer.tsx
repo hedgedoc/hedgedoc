@@ -16,9 +16,9 @@ import { useCalculateLineMarkerPosition } from './utils/calculate-line-marker-po
 import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
 import type { TocAst } from 'markdown-it-toc-done-right'
 import { useOnRefChange } from './hooks/use-on-ref-change'
-import { BasicMarkdownItConfigurator } from './markdown-it-configurator/basic-markdown-it-configurator'
 import { useTrimmedContent } from './hooks/use-trimmed-content'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
+import { DocumentMarkdownItConfigurator } from './markdown-it-configurator/document-markdown-it-configurator'
 
 export interface DocumentMarkdownRendererProps extends CommonMarkdownRendererProps {
   onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void
@@ -44,15 +44,14 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
 
   const markdownIt = useMemo(
     () =>
-      new BasicMarkdownItConfigurator({
-        onToc: (toc) => (tocAst.current = toc),
+      new DocumentMarkdownItConfigurator({
+        onTocChange: (toc) => (tocAst.current = toc),
         onLineMarkers:
           onLineMarkerPositionChanged === undefined
             ? undefined
             : (lineMarkers) => (currentLineMarkers.current = lineMarkers),
         useAlternativeBreaks,
-        lineOffset,
-        headlineAnchors: true
+        lineOffset
       }).buildConfiguredMarkdownIt(),
     [onLineMarkerPositionChanged, useAlternativeBreaks, lineOffset]
   )

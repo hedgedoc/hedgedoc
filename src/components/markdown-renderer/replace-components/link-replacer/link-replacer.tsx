@@ -5,8 +5,8 @@
  */
 import type { Element } from 'domhandler'
 import React from 'react'
-import type { NativeRenderer, SubNodeTransform, ValidReactDomElement } from '../ComponentReplacer'
-import { ComponentReplacer } from '../ComponentReplacer'
+import type { NativeRenderer, SubNodeTransform, ValidReactDomElement } from '../component-replacer'
+import { ComponentReplacer } from '../component-replacer'
 
 export const createJumpToMarkClickEventHandler = (id: string) => {
   return (event: React.MouseEvent<HTMLElement, MouseEvent>): void => {
@@ -25,7 +25,7 @@ export class LinkReplacer extends ComponentReplacer {
     super()
   }
 
-  public getReplacement(
+  public replace(
     node: Element,
     subNodeTransform: SubNodeTransform,
     nativeRenderer: NativeRenderer

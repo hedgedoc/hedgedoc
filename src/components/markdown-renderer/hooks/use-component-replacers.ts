@@ -5,28 +5,30 @@
  */
 
 import { useMemo } from 'react'
-import { AbcReplacer } from '../replace-components/abc/abc-replacer'
-import { AsciinemaReplacer } from '../replace-components/asciinema/asciinema-replacer'
-import type { ComponentReplacer } from '../replace-components/ComponentReplacer'
+import type { ComponentReplacer } from '../replace-components/component-replacer'
 import { CsvReplacer } from '../replace-components/csv/csv-replacer'
-import { FlowchartReplacer } from '../replace-components/flow/flowchart-replacer'
-import { GistReplacer } from '../replace-components/gist/gist-replacer'
-import { GraphvizReplacer } from '../replace-components/graphviz/graphviz-replacer'
 import { HighlightedCodeReplacer } from '../replace-components/highlighted-fence/highlighted-fence-replacer'
 import type { ImageClickHandler } from '../replace-components/image/image-replacer'
 import { ImageReplacer } from '../replace-components/image/image-replacer'
 import { KatexReplacer } from '../replace-components/katex/katex-replacer'
 import { LinemarkerReplacer } from '../replace-components/linemarker/linemarker-replacer'
 import { LinkReplacer } from '../replace-components/link-replacer/link-replacer'
-import { MarkmapReplacer } from '../replace-components/markmap/markmap-replacer'
-import { MermaidReplacer } from '../replace-components/mermaid/mermaid-replacer'
 import { ColoredBlockquoteReplacer } from '../replace-components/colored-blockquote/colored-blockquote-replacer'
-import { SequenceDiagramReplacer } from '../replace-components/sequence-diagram/sequence-diagram-replacer'
 import type { TaskCheckedChangeHandler } from '../replace-components/task-list/task-list-replacer'
 import { TaskListReplacer } from '../replace-components/task-list/task-list-replacer'
-import { VegaReplacer } from '../replace-components/vega-lite/vega-replacer'
-import { VimeoReplacer } from '../replace-components/vimeo/vimeo-replacer'
-import { YoutubeReplacer } from '../replace-components/youtube/youtube-replacer'
+import { CodeBlockComponentReplacer } from '../replace-components/code-block-component-replacer'
+import { GraphvizFrame } from '../replace-components/graphviz/graphviz-frame'
+import { MarkmapFrame } from '../replace-components/markmap/markmap-frame'
+import { VegaChart } from '../replace-components/vega-lite/vega-chart'
+import { MermaidChart } from '../replace-components/mermaid/mermaid-chart'
+import { FlowChart } from '../replace-components/flow/flowchart'
+import { SequenceDiagram } from '../replace-components/sequence-diagram/sequence-diagram'
+import { AbcFrame } from '../replace-components/abc/abc-frame'
+import { CustomTagWithIdComponentReplacer } from '../replace-components/custom-tag-with-id-component-replacer'
+import { GistFrame } from '../replace-components/gist/gist-frame'
+import { YouTubeFrame } from '../replace-components/youtube/youtube-frame'
+import { VimeoFrame } from '../replace-components/vimeo/vimeo-frame'
+import { AsciinemaFrame } from '../replace-components/asciinema/asciinema-frame'
 
 /**
  * Provides a function that creates a list of {@link ComponentReplacer component replacer} instances.
@@ -47,23 +49,23 @@ export const useComponentReplacers = (
   useMemo(
     () => [
       new LinemarkerReplacer(),
-      new GistReplacer(),
-      new YoutubeReplacer(),
-      new VimeoReplacer(),
-      new AsciinemaReplacer(),
-      new AbcReplacer(),
+      new CustomTagWithIdComponentReplacer(GistFrame, 'gist'),
+      new CustomTagWithIdComponentReplacer(YouTubeFrame, 'youtube'),
+      new CustomTagWithIdComponentReplacer(VimeoFrame, 'vimeo'),
+      new CustomTagWithIdComponentReplacer(AsciinemaFrame, 'asciinema'),
       new ImageReplacer(onImageClick),
-      new SequenceDiagramReplacer(),
       new CsvReplacer(),
-      new FlowchartReplacer(),
-      new MermaidReplacer(),
-      new GraphvizReplacer(),
-      new MarkmapReplacer(),
-      new VegaReplacer(),
+      new CodeBlockComponentReplacer(AbcFrame, 'abc'),
+      new CodeBlockComponentReplacer(SequenceDiagram, 'sequence'),
+      new CodeBlockComponentReplacer(FlowChart, 'flow'),
+      new CodeBlockComponentReplacer(MermaidChart, 'mermaid'),
+      new CodeBlockComponentReplacer(GraphvizFrame, 'graphviz'),
+      new CodeBlockComponentReplacer(MarkmapFrame, 'markmap'),
+      new CodeBlockComponentReplacer(VegaChart, 'vega-lite'),
       new HighlightedCodeReplacer(),
       new ColoredBlockquoteReplacer(),
       new KatexReplacer(),
-      new TaskListReplacer(onTaskCheckedChange, frontmatterLinesToSkip),
+      new TaskListReplacer(frontmatterLinesToSkip, onTaskCheckedChange),
       new LinkReplacer(baseUrl)
     ],
     [onImageClick, onTaskCheckedChange, baseUrl, frontmatterLinesToSkip]

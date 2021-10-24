@@ -8,7 +8,7 @@ import type MarkdownIt from 'markdown-it'
 import markdownItContainer from 'markdown-it-container'
 import type Renderer from 'markdown-it/lib/renderer'
 import type Token from 'markdown-it/lib/token'
-import type { MarkdownItPlugin } from '../replace-components/ComponentReplacer'
+import type { MarkdownItPlugin } from '../replace-components/component-replacer'
 
 export type RenderContainerReturn = (
   tokens: Token[],

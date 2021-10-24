@@ -6,6 +6,7 @@
 
 import React, { useCallback } from 'react'
 import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
+import type { IdProps } from '../custom-tag-with-id-component-replacer'
 
 interface VimeoApiResponse {
   // Vimeo uses strange names for their fields. ESLint doesn't like that.
@@ -13,11 +14,7 @@ interface VimeoApiResponse {
   thumbnail_large?: string
 }
 
-export interface VimeoFrameProps {
-  id: string
-}
-
-export const VimeoFrame: React.FC<VimeoFrameProps> = ({ id }) => {
+export const VimeoFrame: React.FC<IdProps> = ({ id }) => {
   const getPreviewImageLink = useCallback(async () => {
     const response = await fetch(`https://vimeo.com/api/v2/video/${id}.json`, {
       credentials: 'omit',

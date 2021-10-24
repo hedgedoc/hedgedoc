@@ -8,7 +8,7 @@ import type MarkdownIt from 'markdown-it'
 import { escapeHtml } from 'markdown-it/lib/common/utils'
 import markdownItContainer from 'markdown-it-container'
 import type Token from 'markdown-it/lib/token'
-import type { MarkdownItPlugin } from '../replace-components/ComponentReplacer'
+import type { MarkdownItPlugin } from '../replace-components/component-replacer'
 import type { RenderContainerReturn } from './alert-container'
 
 export const spoilerRegEx = /^spoiler\s+(.*)$/

@@ -6,26 +6,19 @@
 
 import type { Element } from 'domhandler'
 import React from 'react'
-import { ComponentReplacer } from '../ComponentReplacer'
+import { ComponentReplacer } from '../component-replacer'
 import { CsvTable } from './csv-table'
+import { CodeBlockComponentReplacer } from '../code-block-component-replacer'
 
 /**
  * Detects code blocks with "csv" as language and renders them as table.
  */
 export class CsvReplacer extends ComponentReplacer {
-  public getReplacement(codeNode: Element): React.ReactElement | undefined {
-    if (
-      codeNode.name !== 'code' ||
-      !codeNode.attribs ||
-      !codeNode.attribs['data-highlight-language'] ||
-      codeNode.attribs['data-highlight-language'] !== 'csv' ||
-      !codeNode.children ||
-      !codeNode.children[0]
-    ) {
+  public replace(codeNode: Element): React.ReactElement | undefined {
+    const code = CodeBlockComponentReplacer.extractTextFromCodeNode(codeNode, 'csv')
+    if (!code) {
       return
     }
-
-    const code = ComponentReplacer.extractTextChildContent(codeNode)
 
     const extraData = codeNode.attribs['data-extra']
     const extraRegex = /\s*(delimiter=([^\s]*))?\s*(header)?/

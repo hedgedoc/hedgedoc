@@ -10,14 +10,11 @@ import { useTranslation } from 'react-i18next'
 import type { VisualizationSpec } from 'vega-embed'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { Logger } from '../../../../utils/logger'
+import type { CodeProps } from '../code-block-component-replacer'
 
 const log = new Logger('VegaChart')
 
-export interface VegaChartProps {
-  code: string
-}
-
-export const VegaChart: React.FC<VegaChartProps> = ({ code }) => {
+export const VegaChart: React.FC<CodeProps> = ({ code }) => {
   const diagramContainer = useRef<HTMLDivElement>(null)
   const [error, setError] = useState<string>()
   const { t } = useTranslation()

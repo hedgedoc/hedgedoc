@@ -6,8 +6,8 @@
 
 import type { Element } from 'domhandler'
 import { isTag } from 'domhandler'
-import type { NativeRenderer, SubNodeTransform, ValidReactDomElement } from '../ComponentReplacer'
-import { ComponentReplacer } from '../ComponentReplacer'
+import type { NativeRenderer, SubNodeTransform, ValidReactDomElement } from '../component-replacer'
+import { ComponentReplacer } from '../component-replacer'
 
 /**
  * Checks if the given node is a blockquote color definition
@@ -42,7 +42,7 @@ const findBlockquoteColorParentElement = (nodes: Element[]): Element | undefined
  * If a color tag was found then the color will be applied to the node as border.
  */
 export class ColoredBlockquoteReplacer extends ComponentReplacer {
-  public getReplacement(
+  public replace(
     node: Element,
     subNodeTransform: SubNodeTransform,
     nativeRenderer: NativeRenderer

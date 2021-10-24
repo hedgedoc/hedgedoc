@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { Element, NodeWithChildren } from 'domhandler'
+import type { Element } from 'domhandler'
 import { isText } from 'domhandler'
 import type MarkdownIt from 'markdown-it'
 import type { ReactElement } from 'react'
@@ -16,6 +16,10 @@ export type SubNodeTransform = (node: Element, subKey: number | string) => Valid
 export type NativeRenderer = () => ValidReactDomElement
 
 export type MarkdownItPlugin = MarkdownIt.PluginSimple | MarkdownIt.PluginWithOptions | MarkdownIt.PluginWithParams
+
+export const REPLACE_WITH_NOTHING = null
+export const DO_NOT_REPLACE = undefined
+export type NodeReplacement = ValidReactDomElement | typeof REPLACE_WITH_NOTHING | typeof DO_NOT_REPLACE
 
 /**
  * Base class for all component replacers.
@@ -29,7 +33,7 @@ export abstract class ComponentReplacer {
    * @param node the node with the text node child
    * @return the string content
    */
-  protected static extractTextChildContent(node: NodeWithChildren): string {
+  protected static extractTextChildContent(node: Element): string {
     const childrenTextNode = node.children[0]
     return isText(childrenTextNode) ? childrenTextNode.data : ''
   }
@@ -39,12 +43,12 @@ export abstract class ComponentReplacer {
    *
    * @param node The current html dom node
    * @param subNodeTransform should be used to convert child elements of the current node
-   * @param nativeRenderer renders the current node as it is without any replacement.
+   * @param nativeRenderer renders the current node without any replacement
    * @return the replacement for the current node or undefined if the current replacer replacer hasn't done anything.
    */
-  public abstract getReplacement(
+  public abstract replace(
     node: Element,
     subNodeTransform: SubNodeTransform,
     nativeRenderer: NativeRenderer
-  ): ValidReactDomElement | undefined
+  ): NodeReplacement
 }

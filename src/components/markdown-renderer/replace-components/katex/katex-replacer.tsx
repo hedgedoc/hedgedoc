@@ -9,7 +9,7 @@ import { isTag } from 'domhandler'
 import type MarkdownIt from 'markdown-it'
 import mathJax from 'markdown-it-mathjax'
 import React from 'react'
-import { ComponentReplacer } from '../ComponentReplacer'
+import { ComponentReplacer } from '../component-replacer'
 import './katex.scss'
 
 /**
@@ -52,7 +52,7 @@ export class KatexReplacer extends ComponentReplacer {
     afterDisplayMath: '</app-katex>'
   })
 
-  public getReplacement(node: Element): React.ReactElement | undefined {
+  public replace(node: Element): React.ReactElement | undefined {
     const katex = getNodeIfKatexBlock(node) || getNodeIfInlineKatex(node)
     if (katex?.children && katex.children[0]) {
       const mathJaxContent = ComponentReplacer.extractTextChildContent(katex)

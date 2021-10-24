@@ -10,14 +10,11 @@ import { ShowIf } from '../../../common/show-if/show-if'
 import { useFrontendBaseUrl } from '../../../../hooks/common/use-frontend-base-url'
 import { Logger } from '../../../../utils/logger'
 import { cypressId } from '../../../../utils/cypress-attribute'
+import type { CodeProps } from '../code-block-component-replacer'
 
 const log = new Logger('GraphvizFrame')
 
-export interface GraphvizFrameProps {
-  code: string
-}
-
-export const GraphvizFrame: React.FC<GraphvizFrameProps> = ({ code }) => {
+export const GraphvizFrame: React.FC<CodeProps> = ({ code }) => {
   const container = useRef<HTMLDivElement>(null)
   const [error, setError] = useState<string>()
 

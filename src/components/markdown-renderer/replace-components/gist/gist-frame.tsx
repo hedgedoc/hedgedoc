@@ -8,17 +8,16 @@ import React, { useCallback } from 'react'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import './gist-frame.scss'
 import { useResizeGistFrame } from './use-resize-gist-frame'
-
-export interface GistFrameProps {
-  id: string
-}
+import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
+import preview from './gist-preview.png'
+import type { IdProps } from '../custom-tag-with-id-component-replacer'
 
 /**
  * This component renders a GitHub Gist by placing the gist URL in an {@link HTMLIFrameElement iframe}.
  *
  * @param id The id of the gist
  */
-export const GistFrame: React.FC<GistFrameProps> = ({ id }) => {
+export const GistFrame: React.FC<IdProps> = ({ id }) => {
   const [frameHeight, onStartResizing] = useResizeGistFrame(150)
 
   const onStart = useCallback(
@@ -29,7 +28,7 @@ export const GistFrame: React.FC<GistFrameProps> = ({ id }) => {
   )
 
   return (
-    <span>
+    <OneClickEmbedding previewContainerClassName={'gist-frame'} loadingImageUrl={preview} hoverIcon={'github'}>
       <iframe
         sandbox=''
         {...cypressId('gh-gist')}
@@ -42,6 +41,6 @@ export const GistFrame: React.FC<GistFrameProps> = ({ id }) => {
       <span className={'gist-resizer-row'}>
         <span className={'gist-resizer'} onMouseDown={onStart} onTouchStart={onStart} />
       </span>
-    </span>
+    </OneClickEmbedding>
   )
 }

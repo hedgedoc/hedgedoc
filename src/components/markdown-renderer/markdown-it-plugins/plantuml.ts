@@ -11,7 +11,7 @@ import type { RenderRule } from 'markdown-it/lib/renderer'
 import type Renderer from 'markdown-it/lib/renderer'
 import type Token from 'markdown-it/lib/token'
 import { store } from '../../../redux'
-import type { MarkdownItPlugin } from '../replace-components/ComponentReplacer'
+import type { MarkdownItPlugin } from '../replace-components/component-replacer'
 
 export const plantumlWithError: MarkdownItPlugin = (markdownIt: MarkdownIt) => {
   const plantumlServer = store.getState().config.plantumlServer

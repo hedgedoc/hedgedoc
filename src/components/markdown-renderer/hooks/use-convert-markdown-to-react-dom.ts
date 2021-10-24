@@ -5,13 +5,12 @@
  */
 
 import type MarkdownIt from 'markdown-it/lib'
-import { useMemo, useRef } from 'react'
-import type { ComponentReplacer, ValidReactDomElement } from '../replace-components/ComponentReplacer'
-import type { LineKeys } from '../types'
-import { buildTransformer } from '../utils/html-react-transformer'
-import { calculateNewLineNumberMapping } from '../utils/line-number-mapping'
+import { useMemo } from 'react'
+import type { ComponentReplacer, ValidReactDomElement } from '../replace-components/component-replacer'
 import convertHtmlToReact from '@hedgedoc/html-to-react'
 import type { Document } from 'domhandler'
+import { NodeToReactTransformer } from '../utils/node-to-react-transformer'
+import { LineIdMapper } from '../utils/line-id-mapper'
 
 /**
  * Renders markdown code into react elements
@@ -28,21 +27,22 @@ export const useConvertMarkdownToReactDom = (
   replacers: ComponentReplacer[],
   preprocessNodes?: (nodes: Document) => Document
 ): ValidReactDomElement[] => {
-  const oldMarkdownLineKeys = useRef<LineKeys[]>()
-  const lastUsedLineId = useRef<number>(0)
+  const lineNumberMapper = useMemo(() => new LineIdMapper(), [])
+  const htmlToReactTransformer = useMemo(() => new NodeToReactTransformer(), [])
+
+  useMemo(() => {
+    htmlToReactTransformer.setReplacers(replacers)
+  }, [htmlToReactTransformer, replacers])
+
+  useMemo(() => {
+    htmlToReactTransformer.setLineIds(lineNumberMapper.updateLineMapping(markdownCode))
+  }, [htmlToReactTransformer, lineNumberMapper, markdownCode])
 
   return useMemo(() => {
     const html = markdownIt.render(markdownCode)
-    const contentLines = markdownCode.split('\n')
-    const { lines: newLines, lastUsedLineId: newLastUsedLineId } = calculateNewLineNumberMapping(
-      contentLines,
-      oldMarkdownLineKeys.current ?? [],
-      lastUsedLineId.current
-    )
-    oldMarkdownLineKeys.current = newLines
-    lastUsedLineId.current = newLastUsedLineId
-
-    const transformer = replacers.length > 0 ? buildTransformer(newLines, replacers) : undefined
-    return convertHtmlToReact(html, { transform: transformer, preprocessNodes: preprocessNodes })
-  }, [markdownIt, markdownCode, replacers, preprocessNodes])
+    return convertHtmlToReact(html, {
+      transform: (node, index) => htmlToReactTransformer.translateNodeToReactElement(node, index),
+      preprocessNodes: preprocessNodes
+    })
+  }, [htmlToReactTransformer, markdownCode, markdownIt, preprocessNodes])
 }

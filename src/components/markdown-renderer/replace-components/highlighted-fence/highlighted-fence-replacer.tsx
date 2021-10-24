@@ -6,7 +6,7 @@
 
 import type { Element } from 'domhandler'
 import React from 'react'
-import { ComponentReplacer } from '../ComponentReplacer'
+import { ComponentReplacer } from '../component-replacer'
 import { HighlightedCode } from './highlighted-code/highlighted-code'
 
 /**
@@ -15,14 +15,15 @@ import { HighlightedCode } from './highlighted-code/highlighted-code'
 export class HighlightedCodeReplacer extends ComponentReplacer {
   private lastLineNumber = 0
 
-  public getReplacement(codeNode: Element): React.ReactElement | undefined {
-    if (
-      codeNode.name !== 'code' ||
-      !codeNode.attribs ||
-      !codeNode.attribs['data-highlight-language'] ||
-      !codeNode.children ||
-      !codeNode.children[0]
-    ) {
+  private extractCode(codeNode: Element): string | undefined {
+    return codeNode.name === 'code' && !!codeNode.attribs['data-highlight-language'] && !!codeNode.children[0]
+      ? ComponentReplacer.extractTextChildContent(codeNode)
+      : undefined
+  }
+
+  public replace(codeNode: Element): React.ReactElement | undefined {
+    const code = this.extractCode(codeNode)
+    if (!code) {
       return
     }
 
@@ -42,7 +43,6 @@ export class HighlightedCodeReplacer extends ComponentReplacer {
 
     const startLineNumber =
       startLineNumberAttribute === '+' ? this.lastLineNumber : parseInt(startLineNumberAttribute) || 1
-    const code = ComponentReplacer.extractTextChildContent(codeNode)
 
     if (showLineNumbers) {
       this.lastLineNumber = startLineNumber + code.split('\n').filter((line) => !!line).length

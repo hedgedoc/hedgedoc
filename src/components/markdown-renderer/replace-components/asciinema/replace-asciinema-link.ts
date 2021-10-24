@@ -5,6 +5,8 @@
  */
 
 import type { RegexOptions } from '../../../../external-types/markdown-it-regex/interface'
+import type MarkdownIt from 'markdown-it/lib'
+import markdownItRegex from 'markdown-it-regex'
 
 const protocolRegex = /(?:http(?:s)?:\/\/)?/
 const domainRegex = /(?:asciinema\.org\/a\/)/
@@ -12,6 +14,10 @@ const idRegex = /(\d+)/
 const tailRegex = /(?:[./?#].*)?/
 const gistUrlRegex = new RegExp(`(?:${protocolRegex.source}${domainRegex.source}${idRegex.source}${tailRegex.source})`)
 const linkRegex = new RegExp(`^${gistUrlRegex.source}$`, 'i')
+
+export const asciinemaMarkdownItPlugin: MarkdownIt.PluginSimple = (markdownIt: MarkdownIt) => {
+  markdownItRegex(markdownIt, replaceAsciinemaLink)
+}
 
 export const replaceAsciinemaLink: RegexOptions = {
   name: 'asciinema-link',
