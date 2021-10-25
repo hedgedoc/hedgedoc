@@ -1727,10 +1727,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:14.17.29":
-  version: 14.17.29
-  resolution: "@types/node@npm:14.17.29"
-  checksum: 5441e505a6287c7d36f083be95b39ef93238bb4bdb6e2c934304cc9b0f5ac33e7d552c8047824cbd274fcb6f5554703a102c039c8a5306d2acf4ebc3c3f7298b
+"@types/node@npm:14.17.30":
+  version: 14.17.30
+  resolution: "@types/node@npm:14.17.30"
+  checksum: 5b77bd9fb44366697fb3fd90a0c089b763de22aea1f632c66889429d98448c6dc23455171358584ceaaf3ebf983f70ebbc1c2a71b3f5025171ceff81a6800401
   languageName: node
   linkType: hard
 
@@ -5073,7 +5073,7 @@ __metadata:
     "@types/express-session": 1.17.4
     "@types/jest": 27.0.2
     "@types/minio": 7.0.11
-    "@types/node": 14.17.29
+    "@types/node": 14.17.30
     "@types/node-fetch": 2.5.12
     "@types/passport-http-bearer": 1.0.37
     "@types/passport-local": 1.0.34
