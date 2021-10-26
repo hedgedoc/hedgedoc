@@ -83,7 +83,7 @@
     "bootstrap": "4.6.0",
     "codemirror": "5.63.3",
     "copy-webpack-plugin": "6.4.1",
-    "@craco/craco": "6.3.0",
+    "@craco/craco": "6.4.0",
     "cross-env": "7.0.3",
     "cypress": "7.7.0",
     "cypress-commands": "1.1.0",
