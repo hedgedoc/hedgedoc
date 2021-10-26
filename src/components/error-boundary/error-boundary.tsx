@@ -4,7 +4,7 @@
  SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { ErrorInfo, ReactElement, ReactNodeArray } from 'react'
+import type { ErrorInfo, ReactNode } from 'react'
 import React, { Component } from 'react'
 import { Button, Container } from 'react-bootstrap'
 import links from '../../links.json'
@@ -38,7 +38,7 @@ export class ErrorBoundary extends Component {
     window.location.reload()
   }
 
-  render(): ReactElement | undefined | null | string | number | boolean | Record<string, unknown> | ReactNodeArray {
+  render(): ReactNode | undefined {
     if (this.state.hasError) {
       return (
         <Container className='text-light d-flex flex-column mvh-100'>
@@ -62,7 +62,8 @@ export class ErrorBoundary extends Component {
           </div>
         </Container>
       )
+    } else {
+      return this.props.children
     }
-    return this.props.children
   }
 }
