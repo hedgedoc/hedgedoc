@@ -6,6 +6,7 @@
 import {
   BadRequestException,
   Body,
+  ConflictException,
   Controller,
   Delete,
   NotFoundException,
@@ -56,7 +57,7 @@ export class AuthController {
       return;
     } catch (e) {
       if (e instanceof AlreadyInDBError) {
-        throw new BadRequestException(e.message);
+        throw new ConflictException(e.message);
       }
       throw e;
     }
