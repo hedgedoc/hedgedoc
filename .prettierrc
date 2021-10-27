@@ -3,5 +3,8 @@
   "singleQuote": true,
   "trailingComma": "all",
   "importOrder": ["^[./]"],
-  "importOrderSeparation": true
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrderCaseInsensitive": true,
+  "importOrderParserPlugins": ["typescript","classProperties","decorators-legacy"]
 }
