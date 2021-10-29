@@ -14,24 +14,33 @@ import { PublicApiModule } from '../src/api/public/public-api.module';
 import { AuthModule } from '../src/auth/auth.module';
 import { MockAuthGuard } from '../src/auth/mock-auth.guard';
 import { TokenAuthGuard } from '../src/auth/token.strategy';
+import { AuthorsModule } from '../src/authors/authors.module';
+import { AuthConfig } from '../src/config/auth.config';
 import appConfigMock from '../src/config/mock/app.config.mock';
 import authConfigMock from '../src/config/mock/auth.config.mock';
 import customizationConfigMock from '../src/config/mock/customization.config.mock';
 import externalServicesConfigMock from '../src/config/mock/external-services.config.mock';
 import mediaConfigMock from '../src/config/mock/media.config.mock';
+import { FrontendConfigModule } from '../src/frontend-config/frontend-config.module';
 import { GroupsModule } from '../src/groups/groups.module';
 import { HistoryModule } from '../src/history/history.module';
 import { HistoryService } from '../src/history/history.service';
+import { IdentityModule } from '../src/identity/identity.module';
 import { IdentityService } from '../src/identity/identity.service';
+import { ConsoleLoggerService } from '../src/logger/console-logger.service';
 import { LoggerModule } from '../src/logger/logger.module';
 import { MediaModule } from '../src/media/media.module';
 import { MediaService } from '../src/media/media.service';
+import { MonitoringModule } from '../src/monitoring/monitoring.module';
 import { AliasService } from '../src/notes/alias.service';
 import { NotesModule } from '../src/notes/notes.module';
 import { NotesService } from '../src/notes/notes.service';
 import { PermissionsModule } from '../src/permissions/permissions.module';
+import { RevisionsModule } from '../src/revisions/revisions.module';
 import { UsersModule } from '../src/users/users.module';
 import { UsersService } from '../src/users/users.service';
+import { setupSessionMiddleware } from '../src/utils/session';
+import { setupValidationPipe } from '../src/utils/setup-pipes';
 
 export class TestSetup {
   moduleRef: TestingModule;
@@ -78,16 +87,21 @@ export class TestSetup {
             externalServicesConfigMock,
           ],
         }),
+        NotesModule,
+        UsersModule,
+        RevisionsModule,
+        AuthorsModule,
         PublicApiModule,
         PrivateApiModule,
-        NotesModule,
+        HistoryModule,
+        MonitoringModule,
         PermissionsModule,
         GroupsModule,
         LoggerModule,
-        AuthModule,
-        UsersModule,
         MediaModule,
-        HistoryModule,
+        AuthModule,
+        FrontendConfigModule,
+        IdentityModule,
       ],
     })
       .overrideGuard(TokenAuthGuard)
@@ -109,6 +123,11 @@ export class TestSetup {
       testSetup.moduleRef.get<AliasService>(AliasService);
 
     testSetup.app = testSetup.moduleRef.createNestApplication();
+
+    setupSessionMiddleware(
+      testSetup.app,
+      testSetup.configService.get<AuthConfig>('authConfig'),
+    );
 
     return testSetup;
   }

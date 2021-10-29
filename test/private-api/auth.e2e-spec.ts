@@ -75,7 +75,7 @@ describe('Auth', () => {
           .post('/api/private/auth/local')
           .set('Content-Type', 'application/json')
           .send(JSON.stringify(registrationDto))
-          .expect(400);
+          .expect(409);
       });
       it('when registration is disabled', async () => {
         testSetup.configService.get('authConfig').local.enableRegister = false;
