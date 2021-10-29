@@ -154,7 +154,7 @@
     "react-router-use-location-state": "2.5.0",
     "react-scripts": "4.0.3",
     "react-use": "17.3.1",
-    "redux": "4.1.1",
+    "redux": "4.1.2",
     "@redux-devtools/core": "3.9.0",
     "redux-devtools-extension": "2.13.9",
     "reveal.js": "4.1.3",
