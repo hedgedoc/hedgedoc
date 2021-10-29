@@ -188,7 +188,7 @@
     "@types/react-router-bootstrap": "0.24.5",
     "@types/react-router-dom": "5.3.2",
     "@types/redux-devtools": "3.0.47",
-    "@types/sass": "1.16.1",
+    "@types/sass": "1.43.0",
     "@types/uuid": "8.3.1",
     "use-resize-observer": "8.0.0",
     "uuid": "8.3.2",
