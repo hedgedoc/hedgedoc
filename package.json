@@ -80,7 +80,7 @@
   "dependencies": {},
   "devDependencies": {
     "abcjs": "6.0.0-beta.33",
-    "bootstrap": "4.6.0",
+    "bootstrap": "4.6.1",
     "codemirror": "5.63.3",
     "copy-webpack-plugin": "6.4.1",
     "@craco/craco": "6.4.0",
