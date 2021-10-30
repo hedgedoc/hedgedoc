@@ -14,6 +14,7 @@ import { AuthConfig } from './config/auth.config';
 import { MediaConfig } from './config/media.config';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { BackendType } from './media/backends/backend-type.enum';
+import { setupSpecialGroups } from './utils/createSpecialGroups';
 import { setupFrontendProxy } from './utils/frontend-integration';
 import { setupSessionMiddleware } from './utils/session';
 import { setupValidationPipe } from './utils/setup-pipes';
@@ -50,6 +51,8 @@ async function bootstrap(): Promise<void> {
     );
     setupFrontendProxy(app, logger);
   }
+
+  await setupSpecialGroups(app);
 
   setupSessionMiddleware(app, authConfig);
 
