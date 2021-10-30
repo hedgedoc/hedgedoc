@@ -9,7 +9,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import appConfigMock from '../config/mock/app.config.mock';
-import { NotInDBError } from '../errors/errors';
+import { AlreadyInDBError, NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
 import { Group } from './group.entity';
 import { GroupsService } from './groups.service';
@@ -44,6 +44,33 @@ describe('GroupsService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  describe('createGroup', () => {
+    const groupName = 'testGroup';
+    const displayname = 'Group Test';
+    beforeEach(() => {
+      jest
+        .spyOn(groupRepo, 'save')
+        .mockImplementationOnce(async (group: Group): Promise<Group> => group);
+    });
+    it('successfully creates a group', async () => {
+      const user = await service.createGroup(groupName, displayname);
+      expect(user.name).toEqual(groupName);
+      expect(user.displayName).toEqual(displayname);
+    });
+    it('fails if group name is already taken', async () => {
+      // add additional mock implementation for failure
+      jest.spyOn(groupRepo, 'save').mockImplementationOnce(() => {
+        throw new Error();
+      });
+      // create first group with group name
+      await service.createGroup(groupName, displayname);
+      // attempt to create second group with group name
+      await expect(service.createGroup(groupName, displayname)).rejects.toThrow(
+        AlreadyInDBError,
+      );
+    });
   });
 
   describe('getGroupByName', () => {
