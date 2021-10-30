@@ -5,6 +5,7 @@
  */
 import { Injectable } from '@nestjs/common';
 
+import { SpecialGroup } from '../groups/groups.special';
 import { Note } from '../notes/note.entity';
 import { User } from '../users/user.entity';
 
@@ -102,16 +103,14 @@ export class PermissionsService {
       if (groupPermission.canEdit || !wantEdit) {
         // Handle special groups
         if (groupPermission.group.special) {
-          if (groupPermission.group.name == 'loggedIn') {
-            // TODO: Name of group for logged in users
+          if (groupPermission.group.name == SpecialGroup.LOGGED_IN) {
             return true;
           }
           if (
-            groupPermission.group.name == 'everybody' &&
+            groupPermission.group.name == SpecialGroup.EVERYONE &&
             (groupPermission.canEdit || !wantEdit) &&
             guestsAllowed
           ) {
-            // TODO: Name of group in which everybody even guests can edit
             return true;
           }
         } else {
