@@ -9,7 +9,7 @@ import { Logger } from '../../utils/logger'
 
 const log = new Logger('reveal.js > Comment Node Preprocessor')
 const revealCommandSyntax = /^\s*\.(\w*):(.*)$/g
-const dataAttributesSyntax = /\s*([\w-]*)=(?:"((?:[^"\\]|\\"|\\)*)"|'([^']*)')/g
+const dataAttributesSyntax = /\s*(data-[\w-]*|class)=(?:"((?:[^"\\]|\\"|\\)*)"|'([^']*)')/g
 
 /**
  * Travels through the given {@link Document}, searches for reveal command comments and applies them.

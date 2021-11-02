@@ -35,14 +35,7 @@ export class LinkReplacer extends ComponentReplacer {
     }
 
     const url = node.attribs.href.trim()
-
-    // eslint-disable-next-line no-script-url
-    if (url.startsWith('data:') || url.startsWith('javascript:') || url.startsWith('vbscript:')) {
-      return <span>{node.attribs.href}</span>
-    }
-
     const isJumpMark = url.substr(0, 1) === '#'
-
     const id = url.substr(1)
 
     try {

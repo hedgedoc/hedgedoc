@@ -11,6 +11,7 @@ import convertHtmlToReact from '@hedgedoc/html-to-react'
 import type { Document } from 'domhandler'
 import { NodeToReactTransformer } from '../utils/node-to-react-transformer'
 import { LineIdMapper } from '../utils/line-id-mapper'
+import { domPurifierNodePreprocessor } from './dom-purifier-node-preprocessor'
 
 /**
  * Renders markdown code into react elements
@@ -40,9 +41,13 @@ export const useConvertMarkdownToReactDom = (
 
   return useMemo(() => {
     const html = markdownIt.render(markdownCode)
+
     return convertHtmlToReact(html, {
       transform: (node, index) => htmlToReactTransformer.translateNodeToReactElement(node, index),
-      preprocessNodes: preprocessNodes
+      preprocessNodes: (document: Document): Document => {
+        const processedDocument = preprocessNodes ? preprocessNodes(document) : document
+        return domPurifierNodePreprocessor(processedDocument)
+      }
     })
   }, [htmlToReactTransformer, markdownCode, markdownIt, preprocessNodes])
 }
