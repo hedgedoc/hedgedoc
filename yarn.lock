@@ -1001,9 +1001,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/config@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@nestjs/config@npm:1.0.3"
+"@nestjs/config@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@nestjs/config@npm:1.1.0"
   dependencies:
     dotenv: 10.0.0
     dotenv-expand: 5.1.0
@@ -1015,7 +1015,7 @@ __metadata:
     "@nestjs/common": ^7.0.0 || ^8.0.0
     reflect-metadata: ^0.1.13
     rxjs: ^6.0.0 || ^7.2.0
-  checksum: e5bce87014ec513c3dfe81139ac49bfabf3379227c630fb4c401379f5acf1633ddbc35197500389430bec73d844e635e241b08496876b5d3b21fb31966b2e0ce
+  checksum: 485c7fdf574f36bdabe80113d7f09d3470e2e9d82f47489ee7c0a3cddd329279d6e80986895a096ef553dd927cc1dfc22386421943c4d209aa6ac4f3361e1f46
   languageName: node
   linkType: hard
 
@@ -5032,7 +5032,7 @@ __metadata:
     "@azure/storage-blob": 12.8.0
     "@nestjs/cli": 8.1.4
     "@nestjs/common": 8.1.2
-    "@nestjs/config": 1.0.3
+    "@nestjs/config": 1.1.0
     "@nestjs/core": 8.1.2
     "@nestjs/passport": 8.0.1
     "@nestjs/platform-express": 8.1.2
