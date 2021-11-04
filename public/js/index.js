@@ -621,6 +621,11 @@ Visibility.change(function (e, state) {
 
 // when page ready
 $(document).ready(function () {
+  // set global ajax timeout
+  $.ajaxSetup({
+    timeout: 10000
+  })
+
   idle.checkAway()
   checkResponsive()
   // if in smaller screen, we don't need advanced scrollbar
