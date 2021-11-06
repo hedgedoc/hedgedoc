@@ -52,12 +52,13 @@ describe('UsersService', () => {
         .spyOn(userRepo, 'save')
         .mockImplementationOnce(async (user: User): Promise<User> => user);
     });
-    it('works', async () => {
+    it('successfully creates a user', async () => {
       const user = await service.createUser(username, displayname);
       expect(user.username).toEqual(username);
       expect(user.displayName).toEqual(displayname);
     });
     it('fails if username is already taken', async () => {
+      // add additional mock implementation for failure
       jest.spyOn(userRepo, 'save').mockImplementationOnce(() => {
         throw new Error();
       });
