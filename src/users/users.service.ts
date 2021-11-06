@@ -26,7 +26,7 @@ export class UsersService {
    * @async
    * Create a new user with a given username and displayName
    * @param username - the username the new user shall have
-   * @param displayName - the display the new user shall have
+   * @param displayName - the display name the new user shall have
    * @return {User} the user
    * @throws {AlreadyInDBError} the username is already taken.
    */
