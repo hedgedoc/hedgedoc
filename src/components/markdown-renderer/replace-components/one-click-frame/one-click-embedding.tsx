@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useEffect, useState } from 'react'
-import { Trans } from 'react-i18next'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { IconName } from '../../../common/fork-awesome/types'
 import { ShowIf } from '../../../common/show-if/show-if'
 import './one-click-embedding.scss'
@@ -19,7 +19,7 @@ interface OneClickFrameProps {
   loadingImageUrl?: string
   hoverIcon?: IconName
   hoverTextI18nKey?: string
-  tooltip?: string
+  targetDescription?: string
   containerClassName?: string
   previewContainerClassName?: string
   onActivate?: () => void
@@ -31,13 +31,13 @@ export const OneClickEmbedding: React.FC<OneClickFrameProps> = ({
   onImageFetch,
   loadingImageUrl,
   children,
-  tooltip,
+  targetDescription,
   hoverIcon,
-  hoverTextI18nKey,
   onActivate
 }) => {
   const [showFrame, setShowFrame] = useState(false)
   const [previewImageUrl, setPreviewImageUrl] = useState(loadingImageUrl)
+  const { t } = useTranslation()
 
   const showChildren = () => {
     setShowFrame(true)
@@ -59,6 +59,10 @@ export const OneClickEmbedding: React.FC<OneClickFrameProps> = ({
       })
   }, [onImageFetch])
 
+  const previewHoverText = useMemo(() => {
+    return targetDescription ? t('renderer.one-click-embedding.previewHoverText', { target: targetDescription }) : ''
+  }, [t, targetDescription])
+
   return (
     <span className={containerClassName}>
       <ShowIf condition={showFrame}>{children}</ShowIf>
@@ -68,17 +72,13 @@ export const OneClickEmbedding: React.FC<OneClickFrameProps> = ({
             <ProxyImageFrame
               className={'one-click-embedding-preview'}
               src={previewImageUrl}
-              alt={tooltip || ''}
-              title={tooltip || ''}
+              alt={previewHoverText}
+              title={previewHoverText}
             />
           </ShowIf>
           <ShowIf condition={!!hoverIcon}>
             <span className='one-click-embedding-icon text-center'>
               <i className={`fa fa-${hoverIcon as string} fa-5x mb-2`} />
-              <ShowIf condition={!!hoverTextI18nKey}>
-                <br />
-                <Trans i18nKey={hoverTextI18nKey} />
-              </ShowIf>
             </span>
           </ShowIf>
         </span>

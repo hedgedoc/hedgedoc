@@ -28,6 +28,9 @@
             "png": "Save as PNG",
             "svg": "Save as SVG",
             "errorJson": "Error parsing the JSON"
+        },
+        "one-click-embedding": {
+          "previewHoverText": "Click to load content from {{target}}"
         }
     },
     "landing": {

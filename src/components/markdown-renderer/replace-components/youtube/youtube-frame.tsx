@@ -14,6 +14,7 @@ export const YouTubeFrame: React.FC<IdProps> = ({ id }) => {
       containerClassName={'embed-responsive embed-responsive-16by9'}
       previewContainerClassName={'embed-responsive-item'}
       hoverIcon={'youtube-play'}
+      targetDescription={'YouTube'}
       loadingImageUrl={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`}>
       <iframe
         className='embed-responsive-item'

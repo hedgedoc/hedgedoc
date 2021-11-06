@@ -14,6 +14,7 @@ export const AsciinemaFrame: React.FC<IdProps> = ({ id }) => {
       containerClassName={'embed-responsive embed-responsive-16by9'}
       previewContainerClassName={'embed-responsive-item'}
       hoverIcon={'play'}
+      targetDescription={'asciinema'}
       loadingImageUrl={`https://asciinema.org/a/${id}.png`}>
       <iframe
         className='embed-responsive-item'

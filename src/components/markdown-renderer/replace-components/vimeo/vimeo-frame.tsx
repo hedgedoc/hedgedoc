@@ -38,6 +38,7 @@ export const VimeoFrame: React.FC<IdProps> = ({ id }) => {
       previewContainerClassName={'embed-responsive-item'}
       loadingImageUrl={'https://i.vimeocdn.com/video/'}
       hoverIcon={'vimeo-square'}
+      targetDescription={'Vimeo'}
       onImageFetch={getPreviewImageLink}>
       <iframe
         className='embed-responsive-item'
