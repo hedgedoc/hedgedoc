@@ -1730,23 +1730,22 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.10.2.tgz#0798c03351f0dea1a5a4cabddf26a55a7cbee590"
   integrity sha512-IXf3XA7+XyN7CP9gGh/XB0UxVMlvARGEgGXLubFICsUMGz6Q+DU+i4gGlpOxTjKvXjkJDJC8YdqdKkDj9qZHEQ==
 
-"@redux-devtools/core@3.9.0":
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/@redux-devtools/core/-/core-3.9.0.tgz#2f18871f43a50028505ac34abd94d228ee01d991"
-  integrity sha512-Jvj060Lx/JnWHvcNwHND4JCF0NJ9+yPHsZTvfHzyCbX4XWHwA0H3yn3ZhceATDG/7VJ0fq0garUab6sXgAU12A==
+"@redux-devtools/core@3.9.1":
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/@redux-devtools/core/-/core-3.9.1.tgz#017b7a2fe82ce53699023b2175da1fa22480fabf"
+  integrity sha512-oGjhKMupuDmTHGgObbVT64W1esCP6JNgTxO8h1yIrKDnoxLH+hI9thyqKpA69Wb8ohFyhBdQzX1/NZTWCE68VQ==
   dependencies:
-    "@redux-devtools/instrument" "^1.11.0"
-    "@types/prop-types" "^15.7.3"
-    lodash "^4.17.19"
+    "@redux-devtools/instrument" "^1.11.1"
+    "@types/prop-types" "^15.7.4"
+    lodash "^4.17.21"
     prop-types "^15.7.2"
 
-"@redux-devtools/instrument@^1.11.0":
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/@redux-devtools/instrument/-/instrument-1.11.0.tgz#a066222f61f17f7aee76a9c0621add588f97f20a"
-  integrity sha512-/Ko8DI5jUXkRbZnCQo1kHx3remQMJ4D71C8zCJmsosignficGtta5qvdUT0DqmY9MV3MhO7HlHcBi8neKxjBzw==
+"@redux-devtools/instrument@^1.11.1":
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/@redux-devtools/instrument/-/instrument-1.11.1.tgz#d5951dce45fa43bffecbbd582d97dbe956ac41de"
+  integrity sha512-UYO3yeF7Irvjzz7AlH30++MFNqNc4Slm8nzGDqOKqQepL24eukOxFUfMawWIH2S4EEcFzsVxdVU/WXf/w04Ttw==
   dependencies:
-    lodash "^4.17.19"
-    symbol-observable "^2.0.3"
+    lodash "^4.17.21"
 
 "@restart/context@^2.1.4":
   version "2.1.4"
@@ -2470,7 +2469,7 @@
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.4.1.tgz#e1303048d5389563e130f5bdd89d37a99acb75eb"
   integrity sha512-Fo79ojj3vdEZOHg3wR9ksAMRz4P3S5fDB5e/YWZiFnyFQI1WY2Vftu9XoXVVtJfxB7Bpce/QTqWSSntkz2Znrw==
 
-"@types/prop-types@*", "@types/prop-types@^15.7.3":
+"@types/prop-types@*", "@types/prop-types@^15.7.3", "@types/prop-types@^15.7.4":
   version "15.7.4"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
   integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
@@ -13554,11 +13553,6 @@ svgo@^1.0.0, svgo@^1.2.2:
     stable "^0.1.8"
     unquote "~1.1.1"
     util.promisify "~1.0.0"
-
-symbol-observable@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-2.0.3.tgz#5b521d3d07a43c351055fa43b8355b62d33fd16a"
-  integrity sha512-sQV7phh2WCYAn81oAkakC5qjq2Ml0g8ozqz03wOGnx9dDlG1de6yrF+0RAzSJD8fPUow3PTSMf2SAbOGxb93BA==
 
 symbol-tree@^3.2.4:
   version "3.2.4"
