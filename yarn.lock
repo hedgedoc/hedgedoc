@@ -3031,10 +3031,10 @@ abab@^2.0.3, abab@^2.0.5:
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.5.tgz#c0b678fb32d60fc1219c784d6a826fe385aeb79a"
   integrity sha512-9IK9EadsbHo6jLWIpxpR6pL0sazTXV6+SQv25ZB+F7Bj9mJNaOc4nCRabwd5M/JwmUa8idz6Eci6eKfJryPs6Q==
 
-abcjs@6.0.0-beta.33:
-  version "6.0.0-beta.33"
-  resolved "https://registry.yarnpkg.com/abcjs/-/abcjs-6.0.0-beta.33.tgz#d9c5645dea2a7b378652f2857c26474fbd795fec"
-  integrity sha512-QvGxzlcXmbT2XfVkBiT/05feY5JF/WigNx3P+gM5JNNXqkcgfZIRTatBht1wxKrKgwjx7t4l8EVogdjXDcvW7w==
+abcjs@6.0.0-beta.35:
+  version "6.0.0-beta.35"
+  resolved "https://registry.yarnpkg.com/abcjs/-/abcjs-6.0.0-beta.35.tgz#34da2461e4681294240613113142caddb4cb90ff"
+  integrity sha512-lbMp9QPIeSRvGAzIZtGiXbcdZJ6t6xCkCjsQYS2NQzcwc4HqWZy5yyw6uooBuD+5XM6sbe8aKXKscYjW9Sk0bQ==
 
 accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.7:
   version "1.3.7"
