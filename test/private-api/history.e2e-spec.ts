@@ -104,7 +104,13 @@ describe('History', () => {
         .expect(201);
       const userEntries = await testSetup.historyService.getEntriesByUser(user);
       expect(userEntries.length).toEqual(1);
-      expect(userEntries[0].note.aliases).toEqual(note2.aliases);
+      expect(userEntries[0].note.aliases[0].name).toEqual(
+        note2.aliases[0].name,
+      );
+      expect(userEntries[0].note.aliases[0].primary).toEqual(
+        note2.aliases[0].primary,
+      );
+      expect(userEntries[0].note.aliases[0].id).toEqual(note2.aliases[0].id);
       expect(userEntries[0].user.username).toEqual(user.username);
       expect(userEntries[0].pinStatus).toEqual(pinStatus);
       expect(userEntries[0].updatedAt).toEqual(lastVisited);
