@@ -11,6 +11,7 @@ import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
 import appConfigMock from '../config/mock/app.config.mock';
 import { Group } from '../groups/group.entity';
+import { SpecialGroup } from '../groups/groups.special';
 import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
 import { Alias } from '../notes/alias.entity';
@@ -134,7 +135,7 @@ describe('PermissionsService', () => {
     note7.userPermissions.push(noteUserPermission2);
 
     const everybody = {} as Group;
-    everybody.name = 'everybody';
+    everybody.name = SpecialGroup.EVERYONE;
     everybody.special = true;
     const noteEverybodyRead = createNote(user1);
 
@@ -261,13 +262,19 @@ describe('PermissionsService', () => {
   function createGroups(): { [id: string]: Group } {
     const result: { [id: string]: Group } = {};
 
-    const everybody: Group = Group.create('everybody', 'Everybody');
+    const everybody: Group = Group.create(
+      SpecialGroup.EVERYONE,
+      SpecialGroup.EVERYONE,
+    );
     everybody.special = true;
-    result['everybody'] = everybody;
+    result[SpecialGroup.EVERYONE] = everybody;
 
-    const loggedIn = Group.create('loggedIn', 'loggedIn');
+    const loggedIn = Group.create(
+      SpecialGroup.LOGGED_IN,
+      SpecialGroup.LOGGED_IN,
+    );
     loggedIn.special = true;
-    result['loggedIn'] = loggedIn;
+    result[SpecialGroup.LOGGED_IN] = loggedIn;
 
     const user1group = Group.create('user1group', 'user1group');
     user1group.members = [user1];
@@ -304,11 +311,23 @@ describe('PermissionsService', () => {
       return NoteGroupPermission.create(group, write);
     }
 
-    const everybodyRead = createNoteGroupPermission(groups['everybody'], false);
-    const everybodyWrite = createNoteGroupPermission(groups['everybody'], true);
+    const everybodyRead = createNoteGroupPermission(
+      groups[SpecialGroup.EVERYONE],
+      false,
+    );
+    const everybodyWrite = createNoteGroupPermission(
+      groups[SpecialGroup.EVERYONE],
+      true,
+    );
 
-    const loggedInRead = createNoteGroupPermission(groups['loggedIn'], false);
-    const loggedInWrite = createNoteGroupPermission(groups['loggedIn'], true);
+    const loggedInRead = createNoteGroupPermission(
+      groups[SpecialGroup.LOGGED_IN],
+      false,
+    );
+    const loggedInWrite = createNoteGroupPermission(
+      groups[SpecialGroup.LOGGED_IN],
+      true,
+    );
 
     const user1groupRead = createNoteGroupPermission(
       groups['user1group'],
