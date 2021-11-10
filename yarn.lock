@@ -1301,21 +1301,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trivago/prettier-plugin-sort-imports@npm:3.1.0":
-  version: 3.1.0
-  resolution: "@trivago/prettier-plugin-sort-imports@npm:3.1.0"
+"@trivago/prettier-plugin-sort-imports@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@trivago/prettier-plugin-sort-imports@npm:3.1.1"
   dependencies:
     "@babel/core": 7.13.10
     "@babel/generator": 7.13.9
     "@babel/parser": 7.14.6
     "@babel/traverse": 7.13.0
     "@babel/types": 7.13.0
-    "@types/lodash": 4.14.168
     javascript-natural-sort: 0.7.1
     lodash: 4.17.21
   peerDependencies:
     prettier: 2.x
-  checksum: cedbeefb26158402d27e7887e63383c4390f676fccf0aef37f818ea00e5dc71e701688fedc3469bf48d0a9fd561ee5b3d14090cac90e6eb4abf739fa01665c27
+  checksum: 55c6e2d99319ccf4864f6e9a72ee81219b9a2aee962b989b6b2c4d113587daa95f0b96c803d08047790fa27e830a34bf75091e099ca9a088921fd36827af6116
   languageName: node
   linkType: hard
 
@@ -1644,13 +1643,6 @@ __metadata:
     "@types/koa-compose": "*"
     "@types/node": "*"
   checksum: 35a54e68944f74d6763537d55d01f8ed870d0ef816b5f27fce97a317b237540b7c249dc4a54abab44ad0afd0ce010b335122c9efb490b9589affe7929201d707
-  languageName: node
-  linkType: hard
-
-"@types/lodash@npm:4.14.168":
-  version: 4.14.168
-  resolution: "@types/lodash@npm:4.14.168"
-  checksum: 3326966ee089debde7a7d819e13b64991756e879945852c3357df14a7be837130f697c2cb451be9dd599eb7213fed0975bc9ca0f8f56b46fa73c46a83815b79c
   languageName: node
   linkType: hard
 
@@ -5007,7 +4999,7 @@ __metadata:
     "@nestjs/swagger": 5.1.4
     "@nestjs/testing": 8.1.2
     "@nestjs/typeorm": 8.0.2
-    "@trivago/prettier-plugin-sort-imports": 3.1.0
+    "@trivago/prettier-plugin-sort-imports": 3.1.1
     "@tsconfig/node12": 1.0.9
     "@types/bcrypt": 5.0.0
     "@types/cli-color": 2.0.1
