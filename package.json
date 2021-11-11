@@ -111,5 +111,6 @@
         "tsconfig": "test/tsconfig.json"
       }
     }
-  }
+  },
+  "packageManager": "yarn@3.1.0"
 }
