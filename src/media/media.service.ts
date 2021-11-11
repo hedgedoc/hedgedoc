@@ -6,6 +6,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
+import crypto from 'crypto';
 import * as FileType from 'file-type';
 import { Repository } from 'typeorm';
 
@@ -88,19 +89,19 @@ export class MediaService {
     if (!MediaService.isAllowedMimeType(fileTypeResult.mime)) {
       throw new ClientError('MIME type not allowed.');
     }
+    const randomBytes = crypto.randomBytes(16);
+    const id = randomBytes.toString('hex') + '.' + fileTypeResult.ext;
+    this.logger.debug(`Generated filename: '${id}'`, 'saveFile');
+    const [url, backendData] = await this.mediaBackend.saveFile(fileBuffer, id);
     const mediaUpload = MediaUpload.create(
+      id,
       note,
       user,
       fileTypeResult.ext,
       this.mediaBackendType,
+      backendData,
+      url,
     );
-    this.logger.debug(`Generated filename: '${mediaUpload.id}'`, 'saveFile');
-    const [url, backendData] = await this.mediaBackend.saveFile(
-      fileBuffer,
-      mediaUpload.id,
-    );
-    mediaUpload.backendData = backendData;
-    mediaUpload.fileUrl = url;
     await this.mediaUploadRepository.save(mediaUpload);
     return url;
   }
