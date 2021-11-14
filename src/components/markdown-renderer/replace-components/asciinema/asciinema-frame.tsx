@@ -5,22 +5,29 @@
  */
 
 import React from 'react'
-import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
+import { ClickShield } from '../click-shield/click-shield'
 import type { IdProps } from '../custom-tag-with-id-component-replacer'
 
+/**
+ * Renders an embedding for https://asciinema.org
+ *
+ * @param id The id from the asciinema url
+ */
 export const AsciinemaFrame: React.FC<IdProps> = ({ id }) => {
   return (
-    <OneClickEmbedding
-      containerClassName={'embed-responsive embed-responsive-16by9'}
-      previewContainerClassName={'embed-responsive-item'}
+    <ClickShield
       hoverIcon={'play'}
       targetDescription={'asciinema'}
-      loadingImageUrl={`https://asciinema.org/a/${id}.png`}>
-      <iframe
-        className='embed-responsive-item'
-        title={`asciinema cast ${id}`}
-        src={`https://asciinema.org/a/${id}/embed?autoplay=1`}
-      />
-    </OneClickEmbedding>
+      fallbackPreviewImageUrl={`https://asciinema.org/a/${id}.png`}
+      fallbackBackgroundColor={'#d40000'}
+      data-cypress-id={'click-shield-asciinema'}>
+      <span className={'embed-responsive embed-responsive-16by9'}>
+        <iframe
+          className='embed-responsive-item'
+          title={`asciinema cast ${id}`}
+          src={`https://asciinema.org/a/${id}/embed?autoplay=1`}
+        />
+      </span>
+    </ClickShield>
   )
 }

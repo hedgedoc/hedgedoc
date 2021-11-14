@@ -5,23 +5,30 @@
  */
 
 import React from 'react'
-import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
+import { ClickShield } from '../click-shield/click-shield'
 import type { IdProps } from '../custom-tag-with-id-component-replacer'
 
+/**
+ * Renders a video player embedding for https://youtube.com
+ *
+ * @param id The id from the youtube video url
+ */
 export const YouTubeFrame: React.FC<IdProps> = ({ id }) => {
   return (
-    <OneClickEmbedding
-      containerClassName={'embed-responsive embed-responsive-16by9'}
-      previewContainerClassName={'embed-responsive-item'}
+    <ClickShield
       hoverIcon={'youtube-play'}
       targetDescription={'YouTube'}
-      loadingImageUrl={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`}>
-      <iframe
-        className='embed-responsive-item'
-        title={`youtube video of ${id}`}
-        src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1`}
-        allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
-      />
-    </OneClickEmbedding>
+      fallbackPreviewImageUrl={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`}
+      fallbackBackgroundColor={'#ff0000'}
+      data-cypress-id={'click-shield-youtube'}>
+      <span className={'embed-responsive embed-responsive-16by9'}>
+        <iframe
+          className='embed-responsive-item'
+          title={`youtube video of ${id}`}
+          src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1`}
+          allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+        />
+      </span>
+    </ClickShield>
   )
 }

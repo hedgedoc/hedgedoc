@@ -4,33 +4,44 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-.one-click-embedding {
+.click-shield {
 
   position: relative;
   cursor: pointer;
   width: 100%;
   overflow: hidden;
 
-  .one-click-embedding-icon {
+  .preview-hover {
     display: inline;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
-    opacity: 0.4;
+    opacity: 0.5;
     transition: opacity 0.2s;
     text-shadow: #000000 0 0 5px;
   }
 
-  &:hover > .one-click-embedding-icon {
-    opacity: 0.8;
-    text-shadow: #000000 0 0 10px;
+  .preview-hover-text {
+    opacity: 0;
   }
 
-  .one-click-embedding-preview {
+  &:hover {
+    .preview-hover-text {
+      opacity: 1;
+    }
+    .preview-hover {
+      opacity: 1;
+      text-shadow: #000000 0 0 5px, #000000 0 0 10px;
+    }
+  }
+
+  .preview-background {
     background: none;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    min-height: 300px;
+    width: 100%;
   }
 }

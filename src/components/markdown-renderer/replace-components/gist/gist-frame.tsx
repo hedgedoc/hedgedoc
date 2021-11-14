@@ -8,8 +8,7 @@ import React, { useCallback } from 'react'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import './gist-frame.scss'
 import { useResizeGistFrame } from './use-resize-gist-frame'
-import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
-import preview from './gist-preview.png'
+import { ClickShield } from '../click-shield/click-shield'
 import type { IdProps } from '../custom-tag-with-id-component-replacer'
 
 /**
@@ -28,11 +27,11 @@ export const GistFrame: React.FC<IdProps> = ({ id }) => {
   )
 
   return (
-    <OneClickEmbedding
-      previewContainerClassName={'gist-frame'}
-      loadingImageUrl={preview}
+    <ClickShield
+      fallbackBackgroundColor={'#161b22'}
       hoverIcon={'github'}
-      targetDescription={'GitHub Gist'}>
+      targetDescription={'GitHub Gist'}
+      data-cypress-id={'click-shield-gist'}>
       <iframe
         sandbox=''
         {...cypressId('gh-gist')}
@@ -45,6 +44,6 @@ export const GistFrame: React.FC<IdProps> = ({ id }) => {
       <span className={'gist-resizer-row'}>
         <span className={'gist-resizer'} onMouseDown={onStart} onTouchStart={onStart} />
       </span>
-    </OneClickEmbedding>
+    </ClickShield>
   )
 }

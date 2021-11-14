@@ -37,10 +37,10 @@ describe('Short code gets replaced or rendered: ', () => {
   })
 
   describe('youtube', () => {
-    it('renders one-click-embedding', () => {
+    it('renders click-shield', () => {
       cy.setCodemirrorContent(`{%youtube YE7VzlLtp-4 %}`)
       cy.getMarkdownBody()
-        .find('.one-click-embedding.embed-responsive-item')
+        .find('[data-cypress-id="click-shield-youtube"]')
     })
   })
 })

@@ -29,7 +29,7 @@
             "svg": "Save as SVG",
             "errorJson": "Error parsing the JSON"
         },
-        "one-click-embedding": {
+        "clickShield": {
           "previewHoverText": "Click to load content from {{target}}"
         }
     },

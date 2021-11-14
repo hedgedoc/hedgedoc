@@ -14,7 +14,8 @@ describe('Link gets replaced with embedding: ', () => {
   it('GitHub Gist', () => {
     cy.setCodemirrorContent('https://gist.github.com/schacon/1')
     cy.getMarkdownBody()
-      .find('.one-click-embedding.gist-frame')
+      .find('[data-cypress-id="click-shield-gist"] .preview-background')
+      .parent()
       .click()
     cy.getMarkdownBody()
       .find('iframe[data-cypress-id=gh-gist]')
@@ -24,7 +25,7 @@ describe('Link gets replaced with embedding: ', () => {
   it('YouTube', () => {
     cy.setCodemirrorContent('https://www.youtube.com/watch?v=YE7VzlLtp-4')
     cy.getMarkdownBody()
-      .find('.one-click-embedding-preview')
+      .find('[data-cypress-id="click-shield-youtube"] .preview-background')
       .should('have.attr', 'src', 'https://i.ytimg.com/vi/YE7VzlLtp-4/maxresdefault.jpg')
       .parent()
       .click()
@@ -46,7 +47,7 @@ describe('Link gets replaced with embedding: ', () => {
     })
     cy.setCodemirrorContent('https://vimeo.com/23237102')
     cy.getMarkdownBody()
-      .find('.one-click-embedding-preview')
+      .find('[data-cypress-id="click-shield-vimeo"] .preview-background')
       .should('have.attr', 'src', 'https://i.vimeocdn.com/video/503631401_640.jpg')
       .parent()
       .click()
@@ -58,7 +59,7 @@ describe('Link gets replaced with embedding: ', () => {
   it('Asciinema', () => {
     cy.setCodemirrorContent('https://asciinema.org/a/117928')
     cy.getMarkdownBody()
-      .find('.one-click-embedding-preview')
+      .find('[data-cypress-id="click-shield-asciinema"] .preview-background')
       .should('have.attr', 'src', 'https://asciinema.org/a/117928.png')
       .parent()
       .click()

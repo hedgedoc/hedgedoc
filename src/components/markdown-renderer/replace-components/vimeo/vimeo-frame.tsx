@@ -5,7 +5,7 @@
  */
 
 import React, { useCallback } from 'react'
-import { OneClickEmbedding } from '../one-click-frame/one-click-embedding'
+import { ClickShield } from '../click-shield/click-shield'
 import type { IdProps } from '../custom-tag-with-id-component-replacer'
 
 interface VimeoApiResponse {
@@ -14,6 +14,11 @@ interface VimeoApiResponse {
   thumbnail_large?: string
 }
 
+/**
+ * Renders a video player embedding for https://vimeo.com
+ *
+ * @param id The id from the vimeo video url
+ */
 export const VimeoFrame: React.FC<IdProps> = ({ id }) => {
   const getPreviewImageLink = useCallback(async () => {
     const response = await fetch(`https://vimeo.com/api/v2/video/${id}.json`, {
@@ -33,19 +38,20 @@ export const VimeoFrame: React.FC<IdProps> = ({ id }) => {
   }, [id])
 
   return (
-    <OneClickEmbedding
-      containerClassName={'embed-responsive embed-responsive-16by9'}
-      previewContainerClassName={'embed-responsive-item'}
-      loadingImageUrl={'https://i.vimeocdn.com/video/'}
+    <ClickShield
       hoverIcon={'vimeo-square'}
       targetDescription={'Vimeo'}
-      onImageFetch={getPreviewImageLink}>
-      <iframe
-        className='embed-responsive-item'
-        title={`vimeo video of ${id}`}
-        src={`https://player.vimeo.com/video/${id}?autoplay=1`}
-        allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
-      />
-    </OneClickEmbedding>
+      onImageFetch={getPreviewImageLink}
+      fallbackBackgroundColor={'#00adef'}
+      data-cypress-id={'click-shield-vimeo'}>
+      <span className={'embed-responsive embed-responsive-16by9'}>
+        <iframe
+          className='embed-responsive-item'
+          title={`vimeo video of ${id}`}
+          src={`https://player.vimeo.com/video/${id}?autoplay=1`}
+          allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+        />
+      </span>
+    </ClickShield>
   )
 }
