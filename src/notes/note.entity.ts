@@ -92,7 +92,12 @@ export class Note {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  public static create(owner?: User, alias?: string): Omit<Note, 'id'> {
+  /**
+   * Creates a new Note
+   * @param owner The owner of the note
+   * @param alias Optional primary alias
+   */
+  public static create(owner: User | null, alias?: string): Omit<Note, 'id'> {
     const newNote = new Note();
     newNote.publicId = generatePublicId();
     newNote.aliases = alias
@@ -101,7 +106,7 @@ export class Note {
     newNote.userPermissions = [];
     newNote.groupPermissions = [];
     newNote.viewCount = 0;
-    newNote.owner = owner ?? null;
+    newNote.owner = owner;
     newNote.revisions = Promise.resolve([]);
     newNote.historyEntries = [];
     newNote.mediaUploads = [];

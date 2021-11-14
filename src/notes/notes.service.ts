@@ -88,8 +88,8 @@ export class NotesService {
    */
   async createNote(
     noteContent: string,
+    owner: User | null,
     alias?: string,
-    owner?: User,
   ): Promise<Note> {
     if (alias) {
       this.checkNoteIdOrAlias(alias);

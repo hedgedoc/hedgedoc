@@ -93,7 +93,7 @@ export class NotesController {
     }
     this.logger.debug('Got raw markdown:\n' + text);
     return await this.noteService.toNoteDto(
-      await this.noteService.createNote(text, undefined, user),
+      await this.noteService.createNote(text, user),
     );
   }
 
@@ -135,7 +135,7 @@ export class NotesController {
     this.logger.debug('Got raw markdown:\n' + text, 'createNamedNote');
     try {
       return await this.noteService.toNoteDto(
-        await this.noteService.createNote(text, noteAlias, user),
+        await this.noteService.createNote(text, user, noteAlias),
       );
     } catch (e) {
       if (e instanceof AlreadyInDBError) {

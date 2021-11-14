@@ -42,7 +42,7 @@ describe('Me', () => {
 
   it(`GET /me/history`, async () => {
     const noteName = 'testGetNoteHistory1';
-    const note = await testSetup.notesService.createNote('', noteName);
+    const note = await testSetup.notesService.createNote('', null, noteName);
     const createdHistoryEntry =
       await testSetup.historyService.updateHistoryEntryTimestamp(note, user);
     const response = await request(testSetup.app.getHttpServer())
@@ -67,7 +67,7 @@ describe('Me', () => {
   describe(`GET /me/history/{note}`, () => {
     it('works with an existing note', async () => {
       const noteName = 'testGetNoteHistory2';
-      const note = await testSetup.notesService.createNote('', noteName);
+      const note = await testSetup.notesService.createNote('', null, noteName);
       const createdHistoryEntry =
         await testSetup.historyService.updateHistoryEntryTimestamp(note, user);
       const response = await request(testSetup.app.getHttpServer())
@@ -96,7 +96,7 @@ describe('Me', () => {
   describe(`PUT /me/history/{note}`, () => {
     it('works', async () => {
       const noteName = 'testGetNoteHistory3';
-      const note = await testSetup.notesService.createNote('', noteName);
+      const note = await testSetup.notesService.createNote('', null, noteName);
       await testSetup.historyService.updateHistoryEntryTimestamp(note, user);
       const historyEntryUpdateDto = new HistoryEntryUpdateDto();
       historyEntryUpdateDto.pinStatus = true;
@@ -126,7 +126,7 @@ describe('Me', () => {
   describe(`DELETE /me/history/{note}`, () => {
     it('works', async () => {
       const noteName = 'testGetNoteHistory4';
-      const note = await testSetup.notesService.createNote('', noteName);
+      const note = await testSetup.notesService.createNote('', null, noteName);
       await testSetup.historyService.updateHistoryEntryTimestamp(note, user);
       const response = await request(testSetup.app.getHttpServer())
         .delete(`/api/v2/me/history/${noteName}`)
@@ -147,7 +147,7 @@ describe('Me', () => {
       });
       it('with a non-existing history entry', async () => {
         const noteName = 'testGetNoteHistory5';
-        await testSetup.notesService.createNote('', noteName);
+        await testSetup.notesService.createNote('', null, noteName);
         await request(testSetup.app.getHttpServer())
           .delete(`/api/v2/me/history/${noteName}`)
           .expect(404);
@@ -157,7 +157,7 @@ describe('Me', () => {
 
   it(`GET /me/notes/`, async () => {
     const noteName = 'testNote';
-    await testSetup.notesService.createNote('', noteName, user);
+    await testSetup.notesService.createNote('', user, noteName);
     const response = await request(testSetup.app.getHttpServer())
       .get('/api/v2/me/notes/')
       .expect('Content-Type', /json/)
@@ -171,13 +171,13 @@ describe('Me', () => {
   it('GET /me/media', async () => {
     const note1 = await testSetup.notesService.createNote(
       'This is a test note.',
-      'test8',
       await testSetup.userService.getUserByUsername('hardcoded'),
+      'test8',
     );
     const note2 = await testSetup.notesService.createNote(
       'This is a test note.',
-      'test9',
       await testSetup.userService.getUserByUsername('hardcoded'),
+      'test9',
     );
     const httpServer = testSetup.app.getHttpServer();
     const response1 = await request(httpServer)
