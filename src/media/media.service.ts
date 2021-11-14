@@ -99,9 +99,9 @@ export class MediaService {
       user,
       fileTypeResult.ext,
       this.mediaBackendType,
-      backendData,
       url,
     );
+    mediaUpload.backendData = backendData;
     await this.mediaUploadRepository.save(mediaUpload);
     return url;
   }

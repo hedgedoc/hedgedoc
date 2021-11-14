@@ -68,7 +68,6 @@ export class MediaUpload {
     user: User,
     extension: string,
     backendType: BackendType,
-    backendData: BackendData | null,
     fileUrl: string,
   ): Omit<MediaUpload, 'createdAt'> {
     const upload = new MediaUpload();
@@ -76,7 +75,7 @@ export class MediaUpload {
     upload.note = note;
     upload.user = user;
     upload.backendType = backendType;
-    upload.backendData = backendData;
+    upload.backendData = null;
     upload.fileUrl = fileUrl;
     return upload;
   }
