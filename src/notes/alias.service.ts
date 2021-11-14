@@ -66,7 +66,7 @@ export class AliasService {
       // the first alias is automatically made the primary alias
       newAlias = Alias.create(alias, note, true);
     } else {
-      newAlias = Alias.create(alias, note);
+      newAlias = Alias.create(alias, note, false);
     }
     note.aliases.push(newAlias as Alias);
 
