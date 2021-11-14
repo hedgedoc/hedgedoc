@@ -164,7 +164,7 @@ describe('NotesService', () => {
           .mockImplementation(async (note: Note): Promise<Note> => note);
       });
       it('without alias, without owner', async () => {
-        const newNote = await service.createNote(content);
+        const newNote = await service.createNote(content, null);
         const revisions = await newNote.revisions;
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
@@ -176,7 +176,7 @@ describe('NotesService', () => {
         expect(newNote.aliases).toHaveLength(0);
       });
       it('without alias, with owner', async () => {
-        const newNote = await service.createNote(content, undefined, user);
+        const newNote = await service.createNote(content, user);
         const revisions = await newNote.revisions;
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
@@ -189,7 +189,7 @@ describe('NotesService', () => {
         expect(newNote.aliases).toHaveLength(0);
       });
       it('with alias, without owner', async () => {
-        const newNote = await service.createNote(content, alias);
+        const newNote = await service.createNote(content, null, alias);
         const revisions = await newNote.revisions;
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
@@ -201,7 +201,7 @@ describe('NotesService', () => {
         expect(newNote.aliases).toHaveLength(1);
       });
       it('with alias, with owner', async () => {
-        const newNote = await service.createNote(content, alias, user);
+        const newNote = await service.createNote(content, user, alias);
         const revisions = await newNote.revisions;
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
@@ -218,7 +218,7 @@ describe('NotesService', () => {
     describe('fails:', () => {
       it('alias is forbidden', async () => {
         await expect(
-          service.createNote(content, forbiddenNoteId),
+          service.createNote(content, null, forbiddenNoteId),
         ).rejects.toThrow(ForbiddenIdError);
       });
 
@@ -226,7 +226,7 @@ describe('NotesService', () => {
         jest.spyOn(noteRepo, 'save').mockImplementationOnce(async () => {
           throw new Error();
         });
-        await expect(service.createNote(content, alias)).rejects.toThrow(
+        await expect(service.createNote(content, null, alias)).rejects.toThrow(
           AlreadyInDBError,
         );
       });
@@ -239,7 +239,7 @@ describe('NotesService', () => {
       jest
         .spyOn(noteRepo, 'save')
         .mockImplementation(async (note: Note): Promise<Note> => note);
-      const newNote = await service.createNote(content);
+      const newNote = await service.createNote(content, null);
       const revisions = await newNote.revisions;
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
       await service.getNoteContent(newNote).then((result) => {
@@ -254,7 +254,7 @@ describe('NotesService', () => {
       jest
         .spyOn(noteRepo, 'save')
         .mockImplementation(async (note: Note): Promise<Note> => note);
-      const newNote = await service.createNote(content);
+      const newNote = await service.createNote(content, null);
       const revisions = await newNote.revisions;
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
       await service.getLatestRevision(newNote).then((result) => {
@@ -271,7 +271,7 @@ describe('NotesService', () => {
       jest
         .spyOn(noteRepo, 'save')
         .mockImplementation(async (note: Note): Promise<Note> => note);
-      const newNote = await service.createNote(content);
+      const newNote = await service.createNote(content, null);
       const revisions = await newNote.revisions;
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
       await service.getLatestRevision(newNote).then((result) => {
@@ -709,7 +709,7 @@ describe('NotesService', () => {
       jest
         .spyOn(noteRepo, 'save')
         .mockImplementation(async (note: Note): Promise<Note> => note);
-      const note = await service.createNote(content);
+      const note = await service.createNote(content, null);
       const revisions = await note.revisions;
       revisions[0].edits = [
         {
@@ -806,7 +806,7 @@ describe('NotesService', () => {
       jest
         .spyOn(noteRepo, 'save')
         .mockImplementation(async (note: Note): Promise<Note> => note);
-      const note = await service.createNote(content);
+      const note = await service.createNote(content, null);
       const revisions = await note.revisions;
       revisions[0].edits = [
         {

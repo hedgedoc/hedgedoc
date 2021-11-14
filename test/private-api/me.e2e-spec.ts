@@ -40,8 +40,8 @@ describe('Me', () => {
 
     content = 'This is a test note.';
     alias2 = 'note2';
-    note1 = await testSetup.notesService.createNote(content, undefined, user);
-    note2 = await testSetup.notesService.createNote(content, alias2, user);
+    note1 = await testSetup.notesService.createNote(content, user);
+    note2 = await testSetup.notesService.createNote(content, user, alias2);
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
       .post('/api/private/auth/local/login')

@@ -50,8 +50,8 @@ describe('History', () => {
     user = await userService.createUser('hardcoded', 'Testy');
     await identityService.createLocalIdentity(user, 'test');
     const notesService = moduleRef.get(NotesService);
-    note = await notesService.createNote(content, 'note', user);
-    note2 = await notesService.createNote(content, 'note2', user);
+    note = await notesService.createNote(content, user, 'note');
+    note2 = await notesService.createNote(content, user, 'note2');
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
       .post('/api/private/auth/local/login')

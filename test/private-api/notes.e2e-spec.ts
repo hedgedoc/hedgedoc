@@ -74,7 +74,7 @@ describe('Notes', () => {
   describe('GET /notes/{note}', () => {
     it('works with an existing note', async () => {
       // check if we can succefully get a note that exists
-      await testSetup.notesService.createNote(content, 'test1', user);
+      await testSetup.notesService.createNote(content, user, 'test1');
       const response = await agent
         .get('/api/private/notes/test1')
         .expect('Content-Type', /json/)
@@ -133,8 +133,8 @@ describe('Notes', () => {
         const noteId = 'test3';
         const note = await testSetup.notesService.createNote(
           content,
-          noteId,
           user,
+          noteId,
         );
         await testSetup.mediaService.saveFile(testImage, user, note);
         await agent
@@ -158,8 +158,8 @@ describe('Notes', () => {
         const noteId = 'test3a';
         const note = await testSetup.notesService.createNote(
           content,
-          noteId,
           user,
+          noteId,
         );
         const url = await testSetup.mediaService.saveFile(
           testImage,
@@ -198,7 +198,7 @@ describe('Notes', () => {
 
   describe('GET /notes/{note}/revisions', () => {
     it('works with existing alias', async () => {
-      await testSetup.notesService.createNote(content, 'test4', user);
+      await testSetup.notesService.createNote(content, user, 'test4');
       const response = await agent
         .get('/api/private/notes/test4/revisions')
         .expect('Content-Type', /json/)
@@ -226,8 +226,8 @@ describe('Notes', () => {
       const noteId = 'test8';
       const note = await testSetup.notesService.createNote(
         content,
-        noteId,
         user,
+        noteId,
       );
       await testSetup.notesService.updateNote(note, 'update');
       const responseBeforeDeleting = await agent
@@ -263,8 +263,8 @@ describe('Notes', () => {
     it('works with an existing alias', async () => {
       const note = await testSetup.notesService.createNote(
         content,
-        'test5',
         user,
+        'test5',
       );
       const revision = await testSetup.notesService.getLatestRevision(note);
       const response = await agent
@@ -293,13 +293,13 @@ describe('Notes', () => {
       const extraAlias = 'test7';
       const note1 = await testSetup.notesService.createNote(
         content,
-        alias,
         user,
+        alias,
       );
       const note2 = await testSetup.notesService.createNote(
         content,
-        extraAlias,
         user,
+        extraAlias,
       );
       const response = await agent
         .get(`/api/private/notes/${alias}/media/`)
@@ -343,8 +343,8 @@ describe('Notes', () => {
       const alias = 'test11';
       await testSetup.notesService.createNote(
         'This is a test note.',
-        alias,
         user2,
+        alias,
       );
       await agent
         .get(`/api/private/notes/${alias}/media/`)

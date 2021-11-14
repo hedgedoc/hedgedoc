@@ -39,8 +39,8 @@ describe('Notes', () => {
     beforeAll(async () => {
       const note = await testSetup.notesService.createNote(
         content,
-        testAlias,
         user,
+        testAlias,
       );
       publicId = note.publicId;
     });
@@ -94,8 +94,8 @@ describe('Notes', () => {
     beforeAll(async () => {
       const note = await testSetup.notesService.createNote(
         content,
-        testAlias,
         user,
+        testAlias,
       );
       publicId = note.publicId;
       await testSetup.aliasService.addAlias(note, newAlias);
@@ -143,8 +143,8 @@ describe('Notes', () => {
     beforeAll(async () => {
       const note = await testSetup.notesService.createNote(
         content,
-        testAlias,
         user,
+        testAlias,
       );
       await testSetup.aliasService.addAlias(note, newAlias);
     });
