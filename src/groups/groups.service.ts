@@ -35,8 +35,7 @@ export class GroupsService {
     displayName: string,
     special = false,
   ): Promise<Group> {
-    const group = Group.create(name, displayName);
-    group.special = special;
+    const group = Group.create(name, displayName, special);
     try {
       return await this.groupRepository.save(group);
     } catch {

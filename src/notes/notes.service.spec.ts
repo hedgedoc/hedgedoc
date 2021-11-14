@@ -365,6 +365,7 @@ describe('NotesService', () => {
     const group = Group.create(
       groupPermissionUpate.groupname,
       groupPermissionUpate.groupname,
+      false,
     ) as Group;
     const note = Note.create(user) as Note;
     describe('works', () => {
@@ -668,7 +669,7 @@ describe('NotesService', () => {
   describe('toNotePermissionsDto', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
-      const group = Group.create('testGroup', 'testGroup') as Group;
+      const group = Group.create('testGroup', 'testGroup', false) as Group;
       const note = Note.create(user) as Note;
       note.userPermissions = [
         {
@@ -703,7 +704,7 @@ describe('NotesService', () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const author = Author.create(1);
       author.user = user;
-      const group = Group.create('testGroup', 'testGroup') as Group;
+      const group = Group.create('testGroup', 'testGroup', false) as Group;
       const content = 'testContent';
       jest
         .spyOn(noteRepo, 'save')
@@ -800,7 +801,7 @@ describe('NotesService', () => {
       author.user = user;
       const otherUser = User.create('other hardcoded', 'Testy2') as User;
       otherUser.username = 'other hardcoded user';
-      const group = Group.create('testGroup', 'testGroup') as Group;
+      const group = Group.create('testGroup', 'testGroup', false) as Group;
       const content = 'testContent';
       jest
         .spyOn(noteRepo, 'save')

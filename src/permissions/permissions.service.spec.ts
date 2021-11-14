@@ -265,28 +265,29 @@ describe('PermissionsService', () => {
     const everybody: Group = Group.create(
       SpecialGroup.EVERYONE,
       SpecialGroup.EVERYONE,
+      true,
     ) as Group;
-    everybody.special = true;
     result[SpecialGroup.EVERYONE] = everybody;
 
     const loggedIn = Group.create(
       SpecialGroup.LOGGED_IN,
       SpecialGroup.LOGGED_IN,
+      true,
     ) as Group;
-    loggedIn.special = true;
     result[SpecialGroup.LOGGED_IN] = loggedIn;
 
-    const user1group = Group.create('user1group', 'user1group') as Group;
+    const user1group = Group.create('user1group', 'user1group', false) as Group;
     user1group.members = [user1];
     result['user1group'] = user1group;
 
-    const user2group = Group.create('user2group', 'user2group') as Group;
+    const user2group = Group.create('user2group', 'user2group', false) as Group;
     user2group.members = [user2];
     result['user2group'] = user2group;
 
     const user1and2group = Group.create(
       'user1and2group',
       'user1and2group',
+      false,
     ) as Group;
     user1and2group.members = [user1, user2];
     result['user1and2group'] = user1and2group;
@@ -294,6 +295,7 @@ describe('PermissionsService', () => {
     const user2and1group = Group.create(
       'user2and1group',
       'user2and1group',
+      false,
     ) as Group;
     user2and1group.members = [user2, user1];
     result['user2and1group'] = user2and1group;

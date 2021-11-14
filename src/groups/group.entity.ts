@@ -43,11 +43,15 @@ export class Group {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  public static create(name: string, displayName: string): Omit<Group, 'id'> {
+  public static create(
+    name: string,
+    displayName: string,
+    special: boolean,
+  ): Omit<Group, 'id'> {
     const newGroup = new Group();
     newGroup.name = name;
     newGroup.displayName = displayName;
-    newGroup.special = false; // this attribute should only be true for the two special groups
+    newGroup.special = special; // this attribute should only be true for the two special groups
     newGroup.members = [];
     return newGroup;
   }
