@@ -140,7 +140,7 @@ describe('AliasService', () => {
       it('with an already used name', async () => {
         jest
           .spyOn(aliasRepo, 'findOne')
-          .mockResolvedValueOnce(Alias.create(alias2, note) as Alias);
+          .mockResolvedValueOnce(Alias.create(alias2, note, false) as Alias);
         await expect(service.addAlias(note, alias2)).rejects.toThrow(
           AlreadyInDBError,
         );
@@ -159,7 +159,7 @@ describe('AliasService', () => {
     const user = User.create('hardcoded', 'Testy') as User;
     describe('removes one alias correctly', () => {
       const note = Note.create(user, alias) as Note;
-      note.aliases.push(Alias.create(alias2, note) as Alias);
+      note.aliases.push(Alias.create(alias2, note, false) as Alias);
       it('with two aliases', async () => {
         jest
           .spyOn(noteRepo, 'save')
@@ -189,7 +189,7 @@ describe('AliasService', () => {
     });
     describe('does not remove one alias', () => {
       const note = Note.create(user, alias) as Note;
-      note.aliases.push(Alias.create(alias2, note) as Alias);
+      note.aliases.push(Alias.create(alias2, note, false) as Alias);
       it('if the alias is unknown', async () => {
         await expect(service.removeAlias(note, 'non existent')).rejects.toThrow(
           NotInDBError,
@@ -208,7 +208,7 @@ describe('AliasService', () => {
     const aliasName = 'testAlias';
     const note = Note.create(user, aliasName) as Note;
     const alias = Alias.create(aliasName, note, true) as Alias;
-    const alias2 = Alias.create('testAlias2', note) as Alias;
+    const alias2 = Alias.create('testAlias2', note, false) as Alias;
     note.aliases.push(alias2);
     it('mark the alias as primary', async () => {
       jest
