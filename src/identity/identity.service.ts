@@ -36,7 +36,7 @@ export class IdentityService {
    * @return {Identity} the new local identity
    */
   async createLocalIdentity(user: User, password: string): Promise<Identity> {
-    const identity = Identity.create(user, ProviderType.LOCAL);
+    const identity = Identity.create(user, ProviderType.LOCAL, false);
     identity.passwordHash = await hashPassword(password);
     return await this.identityRepository.save(identity);
   }

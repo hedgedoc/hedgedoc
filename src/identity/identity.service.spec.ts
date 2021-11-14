@@ -95,7 +95,11 @@ describe('IdentityService', () => {
 
   describe('loginWithLocalIdentity', () => {
     it('works', async () => {
-      const identity = Identity.create(user, ProviderType.LOCAL) as Identity;
+      const identity = Identity.create(
+        user,
+        ProviderType.LOCAL,
+        false,
+      ) as Identity;
       identity.passwordHash = await hashPassword(password);
       user.identities = Promise.resolve([identity]);
       await expect(

@@ -100,7 +100,7 @@ export class Identity {
   public static create(
     user: User,
     providerType: ProviderType,
-    syncSource = false,
+    syncSource: boolean,
   ): Omit<Identity, 'id' | 'createdAt' | 'updatedAt'> {
     const newIdentity = new Identity();
     newIdentity.user = user;
