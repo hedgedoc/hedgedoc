@@ -13,7 +13,7 @@ export interface CheatsheetLineProps {
 }
 
 const HighlightedCode = React.lazy(
-  () => import('../../../markdown-renderer/replace-components/highlighted-fence/highlighted-code/highlighted-code')
+  () => import('../../../markdown-renderer/markdown-extension/highlighted-fence/highlighted-code')
 )
 const DocumentMarkdownRenderer = React.lazy(() => import('../../../markdown-renderer/document-markdown-renderer'))
 

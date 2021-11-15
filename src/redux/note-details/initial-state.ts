@@ -45,7 +45,7 @@ export const initialState: NoteDetails = {
     robots: '',
     lang: 'en',
     dir: NoteTextDirection.LTR,
-    breaks: true,
+    newlinesAreBreaks: true,
     GA: '',
     disqus: '',
     type: NoteType.DOCUMENT,

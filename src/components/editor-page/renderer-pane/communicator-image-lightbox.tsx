@@ -5,7 +5,7 @@
  */
 
 import React, { useCallback, useState } from 'react'
-import { ImageLightboxModal } from '../../markdown-renderer/replace-components/image/image-lightbox-modal'
+import { ImageLightboxModal } from '../../markdown-renderer/markdown-extension/image/image-lightbox-modal'
 import type {
   ImageClickedMessage,
   ImageDetails

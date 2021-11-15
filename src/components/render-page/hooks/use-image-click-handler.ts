@@ -6,7 +6,7 @@
 
 import type React from 'react'
 import { useCallback } from 'react'
-import type { ImageClickHandler } from '../../markdown-renderer/replace-components/image/image-replacer'
+import type { ImageClickHandler } from '../../markdown-renderer/markdown-extension/image/proxy-image-replacer'
 import type { RendererToEditorCommunicator } from '../window-post-message-communicator/renderer-to-editor-communicator'
 import { CommunicationMessageType } from '../window-post-message-communicator/rendering-message'
 

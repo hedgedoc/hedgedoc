@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { LineMarkerPosition } from '../../markdown-renderer/types'
+import type { LineMarkerPosition } from '../../markdown-renderer/markdown-extension/linemarker/types'
 
 export const findLineMarks = (
   lineMarks: LineMarkerPosition[],

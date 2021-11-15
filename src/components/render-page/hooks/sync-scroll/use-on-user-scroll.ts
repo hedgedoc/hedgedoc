@@ -6,7 +6,7 @@
 
 import type { RefObject } from 'react'
 import { useCallback } from 'react'
-import type { LineMarkerPosition } from '../../../markdown-renderer/types'
+import type { LineMarkerPosition } from '../../../markdown-renderer/markdown-extension/linemarker/types'
 import type { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
 
 export const useOnUserScroll = (

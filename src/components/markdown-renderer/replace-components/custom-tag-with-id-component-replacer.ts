@@ -34,8 +34,6 @@ export class CustomTagWithIdComponentReplacer extends ComponentReplacer {
    * @return the extracted id or undefined if the element isn't a custom tag or has no id attribute.
    */
   private extractId(element: Element): string | undefined {
-    return element.name === `app-${this.tagName}` && element.attribs && element.attribs.id
-      ? element.attribs.id
-      : undefined
+    return element.name === this.tagName && element.attribs && element.attribs.id ? element.attribs.id : undefined
   }
 }

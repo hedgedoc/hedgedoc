@@ -8,17 +8,17 @@ import React, { useMemo, useRef } from 'react'
 import { DocumentLengthLimitReachedAlert } from './document-length-limit-reached-alert'
 import { useConvertMarkdownToReactDom } from './hooks/use-convert-markdown-to-react-dom'
 import './markdown-renderer.scss'
-import type { LineMarkerPosition } from './types'
-import { useComponentReplacers } from './hooks/use-component-replacers'
+import type { LineMarkerPosition } from './markdown-extension/linemarker/types'
 import { useTranslation } from 'react-i18next'
-import type { LineMarkers } from './replace-components/linemarker/line-number-marker'
+import type { LineMarkers } from './markdown-extension/linemarker/add-line-marker-markdown-it-plugin'
 import { useCalculateLineMarkerPosition } from './utils/calculate-line-marker-positions'
 import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
 import type { TocAst } from 'markdown-it-toc-done-right'
 import { useOnRefChange } from './hooks/use-on-ref-change'
 import { useTrimmedContent } from './hooks/use-trimmed-content'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
-import { DocumentMarkdownItConfigurator } from './markdown-it-configurator/document-markdown-it-configurator'
+import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
+import { HeadlineAnchorsMarkdownExtension } from './markdown-extension/headline-anchors-markdown-extension'
 
 export interface DocumentMarkdownRendererProps extends CommonMarkdownRendererProps {
   onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void
@@ -34,7 +34,7 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
   baseUrl,
   onImageClick,
   outerContainerRef,
-  useAlternativeBreaks,
+  newlinesAreBreaks,
   lineOffset
 }) => {
   const markdownBodyRef = useRef<HTMLDivElement>(null)
@@ -42,21 +42,16 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
   const tocAst = useRef<TocAst>()
   const [trimmedContent, contentExceedsLimit] = useTrimmedContent(content)
 
-  const markdownIt = useMemo(
-    () =>
-      new DocumentMarkdownItConfigurator({
-        onTocChange: (toc) => (tocAst.current = toc),
-        onLineMarkers:
-          onLineMarkerPositionChanged === undefined
-            ? undefined
-            : (lineMarkers) => (currentLineMarkers.current = lineMarkers),
-        useAlternativeBreaks,
-        lineOffset
-      }).buildConfiguredMarkdownIt(),
-    [onLineMarkerPositionChanged, useAlternativeBreaks, lineOffset]
+  const extensions = useMarkdownExtensions(
+    baseUrl,
+    currentLineMarkers,
+    useMemo(() => [new HeadlineAnchorsMarkdownExtension()], []),
+    lineOffset,
+    onTaskCheckedChange,
+    onImageClick,
+    onTocChange
   )
-  const replacers = useComponentReplacers(onTaskCheckedChange, onImageClick, baseUrl, lineOffset)
-  const markdownReactDom = useConvertMarkdownToReactDom(trimmedContent, markdownIt, replacers)
+  const markdownReactDom = useConvertMarkdownToReactDom(trimmedContent, extensions, newlinesAreBreaks)
 
   useTranslation()
   useCalculateLineMarkerPosition(

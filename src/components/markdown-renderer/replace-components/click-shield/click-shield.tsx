@@ -9,12 +9,12 @@ import { Trans, useTranslation } from 'react-i18next'
 import type { IconName } from '../../../common/fork-awesome/types'
 import { ShowIf } from '../../../common/show-if/show-if'
 import './click-shield.scss'
-import { ProxyImageFrame } from '../image/proxy-image-frame'
 import { Logger } from '../../../../utils/logger'
 import type { Property } from 'csstype'
 import type { PropsWithDataCypressId } from '../../../../utils/cypress-attribute'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { ProxyImageFrame } from '../../markdown-extension/image/proxy-image-frame'
 
 const log = new Logger('OneClickEmbedding')
 

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { LineWithId } from '../types'
+import type { LineWithId } from '../markdown-extension/linemarker/types'
 import type { ArrayChange } from 'diff'
 import { diffArrays } from 'diff'
 

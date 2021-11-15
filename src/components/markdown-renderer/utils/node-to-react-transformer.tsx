@@ -10,8 +10,9 @@ import { convertNodeToReactElement } from '@hedgedoc/html-to-react/dist/convertN
 import type { ComponentReplacer, NodeReplacement, ValidReactDomElement } from '../replace-components/component-replacer'
 import { DO_NOT_REPLACE, REPLACE_WITH_NOTHING } from '../replace-components/component-replacer'
 import React from 'react'
-import type { LineWithId } from '../types'
+import type { LineWithId } from '../markdown-extension/linemarker/types'
 import Optional from 'optional-js'
+import { LinemarkerMarkdownExtension } from '../markdown-extension/linemarker/linemarker-markdown-extension'
 
 type LineIndexPair = [startLineIndex: number, endLineIndex: number]
 
@@ -116,7 +117,7 @@ export class NodeToReactTransformer {
    * @return the extracted line indexes
    */
   private static extractLineIndexFromLineMarker(lineMarker: Node): LineIndexPair | undefined {
-    if (!isTag(lineMarker) || lineMarker.tagName !== 'app-linemarker' || !lineMarker.attribs) {
+    if (!isTag(lineMarker) || lineMarker.tagName !== LinemarkerMarkdownExtension.tagName || !lineMarker.attribs) {
       return
     }
     const startLineInMarkdown = lineMarker.attribs['data-start-line']

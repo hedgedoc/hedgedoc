@@ -12,7 +12,7 @@ import { YamlArrayDeprecationAlert } from '../editor-page/renderer-pane/yaml-arr
 import { useDocumentSyncScrolling } from './hooks/sync-scroll/use-document-sync-scrolling'
 import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import { DocumentMarkdownRenderer } from '../markdown-renderer/document-markdown-renderer'
-import type { ImageClickHandler } from '../markdown-renderer/replace-components/image/image-replacer'
+import type { ImageClickHandler } from '../markdown-renderer/markdown-extension/image/proxy-image-replacer'
 import './markdown-document.scss'
 import { WidthBasedTableOfContents } from './width-based-table-of-contents'
 import { ShowIf } from '../common/show-if/show-if'
@@ -61,7 +61,7 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
 
   const [tocAst, setTocAst] = useState<TocAst>()
 
-  const useAlternativeBreaks = useApplicationState((state) => state.noteDetails.frontmatter.breaks)
+  const newlinesAreBreaks = useApplicationState((state) => state.noteDetails.frontmatter.newlinesAreBreaks)
 
   useEffect(() => {
     if (!onHeightChange) {
@@ -99,7 +99,7 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
           onTocChange={setTocAst}
           baseUrl={baseUrl}
           onImageClick={onImageClick}
-          useAlternativeBreaks={useAlternativeBreaks}
+          newlinesAreBreaks={newlinesAreBreaks}
           lineOffset={frontmatterInfo?.lineOffset}
         />
       </div>

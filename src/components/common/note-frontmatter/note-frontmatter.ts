@@ -21,7 +21,7 @@ export interface NoteFrontmatter {
   robots: string
   lang: typeof ISO6391[number]
   dir: NoteTextDirection
-  breaks: boolean
+  newlinesAreBreaks: boolean
   GA: string
   disqus: string
   type: NoteType
@@ -51,7 +51,7 @@ export const parseRawNoteFrontmatter = (rawData: RawNoteFrontmatter): NoteFrontm
     title: rawData.title ?? '',
     description: rawData.description ?? '',
     robots: rawData.robots ?? '',
-    breaks: rawData.breaks ?? true,
+    newlinesAreBreaks: rawData.breaks ?? true,
     GA: rawData.GA ?? '',
     disqus: rawData.disqus ?? '',
     lang: (rawData.lang ? ISO6391.find((lang) => lang === rawData.lang) : undefined) ?? 'en',

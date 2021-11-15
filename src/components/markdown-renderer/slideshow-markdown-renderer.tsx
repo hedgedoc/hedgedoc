@@ -7,7 +7,6 @@
 import React, { Fragment, useMemo, useRef } from 'react'
 import { useConvertMarkdownToReactDom } from './hooks/use-convert-markdown-to-react-dom'
 import './markdown-renderer.scss'
-import { useComponentReplacers } from './hooks/use-component-replacers'
 import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
 import type { TocAst } from 'markdown-it-toc-done-right'
 import { useOnRefChange } from './hooks/use-on-ref-change'
@@ -17,10 +16,10 @@ import './slideshow.scss'
 import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import { DocumentLengthLimitReachedAlert } from './document-length-limit-reached-alert'
 import type { SlideOptions } from '../common/note-frontmatter/types'
-import { processRevealCommentNodes } from './process-reveal-comment-nodes'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 import { LoadingSlide } from './loading-slide'
-import { SlideshowMarkdownItConfigurator } from './markdown-it-configurator/slideshow-markdown-it-configurator'
+import { RevealMarkdownExtension } from './markdown-extension/reveal/reveal-markdown-extension'
+import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
 
 export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererProps {
   slideOptions: SlideOptions
@@ -34,7 +33,7 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
   onTocChange,
   baseUrl,
   onImageClick,
-  useAlternativeBreaks,
+  newlinesAreBreaks,
   lineOffset,
   slideOptions
 }) => {
@@ -42,22 +41,17 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
   const tocAst = useRef<TocAst>()
   const [trimmedContent, contentExceedsLimit] = useTrimmedContent(content)
 
-  const markdownIt = useMemo(
-    () =>
-      new SlideshowMarkdownItConfigurator({
-        onTocChange: (toc) => (tocAst.current = toc),
-        useAlternativeBreaks,
-        lineOffset
-      }).buildConfiguredMarkdownIt(),
-    [lineOffset, useAlternativeBreaks]
+  const extensions = useMarkdownExtensions(
+    baseUrl,
+    undefined,
+    useMemo(() => [new RevealMarkdownExtension()], []),
+    lineOffset,
+    onTaskCheckedChange,
+    onImageClick,
+    onTocChange
   )
-  const replacers = useComponentReplacers(onTaskCheckedChange, onImageClick, baseUrl, lineOffset)
-  const markdownReactDom = useConvertMarkdownToReactDom(
-    trimmedContent,
-    markdownIt,
-    replacers,
-    processRevealCommentNodes
-  )
+
+  const markdownReactDom = useConvertMarkdownToReactDom(trimmedContent, extensions, newlinesAreBreaks)
   const revealStatus = useReveal(content, slideOptions)
 
   useExtractFirstHeadline(

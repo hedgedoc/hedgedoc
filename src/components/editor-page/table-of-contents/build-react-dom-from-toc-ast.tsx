@@ -8,8 +8,8 @@ import type { TocAst } from 'markdown-it-toc-done-right'
 import type { ReactElement } from 'react'
 import React, { Fragment } from 'react'
 import { ShowIf } from '../../common/show-if/show-if'
-import { createJumpToMarkClickEventHandler } from '../../markdown-renderer/replace-components/link-replacer/link-replacer'
 import { tocSlugify } from './toc-slugify'
+import { JumpAnchor } from '../../markdown-renderer/markdown-extension/link-replacer/jump-anchor'
 
 export const buildReactDomFromTocAst = (
   toc: TocAst,
@@ -32,9 +32,9 @@ export const buildReactDomFromTocAst = (
   const content = (
     <Fragment>
       <ShowIf condition={toc.l > 0}>
-        <a href={headlineUrl} title={rawName} onClick={createJumpToMarkClickEventHandler(slug.substr(1))}>
+        <JumpAnchor href={headlineUrl} title={rawName} jumpTargetId={slug.substr(1)}>
           {rawName}
-        </a>
+        </JumpAnchor>
       </ShowIf>
       <ShowIf condition={toc.c.length > 0}>
         <ul>

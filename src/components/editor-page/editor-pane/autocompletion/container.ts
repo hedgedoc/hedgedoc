@@ -6,16 +6,16 @@
 
 import type { Editor, Hint, Hints } from 'codemirror'
 import { Pos } from 'codemirror'
-import { validAlertLevels } from '../../../markdown-renderer/markdown-it-plugins/alert-container'
 import type { Hinter } from './index'
 import { findWordAtCursor } from './index'
+import { alertLevels } from '../../../markdown-renderer/markdown-extension/alert-markdown-extension'
 
 const wordRegExp = /^:::((?:\w|-|\+)*)$/
 const spoilerSuggestion: Hint = {
   text: ':::spoiler Toggle label\nToggled content\n::: \n',
   displayText: 'spoiler'
 }
-const suggestions = validAlertLevels
+const suggestions = alertLevels
   .map(
     (suggestion: string): Hint => ({
       text: ':::' + suggestion + '\n\n::: \n',

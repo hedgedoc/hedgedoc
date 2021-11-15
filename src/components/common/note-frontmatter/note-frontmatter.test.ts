@@ -40,7 +40,7 @@ describe('yaml frontmatter', () => {
 
   it('should parse "breaks"', () => {
     const noteFrontmatter = createNoteFrontmatterFromYaml('breaks: false')
-    expect(noteFrontmatter.breaks).toEqual(false)
+    expect(noteFrontmatter.newlinesAreBreaks).toEqual(false)
   })
 
   it('should parse an empty opengraph object', () => {

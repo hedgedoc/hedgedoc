@@ -14,13 +14,13 @@ describe('Quote extra tags', function () {
       cy.setCodemirrorContent('[name=testy mctestface]')
 
       cy.getMarkdownBody()
-        .find('.quote-extra')
+        .find('.blockquote-extra')
         .should('be.visible')
         .find('.fa-user')
         .should('be.visible')
 
       cy.getMarkdownBody()
-        .find('.quote-extra')
+        .find('.blockquote-extra')
         .should('be.visible')
         .contains('testy mctestface')
     })
@@ -31,13 +31,13 @@ describe('Quote extra tags', function () {
       cy.setCodemirrorContent(`[time=always]`)
 
       cy.getMarkdownBody()
-        .find('.quote-extra')
+        .find('.blockquote-extra')
         .should('be.visible')
         .find('.fa-clock-o')
         .should('be.visible')
 
       cy.getMarkdownBody()
-        .find('.quote-extra')
+        .find('.blockquote-extra')
         .should('be.visible')
         .contains('always')
     })
@@ -48,13 +48,13 @@ describe('Quote extra tags', function () {
       cy.setCodemirrorContent(`[color=#b51f08]`)
 
       cy.getMarkdownBody()
-        .find('.quote-extra')
+        .find('.blockquote-extra')
         .should('be.visible')
         .find('.fa-tag')
         .should('be.visible')
 
       cy.getMarkdownBody()
-        .find('.quote-extra')
+        .find('.blockquote-extra')
         .should('be.visible')
         .should('have.css', 'color', 'rgb(181, 31, 8)')
     })
@@ -63,7 +63,7 @@ describe('Quote extra tags', function () {
       cy.setCodemirrorContent(`> [color=#b51f08] HedgeDoc`)
 
       cy.getMarkdownBody()
-        .find('.quote-extra')
+        .find('.blockquote-extra')
         .should('not.exist')
 
       cy.getMarkdownBody()

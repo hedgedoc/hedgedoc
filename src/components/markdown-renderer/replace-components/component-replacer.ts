@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { Element } from 'domhandler'
+import type { Element, Node } from 'domhandler'
 import { isText } from 'domhandler'
 import type MarkdownIt from 'markdown-it'
 import type { ReactElement } from 'react'
 
 export type ValidReactDomElement = ReactElement | string | null
 
-export type SubNodeTransform = (node: Element, subKey: number | string) => ValidReactDomElement | void
+export type SubNodeTransform = (node: Node, subKey: number | string) => NodeReplacement
 
 export type NativeRenderer = () => ValidReactDomElement
 
@@ -36,6 +36,17 @@ export abstract class ComponentReplacer {
   protected static extractTextChildContent(node: Element): string {
     const childrenTextNode = node.children[0]
     return isText(childrenTextNode) ? childrenTextNode.data : ''
+  }
+
+  /**
+   * Applies the given {@link SubNodeTransform sub node transformer} to every children of the given {@link Node}
+   *
+   * @param node The node whose children should be transformed
+   * @param subNodeTransform The transformer that should be used.
+   * @return The children as react elements.
+   */
+  protected static transformChildren(node: Element, subNodeTransform: SubNodeTransform): NodeReplacement[] {
+    return node.children.map((value, index) => subNodeTransform(value, index))
   }
 
   /**

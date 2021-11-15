@@ -15,6 +15,9 @@
             "locked": "Mouse input locked",
             "unlocked": "Mouse input unlocked"
         },
+        "plantuml": {
+            "notConfigured": "PlantUML plugin is enabled but not properly configured."
+        },
         "flowchart": {
             "invalidSyntax": "Invalid flowchart.js syntax!"
         },
