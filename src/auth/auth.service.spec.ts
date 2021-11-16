@@ -93,7 +93,7 @@ describe('AuthService', () => {
         .digest('hex');
       jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
         ...authToken,
-        user: user,
+        user: Promise.resolve(user),
         accessTokenHash: accessTokenHash,
       });
       const authTokenFromCall = await service.getAuthTokenAndValidate(
@@ -102,7 +102,7 @@ describe('AuthService', () => {
       );
       expect(authTokenFromCall).toEqual({
         ...authToken,
-        user: user,
+        user: Promise.resolve(user),
         accessTokenHash: accessTokenHash,
       });
     });
@@ -116,7 +116,7 @@ describe('AuthService', () => {
       it('AuthToken has wrong hash', async () => {
         jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
           ...authToken,
-          user: user,
+          user: Promise.resolve(user),
           accessTokenHash: 'the wrong hash',
         });
         await expect(
@@ -127,7 +127,7 @@ describe('AuthService', () => {
         const accessTokenHash = await hashPassword(token);
         jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
           ...authToken,
-          user: user,
+          user: Promise.resolve(user),
           accessTokenHash: accessTokenHash,
           validUntil: new Date(1549312452000),
         });
@@ -142,7 +142,7 @@ describe('AuthService', () => {
     it('works', async () => {
       jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
         ...authToken,
-        user: user,
+        user: Promise.resolve(user),
         lastUsed: new Date(1549312452000),
       });
       jest
@@ -178,7 +178,7 @@ describe('AuthService', () => {
       });
       jest.spyOn(authTokenRepo, 'findOne').mockResolvedValue({
         ...authToken,
-        user: user,
+        user: Promise.resolve(user),
         accessTokenHash: accessTokenHash,
       });
       jest
@@ -212,14 +212,14 @@ describe('AuthService', () => {
     it('works', async () => {
       jest.spyOn(authTokenRepo, 'findOne').mockResolvedValue({
         ...authToken,
-        user: user,
+        user: Promise.resolve(user),
       });
       jest
         .spyOn(authTokenRepo, 'remove')
         .mockImplementationOnce(async (token, __): Promise<AuthToken> => {
           expect(token).toEqual({
             ...authToken,
-            user: user,
+            user: Promise.resolve(user),
           });
           return authToken;
         });
