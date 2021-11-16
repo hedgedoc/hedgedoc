@@ -7,7 +7,6 @@
     "group:test",
     ":gitSignOff",
     ":prHourlyLimitNone",
-    ":dependencyDashboard",
     ":rebaseStalePrs",
     ":maintainLockFilesWeekly",
     ":automergePatch"
