@@ -53,7 +53,11 @@ export class AuthService {
     }
     const accessToken = await this.getAuthTokenAndValidate(keyId, secret);
     await this.setLastUsedToken(keyId);
-    return await this.usersService.getUserByUsername(accessToken.user.username);
+    return await this.usersService.getUserByUsername(
+      (
+        await accessToken.user
+      ).username,
+    );
   }
 
   async createTokenForUser(
