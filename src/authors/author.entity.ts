@@ -39,21 +39,21 @@ export class Author {
    * Only contains sessions for anonymous users, which don't have a user set
    */
   @OneToMany(() => Session, (session) => session.author)
-  sessions: Session[];
+  sessions: Promise<Session[]>;
 
   /**
    * User that this author corresponds to
    * Only set when the user was identified (by a browser session) as a registered user at edit-time
    */
   @ManyToOne(() => User, (user) => user.authors, { nullable: true })
-  user: User | null;
+  user: Promise<User | null>;
 
   /**
    * List of edits that this author created
    * All edits must belong to the same note
    */
   @OneToMany(() => Edit, (edit) => edit.author)
-  edits: Edit[];
+  edits: Promise<Edit[]>;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
@@ -61,9 +61,9 @@ export class Author {
   public static create(color: number): Omit<Author, 'id'> {
     const newAuthor = new Author();
     newAuthor.color = color;
-    newAuthor.sessions = [];
-    newAuthor.user = null;
-    newAuthor.edits = [];
+    newAuthor.sessions = Promise.resolve([]);
+    newAuthor.user = Promise.resolve(null);
+    newAuthor.edits = Promise.resolve([]);
     return newAuthor;
   }
 }

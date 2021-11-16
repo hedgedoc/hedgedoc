@@ -703,7 +703,7 @@ describe('NotesService', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const author = Author.create(1);
-      author.user = user;
+      author.user = Promise.resolve(user);
       const group = Group.create('testGroup', 'testGroup', false) as Group;
       const content = 'testContent';
       jest
@@ -798,7 +798,7 @@ describe('NotesService', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const author = Author.create(1);
-      author.user = user;
+      author.user = Promise.resolve(user);
       const otherUser = User.create('other hardcoded', 'Testy2') as User;
       otherUser.username = 'other hardcoded user';
       const group = Group.create('testGroup', 'testGroup', false) as Group;

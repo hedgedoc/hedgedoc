@@ -343,7 +343,7 @@ export class NotesService {
     if (lastRevision && lastRevision.edits) {
       // Sort the last Revisions Edits by their updatedAt Date to get the latest one
       // the user of that Edit is the updateUser
-      return lastRevision.edits.sort(
+      return await lastRevision.edits.sort(
         (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime(),
       )[0].author.user;
     }

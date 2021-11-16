@@ -67,7 +67,7 @@ createConnection({
       const identity = Identity.create(user, ProviderType.LOCAL, false);
       identity.passwordHash = await hashPassword(password);
       connection.manager.create(Identity, identity);
-      author.user = user;
+      author.user = Promise.resolve(user);
       const revision = Revision.create(
         'This is a test note',
         'This is a test note',
