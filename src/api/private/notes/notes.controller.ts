@@ -14,14 +14,10 @@ import {
   Param,
   Post,
   UseGuards,
-  UseInterceptors,
+  UseInterceptors
 } from '@nestjs/common';
 
-import {
-  AlreadyInDBError,
-  ForbiddenIdError,
-  NotInDBError,
-} from '../../../errors/errors';
+import { AlreadyInDBError, ForbiddenIdError, NotInDBError } from '../../../errors/errors';
 import { HistoryService } from '../../../history/history.service';
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';

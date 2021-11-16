@@ -21,24 +21,24 @@ export enum GuestPermission {
 @Injectable()
 export class PermissionsService {
   public guestPermission: GuestPermission; // TODO change to configOption
-  mayRead(user: User | null, note: Note): boolean {
+  async mayRead(user: User | null, note: Note): Promise<boolean> {
     if (this.isOwner(user, note)) return true;
 
     if (this.hasPermissionUser(user, note, false)) return true;
 
     // noinspection RedundantIfStatementJS
-    if (this.hasPermissionGroup(user, note, false)) return true;
+    if (await this.hasPermissionGroup(user, note, false)) return true;
 
     return false;
   }
 
-  mayWrite(user: User | null, note: Note): boolean {
+  async mayWrite(user: User | null, note: Note): Promise<boolean> {
     if (this.isOwner(user, note)) return true;
 
     if (this.hasPermissionUser(user, note, true)) return true;
 
     // noinspection RedundantIfStatementJS
-    if (this.hasPermissionGroup(user, note, true)) return true;
+    if (await this.hasPermissionGroup(user, note, true)) return true;
 
     return false;
   }
@@ -83,11 +83,11 @@ export class PermissionsService {
     return false;
   }
 
-  private hasPermissionGroup(
+  private async hasPermissionGroup(
     user: User | null,
     note: Note,
     wantEdit: boolean,
-  ): boolean {
+  ): Promise<boolean> {
     // TODO: Get real config value
     let guestsAllowed = false;
     switch (this.guestPermission) {
@@ -116,7 +116,7 @@ export class PermissionsService {
         } else {
           // Handle normal groups
           if (user) {
-            for (const member of groupPermission.group.members) {
+            for (const member of await groupPermission.group.members) {
               if (member.id === user.id) return true;
             }
           }

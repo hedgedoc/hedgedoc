@@ -16,7 +16,7 @@ import {
   Post,
   Put,
   UseGuards,
-  UseInterceptors,
+  UseInterceptors
 } from '@nestjs/common';
 import {
   ApiCreatedResponse,
@@ -26,24 +26,17 @@ import {
   ApiProduces,
   ApiSecurity,
   ApiTags,
-  ApiUnauthorizedResponse,
+  ApiUnauthorizedResponse
 } from '@nestjs/swagger';
 
 import { TokenAuthGuard } from '../../../auth/token.strategy';
-import {
-  AlreadyInDBError,
-  ForbiddenIdError,
-  NotInDBError,
-} from '../../../errors/errors';
+import { AlreadyInDBError, ForbiddenIdError, NotInDBError } from '../../../errors/errors';
 import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
 import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
-import {
-  NotePermissionsDto,
-  NotePermissionsUpdateDto,
-} from '../../../notes/note-permissions.dto';
+import { NotePermissionsDto, NotePermissionsUpdateDto } from '../../../notes/note-permissions.dto';
 import { NoteDto } from '../../../notes/note.dto';
 import { Note } from '../../../notes/note.entity';
 import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
@@ -57,7 +50,7 @@ import { User } from '../../../users/user.entity';
 import {
   forbiddenDescription,
   successfullyDeletedDescription,
-  unauthorizedDescription,
+  unauthorizedDescription
 } from '../../utils/descriptions';
 import { FullApi } from '../../utils/fullapi-decorator';
 import { GetNoteInterceptor } from '../../utils/get-note.interceptor';

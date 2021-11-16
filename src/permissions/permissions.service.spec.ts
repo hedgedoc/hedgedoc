@@ -170,79 +170,79 @@ describe('PermissionsService', () => {
   const notes = createNoteUserPermissionNotes();
 
   describe('mayRead works with', () => {
-    it('Owner', () => {
+    it('Owner', async () => {
       permissionsService.guestPermission = GuestPermission.DENY;
-      expect(permissionsService.mayRead(user1, notes[0])).toBeTruthy();
-      expect(permissionsService.mayRead(user1, notes[7])).toBeFalsy();
+      expect(await permissionsService.mayRead(user1, notes[0])).toBeTruthy();
+      expect(await permissionsService.mayRead(user1, notes[7])).toBeFalsy();
     });
-    it('userPermission read', () => {
+    it('userPermission read', async () => {
       permissionsService.guestPermission = GuestPermission.DENY;
-      expect(permissionsService.mayRead(user1, notes[1])).toBeTruthy();
-      expect(permissionsService.mayRead(user1, notes[2])).toBeTruthy();
-      expect(permissionsService.mayRead(user1, notes[3])).toBeTruthy();
+      expect(await permissionsService.mayRead(user1, notes[1])).toBeTruthy();
+      expect(await permissionsService.mayRead(user1, notes[2])).toBeTruthy();
+      expect(await permissionsService.mayRead(user1, notes[3])).toBeTruthy();
     });
-    it('userPermission write', () => {
+    it('userPermission write', async () => {
       permissionsService.guestPermission = GuestPermission.DENY;
-      expect(permissionsService.mayRead(user1, notes[4])).toBeTruthy();
-      expect(permissionsService.mayRead(user1, notes[5])).toBeTruthy();
-      expect(permissionsService.mayRead(user1, notes[6])).toBeTruthy();
-      expect(permissionsService.mayRead(user1, notes[7])).toBeFalsy();
+      expect(await permissionsService.mayRead(user1, notes[4])).toBeTruthy();
+      expect(await permissionsService.mayRead(user1, notes[5])).toBeTruthy();
+      expect(await permissionsService.mayRead(user1, notes[6])).toBeTruthy();
+      expect(await permissionsService.mayRead(user1, notes[7])).toBeFalsy();
     });
 
     describe('guest permission', () => {
-      it('CREATE_ALIAS', () => {
+      it('CREATE_ALIAS', async () => {
         permissionsService.guestPermission = GuestPermission.CREATE_ALIAS;
-        expect(permissionsService.mayRead(null, notes[8])).toBeTruthy();
+        expect(await permissionsService.mayRead(null, notes[8])).toBeTruthy();
       });
-      it('CREATE', () => {
+      it('CREATE', async () => {
         permissionsService.guestPermission = GuestPermission.CREATE;
-        expect(permissionsService.mayRead(null, notes[8])).toBeTruthy();
+        expect(await permissionsService.mayRead(null, notes[8])).toBeTruthy();
       });
-      it('WRITE', () => {
+      it('WRITE', async () => {
         permissionsService.guestPermission = GuestPermission.WRITE;
-        expect(permissionsService.mayRead(null, notes[8])).toBeTruthy();
+        expect(await permissionsService.mayRead(null, notes[8])).toBeTruthy();
       });
-      it('READ', () => {
+      it('READ', async () => {
         permissionsService.guestPermission = GuestPermission.READ;
-        expect(permissionsService.mayRead(null, notes[8])).toBeTruthy();
+        expect(await permissionsService.mayRead(null, notes[8])).toBeTruthy();
       });
     });
   });
   describe('mayWrite works with', () => {
-    it('Owner', () => {
+    it('Owner', async () => {
       permissionsService.guestPermission = GuestPermission.DENY;
-      expect(permissionsService.mayWrite(user1, notes[0])).toBeTruthy();
-      expect(permissionsService.mayWrite(user1, notes[7])).toBeFalsy();
+      expect(await permissionsService.mayWrite(user1, notes[0])).toBeTruthy();
+      expect(await permissionsService.mayWrite(user1, notes[7])).toBeFalsy();
     });
-    it('userPermission read', () => {
+    it('userPermission read', async () => {
       permissionsService.guestPermission = GuestPermission.DENY;
-      expect(permissionsService.mayWrite(user1, notes[1])).toBeFalsy();
-      expect(permissionsService.mayWrite(user1, notes[2])).toBeFalsy();
-      expect(permissionsService.mayWrite(user1, notes[3])).toBeFalsy();
+      expect(await permissionsService.mayWrite(user1, notes[1])).toBeFalsy();
+      expect(await permissionsService.mayWrite(user1, notes[2])).toBeFalsy();
+      expect(await permissionsService.mayWrite(user1, notes[3])).toBeFalsy();
     });
-    it('userPermission write', () => {
+    it('userPermission write', async () => {
       permissionsService.guestPermission = GuestPermission.DENY;
-      expect(permissionsService.mayWrite(user1, notes[4])).toBeTruthy();
-      expect(permissionsService.mayWrite(user1, notes[5])).toBeTruthy();
-      expect(permissionsService.mayWrite(user1, notes[6])).toBeTruthy();
-      expect(permissionsService.mayWrite(user1, notes[7])).toBeFalsy();
+      expect(await permissionsService.mayWrite(user1, notes[4])).toBeTruthy();
+      expect(await permissionsService.mayWrite(user1, notes[5])).toBeTruthy();
+      expect(await permissionsService.mayWrite(user1, notes[6])).toBeTruthy();
+      expect(await permissionsService.mayWrite(user1, notes[7])).toBeFalsy();
     });
     describe('guest permission', () => {
-      it('CREATE_ALIAS', () => {
+      it('CREATE_ALIAS', async () => {
         permissionsService.guestPermission = GuestPermission.CREATE_ALIAS;
-        expect(permissionsService.mayWrite(null, notes[9])).toBeTruthy();
+        expect(await permissionsService.mayWrite(null, notes[9])).toBeTruthy();
       });
-      it('CREATE', () => {
+      it('CREATE', async () => {
         permissionsService.guestPermission = GuestPermission.CREATE;
-        expect(permissionsService.mayWrite(null, notes[9])).toBeTruthy();
+        expect(await permissionsService.mayWrite(null, notes[9])).toBeTruthy();
       });
-      it('WRITE', () => {
+      it('WRITE', async () => {
         permissionsService.guestPermission = GuestPermission.WRITE;
-        expect(permissionsService.mayWrite(null, notes[9])).toBeTruthy();
+        expect(await permissionsService.mayWrite(null, notes[9])).toBeTruthy();
       });
-      it('READ', () => {
+      it('READ', async () => {
         permissionsService.guestPermission = GuestPermission.READ;
-        expect(permissionsService.mayWrite(null, notes[9])).toBeFalsy();
+        expect(await permissionsService.mayWrite(null, notes[9])).toBeFalsy();
       });
     });
   });
@@ -277,11 +277,11 @@ describe('PermissionsService', () => {
     result[SpecialGroup.LOGGED_IN] = loggedIn;
 
     const user1group = Group.create('user1group', 'user1group', false) as Group;
-    user1group.members = [user1];
+    user1group.members = Promise.resolve([user1]);
     result['user1group'] = user1group;
 
     const user2group = Group.create('user2group', 'user2group', false) as Group;
-    user2group.members = [user2];
+    user2group.members = Promise.resolve([user2]);
     result['user2group'] = user2group;
 
     const user1and2group = Group.create(
@@ -289,7 +289,7 @@ describe('PermissionsService', () => {
       'user1and2group',
       false,
     ) as Group;
-    user1and2group.members = [user1, user2];
+    user1and2group.members = Promise.resolve([user1, user2]);
     result['user1and2group'] = user1and2group;
 
     const user2and1group = Group.create(
@@ -297,7 +297,7 @@ describe('PermissionsService', () => {
       'user2and1group',
       false,
     ) as Group;
-    user2and1group.members = [user2, user1];
+    user2and1group.members = Promise.resolve([user2, user1]);
     result['user2and1group'] = user2and1group;
 
     return result;
@@ -506,15 +506,15 @@ describe('PermissionsService', () => {
       for (const perm of permission.permissions) {
         permissionString += ` ${perm.group.name}:${String(perm.canEdit)}`;
       }
-      it(`mayWrite - test #${i}:${permissionString}`, () => {
+      it(`mayWrite - test #${i}:${permissionString}`, async () => {
         permissionsService.guestPermission = guestPermission;
-        expect(permissionsService.mayWrite(user1, note)).toEqual(
+        expect(await permissionsService.mayWrite(user1, note)).toEqual(
           permission.allowsWrite,
         );
       });
-      it(`mayRead - test #${i}:${permissionString}`, () => {
+      it(`mayRead - test #${i}:${permissionString}`, async () => {
         permissionsService.guestPermission = guestPermission;
-        expect(permissionsService.mayRead(user1, note)).toEqual(
+        expect(await permissionsService.mayRead(user1, note)).toEqual(
           permission.allowsRead,
         );
       });
