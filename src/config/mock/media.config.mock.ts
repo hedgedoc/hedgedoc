@@ -9,7 +9,8 @@ export default registerAs('mediaConfig', () => ({
   backend: {
     use: 'filesystem',
     filesystem: {
-      uploadPath: 'test_uploads',
+      uploadPath:
+        'test_uploads' + Math.floor(Math.random() * 100000).toString(),
     },
   },
 }));
