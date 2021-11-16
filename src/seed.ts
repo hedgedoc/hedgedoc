@@ -57,22 +57,23 @@ createConnection({
     users.push(User.create('hardcoded_2', 'Test User 2'));
     users.push(User.create('hardcoded_3', 'Test User 3'));
     const notes: Note[] = [];
-    notes.push(Note.create(undefined, 'test'));
-    notes.push(Note.create(undefined, 'test2'));
-    notes.push(Note.create(undefined, 'test3'));
+    notes.push(Note.create(null, 'test') as Note);
+    notes.push(Note.create(null, 'test2') as Note);
+    notes.push(Note.create(null, 'test3') as Note);
 
     for (let i = 0; i < 3; i++) {
       const author = connection.manager.create(Author, Author.create(1));
       const user = connection.manager.create(User, users[i]);
-      const identity = Identity.create(user, ProviderType.LOCAL);
+      const identity = Identity.create(user, ProviderType.LOCAL, false);
       identity.passwordHash = await hashPassword(password);
       connection.manager.create(Identity, identity);
       author.user = user;
       const revision = Revision.create(
         'This is a test note',
         'This is a test note',
-      );
-      const edit = Edit.create(author, 1, 42);
+        notes[i],
+      ) as Revision;
+      const edit = Edit.create(author, 1, 42) as Edit;
       revision.edits = [edit];
       notes[i].revisions = Promise.all([revision]);
       notes[i].userPermissions = [];

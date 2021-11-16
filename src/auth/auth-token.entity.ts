@@ -45,21 +45,17 @@ export class AuthToken {
   lastUsed: Date | null;
 
   public static create(
+    keyId: string,
     user: User,
     label: string,
-    keyId: string,
     accessToken: string,
     validUntil: Date,
-  ): Pick<
-    AuthToken,
-    'user' | 'label' | 'keyId' | 'accessTokenHash' | 'createdAt' | 'validUntil'
-  > {
+  ): Omit<AuthToken, 'id' | 'createdAt'> {
     const newToken = new AuthToken();
+    newToken.keyId = keyId;
     newToken.user = user;
     newToken.label = label;
-    newToken.keyId = keyId;
     newToken.accessTokenHash = accessToken;
-    newToken.createdAt = new Date();
     newToken.validUntil = validUntil;
     newToken.lastUsed = null;
     return newToken;

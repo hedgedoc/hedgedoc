@@ -100,12 +100,16 @@ export class Identity {
   public static create(
     user: User,
     providerType: ProviderType,
-    syncSource = false,
-  ): Identity {
+    syncSource: boolean,
+  ): Omit<Identity, 'id' | 'createdAt' | 'updatedAt'> {
     const newIdentity = new Identity();
     newIdentity.user = user;
     newIdentity.providerType = providerType;
+    newIdentity.providerName = null;
     newIdentity.syncSource = syncSource;
+    newIdentity.providerUserId = null;
+    newIdentity.oAuthAccessToken = null;
+    newIdentity.passwordHash = null;
     return newIdentity;
   }
 }

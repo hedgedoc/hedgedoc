@@ -62,9 +62,9 @@ describe('AuthService', () => {
 
     user = User.create('hardcoded', 'Testy') as User;
     authToken = AuthToken.create(
+      'testKeyId',
       user,
       'testToken',
-      'testKeyId',
       'abc',
       new Date(new Date().getTime() + 60000), // make this AuthToken valid for 1min
     ) as AuthToken;

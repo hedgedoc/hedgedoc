@@ -59,6 +59,7 @@ export class Revision {
    */
   @ManyToOne((_) => Note, (note) => note.revisions, { onDelete: 'CASCADE' })
   note: Note;
+
   /**
    * All edit objects which are used in the revision.
    */
@@ -69,11 +70,17 @@ export class Revision {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  static create(content: string, patch: string): Revision {
+  static create(
+    content: string,
+    patch: string,
+    note: Note,
+  ): Omit<Revision, 'id' | 'createdAt'> {
     const newRevision = new Revision();
     newRevision.patch = patch;
     newRevision.content = content;
     newRevision.length = content.length;
+    newRevision.note = note;
+    newRevision.edits = [];
     return newRevision;
   }
 }

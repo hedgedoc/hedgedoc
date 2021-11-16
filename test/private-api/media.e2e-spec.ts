@@ -40,6 +40,7 @@ describe('Media', () => {
 
     await testSetup.notesService.createNote(
       'test content',
+      null,
       'test_upload_media',
     );
     user = await testSetup.userService.createUser('hardcoded', 'Testy');
@@ -109,6 +110,7 @@ describe('Media', () => {
   it('DELETE /media/{filename}', async () => {
     const testNote = await testSetup.notesService.createNote(
       'test content',
+      null,
       'test_delete_media',
     );
     const testImage = await fs.readFile('test/private-api/fixtures/test.png');

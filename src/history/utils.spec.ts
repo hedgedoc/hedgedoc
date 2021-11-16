@@ -15,8 +15,8 @@ describe('getIdentifier', () => {
   let entry: HistoryEntry;
   beforeEach(() => {
     const user = User.create('hardcoded', 'Testy') as User;
-    note = Note.create(user, alias);
-    entry = HistoryEntry.create(user, note);
+    note = Note.create(user, alias) as Note;
+    entry = HistoryEntry.create(user, note) as HistoryEntry;
   });
   it('returns the publicId if there are no aliases', () => {
     note.aliases = undefined as unknown as Alias[];

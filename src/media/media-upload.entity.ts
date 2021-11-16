@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import * as crypto from 'crypto';
 import {
   Column,
   CreateDateColumn,
@@ -53,24 +52,31 @@ export class MediaUpload {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
+  /**
+   * Create a new media upload enity
+   * @param id the id of the upload
+   * @param note the note the upload should be associated with. This is required despite the fact the note field is optional, because it's possible to delete a note without also deleting the associated media uploads, but a note is required for the initial creation.
+   * @param user the user that owns the upload
+   * @param extension which file extension the upload has
+   * @param backendType on which type of media backend the upload is saved
+   * @param backendData the backend data returned by the media backend
+   * @param fileUrl the url where the upload can be accessed
+   */
   public static create(
+    id: string,
     note: Note,
     user: User,
     extension: string,
     backendType: BackendType,
-    backendData?: string,
-  ): MediaUpload {
+    fileUrl: string,
+  ): Omit<MediaUpload, 'createdAt'> {
     const upload = new MediaUpload();
-    const randomBytes = crypto.randomBytes(16);
-    upload.id = randomBytes.toString('hex') + '.' + extension;
+    upload.id = id;
     upload.note = note;
     upload.user = user;
     upload.backendType = backendType;
-    if (backendData) {
-      upload.backendData = backendData;
-    } else {
-      upload.backendData = null;
-    }
+    upload.backendData = null;
+    upload.fileUrl = fileUrl;
     return upload;
   }
 }

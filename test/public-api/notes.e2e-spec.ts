@@ -61,7 +61,7 @@ describe('Notes', () => {
   describe('GET /notes/{note}', () => {
     it('works with an existing note', async () => {
       // check if we can succefully get a note that exists
-      await testSetup.notesService.createNote(content, 'test1', user);
+      await testSetup.notesService.createNote(content, user, 'test1');
       const response = await request(testSetup.app.getHttpServer())
         .get('/api/v2/notes/test1')
         .expect('Content-Type', /json/)
@@ -127,8 +127,8 @@ describe('Notes', () => {
         const noteId = 'test3';
         const note = await testSetup.notesService.createNote(
           content,
-          noteId,
           user,
+          noteId,
         );
         await testSetup.mediaService.saveFile(testImage, user, note);
         await request(testSetup.app.getHttpServer())
@@ -151,8 +151,8 @@ describe('Notes', () => {
         const noteId = 'test3a';
         const note = await testSetup.notesService.createNote(
           content,
-          noteId,
           user,
+          noteId,
         );
         const url = await testSetup.mediaService.saveFile(
           testImage,
@@ -183,8 +183,9 @@ describe('Notes', () => {
     it('works with an existing alias with permissions', async () => {
       const note = await testSetup.notesService.createNote(
         content,
-        'test3',
         user,
+
+        'test3',
       );
       const updateNotePermission = new NotePermissionsUpdateDto();
       updateNotePermission.sharedToUsers = [
@@ -233,7 +234,7 @@ describe('Notes', () => {
   describe('PUT /notes/{note}', () => {
     const changedContent = 'New note text';
     it('works with existing alias', async () => {
-      await testSetup.notesService.createNote(content, 'test4', user);
+      await testSetup.notesService.createNote(content, user, 'test4');
       const response = await request(testSetup.app.getHttpServer())
         .put('/api/v2/notes/test4')
         .set('Content-Type', 'text/markdown')
@@ -264,7 +265,7 @@ describe('Notes', () => {
 
   describe('GET /notes/{note}/metadata', () => {
     it('returns complete metadata object', async () => {
-      await testSetup.notesService.createNote(content, 'test5', user);
+      await testSetup.notesService.createNote(content, user, 'test5');
       const metadata = await request(testSetup.app.getHttpServer())
         .get('/api/v2/notes/test5/metadata')
         .expect(200);
@@ -306,8 +307,9 @@ describe('Notes', () => {
       // create a note
       const note = await testSetup.notesService.createNote(
         content,
-        'test5a',
         user,
+
+        'test5a',
       );
       // save the creation time
       const createDate = (await note.revisions)[0].createdAt;
@@ -325,7 +327,7 @@ describe('Notes', () => {
 
   describe('GET /notes/{note}/revisions', () => {
     it('works with existing alias', async () => {
-      await testSetup.notesService.createNote(content, 'test6', user);
+      await testSetup.notesService.createNote(content, user, 'test6');
       const response = await request(testSetup.app.getHttpServer())
         .get('/api/v2/notes/test6/revisions')
         .expect('Content-Type', /json/)
@@ -352,8 +354,9 @@ describe('Notes', () => {
     it('works with an existing alias', async () => {
       const note = await testSetup.notesService.createNote(
         content,
-        'test7',
         user,
+
+        'test7',
       );
       const revision = await testSetup.notesService.getLatestRevision(note);
       const response = await request(testSetup.app.getHttpServer())
@@ -378,7 +381,7 @@ describe('Notes', () => {
 
   describe('GET /notes/{note}/content', () => {
     it('works with an existing alias', async () => {
-      await testSetup.notesService.createNote(content, 'test8', user);
+      await testSetup.notesService.createNote(content, user, 'test8');
       const response = await request(testSetup.app.getHttpServer())
         .get('/api/v2/notes/test8/content')
         .expect(200);
@@ -404,13 +407,13 @@ describe('Notes', () => {
       const extraAlias = 'test10';
       const note1 = await testSetup.notesService.createNote(
         content,
-        alias,
         user,
+        alias,
       );
       const note2 = await testSetup.notesService.createNote(
         content,
-        extraAlias,
         user,
+        extraAlias,
       );
       const httpServer = testSetup.app.getHttpServer();
       const response = await request(httpServer)
@@ -455,8 +458,8 @@ describe('Notes', () => {
       const alias = 'test11';
       await testSetup.notesService.createNote(
         'This is a test note.',
-        alias,
         user2,
+        alias,
       );
       await request(testSetup.app.getHttpServer())
         .get(`/api/v2/notes/${alias}/media/`)

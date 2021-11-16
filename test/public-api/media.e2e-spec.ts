@@ -38,6 +38,7 @@ describe('Media', () => {
     user = await testSetup.userService.createUser('hardcoded', 'Testy');
     testNote = await testSetup.notesService.createNote(
       'test content',
+      null,
       'test_upload_media',
     );
   });

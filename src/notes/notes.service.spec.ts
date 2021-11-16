@@ -131,7 +131,7 @@ describe('NotesService', () => {
     describe('works', () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const alias = 'alias';
-      const note = Note.create(user, alias);
+      const note = Note.create(user, alias) as Note;
 
       it('with no note', async () => {
         jest.spyOn(noteRepo, 'find').mockResolvedValueOnce(undefined);
@@ -164,11 +164,11 @@ describe('NotesService', () => {
           .mockImplementation(async (note: Note): Promise<Note> => note);
       });
       it('without alias, without owner', async () => {
-        const newNote = await service.createNote(content);
+        const newNote = await service.createNote(content, null);
         const revisions = await newNote.revisions;
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
-        expect(newNote.historyEntries).toBeUndefined();
+        expect(newNote.historyEntries).toHaveLength(0);
         expect(newNote.userPermissions).toHaveLength(0);
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
@@ -176,7 +176,7 @@ describe('NotesService', () => {
         expect(newNote.aliases).toHaveLength(0);
       });
       it('without alias, with owner', async () => {
-        const newNote = await service.createNote(content, undefined, user);
+        const newNote = await service.createNote(content, user);
         const revisions = await newNote.revisions;
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
@@ -189,11 +189,11 @@ describe('NotesService', () => {
         expect(newNote.aliases).toHaveLength(0);
       });
       it('with alias, without owner', async () => {
-        const newNote = await service.createNote(content, alias);
+        const newNote = await service.createNote(content, null, alias);
         const revisions = await newNote.revisions;
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
-        expect(newNote.historyEntries).toBeUndefined();
+        expect(newNote.historyEntries).toHaveLength(0);
         expect(newNote.userPermissions).toHaveLength(0);
         expect(newNote.groupPermissions).toHaveLength(0);
         expect(newNote.tags).toHaveLength(0);
@@ -201,7 +201,7 @@ describe('NotesService', () => {
         expect(newNote.aliases).toHaveLength(1);
       });
       it('with alias, with owner', async () => {
-        const newNote = await service.createNote(content, alias, user);
+        const newNote = await service.createNote(content, user, alias);
         const revisions = await newNote.revisions;
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
@@ -218,7 +218,7 @@ describe('NotesService', () => {
     describe('fails:', () => {
       it('alias is forbidden', async () => {
         await expect(
-          service.createNote(content, forbiddenNoteId),
+          service.createNote(content, null, forbiddenNoteId),
         ).rejects.toThrow(ForbiddenIdError);
       });
 
@@ -226,7 +226,7 @@ describe('NotesService', () => {
         jest.spyOn(noteRepo, 'save').mockImplementationOnce(async () => {
           throw new Error();
         });
-        await expect(service.createNote(content, alias)).rejects.toThrow(
+        await expect(service.createNote(content, null, alias)).rejects.toThrow(
           AlreadyInDBError,
         );
       });
@@ -239,7 +239,7 @@ describe('NotesService', () => {
       jest
         .spyOn(noteRepo, 'save')
         .mockImplementation(async (note: Note): Promise<Note> => note);
-      const newNote = await service.createNote(content);
+      const newNote = await service.createNote(content, null);
       const revisions = await newNote.revisions;
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
       await service.getNoteContent(newNote).then((result) => {
@@ -254,7 +254,7 @@ describe('NotesService', () => {
       jest
         .spyOn(noteRepo, 'save')
         .mockImplementation(async (note: Note): Promise<Note> => note);
-      const newNote = await service.createNote(content);
+      const newNote = await service.createNote(content, null);
       const revisions = await newNote.revisions;
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
       await service.getLatestRevision(newNote).then((result) => {
@@ -271,7 +271,7 @@ describe('NotesService', () => {
       jest
         .spyOn(noteRepo, 'save')
         .mockImplementation(async (note: Note): Promise<Note> => note);
-      const newNote = await service.createNote(content);
+      const newNote = await service.createNote(content, null);
       const revisions = await newNote.revisions;
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
       await service.getLatestRevision(newNote).then((result) => {
@@ -328,7 +328,7 @@ describe('NotesService', () => {
   describe('deleteNote', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
-      const note = Note.create(user);
+      const note = Note.create(user) as Note;
       jest
         .spyOn(noteRepo, 'remove')
         .mockImplementationOnce(async (entry, _) => {
@@ -342,7 +342,7 @@ describe('NotesService', () => {
   describe('updateNote', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
-      const note = Note.create(user);
+      const note = Note.create(user) as Note;
       const revisionLength = (await note.revisions).length;
       jest
         .spyOn(noteRepo, 'save')
@@ -365,8 +365,9 @@ describe('NotesService', () => {
     const group = Group.create(
       groupPermissionUpate.groupname,
       groupPermissionUpate.groupname,
-    );
-    const note = Note.create(user);
+      false,
+    ) as Group;
+    const note = Note.create(user) as Note;
     describe('works', () => {
       it('with empty GroupPermissions and with empty UserPermissions', async () => {
         jest
@@ -668,8 +669,8 @@ describe('NotesService', () => {
   describe('toNotePermissionsDto', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
-      const group = Group.create('testGroup', 'testGroup');
-      const note = Note.create(user);
+      const group = Group.create('testGroup', 'testGroup', false) as Group;
+      const note = Note.create(user) as Note;
       note.userPermissions = [
         {
           note: note,
@@ -685,7 +686,8 @@ describe('NotesService', () => {
         },
       ];
       const permissions = service.toNotePermissionsDto(note);
-      expect(permissions.owner.username).toEqual(user.username);
+      expect(permissions.owner).not.toEqual(null);
+      expect(permissions.owner?.username).toEqual(user.username);
       expect(permissions.sharedToUsers).toHaveLength(1);
       expect(permissions.sharedToUsers[0].user.username).toEqual(user.username);
       expect(permissions.sharedToUsers[0].canEdit).toEqual(true);
@@ -702,12 +704,12 @@ describe('NotesService', () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const author = Author.create(1);
       author.user = user;
-      const group = Group.create('testGroup', 'testGroup');
+      const group = Group.create('testGroup', 'testGroup', false) as Group;
       const content = 'testContent';
       jest
         .spyOn(noteRepo, 'save')
         .mockImplementation(async (note: Note): Promise<Note> => note);
-      const note = await service.createNote(content);
+      const note = await service.createNote(content, null);
       const revisions = await note.revisions;
       revisions[0].edits = [
         {
@@ -738,7 +740,7 @@ describe('NotesService', () => {
         // @ts-ignore
         .mockImplementation(() => createQueryBuilder);
       note.publicId = 'testId';
-      note.aliases = [Alias.create('testAlias', true)];
+      note.aliases = [Alias.create('testAlias', note, true) as Alias];
       note.title = 'testTitle';
       note.description = 'testDescription';
       note.owner = user;
@@ -799,12 +801,12 @@ describe('NotesService', () => {
       author.user = user;
       const otherUser = User.create('other hardcoded', 'Testy2') as User;
       otherUser.username = 'other hardcoded user';
-      const group = Group.create('testGroup', 'testGroup');
+      const group = Group.create('testGroup', 'testGroup', false) as Group;
       const content = 'testContent';
       jest
         .spyOn(noteRepo, 'save')
         .mockImplementation(async (note: Note): Promise<Note> => note);
-      const note = await service.createNote(content);
+      const note = await service.createNote(content, null);
       const revisions = await note.revisions;
       revisions[0].edits = [
         {
@@ -838,7 +840,7 @@ describe('NotesService', () => {
         // @ts-ignore
         .mockImplementation(() => createQueryBuilder);
       note.publicId = 'testId';
-      note.aliases = [Alias.create('testAlias', true)];
+      note.aliases = [Alias.create('testAlias', note, true) as Alias];
       note.title = 'testTitle';
       note.description = 'testDescription';
       note.owner = user;
