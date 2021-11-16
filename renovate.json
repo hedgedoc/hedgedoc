@@ -10,7 +10,8 @@
     ":prHourlyLimitNone",
     ":rebaseStalePrs",
     ":maintainLockFilesWeekly",
-    ":automergePatch"
+    ":automergePatch",
+    ":separateMajorReleases"
   ],
   "baseBranches": [
     "master",
