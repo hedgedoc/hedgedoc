@@ -1,16 +1,17 @@
 {
   "extends": [
     "config:base",
+    "schedule:weekends",
     "group:definitelyTyped",
     "group:socketio",
     "group:linters",
     "group:test",
     ":gitSignOff",
     ":prHourlyLimitNone",
-    ":dependencyDashboard",
     ":rebaseStalePrs",
     ":maintainLockFilesWeekly",
-    ":automergePatch"
+    ":automergePatch",
+    ":separateMajorReleases"
   ],
   "baseBranches": [
     "master",
