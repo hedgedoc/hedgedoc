@@ -12,7 +12,7 @@ This documentation will cover HTTPS setup, with comments for HTTP setup.
 
 ## HedgeDoc config
 
-[Full explanation of the configuration options](../configuration.md)
+### Useful configuration options
 
 | `config.json` parameter | Environment variable | Value | Example |
 |-------------------------|----------------------|-------|---------|
@@ -24,6 +24,23 @@ This documentation will cover HTTPS setup, with comments for HTTP setup.
 | `useSSL` |  | `false`, the communications between HedgeDoc and the proxy are unencrypted | `false` |
 | `urlAddPort` | `CMD_URL_ADDPORT` | `false`, HedgeDoc should not append its port to the URLs it links | `false` |
 | `hsts.enable` | `CMD_HSTS_ENABLE` | `true` if you host over SSL, `false` otherwise | `true` |
+
+[Full explanation of the configuration options](../configuration.md)
+
+### Configure asset link generation
+
+HedgeDoc generates links to other pages and to assets (like images, stylesheets, fonts, etc) using the following settings. You must configure them according to the URL that you use to access your instance.
+
+- `domain` (env: `CMD_DOMAIN`)
+- `protocolUseSSL` (env: `CMD_PROTOCOL_USESSL`)
+- `urlAddPort` (env: `CMD_URL_ADDPORT`)
+
+!!! example
+    You access your HedgeDoc instance using a reverse proxy via `https://markdown.example`. You must set:
+
+    - `domain` to `markdown.example`.
+    - `protocolUseSSL` to `true` because you access your instance via HTTPS.
+    - `urlAddPort` to `false` because you access the instance using the default HTTPS port.
 
 
 ## Reverse Proxy config
