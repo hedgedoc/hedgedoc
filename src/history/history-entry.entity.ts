@@ -10,6 +10,13 @@ import { User } from '../users/user.entity';
 
 @Entity()
 export class HistoryEntry {
+  /**
+   * The `user` and `note` properties cannot be converted to promises
+   * (to lazy-load them), as TypeORM gets confused about lazy composite
+   * primary keys.
+   * See https://github.com/typeorm/typeorm/issues/6908
+   */
+
   @ManyToOne((_) => User, (user) => user.historyEntries, {
     onDelete: 'CASCADE',
     primary: true,
