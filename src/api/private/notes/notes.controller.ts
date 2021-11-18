@@ -72,7 +72,9 @@ export class NotesController {
   @UseGuards(PermissionsGuard)
   async getNotesMedia(@RequestNote() note: Note): Promise<MediaUploadDto[]> {
     const media = await this.mediaService.listUploadsByNote(note);
-    return media.map((media) => this.mediaService.toMediaUploadDto(media));
+    return await Promise.all(
+      media.map((media) => this.mediaService.toMediaUploadDto(media)),
+    );
   }
 
   @Post()

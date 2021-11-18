@@ -188,6 +188,8 @@ export class MeController {
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getMyMedia(@RequestUser() user: User): Promise<MediaUploadDto[]> {
     const media = await this.mediaService.listUploadsByUser(user);
-    return media.map((media) => this.mediaService.toMediaUploadDto(media));
+    return await Promise.all(
+      media.map((media) => this.mediaService.toMediaUploadDto(media)),
+    );
   }
 }
