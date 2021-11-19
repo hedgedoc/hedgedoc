@@ -12,6 +12,7 @@ import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { UploadInput } from '../../sidebar/upload-input'
 import { handleUpload } from '../upload-handler'
 import { supportedMimeTypes } from '../../../common/upload-image-mimetypes'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
 export interface UploadImageButtonProps {
   editor?: Editor
@@ -42,10 +43,19 @@ export const UploadImageButton: React.FC<UploadImageButtonProps> = ({ editor }) 
 
   return (
     <Fragment>
-      <Button variant='light' onClick={buttonClick} title={t('editor.editorToolbar.uploadImage')}>
+      <Button
+        variant='light'
+        onClick={buttonClick}
+        title={t('editor.editorToolbar.uploadImage')}
+        {...cypressId('editor-toolbar-upload-image-button')}>
         <ForkAwesomeIcon icon={'upload'} />
       </Button>
-      <UploadInput onLoad={onUploadImage} acceptedFiles={acceptedMimeTypes} onClickRef={clickRef} />
+      <UploadInput
+        onLoad={onUploadImage}
+        acceptedFiles={acceptedMimeTypes}
+        onClickRef={clickRef}
+        {...cypressId('editor-toolbar-upload-image-input')}
+      />
     </Fragment>
   )
 }

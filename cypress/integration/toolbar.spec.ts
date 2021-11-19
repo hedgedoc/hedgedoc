@@ -11,295 +11,220 @@ describe('Toolbar Buttons', () => {
   beforeEach(() => {
     cy.visitTestEditor()
 
-    cy.get('.CodeMirror')
-      .click()
-      .get('textarea')
-      .as('codeinput')
+    cy.get('.CodeMirror').click().get('textarea').as('codeinput')
   })
 
   describe('for single line text', () => {
     beforeEach(() => {
       cy.setCodemirrorContent(testText)
-      cy.get('.CodeMirror-line > span')
-        .should('exist')
-        .should('have.text', testText)
+      cy.get('.CodeMirror-line > span').should('exist').should('have.text', testText)
     })
 
     describe('with selection', () => {
       beforeEach(() => {
-        cy.get('@codeinput')
-          .type('{ctrl}a')
+        cy.get('@codeinput').type('{ctrl}a')
       })
 
       it('should format as bold', () => {
-        cy.get('.btn-toolbar [data-cypress-id="format-bold"]')
-          .click()
-        cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `**${ testText }**`)
+        cy.getById('format-bold').click()
+        cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `**${testText}**`)
       })
 
       it('should format as italic', () => {
-        cy.get('.btn-toolbar [data-cypress-id="format-italic"]')
-          .click()
-        cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `*${ testText }*`)
+        cy.getById('format-italic').click()
+        cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `*${testText}*`)
       })
 
       it('should format as underline', () => {
-        cy.get('.btn-toolbar [data-cypress-id="format-underline"]')
-          .click()
-        cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `++${ testText }++`)
+        cy.getById('format-underline').click()
+        cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `++${testText}++`)
       })
 
       it('should format as strikethrough', () => {
-        cy.get('.btn-toolbar  [data-cypress-id="format-strikethrough"]')
-          .click()
-        cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `~~${ testText }~~`)
+        cy.get('.btn-toolbar  [data-cypress-id="format-strikethrough').click()
+        cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `~~${testText}~~`)
       })
 
       it('should format as subscript', () => {
-        cy.get('.btn-toolbar [data-cypress-id="format-subscript"]')
-          .click()
-        cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `~${ testText }~`)
+        cy.getById('format-subscript').click()
+        cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `~${testText}~`)
       })
 
       it('should format as superscript', () => {
-        cy.get('.btn-toolbar [data-cypress-id="format-superscript"]')
-          .click()
-        cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `^${ testText }^`)
+        cy.getById('format-superscript').click()
+        cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `^${testText}^`)
       })
 
       it('should format the line as code block', () => {
-        cy.get('.btn-toolbar [data-cypress-id="format-code-block"]')
-          .click()
-        cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span')
-          .should('have.text', '```')
-        cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span')
-          .should('have.text', testText)
-        cy.get('.CodeMirror-code > div.CodeMirror-activeline > .CodeMirror-line > span  span')
-          .should('have.text', '```')
+        cy.getById('format-code-block').click()
+        cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span').should('have.text', '```')
+        cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span').should('have.text', testText)
+        cy.get('.CodeMirror-code > div.CodeMirror-activeline > .CodeMirror-line > span  span').should(
+          'have.text',
+          '```'
+        )
       })
 
       it('should format links', () => {
-        cy.get('.btn-toolbar [data-cypress-id="format-link"]')
-          .click()
-        cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `[${ testText }](https://)`)
+        cy.getById('format-link').click()
+        cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `[${testText}](https://)`)
       })
 
       it('should format as image', () => {
-        cy.get('.btn-toolbar [data-cypress-id="format-image"]')
-          .click()
-        cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-          .should('have.text', `![${ testText }](https://)`)
+        cy.getById('format-image').click()
+        cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `![${testText}](https://)`)
       })
     })
 
     it('should format line as heading', () => {
-      cy.get('.btn-toolbar [data-cypress-id="format-heading"]')
-        .click()
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `# ${ testText }`)
-      cy.get('.fa-header')
-        .click()
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `## ${ testText }`)
+      cy.getById('format-heading').click()
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `# ${testText}`)
+      cy.get('.fa-header').click()
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `## ${testText}`)
     })
 
     it('should format the line as code', () => {
-      cy.get('.btn-toolbar [data-cypress-id="format-code-block"]')
-        .click()
-      cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span')
-        .should('have.text', '```')
-      cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span')
-        .should('have.text', testText)
-      cy.get('.CodeMirror-code > div.CodeMirror-activeline > .CodeMirror-line > span  span')
-        .should('have.text', '```')
+      cy.getById('format-code-block').click()
+      cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span').should('have.text', '```')
+      cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span').should('have.text', testText)
+      cy.get('.CodeMirror-code > div.CodeMirror-activeline > .CodeMirror-line > span  span').should('have.text', '```')
     })
 
     it('should add a quote', () => {
-      cy.get('.btn-toolbar [data-cypress-id="format-block-quote"]')
-        .click()
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `> ${ testText }`)
-      cy.get('.btn-toolbar [data-cypress-id="format-block-quote"]')
-        .click()
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `> > ${ testText }`)
+      cy.getById('format-block-quote').click()
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `> ${testText}`)
+      cy.getById('format-block-quote').click()
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `> > ${testText}`)
     })
 
     it('should format as unordered list', () => {
-      cy.get('.btn-toolbar [data-cypress-id="format-unordered-list"]')
-        .click()
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `- ${ testText }`)
-      cy.get('.btn-toolbar [data-cypress-id="format-unordered-list"]')
-        .click()
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `- - ${ testText }`)
+      cy.getById('format-unordered-list').click()
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `- ${testText}`)
+      cy.getById('format-unordered-list').click()
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `- - ${testText}`)
     })
 
     it('should format as ordered list', () => {
-      cy.get('.btn-toolbar [data-cypress-id="format-ordered-list"]')
-        .click()
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `1. ${ testText }`)
-      cy.get('.btn-toolbar [data-cypress-id="format-ordered-list"]')
-        .click()
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `1. 1. ${ testText }`)
+      cy.getById('format-ordered-list').click()
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `1. ${testText}`)
+      cy.getById('format-ordered-list').click()
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `1. 1. ${testText}`)
     })
 
     it('should format as check list', () => {
-      cy.get('.btn-toolbar [data-cypress-id="format-check-list"]')
-        .click()
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `- [ ] ${ testText }`)
-      cy.get('.btn-toolbar [data-cypress-id="format-check-list"]')
-        .click()
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `- [ ] - [ ] ${ testText }`)
+      cy.getById('format-check-list').click()
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `- [ ] ${testText}`)
+      cy.getById('format-check-list').click()
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `- [ ] - [ ] ${testText}`)
     })
 
     it('should insert links', () => {
-      cy.get('.btn-toolbar [data-cypress-id="format-link"]')
-        .click()
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `${ testText }[](https://)`)
+      cy.getById('format-link').click()
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `${testText}[](https://)`)
     })
 
     it('should insert an empty image link', () => {
-      cy.get('.btn-toolbar [data-cypress-id="format-image"]')
-        .click()
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `${ testText }![](https://)`)
+      cy.getById('format-image').click()
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `${testText}![](https://)`)
     })
   })
 
   describe('for single line link with selection', () => {
     beforeEach(() => {
       cy.setCodemirrorContent(testLink)
-      cy.get('.CodeMirror-line > span')
-        .should('exist')
-        .should('have.text', testLink)
-      cy.get('@codeinput')
-        .type('{ctrl}a')
+      cy.get('.CodeMirror-line > span').should('exist').should('have.text', testLink)
+      cy.get('@codeinput').type('{ctrl}a')
     })
 
     it('should format as link', () => {
-      cy.get('.btn-toolbar [data-cypress-id="format-link"]')
-        .click()
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `[](${ testLink })`)
+      cy.getById('format-link').click()
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `[](${testLink})`)
     })
 
     it('should format as image', () => {
-      cy.get('.btn-toolbar [data-cypress-id="format-image"]')
-        .click()
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span')
-        .should('have.text', `![](${ testLink })`)
+      cy.getById('format-image').click()
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `![](${testLink})`)
     })
   })
 
   describe('for no text', () => {
     it('should add an empty code block', () => {
-      cy.get('.btn-toolbar [data-cypress-id="format-code-block"]')
-        .click()
-      cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span')
-        .should('have.text', '```')
-      cy.get('.CodeMirror-code > div.CodeMirror-activeline > .CodeMirror-line > span  span')
-        .should('have.text', '```')
+      cy.getById('format-code-block').click()
+      cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span').should('have.text', '```')
+      cy.get('.CodeMirror-code > div.CodeMirror-activeline > .CodeMirror-line > span  span').should('have.text', '```')
     })
 
     it('should insert lines', () => {
-      cy.get('.btn-toolbar [data-cypress-id="format-add-line"]')
-        .click()
-      cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span')
-        .should('have.text', '----')
+      cy.getById('format-add-line').click()
+      cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span').should('have.text', '----')
     })
 
     it('should add a collapsable block', () => {
-      cy.get('.btn-toolbar [data-cypress-id="format-collapsable-block"]')
-        .click()
-      cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span')
-        .should('have.text', ':::spoiler Toggle label')
+      cy.getById('format-collapsable-block').click()
+      cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span').should(
+        'have.text',
+        ':::spoiler Toggle label'
+      )
     })
 
     it('should add a comment', () => {
-      cy.get('.btn-toolbar [data-cypress-id="format-add-comment"]')
-        .click()
-      cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span')
-        .should('have.text', '> []')
+      cy.getById('format-add-comment').click()
+      cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span').should('have.text', '> []')
     })
   })
 
   describe('for new tables', () => {
     beforeEach(() => {
-      cy.get('.table-picker-container')
-        .should('not.be.visible')
-      cy.get('[data-cypress-id="show-table-overlay"]')
-        .last()
-        .click()
-      cy.get('.table-picker-container')
-        .should('be.visible')
+      cy.get('.table-picker-container').should('not.be.visible')
+      cy.getById('show-table-overlay').last().click()
+      cy.get('.table-picker-container').should('be.visible')
     })
 
     it('should open an overlay', () => {
-      cy.get('.table-container > div:nth-of-type(25)')
-        .trigger('mouseover')
-      cy.get('.table-cell.bg-primary')
-        .should('have.length', 15)
-      cy.get('.table-picker-container > p')
-        .contains('5x3')
-      cy.get('.table-container > div:nth-of-type(25)')
-        .click()
+      cy.get('.table-container > div:nth-of-type(25)').trigger('mouseover')
+      cy.get('.table-cell.bg-primary').should('have.length', 15)
+      cy.get('.table-picker-container > p').contains('5x3')
+      cy.get('.table-container > div:nth-of-type(25)').click()
     })
 
     it('should open a modal for custom table sizes in the overlay', () => {
-      cy.get('.modal-dialog')
-        .should('not.exist')
-      cy.get('[data-cypress-id="show-custom-table-modal"]')
-        .first()
-        .click()
-      cy.get('.modal-dialog')
-        .should('be.visible')
-      cy.get('.modal-content > .d-flex > input')
-        .first()
-        .type('5')
-      cy.get('.modal-content > .d-flex > input')
-        .last()
-        .type('3')
-      cy.get('.modal-footer > button')
-        .click()
+      cy.get('.modal-dialog').should('not.exist')
+      cy.getById('show-custom-table-modal').first().click()
+      cy.get('.modal-dialog').should('be.visible')
+      cy.get('.modal-content > .d-flex > input').first().type('5')
+      cy.get('.modal-content > .d-flex > input').last().type('3')
+      cy.get('.modal-footer > button').click()
     })
 
     afterEach(() => {
-      cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span')
-        .should('have.text', '|  # 1 |  # 2 |  # 3 |  # 4 |  # 5 |')
-      cy.get('.CodeMirror-code > div:nth-of-type(3) > .CodeMirror-line > span  span')
-        .should('have.text', '| ---- | ---- | ---- | ---- | ---- |')
-      cy.get('.CodeMirror-code > div:nth-of-type(4) > .CodeMirror-line > span  span')
-        .should('have.text', '| Text | Text | Text | Text | Text |')
-      cy.get('.CodeMirror-code > div:nth-of-type(5) > .CodeMirror-line > span  span')
-        .should('have.text', '| Text | Text | Text | Text | Text |')
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span ')
-        .should('have.text', '| Text | Text | Text | Text | Text |')
+      cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span  span').should(
+        'have.text',
+        '|  # 1 |  # 2 |  # 3 |  # 4 |  # 5 |'
+      )
+      cy.get('.CodeMirror-code > div:nth-of-type(3) > .CodeMirror-line > span  span').should(
+        'have.text',
+        '| ---- | ---- | ---- | ---- | ---- |'
+      )
+      cy.get('.CodeMirror-code > div:nth-of-type(4) > .CodeMirror-line > span  span').should(
+        'have.text',
+        '| Text | Text | Text | Text | Text |'
+      )
+      cy.get('.CodeMirror-code > div:nth-of-type(5) > .CodeMirror-line > span  span').should(
+        'have.text',
+        '| Text | Text | Text | Text | Text |'
+      )
+      cy.get('.CodeMirror-activeline > .CodeMirror-line > span ').should(
+        'have.text',
+        '| Text | Text | Text | Text | Text |'
+      )
     })
   })
 
   describe('for the emoji-picker', () => {
     it('should open overlay', () => {
-      cy.get('emoji-picker')
-        .should('not.be.visible')
-      cy.get('[data-cypress-id="show-emoji-picker"]')
-        .click()
-      cy.get('emoji-picker')
-        .should('be.visible')
+      cy.get('emoji-picker').should('not.be.visible')
+      cy.getById('show-emoji-picker').click()
+      cy.get('emoji-picker').should('be.visible')
     })
   })
-
 })

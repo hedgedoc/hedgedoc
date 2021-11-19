@@ -16,26 +16,20 @@ declare namespace Cypress {
   }
 }
 
-Cypress.Commands.add('fill', {
-  prevSubject: 'element'
-}, (subject, value) => {
-  return cy.wrap(subject)
-           .invoke('val', value)
-           .trigger('change', { force: true })
-})
+Cypress.Commands.add(
+  'fill',
+  {
+    prevSubject: 'element'
+  },
+  (subject, value) => {
+    return cy.wrap(subject).invoke('val', value).trigger('change', { force: true })
+  }
+)
 
 Cypress.Commands.add('setCodemirrorContent', (content: string) => {
-  const line = content.split('\n')
-                      .find(value => value !== '')
-  cy.get('.CodeMirror')
-    .click()
-    .get('textarea')
-    .type('{ctrl}a')
-    .type('{backspace}')
-    .fill(content)
+  const line = content.split('\n').find((value) => value !== '')
+  cy.get('.CodeMirror').click().get('textarea').type('{ctrl}a').type('{backspace}').fill(content)
   if (line) {
-    cy.get('.CodeMirror')
-      .find('.CodeMirror-line')
-      .should('contain.text', line)
+    cy.get('.CodeMirror').find('.CodeMirror-line').should('contain.text', line)
   }
 })

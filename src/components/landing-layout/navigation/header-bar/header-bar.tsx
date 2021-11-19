@@ -14,6 +14,7 @@ import { NewUserNoteButton } from '../new-user-note-button'
 import { SignInButton } from '../sign-in-button'
 import { UserDropdown } from '../user-dropdown'
 import './header-bar.scss'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
 const HeaderBar: React.FC = () => {
   useTranslation()
@@ -22,10 +23,10 @@ const HeaderBar: React.FC = () => {
   return (
     <Navbar className='justify-content-between'>
       <div className='nav header-nav'>
-        <HeaderNavLink to='/intro' id='navLinkIntro'>
+        <HeaderNavLink to='/intro' {...cypressId('navLinkIntro')}>
           <Trans i18nKey='landing.navigation.intro' />
         </HeaderNavLink>
-        <HeaderNavLink to='/history' id='navLinkHistory'>
+        <HeaderNavLink to='/history' {...cypressId('navLinkHistory')}>
           <Trans i18nKey='landing.navigation.history' />
         </HeaderNavLink>
       </div>

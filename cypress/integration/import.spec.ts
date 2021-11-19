@@ -10,34 +10,33 @@ describe('Import markdown file', () => {
   })
 
   it('import on blank note', () => {
-    cy.get('[data-cypress-id="menu-import"]')
-      .click()
-    cy.get('[data-cypress-id="menu-import-markdown"]')
-      .click()
-    cy.get('[data-cypress-id="menu-import-markdown-input"]')
-      .attachFile({ filePath: 'import.md', mimeType: 'text/markdown' })
-    cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span')
-      .should('have.text', '# Some short import test file')
-    cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span > span')
-      .should('have.text', ':)')
+    cy.getById('menu-import').click()
+    cy.getById('menu-import-markdown').click()
+    cy.getById('menu-import-markdown-input').attachFile({
+      filePath: 'import.md',
+      mimeType: 'text/markdown'
+    })
+    cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span').should(
+      'have.text',
+      '# Some short import test file'
+    )
+    cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span > span').should('have.text', ':)')
   })
 
   it('import on note with content', () => {
-
     cy.setCodemirrorContent('test\nabc')
-    cy.get('[data-cypress-id="menu-import"]')
-      .click()
-    cy.get('[data-cypress-id="menu-import-markdown"]')
-      .click()
-    cy.get('[data-cypress-id="menu-import-markdown-input"]')
-      .attachFile({ filePath: 'import.md', mimeType: 'text/markdown' })
-    cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span')
-      .should('have.text', 'test')
-    cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span > span')
-      .should('have.text', 'abc')
-    cy.get('.CodeMirror-code > div:nth-of-type(3) > .CodeMirror-line > span > span')
-      .should('have.text', '# Some short import test file')
-    cy.get('.CodeMirror-code > div:nth-of-type(4) > .CodeMirror-line > span > span')
-      .should('have.text', ':)')
+    cy.getById('menu-import').click()
+    cy.getById('menu-import-markdown').click()
+    cy.getById('menu-import-markdown-input').attachFile({
+      filePath: 'import.md',
+      mimeType: 'text/markdown'
+    })
+    cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span').should('have.text', 'test')
+    cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span > span').should('have.text', 'abc')
+    cy.get('.CodeMirror-code > div:nth-of-type(3) > .CodeMirror-line > span > span').should(
+      'have.text',
+      '# Some short import test file'
+    )
+    cy.get('.CodeMirror-code > div:nth-of-type(4) > .CodeMirror-line > span > span').should('have.text', ':)')
   })
 })

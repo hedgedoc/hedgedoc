@@ -13,16 +13,9 @@ describe('Quote extra tags', function () {
     it('renders correctly', () => {
       cy.setCodemirrorContent('[name=testy mctestface]')
 
-      cy.getMarkdownBody()
-        .find('.blockquote-extra')
-        .should('be.visible')
-        .find('.fa-user')
-        .should('be.visible')
+      cy.getMarkdownBody().find('.blockquote-extra').should('be.visible').find('.fa-user').should('be.visible')
 
-      cy.getMarkdownBody()
-        .find('.blockquote-extra')
-        .should('be.visible')
-        .contains('testy mctestface')
+      cy.getMarkdownBody().find('.blockquote-extra').should('be.visible').contains('testy mctestface')
     })
   })
 
@@ -30,16 +23,9 @@ describe('Quote extra tags', function () {
     it('renders correctly', () => {
       cy.setCodemirrorContent(`[time=always]`)
 
-      cy.getMarkdownBody()
-        .find('.blockquote-extra')
-        .should('be.visible')
-        .find('.fa-clock-o')
-        .should('be.visible')
+      cy.getMarkdownBody().find('.blockquote-extra').should('be.visible').find('.fa-clock-o').should('be.visible')
 
-      cy.getMarkdownBody()
-        .find('.blockquote-extra')
-        .should('be.visible')
-        .contains('always')
+      cy.getMarkdownBody().find('.blockquote-extra').should('be.visible').contains('always')
     })
   })
 
@@ -47,24 +33,15 @@ describe('Quote extra tags', function () {
     it('renders correctly', () => {
       cy.setCodemirrorContent(`[color=#b51f08]`)
 
-      cy.getMarkdownBody()
-        .find('.blockquote-extra')
-        .should('be.visible')
-        .find('.fa-tag')
-        .should('be.visible')
+      cy.getMarkdownBody().find('.blockquote-extra').should('be.visible').find('.fa-tag').should('be.visible')
 
-      cy.getMarkdownBody()
-        .find('.blockquote-extra')
-        .should('be.visible')
-        .should('have.css', 'color', 'rgb(181, 31, 8)')
+      cy.getMarkdownBody().find('.blockquote-extra').should('be.visible').should('have.css', 'color', 'rgb(181, 31, 8)')
     })
 
-    it('doesn\'t render in a blockquote and dyes the blockquote border', () => {
+    it("doesn't render in a blockquote and dyes the blockquote border", () => {
       cy.setCodemirrorContent(`> [color=#b51f08] HedgeDoc`)
 
-      cy.getMarkdownBody()
-        .find('.blockquote-extra')
-        .should('not.exist')
+      cy.getMarkdownBody().find('.blockquote-extra').should('not.exist')
 
       cy.getMarkdownBody()
         .find('blockquote')

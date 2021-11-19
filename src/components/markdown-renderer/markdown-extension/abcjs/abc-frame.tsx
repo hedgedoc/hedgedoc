@@ -8,6 +8,7 @@ import React, { useEffect, useRef } from 'react'
 import './abc.scss'
 import { Logger } from '../../../../utils/logger'
 import type { CodeProps } from '../../replace-components/code-block-component-replacer'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
 const log = new Logger('AbcFrame')
 
@@ -28,5 +29,5 @@ export const AbcFrame: React.FC<CodeProps> = ({ code }) => {
       })
   }, [code])
 
-  return <div ref={container} className={'abcjs-score bg-white text-black svg-container'} />
+  return <div ref={container} className={'abcjs-score bg-white text-black svg-container'} {...cypressId('abcjs')} />
 }

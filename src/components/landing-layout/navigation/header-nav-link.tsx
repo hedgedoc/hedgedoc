@@ -7,17 +7,18 @@
 import React from 'react'
 import { Nav } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import type { PropsWithDataCypressId } from '../../../utils/cypress-attribute'
+import { cypressId } from '../../../utils/cypress-attribute'
 
-export interface HeaderNavLinkProps {
+export interface HeaderNavLinkProps extends PropsWithDataCypressId {
   to: string
-  id: string
 }
 
-export const HeaderNavLink: React.FC<HeaderNavLinkProps> = ({ to, id, children }) => {
+export const HeaderNavLink: React.FC<HeaderNavLinkProps> = ({ to, children, ...props }) => {
   return (
     <Nav.Item>
       <LinkContainer to={to}>
-        <Nav.Link id={id} className='text-light' href={to}>
+        <Nav.Link className='text-light' href={to} {...cypressId(props)}>
           {children}
         </Nav.Link>
       </LinkContainer>

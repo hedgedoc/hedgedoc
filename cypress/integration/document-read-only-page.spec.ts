@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-describe("Document read only page", () => {
+describe('Document read only page', () => {
   it('renders the document mode', () => {
     cy.visit('/s/test')
-    cy.getMarkdownBody().should("exist")
+    cy.getMarkdownBody().should('exist')
   })
 })

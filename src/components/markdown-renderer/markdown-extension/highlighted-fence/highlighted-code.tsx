@@ -66,7 +66,7 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
   }, [code, language, startLineNumber])
 
   return (
-    <div className={'code-highlighter'}>
+    <div className={'code-highlighter'} {...cypressId('highlighted-code-block')}>
       <code className={`hljs ${startLineNumber !== undefined ? 'showGutter' : ''} ${wrapLines ? 'wrapLines' : ''}`}>
         {dom}
       </code>

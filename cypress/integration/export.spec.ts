@@ -6,7 +6,7 @@
 
 describe('Export', () => {
   const testTitle = 'testContent'
-  const testContent = `---\ntitle: ${ testTitle }\n---\nThis is some test content`
+  const testContent = `---\ntitle: ${testTitle}\n---\nThis is some test content`
 
   beforeEach(() => {
     cy.visitTestEditor()
@@ -14,34 +14,33 @@ describe('Export', () => {
   })
 
   it('Markdown', () => {
-    cy.get('[data-cypress-id="menu-export"]')
-      .click()
-    cy.get('[data-cypress-id="menu-export-markdown"]')
-      .click()
+    cy.getById('menu-export').click()
+    cy.getById('menu-export-markdown').click()
     cy.get('a[download]')
-      .then((anchor) => (
-        new Cypress.Promise((resolve: any, _: any) => {
-          // Use XHR to get the blob that corresponds to the object URL.
-          const xhr = new XMLHttpRequest()
-          xhr.open('GET', anchor.prop('href'), true)
-          xhr.responseType = 'blob'
+      .then(
+        (anchor) =>
+          new Cypress.Promise((resolve: any, _: any) => {
+            // Use XHR to get the blob that corresponds to the object URL.
+            const xhr = new XMLHttpRequest()
+            xhr.open('GET', anchor.prop('href'), true)
+            xhr.responseType = 'blob'
 
-          // Once loaded, use FileReader to get the string back from the blob.
-          xhr.onload = () => {
-            if (xhr.status === 200) {
-              const blob = xhr.response
-              const reader = new FileReader()
-              reader.onload = () => {
-                // Once we have a string, resolve the promise to let
-                // the Cypress chain continue, e.g. to assert on the result.
-                resolve(reader.result)
+            // Once loaded, use FileReader to get the string back from the blob.
+            xhr.onload = () => {
+              if (xhr.status === 200) {
+                const blob = xhr.response
+                const reader = new FileReader()
+                reader.onload = () => {
+                  // Once we have a string, resolve the promise to let
+                  // the Cypress chain continue, e.g. to assert on the result.
+                  resolve(reader.result)
+                }
+                reader.readAsText(blob)
               }
-              reader.readAsText(blob)
             }
-          }
-          xhr.send()
-        })
-      ))
+            xhr.send()
+          })
+      )
       // Now the regular Cypress assertions should work.
       .should('equal', testContent)
   })

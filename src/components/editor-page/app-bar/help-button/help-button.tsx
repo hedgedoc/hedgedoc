@@ -9,6 +9,7 @@ import { Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { HelpModal } from './help-modal'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
 export const HelpButton: React.FC = () => {
   const { t } = useTranslation()
@@ -18,6 +19,7 @@ export const HelpButton: React.FC = () => {
   return (
     <Fragment>
       <Button
+        {...cypressId('editor-help-button')}
         title={t('editor.documentBar.help')}
         className='ml-2 text-secondary'
         size='sm'

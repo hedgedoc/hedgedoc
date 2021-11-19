@@ -6,68 +6,65 @@
 
 describe('profile page', () => {
   beforeEach(() => {
-    cy.intercept({
-      url: '/mock-backend/api/private/tokens',
-      method: 'GET'
-    }, {
-      body: [
-        {
-          label: 'cypress-App',
-          created: 1601991518
-        }
-      ]
-    })
-    cy.intercept({
-      url: '/mock-backend/api/private/tokens',
-      method: 'POST'
-    }, {
-      body: {
-        label: 'cypress',
-        secret: 'c-y-p-r-e-s-s',
-        created: Date.now()
+    cy.intercept(
+      {
+        url: '/mock-backend/api/private/tokens',
+        method: 'GET'
+      },
+      {
+        body: [
+          {
+            label: 'cypress-App',
+            created: 1601991518
+          }
+        ]
       }
-    })
-    cy.intercept({
-      url: '/mock-backend/api/private/tokens/1601991518',
-      method: 'DELETE'
-    }, {
-      body: []
-    })
+    )
+    cy.intercept(
+      {
+        url: '/mock-backend/api/private/tokens',
+        method: 'POST'
+      },
+      {
+        body: {
+          label: 'cypress',
+          secret: 'c-y-p-r-e-s-s',
+          created: Date.now()
+        }
+      }
+    )
+    cy.intercept(
+      {
+        url: '/mock-backend/api/private/tokens/1601991518',
+        method: 'DELETE'
+      },
+      {
+        body: []
+      }
+    )
     cy.visit('/profile')
   })
 
   describe('access tokens', () => {
     it('list existing tokens', () => {
-      cy.get('.card.access-tokens .list-group-item .text-start.col')
-        .contains('cypress-App')
+      cy.getById('access-token-label').contains('cypress-App')
     })
 
     it('delete token', () => {
-      cy.get('.modal-dialog')
-        .should('not.exist')
-      cy.get('.card.access-tokens .list-group-item .btn-danger')
-        .click()
-      cy.get('.modal-dialog')
-        .should('be.visible')
-        .get('.modal-footer .btn-danger')
-        .click()
-      cy.get('.modal-dialog')
-        .should('not.exist')
+      cy.getById('access-token-delete-button').click()
+      cy.getById('access-token-modal-delete').as('deletion-modal')
+      cy.get('@deletion-modal').should('be.visible').find('.modal-footer .btn-danger').click()
+      cy.get('@deletion-modal').should('not.exist')
     })
 
     it('add token', () => {
-      cy.get('.card.access-tokens .btn-primary')
-        .should('be.disabled')
-      cy.get('.card.access-tokens input[type=text]')
-        .type('cypress')
-      cy.get('.modal-dialog')
-        .should('not.exist')
-      cy.get('.card.access-tokens .btn-primary')
-        .should('not.be.disabled')
-        .click()
-      cy.get('.modal-dialog')
+      cy.getById('access-token-add-button').should('be.disabled')
+      cy.getById('access-token-add-input').type('cypress')
+      cy.getById('access-token-modal-add').should('not.exist')
+      cy.getById('access-token-add-button').should('not.be.disabled').click()
+      cy.getById('access-token-modal-add')
         .should('be.visible')
-        .get('.modal-dialog input[readonly]')
+        .find('input[readonly]')
         .should('have.value', 'c-y-p-r-e-s-s')
     })
   })

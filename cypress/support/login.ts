@@ -15,8 +15,6 @@ declare namespace Cypress {
 }
 
 Cypress.Commands.add('logout', () => {
-  cy.get('#dropdown-user')
-    .click()
-  cy.get('.fa-sign-out')
-    .click()
+  cy.getById('user-dropdown').click()
+  cy.getById('user-dropdown-sign-out-button').click()
 })

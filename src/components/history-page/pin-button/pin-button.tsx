@@ -8,6 +8,7 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import './pin-button.scss'
+import { cypressId } from '../../../utils/cypress-attribute'
 
 export interface PinButtonProps {
   isPinned: boolean
@@ -21,7 +22,8 @@ export const PinButton: React.FC<PinButtonProps> = ({ isPinned, onPinClick, isDa
     <Button
       variant={isDark ? 'secondary' : 'light'}
       className={`history-pin ${className || ''} ${isPinned ? 'pinned' : ''}`}
-      onClick={onPinClick}>
+      onClick={onPinClick}
+      {...cypressId('history-entry-pin-button')}>
       <ForkAwesomeIcon icon='thumb-tack' />
     </Button>
   )

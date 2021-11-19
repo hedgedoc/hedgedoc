@@ -10,19 +10,19 @@ describe('Split view', () => {
   })
 
   it('can show both panes', () => {
-    cy.get('[data-cypress-id="view-mode-both"]').click()
+    cy.getById('view-mode-both').click()
     cy.get('.splitter.left').should('be.visible')
     cy.get('.splitter.right').should('be.visible')
   })
 
   it('can show only preview pane', () => {
-    cy.get('[data-cypress-id="view-mode-preview"]').click()
+    cy.getById('view-mode-preview').click()
     cy.get('.splitter.left').should('be.not.visible')
     cy.get('.splitter.right').should('be.visible')
   })
 
   it('can show only editor pane', () => {
-    cy.get('[data-cypress-id="view-mode-editor"]').click()
+    cy.getById('view-mode-editor').click()
     cy.get('.splitter.left').should('be.visible')
     cy.get('.splitter.right').should('be.not.visible')
   })
@@ -31,7 +31,7 @@ describe('Split view', () => {
     cy.get('.splitter.left').then((leftPanebefore) => {
       const widthBefore = leftPanebefore.outerWidth()
 
-      cy.get('[data-cypress-id="view-mode-both"]').click()
+      cy.getById('view-mode-both').click()
       cy.get('.split-divider').should('be.visible').trigger('mousedown', { buttons: 1 })
       cy.document().trigger('mousemove', { buttons: 1, pageX: 0, pageY: 0 })
       cy.get('.split-divider').trigger('mouseup')

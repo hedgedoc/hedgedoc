@@ -11,22 +11,16 @@ describe('YAML Array for deprecated syntax of document tags in frontmatter', () 
 
   it('is shown when using old syntax', () => {
     cy.setCodemirrorContent('---\ntags: a, b, c\n---')
-    cy.getIframeBody()
-      .find('[data-cypress-id="yamlArrayDeprecationAlert"]')
-      .should('be.visible')
+    cy.getIframeBody().findById('yamlArrayDeprecationAlert').should('be.visible')
   })
 
-  it('isn\'t shown when using inline yaml-array', () => {
-    cy.setCodemirrorContent('---\ntags: [\'a\', \'b\', \'c\']\n---')
-    cy.getIframeBody()
-      .find('[data-cypress-id="yamlArrayDeprecationAlert"]')
-      .should('not.exist')
+  it("isn't shown when using inline yaml-array", () => {
+    cy.setCodemirrorContent("---\ntags: ['a', 'b', 'c']\n---")
+    cy.getIframeBody().findById('yamlArrayDeprecationAlert').should('not.exist')
   })
 
-  it('isn\'t shown when using multi line yaml-array', () => {
+  it("isn't shown when using multi line yaml-array", () => {
     cy.setCodemirrorContent('---\ntags:\n  - a\n  - b\n  - c\n---')
-    cy.getIframeBody()
-      .find('[data-cypress-id="yamlArrayDeprecationAlert"]')
-      .should('not.exist')
+    cy.getIframeBody().findById('yamlArrayDeprecationAlert').should('not.exist')
   })
 })

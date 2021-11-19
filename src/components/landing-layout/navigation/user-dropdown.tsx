@@ -12,6 +12,7 @@ import { clearUser } from '../../../redux/user/methods'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { UserAvatar } from '../../common/user-avatar/user-avatar'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { cypressId } from '../../../utils/cypress-attribute'
 
 export const UserDropdown: React.FC = () => {
   useTranslation()
@@ -23,19 +24,19 @@ export const UserDropdown: React.FC = () => {
 
   return (
     <Dropdown alignRight>
-      <Dropdown.Toggle size='sm' variant='dark' id='dropdown-user' className={'d-flex align-items-center'}>
+      <Dropdown.Toggle size='sm' variant='dark' {...cypressId('user-dropdown')} className={'d-flex align-items-center'}>
         <UserAvatar name={user.name} photo={user.photo} />
       </Dropdown.Toggle>
 
       <Dropdown.Menu className='text-start'>
         <LinkContainer to={'/n/features'}>
-          <Dropdown.Item dir='auto'>
+          <Dropdown.Item dir='auto' {...cypressId('user-dropdown-features-button')}>
             <ForkAwesomeIcon icon='bolt' fixedWidth={true} className='mx-2' />
             <Trans i18nKey='editor.help.documents.features' />
           </Dropdown.Item>
         </LinkContainer>
         <LinkContainer to={'/profile'}>
-          <Dropdown.Item dir='auto'>
+          <Dropdown.Item dir='auto' {...cypressId('user-dropdown-profile-button')}>
             <ForkAwesomeIcon icon='user' fixedWidth={true} className='mx-2' />
             <Trans i18nKey='profile.userProfile' />
           </Dropdown.Item>
@@ -44,7 +45,8 @@ export const UserDropdown: React.FC = () => {
           dir='auto'
           onClick={() => {
             clearUser()
-          }}>
+          }}
+          {...cypressId('user-dropdown-sign-out-button')}>
           <ForkAwesomeIcon icon='sign-out' fixedWidth={true} className='mx-2' />
           <Trans i18nKey='login.signOut' />
         </Dropdown.Item>

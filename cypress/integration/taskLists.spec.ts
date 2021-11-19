@@ -17,31 +17,23 @@ describe('Task lists ', () => {
   describe('render with checkboxes ', () => {
     it('when unchecked', () => {
       cy.setCodemirrorContent(TEST_STRING_UNCHECKED)
-      cy.getMarkdownBody()
-        .find('input[type=checkbox]')
-        .should('have.length', 6)
+      cy.getMarkdownBody().find('input[type=checkbox]').should('have.length', 6)
     })
 
     it('when checked lowercase', () => {
       cy.setCodemirrorContent(TEST_STRING_CHECKED_LOWER)
-      cy.getMarkdownBody()
-        .find('input[type=checkbox]')
-        .should('have.length', 6)
+      cy.getMarkdownBody().find('input[type=checkbox]').should('have.length', 6)
     })
 
     it('when checked uppercase', () => {
       cy.setCodemirrorContent(TEST_STRING_CHECKED_UPPER)
-      cy.getMarkdownBody()
-        .find('input[type=checkbox]')
-        .should('have.length', 6)
+      cy.getMarkdownBody().find('input[type=checkbox]').should('have.length', 6)
     })
   })
 
   it('do not render as checkboxes when invalid', () => {
     cy.setCodemirrorContent(TEST_STRING_INVALID)
-    cy.getMarkdownBody()
-      .find('input[type=checkbox]')
-      .should('have.length', 0)
+    cy.getMarkdownBody().find('input[type=checkbox]').should('have.length', 0)
   })
 
   describe('are clickable and change the markdown source ', () => {
@@ -49,39 +41,30 @@ describe('Task lists ', () => {
       cy.setCodemirrorContent(TEST_STRING_UNCHECKED)
       cy.getMarkdownBody()
         .find('input[type=checkbox]')
-        .each(box => {
+        .each((box) => {
           box.trigger('click')
         })
-      cy.get('.CodeMirror-line > span')
-        .should('exist')
-        .should('contain.text', '[x]')
-        .should('not.contain.text', '[ ]')
+      cy.get('.CodeMirror-line > span').should('exist').should('contain.text', '[x]').should('not.contain.text', '[ ]')
     })
 
     it('from checked (lowercase) to unchecked', () => {
       cy.setCodemirrorContent(TEST_STRING_CHECKED_LOWER)
       cy.getMarkdownBody()
         .find('input[type=checkbox]')
-        .each(box => {
+        .each((box) => {
           box.trigger('click')
         })
-      cy.get('.CodeMirror-line > span')
-        .should('exist')
-        .should('contain.text', '[ ]')
-        .should('not.contain.text', '[x]')
+      cy.get('.CodeMirror-line > span').should('exist').should('contain.text', '[ ]').should('not.contain.text', '[x]')
     })
 
     it('from checked (uppercase) to unchecked', () => {
       cy.setCodemirrorContent(TEST_STRING_CHECKED_UPPER)
       cy.getMarkdownBody()
         .find('input[type=checkbox]')
-        .each(box => {
+        .each((box) => {
           box.trigger('click')
         })
-      cy.get('.CodeMirror-line > span')
-        .should('exist')
-        .should('contain.text', '[ ]')
-        .should('not.contain.text', '[X]')
+      cy.get('.CodeMirror-line > span').should('exist').should('contain.text', '[ ]').should('not.contain.text', '[X]')
     })
   })
 })

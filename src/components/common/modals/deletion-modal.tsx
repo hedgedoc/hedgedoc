@@ -22,12 +22,13 @@ export const DeletionModal: React.FC<DeletionModalProps> = ({
   onConfirm,
   deletionButtonI18nKey,
   icon,
-  children
+  children,
+  ...props
 }) => {
   useTranslation()
 
   return (
-    <CommonModal show={show} onHide={onHide} titleI18nKey={titleI18nKey} icon={icon} closeButton={true}>
+    <CommonModal show={show} onHide={onHide} titleI18nKey={titleI18nKey} icon={icon} closeButton={true} {...props}>
       <Modal.Body className='text-dark'>{children}</Modal.Body>
       <Modal.Footer>
         <Button variant='danger' onClick={onConfirm}>

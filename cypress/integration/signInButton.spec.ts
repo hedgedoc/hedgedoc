@@ -18,7 +18,10 @@ const authProvidersDisabled = {
   openid: false
 }
 
-const initLoggedOutTestWithCustomAuthProviders = (cy: Cypress.cy, enabledProviders: Partial<typeof authProvidersDisabled>) => {
+const initLoggedOutTestWithCustomAuthProviders = (
+  cy: Cypress.cy,
+  enabledProviders: Partial<typeof authProvidersDisabled>
+) => {
   cy.loadConfig({
     authProviders: {
       ...authProvidersDisabled,
@@ -32,8 +35,7 @@ const initLoggedOutTestWithCustomAuthProviders = (cy: Cypress.cy, enabledProvide
 describe('When logged-in, ', () => {
   it('sign-in button is hidden', () => {
     cy.visit('/')
-    cy.get('[data-cypress-id=sign-in-button]')
-      .should('not.exist')
+    cy.getById('sign-in-button').should('not.exist')
   })
 })
 
@@ -41,8 +43,7 @@ describe('When logged-out ', () => {
   describe('and no auth-provider is enabled, ', () => {
     it('sign-in button is hidden', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, {})
-      cy.get('[data-cypress-id=sign-in-button]')
-        .should('not.exist')
+      cy.getById('sign-in-button').should('not.exist')
     })
   })
 
@@ -51,27 +52,21 @@ describe('When logged-out ', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, {
         internal: true
       })
-      cy.get('[data-cypress-id=sign-in-button]')
-        .should('be.visible')
-        .should('have.attr', 'href', '/login')
+      cy.getById('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
     })
 
     it('sign-in button points to login route: ldap', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, {
         ldap: true
       })
-      cy.get('[data-cypress-id=sign-in-button]')
-        .should('be.visible')
-        .should('have.attr', 'href', '/login')
+      cy.getById('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
     })
 
     it('sign-in button points to login route: openid', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, {
         openid: true
       })
-      cy.get('[data-cypress-id=sign-in-button]')
-        .should('be.visible')
-        .should('have.attr', 'href', '/login')
+      cy.getById('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
     })
   })
 
@@ -80,7 +75,7 @@ describe('When logged-out ', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, {
         saml: true
       })
-      cy.get('[data-cypress-id=sign-in-button]')
+      cy.getById('sign-in-button')
         .should('be.visible')
         // The absolute URL is used because it is defined as API base URL absolute.
         .should('have.attr', 'href', '/mock-backend/api/private/auth/saml')
@@ -93,9 +88,7 @@ describe('When logged-out ', () => {
         saml: true,
         github: true
       })
-      cy.get('[data-cypress-id=sign-in-button]')
-        .should('be.visible')
-        .should('have.attr', 'href', '/login')
+      cy.getById('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
     })
   })
 
@@ -105,9 +98,7 @@ describe('When logged-out ', () => {
         saml: true,
         internal: true
       })
-      cy.get('[data-cypress-id=sign-in-button]')
-        .should('be.visible')
-        .should('have.attr', 'href', '/login')
+      cy.getById('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
     })
   })
 })

@@ -6,6 +6,7 @@
 
 import React, { useMemo } from 'react'
 import { parseCsv } from './csv-parser'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
 export interface CsvTableProps {
   code: string
@@ -63,7 +64,7 @@ export const CsvTable: React.FC<CsvTableProps> = ({
   )
 
   return (
-    <table className={'csv-html-table table-striped'}>
+    <table className={'csv-html-table table-striped'} {...cypressId('csv-html-table')}>
       {renderTableHeader}
       {renderTableBody}
     </table>

@@ -50,9 +50,9 @@ export const config = {
     sourceCodeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     issueTrackerUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
   },
-  'iframeCommunication': {
-    'editorOrigin': 'http://127.0.0.1:3001/',
-    'rendererOrigin': 'http://127.0.0.1:3001/'
+  iframeCommunication: {
+    editorOrigin: 'http://127.0.0.1:3001/',
+    rendererOrigin: 'http://127.0.0.1:3001/'
   }
 }
 

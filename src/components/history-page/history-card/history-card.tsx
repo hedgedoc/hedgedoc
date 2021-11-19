@@ -34,7 +34,7 @@ export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = (
   const entryTitle = useHistoryEntryTitle(entry)
 
   return (
-    <div className='p-2 col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+    <div className='p-2 col-xs-12 col-sm-6 col-md-6 col-lg-4' {...cypressId('history-card')}>
       <Card className='card-min-height' text={'dark'} bg={'light'}>
         <Card.Body className='p-2 d-flex flex-row justify-content-between'>
           <div className={'d-flex flex-column'}>

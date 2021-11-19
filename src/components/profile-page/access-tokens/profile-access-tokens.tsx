@@ -14,9 +14,9 @@ import type { AccessToken } from '../../../api/tokens/types'
 import { CopyableField } from '../../common/copyable/copyable-field/copyable-field'
 import { IconButton } from '../../common/icon-button/icon-button'
 import { CommonModal } from '../../common/modals/common-modal'
-import { DeletionModal } from '../../common/modals/deletion-modal'
 import { ShowIf } from '../../common/show-if/show-if'
 import { Logger } from '../../../utils/logger'
+import { cypressId } from '../../../utils/cypress-attribute'
 
 const log = new Logger('ProfileAccessTokens')
 
@@ -108,7 +108,9 @@ export const ProfileAccessTokens: React.FC = () => {
               return (
                 <ListGroup.Item className='bg-dark' key={token.created}>
                   <Row>
-                    <Col className='text-start'>{token.label}</Col>
+                    <Col className='text-start' {...cypressId('access-token-label')}>
+                      {token.label}
+                    </Col>
                     <Col className='text-start text-white-50'>
                       <Trans
                         i18nKey='profile.accessTokens.created'
@@ -120,7 +122,12 @@ export const ProfileAccessTokens: React.FC = () => {
                       />
                     </Col>
                     <Col xs='auto'>
-                      <IconButton icon='trash-o' variant='danger' onClick={() => selectForDeletion(token.created)} />
+                      <IconButton
+                        icon='trash-o'
+                        variant='danger'
+                        onClick={() => selectForDeletion(token.created)}
+                        {...cypressId('access-token-delete-button')}
+                      />
                     </Col>
                   </Row>
                 </ListGroup.Item>
@@ -140,10 +147,16 @@ export const ProfileAccessTokens: React.FC = () => {
                   onChange={(event: ChangeEvent<HTMLInputElement>) => setNewTokenLabel(event.target.value)}
                   isValid={newTokenSubmittable}
                   required
+                  {...cypressId('access-token-add-input')}
                 />
               </Col>
               <Col xs={'auto'}>
-                <Button type='submit' variant='primary' size='sm' disabled={!newTokenSubmittable}>
+                <Button
+                  type='submit'
+                  variant='primary'
+                  size='sm'
+                  disabled={!newTokenSubmittable}
+                  {...cypressId('access-token-add-button')}>
                   <Trans i18nKey='profile.accessTokens.createToken' />
                 </Button>
               </Col>
@@ -155,7 +168,8 @@ export const ProfileAccessTokens: React.FC = () => {
       <CommonModal
         show={showAddedModal}
         onHide={() => setShowAddedModal(false)}
-        titleI18nKey='profile.modal.addedAccessToken.title'>
+        titleI18nKey='profile.modal.addedAccessToken.title'
+        {...cypressId('access-token-modal-add')}>
         <Modal.Body>
           <Trans i18nKey='profile.modal.addedAccessToken.message' />
           <br />
@@ -168,14 +182,20 @@ export const ProfileAccessTokens: React.FC = () => {
         </Modal.Footer>
       </CommonModal>
 
-      <DeletionModal
-        onConfirm={deleteToken}
-        deletionButtonI18nKey={'common.delete'}
+      <CommonModal
         show={showDeleteModal}
         onHide={() => setShowDeleteModal(false)}
-        titleI18nKey={'profile.modal.deleteAccessToken.title'}>
-        <Trans i18nKey='profile.modal.deleteAccessToken.message' />
-      </DeletionModal>
+        titleI18nKey={'profile.modal.deleteAccessToken.title'}
+        {...cypressId('access-token-modal-delete')}>
+        <Modal.Body>
+          <Trans i18nKey='profile.modal.deleteAccessToken.message' />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='danger' onClick={deleteToken}>
+            <Trans i18nKey={'common.delete'} />
+          </Button>
+        </Modal.Footer>
+      </CommonModal>
     </Fragment>
   )
 }

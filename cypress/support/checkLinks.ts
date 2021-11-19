@@ -15,7 +15,5 @@ declare namespace Cypress {
 }
 
 Cypress.Commands.add('checkExternalLink', { prevSubject: 'element' }, ($element: JQuery, url: string) => {
-  cy.wrap($element)
-    .should('have.attr', 'href', url)
-    .should('have.attr', 'target', '_blank')
+  cy.wrap($element).should('have.attr', 'href', url).should('have.attr', 'target', '_blank')
 })
