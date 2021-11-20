@@ -81,7 +81,7 @@
   "devDependencies": {
     "@craco/craco": "6.4.1",
     "@cypress/webpack-preprocessor": "5.10.0",
-    "@fontsource/source-sans-pro": "4.5.0",
+    "@fontsource/source-sans-pro": "4.5.1",
     "@hedgedoc/html-to-react": "1.1.0",
     "@hedgedoc/markdown-it-image-size": "1.0.1",
     "@hedgedoc/markdown-it-task-lists": "1.0.2",
