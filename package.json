@@ -47,7 +47,7 @@
     "express-session": "1.17.2",
     "file-type": "16.5.3",
     "joi": "17.4.2",
-    "minio": "7.0.19",
+    "minio": "7.0.20",
     "nest-router": "1.0.9",
     "node-fetch": "2.6.6",
     "passport": "0.4.1",
