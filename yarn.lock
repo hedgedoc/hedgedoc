@@ -8656,10 +8656,10 @@ relateurl@^0.2.7:
   resolved "https://registry.yarnpkg.com/relateurl/-/relateurl-0.2.7.tgz#54dbf377e51440aca90a4cd274600d3ff2d888a9"
   integrity sha1-VNvzd+UUQKypCkzSdGANP/LYiKk=
 
-remark-cli@10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/remark-cli/-/remark-cli-10.0.0.tgz#3b0e20f2ad3909f35c7a6fb3f721c82f6ff5beac"
-  integrity sha512-Yc5kLsJ5vgiQJl6xMLLJHqPac6OSAC5DOqKQrtmzJxSdJby2Jgr+OpIAkWQYwvbNHEspNagyoQnuwK2UCWg73g==
+remark-cli@10.0.1:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/remark-cli/-/remark-cli-10.0.1.tgz#0a38166b8bb1a1720f5ed8a324715563f63dbcba"
+  integrity sha512-+eln31zLE69JwBMoa8nd2sPC0DFZyiWgBrshL8aKb3L2XXTRMuEKWE/IAtNPYEtcktceAQw+OpmqVy8pAmGOwQ==
   dependencies:
     remark "^14.0.0"
     unified-args "^9.0.0"
