@@ -1637,13 +1637,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:27.0.2":
-  version: 27.0.2
-  resolution: "@types/jest@npm:27.0.2"
+"@types/jest@npm:27.0.3":
+  version: 27.0.3
+  resolution: "@types/jest@npm:27.0.3"
   dependencies:
     jest-diff: ^27.0.0
     pretty-format: ^27.0.0
-  checksum: 814ad5f5d2f277849f47e52906da4b745758e555630fc8cb46a071bde648eefeffb1b35710c530a8cea7fc4ea7c1d813812c120484bf7902ab6c5e473cdd49c9
+  checksum: 3683a9945821966f6dccddf337219a5d682633687c9d30df859223db553589f63e9b2c34e69f0cc845c86ffcf115742f25c12ea03c8d33d2244890fdc0af61e2
   languageName: node
   linkType: hard
 
@@ -5080,7 +5080,7 @@ __metadata:
     "@types/cron": 1.7.3
     "@types/express": 4.17.13
     "@types/express-session": 1.17.4
-    "@types/jest": 27.0.2
+    "@types/jest": 27.0.3
     "@types/minio": 7.0.11
     "@types/node": 16.11.7
     "@types/node-fetch": 2.5.12
