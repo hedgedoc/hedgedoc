@@ -1888,13 +1888,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/validator@npm:^13.1.3":
-  version: 13.6.6
-  resolution: "@types/validator@npm:13.6.6"
-  checksum: cae90ccbb067640bbed2c233b6393b986529fc9b695a04516708354a5df5419cb0f588e5dd4c8a0c6127402d38d060519b9738ab8aab80f70bc92a6b354a43da
-  languageName: node
-  linkType: hard
-
 "@types/yargs-parser@npm:*":
   version: 20.2.1
   resolution: "@types/yargs-parser@npm:20.2.1"
@@ -3158,14 +3151,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"class-validator@npm:0.13.1":
-  version: 0.13.1
-  resolution: "class-validator@npm:0.13.1"
+"class-validator@npm:0.13.2":
+  version: 0.13.2
+  resolution: "class-validator@npm:0.13.2"
   dependencies:
-    "@types/validator": ^13.1.3
-    libphonenumber-js: ^1.9.7
-    validator: ^13.5.2
-  checksum: 1d77f869792e83baef67d18220baf1e1a413a43efbd454ed359e0da691462e6d7d869e73de3ce5bb4a67206084338e5e4323e9e54dd8bc967c6fadb4e9ac44c2
+    libphonenumber-js: ^1.9.43
+    validator: ^13.7.0
+  checksum: 0deb4c29faa18345f6989fd7eaaaa07b05caae5298603fcd6485531c6daad503e5d2b24cc1342e4fc88ae5ba0acffdc24d0fc333110ef3f21a667cd8a79e1258
   languageName: node
   linkType: hard
 
@@ -5132,7 +5124,7 @@ __metadata:
     base32-encode: 1.2.0
     bcrypt: 5.0.1
     class-transformer: 0.4.0
-    class-validator: 0.13.1
+    class-validator: 0.13.2
     cli-color: 2.0.1
     connect-typeorm: 1.1.4
     eslint: 8.2.0
@@ -6618,10 +6610,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"libphonenumber-js@npm:^1.9.7":
-  version: 1.9.42
-  resolution: "libphonenumber-js@npm:1.9.42"
-  checksum: 2130cdc774cd9be72a9235953ff1eb54985b310caf6267ccf7e9246837f1a0960690a313859ce95d5801093280c5c252012993b782f3e630b5afeab946878d78
+"libphonenumber-js@npm:^1.9.43":
+  version: 1.9.43
+  resolution: "libphonenumber-js@npm:1.9.43"
+  checksum: 0e5112fbe9c8d4ccfb7b9f0eb1e7c672234e2bb70ea32169a6189583179b2a1ebb7ed284629ead06065d167f736955410e3c6debbeb98cb2f66398187209e415
   languageName: node
   linkType: hard
 
@@ -9745,7 +9737,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"validator@npm:^13.5.2":
+"validator@npm:^13.7.0":
   version: 13.7.0
   resolution: "validator@npm:13.7.0"
   checksum: 2b83283de1222ca549a7ef57f46e8d49c6669213348db78b7045bce36a3b5843ff1e9f709ebf74574e06223461ee1f264f8cc9a26a0060a79a27de079d8286ef
