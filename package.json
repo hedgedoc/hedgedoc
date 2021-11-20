@@ -79,7 +79,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@craco/craco": "6.4.0",
+    "@craco/craco": "6.4.1",
     "@cypress/webpack-preprocessor": "5.10.0",
     "@fontsource/source-sans-pro": "4.5.0",
     "@hedgedoc/html-to-react": "1.1.0",
