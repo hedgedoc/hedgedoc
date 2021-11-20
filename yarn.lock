@@ -8056,10 +8056,10 @@ i18next-resources-to-backend@1.0.0:
   dependencies:
     "@babel/runtime" "7.14.0"
 
-i18next@21.4.2:
-  version "21.4.2"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-21.4.2.tgz#10d10e07c9d1d589d71ac031f8ae755a37fcd0fc"
-  integrity sha512-vVWsmTnZNdYHPLt01MvT5YNM2lxec2R6r5T72J89eaazp8XQnGSqA66O+a918qqmjHZGB6HHRSs02xp753he9g==
+i18next@21.5.2:
+  version "21.5.2"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-21.5.2.tgz#ababe6fb0a769360035ebf06a36751e0b810cdfa"
+  integrity sha512-Iuztr2+7CPCh5SYQV0utw2HXMx1za18xfznrw/PmgX+98oIpm84bhIM7VUPODjLycwIZ299oP7sEVQ9oCgmzfg==
   dependencies:
     "@babel/runtime" "^7.12.0"
 

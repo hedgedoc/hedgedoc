@@ -5,7 +5,7 @@
  */
 
 import type { TOptions } from 'i18next'
-import i18n from 'i18next'
+import { t } from 'i18next'
 import { store } from '../index'
 import type { DismissUiNotificationAction, DispatchOptions } from './types'
 import { UiNotificationActionType } from './types'
@@ -75,7 +75,7 @@ export const dismissUiNotification = (notificationId: number): void => {
 export const showErrorNotification =
   (messageI18nKey: string, messageI18nOptions?: TOptions | string) =>
   (error: Error): void => {
-    log.error(i18n.t(messageI18nKey, messageI18nOptions), error)
+    log.error(t(messageI18nKey, messageI18nOptions), error)
     void dispatchUiNotification('common.errorOccurred', messageI18nKey, {
       contentI18nOptions: messageI18nOptions,
       icon: 'exclamation-triangle'
