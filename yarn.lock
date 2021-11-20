@@ -38,19 +38,38 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/schematics-cli@npm:12.2.10":
-  version: 12.2.10
-  resolution: "@angular-devkit/schematics-cli@npm:12.2.10"
+"@angular-devkit/core@npm:13.0.3":
+  version: 13.0.3
+  resolution: "@angular-devkit/core@npm:13.0.3"
   dependencies:
-    "@angular-devkit/core": 12.2.10
-    "@angular-devkit/schematics": 12.2.10
+    ajv: 8.6.3
+    ajv-formats: 2.1.1
+    fast-json-stable-stringify: 2.1.0
+    magic-string: 0.25.7
+    rxjs: 6.6.7
+    source-map: 0.7.3
+  peerDependencies:
+    chokidar: ^3.5.2
+  peerDependenciesMeta:
+    chokidar:
+      optional: true
+  checksum: 80394699cac2de5984949c833266287b01984f9b035f2967e753607ed8c74bf80ae5e49a240379957729c603ff7e1720e0c572269df0a7727984d8bc62850c6d
+  languageName: node
+  linkType: hard
+
+"@angular-devkit/schematics-cli@npm:13.0.3":
+  version: 13.0.3
+  resolution: "@angular-devkit/schematics-cli@npm:13.0.3"
+  dependencies:
+    "@angular-devkit/core": 13.0.3
+    "@angular-devkit/schematics": 13.0.3
     ansi-colors: 4.1.1
-    inquirer: 8.1.2
+    inquirer: 8.2.0
     minimist: 1.2.5
     symbol-observable: 4.0.0
   bin:
     schematics: bin/schematics.js
-  checksum: 90eed641009b4e6ee1c774904818b4792c97e7ec3c3fd9c42692e1cae0fdb3a9bbe5070a7efd62a986cb6e5c2b8144393582d8c06feecc5e33ad1e35faf2ae8b
+  checksum: a5dc5bc6619ded1eb8aa1a5df2d7e5bf3739224bd3b35037f633adc0da6a7b13b215bcd538fa14cc60dc7827d88e58b30115259902c3f3645e145446d406d635
   languageName: node
   linkType: hard
 
@@ -75,6 +94,19 @@ __metadata:
     ora: 5.4.1
     rxjs: 6.6.7
   checksum: 8eef5b7237c184291bc80284571017e8d68d5cce83c4c7cd6d9cc950cca97f8280fcc78d5e61c2cadc6da9be8c02211440cf3c30ac687e30f53dcf9d6bbba079
+  languageName: node
+  linkType: hard
+
+"@angular-devkit/schematics@npm:13.0.3":
+  version: 13.0.3
+  resolution: "@angular-devkit/schematics@npm:13.0.3"
+  dependencies:
+    "@angular-devkit/core": 13.0.3
+    jsonc-parser: 3.0.0
+    magic-string: 0.25.7
+    ora: 5.4.1
+    rxjs: 6.6.7
+  checksum: d7ae8c87ff73cefe84e6ed9ab66dec6cdb5ff1ce37b80011f03b23508ca1dea488fbfd8fd1753b0ef62853134e0b66d8957bba6a7e406c7e1dc9e7e3f493e952
   languageName: node
   linkType: hard
 
@@ -976,19 +1008,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/cli@npm:8.1.4":
-  version: 8.1.4
-  resolution: "@nestjs/cli@npm:8.1.4"
+"@nestjs/cli@npm:8.1.5":
+  version: 8.1.5
+  resolution: "@nestjs/cli@npm:8.1.5"
   dependencies:
-    "@angular-devkit/core": 12.2.10
-    "@angular-devkit/schematics": 12.2.10
-    "@angular-devkit/schematics-cli": 12.2.10
+    "@angular-devkit/core": 13.0.3
+    "@angular-devkit/schematics": 13.0.3
+    "@angular-devkit/schematics-cli": 13.0.3
     "@nestjs/schematics": ^8.0.3
     chalk: 3.0.0
     chokidar: 3.5.2
     cli-table3: 0.6.0
     commander: 4.1.1
-    fork-ts-checker-webpack-plugin: 6.3.4
+    fork-ts-checker-webpack-plugin: 6.4.0
     inquirer: 7.3.3
     node-emoji: 1.11.0
     ora: 5.4.1
@@ -998,19 +1030,19 @@ __metadata:
     source-map-support: 0.5.20
     tree-kill: 1.2.2
     tsconfig-paths: 3.11.0
-    tsconfig-paths-webpack-plugin: 3.5.1
+    tsconfig-paths-webpack-plugin: 3.5.2
     typescript: 4.3.5
-    webpack: 5.58.2
+    webpack: 5.64.1
     webpack-node-externals: 3.0.0
   bin:
     nest: bin/nest.js
-  checksum: e1f8538b8498fd349c6848d5d81cc00d9adf27ca32f3188c2fbccb257fc2752b1b604d5db0c7f73e28ef480e39334616b9c3a2c959721f0acb35682e9facdf1e
+  checksum: 7818d8bfaf51513def32e90e0268fdafc0383c7a75ee0b270499cf5c5b8158f6e7e53fe296dad15858d74c063db5db49df50cf63967345fa1f2161844fa6dc02
   languageName: node
   linkType: hard
 
-"@nestjs/common@npm:8.2.1":
-  version: 8.2.1
-  resolution: "@nestjs/common@npm:8.2.1"
+"@nestjs/common@npm:8.2.2":
+  version: 8.2.2
+  resolution: "@nestjs/common@npm:8.2.2"
   dependencies:
     axios: 0.24.0
     iterare: 1.2.1
@@ -1029,7 +1061,7 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 20f1e1099d82d3134d63e7a9576bcdbafd917166dd440aca675b4d7c1f5de4f6ac0ba7ffe0ddfba58c8e8156983fb4bcccc544d36bb9d7d31b958e5f8a164fe8
+  checksum: 5d74143630d9bbe28d18bb9c47a948f84c2b62aed0974de0963ec3e94da9964b9b214da3622b4b6970456dfe03dc12439728c57570ffca5e2283b4fe3ac6daee
   languageName: node
   linkType: hard
 
@@ -1051,9 +1083,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/core@npm:8.2.1":
-  version: 8.2.1
-  resolution: "@nestjs/core@npm:8.2.1"
+"@nestjs/core@npm:8.2.2":
+  version: 8.2.2
+  resolution: "@nestjs/core@npm:8.2.2"
   dependencies:
     "@nuxtjs/opencollective": 0.3.2
     fast-safe-stringify: 2.1.1
@@ -1076,7 +1108,7 @@ __metadata:
       optional: true
     "@nestjs/websockets":
       optional: true
-  checksum: d295a6964e0b5015438b086928a35514333ec4b83028d4f9a3010e087c0c70d9d9bc9537dfa0791bbe4fbfe72d8bf8c748b0a54cf40c6671fa1d30e6b1489458
+  checksum: 5dee8d70b9c8e09c3810f028fdaa91b0025fd11bf2fd47b74d44ee44b6cce9245709f3b69a1661be23ba67688ed67eeb85770a2d0c1812534429976ba103d8e8
   languageName: node
   linkType: hard
 
@@ -1102,9 +1134,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/platform-express@npm:8.2.1":
-  version: 8.2.1
-  resolution: "@nestjs/platform-express@npm:8.2.1"
+"@nestjs/platform-express@npm:8.2.2":
+  version: 8.2.2
+  resolution: "@nestjs/platform-express@npm:8.2.2"
   dependencies:
     body-parser: 1.19.0
     cors: 2.8.5
@@ -1114,7 +1146,7 @@ __metadata:
   peerDependencies:
     "@nestjs/common": ^8.0.0
     "@nestjs/core": ^8.0.0
-  checksum: ad2760854ab846e9438b7287d58b2d0427f9884affd1538c4db37317d267aa4d250d41432f437244ca1404486b464d8e44a9845037e4615e64310f1be60c2170
+  checksum: c4da4e62d48988314592c66fcf0519a2c61e5515bad3b3d48964e5df44257c54c70060f62d7fc387950bc49a145de92e0865067cf93d14461d704360f0dc1fc3
   languageName: node
   linkType: hard
 
@@ -1162,9 +1194,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/swagger@npm:5.1.4":
-  version: 5.1.4
-  resolution: "@nestjs/swagger@npm:5.1.4"
+"@nestjs/swagger@npm:5.1.5":
+  version: 5.1.5
+  resolution: "@nestjs/swagger@npm:5.1.5"
   dependencies:
     "@nestjs/mapped-types": 1.0.0
     lodash: 4.17.21
@@ -1180,13 +1212,13 @@ __metadata:
       optional: true
     swagger-ui-express:
       optional: true
-  checksum: d486ed2895bdc1022ea4952dedd0ca37115da8aa3577ba249626c3f71baf4c1a17abc769754dfec77c61154567cf4a6c50077736bffd5b69cef357516772115a
+  checksum: 76a92bd411904464ff34fc5b95357e56e4b3464af628a283562b2b21f134d6586386edc31623759b15a687740778659bdea11efde24c6b687ba17e81368db3e6
   languageName: node
   linkType: hard
 
-"@nestjs/testing@npm:8.2.1":
-  version: 8.2.1
-  resolution: "@nestjs/testing@npm:8.2.1"
+"@nestjs/testing@npm:8.2.2":
+  version: 8.2.2
+  resolution: "@nestjs/testing@npm:8.2.2"
   dependencies:
     optional: 0.1.4
     tslib: 2.3.1
@@ -1200,7 +1232,7 @@ __metadata:
       optional: true
     "@nestjs/platform-express":
       optional: true
-  checksum: 34717cfc968e795b9a627eeb1481e006ab429653f4ddac3fb367934e3cfacce285677e787f248bc78e07c5401fda1af4c085ea9a030250058126d9903d8ba0a9
+  checksum: 0491d5212f7a26e16db3394cf1ac7c7165d484e50e0496471461745dc7716319e54e6d9e39a21a149b9f155bea5878b351f985ca092282cf2e7e6f8f28c79d70
   languageName: node
   linkType: hard
 
@@ -4633,9 +4665,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fork-ts-checker-webpack-plugin@npm:6.3.4":
-  version: 6.3.4
-  resolution: "fork-ts-checker-webpack-plugin@npm:6.3.4"
+"fork-ts-checker-webpack-plugin@npm:6.4.0":
+  version: 6.4.0
+  resolution: "fork-ts-checker-webpack-plugin@npm:6.4.0"
   dependencies:
     "@babel/code-frame": ^7.8.3
     "@types/json-schema": ^7.0.5
@@ -4660,7 +4692,7 @@ __metadata:
       optional: true
     vue-template-compiler:
       optional: true
-  checksum: ad84ccbc990c086e86e988f556bd8a28f5a94e358f044889698d78b4d13d106f61da121081d2cdf58d84f972a2635826c035e5ef70138b92558cec7cf0c7f3a1
+  checksum: feba541453d4bdeaa743388541e125204789369920909f0152b11cfd1801a75fb2f6c708eae0174c9810ab4334fa21dea761037629440a647046581e7df62b8c
   languageName: node
   linkType: hard
 
@@ -5069,16 +5101,16 @@ __metadata:
   resolution: "hedgedoc@workspace:."
   dependencies:
     "@azure/storage-blob": 12.8.0
-    "@nestjs/cli": 8.1.4
-    "@nestjs/common": 8.2.1
+    "@nestjs/cli": 8.1.5
+    "@nestjs/common": 8.2.2
     "@nestjs/config": 1.1.0
-    "@nestjs/core": 8.2.1
+    "@nestjs/core": 8.2.2
     "@nestjs/passport": 8.0.1
-    "@nestjs/platform-express": 8.2.1
+    "@nestjs/platform-express": 8.2.2
     "@nestjs/schedule": 1.0.2
     "@nestjs/schematics": 8.0.5
-    "@nestjs/swagger": 5.1.4
-    "@nestjs/testing": 8.2.1
+    "@nestjs/swagger": 5.1.5
+    "@nestjs/testing": 8.2.2
     "@nestjs/typeorm": 8.0.2
     "@trivago/prettier-plugin-sort-imports": 3.1.1
     "@tsconfig/node12": 1.0.9
@@ -5428,9 +5460,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inquirer@npm:8.1.2":
-  version: 8.1.2
-  resolution: "inquirer@npm:8.1.2"
+"inquirer@npm:8.2.0":
+  version: 8.2.0
+  resolution: "inquirer@npm:8.2.0"
   dependencies:
     ansi-escapes: ^4.2.1
     chalk: ^4.1.1
@@ -5440,13 +5472,13 @@ __metadata:
     figures: ^3.0.0
     lodash: ^4.17.21
     mute-stream: 0.0.8
-    ora: ^5.3.0
+    ora: ^5.4.1
     run-async: ^2.4.0
     rxjs: ^7.2.0
     string-width: ^4.1.0
     strip-ansi: ^6.0.0
     through: ^2.3.6
-  checksum: fa6caec984d12a89f6bf926c3ee4924beed3dd1ceae66ad8ac287c3ef1b534e31cba86af66950f364305c42eb263c8f4a98c5a27227b3459308c8e3251c6d39a
+  checksum: 861d1a9324ae933b49126b3541d94e4d6a2f2a25411b3f3cc00c34bf1bdab34146362d702cf289efe6d8034900dc5905bcf2ea716092a02b6fc390e5986dd236
   languageName: node
   linkType: hard
 
@@ -7503,7 +7535,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ora@npm:5.4.1, ora@npm:^5.3.0":
+"ora@npm:5.4.1, ora@npm:^5.4.1":
   version: 5.4.1
   resolution: "ora@npm:5.4.1"
   dependencies:
@@ -9310,14 +9342,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsconfig-paths-webpack-plugin@npm:3.5.1":
-  version: 3.5.1
-  resolution: "tsconfig-paths-webpack-plugin@npm:3.5.1"
+"tsconfig-paths-webpack-plugin@npm:3.5.2":
+  version: 3.5.2
+  resolution: "tsconfig-paths-webpack-plugin@npm:3.5.2"
   dependencies:
     chalk: ^4.1.0
     enhanced-resolve: ^5.7.0
     tsconfig-paths: ^3.9.0
-  checksum: 86a58fc9ab373ac0ce0717a1147ed83b25ca05f2fa236f11ad8ae81a2577c9a33d7d6596d742d3d8b927c02e85300ef24d685ae7c767f4f964f22f78aa642647
+  checksum: e7872f45b10684204d4a6cbc7989073d885c99e0c9eb5222de6b2b83d2e1594bccb647f52d2f8e00c53da5b9a3084e47a2de44f41c6f7a607ec2b17330a8d9e9
   languageName: node
   linkType: hard
 
@@ -9825,16 +9857,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-sources@npm:^3.2.0":
-  version: 3.2.1
-  resolution: "webpack-sources@npm:3.2.1"
-  checksum: 438ee4759f70ee2d5ae17a2fc5e66a1f71f0ba8ad9de77edfaf4180c82925f6504790c5a1ddfa2a6d409212cd9e7332a6822d6acabb0f39303bc3b14354872e6
+"webpack-sources@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "webpack-sources@npm:3.2.2"
+  checksum: cc81f1f1bfd1c25c7a565598850294b515bcccf7974d0249b4a0c8c607307866ce3f9e8cdef1c74d5facfb0d993944c499cfd4b7c8f52d01359b6671cc5823d4
   languageName: node
   linkType: hard
 
-"webpack@npm:5.58.2":
-  version: 5.58.2
-  resolution: "webpack@npm:5.58.2"
+"webpack@npm:5.64.1":
+  version: 5.64.1
+  resolution: "webpack@npm:5.64.1"
   dependencies:
     "@types/eslint-scope": ^3.7.0
     "@types/estree": ^0.0.50
@@ -9859,13 +9891,13 @@ __metadata:
     tapable: ^2.1.1
     terser-webpack-plugin: ^5.1.3
     watchpack: ^2.2.0
-    webpack-sources: ^3.2.0
+    webpack-sources: ^3.2.2
   peerDependenciesMeta:
     webpack-cli:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 775da3b72c181204ca3f5200c144dde874fec8e059ba6c08dc9596e33e8408fd55c9c21ab5996124fe4b65963a54817bd4dfbb79fb89f307c9bf6054d69eaef5
+  checksum: d2a1baddaed03f2ce70c13501b89935d4bb4af30b4accb0d2dfbd00ec6f491eaf46272346cedcf013b477e131c8cc202ee0b2d2c51ece1cfb713fd2d98b80a52
   languageName: node
   linkType: hard
 
