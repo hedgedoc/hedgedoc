@@ -10,7 +10,7 @@ import { AliasUpdateDto } from '../../src/notes/alias-update.dto';
 import { User } from '../../src/users/user.entity';
 import { TestSetup } from '../test-setup';
 
-describe('Notes', () => {
+describe('Alias', () => {
   let testSetup: TestSetup;
 
   let user: User;
