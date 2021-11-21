@@ -58,3 +58,22 @@ and make sure that `protocolUseSSL` / `CMD_PROTOCOL_USESSL` is set to `true` if 
 ## HedgeDoc fails executing migrations and does not start
 Unfortunately, older versions of HedgeDoc had some bugs regarding migrations and didn't always record that a migration was executed.  
 Have a look at the *[Troubleshooting Migrations](/guides/migration-troubleshooting/)* guide for more information.
+
+## Why does my interface look weird?
+
+If your interface looks like this
+
+![Broken HedgeDoc interface](./faq/interface_broken.png)
+
+instead of this
+
+![Not broken HedgeDoc interface](./faq/interface_okay.png)
+
+then HedgeDoc can't find the asset files like images, stylesheets, fonts, etc.
+You should check the following settings (or their corresponding environment variables if you e.g. use docker.):
+
+- `domain` (env: `CMD_DOMAIN`)
+- `protocolUseSSL` (env: `CMD_PROTOCOL_USESSL`)
+- `urlAddPort` (env: `CMD_URL_ADDPORT`)
+
+Check [the reverse proxy guide](../guides/reverse-proxy/#configure-asset-link-generation) for an explanation.
