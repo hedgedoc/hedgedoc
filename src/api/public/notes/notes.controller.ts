@@ -15,7 +15,6 @@ import {
   Param,
   Post,
   Put,
-  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -48,7 +47,8 @@ import { NoteDto } from '../../../notes/note.dto';
 import { Note } from '../../../notes/note.entity';
 import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
 import { NotesService } from '../../../notes/notes.service';
-import { PermissionsService } from '../../../permissions/permissions.service';
+import { Permissions } from '../../../permissions/permissions.decorator';
+import { Permission } from '../../../permissions/permissions.enum';
 import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
@@ -61,6 +61,7 @@ import {
 import { FullApi } from '../../utils/fullapi-decorator';
 import { GetNotePipe } from '../../utils/get-note.pipe';
 import { MarkdownBody } from '../../utils/markdownbody-decorator';
+import { PermissionsGuard } from '../../utils/permissions.guard';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @ApiTags('notes')
@@ -71,14 +72,14 @@ export class NotesController {
     private readonly logger: ConsoleLoggerService,
     private noteService: NotesService,
     private revisionsService: RevisionsService,
-    private permissionsService: PermissionsService,
     private historyService: HistoryService,
     private mediaService: MediaService,
   ) {
     this.logger.setContext(NotesController.name);
   }
 
-  @UseGuards(TokenAuthGuard)
+  @Permissions(Permission.CREATE)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Post()
   @HttpCode(201)
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
@@ -87,17 +88,14 @@ export class NotesController {
     @RequestUser() user: User,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
-    // ToDo: provide user for createNoteDto
-    if (!this.permissionsService.mayCreate(user)) {
-      throw new UnauthorizedException('Creating note denied!');
-    }
     this.logger.debug('Got raw markdown:\n' + text);
     return await this.noteService.toNoteDto(
       await this.noteService.createNote(text, user),
     );
   }
 
-  @UseGuards(TokenAuthGuard)
+  @Permissions(Permission.READ)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Get(':noteIdOrAlias')
   @ApiOkResponse({
     description: 'Get information about the newly created note',
@@ -108,14 +106,12 @@ export class NotesController {
     @RequestUser() user: User,
     @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<NoteDto> {
-    if (!this.permissionsService.mayRead(user, note)) {
-      throw new UnauthorizedException('Reading note denied!');
-    }
     await this.historyService.updateHistoryEntryTimestamp(note, user);
     return await this.noteService.toNoteDto(note);
   }
 
-  @UseGuards(TokenAuthGuard)
+  @Permissions(Permission.CREATE)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Post(':noteAlias')
   @HttpCode(201)
   @ApiCreatedResponse({
@@ -129,9 +125,6 @@ export class NotesController {
     @Param('noteAlias') noteAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
-    if (!this.permissionsService.mayCreate(user)) {
-      throw new UnauthorizedException('Creating note denied!');
-    }
     this.logger.debug('Got raw markdown:\n' + text, 'createNamedNote');
     try {
       return await this.noteService.toNoteDto(
@@ -148,7 +141,8 @@ export class NotesController {
     }
   }
 
-  @UseGuards(TokenAuthGuard)
+  @Permissions(Permission.OWNER)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Delete(':noteIdOrAlias')
   @HttpCode(204)
   @ApiNoContentResponse({ description: successfullyDeletedDescription })
@@ -158,9 +152,6 @@ export class NotesController {
     @Param('noteIdOrAlias', GetNotePipe) note: Note,
     @Body() noteMediaDeletionDto: NoteMediaDeletionDto,
   ): Promise<void> {
-    if (!this.permissionsService.isOwner(user, note)) {
-      throw new UnauthorizedException('Deleting note denied!');
-    }
     const mediaUploads = await this.mediaService.listUploadsByNote(note);
     for (const mediaUpload of mediaUploads) {
       if (!noteMediaDeletionDto.keepMedia) {
@@ -175,7 +166,8 @@ export class NotesController {
     return;
   }
 
-  @UseGuards(TokenAuthGuard)
+  @Permissions(Permission.WRITE)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Put(':noteIdOrAlias')
   @ApiOkResponse({
     description: 'The new, changed note',
@@ -187,16 +179,14 @@ export class NotesController {
     @Param('noteIdOrAlias', GetNotePipe) note: Note,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
-    if (!this.permissionsService.mayWrite(user, note)) {
-      throw new UnauthorizedException('Updating note denied!');
-    }
     this.logger.debug('Got raw markdown:\n' + text, 'updateNote');
     return await this.noteService.toNoteDto(
       await this.noteService.updateNote(note, text),
     );
   }
 
-  @UseGuards(TokenAuthGuard)
+  @Permissions(Permission.READ)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Get(':noteIdOrAlias/content')
   @ApiProduces('text/markdown')
   @ApiOkResponse({
@@ -208,13 +198,11 @@ export class NotesController {
     @RequestUser() user: User,
     @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<string> {
-    if (!this.permissionsService.mayRead(user, note)) {
-      throw new UnauthorizedException('Reading note denied!');
-    }
     return await this.noteService.getNoteContent(note);
   }
 
-  @UseGuards(TokenAuthGuard)
+  @Permissions(Permission.READ)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Get(':noteIdOrAlias/metadata')
   @ApiOkResponse({
     description: 'The metadata of the note',
@@ -225,13 +213,11 @@ export class NotesController {
     @RequestUser() user: User,
     @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<NoteMetadataDto> {
-    if (!this.permissionsService.mayRead(user, note)) {
-      throw new UnauthorizedException('Reading note denied!');
-    }
     return await this.noteService.toNoteMetadataDto(note);
   }
 
-  @UseGuards(TokenAuthGuard)
+  @Permissions(Permission.OWNER)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Put(':noteIdOrAlias/metadata/permissions')
   @ApiOkResponse({
     description: 'The updated permissions of the note',
@@ -243,15 +229,13 @@ export class NotesController {
     @Param('noteIdOrAlias', GetNotePipe) note: Note,
     @Body() updateDto: NotePermissionsUpdateDto,
   ): Promise<NotePermissionsDto> {
-    if (!this.permissionsService.isOwner(user, note)) {
-      throw new UnauthorizedException('Updating note denied!');
-    }
     return this.noteService.toNotePermissionsDto(
       await this.noteService.updateNotePermissions(note, updateDto),
     );
   }
 
-  @UseGuards(TokenAuthGuard)
+  @Permissions(Permission.READ)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Get(':noteIdOrAlias/revisions')
   @ApiOkResponse({
     description: 'Revisions of the note',
@@ -263,9 +247,6 @@ export class NotesController {
     @RequestUser() user: User,
     @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<RevisionMetadataDto[]> {
-    if (!this.permissionsService.mayRead(user, note)) {
-      throw new UnauthorizedException('Reading note denied!');
-    }
     const revisions = await this.revisionsService.getAllRevisions(note);
     return await Promise.all(
       revisions.map((revision) =>
@@ -274,7 +255,8 @@ export class NotesController {
     );
   }
 
-  @UseGuards(TokenAuthGuard)
+  @Permissions(Permission.READ)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Get(':noteIdOrAlias/revisions/:revisionId')
   @ApiOkResponse({
     description: 'Revision of the note for the given id or alias',
@@ -286,9 +268,6 @@ export class NotesController {
     @Param('noteIdOrAlias', GetNotePipe) note: Note,
     @Param('revisionId') revisionId: number,
   ): Promise<RevisionDto> {
-    if (!this.permissionsService.mayRead(user, note)) {
-      throw new UnauthorizedException('Reading note denied!');
-    }
     try {
       return this.revisionsService.toRevisionDto(
         await this.revisionsService.getRevision(note, revisionId),
@@ -301,7 +280,8 @@ export class NotesController {
     }
   }
 
-  @UseGuards(TokenAuthGuard)
+  @Permissions(Permission.READ)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Get(':noteIdOrAlias/media')
   @ApiOkResponse({
     description: 'All media uploads of the note',
@@ -313,9 +293,6 @@ export class NotesController {
     @RequestUser() user: User,
     @Param('noteIdOrAlias', GetNotePipe) note: Note,
   ): Promise<MediaUploadDto[]> {
-    if (!this.permissionsService.mayRead(user, note)) {
-      throw new UnauthorizedException('Reading note denied!');
-    }
     const media = await this.mediaService.listUploadsByNote(note);
     return media.map((media) => this.mediaService.toMediaUploadDto(media));
   }
