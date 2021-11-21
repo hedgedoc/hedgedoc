@@ -4,17 +4,22 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { RendererType } from '../../src/components/render-page/window-post-message-communicator/rendering-message'
+
 declare namespace Cypress {
   interface Chainable {
-    getIframeBody(): Chainable<Element>
+    getIframeBody(rendererType?: RendererType): Chainable<Element>
+
     getReveal(): Chainable<Element>
+
     getMarkdownBody(): Chainable<Element>
   }
 }
 
-Cypress.Commands.add('getIframeBody', () => {
+Cypress.Commands.add('getIframeBody', (rendererType?: RendererType) => {
+  const renderTypeAttribute = rendererType ? `[data-cypress-renderer-type="${rendererType}"]` : ''
   return cy
-    .get(`iframe[data-cypress-id="documentIframe"][data-content-ready="true"]`)
+    .get(`iframe[data-cypress-id="documentIframe"][data-cypress-renderer-ready="true"]${renderTypeAttribute}`)
     .should('be.visible')
     .its('0.contentDocument')
     .should('exist')
@@ -24,9 +29,13 @@ Cypress.Commands.add('getIframeBody', () => {
 })
 
 Cypress.Commands.add('getReveal', () => {
-  return cy.getIframeBody().find('.reveal')
+  return cy.getIframeBody(RendererType.SLIDESHOW).find('.reveal')
 })
 
 Cypress.Commands.add('getMarkdownBody', () => {
-  return cy.getIframeBody().find('.markdown-body')
+  return cy.getIframeBody(RendererType.DOCUMENT).find('.markdown-body')
+})
+
+Cypress.Commands.add('getIntroBody', () => {
+  return cy.getIframeBody(RendererType.INTRO).find('.markdown-body')
 })

@@ -31,3 +31,22 @@ export const cypressId = (
     return { 'data-cypress-id': attributeContent }
   }
 }
+
+/**
+ * Returns an object with an attribute that starts with "data-cypress-" and the given attribute name.
+ * It is used to check additional data during integration tests.
+ * This works only if the runtime is built in test mode.
+ *
+ * @param attribute The attribute name
+ * @param value The attribute content
+ * @return An object if in test mode, undefined otherwise.
+ */
+export const cypressAttribute = (attribute: string, value: string): Record<string, string> | undefined => {
+  if (!isTestMode()) {
+    return
+  }
+
+  return {
+    [`data-cypress-${attribute}`]: value
+  }
+}

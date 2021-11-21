@@ -120,9 +120,9 @@ export type RendererToEditorMessageType =
   | CommunicationMessageType.ON_WORD_COUNT_CALCULATED
 
 export enum RendererType {
-  DOCUMENT,
-  INTRO,
-  SLIDESHOW
+  DOCUMENT = 'document',
+  INTRO = 'intro',
+  SLIDESHOW = 'slideshow'
 }
 
 export interface BaseConfiguration {

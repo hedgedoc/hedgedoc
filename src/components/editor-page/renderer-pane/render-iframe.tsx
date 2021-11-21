@@ -26,7 +26,7 @@ import { useSendScrollState } from './hooks/use-send-scroll-state'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { Logger } from '../../../utils/logger'
 import { useEffectOnRenderTypeChange } from './hooks/use-effect-on-render-type-change'
-import { cypressId } from '../../../utils/cypress-attribute'
+import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 
 export interface RenderIframeProps extends RendererProps {
   rendererType: RendererType
@@ -148,7 +148,8 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
         ref={frameReference}
         referrerPolicy={'no-referrer'}
         className={`border-0 ${frameClasses ?? ''}`}
-        data-content-ready={rendererReady}
+        {...cypressAttribute('renderer-ready', rendererReady ? 'true' : 'false')}
+        {...cypressAttribute('renderer-type', rendererType)}
       />
     </Fragment>
   )
