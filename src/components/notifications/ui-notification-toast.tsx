@@ -4,16 +4,17 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { Button, ProgressBar, Toast } from 'react-bootstrap'
 import type { UiNotification } from '../../redux/ui-notifications/types'
 import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../common/show-if/show-if'
 import type { IconName } from '../common/fork-awesome/types'
-import { dismissUiNotification } from '../../redux/ui-notifications/methods'
 import { Trans, useTranslation } from 'react-i18next'
 import { Logger } from '../../utils/logger'
 import { cypressId } from '../../utils/cypress-attribute'
+import { useEffectOnce, useInterval } from 'react-use'
+import { dismissUiNotification } from '../../redux/ui-notifications/methods'
 
 const STEPS_PER_SECOND = 10
 const log = new Logger('UiNotificationToast')
@@ -35,56 +36,35 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
   buttons
 }) => {
   const { t } = useTranslation()
-  const [eta, setEta] = useState<number>()
-  const interval = useRef<NodeJS.Timeout | undefined>(undefined)
+  const [remainingSteps, setRemainingSteps] = useState<number>(() => durationInSecond * STEPS_PER_SECOND)
 
-  const deleteInterval = useCallback(() => {
-    if (interval.current) {
-      clearInterval(interval.current)
-    }
-  }, [])
-
-  const dismissThisNotification = useCallback(() => {
-    log.debug(`Dismissed notification ${notificationId}`)
-    dismissUiNotification(notificationId)
+  const dismissNow = useCallback(() => {
+    log.debug(`Dismiss notification ${notificationId} immediately`)
+    setRemainingSteps(0)
   }, [notificationId])
 
-  useLayoutEffect(() => {
-    if (dismissed || !!interval.current) {
-      return
-    }
+  useEffectOnce(() => {
     log.debug(`Show notification ${notificationId}`)
-    setEta(durationInSecond * STEPS_PER_SECOND)
-    interval.current = setInterval(
-      () =>
-        setEta((lastETA) => {
-          if (lastETA === undefined) {
-            return
-          } else if (lastETA <= 0) {
-            return 0
-          } else {
-            return lastETA - 1
-          }
-        }),
-      1000 / STEPS_PER_SECOND
-    )
-    return () => {
-      deleteInterval()
-    }
-  }, [deleteInterval, dismissThisNotification, dismissed, durationInSecond, notificationId])
+  })
+
+  useInterval(
+    () => setRemainingSteps((lastRemainingSteps) => lastRemainingSteps - 1),
+    useMemo(() => (dismissed || remainingSteps <= 0 ? null : 1000 / STEPS_PER_SECOND), [dismissed, remainingSteps])
+  )
 
   useEffect(() => {
-    if (eta === 0) {
-      dismissThisNotification()
+    if (remainingSteps <= 0 && !dismissed) {
+      log.debug(`Dismiss notification ${notificationId}`)
+      dismissUiNotification(notificationId)
     }
-  }, [dismissThisNotification, eta])
+  }, [dismissed, remainingSteps, notificationId])
 
   const buttonsDom = useMemo(
     () =>
       buttons?.map((button, buttonIndex) => {
         const buttonClick = () => {
           button.onClick()
-          dismissThisNotification()
+          dismissNow()
         }
         return (
           <Button key={buttonIndex} size={'sm'} onClick={buttonClick} variant={'link'}>
@@ -92,7 +72,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
           </Button>
         )
       }),
-    [buttons, dismissThisNotification]
+    [buttons, dismissNow]
   )
 
   const contentDom = useMemo(() => {
@@ -109,10 +89,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
   }, [contentI18nKey, contentI18nOptions, t])
 
   return (
-    <Toast
-      show={!dismissed && eta !== undefined}
-      onClose={dismissThisNotification}
-      {...cypressId('notification-toast')}>
+    <Toast show={!dismissed} onClose={dismissNow} {...cypressId('notification-toast')}>
       <Toast.Header>
         <strong className='mr-auto'>
           <ShowIf condition={!!icon}>
@@ -123,7 +100,12 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
         <small>{date.toRelative({ style: 'short' })}</small>
       </Toast.Header>
       <Toast.Body>{contentDom}</Toast.Body>
-      <ProgressBar variant={'info'} now={eta} max={durationInSecond * STEPS_PER_SECOND} min={0} />
+      <ProgressBar
+        variant={'info'}
+        now={remainingSteps}
+        max={durationInSecond * STEPS_PER_SECOND}
+        min={STEPS_PER_SECOND}
+      />
       <div>{buttonsDom}</div>
     </Toast>
   )
