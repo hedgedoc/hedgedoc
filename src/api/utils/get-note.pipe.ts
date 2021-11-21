@@ -11,10 +11,10 @@ import {
   PipeTransform,
 } from '@nestjs/common';
 
-import { ForbiddenIdError, NotInDBError } from '../errors/errors';
-import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { Note } from './note.entity';
-import { NotesService } from './notes.service';
+import { ForbiddenIdError, NotInDBError } from '../../errors/errors';
+import { ConsoleLoggerService } from '../../logger/console-logger.service';
+import { Note } from '../../notes/note.entity';
+import { NotesService } from '../../notes/notes.service';
 
 @Injectable()
 export class GetNotePipe implements PipeTransform<string, Promise<Note>> {

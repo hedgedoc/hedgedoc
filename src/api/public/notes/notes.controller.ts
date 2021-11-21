@@ -39,7 +39,6 @@ import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
-import { GetNotePipe } from '../../../notes/get-note.pipe';
 import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
 import {
   NotePermissionsDto,
@@ -60,6 +59,7 @@ import {
   unauthorizedDescription,
 } from '../../utils/descriptions';
 import { FullApi } from '../../utils/fullapi-decorator';
+import { GetNotePipe } from '../../utils/get-note.pipe';
 import { MarkdownBody } from '../../utils/markdownbody-decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 

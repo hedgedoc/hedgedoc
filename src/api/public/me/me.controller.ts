@@ -31,7 +31,6 @@ import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
-import { GetNotePipe } from '../../../notes/get-note.pipe';
 import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
@@ -43,6 +42,7 @@ import {
   successfullyDeletedDescription,
   unauthorizedDescription,
 } from '../../utils/descriptions';
+import { GetNotePipe } from '../../utils/get-note.pipe';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @ApiTags('me')
