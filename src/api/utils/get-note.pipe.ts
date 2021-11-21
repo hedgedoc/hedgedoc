@@ -26,18 +26,25 @@ export class GetNotePipe implements PipeTransform<string, Promise<Note>> {
   }
 
   async transform(noteIdOrAlias: string, _: ArgumentMetadata): Promise<Note> {
-    let note: Note;
-    try {
-      note = await this.noteService.getNoteByIdOrAlias(noteIdOrAlias);
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
-    }
-    return note;
+    return await getNote(this.noteService, noteIdOrAlias);
   }
+}
+
+export async function getNote(
+  noteService: NotesService,
+  noteIdOrAlias: string,
+): Promise<Note> {
+  let note: Note;
+  try {
+    note = await noteService.getNoteByIdOrAlias(noteIdOrAlias);
+  } catch (e) {
+    if (e instanceof NotInDBError) {
+      throw new NotFoundException(e.message);
+    }
+    if (e instanceof ForbiddenIdError) {
+      throw new BadRequestException(e.message);
+    }
+    throw e;
+  }
+  return note;
 }
