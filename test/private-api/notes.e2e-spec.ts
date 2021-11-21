@@ -349,7 +349,7 @@ describe('Notes', () => {
       await agent
         .get(`/api/private/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
-        .expect(401);
+        .expect(403);
     });
   });
 

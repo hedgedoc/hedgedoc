@@ -464,7 +464,7 @@ describe('Notes', () => {
       await request(testSetup.app.getHttpServer())
         .get(`/api/v2/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
-        .expect(401);
+        .expect(403);
     });
   });
 
