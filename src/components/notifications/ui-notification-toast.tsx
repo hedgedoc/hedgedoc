@@ -49,7 +49,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
 
   useInterval(
     () => setRemainingSteps((lastRemainingSteps) => lastRemainingSteps - 1),
-    useMemo(() => (dismissed || remainingSteps <= 0 ? null : 1000 / STEPS_PER_SECOND), [dismissed, remainingSteps])
+    !dismissed && remainingSteps > 0 ? 1000 / STEPS_PER_SECOND : null
   )
 
   useEffect(() => {
