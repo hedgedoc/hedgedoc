@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
@@ -13,30 +13,39 @@ import { ShowIf } from '../show-if/show-if'
 import type { PropsWithDataCypressId } from '../../../utils/cypress-attribute'
 import { cypressId } from '../../../utils/cypress-attribute'
 
-export interface CommonModalProps extends PropsWithDataCypressId {
+export interface ModalVisibilityProps {
   show: boolean
   onHide?: () => void
-  titleI18nKey?: string
+}
+
+export interface ModalContentProps {
   title?: string
-  closeButton?: boolean
-  icon?: IconName
-  size?: 'lg' | 'sm' | 'xl'
+  titleIsI18nKey?: boolean
+  showCloseButton?: boolean
+  titleIcon?: IconName
+  modalSize?: 'lg' | 'sm' | 'xl'
   additionalClasses?: string
 }
+
+export type CommonModalProps = PropsWithDataCypressId & ModalVisibilityProps & ModalContentProps
 
 export const CommonModal: React.FC<CommonModalProps> = ({
   show,
   onHide,
-  titleI18nKey,
   title,
-  closeButton,
-  icon,
+  showCloseButton,
+  titleIcon,
   additionalClasses,
-  size,
+  modalSize,
   children,
+  titleIsI18nKey = true,
   ...props
 }) => {
   useTranslation()
+
+  const titleElement = useMemo(() => {
+    return titleIsI18nKey ? <Trans i18nKey={title} /> : <span>{title}</span>
+  }, [title, titleIsI18nKey])
 
   return (
     <Modal
@@ -45,14 +54,14 @@ export const CommonModal: React.FC<CommonModalProps> = ({
       onHide={onHide}
       animation={true}
       dialogClassName={`text-dark ${additionalClasses ?? ''}`}
-      size={size}>
-      <Modal.Header closeButton={!!closeButton}>
+      size={modalSize}>
+      <Modal.Header closeButton={!!showCloseButton}>
         <Modal.Title>
-          <ShowIf condition={!!icon}>
-            <ForkAwesomeIcon icon={icon as IconName} />
+          <ShowIf condition={!!titleIcon}>
+            <ForkAwesomeIcon icon={titleIcon as IconName} />
             &nbsp;
           </ShowIf>
-          {titleI18nKey ? <Trans i18nKey={titleI18nKey} /> : <span>{title}</span>}
+          {titleElement}
         </Modal.Title>
       </Modal.Header>
       {children}

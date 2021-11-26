@@ -10,18 +10,14 @@ import { Trans, useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import { useFrontendBaseUrl } from '../../../../hooks/common/use-frontend-base-url'
 import { CopyableField } from '../../../common/copyable/copyable-field/copyable-field'
+import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
 import type { EditorPagePathParams } from '../../editor-page'
 import { NoteType } from '../../../common/note-frontmatter/types'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
-export interface ShareModalProps {
-  show: boolean
-  onHide: () => void
-}
-
-export const ShareModal: React.FC<ShareModalProps> = ({ show, onHide }) => {
+export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   useTranslation()
   const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)
   const editorMode = useApplicationState((state) => state.editorConfig.editorMode)
@@ -29,7 +25,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({ show, onHide }) => {
   const { id } = useParams<EditorPagePathParams>()
 
   return (
-    <CommonModal show={show} onHide={onHide} closeButton={true} titleI18nKey={'editor.modal.shareLink.title'}>
+    <CommonModal show={show} onHide={onHide} showCloseButton={true} title={'editor.modal.shareLink.title'}>
       <Modal.Body>
         <Trans i18nKey={'editor.modal.shareLink.editorDescription'} />
         <CopyableField

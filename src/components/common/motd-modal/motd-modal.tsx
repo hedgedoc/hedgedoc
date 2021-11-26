@@ -48,7 +48,7 @@ export const MotdModal: React.FC = () => {
     return null
   } else {
     return (
-      <CommonModal {...cypressId('motd')} show={!!motdState} titleI18nKey={'motd.title'}>
+      <CommonModal {...cypressId('motd')} show={!!motdState} title={'motd.title'}>
         <Modal.Body>{domContent}</Modal.Body>
         <Modal.Footer>
           <Button variant={'success'} onClick={dismiss} {...cypressId('motd-dismiss')}>

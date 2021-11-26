@@ -7,10 +7,11 @@
 import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import React, { useMemo, useState } from 'react'
+import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
-import { Shortcut } from './shortcuts'
-import { Links } from './links'
-import { Cheatsheet } from './cheatsheet'
+import { ShortcutTabContent } from './shortcuts-tab-content'
+import { LinksTabContent } from './links-tab-content'
+import { CheatsheetTabContent } from './cheatsheet-tab-content'
 
 export enum HelpTabStatus {
   Cheatsheet = 'cheatsheet.title',
@@ -18,30 +19,31 @@ export enum HelpTabStatus {
   Links = 'links.title'
 }
 
-export interface HelpModalProps {
-  show: boolean
-  onHide: () => void
-}
-
-export const HelpModal: React.FC<HelpModalProps> = ({ show, onHide }) => {
+export const HelpModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   const [tab, setTab] = useState<HelpTabStatus>(HelpTabStatus.Cheatsheet)
   const { t } = useTranslation()
 
   const tabContent = useMemo(() => {
     switch (tab) {
       case HelpTabStatus.Cheatsheet:
-        return <Cheatsheet />
+        return <CheatsheetTabContent />
       case HelpTabStatus.Shortcuts:
-        return <Shortcut />
+        return <ShortcutTabContent />
       case HelpTabStatus.Links:
-        return <Links />
+        return <LinksTabContent />
     }
   }, [tab])
 
-  const tabTitle = useMemo(() => t('editor.documentBar.help') + ' - ' + t(`editor.help.${tab}`), [t, tab])
+  const modalTitle = useMemo(() => t('editor.documentBar.help') + ' - ' + t(`editor.help.${tab}`), [t, tab])
 
   return (
-    <CommonModal size={'lg'} icon={'question-circle'} show={show} onHide={onHide} title={tabTitle}>
+    <CommonModal
+      modalSize={'lg'}
+      titleIcon={'question-circle'}
+      show={show}
+      onHide={onHide}
+      title={modalTitle}
+      titleIsI18nKey={false}>
       <Modal.Body>
         <nav className='nav nav-tabs'>
           <Button

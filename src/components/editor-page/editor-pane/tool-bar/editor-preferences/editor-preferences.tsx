@@ -32,9 +32,9 @@ export const EditorPreferences: React.FC = () => {
       <CommonModal
         show={showModal}
         onHide={() => setShowModal(false)}
-        titleI18nKey={'editor.modal.preferences.title'}
-        closeButton={true}
-        icon={'wrench'}>
+        title={'editor.modal.preferences.title'}
+        showCloseButton={true}
+        titleIcon={'wrench'}>
         <Form>
           <ListGroup>
             <ListGroup.Item>

@@ -10,7 +10,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import './cheatsheet.scss'
 import { CheatsheetLine } from './cheatsheet-line'
 
-export const Cheatsheet: React.FC = () => {
+export const CheatsheetTabContent: React.FC = () => {
   const { t } = useTranslation()
   const [checked, setChecked] = useState<boolean>(false)
   const codes = useMemo(
@@ -58,4 +58,4 @@ export const Cheatsheet: React.FC = () => {
   )
 }
 
-export default Cheatsheet
+export default CheatsheetTabContent

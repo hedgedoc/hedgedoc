@@ -5,14 +5,12 @@
  */
 
 import React from 'react'
-import { Modal } from 'react-bootstrap'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import './lightbox.scss'
 import { ProxyImageFrame } from './proxy-image-frame'
+import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
+import { CommonModal } from '../../../common/modals/common-modal'
 
-export interface ImageLightboxModalProps {
-  show: boolean
-  onHide: () => void
+export interface ImageLightboxModalProps extends ModalVisibilityProps {
   alt?: string
   src?: string
   title?: string
@@ -20,21 +18,15 @@ export interface ImageLightboxModalProps {
 
 export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({ show, onHide, src, alt, title }) => {
   return (
-    <Modal
-      animation={true}
-      centered={true}
-      dialogClassName={'text-dark lightbox'}
+    <CommonModal
+      modalSize={'xl'}
       show={show && !!src}
       onHide={onHide}
-      size={'xl'}>
-      <Modal.Header closeButton={true}>
-        <Modal.Title className={'h6'}>
-          <ForkAwesomeIcon icon={'picture-o'} />
-          &nbsp;
-          <span>{alt ?? title ?? ''}</span>
-        </Modal.Title>
-      </Modal.Header>
+      showCloseButton={true}
+      additionalClasses={'lightbox'}
+      title={alt ?? title ?? ''}
+      titleIsI18nKey={false}>
       <ProxyImageFrame alt={alt} src={src} title={title} className={'w-100 cursor-zoom-out'} onClick={onHide} />
-    </Modal>
+    </CommonModal>
   )
 }

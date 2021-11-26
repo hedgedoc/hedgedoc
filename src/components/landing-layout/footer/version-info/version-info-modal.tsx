@@ -35,8 +35,8 @@ export const VersionInfoModal: React.FC<CommonModalProps> = ({ onHide, show }) =
       {...cypressId('version-modal')}
       show={show}
       onHide={onHide}
-      closeButton={true}
-      titleI18nKey={'landing.versionInfo.title'}>
+      showCloseButton={true}
+      title={'landing.versionInfo.title'}>
       <Modal.Body>
         <Row>
           <VersionInfoModalColumn

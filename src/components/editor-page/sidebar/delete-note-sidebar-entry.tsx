@@ -24,7 +24,7 @@ export const DeleteNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ hi
         deletionButtonI18nKey={'editor.modal.deleteNote.button'}
         show={showDialog}
         onHide={() => setShowDialog(false)}
-        titleI18nKey={'editor.modal.deleteNote.title'}>
+        title={'editor.modal.deleteNote.title'}>
         <h5>
           <Trans i18nKey={'editor.modal.deleteNote.question'} />
         </h5>

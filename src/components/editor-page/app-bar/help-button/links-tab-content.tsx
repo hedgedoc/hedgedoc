@@ -11,7 +11,7 @@ import links from '../../../../links.json'
 import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
 import { TranslatedInternalLink } from '../../../common/links/translated-internal-link'
 
-export const Links: React.FC = () => {
+export const LinksTabContent: React.FC = () => {
   useTranslation()
 
   return (

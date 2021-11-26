@@ -14,18 +14,14 @@ import type { Revision, RevisionListEntry } from '../../../../api/revisions/type
 import type { UserResponse } from '../../../../api/users/types'
 import { useIsDarkModeActivated } from '../../../../hooks/common/use-is-dark-mode-activated'
 import { useNoteMarkdownContent } from '../../../../hooks/common/use-note-markdown-content'
+import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { RevisionModalListEntry } from './revision-modal-list-entry'
 import './revision-modal.scss'
 import { downloadRevision, getUserDataForRevision } from './utils'
 
-export interface PermissionsModalProps {
-  show: boolean
-  onHide: () => void
-}
-
-export const RevisionModal: React.FC<PermissionsModalProps> = ({ show, onHide }) => {
+export const RevisionModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   useTranslation()
   const [revisions, setRevisions] = useState<RevisionListEntry[]>([])
   const [selectedRevisionTimestamp, setSelectedRevisionTimestamp] = useState<number | null>(null)
@@ -67,10 +63,10 @@ export const RevisionModal: React.FC<PermissionsModalProps> = ({ show, onHide })
     <CommonModal
       show={show}
       onHide={onHide}
-      titleI18nKey={'editor.modal.revision.title'}
-      icon={'history'}
-      closeButton={true}
-      size={'xl'}
+      title={'editor.modal.revision.title'}
+      titleIcon={'history'}
+      showCloseButton={true}
+      modalSize={'xl'}
       additionalClasses='revision-modal'>
       <Modal.Body>
         <Row>

@@ -168,7 +168,7 @@ export const ProfileAccessTokens: React.FC = () => {
       <CommonModal
         show={showAddedModal}
         onHide={() => setShowAddedModal(false)}
-        titleI18nKey='profile.modal.addedAccessToken.title'
+        title='profile.modal.addedAccessToken.title'
         {...cypressId('access-token-modal-add')}>
         <Modal.Body>
           <Trans i18nKey='profile.modal.addedAccessToken.message' />
@@ -185,7 +185,7 @@ export const ProfileAccessTokens: React.FC = () => {
       <CommonModal
         show={showDeleteModal}
         onHide={() => setShowDeleteModal(false)}
-        titleI18nKey={'profile.modal.deleteAccessToken.title'}
+        title={'profile.modal.deleteAccessToken.title'}
         {...cypressId('access-token-modal-delete')}>
         <Modal.Body>
           <Trans i18nKey='profile.modal.deleteAccessToken.message' />

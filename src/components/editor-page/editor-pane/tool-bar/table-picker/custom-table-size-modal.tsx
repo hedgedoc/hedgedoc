@@ -40,9 +40,9 @@ export const CustomTableSizeModal: React.FC<CustomTableSizeModalProps> = ({ show
     <CommonModal
       show={showModal}
       onHide={() => onDismiss()}
-      titleI18nKey={'editor.editorToolbar.table.customSize'}
-      closeButton={true}
-      icon={'table'}>
+      title={'editor.editorToolbar.table.customSize'}
+      showCloseButton={true}
+      titleIcon={'table'}>
       <div className={'col-lg-10 d-flex flex-row p-3 align-items-center'}>
         <Form.Control
           type={'number'}

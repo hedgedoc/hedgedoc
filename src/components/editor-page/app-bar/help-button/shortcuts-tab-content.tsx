@@ -9,7 +9,7 @@ import { Card, ListGroup, Row } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
 import { isMac } from '../../utils'
 
-export const Shortcut: React.FC = () => {
+export const ShortcutTabContent: React.FC = () => {
   const modifierKey = isMac ? <kbd>⌘</kbd> : <kbd>Ctrl</kbd>
   const altKey = isMac ? <kbd>⌥</kbd> : <kbd>Alt</kbd>
 

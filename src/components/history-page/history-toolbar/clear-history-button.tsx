@@ -42,7 +42,7 @@ export const ClearHistoryButton: React.FC = () => {
         deletionButtonI18nKey={'landing.history.toolbar.clear'}
         show={show}
         onHide={handleClose}
-        titleI18nKey={'landing.history.modal.clearHistory.title'}>
+        title={'landing.history.modal.clearHistory.title'}>
         <h5>
           <Trans i18nKey={'landing.history.modal.clearHistory.question'} />
         </h5>

@@ -51,7 +51,7 @@ export const DropdownItemWithDeletionModal: React.FC<DropdownItemWithDeletionMod
         deletionButtonI18nKey={modalButtonI18nKey}
         show={showDialog}
         onHide={() => setShowDialog(false)}
-        titleI18nKey={modalTitleI18nKey}>
+        title={modalTitleI18nKey}>
         <h5>
           <Trans i18nKey={modalQuestionI18nKey} />
         </h5>

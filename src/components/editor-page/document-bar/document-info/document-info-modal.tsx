@@ -8,6 +8,7 @@ import { DateTime } from 'luxon'
 import React from 'react'
 import { ListGroup, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
+import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { DocumentInfoLine } from './document-info-line'
 import { DocumentInfoLineWithTimeMode, DocumentInfoTimeLine } from './document-info-time-line'
@@ -16,12 +17,7 @@ import { useCustomizeAssetsUrl } from '../../../../hooks/common/use-customize-as
 import { DocumentInfoLineWordCount } from './document-info-line-word-count'
 import { cypressId } from '../../../../utils/cypress-attribute'
 
-export interface DocumentInfoModalProps {
-  show: boolean
-  onHide: () => void
-}
-
-export const DocumentInfoModal: React.FC<DocumentInfoModalProps> = ({ show, onHide }) => {
+export const DocumentInfoModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   const assetsBaseUrl = useCustomizeAssetsUrl()
   useTranslation()
 
@@ -30,8 +26,8 @@ export const DocumentInfoModal: React.FC<DocumentInfoModalProps> = ({ show, onHi
     <CommonModal
       show={show}
       onHide={onHide}
-      closeButton={true}
-      titleI18nKey={'editor.modal.documentInfo.title'}
+      showCloseButton={true}
+      title={'editor.modal.documentInfo.title'}
       {...cypressId('document-info-modal')}>
       <Modal.Body>
         <ListGroup>

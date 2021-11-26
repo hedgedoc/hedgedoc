@@ -18,17 +18,17 @@ export interface DeletionModalProps extends CommonModalProps {
 export const DeletionModal: React.FC<DeletionModalProps> = ({
   show,
   onHide,
-  titleI18nKey,
+  title,
   onConfirm,
   deletionButtonI18nKey,
-  icon,
+  titleIcon,
   children,
   ...props
 }) => {
   useTranslation()
 
   return (
-    <CommonModal show={show} onHide={onHide} titleI18nKey={titleI18nKey} icon={icon} closeButton={true} {...props}>
+    <CommonModal show={show} onHide={onHide} title={title} titleIcon={titleIcon} showCloseButton={true} {...props}>
       <Modal.Body className='text-dark'>{children}</Modal.Body>
       <Modal.Footer>
         <Button variant='danger' onClick={onConfirm}>

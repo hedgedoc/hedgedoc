@@ -8,17 +8,13 @@ import React, { useEffect, useState } from 'react'
 import { Alert, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { getUserById } from '../../../../api/users'
+import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
 import type { UserAvatarProps } from '../../../common/user-avatar/user-avatar'
 import { UserAvatar } from '../../../common/user-avatar/user-avatar'
 import { GroupMode, PermissionGroupEntry } from './permission-group-entry'
 import { PermissionList } from './permission-list'
-
-export interface PermissionsModalProps {
-  show: boolean
-  onHide: () => void
-}
 
 export interface Principal {
   id: string
@@ -66,7 +62,7 @@ const permissionsApiResponse: NotePermissions = {
   ]
 }
 
-export const PermissionModal: React.FC<PermissionsModalProps> = ({ show, onHide }) => {
+export const PermissionModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   useTranslation()
   const [error, setError] = useState(false)
   const [userList, setUserList] = useState<Principal[]>([])
@@ -138,7 +134,7 @@ export const PermissionModal: React.FC<PermissionsModalProps> = ({ show, onHide 
   }
 
   return (
-    <CommonModal show={show} onHide={onHide} closeButton={true} titleI18nKey={'editor.modal.permissions.title'}>
+    <CommonModal show={show} onHide={onHide} showCloseButton={true} title={'editor.modal.permissions.title'}>
       <Modal.Body>
         <h5 className={'mb-3'}>
           <Trans i18nKey={'editor.modal.permissions.owner'} />
