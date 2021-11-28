@@ -7,16 +7,20 @@
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import type { ModalVisibilityProps } from '../../common/modals/common-modal'
-import { CommonModal } from '../../common/modals/common-modal'
-import { cypressId } from '../../../utils/cypress-attribute'
+import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
+import { CommonModal } from '../../../common/modals/common-modal'
+import { cypressId } from '../../../../utils/cypress-attribute'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
-export interface MaxLengthWarningModalProps extends ModalVisibilityProps {
-  maxLength: number
-}
-
-export const MaxLengthWarningModal: React.FC<MaxLengthWarningModalProps> = ({ show, onHide, maxLength }) => {
+/**
+ * Shows a modal that informs the user that the document is too long.
+ *
+ * @param show is {@code true} if the modal should be shown
+ * @param onHide gets called if the modal was closed
+ */
+export const MaxLengthWarningModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   useTranslation()
+  const maxDocumentLength = useApplicationState((state) => state.config.maxDocumentLength)
 
   return (
     <CommonModal
@@ -26,7 +30,7 @@ export const MaxLengthWarningModal: React.FC<MaxLengthWarningModalProps> = ({ sh
       title={'editor.error.limitReached.title'}
       showCloseButton={true}>
       <Modal.Body>
-        <Trans i18nKey={'editor.error.limitReached.description'} values={{ maxLength }} />
+        <Trans i18nKey={'editor.error.limitReached.description'} values={{ maxDocumentLength }} />
         <strong className='mt-2 d-block'>
           <Trans i18nKey={'editor.error.limitReached.advice'} />
         </strong>
