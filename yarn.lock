@@ -5161,7 +5161,7 @@ __metadata:
     minio: 7.0.20
     nest-router: 1.0.9
     node-fetch: 2.6.6
-    passport: 0.4.1
+    passport: 0.5.0
     passport-http-bearer: 1.0.1
     passport-local: 1.0.0
     prettier: 2.4.1
@@ -7741,13 +7741,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"passport@npm:0.4.1":
-  version: 0.4.1
-  resolution: "passport@npm:0.4.1"
+"passport@npm:0.5.0":
+  version: 0.5.0
+  resolution: "passport@npm:0.5.0"
   dependencies:
     passport-strategy: 1.x.x
     pause: 0.0.1
-  checksum: 6e0d855e281df8568f4b361d8377995295e59b08391a1b57d18d1404dbaa67af1523c987e9a071d6b0d1550f022637d62f9854bbd31ebc30372f0bfb1acb2567
+  checksum: 5a3db4b420c0255fb8fdfe26005529582ea5697bff5c566ea02ec7e93c5a542f16b298c5545b0e7b5eb4db04eb4d15885948040adf9a98ed77dafb25ed155b7c
   languageName: node
   linkType: hard
 
