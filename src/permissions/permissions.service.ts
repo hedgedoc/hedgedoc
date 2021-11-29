@@ -21,7 +21,7 @@ export enum GuestPermission {
 @Injectable()
 export class PermissionsService {
   public guestPermission: GuestPermission; // TODO change to configOption
-  mayRead(user: User, note: Note): boolean {
+  mayRead(user: User | null, note: Note): boolean {
     if (this.isOwner(user, note)) return true;
 
     if (this.hasPermissionUser(user, note, false)) return true;
@@ -32,7 +32,7 @@ export class PermissionsService {
     return false;
   }
 
-  mayWrite(user: User, note: Note): boolean {
+  mayWrite(user: User | null, note: Note): boolean {
     if (this.isOwner(user, note)) return true;
 
     if (this.hasPermissionUser(user, note, true)) return true;
@@ -43,7 +43,7 @@ export class PermissionsService {
     return false;
   }
 
-  mayCreate(user: User): boolean {
+  mayCreate(user: User | null): boolean {
     if (user) {
       return true;
     } else {
@@ -58,14 +58,14 @@ export class PermissionsService {
     return false;
   }
 
-  isOwner(user: User, note: Note): boolean {
+  isOwner(user: User | null, note: Note): boolean {
     if (!user) return false;
     if (!note.owner) return false;
     return note.owner.id === user.id;
   }
 
   private hasPermissionUser(
-    user: User,
+    user: User | null,
     note: Note,
     wantEdit: boolean,
   ): boolean {
@@ -84,7 +84,7 @@ export class PermissionsService {
   }
 
   private hasPermissionGroup(
-    user: User,
+    user: User | null,
     note: Note,
     wantEdit: boolean,
   ): boolean {
