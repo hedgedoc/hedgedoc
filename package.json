@@ -195,8 +195,8 @@
     "use-resize-observer": "8.0.0",
     "uuid": "8.3.2",
     "vega": "5.21.0",
-    "vega-embed": "6.20.0",
-    "vega-lite": "5.1.1",
+    "vega-embed": "6.20.5",
+    "vega-lite": "5.2.0",
     "webpack-bundle-analyzer": "4.5.0",
     "words-count": "2.0.2"
   },
