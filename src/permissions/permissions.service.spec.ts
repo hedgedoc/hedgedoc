@@ -30,6 +30,7 @@ import { GuestPermission, PermissionsService } from './permissions.service';
 
 describe('PermissionsService', () => {
   let permissionsService: PermissionsService;
+  let notes: Note[];
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -73,6 +74,7 @@ describe('PermissionsService', () => {
       .useValue({})
       .compile();
     permissionsService = module.get<PermissionsService>(PermissionsService);
+    notes = await createNoteUserPermissionNotes();
   });
 
   // The two users we test with:
@@ -87,16 +89,16 @@ describe('PermissionsService', () => {
 
   function createNote(owner: User): Note {
     const note = {} as Note;
-    note.userPermissions = [];
-    note.groupPermissions = [];
-    note.owner = owner;
+    note.userPermissions = Promise.resolve([]);
+    note.groupPermissions = Promise.resolve([]);
+    note.owner = Promise.resolve(owner);
     return note;
   }
 
   /*
    * Creates the permission objects for UserPermission for two users with write and with out write permission
    */
-  function createNoteUserPermissionNotes(): Note[] {
+  async function createNoteUserPermissionNotes(): Promise<Note[]> {
     const note0 = createNote(user1);
     const note1 = createNote(user2);
     const note2 = createNote(user2);
@@ -116,23 +118,23 @@ describe('PermissionsService', () => {
     noteUserPermission4.user = user2;
     noteUserPermission4.canEdit = true;
 
-    note1.userPermissions.push(noteUserPermission1);
+    (await note1.userPermissions).push(noteUserPermission1);
 
-    note2.userPermissions.push(noteUserPermission1);
-    note2.userPermissions.push(noteUserPermission2);
+    (await note2.userPermissions).push(noteUserPermission1);
+    (await note2.userPermissions).push(noteUserPermission2);
 
-    note3.userPermissions.push(noteUserPermission2);
-    note3.userPermissions.push(noteUserPermission1);
+    (await note3.userPermissions).push(noteUserPermission2);
+    (await note3.userPermissions).push(noteUserPermission1);
 
-    note4.userPermissions.push(noteUserPermission3);
+    (await note4.userPermissions).push(noteUserPermission3);
 
-    note5.userPermissions.push(noteUserPermission3);
-    note5.userPermissions.push(noteUserPermission4);
+    (await note5.userPermissions).push(noteUserPermission3);
+    (await note5.userPermissions).push(noteUserPermission4);
 
-    note6.userPermissions.push(noteUserPermission4);
-    note6.userPermissions.push(noteUserPermission3);
+    (await note6.userPermissions).push(noteUserPermission4);
+    (await note6.userPermissions).push(noteUserPermission3);
 
-    note7.userPermissions.push(noteUserPermission2);
+    (await note7.userPermissions).push(noteUserPermission2);
 
     const everybody = {} as Group;
     everybody.name = SpecialGroup.EVERYONE;
@@ -143,7 +145,9 @@ describe('PermissionsService', () => {
     noteGroupPermissionRead.group = everybody;
     noteGroupPermissionRead.canEdit = false;
     noteGroupPermissionRead.note = noteEverybodyRead;
-    noteEverybodyRead.groupPermissions = [noteGroupPermissionRead];
+    noteEverybodyRead.groupPermissions = Promise.resolve([
+      noteGroupPermissionRead,
+    ]);
 
     const noteEverybodyWrite = createNote(user1);
 
@@ -151,7 +155,9 @@ describe('PermissionsService', () => {
     noteGroupPermissionWrite.group = everybody;
     noteGroupPermissionWrite.canEdit = true;
     noteGroupPermissionWrite.note = noteEverybodyWrite;
-    noteEverybodyWrite.groupPermissions = [noteGroupPermissionWrite];
+    noteEverybodyWrite.groupPermissions = Promise.resolve([
+      noteGroupPermissionWrite,
+    ]);
 
     return [
       note0,
@@ -166,8 +172,6 @@ describe('PermissionsService', () => {
       noteEverybodyWrite,
     ];
   }
-
-  const notes = createNoteUserPermissionNotes();
 
   describe('mayRead works with', () => {
     it('Owner', async () => {
@@ -501,7 +505,7 @@ describe('PermissionsService', () => {
     let i = 0;
     for (const permission of permissions) {
       const note = createNote(user2);
-      note.groupPermissions = permission.permissions;
+      note.groupPermissions = Promise.resolve(permission.permissions);
       let permissionString = '';
       for (const perm of permission.permissions) {
         permissionString += ` ${perm.group.name}:${String(perm.canEdit)}`;
@@ -550,13 +554,13 @@ describe('PermissionsService', () => {
   });
 
   describe('isOwner works', () => {
-    it('for positive case', () => {
+    it('for positive case', async () => {
       permissionsService.guestPermission = GuestPermission.DENY;
-      expect(permissionsService.isOwner(user1, notes[0])).toBeTruthy();
+      expect(await permissionsService.isOwner(user1, notes[0])).toBeTruthy();
     });
-    it('for negative case', () => {
+    it('for negative case', async () => {
       permissionsService.guestPermission = GuestPermission.DENY;
-      expect(permissionsService.isOwner(user1, notes[1])).toBeFalsy();
+      expect(await permissionsService.isOwner(user1, notes[1])).toBeFalsy();
     });
   });
 });

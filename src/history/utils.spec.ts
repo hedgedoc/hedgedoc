@@ -18,19 +18,19 @@ describe('getIdentifier', () => {
     note = Note.create(user, alias) as Note;
     entry = HistoryEntry.create(user, note) as HistoryEntry;
   });
-  it('returns the publicId if there are no aliases', () => {
-    note.aliases = undefined as unknown as Alias[];
-    expect(getIdentifier(entry)).toEqual(note.publicId);
+  it('returns the publicId if there are no aliases', async () => {
+    note.aliases = Promise.resolve(undefined as unknown as Alias[]);
+    expect(await getIdentifier(entry)).toEqual(note.publicId);
   });
-  it('returns the publicId, if the alias array is empty', () => {
-    note.aliases = [];
-    expect(getIdentifier(entry)).toEqual(note.publicId);
+  it('returns the publicId, if the alias array is empty', async () => {
+    note.aliases = Promise.resolve([]);
+    expect(await getIdentifier(entry)).toEqual(note.publicId);
   });
-  it('returns the publicId, if the only alias is not primary', () => {
-    note.aliases[0].primary = false;
-    expect(getIdentifier(entry)).toEqual(note.publicId);
+  it('returns the publicId, if the only alias is not primary', async () => {
+    (await note.aliases)[0].primary = false;
+    expect(await getIdentifier(entry)).toEqual(note.publicId);
   });
-  it('returns the primary alias, if one exists', () => {
-    expect(getIdentifier(entry)).toEqual(note.aliases[0].name);
+  it('returns the primary alias, if one exists', async () => {
+    expect(await getIdentifier(entry)).toEqual((await note.aliases)[0].name);
   });
 });

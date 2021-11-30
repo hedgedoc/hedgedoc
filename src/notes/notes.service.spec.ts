@@ -168,51 +168,51 @@ describe('NotesService', () => {
         const revisions = await newNote.revisions;
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
-        expect(newNote.historyEntries).toHaveLength(0);
-        expect(newNote.userPermissions).toHaveLength(0);
-        expect(newNote.groupPermissions).toHaveLength(0);
-        expect(newNote.tags).toHaveLength(0);
-        expect(newNote.owner).toBeNull();
-        expect(newNote.aliases).toHaveLength(0);
+        expect(await newNote.historyEntries).toHaveLength(0);
+        expect(await newNote.userPermissions).toHaveLength(0);
+        expect(await newNote.groupPermissions).toHaveLength(0);
+        expect(await newNote.tags).toHaveLength(0);
+        expect(await newNote.owner).toBeNull();
+        expect(await newNote.aliases).toHaveLength(0);
       });
       it('without alias, with owner', async () => {
         const newNote = await service.createNote(content, user);
         const revisions = await newNote.revisions;
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
-        expect(newNote.historyEntries).toHaveLength(1);
-        expect(newNote.historyEntries[0].user).toEqual(user);
-        expect(newNote.userPermissions).toHaveLength(0);
-        expect(newNote.groupPermissions).toHaveLength(0);
-        expect(newNote.tags).toHaveLength(0);
-        expect(newNote.owner).toEqual(user);
-        expect(newNote.aliases).toHaveLength(0);
+        expect(await newNote.historyEntries).toHaveLength(1);
+        expect((await newNote.historyEntries)[0].user).toEqual(user);
+        expect(await newNote.userPermissions).toHaveLength(0);
+        expect(await newNote.groupPermissions).toHaveLength(0);
+        expect(await newNote.tags).toHaveLength(0);
+        expect(await newNote.owner).toEqual(user);
+        expect(await newNote.aliases).toHaveLength(0);
       });
       it('with alias, without owner', async () => {
         const newNote = await service.createNote(content, null, alias);
         const revisions = await newNote.revisions;
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
-        expect(newNote.historyEntries).toHaveLength(0);
-        expect(newNote.userPermissions).toHaveLength(0);
-        expect(newNote.groupPermissions).toHaveLength(0);
-        expect(newNote.tags).toHaveLength(0);
-        expect(newNote.owner).toBeNull();
-        expect(newNote.aliases).toHaveLength(1);
+        expect(await newNote.historyEntries).toHaveLength(0);
+        expect(await newNote.userPermissions).toHaveLength(0);
+        expect(await newNote.groupPermissions).toHaveLength(0);
+        expect(await newNote.tags).toHaveLength(0);
+        expect(await newNote.owner).toBeNull();
+        expect(await newNote.aliases).toHaveLength(1);
       });
       it('with alias, with owner', async () => {
         const newNote = await service.createNote(content, user, alias);
         const revisions = await newNote.revisions;
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
-        expect(newNote.historyEntries).toHaveLength(1);
-        expect(newNote.historyEntries[0].user).toEqual(user);
-        expect(newNote.userPermissions).toHaveLength(0);
-        expect(newNote.groupPermissions).toHaveLength(0);
-        expect(newNote.tags).toHaveLength(0);
-        expect(newNote.owner).toEqual(user);
-        expect(newNote.aliases).toHaveLength(1);
-        expect(newNote.aliases[0].name).toEqual(alias);
+        expect(await newNote.historyEntries).toHaveLength(1);
+        expect((await newNote.historyEntries)[0].user).toEqual(user);
+        expect(await newNote.userPermissions).toHaveLength(0);
+        expect(await newNote.groupPermissions).toHaveLength(0);
+        expect(await newNote.tags).toHaveLength(0);
+        expect(await newNote.owner).toEqual(user);
+        expect(await newNote.aliases).toHaveLength(1);
+        expect((await newNote.aliases)[0].name).toEqual(alias);
       });
     });
     describe('fails:', () => {
@@ -379,8 +379,8 @@ describe('NotesService', () => {
           sharedToUsers: [],
           sharedToGroups: [],
         });
-        expect(savedNote.userPermissions).toHaveLength(0);
-        expect(savedNote.groupPermissions).toHaveLength(0);
+        expect(await savedNote.userPermissions).toHaveLength(0);
+        expect(await savedNote.groupPermissions).toHaveLength(0);
       });
       it('with empty GroupPermissions and with new UserPermissions', async () => {
         jest
@@ -393,24 +393,24 @@ describe('NotesService', () => {
           sharedToUsers: [userPermissionUpdate],
           sharedToGroups: [],
         });
-        expect(savedNote.userPermissions).toHaveLength(1);
-        expect(savedNote.userPermissions[0].user.username).toEqual(
+        expect(await savedNote.userPermissions).toHaveLength(1);
+        expect((await savedNote.userPermissions)[0].user.username).toEqual(
           userPermissionUpdate.username,
         );
-        expect(savedNote.userPermissions[0].canEdit).toEqual(
+        expect((await savedNote.userPermissions)[0].canEdit).toEqual(
           userPermissionUpdate.canEdit,
         );
-        expect(savedNote.groupPermissions).toHaveLength(0);
+        expect(await savedNote.groupPermissions).toHaveLength(0);
       });
       it('with empty GroupPermissions and with existing UserPermissions', async () => {
         const noteWithPreexistingPermissions: Note = { ...note };
-        noteWithPreexistingPermissions.userPermissions = [
+        noteWithPreexistingPermissions.userPermissions = Promise.resolve([
           {
             note: noteWithPreexistingPermissions,
             user: user,
             canEdit: !userPermissionUpdate.canEdit,
           },
-        ];
+        ]);
         jest
           .spyOn(noteRepo, 'save')
           .mockImplementationOnce(async (entry: Note) => {
@@ -421,14 +421,14 @@ describe('NotesService', () => {
           sharedToUsers: [userPermissionUpdate],
           sharedToGroups: [],
         });
-        expect(savedNote.userPermissions).toHaveLength(1);
-        expect(savedNote.userPermissions[0].user.username).toEqual(
+        expect(await savedNote.userPermissions).toHaveLength(1);
+        expect((await savedNote.userPermissions)[0].user.username).toEqual(
           userPermissionUpdate.username,
         );
-        expect(savedNote.userPermissions[0].canEdit).toEqual(
+        expect((await savedNote.userPermissions)[0].canEdit).toEqual(
           userPermissionUpdate.canEdit,
         );
-        expect(savedNote.groupPermissions).toHaveLength(0);
+        expect(await savedNote.groupPermissions).toHaveLength(0);
       });
       it('with new GroupPermissions and with empty UserPermissions', async () => {
         jest
@@ -441,11 +441,11 @@ describe('NotesService', () => {
           sharedToUsers: [],
           sharedToGroups: [groupPermissionUpate],
         });
-        expect(savedNote.userPermissions).toHaveLength(0);
-        expect(savedNote.groupPermissions[0].group.name).toEqual(
+        expect(await savedNote.userPermissions).toHaveLength(0);
+        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
           groupPermissionUpate.groupname,
         );
-        expect(savedNote.groupPermissions[0].canEdit).toEqual(
+        expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpate.canEdit,
         );
       });
@@ -461,28 +461,28 @@ describe('NotesService', () => {
           sharedToUsers: [userPermissionUpdate],
           sharedToGroups: [groupPermissionUpate],
         });
-        expect(savedNote.userPermissions[0].user.username).toEqual(
+        expect((await savedNote.userPermissions)[0].user.username).toEqual(
           userPermissionUpdate.username,
         );
-        expect(savedNote.userPermissions[0].canEdit).toEqual(
+        expect((await savedNote.userPermissions)[0].canEdit).toEqual(
           userPermissionUpdate.canEdit,
         );
-        expect(savedNote.groupPermissions[0].group.name).toEqual(
+        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
           groupPermissionUpate.groupname,
         );
-        expect(savedNote.groupPermissions[0].canEdit).toEqual(
+        expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpate.canEdit,
         );
       });
       it('with new GroupPermissions and with existing UserPermissions', async () => {
         const noteWithUserPermission: Note = { ...note };
-        noteWithUserPermission.userPermissions = [
+        noteWithUserPermission.userPermissions = Promise.resolve([
           {
             note: noteWithUserPermission,
             user: user,
             canEdit: !userPermissionUpdate.canEdit,
           },
-        ];
+        ]);
         jest
           .spyOn(noteRepo, 'save')
           .mockImplementationOnce(async (entry: Note) => {
@@ -497,28 +497,28 @@ describe('NotesService', () => {
             sharedToGroups: [groupPermissionUpate],
           },
         );
-        expect(savedNote.userPermissions[0].user.username).toEqual(
+        expect((await savedNote.userPermissions)[0].user.username).toEqual(
           userPermissionUpdate.username,
         );
-        expect(savedNote.userPermissions[0].canEdit).toEqual(
+        expect((await savedNote.userPermissions)[0].canEdit).toEqual(
           userPermissionUpdate.canEdit,
         );
-        expect(savedNote.groupPermissions[0].group.name).toEqual(
+        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
           groupPermissionUpate.groupname,
         );
-        expect(savedNote.groupPermissions[0].canEdit).toEqual(
+        expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpate.canEdit,
         );
       });
       it('with existing GroupPermissions and with empty UserPermissions', async () => {
         const noteWithPreexistingPermissions: Note = { ...note };
-        noteWithPreexistingPermissions.groupPermissions = [
+        noteWithPreexistingPermissions.groupPermissions = Promise.resolve([
           {
             note: noteWithPreexistingPermissions,
             group: group,
             canEdit: !groupPermissionUpate.canEdit,
           },
-        ];
+        ]);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
         jest
           .spyOn(noteRepo, 'save')
@@ -532,23 +532,23 @@ describe('NotesService', () => {
             sharedToGroups: [groupPermissionUpate],
           },
         );
-        expect(savedNote.userPermissions).toHaveLength(0);
-        expect(savedNote.groupPermissions[0].group.name).toEqual(
+        expect(await savedNote.userPermissions).toHaveLength(0);
+        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
           groupPermissionUpate.groupname,
         );
-        expect(savedNote.groupPermissions[0].canEdit).toEqual(
+        expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpate.canEdit,
         );
       });
       it('with existing GroupPermissions and with new UserPermissions', async () => {
         const noteWithPreexistingPermissions: Note = { ...note };
-        noteWithPreexistingPermissions.groupPermissions = [
+        noteWithPreexistingPermissions.groupPermissions = Promise.resolve([
           {
             note: noteWithPreexistingPermissions,
             group: group,
             canEdit: !groupPermissionUpate.canEdit,
           },
-        ];
+        ]);
         jest
           .spyOn(noteRepo, 'save')
           .mockImplementationOnce(async (entry: Note) => {
@@ -563,35 +563,35 @@ describe('NotesService', () => {
             sharedToGroups: [groupPermissionUpate],
           },
         );
-        expect(savedNote.userPermissions[0].user.username).toEqual(
+        expect((await savedNote.userPermissions)[0].user.username).toEqual(
           userPermissionUpdate.username,
         );
-        expect(savedNote.userPermissions[0].canEdit).toEqual(
+        expect((await savedNote.userPermissions)[0].canEdit).toEqual(
           userPermissionUpdate.canEdit,
         );
-        expect(savedNote.groupPermissions[0].group.name).toEqual(
+        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
           groupPermissionUpate.groupname,
         );
-        expect(savedNote.groupPermissions[0].canEdit).toEqual(
+        expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpate.canEdit,
         );
       });
       it('with existing GroupPermissions and with existing UserPermissions', async () => {
         const noteWithPreexistingPermissions: Note = { ...note };
-        noteWithPreexistingPermissions.groupPermissions = [
+        noteWithPreexistingPermissions.groupPermissions = Promise.resolve([
           {
             note: noteWithPreexistingPermissions,
             group: group,
             canEdit: !groupPermissionUpate.canEdit,
           },
-        ];
-        noteWithPreexistingPermissions.userPermissions = [
+        ]);
+        noteWithPreexistingPermissions.userPermissions = Promise.resolve([
           {
             note: noteWithPreexistingPermissions,
             user: user,
             canEdit: !userPermissionUpdate.canEdit,
           },
-        ];
+        ]);
         jest
           .spyOn(noteRepo, 'save')
           .mockImplementationOnce(async (entry: Note) => {
@@ -606,16 +606,16 @@ describe('NotesService', () => {
             sharedToGroups: [groupPermissionUpate],
           },
         );
-        expect(savedNote.userPermissions[0].user.username).toEqual(
+        expect((await savedNote.userPermissions)[0].user.username).toEqual(
           userPermissionUpdate.username,
         );
-        expect(savedNote.userPermissions[0].canEdit).toEqual(
+        expect((await savedNote.userPermissions)[0].canEdit).toEqual(
           userPermissionUpdate.canEdit,
         );
-        expect(savedNote.groupPermissions[0].group.name).toEqual(
+        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
           groupPermissionUpate.groupname,
         );
-        expect(savedNote.groupPermissions[0].canEdit).toEqual(
+        expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpate.canEdit,
         );
       });
@@ -653,16 +653,16 @@ describe('NotesService', () => {
   describe('toTagList', () => {
     it('works', async () => {
       const note = {} as Note;
-      note.tags = [
+      note.tags = Promise.resolve([
         {
           id: 1,
           name: 'testTag',
           notes: [note],
         },
-      ];
-      const tagList = service.toTagList(note);
+      ]);
+      const tagList = await service.toTagList(note);
       expect(tagList).toHaveLength(1);
-      expect(tagList[0]).toEqual(note.tags[0].name);
+      expect(tagList[0]).toEqual((await note.tags)[0].name);
     });
   });
 
@@ -671,21 +671,21 @@ describe('NotesService', () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const group = Group.create('testGroup', 'testGroup', false) as Group;
       const note = Note.create(user) as Note;
-      note.userPermissions = [
+      note.userPermissions = Promise.resolve([
         {
           note: note,
           user: user,
           canEdit: true,
         },
-      ];
-      note.groupPermissions = [
+      ]);
+      note.groupPermissions = Promise.resolve([
         {
           note: note,
           group: group,
           canEdit: true,
         },
-      ];
-      const permissions = service.toNotePermissionsDto(note);
+      ]);
+      const permissions = await service.toNotePermissionsDto(note);
       expect(permissions.owner).not.toEqual(null);
       expect(permissions.owner?.username).toEqual(user.username);
       expect(permissions.sharedToUsers).toHaveLength(1);
@@ -740,36 +740,38 @@ describe('NotesService', () => {
         // @ts-ignore
         .mockImplementation(() => createQueryBuilder);
       note.publicId = 'testId';
-      note.aliases = [Alias.create('testAlias', note, true) as Alias];
+      note.aliases = Promise.resolve([
+        Alias.create('testAlias', note, true) as Alias,
+      ]);
       note.title = 'testTitle';
       note.description = 'testDescription';
-      note.owner = user;
-      note.userPermissions = [
+      note.owner = Promise.resolve(user);
+      note.userPermissions = Promise.resolve([
         {
           note: note,
           user: user,
           canEdit: true,
         },
-      ];
-      note.groupPermissions = [
+      ]);
+      note.groupPermissions = Promise.resolve([
         {
           note: note,
           group: group,
           canEdit: true,
         },
-      ];
-      note.tags = [
+      ]);
+      note.tags = Promise.resolve([
         {
           id: 1,
           name: 'testTag',
           notes: [note],
         },
-      ];
+      ]);
       note.viewCount = 1337;
       const metadataDto = await service.toNoteMetadataDto(note);
       expect(metadataDto.id).toEqual(note.publicId);
       expect(metadataDto.aliases).toHaveLength(1);
-      expect(metadataDto.aliases[0]).toEqual(note.aliases[0].name);
+      expect(metadataDto.aliases[0]).toEqual((await note.aliases)[0].name);
       expect(metadataDto.title).toEqual(note.title);
       expect(metadataDto.createTime).toEqual(revisions[0].createdAt);
       expect(metadataDto.description).toEqual(note.description);
@@ -787,7 +789,7 @@ describe('NotesService', () => {
       ).toEqual(group.displayName);
       expect(metadataDto.permissions.sharedToGroups[0].canEdit).toEqual(true);
       expect(metadataDto.tags).toHaveLength(1);
-      expect(metadataDto.tags[0]).toEqual(note.tags[0].name);
+      expect(metadataDto.tags[0]).toEqual((await note.tags)[0].name);
       expect(metadataDto.updateTime).toEqual(revisions[0].createdAt);
       expect(metadataDto.updateUser.username).toEqual(user.username);
       expect(metadataDto.viewCount).toEqual(note.viewCount);
@@ -840,36 +842,38 @@ describe('NotesService', () => {
         // @ts-ignore
         .mockImplementation(() => createQueryBuilder);
       note.publicId = 'testId';
-      note.aliases = [Alias.create('testAlias', note, true) as Alias];
+      note.aliases = Promise.resolve([
+        Alias.create('testAlias', note, true) as Alias,
+      ]);
       note.title = 'testTitle';
       note.description = 'testDescription';
-      note.owner = user;
-      note.userPermissions = [
+      note.owner = Promise.resolve(user);
+      note.userPermissions = Promise.resolve([
         {
           note: note,
           user: user,
           canEdit: true,
         },
-      ];
-      note.groupPermissions = [
+      ]);
+      note.groupPermissions = Promise.resolve([
         {
           note: note,
           group: group,
           canEdit: true,
         },
-      ];
-      note.tags = [
+      ]);
+      note.tags = Promise.resolve([
         {
           id: 1,
           name: 'testTag',
           notes: [note],
         },
-      ];
+      ]);
       note.viewCount = 1337;
       const noteDto = await service.toNoteDto(note);
       expect(noteDto.metadata.id).toEqual(note.publicId);
       expect(noteDto.metadata.aliases).toHaveLength(1);
-      expect(noteDto.metadata.aliases[0]).toEqual(note.aliases[0].name);
+      expect(noteDto.metadata.aliases[0]).toEqual((await note.aliases)[0].name);
       expect(noteDto.metadata.title).toEqual(note.title);
       expect(noteDto.metadata.createTime).toEqual(revisions[0].createdAt);
       expect(noteDto.metadata.description).toEqual(note.description);
@@ -893,7 +897,7 @@ describe('NotesService', () => {
         true,
       );
       expect(noteDto.metadata.tags).toHaveLength(1);
-      expect(noteDto.metadata.tags[0]).toEqual(note.tags[0].name);
+      expect(noteDto.metadata.tags[0]).toEqual((await note.tags)[0].name);
       expect(noteDto.metadata.updateTime).toEqual(revisions[0].createdAt);
       expect(noteDto.metadata.updateUser.username).toEqual(user.username);
       expect(noteDto.metadata.viewCount).toEqual(note.viewCount);

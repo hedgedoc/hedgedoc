@@ -45,8 +45,10 @@ export class HistoryController {
   async getHistory(@RequestUser() user: User): Promise<HistoryEntryDto[]> {
     try {
       const foundEntries = await this.historyService.getEntriesByUser(user);
-      return foundEntries.map((entry) =>
-        this.historyService.toHistoryEntryDto(entry),
+      return await Promise.all(
+        foundEntries.map((entry) =>
+          this.historyService.toHistoryEntryDto(entry),
+        ),
       );
     } catch (e) {
       if (e instanceof NotInDBError) {
@@ -96,7 +98,7 @@ export class HistoryController {
         user,
         entryUpdateDto,
       );
-      return this.historyService.toHistoryEntryDto(newEntry);
+      return await this.historyService.toHistoryEntryDto(newEntry);
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);

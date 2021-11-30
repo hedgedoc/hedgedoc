@@ -101,7 +101,7 @@ export class MeController {
   ): Promise<HistoryEntryDto> {
     try {
       const foundEntry = await this.historyService.getEntryByNote(note, user);
-      return this.historyService.toHistoryEntryDto(foundEntry);
+      return await this.historyService.toHistoryEntryDto(foundEntry);
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new NotFoundException(e.message);
@@ -126,7 +126,7 @@ export class MeController {
   ): Promise<HistoryEntryDto> {
     // ToDo: Check if user is allowed to pin this history entry
     try {
-      return this.historyService.toHistoryEntryDto(
+      return await this.historyService.toHistoryEntryDto(
         await this.historyService.updateHistoryEntry(
           note,
           user,
