@@ -10,9 +10,9 @@ import {
   Get,
   HttpCode,
   NotFoundException,
-  Param,
   Put,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiNoContentResponse,
@@ -42,7 +42,8 @@ import {
   successfullyDeletedDescription,
   unauthorizedDescription,
 } from '../../utils/descriptions';
-import { GetNotePipe } from '../../utils/get-note.pipe';
+import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
+import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @ApiTags('me')
@@ -85,8 +86,9 @@ export class MeController {
     );
   }
 
+  @UseInterceptors(GetNoteInterceptor)
   @UseGuards(TokenAuthGuard)
-  @Get('history/:note')
+  @Get('history/:noteIdOrAlias')
   @ApiOkResponse({
     description: 'The history entry of the user which points to the note',
     type: HistoryEntryDto,
@@ -95,7 +97,7 @@ export class MeController {
   @ApiNotFoundResponse({ description: notFoundDescription })
   async getHistoryEntry(
     @RequestUser() user: User,
-    @Param('note', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
   ): Promise<HistoryEntryDto> {
     try {
       const foundEntry = await this.historyService.getEntryByNote(note, user);
@@ -108,8 +110,9 @@ export class MeController {
     }
   }
 
+  @UseInterceptors(GetNoteInterceptor)
   @UseGuards(TokenAuthGuard)
-  @Put('history/:note')
+  @Put('history/:noteIdOrAlias')
   @ApiOkResponse({
     description: 'The updated history entry',
     type: HistoryEntryDto,
@@ -118,7 +121,7 @@ export class MeController {
   @ApiNotFoundResponse({ description: notFoundDescription })
   async updateHistoryEntry(
     @RequestUser() user: User,
-    @Param('note', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
     @Body() entryUpdateDto: HistoryEntryUpdateDto,
   ): Promise<HistoryEntryDto> {
     // ToDo: Check if user is allowed to pin this history entry
@@ -138,15 +141,16 @@ export class MeController {
     }
   }
 
+  @UseInterceptors(GetNoteInterceptor)
   @UseGuards(TokenAuthGuard)
-  @Delete('history/:note')
+  @Delete('history/:noteIdOrAlias')
   @HttpCode(204)
   @ApiNoContentResponse({ description: successfullyDeletedDescription })
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   @ApiNotFoundResponse({ description: notFoundDescription })
   async deleteHistoryEntry(
     @RequestUser() user: User,
-    @Param('note', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
   ): Promise<void> {
     // ToDo: Check if user is allowed to delete note
     try {
