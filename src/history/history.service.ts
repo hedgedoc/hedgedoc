@@ -186,11 +186,11 @@ export class HistoryService {
    * @param {HistoryEntry} entry - the history entry to use
    * @return {HistoryEntryDto} the built HistoryEntryDto
    */
-  toHistoryEntryDto(entry: HistoryEntry): HistoryEntryDto {
+  async toHistoryEntryDto(entry: HistoryEntry): Promise<HistoryEntryDto> {
     return {
-      identifier: getIdentifier(entry),
+      identifier: await getIdentifier(entry),
       lastVisited: entry.updatedAt,
-      tags: this.notesService.toTagList(entry.note),
+      tags: await this.notesService.toTagList(entry.note),
       title: entry.note.title ?? '',
       pinStatus: entry.pinStatus,
     };

@@ -291,7 +291,9 @@ describe('MediaService', () => {
   describe('removeNoteFromMediaUpload', () => {
     it('works', async () => {
       const mockNote = {} as Note;
-      mockNote.aliases = [Alias.create('test', mockNote, true) as Alias];
+      mockNote.aliases = Promise.resolve([
+        Alias.create('test', mockNote, true) as Alias,
+      ]);
       const mockMediaUploadEntry = {
         id: 'testMediaUpload',
         backendData: 'testBackendData',

@@ -22,9 +22,9 @@ export enum GuestPermission {
 export class PermissionsService {
   public guestPermission: GuestPermission; // TODO change to configOption
   async mayRead(user: User | null, note: Note): Promise<boolean> {
-    if (this.isOwner(user, note)) return true;
+    if (await this.isOwner(user, note)) return true;
 
-    if (this.hasPermissionUser(user, note, false)) return true;
+    if (await this.hasPermissionUser(user, note, false)) return true;
 
     // noinspection RedundantIfStatementJS
     if (await this.hasPermissionGroup(user, note, false)) return true;
@@ -33,9 +33,9 @@ export class PermissionsService {
   }
 
   async mayWrite(user: User | null, note: Note): Promise<boolean> {
-    if (this.isOwner(user, note)) return true;
+    if (await this.isOwner(user, note)) return true;
 
-    if (this.hasPermissionUser(user, note, true)) return true;
+    if (await this.hasPermissionUser(user, note, true)) return true;
 
     // noinspection RedundantIfStatementJS
     if (await this.hasPermissionGroup(user, note, true)) return true;
@@ -58,21 +58,22 @@ export class PermissionsService {
     return false;
   }
 
-  isOwner(user: User | null, note: Note): boolean {
+  async isOwner(user: User | null, note: Note): Promise<boolean> {
     if (!user) return false;
-    if (!note.owner) return false;
-    return note.owner.id === user.id;
+    const owner = await note.owner;
+    if (!owner) return false;
+    return owner.id === user.id;
   }
 
-  private hasPermissionUser(
+  private async hasPermissionUser(
     user: User | null,
     note: Note,
     wantEdit: boolean,
-  ): boolean {
+  ): Promise<boolean> {
     if (!user) {
       return false;
     }
-    for (const userPermission of note.userPermissions) {
+    for (const userPermission of await note.userPermissions) {
       if (
         userPermission.user.id === user.id &&
         (userPermission.canEdit || !wantEdit)
@@ -99,7 +100,7 @@ export class PermissionsService {
       case GuestPermission.READ:
         guestsAllowed = !wantEdit;
     }
-    for (const groupPermission of note.groupPermissions) {
+    for (const groupPermission of await note.groupPermissions) {
       if (groupPermission.canEdit || !wantEdit) {
         // Handle special groups
         if (groupPermission.group.special) {

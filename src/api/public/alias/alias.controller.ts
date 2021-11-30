@@ -69,7 +69,7 @@ export class AliasController {
       const note = await this.noteService.getNoteByIdOrAlias(
         newAliasDto.noteIdOrAlias,
       );
-      if (!this.permissionsService.isOwner(user, note)) {
+      if (!(await this.permissionsService.isOwner(user, note))) {
         throw new UnauthorizedException('Reading note denied!');
       }
       const updatedAlias = await this.aliasService.addAlias(
@@ -107,7 +107,7 @@ export class AliasController {
     }
     try {
       const note = await this.noteService.getNoteByIdOrAlias(alias);
-      if (!this.permissionsService.isOwner(user, note)) {
+      if (!(await this.permissionsService.isOwner(user, note))) {
         throw new UnauthorizedException('Reading note denied!');
       }
       const updatedAlias = await this.aliasService.makeAliasPrimary(
@@ -139,7 +139,7 @@ export class AliasController {
   ): Promise<void> {
     try {
       const note = await this.noteService.getNoteByIdOrAlias(alias);
-      if (!this.permissionsService.isOwner(user, note)) {
+      if (!(await this.permissionsService.isOwner(user, note))) {
         throw new UnauthorizedException('Reading note denied!');
       }
       await this.aliasService.removeAlias(note, alias);

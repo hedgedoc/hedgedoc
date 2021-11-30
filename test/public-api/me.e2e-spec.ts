@@ -51,8 +51,9 @@ describe('Me', () => {
       .expect(200);
     const history: HistoryEntryDto[] = response.body;
     expect(history.length).toEqual(1);
-    const historyDto =
-      testSetup.historyService.toHistoryEntryDto(createdHistoryEntry);
+    const historyDto = await testSetup.historyService.toHistoryEntryDto(
+      createdHistoryEntry,
+    );
     for (const historyEntry of history) {
       expect(historyEntry.identifier).toEqual(historyDto.identifier);
       expect(historyEntry.title).toEqual(historyDto.title);
@@ -75,8 +76,9 @@ describe('Me', () => {
         .expect('Content-Type', /json/)
         .expect(200);
       const historyEntry: HistoryEntryDto = response.body;
-      const historyEntryDto =
-        testSetup.historyService.toHistoryEntryDto(createdHistoryEntry);
+      const historyEntryDto = await testSetup.historyService.toHistoryEntryDto(
+        createdHistoryEntry,
+      );
       expect(historyEntry.identifier).toEqual(historyEntryDto.identifier);
       expect(historyEntry.title).toEqual(historyEntryDto.title);
       expect(historyEntry.tags).toEqual(historyEntryDto.tags);
@@ -109,8 +111,12 @@ describe('Me', () => {
       expect(historyEntry.pinStatus).toEqual(true);
       let theEntry: HistoryEntryDto;
       for (const entry of history) {
-        if (entry.note.aliases.find((element) => element.name === noteName)) {
-          theEntry = testSetup.historyService.toHistoryEntryDto(entry);
+        if (
+          (await entry.note.aliases).find(
+            (element) => element.name === noteName,
+          )
+        ) {
+          theEntry = await testSetup.historyService.toHistoryEntryDto(entry);
         }
       }
       expect(theEntry.pinStatus).toEqual(true);
@@ -134,7 +140,11 @@ describe('Me', () => {
       expect(response.body).toEqual({});
       const history = await testSetup.historyService.getEntriesByUser(user);
       for (const entry of history) {
-        if (entry.note.aliases.find((element) => element.name === noteName)) {
+        if (
+          (await entry.note.aliases).find(
+            (element) => element.name === noteName,
+          )
+        ) {
           throw new Error('Deleted history entry still in history');
         }
       }

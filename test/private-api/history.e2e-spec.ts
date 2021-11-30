@@ -69,7 +69,7 @@ describe('History', () => {
       note,
       user,
     );
-    const entryDto = testSetup.historyService.toHistoryEntryDto(entry);
+    const entryDto = await testSetup.historyService.toHistoryEntryDto(entry);
     const response = await agent
       .get('/api/private/me/history')
       .expect('Content-Type', /json/)
@@ -92,7 +92,7 @@ describe('History', () => {
       const pinStatus = true;
       const lastVisited = new Date('2020-12-01 12:23:34');
       const postEntryDto = new HistoryEntryImportDto();
-      postEntryDto.note = note2.aliases.filter(
+      postEntryDto.note = (await note2.aliases).filter(
         (alias) => alias.primary,
       )[0].name;
       postEntryDto.pinStatus = pinStatus;
@@ -104,13 +104,15 @@ describe('History', () => {
         .expect(201);
       const userEntries = await testSetup.historyService.getEntriesByUser(user);
       expect(userEntries.length).toEqual(1);
-      expect(userEntries[0].note.aliases[0].name).toEqual(
-        note2.aliases[0].name,
+      expect((await userEntries[0].note.aliases)[0].name).toEqual(
+        (await note2.aliases)[0].name,
       );
-      expect(userEntries[0].note.aliases[0].primary).toEqual(
-        note2.aliases[0].primary,
+      expect((await userEntries[0].note.aliases)[0].primary).toEqual(
+        (await note2.aliases)[0].primary,
       );
-      expect(userEntries[0].note.aliases[0].id).toEqual(note2.aliases[0].id);
+      expect((await userEntries[0].note.aliases)[0].id).toEqual(
+        (await note2.aliases)[0].id,
+      );
       expect(userEntries[0].user.username).toEqual(user.username);
       expect(userEntries[0].pinStatus).toEqual(pinStatus);
       expect(userEntries[0].updatedAt).toEqual(lastVisited);
@@ -129,7 +131,7 @@ describe('History', () => {
         pinStatus = !previousHistory[0].pinStatus;
         lastVisited = new Date('2020-12-01 23:34:45');
         postEntryDto = new HistoryEntryImportDto();
-        postEntryDto.note = note2.aliases.filter(
+        postEntryDto.note = (await note2.aliases).filter(
           (alias) => alias.primary,
         )[0].name;
         postEntryDto.pinStatus = pinStatus;
@@ -188,7 +190,8 @@ describe('History', () => {
       user,
     );
     expect(entry.pinStatus).toBeFalsy();
-    const alias = entry.note.aliases.filter((alias) => alias.primary)[0].name;
+    const alias = (await entry.note.aliases).filter((alias) => alias.primary)[0]
+      .name;
     await agent
       .put(`/api/private/me/history/${alias || 'undefined'}`)
       .send({ pinStatus: true })
@@ -201,15 +204,16 @@ describe('History', () => {
 
   it('DELETE /me/history/:note', async () => {
     const entry = await historyService.updateHistoryEntryTimestamp(note2, user);
-    const alias = entry.note.aliases.filter((alias) => alias.primary)[0].name;
+    const alias = (await entry.note.aliases).filter((alias) => alias.primary)[0]
+      .name;
     const entry2 = await historyService.updateHistoryEntryTimestamp(note, user);
-    const entryDto = historyService.toHistoryEntryDto(entry2);
+    const entryDto = await historyService.toHistoryEntryDto(entry2);
     await agent
       .delete(`/api/private/me/history/${alias || 'undefined'}`)
       .expect(200);
     const userEntries = await historyService.getEntriesByUser(user);
     expect(userEntries.length).toEqual(1);
-    const userEntryDto = historyService.toHistoryEntryDto(userEntries[0]);
+    const userEntryDto = await historyService.toHistoryEntryDto(userEntries[0]);
     expect(userEntryDto.identifier).toEqual(entryDto.identifier);
     expect(userEntryDto.title).toEqual(entryDto.title);
     expect(userEntryDto.tags).toEqual(entryDto.tags);
