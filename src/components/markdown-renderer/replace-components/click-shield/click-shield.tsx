@@ -21,9 +21,8 @@ const log = new Logger('OneClickEmbedding')
 interface ClickShieldProps extends PropsWithDataCypressId {
   onImageFetch?: () => Promise<string>
   fallbackPreviewImageUrl?: string
-  hoverIcon?: IconName
-  hoverTextI18nKey?: string
-  targetDescription?: string
+  hoverIcon: IconName
+  targetDescription: string
   containerClassName?: string
   fallbackBackgroundColor?: Property.BackgroundColor
 }
@@ -98,21 +97,21 @@ export const ClickShield: React.FC<ClickShieldProps> = ({
     )
   }, [fallbackBackgroundStyle, previewHoverText, previewImageUrl])
 
+  const hoverTextTranslationValues = useMemo(() => ({ target: targetDescription }), [targetDescription])
+
   return (
     <span className={containerClassName} {...cypressId(props['data-cypress-id'])}>
       <ShowIf condition={showChildren}>{children}</ShowIf>
       <ShowIf condition={!showChildren}>
         <span className={`click-shield embed-responsive embed-responsive-16by9`} onClick={doShowChildren}>
           {previewBackground}
-          <ShowIf condition={!!hoverIcon}>
-            <span className={`preview-hover text-center`}>
-              <span className={'preview-hover-text'}>
-                <Trans i18nKey={'renderer.clickShield.previewHoverText'} tOptions={{ target: targetDescription }} />
-              </span>
-              <br />
-              <ForkAwesomeIcon icon={hoverIcon as IconName} size={'5x'} className={'mb-2'} />
+          <span className={`preview-hover text-center`}>
+            <span className={'preview-hover-text'}>
+              <Trans i18nKey={'renderer.clickShield.previewHoverText'} values={hoverTextTranslationValues} />
             </span>
-          </ShowIf>
+            <br />
+            <ForkAwesomeIcon icon={hoverIcon} size={'5x'} className={'mb-2'} />
+          </span>
         </span>
       </ShowIf>
     </span>

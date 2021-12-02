@@ -43,5 +43,13 @@
     object-fit: cover;
     min-height: 300px;
     width: 100%;
+
+    body.dark &{
+      @import "../../../../style/variables.dark";
+      box-shadow: inset fade-out($black, 0.5) 0 0 20px;
+    }
+
+    @import "../../../../style/variables.light";
+    box-shadow: inset fade-out($black, 0.5) 0 0 20px;
   }
 }

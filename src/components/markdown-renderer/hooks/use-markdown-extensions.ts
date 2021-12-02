@@ -39,6 +39,7 @@ import type { LineMarkers } from '../markdown-extension/linemarker/add-line-mark
 import type { ImageClickHandler } from '../markdown-extension/image/proxy-image-replacer'
 import type { TocAst } from 'markdown-it-toc-done-right'
 import type { MarkdownExtension } from '../markdown-extension/markdown-extension'
+import { IframeCapsuleMarkdownExtension } from '../markdown-extension/iframe-capsule/iframe-capsule-markdown-extension'
 
 /**
  * Provides a list of {@link MarkdownExtension markdown extensions} that is a combination of the common extensions and the given additional.
@@ -73,6 +74,7 @@ export const useMarkdownExtensions = (
         currentLineMarkers ? (lineMarkers) => (currentLineMarkers.current = lineMarkers) : undefined,
         lineOffset
       ),
+      new IframeCapsuleMarkdownExtension(),
       new GistMarkdownExtension(),
       new YoutubeMarkdownExtension(),
       new VimeoMarkdownExtension(),
