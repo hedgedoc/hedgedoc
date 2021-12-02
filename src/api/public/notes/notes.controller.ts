@@ -16,6 +16,7 @@ import {
   Post,
   Put,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiCreatedResponse,
@@ -59,9 +60,10 @@ import {
   unauthorizedDescription,
 } from '../../utils/descriptions';
 import { FullApi } from '../../utils/fullapi-decorator';
-import { GetNotePipe } from '../../utils/get-note.pipe';
+import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
 import { MarkdownBody } from '../../utils/markdownbody-decorator';
 import { PermissionsGuard } from '../../utils/permissions.guard';
+import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @ApiTags('notes')
@@ -94,6 +96,7 @@ export class NotesController {
     );
   }
 
+  @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
   @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Get(':noteIdOrAlias')
@@ -104,7 +107,7 @@ export class NotesController {
   @FullApi
   async getNote(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
   ): Promise<NoteDto> {
     await this.historyService.updateHistoryEntryTimestamp(note, user);
     return await this.noteService.toNoteDto(note);
@@ -141,6 +144,7 @@ export class NotesController {
     }
   }
 
+  @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
   @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Delete(':noteIdOrAlias')
@@ -149,7 +153,7 @@ export class NotesController {
   @FullApi
   async deleteNote(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
     @Body() noteMediaDeletionDto: NoteMediaDeletionDto,
   ): Promise<void> {
     const mediaUploads = await this.mediaService.listUploadsByNote(note);
@@ -166,6 +170,7 @@ export class NotesController {
     return;
   }
 
+  @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.WRITE)
   @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Put(':noteIdOrAlias')
@@ -176,7 +181,7 @@ export class NotesController {
   @FullApi
   async updateNote(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
     this.logger.debug('Got raw markdown:\n' + text, 'updateNote');
@@ -185,6 +190,7 @@ export class NotesController {
     );
   }
 
+  @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
   @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Get(':noteIdOrAlias/content')
@@ -196,11 +202,12 @@ export class NotesController {
   @Header('content-type', 'text/markdown')
   async getNoteContent(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
   ): Promise<string> {
     return await this.noteService.getNoteContent(note);
   }
 
+  @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
   @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Get(':noteIdOrAlias/metadata')
@@ -211,11 +218,12 @@ export class NotesController {
   @FullApi
   async getNoteMetadata(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
   ): Promise<NoteMetadataDto> {
     return await this.noteService.toNoteMetadataDto(note);
   }
 
+  @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
   @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Put(':noteIdOrAlias/metadata/permissions')
@@ -226,7 +234,7 @@ export class NotesController {
   @FullApi
   async updateNotePermissions(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
     @Body() updateDto: NotePermissionsUpdateDto,
   ): Promise<NotePermissionsDto> {
     return this.noteService.toNotePermissionsDto(
@@ -234,6 +242,7 @@ export class NotesController {
     );
   }
 
+  @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
   @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Get(':noteIdOrAlias/revisions')
@@ -245,7 +254,7 @@ export class NotesController {
   @FullApi
   async getNoteRevisions(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
   ): Promise<RevisionMetadataDto[]> {
     const revisions = await this.revisionsService.getAllRevisions(note);
     return await Promise.all(
@@ -255,6 +264,7 @@ export class NotesController {
     );
   }
 
+  @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
   @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Get(':noteIdOrAlias/revisions/:revisionId')
@@ -265,7 +275,7 @@ export class NotesController {
   @FullApi
   async getNoteRevision(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
     @Param('revisionId') revisionId: number,
   ): Promise<RevisionDto> {
     try {
@@ -280,6 +290,7 @@ export class NotesController {
     }
   }
 
+  @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
   @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Get(':noteIdOrAlias/media')
@@ -291,7 +302,7 @@ export class NotesController {
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getNotesMedia(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
   ): Promise<MediaUploadDto[]> {
     const media = await this.mediaService.listUploadsByNote(note);
     return media.map((media) => this.mediaService.toMediaUploadDto(media));

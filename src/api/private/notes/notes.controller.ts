@@ -14,6 +14,7 @@ import {
   Param,
   Post,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 
 import {
@@ -37,9 +38,10 @@ import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
-import { GetNotePipe } from '../../utils/get-note.pipe';
+import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
 import { MarkdownBody } from '../../utils/markdownbody-decorator';
 import { PermissionsGuard } from '../../utils/permissions.guard';
+import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
@@ -58,10 +60,11 @@ export class NotesController {
 
   @Get(':noteIdOrAlias')
   @Permissions(Permission.READ)
+  @UseInterceptors(GetNoteInterceptor)
   @UseGuards(PermissionsGuard)
   async getNote(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
   ): Promise<NoteDto> {
     await this.historyService.updateHistoryEntryTimestamp(note, user);
     return await this.noteService.toNoteDto(note);
@@ -69,10 +72,9 @@ export class NotesController {
 
   @Get(':noteIdOrAlias/media')
   @Permissions(Permission.READ)
+  @UseInterceptors(GetNoteInterceptor)
   @UseGuards(PermissionsGuard)
-  async getNotesMedia(
-    @Param('noteIdOrAlias', GetNotePipe) note: Note,
-  ): Promise<MediaUploadDto[]> {
+  async getNotesMedia(@RequestNote() note: Note): Promise<MediaUploadDto[]> {
     const media = await this.mediaService.listUploadsByNote(note);
     return media.map((media) => this.mediaService.toMediaUploadDto(media));
   }
@@ -119,10 +121,11 @@ export class NotesController {
   @Delete(':noteIdOrAlias')
   @HttpCode(204)
   @Permissions(Permission.OWNER)
+  @UseInterceptors(GetNoteInterceptor)
   @UseGuards(PermissionsGuard)
   async deleteNote(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
     @Body() noteMediaDeletionDto: NoteMediaDeletionDto,
   ): Promise<void> {
     const mediaUploads = await this.mediaService.listUploadsByNote(note);
@@ -141,10 +144,11 @@ export class NotesController {
 
   @Get(':noteIdOrAlias/revisions')
   @Permissions(Permission.READ)
+  @UseInterceptors(GetNoteInterceptor)
   @UseGuards(PermissionsGuard)
   async getNoteRevisions(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
   ): Promise<RevisionMetadataDto[]> {
     const revisions = await this.revisionsService.getAllRevisions(note);
     return await Promise.all(
@@ -157,10 +161,11 @@ export class NotesController {
   @Delete(':noteIdOrAlias/revisions')
   @HttpCode(204)
   @Permissions(Permission.READ)
+  @UseInterceptors(GetNoteInterceptor)
   @UseGuards(PermissionsGuard)
   async purgeNoteRevisions(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
   ): Promise<void> {
     this.logger.debug(
       'Purging history of note: ' + note.id,
@@ -176,10 +181,11 @@ export class NotesController {
 
   @Get(':noteIdOrAlias/revisions/:revisionId')
   @Permissions(Permission.READ)
+  @UseInterceptors(GetNoteInterceptor)
   @UseGuards(PermissionsGuard)
   async getNoteRevision(
     @RequestUser() user: User,
-    @Param('noteIdOrAlias', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
     @Param('revisionId') revisionId: number,
   ): Promise<RevisionDto> {
     try {

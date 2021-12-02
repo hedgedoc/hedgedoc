@@ -4,29 +4,39 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
-  ArgumentMetadata,
   BadRequestException,
+  CallHandler,
+  ExecutionContext,
   Injectable,
+  NestInterceptor,
   NotFoundException,
-  PipeTransform,
 } from '@nestjs/common';
+import { Request } from 'express';
+import { Observable } from 'rxjs';
 
 import { ForbiddenIdError, NotInDBError } from '../../errors/errors';
-import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { Note } from '../../notes/note.entity';
 import { NotesService } from '../../notes/notes.service';
+import { User } from '../../users/user.entity';
 
+/**
+ * Saves the note identified by the `noteIdOrAlias` URL parameter
+ * under the `note` property of the request object.
+ */
 @Injectable()
-export class GetNotePipe implements PipeTransform<string, Promise<Note>> {
-  constructor(
-    private readonly logger: ConsoleLoggerService,
-    private noteService: NotesService,
-  ) {
-    this.logger.setContext(GetNotePipe.name);
-  }
+export class GetNoteInterceptor implements NestInterceptor {
+  constructor(private noteService: NotesService) {}
 
-  async transform(noteIdOrAlias: string, _: ArgumentMetadata): Promise<Note> {
-    return await getNote(this.noteService, noteIdOrAlias);
+  async intercept<T>(
+    context: ExecutionContext,
+    next: CallHandler,
+  ): Promise<Observable<T>> {
+    const request: Request & { user: User; note: Note } = context
+      .switchToHttp()
+      .getRequest();
+    const noteIdOrAlias = request.params['noteIdOrAlias'];
+    request.note = await getNote(this.noteService, noteIdOrAlias);
+    return next.handle();
   }
 }
 

@@ -12,7 +12,7 @@ import { NotesService } from '../../notes/notes.service';
 import { Permission } from '../../permissions/permissions.enum';
 import { PermissionsService } from '../../permissions/permissions.service';
 import { User } from '../../users/user.entity';
-import { getNote } from './get-note.pipe';
+import { getNote } from './get-note.interceptor';
 
 /**
  * This guards controller methods from access, if the user has not the appropriate permissions.
@@ -50,7 +50,7 @@ export class PermissionsGuard implements CanActivate {
       return this.permissionsService.mayCreate(user);
     }
     // Get the note from the parameter noteIdOrAlias
-    // Attention: This gets the note an additional time if used in conjunction with GetNotePipe
+    // Attention: This gets the note an additional time if used in conjunction with GetNoteInterceptor
     const noteIdOrAlias = request.params['noteIdOrAlias'];
     const note = await getNote(this.noteService, noteIdOrAlias);
     switch (permissions[0]) {

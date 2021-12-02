@@ -10,10 +10,10 @@ import {
   Delete,
   Get,
   NotFoundException,
-  Param,
   Post,
   Put,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -26,7 +26,8 @@ import { SessionGuard } from '../../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { Note } from '../../../../notes/note.entity';
 import { User } from '../../../../users/user.entity';
-import { GetNotePipe } from '../../../utils/get-note.pipe';
+import { GetNoteInterceptor } from '../../../utils/get-note.interceptor';
+import { RequestNote } from '../../../utils/request-note.decorator';
 import { RequestUser } from '../../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
@@ -82,9 +83,10 @@ export class HistoryController {
     }
   }
 
-  @Put(':note')
+  @Put(':noteIdOrAlias')
+  @UseInterceptors(GetNoteInterceptor)
   async updateHistoryEntry(
-    @Param('note', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
     @RequestUser() user: User,
     @Body() entryUpdateDto: HistoryEntryUpdateDto,
   ): Promise<HistoryEntryDto> {
@@ -103,9 +105,10 @@ export class HistoryController {
     }
   }
 
-  @Delete(':note')
+  @Delete(':noteIdOrAlias')
+  @UseInterceptors(GetNoteInterceptor)
   async deleteHistoryEntry(
-    @Param('note', GetNotePipe) note: Note,
+    @RequestNote() note: Note,
     @RequestUser() user: User,
   ): Promise<void> {
     try {
