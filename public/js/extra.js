@@ -387,7 +387,7 @@ export function finishView (view) {
     const $ele = $(value).closest('pre')
     require.ensure([], function (require) {
       try {
-        const mermaid = require('mermaid')
+        const mermaid = require('mermaid').default
         mermaid.startOnLoad = false
         mermaid.mermaidAPI.parse($value.text())
         $ele.addClass('mermaid')
