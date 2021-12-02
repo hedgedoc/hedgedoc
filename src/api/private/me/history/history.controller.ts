@@ -24,9 +24,9 @@ import { HistoryEntryDto } from '../../../../history/history-entry.dto';
 import { HistoryService } from '../../../../history/history.service';
 import { SessionGuard } from '../../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
-import { GetNotePipe } from '../../../../notes/get-note.pipe';
 import { Note } from '../../../../notes/note.entity';
 import { User } from '../../../../users/user.entity';
+import { GetNotePipe } from '../../../utils/get-note.pipe';
 import { RequestUser } from '../../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)

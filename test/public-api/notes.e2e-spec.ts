@@ -396,7 +396,6 @@ describe('Notes', () => {
       // check if a missing note correctly returns 404
       await request(testSetup.app.getHttpServer())
         .get('/api/v2/notes/i_dont_exist/content')
-        .expect('Content-Type', /text\/markdown/)
         .expect(404);
     });
   });
@@ -464,7 +463,7 @@ describe('Notes', () => {
       await request(testSetup.app.getHttpServer())
         .get(`/api/v2/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
-        .expect(401);
+        .expect(403);
     });
   });
 
