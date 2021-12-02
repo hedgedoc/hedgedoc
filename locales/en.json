@@ -158,8 +158,10 @@
             "old": "Old password",
             "new": "New password",
             "newAgain": "New password again",
-            "info": "Your new password should contain at least 6 characters."
+            "info": "Your new password should contain at least 6 characters.",
+            "failed": "Changing your password failed. Check your old password and try again."
         },
+        "changeDisplayNameFailed": "There was an error changing your display name.",
         "accountManagement": "Account management",
         "deleteUser": "Delete user",
         "exportUserData": "Export user data",
@@ -170,21 +172,31 @@
             "noTokens": "You don't have any tokens generated yet.",
             "createToken": "Create token",
             "label": "Token label",
-            "created": "created {{time}}"
+            "created": "created {{time}}",
+            "lastUsed": "last used {{time}}",
+            "loadingFailed": "Fetching your access tokens has failed. Try reloading this page.",
+            "creationFailed": "Creating the access token failed.",
+            "expiry": "Expiry date"
         },
         "modal": {
             "deleteUser": {
                 "title": "Delete user",
                 "message": "Do you really want to delete your user account?",
-                "subMessage": "This will delete your account, all notes that are owned by you and remove all references to your account from other notes."
+                "subMessage": "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.",
+                "failed": "There was an error deleting your account. Please try it again or contact your instance's administrator.",
+                "notificationTitle": "Account deleted",
+                "notificationText": "Your account has been successfully deleted."
             },
             "addedAccessToken": {
                 "title": "Token added",
-                "message": "An access token was created. Copy it from the field below now, as you won't be able to view it again."
+                "message": "The access token '{{label}}' was created. Copy it from the field below now, as you won't be able to view it again."
             },
             "deleteAccessToken": {
                 "title": "Really delete token?",
-                "message": "When deleting an access token, the applications that used it won't have access to your account anymore. You eventually need a new token to continue using those applications."
+                "message": "When deleting an access token, the applications that used it won't have access to your account anymore. You eventually need a new token to continue using those applications.",
+                "notificationTitle": "Access token deleted",
+                "notificationText": "The access token '{{label}}' has been deleted.",
+                "failed": "There was an error deleting the access token. Please try it again or contact your instance's administrator."
             }
         }
     },

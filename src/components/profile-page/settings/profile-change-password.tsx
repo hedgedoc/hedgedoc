@@ -5,36 +5,50 @@
  */
 
 import type { ChangeEvent, FormEvent } from 'react'
-import React, { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { changePassword } from '../../../api/me'
+import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 
+const REGEX_VALID_PASSWORD = /^[^\s].{5,}$/
+
+/**
+ * Profile page section for changing the password when using internal login.
+ */
 export const ProfileChangePassword: React.FC = () => {
   useTranslation()
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [newPasswordAgain, setNewPasswordAgain] = useState('')
-  const [newPasswordValid, setNewPasswordValid] = useState(false)
-  const [newPasswordAgainValid, setNewPasswordAgainValid] = useState(false)
 
-  const regexPassword = /^[^\s].{5,}$/
+  const newPasswordValid = useMemo(() => {
+    return REGEX_VALID_PASSWORD.test(newPassword)
+  }, [newPassword])
 
-  const onChangeNewPassword = (event: ChangeEvent<HTMLInputElement>) => {
+  const newPasswordAgainValid = useMemo(() => {
+    return newPassword === newPasswordAgain
+  }, [newPassword, newPasswordAgain])
+
+  const onChangeOldPassword = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setOldPassword(event.target.value)
+  }, [])
+
+  const onChangeNewPassword = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setNewPassword(event.target.value)
-    setNewPasswordValid(regexPassword.test(event.target.value))
-    setNewPasswordAgainValid(event.target.value === newPasswordAgain)
-  }
+  }, [])
 
-  const onChangeNewPasswordAgain = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChangeNewPasswordAgain = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setNewPasswordAgain(event.target.value)
-    setNewPasswordAgainValid(event.target.value === newPassword)
-  }
+  }, [])
 
-  const updatePasswordSubmit = async (event: FormEvent) => {
-    await changePassword(oldPassword, newPassword)
-    event.preventDefault()
-  }
+  const onSubmitPasswordChange = useCallback(
+    (event: FormEvent) => {
+      event.preventDefault()
+      changePassword(oldPassword, newPassword).catch(showErrorNotification('profile.changePassword.failed'))
+    },
+    [oldPassword, newPassword]
+  )
 
   return (
     <Card className='bg-dark mb-4'>
@@ -42,7 +56,7 @@ export const ProfileChangePassword: React.FC = () => {
         <Card.Title>
           <Trans i18nKey='profile.changePassword.title' />
         </Card.Title>
-        <Form onSubmit={updatePasswordSubmit} className='text-left'>
+        <Form onSubmit={onSubmitPasswordChange} className='text-left'>
           <Form.Group controlId='oldPassword'>
             <Form.Label>
               <Trans i18nKey='profile.changePassword.old' />
@@ -51,8 +65,9 @@ export const ProfileChangePassword: React.FC = () => {
               type='password'
               size='sm'
               className='bg-dark text-light'
+              autoComplete='current-password'
               required
-              onChange={(event) => setOldPassword(event.target.value)}
+              onChange={onChangeOldPassword}
             />
           </Form.Group>
           <Form.Group controlId='newPassword'>
@@ -63,6 +78,7 @@ export const ProfileChangePassword: React.FC = () => {
               type='password'
               size='sm'
               className='bg-dark text-light'
+              autoComplete='new-password'
               required
               onChange={onChangeNewPassword}
               isValid={newPasswordValid}
@@ -80,6 +96,7 @@ export const ProfileChangePassword: React.FC = () => {
               size='sm'
               className='bg-dark text-light'
               required
+              autoComplete='new-password'
               onChange={onChangeNewPasswordAgain}
               isValid={newPasswordAgainValid}
               isInvalid={newPasswordAgain !== '' && !newPasswordAgainValid}

@@ -5,19 +5,20 @@
  */
 
 import type { ChangeEvent, FormEvent } from 'react'
-import React, { useEffect, useState } from 'react'
-import { Alert, Button, Card, Form } from 'react-bootstrap'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { updateDisplayName } from '../../../api/me'
 import { fetchAndSetUser } from '../../login-page/auth/utils'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 
+/**
+ * Profile page section for changing the current display name.
+ */
 export const ProfileDisplayName: React.FC = () => {
-  const regexInvalidDisplayName = /^\s*$/
   const { t } = useTranslation()
   const userName = useApplicationState((state) => state.user?.name)
-  const [submittable, setSubmittable] = useState(false)
-  const [error, setError] = useState(false)
   const [displayName, setDisplayName] = useState('')
 
   useEffect(() => {
@@ -26,24 +27,23 @@ export const ProfileDisplayName: React.FC = () => {
     }
   }, [userName])
 
-  if (!userName) {
-    return <Alert variant={'danger'}>User not logged in</Alert>
-  }
-
-  const changeNameField = (event: ChangeEvent<HTMLInputElement>) => {
-    setSubmittable(!regexInvalidDisplayName.test(event.target.value))
+  const onChangeDisplayName = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setDisplayName(event.target.value)
-  }
+  }, [])
 
-  const doAsyncChange = async () => {
-    await updateDisplayName(displayName)
-    await fetchAndSetUser()
-  }
+  const onSubmitNameChange = useCallback(
+    (event: FormEvent) => {
+      event.preventDefault()
+      updateDisplayName(displayName)
+        .then(fetchAndSetUser)
+        .catch(showErrorNotification('profile.changeDisplayNameFailed'))
+    },
+    [displayName]
+  )
 
-  const changeNameSubmit = (event: FormEvent) => {
-    doAsyncChange().catch(() => setError(true))
-    event.preventDefault()
-  }
+  const formSubmittable = useMemo(() => {
+    return displayName.trim() !== ''
+  }, [displayName])
 
   return (
     <Card className='bg-dark mb-4'>
@@ -51,7 +51,7 @@ export const ProfileDisplayName: React.FC = () => {
         <Card.Title>
           <Trans i18nKey='profile.userProfile' />
         </Card.Title>
-        <Form onSubmit={changeNameSubmit} className='text-left'>
+        <Form onSubmit={onSubmitNameChange} className='text-left'>
           <Form.Group controlId='displayName'>
             <Form.Label>
               <Trans i18nKey='profile.displayName' />
@@ -62,9 +62,8 @@ export const ProfileDisplayName: React.FC = () => {
               placeholder={t('profile.displayName')}
               value={displayName}
               className='bg-dark text-light'
-              onChange={changeNameField}
-              isValid={submittable}
-              isInvalid={error}
+              onChange={onChangeDisplayName}
+              isValid={formSubmittable}
               required
             />
             <Form.Text>
@@ -72,7 +71,7 @@ export const ProfileDisplayName: React.FC = () => {
             </Form.Text>
           </Form.Group>
 
-          <Button type='submit' variant='primary' disabled={!submittable}>
+          <Button type='submit' variant='primary' disabled={!formSubmittable}>
             <Trans i18nKey='common.save' />
           </Button>
         </Form>

@@ -6,9 +6,12 @@
 
 export interface AccessToken {
   label: string
-  created: number
+  validUntil: string
+  keyId: string
+  createdAt: string
+  lastUsed: string
 }
 
-export interface AccessTokenSecret {
+export interface AccessTokenWithSecret extends AccessToken {
   secret: string
 }

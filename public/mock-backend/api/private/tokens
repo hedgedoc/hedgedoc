@@ -1,10 +1,17 @@
 [
     {
         "label": "Demo-App",
-        "created": 1601991518
+        "keyId": "demo",
+        "createdAt": "2021-11-20T23:54:13+01:00",
+        "lastUsed": "2021-11-20T23:54:13+01:00",
+        "validUntil": "2022-11-20"
+
     },
     {
         "label": "CLI @ Test-PC",
-        "created": 1601912159
+        "keyId": "cli",
+        "createdAt": "2021-11-20T23:54:13+01:00",
+        "lastUsed": "2021-11-20T23:54:13+01:00",
+        "validUntil": "2021-11-20"
     }
 ]
