@@ -85,7 +85,7 @@
     "pdfobject": "^2.0.201604172",
     "pg": "^8.2.1",
     "pg-hstore": "^2.3.3",
-    "prom-client": "^13.1.0",
+    "prom-client": "^14.0.0",
     "prometheus-api-metrics": "^3.2.0",
     "randomcolor": "^0.6.0",
     "readline-sync": "^1.4.7",
