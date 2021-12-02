@@ -192,7 +192,7 @@
     "prismjs": "1.24.1",
     "raphael": "2.3.0",
     "remark-cli": "10.0.1",
-    "remark-preset-lint-markdown-style-guide": "5.0.1",
+    "remark-preset-lint-markdown-style-guide": "5.1.1",
     "reveal.js": "3.9.2",
     "select2": "3.5.2-browserify",
     "socket.io-client": "2.4.0",
