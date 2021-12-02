@@ -5,15 +5,15 @@
  */
 
 import type { Reducer } from 'redux'
-import type { PresentFrontmatterExtractionResult } from '../../components/common/note-frontmatter/types'
-import type { NoteFrontmatter } from '../../components/common/note-frontmatter/note-frontmatter'
-import { createNoteFrontmatterFromYaml } from '../../components/common/note-frontmatter/note-frontmatter'
-import type { NoteDetails, NoteDetailsActions } from './types'
+import { createNoteFrontmatterFromYaml } from './raw-note-frontmatter-parser/parser'
+import type { NoteDetailsActions } from './types'
 import { NoteDetailsActionType } from './types'
-import { extractFrontmatter } from '../../components/common/note-frontmatter/extract-frontmatter'
+import { extractFrontmatter } from './frontmatter-extractor/extractor'
 import type { NoteDto } from '../../api/notes/types'
 import { initialState } from './initial-state'
 import { DateTime } from 'luxon'
+import type { NoteDetails, NoteFrontmatter } from './types/note-details'
+import type { PresentFrontmatterExtractionResult } from './frontmatter-extractor/types'
 
 export const NoteDetailsReducer: Reducer<NoteDetails, NoteDetailsActions> = (
   state: NoteDetails = initialState,
@@ -75,7 +75,15 @@ const buildStateFromTaskListUpdate = (
  */
 const buildStateFromMarkdownContentUpdate = (state: NoteDetails, markdownContent: string): NoteDetails => {
   const frontmatterExtraction = extractFrontmatter(markdownContent)
-  if (!frontmatterExtraction.isPresent) {
+  if (frontmatterExtraction.isPresent) {
+    return buildStateFromFrontmatterUpdate(
+      {
+        ...state,
+        markdownContent: markdownContent
+      },
+      frontmatterExtraction
+    )
+  } else {
     return {
       ...state,
       markdownContent: markdownContent,
@@ -85,13 +93,6 @@ const buildStateFromMarkdownContentUpdate = (state: NoteDetails, markdownContent
       frontmatterRendererInfo: initialState.frontmatterRendererInfo
     }
   }
-  return buildStateFromFrontmatterUpdate(
-    {
-      ...state,
-      markdownContent: markdownContent
-    },
-    frontmatterExtraction
-  )
 }
 
 /**

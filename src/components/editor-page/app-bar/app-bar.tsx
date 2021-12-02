@@ -14,11 +14,11 @@ import { EditorViewMode } from './editor-view-mode'
 import { HelpButton } from './help-button/help-button'
 import { NavbarBranding } from './navbar-branding'
 import { SyncScrollButtons } from './sync-scroll-buttons/sync-scroll-buttons'
-import { NoteType } from '../../common/note-frontmatter/types'
 import { SlideModeButton } from './slide-mode-button'
 import { ReadOnlyModeButton } from './read-only-mode-button'
 import { NewNoteButton } from './new-note-button'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { NoteType } from '../../../redux/note-details/types/note-details'
 
 export enum AppBarMode {
   BASIC,

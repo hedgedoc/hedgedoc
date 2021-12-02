@@ -4,50 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { RevealOptions } from 'reveal.js'
-
-export type FrontmatterExtractionResult = PresentFrontmatterExtractionResult | NonPresentFrontmatterExtractionResult
-
-export type WantedRevealOptions =
-  | 'autoSlide'
-  | 'autoSlideStoppable'
-  | 'transition'
-  | 'backgroundTransition'
-  | 'slideNumber'
-export type SlideOptions = Required<Pick<RevealOptions, WantedRevealOptions>>
-
-export interface RendererFrontmatterInfo {
-  lineOffset: number
-  frontmatterInvalid: boolean
-  deprecatedSyntax: boolean
-  slideOptions: SlideOptions
-}
-
-export interface PresentFrontmatterExtractionResult {
-  isPresent: true
-  rawText: string
-  lineOffset: number
-}
-
-interface NonPresentFrontmatterExtractionResult {
-  isPresent: false
-}
-
-export interface RawNoteFrontmatter {
-  title: string | undefined
-  description: string | undefined
-  tags: string | string[] | undefined
-  robots: string | undefined
-  lang: string | undefined
-  dir: string | undefined
-  breaks: boolean | undefined
-  GA: string | undefined
-  disqus: string | undefined
-  type: string | undefined
-  slideOptions: { [key: string]: string } | null
-  opengraph: { [key: string]: string } | null
-}
-
 export const ISO6391 = [
   'aa',
   'ab',
@@ -252,13 +208,3 @@ export const ISO6391 = [
   'zh-tw',
   'zu'
 ] as const
-
-export enum NoteType {
-  DOCUMENT = '',
-  SLIDE = 'slide'
-}
-
-export enum NoteTextDirection {
-  LTR = 'ltr',
-  RTL = 'rtl'
-}

@@ -17,7 +17,6 @@ import type { DarkModeConfig } from './dark-mode/types'
 import { EditorConfigReducer } from './editor/reducers'
 import type { EditorConfig } from './editor/types'
 import { NoteDetailsReducer } from './note-details/reducer'
-import type { NoteDetails } from './note-details/types'
 import { UserReducer } from './user/reducers'
 import type { OptionalUserState } from './user/types'
 import type { UiNotificationState } from './ui-notifications/types'
@@ -27,6 +26,7 @@ import { HistoryReducer } from './history/reducers'
 import { RendererStatusReducer } from './renderer-status/reducers'
 import type { RendererStatus } from './renderer-status/types'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
+import type { NoteDetails } from './note-details/types/note-details'
 
 export interface ApplicationState {
   user: OptionalUserState

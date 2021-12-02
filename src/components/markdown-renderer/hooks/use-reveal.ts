@@ -7,7 +7,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Reveal from 'reveal.js'
 import { Logger } from '../../../utils/logger'
-import type { SlideOptions } from '../../common/note-frontmatter/types'
+import type { SlideOptions } from '../../../redux/note-details/types/slide-show-options'
 
 const log = new Logger('reveal.js')
 

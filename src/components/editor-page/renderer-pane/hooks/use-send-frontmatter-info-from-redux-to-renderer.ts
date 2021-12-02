@@ -8,8 +8,8 @@ import { useSendToRenderer } from '../../../render-page/window-post-message-comm
 import { useMemo, useRef } from 'react'
 import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import type { RendererFrontmatterInfo } from '../../../common/note-frontmatter/types'
 import equal from 'fast-deep-equal'
+import type { RendererFrontmatterInfo } from '../../../../redux/note-details/types/note-details'
 
 /**
  * Extracts the {@link RendererFrontmatterInfo frontmatter data}

@@ -4,36 +4,30 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-// import { RevealOptions } from 'reveal.js'
 import { load } from 'js-yaml'
-import type { RawNoteFrontmatter, SlideOptions } from './types'
-import { ISO6391, NoteTextDirection, NoteType } from './types'
-import { initialSlideOptions } from '../../../redux/note-details/initial-state'
+import type { SlideOptions } from '../types/slide-show-options'
+import type { NoteFrontmatter } from '../types/note-details'
+import { NoteTextDirection, NoteType } from '../types/note-details'
+import { ISO6391 } from '../types/iso6391'
+import type { RawNoteFrontmatter } from './types'
+import { initialSlideOptions } from '../initial-state'
 
 /**
- * Class that represents the parsed frontmatter metadata of a note.
+ * Creates a new frontmatter metadata instance based on a raw yaml string.
+ * @param rawYaml The frontmatter content in yaml format.
+ * @throws Error when the content string is invalid yaml.
+ * @return Frontmatter metadata instance containing the parsed properties from the yaml content.
  */
-export interface NoteFrontmatter {
-  title: string
-  description: string
-  tags: string[]
-  deprecatedTagsSyntax: boolean
-  robots: string
-  lang: typeof ISO6391[number]
-  dir: NoteTextDirection
-  newlinesAreBreaks: boolean
-  GA: string
-  disqus: string
-  type: NoteType
-  opengraph: Map<string, string>
-  slideOptions: SlideOptions
+export const createNoteFrontmatterFromYaml = (rawYaml: string): NoteFrontmatter => {
+  const rawNoteFrontmatter = load(rawYaml) as RawNoteFrontmatter
+  return parseRawNoteFrontmatter(rawNoteFrontmatter)
 }
 
 /**
  * Creates a new frontmatter metadata instance based on the given raw metadata properties.
  * @param rawData A {@link RawNoteFrontmatter} object containing the properties of the parsed yaml frontmatter.
  */
-export const parseRawNoteFrontmatter = (rawData: RawNoteFrontmatter): NoteFrontmatter => {
+const parseRawNoteFrontmatter = (rawData: RawNoteFrontmatter): NoteFrontmatter => {
   let tags: string[]
   let deprecatedTagsSyntax: boolean
   if (typeof rawData?.tags === 'string') {
@@ -55,11 +49,8 @@ export const parseRawNoteFrontmatter = (rawData: RawNoteFrontmatter): NoteFrontm
     GA: rawData.GA ?? '',
     disqus: rawData.disqus ?? '',
     lang: (rawData.lang ? ISO6391.find((lang) => lang === rawData.lang) : undefined) ?? 'en',
-    type:
-      (rawData.type ? Object.values(NoteType).find((type) => type === rawData.type) : undefined) ?? NoteType.DOCUMENT,
-    dir:
-      (rawData.dir ? Object.values(NoteTextDirection).find((dir) => dir === rawData.dir) : undefined) ??
-      NoteTextDirection.LTR,
+    type: rawData.type === NoteType.SLIDE ? NoteType.SLIDE : NoteType.DOCUMENT,
+    dir: rawData.dir === NoteTextDirection.LTR ? NoteTextDirection.LTR : NoteTextDirection.RTL,
     opengraph: rawData?.opengraph
       ? new Map<string, string>(Object.entries(rawData.opengraph))
       : new Map<string, string>(),
@@ -109,15 +100,4 @@ const parseNumber = (rawData: unknown | undefined): number | undefined => {
   }
   const numValue = Number(rawData)
   return isNaN(numValue) ? undefined : numValue
-}
-
-/**
- * Creates a new frontmatter metadata instance based on a raw yaml string.
- * @param rawYaml The frontmatter content in yaml format.
- * @throws Error when the content string is invalid yaml.
- * @return Frontmatter metadata instance containing the parsed properties from the yaml content.
- */
-export const createNoteFrontmatterFromYaml = (rawYaml: string): NoteFrontmatter => {
-  const rawNoteFrontmatter = load(rawYaml) as RawNoteFrontmatter
-  return parseRawNoteFrontmatter(rawNoteFrontmatter)
 }

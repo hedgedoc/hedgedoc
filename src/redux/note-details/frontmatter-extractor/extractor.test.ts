@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { extractFrontmatter } from './extract-frontmatter'
+import { extractFrontmatter } from './extractor'
 import type { PresentFrontmatterExtractionResult } from './types'
 
 describe('frontmatter extraction', () => {

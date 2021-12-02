@@ -13,11 +13,11 @@ import type { ImageClickHandler } from '../markdown-renderer/markdown-extension/
 import { useImageClickHandler } from './hooks/use-image-click-handler'
 import { MarkdownDocument } from './markdown-document'
 import { countWords } from './word-counter'
-import type { RendererFrontmatterInfo } from '../common/note-frontmatter/types'
 import { useRendererToEditorCommunicator } from '../editor-page/render-context/renderer-to-editor-communicator-context-provider'
 import { useRendererReceiveHandler } from './window-post-message-communicator/hooks/use-renderer-receive-handler'
 import { SlideshowMarkdownRenderer } from '../markdown-renderer/slideshow-markdown-renderer'
 import { initialState } from '../../redux/note-details/initial-state'
+import type { RendererFrontmatterInfo } from '../../redux/note-details/types/note-details'
 
 export const IframeMarkdownRenderer: React.FC = () => {
   const [markdownContent, setMarkdownContent] = useState('')

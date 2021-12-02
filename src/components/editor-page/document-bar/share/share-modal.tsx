@@ -14,8 +14,8 @@ import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
 import type { EditorPagePathParams } from '../../editor-page'
-import { NoteType } from '../../../common/note-frontmatter/types'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { NoteType } from '../../../../redux/note-details/types/note-details'
 
 export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   useTranslation()
@@ -37,7 +37,7 @@ export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => 
           <Trans i18nKey={'editor.modal.shareLink.slidesDescription'} />
           <CopyableField content={`${baseUrl}p/${id}`} nativeShareButton={true} url={`${baseUrl}p/${id}`} />
         </ShowIf>
-        <ShowIf condition={noteFrontmatter.type === ''}>
+        <ShowIf condition={noteFrontmatter.type === NoteType.DOCUMENT}>
           <Trans i18nKey={'editor.modal.shareLink.viewOnlyDescription'} />
           <CopyableField content={`${baseUrl}s/${id}`} nativeShareButton={true} url={`${baseUrl}s/${id}`} />
         </ShowIf>

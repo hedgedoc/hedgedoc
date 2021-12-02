@@ -17,8 +17,8 @@ import './markdown-document.scss'
 import { WidthBasedTableOfContents } from './width-based-table-of-contents'
 import { ShowIf } from '../common/show-if/show-if'
 import { useApplicationState } from '../../hooks/common/use-application-state'
-import type { RendererFrontmatterInfo } from '../common/note-frontmatter/types'
 import { InvalidYamlAlert } from '../markdown-renderer/invalid-yaml-alert'
+import type { RendererFrontmatterInfo } from '../../redux/note-details/types/note-details'
 
 export interface RendererProps extends ScrollProps {
   onFirstHeadingChange?: (firstHeading: string | undefined) => void

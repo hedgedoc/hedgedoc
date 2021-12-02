@@ -29,7 +29,7 @@ import { useApplicationState } from '../../hooks/common/use-application-state'
 import { EditorDocumentRenderer } from './editor-document-renderer/editor-document-renderer'
 import { EditorToRendererCommunicatorContextProvider } from './render-context/editor-to-renderer-communicator-context-provider'
 import { Logger } from '../../utils/logger'
-import { NoteType } from '../common/note-frontmatter/types'
+import { NoteType } from '../../redux/note-details/types/note-details'
 
 export interface EditorPagePathParams {
   id: string

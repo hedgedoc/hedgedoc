@@ -4,39 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { DateTime } from 'luxon'
 import type { Action } from 'redux'
-import type { NoteFrontmatter } from '../../components/common/note-frontmatter/note-frontmatter'
 import type { NoteDto } from '../../api/notes/types'
-import type { RendererFrontmatterInfo } from '../../components/common/note-frontmatter/types'
 
 export enum NoteDetailsActionType {
   SET_DOCUMENT_CONTENT = 'note-details/content/set',
   SET_NOTE_DATA_FROM_SERVER = 'note-details/data/server/set',
   UPDATE_NOTE_TITLE_BY_FIRST_HEADING = 'note-details/update-note-title-by-first-heading',
   UPDATE_TASK_LIST_CHECKBOX = 'note-details/update-task-list-checkbox'
-}
-interface LastChange {
-  userName: string
-  timestamp: DateTime
-}
-
-/**
- * Redux state containing the currently loaded note with its content and metadata.
- */
-export interface NoteDetails {
-  markdownContent: string
-  rawFrontmatter: string
-  frontmatter: NoteFrontmatter
-  frontmatterRendererInfo: RendererFrontmatterInfo
-  id: string
-  createTime: DateTime
-  lastChange: LastChange
-  viewCount: number
-  alias: string
-  authorship: string[]
-  noteTitle: string
-  firstHeading?: string
 }
 
 export type NoteDetailsActions =

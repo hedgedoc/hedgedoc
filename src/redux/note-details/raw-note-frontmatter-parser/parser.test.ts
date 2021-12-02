@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { createNoteFrontmatterFromYaml } from './note-frontmatter'
+import { createNoteFrontmatterFromYaml } from './parser'
 
 describe('yaml frontmatter', () => {
   it('should parse "title"', () => {

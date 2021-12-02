@@ -15,11 +15,11 @@ import { REVEAL_STATUS, useReveal } from './hooks/use-reveal'
 import './slideshow.scss'
 import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import { DocumentLengthLimitReachedAlert } from './document-length-limit-reached-alert'
-import type { SlideOptions } from '../common/note-frontmatter/types'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 import { LoadingSlide } from './loading-slide'
 import { RevealMarkdownExtension } from './markdown-extension/reveal/reveal-markdown-extension'
 import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
+import type { SlideOptions } from '../../redux/note-details/types/slide-show-options'
 
 export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererProps {
   slideOptions: SlideOptions
