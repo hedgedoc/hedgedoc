@@ -1,8 +1,27 @@
 # Release Notes
 
-## <i class="fa fa-tag"></i> Unreleased
+## <i class="fa fa-tag"></i> 1.9.1 <i class="fa fa-calendar-o"></i> 2021-12-02
+
+This release increases the minimum required Node versions to `12.20.0`, `14.13.1` and `16`.
+In general, only the latest releases of Node 12, 14 and 16 are officially supported by us, older minor versions can be dropped at any time.
+We recommend you run HedgeDoc with the latest release of Node 16.
+
 ### Bugfixes
 - Add workaround for incorrect CSP handling in Safari
+- Fix crash when an unexpected response from the GitLab API is encountered
+- Fix crash when using hungarian language
+
+### Contributors
+- AIAC (translator)
+- [Danilo Bargen](https://github.com/dbrgn)
+- Diem Duong (translator)
+- Gergely Polonkai (translator)
+- Nikola (translator)
+- [ProttoyChakraborty](https://github.com/ProttoyChakraborty)
+- Sergio (translator)
+- Tiago Triques (translator)
+- Vincent Dusanek (translator)
+- Александр (translator)
 
 ## <i class="fa fa-tag"></i> 1.9.0 <i class="fa fa-calendar-o"></i> 2021-09-13
 ### Security Fixes
