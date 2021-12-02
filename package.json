@@ -37,7 +37,7 @@
     "ejs": "^3.0.0",
     "express": ">=4.14",
     "express-session": "^1.14.2",
-    "file-type": "^16.1.0",
+    "file-type": "^17.0.0",
     "formidable": "^1.0.17",
     "graceful-fs": "^4.1.11",
     "helmet": "^4.5.0",
@@ -110,7 +110,7 @@
     "**/request": "^2.88.0"
   },
   "engines": {
-    "node": "12.x || 14.x || 16.x"
+    "node": "^12.20.0 || ^14.13.1 || 16.x"
   },
   "bugs": "https://github.com/hedgedoc/hedgedoc/issues",
   "keywords": [
