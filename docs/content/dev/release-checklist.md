@@ -34,6 +34,7 @@
   - [ ] Bug fixes
   - [ ] Enhancements
   - [ ] Add all contributors
+    - sort alphabetically
 - [ ] Run the tests described in the release test document (internal)
 - [ ] Upload tar ball to github and add a release tag
 - [ ] Update container images
