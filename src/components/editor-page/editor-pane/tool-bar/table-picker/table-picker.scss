@@ -6,9 +6,9 @@
 
 
 .table-picker-container {
-  z-index: 1111;
-
   @import "../../../../../style/variables.light";
+
+  z-index: 1111;
 
   .table-cell {
     border: 1px solid $gray-700;

@@ -5,39 +5,106 @@
  */
 
 import type CodeMirror from 'codemirror'
-import React, { Fragment, useState } from 'react'
-import { Button } from 'react-bootstrap'
+import React, { Fragment, useCallback, useMemo, useRef, useState } from 'react'
+import { Button, Overlay } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
 import { addTable } from '../utils/toolbarButtonUtils'
-import { TablePicker } from './table-picker'
 import { cypressId } from '../../../../../utils/cypress-attribute'
+import { TableSizePickerPopover } from './table-size-picker-popover'
+import { CustomTableSizeModal } from './custom-table-size-modal'
+import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
+import { ShowIf } from '../../../../common/show-if/show-if'
 
 export interface TablePickerButtonProps {
   editor: CodeMirror.Editor
 }
 
+enum PickerMode {
+  INVISIBLE,
+  GRID,
+  CUSTOM
+}
+
+/**
+ * Toggles the visibility of a {@link TableSizePicker table size picker overlay} and inserts the result into the editor.
+ *
+ * @param editor The editor in which the result should get inserted
+ */
 export const TablePickerButton: React.FC<TablePickerButtonProps> = ({ editor }) => {
   const { t } = useTranslation()
-  const [showTablePicker, setShowTablePicker] = useState(false)
+  const [pickerMode, setPickerMode] = useState<PickerMode>(PickerMode.INVISIBLE)
+  const onDismiss = useCallback(() => setPickerMode(PickerMode.INVISIBLE), [])
+  const onShowModal = useCallback(() => setPickerMode(PickerMode.CUSTOM), [])
+
+  const onSizeSelect = useCallback(
+    (rows: number, columns: number) => {
+      addTable(editor, rows, columns)
+      setPickerMode(PickerMode.INVISIBLE)
+    },
+    [editor]
+  )
+
+  const tableTitle = useMemo(() => t('editor.editorToolbar.table.title'), [t])
+
+  const button = useRef(null)
+
+  const toggleOverlayVisibility = useCallback(
+    () =>
+      setPickerMode((oldPickerMode) =>
+        oldPickerMode === PickerMode.INVISIBLE ? PickerMode.GRID : PickerMode.INVISIBLE
+      ),
+    []
+  )
+
+  const onOverlayHide = useCallback(() => {
+    setPickerMode((oldMode) => {
+      if (oldMode === PickerMode.CUSTOM) {
+        return PickerMode.CUSTOM
+      } else {
+        return PickerMode.INVISIBLE
+      }
+    })
+  }, [])
+
+  const createPopoverElement = useCallback<(props: OverlayInjectedProps) => React.ReactElement>(
+    ({ ref, ...popoverProps }) => (
+      <TableSizePickerPopover
+        onTableSizeSelected={onSizeSelect}
+        onShowCustomSizeModal={onShowModal}
+        onDismiss={onDismiss}
+        onRefUpdate={ref}
+        {...popoverProps}
+      />
+    ),
+    [onDismiss, onShowModal, onSizeSelect]
+  )
 
   return (
     <Fragment>
-      <TablePicker
-        show={showTablePicker}
-        onDismiss={() => setShowTablePicker(false)}
-        onTablePicked={(rows, cols) => {
-          setShowTablePicker(false)
-          addTable(editor, rows, cols)
-        }}
-      />
       <Button
-        {...cypressId('show-table-overlay')}
+        {...cypressId('table-size-picker-button')}
         variant='light'
-        onClick={() => setShowTablePicker((old) => !old)}
-        title={t('editor.editorToolbar.table.title')}>
+        onClick={toggleOverlayVisibility}
+        title={tableTitle}
+        ref={button}>
         <ForkAwesomeIcon icon='table' />
       </Button>
+      <Overlay
+        target={button.current}
+        onHide={onOverlayHide}
+        show={pickerMode === PickerMode.GRID}
+        placement={'bottom'}
+        rootClose={true}>
+        {createPopoverElement}
+      </Overlay>
+      <ShowIf condition={pickerMode === PickerMode.CUSTOM}>
+        <CustomTableSizeModal
+          showModal={pickerMode === PickerMode.CUSTOM}
+          onDismiss={onDismiss}
+          onSizeSelect={onSizeSelect}
+        />
+      </ShowIf>
     </Fragment>
   )
 }

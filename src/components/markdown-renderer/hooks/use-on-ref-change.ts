@@ -8,11 +8,8 @@ import equal from 'fast-deep-equal'
 import type { MutableRefObject } from 'react'
 import { useEffect, useRef } from 'react'
 
-export const useOnRefChange = <T>(
-  reference: MutableRefObject<T | undefined>,
-  onChange?: (newValue?: T) => void
-): void => {
-  const lastValue = useRef<T | undefined>()
+export const useOnRefChange = <T>(reference: MutableRefObject<T>, onChange?: (newValue: T) => void): void => {
+  const lastValue = useRef<T>()
   useEffect(() => {
     if (onChange && !equal(reference, lastValue.current)) {
       lastValue.current = reference.current

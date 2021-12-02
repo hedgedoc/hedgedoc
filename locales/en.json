@@ -309,8 +309,8 @@
             "image": "Image",
             "uploadImage": "Upload Image",
             "table": {
-                "title": "Table",
-                "size": "{{cols}}x{{rows}} Table",
+                "titleWithoutSize": "Table",
+                "titleWithSize": "{{cols}}x{{rows}} Table",
                 "customSize": "Custom Size",
                 "cols": "Cols",
                 "rows": "Rows",

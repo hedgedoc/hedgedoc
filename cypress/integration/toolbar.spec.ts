@@ -175,25 +175,29 @@ describe('Toolbar Buttons', () => {
 
   describe('for new tables', () => {
     beforeEach(() => {
-      cy.get('.table-picker-container').should('not.be.visible')
-      cy.getById('show-table-overlay').last().click()
-      cy.get('.table-picker-container').should('be.visible')
+      cy.getById('table-size-picker-popover').should('not.exist')
+      cy.getById('table-size-picker-button').last().click()
+      cy.getById('table-size-picker-popover').should('be.visible')
     })
 
-    it('should open an overlay', () => {
-      cy.get('.table-container > div:nth-of-type(25)').trigger('mouseover')
-      cy.get('.table-cell.bg-primary').should('have.length', 15)
-      cy.get('.table-picker-container > p').contains('5x3')
-      cy.get('.table-container > div:nth-of-type(25)').click()
+    it('should select table size', () => {
+      cy.getById('table-size-picker-popover')
+        .find('.table-container > .table-cell:nth-of-type(25)')
+        .trigger('mouseover')
+      cy.getById('table-size-picker-popover')
+        .find('.table-container > .table-cell[data-cypress-selected="true"]')
+        .should('have.length', 15)
+      cy.getById('table-size-picker-popover').find('.popover-header').contains('5x3')
+      cy.getById('table-size-picker-popover').find('.table-container > .table-cell:nth-of-type(25)').click()
     })
 
-    it('should open a modal for custom table sizes in the overlay', () => {
-      cy.get('.modal-dialog').should('not.exist')
+    it('should open a custom table size in the modal', () => {
+      cy.getById('custom-table-size-modal').should('not.exist')
       cy.getById('show-custom-table-modal').first().click()
-      cy.get('.modal-dialog').should('be.visible')
-      cy.get('.modal-content > .d-flex > input').first().type('5')
-      cy.get('.modal-content > .d-flex > input').last().type('3')
-      cy.get('.modal-footer > button').click()
+      cy.getById('custom-table-size-modal').should('be.visible')
+      cy.getById('custom-table-size-modal').find('input').first().type('5')
+      cy.getById('custom-table-size-modal').find('input').last().type('3')
+      cy.getById('custom-table-size-modal').find('.modal-footer > button').click()
     })
 
     afterEach(() => {
