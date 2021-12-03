@@ -1,5 +1,11 @@
 # Release Notes
 
+## <i class="fa fa-tag"></i> Unreleased
+
+### Bugfixes
+
+- Fix error in the session handler when requesting `/metrics` or `/status`
+
 ## <i class="fa fa-tag"></i> 1.9.1 <i class="fa fa-calendar-o"></i> 2021-12-02
 
 This release increases the minimum required Node versions to `12.20.0`, `14.13.1` and `16`.
