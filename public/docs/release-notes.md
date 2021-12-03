@@ -1,9 +1,8 @@
 # Release Notes
 
-## <i class="fa fa-tag"></i> Unreleased
+## <i class="fa fa-tag"></i> 1.9.2 <i class="fa fa-calendar-o"></i> 2021-12-03
 
 ### Bugfixes
-
 - Fix error in the session handler when requesting `/metrics` or `/status`
 
 ## <i class="fa fa-tag"></i> 1.9.1 <i class="fa fa-calendar-o"></i> 2021-12-02
