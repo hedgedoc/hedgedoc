@@ -1318,12 +1318,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sideway/address@npm:^4.1.0":
-  version: 4.1.2
-  resolution: "@sideway/address@npm:4.1.2"
+"@sideway/address@npm:^4.1.3":
+  version: 4.1.3
+  resolution: "@sideway/address@npm:4.1.3"
   dependencies:
     "@hapi/hoek": ^9.0.0
-  checksum: 1e4910f7b3205347f78e698923dd7e0bb400c9e9e9bdd4a059edb6d2e32a540b426aba4652d095ea299fb75019d87883251dd9b96b350c00a35454bcdfa5f9f5
+  checksum: 3c1faf6ef37a0b59b62ce42b59c012c00ef1fc4194ad6776c65c2f9a6dd6c1710c6f6362b3ca3fa582fdb93984f0cb64ca44f9f5e02940634805f5e561279c22
   languageName: node
   linkType: hard
 
@@ -5157,7 +5157,7 @@ __metadata:
     file-type: 16.5.3
     http-proxy-middleware: 2.0.1
     jest: 27.3.1
-    joi: 17.4.2
+    joi: 17.4.3
     minio: 7.0.20
     nest-router: 1.0.9
     node-fetch: 2.6.6
@@ -6394,16 +6394,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"joi@npm:17.4.2":
-  version: 17.4.2
-  resolution: "joi@npm:17.4.2"
+"joi@npm:17.4.3":
+  version: 17.4.3
+  resolution: "joi@npm:17.4.3"
   dependencies:
     "@hapi/hoek": ^9.0.0
     "@hapi/topo": ^5.0.0
-    "@sideway/address": ^4.1.0
+    "@sideway/address": ^4.1.3
     "@sideway/formula": ^3.0.0
     "@sideway/pinpoint": ^2.0.0
-  checksum: 977ada1f9d38c2762689b61cec1272176968ccea731a16b71713ebaa067f140460e0b6f7eccff6fc12206fddce22e7f4ed74724651bc1b24b1e26d43280633d0
+  checksum: bde4bded6c4dda4b817f26071da6291aa4f294235877beda06d70a8de5b5432114990178b43d5a6d4f756747b225919319cebaa9e474656d13b710719af98c6f
   languageName: node
   linkType: hard
 
