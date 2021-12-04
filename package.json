@@ -163,9 +163,9 @@
     "markdown-it-sup": "1.0.0",
     "markdown-it-task-lists": "2.1.1",
     "markdown-it-toc-done-right": "4.2.0",
-    "markmap-common": "0.1.5",
-    "markmap-lib": "0.11.6",
-    "markmap-view": "0.2.6",
+    "markmap-common": "0.1.6",
+    "markmap-lib": "0.12.0",
+    "markmap-view": "0.2.7",
     "mermaid": "8.13.4",
     "optional-js": "2.3.0",
     "prettier": "2.5.0",
@@ -201,7 +201,6 @@
     "words-count": "2.0.2"
   },
   "resolutions": {
-    "cypress": "7.7.0",
-    "katex": "0.15.1"
+    "cypress": "7.7.0"
   }
 }
