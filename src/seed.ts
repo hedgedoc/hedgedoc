@@ -78,7 +78,7 @@ createConnection({
       notes[i].revisions = Promise.all([revision]);
       notes[i].userPermissions = Promise.resolve([]);
       notes[i].groupPermissions = Promise.resolve([]);
-      user.ownedNotes = [notes[i]];
+      user.ownedNotes = Promise.resolve([notes[i]]);
       await connection.manager.save([
         notes[i],
         user,

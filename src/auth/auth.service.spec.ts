@@ -166,7 +166,7 @@ describe('AuthService', () => {
       const accessTokenHash = await hashPassword(token);
       jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce({
         ...user,
-        authTokens: [authToken],
+        authTokens: Promise.resolve([authToken]),
       });
       jest.spyOn(authTokenRepo, 'findOne').mockResolvedValue({
         ...authToken,
@@ -183,7 +183,7 @@ describe('AuthService', () => {
       );
       expect(userByToken).toEqual({
         ...user,
-        authTokens: [authToken],
+        authTokens: Promise.resolve([authToken]),
       });
     });
     describe('fails:', () => {
