@@ -60,7 +60,7 @@ describe('IdentityService', () => {
       await checkPassword(password, identity.passwordHash ?? '').then(
         (result) => expect(result).toBeTruthy(),
       );
-      expect(identity.user).toEqual(user);
+      expect(await identity.user).toEqual(user);
     });
   });
 
@@ -83,7 +83,7 @@ describe('IdentityService', () => {
       await checkPassword(newPassword, identity.passwordHash ?? '').then(
         (result) => expect(result).toBeTruthy(),
       );
-      expect(identity.user).toEqual(user);
+      expect(await identity.user).toEqual(user);
     });
     it('fails, when user has no local identity', async () => {
       user.identities = Promise.resolve([]);
