@@ -340,11 +340,12 @@ export class NotesService {
    */
   async calculateUpdateUser(note: Note): Promise<User | null> {
     const lastRevision = await this.getLatestRevision(note);
-    if (lastRevision && lastRevision.edits) {
+    const edits = await lastRevision.edits;
+    if (edits.length > 0) {
       // Sort the last Revisions Edits by their updatedAt Date to get the latest one
       // the user of that Edit is the updateUser
       return await (
-        await lastRevision.edits.sort(
+        await edits.sort(
           (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime(),
         )[0].author
       ).user;
