@@ -18,5 +18,5 @@ export class Tag {
   name: string;
 
   @ManyToMany((_) => Note, (note) => note.tags)
-  notes: Note[];
+  notes: Promise<Note[]>;
 }

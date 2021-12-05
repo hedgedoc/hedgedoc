@@ -657,7 +657,7 @@ describe('NotesService', () => {
         {
           id: 1,
           name: 'testTag',
-          notes: [note],
+          notes: Promise.resolve([note]),
         },
       ]);
       const tagList = await service.toTagList(note);
@@ -764,7 +764,7 @@ describe('NotesService', () => {
         {
           id: 1,
           name: 'testTag',
-          notes: [note],
+          notes: Promise.resolve([note]),
         },
       ]);
       note.viewCount = 1337;
@@ -866,7 +866,7 @@ describe('NotesService', () => {
         {
           id: 1,
           name: 'testTag',
-          notes: [note],
+          notes: Promise.resolve([note]),
         },
       ]);
       note.viewCount = 1337;
