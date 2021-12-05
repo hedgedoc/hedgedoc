@@ -99,4 +99,11 @@ export class NoteClientMap {
   public countNotes(): number {
     return this.noteIdToClients.size;
   }
+
+  public countClientsByNoteId(noteId: string): number {
+    if (!this.noteIdToClients.has(noteId)) {
+      return 0;
+    }
+    return this.noteIdToClients.get(noteId).length;
+  }
 }

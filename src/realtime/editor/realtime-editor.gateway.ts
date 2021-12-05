@@ -12,15 +12,18 @@ import {
 } from '@nestjs/websockets';
 import { IncomingMessage } from 'http';
 import WebSocket from 'ws';
-
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { Note } from '../../notes/note.entity';
 import { NotesService } from '../../notes/notes.service';
 import { PermissionsService } from '../../permissions/permissions.service';
-import { UsersService } from '../../users/users.service';
 import { MessageType } from './message-type';
 import { NoteClientMap } from './note-client-map';
 import { MessageHandlerCallbackResponse } from './yjs.adapter';
+import { SessionGuard } from '../../identity/session.guard';
+import { UseGuards } from '@nestjs/common';
+import Y from 'yjs';
+import { RequestUser } from '../../api/utils/request-user.decorator';
+import { User } from '../../users/user.entity';
 
 /**
  * Gateway implementing the realtime logic required for realtime note editing.
@@ -33,13 +36,15 @@ export class RealtimeEditorGateway
     private readonly logger: ConsoleLoggerService,
     private noteService: NotesService,
     private permissionsService: PermissionsService,
-    private userService: UsersService,
   ) {
     this.logger.setContext(RealtimeEditorGateway.name);
   }
 
   /** Mapping instance keeping track of WebSocket clients and their associated note identifier. */
   private noteClientMap = new NoteClientMap();
+
+  /** Mapping instance keeping track of note-ids and their associated y-doc. */
+  private noteYDocMap = new Map<string, Y.Doc>();
 
   /**
    * Handler that is called when a WebSocket client disconnects.
@@ -54,10 +59,13 @@ export class RealtimeEditorGateway
     }
     this.logger.log(`Client disconnected from note '${noteIdOfClient}'`);
     this.noteClientMap.removeClient(client);
-    this.logger.log(
+    if (this.noteClientMap.countClientsByNoteId(noteIdOfClient) === 0) {
+      // TODO Clean-up Y-Doc and store to database
+      this.noteYDocMap.delete(noteIdOfClient);
+    }
+    this.logger.debug(
       `Status: ${this.noteClientMap.countClients()} users online on ${this.noteClientMap.countNotes()} notes`,
     );
-    // TODO If this client was the last one participating on a note, close the YDoc of the note and store it to the db.
   }
 
   /**
@@ -68,10 +76,13 @@ export class RealtimeEditorGateway
    *
    * @param client The WebSocket client object.
    * @param req The underlying HTTP request of the WebSocket connection.
+   * @param user The user that connected to the WebSocket.
    */
+  @UseGuards(SessionGuard)
   async handleConnection(
     client: WebSocket,
     req: IncomingMessage,
+    @RequestUser() user: User,
   ): Promise<void> {
     client.on('close', () => this.handleDisconnect(client));
     const url = req.url ?? '';
@@ -82,8 +93,6 @@ export class RealtimeEditorGateway
       return;
     }
     const noteIdFromPath = pathMatching[1];
-    // TODO Use actual user here
-    const user = await this.userService.getUserByUsername('hardcoded');
     let note: Note;
     try {
       note = await this.noteService.getNoteByIdOrAlias(noteIdFromPath);
@@ -102,10 +111,15 @@ export class RealtimeEditorGateway
       return;
     }
     this.noteClientMap.addClient(client, note.id);
+    if (this.noteYDocMap.has(note.id)) {
+      // TODO Handle existing Y-Doc
+    } else {
+      // TODO Create new Y-Doc for note
+    }
     this.logger.log(
       `Connection to note '${note.id}' by user '${user.username}'`,
     );
-    this.logger.log(
+    this.logger.debug(
       `Status: ${this.noteClientMap.countClients()} users online on ${this.noteClientMap.countNotes()} notes`,
     );
   }
@@ -123,7 +137,7 @@ export class RealtimeEditorGateway
     client: WebSocket,
     @MessageBody() data: Uint8Array,
   ): MessageHandlerCallbackResponse {
-    this.logger.log('Received SYNC message');
+    this.logger.debug('Received SYNC message');
     return Promise.resolve();
   }
 
@@ -140,7 +154,7 @@ export class RealtimeEditorGateway
     client: WebSocket,
     @MessageBody() data: Uint8Array,
   ): MessageHandlerCallbackResponse {
-    this.logger.log('Received AWARENESS message');
+    this.logger.debug('Received AWARENESS message');
     return Promise.resolve();
   }
 
@@ -157,7 +171,7 @@ export class RealtimeEditorGateway
     client: WebSocket,
     @MessageBody() data: Uint8Array,
   ): MessageHandlerCallbackResponse {
-    this.logger.log('Received HEDGEDOC message');
+    this.logger.debug('Received HEDGEDOC message');
     return Promise.resolve();
   }
 }
