@@ -711,7 +711,7 @@ describe('NotesService', () => {
         .mockImplementation(async (note: Note): Promise<Note> => note);
       const note = await service.createNote(content, null);
       const revisions = await note.revisions;
-      revisions[0].edits = [
+      revisions[0].edits = Promise.resolve([
         {
           revisions: Promise.resolve(revisions),
           startPos: 0,
@@ -726,7 +726,7 @@ describe('NotesService', () => {
           updatedAt: new Date(1549312452001),
           author: Promise.resolve(author),
         } as Edit,
-      ];
+      ]);
       revisions[0].createdAt = new Date(1549312452000);
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValue(revisions[0]);
       const createQueryBuilder = {
@@ -810,7 +810,7 @@ describe('NotesService', () => {
         .mockImplementation(async (note: Note): Promise<Note> => note);
       const note = await service.createNote(content, null);
       const revisions = await note.revisions;
-      revisions[0].edits = [
+      revisions[0].edits = Promise.resolve([
         {
           revisions: Promise.resolve(revisions),
           startPos: 0,
@@ -825,7 +825,7 @@ describe('NotesService', () => {
           updatedAt: new Date(1549312452001),
           author: Promise.resolve(author),
         } as Edit,
-      ];
+      ]);
       revisions[0].createdAt = new Date(1549312452000);
       jest
         .spyOn(revisionRepo, 'findOne')
