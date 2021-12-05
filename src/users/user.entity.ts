@@ -53,25 +53,25 @@ export class User {
   email: string | null;
 
   @OneToMany((_) => Note, (note) => note.owner)
-  ownedNotes: Note[];
+  ownedNotes: Promise<Note[]>;
 
   @OneToMany((_) => AuthToken, (authToken) => authToken.user)
-  authTokens: AuthToken[];
+  authTokens: Promise<AuthToken[]>;
 
   @OneToMany((_) => Identity, (identity) => identity.user)
   identities: Promise<Identity[]>;
 
   @ManyToMany((_) => Group, (group) => group.members)
-  groups: Group[];
+  groups: Promise<Group[]>;
 
   @OneToMany((_) => HistoryEntry, (historyEntry) => historyEntry.user)
-  historyEntries: HistoryEntry[];
+  historyEntries: Promise<HistoryEntry[]>;
 
   @OneToMany((_) => MediaUpload, (mediaUpload) => mediaUpload.user)
-  mediaUploads: MediaUpload[];
+  mediaUploads: Promise<MediaUpload[]>;
 
   @OneToMany(() => Author, (author) => author.user)
-  authors: Author[];
+  authors: Promise<Author[]>;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
@@ -85,13 +85,13 @@ export class User {
     newUser.displayName = displayName;
     newUser.photo = null;
     newUser.email = null;
-    newUser.ownedNotes = [];
-    newUser.authTokens = [];
+    newUser.ownedNotes = Promise.resolve([]);
+    newUser.authTokens = Promise.resolve([]);
     newUser.identities = Promise.resolve([]);
-    newUser.groups = [];
-    newUser.historyEntries = [];
-    newUser.mediaUploads = [];
-    newUser.authors = [];
+    newUser.groups = Promise.resolve([]);
+    newUser.historyEntries = Promise.resolve([]);
+    newUser.mediaUploads = Promise.resolve([]);
+    newUser.authors = Promise.resolve([]);
     return newUser;
   }
 }
