@@ -74,7 +74,7 @@ createConnection({
         notes[i],
       ) as Revision;
       const edit = Edit.create(author, 1, 42) as Edit;
-      revision.edits = [edit];
+      revision.edits = Promise.resolve([edit]);
       notes[i].revisions = Promise.all([revision]);
       notes[i].userPermissions = Promise.resolve([]);
       notes[i].groupPermissions = Promise.resolve([]);

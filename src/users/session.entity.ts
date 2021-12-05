@@ -21,5 +21,5 @@ export class Session implements ISession {
   public json = '';
 
   @ManyToOne(() => Author, (author) => author.sessions)
-  author: Author;
+  author: Promise<Author>;
 }
