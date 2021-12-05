@@ -713,18 +713,18 @@ describe('NotesService', () => {
       const revisions = await note.revisions;
       revisions[0].edits = [
         {
-          revisions: revisions,
+          revisions: Promise.resolve(revisions),
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452000),
-          author: author,
+          author: Promise.resolve(author),
         } as Edit,
         {
-          revisions: revisions,
+          revisions: Promise.resolve(revisions),
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452001),
-          author: author,
+          author: Promise.resolve(author),
         } as Edit,
       ];
       revisions[0].createdAt = new Date(1549312452000);
@@ -812,18 +812,18 @@ describe('NotesService', () => {
       const revisions = await note.revisions;
       revisions[0].edits = [
         {
-          revisions: revisions,
+          revisions: Promise.resolve(revisions),
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452000),
-          author: author,
+          author: Promise.resolve(author),
         } as Edit,
         {
-          revisions: revisions,
+          revisions: Promise.resolve(revisions),
           startPos: 0,
           endPos: 1,
           updatedAt: new Date(1549312452001),
-          author: author,
+          author: Promise.resolve(author),
         } as Edit,
       ];
       revisions[0].createdAt = new Date(1549312452000);

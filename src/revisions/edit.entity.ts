@@ -28,13 +28,13 @@ export class Edit {
    * Revisions this edit appears in
    */
   @ManyToMany((_) => Revision, (revision) => revision.edits)
-  revisions: Revision[];
+  revisions: Promise<Revision[]>;
 
   /**
    * Author that created the change
    */
   @ManyToOne(() => Author, (author) => author.edits)
-  author: Author;
+  author: Promise<Author>;
 
   @Column()
   startPos: number;
@@ -57,8 +57,8 @@ export class Edit {
     endPos: number,
   ): Omit<Edit, 'id' | 'createdAt' | 'updatedAt'> {
     const newEdit = new Edit();
-    newEdit.revisions = [];
-    newEdit.author = author;
+    newEdit.revisions = Promise.resolve([]);
+    newEdit.author = Promise.resolve(author);
     newEdit.startPos = startPos;
     newEdit.endPos = endPos;
     return newEdit;
