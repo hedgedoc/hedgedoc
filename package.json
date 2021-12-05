@@ -46,7 +46,7 @@
     "connect-typeorm": "1.1.4",
     "express-session": "1.17.2",
     "file-type": "16.5.3",
-    "joi": "17.4.3",
+    "joi": "17.5.0",
     "minio": "7.0.23",
     "nest-router": "1.0.9",
     "node-fetch": "2.6.6",
