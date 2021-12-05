@@ -55,11 +55,11 @@ export class PermissionsGuard implements CanActivate {
     const note = await getNote(this.noteService, noteIdOrAlias);
     switch (permissions[0]) {
       case Permission.READ:
-        return this.permissionsService.mayRead(user, note);
+        return await this.permissionsService.mayRead(user, note);
       case Permission.WRITE:
-        return this.permissionsService.mayWrite(user, note);
+        return await this.permissionsService.mayWrite(user, note);
       case Permission.OWNER:
-        return this.permissionsService.isOwner(user, note);
+        return await this.permissionsService.isOwner(user, note);
     }
     return false;
   }
