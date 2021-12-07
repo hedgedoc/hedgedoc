@@ -27,7 +27,7 @@ export class SessionGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: Request & { session?: { user: string }; user?: User } =
       context.switchToHttp().getRequest();
-    if (!request.session) {
+    if (!request.session?.user) {
       this.logger.debug('The user has no session.');
       throw new UnauthorizedException("You're not logged in");
     }
