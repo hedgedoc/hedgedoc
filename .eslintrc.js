@@ -26,7 +26,7 @@ module.exports = {
             assertFunctionNames: [
               'expect',
               'request.**.expect',
-              'agent.**.expect',
+              'agent[0-9]?.**.expect',
             ],
           },
         ],
