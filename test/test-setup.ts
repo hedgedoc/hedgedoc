@@ -37,10 +37,10 @@ import { NotesModule } from '../src/notes/notes.module';
 import { NotesService } from '../src/notes/notes.service';
 import { PermissionsModule } from '../src/permissions/permissions.module';
 import { RevisionsModule } from '../src/revisions/revisions.module';
+import { User } from '../src/users/user.entity';
 import { UsersModule } from '../src/users/users.module';
 import { UsersService } from '../src/users/users.service';
 import { setupSessionMiddleware } from '../src/utils/session';
-import { setupValidationPipe } from '../src/utils/setup-pipes';
 
 export class TestSetup {
   moduleRef: TestingModule;
@@ -53,6 +53,8 @@ export class TestSetup {
   mediaService: MediaService;
   historyService: HistoryService;
   aliasService: AliasService;
+
+  users: User[] = [];
 
   public static async create(): Promise<TestSetup> {
     const testSetup = new TestSetup();
@@ -130,5 +132,25 @@ export class TestSetup {
     );
 
     return testSetup;
+  }
+
+  public async withUsers(): Promise<TestSetup> {
+    // Create users
+    this.users.push(
+      await this.userService.createUser('testuser1', 'Test User 1'),
+    );
+    this.users.push(
+      await this.userService.createUser('testuser2', 'Test User 2'),
+    );
+    this.users.push(
+      await this.userService.createUser('testuser3', 'Test User 3'),
+    );
+
+    // Create identities for login
+    await this.identityService.createLocalIdentity(this.users[0], 'testuser1');
+    await this.identityService.createLocalIdentity(this.users[1], 'testuser2');
+    await this.identityService.createLocalIdentity(this.users[2], 'testuser3');
+
+    return this;
   }
 }
