@@ -22,7 +22,11 @@ module.exports = {
         'jest/expect-expect': [
           'error',
           {
-            assertFunctionNames: ['expect', 'request.**.expect', 'agent.**.expect'],
+            assertFunctionNames: [
+              'expect',
+              'request.**.expect',
+              'agent[0-9]?.**.expect',
+            ],
           },
         ],
         'jest/no-standalone-expect': [
