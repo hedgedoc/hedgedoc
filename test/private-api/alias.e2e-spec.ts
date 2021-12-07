@@ -5,11 +5,9 @@
  */
 import request from 'supertest';
 
-import { AuthConfig } from '../../src/config/auth.config';
 import { AliasCreateDto } from '../../src/notes/alias-create.dto';
 import { AliasUpdateDto } from '../../src/notes/alias-update.dto';
 import { User } from '../../src/users/user.entity';
-import { setupSessionMiddleware } from '../../src/utils/session';
 import { TestSetup } from '../test-setup';
 
 describe('Alias', () => {
@@ -22,20 +20,20 @@ describe('Alias', () => {
   let agent: request.SuperAgentTest;
 
   beforeAll(async () => {
-    testSetup = await TestSetup.create();
+    testSetup = await (await TestSetup.create()).withUsers();
 
     forbiddenNoteId =
       testSetup.configService.get('appConfig').forbiddenNoteIds[0];
-    const authConfig = testSetup.configService.get('authConfig') as AuthConfig;
-    setupSessionMiddleware(testSetup.app, authConfig);
+
     await testSetup.app.init();
-    user = await testSetup.userService.createUser('hardcoded', 'Testy');
-    await testSetup.identityService.createLocalIdentity(user, 'test');
+
+    user = testSetup.users[0];
+
     content = 'This is a test note.';
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
       .post('/api/private/auth/local/login')
-      .send({ username: 'hardcoded', password: 'test' })
+      .send({ username: 'testuser1', password: 'testuser1' })
       .expect(201);
   });
 
