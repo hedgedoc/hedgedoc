@@ -98,7 +98,7 @@ Here is an example config snippet:
 
   RewriteEngine on
   RewriteCond %{REQUEST_URI} ^/socket.io             [NC]
-  RewriteCond %{HTTP:Upgrade} =websocket [NC]
+  RewriteCond %{HTTP:Upgrade} =websocket             [NC]
   RewriteRule /(.*)  ws://127.0.0.1:3000/$1          [P,L]
 
   ProxyPass / http://127.0.0.1:3000/
