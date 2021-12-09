@@ -48,7 +48,7 @@ describe('Tokens', () => {
     expect(response.body.label).toBe(tokenName);
     expect(response.body.validUntil).toBe(null);
     expect(response.body.lastUsed).toBe(null);
-    expect(response.body.secret.length).toBe(84);
+    expect(response.body.secret.length).toBe(98);
   });
 
   it(`GET /tokens`, async () => {
