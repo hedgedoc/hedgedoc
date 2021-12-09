@@ -56,7 +56,7 @@ export class TestSetup {
 
   users: User[] = [];
 
-  public static async create(): Promise<TestSetup> {
+  public static async create(withMockAuth = true): Promise<TestSetup> {
     const testSetup = new TestSetup();
     const routes: Routes = [
       {
@@ -69,7 +69,7 @@ export class TestSetup {
       },
     ];
 
-    testSetup.moduleRef = await Test.createTestingModule({
+    const testingModule = await Test.createTestingModule({
       imports: [
         RouterModule.forRoutes(routes),
         TypeOrmModule.forRoot({
@@ -105,10 +105,13 @@ export class TestSetup {
         FrontendConfigModule,
         IdentityModule,
       ],
-    })
-      .overrideGuard(TokenAuthGuard)
-      .useClass(MockAuthGuard)
-      .compile();
+    });
+
+    if (withMockAuth) {
+      testingModule.overrideGuard(TokenAuthGuard).useClass(MockAuthGuard);
+    }
+
+    testSetup.moduleRef = await testingModule.compile();
 
     testSetup.userService = testSetup.moduleRef.get<UsersService>(UsersService);
     testSetup.configService =
