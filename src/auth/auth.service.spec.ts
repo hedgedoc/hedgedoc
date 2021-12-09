@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import crypto from 'crypto';
 import { Repository } from 'typeorm';
 
 import appConfigMock from '../config/mock/app.config.mock';
@@ -86,7 +87,10 @@ describe('AuthService', () => {
   describe('getAuthToken', () => {
     const token = 'testToken';
     it('works', async () => {
-      const accessTokenHash = await hashPassword(token);
+      const accessTokenHash = crypto
+        .createHash('sha512')
+        .update(token)
+        .digest('hex');
       jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
         ...authToken,
         user: user,
@@ -162,8 +166,12 @@ describe('AuthService', () => {
 
   describe('validateToken', () => {
     it('works', async () => {
-      const token = 'testToken';
-      const accessTokenHash = await hashPassword(token);
+      const testSecret =
+        'gNrv_NJ4FHZ0UFZJQu_q_3i3-GP_d6tELVtkYiMFLkLWNl_dxEmPVAsCNKxP3N3DB9aGBVFYE1iptvw7hFMJvA';
+      const accessTokenHash = crypto
+        .createHash('sha512')
+        .update(testSecret)
+        .digest('hex');
       jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce({
         ...user,
         authTokens: [authToken],
@@ -179,7 +187,7 @@ describe('AuthService', () => {
           return authToken;
         });
       const userByToken = await service.validateToken(
-        `${authToken.keyId}.${token}`,
+        `${authToken.keyId}.${testSecret}`,
       );
       expect(userByToken).toEqual({
         ...user,
