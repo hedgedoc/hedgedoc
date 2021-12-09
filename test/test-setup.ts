@@ -11,7 +11,9 @@ import { RouterModule, Routes } from 'nest-router';
 
 import { PrivateApiModule } from '../src/api/private/private-api.module';
 import { PublicApiModule } from '../src/api/public/public-api.module';
+import { AuthTokenWithSecretDto } from '../src/auth/auth-token-with-secret.dto';
 import { AuthModule } from '../src/auth/auth.module';
+import { AuthService } from '../src/auth/auth.service';
 import { MockAuthGuard } from '../src/auth/mock-auth.guard';
 import { TokenAuthGuard } from '../src/auth/token.strategy';
 import { AuthorsModule } from '../src/authors/authors.module';
@@ -53,8 +55,10 @@ export class TestSetup {
   mediaService: MediaService;
   historyService: HistoryService;
   aliasService: AliasService;
+  authService: AuthService;
 
   users: User[] = [];
+  authTokens: AuthTokenWithSecretDto[] = [];
 
   public static async create(withMockAuth = true): Promise<TestSetup> {
     const testSetup = new TestSetup();
@@ -69,7 +73,7 @@ export class TestSetup {
       },
     ];
 
-    const testingModule = await Test.createTestingModule({
+    const testingModule = Test.createTestingModule({
       imports: [
         RouterModule.forRoutes(routes),
         TypeOrmModule.forRoot({
@@ -126,6 +130,7 @@ export class TestSetup {
       testSetup.moduleRef.get<HistoryService>(HistoryService);
     testSetup.aliasService =
       testSetup.moduleRef.get<AliasService>(AliasService);
+    testSetup.authService = testSetup.moduleRef.get<AuthService>(AuthService);
 
     testSetup.app = testSetup.moduleRef.createNestApplication();
 
@@ -153,6 +158,17 @@ export class TestSetup {
     await this.identityService.createLocalIdentity(this.users[0], 'testuser1');
     await this.identityService.createLocalIdentity(this.users[1], 'testuser2');
     await this.identityService.createLocalIdentity(this.users[2], 'testuser3');
+
+    // create auth tokens
+    this.authTokens = await Promise.all(
+      this.users.map(async (user) => {
+        return await this.authService.createTokenForUser(
+          user,
+          'test',
+          new Date().getTime() + 60 * 60 * 1000,
+        );
+      }),
+    );
 
     return this;
   }
