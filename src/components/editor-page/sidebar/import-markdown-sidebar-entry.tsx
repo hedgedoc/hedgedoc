@@ -43,7 +43,7 @@ export const ImportMarkdownSidebarEntry: React.FC = () => {
 
   return (
     <Fragment>
-      <SidebarButton {...cypressId('menu-import-markdown')} icon={'file-text-o'} onClick={buttonClick}>
+      <SidebarButton {...cypressId('menu-import-markdown-button')} icon={'file-text-o'} onClick={buttonClick}>
         <Trans i18nKey={'editor.import.file'} />
       </SidebarButton>
       <UploadInput

@@ -21,11 +21,12 @@ export interface UploadInputProps extends PropsWithDataCypressId {
 export const UploadInput: React.FC<UploadInputProps> = ({ onLoad, acceptedFiles, onClickRef, ...props }) => {
   const fileInputReference = useRef<HTMLInputElement>(null)
   const onClick = useCallback(() => {
-    const fileInput = fileInputReference.current
-    if (!fileInput) {
-      return
-    }
-    fileInput.addEventListener('change', () => {
+    fileInputReference.current?.click()
+  }, [])
+
+  const onChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
+    (event) => {
+      const fileInput = event.currentTarget
       if (!fileInput.files || fileInput.files.length < 1) {
         return
       }
@@ -37,13 +38,22 @@ export const UploadInput: React.FC<UploadInputProps> = ({ onLoad, acceptedFiles,
         .catch((error: Error) => {
           log.error('Error while uploading file', error)
         })
-    })
-    fileInput.click()
-  }, [onLoad])
+    },
+    [onLoad]
+  )
 
   useEffect(() => {
     onClickRef.current = onClick
   })
 
-  return <input {...cypressId(props)} type='file' ref={fileInputReference} className='d-none' accept={acceptedFiles} />
+  return (
+    <input
+      {...cypressId(props)}
+      onChange={onChange}
+      type='file'
+      ref={fileInputReference}
+      className='d-none'
+      accept={acceptedFiles}
+    />
+  )
 }
