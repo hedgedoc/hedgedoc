@@ -7271,10 +7271,10 @@ find-up@^3.0.0:
   dependencies:
     locate-path "^3.0.0"
 
-firacode@6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/firacode/-/firacode-6.1.0.tgz#c472770e67dde3c3ee78d4c621e26b4431cc8e9a"
-  integrity sha512-nwT6/cQyZG80CD3LsJXHrsERf4rPTe4vjlzEB5s+V3bFdMJN25bGe+wyg3YGGo/LXpLtQhEpZ4Lz/89ktsRbHg==
+firacode@6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/firacode/-/firacode-6.2.0.tgz#d9fcbf7cb8589b6df56b59edddcde640c7f68ab9"
+  integrity sha512-t5R3aO2BmhRXnYtKXbImLVNsILuCIbJ/XlDzBufjpi3il8P/CVdpWco83Ud3r2Tl0gitAmyP4o1fbJ52ozV1jw==
 
 flat-cache@^3.0.4:
   version "3.0.4"
