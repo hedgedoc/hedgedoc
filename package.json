@@ -185,7 +185,7 @@
     "react-use": "17.3.1",
     "redux": "4.1.2",
     "redux-devtools-extension": "2.13.9",
-    "reveal.js": "4.2.0",
+    "reveal.js": "4.2.1",
     "sanitize-filename": "1.6.3",
     "sass": "1.44.0",
     "ts-loader": "9.2.6",
