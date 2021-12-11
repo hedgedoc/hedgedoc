@@ -34,6 +34,9 @@
         },
         "clickShield": {
           "previewHoverText": "Click to load content from {{target}}"
+        },
+        "uploadIndicator": {
+          "uploadMessage": "Uploading file"
         }
     },
     "landing": {
@@ -202,8 +205,12 @@
     },
     "editor": {
         "upload": {
-            "uploadFile": "Uploading file...{{fileName}}",
-            "dropImage": "Drop Image to insert"
+            "uploadFile": {
+              "withoutDescription": "Uploading file {{fileName}}",
+              "withDescription": "Uploading file {{fileName}} - {{description}}"
+            },
+            "dropImage": "Drop Image to insert",
+            "failed": "Error while uploading {{fileName}}"
         },
         "untitledNote": "Untitled",
         "placeholder": "← Start by entering a title here\n===\nVisit the features page if you don't know what to do.\nHappy hacking :)",
@@ -451,7 +458,11 @@
             }
         },
         "embeddings": {
-            "clickToLoad": "Click to load"
+            "clickToLoad": "Click to load",
+            "placeholderImage": {
+                "placeholderText": "Placeholder",
+                "upload": "Upload image"
+            }
         }
     },
     "views": {

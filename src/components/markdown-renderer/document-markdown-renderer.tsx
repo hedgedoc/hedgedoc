@@ -46,7 +46,7 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
     baseUrl,
     currentLineMarkers,
     useMemo(() => [new HeadlineAnchorsMarkdownExtension()], []),
-    lineOffset,
+    lineOffset ?? 0,
     onTaskCheckedChange,
     onImageClick,
     onTocChange

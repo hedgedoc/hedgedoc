@@ -23,10 +23,11 @@ import { useOnEditorScroll } from './hooks/use-on-editor-scroll'
 import { useApplyScrollState } from './hooks/use-apply-scroll-state'
 import { MaxLengthWarning } from './max-length-warning/max-length-warning'
 import { useCreateStatusBarInfo } from './hooks/use-create-status-bar-info'
+import { useOnImageUploadFromRenderer } from './hooks/use-on-image-upload-from-renderer'
 
 const onChange = (editor: Editor) => {
+  const searchTerm = findWordAtCursor(editor)
   for (const hinter of allHinters) {
-    const searchTerm = findWordAtCursor(editor)
     if (hinter.wordRegExp.test(searchTerm.text)) {
       editor.showHint({
         hint: hinter.hint,
@@ -54,6 +55,8 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
   }, [])
 
   const [statusBarInfo, updateStatusBarInfo] = useCreateStatusBarInfo()
+
+  useOnImageUploadFromRenderer(editor)
 
   const onEditorDidMount = useCallback(
     (mountedEditor: Editor) => {

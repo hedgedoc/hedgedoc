@@ -19,7 +19,8 @@ export enum CommunicationMessageType {
   SET_BASE_CONFIGURATION = 'SET_BASE_CONFIGURATION',
   GET_WORD_COUNT = 'GET_WORD_COUNT',
   ON_WORD_COUNT_CALCULATED = 'ON_WORD_COUNT_CALCULATED',
-  SET_FRONTMATTER_INFO = 'SET_FRONTMATTER_INFO'
+  SET_FRONTMATTER_INFO = 'SET_FRONTMATTER_INFO',
+  IMAGE_UPLOAD = 'IMAGE_UPLOAD'
 }
 
 export interface NoPayloadMessage {
@@ -35,6 +36,14 @@ export interface ImageDetails {
   alt?: string
   src: string
   title?: string
+}
+
+export interface ImageUploadMessage {
+  type: CommunicationMessageType.IMAGE_UPLOAD
+  dataUri: string
+  fileName: string
+  lineIndex?: number
+  placeholderIndexInLine?: number
 }
 
 export interface SetBaseUrlMessage {
@@ -100,6 +109,7 @@ export type CommunicationMessages =
   | SetFrontmatterInfoMessage
   | OnHeightChangeMessage
   | OnWordCountCalculatedMessage
+  | ImageUploadMessage
 
 export type EditorToRendererMessageType =
   | CommunicationMessageType.SET_MARKDOWN_CONTENT
@@ -118,6 +128,7 @@ export type RendererToEditorMessageType =
   | CommunicationMessageType.IMAGE_CLICKED
   | CommunicationMessageType.ON_HEIGHT_CHANGE
   | CommunicationMessageType.ON_WORD_COUNT_CALCULATED
+  | CommunicationMessageType.IMAGE_UPLOAD
 
 export enum RendererType {
   DOCUMENT = 'document',

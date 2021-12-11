@@ -11,7 +11,8 @@ export enum NoteDetailsActionType {
   SET_DOCUMENT_CONTENT = 'note-details/content/set',
   SET_NOTE_DATA_FROM_SERVER = 'note-details/data/server/set',
   UPDATE_NOTE_TITLE_BY_FIRST_HEADING = 'note-details/update-note-title-by-first-heading',
-  UPDATE_TASK_LIST_CHECKBOX = 'note-details/update-task-list-checkbox'
+  UPDATE_TASK_LIST_CHECKBOX = 'note-details/update-task-list-checkbox',
+  REPLACE_IN_MARKDOWN_CONTENT = 'note-details/replace-in-markdown-content'
 }
 
 export type NoteDetailsActions =
@@ -19,6 +20,7 @@ export type NoteDetailsActions =
   | SetNoteDetailsFromServerAction
   | UpdateNoteTitleByFirstHeadingAction
   | UpdateTaskListCheckboxAction
+  | ReplaceInMarkdownContentAction
 
 /**
  * Action for updating the document content of the currently loaded note.
@@ -51,4 +53,10 @@ export interface UpdateTaskListCheckboxAction extends Action<NoteDetailsActionTy
   type: NoteDetailsActionType.UPDATE_TASK_LIST_CHECKBOX
   changedLine: number
   checkboxChecked: boolean
+}
+
+export interface ReplaceInMarkdownContentAction extends Action<NoteDetailsActionType> {
+  type: NoteDetailsActionType.REPLACE_IN_MARKDOWN_CONTENT
+  placeholder: string
+  replacement: string
 }

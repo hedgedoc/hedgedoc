@@ -28,9 +28,27 @@ export const NoteDetailsReducer: Reducer<NoteDetails, NoteDetailsActions> = (
       return buildStateFromServerDto(action.dto)
     case NoteDetailsActionType.UPDATE_TASK_LIST_CHECKBOX:
       return buildStateFromTaskListUpdate(state, action.changedLine, action.checkboxChecked)
+    case NoteDetailsActionType.REPLACE_IN_MARKDOWN_CONTENT:
+      return buildStateFromDocumentContentReplacement(state, action.placeholder, action.replacement)
     default:
       return state
   }
+}
+
+/**
+ * Builds a {@link NoteDetails} redux state with a modified markdown content.
+ *
+ * @param state The previous redux state
+ * @param replaceable The string that should be replaced in the old markdown content
+ * @param replacement The string that should replace the replaceable
+ * @return An updated {@link NoteDetails} redux state
+ */
+const buildStateFromDocumentContentReplacement = (
+  state: NoteDetails,
+  replaceable: string,
+  replacement: string
+): NoteDetails => {
+  return buildStateFromMarkdownContentUpdate(state, state.markdownContent.replaceAll(replaceable, replacement))
 }
 
 /**

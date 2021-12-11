@@ -78,6 +78,8 @@ export const useConvertMarkdownToReactDom = (
   return useMemo(() => {
     const html = markdownIt.render(markdownCode)
 
+    htmlToReactTransformer.resetReplacers()
+
     return convertHtmlToReact(html, {
       transform: (node, index) => htmlToReactTransformer.translateNodeToReactElement(node, index),
       preprocessNodes: (document) => nodePreProcessor(document)

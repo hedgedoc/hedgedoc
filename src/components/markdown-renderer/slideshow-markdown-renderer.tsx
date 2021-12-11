@@ -45,7 +45,7 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
     baseUrl,
     undefined,
     useMemo(() => [new RevealMarkdownExtension()], []),
-    lineOffset,
+    lineOffset ?? 0,
     onTaskCheckedChange,
     onImageClick,
     onTocChange

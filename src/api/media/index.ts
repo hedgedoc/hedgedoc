@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { isMockMode } from '../../utils/test-modes'
+import { isMockMode, isTestMode } from '../../utils/test-modes'
 import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 
 export interface ImageProxyResponse {
@@ -37,6 +37,13 @@ export const uploadFile = async (noteId: string, media: Blob): Promise<UploadedM
     method: isMockMode() ? 'GET' : 'POST',
     body: isMockMode() ? undefined : media
   })
+
+  if (isMockMode() && !isTestMode()) {
+    await new Promise((resolve) => {
+      setTimeout(resolve, 3000)
+    })
+  }
+
   expectResponseCode(response, isMockMode() ? 200 : 201)
   return (await response.json()) as Promise<UploadedMedia>
 }

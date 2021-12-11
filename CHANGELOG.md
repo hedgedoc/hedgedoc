@@ -74,6 +74,8 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - The history page supports URL parameters that allow bookmarking of a specific search of tags filter.
 - Users can change the pinning state of a note directly from the editor.
 - Note information dialog containing word count, revision count, last editor and creation time.
+- Image tags with placeholder urls (`https://`) will be replaced with a placeholder frame.
+- Images that are currently uploading will be rendered as "uploading".
 
 ### Changed
 

@@ -18,3 +18,5 @@ export const supportedMimeTypes: string[] = [
   'image/tiff',
   'image/webp'
 ]
+
+export const acceptedMimeTypes = supportedMimeTypes.join(', ')

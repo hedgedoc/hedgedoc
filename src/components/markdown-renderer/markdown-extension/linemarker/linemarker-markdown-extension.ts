@@ -17,7 +17,7 @@ import type MarkdownIt from 'markdown-it'
 export class LinemarkerMarkdownExtension extends MarkdownExtension {
   public static readonly tagName = 'app-linemarker'
 
-  constructor(private onLineMarkers?: (lineMarkers: LineMarkers[]) => void, private lineOffset?: number) {
+  constructor(private lineOffset: number, private onLineMarkers?: (lineMarkers: LineMarkers[]) => void) {
     super()
   }
 

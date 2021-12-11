@@ -50,6 +50,13 @@ export abstract class ComponentReplacer {
   }
 
   /**
+   * Should be used to reset the replacers internal state before rendering.
+   */
+  public reset(): void {
+    // left blank for overrides
+  }
+
+  /**
    * Checks if the current node should be altered or replaced and does if needed.
    *
    * @param node The current html dom node

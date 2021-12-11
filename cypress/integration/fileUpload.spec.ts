@@ -42,7 +42,7 @@ describe('File upload', () => {
     it('via button', () => {
       cy.getById('editor-toolbar-upload-image-button').click()
       cy.getById('editor-toolbar-upload-image-input').attachFile({ filePath: 'demo.png', mimeType: 'image/png' })
-      cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `![](${imageUrl})`)
+      cy.get('.CodeMirror-activeline').contains(`![](${imageUrl})`)
     })
 
     it('via paste', () => {
@@ -54,7 +54,7 @@ describe('File upload', () => {
           }
         }
         cy.get('.CodeMirror-scroll').trigger('paste', pasteEvent)
-        cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `![](${imageUrl})`)
+        cy.get('.CodeMirror-activeline').contains(`![](${imageUrl})`)
       })
     })
 
@@ -68,7 +68,7 @@ describe('File upload', () => {
         }
         cy.get('.CodeMirror-scroll').trigger('dragenter', dropEvent)
         cy.get('.CodeMirror-scroll').trigger('drop', dropEvent)
-        cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `![](${imageUrl})`)
+        cy.get('.CodeMirror-activeline').contains(`![](${imageUrl})`)
       })
     })
   })
@@ -87,7 +87,7 @@ describe('File upload', () => {
     cy.fixture('demo.png').then(() => {
       cy.getById('editor-toolbar-upload-image-input').attachFile({ filePath: 'demo.png', mimeType: 'image/png' })
     })
-    cy.get('.CodeMirror-activeline > .CodeMirror-line > span > span').should('have.text', String.fromCharCode(8203)) //thanks codemirror....
+    cy.get('.CodeMirror-activeline').contains('![upload of demo.png failed]()')
   })
 
   it('lets text paste still work', () => {
@@ -98,6 +98,6 @@ describe('File upload', () => {
       }
     }
     cy.get('.CodeMirror-scroll').trigger('paste', pasteEvent)
-    cy.get('.CodeMirror-activeline > .CodeMirror-line > span').should('have.text', `${testText}`)
+    cy.get('.CodeMirror-activeline').contains(`${testText}`)
   })
 })

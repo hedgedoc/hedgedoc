@@ -32,6 +32,13 @@ export class NodeToReactTransformer {
   }
 
   /**
+   * Resets all replacers before rendering.
+   */
+  public resetReplacers(): void {
+    this.replacers.forEach((replacer) => replacer.reset())
+  }
+
+  /**
    * Converts the given {@link Node} to a react element.
    *
    * @param node The {@link Node DOM node} that should be translated.
