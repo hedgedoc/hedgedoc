@@ -24,7 +24,7 @@ export const DocumentReadOnlyPageContent: React.FC = () => {
   return (
     <Fragment>
       <DocumentInfobar
-        changedAuthor={noteDetails.lastChange.userName ?? ''}
+        changedAuthor={noteDetails.lastChange.username ?? ''}
         changedTime={noteDetails.lastChange.timestamp}
         createdAuthor={'Test'}
         createdTime={noteDetails.createTime}

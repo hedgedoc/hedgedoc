@@ -3,62 +3,31 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { RegisterError } from '../../components/register-page/register-page'
 import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 
-export const INTERACTIVE_LOGIN_METHODS = ['internal', 'ldap', 'openid']
+export const INTERACTIVE_LOGIN_METHODS = ['local', 'ldap']
 
-export const doInternalLogin = async (username: string, password: string): Promise<void> => {
-  const response = await fetch(getApiUrl() + 'auth/internal', {
-    ...defaultFetchConfig,
-    method: 'POST',
-    body: JSON.stringify({
-      username: username,
-      password: password
-    })
-  })
-
-  expectResponseCode(response)
+export enum AuthError {
+  INVALID_CREDENTIALS = 'invalidCredentials',
+  LOGIN_DISABLED = 'loginDisabled',
+  OPENID_ERROR = 'openIdError',
+  OTHER = 'other'
 }
 
-export const doInternalRegister = async (username: string, password: string): Promise<void> => {
-  const response = await fetch(getApiUrl() + 'auth/register', {
-    ...defaultFetchConfig,
-    method: 'POST',
-    body: JSON.stringify({
-      username: username,
-      password: password
-    })
-  })
-
-  if (response.status === 409) {
-    throw new Error(RegisterError.USERNAME_EXISTING)
-  }
-
-  expectResponseCode(response)
+export enum RegisterError {
+  USERNAME_EXISTING = 'usernameExisting',
+  REGISTRATION_DISABLED = 'registrationDisabled',
+  OTHER = 'other'
 }
 
-export const doLdapLogin = async (username: string, password: string): Promise<void> => {
-  const response = await fetch(getApiUrl() + 'auth/ldap', {
+/**
+ * Requests to logout the current user.
+ * @throws Error if logout is not possible.
+ */
+export const doLogout = async (): Promise<void> => {
+  const response = await fetch(getApiUrl() + 'auth/logout', {
     ...defaultFetchConfig,
-    method: 'POST',
-    body: JSON.stringify({
-      username: username,
-      password: password
-    })
-  })
-
-  expectResponseCode(response)
-}
-
-export const doOpenIdLogin = async (openId: string): Promise<void> => {
-  const response = await fetch(getApiUrl() + 'auth/openid', {
-    ...defaultFetchConfig,
-    method: 'POST',
-    body: JSON.stringify({
-      openId: openId
-    })
+    method: 'DELETE'
   })
 
   expectResponseCode(response)

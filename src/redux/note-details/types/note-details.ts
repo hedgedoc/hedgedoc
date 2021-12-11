@@ -19,7 +19,7 @@ export interface NoteDetails {
   id: string
   createTime: DateTime
   lastChange: {
-    userName: string
+    username: string
     timestamp: DateTime
   }
   viewCount: number

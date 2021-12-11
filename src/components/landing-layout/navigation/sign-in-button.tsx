@@ -10,15 +10,16 @@ import type { ButtonProps } from 'react-bootstrap/Button'
 import { Trans, useTranslation } from 'react-i18next'
 import { LinkContainer } from 'react-router-bootstrap'
 import { ShowIf } from '../../common/show-if/show-if'
-import { getApiUrl } from '../../../api/utils'
 import { INTERACTIVE_LOGIN_METHODS } from '../../../api/auth'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { cypressId } from '../../../utils/cypress-attribute'
+import { useBackendBaseUrl } from '../../../hooks/common/use-backend-base-url'
 
 export type SignInButtonProps = Omit<ButtonProps, 'href'>
 
 export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props }) => {
   const { t } = useTranslation()
+  const backendBaseUrl = useBackendBaseUrl()
   const authProviders = useApplicationState((state) => state.config.authProviders)
   const authEnabled = useMemo(() => Object.values(authProviders).includes(true), [authProviders])
 
@@ -29,10 +30,10 @@ export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props })
     const activeOneClickProviders = activeProviders.filter((entry) => !INTERACTIVE_LOGIN_METHODS.includes(entry))
 
     if (activeProviders.length === 1 && activeOneClickProviders.length === 1) {
-      return `${getApiUrl()}auth/${activeOneClickProviders[0]}`
+      return `${backendBaseUrl}auth/${activeOneClickProviders[0]}`
     }
     return '/login'
-  }, [authProviders])
+  }, [authProviders, backendBaseUrl])
 
   return (
     <ShowIf condition={authEnabled}>

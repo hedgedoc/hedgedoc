@@ -1,7 +1,6 @@
 {
-    "id": "mockUser",
+    "username": "mockUser",
     "photo": "/mock-backend/public/img/avatar.png",
-    "name": "Test",
-    "status": "ok",
-    "provider": "internal"
+    "displayName": "Test",
+    "email": "mock@hedgedoc.dev"
 }

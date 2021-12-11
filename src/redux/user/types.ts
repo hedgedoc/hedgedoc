@@ -23,8 +23,9 @@ export interface ClearUserAction extends Action<UserActionType> {
 }
 
 export interface UserState {
-  id: string
-  name: string
+  username: string
+  displayName: string
+  email: string
   photo: string
   provider: LoginProvider
 }
@@ -38,9 +39,8 @@ export enum LoginProvider {
   GOOGLE = 'google',
   SAML = 'saml',
   OAUTH2 = 'oauth2',
-  INTERNAL = 'internal',
-  LDAP = 'ldap',
-  OPENID = 'openid'
+  LOCAL = 'local',
+  LDAP = 'ldap'
 }
 
 export type OptionalUserState = UserState | null

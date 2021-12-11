@@ -8,11 +8,11 @@ import React from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { LinkContainer } from 'react-router-bootstrap'
-import { clearUser } from '../../../redux/user/methods'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { UserAvatar } from '../../common/user-avatar/user-avatar'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { cypressId } from '../../../utils/cypress-attribute'
+import { SignOutDropdownButton } from './sign-out-dropdown-button'
 
 export const UserDropdown: React.FC = () => {
   useTranslation()
@@ -25,7 +25,7 @@ export const UserDropdown: React.FC = () => {
   return (
     <Dropdown alignRight>
       <Dropdown.Toggle size='sm' variant='dark' {...cypressId('user-dropdown')} className={'d-flex align-items-center'}>
-        <UserAvatar name={user.name} photo={user.photo} />
+        <UserAvatar name={user.displayName} photo={user.photo} />
       </Dropdown.Toggle>
 
       <Dropdown.Menu className='text-start'>
@@ -41,15 +41,7 @@ export const UserDropdown: React.FC = () => {
             <Trans i18nKey='profile.userProfile' />
           </Dropdown.Item>
         </LinkContainer>
-        <Dropdown.Item
-          dir='auto'
-          onClick={() => {
-            clearUser()
-          }}
-          {...cypressId('user-dropdown-sign-out-button')}>
-          <ForkAwesomeIcon icon='sign-out' fixedWidth={true} className='mx-2' />
-          <Trans i18nKey='login.signOut' />
-        </Dropdown.Item>
+        <SignOutDropdownButton />
       </Dropdown.Menu>
     </Dropdown>
   )

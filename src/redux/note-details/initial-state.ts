@@ -6,8 +6,8 @@
 
 import { DateTime } from 'luxon'
 import type { NoteDetails } from './types/note-details'
-import type { SlideOptions } from './types/slide-show-options'
 import { NoteTextDirection, NoteType } from './types/note-details'
+import type { SlideOptions } from './types/slide-show-options'
 
 export const initialSlideOptions: SlideOptions = {
   transition: 'zoom',
@@ -30,7 +30,7 @@ export const initialState: NoteDetails = {
   createTime: DateTime.fromSeconds(0),
   lastChange: {
     timestamp: DateTime.fromSeconds(0),
-    userName: ''
+    username: ''
   },
   alias: '',
   viewCount: 0,

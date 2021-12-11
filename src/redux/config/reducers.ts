@@ -22,8 +22,7 @@ export const initialState: Config = {
     google: false,
     saml: false,
     oauth2: false,
-    internal: false,
-    openid: false
+    local: false
   },
   branding: {
     name: '',

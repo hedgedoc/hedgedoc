@@ -182,7 +182,7 @@ const convertNoteDtoToNoteDetails = (note: NoteDto): NoteDetails => {
     noteTitle: initialState.noteTitle,
     createTime: DateTime.fromISO(note.metadata.createTime),
     lastChange: {
-      userName: note.metadata.updateUser.userName,
+      username: note.metadata.updateUser.username,
       timestamp: DateTime.fromISO(note.metadata.updateTime)
     },
     firstHeading: initialState.firstHeading,

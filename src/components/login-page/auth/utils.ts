@@ -6,13 +6,22 @@
 
 import { getMe } from '../../../api/me'
 import { setUser } from '../../../redux/user/methods'
+import { LoginProvider } from '../../../redux/user/types'
 
+/**
+ * Fetches metadata about the currently signed-in user from the API and stores it into the redux.
+ */
 export const fetchAndSetUser: () => Promise<void> = async () => {
-  const me = await getMe()
-  setUser({
-    id: me.id,
-    name: me.name,
-    photo: me.photo,
-    provider: me.provider
-  })
+  try {
+    const me = await getMe()
+    setUser({
+      username: me.username,
+      displayName: me.displayName,
+      photo: me.photo,
+      provider: LoginProvider.LOCAL, // TODO Use real provider instead
+      email: me.email
+    })
+  } catch (error) {
+    console.error(error)
+  }
 }

@@ -28,7 +28,7 @@ const allSupportedLinks = [
 
 const getUserName = (): string => {
   const user = store.getState().user
-  return user ? user.name : 'Anonymous'
+  return user ? user.displayName : 'Anonymous'
 }
 
 const linkAndExtraTagHint = (editor: Editor): Promise<Hints | null> => {

@@ -14,7 +14,7 @@ export interface UserResponse {
 }
 
 export interface UserInfoDto {
-  userName: string
+  username: string
   displayName: string
   photo: string
   email: string
