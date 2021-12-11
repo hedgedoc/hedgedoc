@@ -4428,14 +4428,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-type@npm:16.5.3":
-  version: 16.5.3
-  resolution: "file-type@npm:16.5.3"
+"file-type@npm:17.0.0":
+  version: 17.0.0
+  resolution: "file-type@npm:17.0.0"
   dependencies:
-    readable-web-to-node-stream: ^3.0.0
-    strtok3: ^6.2.4
+    readable-web-to-node-stream: ^3.0.2
+    strtok3: 7.0.0-alpha.4
     token-types: ^4.1.1
-  checksum: 38a4443d0f7b9b3de8a44a1d75d441f9ddb544a1adbf22ec7bc07d135452c3464000c64daa51220ffec6a38ceec7565a1290337bd81aab2e6273c79db5ed9ef3
+  checksum: dcdf60b96bf59caf7aed05cb345abd69d7644b97072ec1cf03912bcac55c2d7c98c9e85909b9b6678a3617816bfba9a5a1e21be4413504fc0e0ce0e0eb2cc15d
   languageName: node
   linkType: hard
 
@@ -5000,7 +5000,7 @@ __metadata:
     eslint-plugin-local-rules: 1.1.0
     eslint-plugin-prettier: 4.0.0
     express-session: 1.17.2
-    file-type: 16.5.3
+    file-type: 17.0.0
     http-proxy-middleware: 2.0.1
     jest: 27.4.4
     joi: 17.5.0
@@ -7665,10 +7665,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"peek-readable@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "peek-readable@npm:4.0.1"
-  checksum: aed788748585fe2dc55ac8a1ea4dd75b9f30c71a790bbd53f785aab757e6b765a6b6a4b19343242f24fdfc416a81d5ec40635ead75379b94af5b0e9d647d087d
+"peek-readable@npm:^5.0.0-alpha.4":
+  version: 5.0.0-alpha.4
+  resolution: "peek-readable@npm:5.0.0-alpha.4"
+  checksum: acd539347cbb89e5bc76400262815bfa85be09dfe64001587af2015abecd703c22ede9a7364843d4822cb962e48266009a3fec5111e2da18f4e849f4f18abd9c
   languageName: node
   linkType: hard
 
@@ -7996,7 +7996,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"readable-web-to-node-stream@npm:^3.0.0":
+"readable-web-to-node-stream@npm:^3.0.2":
   version: 3.0.2
   resolution: "readable-web-to-node-stream@npm:3.0.2"
   dependencies:
@@ -8741,13 +8741,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strtok3@npm:^6.2.4":
-  version: 6.2.4
-  resolution: "strtok3@npm:6.2.4"
+"strtok3@npm:7.0.0-alpha.4":
+  version: 7.0.0-alpha.4
+  resolution: "strtok3@npm:7.0.0-alpha.4"
   dependencies:
     "@tokenizer/token": ^0.3.0
-    peek-readable: ^4.0.1
-  checksum: 327b48a79d464542e9ae922c1af3aacc6e6673be31442ab82648ee4afa8cf67f23b426d3e6e77a496ff6e0c9ddc009d9242a224ee05186a100325b633759d0ec
+    peek-readable: ^5.0.0-alpha.4
+  checksum: 6015599d8b02c9dfe5cabb91442008831d8f0219e9fef0ad898b81ede8ce8233c1fa463f79aa24e1690f3e9b4c236c0a039ad1ee69edc9623c1a2b6f535c4782
   languageName: node
   linkType: hard
 

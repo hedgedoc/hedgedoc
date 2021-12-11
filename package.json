@@ -45,7 +45,7 @@
     "cli-color": "2.0.1",
     "connect-typeorm": "1.1.4",
     "express-session": "1.17.2",
-    "file-type": "16.5.3",
+    "file-type": "17.0.0",
     "joi": "17.5.0",
     "minio": "7.0.23",
     "nest-router": "1.0.9",
