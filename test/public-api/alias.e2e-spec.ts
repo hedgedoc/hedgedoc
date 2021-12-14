@@ -86,6 +86,14 @@ describe('Alias', () => {
           .send(newAliasDto)
           .expect(400);
       });
+      it('because the user is not an owner', async () => {
+        await request(testSetup.app.getHttpServer())
+          .post(`/api/v2/alias`)
+          .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
+          .set('Content-Type', 'application/json')
+          .send(newAliasDto)
+          .expect(401);
+      });
     });
   });
 
@@ -137,6 +145,22 @@ describe('Alias', () => {
           .send(changeAliasDto)
           .expect(404);
       });
+      it('a note with a forbidden id', async () => {
+        await request(testSetup.app.getHttpServer())
+          .put(`/api/v2/alias/${forbiddenNoteId}`)
+          .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+          .set('Content-Type', 'application/json')
+          .send(changeAliasDto)
+          .expect(400);
+      });
+      it('if the user is not an owner', async () => {
+        await request(testSetup.app.getHttpServer())
+          .put(`/api/v2/alias/${newAlias}`)
+          .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
+          .set('Content-Type', 'application/json')
+          .send(changeAliasDto)
+          .expect(401);
+      });
       it('if the property primaryAlias is false', async () => {
         changeAliasDto.primaryAlias = false;
 
@@ -179,6 +203,20 @@ describe('Alias', () => {
         .delete(`/api/v2/alias/i_dont_exist`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(404);
+    });
+
+    it('errors on forbidden notes', async () => {
+      await request(testSetup.app.getHttpServer())
+        .delete(`/api/v2/alias/${forbiddenNoteId}`)
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+        .expect(400);
+    });
+
+    it('errors if the user is not the owner', async () => {
+      await request(testSetup.app.getHttpServer())
+        .delete(`/api/v2/alias/${testAlias}`)
+        .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
+        .expect(401);
     });
 
     it('does not delete a primary alias (if it is not the only one)', async () => {
