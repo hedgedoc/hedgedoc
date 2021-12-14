@@ -25,18 +25,9 @@
 
 2. Enter the directory and run `yarn install`.
 
-## Running the Code
+## Running Hedgedoc with auto-reload
 
-Now that everything is in place, we can start HedgeDoc:
-
-**ToDo:** Document how to build the frontend and backend or remove this paragraph entirely.
-
-## Running the Code with Auto-Reload
-
-The commands above are fine for production, but you're a developer and surely
-you want to change things. You would need to restart both commands whenever you
-change something. Luckily, you can run these commands that will automatically
-rebuild the backend andfrontend or restart the server if necessary.
+We will run Hedgedoc in development mode, which means the backend and frontend will automatically rebuild or restart when you make changes.
 
 The commands will stay active in your terminal, so you will need multiple tabs
 to run both at the same time.
