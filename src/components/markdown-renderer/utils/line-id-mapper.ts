@@ -23,12 +23,11 @@ export class LineIdMapper {
    * Calculates a line id mapping for the given line based text by creating a diff
    * with the last lines code.
    *
-   * @param newText The new text for which the line ids should be calculated
+   * @param newMarkdownContentLines The markdown content for which the line ids should be calculated
    * @return the calculated {@link LineWithId lines with unique ids}
    */
-  public updateLineMapping(newText: string): LineWithId[] {
-    const lines = newText.split('\n')
-    const lineDifferences = this.diffNewLinesWithLastLineKeys(lines)
+  public updateLineMapping(newMarkdownContentLines: string[]): LineWithId[] {
+    const lineDifferences = this.diffNewLinesWithLastLineKeys(newMarkdownContentLines)
     const newLineKeys = this.convertChangesToLinesWithIds(lineDifferences)
     this.lastLines = newLineKeys
     return newLineKeys

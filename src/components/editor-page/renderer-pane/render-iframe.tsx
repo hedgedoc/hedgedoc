@@ -37,7 +37,7 @@ export interface RenderIframeProps extends RendererProps {
 const log = new Logger('RenderIframe')
 
 export const RenderIframe: React.FC<RenderIframeProps> = ({
-  markdownContent,
+  markdownContentLines,
   onTaskCheckedChange,
   scrollState,
   onFirstHeadingChange,
@@ -133,7 +133,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   useEffectOnRenderTypeChange(rendererType, onIframeLoad)
   useSendScrollState(scrollState)
   useSendDarkModeStatusToRenderer(forcedDarkMode)
-  useSendMarkdownToRenderer(markdownContent)
+  useSendMarkdownToRenderer(markdownContentLines)
 
   return (
     <Fragment>

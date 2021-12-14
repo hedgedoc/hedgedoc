@@ -13,6 +13,7 @@ import type { ISO6391 } from './iso6391'
  */
 export interface NoteDetails {
   markdownContent: string
+  markdownContentLines: string[]
   rawFrontmatter: string
   frontmatter: NoteFrontmatter
   frontmatterRendererInfo: RendererFrontmatterInfo

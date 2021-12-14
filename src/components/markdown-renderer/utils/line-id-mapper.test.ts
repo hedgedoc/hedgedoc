@@ -14,8 +14,8 @@ describe('line id mapper', () => {
   })
 
   it('should be case sensitive', () => {
-    lineIdMapper.updateLineMapping('this\nis\ntext')
-    expect(lineIdMapper.updateLineMapping('this\nis\nText')).toEqual([
+    lineIdMapper.updateLineMapping(['this', 'is', 'text'])
+    expect(lineIdMapper.updateLineMapping(['this', 'is', 'Text'])).toEqual([
       {
         line: 'this',
         id: 1
@@ -32,8 +32,8 @@ describe('line id mapper', () => {
   })
 
   it('should not update line ids of shifted lines', () => {
-    lineIdMapper.updateLineMapping('this\nis\ntext')
-    expect(lineIdMapper.updateLineMapping('this\nis\nmore\ntext')).toEqual([
+    lineIdMapper.updateLineMapping(['this', 'is', 'text'])
+    expect(lineIdMapper.updateLineMapping(['this', 'is', 'more', 'text'])).toEqual([
       {
         line: 'this',
         id: 1
@@ -54,8 +54,8 @@ describe('line id mapper', () => {
   })
 
   it('should not update line ids if nothing changes', () => {
-    lineIdMapper.updateLineMapping('this\nis\ntext')
-    expect(lineIdMapper.updateLineMapping('this\nis\ntext')).toEqual([
+    lineIdMapper.updateLineMapping(['this', 'is', 'text'])
+    expect(lineIdMapper.updateLineMapping(['this', 'is', 'text'])).toEqual([
       {
         line: 'this',
         id: 1
@@ -72,9 +72,9 @@ describe('line id mapper', () => {
   })
 
   it('should not reuse line ids of removed lines', () => {
-    lineIdMapper.updateLineMapping('this\nis\nold')
-    lineIdMapper.updateLineMapping('this\nis')
-    expect(lineIdMapper.updateLineMapping('this\nis\nnew')).toEqual([
+    lineIdMapper.updateLineMapping(['this', 'is', 'old'])
+    lineIdMapper.updateLineMapping(['this', 'is'])
+    expect(lineIdMapper.updateLineMapping(['this', 'is', 'new'])).toEqual([
       {
         line: 'this',
         id: 1
@@ -91,8 +91,8 @@ describe('line id mapper', () => {
   })
 
   it('should update line ids for changed lines', () => {
-    lineIdMapper.updateLineMapping('this\nis\nold')
-    expect(lineIdMapper.updateLineMapping('this\nis\nnew')).toEqual([
+    lineIdMapper.updateLineMapping(['this', 'is', 'old'])
+    expect(lineIdMapper.updateLineMapping(['this', 'is', 'new'])).toEqual([
       {
         line: 'this',
         id: 1

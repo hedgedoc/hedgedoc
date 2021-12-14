@@ -10,10 +10,10 @@ import { RenderIframe } from '../editor-page/renderer-pane/render-iframe'
 import { updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
 import { useTranslation } from 'react-i18next'
 import { useSendFrontmatterInfoFromReduxToRenderer } from '../editor-page/renderer-pane/hooks/use-send-frontmatter-info-from-redux-to-renderer'
-import { useNoteMarkdownContentWithoutFrontmatter } from '../../hooks/common/use-note-markdown-content-without-frontmatter'
+import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../hooks/common/use-trimmed-note-markdown-content-without-frontmatter'
 
 export const SlideShowPageContent: React.FC = () => {
-  const markdownContent = useNoteMarkdownContentWithoutFrontmatter()
+  const markdownContentLines = useTrimmedNoteMarkdownContentWithoutFrontmatter()
   useTranslation()
   useSendFrontmatterInfoFromReduxToRenderer()
 
@@ -21,7 +21,7 @@ export const SlideShowPageContent: React.FC = () => {
     <div className={'vh-100 vw-100'}>
       <RenderIframe
         frameClasses={'h-100 w-100'}
-        markdownContent={markdownContent}
+        markdownContentLines={markdownContentLines}
         rendererType={RendererType.SLIDESHOW}
         onFirstHeadingChange={updateNoteTitleByFirstHeading}
       />

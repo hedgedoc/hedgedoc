@@ -74,7 +74,7 @@ const buildStateFromTaskListUpdate = (
   changedLine: number,
   checkboxChecked: boolean
 ): NoteDetails => {
-  const lines = state.markdownContent.split('\n')
+  const lines = state.markdownContentLines
   const results = TASK_REGEX.exec(lines[changedLine])
   if (results) {
     const before = results[1]
@@ -88,23 +88,26 @@ const buildStateFromTaskListUpdate = (
 /**
  * Builds a {@link NoteDetails} redux state from a fresh document content.
  * @param state The previous redux state.
- * @param markdownContent The fresh document content consisting of the frontmatter and markdown part.
+ * @param newMarkdownContent The fresh document content consisting of the frontmatter and markdown part.
  * @return An updated {@link NoteDetails} redux state.
  */
-const buildStateFromMarkdownContentUpdate = (state: NoteDetails, markdownContent: string): NoteDetails => {
-  const frontmatterExtraction = extractFrontmatter(markdownContent)
+const buildStateFromMarkdownContentUpdate = (state: NoteDetails, newMarkdownContent: string): NoteDetails => {
+  const markdownContentLines = newMarkdownContent.split('\n')
+  const frontmatterExtraction = extractFrontmatter(markdownContentLines)
   if (frontmatterExtraction.isPresent) {
     return buildStateFromFrontmatterUpdate(
       {
         ...state,
-        markdownContent: markdownContent
+        markdownContent: newMarkdownContent,
+        markdownContentLines: markdownContentLines
       },
       frontmatterExtraction
     )
   } else {
     return {
       ...state,
-      markdownContent: markdownContent,
+      markdownContent: newMarkdownContent,
+      markdownContentLines: markdownContentLines,
       rawFrontmatter: '',
       noteTitle: generateNoteTitle(initialState.frontmatter, state.firstHeading),
       frontmatter: initialState.frontmatter,
@@ -193,6 +196,7 @@ const generateNoteTitle = (frontmatter: NoteFrontmatter, firstHeading?: string) 
 const convertNoteDtoToNoteDetails = (note: NoteDto): NoteDetails => {
   return {
     markdownContent: note.content,
+    markdownContentLines: note.content.split('\n'),
     rawFrontmatter: '',
     frontmatterRendererInfo: initialState.frontmatterRendererInfo,
     frontmatter: initialState.frontmatter,

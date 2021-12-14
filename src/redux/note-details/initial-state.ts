@@ -19,6 +19,7 @@ export const initialSlideOptions: SlideOptions = {
 
 export const initialState: NoteDetails = {
   markdownContent: '',
+  markdownContentLines: [],
   rawFrontmatter: '',
   frontmatterRendererInfo: {
     frontmatterInvalid: false,

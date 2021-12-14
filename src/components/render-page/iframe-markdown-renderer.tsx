@@ -20,7 +20,7 @@ import { initialState } from '../../redux/note-details/initial-state'
 import type { RendererFrontmatterInfo } from '../../redux/note-details/types/note-details'
 
 export const IframeMarkdownRenderer: React.FC = () => {
-  const [markdownContent, setMarkdownContent] = useState('')
+  const [markdownContentLines, setMarkdownContentLines] = useState<string[]>([])
   const [scrollState, setScrollState] = useState<ScrollState>({ firstLineInView: 1, scrolledPercentage: 0 })
   const [baseConfiguration, setBaseConfiguration] = useState<BaseConfiguration | undefined>(undefined)
   const [frontmatterInfo, setFrontmatterInfo] = useState<RendererFrontmatterInfo>(initialState.frontmatterRendererInfo)
@@ -39,7 +39,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
     setBaseConfiguration(values.baseConfiguration)
   )
   useRendererReceiveHandler(CommunicationMessageType.SET_MARKDOWN_CONTENT, (values) =>
-    setMarkdownContent(values.content)
+    setMarkdownContentLines(values.content)
   )
   useRendererReceiveHandler(CommunicationMessageType.SET_DARKMODE, (values) => setDarkMode(values.activated))
   useRendererReceiveHandler(CommunicationMessageType.SET_SCROLL_STATE, (values) => setScrollState(values.scrollState))
@@ -106,7 +106,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
       return (
         <MarkdownDocument
           additionalOuterContainerClasses={'vh-100 bg-light'}
-          markdownContent={markdownContent}
+          markdownContentLines={markdownContentLines}
           onTaskCheckedChange={onTaskCheckedChange}
           onFirstHeadingChange={onFirstHeadingChange}
           onMakeScrollSource={onMakeScrollSource}
@@ -120,7 +120,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
     case RendererType.SLIDESHOW:
       return (
         <SlideshowMarkdownRenderer
-          content={markdownContent}
+          markdownContentLines={markdownContentLines}
           baseUrl={baseConfiguration.baseUrl}
           onFirstHeadingChange={onFirstHeadingChange}
           onImageClick={onImageClick}
@@ -133,7 +133,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
       return (
         <MarkdownDocument
           additionalOuterContainerClasses={'vh-100 bg-light overflow-y-hidden'}
-          markdownContent={markdownContent}
+          markdownContentLines={markdownContentLines}
           baseUrl={baseConfiguration.baseUrl}
           onImageClick={onImageClick}
           disableToc={true}

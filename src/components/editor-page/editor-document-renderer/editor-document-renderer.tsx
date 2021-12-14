@@ -7,10 +7,10 @@
 import React from 'react'
 import type { RenderIframeProps } from '../renderer-pane/render-iframe'
 import { RenderIframe } from '../renderer-pane/render-iframe'
-import { useNoteMarkdownContentWithoutFrontmatter } from '../../../hooks/common/use-note-markdown-content-without-frontmatter'
 import { useSendFrontmatterInfoFromReduxToRenderer } from '../renderer-pane/hooks/use-send-frontmatter-info-from-redux-to-renderer'
+import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../../hooks/common/use-trimmed-note-markdown-content-without-frontmatter'
 
-export type EditorDocumentRendererProps = Omit<RenderIframeProps, 'markdownContent'>
+export type EditorDocumentRendererProps = Omit<RenderIframeProps, 'markdownContentLines'>
 
 /**
  * Renders the markdown content from the global application state with the iframe renderer.
@@ -18,9 +18,8 @@ export type EditorDocumentRendererProps = Omit<RenderIframeProps, 'markdownConte
  * @param props Every property from the {@link RenderIframe} except the markdown content.
  */
 export const EditorDocumentRenderer: React.FC<EditorDocumentRendererProps> = (props) => {
-  const markdownContent = useNoteMarkdownContentWithoutFrontmatter()
-
   useSendFrontmatterInfoFromReduxToRenderer()
+  const trimmedContentLines = useTrimmedNoteMarkdownContentWithoutFrontmatter()
 
-  return <RenderIframe markdownContent={markdownContent} {...props} />
+  return <RenderIframe {...props} markdownContentLines={trimmedContentLines} />
 }

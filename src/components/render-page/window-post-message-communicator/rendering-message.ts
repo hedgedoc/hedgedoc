@@ -62,7 +62,7 @@ export interface ImageClickedMessage {
 
 export interface SetMarkdownContentMessage {
   type: CommunicationMessageType.SET_MARKDOWN_CONTENT
-  content: string
+  content: string[]
 }
 
 export interface SetScrollStateMessage {

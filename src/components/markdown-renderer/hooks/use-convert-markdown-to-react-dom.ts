@@ -24,7 +24,7 @@ import { SanitizerMarkdownExtension } from '../markdown-extension/sanitizer/sani
  * @return The React DOM that represents the rendered markdown code
  */
 export const useConvertMarkdownToReactDom = (
-  markdownCode: string,
+  markdownContentLines: string[],
   additionalMarkdownExtensions: MarkdownExtension[],
   newlinesAreBreaks?: boolean
 ): ValidReactDomElement[] => {
@@ -63,8 +63,8 @@ export const useConvertMarkdownToReactDom = (
   }, [htmlToReactTransformer, markdownExtensions])
 
   useMemo(() => {
-    htmlToReactTransformer.setLineIds(lineNumberMapper.updateLineMapping(markdownCode))
-  }, [htmlToReactTransformer, lineNumberMapper, markdownCode])
+    htmlToReactTransformer.setLineIds(lineNumberMapper.updateLineMapping(markdownContentLines))
+  }, [htmlToReactTransformer, lineNumberMapper, markdownContentLines])
 
   const nodePreProcessor = useMemo(() => {
     return markdownExtensions
@@ -76,7 +76,7 @@ export const useConvertMarkdownToReactDom = (
   }, [markdownExtensions])
 
   return useMemo(() => {
-    const html = markdownIt.render(markdownCode)
+    const html = markdownIt.render(markdownContentLines.join('\n'))
 
     htmlToReactTransformer.resetReplacers()
 
@@ -84,5 +84,5 @@ export const useConvertMarkdownToReactDom = (
       transform: (node, index) => htmlToReactTransformer.translateNodeToReactElement(node, index),
       preprocessNodes: (document) => nodePreProcessor(document)
     })
-  }, [htmlToReactTransformer, markdownCode, markdownIt, nodePreProcessor])
+  }, [htmlToReactTransformer, markdownContentLines, markdownIt, nodePreProcessor])
 }

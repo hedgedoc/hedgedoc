@@ -27,7 +27,7 @@ const initialSlideState: SlideState = {
   indexVertical: 0
 }
 
-export const useReveal = (content: string, slideOptions?: SlideOptions): REVEAL_STATUS => {
+export const useReveal = (markdownContentLines: string[], slideOptions?: SlideOptions): REVEAL_STATUS => {
   const [deck, setDeck] = useState<Reveal>()
   const [revealStatus, setRevealStatus] = useState<REVEAL_STATUS>(REVEAL_STATUS.NOT_INITIALISED)
   const currentSlideState = useRef<SlideState>(initialSlideState)
@@ -67,7 +67,7 @@ export const useReveal = (content: string, slideOptions?: SlideOptions): REVEAL_
     log.debug('Sync deck')
     deck.sync()
     deck.slide(currentSlideState.current.indexHorizontal, currentSlideState.current.indexVertical)
-  }, [content, deck, revealStatus])
+  }, [markdownContentLines, deck, revealStatus])
 
   useEffect(() => {
     if (

@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useMemo, useRef } from 'react'
-import { DocumentLengthLimitReachedAlert } from './document-length-limit-reached-alert'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { useConvertMarkdownToReactDom } from './hooks/use-convert-markdown-to-react-dom'
 import './markdown-renderer.scss'
 import type { LineMarkerPosition } from './markdown-extension/linemarker/types'
@@ -15,7 +14,6 @@ import { useCalculateLineMarkerPosition } from './utils/calculate-line-marker-po
 import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
 import type { TocAst } from 'markdown-it-toc-done-right'
 import { useOnRefChange } from './hooks/use-on-ref-change'
-import { useTrimmedContent } from './hooks/use-trimmed-content'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
 import { HeadlineAnchorsMarkdownExtension } from './markdown-extension/headline-anchors-markdown-extension'
@@ -26,7 +24,7 @@ export interface DocumentMarkdownRendererProps extends CommonMarkdownRendererPro
 
 export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> = ({
   className,
-  content,
+  markdownContentLines,
   onFirstHeadingChange,
   onLineMarkerPositionChanged,
   onTaskCheckedChange,
@@ -40,7 +38,6 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
   const markdownBodyRef = useRef<HTMLDivElement>(null)
   const currentLineMarkers = useRef<LineMarkers[]>()
   const tocAst = useRef<TocAst>()
-  const [trimmedContent, contentExceedsLimit] = useTrimmedContent(content)
 
   const extensions = useMarkdownExtensions(
     baseUrl,
@@ -51,7 +48,7 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
     onImageClick,
     onTocChange
   )
-  const markdownReactDom = useConvertMarkdownToReactDom(trimmedContent, extensions, newlinesAreBreaks)
+  const markdownReactDom = useConvertMarkdownToReactDom(markdownContentLines, extensions, newlinesAreBreaks)
 
   useTranslation()
   useCalculateLineMarkerPosition(
@@ -60,12 +57,15 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
     onLineMarkerPositionChanged,
     markdownBodyRef.current?.offsetTop ?? 0
   )
-  useExtractFirstHeadline(markdownBodyRef, content, onFirstHeadingChange)
+  const extractFirstHeadline = useExtractFirstHeadline(markdownBodyRef, onFirstHeadingChange)
+  useEffect(() => {
+    extractFirstHeadline()
+  }, [extractFirstHeadline, markdownContentLines])
+
   useOnRefChange(tocAst, onTocChange)
 
   return (
     <div ref={outerContainerRef} className={'position-relative'}>
-      <DocumentLengthLimitReachedAlert show={contentExceedsLimit} />
       <div
         ref={markdownBodyRef}
         className={`${className ?? ''} markdown-body w-100 d-flex flex-column align-items-center`}>

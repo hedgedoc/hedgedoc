@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Suspense, useCallback } from 'react'
+import React, { Suspense, useCallback, useMemo } from 'react'
 import { WaitSpinner } from '../../../common/wait-spinner/wait-spinner'
 
 export interface CheatsheetLineProps {
-  code: string
+  markdown: string
   onTaskCheckedChange: (newValue: boolean) => void
 }
 
@@ -17,7 +17,8 @@ const HighlightedCode = React.lazy(
 )
 const DocumentMarkdownRenderer = React.lazy(() => import('../../../markdown-renderer/document-markdown-renderer'))
 
-export const CheatsheetLine: React.FC<CheatsheetLineProps> = ({ code, onTaskCheckedChange }) => {
+export const CheatsheetLine: React.FC<CheatsheetLineProps> = ({ markdown, onTaskCheckedChange }) => {
+  const lines = useMemo(() => markdown.split('\n'), [markdown])
   const checkboxClick = useCallback(
     (lineInMarkdown: number, newValue: boolean) => {
       onTaskCheckedChange(newValue)
@@ -37,13 +38,13 @@ export const CheatsheetLine: React.FC<CheatsheetLineProps> = ({ code, onTaskChec
       <tr>
         <td>
           <DocumentMarkdownRenderer
-            content={code}
+            markdownContentLines={lines}
             baseUrl={'https://example.org'}
             onTaskCheckedChange={checkboxClick}
           />
         </td>
         <td className={'markdown-body'}>
-          <HighlightedCode code={code} wrapLines={true} startLineNumber={1} language={'markdown'} />
+          <HighlightedCode code={markdown} wrapLines={true} startLineNumber={1} language={'markdown'} />
         </td>
       </tr>
     </Suspense>

@@ -18,5 +18,5 @@ export interface CommonMarkdownRendererProps {
   newlinesAreBreaks?: boolean
   lineOffset?: number
   className?: string
-  content: string
+  markdownContentLines: string[]
 }

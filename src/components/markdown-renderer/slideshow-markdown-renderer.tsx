@@ -4,17 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { useConvertMarkdownToReactDom } from './hooks/use-convert-markdown-to-react-dom'
 import './markdown-renderer.scss'
 import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
 import type { TocAst } from 'markdown-it-toc-done-right'
 import { useOnRefChange } from './hooks/use-on-ref-change'
-import { useTrimmedContent } from './hooks/use-trimmed-content'
 import { REVEAL_STATUS, useReveal } from './hooks/use-reveal'
 import './slideshow.scss'
 import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
-import { DocumentLengthLimitReachedAlert } from './document-length-limit-reached-alert'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 import { LoadingSlide } from './loading-slide'
 import { RevealMarkdownExtension } from './markdown-extension/reveal/reveal-markdown-extension'
@@ -27,7 +25,7 @@ export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererPr
 
 export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps & ScrollProps> = ({
   className,
-  content,
+  markdownContentLines,
   onFirstHeadingChange,
   onTaskCheckedChange,
   onTocChange,
@@ -39,7 +37,6 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
 }) => {
   const markdownBodyRef = useRef<HTMLDivElement>(null)
   const tocAst = useRef<TocAst>()
-  const [trimmedContent, contentExceedsLimit] = useTrimmedContent(content)
 
   const extensions = useMarkdownExtensions(
     baseUrl,
@@ -51,14 +48,18 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
     onTocChange
   )
 
-  const markdownReactDom = useConvertMarkdownToReactDom(trimmedContent, extensions, newlinesAreBreaks)
-  const revealStatus = useReveal(content, slideOptions)
+  const markdownReactDom = useConvertMarkdownToReactDom(markdownContentLines, extensions, newlinesAreBreaks)
+  const revealStatus = useReveal(markdownContentLines, slideOptions)
 
-  useExtractFirstHeadline(
-    markdownBodyRef,
-    revealStatus === REVEAL_STATUS.INITIALISED ? content : undefined,
-    onFirstHeadingChange
-  )
+  useExtractFirstHeadline(markdownBodyRef, onFirstHeadingChange)
+
+  const extractFirstHeadline = useExtractFirstHeadline(markdownBodyRef, onFirstHeadingChange)
+  useEffect(() => {
+    if (revealStatus === REVEAL_STATUS.INITIALISED) {
+      extractFirstHeadline()
+    }
+  }, [extractFirstHeadline, markdownContentLines, revealStatus])
+
   useOnRefChange(tocAst, onTocChange)
 
   const slideShowDOM = useMemo(
@@ -67,14 +68,11 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
   )
 
   return (
-    <Fragment>
-      <DocumentLengthLimitReachedAlert show={contentExceedsLimit} />
-      <div className={'reveal'}>
-        <div ref={markdownBodyRef} className={`${className ?? ''} slides`}>
-          {slideShowDOM}
-        </div>
+    <div className={'reveal'}>
+      <div ref={markdownBodyRef} className={`${className ?? ''} slides`}>
+        {slideShowDOM}
       </div>
-    </Fragment>
+    </div>
   )
 }
 

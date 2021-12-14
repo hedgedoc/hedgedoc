@@ -51,7 +51,7 @@ export const CheatsheetTabContent: React.FC = () => {
       </thead>
       <tbody>
         {codes.map((code) => (
-          <CheatsheetLine code={code} key={code} onTaskCheckedChange={setChecked} />
+          <CheatsheetLine markdown={code} key={code} onTaskCheckedChange={setChecked} />
         ))}
       </tbody>
     </Table>

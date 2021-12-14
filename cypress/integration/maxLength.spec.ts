@@ -27,9 +27,8 @@ describe('The status bar text length info', () => {
     cy.getById('remainingCharacters').should('have.class', 'text-danger')
   })
 
-  it('shows a warning and opens a modal', () => {
+  it('opens a modal', () => {
     cy.setCodemirrorContent(tooMuchTestContent)
     cy.getById('limitReachedModal').should('be.visible')
-    cy.getIframeBody().findById('limitReachedMessage').should('be.visible')
   })
 })

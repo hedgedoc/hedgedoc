@@ -11,16 +11,16 @@ import { CommunicationMessageType } from '../../../render-page/window-post-messa
 /**
  * Sends the given markdown content to the renderer.
  *
- * @param markdownContent The markdown content to send.
+ * @param markdownContentLines The markdown content to send.
  */
-export const useSendMarkdownToRenderer = (markdownContent: string): void => {
+export const useSendMarkdownToRenderer = (markdownContentLines: string[]): void => {
   return useSendToRenderer(
     useMemo(
       () => ({
         type: CommunicationMessageType.SET_MARKDOWN_CONTENT,
-        content: markdownContent
+        content: markdownContentLines
       }),
-      [markdownContent]
+      [markdownContentLines]
     )
   )
 }

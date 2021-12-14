@@ -7,17 +7,17 @@
 import React, { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
-import { useNoteMarkdownContentWithoutFrontmatter } from '../../hooks/common/use-note-markdown-content-without-frontmatter'
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { useSendFrontmatterInfoFromReduxToRenderer } from '../editor-page/renderer-pane/hooks/use-send-frontmatter-info-from-redux-to-renderer'
 import { DocumentInfobar } from './document-infobar'
 import { RenderIframe } from '../editor-page/renderer-pane/render-iframe'
 import { RendererType } from '../render-page/window-post-message-communicator/rendering-message'
+import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../hooks/common/use-trimmed-note-markdown-content-without-frontmatter'
 
 export const DocumentReadOnlyPageContent: React.FC = () => {
   useTranslation()
 
-  const markdownContent = useNoteMarkdownContentWithoutFrontmatter()
+  const markdownContentLines = useTrimmedNoteMarkdownContentWithoutFrontmatter()
   const noteDetails = useApplicationState((state) => state.noteDetails)
   useSendFrontmatterInfoFromReduxToRenderer()
 
@@ -34,7 +34,7 @@ export const DocumentReadOnlyPageContent: React.FC = () => {
       />
       <RenderIframe
         frameClasses={'flex-fill h-100 w-100'}
-        markdownContent={markdownContent}
+        markdownContentLines={markdownContentLines}
         onFirstHeadingChange={updateNoteTitleByFirstHeading}
         rendererType={RendererType.DOCUMENT}
       />

@@ -24,7 +24,7 @@ export interface RendererProps extends ScrollProps {
   onFirstHeadingChange?: (firstHeading: string | undefined) => void
   onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
   documentRenderPaneRef?: MutableRefObject<HTMLDivElement | null>
-  markdownContent: string
+  markdownContentLines: string[]
   onImageClick?: ImageClickHandler
   onHeightChange?: (height: number) => void
 }
@@ -44,7 +44,7 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
   onMakeScrollSource,
   onTaskCheckedChange,
   baseUrl,
-  markdownContent,
+  markdownContentLines,
   onImageClick,
   onScroll,
   scrollState,
@@ -70,7 +70,7 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
     onHeightChange(rendererSize.height ? rendererSize.height + 1 : 0)
   }, [rendererSize.height, onHeightChange])
 
-  const contentLineCount = useMemo(() => markdownContent.split('\n').length, [markdownContent])
+  const contentLineCount = useMemo(() => markdownContentLines.length, [markdownContentLines])
   const [onLineMarkerPositionChanged, onUserScroll] = useDocumentSyncScrolling(
     internalDocumentRenderPaneRef,
     rendererRef,
@@ -92,7 +92,7 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
         <DocumentMarkdownRenderer
           outerContainerRef={rendererRef}
           className={`mb-3 ${additionalRendererClasses ?? ''}`}
-          content={markdownContent}
+          markdownContentLines={markdownContentLines}
           onFirstHeadingChange={onFirstHeadingChange}
           onLineMarkerPositionChanged={onLineMarkerPositionChanged}
           onTaskCheckedChange={onTaskCheckedChange}
