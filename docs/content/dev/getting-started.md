@@ -45,3 +45,5 @@ to run both at the same time.
 
 - The backend will be available at `http://localhost:3000`.
 - The frontend will be available at `http://localhost:3001`.
+
+**Note:** The backend also proxies requests to the frontend, so you can point also your browser at the backend.
