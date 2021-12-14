@@ -65,6 +65,7 @@ export class AuthService {
     }
     const secret = bufferToBase64Url(randomBytes(64));
     const keyId = bufferToBase64Url(randomBytes(8));
+    // More about the choice of SHA-512 in the dev docs
     const accessTokenHash = crypto
       .createHash('sha512')
       .update(secret)
