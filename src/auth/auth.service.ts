@@ -6,7 +6,7 @@
 import { Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
-import { randomBytes } from 'crypto';
+import crypto, { randomBytes } from 'crypto';
 import { Repository } from 'typeorm';
 
 import {
@@ -17,11 +17,7 @@ import {
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
-import {
-  bufferToBase64Url,
-  checkPassword,
-  hashPassword,
-} from '../utils/password';
+import { bufferToBase64Url } from '../utils/password';
 import { TimestampMillis } from '../utils/timestamp';
 import { AuthTokenWithSecretDto } from './auth-token-with-secret.dto';
 import { AuthTokenDto } from './auth-token.dto';
@@ -43,13 +39,10 @@ export class AuthService {
     if (!secret) {
       throw new TokenNotValidError('Invalid AuthToken format');
     }
-    if (secret.length > 72) {
-      // Only the first 72 characters of the tokens are considered by bcrypt
-      // This should prevent strange corner cases
-      // At the very least it won't hurt us
-      throw new TokenNotValidError(
-        `AuthToken '${secret}' is too long the be a proper token`,
-      );
+    if (secret.length != 86) {
+      // We always expect 86 characters, as the secret is generated with 64 bytes
+      // and then converted to a base64url string
+      throw new TokenNotValidError(`AuthToken '${token}' has incorrect length`);
     }
     const accessToken = await this.getAuthTokenAndValidate(keyId, secret);
     await this.setLastUsedToken(keyId);
@@ -70,9 +63,13 @@ export class AuthService {
         `User '${user.username}' has already 200 tokens and can't have anymore`,
       );
     }
-    const secret = bufferToBase64Url(randomBytes(54));
+    const secret = bufferToBase64Url(randomBytes(64));
     const keyId = bufferToBase64Url(randomBytes(8));
-    const accessToken = await hashPassword(secret);
+    // More about the choice of SHA-512 in the dev docs
+    const accessTokenHash = crypto
+      .createHash('sha512')
+      .update(secret)
+      .digest('hex');
     let token;
     // Tokens can only be valid for a maximum of 2 years
     const maximumTokenValidity =
@@ -82,7 +79,7 @@ export class AuthService {
         keyId,
         user,
         identifier,
-        accessToken,
+        accessTokenHash,
         new Date(maximumTokenValidity),
       );
     } else {
@@ -90,7 +87,7 @@ export class AuthService {
         keyId,
         user,
         identifier,
-        accessToken,
+        accessTokenHash,
         new Date(validUntil),
       );
     }
@@ -122,7 +119,17 @@ export class AuthService {
     if (accessToken === undefined) {
       throw new NotInDBError(`AuthToken '${token}' not found`);
     }
-    if (!(await checkPassword(token, accessToken.accessTokenHash))) {
+    // Hash the user-provided token
+    const userHash = Buffer.from(
+      crypto.createHash('sha512').update(token).digest('hex'),
+    );
+    const dbHash = Buffer.from(accessToken.accessTokenHash);
+    if (
+      // Normally, both hashes have the same length, as they are both SHA512
+      // This is only defense-in-depth, as timingSafeEqual throws if the buffers are not of the same length
+      userHash.length !== dbHash.length ||
+      !crypto.timingSafeEqual(userHash, dbHash)
+    ) {
       // hashes are not the same
       throw new TokenNotValidError(`AuthToken '${token}' is not valid.`);
     }
