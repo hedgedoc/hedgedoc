@@ -16,7 +16,7 @@
    
 4. Run `openssl rand -hex 16 | sed -E 's/(.*)/HD_SESSION_SECRET=\1/' >> .env` to generate a session secret if you have not set one manually before.
  
- ## Preparing for running the frontend code
+## Preparing for running the frontend code
 
 **ToDo:** Document how to setup development environment using docker.
 
@@ -32,14 +32,11 @@ We will run Hedgedoc in development mode, which means the backend and frontend w
 The commands will stay active in your terminal, so you will need multiple tabs
 to run both at the same time.
 
-1. Enter the `react-frontend` directory and use `yarn start` if you want webpack to continuously rebuild the frontend
-   code.
+1. Enter the `react-frontend` directory and use `yarn start:for-real-backend` if you want webpack to continuously rebuild the frontend code. The frontend will expect a running backend at port 3000.
    
-   **Note:** Currently, this will not result in the backend and frontend communicating with each other.
-   
-   **Note:** You can run `yarn start:for-real-backend` to start a frontend, which tries to connect to a local backend.
+   **Note:** You can run `yarn start` to start a frontend with an integrated, mocked API. This may support more features than the real backend.
 
-2. To auto-reload the server, enter the `hedgedoc` directory and run `yarn start:dev`.
+2. To start the server in auto-reload mode, enter the `hedgedoc` directory and run `env NODE_ENV=development yarn start:dev`.
 
 ## Testing
 
