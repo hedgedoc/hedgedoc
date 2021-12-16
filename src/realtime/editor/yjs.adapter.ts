@@ -3,19 +3,20 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { INestApplicationContext, Logger, WebSocketAdapter } from '@nestjs/common';
-import { AbstractWsAdapter } from '@nestjs/websockets';
+import {
+  HttpServer,
+  INestApplication,
+  Logger,
+  WebSocketAdapter,
+} from '@nestjs/common';
 import { CONNECTION_EVENT, ERROR_EVENT } from '@nestjs/websockets/constants';
 import http from 'http';
 import https from 'https';
 import { decoding } from 'lib0';
-import { Observable } from 'rxjs';
+import WebSocket, { Server, ServerOptions } from 'ws';
 
 import { MessageType } from './message-type';
-import { NoteIdWebsocket } from './note-id.websocket';
-import { Note } from '../../notes/note.entity';
-import { WebsocketClient } from 'lib0/websocket';
-import WebSocket from 'ws';
+import { NoteIdWebsocket } from './note-id-websocket';
 
 export type MessageHandlerCallbackResponse = Promise<Uint8Array | void>;
 
@@ -26,22 +27,20 @@ interface MessageHandler {
   callback: (decoder: decoding.Decoder) => MessageHandlerCallbackResponse;
 }
 
-export class YjsAdapter implements WebSocketAdapter<
-  Websocket,
-  NoteIdWebsocket,
-  any
-> {
+export class YjsAdapter
+  implements WebSocketAdapter<Server, NoteIdWebsocket, ServerOptions>
+{
   protected readonly logger = new Logger(YjsAdapter.name);
+  private readonly httpServer: HttpServer;
 
-  constructor(private app: INestApplicationContext) {
-    super(app);
+  constructor(private app: INestApplication) {
+    this.httpServer = app.getHttpServer() as HttpServer;
   }
 
   bindMessageHandlers(
     client: NoteIdWebsocket,
     handlers: MessageHandler[],
-    transform: (data: any) => Observable<any>,
-  ): any {
+  ): void {
     client.binaryType = 'arraybuffer';
     client.on('message', (data: ArrayBuffer) => {
       const uint8Data = new Uint8Array(data);
@@ -72,12 +71,12 @@ export class YjsAdapter implements WebSocketAdapter<
     });
   }
 
-  create(port: number, options: ServerOptions): Server {
+  create(port: number, options?: ServerOptions): Server {
     this.logger.log('Initiating WebSocket server for realtime communication');
     if (this.httpServer) {
       this.logger.log('Using existing WebServer for WebSocket communication');
       const server = new Server({
-        server: this.httpServer as WebServer,
+        server: this.httpServer as unknown as WebServer,
         ...options,
       });
       return this.bindErrorHandler(server);
@@ -96,5 +95,28 @@ export class YjsAdapter implements WebSocketAdapter<
     );
     server.on(ERROR_EVENT, (err: Error) => this.logger.error(err));
     return server;
+  }
+
+  bindClientConnect(
+    server: WebSocket.Server,
+    callback: (
+      this: Server,
+      socket: NoteIdWebsocket,
+      request: http.IncomingMessage,
+    ) => void,
+  ): void {
+    server.on('connection', callback);
+  }
+
+  bindClientDisconnect(
+    client: NoteIdWebsocket,
+    callback: (socket: NoteIdWebsocket) => void,
+  ): void {
+    client.on('close', callback);
+  }
+
+  close(server: WebSocket.Server): void {
+    // TODO Check if clean-up with server is needed.
+    this.logger.warn('WebSocket server closed.');
   }
 }

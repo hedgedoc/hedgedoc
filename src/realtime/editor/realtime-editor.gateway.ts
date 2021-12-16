@@ -13,10 +13,8 @@ import {
 import assert from 'assert';
 import { IncomingMessage } from 'http';
 import { decoding, encoding } from 'lib0';
-import WebSocket from 'ws';
-import SyncProtocol from 'y-protocols/sync';
 import AwarenessProtocol from 'y-protocols/awareness';
-import Y from 'yjs';
+import SyncProtocol from 'y-protocols/sync';
 
 import { RequestUser } from '../../api/utils/request-user.decorator';
 import { SessionGuard } from '../../identity/session.guard';
@@ -26,8 +24,9 @@ import { NotesService } from '../../notes/notes.service';
 import { PermissionsService } from '../../permissions/permissions.service';
 import { User } from '../../users/user.entity';
 import { MessageType } from './message-type';
-import { NoteClientMap } from './note-client-map';
-import { WSReadyState } from './ws-ready-state.enum';
+import { MultiClientAwarenessYDoc } from './multi-client-awareness-y-doc';
+import { NoteIdWebsocket } from './note-id-websocket';
+import { getNoteFromRealtimePath } from './utils/get-note-from-realtime-path';
 import { MessageHandlerCallbackResponse } from './yjs.adapter';
 
 /**
@@ -45,32 +44,28 @@ export class RealtimeEditorGateway
     this.logger.setContext(RealtimeEditorGateway.name);
   }
 
-  /** Mapping instance keeping track of WebSocket clients and their associated note identifier. */
-  private noteClientMap = new NoteClientMap();
-
   /** Mapping instance keeping track of note-ids and their associated y-doc. */
-  private noteYDocMap = new Map<string, Y.Doc>();
+  private noteYDocMap = new Map<string, MultiClientAwarenessYDoc>();
 
   /**
    * Handler that is called when a WebSocket client disconnects.
-   * Removes the client from the note-client mapping instance, if it is present there.
+   * Removes the client from their Y.Doc, if they were part of any.
    * @param client The WebSocket client that disconnects.
    */
-  handleDisconnect(client: WebSocket): void {
-    const noteIdOfClient = this.noteClientMap.getNoteIdByClient(client);
-    if (noteIdOfClient === undefined) {
-      this.logger.log('Undefined noteid for client');
+  handleDisconnect(client: NoteIdWebsocket): void {
+    // FIXME We receive a WebSocket here, no NoteIdWebSocket. Thus the following call always fails.
+    const noteIdOfClient = client.getNoteId();
+    const yDoc = this.noteYDocMap.get(noteIdOfClient);
+    if (!yDoc) {
+      this.logger.log('Undefined y-doc for noteId');
       return;
     }
-    this.logger.log(`Client disconnected from note '${noteIdOfClient}'`);
-    this.noteClientMap.removeClient(client);
-    if (this.noteClientMap.countClientsByNoteId(noteIdOfClient) === 0) {
+    yDoc.disconnect(client);
+    this.logger.debug(`Client disconnected from note '${noteIdOfClient}'`);
+    if (yDoc.countClients() === 0) {
       // TODO Clean-up Y-Doc and store to database
       this.noteYDocMap.delete(noteIdOfClient);
     }
-    this.logger.debug(
-      `Status: ${this.noteClientMap.countClients()} users online on ${this.noteClientMap.countNotes()} notes`,
-    );
   }
 
   /**
@@ -85,59 +80,38 @@ export class RealtimeEditorGateway
    */
   @UseGuards(SessionGuard)
   async handleConnection(
-    client: WebSocket,
+    client: NoteIdWebsocket,
     req: IncomingMessage,
     @RequestUser() user: User,
   ): Promise<void> {
     client.on('close', () => this.handleDisconnect(client));
-    const url = req.url ?? '';
-    const pathMatching = /^\/realtime\/(.+)$/.exec(url);
-    if (!pathMatching || pathMatching.length < 2) {
-      this.logger.log('Realtime connection denied (invalid URL path): ' + url);
-      client.close();
-      return;
-    }
-    const noteIdFromPath = pathMatching[1];
     let note: Note;
     try {
-      note = await this.noteService.getNoteByIdOrAlias(noteIdFromPath);
+      note = await getNoteFromRealtimePath(this.noteService, req.url ?? '');
     } catch (e) {
       // TODO Send error message to client to avoid reconnects for same note
+      this.logger.log('Realtime connection closed: ' + String(e));
       client.close();
-      this.logger.error(`Encountered an error: ${String(e)}`);
       return;
     }
+
     if (!this.permissionsService.mayRead(user, note)) {
       // TODO Send error message to client to avoid reconnects for same note
       client.close();
       this.logger.log(
-        `Reading note '${noteIdFromPath}' by user '${user.username}' denied!`,
+        `Reading note '${note.id}' by user '${user.username}' denied!`,
       );
       return;
     }
-    this.noteClientMap.addClient(client, note.id);
+
     if (!this.noteYDocMap.has(note.id)) {
-      const yDoc = new Y.Doc();
+      const yDoc = new MultiClientAwarenessYDoc();
       this.noteYDocMap.set(note.id, yDoc);
     }
-    this.logger.log(
-      `Connection to note '${note.id}' by user '${user.username}'`,
-    );
+    const yDoc = this.noteYDocMap.get(note.id);
+    yDoc?.connect(client);
     this.logger.debug(
-      `Status: ${this.noteClientMap.countClients()} users online on ${this.noteClientMap.countNotes()} notes`,
-    );
-  }
-
-  /**
-   * @private
-   * This checks if the WebSocket connection's readyState is not either connecting or open
-   * @param client
-   * @return boolean indicating if the connection is not ready
-   */
-  private checkIfConnectionIsNotReady(client: WebSocket): boolean {
-    return (
-      client.readyState !== WSReadyState.CONNECTING &&
-      client.readyState !== WSReadyState.OPEN
+      `Connection to note '${note.id}' by user '${user.username}'`,
     );
   }
 
@@ -151,11 +125,11 @@ export class RealtimeEditorGateway
    */
   @SubscribeMessage(MessageType.SYNC)
   handleMessageSync(
-    client: WebSocket,
+    client: NoteIdWebsocket,
     decoder: decoding.Decoder,
   ): MessageHandlerCallbackResponse {
     this.logger.debug('Received SYNC message');
-    const noteId = this.noteClientMap.getNoteIdByClient(client);
+    const noteId = client.getNoteId();
     assert(noteId);
     const yDoc = this.noteYDocMap.get(noteId);
     if (!yDoc) {
@@ -164,7 +138,7 @@ export class RealtimeEditorGateway
     }
     const encoder = encoding.createEncoder();
     encoding.writeVarUint(encoder, MessageType.SYNC);
-    syncProtocol.readSyncMessage(decoder, encoder, yDoc, null);
+    SyncProtocol.readSyncMessage(decoder, encoder, yDoc, null);
     return Promise.resolve(encoding.toUint8Array(encoder));
   }
 
@@ -178,11 +152,11 @@ export class RealtimeEditorGateway
    */
   @SubscribeMessage(MessageType.AWARENESS)
   handleMessageAwareness(
-    client: WebSocket,
+    client: NoteIdWebsocket,
     decoder: decoding.Decoder,
   ): MessageHandlerCallbackResponse {
     this.logger.debug('Received AWARENESS message');
-    const noteId = this.noteClientMap.getNoteIdByClient(client);
+    const noteId = client.getNoteId();
     assert(noteId);
     const yDoc = this.noteYDocMap.get(noteId);
     if (!yDoc) {
@@ -207,7 +181,7 @@ export class RealtimeEditorGateway
    */
   @SubscribeMessage(MessageType.HEDGEDOC)
   handleMessageHedgeDoc(
-    client: WebSocket,
+    client: NoteIdWebsocket,
     decoder: decoding.Decoder,
   ): MessageHandlerCallbackResponse {
     this.logger.debug('Received HEDGEDOC message');
