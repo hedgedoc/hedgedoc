@@ -3,17 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { INestApplicationContext, Logger } from '@nestjs/common';
+import { INestApplicationContext, Logger, WebSocketAdapter } from '@nestjs/common';
 import { AbstractWsAdapter } from '@nestjs/websockets';
 import { CONNECTION_EVENT, ERROR_EVENT } from '@nestjs/websockets/constants';
 import http from 'http';
 import https from 'https';
 import { decoding } from 'lib0';
 import { Observable } from 'rxjs';
-import WebSocket, { Server, ServerOptions } from 'ws';
-import Y from 'yjs';
 
 import { MessageType } from './message-type';
+import { NoteIdWebsocket } from './note-id.websocket';
+import { Note } from '../../notes/note.entity';
+import { WebsocketClient } from 'lib0/websocket';
+import WebSocket from 'ws';
 
 export type MessageHandlerCallbackResponse = Promise<Uint8Array | void>;
 
@@ -21,10 +23,14 @@ type WebServer = http.Server | https.Server;
 
 interface MessageHandler {
   message: string;
-  callback: (data: Uint8Array) => MessageHandlerCallbackResponse;
+  callback: (decoder: decoding.Decoder) => MessageHandlerCallbackResponse;
 }
 
-export class YjsAdapter extends AbstractWsAdapter {
+export class YjsAdapter implements WebSocketAdapter<
+  Websocket,
+  NoteIdWebsocket,
+  any
+> {
   protected readonly logger = new Logger(YjsAdapter.name);
 
   constructor(private app: INestApplicationContext) {
@@ -32,7 +38,7 @@ export class YjsAdapter extends AbstractWsAdapter {
   }
 
   bindMessageHandlers(
-    client: WebSocket,
+    client: NoteIdWebsocket,
     handlers: MessageHandler[],
     transform: (data: any) => Observable<any>,
   ): any {
@@ -49,7 +55,7 @@ export class YjsAdapter extends AbstractWsAdapter {
         return;
       }
       handler
-        .callback(uint8Data)
+        .callback(decoder)
         .then((response) => {
           if (!response) {
             return;
