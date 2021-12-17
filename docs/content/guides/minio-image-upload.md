@@ -9,7 +9,7 @@
 
    For checking it out and development purposes a non-persistent setup is enough:
    ```sh
-   docker run --name test-minio --rm -d -p 9000:9000 minio/minio server /data
+   docker run --name test-minio --rm -d -p 9001:9001 minio/minio server /data
    ```
 
    *Please notice this is not for productive use as all your data gets lost
@@ -23,7 +23,7 @@
 
    ![docker logs](../images/minio-image-upload/docker-logs.png)
 
-3. Open <http://localhost:9000> and login with the shown credentials.
+3. Open <http://localhost:9001> and login with the shown credentials.
 
    ![minio default view](../images/minio-image-upload/default-view.png)
 
@@ -46,7 +46,7 @@
      "accessKey": "888MXJ7EP4XXXXXXXXX",
      "secretKey": "yQS2EbM1Y6IJrp/1BUKWq2/XXXXXXXXXXXXXXX",
      "endPoint": "localhost",
-     "port": 9000,
+     "port": 9001,
      "secure": false
    }
    ```
@@ -75,7 +75,7 @@
        "accessKey": "888MXJ7EP4XXXXXXXXX",
        "secretKey": "yQS2EbM1Y6IJrp/1BUKWq2/XXXXXXXXXXXXXXX",
        "endPoint": "localhost",
-       "port": 9000,
+       "port": 9001,
        "secure": false
      },
      "s3bucket": "hedgedoc",
