@@ -54,18 +54,19 @@ export class RealtimeEditorGateway
    */
   handleDisconnect(client: NoteIdWebsocket): void {
     // FIXME We receive a WebSocket here, no NoteIdWebSocket. Thus the following call always fails.
-    const noteIdOfClient = client.getNoteId();
-    const yDoc = this.noteYDocMap.get(noteIdOfClient);
-    if (!yDoc) {
-      this.logger.log('Undefined y-doc for noteId');
-      return;
-    }
-    yDoc.disconnect(client);
-    this.logger.debug(`Client disconnected from note '${noteIdOfClient}'`);
-    if (yDoc.countClients() === 0) {
-      // TODO Clean-up Y-Doc and store to database
-      this.noteYDocMap.delete(noteIdOfClient);
-    }
+    /*
+      const noteIdOfClient = client.getNoteId();
+      const yDoc = this.noteYDocMap.get(noteIdOfClient);
+      if (!yDoc) {
+        this.logger.log('Undefined y-doc for noteId');
+        return;
+      }
+      yDoc.disconnect(client);
+      this.logger.debug(`Client disconnected from note '${noteIdOfClient}'`);
+      if (yDoc.countClients() === 0) {
+        // TODO Clean-up Y-Doc and store to database
+        this.noteYDocMap.delete(noteIdOfClient);
+      }*/
   }
 
   /**
