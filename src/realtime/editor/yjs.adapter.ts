@@ -3,12 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  HttpServer,
-  INestApplication,
-  Logger,
-  WebSocketAdapter,
-} from '@nestjs/common';
+import { HttpServer, Logger, WebSocketAdapter, } from '@nestjs/common';
 import { CONNECTION_EVENT, ERROR_EVENT } from '@nestjs/websockets/constants';
 import http from 'http';
 import https from 'https';
@@ -17,6 +12,7 @@ import WebSocket, { Server, ServerOptions } from 'ws';
 
 import { MessageType } from './message-type';
 import { NoteIdWebsocket } from './note-id-websocket';
+import { NestApplication } from "@nestjs/core";
 
 export type MessageHandlerCallbackResponse = Promise<Uint8Array | void>;
 
@@ -28,13 +24,12 @@ interface MessageHandler {
 }
 
 export class YjsAdapter
-  implements WebSocketAdapter<Server, NoteIdWebsocket, ServerOptions>
-{
+  implements WebSocketAdapter<Server, NoteIdWebsocket, ServerOptions> {
   protected readonly logger = new Logger(YjsAdapter.name);
   private readonly httpServer: HttpServer;
 
-  constructor(private app: INestApplication) {
-    this.httpServer = app.getHttpServer() as HttpServer;
+  constructor(private app: NestApplication) {
+    this.httpServer = app.getUnderlyingHttpServer();
     if (!this.httpServer) {
       throw new Error("Can't use YjsAdapter without HTTP-Server");
     }
@@ -111,7 +106,7 @@ export class YjsAdapter
   }
 
   close(server: WebSocket.Server): void {
-    // TODO Check if clean-up with server is needed.
+    server.close();
     this.logger.warn('WebSocket server closed.');
   }
 }
