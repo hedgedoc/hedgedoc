@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { HttpServer, Logger, WebSocketAdapter, } from '@nestjs/common';
+import { HttpServer, Logger, WebSocketAdapter } from '@nestjs/common';
+import { NestApplication } from '@nestjs/core';
 import { CONNECTION_EVENT, ERROR_EVENT } from '@nestjs/websockets/constants';
 import http from 'http';
 import https from 'https';
@@ -12,7 +13,6 @@ import WebSocket, { Server, ServerOptions } from 'ws';
 
 import { MessageType } from './message-type';
 import { NoteIdWebsocket } from './note-id-websocket';
-import { NestApplication } from "@nestjs/core";
 
 export type MessageHandlerCallbackResponse = Promise<Uint8Array | void>;
 
@@ -24,7 +24,8 @@ interface MessageHandler {
 }
 
 export class YjsAdapter
-  implements WebSocketAdapter<Server, NoteIdWebsocket, ServerOptions> {
+  implements WebSocketAdapter<Server, NoteIdWebsocket, ServerOptions>
+{
   protected readonly logger = new Logger(YjsAdapter.name);
   private readonly httpServer: HttpServer;
 
@@ -71,7 +72,7 @@ export class YjsAdapter
     });
   }
 
-  create(port: number, options?: ServerOptions): Server {
+  create(): Server {
     this.logger.log('Initiating WebSocket server for realtime communication');
     const server = new Server({
       server: this.httpServer as unknown as WebServer,
