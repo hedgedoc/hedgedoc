@@ -80,7 +80,7 @@ export class YjsAdapter
     this.logger.log('Initiating WebSocket server for realtime communication');
     const server = new Server({
       server: this.httpServer as unknown as WebServer,
-      path: '/realtime',
+      path: '/realtime/',
     });
     return this.bindErrorHandler(server);
   }
