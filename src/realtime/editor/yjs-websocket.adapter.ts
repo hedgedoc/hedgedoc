@@ -3,41 +3,28 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  HttpServer,
-  INestApplication,
-  Logger,
-  WebSocketAdapter,
-} from '@nestjs/common';
-import { CONNECTION_EVENT, ERROR_EVENT } from '@nestjs/websockets/constants';
-import http from 'http';
-import https from 'https';
+import { INestApplication, Logger, } from '@nestjs/common';
 import { decoding } from 'lib0';
-import WebSocket, { Server, ServerOptions } from 'ws';
+import { Server, ServerOptions } from 'ws';
 
 import { MessageType } from './message-type';
 import { NoteIdWebsocket } from './note-id-websocket';
+import { Observable } from "rxjs";
+import { WsAdapter } from "@nestjs/platform-ws";
+import { MessageMappingProperties } from "@nestjs/websockets";
 
 export type MessageHandlerCallbackResponse = Promise<Uint8Array | void>;
-
-type WebServer = http.Server | https.Server;
 
 interface MessageHandler {
   message: string;
   callback: (decoder: decoding.Decoder) => MessageHandlerCallbackResponse;
 }
 
-export class YjsWebsocketAdapter
-  implements WebSocketAdapter<Server, NoteIdWebsocket, ServerOptions>
-{
+export class YjsWebsocketAdapter extends WsAdapter {
   protected readonly logger = new Logger(YjsWebsocketAdapter.name);
-  private readonly httpServer: HttpServer;
 
   constructor(private app: INestApplication) {
-    this.httpServer = app.getHttpServer() as HttpServer;
-    if (!this.httpServer) {
-      throw new Error("Can't use YjsAdapter without HTTP-Server");
-    }
+    super(app);
   }
 
   bindMessageHandlers(
@@ -78,41 +65,6 @@ export class YjsWebsocketAdapter
 
   create(port: number, options: ServerOptions): Server {
     this.logger.log('Initiating WebSocket server for realtime communication');
-    const server = new Server({
-      server: this.httpServer as unknown as WebServer,
-      ...options,
-    });
-    return this.bindErrorHandler(server);
-  }
-
-  bindErrorHandler(server: Server): Server {
-    server.on(CONNECTION_EVENT, (ws) =>
-      ws.on(ERROR_EVENT, (err: Error) => this.logger.error(err)),
-    );
-    server.on(ERROR_EVENT, (err: Error) => this.logger.error(err));
-    return server;
-  }
-
-  bindClientConnect(
-    server: WebSocket.Server,
-    callback: (
-      this: Server,
-      socket: NoteIdWebsocket,
-      request: http.IncomingMessage,
-    ) => void,
-  ): void {
-    server.on('connection', callback);
-  }
-
-  bindClientDisconnect(
-    client: NoteIdWebsocket,
-    callback: (socket: NoteIdWebsocket) => void,
-  ): void {
-    client.on('close', callback);
-  }
-
-  close(server: WebSocket.Server): void {
-    server.close();
-    this.logger.warn('WebSocket server closed.');
+    return super.create(port, options) as Server;
   }
 }
