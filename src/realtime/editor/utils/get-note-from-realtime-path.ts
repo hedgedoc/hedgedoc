@@ -6,7 +6,7 @@
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
 
-const REALTIME_PATH_REGEX = /^\/realtime\/(.+)$/;
+const REALTIME_PATH_REGEX = /^\/realtime\/\?noteId=(.+)$/;
 
 export async function getNoteFromRealtimePath(
   noteService: NotesService,
