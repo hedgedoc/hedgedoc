@@ -3,22 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { INestApplication, Logger, } from '@nestjs/common';
+import { INestApplication, Logger } from '@nestjs/common';
+import { WsAdapter } from '@nestjs/platform-ws';
+import { MessageMappingProperties } from '@nestjs/websockets';
 import { decoding } from 'lib0';
 import { Server, ServerOptions } from 'ws';
 
 import { MessageType } from './message-type';
 import { NoteIdWebsocket } from './note-id-websocket';
-import { Observable } from "rxjs";
-import { WsAdapter } from "@nestjs/platform-ws";
-import { MessageMappingProperties } from "@nestjs/websockets";
 
 export type MessageHandlerCallbackResponse = Promise<Uint8Array | void>;
-
-interface MessageHandler {
-  message: string;
-  callback: (decoder: decoding.Decoder) => MessageHandlerCallbackResponse;
-}
 
 export class YjsWebsocketAdapter extends WsAdapter {
   protected readonly logger = new Logger(YjsWebsocketAdapter.name);
@@ -29,7 +23,7 @@ export class YjsWebsocketAdapter extends WsAdapter {
 
   bindMessageHandlers(
     client: NoteIdWebsocket,
-    handlers: MessageHandler[],
+    handlers: MessageMappingProperties[],
   ): void {
     client.binaryType = 'arraybuffer';
     client.on('message', (data: ArrayBuffer) => {
@@ -37,7 +31,7 @@ export class YjsWebsocketAdapter extends WsAdapter {
       const decoder = decoding.createDecoder(uint8Data);
       const messageType = decoding.readVarUint(decoder);
       const handler = handlers.find(
-        (handler) => handler.message === MessageType[messageType],
+        (handler) => handler.message === messageType,
       );
       if (!handler) {
         this.logger.error(
@@ -45,8 +39,7 @@ export class YjsWebsocketAdapter extends WsAdapter {
         );
         return;
       }
-      handler
-        .callback(decoder)
+      (handler.callback(decoder) as MessageHandlerCallbackResponse)
         .then((response) => {
           if (!response) {
             return;
