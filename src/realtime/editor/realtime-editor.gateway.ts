@@ -27,12 +27,12 @@ import { MessageType } from './message-type';
 import { MultiClientAwarenessYDoc } from './multi-client-awareness-y-doc';
 import { NoteIdWebsocket } from './note-id-websocket';
 import { getNoteFromRealtimePath } from './utils/get-note-from-realtime-path';
-import { MessageHandlerCallbackResponse } from './yjs.adapter';
+import { MessageHandlerCallbackResponse } from './yjs-websocket.adapter';
 
 /**
  * Gateway implementing the realtime logic required for realtime note editing.
  */
-@WebSocketGateway()
+@WebSocketGateway({ path: '/realtime/' })
 export class RealtimeEditorGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {

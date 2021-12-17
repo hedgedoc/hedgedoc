@@ -15,7 +15,7 @@ import { AuthConfig } from './config/auth.config';
 import { MediaConfig } from './config/media.config';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { BackendType } from './media/backends/backend-type.enum';
-import { YjsAdapter } from './realtime/editor/yjs.adapter';
+import { YjsWebsocketAdapter } from './realtime/editor/yjs-websocket.adapter';
 import { setupSpecialGroups } from './utils/createSpecialGroups';
 import { setupFrontendProxy } from './utils/frontend-integration';
 import { setupSessionMiddleware } from './utils/session';
@@ -35,7 +35,7 @@ async function bootstrap(): Promise<void> {
   const authConfig = configService.get<AuthConfig>('authConfig');
   const mediaConfig = configService.get<MediaConfig>('mediaConfig');
 
-  app.useWebSocketAdapter(new YjsAdapter(app));
+  app.useWebSocketAdapter(new YjsWebsocketAdapter(app));
 
   if (!appConfig || !authConfig || !mediaConfig) {
     logger.error('Could not initialize config, aborting.', 'AppBootstrap');

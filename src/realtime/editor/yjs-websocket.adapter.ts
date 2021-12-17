@@ -27,10 +27,10 @@ interface MessageHandler {
   callback: (decoder: decoding.Decoder) => MessageHandlerCallbackResponse;
 }
 
-export class YjsAdapter
+export class YjsWebsocketAdapter
   implements WebSocketAdapter<Server, NoteIdWebsocket, ServerOptions>
 {
-  protected readonly logger = new Logger(YjsAdapter.name);
+  protected readonly logger = new Logger(YjsWebsocketAdapter.name);
   private readonly httpServer: HttpServer;
 
   constructor(private app: INestApplication) {
@@ -76,11 +76,11 @@ export class YjsAdapter
     });
   }
 
-  create(): Server {
+  create(port: number, options: ServerOptions): Server {
     this.logger.log('Initiating WebSocket server for realtime communication');
     const server = new Server({
       server: this.httpServer as unknown as WebServer,
-      path: '/realtime/',
+      ...options,
     });
     return this.bindErrorHandler(server);
   }
