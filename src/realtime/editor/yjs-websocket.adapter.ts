@@ -7,10 +7,9 @@ import { INestApplication, Logger } from '@nestjs/common';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { MessageMappingProperties } from '@nestjs/websockets';
 import { decoding } from 'lib0';
-import { Server, ServerOptions } from 'ws';
+import WebSocket, { Server, ServerOptions } from 'ws';
 
 import { MessageType } from './message-type';
-import { NoteIdWebsocket } from './note-id-websocket';
 
 export type MessageHandlerCallbackResponse = Promise<Uint8Array | void>;
 
@@ -22,7 +21,7 @@ export class YjsWebsocketAdapter extends WsAdapter {
   }
 
   bindMessageHandlers(
-    client: NoteIdWebsocket,
+    client: WebSocket,
     handlers: MessageMappingProperties[],
   ): void {
     client.binaryType = 'arraybuffer';
