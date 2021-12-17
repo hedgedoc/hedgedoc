@@ -35,6 +35,9 @@ export class YjsAdapter
 
   constructor(private app: INestApplication) {
     this.httpServer = app.getHttpServer() as HttpServer;
+    if (!this.httpServer) {
+      throw new Error("Can't use YjsAdapter without HTTP-Server");
+    }
   }
 
   bindMessageHandlers(
@@ -50,7 +53,9 @@ export class YjsAdapter
         (handler) => handler.message === MessageType[messageType],
       );
       if (!handler) {
-        this.logger.error('Some message handlers were not defined!');
+        this.logger.error(
+          `Message handler for ${MessageType[messageType]} wasn't defined!`,
+        );
         return;
       }
       handler
@@ -73,18 +78,8 @@ export class YjsAdapter
 
   create(port: number, options?: ServerOptions): Server {
     this.logger.log('Initiating WebSocket server for realtime communication');
-    if (this.httpServer) {
-      this.logger.log('Using existing WebServer for WebSocket communication');
-      const server = new Server({
-        server: this.httpServer as unknown as WebServer,
-        ...options,
-      });
-      return this.bindErrorHandler(server);
-    }
-    this.logger.log('Using new WebSocket server instance');
     const server = new Server({
-      port,
-      ...options,
+      server: this.httpServer as unknown as WebServer,
     });
     return this.bindErrorHandler(server);
   }
