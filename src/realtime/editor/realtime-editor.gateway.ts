@@ -104,15 +104,22 @@ export class RealtimeEditorGateway
       return;
     }
 
-    if (!this.noteYDocMap.has(note.id)) {
-      const yDoc = new MultiClientAwarenessYDoc();
-      this.noteYDocMap.set(note.id, yDoc);
-    }
-    const yDoc = this.noteYDocMap.get(note.id);
-    yDoc?.connect(client);
+    client.setNoteId(note.id);
+    this.getOrCreateYDoc(note.id).connect(client);
     this.logger.debug(
       `Connection to note '${note.id}' by user '${user.username}'`,
     );
+  }
+
+  private getOrCreateYDoc(noteId: string): MultiClientAwarenessYDoc {
+    const yDoc = this.noteYDocMap.get(noteId);
+    if (!yDoc) {
+      const yDoc = new MultiClientAwarenessYDoc();
+      this.noteYDocMap.set(noteId, yDoc);
+      return yDoc;
+    } else {
+      return yDoc;
+    }
   }
 
   /**
