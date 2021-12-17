@@ -3,8 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { HttpServer, Logger, WebSocketAdapter } from '@nestjs/common';
-import { NestApplication } from '@nestjs/core';
+import {
+  HttpServer,
+  INestApplication,
+  Logger,
+  WebSocketAdapter,
+} from '@nestjs/common';
 import { CONNECTION_EVENT, ERROR_EVENT } from '@nestjs/websockets/constants';
 import http from 'http';
 import https from 'https';
@@ -29,8 +33,8 @@ export class YjsAdapter
   protected readonly logger = new Logger(YjsAdapter.name);
   private readonly httpServer: HttpServer;
 
-  constructor(private app: NestApplication) {
-    this.httpServer = app.getUnderlyingHttpServer();
+  constructor(private app: INestApplication) {
+    this.httpServer = app.getHttpServer() as HttpServer;
     if (!this.httpServer) {
       throw new Error("Can't use YjsAdapter without HTTP-Server");
     }
@@ -76,6 +80,7 @@ export class YjsAdapter
     this.logger.log('Initiating WebSocket server for realtime communication');
     const server = new Server({
       server: this.httpServer as unknown as WebServer,
+      path: '/realtime',
     });
     return this.bindErrorHandler(server);
   }
