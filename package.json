@@ -25,11 +25,11 @@
   },
   "dependencies": {
     "@azure/storage-blob": "12.8.0",
-    "@nestjs/common": "8.2.3",
+    "@nestjs/common": "8.2.4",
     "@nestjs/config": "1.1.5",
-    "@nestjs/core": "8.2.3",
+    "@nestjs/core": "8.2.4",
     "@nestjs/passport": "8.0.1",
-    "@nestjs/platform-express": "8.2.3",
+    "@nestjs/platform-express": "8.2.4",
     "@nestjs/schedule": "1.0.2",
     "@nestjs/swagger": "5.1.5",
     "@nestjs/typeorm": "8.0.2",
@@ -62,9 +62,9 @@
     "typeorm": "0.2.41"
   },
   "devDependencies": {
-    "@nestjs/cli": "8.1.5",
+    "@nestjs/cli": "8.1.6",
     "@nestjs/schematics": "8.0.5",
-    "@nestjs/testing": "8.2.3",
+    "@nestjs/testing": "8.2.4",
     "@trivago/prettier-plugin-sort-imports": "3.1.1",
     "@tsconfig/node12": "1.0.9",
     "@types/cli-color": "2.0.1",
