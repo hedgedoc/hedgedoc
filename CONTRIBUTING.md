@@ -67,9 +67,52 @@ If you can certify it, then just add a line to every git commit message:
 
 Use your real name (sorry, no pseudonyms or anonymous contributions).
 
-If you set your `user.name` and `user.email` git configs, you can sign your commit automatically with `git commit -s`.
-You can also use git [aliases](https://git-scm.com/book/tr/v2/Git-Basics-Git-Aliases)
-like `git config --global alias.ci 'commit -s'`. Now you can commit with `git ci` and the commit will be signed.
+### How to sign-off commits
+
+The sign-off message can either be added by hand to your commit message or automatically by git.
+
+This is accomplished by using the `-s` or `--signoff` option on your regular commit command.
+
+e.g.
+```bash
+git commit -s
+```
+or
+```bash
+git commit --signoff
+```
+
+This will use the name and email you configured in git.
+
+Find out how you can change your name and email in this guide from [GitHub](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-user-account/managing-email-preferences/setting-your-commit-email-address#setting-your-commit-email-address-in-git)
+
+#### How to amend a sign-off
+
+The last commit on any given branch can be amended to include the sign-off message like this:
+
+```bash
+git commit --amend --signoff
+```
+
+#### Amend a sign-off to multiple commits 
+
+Assuming you have the upstream hedgedoc repo as `upstream`:
+
+Run `git fetch upstream` to get the latest content from the upstream repository
+and then use `git rebase --signoff upstream/master` or `git rebase --signoff upstream/develop`
+to rebase all commits in your current branch, that are different from upstream you try to merge with, and sign them off.
+
+If you've already pushed these commits to GitHub, you'll need to force push your branch after this with `git push --force-with-lease`.
+
+## Changelog snippets
+
+PRs that fix a bug or add a new feature or enhancement should add a corresponding changelog entry.
+The changelog can be found at `public/docs/release-notes.md`. If there is no section for the next release yet, just add
+one using `## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED`. The version and date will
+be filled later by the maintainers.  
+Add a short description for your change in the `Features`, `Enhancements` or `Bugfixes` section, creating the section
+if needed. Have a look at previous entries for inspiration.
+You are welcome to add a `(by [@your_username](https://github.com/your_username))` note to your entry.
 
 ## Submitting a Pull Request
 
