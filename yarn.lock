@@ -5263,7 +5263,7 @@ __metadata:
     source-map-support: 0.5.21
     sqlite3: 5.0.2
     supertest: 6.1.6
-    swagger-ui-express: 4.2.0
+    swagger-ui-express: 4.3.0
     ts-jest: 27.1.2
     ts-node: 10.4.0
     tsconfig-paths: 3.12.0
@@ -9153,21 +9153,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swagger-ui-dist@npm:>3.52.5":
+"swagger-ui-dist@npm:>=4.1.3":
   version: 4.1.3
   resolution: "swagger-ui-dist@npm:4.1.3"
   checksum: b44ca8000af338218ae11ad0309c408ed07b2de0d0c2c9a9391ba4fe9e0198bcd8ed5d89e9ddafd44de99389d47deba9eeac130187b4024b896e60f07258f0dc
   languageName: node
   linkType: hard
 
-"swagger-ui-express@npm:4.2.0":
-  version: 4.2.0
-  resolution: "swagger-ui-express@npm:4.2.0"
+"swagger-ui-express@npm:4.3.0":
+  version: 4.3.0
+  resolution: "swagger-ui-express@npm:4.3.0"
   dependencies:
-    swagger-ui-dist: ">3.52.5"
+    swagger-ui-dist: ">=4.1.3"
   peerDependencies:
     express: ">=4.0.0"
-  checksum: e87255305edc2e48629d836f5839ecf31d031fffaacf029e2f34ea0823b72a5031302aae0d6a51d4eda5963ab731768028b97b990fa0f5dcceefdd9de2073aba
+  checksum: 8d2e1e5389efff59f19fbea9156e8db676a77aa80812872899f46a6e97e697b4e0ea0baccc5ec0f266371a6e604c2289fc84f2edc623a37f51f2393553796a8b
   languageName: node
   linkType: hard
 
