@@ -191,7 +191,7 @@
     "ts-loader": "9.2.6",
     "ts-mockery": "1.2.0",
     "twemoji-colr-font": "0.0.4",
-    "typescript": "4.5.3",
+    "typescript": "4.5.4",
     "use-resize-observer": "8.0.0",
     "uuid": "8.3.2",
     "vega": "5.21.0",
