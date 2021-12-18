@@ -50,7 +50,7 @@
     "minio": "7.0.25",
     "nest-router": "1.0.9",
     "node-fetch": "2.6.6",
-    "passport": "0.5.0",
+    "passport": "0.5.2",
     "passport-http-bearer": "1.0.1",
     "passport-local": "1.0.0",
     "raw-body": "2.4.2",
