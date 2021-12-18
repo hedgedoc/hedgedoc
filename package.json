@@ -58,7 +58,7 @@
     "rimraf": "3.0.2",
     "rxjs": "7.4.0",
     "sqlite3": "5.0.2",
-    "swagger-ui-express": "4.2.0",
+    "swagger-ui-express": "4.3.0",
     "typeorm": "0.2.41"
   },
   "devDependencies": {
