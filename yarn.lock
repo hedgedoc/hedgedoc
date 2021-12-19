@@ -1427,10 +1427,10 @@
     react "^17.0.2"
     react-dom "^17.0.2"
 
-"@hedgedoc/markdown-it-image-size@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@hedgedoc/markdown-it-image-size/-/markdown-it-image-size-1.0.1.tgz#c785aa544b9f392cac742ec660c8dfc7459c2585"
-  integrity sha512-kqqXIb0NfUp4cl0kN7UlOL/zwe+OgESfZ69luPSRTMObdO54C3dCumKoIodbQau8HE8fkN44uQSFhMt6mSdsLg==
+"@hedgedoc/markdown-it-image-size@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@hedgedoc/markdown-it-image-size/-/markdown-it-image-size-1.0.3.tgz#05cc89bc7ba24216c93f79e240e63c49b3e38b0c"
+  integrity sha512-YLI1r4e4k7tCt6nLVcUjM/fXQJWMpz6psUgg7FJgHGxGPyC15heY24qK/HjB0gYpFyUUdRANR6mngWg+PufZXA==
 
 "@hedgedoc/markdown-it-task-lists@1.0.2":
   version "1.0.2"
