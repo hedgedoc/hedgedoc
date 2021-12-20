@@ -1300,10 +1300,10 @@
   resolved "https://registry.yarnpkg.com/@hedgedoc/markdown-it-image-size/-/markdown-it-image-size-1.0.3.tgz#05cc89bc7ba24216c93f79e240e63c49b3e38b0c"
   integrity sha512-YLI1r4e4k7tCt6nLVcUjM/fXQJWMpz6psUgg7FJgHGxGPyC15heY24qK/HjB0gYpFyUUdRANR6mngWg+PufZXA==
 
-"@hedgedoc/markdown-it-task-lists@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@hedgedoc/markdown-it-task-lists/-/markdown-it-task-lists-1.0.2.tgz#3e140fad624fba0d066ebab0b6d25da9e210b98b"
-  integrity sha512-E0sCN3BkWUY9SGD+h5qQsjmsnQBrBOyfIdlTi5Gs6K3eCSanCCm9caJfnRAJCCWyfqBTP30p4LfR+dGosyYajw==
+"@hedgedoc/markdown-it-task-lists@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@hedgedoc/markdown-it-task-lists/-/markdown-it-task-lists-1.0.3.tgz#a7ed9f65c9b0656b1f26eae1068679b8662a7e39"
+  integrity sha512-/Gi8zNbr7oD/LIdNEKeYAVV2e/z+sjrfuWHDOL+2HQKdpQaMBMpG0xb/aN3CQmJiKQCWUaBO47iuapn7VUh98w==
 
 "@hpcc-js/wasm@1.4.1":
   version "1.4.1"
