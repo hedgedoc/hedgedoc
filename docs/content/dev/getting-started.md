@@ -40,7 +40,8 @@ to run both at the same time.
 
 ## Testing
 
-- The backend will be available at `http://localhost:3000`.
-- The frontend will be available at `http://localhost:3001`.
+- After starting both frontend and backend, Hedgedoc will be available at `http://localhost:3000`.
 
-**Note:** The backend proxies requests to the frontend, so you can also point your browser at the backend.
+**Note:** If you only started the frontend, it will be available at `http://localhost:3001`.
+
+**Note:** If you want to use Hedgedoc with the real backend, point your browser at `http://localhost:3000`, as the backend proxies requests to the frontend and you'll get CORS errors if you try to use the frontend directly.
