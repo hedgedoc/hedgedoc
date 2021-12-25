@@ -116,7 +116,7 @@
     "@typescript-eslint/parser": "5.7.0",
     "abcjs": "6.0.0-beta.35",
     "bootstrap": "4.6.1",
-    "codemirror": "5.64.0",
+    "codemirror": "5.65.0",
     "copy-webpack-plugin": "6.4.1",
     "cross-env": "7.0.3",
     "cypress": "9.1.1",
