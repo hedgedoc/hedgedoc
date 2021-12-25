@@ -6245,10 +6245,10 @@ emittery@^0.7.1:
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.7.2.tgz#25595908e13af0f5674ab419396e2fb394cdfa82"
   integrity sha512-A8OG5SR/ij3SsJdWDJdkkSYUjQdCUx6APQXem0SaEePBSRg4eymGYwBkKo1Y6DU+af/Jn2dBQqDBvjnr9Vi8nQ==
 
-emoji-picker-element-data@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/emoji-picker-element-data/-/emoji-picker-element-data-1.2.0.tgz#755790b7e3ff5f62ae51220692b0359b704f4fd1"
-  integrity sha512-ziHcTY/7SFbk4KI0rQ6cb/KZo9A5ow0N3QT9bPTGGRxYAJd5gFQjShaM0OkW12rpLlKekOSOMT2hOlJB5QGqWQ==
+emoji-picker-element-data@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/emoji-picker-element-data/-/emoji-picker-element-data-1.3.0.tgz#64423b97a91dd0da798023077ebe745c287b23d4"
+  integrity sha512-0Hsp+MgX0R7wUKaRx34ILJsVsTaz2rpEDwdnb0lP3eEoquLVgZUY+jyrbdFzuwceY026egaeIRMVCcs239SCbQ==
 
 emoji-picker-element@1.10.0:
   version "1.10.0"

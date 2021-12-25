@@ -126,7 +126,7 @@
     "diff": "5.0.0",
     "dompurify": "2.3.4",
     "emoji-picker-element": "1.10.0",
-    "emoji-picker-element-data": "1.2.0",
+    "emoji-picker-element-data": "1.3.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-react-app": "6.0.0",
     "eslint-plugin-chai-friendly": "0.7.2",
