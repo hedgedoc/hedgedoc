@@ -187,7 +187,7 @@
     "redux-devtools-extension": "2.13.9",
     "reveal.js": "4.2.1",
     "sanitize-filename": "1.6.3",
-    "sass": "1.45.0",
+    "sass": "1.45.1",
     "ts-loader": "9.2.6",
     "ts-mockery": "1.2.0",
     "twemoji-colr-font": "0.0.4",
