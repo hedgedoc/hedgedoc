@@ -1434,10 +1434,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/cli-color@npm:2.0.1":
-  version: 2.0.1
-  resolution: "@types/cli-color@npm:2.0.1"
-  checksum: e2caa8693c02c0b81b1239768cad50dd0a27c75fd8db439057dea999d8adb506101cdc501b35c6603e3ca04eff9db8d8315c7429f002564c47d474bdef83e6c7
+"@types/cli-color@npm:2.0.2":
+  version: 2.0.2
+  resolution: "@types/cli-color@npm:2.0.2"
+  checksum: 255b57b6072ca09416987e37d01c20161115e2ed5e7e72166df15cc69c932e54e603200c86b1f6769eea13aec6fe128b1ed553f00b21f46d0ef7f2ed336fd100
   languageName: node
   linkType: hard
 
@@ -1698,10 +1698,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:16.11.14":
-  version: 16.11.14
-  resolution: "@types/node@npm:16.11.14"
-  checksum: 0bd4333fb4e56532db7f5174732268b18089913ddbb0e97957228e64f9fe3babf9923c77ce6f07d3d354445cfbb8d31b95c1f8be3c0f7426308bd8b93d3aaa02
+"@types/node@npm:16.11.17":
+  version: 16.11.17
+  resolution: "@types/node@npm:16.11.17"
+  checksum: 86ed84f79450f6aba1a6ef09f8407c10076966c3cc7cc4eb3d35b8ae4f47817e525641396ef0a667fa0a88fcdf484f6182812c074601403083bdf3b5e1ac0313
   languageName: node
   linkType: hard
 
@@ -5215,13 +5215,13 @@ __metadata:
     "@trivago/prettier-plugin-sort-imports": 3.1.1
     "@tsconfig/node12": 1.0.9
     "@types/bcrypt": 5.0.0
-    "@types/cli-color": 2.0.1
+    "@types/cli-color": 2.0.2
     "@types/cron": 1.7.3
     "@types/express": 4.17.13
     "@types/express-session": 1.17.4
     "@types/jest": 27.0.3
     "@types/minio": 7.0.11
-    "@types/node": 16.11.14
+    "@types/node": 16.11.17
     "@types/node-fetch": 2.5.12
     "@types/passport-http-bearer": 1.0.37
     "@types/passport-local": 1.0.34
