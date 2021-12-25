@@ -1285,10 +1285,10 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@hedgedoc/html-to-react@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@hedgedoc/html-to-react/-/html-to-react-1.1.0.tgz#36c4bd5c291ee158393cf010d95f580ec86e3e73"
-  integrity sha512-no4IAT2pd4fneNbHEjvg3g03gv1DsFEcSLHzSYvXLHyjcvpW0qbvJEPZnRDGqQmEymgk93tsyi3VISOSkxRdxA==
+"@hedgedoc/html-to-react@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@hedgedoc/html-to-react/-/html-to-react-1.1.1.tgz#e89de3ff410448e4396d0e520b69a2c8430bf4ee"
+  integrity sha512-g8phoYMRKcO49V93Iay4Wu/GxfyMFskde9OEmWrg5XUAZFmAHalmDf5atmJ1QLWMepKOFXfX6Y++vIU8ECHzrA==
   dependencies:
     "@types/react" "^17.0.11"
     htmlparser2 "^7.0.0"
