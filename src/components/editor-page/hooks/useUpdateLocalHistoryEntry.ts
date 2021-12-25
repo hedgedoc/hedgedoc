@@ -7,15 +7,13 @@
 import equal from 'fast-deep-equal'
 import { useEffect, useRef } from 'react'
 import { store } from '../../../redux'
-import { useParams } from 'react-router-dom'
-import type { EditorPagePathParams } from '../editor-page'
 import type { HistoryEntry } from '../../../redux/history/types'
 import { HistoryEntryOrigin } from '../../../redux/history/types'
 import { updateLocalHistoryEntry } from '../../../redux/history/methods'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export const useUpdateLocalHistoryEntry = (updateReady: boolean): void => {
-  const { id } = useParams<EditorPagePathParams>()
+  const id = useApplicationState((state) => state.noteDetails.id)
   const userExists = useApplicationState((state) => !!state.user)
   const currentNoteTitle = useApplicationState((state) => state.noteDetails.noteTitle)
   const currentNoteTags = useApplicationState((state) => state.noteDetails.frontmatter.tags)

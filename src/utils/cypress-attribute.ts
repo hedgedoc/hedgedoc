@@ -41,7 +41,10 @@ export const cypressId = (
  * @param value The attribute content
  * @return An object if in test mode, undefined otherwise.
  */
-export const cypressAttribute = (attribute: string, value: string): Record<string, string> | undefined => {
+export const cypressAttribute = (
+  attribute: string,
+  value: string | undefined
+): Record<string, string | undefined> | undefined => {
   if (!isTestMode()) {
     return
   }

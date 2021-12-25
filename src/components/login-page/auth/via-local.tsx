@@ -8,7 +8,6 @@ import type { ChangeEvent, FormEvent } from 'react'
 import React, { useCallback, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 import { doLocalLogin } from '../../../api/auth/local'
 import { ShowIf } from '../../common/show-if/show-if'
 import { fetchAndSetUser } from './utils'
@@ -17,6 +16,7 @@ import { AuthError as AuthErrorType } from '../../../api/auth'
 import { UsernameField } from './fields/username-field'
 import { PasswordField } from './fields/password-field'
 import { AuthError } from './auth-error/auth-error'
+import Link from 'next/link'
 
 /**
  * Renders the local login box with username and password field and the optional button for registering a new user.
@@ -68,7 +68,7 @@ export const ViaLocal: React.FC = () => {
               <Trans i18nKey='login.signIn' />
             </Button>
             <ShowIf condition={allowRegister}>
-              <Link to={'/register'}>
+              <Link href={'/register'} passHref={true}>
                 <Button type='button' variant='secondary' className='mx-2'>
                   <Trans i18nKey='login.register.title' />
                 </Button>

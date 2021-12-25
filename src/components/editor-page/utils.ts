@@ -4,4 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export const isMac = navigator.platform.toLowerCase().includes('mac')
+import { isClientSideRendering } from '../../utils/is-client-side-rendering'
+
+export const isMac: () => boolean = () => isClientSideRendering() && navigator.platform.toLowerCase().includes('mac')

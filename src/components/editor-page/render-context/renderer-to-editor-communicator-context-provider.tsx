@@ -6,9 +6,9 @@
 
 import React, { createContext, useContext, useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import type { ApplicationState } from '../../../redux'
 import { RendererToEditorCommunicator } from '../../render-page/window-post-message-communicator/renderer-to-editor-communicator'
 import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
+import type { ApplicationState } from '../../../redux/application-state'
 
 const RendererToEditorCommunicatorContext = createContext<RendererToEditorCommunicator | undefined>(undefined)
 

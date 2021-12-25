@@ -8,12 +8,13 @@ import type { ReactElement } from 'react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SplitDivider } from './split-divider/split-divider'
-import './splitter.scss'
+import styles from './splitter.module.scss'
 import { useAdjustedRelativeSplitValue } from './hooks/use-adjusted-relative-split-value'
+import { cypressId } from '../../../utils/cypress-attribute'
 
 export interface SplitterProps {
-  left: ReactElement
-  right: ReactElement
+  left?: ReactElement
+  right?: ReactElement
   additionalContainerClassName?: string
   showLeft: boolean
   showRight: boolean
@@ -130,17 +131,19 @@ export const Splitter: React.FC<SplitterProps> = ({
   return (
     <div ref={splitContainer} className={`flex-fill flex-row d-flex ${additionalContainerClassName || ''}`}>
       <div
-        className={`splitter left ${!showLeft ? 'd-none' : ''}`}
+        {...cypressId('splitter-left')}
+        className={`${styles['splitter']} ${styles['left']} ${!showLeft ? 'd-none' : ''}`}
         style={{ width: `calc(${adjustedRelativeSplitValue}% - 5px)` }}>
         {left}
       </div>
       <ShowIf condition={showLeft && showRight}>
-        <div className='splitter separator'>
+        <div className={`${styles['splitter']} ${styles['separator']}`} {...cypressId('splitter-separator')}>
           <SplitDivider onGrab={onStartResizing} />
         </div>
       </ShowIf>
       <div
-        className={`splitter right ${!showRight ? 'd-none' : ''}`}
+        {...cypressId('splitter-right')}
+        className={`${styles['splitter']} ${styles['right']} ${!showRight ? 'd-none' : ''}`}
         style={{ width: `calc(100% - ${adjustedRelativeSplitValue}%)` }}>
         {right}
       </div>

@@ -1,13 +1,14 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ShowIf } from '../show-if/show-if'
-import './user-avatar.scss'
+import Image from 'next/image'
+import styles from './user-avatar.module.scss'
 
 export interface UserAvatarProps {
   size?: 'sm' | 'lg'
@@ -20,16 +21,30 @@ export interface UserAvatarProps {
 const UserAvatar: React.FC<UserAvatarProps> = ({ name, photo, size, additionalClasses = '', showName = true }) => {
   const { t } = useTranslation()
 
+  const imageSize = useMemo(() => {
+    switch (size) {
+      case 'sm':
+        return 16
+      case 'lg':
+        return 30
+      default:
+        return 20
+    }
+  }, [size])
+
   return (
     <span className={'d-inline-flex align-items-center ' + additionalClasses}>
-      <img
+      <Image
         src={photo}
-        className={`user-avatar rounded mr-1 ${size ?? ''}`}
+        className={`rounded`}
         alt={t('common.avatarOf', { name })}
         title={name}
+        height={imageSize}
+        width={imageSize}
+        layout={'fixed'}
       />
       <ShowIf condition={showName}>
-        <span className='mx-1 user-line-name'>{name}</span>
+        <span className={`ml-2 mr-1 ${styles['user-line-name']}`}>{name}</span>
       </ShowIf>
     </span>
   )

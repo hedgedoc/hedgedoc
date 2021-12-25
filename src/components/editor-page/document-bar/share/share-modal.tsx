@@ -7,22 +7,20 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
-import { useFrontendBaseUrl } from '../../../../hooks/common/use-frontend-base-url'
 import { CopyableField } from '../../../common/copyable/copyable-field/copyable-field'
 import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
-import type { EditorPagePathParams } from '../../editor-page'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { NoteType } from '../../../../redux/note-details/types/note-details'
+import { useFrontendBaseUrl } from '../../../../hooks/common/use-frontend-base-url'
 
 export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   useTranslation()
   const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)
   const editorMode = useApplicationState((state) => state.editorConfig.editorMode)
   const baseUrl = useFrontendBaseUrl()
-  const { id } = useParams<EditorPagePathParams>()
+  const id = useApplicationState((state) => state.noteDetails.id)
 
   return (
     <CommonModal show={show} onHide={onHide} showCloseButton={true} title={'editor.modal.shareLink.title'}>

@@ -34,7 +34,7 @@ const initLoggedOutTestWithCustomAuthProviders = (
 describe('When logged-in, ', () => {
   it('sign-in button is hidden', () => {
     cy.visit('/')
-    cy.getById('sign-in-button').should('not.exist')
+    cy.getByCypressId('sign-in-button').should('not.exist')
   })
 })
 
@@ -42,7 +42,7 @@ describe('When logged-out ', () => {
   describe('and no auth-provider is enabled, ', () => {
     it('sign-in button is hidden', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, {})
-      cy.getById('sign-in-button').should('not.exist')
+      cy.getByCypressId('sign-in-button').should('not.exist')
     })
   })
 
@@ -51,14 +51,14 @@ describe('When logged-out ', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, {
         local: true
       })
-      cy.getById('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
+      cy.getByCypressId('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
     })
 
     it('sign-in button points to login route: ldap', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, {
         ldap: true
       })
-      cy.getById('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
+      cy.getByCypressId('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
     })
   })
 
@@ -67,7 +67,7 @@ describe('When logged-out ', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, {
         saml: true
       })
-      cy.getById('sign-in-button')
+      cy.getByCypressId('sign-in-button')
         .should('be.visible')
         // The absolute URL is used because it is defined as API base URL absolute.
         .should('have.attr', 'href', '/mock-backend/auth/saml')
@@ -80,7 +80,7 @@ describe('When logged-out ', () => {
         saml: true,
         github: true
       })
-      cy.getById('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
+      cy.getByCypressId('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
     })
   })
 
@@ -90,7 +90,7 @@ describe('When logged-out ', () => {
         saml: true,
         local: true
       })
-      cy.getById('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
+      cy.getByCypressId('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
     })
   })
 })

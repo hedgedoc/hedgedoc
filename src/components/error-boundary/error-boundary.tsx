@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import type { ErrorInfo, ReactNode } from 'react'
@@ -25,7 +25,7 @@ export class ErrorBoundary extends Component {
     this.state = { hasError: false }
   }
 
-  static getDerivedStateFromError(_error: Error): { hasError: boolean } {
+  static getDerivedStateFromError(): { hasError: boolean } {
     // Update state so the next render will show the fallback UI.
     return { hasError: true }
   }
@@ -45,8 +45,8 @@ export class ErrorBoundary extends Component {
           <div className='text-light d-flex flex-column align-items-center justify-content-center my-5'>
             <h1>An unknown error occurred</h1>
             <p>
-              Don't worry, this happens sometimes. If this is the first time you see this page then try reloading the
-              app.
+              Don&apos;t worry, this happens sometimes. If this is the first time you see this page then try reloading
+              the app.
             </p>
             If you can reproduce this error, then we would be glad if you&#32;
             <ExternalLink

@@ -1,16 +1,17 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useCallback, useRef } from 'react'
+import React, { Fragment, useCallback, useMemo, useRef } from 'react'
 import { Button, FormControl, InputGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../../show-if/show-if'
 import { CopyOverlay } from '../copy-overlay'
 import { Logger } from '../../../../utils/logger'
+import { isClientSideRendering } from '../../../../utils/is-client-side-rendering'
 
 export interface CopyableFieldProps {
   content: string
@@ -25,6 +26,10 @@ export const CopyableField: React.FC<CopyableFieldProps> = ({ content, nativeSha
   const copyButton = useRef<HTMLButtonElement>(null)
 
   const doShareAction = useCallback(() => {
+    if (!isClientSideRendering()) {
+      log.error('Native sharing not available in server side rendering')
+      return
+    }
     navigator
       .share({
         text: content,
@@ -35,7 +40,7 @@ export const CopyableField: React.FC<CopyableFieldProps> = ({ content, nativeSha
       })
   }, [content, url])
 
-  const sharingSupported = typeof navigator.share === 'function'
+  const sharingSupported = useMemo(() => isClientSideRendering() && typeof navigator.share === 'function', [])
 
   return (
     <Fragment>

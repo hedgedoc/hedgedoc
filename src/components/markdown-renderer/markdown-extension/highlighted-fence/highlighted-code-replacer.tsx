@@ -57,4 +57,8 @@ export class HighlightedCodeReplacer extends ComponentReplacer {
       />
     )
   }
+
+  reset() {
+    this.lastLineNumber = 0
+  }
 }

@@ -28,7 +28,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
   const communicator = useRendererToEditorCommunicator()
 
   const countWordsInRenderedDocument = useCallback(() => {
-    const documentContainer = document.querySelector('.markdown-body')
+    const documentContainer = document.querySelector('[data-word-count-target]')
     communicator.sendMessageToOtherSide({
       type: CommunicationMessageType.ON_WORD_COUNT_CALCULATED,
       words: documentContainer ? countWords(documentContainer) : 0

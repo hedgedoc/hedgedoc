@@ -13,7 +13,7 @@ import {
   DocumentInfoLineWithTimeMode,
   DocumentInfoTimeLine
 } from '../editor-page/document-bar/document-info/document-info-time-line'
-import './document-infobar.scss'
+import styles from './document-infobar.module.scss'
 import { useCustomizeAssetsUrl } from '../../hooks/common/use-customize-assets-url'
 
 export interface DocumentInfobarProps {
@@ -39,7 +39,7 @@ export const DocumentInfobar: React.FC<DocumentInfobarProps> = ({
   const assetsBaseUrl = useCustomizeAssetsUrl()
 
   return (
-    <div className={'d-flex flex-row my-3 document-infobar'}>
+    <div className={`d-flex flex-row my-3 ${styles['document-infobar']}`}>
       <div className={'col-md'}>&nbsp;</div>
       <div className={'d-flex flex-fill'}>
         <div className={'d-flex flex-column'}>

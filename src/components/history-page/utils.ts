@@ -6,17 +6,14 @@
 
 import { DateTime } from 'luxon'
 import { SortModeEnum } from './sort-button/sort-button'
-import type { HistoryToolbarState } from './history-toolbar/history-toolbar'
 import type { HistoryEntry } from '../../redux/history/types'
+import type { HistoryToolbarState } from './history-toolbar/history-toolbar-state'
 
 export const formatHistoryDate = (date: string): string => DateTime.fromISO(date).toFormat('DDDD T')
 
 export const sortAndFilterEntries = (entries: HistoryEntry[], toolbarState: HistoryToolbarState): HistoryEntry[] => {
   const filteredBySelectedTagsEntries = filterBySelectedTags(entries, toolbarState.selectedTags)
-  const filteredByKeywordSearchEntries = filterByKeywordSearch(
-    filteredBySelectedTagsEntries,
-    toolbarState.keywordSearch
-  )
+  const filteredByKeywordSearchEntries = filterByKeywordSearch(filteredBySelectedTagsEntries, toolbarState.search)
   return sortEntries(filteredByKeywordSearchEntries, toolbarState)
 }
 

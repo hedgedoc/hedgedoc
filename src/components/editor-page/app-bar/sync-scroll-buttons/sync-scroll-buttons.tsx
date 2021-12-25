@@ -8,9 +8,9 @@ import React from 'react'
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { setEditorSyncScroll } from '../../../../redux/editor/methods'
-import { ReactComponent as DisabledScrollIcon } from './disabledScroll.svg'
-import { ReactComponent as EnabledScrollIcon } from './enabledScroll.svg'
-import './sync-scroll-buttons.scss'
+import DisabledScroll from './disabledScroll.svg'
+import EnabledScroll from './enabledScroll.svg'
+import './sync-scroll-buttons.module.scss'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 enum SyncScrollState {
@@ -36,14 +36,14 @@ export const SyncScrollButtons: React.FC = () => {
         title={t('editor.appBar.syncScroll.enable')}
         onChange={() => setEditorSyncScroll(true)}
         value={SyncScrollState.SYNCED}>
-        <EnabledScrollIcon />
+        <EnabledScroll />
       </ToggleButton>
       <ToggleButton
         variant={'outline-secondary'}
         title={t('editor.appBar.syncScroll.disable')}
         onChange={() => setEditorSyncScroll(false)}
         value={SyncScrollState.UNSYNCED}>
-        <DisabledScrollIcon />
+        <DisabledScroll />
       </ToggleButton>
     </ToggleButtonGroup>
   )

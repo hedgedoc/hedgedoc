@@ -5,19 +5,20 @@
  */
 declare namespace Cypress {
   interface Chainable {
-    getById(id: string): Chainable<Element>
-    findById(id: string): Chainable<Element>
+    getByCypressId(id: string): Chainable<Element>
+
+    findByCypressId(id: string): Chainable<Element>
   }
 }
 
 const CYPRESS_ATTR = 'data-cypress-id'
 
-Cypress.Commands.add('getById', (id: string) => {
+Cypress.Commands.add('getByCypressId', (id: string) => {
   return cy.get(`[${CYPRESS_ATTR}="${id}"]`)
 })
 
 Cypress.Commands.add(
-  'findById',
+  'findByCypressId',
   {
     prevSubject: 'element'
   },

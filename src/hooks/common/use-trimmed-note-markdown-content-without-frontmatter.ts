@@ -6,21 +6,29 @@
 
 import { useMemo } from 'react'
 import { useApplicationState } from './use-application-state'
-import { useNoteMarkdownContent } from './use-note-markdown-content'
+import equal from 'fast-deep-equal'
 
+/**
+ * Returns the markdown content from the global application state trimmed to the maximal note length and without the frontmatter lines.
+ */
 export const useTrimmedNoteMarkdownContentWithoutFrontmatter = (): string[] => {
   const maxLength = useApplicationState((state) => state.config.maxDocumentLength)
-  const markdownContent = useNoteMarkdownContent()
-  const markdownContentLines = useApplicationState((state) => state.noteDetails.markdownContentLines)
+  const markdownContent = useApplicationState(
+    (state) => ({
+      lines: state.noteDetails.markdownContentLines,
+      content: state.noteDetails.markdownContent
+    }),
+    equal
+  )
   const lineOffset = useApplicationState((state) => state.noteDetails.frontmatterRendererInfo.lineOffset)
 
   const trimmedLines = useMemo(() => {
-    if (markdownContent.length > maxLength) {
-      return markdownContent.slice(0, maxLength).split('\n')
+    if (markdownContent.content.length > maxLength) {
+      return markdownContent.content.slice(0, maxLength).split('\n')
     } else {
-      return markdownContentLines
+      return markdownContent.lines
     }
-  }, [markdownContent, markdownContentLines, maxLength])
+  }, [markdownContent, maxLength])
 
   return useMemo(() => {
     return trimmedLines.slice(lineOffset)

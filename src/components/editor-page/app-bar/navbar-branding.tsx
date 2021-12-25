@@ -6,7 +6,7 @@
 
 import React from 'react'
 import { Navbar } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { useIsDarkModeActivated } from '../../../hooks/common/use-is-dark-mode-activated'
 import { Branding } from '../../common/branding/branding'
 import {
@@ -20,12 +20,14 @@ export const NavbarBranding: React.FC = () => {
 
   return (
     <Navbar.Brand>
-      <Link to='/intro' className='text-secondary text-decoration-none d-flex align-items-center'>
-        <HedgeDocLogoWithText
-          logoType={darkModeActivated ? HedgeDocLogoType.WB_HORIZONTAL : HedgeDocLogoType.BW_HORIZONTAL}
-          size={HedgeDocLogoSize.SMALL}
-        />
-        <Branding inline={true} />
+      <Link href='/intro'>
+        <a className='text-secondary text-decoration-none d-flex align-items-center'>
+          <HedgeDocLogoWithText
+            logoType={darkModeActivated ? HedgeDocLogoType.WB_HORIZONTAL : HedgeDocLogoType.BW_HORIZONTAL}
+            size={HedgeDocLogoSize.SMALL}
+          />
+          <Branding inline={true} />
+        </a>
       </Link>
     </Navbar.Brand>
   )

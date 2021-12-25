@@ -10,7 +10,7 @@ import { Button } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
 import type { IconName } from '../fork-awesome/types'
 import { ShowIf } from '../show-if/show-if'
-import './icon-button.scss'
+import styles from './icon-button.module.scss'
 
 export interface IconButtonProps extends ButtonProps {
   icon: IconName
@@ -30,12 +30,14 @@ export const IconButton: React.FC<IconButtonProps> = ({
   return (
     <Button
       {...props}
-      className={`btn-icon p-0 d-inline-flex align-items-stretch ${border ? 'with-border' : ''} ${className ?? ''}`}>
-      <span className='icon-part d-flex align-items-center'>
+      className={`${styles['btn-icon']} p-0 d-inline-flex align-items-stretch ${border ? styles['with-border'] : ''} ${
+        className ?? ''
+      }`}>
+      <span className={`${styles['icon-part']} d-flex align-items-center`}>
         <ForkAwesomeIcon icon={icon} fixedWidth={iconFixedWidth} className={'icon'} />
       </span>
       <ShowIf condition={!!children}>
-        <span className='text-part d-flex align-items-center'>{children}</span>
+        <span className={`${styles['text-part']} d-flex align-items-center`}>{children}</span>
       </ShowIf>
     </Button>
   )

@@ -33,9 +33,9 @@ Cypress.Commands.add('getReveal', () => {
 })
 
 Cypress.Commands.add('getMarkdownBody', () => {
-  return cy.getIframeBody(RendererType.DOCUMENT).find('.markdown-body')
+  return cy.getIframeBody(RendererType.DOCUMENT).findByCypressId('markdown-body')
 })
 
 Cypress.Commands.add('getIntroBody', () => {
-  return cy.getIframeBody(RendererType.INTRO).find('.markdown-body')
+  return cy.getIframeBody(RendererType.INTRO).findByCypressId('markdown-body')
 })

@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React from 'react'
@@ -10,7 +10,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../../common/show-if/show-if'
 import { DeleteNoteItem } from './delete-note-item'
-import './entry-menu.scss'
+import styles from './entry-menu.module.scss'
 import { RemoveNoteEntryItem } from './remove-note-entry-item'
 import { HistoryEntryOrigin } from '../../../redux/history/types'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
@@ -36,7 +36,7 @@ export const EntryMenu: React.FC<EntryMenuProps> = ({ id, title, origin, isDark,
       <Dropdown.Toggle
         variant={isDark ? 'secondary' : 'light'}
         id={`dropdown-card-${id}`}
-        className='no-arrow history-menu d-inline-flex align-items-center'>
+        className={`no-arrow ${styles['history-menu']} d-inline-flex align-items-center`}>
         <ForkAwesomeIcon icon='ellipsis-v' fixedWidth={true} />
       </Dropdown.Toggle>
 

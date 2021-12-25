@@ -8,7 +8,8 @@ import type { MutableRefObject } from 'react'
 import { useMemo } from 'react'
 import { TableOfContentsMarkdownExtension } from '../markdown-extension/table-of-contents-markdown-extension'
 import { VegaLiteMarkdownExtension } from '../markdown-extension/vega-lite/vega-lite-markdown-extension'
-import { MarkmapMarkdownExtension } from '../markdown-extension/markmap/markmap-markdown-extension'
+//TODO: fix dependency issues in markmap
+//import { MarkmapMarkdownExtension } from '../markdown-extension/markmap/markmap-markdown-extension'
 import { LinemarkerMarkdownExtension } from '../markdown-extension/linemarker/linemarker-markdown-extension'
 import { GistMarkdownExtension } from '../markdown-extension/gist/gist-markdown-extension'
 import { YoutubeMarkdownExtension } from '../markdown-extension/youtube/youtube-markdown-extension'
@@ -71,7 +72,7 @@ export const useMarkdownExtensions = (
       new TableOfContentsMarkdownExtension(onTocChange),
       ...additionalExtensions,
       new VegaLiteMarkdownExtension(),
-      new MarkmapMarkdownExtension(),
+      // new MarkmapMarkdownExtension(),
       new LinemarkerMarkdownExtension(
         lineOffset,
         currentLineMarkers ? (lineMarkers) => (currentLineMarkers.current = lineMarkers) : undefined

@@ -42,7 +42,7 @@ const processCommentNode = (node: DataNode): void => {
     return
   }
 
-  for (const dataAttribute of regexResult[2].matchAll(dataAttributesSyntax)) {
+  for (const dataAttribute of [...regexResult[2].matchAll(dataAttributesSyntax)]) {
     const attributeName = dataAttribute[1]
     const attributeValue = dataAttribute[2] ?? dataAttribute[3]
     if (attributeValue) {

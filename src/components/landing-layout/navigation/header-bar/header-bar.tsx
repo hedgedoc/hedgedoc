@@ -1,19 +1,18 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { Fragment } from 'react'
 import { Navbar } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { HeaderNavLink } from '../header-nav-link'
+import { HeaderNavLink } from './header-nav-link'
 import { NewGuestNoteButton } from '../new-guest-note-button'
 import { NewUserNoteButton } from '../new-user-note-button'
 import { SignInButton } from '../sign-in-button'
 import { UserDropdown } from '../user-dropdown'
-import './header-bar.scss'
 import { cypressId } from '../../../../utils/cypress-attribute'
 
 const HeaderBar: React.FC = () => {
@@ -22,7 +21,7 @@ const HeaderBar: React.FC = () => {
 
   return (
     <Navbar className='justify-content-between'>
-      <div className='nav header-nav'>
+      <div className='nav'>
         <HeaderNavLink to='/intro' {...cypressId('navLinkIntro')}>
           <Trans i18nKey='landing.navigation.intro' />
         </HeaderNavLink>

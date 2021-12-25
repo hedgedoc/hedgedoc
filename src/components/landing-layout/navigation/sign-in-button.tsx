@@ -8,12 +8,12 @@ import React, { useMemo } from 'react'
 import { Button } from 'react-bootstrap'
 import type { ButtonProps } from 'react-bootstrap/Button'
 import { Trans, useTranslation } from 'react-i18next'
-import { LinkContainer } from 'react-router-bootstrap'
 import { ShowIf } from '../../common/show-if/show-if'
 import { INTERACTIVE_LOGIN_METHODS } from '../../../api/auth'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { useBackendBaseUrl } from '../../../hooks/common/use-backend-base-url'
+import Link from 'next/link'
 
 export type SignInButtonProps = Omit<ButtonProps, 'href'>
 
@@ -37,11 +37,11 @@ export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props })
 
   return (
     <ShowIf condition={authEnabled}>
-      <LinkContainer to={loginLink} title={t('login.signIn')}>
-        <Button {...cypressId('sign-in-button')} variant={variant || 'success'} {...props}>
+      <Link href={loginLink} passHref={true}>
+        <Button title={t('login.signIn')} {...cypressId('sign-in-button')} variant={variant || 'success'} {...props}>
           <Trans i18nKey='login.signIn' />
         </Button>
-      </LinkContainer>
+      </Link>
     </ShowIf>
   )
 }

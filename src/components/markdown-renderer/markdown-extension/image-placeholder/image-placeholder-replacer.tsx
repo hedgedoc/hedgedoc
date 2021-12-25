@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { NativeRenderer, NodeReplacement, SubNodeTransform } from '../../replace-components/component-replacer'
+import type { NodeReplacement } from '../../replace-components/component-replacer'
 import { ComponentReplacer } from '../../replace-components/component-replacer'
 import type { Element } from 'domhandler'
 import { ImagePlaceholder } from './image-placeholder'
@@ -24,7 +24,7 @@ export class ImagePlaceholderReplacer extends ComponentReplacer {
     this.countPerSourceLine = new Map<number, number>()
   }
 
-  replace(node: Element, subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer): NodeReplacement {
+  replace(node: Element): NodeReplacement {
     if (node.name === 'img' && node.attribs && node.attribs.src === ImagePlaceholderMarkdownExtension.PLACEHOLDER_URL) {
       const lineIndex = Number(node.attribs['data-line'])
       const indexInLine = this.countPerSourceLine.get(lineIndex) ?? 0

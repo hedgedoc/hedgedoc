@@ -25,9 +25,10 @@ export const MotdModal: React.FC = () => {
     if (!motdState) {
       return null
     }
+    let index = 0
     return motdState.text
       ?.split('\n')
-      .map((line) => <span>{line}</span>)
+      .map((line) => <span key={(index += 1)}>{line}</span>)
       .reduce((previousLine, currentLine, currentLineIndex) => (
         <Fragment key={currentLineIndex}>
           {previousLine}

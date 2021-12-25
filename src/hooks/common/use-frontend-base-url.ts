@@ -1,15 +1,15 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { useLocation } from 'react-router'
+import { useRouter } from 'next/router'
+import { useMemo } from 'react'
 
 export const useFrontendBaseUrl = (): string => {
-  const { pathname } = useLocation()
-  const location = window.location
-  const cleanedPathName = location.pathname.replace(pathname, '')
-
-  return `${location.protocol}//${location.host}${cleanedPathName}/`
+  const { asPath } = useRouter()
+  return useMemo(() => {
+    return process.env.NEXT_PUBLIC_FRONTEND_ASSETS_URL || window.location.toString().replace(asPath, '') + '/'
+  }, [asPath])
 }

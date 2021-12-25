@@ -9,6 +9,14 @@ import { Cache } from './cache'
 describe('Test caching functionality', () => {
   let testCache: Cache<string, number>
 
+  beforeAll(() => {
+    jest.useFakeTimers()
+  })
+
+  afterAll(() => {
+    jest.useRealTimers()
+  })
+
   beforeEach(() => {
     testCache = new Cache<string, number>(1000)
   })

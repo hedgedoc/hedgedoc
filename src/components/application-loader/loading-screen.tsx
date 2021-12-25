@@ -1,29 +1,35 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React from 'react'
 import { Alert } from 'react-bootstrap'
 import { HedgeDocLogo, HedgeDocLogoSize } from '../common/hedge-doc-logo/hedge-doc-logo'
 import { ShowIf } from '../common/show-if/show-if'
+import styles from './application-loader.module.scss'
 
 export interface LoadingScreenProps {
-  failedTitle?: string
+  failedTaskName?: string
 }
 
-export const LoadingScreen: React.FC<LoadingScreenProps> = ({ failedTitle }) => {
+/**
+ * Renders a loading animation.
+ *
+ * @param failedTaskName Should be set if a task failed to load. The name will be shown on screen.
+ */
+export const LoadingScreen: React.FC<LoadingScreenProps> = ({ failedTaskName }) => {
   return (
-    <div className='loader middle text-light overflow-hidden'>
+    <div className={`${styles.loader} ${styles.middle} text-light overflow-hidden`}>
       <div className='mb-3 text-light'>
-        <span className={`d-block ${failedTitle ? 'animation-shake' : 'animation-jump'}`}>
+        <span className={`d-block ${failedTaskName ? styles['animation-shake'] : styles['animation-jump']}`}>
           <HedgeDocLogo size={HedgeDocLogoSize.BIG} />
         </span>
       </div>
-      <ShowIf condition={!!failedTitle}>
+      <ShowIf condition={!!failedTaskName}>
         <Alert variant={'danger'}>
-          The task '{failedTitle}' failed.
+          The task {failedTaskName} failed.
           <br />
           For further information look into the browser console.
         </Alert>

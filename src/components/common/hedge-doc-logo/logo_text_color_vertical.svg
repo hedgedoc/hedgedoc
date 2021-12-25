@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+
+SPDX-License-Identifier: LicenseRef-HedgeDoc-Icon-Usage-Guidelines
+-->
 <svg clip-rule="evenodd" fill-rule="evenodd" height="1000" stroke-linejoin="round" stroke-miterlimit="2"
      viewBox="0 0 1510 1000" width="1510" xmlns="http://www.w3.org/2000/svg">
     <linearGradient id="a" gradientTransform="matrix(200 -420 420 200 660 1340)" gradientUnits="userSpaceOnUse" x1="0"

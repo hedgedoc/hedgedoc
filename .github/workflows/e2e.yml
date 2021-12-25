@@ -22,7 +22,7 @@ jobs:
         uses: actions/cache@v2.1.7
         id: build-cache
         with:
-          path: build
+          path: .next
           key: build-${{ github.sha }}
 
       - name: Get yarn cache directory path
@@ -56,8 +56,8 @@ jobs:
 
       - uses: actions/upload-artifact@master
         with:
-          name: build
-          path: build
+          name: next-build
+          path: .next
 
   end2end:
     name: Perform E2E Test in ${{ matrix.browser }}
@@ -79,13 +79,13 @@ jobs:
       - name: Download built frontend
         uses: actions/download-artifact@master
         with:
-          name: build
-          path: build
+          name: next-build
+          path: .next
 
       - uses: cypress-io/github-action@v2
         with:
           browser: ${{ matrix.browser }}
-          start: 'yarn serve:build'
+          start: 'yarn start:ci'
           parallel: true
           record: true
           group: "UI - ${{ matrix.browser }}"

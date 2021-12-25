@@ -12,6 +12,7 @@ import type { RevisionListEntry } from '../../../../api/revisions/types'
 import type { UserResponse } from '../../../../api/users/types'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { UserAvatar } from '../../../common/user-avatar/user-avatar'
+import styles from './revision-modal-list-entry.module.scss'
 
 export interface RevisionModalListEntryProps {
   active: boolean
@@ -30,7 +31,7 @@ export const RevisionModalListEntry: React.FC<RevisionModalListEntryProps> = ({
     as='li'
     active={active}
     onClick={onClick}
-    className='user-select-none revision-item d-flex flex-column'>
+    className={`user-select-none ${styles['revision-item']} d-flex flex-column`}>
     <span>
       <ForkAwesomeIcon icon={'clock-o'} className='mx-2' />
       {DateTime.fromMillis(revision.timestamp * 1000).toFormat('DDDD T')}

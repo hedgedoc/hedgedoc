@@ -29,6 +29,7 @@ import {
   historyEntryToHistoryEntryUpdateDto
 } from '../../api/history/dto-methods'
 import { Logger } from '../../utils/logger'
+import { showErrorNotification } from '../ui-notifications/methods'
 
 const log = new Logger('Redux > History')
 
@@ -135,6 +136,10 @@ export const refreshHistoryState = async (): Promise<void> => {
   const remoteEntries = await loadRemoteHistory()
   const allEntries = mergeHistoryEntries(localEntries, remoteEntries)
   setHistoryEntries(allEntries)
+}
+
+export const safeRefreshHistoryState = (): void => {
+  refreshHistoryState().catch(showErrorNotification('landing.history.error.getHistory.text'))
 }
 
 export const storeLocalHistory = (): void => {

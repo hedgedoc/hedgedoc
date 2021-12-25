@@ -7,10 +7,10 @@
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { ShowIf } from '../../../common/show-if/show-if'
-import { useFrontendBaseUrl } from '../../../../hooks/common/use-frontend-base-url'
 import { Logger } from '../../../../utils/logger'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import type { CodeProps } from '../../replace-components/code-block-component-replacer'
+import { useRouter } from 'next/router'
 
 const log = new Logger('GraphvizFrame')
 
@@ -27,7 +27,7 @@ export const GraphvizFrame: React.FC<CodeProps> = ({ code }) => {
     container.current.querySelectorAll('svg').forEach((child) => child.remove())
   }, [])
 
-  const frontendBaseUrl = useFrontendBaseUrl()
+  const { basePath } = useRouter()
 
   useEffect(() => {
     if (!container.current) {
@@ -37,7 +37,7 @@ export const GraphvizFrame: React.FC<CodeProps> = ({ code }) => {
 
     import(/* webpackChunkName: "d3-graphviz" */ '@hpcc-js/wasm')
       .then((wasmPlugin) => {
-        wasmPlugin.wasmFolder(`${frontendBaseUrl}/static/js`)
+        wasmPlugin.wasmFolder(`${basePath}/_next/static/js`)
       })
       .then(() => import(/* webpackChunkName: "d3-graphviz" */ 'd3-graphviz'))
       .then((graphvizImport) => {
@@ -57,7 +57,7 @@ export const GraphvizFrame: React.FC<CodeProps> = ({ code }) => {
       .catch((error: Error) => {
         log.error('Error while loading graphviz', error)
       })
-  }, [code, error, frontendBaseUrl, showError])
+  }, [code, error, basePath, showError])
 
   return (
     <Fragment>

@@ -567,7 +567,6 @@ describe('test addQuotes', () => {
       }
     })
     addQuotes(editor)
-    done()
   })
 
   it('1st line', (done) => {

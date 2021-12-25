@@ -13,12 +13,11 @@ import { cypressAttribute, cypressId } from '../../../../../utils/cypress-attrib
 import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
 import type { PopoverProps } from 'react-bootstrap/Popover'
 import { useOnRefChange } from '../../../../markdown-renderer/hooks/use-on-ref-change'
-import './table-picker.scss'
+import styles from './table-picker.module.scss'
 
 export interface TableSizePickerPopoverProps extends Omit<PopoverProps, 'id'> {
   onShowCustomSizeModal: () => void
   onTableSizeSelected: (rows: number, cols: number) => void
-  onDismiss: () => void
   onRefUpdate: (newRef: HTMLDivElement | null) => void
 }
 
@@ -30,7 +29,6 @@ export interface TableSize {
 export const TableSizePickerPopover: React.FC<TableSizePickerPopoverProps> = ({
   onShowCustomSizeModal,
   onTableSizeSelected,
-  onDismiss,
   onRefUpdate,
   ...props
 }) => {
@@ -55,8 +53,10 @@ export const TableSizePickerPopover: React.FC<TableSizePickerPopoverProps> = ({
           return (
             <div
               key={`${row}_${col}`}
-              className={`table-cell ${selected ? 'bg-primary border-primary' : ''}`}
+              className={`${styles['table-cell']} ${selected ? 'bg-primary border-primary' : ''}`}
               {...cypressAttribute('selected', selected ? 'true' : 'false')}
+              {...cypressAttribute('col', `${col + 1}`)}
+              {...cypressAttribute('row', `${row + 1}`)}
               onMouseEnter={onSizeHover(row + 1, col + 1)}
               title={t('editor.editorToolbar.table.size', { cols: col + 1, rows: row + 1 })}
               onClick={() => onTableSizeSelected(row + 1, col + 1)}
@@ -76,12 +76,12 @@ export const TableSizePickerPopover: React.FC<TableSizePickerPopoverProps> = ({
       ref={popoverRef}
       id={'table-picker'}
       {...cypressId('table-size-picker-popover')}
-      className={`table-picker-container bg-light`}>
+      className={`${styles['table-picker-container']} bg-light`}>
       <Popover.Title>
         <TableSizeText tableSize={tableSize} />
       </Popover.Title>
       <Popover.Content>
-        <div className={'table-container'} role='grid'>
+        <div className={styles['table-container']} role='grid'>
           {tableContainer}
         </div>
         <div className='d-flex justify-content-center mt-2'>

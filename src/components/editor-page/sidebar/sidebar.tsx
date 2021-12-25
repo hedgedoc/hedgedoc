@@ -6,15 +6,15 @@
 
 import React, { useCallback, useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
-import { DeleteNoteSidebarEntry } from './delete-note-sidebar-entry'
-import { DocumentInfoSidebarEntry } from './document-info-sidebar-entry'
-import { ExportMenuSidebarMenu } from './export-menu-sidebar-menu'
-import { ImportMenuSidebarMenu } from './import-menu-sidebar-menu'
-import { PermissionsSidebarEntry } from './permissions-sidebar-entry'
-import { PinNoteSidebarEntry } from './pin-note-sidebar-entry'
-import { RevisionSidebarEntry } from './revision-sidebar-entry'
-import { ShareSidebarEntry } from './share-sidebar-entry'
-import './style/theme.scss'
+import { DeleteNoteSidebarEntry } from './specific-sidebar-entries/delete-note-sidebar-entry'
+import { DocumentInfoSidebarEntry } from './specific-sidebar-entries/document-info-sidebar-entry'
+import { ExportMenuSidebarMenu } from './specific-sidebar-entries/export-menu-sidebar-menu'
+import { ImportMenuSidebarMenu } from './specific-sidebar-entries/import-menu-sidebar-menu'
+import { PermissionsSidebarEntry } from './specific-sidebar-entries/permissions-sidebar-entry'
+import { PinNoteSidebarEntry } from './specific-sidebar-entries/pin-note-sidebar-entry'
+import { RevisionSidebarEntry } from './specific-sidebar-entries/revision-sidebar-entry'
+import { ShareSidebarEntry } from './specific-sidebar-entries/share-sidebar-entry'
+import styles from './style/sidebar.module.scss'
 import { DocumentSidebarMenuSelection } from './types'
 import { UsersOnlineSidebarMenu } from './users-online-sidebar-menu/users-online-sidebar-menu'
 
@@ -37,8 +37,8 @@ export const Sidebar: React.FC = () => {
   const selectionIsNotNone = selectedMenu !== DocumentSidebarMenuSelection.NONE
 
   return (
-    <div className='slide-sidebar'>
-      <div ref={sideBarRef} className={`sidebar-inner ${selectionIsNotNone ? 'show' : ''}`}>
+    <div className={styles['slide-sidebar']}>
+      <div ref={sideBarRef} className={`${styles['sidebar-inner']} ${selectionIsNotNone ? styles['show'] : ''}`}>
         <UsersOnlineSidebarMenu
           menuId={DocumentSidebarMenuSelection.USERS_ONLINE}
           selectedMenuId={selectedMenu}

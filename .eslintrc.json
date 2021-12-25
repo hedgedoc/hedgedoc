@@ -1,0 +1,44 @@
+{
+  "root": true,
+  "parserOptions": {
+    "tsconfigRootDir": "",
+    "project": [
+      "./tsconfig.json"
+    ]
+  },
+  "rules": {
+    "no-use-before-define": "off",
+    "no-debugger": "warn",
+    "default-param-last": "off",
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports",
+        "disallowTypeAnnotations": false
+      }
+    ]
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "testing-library"
+  ],
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "prettier"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": ["plugin:testing-library/react"]
+    }
+  ]
+}

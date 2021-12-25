@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { Fragment, useCallback, useState } from 'react'
@@ -9,7 +9,7 @@ import { Button } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { DeletionModal } from '../../common/modals/deletion-modal'
-import { deleteAllHistoryEntries, refreshHistoryState } from '../../../redux/history/methods'
+import { deleteAllHistoryEntries, safeRefreshHistoryState } from '../../../redux/history/methods'
 import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 import { cypressId } from '../../../utils/cypress-attribute'
 
@@ -23,7 +23,7 @@ export const ClearHistoryButton: React.FC = () => {
   const onConfirm = useCallback(() => {
     deleteAllHistoryEntries().catch((error: Error) => {
       showErrorNotification('landing.history.error.deleteEntry.text')(error)
-      refreshHistoryState().catch(showErrorNotification('landing.history.error.getHistory.text'))
+      safeRefreshHistoryState()
     })
     handleClose()
   }, [])

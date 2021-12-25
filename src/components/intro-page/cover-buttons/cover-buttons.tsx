@@ -7,12 +7,12 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SignInButton } from '../../landing-layout/navigation/sign-in-button'
-import './cover-buttons.scss'
+import './cover-buttons.module.scss'
 import { cypressId } from '../../../utils/cypress-attribute'
+import Link from 'next/link'
 
 export const CoverButtons: React.FC = () => {
   useTranslation()
@@ -33,7 +33,7 @@ export const CoverButtons: React.FC = () => {
           <Trans i18nKey='common.or' />
         </span>
       </ShowIf>
-      <Link to='/n/features'>
+      <Link href='/n/features' passHref={true}>
         <Button {...cypressId('features-button')} className='cover-button' variant='primary' size='lg'>
           <Trans i18nKey='landing.intro.exploreFeatures' />
         </Button>

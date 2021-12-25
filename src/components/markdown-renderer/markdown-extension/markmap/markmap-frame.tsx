@@ -7,7 +7,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LockButton } from '../../../common/lock-button/lock-button'
-import '../../utils/button-inside.scss'
 import { Logger } from '../../../../utils/logger'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import type { CodeProps } from '../../replace-components/code-block-component-replacer'

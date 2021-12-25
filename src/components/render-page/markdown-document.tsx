@@ -13,7 +13,7 @@ import { useDocumentSyncScrolling } from './hooks/sync-scroll/use-document-sync-
 import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import { DocumentMarkdownRenderer } from '../markdown-renderer/document-markdown-renderer'
 import type { ImageClickHandler } from '../markdown-renderer/markdown-extension/image/proxy-image-replacer'
-import './markdown-document.scss'
+import styles from './markdown-document.module.scss'
 import { WidthBasedTableOfContents } from './width-based-table-of-contents'
 import { ShowIf } from '../common/show-if/show-if'
 import { useApplicationState } from '../../hooks/common/use-application-state'
@@ -81,12 +81,12 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
 
   return (
     <div
-      className={`markdown-document ${additionalOuterContainerClasses ?? ''}`}
+      className={`${styles['markdown-document']} ${additionalOuterContainerClasses ?? ''}`}
       ref={internalDocumentRenderPaneRef}
       onScroll={onUserScroll}
       onMouseEnter={onMakeScrollSource}>
-      <div className={'markdown-document-side'} />
-      <div className={'markdown-document-content'}>
+      <div className={styles['markdown-document-side']} />
+      <div className={styles['markdown-document-content']}>
         <InvalidYamlAlert show={!!frontmatterInfo?.frontmatterInvalid} />
         <YamlArrayDeprecationAlert show={!!frontmatterInfo?.deprecatedSyntax} />
         <DocumentMarkdownRenderer
@@ -103,7 +103,7 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
           lineOffset={frontmatterInfo?.lineOffset}
         />
       </div>
-      <div className={'markdown-document-side pt-4'}>
+      <div className={`${styles['markdown-document-side']} pt-4`}>
         <ShowIf condition={!!tocAst && !disableToc}>
           <WidthBasedTableOfContents tocAst={tocAst as TocAst} baseUrl={baseUrl} width={containerWidth} />
         </ShowIf>

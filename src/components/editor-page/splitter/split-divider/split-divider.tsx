@@ -5,12 +5,20 @@
  */
 
 import React from 'react'
-import './split-divider.scss'
+import styles from './split-divider.module.scss'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
 export interface SplitDividerProps {
   onGrab: () => void
 }
 
 export const SplitDivider: React.FC<SplitDividerProps> = ({ onGrab }) => {
-  return <div onMouseDown={() => onGrab()} onTouchStart={() => onGrab()} className={'split-divider'} />
+  return (
+    <div
+      onMouseDown={onGrab}
+      onTouchStart={onGrab}
+      className={styles['split-divider']}
+      {...cypressId('split-divider')}
+    />
+  )
 }

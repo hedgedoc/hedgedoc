@@ -9,7 +9,7 @@ import type { CustomEmoji, EmojiClickEvent, EmojiClickEventDetail } from 'emoji-
 import React, { useEffect, useRef } from 'react'
 import { useClickAway } from 'react-use'
 import { useIsDarkModeActivated } from '../../../../../hooks/common/use-is-dark-mode-activated'
-import './emoji-picker.scss'
+import styles from './emoji-picker.module.scss'
 import forkawesomeIcon from './forkawesome.png'
 import { ForkAwesomeIcons } from '../../../../common/fork-awesome/fork-awesome-icons'
 
@@ -22,11 +22,11 @@ export interface EmojiPickerProps {
 export const customEmojis: CustomEmoji[] = ForkAwesomeIcons.map((name) => ({
   name: `fa-${name}`,
   shortcodes: [`fa-${name.toLowerCase()}`],
-  url: forkawesomeIcon,
+  url: forkawesomeIcon.src,
   category: 'ForkAwesome'
 }))
 
-export const EMOJI_DATA_PATH = '/static/js/emoji-data.json'
+export const EMOJI_DATA_PATH = '/_next/static/js/emoji-data.json'
 
 export const emojiPickerConfig = {
   customEmoji: customEmojis,
@@ -92,6 +92,9 @@ export const EmojiPicker: React.FC<EmojiPickerProps> = ({ show, onEmojiSelected,
   }, [darkModeEnabled])
 
   return (
-    <div className={`position-absolute emoji-picker-container ${!show ? 'd-none' : ''}`} ref={pickerContainerRef} />
+    <div
+      className={`position-absolute ${styles['emoji-picker-container']} ${!show ? 'd-none' : ''}`}
+      ref={pickerContainerRef}
+    />
   )
 }

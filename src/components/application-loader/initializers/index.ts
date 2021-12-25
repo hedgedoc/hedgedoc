@@ -4,12 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { setUpI18n } from './i18n/i18n'
+import { setUpI18n } from './setupI18n'
 import { refreshHistoryState } from '../../../redux/history/methods'
 import { fetchMotd } from './fetch-motd'
 import { setApiUrl } from '../../../redux/api-url/methods'
 import { fetchAndSetUser } from '../../login-page/auth/utils'
 import { fetchFrontendConfig } from './fetch-frontend-config'
+import { loadDarkMode } from './load-dark-mode'
 
 const customDelay: () => Promise<void> = async () => {
   if (window.localStorage.getItem('customDelay')) {
@@ -24,16 +25,16 @@ export interface InitTask {
   task: Promise<void>
 }
 
-export const createSetUpTaskList = (
-  frontendAssetsUrl: string,
-  customizeAssetsUrl: string,
-  backendBaseUrl: string
-): InitTask[] => {
+export const createSetUpTaskList = (customizeAssetsUrl: string, backendBaseUrl: string): InitTask[] => {
   setApiUrl({
     apiUrl: `${backendBaseUrl}api/private/`
   })
 
   return [
+    {
+      name: 'Load dark mode',
+      task: loadDarkMode()
+    },
     {
       name: 'Load Translations',
       task: setUpI18n()

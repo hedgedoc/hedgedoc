@@ -11,7 +11,7 @@ describe('Iframe capsule', () => {
 
   it('shows a clickable click shield instead of the iframe', () => {
     cy.setCodemirrorContent('<iframe src="https://example.org"></iframe>')
-    cy.getMarkdownBody().findById('iframe-capsule-click-shield').should('exist').click()
+    cy.getMarkdownBody().findByCypressId('iframe-capsule-click-shield').should('exist').click()
     cy.getMarkdownBody().find('iframe').should('exist').should('have.attr', 'src', 'https://example.org')
   })
 })

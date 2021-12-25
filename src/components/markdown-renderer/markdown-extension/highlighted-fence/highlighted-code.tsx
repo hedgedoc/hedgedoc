@@ -8,10 +8,9 @@ import type { ReactElement } from 'react'
 import React, { Fragment, useEffect, useState } from 'react'
 import convertHtmlToReact from '@hedgedoc/html-to-react'
 import { CopyToClipboardButton } from '../../../common/copyable/copy-to-clipboard-button/copy-to-clipboard-button'
-import '../../utils/button-inside.scss'
-import './highlighted-code.scss'
+import styles from './highlighted-code.module.scss'
 import { Logger } from '../../../../utils/logger'
-import { cypressId } from '../../../../utils/cypress-attribute'
+import { cypressAttribute, cypressId } from '../../../../utils/cypress-attribute'
 
 const log = new Logger('HighlightedCode')
 
@@ -54,8 +53,12 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
             : escapeHtml(code)
         const replacedDom = replaceCode(unreplacedCode).map((line, index) => (
           <Fragment key={index}>
-            <span className={'linenumber'}>{(startLineNumber || 1) + index}</span>
-            <div className={'codeline'}>{line}</div>
+            <span {...cypressId('linenumber')} className={styles['linenumber']}>
+              {(startLineNumber || 1) + index}
+            </span>
+            <div {...cypressId('codeline')} className={styles['codeline']}>
+              {line}
+            </div>
           </Fragment>
         ))
         setDom(replacedDom)
@@ -65,9 +68,15 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
       })
   }, [code, language, startLineNumber])
 
+  const showGutter = startLineNumber !== undefined
+
   return (
-    <div className={'code-highlighter'} {...cypressId('highlighted-code-block')}>
-      <code className={`hljs ${startLineNumber !== undefined ? 'showGutter' : ''} ${wrapLines ? 'wrapLines' : ''}`}>
+    <div className={styles['code-highlighter']} {...cypressId('highlighted-code-block')}>
+      <code
+        {...cypressId('code-highlighter')}
+        {...cypressAttribute('showgutter', showGutter ? 'true' : 'false')}
+        {...cypressAttribute('wraplines', wrapLines ? 'true' : 'false')}
+        className={`hljs ${showGutter ? styles['showGutter'] : ''} ${wrapLines ? styles['wrapLines'] : ''}`}>
         {dom}
       </code>
       <div className={'text-right button-inside'}>

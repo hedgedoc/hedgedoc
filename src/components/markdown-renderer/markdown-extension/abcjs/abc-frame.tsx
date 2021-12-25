@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect, useRef } from 'react'
-import './abc.scss'
+import styles from './abc.module.scss'
 import { Logger } from '../../../../utils/logger'
 import type { CodeProps } from '../../replace-components/code-block-component-replacer'
 import { cypressId } from '../../../../utils/cypress-attribute'
@@ -29,5 +29,11 @@ export const AbcFrame: React.FC<CodeProps> = ({ code }) => {
       })
   }, [code])
 
-  return <div ref={container} className={'abcjs-score bg-white text-black svg-container'} {...cypressId('abcjs')} />
+  return (
+    <div
+      ref={container}
+      className={`${styles['abcjs-score']} bg-white text-black svg-container`}
+      {...cypressId('abcjs')}
+    />
+  )
 }

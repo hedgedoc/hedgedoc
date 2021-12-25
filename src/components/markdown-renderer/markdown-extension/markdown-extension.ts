@@ -9,10 +9,12 @@ import type { NodeProcessor } from '../node-preprocessors/node-processor'
 import type { ComponentReplacer } from '../replace-components/component-replacer'
 
 export abstract class MarkdownExtension {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public configureMarkdownIt(markdownIt: MarkdownIt): void {
     return
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public configureMarkdownItPost(markdownIt: MarkdownIt): void {
     return
   }

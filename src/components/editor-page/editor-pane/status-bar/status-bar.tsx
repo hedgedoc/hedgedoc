@@ -6,7 +6,7 @@
 
 import type { Position } from 'codemirror'
 import React from 'react'
-import './status-bar.scss'
+import styles from './status-bar.module.scss'
 import { RemainingCharactersInfo } from './remaining-characters-info'
 import { NumberOfLinesInDocumentInfo } from './number-of-lines-in-document-info'
 import { CursorPositionInfo } from './cursor-position-info'
@@ -43,7 +43,7 @@ export interface StatusBarProps {
  */
 export const StatusBar: React.FC<StatusBarProps> = ({ statusBarInfo }) => {
   return (
-    <div className='d-flex flex-row status-bar px-2'>
+    <div className={`d-flex flex-row ${styles['status-bar']} px-2`}>
       <div>
         <CursorPositionInfo cursorPosition={statusBarInfo.position} />
         <ShowIf condition={statusBarInfo.selectedLines === 1 && statusBarInfo.selectedColumns > 0}>

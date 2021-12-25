@@ -12,7 +12,7 @@ import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { EditorPreferences } from './editor-preferences/editor-preferences'
 import { EmojiPickerButton } from './emoji-picker/emoji-picker-button'
 import { TablePickerButton } from './table-picker/table-picker-button'
-import './tool-bar.scss'
+import styles from './tool-bar.module.scss'
 import { UploadImageButton } from './upload-image-button'
 import {
   addCodeFences,
@@ -47,7 +47,7 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor }) => {
   }
 
   return (
-    <ButtonToolbar className='bg-light'>
+    <ButtonToolbar className={`bg-light ${styles.toolbar}`}>
       <ButtonGroup className={'mx-1 flex-wrap'}>
         <Button
           {...cypressId('format-bold')}

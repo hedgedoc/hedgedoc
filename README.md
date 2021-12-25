@@ -13,11 +13,12 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/hedgedoc/react-client.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/hedgedoc/react-client/context:javascript)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/hedgedoc/react-client.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/hedgedoc/react-client/alerts/)
 
-This is the new, improved and better looking frontend for HedgeDoc 2.0.
-Our goal is to recreate the current frontend in react and to improve it.
+This is the new, improved and better looking frontend for HedgeDoc 2.0. Our goal is to recreate the current frontend in
+react and to improve it.
 
 ## Preparation
-You need at least Node 12 (we recommend Node 16) and [yarn](https://yarnpkg.com/).
+
+You need at least Node 14 (we recommend Node 16) and [yarn](https://yarnpkg.com/).
 
 ## Development mode
 
@@ -25,13 +26,14 @@ You need at least Node 12 (we recommend Node 16) and [yarn](https://yarnpkg.com/
 2. Go inside the repo (e.g. `cd hedgedoc-react-client`)
 3. Run `yarn install`
 4. Either run
-    - `yarn start` - Calls only mocked version of the api. Doesn't need a HedgeDoc backend.
-    - `yarn start:for-real-backend` - Expects [a HedgeDoc backend server](https://github.com/hedgedoc/hedgedoc/tree/develop) running under [http://localhost:3000](http://localhost:3000))
+    - `yarn dev` - Calls only mocked version of the api. Doesn't need a HedgeDoc backend.
+    - `yarn start:for-real-backend` -
+      Expects [a HedgeDoc backend server](https://github.com/hedgedoc/hedgedoc/tree/develop) running
+      under [http://localhost:3000](http://localhost:3000))
 
 This should run the app in the development mode and open [http://localhost:3001](http://localhost:3001) in your browser.
 
-The page will reload if you make edits.
-You will also see any lint errors in the console.
+The page will reload if you make edits. You will also see any lint errors in the console.
 
 ### Tests
 
@@ -45,25 +47,28 @@ Unit testing is done via jest.
 
 We use [cypress](https://cypress.io) for e2e tests.
 
-1. Start the frontend with `yarn start:test` in dev test mode or build a test build with `yarn build:test` which you can serve with `yarn serve:build`
+1. Start the frontend with `yarn dev:test` in dev test mode or build a test build with `yarn build:test` which you can
+   serve with `yarn serve:build`
    Don't use the regular start/build command, or the tests will fail!
 2. Run `yarn cy:open` to open the cypress test loader
 3. Choose your browser and test
 4. Let the tests run
 
 ### Bundle analysis
+
 You can inspect the generated production-bundle files to look for optimization issues.
 
 1. Run `yarn analyze`
-2. Open the generated `build/report.html` in your favourite browser
+2. Open the generated `.next/server/analyze/server.html` in your favourite browser
 
 ## Production mode
 
 1. Clone this repo (e.g. `git clone https://github.com/hedgedoc/react-client.git hedgedoc-react-client`)
 2. Go inside the repo (e.g. `cd hedgedoc-react-client`)
 3. Run `yarn install`
-4. Run `yarn build:production`
+4. Run `yarn build`
 
-This will build the app in production mode and save it into the `build` folder.
-The production build is optimized for best performance, minimized
- and the filenames include a hash value of the content. Don't edit them by hand!
+This will build the app in production mode and save it into the `.next` folder. The production build is optimized for
+best performance, minimized and the filenames include a hash value of the content. Don't edit them by hand!
+
+You can run the production build using the built-in server with `yarn start`.

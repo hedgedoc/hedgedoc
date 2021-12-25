@@ -5,7 +5,7 @@
  */
 
 const findHljsCodeBlock = () => {
-  return cy.getMarkdownBody().find('.code-highlighter > code.hljs').should('be.visible')
+  return cy.getMarkdownBody().findByCypressId('code-highlighter').should('be.visible')
 }
 
 describe('Code', () => {
@@ -16,17 +16,18 @@ describe('Code', () => {
   describe('with just the language', () => {
     it("doesn't show a gutter", () => {
       cy.setCodemirrorContent('```javascript \nlet x = 0\n```')
-      findHljsCodeBlock().should('not.have.class', 'showGutter')
+      findHljsCodeBlock().should('have.attr', 'data-cypress-showgutter', 'false')
 
-      findHljsCodeBlock().find('.linenumber').should('not.be.visible')
+      findHljsCodeBlock().findByCypressId('linenumber').should('not.be.visible')
     })
 
     describe('and line wrapping', () => {
       it("doesn't show a gutter", () => {
         cy.setCodemirrorContent('```javascript! \nlet x = 0\n```')
-        findHljsCodeBlock().should('not.have.class', 'showGutter').should('have.class', 'wrapLines')
+        findHljsCodeBlock().should('have.attr', 'data-cypress-showgutter', 'false')
+        findHljsCodeBlock().should('have.attr', 'data-cypress-wrapLines', 'true')
 
-        findHljsCodeBlock().find('.linenumber').should('not.be.visible')
+        findHljsCodeBlock().findByCypressId('linenumber').should('not.be.visible')
       })
     })
   })
@@ -34,17 +35,18 @@ describe('Code', () => {
   describe('with the language and show gutter', () => {
     it('shows the correct line number', () => {
       cy.setCodemirrorContent('```javascript= \nlet x = 0\n```')
-      findHljsCodeBlock().should('have.class', 'showGutter')
+      findHljsCodeBlock().should('have.attr', 'data-cypress-showgutter', 'true')
 
-      findHljsCodeBlock().find('.linenumber').should('be.visible').text().should('eq', '1')
+      findHljsCodeBlock().findByCypressId('linenumber').should('be.visible').text().should('eq', '1')
     })
 
     describe('and line wrapping', () => {
       it('shows the correct line number', () => {
         cy.setCodemirrorContent('```javascript=! \nlet x = 0\n```')
-        findHljsCodeBlock().should('have.class', 'showGutter').should('have.class', 'wrapLines')
+        findHljsCodeBlock().should('have.attr', 'data-cypress-showgutter', 'true')
+        findHljsCodeBlock().should('have.attr', 'data-cypress-wrapLines', 'true')
 
-        findHljsCodeBlock().find('.linenumber').should('be.visible').text().should('eq', '1')
+        findHljsCodeBlock().findByCypressId('linenumber').should('be.visible').text().should('eq', '1')
       })
     })
   })
@@ -52,45 +54,40 @@ describe('Code', () => {
   describe('with the language, show gutter with a start number', () => {
     it('shows the correct line number', () => {
       cy.setCodemirrorContent('```javascript=100 \nlet x = 0\n```')
-      findHljsCodeBlock().should('have.class', 'showGutter')
+      findHljsCodeBlock().should('have.attr', 'data-cypress-showgutter', 'true')
 
-      findHljsCodeBlock().find('.linenumber').should('be.visible').text().should('eq', '100')
+      findHljsCodeBlock().findByCypressId('linenumber').should('be.visible').text().should('eq', '100')
     })
 
     it('shows the correct line number and continues in another codeblock', () => {
       cy.setCodemirrorContent('```javascript=100 \nlet x = 0\nlet y = 1\n```\n\n```javascript=+\nlet y = 2\n```\n')
-      findHljsCodeBlock()
-        .should('have.class', 'showGutter')
-        .first()
-        .find('.linenumber')
-        .first()
-        .should('be.visible')
-        .text()
-        .should('eq', '100')
-      findHljsCodeBlock().first().find('.linenumber').last().should('be.visible').text().should('eq', '101')
-      findHljsCodeBlock().last().find('.linenumber').first().should('be.visible').text().should('eq', '102')
+      findHljsCodeBlock().should('have.attr', 'data-cypress-showgutter', 'true')
+      findHljsCodeBlock().first().findByCypressId('linenumber').first().should('be.visible').text().should('eq', '100')
+      findHljsCodeBlock().first().findByCypressId('linenumber').last().should('be.visible').text().should('eq', '101')
+      findHljsCodeBlock().last().findByCypressId('linenumber').first().should('be.visible').text().should('eq', '102')
     })
 
     describe('and line wrapping', () => {
       it('shows the correct line number', () => {
         cy.setCodemirrorContent('```javascript=100! \nlet x = 0\n```')
-        findHljsCodeBlock().should('have.class', 'showGutter').should('have.class', 'wrapLines')
-        findHljsCodeBlock().find('.linenumber').should('be.visible').text().should('eq', '100')
+        findHljsCodeBlock().should('have.attr', 'data-cypress-showgutter', 'true')
+        findHljsCodeBlock().should('have.attr', 'data-cypress-wrapLines', 'true')
+        findHljsCodeBlock().findByCypressId('linenumber').should('be.visible').text().should('eq', '100')
       })
 
       it('shows the correct line number and continues in another codeblock', () => {
         cy.setCodemirrorContent('```javascript=100! \nlet x = 0\nlet y = 1\n```\n\n```javascript=+\nlet y = 2\n```\n')
+        findHljsCodeBlock().should('have.attr', 'data-cypress-showgutter', 'true')
+        findHljsCodeBlock().should('have.attr', 'data-cypress-wrapLines', 'true')
         findHljsCodeBlock()
-          .should('have.class', 'showGutter')
-          .should('have.class', 'wrapLines')
           .first()
-          .find('.linenumber')
+          .findByCypressId('linenumber')
           .first()
           .should('be.visible')
           .text()
           .should('eq', '100')
-        findHljsCodeBlock().first().find('.linenumber').last().should('be.visible').text().should('eq', '101')
-        findHljsCodeBlock().last().find('.linenumber').first().should('be.visible').text().should('eq', '102')
+        findHljsCodeBlock().first().findByCypressId('linenumber').last().should('be.visible').text().should('eq', '101')
+        findHljsCodeBlock().last().findByCypressId('linenumber').first().should('be.visible').text().should('eq', '102')
       })
     })
   })
@@ -98,7 +95,7 @@ describe('Code', () => {
   it('has a working copy button', () => {
     cy.setCodemirrorContent('```javascript \nlet x = 0\n```')
 
-    cy.getById('documentIframe').then((element: JQuery<HTMLElement>) => {
+    cy.getByCypressId('documentIframe').then((element: JQuery<HTMLElement>) => {
       const frame = element.get(0) as HTMLIFrameElement
       if (frame === null || frame.contentWindow === null) {
         return cy.wrap(null)
@@ -107,7 +104,7 @@ describe('Code', () => {
       cy.spy(frame.contentWindow.navigator.clipboard, 'writeText').as('copy')
     })
 
-    cy.getIframeBody().findById('copy-code-button').click()
+    cy.getIframeBody().findByCypressId('copy-code-button').click()
 
     cy.get('@copy').should('be.calledWithExactly', 'let x = 0\n')
   })

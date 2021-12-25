@@ -6,12 +6,10 @@
 
 import React, { useEffect, useMemo, useRef } from 'react'
 import { useConvertMarkdownToReactDom } from './hooks/use-convert-markdown-to-react-dom'
-import './markdown-renderer.scss'
 import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
 import type { TocAst } from 'markdown-it-toc-done-right'
 import { useOnRefChange } from './hooks/use-on-ref-change'
 import { REVEAL_STATUS, useReveal } from './hooks/use-reveal'
-import './slideshow.scss'
 import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 import { LoadingSlide } from './loading-slide'

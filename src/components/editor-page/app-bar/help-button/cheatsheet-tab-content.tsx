@@ -7,8 +7,8 @@
 import React, { useMemo, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import './cheatsheet.scss'
 import { CheatsheetLine } from './cheatsheet-line'
+import styles from './cheatsheet.module.scss'
 
 export const CheatsheetTabContent: React.FC = () => {
   const { t } = useTranslation()
@@ -38,7 +38,7 @@ export const CheatsheetTabContent: React.FC = () => {
   )
 
   return (
-    <Table className='table-condensed table-cheatsheet'>
+    <Table className={`table-condensed ${styles['table-cheatsheet']}`}>
       <thead>
         <tr>
           <th>

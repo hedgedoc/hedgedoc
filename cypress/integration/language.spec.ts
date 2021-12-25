@@ -12,7 +12,7 @@ describe('Languages', () => {
   })
 
   it('all languages are available', () => {
-    cy.getById('language-picker').find('option').as('languages')
+    cy.getByCypressId('language-picker').find('option').as('languages')
     cy.get('@languages').should('have.length', 28)
     languages.forEach((language) => {
       cy.get('@languages').contains(language)
@@ -20,9 +20,9 @@ describe('Languages', () => {
   })
 
   it('language changes affect the UI', () => {
-    cy.getById('language-picker').select('English')
-    cy.getById('new-note-button').find('span').contains('New note')
-    cy.getById('language-picker').select('Deutsch')
-    cy.getById('new-note-button').find('span').contains('Neue Notiz')
+    cy.getByCypressId('language-picker').select('English')
+    cy.getByCypressId('new-note-button').find('span').contains('New note')
+    cy.getByCypressId('language-picker').select('Deutsch')
+    cy.getByCypressId('new-note-button').find('span').contains('Neue Notiz')
   })
 })

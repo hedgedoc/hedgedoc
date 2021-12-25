@@ -5,7 +5,7 @@
  */
 
 import React from 'react'
-import './active-indicator.scss'
+import styles from './active-indicator.module.scss'
 
 export enum ActiveIndicatorStatus {
   ACTIVE = 'active',
@@ -17,5 +17,5 @@ export interface ActiveIndicatorProps {
 }
 
 export const ActiveIndicator: React.FC<ActiveIndicatorProps> = ({ status }) => {
-  return <span className={`activeIndicator ${status}`} />
+  return <span className={`${styles['activeIndicator']} ${status}`} />
 }

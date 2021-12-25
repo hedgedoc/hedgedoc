@@ -26,7 +26,9 @@ const esc = (editor: Editor): void | typeof Pass => {
     return CodeMirror.Pass
   }
 }
-const suppressKey = (): undefined => undefined
+const suppressKey = (): void => {
+  /*no op*/
+}
 const tab = (editor: Editor) => {
   const tab = '\t'
 
@@ -68,24 +70,9 @@ const tab = (editor: Editor) => {
   }
 }
 
-export const defaultKeyMap: KeyMap = !isMac
-  ? {
-      F9: suppressKey,
-      F10: f10,
-      Esc: esc,
-      'Ctrl-S': suppressKey,
-      Enter: 'newlineAndIndentContinueMarkdownList',
-      Tab: tab,
-      Home: 'goLineLeftSmart',
-      End: 'goLineRight',
-      'Ctrl-I': makeSelectionItalic,
-      'Ctrl-B': makeSelectionBold,
-      'Ctrl-U': underlineSelection,
-      'Ctrl-D': strikeThroughSelection,
-      'Ctrl-M': markSelection,
-      'Ctrl-K': addLink
-    }
-  : {
+export const createDefaultKeyMap: () => KeyMap = () => {
+  if (isMac()) {
+    return {
       F9: suppressKey,
       F10: f10,
       Esc: esc,
@@ -101,4 +88,23 @@ export const defaultKeyMap: KeyMap = !isMac
       'Cmd-U': underlineSelection,
       'Cmd-D': strikeThroughSelection,
       'Cmd-M': markSelection
-    }
+    } as KeyMap
+  } else {
+    return {
+      F9: suppressKey,
+      F10: f10,
+      Esc: esc,
+      'Ctrl-S': suppressKey,
+      Enter: 'newlineAndIndentContinueMarkdownList',
+      Tab: tab,
+      Home: 'goLineLeftSmart',
+      End: 'goLineRight',
+      'Ctrl-I': makeSelectionItalic,
+      'Ctrl-B': makeSelectionBold,
+      'Ctrl-U': underlineSelection,
+      'Ctrl-D': strikeThroughSelection,
+      'Ctrl-M': markSelection,
+      'Ctrl-K': addLink
+    } as KeyMap
+  }
+}

@@ -6,7 +6,6 @@
 
 import React, { useEffect, useMemo, useRef } from 'react'
 import { useConvertMarkdownToReactDom } from './hooks/use-convert-markdown-to-react-dom'
-import './markdown-renderer.scss'
 import type { LineMarkerPosition } from './markdown-extension/linemarker/types'
 import { useTranslation } from 'react-i18next'
 import type { LineMarkers } from './markdown-extension/linemarker/add-line-marker-markdown-it-plugin'
@@ -17,6 +16,7 @@ import { useOnRefChange } from './hooks/use-on-ref-change'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
 import { HeadlineAnchorsMarkdownExtension } from './markdown-extension/headline-anchors-markdown-extension'
+import { cypressId } from '../../utils/cypress-attribute'
 
 export interface DocumentMarkdownRendererProps extends CommonMarkdownRendererProps {
   onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void
@@ -65,9 +65,11 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
   useOnRefChange(tocAst, onTocChange)
 
   return (
-    <div ref={outerContainerRef} className={'position-relative'}>
+    <div ref={outerContainerRef} className={`position-relative`}>
       <div
+        {...cypressId('markdown-body')}
         ref={markdownBodyRef}
+        data-word-count-target={true}
         className={`${className ?? ''} markdown-body w-100 d-flex flex-column align-items-center`}>
         {markdownReactDom}
       </div>

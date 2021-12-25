@@ -16,11 +16,11 @@ export const SocialLink: React.FC = () => {
       <Trans
         i18nKey='landing.footer.followUs'
         components={[
-          <ExternalLink href={links.githubOrg} icon='github' text='GitHub' />,
-          <ExternalLink href={links.community} icon='users' text='Discourse' />,
-          <ExternalLink href={links.chat} icon='comment' text='Matrix' />,
-          <ExternalLink href={links.mastodon} icon='mastodon' text='Mastodon' />,
-          <ExternalLink href={links.translate} icon='globe' text='POEditor' />
+          <ExternalLink href={links.githubOrg} icon='github' key={'github'} text='GitHub' />,
+          <ExternalLink href={links.community} icon='users' key={'users'} text='Discourse' />,
+          <ExternalLink href={links.chat} icon='comment' key={'comment'} text='Matrix' />,
+          <ExternalLink href={links.mastodon} icon='mastodon' key={'mastodon'} text='Mastodon' />,
+          <ExternalLink href={links.translate} icon='globe' key={'globe'} text='POEditor' />
         ]}
       />
     </p>

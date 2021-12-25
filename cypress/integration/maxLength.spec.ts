@@ -14,21 +14,21 @@ describe('The status bar text length info', () => {
   })
 
   it('shows the maximal length of the document as number of available characters in the tooltip', () => {
-    cy.getById('remainingCharacters').attribute('title').should('contain', ' 200 ')
+    cy.getByCypressId('remainingCharacters').attribute('title').should('contain', ' 200 ')
   })
 
   it('color is set to "warning" on <= 100 characters remaining', () => {
     cy.setCodemirrorContent(warningTestContent)
-    cy.getById('remainingCharacters').should('have.class', 'text-warning')
+    cy.getByCypressId('remainingCharacters').should('have.class', 'text-warning')
   })
 
   it('color is set to danger on <= 0 characters remaining', () => {
     cy.setCodemirrorContent(dangerTestContent)
-    cy.getById('remainingCharacters').should('have.class', 'text-danger')
+    cy.getByCypressId('remainingCharacters').should('have.class', 'text-danger')
   })
 
   it('opens a modal', () => {
     cy.setCodemirrorContent(tooMuchTestContent)
-    cy.getById('limitReachedModal').should('be.visible')
+    cy.getByCypressId('limitReachedModal').should('be.visible')
   })
 })

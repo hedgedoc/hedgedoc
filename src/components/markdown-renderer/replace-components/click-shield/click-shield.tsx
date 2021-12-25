@@ -8,7 +8,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import type { IconName } from '../../../common/fork-awesome/types'
 import { ShowIf } from '../../../common/show-if/show-if'
-import './click-shield.scss'
+import styles from './click-shield.module.scss'
 import { Logger } from '../../../../utils/logger'
 import type { Property } from 'csstype'
 import type { PropsWithDataCypressId } from '../../../../utils/cypress-attribute'
@@ -103,10 +103,10 @@ export const ClickShield: React.FC<ClickShieldProps> = ({
     <span className={containerClassName} {...cypressId(props['data-cypress-id'])}>
       <ShowIf condition={showChildren}>{children}</ShowIf>
       <ShowIf condition={!showChildren}>
-        <span className={`click-shield embed-responsive embed-responsive-16by9`} onClick={doShowChildren}>
+        <span className={`${styles['click-shield']} embed-responsive embed-responsive-16by9`} onClick={doShowChildren}>
           {previewBackground}
-          <span className={`preview-hover text-center`}>
-            <span className={'preview-hover-text'}>
+          <span className={`${styles['preview-hover']} text-center`}>
+            <span className={`${styles['preview-hover-text']}`}>
               <Trans i18nKey={'renderer.clickShield.previewHoverText'} values={hoverTextTranslationValues} />
             </span>
             <br />

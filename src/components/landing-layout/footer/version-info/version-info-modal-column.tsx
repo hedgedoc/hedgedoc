@@ -5,11 +5,11 @@
  */
 
 import React from 'react'
-import Col from 'react-bootstrap/esm/Col'
 import { CopyableField } from '../../../common/copyable/copyable-field/copyable-field'
 import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { Trans, useTranslation } from 'react-i18next'
+import { Col } from 'react-bootstrap'
 
 export interface VersionInfoModalColumnProps {
   titleI18nKey: string

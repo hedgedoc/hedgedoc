@@ -12,9 +12,9 @@ describe('Links Intro', () => {
   })
 
   it('History', () => {
-    cy.getById('navLinkHistory').click()
+    cy.getByCypressId('navLinkHistory').click()
     cy.url().should('include', '/history')
-    cy.getById('navLinkIntro').click()
+    cy.getByCypressId('navLinkIntro').click()
     cy.url().should('include', '/intro')
   })
 
@@ -24,29 +24,29 @@ describe('Links Intro', () => {
     })
 
     it('New guest note', () => {
-      cy.getById('new-guest-note-button').click()
+      cy.getByCypressId('new-guest-note-button').click()
       cy.url().should('include', '/new')
     })
   })
 
   describe('Menu Buttons logged in', () => {
     it('New note', () => {
-      cy.getById('new-note-button').click()
+      cy.getByCypressId('new-note-button').click()
       cy.url().should('include', '/new')
     })
 
     describe('User Menu', () => {
       beforeEach(() => {
-        cy.getById('user-dropdown').click()
+        cy.getByCypressId('user-dropdown').click()
       })
 
       it('Features', () => {
-        cy.getById('user-dropdown-features-button').click()
+        cy.getByCypressId('user-dropdown-features-button').click()
         cy.url().should('include', '/features')
       })
 
       it('Profile', () => {
-        cy.getById('user-dropdown-profile-button').click()
+        cy.getByCypressId('user-dropdown-profile-button').click()
         cy.url().should('include', '/profile')
       })
     })

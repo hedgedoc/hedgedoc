@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React from 'react'
@@ -10,7 +10,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { Pager } from '../../common/pagination/pager'
 import type { HistoryEntriesProps, HistoryEventHandlers } from '../history-content/history-content'
 import { HistoryTableRow } from './history-table-row'
-import './history-table.scss'
+import styles from './history-table.module.scss'
 import { cypressId } from '../../../utils/cypress-attribute'
 
 export const HistoryTable: React.FC<HistoryEntriesProps & HistoryEventHandlers> = ({
@@ -23,7 +23,14 @@ export const HistoryTable: React.FC<HistoryEntriesProps & HistoryEventHandlers> 
 }) => {
   useTranslation()
   return (
-    <Table striped bordered hover size='sm' variant='dark' className={'history-table'} {...cypressId('history-table')}>
+    <Table
+      striped
+      bordered
+      hover
+      size='sm'
+      variant='dark'
+      className={styles['history-table']}
+      {...cypressId('history-table')}>
       <thead>
         <tr>
           <th>

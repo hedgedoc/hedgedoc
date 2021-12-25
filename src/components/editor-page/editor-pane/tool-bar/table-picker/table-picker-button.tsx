@@ -27,7 +27,7 @@ enum PickerMode {
 }
 
 /**
- * Toggles the visibility of a {@link TableSizePicker table size picker overlay} and inserts the result into the editor.
+ * Toggles the visibility of a table size picker overlay and inserts the result into the editor.
  *
  * @param editor The editor in which the result should get inserted
  */
@@ -72,12 +72,11 @@ export const TablePickerButton: React.FC<TablePickerButtonProps> = ({ editor }) 
       <TableSizePickerPopover
         onTableSizeSelected={onSizeSelect}
         onShowCustomSizeModal={onShowModal}
-        onDismiss={onDismiss}
         onRefUpdate={ref}
         {...popoverProps}
       />
     ),
-    [onDismiss, onShowModal, onSizeSelect]
+    [onShowModal, onSizeSelect]
   )
 
   return (

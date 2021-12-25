@@ -9,7 +9,7 @@ import React, { useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ShowIf } from '../../common/show-if/show-if'
 import { buildReactDomFromTocAst } from './build-react-dom-from-toc-ast'
-import './table-of-contents.scss'
+import styles from './table-of-contents.module.scss'
 
 export interface TableOfContentsProps {
   ast: TocAst
@@ -26,7 +26,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ ast, maxDepth 
   )
 
   return (
-    <div className={`markdown-toc ${className ?? ''}`}>
+    <div className={`${styles['markdown-toc']} ${className ?? ''}`}>
       <ShowIf condition={ast.c.length === 0}>
         <Trans i18nKey={'editor.infoToc'} />
       </ShowIf>

@@ -5,7 +5,7 @@
  */
 
 import { useEffect, useRef, useState } from 'react'
-import Reveal from 'reveal.js'
+import type Reveal from 'reveal.js'
 import { Logger } from '../../../utils/logger'
 import type { SlideOptions } from '../../../redux/note-details/types/slide-show-options'
 
@@ -38,25 +38,32 @@ export const useReveal = (markdownContentLines: string[], slideOptions?: SlideOp
     }
     setRevealStatus(REVEAL_STATUS.INITIALISING)
     log.debug('Initialize with slide options', slideOptions)
-    const reveal = new Reveal({})
-    reveal
-      .initialize()
-      .then(() => {
-        reveal.layout()
-        reveal.slide(0, 0, 0)
-        reveal.addEventListener('slidechanged', (event) => {
-          currentSlideState.current = {
-            indexHorizontal: event.indexh,
-            indexVertical: event.indexv ?? 0
-          } as SlideState
-        })
 
-        setDeck(reveal)
-        setRevealStatus(REVEAL_STATUS.INITIALISED)
-        log.debug('Initialisation finished')
+    import(/* webpackChunkName: "reveal" */ 'reveal.js')
+      .then((revealImport) => {
+        const reveal = new revealImport.default({})
+        reveal
+          .initialize()
+          .then(() => {
+            reveal.layout()
+            reveal.slide(0, 0, 0)
+            reveal.addEventListener('slidechanged', (event) => {
+              currentSlideState.current = {
+                indexHorizontal: event.indexh,
+                indexVertical: event.indexv ?? 0
+              } as SlideState
+            })
+
+            setDeck(reveal)
+            setRevealStatus(REVEAL_STATUS.INITIALISED)
+            log.debug('Initialisation finished')
+          })
+          .catch((error: Error) => {
+            log.error('Error while initializing reveal.js', error)
+          })
       })
       .catch((error: Error) => {
-        log.error('Error while initializing reveal.js', error)
+        log.error('Error while loading reveal.js', error)
       })
   }, [revealStatus, slideOptions])
 

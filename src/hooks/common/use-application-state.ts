@@ -5,8 +5,8 @@
  */
 
 import { useSelector } from 'react-redux'
-import type { ApplicationState } from '../../redux'
 import equal from 'fast-deep-equal'
+import type { ApplicationState } from '../../redux/application-state'
 
 /**
  * Accesses the global application state to retrieve information.

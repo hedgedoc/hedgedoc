@@ -8,7 +8,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Alert, Button, Col, ListGroup, Modal, Row } from 'react-bootstrap'
 import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 import { Trans, useTranslation } from 'react-i18next'
-import { useParams } from 'react-router'
 import { getAllRevisions, getRevision } from '../../../../api/revisions'
 import type { Revision, RevisionListEntry } from '../../../../api/revisions/types'
 import type { UserResponse } from '../../../../api/users/types'
@@ -18,8 +17,9 @@ import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { RevisionModalListEntry } from './revision-modal-list-entry'
-import './revision-modal.scss'
+import styles from './revision-modal.module.scss'
 import { downloadRevision, getUserDataForRevision } from './utils'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 export const RevisionModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   useTranslation()
@@ -29,9 +29,12 @@ export const RevisionModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) 
   const [error, setError] = useState(false)
   const revisionAuthorListMap = useRef(new Map<number, UserResponse[]>())
   const darkModeEnabled = useIsDarkModeActivated()
-  const { id } = useParams<{ id: string }>()
+  const id = useApplicationState((state) => state.noteDetails.id)
 
   useEffect(() => {
+    if (!show) {
+      return
+    }
     getAllRevisions(id)
       .then((fetchedRevisions) => {
         fetchedRevisions.forEach((revision) => {
@@ -44,7 +47,7 @@ export const RevisionModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) 
         }
       })
       .catch(() => setError(true))
-  }, [setRevisions, setError, id])
+  }, [setRevisions, setError, id, show])
 
   useEffect(() => {
     if (selectedRevisionTimestamp === null) {
@@ -67,10 +70,10 @@ export const RevisionModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) 
       titleIcon={'history'}
       showCloseButton={true}
       modalSize={'xl'}
-      additionalClasses='revision-modal'>
+      additionalClasses={styles['revision-modal']}>
       <Modal.Body>
         <Row>
-          <Col lg={4} className={'scroll-col'}>
+          <Col lg={4} className={styles['scroll-col']}>
             <ListGroup as='ul'>
               {revisions.map((revision, revisionIndex) => (
                 <RevisionModalListEntry
@@ -83,7 +86,7 @@ export const RevisionModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) 
               ))}
             </ListGroup>
           </Col>
-          <Col lg={8} className={'scroll-col'}>
+          <Col lg={8} className={styles['scroll-col']}>
             <ShowIf condition={error}>
               <Alert variant='danger'>
                 <Trans i18nKey='editor.modal.revision.error' />

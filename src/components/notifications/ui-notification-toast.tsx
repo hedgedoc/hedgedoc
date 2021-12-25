@@ -15,6 +15,7 @@ import { Logger } from '../../utils/logger'
 import { cypressId } from '../../utils/cypress-attribute'
 import { useEffectOnce, useInterval } from 'react-use'
 import { dismissUiNotification } from '../../redux/ui-notifications/methods'
+import styles from './notifications.module.scss'
 
 const STEPS_PER_SECOND = 10
 const log = new Logger('UiNotificationToast')
@@ -89,7 +90,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
   }, [contentI18nKey, contentI18nOptions, t])
 
   return (
-    <Toast show={!dismissed} onClose={dismissNow} {...cypressId('notification-toast')}>
+    <Toast className={styles.toast} show={!dismissed} onClose={dismissNow} {...cypressId('notification-toast')}>
       <Toast.Header>
         <strong className='mr-auto'>
           <ShowIf condition={!!icon}>
@@ -105,6 +106,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
         now={remainingSteps}
         max={durationInSecond * STEPS_PER_SECOND}
         min={STEPS_PER_SECOND}
+        className={styles.progress}
       />
       <div>{buttonsDom}</div>
     </Toast>

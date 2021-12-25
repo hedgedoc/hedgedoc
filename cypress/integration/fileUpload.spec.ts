@@ -40,8 +40,8 @@ describe('File upload', () => {
       )
     })
     it('via button', () => {
-      cy.getById('editor-toolbar-upload-image-button').should('be.visible')
-      cy.getById('editor-toolbar-upload-image-input').attachFixture({
+      cy.getByCypressId('editor-toolbar-upload-image-button').should('be.visible')
+      cy.getByCypressId('editor-toolbar-upload-image-input').attachFixture({
         filePath: 'demo.png',
         mimeType: 'image/png'
       })
@@ -86,8 +86,8 @@ describe('File upload', () => {
         statusCode: 400
       }
     )
-    cy.getById('editor-toolbar-upload-image-button').should('be.visible')
-    cy.getById('editor-toolbar-upload-image-input').attachFixture({
+    cy.getByCypressId('editor-toolbar-upload-image-button').should('be.visible')
+    cy.getByCypressId('editor-toolbar-upload-image-input').attachFixture({
       filePath: 'demo.png',
       mimeType: 'image/png'
     })

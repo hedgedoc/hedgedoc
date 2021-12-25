@@ -8,7 +8,7 @@ import type { Element } from 'domhandler'
 import { isTag } from 'domhandler'
 import React from 'react'
 import { ComponentReplacer, DO_NOT_REPLACE } from '../../replace-components/component-replacer'
-import './katex.scss'
+import 'katex/dist/katex.min.css'
 import { KatexMarkdownExtension } from './katex-markdown-extension'
 
 /**

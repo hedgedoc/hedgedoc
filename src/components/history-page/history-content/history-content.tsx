@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useCallback, useState } from 'react'
+import React, { Fragment, useCallback, useMemo, useState } from 'react'
 import { Alert, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { PagerPagination } from '../../common/pagination/pager-pagination'
@@ -15,6 +15,9 @@ import type { HistoryEntry } from '../../../redux/history/types'
 import { removeHistoryEntry, toggleHistoryEntryPinning } from '../../../redux/history/methods'
 import { deleteNote } from '../../../api/notes'
 import { showErrorNotification } from '../../../redux/ui-notifications/methods'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { sortAndFilterEntries } from '../utils'
+import { useHistoryToolbarState } from '../history-toolbar/toolbar-context/use-history-toolbar-state'
 
 type OnEntryClick = (entryId: string) => void
 
@@ -22,11 +25,6 @@ export interface HistoryEventHandlers {
   onPinClick: OnEntryClick
   onRemoveClick: OnEntryClick
   onDeleteClick: OnEntryClick
-}
-
-export interface HistoryContentProps {
-  viewState: ViewStateEnum
-  entries: HistoryEntry[]
 }
 
 export interface HistoryEntryProps {
@@ -39,10 +37,19 @@ export interface HistoryEntriesProps {
   onLastPageIndexChange: (lastPageIndex: number) => void
 }
 
-export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entries }) => {
+export const HistoryContent: React.FC = () => {
   useTranslation()
   const [pageIndex, setPageIndex] = useState(0)
   const [lastPageIndex, setLastPageIndex] = useState(0)
+
+  const allEntries = useApplicationState((state) => state.history)
+
+  const [historyToolbarState] = useHistoryToolbarState()
+
+  const entriesToShow = useMemo<HistoryEntry[]>(
+    () => sortAndFilterEntries(allEntries, historyToolbarState),
+    [allEntries, historyToolbarState]
+  )
 
   const onPinClick = useCallback((noteId: string) => {
     toggleHistoryEntryPinning(noteId).catch(showErrorNotification('landing.history.error.updateEntry.text'))
@@ -58,22 +65,12 @@ export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entri
     removeHistoryEntry(noteId).catch(showErrorNotification('landing.history.error.deleteEntry.text'))
   }, [])
 
-  if (entries.length === 0) {
-    return (
-      <Row className={'justify-content-center'}>
-        <Alert variant={'secondary'}>
-          <Trans i18nKey={'landing.history.noHistory'} />
-        </Alert>
-      </Row>
-    )
-  }
-
-  const mapViewStateToComponent = (viewState: ViewStateEnum) => {
-    switch (viewState) {
+  const historyContent = useMemo(() => {
+    switch (historyToolbarState.viewState) {
       case ViewStateEnum.TABLE:
         return (
           <HistoryTable
-            entries={entries}
+            entries={entriesToShow}
             onPinClick={onPinClick}
             onRemoveClick={onRemoveClick}
             onDeleteClick={onDeleteClick}
@@ -82,10 +79,9 @@ export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entri
           />
         )
       case ViewStateEnum.CARD:
-      default:
         return (
           <HistoryCardList
-            entries={entries}
+            entries={entriesToShow}
             onPinClick={onPinClick}
             onRemoveClick={onRemoveClick}
             onDeleteClick={onDeleteClick}
@@ -94,18 +90,28 @@ export const HistoryContent: React.FC<HistoryContentProps> = ({ viewState, entri
           />
         )
     }
-  }
+  }, [entriesToShow, historyToolbarState.viewState, onDeleteClick, onPinClick, onRemoveClick, pageIndex])
 
-  return (
-    <Fragment>
-      {mapViewStateToComponent(viewState)}
-      <Row className='justify-content-center'>
-        <PagerPagination
-          numberOfPageButtonsToShowAfterAndBeforeCurrent={2}
-          lastPageIndex={lastPageIndex}
-          onPageChange={setPageIndex}
-        />
+  if (entriesToShow.length === 0) {
+    return (
+      <Row className={'justify-content-center'}>
+        <Alert variant={'secondary'}>
+          <Trans i18nKey={'landing.history.noHistory'} />
+        </Alert>
       </Row>
-    </Fragment>
-  )
+    )
+  } else {
+    return (
+      <Fragment>
+        {historyContent}
+        <Row className='justify-content-center'>
+          <PagerPagination
+            numberOfPageButtonsToShowAfterAndBeforeCurrent={2}
+            lastPageIndex={lastPageIndex}
+            onPageChange={setPageIndex}
+          />
+        </Row>
+      </Fragment>
+    )
+  }
 }

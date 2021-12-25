@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { useCallback, useRef, useState } from 'react'
@@ -14,7 +14,7 @@ import {
   convertV1History,
   importHistoryEntries,
   mergeHistoryEntries,
-  refreshHistoryState
+  safeRefreshHistoryState
 } from '../../../redux/history/methods'
 import { dispatchUiNotification, showErrorNotification } from '../../../redux/ui-notifications/methods'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
@@ -32,7 +32,7 @@ export const ImportHistoryButton: React.FC = () => {
       entries.forEach((entry) => (entry.origin = userExists ? HistoryEntryOrigin.REMOTE : HistoryEntryOrigin.LOCAL))
       importHistoryEntries(mergeHistoryEntries(historyState, entries)).catch((error: Error) => {
         showErrorNotification('landing.history.error.setHistory.text')(error)
-        refreshHistoryState().catch(showErrorNotification('landing.history.error.getHistory.text'))
+        safeRefreshHistoryState()
       })
     },
     [historyState, userExists]

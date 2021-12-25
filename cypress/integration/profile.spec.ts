@@ -53,22 +53,22 @@ describe('profile page', () => {
 
   describe('access tokens', () => {
     it('list existing tokens', () => {
-      cy.getById('access-token-label').contains('cypress-App')
+      cy.getByCypressId('access-token-label').contains('cypress-App')
     })
 
     it('delete token', () => {
-      cy.getById('access-token-delete-button').click()
-      cy.getById('access-token-modal-delete').as('deletion-modal')
+      cy.getByCypressId('access-token-delete-button').click()
+      cy.getByCypressId('access-token-modal-delete').as('deletion-modal')
       cy.get('@deletion-modal').should('be.visible').find('.modal-footer .btn-danger').click()
       cy.get('@deletion-modal').should('not.exist')
     })
 
     it('add token', () => {
-      cy.getById('access-token-add-button').should('be.disabled')
-      cy.getById('access-token-add-input-label').type('cypress')
-      cy.getById('access-token-modal-add').should('not.exist')
-      cy.getById('access-token-add-button').should('not.be.disabled').click()
-      cy.getById('access-token-modal-add')
+      cy.getByCypressId('access-token-add-button').should('be.disabled')
+      cy.getByCypressId('access-token-add-input-label').type('cypress')
+      cy.getByCypressId('access-token-modal-add').should('not.exist')
+      cy.getByCypressId('access-token-add-button').should('not.be.disabled').click()
+      cy.getByCypressId('access-token-modal-add')
         .should('be.visible')
         .find('input[readonly]')
         .should('have.value', 'c-y-p-r-e-s-s')

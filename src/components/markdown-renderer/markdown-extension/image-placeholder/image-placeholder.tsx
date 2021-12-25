@@ -8,10 +8,11 @@ import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import './image-placeholder.scss'
+import styles from './image-placeholder.module.scss'
 import { acceptedMimeTypes } from '../../../common/upload-image-mimetypes'
 import { useOnImageUpload } from './hooks/use-on-image-upload'
 import { usePlaceholderSizeStyle } from './hooks/use-placeholder-size-style'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
 export interface PlaceholderImageFrameProps {
   alt?: string
@@ -83,7 +84,8 @@ export const ImagePlaceholder: React.FC<PlaceholderImageFrameProps> = ({
 
   return (
     <span
-      className={`image-drop d-inline-flex flex-column align-items-center ${containerDragClasses} p-1`}
+      {...cypressId('image-placeholder-image-drop')}
+      className={`${styles['image-drop']} d-inline-flex flex-column align-items-center ${containerDragClasses} p-1`}
       style={containerStyle}
       onDrop={onDropHandler}
       onDragOver={onDragOverHandler}
@@ -100,7 +102,7 @@ export const ImagePlaceholder: React.FC<PlaceholderImageFrameProps> = ({
           <span className='my-2'>
             <Trans i18nKey={'editor.embeddings.placeholderImage.placeholderText'} />
           </span>
-          <span className={'altText'}>{alt ?? title ?? ''}</span>
+          <span className={styles['altText']}>{alt ?? title ?? ''}</span>
         </div>
       </div>
       <Button size={'sm'} variant={'primary'} onClick={uploadButtonClicked}>

@@ -4,28 +4,28 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment } from 'react'
+import React, { Fragment, useMemo } from 'react'
 import { Card, ListGroup, Row } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
 import { isMac } from '../../utils'
 
 export const ShortcutTabContent: React.FC = () => {
-  const modifierKey = isMac ? <kbd>⌘</kbd> : <kbd>Ctrl</kbd>
-  const altKey = isMac ? <kbd>⌥</kbd> : <kbd>Alt</kbd>
+  const modifierKey = useMemo(() => (isMac() ? <kbd>⌘</kbd> : <kbd>Ctrl</kbd>), [])
+  const altKey = useMemo(() => (isMac() ? <kbd>⌥</kbd> : <kbd>Alt</kbd>), [])
 
   const shortcutMap: { [category: string]: { [functionName: string]: JSX.Element[] } } = {
     'View Mode': {
-      'editor.help.shortcuts.view': [<kbd>Ctrl</kbd>, <> + </>, altKey, <> + </>, <kbd>V</kbd>],
-      'editor.help.shortcuts.both': [<kbd>Ctrl</kbd>, <> + </>, altKey, <> + </>, <kbd>B</kbd>],
-      'editor.help.shortcuts.edit': [<kbd>Ctrl</kbd>, <> + </>, altKey, <> + </>, <kbd>E</kbd>]
+      'editor.help.shortcuts.view': [<kbd key={'ctrl'}>Ctrl</kbd>, <> + </>, altKey, <> + </>, <kbd key={'v'}>V</kbd>],
+      'editor.help.shortcuts.both': [<kbd key={'ctrl'}>Ctrl</kbd>, <> + </>, altKey, <> + </>, <kbd key={'b'}>B</kbd>],
+      'editor.help.shortcuts.edit': [<kbd key={'ctrl'}>Ctrl</kbd>, <> + </>, altKey, <> + </>, <kbd key={'e'}>E</kbd>]
     },
     Editor: {
-      'editor.help.shortcuts.bold': [modifierKey, <> + </>, <kbd>B</kbd>],
-      'editor.help.shortcuts.italic': [modifierKey, <> + </>, <kbd>I</kbd>],
-      'editor.help.shortcuts.underline': [modifierKey, <> + </>, <kbd>U</kbd>],
-      'editor.help.shortcuts.strikethrough': [modifierKey, <> + </>, <kbd>D</kbd>],
-      'editor.help.shortcuts.mark': [modifierKey, <> + </>, <kbd>M</kbd>],
-      'editor.help.shortcuts.link': [modifierKey, <> + </>, <kbd>K</kbd>]
+      'editor.help.shortcuts.bold': [modifierKey, <> + </>, <kbd key={'b'}>B</kbd>],
+      'editor.help.shortcuts.italic': [modifierKey, <> + </>, <kbd key={'i'}>I</kbd>],
+      'editor.help.shortcuts.underline': [modifierKey, <> + </>, <kbd key={'u'}>U</kbd>],
+      'editor.help.shortcuts.strikethrough': [modifierKey, <> + </>, <kbd key={'d'}>D</kbd>],
+      'editor.help.shortcuts.mark': [modifierKey, <> + </>, <kbd key={'m'}>M</kbd>],
+      'editor.help.shortcuts.link': [modifierKey, <> + </>, <kbd key={'k'}>K</kbd>]
     }
   }
   return (

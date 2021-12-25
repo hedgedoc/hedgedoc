@@ -1,12 +1,12 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { useCallback } from 'react'
 import { cypressId } from '../../../../utils/cypress-attribute'
-import './gist-frame.scss'
+import styles from './gist-frame.module.scss'
 import { useResizeGistFrame } from './use-resize-gist-frame'
 import type { IdProps } from '../../replace-components/custom-tag-with-id-component-replacer'
 import { ClickShield } from '../../replace-components/click-shield/click-shield'
@@ -41,8 +41,8 @@ export const GistFrame: React.FC<IdProps> = ({ id }) => {
         title={`gist ${id}`}
         src={`https://gist.github.com/${id}.pibb`}
       />
-      <span className={'gist-resizer-row'}>
-        <span className={'gist-resizer'} onMouseDown={onStart} onTouchStart={onStart} />
+      <span className={styles['gist-resizer-row']}>
+        <span className={styles['gist-resizer']} onMouseDown={onStart} onTouchStart={onStart} />
       </span>
     </ClickShield>
   )

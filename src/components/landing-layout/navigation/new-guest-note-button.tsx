@@ -1,21 +1,22 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { LinkContainer } from 'react-router-bootstrap'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { cypressId } from '../../../utils/cypress-attribute'
+import Link from 'next/link'
 
 export const NewGuestNoteButton: React.FC = () => {
   const { t } = useTranslation()
   return (
-    <LinkContainer to={'/new'} title={t('landing.navigation.newGuestNote')}>
+    <Link href={'/new'} passHref={true}>
       <Button
+        title={t('landing.navigation.newGuestNote')}
         variant='primary'
         size='sm'
         className='d-inline-flex align-items-center'
@@ -25,6 +26,6 @@ export const NewGuestNoteButton: React.FC = () => {
           <Trans i18nKey='landing.navigation.newGuestNote' />
         </span>
       </Button>
-    </LinkContainer>
+    </Link>
   )
 }

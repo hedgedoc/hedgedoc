@@ -5,21 +5,16 @@
  */
 
 import type { Reducer } from 'redux'
-import { determineDarkModeBrowserSetting, loadFromLocalStorage, saveToLocalStorage } from './methods'
+import { saveToLocalStorage } from './methods'
 import type { DarkModeConfig, DarkModeConfigActions } from './types'
 import { DarkModeConfigActionType } from './types'
 
-export const getInitialState = (): DarkModeConfig => {
-  const initialMode = loadFromLocalStorage() ??
-    determineDarkModeBrowserSetting() ?? {
-      darkMode: false
-    }
-  saveToLocalStorage(initialMode)
-  return initialMode
+const initalState: DarkModeConfig = {
+  darkMode: false
 }
 
 export const DarkModeConfigReducer: Reducer<DarkModeConfig, DarkModeConfigActions> = (
-  state: DarkModeConfig = getInitialState(),
+  state: DarkModeConfig = initalState,
   action: DarkModeConfigActions
 ) => {
   let darkModeConfigState: DarkModeConfig

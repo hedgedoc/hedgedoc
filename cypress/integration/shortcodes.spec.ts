@@ -35,7 +35,7 @@ describe('Short code gets replaced or rendered: ', () => {
   describe('youtube', () => {
     it('renders click-shield', () => {
       cy.setCodemirrorContent(`{%youtube YE7VzlLtp-4 %}`)
-      cy.getMarkdownBody().findById('click-shield-youtube')
+      cy.getMarkdownBody().findByCypressId('click-shield-youtube')
     })
   })
 })

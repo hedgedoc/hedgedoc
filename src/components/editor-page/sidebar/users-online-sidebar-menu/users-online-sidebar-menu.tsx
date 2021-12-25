@@ -6,13 +6,14 @@
 
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { SidebarButton } from '../sidebar-button'
-import { SidebarMenu } from '../sidebar-menu'
+import { SidebarButton } from '../sidebar-button/sidebar-button'
+import { SidebarMenu } from '../sidebar-menu/sidebar-menu'
 import type { SpecificSidebarMenuProps } from '../types'
 import { DocumentSidebarMenuSelection } from '../types'
 import { ActiveIndicatorStatus } from './active-indicator'
-import './online-counter.scss'
-import { UserLine } from './user-line'
+import styles from './online-counter.module.scss'
+import { UserLine } from '../user-line/user-line'
+import { useCustomizeAssetsUrl } from '../../../../hooks/common/use-customize-assets-url'
 
 export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   className,
@@ -35,6 +36,8 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
     onClick(menuId)
   }, [menuId, onClick])
 
+  const avatarUrl = useCustomizeAssetsUrl() + 'img/avatar.png'
+
   return (
     <Fragment>
       <SidebarButton
@@ -42,21 +45,16 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         buttonRef={buttonRef}
         onClick={onClickHandler}
         icon={expand ? 'arrow-left' : 'users'}
-        variant={'primary'}
-        className={`online-entry ${className ?? ''}`}>
+        className={`${styles['online-entry']} ${className ?? ''}`}
+        variant={'primary'}>
         <Trans i18nKey={'editor.onlineStatus.online'} />
       </SidebarButton>
       <SidebarMenu expand={expand}>
         <SidebarButton>
-          <UserLine name='Philip Molares' photo='/img/avatar.png' color='red' status={ActiveIndicatorStatus.INACTIVE} />
+          <UserLine name='Philip Molares' photo={avatarUrl} color='red' status={ActiveIndicatorStatus.INACTIVE} />
         </SidebarButton>
         <SidebarButton>
-          <UserLine
-            name='Tilman Vatteroth'
-            photo='/img/avatar.png'
-            color='blue'
-            status={ActiveIndicatorStatus.ACTIVE}
-          />
+          <UserLine name='Tilman Vatteroth' photo={avatarUrl} color='blue' status={ActiveIndicatorStatus.ACTIVE} />
         </SidebarButton>
       </SidebarMenu>
     </Fragment>

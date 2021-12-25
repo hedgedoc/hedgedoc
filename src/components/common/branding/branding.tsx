@@ -1,12 +1,12 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { useMemo } from 'react'
 import { ShowIf } from '../show-if/show-if'
-import './branding.scss'
+import styles from './branding.module.scss'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export interface BrandingProps {
@@ -21,11 +21,12 @@ export const Branding: React.FC<BrandingProps> = ({ inline = false, delimiter = 
   const brandingDom = useMemo(() => {
     if (branding.logo) {
       return (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={branding.logo}
           alt={branding.name}
           title={branding.name}
-          className={inline ? 'inline-size' : 'regular-size'}
+          className={inline ? styles['inline-size'] : styles['regular-size']}
         />
       )
     } else {
@@ -36,7 +37,7 @@ export const Branding: React.FC<BrandingProps> = ({ inline = false, delimiter = 
   return (
     <ShowIf condition={showBranding}>
       <ShowIf condition={delimiter}>
-        <strong className={`mx-1 ${inline ? 'inline-size' : 'regular-size'}`}>@</strong>
+        <strong className={`mx-1 ${inline ? styles['inline-size'] : styles['regular-size']}`}>@</strong>
       </ShowIf>
       {brandingDom}
     </ShowIf>

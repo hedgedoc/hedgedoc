@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import type { RefObject } from 'react'
@@ -11,6 +11,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { v4 as uuid } from 'uuid'
 import { ShowIf } from '../show-if/show-if'
 import { Logger } from '../../../utils/logger'
+import { isClientSideRendering } from '../../../utils/is-client-side-rendering'
 
 export interface CopyOverlayProps {
   content: string
@@ -26,6 +27,10 @@ export const CopyOverlay: React.FC<CopyOverlayProps> = ({ content, clickComponen
   const [tooltipId] = useState<string>(() => uuid())
 
   const copyToClipboard = useCallback((content: string) => {
+    if (!isClientSideRendering()) {
+      log.error('Clipboard not available in server side rendering')
+      return
+    }
     navigator.clipboard
       .writeText(content)
       .then(() => {

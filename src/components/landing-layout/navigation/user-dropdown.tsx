@@ -7,12 +7,12 @@
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { LinkContainer } from 'react-router-bootstrap'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { UserAvatar } from '../../common/user-avatar/user-avatar'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { SignOutDropdownButton } from './sign-out-dropdown-button'
+import Link from 'next/link'
 
 export const UserDropdown: React.FC = () => {
   useTranslation()
@@ -29,18 +29,18 @@ export const UserDropdown: React.FC = () => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu className='text-start'>
-        <LinkContainer to={'/n/features'}>
+        <Link href={'/n/features'} passHref={true}>
           <Dropdown.Item dir='auto' {...cypressId('user-dropdown-features-button')}>
             <ForkAwesomeIcon icon='bolt' fixedWidth={true} className='mx-2' />
             <Trans i18nKey='editor.help.documents.features' />
           </Dropdown.Item>
-        </LinkContainer>
-        <LinkContainer to={'/profile'}>
+        </Link>
+        <Link href={'/profile'} passHref={true}>
           <Dropdown.Item dir='auto' {...cypressId('user-dropdown-profile-button')}>
             <ForkAwesomeIcon icon='user' fixedWidth={true} className='mx-2' />
             <Trans i18nKey='profile.userProfile' />
           </Dropdown.Item>
-        </LinkContainer>
+        </Link>
         <SignOutDropdownButton />
       </Dropdown.Menu>
     </Dropdown>

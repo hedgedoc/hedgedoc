@@ -1,125 +1,43 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import equal from 'fast-deep-equal'
-import type { ChangeEvent } from 'react'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Button, Form, FormControl, InputGroup, ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
-import { Typeahead } from 'react-bootstrap-typeahead'
-import { Trans, useTranslation } from 'react-i18next'
-import { useQueryState } from 'react-router-use-location-state'
+import React, { useCallback } from 'react'
+import { Button, Form, InputGroup } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../../common/show-if/show-if'
-import { SortButton, SortModeEnum } from '../sort-button/sort-button'
 import { ClearHistoryButton } from './clear-history-button'
 import { ExportHistoryButton } from './export-history-button'
 import { ImportHistoryButton } from './import-history-button'
-import './typeahead-hacks.scss'
 import { HistoryEntryOrigin } from '../../../redux/history/types'
-import { importHistoryEntries, refreshHistoryState, setHistoryEntries } from '../../../redux/history/methods'
+import { importHistoryEntries, safeRefreshHistoryState, setHistoryEntries } from '../../../redux/history/methods'
 import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { cypressId } from '../../../utils/cypress-attribute'
-
-export type HistoryToolbarChange = (newState: HistoryToolbarState) => void
-
-interface ToolbarSortState {
-  titleSortDirection: SortModeEnum
-  lastVisitedSortDirection: SortModeEnum
-}
-
-interface ToolbarFilterState {
-  viewState: ViewStateEnum
-  keywordSearch: string
-  selectedTags: string[]
-}
-
-export type HistoryToolbarState = ToolbarSortState & ToolbarFilterState
+import { KeywordSearchInput } from './keyword-search-input'
+import { TagSelectionInput } from './tag-selection-input'
+import { HistoryRefreshButton } from './history-refresh-button'
+import { SortByTitleButton } from './sort-by-title-button'
+import { SortByLastVisitedButton } from './sort-by-last-visited-button'
+import { HistoryViewModeToggleButton } from './history-view-mode-toggle-button'
+import { useSyncToolbarStateToUrlEffect } from './toolbar-context/use-sync-toolbar-state-to-url-effect'
 
 export enum ViewStateEnum {
   CARD,
   TABLE
 }
 
-export interface HistoryToolbarProps {
-  onSettingsChange: HistoryToolbarChange
-}
-
-const initSortState: ToolbarSortState = {
-  titleSortDirection: SortModeEnum.no,
-  lastVisitedSortDirection: SortModeEnum.down
-}
-
-export const initToolbarState: HistoryToolbarState = {
-  ...initSortState,
-  viewState: ViewStateEnum.CARD,
-  keywordSearch: '',
-  selectedTags: []
-}
-
-export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange }) => {
+/**
+ * Renders the toolbar for the history page that contains controls for filtering and sorting.
+ */
+export const HistoryToolbar: React.FC = () => {
   const { t } = useTranslation()
   const historyEntries = useApplicationState((state) => state.history)
   const userExists = useApplicationState((state) => !!state.user)
 
-  const tags = useMemo<string[]>(() => {
-    const allTags = historyEntries.map((entry) => entry.tags).flat()
-    return [...new Set(allTags)]
-  }, [historyEntries])
-
-  const previousState = useRef(initToolbarState)
-  const [searchState, setSearchState] = useQueryState('search', initToolbarState.keywordSearch)
-  const [tagsState, setTagsState] = useQueryState('tags', initToolbarState.selectedTags)
-  const [viewState, setViewState] = useState(initToolbarState.viewState)
-  const [sortState, setSortState] = useState<ToolbarSortState>(initSortState)
-
-  const titleSortChanged = useCallback(
-    (direction: SortModeEnum) => {
-      setSortState({
-        lastVisitedSortDirection: SortModeEnum.no,
-        titleSortDirection: direction
-      })
-    },
-    [setSortState]
-  )
-
-  const lastVisitedSortChanged = useCallback(
-    (direction: SortModeEnum) => {
-      setSortState({
-        lastVisitedSortDirection: direction,
-        titleSortDirection: SortModeEnum.no
-      })
-    },
-    [setSortState]
-  )
-
-  const keywordSearchChanged = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setSearchState(event.currentTarget.value ?? '')
-    },
-    [setSearchState]
-  )
-
-  const toggleViewChanged = useCallback(
-    (newViewState: ViewStateEnum) => {
-      setViewState(newViewState)
-    },
-    [setViewState]
-  )
-
-  const selectedTagsChanged = useCallback(
-    (selected: string[]) => {
-      setTagsState(selected)
-    },
-    [setTagsState]
-  )
-
-  const refreshHistory = useCallback(() => {
-    refreshHistoryState().catch(showErrorNotification('landing.history.error.getHistory.text'))
-  }, [])
+  useSyncToolbarStateToUrlEffect()
 
   const onUploadAllToRemote = useCallback(() => {
     if (!userExists) {
@@ -137,58 +55,23 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
         }
       })
       setHistoryEntries(historyEntries)
-      refreshHistory()
+      safeRefreshHistoryState()
     })
-  }, [userExists, historyEntries, refreshHistory])
-
-  useEffect(() => {
-    const newState: HistoryToolbarState = {
-      selectedTags: tagsState,
-      keywordSearch: searchState,
-      viewState: viewState,
-      ...sortState
-    }
-    // This is needed because the onSettingsChange triggers a state update in history-page which re-renders the toolbar.
-    // The re-rendering causes this effect to run again resulting in an infinite state update loop.
-    if (equal(previousState.current, newState)) {
-      return
-    }
-    onSettingsChange(newState)
-    previousState.current = newState
-  }, [onSettingsChange, tagsState, searchState, viewState, sortState])
+  }, [userExists, historyEntries])
 
   return (
     <Form inline={true}>
       <InputGroup className={'mr-1 mb-1'}>
-        <Typeahead
-          id={'tagsSelection'}
-          options={tags}
-          multiple={true}
-          placeholder={t('landing.history.toolbar.selectTags')}
-          onChange={selectedTagsChanged}
-          selected={tagsState}
-        />
+        <TagSelectionInput />
       </InputGroup>
       <InputGroup className={'mr-1 mb-1'}>
-        <FormControl
-          placeholder={t('landing.history.toolbar.searchKeywords')}
-          aria-label={t('landing.history.toolbar.searchKeywords')}
-          onChange={keywordSearchChanged}
-          value={searchState}
-        />
+        <KeywordSearchInput />
       </InputGroup>
       <InputGroup className={'mr-1 mb-1'}>
-        <SortButton onDirectionChange={titleSortChanged} direction={sortState.titleSortDirection} variant={'light'}>
-          <Trans i18nKey={'landing.history.toolbar.sortByTitle'} />
-        </SortButton>
+        <SortByTitleButton />
       </InputGroup>
       <InputGroup className={'mr-1 mb-1'}>
-        <SortButton
-          onDirectionChange={lastVisitedSortChanged}
-          direction={sortState.lastVisitedSortDirection}
-          variant={'light'}>
-          <Trans i18nKey={'landing.history.toolbar.sortByLastVisited'} />
-        </SortButton>
+        <SortByLastVisitedButton />
       </InputGroup>
       <InputGroup className={'mr-1 mb-1'}>
         <ExportHistoryButton />
@@ -200,9 +83,7 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
         <ClearHistoryButton />
       </InputGroup>
       <InputGroup className={'mr-1 mb-1'}>
-        <Button variant={'light'} title={t('landing.history.toolbar.refresh')} onClick={refreshHistory}>
-          <ForkAwesomeIcon icon='refresh' />
-        </Button>
+        <HistoryRefreshButton />
       </InputGroup>
       <ShowIf condition={userExists}>
         <InputGroup className={'mr-1 mb-1'}>
@@ -212,26 +93,7 @@ export const HistoryToolbar: React.FC<HistoryToolbarProps> = ({ onSettingsChange
         </InputGroup>
       </ShowIf>
       <InputGroup className={'mr-1 mb-1'}>
-        <ToggleButtonGroup
-          type='radio'
-          name='options'
-          dir='ltr'
-          value={viewState}
-          className={'button-height'}
-          onChange={(newViewState: ViewStateEnum) => {
-            toggleViewChanged(newViewState)
-          }}>
-          <ToggleButton className={'btn-light'} value={ViewStateEnum.CARD} title={t('landing.history.toolbar.cards')}>
-            <ForkAwesomeIcon icon={'sticky-note'} className={'fa-fix-line-height'} />
-          </ToggleButton>
-          <ToggleButton
-            {...cypressId('history-mode-table')}
-            className={'btn-light'}
-            value={ViewStateEnum.TABLE}
-            title={t('landing.history.toolbar.table')}>
-            <ForkAwesomeIcon icon={'table'} className={'fa-fix-line-height'} />
-          </ToggleButton>
-        </ToggleButtonGroup>
+        <HistoryViewModeToggleButton />
       </InputGroup>
     </Form>
   )

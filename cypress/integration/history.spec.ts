@@ -11,12 +11,12 @@ describe('History', () => {
     })
 
     it('Cards', () => {
-      cy.getById('history-card').should('be.visible')
+      cy.getByCypressId('history-card').should('be.visible')
     })
 
     it('Table', () => {
-      cy.getById('history-mode-table').click()
-      cy.getById('history-table').should('be.visible')
+      cy.getByCypressId('history-mode-table').click()
+      cy.getByCypressId('history-table').should('be.visible')
     })
   })
 
@@ -39,13 +39,13 @@ describe('History', () => {
       })
 
       it('in table view', () => {
-        cy.getById('history-mode-table').click()
-        cy.getById('history-table').should('be.visible')
-        cy.getById('history-entry-title').contains('Features')
+        cy.getByCypressId('history-mode-table').click()
+        cy.getByCypressId('history-table').should('be.visible')
+        cy.getByCypressId('history-entry-title').contains('Features')
       })
 
       it('in cards view', () => {
-        cy.getById('history-entry-title').contains('Features')
+        cy.getByCypressId('history-entry-title').contains('Features')
       })
     })
     describe('is untitled when not empty', () => {
@@ -66,13 +66,13 @@ describe('History', () => {
       })
 
       it('in table view', () => {
-        cy.getById('history-mode-table').click()
-        cy.getById('history-table').should('be.visible')
-        cy.getById('history-entry-title').contains('Untitled')
+        cy.getByCypressId('history-mode-table').click()
+        cy.getByCypressId('history-table').should('be.visible')
+        cy.getByCypressId('history-entry-title').contains('Untitled')
       })
 
       it('in cards view', () => {
-        cy.getById('history-entry-title').contains('Untitled')
+        cy.getByCypressId('history-entry-title').contains('Untitled')
       })
     })
   })
@@ -90,17 +90,17 @@ describe('History', () => {
       })
 
       it('Cards', () => {
-        cy.getById('history-card').should('be.visible')
-        cy.getById('history-entry-pin-button').first().as('pin-button')
-        cy.get('@pin-button').should('have.class', 'pinned').click()
-        cy.get('@pin-button').should('not.have.class', 'pinned')
+        cy.getByCypressId('history-card').should('be.visible')
+        cy.getByCypressId('history-entry-pin-button').first().as('pin-button')
+        cy.get('@pin-button').should('have.attr', 'data-cypress-pinned', 'true').click()
+        cy.get('@pin-button').should('have.attr', 'data-cypress-pinned', 'false')
       })
 
       it('Table', () => {
-        cy.getById('history-mode-table').click()
-        cy.getById('history-entry-pin-button').first().as('pin-button')
-        cy.get('@pin-button').should('have.class', 'pinned').click()
-        cy.get('@pin-button').should('not.have.class', 'pinned')
+        cy.getByCypressId('history-mode-table').click()
+        cy.getByCypressId('history-entry-pin-button').first().as('pin-button')
+        cy.get('@pin-button').should('have.attr', 'data-cypress-pinned', 'true').click()
+        cy.get('@pin-button').should('have.attr', 'data-cypress-pinned', 'false')
       })
     })
 
@@ -112,15 +112,15 @@ describe('History', () => {
       })
 
       it('Cards', () => {
-        cy.getById('history-card').should('be.visible')
-        cy.getById('history-entry-pin-button').first().click()
-        cy.getById('notification-toast').should('be.visible')
+        cy.getByCypressId('history-card').should('be.visible')
+        cy.getByCypressId('history-entry-pin-button').first().click()
+        cy.getByCypressId('notification-toast').should('be.visible')
       })
 
       it('Table', () => {
-        cy.getById('history-mode-table').click()
-        cy.getById('history-entry-pin-button').first().click()
-        cy.getById('notification-toast').should('be.visible')
+        cy.getByCypressId('history-mode-table').click()
+        cy.getByCypressId('history-entry-pin-button').first().click()
+        cy.getByCypressId('notification-toast').should('be.visible')
       })
     })
   })
@@ -136,37 +136,37 @@ describe('History', () => {
     })
 
     it('works with valid file', () => {
-      cy.getById('import-history-file-button').should('be.visible')
-      cy.getById('import-history-file-input').attachFixture({
+      cy.getByCypressId('import-history-file-button').should('be.visible')
+      cy.getByCypressId('import-history-file-input').attachFixture({
         filePath: 'history.json',
         mimeType: 'application/json'
       })
-      cy.getById('history-entry-title').should('have.length', 1).contains('cy-Test')
+      cy.getByCypressId('history-entry-title').should('have.length', 1).contains('cy-Test')
     })
 
     it('fails on invalid file', () => {
-      cy.getById('import-history-file-button').should('be.visible')
-      cy.getById('import-history-file-input').attachFixture({
+      cy.getByCypressId('import-history-file-button').should('be.visible')
+      cy.getByCypressId('import-history-file-input').attachFixture({
         filePath: 'invalid-history.txt',
         mimeType: 'text/plain'
       })
-      cy.getById('notification-toast').should('be.visible')
+      cy.getByCypressId('notification-toast').should('be.visible')
     })
 
     it('works when selecting two files with the same name', () => {
-      cy.getById('import-history-file-button').should('be.visible')
-      cy.getById('import-history-file-input').attachFixture({
+      cy.getByCypressId('import-history-file-button').should('be.visible')
+      cy.getByCypressId('import-history-file-input').attachFixture({
         filePath: 'history.json',
         mimeType: 'application/json'
       })
-      cy.getById('history-entry-title').should('have.length', 1).contains('cy-Test')
-      cy.getById('import-history-file-button').should('be.visible')
-      cy.getById('import-history-file-input').attachFixture({
+      cy.getByCypressId('history-entry-title').should('have.length', 1).contains('cy-Test')
+      cy.getByCypressId('import-history-file-button').should('be.visible')
+      cy.getByCypressId('import-history-file-input').attachFixture({
         filePath: 'history-2.json',
         fileName: 'history.json',
         mimeType: 'application/json'
       })
-      cy.getById('history-entry-title').should('have.length', 2).contains('cy-Test2')
+      cy.getByCypressId('history-entry-title').should('have.length', 2).contains('cy-Test2')
     })
   })
 })

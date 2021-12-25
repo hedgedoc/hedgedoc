@@ -19,36 +19,12 @@ export const setDarkMode = (darkMode: boolean): void => {
 }
 
 export const saveToLocalStorage = (darkModeConfig: DarkModeConfig): void => {
+  if (!window) {
+    return
+  }
   try {
     window.localStorage.setItem('nightMode', String(darkModeConfig.darkMode))
   } catch (error) {
     log.error('Saving to local storage failed', error)
-  }
-}
-
-export const loadFromLocalStorage = (): DarkModeConfig | undefined => {
-  try {
-    const storedValue = window.localStorage.getItem('nightMode')
-    if (!storedValue) {
-      return undefined
-    }
-    return {
-      darkMode: storedValue === 'true'
-    }
-  } catch (error) {
-    log.error('Loading from local storage failed', error)
-    return undefined
-  }
-}
-
-export const determineDarkModeBrowserSetting = (): DarkModeConfig | undefined => {
-  try {
-    const mediaQueryResult = window.matchMedia('(prefers-color-scheme: dark)').matches
-    return {
-      darkMode: mediaQueryResult
-    }
-  } catch (error) {
-    log.error('Can not determine setting from browser', error)
-    return undefined
   }
 }

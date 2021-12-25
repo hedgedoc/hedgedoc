@@ -9,10 +9,14 @@ describe('Diagram codeblock ', () => {
     cy.visitTestEditor()
   })
 
-  it('renders markmap', () => {
-    cy.setCodemirrorContent('```markmap\n- pro\n- contra\n```')
-    cy.getMarkdownBody().findById('markmap').children().should('be.visible')
-  })
+  /*
+   TODO: Readd test after fixing https://github.com/hedgedoc/react-client/issues/1709
+
+   it('renders markmap', () => {
+   cy.setCodemirrorContent('```markmap\n- pro\n- contra\n```')
+   cy.getMarkdownBody().findByCypressId('markmap').children().should('be.visible')
+   })
+   */
 
   it('renders vega-lite', () => {
     cy.setCodemirrorContent(
@@ -23,27 +27,27 @@ describe('Diagram codeblock ', () => {
 
   it('renders graphviz', () => {
     cy.setCodemirrorContent('```graphviz\ngraph {\na -- b\n}\n```')
-    cy.getMarkdownBody().findById('graphviz').children().should('be.visible')
+    cy.getMarkdownBody().findByCypressId('graphviz').children().should('be.visible')
   })
 
   it('renders mermaid', () => {
     cy.setCodemirrorContent('```mermaid\ngraph TD;\n    A-->B;\n```')
-    cy.getMarkdownBody().find('.mermaid').children().should('be.visible')
+    cy.getMarkdownBody().findByCypressId('mermaid-frame').children().should('be.visible')
   })
 
   it('renders flowcharts', () => {
     cy.setCodemirrorContent('```flow\nst=>start: Start\ne=>end: End\nst->e\n```')
-    cy.getMarkdownBody().findById('flowchart').children().should('be.visible')
+    cy.getMarkdownBody().findByCypressId('flowchart').children().should('be.visible')
   })
 
   it('renders abc scores', () => {
     cy.setCodemirrorContent('```abc\nM:4/4\nK:G\n|:GABc dedB:|\n```')
-    cy.getMarkdownBody().findById('abcjs').children().should('be.visible')
+    cy.getMarkdownBody().findByCypressId('abcjs').children().should('be.visible')
   })
 
   it('renders csv as table', () => {
     cy.setCodemirrorContent('```csv delimiter=; header\na;b;c;d\n1;2;3;4\n```')
-    cy.getMarkdownBody().findById('csv-html-table').first().should('be.visible')
+    cy.getMarkdownBody().findByCypressId('csv-html-table').first().should('be.visible')
   })
 
   it('renders plantuml', () => {

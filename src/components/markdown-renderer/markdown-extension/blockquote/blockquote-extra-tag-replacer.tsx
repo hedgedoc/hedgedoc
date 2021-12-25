@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { NativeRenderer, NodeReplacement, SubNodeTransform } from '../../replace-components/component-replacer'
+import type { NodeReplacement, SubNodeTransform } from '../../replace-components/component-replacer'
 import { ComponentReplacer, DO_NOT_REPLACE } from '../../replace-components/component-replacer'
 import type { Element } from 'domhandler'
 import type { ForkAwesomeIconProps } from '../../../common/fork-awesome/fork-awesome-icon'
@@ -22,7 +22,7 @@ import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-mark
  * @see ColoredBlockquoteNodePreprocessor
  */
 export class BlockquoteExtraTagReplacer extends ComponentReplacer {
-  replace(element: Element, subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer): NodeReplacement {
+  replace(element: Element, subNodeTransform: SubNodeTransform): NodeReplacement {
     if (element.tagName !== BlockquoteExtraTagMarkdownExtension.tagName || !element.attribs) {
       return DO_NOT_REPLACE
     }

@@ -6,7 +6,7 @@
 
 import type { EditorConfiguration } from 'codemirror'
 import { useMemo } from 'react'
-import { defaultKeyMap } from '../key-map'
+import { createDefaultKeyMap } from '../key-map'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { useTranslation } from 'react-i18next'
 
@@ -36,7 +36,7 @@ export const useCodeMirrorOptions = (): EditorConfiguration => {
       autoCloseTags: true,
       foldGutter: true,
       gutters: ['CodeMirror-linenumbers', 'authorship-gutters', 'CodeMirror-foldgutter'],
-      extraKeys: defaultKeyMap,
+      extraKeys: createDefaultKeyMap(),
       flattenSpans: true,
       addModeClass: true,
       autoRefresh: true,

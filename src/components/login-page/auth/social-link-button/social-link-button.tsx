@@ -1,13 +1,13 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React from 'react'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import type { IconName } from '../../../common/fork-awesome/types'
-import './social-link-button.scss'
+import styles from './social-link-button.module.scss'
 
 export interface SocialButtonProps {
   backgroundClass: string
@@ -21,11 +21,11 @@ export const SocialLinkButton: React.FC<SocialButtonProps> = ({ title, backgroun
     <a
       href={href}
       title={title}
-      className={'btn social-link-button p-0 d-inline-flex align-items-stretch ' + backgroundClass}>
-      <span className='icon-part d-flex align-items-center'>
+      className={`btn ${styles['social-link-button']} p-0 d-inline-flex align-items-stretch ${backgroundClass}`}>
+      <span className={`${styles['icon-part']} d-flex align-items-center`}>
         <ForkAwesomeIcon icon={icon} className={'social-icon'} fixedWidth={true} />
       </span>
-      <span className='text-part d-flex align-items-center mx-auto'>{children}</span>
+      <span className={`${styles['text-part']} d-flex align-items-center mx-auto`}>{children}</span>
     </a>
   )
 }

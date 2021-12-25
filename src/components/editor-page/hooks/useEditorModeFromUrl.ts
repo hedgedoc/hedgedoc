@@ -7,16 +7,15 @@
 import { useEffect } from 'react'
 import { EditorMode } from '../app-bar/editor-view-mode'
 import { setEditorMode } from '../../../redux/editor/methods'
-import { useLocation } from 'react-router'
+import { useRouter } from 'next/router'
 
 export const useEditorModeFromUrl = (): void => {
-  const { search } = useLocation()
+  const { query } = useRouter()
 
   useEffect(() => {
-    const requestedMode = search.substr(1)
-    const mode = Object.values(EditorMode).find((mode) => mode === requestedMode)
+    const mode = Object.values(EditorMode).find((mode) => query[mode] !== undefined)
     if (mode) {
       setEditorMode(mode)
     }
-  }, [search])
+  }, [query])
 }

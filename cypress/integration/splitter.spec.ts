@@ -10,33 +10,33 @@ describe('Split view', () => {
   })
 
   it('can show both panes', () => {
-    cy.getById('view-mode-both').click()
-    cy.get('.splitter.left').should('be.visible')
-    cy.get('.splitter.right').should('be.visible')
+    cy.getByCypressId('view-mode-both').click()
+    cy.getByCypressId('splitter-left').should('be.visible')
+    cy.getByCypressId('splitter-right').should('be.visible')
   })
 
   it('can show only preview pane', () => {
-    cy.getById('view-mode-preview').click()
-    cy.get('.splitter.left').should('be.not.visible')
-    cy.get('.splitter.right').should('be.visible')
+    cy.getByCypressId('view-mode-preview').click()
+    cy.getByCypressId('splitter-left').should('be.not.visible')
+    cy.getByCypressId('splitter-right').should('be.visible')
   })
 
   it('can show only editor pane', () => {
-    cy.getById('view-mode-editor').click()
-    cy.get('.splitter.left').should('be.visible')
-    cy.get('.splitter.right').should('be.not.visible')
+    cy.getByCypressId('view-mode-editor').click()
+    cy.getByCypressId('splitter-left').should('be.visible')
+    cy.getByCypressId('splitter-right').should('be.not.visible')
   })
 
   it('can change the split by dragging', () => {
-    cy.get('.splitter.left').then((leftPanebefore) => {
+    cy.getByCypressId('splitter-left').then((leftPanebefore) => {
       const widthBefore = leftPanebefore.outerWidth()
 
-      cy.getById('view-mode-both').click()
-      cy.get('.split-divider').should('be.visible').trigger('mousedown', { buttons: 1 })
+      cy.getByCypressId('view-mode-both').click()
+      cy.getByCypressId('split-divider').should('be.visible').trigger('mousedown', { buttons: 1 })
       cy.document().trigger('mousemove', { buttons: 1, pageX: 0, pageY: 0 })
-      cy.get('.split-divider').trigger('mouseup')
+      cy.getByCypressId('split-divider').trigger('mouseup')
 
-      cy.get('.splitter.left').should('not.eq', widthBefore)
+      cy.getByCypressId('splitter-left').should('not.eq', widthBefore)
     })
   })
 })

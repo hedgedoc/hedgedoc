@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { NativeRenderer, NodeReplacement, SubNodeTransform } from '../../replace-components/component-replacer'
+import type { NodeReplacement } from '../../replace-components/component-replacer'
 import { ComponentReplacer, DO_NOT_REPLACE } from '../../replace-components/component-replacer'
 import { PlantumlNotConfiguredAlert } from './plantuml-not-configured-alert'
 import type { Element } from 'domhandler'
 
 export class PlantumlNotConfiguredComponentReplacer extends ComponentReplacer {
-  replace(node: Element, subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer): NodeReplacement {
+  replace(node: Element): NodeReplacement {
     return node.tagName === 'plantuml-not-configured' ? <PlantumlNotConfiguredAlert /> : DO_NOT_REPLACE
   }
 }

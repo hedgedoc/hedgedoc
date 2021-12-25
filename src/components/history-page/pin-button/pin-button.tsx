@@ -1,14 +1,14 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
-import './pin-button.scss'
-import { cypressId } from '../../../utils/cypress-attribute'
+import styles from './pin-button.module.scss'
+import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 
 export interface PinButtonProps {
   isPinned: boolean
@@ -21,10 +21,11 @@ export const PinButton: React.FC<PinButtonProps> = ({ isPinned, onPinClick, isDa
   return (
     <Button
       variant={isDark ? 'secondary' : 'light'}
-      className={`history-pin ${className || ''} ${isPinned ? 'pinned' : ''}`}
+      className={`${styles['history-pin']} ${className || ''} ${isPinned ? styles['pinned'] : ''}`}
       onClick={onPinClick}
-      {...cypressId('history-entry-pin-button')}>
-      <ForkAwesomeIcon icon='thumb-tack' />
+      {...cypressId('history-entry-pin-button')}
+      {...cypressAttribute('pinned', isPinned ? 'true' : 'false')}>
+      <ForkAwesomeIcon className={styles['fa']} icon='thumb-tack' />
     </Button>
   )
 }

@@ -18,7 +18,7 @@ describe('Autocompletion works for', () => {
       cy.get('.CodeMirror-hints').should('not.exist')
       cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line').contains('```abnf')
       cy.get('.CodeMirror-code > div:nth-of-type(3) > .CodeMirror-line').contains('```')
-      cy.getMarkdownBody().findById('highlighted-code-block').should('exist')
+      cy.getMarkdownBody().findByCypressId('highlighted-code-block').should('exist')
     })
     it('via doubleclick', () => {
       cy.setCodemirrorContent('```')
@@ -26,7 +26,7 @@ describe('Autocompletion works for', () => {
       cy.get('.CodeMirror-hints').should('not.exist')
       cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line').contains('```abnf')
       cy.get('.CodeMirror-code > div:nth-of-type(3) > .CodeMirror-line').contains('```')
-      cy.getMarkdownBody().findById('highlighted-code-block').should('exist')
+      cy.getMarkdownBody().findByCypressId('highlighted-code-block').should('exist')
     })
   })
 
@@ -109,14 +109,14 @@ describe('Autocompletion works for', () => {
       cy.get('@codeinput').type('{enter}')
       cy.get('.CodeMirror-hints').should('not.exist')
       cy.get('.CodeMirror-activeline').contains('![image alt](https:// "title")')
-      cy.getMarkdownBody().find('.image-drop').should('exist')
+      cy.getMarkdownBody().findByCypressId('image-placeholder-image-drop').should('exist')
     })
     it('via doubleclick', () => {
       cy.setCodemirrorContent('!')
       cy.get('.CodeMirror-hints > li').first().dblclick()
       cy.get('.CodeMirror-hints').should('not.exist')
       cy.get('.CodeMirror-activeline').contains('![image alt](https:// "title")')
-      cy.getMarkdownBody().find('.image-drop').should('exist')
+      cy.getMarkdownBody().findByCypressId('image-placeholder-image-drop').should('exist')
     })
   })
 

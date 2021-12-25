@@ -1,13 +1,14 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React from 'react'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import type { IconName } from '../../common/fork-awesome/types'
 import { SocialLinkButton } from './social-link-button/social-link-button'
+import styles from './via-one-click.module.scss'
 
 export enum OneClickType {
   'DROPBOX' = 'dropbox',
@@ -39,35 +40,35 @@ const getMetadata = (backendUrl: string, oneClickType: OneClickType): OneClickMe
       return {
         name: 'Dropbox',
         icon: 'dropbox',
-        className: 'btn-social-dropbox',
+        className: styles['btn-social-dropbox'],
         url: buildBackendAuthUrlWithFirstParameterSet('dropbox')
       }
     case OneClickType.FACEBOOK:
       return {
         name: 'Facebook',
         icon: 'facebook',
-        className: 'btn-social-facebook',
+        className: styles['btn-social-facebook'],
         url: buildBackendAuthUrlWithFirstParameterSet('facebook')
       }
     case OneClickType.GITHUB:
       return {
         name: 'GitHub',
         icon: 'github',
-        className: 'btn-social-github',
+        className: styles['btn-social-github'],
         url: buildBackendAuthUrlWithFirstParameterSet('github')
       }
     case OneClickType.GITLAB:
       return {
         name: 'GitLab',
         icon: 'gitlab',
-        className: 'btn-social-gitlab',
+        className: styles['btn-social-gitlab'],
         url: buildBackendAuthUrlWithFirstParameterSet('gitlab')
       }
     case OneClickType.GOOGLE:
       return {
         name: 'Google',
         icon: 'google',
-        className: 'btn-social-google',
+        className: styles['btn-social-google'],
         url: buildBackendAuthUrlWithFirstParameterSet('google')
       }
     case OneClickType.OAUTH2:
@@ -88,7 +89,7 @@ const getMetadata = (backendUrl: string, oneClickType: OneClickType): OneClickMe
       return {
         name: 'Twitter',
         icon: 'twitter',
-        className: 'btn-social-twitter',
+        className: styles['btn-social-twitter'],
         url: buildBackendAuthUrlWithFirstParameterSet('twitter')
       }
     default:

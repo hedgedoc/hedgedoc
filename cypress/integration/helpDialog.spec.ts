@@ -10,7 +10,7 @@ describe('Help Dialog', () => {
   })
 
   it('ToDo-List', () => {
-    cy.getById('editor-help-button').click()
+    cy.getByCypressId('editor-help-button').click()
     cy.get('input[type="checkbox"]').should('exist').should('not.be.checked')
   })
 })

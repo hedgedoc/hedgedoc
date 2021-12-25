@@ -6,14 +6,10 @@
 
 import type { Editor, EditorChange } from 'codemirror'
 import React, { useCallback, useState } from 'react'
-import { Controlled as ControlledCodeMirror } from 'react-codemirror2'
 import type { ScrollProps } from '../synced-scroll/scroll-props'
-import { allHinters, findWordAtCursor } from './autocompletion'
-import './editor-pane.scss'
 import { StatusBar } from './status-bar/status-bar'
 import { ToolBar } from './tool-bar/tool-bar'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
-import './codemirror-imports'
 import { setNoteContent } from '../../../redux/note-details/methods'
 import { useNoteMarkdownContent } from '../../../hooks/common/use-note-markdown-content'
 import { useCodeMirrorOptions } from './hooks/use-code-mirror-options'
@@ -24,6 +20,8 @@ import { useApplyScrollState } from './hooks/use-apply-scroll-state'
 import { MaxLengthWarning } from './max-length-warning/max-length-warning'
 import { useCreateStatusBarInfo } from './hooks/use-create-status-bar-info'
 import { useOnImageUploadFromRenderer } from './hooks/use-on-image-upload-from-renderer'
+import { allHinters, findWordAtCursor } from './autocompletion'
+import { ExtendedCodemirror } from './extended-codemirror/extended-codemirror'
 
 const onChange = (editor: Editor) => {
   const searchTerm = findWordAtCursor(editor)
@@ -70,22 +68,25 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
   const codeMirrorOptions = useCodeMirrorOptions()
 
   return (
-    <div className={'d-flex flex-column h-100 position-relative'} onMouseEnter={onMakeScrollSource}>
+    <div className={`d-flex flex-column h-100 position-relative`} onMouseEnter={onMakeScrollSource}>
       <MaxLengthWarning />
       <ToolBar editor={editor} />
-      <ControlledCodeMirror
-        className={`overflow-hidden w-100 flex-fill ${ligaturesEnabled ? '' : 'no-ligatures'}`}
+      <ExtendedCodemirror
+        className={`overflow-hidden w-100 flex-fill`}
         value={markdownContent}
         options={codeMirrorOptions}
-        onChange={onChange}
         onPaste={onPaste}
+        onChange={onChange}
         onDrop={onDrop}
         onCursorActivity={updateStatusBarInfo}
         editorDidMount={onEditorDidMount}
         onBeforeChange={onBeforeChange}
         onScroll={onEditorScroll}
+        ligatures={ligaturesEnabled}
       />
       <StatusBar statusBarInfo={statusBarInfo} />
     </div>
   )
 }
+
+export default EditorPane

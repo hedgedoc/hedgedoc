@@ -8,5 +8,5 @@ import { useBackendBaseUrl } from './use-backend-base-url'
 
 export const useCustomizeAssetsUrl = (): string => {
   const backendBaseUrl = useBackendBaseUrl()
-  return process.env.REACT_APP_CUSTOMIZE_ASSETS_URL || `${backendBaseUrl}public/`
+  return process.env.NEXT_PUBLIC_CUSTOMIZE_ASSETS_URL || `${backendBaseUrl}public/`
 }
