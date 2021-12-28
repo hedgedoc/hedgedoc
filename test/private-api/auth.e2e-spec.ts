@@ -112,6 +112,7 @@ describe('Auth', () => {
     it('works', async () => {
       // Change password
       const changePasswordDto: UpdatePasswordDto = {
+        currentPassword: password,
         newPassword: newPassword,
       };
       await request(testSetup.app.getHttpServer())
@@ -133,6 +134,7 @@ describe('Auth', () => {
       cookie = response.get('Set-Cookie')[0];
       // Reset password
       const changePasswordBackDto: UpdatePasswordDto = {
+        currentPassword: newPassword,
         newPassword: password,
       };
       await request(testSetup.app.getHttpServer())
@@ -146,6 +148,7 @@ describe('Auth', () => {
       testSetup.configService.get('authConfig').local.enableLogin = false;
       // Try to change password
       const changePasswordDto: UpdatePasswordDto = {
+        currentPassword: password,
         newPassword: newPassword,
       };
       await request(testSetup.app.getHttpServer())
@@ -167,6 +170,29 @@ describe('Auth', () => {
         .send(JSON.stringify(loginNewPasswordDto))
         .expect(401);
       // old password does work for login
+      const loginOldPasswordDto: LoginDto = {
+        password: password,
+        username: username,
+      };
+      await request(testSetup.app.getHttpServer())
+        .post('/api/private/auth/local/login')
+        .set('Content-Type', 'application/json')
+        .send(JSON.stringify(loginOldPasswordDto))
+        .expect(201);
+    });
+    it('fails, when old password is wrong', async () => {
+      // Try to change password
+      const changePasswordDto: UpdatePasswordDto = {
+        currentPassword: 'wrong',
+        newPassword: newPassword,
+      };
+      await request(testSetup.app.getHttpServer())
+        .put('/api/private/auth/local')
+        .set('Content-Type', 'application/json')
+        .set('Cookie', cookie)
+        .send(JSON.stringify(changePasswordDto))
+        .expect(401);
+      // old password still does work for login
       const loginOldPasswordDto: LoginDto = {
         password: password,
         username: username,
