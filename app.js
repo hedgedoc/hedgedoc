@@ -27,7 +27,7 @@ const errors = require('./lib/errors')
 const models = require('./lib/models')
 const csp = require('./lib/csp')
 const metrics = require('./lib/prometheus')
-const { useUnless } = require('./lib/utils')
+const { useUnless, isLocalhostAddress } = require('./lib/utils')
 
 const supportedLocalesList = Object.keys(require('./locales/_supported.json'))
 
@@ -65,6 +65,7 @@ if (!config.useSSL && config.protocolUseSSL) {
 
 // logger
 app.use(morgan('combined', {
+  skip: (req, _) => req.headers['user-agent'] == 'hedgedoc-container-healthcheck/1.0' && isLocalhostAddress(req),
   stream: logger.stream
 }))
 
