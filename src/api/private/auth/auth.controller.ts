@@ -9,10 +9,10 @@ import {
   ConflictException,
   Controller,
   Delete,
-  NotFoundException,
   Post,
   Put,
   Req,
+  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { Session } from 'express-session';
@@ -70,6 +70,10 @@ export class AuthController {
     @Body() changePasswordDto: UpdatePasswordDto,
   ): Promise<void> {
     try {
+      await this.identityService.loginWithLocalIdentity(
+        user,
+        changePasswordDto.currentPassword,
+      );
       await this.identityService.updateLocalPassword(
         user,
         changePasswordDto.newPassword,
@@ -77,7 +81,9 @@ export class AuthController {
       return;
     } catch (e) {
       if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
+        throw new UnauthorizedException(
+          'Verifying your identity with the current password did not work.',
+        );
       }
       throw e;
     }
