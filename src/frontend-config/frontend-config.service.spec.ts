@@ -14,6 +14,7 @@ import { GitlabScope, GitlabVersion } from '../config/gitlab.enum';
 import { Loglevel } from '../config/loglevel.enum';
 import { LoggerModule } from '../logger/logger.module';
 import { getServerVersionFromPackageJson } from '../utils/serverVersion';
+import { AuthProviderType } from './frontend-config.dto';
 import { FrontendConfigService } from './frontend-config.service';
 
 /* eslint-disable
@@ -250,85 +251,113 @@ describe('FrontendConfigService', () => {
                             expect(config.allowRegister).toEqual(
                               enableRegister,
                             );
-                            expect(config.authProviders.dropbox).toEqual(
-                              !!authConfig.dropbox.clientID,
-                            );
-                            expect(config.authProviders.facebook).toEqual(
-                              !!authConfig.facebook.clientID,
-                            );
-                            expect(config.authProviders.github).toEqual(
-                              !!authConfig.github.clientID,
-                            );
-                            expect(config.authProviders.google).toEqual(
-                              !!authConfig.google.clientID,
-                            );
-                            expect(config.authProviders.local).toEqual(
-                              enableLogin,
-                            );
-                            expect(config.authProviders.twitter).toEqual(
-                              !!authConfig.twitter.consumerKey,
-                            );
-                            expect(config.authProviders.gitlab).toEqual(
-                              authConfig.gitlab.length !== 0,
-                            );
-                            expect(config.authProviders.ldap).toEqual(
-                              authConfig.ldap.length !== 0,
-                            );
-                            expect(config.authProviders.saml).toEqual(
-                              authConfig.saml.length !== 0,
-                            );
-                            expect(config.authProviders.oauth2).toEqual(
-                              authConfig.oauth2.length !== 0,
-                            );
+                            if (authConfig.dropbox.clientID) {
+                              expect(config.authProviders).toContainEqual({
+                                type: AuthProviderType.DROPBOX,
+                              });
+                            }
+                            if (authConfig.facebook.clientID) {
+                              expect(config.authProviders).toContainEqual({
+                                type: AuthProviderType.FACEBOOK,
+                              });
+                            }
+                            if (authConfig.google.clientID) {
+                              expect(config.authProviders).toContainEqual({
+                                type: AuthProviderType.GOOGLE,
+                              });
+                            }
+                            if (authConfig.github.clientID) {
+                              expect(config.authProviders).toContainEqual({
+                                type: AuthProviderType.GITHUB,
+                              });
+                            }
+                            if (authConfig.local.enableLogin) {
+                              expect(config.authProviders).toContainEqual({
+                                type: AuthProviderType.LOCAL,
+                              });
+                            }
+                            if (authConfig.twitter.consumerKey) {
+                              expect(config.authProviders).toContainEqual({
+                                type: AuthProviderType.TWITTER,
+                              });
+                            }
+                            expect(
+                              config.authProviders.filter(
+                                (provider) =>
+                                  provider.type === AuthProviderType.GITLAB,
+                              ).length,
+                            ).toEqual(authConfig.gitlab.length);
+                            expect(
+                              config.authProviders.filter(
+                                (provider) =>
+                                  provider.type === AuthProviderType.LDAP,
+                              ).length,
+                            ).toEqual(authConfig.ldap.length);
+                            expect(
+                              config.authProviders.filter(
+                                (provider) =>
+                                  provider.type === AuthProviderType.SAML,
+                              ).length,
+                            ).toEqual(authConfig.saml.length);
+                            expect(
+                              config.authProviders.filter(
+                                (provider) =>
+                                  provider.type === AuthProviderType.OAUTH2,
+                              ).length,
+                            ).toEqual(authConfig.oauth2.length);
+                            if (authConfig.gitlab.length > 0) {
+                              expect(
+                                config.authProviders.find(
+                                  (provider) =>
+                                    provider.type === AuthProviderType.GITLAB,
+                                ),
+                              ).toEqual({
+                                type: AuthProviderType.GITLAB,
+                                providerName: authConfig.gitlab[0].providerName,
+                                identifier: authConfig.gitlab[0].identifier,
+                              });
+                            }
+                            if (authConfig.ldap.length > 0) {
+                              expect(
+                                config.authProviders.find(
+                                  (provider) =>
+                                    provider.type === AuthProviderType.LDAP,
+                                ),
+                              ).toEqual({
+                                type: AuthProviderType.LDAP,
+                                providerName: authConfig.ldap[0].providerName,
+                                identifier: authConfig.ldap[0].identifier,
+                              });
+                            }
+                            if (authConfig.saml.length > 0) {
+                              expect(
+                                config.authProviders.find(
+                                  (provider) =>
+                                    provider.type === AuthProviderType.SAML,
+                                ),
+                              ).toEqual({
+                                type: AuthProviderType.SAML,
+                                providerName: authConfig.saml[0].providerName,
+                                identifier: authConfig.saml[0].identifier,
+                              });
+                            }
+                            if (authConfig.oauth2.length > 0) {
+                              expect(
+                                config.authProviders.find(
+                                  (provider) =>
+                                    provider.type === AuthProviderType.OAUTH2,
+                                ),
+                              ).toEqual({
+                                type: AuthProviderType.OAUTH2,
+                                providerName: authConfig.oauth2[0].providerName,
+                                identifier: authConfig.oauth2[0].identifier,
+                              });
+                            }
                             expect(config.allowAnonymous).toEqual(false);
                             expect(config.branding.name).toEqual(customName);
                             expect(config.branding.logo).toEqual(
                               customLogo ? new URL(customLogo) : undefined,
                             );
-                            expect(
-                              config.customAuthNames.gitlab.length,
-                            ).toEqual(authConfig.gitlab.length);
-                            if (config.customAuthNames.gitlab.length === 1) {
-                              expect(
-                                config.customAuthNames.gitlab[0].identifier,
-                              ).toEqual(authConfig.gitlab[0].identifier);
-                              expect(
-                                config.customAuthNames.gitlab[0].providerName,
-                              ).toEqual(authConfig.gitlab[0].providerName);
-                            }
-                            expect(config.customAuthNames.ldap.length).toEqual(
-                              authConfig.ldap.length,
-                            );
-                            if (config.customAuthNames.ldap.length === 1) {
-                              expect(
-                                config.customAuthNames.ldap[0].identifier,
-                              ).toEqual(authConfig.ldap[0].identifier);
-                              expect(
-                                config.customAuthNames.ldap[0].providerName,
-                              ).toEqual(authConfig.ldap[0].providerName);
-                            }
-                            expect(config.customAuthNames.saml.length).toEqual(
-                              authConfig.saml.length,
-                            );
-                            if (config.customAuthNames.saml.length === 1) {
-                              expect(
-                                config.customAuthNames.saml[0].identifier,
-                              ).toEqual(authConfig.saml[0].identifier);
-                              expect(
-                                config.customAuthNames.saml[0].providerName,
-                              ).toEqual(authConfig.saml[0].providerName);
-                            }
-                            expect(
-                              config.customAuthNames.oauth2.length,
-                            ).toEqual(authConfig.oauth2.length);
-                            if (config.customAuthNames.oauth2.length === 1) {
-                              expect(
-                                config.customAuthNames.oauth2[0].identifier,
-                              ).toEqual(authConfig.oauth2[0].identifier);
-                              expect(
-                                config.customAuthNames.oauth2[0].providerName,
-                              ).toEqual(authConfig.oauth2[0].providerName);
-                            }
                             expect(
                               config.iframeCommunication.editorOrigin,
                             ).toEqual(new URL(appConfig.domain));
