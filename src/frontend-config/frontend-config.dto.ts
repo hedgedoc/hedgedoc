@@ -16,67 +16,66 @@ import { URL } from 'url';
 
 import { ServerVersion } from '../monitoring/server-status.dto';
 
-export class AuthProviders {
-  /**
-   * Is Facebook available as a auth provider?
-   */
-  @IsBoolean()
-  facebook: boolean;
-
-  /**
-   * Is GitHub available as a auth provider?
-   */
-  @IsBoolean()
-  github: boolean;
-
-  /**
-   * Is Twitter available as a auth provider?
-   */
-  @IsBoolean()
-  twitter: boolean;
-
-  /**
-   * Is at least one GitLab server available as a auth provider?
-   */
-  @IsBoolean()
-  gitlab: boolean;
-
-  /**
-   * Is DropBox available as a auth provider?
-   */
-  @IsBoolean()
-  dropbox: boolean;
-
-  /**
-   * Is at least one LDAP server available as a auth provider?
-   */
-  @IsBoolean()
-  ldap: boolean;
-
-  /**
-   * Is Google available as a auth provider?
-   */
-  @IsBoolean()
-  google: boolean;
-
-  /**
-   * Is at least one SAML provider available as a auth provider?
-   */
-  @IsBoolean()
-  saml: boolean;
-
-  /**
-   * Is at least one OAuth2 provider available as a auth provider?
-   */
-  @IsBoolean()
-  oauth2: boolean;
-
-  /**
-   * Is local auth available?
-   */
-  @IsBoolean()
-  local: boolean;
+export enum AuthProviderType {
+  LOCAL = 'local',
+  LDAP = 'ldap',
+  SAML = 'saml',
+  OAUTH2 = 'oauth2',
+  GITLAB = 'gitlab',
+  FACEBOOK = 'facebook',
+  GITHUB = 'github',
+  TWITTER = 'twitter',
+  DROPBOX = 'dropbox',
+  GOOGLE = 'google',
 }
+
+export type AuthProviderTypeWithCustomName =
+  | AuthProviderType.LDAP
+  | AuthProviderType.OAUTH2
+  | AuthProviderType.SAML
+  | AuthProviderType.GITLAB;
+
+export type AuthProviderTypeWithoutCustomName =
+  | AuthProviderType.LOCAL
+  | AuthProviderType.FACEBOOK
+  | AuthProviderType.GITHUB
+  | AuthProviderType.TWITTER
+  | AuthProviderType.DROPBOX
+  | AuthProviderType.GOOGLE;
+
+export class AuthProviderWithoutCustomNameDto {
+  /**
+   * The type of the auth provider.
+   */
+  @IsString()
+  type: AuthProviderTypeWithoutCustomName;
+}
+
+export class AuthProviderWithCustomNameDto {
+  /**
+   * The type of the auth provider.
+   */
+  @IsString()
+  type: AuthProviderTypeWithCustomName;
+
+  /**
+   * The identifier with which the auth provider can be called
+   * @example gitlab-fsorg
+   */
+  @IsString()
+  identifier: string;
+
+  /**
+   * The name given to the auth provider
+   * @example GitLab fachschaften.org
+   */
+  @IsString()
+  providerName: string;
+}
+
+export type AuthProviderDto =
+  | AuthProviderWithCustomNameDto
+  | AuthProviderWithoutCustomNameDto;
 
 export class BrandingDto {
   /**
@@ -94,52 +93,6 @@ export class BrandingDto {
   @IsUrl()
   @IsOptional()
   logo?: URL;
-}
-
-export class CustomAuthEntry {
-  /**
-   * The identifier with which the auth provider can be called
-   * @example gitlab
-   */
-  @IsString()
-  identifier: string;
-
-  /**
-   * The name given to the auth provider
-   * @example GitLab
-   */
-  @IsString()
-  providerName: string;
-}
-
-export class CustomAuthNamesDto {
-  /**
-   * All configured GitLab server
-   */
-  @IsArray()
-  @ValidateNested({ each: true })
-  gitlab: CustomAuthEntry[];
-
-  /**
-   * All configured LDAP server
-   */
-  @IsArray()
-  @ValidateNested({ each: true })
-  ldap: CustomAuthEntry[];
-
-  /**
-   * All configured OAuth2 provider
-   */
-  @IsArray()
-  @ValidateNested({ each: true })
-  oauth2: CustomAuthEntry[];
-
-  /**
-   * All configured SAML provider
-   */
-  @IsArray()
-  @ValidateNested({ each: true })
-  saml: CustomAuthEntry[];
 }
 
 export class SpecialUrlsDto {
@@ -200,22 +153,17 @@ export class FrontendConfigDto {
   allowRegister: boolean;
 
   /**
-   * Which auth providers are available?
+   * Which auth providers are enabled and how are they configured?
    */
-  @ValidateNested()
-  authProviders: AuthProviders;
+  @IsArray()
+  @ValidateNested({ each: true })
+  authProviders: AuthProviderDto[];
 
   /**
    * Individual branding information
    */
   @ValidateNested()
   branding: BrandingDto;
-
-  /**
-   * The custom names of auth providers, which can be specified multiple times
-   */
-  @ValidateNested()
-  customAuthNames: CustomAuthNamesDto;
 
   /**
    * Is an image proxy enabled?

@@ -17,9 +17,9 @@ import externalServicesConfiguration, {
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { getServerVersionFromPackageJson } from '../utils/serverVersion';
 import {
-  AuthProviders,
+  AuthProviderDto,
+  AuthProviderType,
   BrandingDto,
-  CustomAuthNamesDto,
   FrontendConfigDto,
   IframeCommunicationDto,
   SpecialUrlsDto,
@@ -48,7 +48,6 @@ export class FrontendConfigService {
       allowRegister: this.authConfig.local.enableRegister,
       authProviders: this.getAuthProviders(),
       branding: this.getBranding(),
-      customAuthNames: this.getCustomAuthNames(),
       iframeCommunication: this.getIframeCommunication(),
       maxDocumentLength: this.appConfig.maxDocumentLength,
       plantUmlServer: this.externalServicesConfig.plantUmlServer
@@ -60,48 +59,67 @@ export class FrontendConfigService {
     };
   }
 
-  private getAuthProviders(): AuthProviders {
-    return {
-      dropbox: !!this.authConfig.dropbox.clientID,
-      facebook: !!this.authConfig.facebook.clientID,
-      github: !!this.authConfig.github.clientID,
-      gitlab: this.authConfig.gitlab.length !== 0,
-      google: !!this.authConfig.google.clientID,
-      local: this.authConfig.local.enableLogin,
-      ldap: this.authConfig.ldap.length !== 0,
-      oauth2: this.authConfig.oauth2.length !== 0,
-      saml: this.authConfig.saml.length !== 0,
-      twitter: !!this.authConfig.twitter.consumerKey,
-    };
-  }
-
-  private getCustomAuthNames(): CustomAuthNamesDto {
-    return {
-      gitlab: this.authConfig.gitlab.map((entry) => {
-        return {
-          identifier: entry.identifier,
-          providerName: entry.providerName,
-        };
-      }),
-      ldap: this.authConfig.ldap.map((entry) => {
-        return {
-          identifier: entry.identifier,
-          providerName: entry.providerName,
-        };
-      }),
-      oauth2: this.authConfig.oauth2.map((entry) => {
-        return {
-          identifier: entry.identifier,
-          providerName: entry.providerName,
-        };
-      }),
-      saml: this.authConfig.saml.map((entry) => {
-        return {
-          identifier: entry.identifier,
-          providerName: entry.providerName,
-        };
-      }),
-    };
+  private getAuthProviders(): AuthProviderDto[] {
+    const providers: AuthProviderDto[] = [];
+    if (this.authConfig.local.enableLogin) {
+      providers.push({
+        type: AuthProviderType.LOCAL,
+      });
+    }
+    if (this.authConfig.dropbox.clientID) {
+      providers.push({
+        type: AuthProviderType.DROPBOX,
+      });
+    }
+    if (this.authConfig.facebook.clientID) {
+      providers.push({
+        type: AuthProviderType.FACEBOOK,
+      });
+    }
+    if (this.authConfig.github.clientID) {
+      providers.push({
+        type: AuthProviderType.GITHUB,
+      });
+    }
+    if (this.authConfig.google.clientID) {
+      providers.push({
+        type: AuthProviderType.GOOGLE,
+      });
+    }
+    if (this.authConfig.twitter.consumerKey) {
+      providers.push({
+        type: AuthProviderType.TWITTER,
+      });
+    }
+    this.authConfig.gitlab.forEach((gitLabEntry) => {
+      providers.push({
+        type: AuthProviderType.GITLAB,
+        providerName: gitLabEntry.providerName,
+        identifier: gitLabEntry.identifier,
+      });
+    });
+    this.authConfig.ldap.forEach((ldapEntry) => {
+      providers.push({
+        type: AuthProviderType.LDAP,
+        providerName: ldapEntry.providerName,
+        identifier: ldapEntry.identifier,
+      });
+    });
+    this.authConfig.oauth2.forEach((oauth2Entry) => {
+      providers.push({
+        type: AuthProviderType.OAUTH2,
+        providerName: oauth2Entry.providerName,
+        identifier: oauth2Entry.identifier,
+      });
+    });
+    this.authConfig.saml.forEach((samlEntry) => {
+      providers.push({
+        type: AuthProviderType.SAML,
+        providerName: samlEntry.providerName,
+        identifier: samlEntry.identifier,
+      });
+    });
+    return providers;
   }
 
   private getBranding(): BrandingDto {
