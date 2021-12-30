@@ -6,7 +6,7 @@
 
 import React, { useCallback, useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
-import { DeleteNoteSidebarEntry } from './specific-sidebar-entries/delete-note-sidebar-entry'
+import { DeleteNoteSidebarEntry } from './delete-note-sidebar-entry/delete-note-sidebar-entry'
 import { DocumentInfoSidebarEntry } from './specific-sidebar-entries/document-info-sidebar-entry'
 import { ExportMenuSidebarMenu } from './specific-sidebar-entries/export-menu-sidebar-menu'
 import { ImportMenuSidebarMenu } from './specific-sidebar-entries/import-menu-sidebar-menu'
