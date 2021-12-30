@@ -14,7 +14,6 @@ import { LinemarkerMarkdownExtension } from '../markdown-extension/linemarker/li
 import { GistMarkdownExtension } from '../markdown-extension/gist/gist-markdown-extension'
 import { YoutubeMarkdownExtension } from '../markdown-extension/youtube/youtube-markdown-extension'
 import { VimeoMarkdownExtension } from '../markdown-extension/vimeo/vimeo-markdown-extension'
-import { AsciinemaMarkdownExtension } from '../markdown-extension/asciinema/asciinema-markdown-extension'
 import { ProxyImageMarkdownExtension } from '../markdown-extension/image/proxy-image-markdown-extension'
 import { CsvTableMarkdownExtension } from '../markdown-extension/csv/csv-table-markdown-extension'
 import { AbcjsMarkdownExtension } from '../markdown-extension/abcjs/abcjs-markdown-extension'
@@ -83,7 +82,6 @@ export const useMarkdownExtensions = (
       new GistMarkdownExtension(),
       new YoutubeMarkdownExtension(),
       new VimeoMarkdownExtension(),
-      new AsciinemaMarkdownExtension(),
       new ProxyImageMarkdownExtension(onImageClick),
       new CsvTableMarkdownExtension(),
       new AbcjsMarkdownExtension(),

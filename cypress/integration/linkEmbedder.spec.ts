@@ -53,15 +53,4 @@ describe('Link gets replaced with embedding: ', () => {
       .click()
     cy.getMarkdownBody().find('iframe').should('have.attr', 'src', 'https://player.vimeo.com/video/23237102?autoplay=1')
   })
-
-  it('Asciinema', () => {
-    cy.setCodemirrorContent('https://asciinema.org/a/117928')
-    cy.getMarkdownBody()
-      .findByCypressId('click-shield-asciinema')
-      .find('.preview-background')
-      .should('have.attr', 'src', 'https://asciinema.org/a/117928.png')
-      .parent()
-      .click()
-    cy.getMarkdownBody().find('iframe').should('have.attr', 'src', 'https://asciinema.org/a/117928/embed?autoplay=1')
-  })
 })
