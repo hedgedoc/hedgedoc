@@ -19,8 +19,12 @@ If you want to create a build that uses the mock api then use build:mock instead
   process.exit(1)
 }
 
+if (!!process.env.NEXT_PUBLIC_IGNORE_IFRAME_ORIGIN_CONFIG) {
+  console.warn("You have set NEXT_PUBLIC_IGNORE_IFRAME_ORIGIN_CONFIG. This flag is ONLY for testing purposes and will decrease the security of the editor if used in production!")
+}
+
 if (!!process.env.NEXT_PUBLIC_TEST_MODE) {
-  console.log('Built in test mode')
+  console.warn('This build runs in test mode. This means:\n - no sandboxed iframe\n - Additional data-attributes for e2e tests added to DOM')
 }
 
 const path = require('path')
