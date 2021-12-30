@@ -33,7 +33,7 @@ export const HistoryViewModeToggleButton: React.FC = () => {
     <ToggleButtonGroup
       type='radio'
       name='options'
-      dir='ltr'
+      dir='auto'
       value={historyToolbarState.viewState}
       className={'button-height'}
       onChange={onViewStateChange}>
