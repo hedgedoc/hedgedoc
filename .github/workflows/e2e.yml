@@ -28,7 +28,7 @@ jobs:
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         if: steps.build-cache.outputs.cache-hit != 'true'
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
       - name: Cache yarn cache
         uses: actions/cache@v2
@@ -48,7 +48,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.build-cache.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --immutable
 
       - name: Build test production build
         if: steps.build-cache.outputs.cache-hit != 'true'

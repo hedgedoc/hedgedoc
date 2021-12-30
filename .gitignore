@@ -7,7 +7,15 @@
 # dependencies
 /node_modules
 /.pnp
-.pnp.js
+.pnp.*
+
+# package manager
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 # testing
 /coverage

@@ -20,7 +20,7 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
       - name: Cache yarn cache
         uses: actions/cache@v2
@@ -36,7 +36,7 @@ jobs:
         with:
           node-version: 16
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --immutable
       - name: Lint code
         run: yarn lint
   format:
@@ -48,7 +48,7 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
       - name: Cache yarn cache
         uses: actions/cache@v2
@@ -64,6 +64,6 @@ jobs:
         with:
           node-version: 16
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --immutable
       - name: Lint code
         run: yarn format
