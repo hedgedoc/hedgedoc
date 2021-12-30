@@ -12,6 +12,7 @@ import { useIsDarkModeActivated } from '../../../../../hooks/common/use-is-dark-
 import styles from './emoji-picker.module.scss'
 import forkawesomeIcon from './forkawesome.png'
 import { ForkAwesomeIcons } from '../../../../common/fork-awesome/fork-awesome-icons'
+import fontStyles from '../../../../../../global-styles/variables.module.scss'
 
 export interface EmojiPickerProps {
   show: boolean
@@ -35,7 +36,7 @@ export const emojiPickerConfig = {
 
 const twemojiStyle = (): HTMLStyleElement => {
   const style = document.createElement('style')
-  style.textContent = 'section.picker { --font-family: "Twemoji" !important; }'
+  style.textContent = `section.picker { --font-family: ${fontStyles['font-family-emojis']} !important; }`
   return style
 }
 

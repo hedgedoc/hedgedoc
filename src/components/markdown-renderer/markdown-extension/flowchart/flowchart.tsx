@@ -10,6 +10,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { useIsDarkModeActivated } from '../../../../hooks/common/use-is-dark-mode-activated'
 import { Logger } from '../../../../utils/logger'
 import { cypressId } from '../../../../utils/cypress-attribute'
+import fontStyles from '../../../../../global-styles/variables.module.scss'
 
 const log = new Logger('FlowChart')
 
@@ -40,7 +41,7 @@ export const FlowChart: React.FC<FlowChartProps> = ({ code }) => {
             'line-color': darkModeActivated ? '#ffffff' : '#000000',
             'element-color': darkModeActivated ? '#ffffff' : '#000000',
             'font-color': darkModeActivated ? '#ffffff' : '#000000',
-            'font-family': 'Source Sans Pro, "Twemoji", monospace'
+            'font-family': fontStyles['font-family-base']
           })
           setError(false)
         } catch (error) {

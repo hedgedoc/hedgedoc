@@ -6,8 +6,6 @@
 
 
 .abcjs-score {
-  @import "../../../../../global-styles/variables";
-
   :global(.markdown-body) & {
     overflow-x: auto !important;
   }
@@ -17,6 +15,7 @@
   }
 
   &, text {
+    @import "../../../../../global-styles/variables.module";
     font-family: $font-family-base;
   }
 }

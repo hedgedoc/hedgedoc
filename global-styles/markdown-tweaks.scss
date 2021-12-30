@@ -6,8 +6,11 @@
 
 .markdown-body {
   position: relative;
-  font-family: 'Source Sans Pro', "Twemoji", sans-serif;
   word-break: break-word;
+  & {
+    @import "./variables.module.scss";
+    font-family: $font-family-base;
+  }
 
   .svg-container {
     overflow-x: auto;

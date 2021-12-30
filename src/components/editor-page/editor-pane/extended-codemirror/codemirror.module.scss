@@ -15,7 +15,10 @@
     @import './hints';
 
     .CodeMirror {
-      font-family: "Fira Code", "Twemoji", Consolas, monaco, monospace;
+      & {
+        @import '../../../../../global-styles/variables.module';
+        font-family: "Fira Code", $font-family-emojis, Consolas, monaco, monospace;
+      }
       letter-spacing: 0.025em;
       line-height: 1.25;
       font-size: 18px;
