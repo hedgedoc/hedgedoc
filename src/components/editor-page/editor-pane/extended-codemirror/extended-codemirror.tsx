@@ -9,9 +9,27 @@ import type { IControlledCodeMirror } from 'react-codemirror2'
 import { Controlled } from 'react-codemirror2'
 import './codemirror-imports'
 import styles from './codemirror.module.scss'
+import { allHinters, findWordAtCursor } from '../autocompletion'
+import type { Editor } from 'codemirror'
 
-export interface ExtendedCodemirrorProps extends IControlledCodeMirror {
+export interface ExtendedCodemirrorProps extends Omit<IControlledCodeMirror, 'onChange'> {
   ligatures?: boolean
+}
+
+const onChange = (editor: Editor) => {
+  const searchTerm = findWordAtCursor(editor)
+  for (const hinter of allHinters) {
+    if (hinter.wordRegExp.test(searchTerm.text)) {
+      editor.showHint({
+        container: editor.getWrapperElement(),
+        hint: hinter.hint,
+        completeSingle: false,
+        completeOnSingleClick: false,
+        alignWithWord: true
+      })
+      return
+    }
+  }
 }
 
 /**
@@ -25,6 +43,7 @@ export const ExtendedCodemirror: React.FC<ExtendedCodemirrorProps> = ({ classNam
   return (
     <Controlled
       className={`${className ?? ''} ${ligatures ? '' : styles['no-ligatures']} ${styles['extended-codemirror']}`}
+      onChange={onChange}
       {...props}
     />
   )

@@ -20,23 +20,7 @@ import { useApplyScrollState } from './hooks/use-apply-scroll-state'
 import { MaxLengthWarning } from './max-length-warning/max-length-warning'
 import { useCreateStatusBarInfo } from './hooks/use-create-status-bar-info'
 import { useOnImageUploadFromRenderer } from './hooks/use-on-image-upload-from-renderer'
-import { allHinters, findWordAtCursor } from './autocompletion'
 import { ExtendedCodemirror } from './extended-codemirror/extended-codemirror'
-
-const onChange = (editor: Editor) => {
-  const searchTerm = findWordAtCursor(editor)
-  for (const hinter of allHinters) {
-    if (hinter.wordRegExp.test(searchTerm.text)) {
-      editor.showHint({
-        hint: hinter.hint,
-        completeSingle: false,
-        completeOnSingleClick: false,
-        alignWithWord: true
-      })
-      return
-    }
-  }
-}
 
 export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMakeScrollSource }) => {
   const markdownContent = useNoteMarkdownContent()
@@ -76,7 +60,6 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
         value={markdownContent}
         options={codeMirrorOptions}
         onPaste={onPaste}
-        onChange={onChange}
         onDrop={onDrop}
         onCursorActivity={updateStatusBarInfo}
         editorDidMount={onEditorDidMount}
