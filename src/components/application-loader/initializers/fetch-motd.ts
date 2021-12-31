@@ -32,7 +32,8 @@ export const fetchMotd = async (customizeAssetsUrl: string): Promise<void> => {
     if (response.status !== 200) {
       return
     }
-    if (response.headers.get('Last-Modified') === cachedLastModified) {
+    const lastModified = response.headers.get('Last-Modified') || response.headers.get('etag')
+    if (lastModified === cachedLastModified) {
       return
     }
   }
@@ -47,9 +48,9 @@ export const fetchMotd = async (customizeAssetsUrl: string): Promise<void> => {
 
   const motdText = await response.text()
 
-  const lastModified = response.headers.get('Last-Modified')
+  const lastModified = response.headers.get('Last-Modified') || response.headers.get('etag')
   if (!lastModified) {
-    log.warn("'Last-Modified' not found for motd.txt!")
+    log.warn("'Last-Modified' or 'Etag' not found for motd.txt!")
   }
 
   setMotd(motdText, lastModified)
