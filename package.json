@@ -93,7 +93,7 @@
     "react-dom": "17.0.2",
     "react-i18next": "11.15.2",
     "react-redux": "7.2.6",
-    "react-use": "17.3.1",
+    "react-use": "17.3.2",
     "redux": "4.1.2",
     "reveal.js": "4.2.1",
     "sanitize-filename": "1.6.3",

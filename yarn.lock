@@ -1758,7 +1758,7 @@ __metadata:
     react-i18next: 11.15.2
     react-redux: 7.2.6
     react-test-renderer: 17.0.2
-    react-use: 17.3.1
+    react-use: 17.3.2
     redux: 4.1.2
     redux-devtools-extension: 2.13.9
     reveal.js: 4.2.1
@@ -11567,9 +11567,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-use@npm:17.3.1":
-  version: 17.3.1
-  resolution: "react-use@npm:17.3.1"
+"react-use@npm:17.3.2":
+  version: 17.3.2
+  resolution: "react-use@npm:17.3.2"
   dependencies:
     "@types/js-cookie": ^2.2.6
     "@xobotyi/scrollbar-width": ^1.9.5
@@ -11588,7 +11588,7 @@ __metadata:
   peerDependencies:
     react: ^16.8.0  || ^17.0.0
     react-dom: ^16.8.0  || ^17.0.0
-  checksum: 0489a2603dc1a5e2666ae7643b42ec82d747a70476087b0965ee67048940a8dee912cd982d568ff97af703365914c8d8208216301b8489082be61d86561fb858
+  checksum: 7379460f51b78c5375f8e039f59305c55efb75205d49a18d579154fcccfddf98fa9460a734e7d4cf3b1be8f1c15ec86feeab0d846fbaaa1fea425da83aaf117c
   languageName: node
   linkType: hard
 
