@@ -57,7 +57,9 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: next-build
-          path: .next
+          path: |
+            .next
+            !.next/cache
 
   end2end:
     name: Perform E2E Test in ${{ matrix.browser }}
