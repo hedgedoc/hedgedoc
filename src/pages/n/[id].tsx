@@ -7,7 +7,6 @@
 import React, { Suspense, useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
-import { useDocumentTitleWithNoteTitle } from '../../hooks/common/use-document-title-with-note-title'
 import { setCheckboxInMarkdownContent, updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
 import { MotdModal } from '../../components/common/motd-modal/motd-modal'
 import { ShowIf } from '../../components/common/show-if/show-if'
@@ -32,6 +31,7 @@ import { NoteType } from '../../redux/note-details/types/note-details'
 import type { NextPage } from 'next'
 import { isClientSideRendering } from '../../utils/is-client-side-rendering'
 import { LoadingScreen } from '../../components/application-loader/loading-screen'
+import { NoteAndAppTitleHead } from '../../components/layout/note-and-app-title-head'
 
 const EditorPane = React.lazy(() => import('../../components/editor-page/editor-pane/editor-pane'))
 
@@ -88,7 +88,6 @@ export const EditorPage: NextPage = () => {
 
   useViewModeShortcuts()
   useApplyDarkMode()
-  useDocumentTitleWithNoteTitle()
   useEditorModeFromUrl()
 
   const [error, loading] = useLoadNoteFromServer()
@@ -137,6 +136,7 @@ export const EditorPage: NextPage = () => {
 
   return (
     <EditorToRendererCommunicatorContextProvider>
+      <NoteAndAppTitleHead />
       <UiNotifications />
       <MotdModal />
       <div className={'d-flex flex-column vh-100'}>

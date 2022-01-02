@@ -11,6 +11,7 @@ import { ApplicationLoader } from '../components/application-loader/application-
 import '../../global-styles/dark.scss'
 import '../../global-styles/index.scss'
 import type { NextPage } from 'next'
+import { BaseHead } from '../components/layout/base-head'
 
 /**
  * The actual hedgedoc next js app.
@@ -19,6 +20,7 @@ import type { NextPage } from 'next'
 const HedgeDocApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
     <Provider store={store}>
+      <BaseHead />
       <ApplicationLoader>
         <ErrorBoundary>
           <Component {...pageProps} />
