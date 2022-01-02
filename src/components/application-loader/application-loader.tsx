@@ -7,7 +7,7 @@
 import React, { Suspense } from 'react'
 import { useBackendBaseUrl } from '../../hooks/common/use-backend-base-url'
 import { createSetUpTaskList } from './initializers'
-import { LoadingScreen } from './loading-screen'
+import { LoadingScreen } from './loading-screen/loading-screen'
 import { useCustomizeAssetsUrl } from '../../hooks/common/use-customize-assets-url'
 import { Logger } from '../../utils/logger'
 import { useAsync } from 'react-use'

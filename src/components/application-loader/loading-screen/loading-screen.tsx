@@ -1,14 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React from 'react'
 import { Alert } from 'react-bootstrap'
-import { HedgeDocLogo, HedgeDocLogoSize } from '../common/hedge-doc-logo/hedge-doc-logo'
-import { ShowIf } from '../common/show-if/show-if'
-import styles from './application-loader.module.scss'
+import { AnimatedHedgeDocLogo, AnimationType } from './animated-hedge-doc-logo/animated-hedge-doc-logo'
+import { ShowIf } from '../../common/show-if/show-if'
+import styles from '../application-loader.module.scss'
 
 export interface LoadingScreenProps {
   failedTaskName?: string
@@ -23,8 +23,8 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ failedTaskName }) 
   return (
     <div className={`${styles.loader} ${styles.middle} text-light overflow-hidden`}>
       <div className='mb-3 text-light'>
-        <span className={`d-block ${failedTaskName ? styles['animation-shake'] : styles['animation-jump']}`}>
-          <HedgeDocLogo size={HedgeDocLogoSize.BIG} />
+        <span className={`d-block`}>
+          <AnimatedHedgeDocLogo animation={failedTaskName ? AnimationType.SHAKE : AnimationType.JUMP} />
         </span>
       </div>
       <ShowIf condition={!!failedTaskName}>

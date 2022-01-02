@@ -1,7 +1,8 @@
 {
     "app": {
         "slogan": "The best platform to write and share markdown.",
-        "title": "Collaborative markdown notes"
+        "title": "Collaborative markdown notes",
+        "icon": "HedgeDoc logo with text"
     },
     "notificationTest": {
       "title": "Test",

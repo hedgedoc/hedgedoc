@@ -30,7 +30,7 @@ import { Logger } from '../../utils/logger'
 import { NoteType } from '../../redux/note-details/types/note-details'
 import type { NextPage } from 'next'
 import { isClientSideRendering } from '../../utils/is-client-side-rendering'
-import { LoadingScreen } from '../../components/application-loader/loading-screen'
+import { LoadingScreen } from '../../components/application-loader/loading-screen/loading-screen'
 import { NoteAndAppTitleHead } from '../../components/layout/note-and-app-title-head'
 
 const EditorPane = React.lazy(() => import('../../components/editor-page/editor-pane/editor-pane'))

@@ -4,15 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-@keyframes animation-roll {
-  0% {
-    transform: translateX(calc(-100vw / 2 - 100%)) rotateZ(0deg);
-  }
-  100% {
-    transform: translateX(calc(100vw / 2 + 100%)) rotateZ(720deg);
-  }
-}
-
 @keyframes animation-jump {
   0% {
     transform: scale(1, 1) translateY(0);
@@ -71,14 +62,6 @@
   100% {
     transform: translate(1px, -2px) rotate(-1deg);
   }
-}
-
-.animation-roll {
-  transform-origin: center center;
-  animation-duration: 4s;
-  animation-iteration-count: infinite;
-  animation-name: animation-roll;
-  animation-timing-function: linear;
 }
 
 .animation-jump {

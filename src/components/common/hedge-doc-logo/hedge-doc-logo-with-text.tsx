@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import LogoBwHorizontal from './logo_text_bw_horizontal.svg'
 import LogoColorVertical from './logo_text_color_vertical.svg'
 import LogoWbHorizontal from './logo_text_wb_horizontal.svg'
+import { useTranslation } from 'react-i18next'
 
 export enum HedgeDocLogoSize {
   SMALL = 32,
@@ -27,13 +28,17 @@ export enum HedgeDocLogoType {
 }
 
 export const HedgeDocLogoWithText: React.FC<HedgeDocLogoProps> = ({ size = HedgeDocLogoSize.MEDIUM, logoType }) => {
+  const { t } = useTranslation()
+  const altText = useMemo(() => t('app.icon'), [t])
+  const style = useMemo(() => ({ height: size }), [size])
+
   switch (logoType) {
     case HedgeDocLogoType.COLOR_VERTICAL:
-      return <LogoColorVertical className={'w-auto'} alt={'HedgeDoc logo with text'} style={{ height: size }} />
+      return <LogoColorVertical className={'w-auto'} title={altText} style={style} />
     case HedgeDocLogoType.BW_HORIZONTAL:
-      return <LogoBwHorizontal className={'w-auto'} alt={'HedgeDoc logo with text'} style={{ height: size }} />
+      return <LogoBwHorizontal className={'w-auto'} title={altText} style={style} />
     case HedgeDocLogoType.WB_HORIZONTAL:
-      return <LogoWbHorizontal className={'w-auto'} alt={'HedgeDoc logo with text'} style={{ height: size }} />
+      return <LogoWbHorizontal className={'w-auto'} title={altText} style={style} />
     default:
       return null
   }

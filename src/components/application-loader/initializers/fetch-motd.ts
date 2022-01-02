@@ -46,12 +46,11 @@ export const fetchMotd = async (customizeAssetsUrl: string): Promise<void> => {
     return
   }
 
-  const motdText = await response.text()
-
   const lastModified = response.headers.get('Last-Modified') || response.headers.get('etag')
   if (!lastModified) {
     log.warn("'Last-Modified' or 'Etag' not found for motd.txt!")
   }
 
+  const motdText = await response.text()
   setMotd(motdText, lastModified)
 }
