@@ -93,6 +93,7 @@ jobs:
           group: "UI - ${{ matrix.browser }}"
           wait-on: 'http://127.0.0.1:3001/'
           wait-on-timeout: 120
+          install-command: yarn install --immutable --silent
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
