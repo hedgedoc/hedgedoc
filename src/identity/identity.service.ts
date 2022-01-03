@@ -73,20 +73,20 @@ export class IdentityService {
    * @param {string} password - the password to use
    * @throws {NotInDBError} the specified user can't be logged in
    */
-  async loginWithLocalIdentity(user: User, password: string): Promise<void> {
+  async checkLocalPassword(user: User, password: string): Promise<void> {
     const internalIdentity: Identity | undefined =
       await getFirstIdentityFromUser(user, ProviderType.LOCAL);
     if (internalIdentity === undefined) {
       this.logger.debug(
         `The user with the username ${user.username} does not have a internal identity.`,
-        'loginWithLocalIdentity',
+        'checkLocalPassword',
       );
       throw new NotInDBError();
     }
     if (!(await checkPassword(password, internalIdentity.passwordHash ?? ''))) {
       this.logger.debug(
         `Password check for ${user.username} did not succeed.`,
-        'loginWithLocalIdentity',
+        'checkLocalPassword',
       );
       throw new NotInDBError();
     }
