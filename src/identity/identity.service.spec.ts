@@ -102,9 +102,9 @@ describe('IdentityService', () => {
       ) as Identity;
       identity.passwordHash = await hashPassword(password);
       user.identities = Promise.resolve([identity]);
-      await expect(
-        service.loginWithLocalIdentity(user, password),
-      ).resolves.toEqual(undefined);
+      await expect(service.checkLocalPassword(user, password)).resolves.toEqual(
+        undefined,
+      );
     });
     describe('fails', () => {
       it('when user has no local identity', async () => {

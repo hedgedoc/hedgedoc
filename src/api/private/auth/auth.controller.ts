@@ -70,7 +70,7 @@ export class AuthController {
     @Body() changePasswordDto: UpdatePasswordDto,
   ): Promise<void> {
     try {
-      await this.identityService.loginWithLocalIdentity(
+      await this.identityService.checkLocalPassword(
         user,
         changePasswordDto.currentPassword,
       );
