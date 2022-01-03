@@ -58,14 +58,14 @@ export class Revision {
    * Note this revision belongs to.
    */
   @ManyToOne((_) => Note, (note) => note.revisions, { onDelete: 'CASCADE' })
-  note: Note;
+  note: Promise<Note>;
 
   /**
    * All edit objects which are used in the revision.
    */
   @ManyToMany((_) => Edit, (edit) => edit.revisions)
   @JoinTable()
-  edits: Edit[];
+  edits: Promise<Edit[]>;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
@@ -79,8 +79,8 @@ export class Revision {
     newRevision.patch = patch;
     newRevision.content = content;
     newRevision.length = content.length;
-    newRevision.note = note;
-    newRevision.edits = [];
+    newRevision.note = Promise.resolve(note);
+    newRevision.edits = Promise.resolve([]);
     return newRevision;
   }
 }

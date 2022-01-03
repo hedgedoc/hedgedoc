@@ -49,7 +49,7 @@ export class Alias {
   @ManyToOne((_) => Note, (note) => note.aliases, {
     onDelete: 'CASCADE', // This deletes the Alias, when the associated Note is deleted
   })
-  note: Note;
+  note: Promise<Note>;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
@@ -58,7 +58,7 @@ export class Alias {
     const alias = new Alias();
     alias.name = name;
     alias.primary = primary;
-    alias.note = note;
+    alias.note = Promise.resolve(note);
     return alias;
   }
 }

@@ -24,7 +24,7 @@ export class AuthToken {
   @ManyToOne((_) => User, (user) => user.authTokens, {
     onDelete: 'CASCADE', // This deletes the AuthToken, when the associated User is deleted
   })
-  user: User;
+  user: Promise<User>;
 
   @Column()
   label: string;
@@ -53,7 +53,7 @@ export class AuthToken {
   ): Omit<AuthToken, 'id' | 'createdAt'> {
     const newToken = new AuthToken();
     newToken.keyId = keyId;
-    newToken.user = user;
+    newToken.user = Promise.resolve(user);
     newToken.label = label;
     newToken.accessTokenHash = accessToken;
     newToken.validUntil = validUntil;

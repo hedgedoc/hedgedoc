@@ -159,9 +159,9 @@ describe('HistoryService', () => {
           Note.create(user, alias) as Note,
           user,
         );
-        expect(createHistoryEntry.note.aliases).toHaveLength(1);
-        expect(createHistoryEntry.note.aliases[0].name).toEqual(alias);
-        expect(createHistoryEntry.note.owner).toEqual(user);
+        expect(await createHistoryEntry.note.aliases).toHaveLength(1);
+        expect((await createHistoryEntry.note.aliases)[0].name).toEqual(alias);
+        expect(await createHistoryEntry.note.owner).toEqual(user);
         expect(createHistoryEntry.user).toEqual(user);
         expect(createHistoryEntry.pinStatus).toEqual(false);
       });
@@ -177,9 +177,9 @@ describe('HistoryService', () => {
           Note.create(user, alias) as Note,
           user,
         );
-        expect(createHistoryEntry.note.aliases).toHaveLength(1);
-        expect(createHistoryEntry.note.aliases[0].name).toEqual(alias);
-        expect(createHistoryEntry.note.owner).toEqual(user);
+        expect(await createHistoryEntry.note.aliases).toHaveLength(1);
+        expect((await createHistoryEntry.note.aliases)[0].name).toEqual(alias);
+        expect(await createHistoryEntry.note.owner).toEqual(user);
         expect(createHistoryEntry.user).toEqual(user);
         expect(createHistoryEntry.pinStatus).toEqual(false);
         expect(createHistoryEntry.updatedAt.getTime()).toBeGreaterThanOrEqual(
@@ -223,9 +223,9 @@ describe('HistoryService', () => {
             pinStatus: true,
           },
         );
-        expect(updatedHistoryEntry.note.aliases).toHaveLength(1);
-        expect(updatedHistoryEntry.note.aliases[0].name).toEqual(alias);
-        expect(updatedHistoryEntry.note.owner).toEqual(user);
+        expect(await updatedHistoryEntry.note.aliases).toHaveLength(1);
+        expect((await updatedHistoryEntry.note.aliases)[0].name).toEqual(alias);
+        expect(await updatedHistoryEntry.note.owner).toEqual(user);
         expect(updatedHistoryEntry.user).toEqual(user);
         expect(updatedHistoryEntry.pinStatus).toEqual(true);
       });
@@ -371,11 +371,13 @@ describe('HistoryService', () => {
       const mockedManager = {
         find: jest.fn().mockResolvedValueOnce([historyEntry]),
         createQueryBuilder: () => createQueryBuilder,
-        remove: jest.fn().mockImplementationOnce((entry: HistoryEntry) => {
-          expect(entry.note.aliases).toHaveLength(1);
-          expect(entry.note.aliases[0].name).toEqual(alias);
-          expect(entry.pinStatus).toEqual(false);
-        }),
+        remove: jest
+          .fn()
+          .mockImplementationOnce(async (entry: HistoryEntry) => {
+            expect(await entry.note.aliases).toHaveLength(1);
+            expect((await entry.note.aliases)[0].name).toEqual(alias);
+            expect(entry.pinStatus).toEqual(false);
+          }),
         save: jest.fn().mockImplementationOnce((entry: HistoryEntry) => {
           expect(entry.note.aliases).toEqual(
             newlyCreatedHistoryEntry.note.aliases,
@@ -402,11 +404,13 @@ describe('HistoryService', () => {
         const tags = ['tag1', 'tag2'];
         const note = Note.create(user, alias) as Note;
         note.title = title;
-        note.tags = tags.map((tag) => {
-          const newTag = new Tag();
-          newTag.name = tag;
-          return newTag;
-        });
+        note.tags = Promise.resolve(
+          tags.map((tag) => {
+            const newTag = new Tag();
+            newTag.name = tag;
+            return newTag;
+          }),
+        );
         const historyEntry = HistoryEntry.create(user, note) as HistoryEntry;
         historyEntry.pinStatus = true;
         const createQueryBuilder = {
@@ -420,7 +424,7 @@ describe('HistoryService', () => {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           .mockImplementation(() => createQueryBuilder);
-        const historyEntryDto = service.toHistoryEntryDto(historyEntry);
+        const historyEntryDto = await service.toHistoryEntryDto(historyEntry);
         expect(historyEntryDto.pinStatus).toEqual(true);
         expect(historyEntryDto.identifier).toEqual(alias);
         expect(historyEntryDto.tags).toEqual(tags);

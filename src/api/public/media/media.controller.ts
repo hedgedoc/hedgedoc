@@ -136,7 +136,7 @@ export class MediaController {
       const mediaUpload = await this.mediaService.findUploadByFilename(
         filename,
       );
-      if (mediaUpload.user.username !== username) {
+      if ((await mediaUpload.user).username !== username) {
         this.logger.warn(
           `${username} tried to delete '${filename}', but is not the owner`,
           'deleteMedia',

@@ -67,18 +67,18 @@ createConnection({
       const identity = Identity.create(user, ProviderType.LOCAL, false);
       identity.passwordHash = await hashPassword(password);
       connection.manager.create(Identity, identity);
-      author.user = user;
+      author.user = Promise.resolve(user);
       const revision = Revision.create(
         'This is a test note',
         'This is a test note',
         notes[i],
       ) as Revision;
       const edit = Edit.create(author, 1, 42) as Edit;
-      revision.edits = [edit];
+      revision.edits = Promise.resolve([edit]);
       notes[i].revisions = Promise.all([revision]);
-      notes[i].userPermissions = [];
-      notes[i].groupPermissions = [];
-      user.ownedNotes = [notes[i]];
+      notes[i].userPermissions = Promise.resolve([]);
+      notes[i].groupPermissions = Promise.resolve([]);
+      user.ownedNotes = Promise.resolve([notes[i]]);
       await connection.manager.save([
         notes[i],
         user,
@@ -99,7 +99,7 @@ createConnection({
       throw new Error('Could not find freshly seeded notes. Aborting.');
     }
     for (const note of foundNotes) {
-      if (!note.aliases[0]) {
+      if (!(await note.aliases)[0]) {
         throw new Error(
           'Could not find alias of freshly seeded notes. Aborting.',
         );
@@ -111,7 +111,7 @@ createConnection({
       );
     }
     for (const note of foundNotes) {
-      console.log(`Created Note '${note.aliases[0].name ?? ''}'`);
+      console.log(`Created Note '${(await note.aliases)[0].name ?? ''}'`);
     }
     for (const user of foundUsers) {
       for (const note of foundNotes) {
@@ -119,7 +119,7 @@ createConnection({
         await connection.manager.save(historyEntry);
         console.log(
           `Created HistoryEntry for user '${user.username}' and note '${
-            note.aliases[0].name ?? ''
+            (await note.aliases)[0].name ?? ''
           }'`,
         );
       }

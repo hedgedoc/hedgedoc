@@ -10,6 +10,13 @@ import { Note } from '../notes/note.entity';
 
 @Entity()
 export class NoteGroupPermission {
+  /**
+   * The `group` and `note` properties cannot be converted to promises
+   * (to lazy-load them), as TypeORM gets confused about lazy composite
+   * primary keys.
+   * See https://github.com/typeorm/typeorm/issues/6908
+   */
+
   @ManyToOne((_) => Group, {
     primary: true,
     onDelete: 'CASCADE', // This deletes the NoteGroupPermission, when the associated Group is deleted

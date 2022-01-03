@@ -22,8 +22,8 @@ export function generatePublicId(): string {
  * Extract the primary alias from a aliases of a note
  * @param {Note} note - the note from which the primary alias should be extracted
  */
-export function getPrimaryAlias(note: Note): string | undefined {
-  const listWithPrimaryAlias = note.aliases.filter(
+export async function getPrimaryAlias(note: Note): Promise<string | undefined> {
+  const listWithPrimaryAlias = (await note.aliases).filter(
     (alias: Alias) => alias.primary,
   );
   if (listWithPrimaryAlias.length !== 1) {

@@ -32,7 +32,7 @@ export class Identity {
   @ManyToOne((_) => User, (user) => user.identities, {
     onDelete: 'CASCADE', // This deletes the Identity, when the associated User is deleted
   })
-  user: User;
+  user: Promise<User>;
 
   /**
    * The ProviderType of the identity
@@ -103,7 +103,7 @@ export class Identity {
     syncSource: boolean,
   ): Omit<Identity, 'id' | 'createdAt' | 'updatedAt'> {
     const newIdentity = new Identity();
-    newIdentity.user = user;
+    newIdentity.user = Promise.resolve(user);
     newIdentity.providerType = providerType;
     newIdentity.providerName = null;
     newIdentity.syncSource = syncSource;

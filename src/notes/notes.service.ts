@@ -100,9 +100,9 @@ export class NotesService {
       Revision.create(noteContent, noteContent, newNote as Note) as Revision,
     ]);
     if (owner) {
-      newNote.historyEntries = [
+      newNote.historyEntries = Promise.resolve([
         HistoryEntry.create(owner, newNote as Note) as HistoryEntry,
-      ];
+      ]);
     }
     try {
       return await this.noteRepository.save(newNote);
@@ -262,8 +262,8 @@ export class NotesService {
     //TODO: Calculate patch
     revisions.push(Revision.create(noteContent, noteContent, note) as Revision);
     note.revisions = Promise.resolve(revisions);
-    note.userPermissions = [];
-    note.groupPermissions = [];
+    note.userPermissions = Promise.resolve([]);
+    note.groupPermissions = Promise.resolve([]);
     return await this.noteRepository.save(note);
   }
 
@@ -298,8 +298,8 @@ export class NotesService {
       );
     }
 
-    note.userPermissions = [];
-    note.groupPermissions = [];
+    note.userPermissions = Promise.resolve([]);
+    note.groupPermissions = Promise.resolve([]);
 
     // Create new userPermissions
     for (const newUserPermission of newPermissions.sharedToUsers) {
@@ -312,7 +312,7 @@ export class NotesService {
         newUserPermission.canEdit,
       );
       createdPermission.note = note;
-      note.userPermissions.push(createdPermission);
+      (await note.userPermissions).push(createdPermission);
     }
 
     // Create groupPermissions
@@ -326,7 +326,7 @@ export class NotesService {
         newGroupPermission.canEdit,
       );
       createdPermission.note = note;
-      note.groupPermissions.push(createdPermission);
+      (await note.groupPermissions).push(createdPermission);
     }
 
     return await this.noteRepository.save(note);
@@ -340,15 +340,18 @@ export class NotesService {
    */
   async calculateUpdateUser(note: Note): Promise<User | null> {
     const lastRevision = await this.getLatestRevision(note);
-    if (lastRevision && lastRevision.edits) {
+    const edits = await lastRevision.edits;
+    if (edits.length > 0) {
       // Sort the last Revisions Edits by their updatedAt Date to get the latest one
       // the user of that Edit is the updateUser
-      return lastRevision.edits.sort(
-        (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime(),
-      )[0].author.user;
+      return await (
+        await edits.sort(
+          (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime(),
+        )[0].author
+      ).user;
     }
     // If there are no Edits, the owner is the updateUser
-    return note.owner;
+    return await note.owner;
   }
 
   /**
@@ -356,8 +359,8 @@ export class NotesService {
    * @param {Note} note - the note to use
    * @return {string[]} string array of tags names
    */
-  toTagList(note: Note): string[] {
-    return note.tags.map((tag) => tag.name);
+  async toTagList(note: Note): Promise<string[]> {
+    return (await note.tags).map((tag) => tag.name);
   }
 
   /**
@@ -365,14 +368,17 @@ export class NotesService {
    * @param {Note} note - the note to use
    * @return {NotePermissionsDto} the built NotePermissionDto
    */
-  toNotePermissionsDto(note: Note): NotePermissionsDto {
+  async toNotePermissionsDto(note: Note): Promise<NotePermissionsDto> {
+    const owner = await note.owner;
+    const userPermissions = await note.userPermissions;
+    const groupPermissions = await note.groupPermissions;
     return {
-      owner: note.owner ? this.usersService.toUserDto(note.owner) : null,
-      sharedToUsers: note.userPermissions.map((noteUserPermission) => ({
+      owner: owner ? this.usersService.toUserDto(owner) : null,
+      sharedToUsers: userPermissions.map((noteUserPermission) => ({
         user: this.usersService.toUserDto(noteUserPermission.user),
         canEdit: noteUserPermission.canEdit,
       })),
-      sharedToGroups: note.groupPermissions.map((noteGroupPermission) => ({
+      sharedToGroups: groupPermissions.map((noteGroupPermission) => ({
         group: this.groupsService.toGroupDto(noteGroupPermission.group),
         canEdit: noteGroupPermission.canEdit,
       })),
@@ -389,14 +395,16 @@ export class NotesService {
     const updateUser = await this.calculateUpdateUser(note);
     return {
       id: note.publicId,
-      aliases: note.aliases.map((alias) => alias.name),
-      primaryAlias: getPrimaryAlias(note) ?? null,
+      aliases: await Promise.all(
+        (await note.aliases).map((alias) => alias.name),
+      ),
+      primaryAlias: (await getPrimaryAlias(note)) ?? null,
       title: note.title ?? '',
       createTime: (await this.getFirstRevision(note)).createdAt,
       description: note.description ?? '',
       editedBy: (await this.getAuthorUsers(note)).map((user) => user.username),
-      permissions: this.toNotePermissionsDto(note),
-      tags: this.toTagList(note),
+      permissions: await this.toNotePermissionsDto(note),
+      tags: await this.toTagList(note),
       updateTime: (await this.getLatestRevision(note)).createdAt,
       updateUser: updateUser ? this.usersService.toUserDto(updateUser) : null,
       viewCount: note.viewCount,

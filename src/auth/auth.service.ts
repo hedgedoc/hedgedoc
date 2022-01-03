@@ -46,7 +46,11 @@ export class AuthService {
     }
     const accessToken = await this.getAuthTokenAndValidate(keyId, secret);
     await this.setLastUsedToken(keyId);
-    return await this.usersService.getUserByUsername(accessToken.user.username);
+    return await this.usersService.getUserByUsername(
+      (
+        await accessToken.user
+      ).username,
+    );
   }
 
   async createTokenForUser(
@@ -54,9 +58,9 @@ export class AuthService {
     identifier: string,
     validUntil: TimestampMillis,
   ): Promise<AuthTokenWithSecretDto> {
-    user.authTokens = await this.getTokensByUser(user);
+    user.authTokens = this.getTokensByUser(user);
 
-    if (user.authTokens.length >= 200) {
+    if ((await user.authTokens).length >= 200) {
       // This is a very high ceiling unlikely to hinder legitimate usage,
       // but should prevent possible attack vectors
       throw new TooManyTokensError(

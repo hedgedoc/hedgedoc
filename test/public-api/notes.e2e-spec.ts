@@ -200,16 +200,16 @@ describe('Notes', () => {
         updateNotePermission,
       );
       const updatedNote = await testSetup.notesService.getNoteByIdOrAlias(
-        note.aliases.filter((alias) => alias.primary)[0].name,
+        (await note.aliases).filter((alias) => alias.primary)[0].name,
       );
-      expect(updatedNote.userPermissions).toHaveLength(1);
-      expect(updatedNote.userPermissions[0].canEdit).toEqual(
+      expect(await updatedNote.userPermissions).toHaveLength(1);
+      expect((await updatedNote.userPermissions)[0].canEdit).toEqual(
         updateNotePermission.sharedToUsers[0].canEdit,
       );
-      expect(updatedNote.userPermissions[0].user.username).toEqual(
+      expect((await updatedNote.userPermissions)[0].user.username).toEqual(
         user.username,
       );
-      expect(updatedNote.groupPermissions).toHaveLength(0);
+      expect(await updatedNote.groupPermissions).toHaveLength(0);
       await request(testSetup.app.getHttpServer())
         .delete('/api/v2/notes/test3')
         .expect(204);

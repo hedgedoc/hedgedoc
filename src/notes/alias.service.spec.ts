@@ -158,8 +158,11 @@ describe('AliasService', () => {
     const alias2 = 'testAlias2';
     const user = User.create('hardcoded', 'Testy') as User;
     describe('removes one alias correctly', () => {
-      const note = Note.create(user, alias) as Note;
-      note.aliases.push(Alias.create(alias2, note, false) as Alias);
+      let note: Note;
+      beforeAll(async () => {
+        note = Note.create(user, alias) as Note;
+        (await note.aliases).push(Alias.create(alias2, note, false) as Alias);
+      });
       it('with two aliases', async () => {
         jest
           .spyOn(noteRepo, 'save')
@@ -170,9 +173,10 @@ describe('AliasService', () => {
             async (alias: Alias): Promise<Alias> => alias,
           );
         const savedNote = await service.removeAlias(note, alias2);
-        expect(savedNote.aliases).toHaveLength(1);
-        expect(savedNote.aliases[0].name).toEqual(alias);
-        expect(savedNote.aliases[0].primary).toBeTruthy();
+        const aliases = await savedNote.aliases;
+        expect(aliases).toHaveLength(1);
+        expect(aliases[0].name).toEqual(alias);
+        expect(aliases[0].primary).toBeTruthy();
       });
       it('with one alias, that is primary', async () => {
         jest
@@ -184,12 +188,15 @@ describe('AliasService', () => {
             async (alias: Alias): Promise<Alias> => alias,
           );
         const savedNote = await service.removeAlias(note, alias);
-        expect(savedNote.aliases).toHaveLength(0);
+        expect(await savedNote.aliases).toHaveLength(0);
       });
     });
     describe('does not remove one alias', () => {
-      const note = Note.create(user, alias) as Note;
-      note.aliases.push(Alias.create(alias2, note, false) as Alias);
+      let note: Note;
+      beforeEach(async () => {
+        note = Note.create(user, alias) as Note;
+        (await note.aliases).push(Alias.create(alias2, note, false) as Alias);
+      });
       it('if the alias is unknown', async () => {
         await expect(service.removeAlias(note, 'non existent')).rejects.toThrow(
           NotInDBError,
@@ -206,10 +213,18 @@ describe('AliasService', () => {
   describe('makeAliasPrimary', () => {
     const user = User.create('hardcoded', 'Testy') as User;
     const aliasName = 'testAlias';
-    const note = Note.create(user, aliasName) as Note;
-    const alias = Alias.create(aliasName, note, true) as Alias;
-    const alias2 = Alias.create('testAlias2', note, false) as Alias;
-    note.aliases.push(alias2);
+    let note: Note;
+    let alias: Alias;
+    let alias2: Alias;
+    beforeEach(async () => {
+      note = Note.create(user, aliasName) as Note;
+      alias = Alias.create(aliasName, note, true) as Alias;
+      alias2 = Alias.create('testAlias2', note, false) as Alias;
+      (await note.aliases).push(
+        Alias.create('testAlias2', note, false) as Alias,
+      );
+    });
+
     it('mark the alias as primary', async () => {
       jest
         .spyOn(aliasRepo, 'findOne')
@@ -224,10 +239,10 @@ describe('AliasService', () => {
         where: () => createQueryBuilder,
         orWhere: () => createQueryBuilder,
         setParameter: () => createQueryBuilder,
-        getOne: () => {
+        getOne: async () => {
           return {
             ...note,
-            aliases: note.aliases.map((anAlias) => {
+            aliases: (await note.aliases).map((anAlias) => {
               if (anAlias.primary) {
                 anAlias.primary = false;
               }

@@ -181,7 +181,7 @@ export class MediaService {
       'Setting note to null for mediaUpload: ' + mediaUpload.id,
       'removeNoteFromMediaUpload',
     );
-    mediaUpload.note = null;
+    mediaUpload.note = Promise.resolve(null);
     await this.mediaUploadRepository.save(mediaUpload);
   }
 
@@ -219,12 +219,12 @@ export class MediaService {
     }
   }
 
-  toMediaUploadDto(mediaUpload: MediaUpload): MediaUploadDto {
+  async toMediaUploadDto(mediaUpload: MediaUpload): Promise<MediaUploadDto> {
     return {
       url: mediaUpload.fileUrl,
-      noteId: mediaUpload.note?.id ?? null,
+      noteId: (await mediaUpload.note)?.id ?? null,
       createdAt: mediaUpload.createdAt,
-      username: mediaUpload.user.username,
+      username: (await mediaUpload.user).username,
     };
   }
 

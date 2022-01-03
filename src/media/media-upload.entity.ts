@@ -25,12 +25,12 @@ export class MediaUpload {
   @ManyToOne((_) => Note, (note) => note.mediaUploads, {
     nullable: true,
   })
-  note: Note | null;
+  note: Promise<Note | null>;
 
   @ManyToOne((_) => User, (user) => user.mediaUploads, {
     nullable: false,
   })
-  user: User;
+  user: Promise<User>;
 
   @Column({
     nullable: false,
@@ -72,8 +72,8 @@ export class MediaUpload {
   ): Omit<MediaUpload, 'createdAt'> {
     const upload = new MediaUpload();
     upload.id = id;
-    upload.note = note;
-    upload.user = user;
+    upload.note = Promise.resolve(note);
+    upload.user = Promise.resolve(user);
     upload.backendType = backendType;
     upload.backendData = null;
     upload.fileUrl = fileUrl;

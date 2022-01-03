@@ -38,7 +38,7 @@ export class Group {
     eager: true,
   })
   @JoinTable()
-  members: User[];
+  members: Promise<User[]>;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
@@ -52,7 +52,7 @@ export class Group {
     newGroup.name = name;
     newGroup.displayName = displayName;
     newGroup.special = special; // this attribute should only be true for the two special groups
-    newGroup.members = [];
+    newGroup.members = Promise.resolve([]);
     return newGroup;
   }
 }

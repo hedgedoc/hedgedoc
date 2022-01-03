@@ -29,12 +29,12 @@ describe('getPrimaryAlias', () => {
     const user = User.create('hardcoded', 'Testy') as User;
     note = Note.create(user, alias) as Note;
   });
-  it('finds correct primary alias', () => {
-    note.aliases.push(Alias.create('annother', note, false) as Alias);
-    expect(getPrimaryAlias(note)).toEqual(alias);
+  it('finds correct primary alias', async () => {
+    (await note.aliases).push(Alias.create('annother', note, false) as Alias);
+    expect(await getPrimaryAlias(note)).toEqual(alias);
   });
-  it('returns undefined if there is no alias', () => {
-    note.aliases[0].primary = false;
-    expect(getPrimaryAlias(note)).toEqual(undefined);
+  it('returns undefined if there is no alias', async () => {
+    (await note.aliases)[0].primary = false;
+    expect(await getPrimaryAlias(note)).toEqual(undefined);
   });
 });
