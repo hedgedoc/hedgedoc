@@ -30,7 +30,7 @@ export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
       const user = await this.userService.getUserByUsername(username, [
         UserRelationEnum.IDENTITIES,
       ]);
-      await this.identityService.loginWithLocalIdentity(user, password);
+      await this.identityService.checkLocalPassword(user, password);
       return user;
     } catch (e) {
       if (e instanceof NotInDBError) {

@@ -114,6 +114,7 @@ describe('Register and Login', () => {
       .set('Content-Type', 'application/json')
       .send(
         JSON.stringify({
+          currentPassword: PASSWORD,
           newPassword: 'newPassword',
         }),
       )
