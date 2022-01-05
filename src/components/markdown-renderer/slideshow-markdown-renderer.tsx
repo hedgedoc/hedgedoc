@@ -49,8 +49,6 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
   const markdownReactDom = useConvertMarkdownToReactDom(markdownContentLines, extensions, newlinesAreBreaks)
   const revealStatus = useReveal(markdownContentLines, slideOptions)
 
-  useExtractFirstHeadline(markdownBodyRef, onFirstHeadingChange)
-
   const extractFirstHeadline = useExtractFirstHeadline(markdownBodyRef, onFirstHeadingChange)
   useEffect(() => {
     if (revealStatus === REVEAL_STATUS.INITIALISED) {
