@@ -11,8 +11,6 @@ import { useTranslation } from 'react-i18next'
 import type { LineMarkers } from './markdown-extension/linemarker/add-line-marker-markdown-it-plugin'
 import { useCalculateLineMarkerPosition } from './utils/calculate-line-marker-positions'
 import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
-import type { TocAst } from 'markdown-it-toc-done-right'
-import { useOnRefChange } from './hooks/use-on-ref-change'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
 import { HeadlineAnchorsMarkdownExtension } from './markdown-extension/headline-anchors-markdown-extension'
@@ -37,7 +35,6 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
 }) => {
   const markdownBodyRef = useRef<HTMLDivElement>(null)
   const currentLineMarkers = useRef<LineMarkers[]>()
-  const tocAst = useRef<TocAst>()
 
   const extensions = useMarkdownExtensions(
     baseUrl,
@@ -61,8 +58,6 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
   useEffect(() => {
     extractFirstHeadline()
   }, [extractFirstHeadline, markdownContentLines])
-
-  useOnRefChange(tocAst, onTocChange)
 
   return (
     <div ref={outerContainerRef} className={`position-relative`}>
