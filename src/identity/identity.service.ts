@@ -8,7 +8,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import authConfiguration, { AuthConfig } from '../config/auth.config';
-import { NotInDBError } from '../errors/errors';
+import {
+  InvalidCredentialsError,
+  NoLocalIdentityError,
+} from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { User } from '../users/user.entity';
 import { checkPassword, hashPassword } from '../utils/password';
@@ -46,7 +49,7 @@ export class IdentityService {
    * Update the internal password of the specified the user
    * @param {User} user - the user, which identity should be updated
    * @param {string} newPassword - the new password
-   * @throws {NotInDBError} the specified user has no internal identity
+   * @throws {NoLocalIdentityError} the specified user has no internal identity
    * @return {Identity} the changed identity
    */
   async updateLocalPassword(
@@ -60,7 +63,7 @@ export class IdentityService {
         `The user with the username ${user.username} does not have a internal identity.`,
         'updateLocalPassword',
       );
-      throw new NotInDBError('This user has no internal identity.');
+      throw new NoLocalIdentityError('This user has no internal identity.');
     }
     internalIdentity.passwordHash = await hashPassword(newPassword);
     return await this.identityRepository.save(internalIdentity);
@@ -68,10 +71,11 @@ export class IdentityService {
 
   /**
    * @async
-   * Login the user with their username and password
+   * Checks if the user and password combination matches
    * @param {User} user - the user to use
    * @param {string} password - the password to use
-   * @throws {NotInDBError} the specified user can't be logged in
+   * @throws {InvalidCredentialsError} the password and user do not match
+   * @throws {NoLocalIdentityError} the specified user has no internal identity
    */
   async checkLocalPassword(user: User, password: string): Promise<void> {
     const internalIdentity: Identity | undefined =
@@ -81,14 +85,14 @@ export class IdentityService {
         `The user with the username ${user.username} does not have a internal identity.`,
         'checkLocalPassword',
       );
-      throw new NotInDBError();
+      throw new NoLocalIdentityError();
     }
     if (!(await checkPassword(password, internalIdentity.passwordHash ?? ''))) {
       this.logger.debug(
         `Password check for ${user.username} did not succeed.`,
         'checkLocalPassword',
       );
-      throw new NotInDBError();
+      throw new InvalidCredentialsError();
     }
   }
 }
