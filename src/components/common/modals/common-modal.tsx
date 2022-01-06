@@ -48,23 +48,25 @@ export const CommonModal: React.FC<CommonModalProps> = ({
   }, [title, titleIsI18nKey])
 
   return (
-    <Modal
-      {...cypressId(props)}
-      show={show}
-      onHide={onHide}
-      animation={true}
-      dialogClassName={`text-dark ${additionalClasses ?? ''}`}
-      size={modalSize}>
-      <Modal.Header closeButton={!!showCloseButton}>
-        <Modal.Title>
-          <ShowIf condition={!!titleIcon}>
-            <ForkAwesomeIcon icon={titleIcon as IconName} />
-            &nbsp;
-          </ShowIf>
-          {titleElement}
-        </Modal.Title>
-      </Modal.Header>
-      {children}
-    </Modal>
+    <ShowIf condition={show}>
+      <Modal
+        {...cypressId(props)}
+        show={show}
+        onHide={onHide}
+        animation={true}
+        dialogClassName={`text-dark ${additionalClasses ?? ''}`}
+        size={modalSize}>
+        <Modal.Header closeButton={!!showCloseButton}>
+          <Modal.Title>
+            <ShowIf condition={!!titleIcon}>
+              <ForkAwesomeIcon icon={titleIcon as IconName} />
+              &nbsp;
+            </ShowIf>
+            {titleElement}
+          </Modal.Title>
+        </Modal.Header>
+        {children}
+      </Modal>
+    </ShowIf>
   )
 }
