@@ -10,7 +10,7 @@ import request from 'supertest';
 import { NotInDBError } from '../../src/errors/errors';
 import { NotePermissionsUpdateDto } from '../../src/notes/note-permissions.dto';
 import { User } from '../../src/users/user.entity';
-import { TestSetup } from '../test-setup';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Notes', () => {
   let testSetup: TestSetup;
@@ -23,7 +23,7 @@ describe('Notes', () => {
   let testImage: Buffer;
 
   beforeAll(async () => {
-    testSetup = await TestSetup.create();
+    testSetup = await TestSetupBuilder.create().withMockAuth().build();
 
     forbiddenNoteId =
       testSetup.configService.get('appConfig').forbiddenNoteIds[0];

@@ -16,7 +16,7 @@ import { NotesService } from '../../src/notes/notes.service';
 import { User } from '../../src/users/user.entity';
 import { UsersService } from '../../src/users/users.service';
 import { setupSessionMiddleware } from '../../src/utils/session';
-import { TestSetup } from '../test-setup';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('History', () => {
   let testSetup: TestSetup;
@@ -30,7 +30,7 @@ describe('History', () => {
   let agent: request.SuperAgentTest;
 
   beforeAll(async () => {
-    testSetup = await TestSetup.create();
+    testSetup = await TestSetupBuilder.create().build();
 
     forbiddenNoteId =
       testSetup.configService.get('appConfig').forbiddenNoteIds[0];

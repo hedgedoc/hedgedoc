@@ -9,7 +9,7 @@ import request from 'supertest';
 import { AliasCreateDto } from '../../src/notes/alias-create.dto';
 import { AliasUpdateDto } from '../../src/notes/alias-update.dto';
 import { User } from '../../src/users/user.entity';
-import { TestSetup } from '../test-setup';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Alias', () => {
   let testSetup: TestSetup;
@@ -22,7 +22,7 @@ describe('Alias', () => {
   let agent2: request.SuperAgentTest;
 
   beforeAll(async () => {
-    testSetup = await (await TestSetup.create()).withUsers();
+    testSetup = await TestSetupBuilder.create().withUsers().build();
     await testSetup.app.init();
 
     forbiddenNoteId =

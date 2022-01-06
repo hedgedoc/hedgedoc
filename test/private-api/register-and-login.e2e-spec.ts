@@ -7,7 +7,7 @@ import request from 'supertest';
 
 import { LoginDto } from '../../src/identity/local/login.dto';
 import { RegisterDto } from '../../src/identity/local/register.dto';
-import { TestSetup } from '../test-setup';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Register and Login', () => {
   let testSetup: TestSetup;
@@ -17,7 +17,7 @@ describe('Register and Login', () => {
   const PASSWORD = 'secure';
 
   beforeEach(async () => {
-    testSetup = await TestSetup.create();
+    testSetup = await TestSetupBuilder.create().build();
     await testSetup.app.init();
   });
 

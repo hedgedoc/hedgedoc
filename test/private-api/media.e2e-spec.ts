@@ -11,7 +11,7 @@ import request from 'supertest';
 import { AuthConfig } from '../../src/config/auth.config';
 import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
 import { setupSessionMiddleware } from '../../src/utils/session';
-import { TestSetup } from '../test-setup';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
 import { ensureDeleted } from '../utils';
 
 describe('Media', () => {
@@ -22,7 +22,7 @@ describe('Media', () => {
   let user: User;
 
   beforeAll(async () => {
-    testSetup = await TestSetup.create();
+    testSetup = await TestSetupBuilder.create().build();
 
     uploadPath =
       testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;

@@ -11,7 +11,7 @@ import { AuthConfig } from '../../src/config/auth.config';
 import { NotInDBError } from '../../src/errors/errors';
 import { User } from '../../src/users/user.entity';
 import { setupSessionMiddleware } from '../../src/utils/session';
-import { TestSetup } from '../test-setup';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Notes', () => {
   let testSetup: TestSetup;
@@ -25,7 +25,7 @@ describe('Notes', () => {
   let agent: request.SuperAgentTest;
 
   beforeAll(async () => {
-    testSetup = await TestSetup.create();
+    testSetup = await TestSetupBuilder.create().build();
 
     forbiddenNoteId =
       testSetup.configService.get('appConfig').forbiddenNoteIds[0];
