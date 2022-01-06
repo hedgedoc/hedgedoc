@@ -63,8 +63,14 @@ if (!config.useSSL && config.protocolUseSSL) {
   app.set('trust proxy', 1)
 }
 
+// check if the request is from container healthcheck
+function isContainerHealthCheck (req, _) {
+  return req.headers['user-agent'] === 'hedgedoc-container-healthcheck/1.0' && req.ip === '127.0.0.1'
+}
+
 // logger
 app.use(morgan('combined', {
+  skip: isContainerHealthCheck,
   stream: logger.stream
 }))
 
