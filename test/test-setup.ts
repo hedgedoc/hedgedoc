@@ -59,7 +59,8 @@ export class TestSetup {
 
   users: User[] = [];
   authTokens: AuthTokenWithSecretDto[] = [];
-  notes: Note[] = [];
+  anonymousNotes: Note[] = [];
+  ownedNotes: Note[] = [];
 }
 
 /**
@@ -223,23 +224,58 @@ export class TestSetupBuilder {
           );
         }),
       );
+
+      // create notes with owner
+      this.testSetup.ownedNotes.push(
+        await this.testSetup.notesService.createNote(
+          'Test Note 1',
+          this.testSetup.users[0],
+          'testAlias1',
+        ),
+      );
+      this.testSetup.ownedNotes.push(
+        await this.testSetup.notesService.createNote(
+          'Test Note 2',
+          this.testSetup.users[1],
+          'testAlias2',
+        ),
+      );
+      this.testSetup.ownedNotes.push(
+        await this.testSetup.notesService.createNote(
+          'Test Note 3',
+          this.testSetup.users[2],
+          'testAlias3',
+        ),
+      );
     });
     return this;
   }
 
   /**
-   * Generate a few notes for testing
+   * Generate a few anonymousNotes for testing
    */
   public withNotes(): TestSetupBuilder {
     this.setupPostCompile.push(async () => {
-      this.testSetup.notes.push(
-        await this.testSetup.notesService.createNote('Test Note 1', null),
+      this.testSetup.anonymousNotes.push(
+        await this.testSetup.notesService.createNote(
+          'Anonymous Note 1',
+          null,
+          'anonAlias1',
+        ),
       );
-      this.testSetup.notes.push(
-        await this.testSetup.notesService.createNote('Test Note 2', null),
+      this.testSetup.anonymousNotes.push(
+        await this.testSetup.notesService.createNote(
+          'Anonymous Note 2',
+          null,
+          'anonAlias2',
+        ),
       );
-      this.testSetup.notes.push(
-        await this.testSetup.notesService.createNote('Test Note 3', null),
+      this.testSetup.anonymousNotes.push(
+        await this.testSetup.notesService.createNote(
+          'Anonymous Note 3',
+          null,
+          'anonAlias3',
+        ),
       );
     });
     return this;
