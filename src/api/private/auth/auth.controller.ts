@@ -17,7 +17,11 @@ import {
 } from '@nestjs/common';
 import { Session } from 'express-session';
 
-import { AlreadyInDBError, NotInDBError } from '../../../errors/errors';
+import {
+  AlreadyInDBError,
+  InvalidCredentialsError,
+  NoLocalIdentityError,
+} from '../../../errors/errors';
 import { IdentityService } from '../../../identity/identity.service';
 import { LocalAuthGuard } from '../../../identity/local/local.strategy';
 import { LoginDto } from '../../../identity/local/login.dto';
@@ -80,10 +84,11 @@ export class AuthController {
       );
       return;
     } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new UnauthorizedException(
-          'Verifying your identity with the current password did not work.',
-        );
+      if (e instanceof InvalidCredentialsError) {
+        throw new UnauthorizedException('Password is not correct');
+      }
+      if (e instanceof NoLocalIdentityError) {
+        throw new BadRequestException('User has no local identity.');
       }
       throw e;
     }

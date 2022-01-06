@@ -43,3 +43,11 @@ export class MediaBackendError extends Error {
 export class PrimaryAliasDeletionForbiddenError extends Error {
   name = 'PrimaryAliasDeletionForbiddenError';
 }
+
+export class InvalidCredentialsError extends Error {
+  name = 'InvalidCredentialsError';
+}
+
+export class NoLocalIdentityError extends Error {
+  name = 'NoLocalIdentityError';
+}
