@@ -8,7 +8,7 @@ import request from 'supertest';
 import { AuthConfig } from '../../src/config/auth.config';
 import { User } from '../../src/users/user.entity';
 import { setupSessionMiddleware } from '../../src/utils/session';
-import { TestSetup } from '../test-setup';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Tokens', () => {
   let testSetup: TestSetup;
@@ -18,7 +18,7 @@ describe('Tokens', () => {
   let keyId: string;
 
   beforeAll(async () => {
-    testSetup = await TestSetup.create();
+    testSetup = await TestSetupBuilder.create().build();
 
     user = await testSetup.userService.createUser('hardcoded', 'Testy');
     await testSetup.identityService.createLocalIdentity(user, 'test');

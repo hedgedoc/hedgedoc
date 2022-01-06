@@ -12,7 +12,7 @@ import { Note } from '../../src/notes/note.entity';
 import { UserInfoDto } from '../../src/users/user-info.dto';
 import { User } from '../../src/users/user.entity';
 import { setupSessionMiddleware } from '../../src/utils/session';
-import { TestSetup } from '../test-setup';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Me', () => {
   let testSetup: TestSetup;
@@ -26,7 +26,7 @@ describe('Me', () => {
   let agent: request.SuperAgentTest;
 
   beforeAll(async () => {
-    testSetup = await TestSetup.create();
+    testSetup = await TestSetupBuilder.create().build();
 
     uploadPath =
       testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;

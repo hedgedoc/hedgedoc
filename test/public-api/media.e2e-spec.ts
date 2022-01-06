@@ -10,7 +10,7 @@ import request from 'supertest';
 import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
 import { Note } from '../../src/notes/note.entity';
 import { User } from '../../src/users/user.entity';
-import { TestSetup } from '../test-setup';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
 import { ensureDeleted } from '../utils';
 
 describe('Media', () => {
@@ -20,7 +20,7 @@ describe('Media', () => {
   let user: User;
 
   beforeAll(async () => {
-    testSetup = await TestSetup.create();
+    testSetup = await TestSetupBuilder.create().withMockAuth().build();
 
     uploadPath =
       testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;

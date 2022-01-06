@@ -17,7 +17,7 @@ import { UpdatePasswordDto } from '../../src/identity/local/update-password.dto'
 import { UserRelationEnum } from '../../src/users/user-relation.enum';
 import { checkPassword } from '../../src/utils/password';
 import { setupSessionMiddleware } from '../../src/utils/session';
-import { TestSetup } from '../test-setup';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Auth', () => {
   let testSetup: TestSetup;
@@ -27,7 +27,7 @@ describe('Auth', () => {
   let password: string;
 
   beforeAll(async () => {
-    testSetup = await TestSetup.create();
+    testSetup = await TestSetupBuilder.create().build();
 
     const authConfig = testSetup.configService.get('authConfig') as AuthConfig;
     setupSessionMiddleware(testSetup.app, authConfig);
