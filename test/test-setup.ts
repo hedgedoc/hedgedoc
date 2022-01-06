@@ -5,7 +5,7 @@
  */
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RouterModule, Routes } from 'nest-router';
 
@@ -29,12 +29,12 @@ import { HistoryModule } from '../src/history/history.module';
 import { HistoryService } from '../src/history/history.service';
 import { IdentityModule } from '../src/identity/identity.module';
 import { IdentityService } from '../src/identity/identity.service';
-import { ConsoleLoggerService } from '../src/logger/console-logger.service';
 import { LoggerModule } from '../src/logger/logger.module';
 import { MediaModule } from '../src/media/media.module';
 import { MediaService } from '../src/media/media.service';
 import { MonitoringModule } from '../src/monitoring/monitoring.module';
 import { AliasService } from '../src/notes/alias.service';
+import { Note } from '../src/notes/note.entity';
 import { NotesModule } from '../src/notes/notes.module';
 import { NotesService } from '../src/notes/notes.service';
 import { PermissionsModule } from '../src/permissions/permissions.module';
@@ -59,9 +59,27 @@ export class TestSetup {
 
   users: User[] = [];
   authTokens: AuthTokenWithSecretDto[] = [];
+  notes: Note[] = [];
+}
 
-  public static async create(withMockAuth = true): Promise<TestSetup> {
-    const testSetup = new TestSetup();
+/**
+ * Builder class for TestSetup
+ * Should be instantiated with the create() method
+ * The useable TestSetup is genereated using build()
+ */
+export class TestSetupBuilder {
+  // list of functions that should be executed before or after builing the TestingModule
+  private setupPreCompile: (() => Promise<void>)[] = [];
+  private setupPostCompile: (() => Promise<void>)[] = [];
+
+  private testingModuleBuilder: TestingModuleBuilder;
+  private testSetup = new TestSetup();
+
+  /**
+   * Creates a new instance of TestSetupBuilder
+   */
+  public static create(): TestSetupBuilder {
+    const testSetupBuilder = new TestSetupBuilder();
     const routes: Routes = [
       {
         path: '/api/v2',
@@ -72,8 +90,7 @@ export class TestSetup {
         module: PrivateApiModule,
       },
     ];
-
-    const testingModule = Test.createTestingModule({
+    testSetupBuilder.testingModuleBuilder = Test.createTestingModule({
       imports: [
         RouterModule.forRoutes(routes),
         TypeOrmModule.forRoot({
@@ -110,66 +127,121 @@ export class TestSetup {
         IdentityModule,
       ],
     });
-
-    if (withMockAuth) {
-      testingModule.overrideGuard(TokenAuthGuard).useClass(MockAuthGuard);
-    }
-
-    testSetup.moduleRef = await testingModule.compile();
-
-    testSetup.userService = testSetup.moduleRef.get<UsersService>(UsersService);
-    testSetup.configService =
-      testSetup.moduleRef.get<ConfigService>(ConfigService);
-    testSetup.identityService =
-      testSetup.moduleRef.get<IdentityService>(IdentityService);
-    testSetup.notesService =
-      testSetup.moduleRef.get<NotesService>(NotesService);
-    testSetup.mediaService =
-      testSetup.moduleRef.get<MediaService>(MediaService);
-    testSetup.historyService =
-      testSetup.moduleRef.get<HistoryService>(HistoryService);
-    testSetup.aliasService =
-      testSetup.moduleRef.get<AliasService>(AliasService);
-    testSetup.authService = testSetup.moduleRef.get<AuthService>(AuthService);
-
-    testSetup.app = testSetup.moduleRef.createNestApplication();
-
-    setupSessionMiddleware(
-      testSetup.app,
-      testSetup.configService.get<AuthConfig>('authConfig'),
-    );
-
-    return testSetup;
+    return testSetupBuilder;
   }
 
-  public async withUsers(): Promise<TestSetup> {
-    // Create users
-    this.users.push(
-      await this.userService.createUser('testuser1', 'Test User 1'),
-    );
-    this.users.push(
-      await this.userService.createUser('testuser2', 'Test User 2'),
-    );
-    this.users.push(
-      await this.userService.createUser('testuser3', 'Test User 3'),
+  /**
+   * Builds the final TestSetup from the configured builder
+   */
+  public async build(): Promise<TestSetup> {
+    for (const setupFunction of this.setupPreCompile) {
+      await setupFunction();
+    }
+
+    this.testSetup.moduleRef = await this.testingModuleBuilder.compile();
+
+    this.testSetup.userService =
+      this.testSetup.moduleRef.get<UsersService>(UsersService);
+    this.testSetup.configService =
+      this.testSetup.moduleRef.get<ConfigService>(ConfigService);
+    this.testSetup.identityService =
+      this.testSetup.moduleRef.get<IdentityService>(IdentityService);
+    this.testSetup.notesService =
+      this.testSetup.moduleRef.get<NotesService>(NotesService);
+    this.testSetup.mediaService =
+      this.testSetup.moduleRef.get<MediaService>(MediaService);
+    this.testSetup.historyService =
+      this.testSetup.moduleRef.get<HistoryService>(HistoryService);
+    this.testSetup.aliasService =
+      this.testSetup.moduleRef.get<AliasService>(AliasService);
+    this.testSetup.authService =
+      this.testSetup.moduleRef.get<AuthService>(AuthService);
+
+    this.testSetup.app = this.testSetup.moduleRef.createNestApplication();
+
+    setupSessionMiddleware(
+      this.testSetup.app,
+      this.testSetup.configService.get<AuthConfig>('authConfig'),
     );
 
-    // Create identities for login
-    await this.identityService.createLocalIdentity(this.users[0], 'testuser1');
-    await this.identityService.createLocalIdentity(this.users[1], 'testuser2');
-    await this.identityService.createLocalIdentity(this.users[2], 'testuser3');
+    for (const setupFunction of this.setupPostCompile) {
+      await setupFunction();
+    }
+    return this.testSetup;
+  }
 
-    // create auth tokens
-    this.authTokens = await Promise.all(
-      this.users.map(async (user) => {
-        return await this.authService.createTokenForUser(
-          user,
-          'test',
-          new Date().getTime() + 60 * 60 * 1000,
-        );
-      }),
-    );
+  /**
+   * Enable mock authentication for the public API
+   */
+  public withMockAuth() {
+    this.setupPreCompile.push(async () => {
+      this.testingModuleBuilder
+        .overrideGuard(TokenAuthGuard)
+        .useClass(MockAuthGuard);
+      return await Promise.resolve();
+    });
+    return this;
+  }
 
+  /**
+   * Generate a few users, identities and auth tokens for testing
+   */
+  public withUsers() {
+    this.setupPostCompile.push(async () => {
+      // Create users
+      this.testSetup.users.push(
+        await this.testSetup.userService.createUser('testuser1', 'Test User 1'),
+      );
+      this.testSetup.users.push(
+        await this.testSetup.userService.createUser('testuser2', 'Test User 2'),
+      );
+      this.testSetup.users.push(
+        await this.testSetup.userService.createUser('testuser3', 'Test User 3'),
+      );
+
+      // Create identities for login
+      await this.testSetup.identityService.createLocalIdentity(
+        this.testSetup.users[0],
+        'testuser1',
+      );
+      await this.testSetup.identityService.createLocalIdentity(
+        this.testSetup.users[1],
+        'testuser2',
+      );
+      await this.testSetup.identityService.createLocalIdentity(
+        this.testSetup.users[2],
+        'testuser3',
+      );
+
+      // create auth tokens
+      this.testSetup.authTokens = await Promise.all(
+        this.testSetup.users.map(async (user) => {
+          return await this.testSetup.authService.createTokenForUser(
+            user,
+            'test',
+            new Date().getTime() + 60 * 60 * 1000,
+          );
+        }),
+      );
+    });
+    return this;
+  }
+
+  /**
+   * Generate a few notes for testing
+   */
+  public withNotes(): TestSetupBuilder {
+    this.setupPostCompile.push(async () => {
+      this.testSetup.notes.push(
+        await this.testSetup.notesService.createNote('Test Note 1', null),
+      );
+      this.testSetup.notes.push(
+        await this.testSetup.notesService.createNote('Test Note 2', null),
+      );
+      this.testSetup.notes.push(
+        await this.testSetup.notesService.createNote('Test Note 3', null),
+      );
+    });
     return this;
   }
 }
