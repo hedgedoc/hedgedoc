@@ -1242,21 +1242,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/config@npm:1.1.5":
-  version: 1.1.5
-  resolution: "@nestjs/config@npm:1.1.5"
+"@nestjs/config@npm:1.1.6":
+  version: 1.1.6
+  resolution: "@nestjs/config@npm:1.1.6"
   dependencies:
     dotenv: 10.0.0
     dotenv-expand: 5.1.0
-    lodash.get: 4.4.2
-    lodash.has: 4.5.2
-    lodash.set: 4.3.2
+    lodash: 4.17.21
     uuid: 8.3.2
   peerDependencies:
     "@nestjs/common": ^7.0.0 || ^8.0.0
     reflect-metadata: ^0.1.13
     rxjs: ^6.0.0 || ^7.2.0
-  checksum: ae468f4d7d8d7b8dec30af3413e672aaa77d6f3889a6ceaad5ecf8dbc9771d102b6e5aa126190a98f52bcfa82ed565b1fcf0b58da45e254723ee3d21bdb267eb
+  checksum: 0f1f6b17ba82aca3cfbcdeb445e186403a5ef55737857d2cc338af51bf6d6beb8fadbe623f5339a5f993be8a621aa0e998985454c6eaca5e28c1332213152b46
   languageName: node
   linkType: hard
 
@@ -5433,7 +5431,7 @@ __metadata:
     "@azure/storage-blob": 12.8.0
     "@nestjs/cli": 8.1.6
     "@nestjs/common": 8.2.4
-    "@nestjs/config": 1.1.5
+    "@nestjs/config": 1.1.6
     "@nestjs/core": 8.2.4
     "@nestjs/passport": 8.0.1
     "@nestjs/platform-express": 8.2.4
@@ -7004,20 +7002,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.get@npm:4.4.2":
-  version: 4.4.2
-  resolution: "lodash.get@npm:4.4.2"
-  checksum: e403047ddb03181c9d0e92df9556570e2b67e0f0a930fcbbbd779370972368f5568e914f913e93f3b08f6d492abc71e14d4e9b7a18916c31fa04bd2306efe545
-  languageName: node
-  linkType: hard
-
-"lodash.has@npm:4.5.2":
-  version: 4.5.2
-  resolution: "lodash.has@npm:4.5.2"
-  checksum: b3ec829a86852331d48b3730ff06088a283d128a3965aa521ffd942bcf5c82e06bed3164ff7a7751d11e768d88f0d7bab316192091489caf20f452d42f7055d5
-  languageName: node
-  linkType: hard
-
 "lodash.memoize@npm:4.x":
   version: 4.1.2
   resolution: "lodash.memoize@npm:4.1.2"
@@ -7029,13 +7013,6 @@ __metadata:
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: ad580b4bdbb7ca1f7abf7e1bce63a9a0b98e370cf40194b03380a46b4ed799c9573029599caebc1b14e3f24b111aef72b96674a56cfa105e0f5ac70546cdc005
-  languageName: node
-  linkType: hard
-
-"lodash.set@npm:4.3.2":
-  version: 4.3.2
-  resolution: "lodash.set@npm:4.3.2"
-  checksum: a9122f49eef9f2d0fc9061a33d87f8e5b8c6b23d46e8b9e9ce1529d3588d79741bd1145a3abdfa3b13082703e65af27ff18d8a07bfc22b9be32f3fc36f763f70
   languageName: node
   linkType: hard
 
