@@ -1725,7 +1725,7 @@ __metadata:
     js-yaml: 4.1.0
     katex: 0.15.1
     luxon: 2.3.0
-    markdown-it: 12.3.1
+    markdown-it: 12.3.2
     markdown-it-abbr: 1.0.4
     markdown-it-anchor: 8.4.1
     markdown-it-container: 3.0.0
@@ -10046,9 +10046,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it@npm:12.3.1":
-  version: 12.3.1
-  resolution: "markdown-it@npm:12.3.1"
+"markdown-it@npm:12.3.2":
+  version: 12.3.2
+  resolution: "markdown-it@npm:12.3.2"
   dependencies:
     argparse: ^2.0.1
     entities: ~2.1.0
@@ -10057,7 +10057,7 @@ __metadata:
     uc.micro: ^1.0.5
   bin:
     markdown-it: bin/markdown-it.js
-  checksum: f99a82767374e8f4e7a59fcd2519caeafb2b160862a1a20ce2521546f359b50c1a350093b1aeeacf4dd14a5908cede0f3bd1345dfdac758c182482828b8fac9b
+  checksum: 890555711c1c00fa03b936ca2b213001a3b9b37dea140d8445ae4130ce16628392aad24b12e2a0a9935336ca5951f2957a38f4e5309a2e38eab44e25ff32a41e
   languageName: node
   linkType: hard
 
