@@ -72,3 +72,9 @@ This will build the app in production mode and save it into the `.next` folder. 
 best performance, minimized and the filenames include a hash value of the content. Don't edit them by hand!
 
 You can run the production build using the built-in server with `yarn start`.
+
+## UI Test
+
+Curious about the new look and feel? We provide a demo of the new UI on [hedgedoc.dev](https://hedgedoc.dev). This version uses mocked data and has no data persistence.
+
+The UI test is hosted by [netlify](https://netlify.com). Please check their [privacy policy](https://netlify.com/privacy) as well as [ours](https://hedgedoc.org/privacy-policy).
