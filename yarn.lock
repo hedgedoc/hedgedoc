@@ -1653,7 +1653,7 @@ __metadata:
     codemirror: 5.65.0
     copy-webpack-plugin: 10.2.0
     cross-env: 7.0.3
-    cypress: 9.2.0
+    cypress: 9.2.1
     cypress-commands: 2.0.1
     cypress-file-upload: 6.0.0-beta.0
     d3-graphviz: 3.2.0
@@ -4376,7 +4376,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cli-table3@npm:~0.6.0":
+"cli-table3@npm:~0.6.1":
   version: 0.6.1
   resolution: "cli-table3@npm:0.6.1"
   dependencies:
@@ -4863,9 +4863,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:9.2.0":
-  version: 9.2.0
-  resolution: "cypress@npm:9.2.0"
+"cypress@npm:9.2.1":
+  version: 9.2.1
+  resolution: "cypress@npm:9.2.1"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -4879,7 +4879,7 @@ __metadata:
     chalk: ^4.1.0
     check-more-types: ^2.24.0
     cli-cursor: ^3.1.0
-    cli-table3: ~0.6.0
+    cli-table3: ~0.6.1
     commander: ^5.1.0
     common-tags: ^1.8.0
     dayjs: ^1.10.4
@@ -4910,7 +4910,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 1378c4d0822c52505cdd71b3bd567c0399bac054a1f99f5e8d9adfb3f6991a0dcbb58de7662b7dbfd2b302bb94dc924c22047152ea8777661fa9b8819308d69f
+  checksum: 9d8d6ea74f92088d11261b8879154a063a041f77eac54c7a2ab11f16c35aa586e48f411f465049dd17b5f63f9dd9893d4c4c77007b099d51d3887f6fd9ea1c6c
   languageName: node
   linkType: hard
 
