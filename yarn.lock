@@ -1633,9 +1633,9 @@ __metadata:
     "@types/codemirror": 5.60.5
     "@types/d3-graphviz": 2.6.7
     "@types/diff": 5.0.2
-    "@types/dompurify": 2.3.2
+    "@types/dompurify": 2.3.3
     "@types/js-yaml": 4.0.5
-    "@types/luxon": 2.0.8
+    "@types/luxon": 2.0.9
     "@types/markdown-it": 12.2.3
     "@types/markdown-it-container": 2.0.4
     "@types/markdown-it-plantuml": 1.4.1
@@ -2930,12 +2930,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/dompurify@npm:2.3.2":
-  version: 2.3.2
-  resolution: "@types/dompurify@npm:2.3.2"
+"@types/dompurify@npm:2.3.3":
+  version: 2.3.3
+  resolution: "@types/dompurify@npm:2.3.3"
   dependencies:
     "@types/trusted-types": "*"
-  checksum: 757390676c95edc516770a42e36defd6bfd15959bc4f7a1bf546bf82963174c01461c49b5997b0a395810eef457480f885c473e14749bd9646b667e2898942da
+  checksum: 427e2dc60d94d13d7860a293b926b376727cb2f545a3334a3f2e7de695a2bb23058dd15108e49e0651378229b443ee8ae0028034b6f2df9a9008c04fb7ad6f8f
   languageName: node
   linkType: hard
 
@@ -3049,10 +3049,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/luxon@npm:2.0.8":
-  version: 2.0.8
-  resolution: "@types/luxon@npm:2.0.8"
-  checksum: 630d069a5a719c7512cb8805bcec6bac7f9aa5d434edf2159ba6dfb22eb8de982232a6d3621acd66f6ca2d1d6b0e8b40f9c8dafbbad654eb8cc01229f528ae45
+"@types/luxon@npm:2.0.9":
+  version: 2.0.9
+  resolution: "@types/luxon@npm:2.0.9"
+  checksum: 6c99741e1735aca5b784981ecec3a6ad9497b8e46cc3dd0ba625901bb5b34af4c7b1bf33e32b3e8468312ce2850b31f553f712283a8301a0ee1aacb633276738
   languageName: node
   linkType: hard
 
