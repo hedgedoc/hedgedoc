@@ -24,9 +24,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/core@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@angular-devkit/core@npm:13.1.1"
+"@angular-devkit/core@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@angular-devkit/core@npm:13.1.2"
   dependencies:
     ajv: 8.8.2
     ajv-formats: 2.1.1
@@ -39,23 +39,23 @@ __metadata:
   peerDependenciesMeta:
     chokidar:
       optional: true
-  checksum: c039b1704279bc23082117706297ae962158bdb5f9ff3946877fe79448c5f6689e39ff2eeb7165189521317441279c916915e131cb07bca0eec0c20e1fa94d34
+  checksum: d9f249f8404d13c1b0d88fc707d56456a46fa5acab2e24fcbfb6946525a651a8802c04f8c7886d240c14c4ca8d0270368f926dc6ea703efe31ea4b3cd613c9e7
   languageName: node
   linkType: hard
 
-"@angular-devkit/schematics-cli@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@angular-devkit/schematics-cli@npm:13.1.1"
+"@angular-devkit/schematics-cli@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@angular-devkit/schematics-cli@npm:13.1.2"
   dependencies:
-    "@angular-devkit/core": 13.1.1
-    "@angular-devkit/schematics": 13.1.1
+    "@angular-devkit/core": 13.1.2
+    "@angular-devkit/schematics": 13.1.2
     ansi-colors: 4.1.1
     inquirer: 8.2.0
     minimist: 1.2.5
     symbol-observable: 4.0.0
   bin:
     schematics: bin/schematics.js
-  checksum: 29816770800183c797639312676794a9a7b155709f8db2a3ec659c0c45fcec93a148d6beccbf9d90163af1e938f9bf52d1d226af6832b1c027dd0ba0b7bdd872
+  checksum: 9ee7056b89ab75922588dce749f81ed29574a4733a2c486c3442e3468c4d4a76353f3501bd63db4475a250bc3045753dbde630438fb96904f871aa6009954d0d
   languageName: node
   linkType: hard
 
@@ -72,16 +72,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/schematics@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@angular-devkit/schematics@npm:13.1.1"
+"@angular-devkit/schematics@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@angular-devkit/schematics@npm:13.1.2"
   dependencies:
-    "@angular-devkit/core": 13.1.1
+    "@angular-devkit/core": 13.1.2
     jsonc-parser: 3.0.0
     magic-string: 0.25.7
     ora: 5.4.1
     rxjs: 6.6.7
-  checksum: 29fe58b7581e23d501fa74d17584676645d88376d24aa894cde5dad93e14d1d3cc60495d3df2c6d797cc4972785f176ba4374278bf96f67f42cc84fa7a92c7b8
+  checksum: 2e81cbf0cad0f6a3caf43cf4c81707e111170cf278fafa434bcb80b7ab4c762378c9be9cc86a40d5215f1435d4456dae95fc2c16b19698834e0261a966eb117c
   languageName: node
   linkType: hard
 
@@ -1185,17 +1185,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/cli@npm:8.1.6":
-  version: 8.1.6
-  resolution: "@nestjs/cli@npm:8.1.6"
+"@nestjs/cli@npm:8.1.8":
+  version: 8.1.8
+  resolution: "@nestjs/cli@npm:8.1.8"
   dependencies:
-    "@angular-devkit/core": 13.1.1
-    "@angular-devkit/schematics": 13.1.1
-    "@angular-devkit/schematics-cli": 13.1.1
+    "@angular-devkit/core": 13.1.2
+    "@angular-devkit/schematics": 13.1.2
+    "@angular-devkit/schematics-cli": 13.1.2
     "@nestjs/schematics": ^8.0.3
     chalk: 3.0.0
     chokidar: 3.5.2
-    cli-table3: 0.6.0
+    cli-table3: 0.6.1
     commander: 4.1.1
     fork-ts-checker-webpack-plugin: 6.5.0
     inquirer: 7.3.3
@@ -1203,7 +1203,7 @@ __metadata:
     ora: 5.4.1
     os-name: 4.0.1
     rimraf: 3.0.2
-    shelljs: 0.8.4
+    shelljs: 0.8.5
     source-map-support: 0.5.21
     tree-kill: 1.2.2
     tsconfig-paths: 3.12.0
@@ -1213,13 +1213,13 @@ __metadata:
     webpack-node-externals: 3.0.0
   bin:
     nest: bin/nest.js
-  checksum: 81bead6029a735582403736fd0b5874c22c3d63662ce87965222519004bf660418ec68936c86c4eb26d57e85d57154b67216085853ffda4144ddbeea06ffa4ce
+  checksum: d7a389088be894058824320b8ca9cfa08a9b544a8f60768a4c68a4312178158eec2133afd96a6c6251ca733c9e0c4dd04604b1a9ac010d5544fe3a90030354af
   languageName: node
   linkType: hard
 
-"@nestjs/common@npm:8.2.4":
-  version: 8.2.4
-  resolution: "@nestjs/common@npm:8.2.4"
+"@nestjs/common@npm:8.2.5":
+  version: 8.2.5
+  resolution: "@nestjs/common@npm:8.2.5"
   dependencies:
     axios: 0.24.0
     iterare: 1.2.1
@@ -1238,7 +1238,7 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: a2945b7fb7bccb848357d98f90711d6a3cc064aff9ca20e207cc88b8bc8003035a8e4ac0e858245bfe352ef0deae1547420499540ca8688c417e71af3b34ab19
+  checksum: 822d318bccdb5f59dda86ce7b3899acefe4a2f7ea207981ce356835abb7f75baabbaece733ed954bb3a7be7fd7b5815c7fd4969f629914d23354e866da35f2b7
   languageName: node
   linkType: hard
 
@@ -1258,9 +1258,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/core@npm:8.2.4":
-  version: 8.2.4
-  resolution: "@nestjs/core@npm:8.2.4"
+"@nestjs/core@npm:8.2.5":
+  version: 8.2.5
+  resolution: "@nestjs/core@npm:8.2.5"
   dependencies:
     "@nuxtjs/opencollective": 0.3.2
     fast-safe-stringify: 2.1.1
@@ -1283,7 +1283,7 @@ __metadata:
       optional: true
     "@nestjs/websockets":
       optional: true
-  checksum: 9bf9ddb586ad4c84f3f8c906d4eaef8985a702d082ca4c80b933c97d63863a7a60cd2b543782e1084b0905822b3a89500f2349f47e0e8a4d256016e60f3511f9
+  checksum: 53d5c9745e840b50489056ac3641b468ca6db94a9d39e994e8fc0631faf41dabb585fd4a013b4351b83afddfa52f00d109b7f7e89260aa9cd4ca20a5771cacb1
   languageName: node
   linkType: hard
 
@@ -1309,11 +1309,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/platform-express@npm:8.2.4":
-  version: 8.2.4
-  resolution: "@nestjs/platform-express@npm:8.2.4"
+"@nestjs/platform-express@npm:8.2.5":
+  version: 8.2.5
+  resolution: "@nestjs/platform-express@npm:8.2.5"
   dependencies:
-    body-parser: 1.19.0
+    body-parser: 1.19.1
     cors: 2.8.5
     express: 4.17.1
     multer: 1.4.4
@@ -1321,7 +1321,7 @@ __metadata:
   peerDependencies:
     "@nestjs/common": ^8.0.0
     "@nestjs/core": ^8.0.0
-  checksum: 9e9990b7372bf7689c7194368febaf73d69b2549fd814a51f07c731f8c0b5443883471c56f52f4085685bc533a4ae05b372fc150b240d53d2e90f5df3ccd1cbe
+  checksum: bae6b6832ac1e598ca850c3ccbcf2a239f7db9a909ebf7191f23f5f85a585fd8c00018eb9bde7d6f476c94a4decf94b019392e722f481460cff5a370b88ff17c
   languageName: node
   linkType: hard
 
@@ -1376,9 +1376,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/testing@npm:8.2.4":
-  version: 8.2.4
-  resolution: "@nestjs/testing@npm:8.2.4"
+"@nestjs/testing@npm:8.2.5":
+  version: 8.2.5
+  resolution: "@nestjs/testing@npm:8.2.5"
   dependencies:
     optional: 0.1.4
     tslib: 2.3.1
@@ -1392,7 +1392,7 @@ __metadata:
       optional: true
     "@nestjs/platform-express":
       optional: true
-  checksum: bef7bd003086b7ccbb0e4e6324bb1f47465a8b99eb81e1b58db251f30a7cc1c5d742648c36619dccd2881b13ed71e520bfc421407b4b9945096b735af887dc19
+  checksum: 0f49ad3b22706668f0f6472896f6a1a2cd40dd4dbb1e58a930e33fa53f042bd00bf739da125ce1c4f647edf455a305ccb4718e29fe1678e083b069a5e72a83d4
   languageName: node
   linkType: hard
 
@@ -2956,6 +2956,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"body-parser@npm:1.19.1":
+  version: 1.19.1
+  resolution: "body-parser@npm:1.19.1"
+  dependencies:
+    bytes: 3.1.1
+    content-type: ~1.0.4
+    debug: 2.6.9
+    depd: ~1.1.2
+    http-errors: 1.8.1
+    iconv-lite: 0.4.24
+    on-finished: ~2.3.0
+    qs: 6.9.6
+    raw-body: 2.4.2
+    type-is: ~1.6.18
+  checksum: 9197a300a6580b8723c7b6b1e22cebd5ba47cd4a6fd45c153350efcde79293869ddee8d17d95fb52724812d649d89d62775faab072608d3243a0cbb00582234e
+  languageName: node
+  linkType: hard
+
 "brace-expansion@npm:^1.1.7":
   version: 1.1.11
   resolution: "brace-expansion@npm:1.1.11"
@@ -3400,17 +3418,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cli-table3@npm:0.6.0":
-  version: 0.6.0
-  resolution: "cli-table3@npm:0.6.0"
+"cli-table3@npm:0.6.1":
+  version: 0.6.1
+  resolution: "cli-table3@npm:0.6.1"
   dependencies:
-    colors: ^1.1.2
-    object-assign: ^4.1.0
+    colors: 1.4.0
     string-width: ^4.2.0
   dependenciesMeta:
     colors:
       optional: true
-  checksum: 98682a2d3eef5ad07d34a08f90398d0640004e28ecf8eb59006436f11ed7b4d453db09f46c2ea880618fbd61fee66321b3b3ee1b20276bc708b6baf6f9663d75
+  checksum: 956e175f8eb019c26465b9f1e51121c08d8978e2aab04be7f8520ea8a4e67906fcbd8516dfb77e386ae3730ef0281aa21a65613dffbfa3d62969263252bd25a9
   languageName: node
   linkType: hard
 
@@ -3501,7 +3518,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"colors@npm:^1.1.2":
+"colors@npm:1.4.0":
   version: 1.4.0
   resolution: "colors@npm:1.4.0"
   checksum: 98aa2c2418ad87dedf25d781be69dc5fc5908e279d9d30c34d8b702e586a0474605b3a189511482b9d5ed0d20c867515d22749537f7bc546256c6014f3ebdcec
@@ -5429,16 +5446,16 @@ __metadata:
   resolution: "hedgedoc@workspace:."
   dependencies:
     "@azure/storage-blob": 12.8.0
-    "@nestjs/cli": 8.1.6
-    "@nestjs/common": 8.2.4
+    "@nestjs/cli": 8.1.8
+    "@nestjs/common": 8.2.5
     "@nestjs/config": 1.1.6
-    "@nestjs/core": 8.2.4
+    "@nestjs/core": 8.2.5
     "@nestjs/passport": 8.0.1
-    "@nestjs/platform-express": 8.2.4
+    "@nestjs/platform-express": 8.2.5
     "@nestjs/schedule": 1.0.2
     "@nestjs/schematics": 8.0.5
     "@nestjs/swagger": 5.1.5
-    "@nestjs/testing": 8.2.4
+    "@nestjs/testing": 8.2.5
     "@nestjs/typeorm": 8.0.2
     "@trivago/prettier-plugin-sort-imports": 3.1.1
     "@tsconfig/node12": 1.0.9
@@ -8397,6 +8414,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"qs@npm:6.9.6":
+  version: 6.9.6
+  resolution: "qs@npm:6.9.6"
+  checksum: cb6df402bb8a3dbefa4bd46eba0dfca427079baca923e6b8d28a03e6bfb16a5c1dcdb96e69388f9c5813ac8ff17bb8bbca22f2ecd31fe1e344a55cb531b5fabf
+  languageName: node
+  linkType: hard
+
 "qs@npm:^6.9.4":
   version: 6.10.2
   resolution: "qs@npm:6.10.2"
@@ -8970,16 +8994,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shelljs@npm:0.8.4":
-  version: 0.8.4
-  resolution: "shelljs@npm:0.8.4"
+"shelljs@npm:0.8.5":
+  version: 0.8.5
+  resolution: "shelljs@npm:0.8.5"
   dependencies:
     glob: ^7.0.0
     interpret: ^1.0.0
     rechoir: ^0.6.2
   bin:
     shjs: bin/shjs
-  checksum: 27f83206ef6a4f5b74a493726c3e6b4c3e07a9c2aac94c5e692d800a61353c18a8234967bd8523b1346abe718beb563843687fb57f466529ba06db3cae6f0bb3
+  checksum: 7babc46f732a98f4c054ec1f048b55b9149b98aa2da32f6cf9844c434b43c6251efebd6eec120937bd0999e13811ebd45efe17410edb3ca938f82f9381302748
   languageName: node
   linkType: hard
 
