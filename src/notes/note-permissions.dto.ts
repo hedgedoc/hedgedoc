@@ -17,11 +17,11 @@ import { UserInfoDto } from '../users/user-info.dto';
 
 export class NoteUserPermissionEntryDto {
   /**
-   * User this permission applies to
+   * Username of the User this permission applies to
    */
-  @ValidateNested()
-  @ApiProperty({ type: UserInfoDto })
-  user: UserInfoDto;
+  @IsString()
+  @ApiProperty()
+  username: string;
 
   /**
    * True if the user is allowed to edit the note
