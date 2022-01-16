@@ -379,7 +379,7 @@ export class NotesService {
         canEdit: noteUserPermission.canEdit,
       })),
       sharedToGroups: groupPermissions.map((noteGroupPermission) => ({
-        group: this.groupsService.toGroupDto(noteGroupPermission.group),
+        groupName: noteGroupPermission.group.name,
         canEdit: noteGroupPermission.canEdit,
       })),
     };

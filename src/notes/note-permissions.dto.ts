@@ -52,11 +52,11 @@ export class NoteUserPermissionUpdateDto {
 
 export class NoteGroupPermissionEntryDto {
   /**
-   * Group this permission applies to
+   * Name of the Group this permission applies to
    */
-  @ValidateNested()
-  @ApiProperty({ type: GroupInfoDto })
-  group: GroupInfoDto;
+  @IsString()
+  @ApiProperty()
+  groupName: string;
 
   /**
    * True if the group members are allowed to edit the note
