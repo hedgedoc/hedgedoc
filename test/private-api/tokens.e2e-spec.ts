@@ -47,7 +47,7 @@ describe('Tokens', () => {
     keyId = response.body.keyId;
     expect(response.body.label).toBe(tokenName);
     expect(response.body.validUntil).toBe(null);
-    expect(response.body.lastUsed).toBe(null);
+    expect(response.body.lastUsedAt).toBe(null);
     expect(response.body.secret.length).toBe(98);
   });
 
@@ -59,7 +59,7 @@ describe('Tokens', () => {
       .expect(200);
     expect(response.body[0].label).toBe(tokenName);
     expect(response.body[0].validUntil).toBe(null);
-    expect(response.body[0].lastUsed).toBe(null);
+    expect(response.body[0].lastUsedAt).toBe(null);
     expect(response.body[0].secret).not.toBeDefined();
   });
   it(`DELETE /tokens/:keyid`, async () => {
