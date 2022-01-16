@@ -359,12 +359,12 @@ describe('NotesService', () => {
     userPermissionUpdate.username = 'hardcoded';
     userPermissionUpdate.canEdit = true;
     const groupPermissionUpate = new NoteGroupPermissionUpdateDto();
-    groupPermissionUpate.groupname = 'testGroup';
+    groupPermissionUpate.groupName = 'testGroup';
     groupPermissionUpate.canEdit = false;
     const user = User.create(userPermissionUpdate.username, 'Testy') as User;
     const group = Group.create(
-      groupPermissionUpate.groupname,
-      groupPermissionUpate.groupname,
+      groupPermissionUpate.groupName,
+      groupPermissionUpate.groupName,
       false,
     ) as Group;
     const note = Note.create(user) as Note;
@@ -443,7 +443,7 @@ describe('NotesService', () => {
         });
         expect(await savedNote.userPermissions).toHaveLength(0);
         expect((await savedNote.groupPermissions)[0].group.name).toEqual(
-          groupPermissionUpate.groupname,
+          groupPermissionUpate.groupName,
         );
         expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpate.canEdit,
@@ -468,7 +468,7 @@ describe('NotesService', () => {
           userPermissionUpdate.canEdit,
         );
         expect((await savedNote.groupPermissions)[0].group.name).toEqual(
-          groupPermissionUpate.groupname,
+          groupPermissionUpate.groupName,
         );
         expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpate.canEdit,
@@ -504,7 +504,7 @@ describe('NotesService', () => {
           userPermissionUpdate.canEdit,
         );
         expect((await savedNote.groupPermissions)[0].group.name).toEqual(
-          groupPermissionUpate.groupname,
+          groupPermissionUpate.groupName,
         );
         expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpate.canEdit,
@@ -534,7 +534,7 @@ describe('NotesService', () => {
         );
         expect(await savedNote.userPermissions).toHaveLength(0);
         expect((await savedNote.groupPermissions)[0].group.name).toEqual(
-          groupPermissionUpate.groupname,
+          groupPermissionUpate.groupName,
         );
         expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpate.canEdit,
@@ -570,7 +570,7 @@ describe('NotesService', () => {
           userPermissionUpdate.canEdit,
         );
         expect((await savedNote.groupPermissions)[0].group.name).toEqual(
-          groupPermissionUpate.groupname,
+          groupPermissionUpate.groupName,
         );
         expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpate.canEdit,
@@ -613,7 +613,7 @@ describe('NotesService', () => {
           userPermissionUpdate.canEdit,
         );
         expect((await savedNote.groupPermissions)[0].group.name).toEqual(
-          groupPermissionUpate.groupname,
+          groupPermissionUpate.groupName,
         );
         expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpate.canEdit,

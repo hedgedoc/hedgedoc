@@ -74,7 +74,7 @@ export class NoteGroupPermissionUpdateDto {
    */
   @IsString()
   @ApiProperty()
-  groupname: string;
+  groupName: string;
 
   /**
    * True if the group members should be allowed to edit the note

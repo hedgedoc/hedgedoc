@@ -285,7 +285,7 @@ export class NotesService {
     );
 
     const groups = newPermissions.sharedToGroups.map(
-      (groupPermission) => groupPermission.groupname,
+      (groupPermission) => groupPermission.groupName,
     );
 
     if (checkArrayForDuplicates(users) || checkArrayForDuplicates(groups)) {
@@ -318,7 +318,7 @@ export class NotesService {
     // Create groupPermissions
     for (const newGroupPermission of newPermissions.sharedToGroups) {
       const group = await this.groupsService.getGroupByName(
-        newGroupPermission.groupname,
+        newGroupPermission.groupName,
       );
       const createdPermission = NoteGroupPermission.create(
         group,
