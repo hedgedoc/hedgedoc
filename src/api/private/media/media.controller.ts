@@ -26,6 +26,7 @@ import {
   ApiForbiddenResponse,
   ApiHeader,
   ApiNoContentResponse,
+  ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
@@ -52,6 +53,7 @@ import { FullApi } from '../../utils/fullapi-decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
+@ApiTags('media')
 @Controller('media')
 export class MediaController {
   constructor(
