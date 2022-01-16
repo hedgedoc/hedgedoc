@@ -7,7 +7,10 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthGuard, PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 
-import { NotInDBError } from '../../errors/errors';
+import {
+  InvalidCredentialsError,
+  NoLocalIdentityError,
+} from '../../errors/errors';
 import { UserRelationEnum } from '../../users/user-relation.enum';
 import { User } from '../../users/user.entity';
 import { UsersService } from '../../users/users.service';
@@ -33,9 +36,12 @@ export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
       await this.identityService.checkLocalPassword(user, password);
       return user;
     } catch (e) {
-      if (e instanceof NotInDBError) {
+      if (
+        e instanceof InvalidCredentialsError ||
+        e instanceof NoLocalIdentityError
+      ) {
         throw new UnauthorizedException(
-          'This username and password combination did not work.',
+          'This username and password combination is not valid.',
         );
       }
       throw e;

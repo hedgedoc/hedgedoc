@@ -10,7 +10,10 @@ import { Repository } from 'typeorm';
 
 import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
-import { NotInDBError } from '../errors/errors';
+import {
+  InvalidCredentialsError,
+  NoLocalIdentityError,
+} from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
 import { User } from '../users/user.entity';
 import { checkPassword, hashPassword } from '../utils/password';
@@ -88,7 +91,7 @@ describe('IdentityService', () => {
     it('fails, when user has no local identity', async () => {
       user.identities = Promise.resolve([]);
       await expect(service.updateLocalPassword(user, password)).rejects.toThrow(
-        NotInDBError,
+        NoLocalIdentityError,
       );
     });
   });
@@ -107,17 +110,23 @@ describe('IdentityService', () => {
       );
     });
     describe('fails', () => {
+      it('when the password is wrong', async () => {
+        const identity = Identity.create(
+          user,
+          ProviderType.LOCAL,
+          false,
+        ) as Identity;
+        identity.passwordHash = await hashPassword(password);
+        user.identities = Promise.resolve([identity]);
+        await expect(
+          service.checkLocalPassword(user, 'wrong_password'),
+        ).rejects.toThrow(InvalidCredentialsError);
+      });
       it('when user has no local identity', async () => {
         user.identities = Promise.resolve([]);
         await expect(
-          service.updateLocalPassword(user, password),
-        ).rejects.toThrow(NotInDBError);
-      });
-      it('when the password is wrong', async () => {
-        user.identities = Promise.resolve([]);
-        await expect(
-          service.updateLocalPassword(user, 'wrong_password'),
-        ).rejects.toThrow(NotInDBError);
+          service.checkLocalPassword(user, password),
+        ).rejects.toThrow(NoLocalIdentityError);
       });
     });
   });
