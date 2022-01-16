@@ -4,11 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Controller, Get } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import { FrontendConfigDto } from '../../../frontend-config/frontend-config.dto';
 import { FrontendConfigService } from '../../../frontend-config/frontend-config.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 
+@ApiTags('config')
 @Controller('config')
 export class ConfigController {
   constructor(

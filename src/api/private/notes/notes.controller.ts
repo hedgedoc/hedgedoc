@@ -16,6 +16,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import {
   AlreadyInDBError,
@@ -45,6 +46,7 @@ import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
+@ApiTags('notes')
 @Controller('notes')
 export class NotesController {
   constructor(

@@ -16,6 +16,7 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import {
   AlreadyInDBError,
@@ -36,6 +37,7 @@ import { UsersService } from '../../../users/users.service';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
+@ApiTags('alias')
 @Controller('alias')
 export class AliasController {
   constructor(
