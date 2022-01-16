@@ -773,7 +773,7 @@ describe('NotesService', () => {
       expect(metadataDto.aliases).toHaveLength(1);
       expect(metadataDto.aliases[0]).toEqual((await note.aliases)[0].name);
       expect(metadataDto.title).toEqual(note.title);
-      expect(metadataDto.createTime).toEqual(revisions[0].createdAt);
+      expect(metadataDto.createdAt).toEqual(revisions[0].createdAt);
       expect(metadataDto.description).toEqual(note.description);
       expect(metadataDto.editedBy).toHaveLength(1);
       expect(metadataDto.editedBy[0]).toEqual(user.username);
@@ -790,7 +790,7 @@ describe('NotesService', () => {
       expect(metadataDto.permissions.sharedToGroups[0].canEdit).toEqual(true);
       expect(metadataDto.tags).toHaveLength(1);
       expect(metadataDto.tags[0]).toEqual((await note.tags)[0].name);
-      expect(metadataDto.updateTime).toEqual(revisions[0].createdAt);
+      expect(metadataDto.updatedAt).toEqual(revisions[0].createdAt);
       expect(metadataDto.updateUser.username).toEqual(user.username);
       expect(metadataDto.viewCount).toEqual(note.viewCount);
     });
@@ -875,7 +875,7 @@ describe('NotesService', () => {
       expect(noteDto.metadata.aliases).toHaveLength(1);
       expect(noteDto.metadata.aliases[0]).toEqual((await note.aliases)[0].name);
       expect(noteDto.metadata.title).toEqual(note.title);
-      expect(noteDto.metadata.createTime).toEqual(revisions[0].createdAt);
+      expect(noteDto.metadata.createdAt).toEqual(revisions[0].createdAt);
       expect(noteDto.metadata.description).toEqual(note.description);
       expect(noteDto.metadata.editedBy).toHaveLength(1);
       expect(noteDto.metadata.editedBy[0]).toEqual(user.username);
@@ -898,7 +898,7 @@ describe('NotesService', () => {
       );
       expect(noteDto.metadata.tags).toHaveLength(1);
       expect(noteDto.metadata.tags[0]).toEqual((await note.tags)[0].name);
-      expect(noteDto.metadata.updateTime).toEqual(revisions[0].createdAt);
+      expect(noteDto.metadata.updatedAt).toEqual(revisions[0].createdAt);
       expect(noteDto.metadata.updateUser.username).toEqual(user.username);
       expect(noteDto.metadata.viewCount).toEqual(note.viewCount);
       expect(noteDto.content).toEqual(content);
