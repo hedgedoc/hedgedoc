@@ -40,6 +40,10 @@ export class PlantumlMarkdownExtension extends MarkdownExtension {
     }
   }
 
+  public buildTagNameWhitelist(): string[] {
+    return ['plantuml-not-configured']
+  }
+
   buildReplacers(): ComponentReplacer[] {
     return [new PlantumlNotConfiguredComponentReplacer()]
   }
