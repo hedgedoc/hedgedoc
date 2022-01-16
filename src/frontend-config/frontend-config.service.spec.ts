@@ -5,6 +5,7 @@
  */
 import { ConfigModule, registerAs } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
+import { URL } from 'url';
 
 import { AppConfig } from '../config/app.config';
 import { AuthConfig } from '../config/auth.config';
