@@ -790,7 +790,7 @@ describe('NotesService', () => {
       expect(metadataDto.tags).toHaveLength(1);
       expect(metadataDto.tags[0]).toEqual((await note.tags)[0].name);
       expect(metadataDto.updatedAt).toEqual(revisions[0].createdAt);
-      expect(metadataDto.updateUser.username).toEqual(user.username);
+      expect(metadataDto.updateUsername).toEqual(user.username);
       expect(metadataDto.viewCount).toEqual(note.viewCount);
     });
   });
@@ -896,7 +896,7 @@ describe('NotesService', () => {
       expect(noteDto.metadata.tags).toHaveLength(1);
       expect(noteDto.metadata.tags[0]).toEqual((await note.tags)[0].name);
       expect(noteDto.metadata.updatedAt).toEqual(revisions[0].createdAt);
-      expect(noteDto.metadata.updateUser.username).toEqual(user.username);
+      expect(noteDto.metadata.updateUsername).toEqual(user.username);
       expect(noteDto.metadata.viewCount).toEqual(note.viewCount);
       expect(noteDto.content).toEqual(content);
     });

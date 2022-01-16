@@ -281,10 +281,7 @@ describe('Notes', () => {
       expect(metadata.body.permissions.sharedToUsers).toEqual([]);
       expect(metadata.body.tags).toEqual([]);
       expect(typeof metadata.body.updatedAt).toEqual('string');
-      expect(typeof metadata.body.updateUser.displayName).toEqual('string');
-      expect(typeof metadata.body.updateUser.username).toEqual('string');
-      expect(typeof metadata.body.updateUser.email).toEqual('string');
-      expect(typeof metadata.body.updateUser.photo).toEqual('string');
+      expect(typeof metadata.body.updateUsername).toEqual('string');
       expect(typeof metadata.body.viewCount).toEqual('number');
       expect(metadata.body.editedBy).toEqual([]);
     });

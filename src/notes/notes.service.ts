@@ -406,7 +406,7 @@ export class NotesService {
       permissions: await this.toNotePermissionsDto(note),
       tags: await this.toTagList(note),
       updatedAt: (await this.getLatestRevision(note)).createdAt,
-      updateUser: updateUser ? this.usersService.toUserDto(updateUser) : null,
+      updateUsername: updateUser ? updateUser.username : null,
       viewCount: note.viewCount,
     };
   }
