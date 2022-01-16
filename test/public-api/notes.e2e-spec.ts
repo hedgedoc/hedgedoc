@@ -274,13 +274,13 @@ describe('Notes', () => {
       expect(metadata.body.primaryAlias).toEqual('test5');
       expect(metadata.body.title).toEqual('');
       expect(metadata.body.description).toEqual('');
-      expect(typeof metadata.body.createTime).toEqual('string');
+      expect(typeof metadata.body.createdAt).toEqual('string');
       expect(metadata.body.editedBy).toEqual([]);
       expect(metadata.body.permissions.owner.username).toEqual('hardcoded');
       expect(metadata.body.permissions.sharedToUsers).toEqual([]);
       expect(metadata.body.permissions.sharedToUsers).toEqual([]);
       expect(metadata.body.tags).toEqual([]);
-      expect(typeof metadata.body.updateTime).toEqual('string');
+      expect(typeof metadata.body.updatedAt).toEqual('string');
       expect(typeof metadata.body.updateUser.displayName).toEqual('string');
       expect(typeof metadata.body.updateUser.username).toEqual('string');
       expect(typeof metadata.body.updateUser.email).toEqual('string');
@@ -320,7 +320,7 @@ describe('Notes', () => {
       const metadata = await request(testSetup.app.getHttpServer())
         .get('/api/v2/notes/test5a/metadata')
         .expect(200);
-      expect(metadata.body.createTime).toEqual(createDate.toISOString());
+      expect(metadata.body.createdAt).toEqual(createDate.toISOString());
       expect(metadata.body.updateTime).not.toEqual(createDate.toISOString());
     });
   });

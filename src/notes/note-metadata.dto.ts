@@ -72,7 +72,7 @@ export class NoteMetadataDto {
    */
   @IsDate()
   @ApiProperty()
-  updateTime: Date;
+  updatedAt: Date;
 
   /**
    * User that last edited the note
@@ -96,7 +96,7 @@ export class NoteMetadataDto {
    */
   @IsDate()
   @ApiProperty()
-  createTime: Date;
+  createdAt: Date;
 
   /**
    * List of usernames that edited the note
