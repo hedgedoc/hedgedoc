@@ -42,7 +42,7 @@ export class AuthToken {
     nullable: true,
     type: 'date',
   })
-  lastUsed: Date | null;
+  lastUsedAt: Date | null;
 
   public static create(
     keyId: string,
@@ -57,7 +57,7 @@ export class AuthToken {
     newToken.label = label;
     newToken.accessTokenHash = accessToken;
     newToken.validUntil = validUntil;
-    newToken.lastUsed = null;
+    newToken.lastUsedAt = null;
     return newToken;
   }
 }

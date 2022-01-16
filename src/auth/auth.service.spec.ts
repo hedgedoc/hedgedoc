@@ -143,14 +143,14 @@ describe('AuthService', () => {
       jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
         ...authToken,
         user: Promise.resolve(user),
-        lastUsed: new Date(1549312452000),
+        lastUsedAt: new Date(1549312452000),
       });
       jest
         .spyOn(authTokenRepo, 'save')
         .mockImplementationOnce(
           async (authTokenSaved, _): Promise<AuthToken> => {
             expect(authTokenSaved.keyId).toEqual(authToken.keyId);
-            expect(authTokenSaved.lastUsed).not.toEqual(1549312452000);
+            expect(authTokenSaved.lastUsedAt).not.toEqual(1549312452000);
             return authToken;
           },
         );
@@ -242,7 +242,7 @@ describe('AuthService', () => {
           .spyOn(authTokenRepo, 'save')
           .mockImplementationOnce(
             async (authTokenSaved: AuthToken, _): Promise<AuthToken> => {
-              expect(authTokenSaved.lastUsed).toBeNull();
+              expect(authTokenSaved.lastUsedAt).toBeNull();
               return authTokenSaved;
             },
           );
@@ -252,7 +252,7 @@ describe('AuthService', () => {
           token.validUntil.getTime() -
             (new Date().getTime() + 2 * 365 * 24 * 60 * 60 * 1000),
         ).toBeLessThanOrEqual(10000);
-        expect(token.lastUsed).toBeNull();
+        expect(token.lastUsedAt).toBeNull();
         expect(token.secret.startsWith(token.keyId)).toBeTruthy();
       });
       it('with validUntil not 0', async () => {
@@ -261,7 +261,7 @@ describe('AuthService', () => {
           .spyOn(authTokenRepo, 'save')
           .mockImplementationOnce(
             async (authTokenSaved: AuthToken, _): Promise<AuthToken> => {
-              expect(authTokenSaved.lastUsed).toBeNull();
+              expect(authTokenSaved.lastUsedAt).toBeNull();
               return authTokenSaved;
             },
           );
@@ -273,7 +273,7 @@ describe('AuthService', () => {
         );
         expect(token.label).toEqual(identifier);
         expect(token.validUntil.getTime()).toEqual(validUntil);
-        expect(token.lastUsed).toBeNull();
+        expect(token.lastUsedAt).toBeNull();
         expect(token.secret.startsWith(token.keyId)).toBeTruthy();
       });
     });
@@ -290,7 +290,7 @@ describe('AuthService', () => {
       authToken.validUntil = new Date();
       const tokenDto = service.toAuthTokenDto(authToken);
       expect(tokenDto.keyId).toEqual(authToken.keyId);
-      expect(tokenDto.lastUsed).toBeNull();
+      expect(tokenDto.lastUsedAt).toBeNull();
       expect(tokenDto.label).toEqual(authToken.label);
       expect(tokenDto.validUntil.getTime()).toEqual(
         authToken.validUntil.getTime(),

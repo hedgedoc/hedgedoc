@@ -108,7 +108,7 @@ export class AuthService {
     if (accessToken === undefined) {
       throw new NotInDBError(`AuthToken for key '${keyId}' not found`);
     }
-    accessToken.lastUsed = new Date();
+    accessToken.lastUsedAt = new Date();
     await this.authTokenRepository.save(accessToken);
   }
 
@@ -175,11 +175,11 @@ export class AuthService {
       keyId: authToken.keyId,
       createdAt: authToken.createdAt,
       validUntil: authToken.validUntil,
-      lastUsed: null,
+      lastUsedAt: null,
     };
 
-    if (authToken.lastUsed) {
-      tokenDto.lastUsed = new Date(authToken.lastUsed);
+    if (authToken.lastUsedAt) {
+      tokenDto.lastUsedAt = new Date(authToken.lastUsedAt);
     }
 
     return tokenDto;
