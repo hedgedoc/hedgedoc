@@ -35,6 +35,7 @@ import {
   ForbiddenIdError,
   NotInDBError,
 } from '../../../errors/errors';
+import { GroupsService } from '../../../groups/groups.service';
 import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
@@ -54,6 +55,7 @@ import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { User } from '../../../users/user.entity';
+import { UsersService } from '../../../users/users.service';
 import {
   forbiddenDescription,
   successfullyDeletedDescription,
@@ -73,6 +75,8 @@ export class NotesController {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private noteService: NotesService,
+    private userService: UsersService,
+    private groupService: GroupsService,
     private revisionsService: RevisionsService,
     private historyService: HistoryService,
     private mediaService: MediaService,
@@ -240,6 +244,177 @@ export class NotesController {
     return await this.noteService.toNotePermissionsDto(
       await this.noteService.updateNotePermissions(note, updateDto),
     );
+  }
+
+  @UseInterceptors(GetNoteInterceptor)
+  @Permissions(Permission.READ)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @Get(':noteIdOrAlias/metadata/permissions')
+  @ApiOkResponse({
+    description: 'Get the permissions for a note',
+    type: NotePermissionsDto,
+  })
+  @FullApi
+  async getPermissions(
+    @RequestUser() user: User,
+    @RequestNote() note: Note,
+  ): Promise<NotePermissionsDto> {
+    return await this.noteService.toNotePermissionsDto(note);
+  }
+
+  @UseInterceptors(GetNoteInterceptor)
+  @Permissions(Permission.OWNER)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @Get(':noteIdOrAlias/metadata/permissions/users/:userName')
+  @ApiOkResponse({
+    description: 'Set the permissions for a user on a note',
+    type: NotePermissionsDto,
+  })
+  @FullApi
+  async setUserPermission(
+    @RequestUser() user: User,
+    @RequestNote() note: Note,
+    @Param('userName') username: string,
+    @Body() canEdit: boolean,
+  ): Promise<NotePermissionsDto> {
+    try {
+      const permissionUser = await this.userService.getUserByUsername(username);
+      const returnedNote = await this.noteService.setUserPermission(
+        note,
+        permissionUser,
+        canEdit,
+      );
+      return await this.noteService.toNotePermissionsDto(returnedNote);
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new BadRequestException(
+          "Can't add user to permissions. User not known.",
+        );
+      }
+      throw e;
+    }
+  }
+
+  @UseInterceptors(GetNoteInterceptor)
+  @Permissions(Permission.OWNER)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @Delete(':noteIdOrAlias/metadata/permissions/users/:userName')
+  @ApiOkResponse({
+    description: 'Remove the permission for a user on a note',
+    type: NotePermissionsDto,
+  })
+  @FullApi
+  async removeUserPermission(
+    @RequestUser() user: User,
+    @RequestNote() note: Note,
+    @Param('userName') username: string,
+  ): Promise<NotePermissionsDto> {
+    try {
+      const permissionUser = await this.userService.getUserByUsername(username);
+      const returnedNote = await this.noteService.removeUserPermission(
+        note,
+        permissionUser,
+      );
+      return await this.noteService.toNotePermissionsDto(returnedNote);
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new BadRequestException(
+          "Can't remove user from permissions. User not known.",
+        );
+      }
+      throw e;
+    }
+  }
+
+  @UseInterceptors(GetNoteInterceptor)
+  @Permissions(Permission.OWNER)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @Get(':noteIdOrAlias/metadata/permissions/groups/:groupName')
+  @ApiOkResponse({
+    description: 'Set the permissions for a user on a note',
+    type: NotePermissionsDto,
+  })
+  @FullApi
+  async setGroupPermission(
+    @RequestUser() user: User,
+    @RequestNote() note: Note,
+    @Param('groupName') groupName: string,
+    @Body() canEdit: boolean,
+  ): Promise<NotePermissionsDto> {
+    try {
+      const permissionGroup = await this.groupService.getGroupByName(groupName);
+      const returnedNote = await this.noteService.setGroupPermission(
+        note,
+        permissionGroup,
+        canEdit,
+      );
+      return await this.noteService.toNotePermissionsDto(returnedNote);
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new BadRequestException(
+          "Can't add group to permissions. Group not known.",
+        );
+      }
+      throw e;
+    }
+  }
+
+  @UseInterceptors(GetNoteInterceptor)
+  @Permissions(Permission.OWNER)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @Delete(':noteIdOrAlias/metadata/permissions/groups/:groupName')
+  @ApiOkResponse({
+    description: 'Remove the permission for a group on a note',
+    type: NotePermissionsDto,
+  })
+  @FullApi
+  async removeGroupPermission(
+    @RequestUser() user: User,
+    @RequestNote() note: Note,
+    @Param('groupName') groupName: string,
+  ): Promise<NotePermissionsDto> {
+    try {
+      const permissionGroup = await this.groupService.getGroupByName(groupName);
+      const returnedNote = await this.noteService.removeGroupPermission(
+        note,
+        permissionGroup,
+      );
+      return await this.noteService.toNotePermissionsDto(returnedNote);
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new BadRequestException(
+          "Can't remove group from permissions. Group not known.",
+        );
+      }
+      throw e;
+    }
+  }
+
+  @UseInterceptors(GetNoteInterceptor)
+  @Permissions(Permission.OWNER)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @Put(':noteIdOrAlias/metadata/permissions/owner')
+  @ApiOkResponse({
+    description: 'Changes the owner of the note',
+    type: NoteDto,
+  })
+  @FullApi
+  async changeOwner(
+    @RequestUser() user: User,
+    @RequestNote() note: Note,
+    @Body() newOwner: string,
+  ): Promise<NoteDto> {
+    try {
+      const owner = await this.userService.getUserByUsername(newOwner);
+      return await this.noteService.toNoteDto(
+        await this.noteService.changeOwner(note, owner),
+      );
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new BadRequestException("Can't set new owner. User not known.");
+      }
+      throw e;
+    }
   }
 
   @UseInterceptors(GetNoteInterceptor)
