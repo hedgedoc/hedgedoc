@@ -276,7 +276,7 @@ describe('Notes', () => {
       expect(metadata.body.description).toEqual('');
       expect(typeof metadata.body.createdAt).toEqual('string');
       expect(metadata.body.editedBy).toEqual([]);
-      expect(metadata.body.permissions.owner.username).toEqual('hardcoded');
+      expect(metadata.body.permissions.owner).toEqual('hardcoded');
       expect(metadata.body.permissions.sharedToUsers).toEqual([]);
       expect(metadata.body.permissions.sharedToUsers).toEqual([]);
       expect(metadata.body.tags).toEqual([]);

@@ -87,12 +87,12 @@ export class NoteGroupPermissionUpdateDto {
 
 export class NotePermissionsDto {
   /**
-   * User this permission applies to
+   * Username of the User this permission applies to
    */
-  @ValidateNested()
-  @ApiPropertyOptional({ type: UserInfoDto })
+  @IsString()
+  @ApiPropertyOptional()
   @IsOptional()
-  owner: UserInfoDto | null;
+  owner: string | null;
 
   /**
    * List of users the note is shared with

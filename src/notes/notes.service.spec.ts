@@ -686,8 +686,7 @@ describe('NotesService', () => {
         },
       ]);
       const permissions = await service.toNotePermissionsDto(note);
-      expect(permissions.owner).not.toEqual(null);
-      expect(permissions.owner?.username).toEqual(user.username);
+      expect(permissions.owner).toEqual(user.username);
       expect(permissions.sharedToUsers).toHaveLength(1);
       expect(permissions.sharedToUsers[0].user.username).toEqual(user.username);
       expect(permissions.sharedToUsers[0].canEdit).toEqual(true);
@@ -777,7 +776,7 @@ describe('NotesService', () => {
       expect(metadataDto.description).toEqual(note.description);
       expect(metadataDto.editedBy).toHaveLength(1);
       expect(metadataDto.editedBy[0]).toEqual(user.username);
-      expect(metadataDto.permissions.owner.username).toEqual(user.username);
+      expect(metadataDto.permissions.owner).toEqual(user.username);
       expect(metadataDto.permissions.sharedToUsers).toHaveLength(1);
       expect(metadataDto.permissions.sharedToUsers[0].user.username).toEqual(
         user.username,
@@ -879,9 +878,7 @@ describe('NotesService', () => {
       expect(noteDto.metadata.description).toEqual(note.description);
       expect(noteDto.metadata.editedBy).toHaveLength(1);
       expect(noteDto.metadata.editedBy[0]).toEqual(user.username);
-      expect(noteDto.metadata.permissions.owner.username).toEqual(
-        user.username,
-      );
+      expect(noteDto.metadata.permissions.owner).toEqual(user.username);
       expect(noteDto.metadata.permissions.sharedToUsers).toHaveLength(1);
       expect(
         noteDto.metadata.permissions.sharedToUsers[0].user.username,

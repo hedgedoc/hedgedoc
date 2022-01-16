@@ -373,7 +373,7 @@ export class NotesService {
     const userPermissions = await note.userPermissions;
     const groupPermissions = await note.groupPermissions;
     return {
-      owner: owner ? this.usersService.toUserDto(owner) : null,
+      owner: owner ? owner.username : null,
       sharedToUsers: userPermissions.map((noteUserPermission) => ({
         user: this.usersService.toUserDto(noteUserPermission.user),
         canEdit: noteUserPermission.canEdit,
