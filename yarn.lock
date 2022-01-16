@@ -1185,9 +1185,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/cli@npm:8.1.8":
-  version: 8.1.8
-  resolution: "@nestjs/cli@npm:8.1.8"
+"@nestjs/cli@npm:8.2.0":
+  version: 8.2.0
+  resolution: "@nestjs/cli@npm:8.2.0"
   dependencies:
     "@angular-devkit/core": 13.1.2
     "@angular-devkit/schematics": 13.1.2
@@ -1208,12 +1208,12 @@ __metadata:
     tree-kill: 1.2.2
     tsconfig-paths: 3.12.0
     tsconfig-paths-webpack-plugin: 3.5.2
-    typescript: 4.3.5
-    webpack: 5.65.0
+    typescript: 4.5.4
+    webpack: 5.66.0
     webpack-node-externals: 3.0.0
   bin:
     nest: bin/nest.js
-  checksum: d7a389088be894058824320b8ca9cfa08a9b544a8f60768a4c68a4312178158eec2133afd96a6c6251ca733c9e0c4dd04604b1a9ac010d5544fe3a90030354af
+  checksum: 1f408094b29f8501372958dc78e668b9c2452bdc852912bd167a283199d8b21dc2c0187c3b7c0d8d583279e1b87cf3bf07351770530c3b011947eadf47ca1f11
   languageName: node
   linkType: hard
 
@@ -1299,13 +1299,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/passport@npm:8.0.1":
-  version: 8.0.1
-  resolution: "@nestjs/passport@npm:8.0.1"
+"@nestjs/passport@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@nestjs/passport@npm:8.1.0"
   peerDependencies:
     "@nestjs/common": ^6.0.0 || ^7.0.0 || ^8.0.0
-    passport: ^0.4.0
-  checksum: eefaab06e1fe6cf433e09cd9925509afbaffe621fd0b9df21c3996ebf18aaf31cecf7f812cc6205e3893a3ae17f567cef68ad79ce7e59694b3c4bbe4d5e3011b
+    passport: ^0.4.0 || ^0.5.0
+  checksum: eb6378c5196b3b52bd1f25484a11c83a92be1bce679fefd6fe1bc5ed52c6bffc12367d6a53da4c40a82c36e5d55f7a2271ab8b6e2fb7138d30bc0c220358ae47
   languageName: node
   linkType: hard
 
@@ -5350,6 +5350,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"graceful-fs@npm:^4.2.9":
+  version: 4.2.9
+  resolution: "graceful-fs@npm:4.2.9"
+  checksum: 68ea4e07ff2c041ada184f9278b830375f8e0b75154e3f080af6b70f66172fabb4108d19b3863a96b53fc068a310b9b6493d86d1291acc5f3861eb4b79d26ad6
+  languageName: node
+  linkType: hard
+
 "har-schema@npm:^2.0.0":
   version: 2.0.0
   resolution: "har-schema@npm:2.0.0"
@@ -5446,11 +5453,11 @@ __metadata:
   resolution: "hedgedoc@workspace:."
   dependencies:
     "@azure/storage-blob": 12.8.0
-    "@nestjs/cli": 8.1.8
+    "@nestjs/cli": 8.2.0
     "@nestjs/common": 8.2.5
     "@nestjs/config": 1.1.6
     "@nestjs/core": 8.2.5
-    "@nestjs/passport": 8.0.1
+    "@nestjs/passport": 8.1.0
     "@nestjs/platform-express": 8.2.5
     "@nestjs/schedule": 1.0.2
     "@nestjs/schematics": 8.0.5
@@ -10026,16 +10033,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.3.5":
-  version: 4.3.5
-  resolution: "typescript@npm:4.3.5"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: bab033b5e2b0790dd35b77fd005df976ef80b8d84fd2c6e63cc31808151875beae9216e5a315fe7068e8499905c3c354248fe83272cdfc13b7705635f0c66c97
-  languageName: node
-  linkType: hard
-
 "typescript@npm:4.5.4":
   version: 4.5.4
   resolution: "typescript@npm:4.5.4"
@@ -10043,16 +10040,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 59f3243f9cd6fe3161e6150ff6bf795fc843b4234a655dbd938a310515e0d61afd1ac942799e7415e4334255e41c2c49b7dd5d9fd38a17acd25a6779ca7e0961
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@4.3.5#~builtin<compat/typescript>":
-  version: 4.3.5
-  resolution: "typescript@patch:typescript@npm%3A4.3.5#~builtin<compat/typescript>::version=4.3.5&hash=493e53"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 61fc1a2ca5037420de5bbe17c6ddc4cbcc0d52301ed94f0a7b5821c55ff9eb96307f0816f745ca8f0fc87ed92f3951cde6d97cd6fd6bc6920c02ea63b5b26259
   languageName: node
   linkType: hard
 
@@ -10318,9 +10305,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5.65.0":
-  version: 5.65.0
-  resolution: "webpack@npm:5.65.0"
+"webpack@npm:5.66.0":
+  version: 5.66.0
+  resolution: "webpack@npm:5.66.0"
   dependencies:
     "@types/eslint-scope": ^3.7.0
     "@types/estree": ^0.0.50
@@ -10336,7 +10323,7 @@ __metadata:
     eslint-scope: 5.1.1
     events: ^3.2.0
     glob-to-regexp: ^0.4.1
-    graceful-fs: ^4.2.4
+    graceful-fs: ^4.2.9
     json-parse-better-errors: ^1.0.2
     loader-runner: ^4.2.0
     mime-types: ^2.1.27
@@ -10351,7 +10338,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 221ab8ccd440cb678269e86689704bbef81cf41393eb266625873e30c6980ffaa055bb1a7d14bf9fc0f5a2e6f03d15d068cbb995bc876757c01a4ca27fd2870c
+  checksum: 5a44664a840fd64c5383aa78847b205ae0b42b607f85ee1d6a568617a210c1b9caab1822bce40a89a3b5eb0f626a83fb5fe2055c638aa230897bf224030d28e8
   languageName: node
   linkType: hard
 
