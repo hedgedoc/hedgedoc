@@ -189,7 +189,7 @@ export class HistoryService {
   async toHistoryEntryDto(entry: HistoryEntry): Promise<HistoryEntryDto> {
     return {
       identifier: await getIdentifier(entry),
-      lastVisited: entry.updatedAt,
+      lastVisitedAt: entry.updatedAt,
       tags: await this.notesService.toTagList(entry.note),
       title: entry.note.title ?? '',
       pinStatus: entry.pinStatus,

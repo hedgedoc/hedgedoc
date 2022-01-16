@@ -59,8 +59,8 @@ describe('Me', () => {
       expect(historyEntry.title).toEqual(historyDto.title);
       expect(historyEntry.tags).toEqual(historyDto.tags);
       expect(historyEntry.pinStatus).toEqual(historyDto.pinStatus);
-      expect(historyEntry.lastVisited).toEqual(
-        historyDto.lastVisited.toISOString(),
+      expect(historyEntry.lastVisitedAt).toEqual(
+        historyDto.lastVisitedAt.toISOString(),
       );
     }
   });
@@ -83,8 +83,8 @@ describe('Me', () => {
       expect(historyEntry.title).toEqual(historyEntryDto.title);
       expect(historyEntry.tags).toEqual(historyEntryDto.tags);
       expect(historyEntry.pinStatus).toEqual(historyEntryDto.pinStatus);
-      expect(historyEntry.lastVisited).toEqual(
-        historyEntryDto.lastVisited.toISOString(),
+      expect(historyEntry.lastVisitedAt).toEqual(
+        historyEntryDto.lastVisitedAt.toISOString(),
       );
     });
     it('fails with a non-existing note', async () => {

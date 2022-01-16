@@ -79,8 +79,8 @@ describe('History', () => {
     expect(response.body[0].title).toEqual(entryDto.title);
     expect(response.body[0].tags).toEqual(entryDto.tags);
     expect(response.body[0].pinStatus).toEqual(entryDto.pinStatus);
-    expect(response.body[0].lastVisited).toEqual(
-      entryDto.lastVisited.toISOString(),
+    expect(response.body[0].lastVisitedAt).toEqual(
+      entryDto.lastVisitedAt.toISOString(),
     );
   });
 
@@ -218,7 +218,7 @@ describe('History', () => {
     expect(userEntryDto.title).toEqual(entryDto.title);
     expect(userEntryDto.tags).toEqual(entryDto.tags);
     expect(userEntryDto.pinStatus).toEqual(entryDto.pinStatus);
-    expect(userEntryDto.lastVisited).toEqual(entryDto.lastVisited);
+    expect(userEntryDto.lastVisitedAt).toEqual(entryDto.lastVisitedAt);
   });
 
   afterAll(async () => {
