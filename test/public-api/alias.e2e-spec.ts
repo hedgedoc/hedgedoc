@@ -12,77 +12,83 @@ import { TestSetup, TestSetupBuilder } from '../test-setup';
 describe('Alias', () => {
   let testSetup: TestSetup;
 
-  const content = 'This is a test note.';
   let forbiddenNoteId: string;
+  let testAlias: string;
+  let publicId: string;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
     forbiddenNoteId =
       testSetup.configService.get('appConfig').forbiddenNoteIds[0];
 
     await testSetup.app.init();
+
+    testAlias = (await testSetup.ownedNotes[0].aliases)[0].name;
+    publicId = testSetup.ownedNotes[0].publicId;
+  });
+
+  afterEach(async () => {
+    await testSetup.app.close();
   });
 
   describe('POST /alias', () => {
-    const testAlias = 'aliasTest';
-    const newAliasDto: AliasCreateDto = {
-      noteIdOrAlias: testAlias,
-      newAlias: '',
-    };
-    let publicId = '';
-    beforeAll(async () => {
-      const note = await testSetup.notesService.createNote(
-        content,
-        testSetup.users[0],
-        testAlias,
-      );
-      publicId = note.publicId;
-    });
-
     it('create with normal alias', async () => {
-      const newAlias = 'normalAlias';
-      newAliasDto.newAlias = newAlias;
-
       const metadata = await request(testSetup.app.getHttpServer())
         .post(`/api/v2/alias`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .set('Content-Type', 'application/json')
-        .send(newAliasDto)
+        .send({
+          noteIdOrAlias: testAlias,
+          newAlias: 'normalAlias',
+        })
         .expect(201);
 
-      expect(metadata.body.name).toEqual(newAlias);
+      expect(metadata.body.name).toEqual('normalAlias');
       expect(metadata.body.primaryAlias).toBeFalsy();
       expect(metadata.body.noteId).toEqual(publicId);
 
       const note = await request(testSetup.app.getHttpServer())
-        .get(`/api/v2/notes/${newAlias}`)
+        .get(`/api/v2/notes/normalAlias`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(200);
 
-      expect(note.body.metadata.aliases).toContain(newAlias);
+      expect(note.body.metadata.aliases).toContain('normalAlias');
       expect(note.body.metadata.primaryAlias).toBeTruthy();
       expect(note.body.metadata.id).toEqual(publicId);
     });
 
     describe('does not create an alias', () => {
-      it('because of a forbidden alias', async () => {
-        newAliasDto.newAlias = forbiddenNoteId;
-
+      it('because because it is already used', async () => {
         await request(testSetup.app.getHttpServer())
           .post(`/api/v2/alias`)
           .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
           .set('Content-Type', 'application/json')
-          .send(newAliasDto)
+          .send({
+            noteIdOrAlias: testAlias,
+            newAlias: 'testAlias1',
+          })
+          .expect(400);
+      });
+      it('because of a forbidden alias', async () => {
+        await request(testSetup.app.getHttpServer())
+          .post(`/api/v2/alias`)
+          .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+          .set('Content-Type', 'application/json')
+          .send({
+            noteIdOrAlias: testAlias,
+            newAlias: forbiddenNoteId,
+          })
           .expect(400);
       });
       it('because of a alias that is a public id', async () => {
-        newAliasDto.newAlias = publicId;
-
         await request(testSetup.app.getHttpServer())
           .post(`/api/v2/alias`)
           .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
           .set('Content-Type', 'application/json')
-          .send(newAliasDto)
+          .send({
+            noteIdOrAlias: testAlias,
+            newAlias: publicId,
+          })
           .expect(400);
       });
       it('because the user is not an owner', async () => {
@@ -90,47 +96,38 @@ describe('Alias', () => {
           .post(`/api/v2/alias`)
           .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
           .set('Content-Type', 'application/json')
-          .send(newAliasDto)
+          .send({
+            noteIdOrAlias: testAlias,
+            newAlias: '',
+          })
           .expect(401);
       });
     });
   });
 
   describe('PUT /alias/{alias}', () => {
-    const testAlias = 'aliasTest2';
-    const newAlias = 'normalAlias2';
     const changeAliasDto: AliasUpdateDto = {
       primaryAlias: true,
     };
-    let publicId = '';
-    beforeAll(async () => {
-      const note = await testSetup.notesService.createNote(
-        content,
-        testSetup.users[0],
-        testAlias,
-      );
-      publicId = note.publicId;
-      await testSetup.aliasService.addAlias(note, newAlias);
-    });
 
     it('updates a note with a normal alias', async () => {
       const metadata = await request(testSetup.app.getHttpServer())
-        .put(`/api/v2/alias/${newAlias}`)
+        .put(`/api/v2/alias/${testAlias}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .set('Content-Type', 'application/json')
         .send(changeAliasDto)
         .expect(200);
 
-      expect(metadata.body.name).toEqual(newAlias);
+      expect(metadata.body.name).toEqual(testAlias);
       expect(metadata.body.primaryAlias).toBeTruthy();
       expect(metadata.body.noteId).toEqual(publicId);
 
       const note = await request(testSetup.app.getHttpServer())
-        .get(`/api/v2/notes/${newAlias}`)
+        .get(`/api/v2/notes/${testAlias}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(200);
 
-      expect(note.body.metadata.aliases).toContain(newAlias);
+      expect(note.body.metadata.aliases).toContain(testAlias);
       expect(note.body.metadata.primaryAlias).toBeTruthy();
       expect(note.body.metadata.id).toEqual(publicId);
     });
@@ -154,7 +151,7 @@ describe('Alias', () => {
       });
       it('if the user is not an owner', async () => {
         await request(testSetup.app.getHttpServer())
-          .put(`/api/v2/alias/${newAlias}`)
+          .put(`/api/v2/alias/${testAlias}`)
           .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
           .set('Content-Type', 'application/json')
           .send(changeAliasDto)
@@ -164,7 +161,7 @@ describe('Alias', () => {
         changeAliasDto.primaryAlias = false;
 
         await request(testSetup.app.getHttpServer())
-          .put(`/api/v2/alias/${newAlias}`)
+          .put(`/api/v2/alias/${testAlias}`)
           .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
           .set('Content-Type', 'application/json')
           .send(changeAliasDto)
@@ -174,25 +171,16 @@ describe('Alias', () => {
   });
 
   describe('DELETE /alias/{alias}', () => {
-    const testAlias = 'aliasTest3';
-    const newAlias = 'normalAlias3';
-    beforeAll(async () => {
-      const note = await testSetup.notesService.createNote(
-        content,
-        testSetup.users[0],
-        testAlias,
-      );
-      await testSetup.aliasService.addAlias(note, newAlias);
-    });
+    const secondAlias = 'secondAlias';
 
     it('deletes a normal alias', async () => {
       await request(testSetup.app.getHttpServer())
-        .delete(`/api/v2/alias/${newAlias}`)
+        .delete(`/api/v2/alias/${testAlias}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(204);
 
       await request(testSetup.app.getHttpServer())
-        .get(`/api/v2/notes/${newAlias}`)
+        .get(`/api/v2/notes/${testAlias}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(404);
     });
@@ -219,23 +207,33 @@ describe('Alias', () => {
     });
 
     it('does not delete a primary alias (if it is not the only one)', async () => {
-      const note = await testSetup.notesService.getNoteByIdOrAlias(testAlias);
-      await testSetup.aliasService.addAlias(note, newAlias);
+      // add another alias
+      await testSetup.aliasService.addAlias(
+        testSetup.ownedNotes[0],
+        secondAlias,
+      );
 
+      // try to delete the primary alias
       await request(testSetup.app.getHttpServer())
         .delete(`/api/v2/alias/${testAlias}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(400);
 
       await request(testSetup.app.getHttpServer())
-        .get(`/api/v2/notes/${newAlias}`)
+        .get(`/api/v2/notes/${secondAlias}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(200);
     });
 
     it('deletes a primary alias (if it is the only one)', async () => {
+      // add another alias
+      await testSetup.aliasService.addAlias(
+        testSetup.ownedNotes[0],
+        secondAlias,
+      );
+
       await request(testSetup.app.getHttpServer())
-        .delete(`/api/v2/alias/${newAlias}`)
+        .delete(`/api/v2/alias/${secondAlias}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(204);
 
