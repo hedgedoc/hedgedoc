@@ -29,7 +29,7 @@ export class HistoryEntryDto {
    */
   @IsDate()
   @ApiProperty()
-  lastVisited: Date;
+  lastVisitedAt: Date;
 
   @IsArray()
   @IsString({ each: true })
