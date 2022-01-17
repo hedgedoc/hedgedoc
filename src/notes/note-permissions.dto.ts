@@ -12,9 +12,6 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-import { GroupInfoDto } from '../groups/group-info.dto';
-import { UserInfoDto } from '../users/user-info.dto';
-
 export class NoteUserPermissionEntryDto {
   /**
    * Username of the User this permission applies to
