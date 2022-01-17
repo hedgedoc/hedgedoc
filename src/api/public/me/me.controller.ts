@@ -46,6 +46,7 @@ import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
 import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
+@UseGuards(TokenAuthGuard)
 @ApiTags('me')
 @ApiSecurity('token')
 @Controller('me')
@@ -60,7 +61,6 @@ export class MeController {
     this.logger.setContext(MeController.name);
   }
 
-  @UseGuards(TokenAuthGuard)
   @Get()
   @ApiOkResponse({
     description: 'The user information',
@@ -71,7 +71,6 @@ export class MeController {
     return this.usersService.toUserDto(user);
   }
 
-  @UseGuards(TokenAuthGuard)
   @Get('history')
   @ApiOkResponse({
     description: 'The history entries of the user',
@@ -87,7 +86,6 @@ export class MeController {
   }
 
   @UseInterceptors(GetNoteInterceptor)
-  @UseGuards(TokenAuthGuard)
   @Get('history/:noteIdOrAlias')
   @ApiOkResponse({
     description: 'The history entry of the user which points to the note',
@@ -99,19 +97,11 @@ export class MeController {
     @RequestUser() user: User,
     @RequestNote() note: Note,
   ): Promise<HistoryEntryDto> {
-    try {
-      const foundEntry = await this.historyService.getEntryByNote(note, user);
-      return await this.historyService.toHistoryEntryDto(foundEntry);
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      throw e;
-    }
+    const foundEntry = await this.historyService.getEntryByNote(note, user);
+    return await this.historyService.toHistoryEntryDto(foundEntry);
   }
 
   @UseInterceptors(GetNoteInterceptor)
-  @UseGuards(TokenAuthGuard)
   @Put('history/:noteIdOrAlias')
   @ApiOkResponse({
     description: 'The updated history entry',
@@ -125,24 +115,12 @@ export class MeController {
     @Body() entryUpdateDto: HistoryEntryUpdateDto,
   ): Promise<HistoryEntryDto> {
     // ToDo: Check if user is allowed to pin this history entry
-    try {
-      return await this.historyService.toHistoryEntryDto(
-        await this.historyService.updateHistoryEntry(
-          note,
-          user,
-          entryUpdateDto,
-        ),
-      );
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      throw e;
-    }
+    return await this.historyService.toHistoryEntryDto(
+      await this.historyService.updateHistoryEntry(note, user, entryUpdateDto),
+    );
   }
 
   @UseInterceptors(GetNoteInterceptor)
-  @UseGuards(TokenAuthGuard)
   @Delete('history/:noteIdOrAlias')
   @HttpCode(204)
   @ApiNoContentResponse({ description: successfullyDeletedDescription })
@@ -153,17 +131,9 @@ export class MeController {
     @RequestNote() note: Note,
   ): Promise<void> {
     // ToDo: Check if user is allowed to delete note
-    try {
-      await this.historyService.deleteHistoryEntry(note, user);
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      throw e;
-    }
+    await this.historyService.deleteHistoryEntry(note, user);
   }
 
-  @UseGuards(TokenAuthGuard)
   @Get('notes')
   @ApiOkResponse({
     description: 'Metadata of all notes of the user',
@@ -178,7 +148,6 @@ export class MeController {
     );
   }
 
-  @UseGuards(TokenAuthGuard)
   @Get('media')
   @ApiOkResponse({
     description: 'All media uploads of the user',

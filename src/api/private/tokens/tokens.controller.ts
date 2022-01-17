@@ -9,7 +9,6 @@ import {
   Delete,
   Get,
   HttpCode,
-  NotFoundException,
   Param,
   Post,
   UnauthorizedException,
@@ -20,7 +19,6 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthTokenWithSecretDto } from '../../../auth/auth-token-with-secret.dto';
 import { AuthTokenDto } from '../../../auth/auth-token.dto';
 import { AuthService } from '../../../auth/auth.service';
-import { NotInDBError } from '../../../errors/errors';
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { User } from '../../../users/user.entity';
@@ -61,15 +59,9 @@ export class TokensController {
     @Param('keyId') keyId: string,
   ): Promise<void> {
     const tokens = await this.authService.getTokensByUser(user);
-    try {
-      for (const token of tokens) {
-        if (token.keyId == keyId) {
-          return await this.authService.removeToken(keyId);
-        }
-      }
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
+    for (const token of tokens) {
+      if (token.keyId == keyId) {
+        return await this.authService.removeToken(keyId);
       }
     }
     throw new UnauthorizedException(
