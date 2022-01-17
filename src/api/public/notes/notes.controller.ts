@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,8 +17,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import {
+  ApiBadRequestResponse,
+  ApiConflictResponse,
   ApiCreatedResponse,
   ApiForbiddenResponse,
+  ApiInternalServerErrorResponse,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiProduces,
@@ -48,7 +51,10 @@ import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { User } from '../../../users/user.entity';
 import {
+  badRequestDescription,
+  conflictDescription,
   forbiddenDescription,
+  internalServerErrorDescription,
   successfullyDeletedDescription,
   unauthorizedDescription,
 } from '../../utils/descriptions';
@@ -115,6 +121,8 @@ export class NotesController {
     description: 'Get information about the newly created note',
     type: NoteDto,
   })
+  @ApiBadRequestResponse({ description: badRequestDescription })
+  @ApiConflictResponse({ description: conflictDescription })
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   @ApiForbiddenResponse({ description: forbiddenDescription })
   async createNamedNote(
@@ -135,6 +143,9 @@ export class NotesController {
   @HttpCode(204)
   @ApiNoContentResponse({ description: successfullyDeletedDescription })
   @FullApi
+  @ApiInternalServerErrorResponse({
+    description: internalServerErrorDescription,
+  })
   async deleteNote(
     @RequestUser() user: User,
     @RequestNote() note: Note,
