@@ -62,6 +62,7 @@ import { PermissionsGuard } from '../../utils/permissions.guard';
 import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
+@UseGuards(TokenAuthGuard)
 @UseFilters(ErrorExceptionMapping)
 @ApiTags('notes')
 @ApiSecurity('token')
@@ -95,7 +96,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias')
   @ApiOkResponse({
     description: 'Get information about the newly created note',
@@ -111,7 +112,7 @@ export class NotesController {
   }
 
   @Permissions(Permission.CREATE)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Post(':noteAlias')
   @HttpCode(201)
   @ApiCreatedResponse({
@@ -133,7 +134,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Delete(':noteIdOrAlias')
   @HttpCode(204)
   @ApiNoContentResponse({ description: successfullyDeletedDescription })
@@ -159,7 +160,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.WRITE)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Put(':noteIdOrAlias')
   @ApiOkResponse({
     description: 'The new, changed note',
@@ -179,7 +180,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias/content')
   @ApiProduces('text/markdown')
   @ApiOkResponse({
@@ -196,7 +197,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias/metadata')
   @ApiOkResponse({
     description: 'The metadata of the note',
@@ -212,7 +213,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Put(':noteIdOrAlias/metadata/permissions')
   @ApiOkResponse({
     description: 'The updated permissions of the note',
@@ -231,7 +232,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias/revisions')
   @ApiOkResponse({
     description: 'Revisions of the note',
@@ -253,7 +254,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias/revisions/:revisionId')
   @ApiOkResponse({
     description: 'Revision of the note for the given id or alias',
@@ -272,7 +273,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias/media')
   @ApiOkResponse({
     description: 'All media uploads of the note',

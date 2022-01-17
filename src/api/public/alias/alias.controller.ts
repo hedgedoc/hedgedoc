@@ -36,6 +36,7 @@ import { User } from '../../../users/user.entity';
 import { FullApi } from '../../utils/fullapi-decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
+@UseGuards(TokenAuthGuard)
 @UseFilters(ErrorExceptionMapping)
 @ApiTags('alias')
 @ApiSecurity('token')
@@ -50,7 +51,6 @@ export class AliasController {
     this.logger.setContext(AliasController.name);
   }
 
-  @UseGuards(TokenAuthGuard)
   @Post()
   @ApiOkResponse({
     description: 'The new alias',
@@ -74,7 +74,6 @@ export class AliasController {
     return this.aliasService.toAliasDto(updatedAlias, note);
   }
 
-  @UseGuards(TokenAuthGuard)
   @Put(':alias')
   @ApiOkResponse({
     description: 'The updated alias',
@@ -99,7 +98,6 @@ export class AliasController {
     return this.aliasService.toAliasDto(updatedAlias, note);
   }
 
-  @UseGuards(TokenAuthGuard)
   @Delete(':alias')
   @HttpCode(204)
   @ApiNoContentResponse({

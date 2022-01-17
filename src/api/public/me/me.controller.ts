@@ -9,7 +9,6 @@ import {
   Delete,
   Get,
   HttpCode,
-  NotFoundException,
   Put,
   UseFilters,
   UseGuards,
@@ -26,7 +25,6 @@ import {
 
 import { TokenAuthGuard } from '../../../auth/token.strategy';
 import { ErrorExceptionMapping } from '../../../errors/error-mapping';
-import { NotInDBError } from '../../../errors/errors';
 import { HistoryEntryUpdateDto } from '../../../history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../../history/history-entry.dto';
 import { HistoryService } from '../../../history/history.service';
@@ -48,6 +46,7 @@ import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
 import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
+@UseGuards(TokenAuthGuard)
 @UseFilters(ErrorExceptionMapping)
 @ApiTags('me')
 @ApiSecurity('token')
@@ -63,7 +62,6 @@ export class MeController {
     this.logger.setContext(MeController.name);
   }
 
-  @UseGuards(TokenAuthGuard)
   @Get()
   @ApiOkResponse({
     description: 'The user information',
@@ -74,7 +72,6 @@ export class MeController {
     return this.usersService.toUserDto(user);
   }
 
-  @UseGuards(TokenAuthGuard)
   @Get('history')
   @ApiOkResponse({
     description: 'The history entries of the user',
@@ -90,7 +87,6 @@ export class MeController {
   }
 
   @UseInterceptors(GetNoteInterceptor)
-  @UseGuards(TokenAuthGuard)
   @Get('history/:noteIdOrAlias')
   @ApiOkResponse({
     description: 'The history entry of the user which points to the note',
@@ -107,7 +103,6 @@ export class MeController {
   }
 
   @UseInterceptors(GetNoteInterceptor)
-  @UseGuards(TokenAuthGuard)
   @Put('history/:noteIdOrAlias')
   @ApiOkResponse({
     description: 'The updated history entry',
@@ -127,7 +122,6 @@ export class MeController {
   }
 
   @UseInterceptors(GetNoteInterceptor)
-  @UseGuards(TokenAuthGuard)
   @Delete('history/:noteIdOrAlias')
   @HttpCode(204)
   @ApiNoContentResponse({ description: successfullyDeletedDescription })
@@ -141,7 +135,6 @@ export class MeController {
     await this.historyService.deleteHistoryEntry(note, user);
   }
 
-  @UseGuards(TokenAuthGuard)
   @Get('notes')
   @ApiOkResponse({
     description: 'Metadata of all notes of the user',
@@ -156,7 +149,6 @@ export class MeController {
     );
   }
 
-  @UseGuards(TokenAuthGuard)
   @Get('media')
   @ApiOkResponse({
     description: 'All media uploads of the user',

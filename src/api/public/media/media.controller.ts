@@ -46,6 +46,7 @@ import {
 import { FullApi } from '../../utils/fullapi-decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
+@UseGuards(TokenAuthGuard)
 @UseFilters(ErrorExceptionMapping)
 @ApiTags('media')
 @ApiSecurity('token')
@@ -59,7 +60,6 @@ export class MediaController {
     this.logger.setContext(MediaController.name);
   }
 
-  @UseGuards(TokenAuthGuard)
   @Post()
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -100,7 +100,6 @@ export class MediaController {
     return this.mediaService.toMediaUploadUrlDto(url);
   }
 
-  @UseGuards(TokenAuthGuard)
   @Delete(':filename')
   @HttpCode(204)
   @ApiNoContentResponse({ description: successfullyDeletedDescription })
