@@ -21,13 +21,13 @@ import {
   unauthorizedDescription,
 } from '../../utils/descriptions';
 
+@UseGuards(TokenAuthGuard)
 @ApiTags('monitoring')
 @ApiSecurity('token')
 @Controller('monitoring')
 export class MonitoringController {
   constructor(private monitoringService: MonitoringService) {}
 
-  @UseGuards(TokenAuthGuard)
   @Get()
   @ApiOkResponse({
     description: 'The server info',
@@ -40,7 +40,6 @@ export class MonitoringController {
     return this.monitoringService.getServerStatus();
   }
 
-  @UseGuards(TokenAuthGuard)
   @Get('prometheus')
   @ApiOkResponse({
     description: 'Prometheus compatible monitoring data',
