@@ -11,10 +11,10 @@ import {
   Get,
   Header,
   HttpCode,
-  NotFoundException,
   Param,
   Post,
   Put,
+  UseFilters,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -30,11 +30,7 @@ import {
 } from '@nestjs/swagger';
 
 import { TokenAuthGuard } from '../../../auth/token.strategy';
-import {
-  AlreadyInDBError,
-  ForbiddenIdError,
-  NotInDBError,
-} from '../../../errors/errors';
+import { ErrorExceptionMapping } from '../../../errors/error-mapping';
 import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
@@ -66,6 +62,7 @@ import { PermissionsGuard } from '../../utils/permissions.guard';
 import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
+@UseFilters(ErrorExceptionMapping)
 @ApiTags('notes')
 @ApiSecurity('token')
 @Controller('notes')
@@ -129,19 +126,9 @@ export class NotesController {
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
     this.logger.debug('Got raw markdown:\n' + text, 'createNamedNote');
-    try {
-      return await this.noteService.toNoteDto(
-        await this.noteService.createNote(text, user, noteAlias),
-      );
-    } catch (e) {
-      if (e instanceof AlreadyInDBError) {
-        throw new BadRequestException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
-    }
+    return await this.noteService.toNoteDto(
+      await this.noteService.createNote(text, user, noteAlias),
+    );
   }
 
   @UseInterceptors(GetNoteInterceptor)
@@ -278,16 +265,9 @@ export class NotesController {
     @RequestNote() note: Note,
     @Param('revisionId') revisionId: number,
   ): Promise<RevisionDto> {
-    try {
-      return this.revisionsService.toRevisionDto(
-        await this.revisionsService.getRevision(note, revisionId),
-      );
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      throw e;
-    }
+    return this.revisionsService.toRevisionDto(
+      await this.revisionsService.getRevision(note, revisionId),
+    );
   }
 
   @UseInterceptors(GetNoteInterceptor)

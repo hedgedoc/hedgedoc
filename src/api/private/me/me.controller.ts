@@ -10,10 +10,12 @@ import {
   Get,
   HttpCode,
   Post,
+  UseFilters,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
+import { ErrorExceptionMapping } from '../../../errors/error-mapping';
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
@@ -24,6 +26,7 @@ import { UsersService } from '../../../users/users.service';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
+@UseFilters(ErrorExceptionMapping)
 @ApiTags('me')
 @Controller('me')
 export class MeController {

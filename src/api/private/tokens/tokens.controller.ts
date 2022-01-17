@@ -9,10 +9,10 @@ import {
   Delete,
   Get,
   HttpCode,
-  NotFoundException,
   Param,
   Post,
   UnauthorizedException,
+  UseFilters,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -20,7 +20,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthTokenWithSecretDto } from '../../../auth/auth-token-with-secret.dto';
 import { AuthTokenDto } from '../../../auth/auth-token.dto';
 import { AuthService } from '../../../auth/auth.service';
-import { NotInDBError } from '../../../errors/errors';
+import { ErrorExceptionMapping } from '../../../errors/error-mapping';
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { User } from '../../../users/user.entity';
@@ -28,6 +28,7 @@ import { TimestampMillis } from '../../../utils/timestamp';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
+@UseFilters(ErrorExceptionMapping)
 @ApiTags('tokens')
 @Controller('tokens')
 export class TokensController {
@@ -61,15 +62,9 @@ export class TokensController {
     @Param('keyId') keyId: string,
   ): Promise<void> {
     const tokens = await this.authService.getTokensByUser(user);
-    try {
-      for (const token of tokens) {
-        if (token.keyId == keyId) {
-          return await this.authService.removeToken(keyId);
-        }
-      }
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
+    for (const token of tokens) {
+      if (token.keyId == keyId) {
+        return await this.authService.removeToken(keyId);
       }
     }
     throw new UnauthorizedException(
