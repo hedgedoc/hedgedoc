@@ -15,7 +15,11 @@ import {
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiNotFoundResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
 import { AuthTokenWithSecretDto } from '../../../auth/auth-token-with-secret.dto';
 import { AuthTokenDto } from '../../../auth/auth-token.dto';
@@ -25,6 +29,10 @@ import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { User } from '../../../users/user.entity';
 import { TimestampMillis } from '../../../utils/timestamp';
+import {
+  notFoundDescription,
+  unauthorizedDescription,
+} from '../../utils/descriptions';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
@@ -40,6 +48,7 @@ export class TokensController {
   }
 
   @Get()
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getUserTokens(@RequestUser() user: User): Promise<AuthTokenDto[]> {
     return (await this.authService.getTokensByUser(user)).map((token) =>
       this.authService.toAuthTokenDto(token),
@@ -47,6 +56,7 @@ export class TokensController {
   }
 
   @Post()
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async postTokenRequest(
     @Body('label') label: string,
     @Body('validUntil') validUntil: TimestampMillis,
@@ -57,6 +67,8 @@ export class TokensController {
 
   @Delete('/:keyId')
   @HttpCode(204)
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @ApiNotFoundResponse({ description: notFoundDescription })
   async deleteToken(
     @RequestUser() user: User,
     @Param('keyId') keyId: string,

@@ -17,10 +17,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
+  ApiBadRequestResponse,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiSecurity,
   ApiTags,
+  ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
 
 import { TokenAuthGuard } from '../../../auth/token.strategy';
@@ -33,6 +35,10 @@ import { AliasService } from '../../../notes/alias.service';
 import { NotesService } from '../../../notes/notes.service';
 import { PermissionsService } from '../../../permissions/permissions.service';
 import { User } from '../../../users/user.entity';
+import {
+  badRequestDescription,
+  unprocessableEntityDescription,
+} from '../../utils/descriptions';
 import { FullApi } from '../../utils/fullapi-decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
@@ -100,10 +106,14 @@ export class AliasController {
 
   @Delete(':alias')
   @HttpCode(204)
+  @ApiBadRequestResponse({ description: badRequestDescription })
   @ApiNoContentResponse({
     description: 'The alias was deleted',
   })
   @FullApi
+  @ApiUnprocessableEntityResponse({
+    description: unprocessableEntityDescription,
+  })
   async removeAlias(
     @RequestUser() user: User,
     @Param('alias') alias: string,

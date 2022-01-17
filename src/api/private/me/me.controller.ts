@@ -13,7 +13,12 @@ import {
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
 import { ErrorExceptionMapping } from '../../../errors/error-mapping';
 import { SessionGuard } from '../../../identity/session.guard';
@@ -23,6 +28,11 @@ import { MediaService } from '../../../media/media.service';
 import { UserInfoDto } from '../../../users/user-info.dto';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
+import {
+  internalServerErrorDescription,
+  notFoundDescription,
+  unauthorizedDescription,
+} from '../../utils/descriptions';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
@@ -38,11 +48,13 @@ export class MeController {
     this.logger.setContext(MeController.name);
   }
   @Get()
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   getMe(@RequestUser() user: User): UserInfoDto {
     return this.userService.toUserDto(user);
   }
 
   @Get('media')
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getMyMedia(@RequestUser() user: User): Promise<MediaUploadDto[]> {
     const media = await this.mediaService.listUploadsByUser(user);
     return await Promise.all(
@@ -52,6 +64,11 @@ export class MeController {
 
   @Delete()
   @HttpCode(204)
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @ApiNotFoundResponse({ description: notFoundDescription })
+  @ApiInternalServerErrorResponse({
+    description: internalServerErrorDescription,
+  })
   async deleteUser(@RequestUser() user: User): Promise<void> {
     const mediaUploads = await this.mediaService.listUploadsByUser(user);
     for (const mediaUpload of mediaUploads) {
@@ -64,6 +81,7 @@ export class MeController {
 
   @Post('profile')
   @HttpCode(200)
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async updateDisplayName(
     @RequestUser() user: User,
     @Body('name') newDisplayName: string,

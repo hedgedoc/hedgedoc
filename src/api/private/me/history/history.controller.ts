@@ -14,7 +14,11 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiNotFoundResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
 import { ErrorExceptionMapping } from '../../../../errors/error-mapping';
 import { HistoryEntryImportDto } from '../../../../history/history-entry-import.dto';
@@ -25,6 +29,10 @@ import { SessionGuard } from '../../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { Note } from '../../../../notes/note.entity';
 import { User } from '../../../../users/user.entity';
+import {
+  notFoundDescription,
+  unauthorizedDescription,
+} from '../../../utils/descriptions';
 import { GetNoteInterceptor } from '../../../utils/get-note.interceptor';
 import { RequestNote } from '../../../utils/request-note.decorator';
 import { RequestUser } from '../../../utils/request-user.decorator';
@@ -42,6 +50,8 @@ export class HistoryController {
   }
 
   @Get()
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @ApiNotFoundResponse({ description: notFoundDescription })
   async getHistory(@RequestUser() user: User): Promise<HistoryEntryDto[]> {
     const foundEntries = await this.historyService.getEntriesByUser(user);
     return await Promise.all(
@@ -50,6 +60,8 @@ export class HistoryController {
   }
 
   @Post()
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @ApiNotFoundResponse({ description: notFoundDescription })
   async setHistory(
     @RequestUser() user: User,
     @Body('history') history: HistoryEntryImportDto[],
@@ -58,11 +70,15 @@ export class HistoryController {
   }
 
   @Delete()
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @ApiNotFoundResponse({ description: notFoundDescription })
   async deleteHistory(@RequestUser() user: User): Promise<void> {
     await this.historyService.deleteHistory(user);
   }
 
   @Put(':noteIdOrAlias')
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @ApiNotFoundResponse({ description: notFoundDescription })
   @UseInterceptors(GetNoteInterceptor)
   async updateHistoryEntry(
     @RequestNote() note: Note,
@@ -78,6 +94,8 @@ export class HistoryController {
   }
 
   @Delete(':noteIdOrAlias')
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @ApiNotFoundResponse({ description: notFoundDescription })
   @UseInterceptors(GetNoteInterceptor)
   async deleteHistoryEntry(
     @RequestNote() note: Note,

@@ -17,12 +17,15 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
+  ApiBadRequestResponse,
   ApiBody,
   ApiConsumes,
   ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiHeader,
+  ApiInternalServerErrorResponse,
   ApiNoContentResponse,
+  ApiNotFoundResponse,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -38,7 +41,10 @@ import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
 import { User } from '../../../users/user.entity';
 import {
+  badRequestDescription,
   forbiddenDescription,
+  internalServerErrorDescription,
+  notFoundDescription,
   successfullyDeletedDescription,
   unauthorizedDescription,
 } from '../../utils/descriptions';
@@ -75,14 +81,19 @@ export class MediaController {
     name: 'HedgeDoc-Note',
     description: 'ID or alias of the parent note',
   })
+  @UseInterceptors(FileInterceptor('file'))
+  @HttpCode(201)
   @ApiCreatedResponse({
     description: 'The file was uploaded successfully',
     type: MediaUploadUrlDto,
   })
+  @ApiBadRequestResponse({ description: badRequestDescription })
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   @ApiForbiddenResponse({ description: forbiddenDescription })
-  @UseInterceptors(FileInterceptor('file'))
-  @HttpCode(201)
+  @ApiNotFoundResponse({ description: notFoundDescription })
+  @ApiInternalServerErrorResponse({
+    description: internalServerErrorDescription,
+  })
   async uploadMedia(
     @UploadedFile() file: MulterFile,
     @Headers('HedgeDoc-Note') noteId: string,
@@ -102,6 +113,9 @@ export class MediaController {
   @HttpCode(204)
   @ApiNoContentResponse({ description: successfullyDeletedDescription })
   @FullApi
+  @ApiInternalServerErrorResponse({
+    description: internalServerErrorDescription,
+  })
   async deleteMedia(
     @RequestUser() user: User,
     @Param('filename') filename: string,

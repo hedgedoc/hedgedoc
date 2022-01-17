@@ -15,7 +15,12 @@ import {
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiConflictResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { Session } from 'express-session';
 
 import { ErrorExceptionMapping } from '../../../errors/error-mapping';
@@ -29,6 +34,11 @@ import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
+import {
+  badRequestDescription,
+  conflictDescription,
+  unauthorizedDescription,
+} from '../../utils/descriptions';
 import { LoginEnabledGuard } from '../../utils/login-enabled.guard';
 import { RegistrationEnabledGuard } from '../../utils/registration-enabled.guard';
 import { RequestUser } from '../../utils/request-user.decorator';
@@ -47,6 +57,8 @@ export class AuthController {
 
   @UseGuards(RegistrationEnabledGuard)
   @Post('local')
+  @ApiBadRequestResponse({ description: badRequestDescription })
+  @ApiConflictResponse({ description: conflictDescription })
   async registerUser(@Body() registerDto: RegisterDto): Promise<void> {
     try {
       const user = await this.usersService.createUser(
@@ -70,6 +82,8 @@ export class AuthController {
 
   @UseGuards(LoginEnabledGuard, SessionGuard)
   @Put('local')
+  @ApiBadRequestResponse({ description: badRequestDescription })
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async updatePassword(
     @RequestUser() user: User,
     @Body() changePasswordDto: UpdatePasswordDto,
@@ -87,6 +101,7 @@ export class AuthController {
 
   @UseGuards(LoginEnabledGuard, LocalAuthGuard)
   @Post('local/login')
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   login(
     @Req() request: Request & { session: { user: string } },
     @Body() loginDto: LoginDto,
@@ -97,6 +112,7 @@ export class AuthController {
 
   @UseGuards(SessionGuard)
   @Delete('logout')
+  @ApiBadRequestResponse({ description: badRequestDescription })
   logout(@Req() request: Request & { session: Session }): void {
     request.session.destroy((err) => {
       if (err) {

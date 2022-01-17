@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -19,8 +18,10 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import {
+  ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiForbiddenResponse,
+  ApiInternalServerErrorResponse,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiProduces,
@@ -51,7 +52,9 @@ import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { User } from '../../../users/user.entity';
 import {
+  badRequestDescription,
   forbiddenDescription,
+  internalServerErrorDescription,
   successfullyDeletedDescription,
   unauthorizedDescription,
 } from '../../utils/descriptions';
@@ -119,6 +122,7 @@ export class NotesController {
     description: 'Get information about the newly created note',
     type: NoteDto,
   })
+  @ApiBadRequestResponse({ description: badRequestDescription })
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   @ApiForbiddenResponse({ description: forbiddenDescription })
   async createNamedNote(
@@ -139,6 +143,9 @@ export class NotesController {
   @HttpCode(204)
   @ApiNoContentResponse({ description: successfullyDeletedDescription })
   @FullApi
+  @ApiInternalServerErrorResponse({
+    description: internalServerErrorDescription,
+  })
   async deleteNote(
     @RequestUser() user: User,
     @RequestNote() note: Note,
