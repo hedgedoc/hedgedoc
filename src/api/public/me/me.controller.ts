@@ -9,7 +9,6 @@ import {
   Delete,
   Get,
   HttpCode,
-  NotFoundException,
   Put,
   UseGuards,
   UseInterceptors,
@@ -24,7 +23,6 @@ import {
 } from '@nestjs/swagger';
 
 import { TokenAuthGuard } from '../../../auth/token.strategy';
-import { NotInDBError } from '../../../errors/errors';
 import { HistoryEntryUpdateDto } from '../../../history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../../history/history-entry.dto';
 import { HistoryService } from '../../../history/history.service';
