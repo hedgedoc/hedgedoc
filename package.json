@@ -40,7 +40,7 @@
     "formidable": "^2.0.0",
     "file-type": "^17.0.0",
     "graceful-fs": "^4.1.11",
-    "helmet": "^4.5.0",
+    "helmet": "^5.0.0",
     "i18n": "^0.13.0",
     "is-svg": "^4.3.1",
     "jsdom-nogyp": "^0.8.3",
