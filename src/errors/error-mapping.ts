@@ -1,0 +1,90 @@
+/*
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+import {
+  ArgumentsHost,
+  BadRequestException,
+  ConflictException,
+  InternalServerErrorException,
+  NotFoundException,
+  UnauthorizedException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
+import { HttpException } from '@nestjs/common/exceptions/http.exception';
+import { BaseExceptionFilter } from '@nestjs/core';
+
+import {
+  buildHttpExceptionObject,
+  HttpExceptionObject,
+} from './http-exception-object';
+
+type HttpExceptionConstructor = (object: HttpExceptionObject) => HttpException;
+
+const mapOfHedgeDocErrorsToHttpErrors: Map<string, HttpExceptionConstructor> =
+  new Map([
+    ['NotInDBError', (object): HttpException => new NotFoundException(object)],
+    [
+      'AlreadyInDBError',
+      (object): HttpException => new BadRequestException(object),
+    ],
+    [
+      'ForbiddenIdError',
+      (object): HttpException => new ConflictException(object),
+    ],
+    ['ClientError', (object): HttpException => new BadRequestException(object)],
+    [
+      'PermissionError',
+      (object): HttpException => new UnauthorizedException(object),
+    ],
+    [
+      'TokenNotValidError',
+      (object): HttpException => new UnauthorizedException(object),
+    ],
+    [
+      'TooManyTokensError',
+      (object): HttpException => new BadRequestException(object),
+    ],
+    [
+      'PermissionsUpdateInconsistentError',
+      (object): HttpException => new UnprocessableEntityException(object),
+    ],
+    [
+      'MediaBackendError',
+      (object): HttpException => new InternalServerErrorException(object),
+    ],
+    [
+      'PrimaryAliasDeletionForbiddenError',
+      (object): HttpException => new UnprocessableEntityException(object),
+    ],
+    [
+      'InvalidCredentialsError',
+      (object): HttpException => new UnauthorizedException(object),
+    ],
+    [
+      'NoLocalIdentityError',
+      (object): HttpException => new BadRequestException(object),
+    ],
+  ]);
+
+export class ErrorExceptionMapping extends BaseExceptionFilter<Error> {
+  catch(error: Error, _: ArgumentsHost): Error {
+    return ErrorExceptionMapping.transformError(error);
+  }
+
+  private static transformError(error: Error): Error {
+    const httpExceptionConstructor = mapOfHedgeDocErrorsToHttpErrors.get(
+      error.name,
+    );
+    if (httpExceptionConstructor === undefined) {
+      // We don't know how to map this error and just leave it be
+      return error;
+    }
+    const httpExceptionObject = buildHttpExceptionObject(
+      error.name,
+      error.message,
+    );
+    return httpExceptionConstructor(httpExceptionObject);
+  }
+}
