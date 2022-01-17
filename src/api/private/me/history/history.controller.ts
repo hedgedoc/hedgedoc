@@ -1,15 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Post,
   Put,
   UseGuards,
@@ -17,7 +15,6 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { ForbiddenIdError, NotInDBError } from '../../../../errors/errors';
 import { HistoryEntryImportDto } from '../../../../history/history-entry-import.dto';
 import { HistoryEntryUpdateDto } from '../../../../history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../../../history/history-entry.dto';
@@ -43,19 +40,10 @@ export class HistoryController {
 
   @Get()
   async getHistory(@RequestUser() user: User): Promise<HistoryEntryDto[]> {
-    try {
-      const foundEntries = await this.historyService.getEntriesByUser(user);
-      return await Promise.all(
-        foundEntries.map((entry) =>
-          this.historyService.toHistoryEntryDto(entry),
-        ),
-      );
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      throw e;
-    }
+    const foundEntries = await this.historyService.getEntriesByUser(user);
+    return await Promise.all(
+      foundEntries.map((entry) => this.historyService.toHistoryEntryDto(entry)),
+    );
   }
 
   @Post()
@@ -63,26 +51,12 @@ export class HistoryController {
     @RequestUser() user: User,
     @Body('history') history: HistoryEntryImportDto[],
   ): Promise<void> {
-    try {
-      await this.historyService.setHistory(user, history);
-    } catch (e) {
-      if (e instanceof NotInDBError || e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
-    }
+    await this.historyService.setHistory(user, history);
   }
 
   @Delete()
   async deleteHistory(@RequestUser() user: User): Promise<void> {
-    try {
-      await this.historyService.deleteHistory(user);
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      throw e;
-    }
+    await this.historyService.deleteHistory(user);
   }
 
   @Put(':noteIdOrAlias')
@@ -92,19 +66,12 @@ export class HistoryController {
     @RequestUser() user: User,
     @Body() entryUpdateDto: HistoryEntryUpdateDto,
   ): Promise<HistoryEntryDto> {
-    try {
-      const newEntry = await this.historyService.updateHistoryEntry(
-        note,
-        user,
-        entryUpdateDto,
-      );
-      return await this.historyService.toHistoryEntryDto(newEntry);
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      throw e;
-    }
+    const newEntry = await this.historyService.updateHistoryEntry(
+      note,
+      user,
+      entryUpdateDto,
+    );
+    return await this.historyService.toHistoryEntryDto(newEntry);
   }
 
   @Delete(':noteIdOrAlias')
@@ -113,13 +80,6 @@ export class HistoryController {
     @RequestNote() note: Note,
     @RequestUser() user: User,
   ): Promise<void> {
-    try {
-      await this.historyService.deleteHistoryEntry(note, user);
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      throw e;
-    }
+    await this.historyService.deleteHistoryEntry(note, user);
   }
 }

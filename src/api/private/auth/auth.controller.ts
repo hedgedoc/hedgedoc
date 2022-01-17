@@ -12,17 +12,12 @@ import {
   Post,
   Put,
   Req,
-  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Session } from 'express-session';
 
-import {
-  AlreadyInDBError,
-  InvalidCredentialsError,
-  NoLocalIdentityError,
-} from '../../../errors/errors';
+import { AlreadyInDBError } from '../../../errors/errors';
 import { IdentityService } from '../../../identity/identity.service';
 import { LocalAuthGuard } from '../../../identity/local/local.strategy';
 import { LoginDto } from '../../../identity/local/login.dto';
@@ -62,6 +57,7 @@ export class AuthController {
       );
       return;
     } catch (e) {
+      // This special handling can't be omitted since AlreadyInDBErrors get mapped to BadRequestException usually.
       if (e instanceof AlreadyInDBError) {
         throw new ConflictException(e.message);
       }

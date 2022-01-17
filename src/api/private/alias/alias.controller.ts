@@ -9,7 +9,6 @@ import {
   Controller,
   Delete,
   HttpCode,
-  NotFoundException,
   Param,
   Post,
   Put,
@@ -19,11 +18,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import {
-  AlreadyInDBError,
-  ForbiddenIdError,
-  NotInDBError,
-  PrimaryAliasDeletionForbiddenError,
-} from '../../../errors/errors';
+
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { AliasCreateDto } from '../../../notes/alias-create.dto';
@@ -49,32 +44,23 @@ export class AliasController {
   ) {
     this.logger.setContext(AliasController.name);
   }
+
   @Post()
   async addAlias(
     @RequestUser() user: User,
     @Body() newAliasDto: AliasCreateDto,
   ): Promise<AliasDto> {
-    try {
-      const note = await this.noteService.getNoteByIdOrAlias(
-        newAliasDto.noteIdOrAlias,
-      );
-      if (!(await this.permissionsService.isOwner(user, note))) {
-        throw new UnauthorizedException('Reading note denied!');
-      }
-      const updatedAlias = await this.aliasService.addAlias(
-        note,
-        newAliasDto.newAlias,
-      );
-      return this.aliasService.toAliasDto(updatedAlias, note);
-    } catch (e) {
-      if (e instanceof AlreadyInDBError) {
-        throw new BadRequestException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
+    const note = await this.noteService.getNoteByIdOrAlias(
+      newAliasDto.noteIdOrAlias,
+    );
+    if (!(await this.permissionsService.isOwner(user, note))) {
+      throw new UnauthorizedException('Reading note denied!');
     }
+    const updatedAlias = await this.aliasService.addAlias(
+      note,
+      newAliasDto.newAlias,
+    );
+    return this.aliasService.toAliasDto(updatedAlias, note);
   }
 
   @Put(':alias')
@@ -88,25 +74,12 @@ export class AliasController {
         `The field 'primaryAlias' must be set to 'true'.`,
       );
     }
-    try {
-      const note = await this.noteService.getNoteByIdOrAlias(alias);
-      if (!(await this.permissionsService.isOwner(user, note))) {
-        throw new UnauthorizedException('Reading note denied!');
-      }
-      const updatedAlias = await this.aliasService.makeAliasPrimary(
-        note,
-        alias,
-      );
-      return this.aliasService.toAliasDto(updatedAlias, note);
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
+    const note = await this.noteService.getNoteByIdOrAlias(alias);
+    if (!(await this.permissionsService.isOwner(user, note))) {
+      throw new UnauthorizedException('Reading note denied!');
     }
+    const updatedAlias = await this.aliasService.makeAliasPrimary(note, alias);
+    return this.aliasService.toAliasDto(updatedAlias, note);
   }
 
   @Delete(':alias')
@@ -115,24 +88,11 @@ export class AliasController {
     @RequestUser() user: User,
     @Param('alias') alias: string,
   ): Promise<void> {
-    try {
-      const note = await this.noteService.getNoteByIdOrAlias(alias);
-      if (!(await this.permissionsService.isOwner(user, note))) {
-        throw new UnauthorizedException('Reading note denied!');
-      }
-      await this.aliasService.removeAlias(note, alias);
-      return;
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      if (e instanceof PrimaryAliasDeletionForbiddenError) {
-        throw new BadRequestException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
+    const note = await this.noteService.getNoteByIdOrAlias(alias);
+    if (!(await this.permissionsService.isOwner(user, note))) {
+      throw new UnauthorizedException('Reading note denied!');
     }
+    await this.aliasService.removeAlias(note, alias);
+    return;
   }
 }

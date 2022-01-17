@@ -4,16 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
-  BadRequestException,
   Controller,
   Delete,
   Headers,
   HttpCode,
-  InternalServerErrorException,
-  NotFoundException,
   Param,
   Post,
-  UnauthorizedException,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -30,12 +26,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
-import {
-  ClientError,
-  MediaBackendError,
-  NotInDBError,
-  PermissionError,
-} from '../../../errors/errors';
+import { PermissionError } from '../../../errors/errors';
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadUrlDto } from '../../../media/media-upload-url.dto';
@@ -94,26 +85,14 @@ export class MediaController {
     @Headers('HedgeDoc-Note') noteId: string,
     @RequestUser() user: User,
   ): Promise<MediaUploadUrlDto> {
-    try {
-      // TODO: Move getting the Note object into a decorator
-      const note: Note = await this.noteService.getNoteByIdOrAlias(noteId);
-      this.logger.debug(
-        `Recieved filename '${file.originalname}' for note '${noteId}' from user '${user.username}'`,
-        'uploadMedia',
-      );
-      const url = await this.mediaService.saveFile(file.buffer, user, note);
-      return this.mediaService.toMediaUploadUrlDto(url);
-    } catch (e) {
-      if (e instanceof ClientError || e instanceof NotInDBError) {
-        throw new BadRequestException(e.message);
-      }
-      if (e instanceof MediaBackendError) {
-        throw new InternalServerErrorException(
-          'There was an error in the media backend',
-        );
-      }
-      throw e;
-    }
+    // TODO: Move getting the Note object into a decorator
+    const note: Note = await this.noteService.getNoteByIdOrAlias(noteId);
+    this.logger.debug(
+      `Recieved filename '${file.originalname}' for note '${noteId}' from user '${user.username}'`,
+      'uploadMedia',
+    );
+    const url = await this.mediaService.saveFile(file.buffer, user, note);
+    return this.mediaService.toMediaUploadUrlDto(url);
   }
 
   @Delete(':filename')
@@ -125,37 +104,20 @@ export class MediaController {
     @Param('filename') filename: string,
   ): Promise<void> {
     const username = user.username;
-    try {
-      this.logger.debug(
-        `Deleting '${filename}' for user '${username}'`,
+    this.logger.debug(
+      `Deleting '${filename}' for user '${username}'`,
+      'deleteMedia',
+    );
+    const mediaUpload = await this.mediaService.findUploadByFilename(filename);
+    if ((await mediaUpload.user).username !== username) {
+      this.logger.warn(
+        `${username} tried to delete '${filename}', but is not the owner`,
         'deleteMedia',
       );
-      const mediaUpload = await this.mediaService.findUploadByFilename(
-        filename,
+      throw new PermissionError(
+        `File '${filename}' is not owned by '${username}'`,
       );
-      if ((await mediaUpload.user).username !== username) {
-        this.logger.warn(
-          `${username} tried to delete '${filename}', but is not the owner`,
-          'deleteMedia',
-        );
-        throw new PermissionError(
-          `File '${filename}' is not owned by '${username}'`,
-        );
-      }
-      await this.mediaService.deleteFile(mediaUpload);
-    } catch (e) {
-      if (e instanceof PermissionError) {
-        throw new UnauthorizedException(e.message);
-      }
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      if (e instanceof MediaBackendError) {
-        throw new InternalServerErrorException(
-          'There was an error in the media backend',
-        );
-      }
-      throw e;
     }
+    await this.mediaService.deleteFile(mediaUpload);
   }
 }

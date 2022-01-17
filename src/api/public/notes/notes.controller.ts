@@ -11,7 +11,6 @@ import {
   Get,
   Header,
   HttpCode,
-  NotFoundException,
   Param,
   Post,
   Put,
@@ -30,11 +29,6 @@ import {
 } from '@nestjs/swagger';
 
 import { TokenAuthGuard } from '../../../auth/token.strategy';
-import {
-  AlreadyInDBError,
-  ForbiddenIdError,
-  NotInDBError,
-} from '../../../errors/errors';
 import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
@@ -66,6 +60,7 @@ import { PermissionsGuard } from '../../utils/permissions.guard';
 import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
+@UseGuards(TokenAuthGuard)
 @ApiTags('notes')
 @ApiSecurity('token')
 @Controller('notes')
@@ -98,7 +93,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias')
   @ApiOkResponse({
     description: 'Get information about the newly created note',
@@ -114,7 +109,7 @@ export class NotesController {
   }
 
   @Permissions(Permission.CREATE)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Post(':noteAlias')
   @HttpCode(201)
   @ApiCreatedResponse({
@@ -129,24 +124,14 @@ export class NotesController {
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
     this.logger.debug('Got raw markdown:\n' + text, 'createNamedNote');
-    try {
-      return await this.noteService.toNoteDto(
-        await this.noteService.createNote(text, user, noteAlias),
-      );
-    } catch (e) {
-      if (e instanceof AlreadyInDBError) {
-        throw new BadRequestException(e.message);
-      }
-      if (e instanceof ForbiddenIdError) {
-        throw new BadRequestException(e.message);
-      }
-      throw e;
-    }
+    return await this.noteService.toNoteDto(
+      await this.noteService.createNote(text, user, noteAlias),
+    );
   }
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Delete(':noteIdOrAlias')
   @HttpCode(204)
   @ApiNoContentResponse({ description: successfullyDeletedDescription })
@@ -172,7 +157,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.WRITE)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Put(':noteIdOrAlias')
   @ApiOkResponse({
     description: 'The new, changed note',
@@ -192,7 +177,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias/content')
   @ApiProduces('text/markdown')
   @ApiOkResponse({
@@ -209,7 +194,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias/metadata')
   @ApiOkResponse({
     description: 'The metadata of the note',
@@ -225,7 +210,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Put(':noteIdOrAlias/metadata/permissions')
   @ApiOkResponse({
     description: 'The updated permissions of the note',
@@ -244,7 +229,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias/revisions')
   @ApiOkResponse({
     description: 'Revisions of the note',
@@ -266,7 +251,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias/revisions/:revisionId')
   @ApiOkResponse({
     description: 'Revision of the note for the given id or alias',
@@ -278,21 +263,14 @@ export class NotesController {
     @RequestNote() note: Note,
     @Param('revisionId') revisionId: number,
   ): Promise<RevisionDto> {
-    try {
-      return this.revisionsService.toRevisionDto(
-        await this.revisionsService.getRevision(note, revisionId),
-      );
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new NotFoundException(e.message);
-      }
-      throw e;
-    }
+    return this.revisionsService.toRevisionDto(
+      await this.revisionsService.getRevision(note, revisionId),
+    );
   }
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias/media')
   @ApiOkResponse({
     description: 'All media uploads of the note',
