@@ -321,7 +321,7 @@ describe('NotesService', () => {
       it('id is forbidden', async () => {
         await expect(
           service.getNoteByIdOrAlias(forbiddenNoteId),
-        ).rejects.toThrow(ForbiddenIdError);
+        ).rejects.toThrow(NotInDBError);
       });
     });
   });
