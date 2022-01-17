@@ -1,12 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
   BadRequestException,
   Body,
-  ConflictException,
   Controller,
   Delete,
   Post,
@@ -14,10 +13,14 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiConflictResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { Session } from 'express-session';
 
-import { AlreadyInDBError } from '../../../errors/errors';
 import { IdentityService } from '../../../identity/identity.service';
 import { LocalAuthGuard } from '../../../identity/local/local.strategy';
 import { LoginDto } from '../../../identity/local/login.dto';
@@ -27,6 +30,11 @@ import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
+import {
+  badRequestDescription,
+  conflictDescription,
+  unauthorizedDescription,
+} from '../../utils/descriptions';
 import { LoginEnabledGuard } from '../../utils/login-enabled.guard';
 import { RegistrationEnabledGuard } from '../../utils/registration-enabled.guard';
 import { RequestUser } from '../../utils/request-user.decorator';
@@ -44,29 +52,21 @@ export class AuthController {
 
   @UseGuards(RegistrationEnabledGuard)
   @Post('local')
+  @ApiBadRequestResponse({ description: badRequestDescription })
+  @ApiConflictResponse({ description: conflictDescription })
   async registerUser(@Body() registerDto: RegisterDto): Promise<void> {
-    try {
-      const user = await this.usersService.createUser(
-        registerDto.username,
-        registerDto.displayname,
-      );
-      // ToDo: Figure out how to rollback user if anything with this calls goes wrong
-      await this.identityService.createLocalIdentity(
-        user,
-        registerDto.password,
-      );
-      return;
-    } catch (e) {
-      // This special handling can't be omitted since AlreadyInDBErrors get mapped to BadRequestException usually.
-      if (e instanceof AlreadyInDBError) {
-        throw new ConflictException(e.message);
-      }
-      throw e;
-    }
+    const user = await this.usersService.createUser(
+      registerDto.username,
+      registerDto.displayname,
+    );
+    // ToDo: Figure out how to rollback user if anything with this calls goes wrong
+    await this.identityService.createLocalIdentity(user, registerDto.password);
   }
 
   @UseGuards(LoginEnabledGuard, SessionGuard)
   @Put('local')
+  @ApiBadRequestResponse({ description: badRequestDescription })
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async updatePassword(
     @RequestUser() user: User,
     @Body() changePasswordDto: UpdatePasswordDto,
@@ -84,6 +84,7 @@ export class AuthController {
 
   @UseGuards(LoginEnabledGuard, LocalAuthGuard)
   @Post('local/login')
+  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   login(
     @Req() request: Request & { session: { user: string } },
     @Body() loginDto: LoginDto,
@@ -94,6 +95,7 @@ export class AuthController {
 
   @UseGuards(SessionGuard)
   @Delete('logout')
+  @ApiBadRequestResponse({ description: badRequestDescription })
   logout(@Req() request: Request & { session: Session }): void {
     request.session.destroy((err) => {
       if (err) {

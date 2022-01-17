@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,6 +20,7 @@ import {
   ApiOkResponse,
   ApiSecurity,
   ApiTags,
+  ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
 
 import { TokenAuthGuard } from '../../../auth/token.strategy';
@@ -31,6 +32,7 @@ import { AliasService } from '../../../notes/alias.service';
 import { NotesService } from '../../../notes/notes.service';
 import { PermissionsService } from '../../../permissions/permissions.service';
 import { User } from '../../../users/user.entity';
+import { unprocessableEntityDescription } from '../../utils/descriptions';
 import { FullApi } from '../../utils/fullapi-decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
@@ -101,6 +103,9 @@ export class AliasController {
     description: 'The alias was deleted',
   })
   @FullApi
+  @ApiUnprocessableEntityResponse({
+    description: unprocessableEntityDescription,
+  })
   async removeAlias(
     @RequestUser() user: User,
     @Param('alias') alias: string,
