@@ -85,14 +85,14 @@ export class IdentityService {
         `The user with the username ${user.username} does not have a internal identity.`,
         'checkLocalPassword',
       );
-      throw new NoLocalIdentityError();
+      throw new NoLocalIdentityError('This user has no internal identity.');
     }
     if (!(await checkPassword(password, internalIdentity.passwordHash ?? ''))) {
       this.logger.debug(
         `Password check for ${user.username} did not succeed.`,
         'checkLocalPassword',
       );
-      throw new InvalidCredentialsError();
+      throw new InvalidCredentialsError('Password is not correct');
     }
   }
 }
