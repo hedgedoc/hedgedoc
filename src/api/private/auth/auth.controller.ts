@@ -75,25 +75,15 @@ export class AuthController {
     @RequestUser() user: User,
     @Body() changePasswordDto: UpdatePasswordDto,
   ): Promise<void> {
-    try {
-      await this.identityService.checkLocalPassword(
-        user,
-        changePasswordDto.currentPassword,
-      );
-      await this.identityService.updateLocalPassword(
-        user,
-        changePasswordDto.newPassword,
-      );
-      return;
-    } catch (e) {
-      if (e instanceof InvalidCredentialsError) {
-        throw new UnauthorizedException('Password is not correct');
-      }
-      if (e instanceof NoLocalIdentityError) {
-        throw new BadRequestException('User has no local identity.');
-      }
-      throw e;
-    }
+    await this.identityService.checkLocalPassword(
+      user,
+      changePasswordDto.currentPassword,
+    );
+    await this.identityService.updateLocalPassword(
+      user,
+      changePasswordDto.newPassword,
+    );
+    return;
   }
 
   @UseGuards(LoginEnabledGuard, LocalAuthGuard)
