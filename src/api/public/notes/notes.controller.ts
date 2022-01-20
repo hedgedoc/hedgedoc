@@ -265,7 +265,7 @@ export class NotesController {
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
   @UseGuards(TokenAuthGuard, PermissionsGuard)
-  @Get(':noteIdOrAlias/metadata/permissions/users/:userName')
+  @Put(':noteIdOrAlias/metadata/permissions/users/:userName')
   @ApiOkResponse({
     description: 'Set the permissions for a user on a note',
     type: NotePermissionsDto,
@@ -329,7 +329,7 @@ export class NotesController {
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
   @UseGuards(TokenAuthGuard, PermissionsGuard)
-  @Get(':noteIdOrAlias/metadata/permissions/groups/:groupName')
+  @Put(':noteIdOrAlias/metadata/permissions/groups/:groupName')
   @ApiOkResponse({
     description: 'Set the permissions for a user on a note',
     type: NotePermissionsDto,
