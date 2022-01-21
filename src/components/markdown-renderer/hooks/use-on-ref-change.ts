@@ -11,7 +11,7 @@ import { useEffect, useRef } from 'react'
 export const useOnRefChange = <T>(reference: MutableRefObject<T>, onChange?: (newValue: T) => void): void => {
   const lastValue = useRef<T>()
   useEffect(() => {
-    if (onChange && !equal(reference, lastValue.current)) {
+    if (onChange && !equal(reference.current, lastValue.current)) {
       lastValue.current = reference.current
       onChange(reference.current)
     }
