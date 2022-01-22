@@ -1650,7 +1650,7 @@ __metadata:
     "@typescript-eslint/parser": 5.9.1
     abcjs: 6.0.0-beta.36
     bootstrap: 4.6.1
-    codemirror: 5.65.0
+    codemirror: 5.65.1
     copy-webpack-plugin: 10.2.0
     cross-env: 7.0.3
     cypress: 9.2.1
@@ -4426,10 +4426,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"codemirror@npm:5.65.0":
-  version: 5.65.0
-  resolution: "codemirror@npm:5.65.0"
-  checksum: e2e017d91787f4d4c41a7920b9285d65d1806c70bf9098e6d88c6ff6c8d091bef197059b8177635d4f00285e4dc8222a2709fb64dbd6561cfbfd559a2b13dbe5
+"codemirror@npm:5.65.1":
+  version: 5.65.1
+  resolution: "codemirror@npm:5.65.1"
+  checksum: 19f615f2c61fbae36bcc0b426aa9f485420b2d70c49092d69e86f49ab04b579512b642706f64a374c9bd56498edec641e16524ed3d2dbbd77ce12077e3bf2d14
   languageName: node
   linkType: hard
 
