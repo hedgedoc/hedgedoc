@@ -1637,10 +1637,10 @@ __metadata:
     "@types/js-yaml": 4.0.5
     "@types/luxon": 2.0.9
     "@types/markdown-it": 12.2.3
-    "@types/markdown-it-container": 2.0.4
+    "@types/markdown-it-container": 2.0.5
     "@types/markdown-it-plantuml": 1.4.1
     "@types/mermaid": 8.2.7
-    "@types/node": 16.11.19
+    "@types/node": 16.11.21
     "@types/react": 17.0.38
     "@types/react-bootstrap-typeahead": 5.1.8
     "@types/react-dom": 17.0.11
@@ -3058,12 +3058,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/markdown-it-container@npm:2.0.4":
-  version: 2.0.4
-  resolution: "@types/markdown-it-container@npm:2.0.4"
+"@types/markdown-it-container@npm:2.0.5":
+  version: 2.0.5
+  resolution: "@types/markdown-it-container@npm:2.0.5"
   dependencies:
     "@types/markdown-it": "*"
-  checksum: 4aa5b0a492266a3ee6f43537ed358e49d218442e7d7e01a54f88e5b7155d00a2944f0fc3445580825ca871ab295b220dabcd303ea1b548deef8aa851dd37c7f6
+  checksum: 33e47d2461dcf2203458fd10f2c0f7e15271b61615f00a8d69176668546ecd498844c6f9fb6f12df627e35909221aada091b1fdc7a185cafba8ec07791dfa710
   languageName: node
   linkType: hard
 
@@ -3107,10 +3107,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:16.11.19":
-  version: 16.11.19
-  resolution: "@types/node@npm:16.11.19"
-  checksum: a9ba0cd1e61c8ad50f3fc9c2b37b795bf0286dacb39dcc985da90328abf0c5151dffe9932d20bc9a6a52c3ce7bfc1e5a7c2dc1416480fb84f1c2d70e25caeba0
+"@types/node@npm:16.11.21":
+  version: 16.11.21
+  resolution: "@types/node@npm:16.11.21"
+  checksum: 75b679dc6375cf09bc14a2d1b344be6f3fd8ea50f212b0d60970dc9e175cef45e44c284c716eb9e766ffa52d0c83b689adb3d1911b6dd8649c560b8f77442a22
   languageName: node
   linkType: hard
 
