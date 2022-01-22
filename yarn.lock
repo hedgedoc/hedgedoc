@@ -1700,7 +1700,7 @@ __metadata:
     markmap-common: 0.1.6
     markmap-lib: 0.12.0
     markmap-view: 0.2.7
-    mermaid: 8.13.8
+    mermaid: 8.13.10
     next: 12.0.8
     optional-js: 2.3.0
     prettier: 2.5.1
@@ -9406,9 +9406,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mermaid@npm:8.13.8":
-  version: 8.13.8
-  resolution: "mermaid@npm:8.13.8"
+"mermaid@npm:8.13.10":
+  version: 8.13.10
+  resolution: "mermaid@npm:8.13.10"
   dependencies:
     "@braintree/sanitize-url": ^3.1.0
     d3: ^7.0.0
@@ -9419,7 +9419,7 @@ __metadata:
     khroma: ^1.4.1
     moment-mini: ^2.24.0
     stylis: ^4.0.10
-  checksum: 2873039c9297fb647fdac718a949ba3fe2101ca8e5e2b33145eabff4da15ce1b76f1bef9766be474aff88a27862474cce3aa0b775a17196216c59c54a608a5c4
+  checksum: 6544475909890c551801dcbbe92e6792ac4f3dbc010d030a4e9a79c1e2fcf92a9a09ff37aee18a8bc5a79e08dccccb184daff0ac18c1d532c8a6f6f5a95b0f85
   languageName: node
   linkType: hard
 
