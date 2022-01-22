@@ -1651,7 +1651,7 @@ __metadata:
     abcjs: 6.0.0-beta.36
     bootstrap: 4.6.1
     codemirror: 5.65.1
-    copy-webpack-plugin: 10.2.0
+    copy-webpack-plugin: 10.2.1
     cross-env: 7.0.3
     cypress: 9.3.1
     cypress-commands: 2.0.1
@@ -4621,9 +4621,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"copy-webpack-plugin@npm:10.2.0":
-  version: 10.2.0
-  resolution: "copy-webpack-plugin@npm:10.2.0"
+"copy-webpack-plugin@npm:10.2.1":
+  version: 10.2.1
+  resolution: "copy-webpack-plugin@npm:10.2.1"
   dependencies:
     fast-glob: ^3.2.7
     glob-parent: ^6.0.1
@@ -4633,7 +4633,7 @@ __metadata:
     serialize-javascript: ^6.0.0
   peerDependencies:
     webpack: ^5.1.0
-  checksum: ae99dc42d0fbe4d7fc4a6a0902130c4420c7a2f27a995df55b4fcaa5c5aec371b4545609249f93e8db0f5b95daaed053e74f38d794ace1336f21886c29e2fddc
+  checksum: 59b4fc10aaa81658fa1b6164fc9985ef0e4b54ba2734c07e0da5fdbc6828a5954fe822e2c383beac1e247dd26e669b2c86fa0d7d5495dfb1cbf562196d005ec2
   languageName: node
   linkType: hard
 

@@ -46,7 +46,7 @@
     "abcjs": "6.0.0-beta.36",
     "bootstrap": "4.6.1",
     "codemirror": "5.65.1",
-    "copy-webpack-plugin": "10.2.0",
+    "copy-webpack-plugin": "10.2.1",
     "cross-env": "7.0.3",
     "d3-graphviz": "3.2.0",
     "diff": "5.0.0",
