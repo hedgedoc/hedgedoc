@@ -12,6 +12,7 @@ import { AppModule } from './app.module';
 import { AppConfig } from './config/app.config';
 import { AuthConfig } from './config/auth.config';
 import { MediaConfig } from './config/media.config';
+import { ErrorExceptionMapping } from './errors/error-mapping';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { BackendType } from './media/backends/backend-type.enum';
 import { setupSpecialGroups } from './utils/createSpecialGroups';
@@ -78,6 +79,7 @@ async function bootstrap(): Promise<void> {
   app.useStaticAssets('public', {
     prefix: '/public/',
   });
+  app.useGlobalFilters(new ErrorExceptionMapping());
   await app.listen(appConfig.port);
   logger.log(`Listening on port ${appConfig.port}`, 'AppBootstrap');
 }
