@@ -1,0 +1,31 @@
+node_modules
+package-lock.json
+composer.phar
+composer.lock
+.env.*.php
+.env.php
+.DS_Store
+.idea/
+Thumbs.db
+npm-debug.log
+newrelic_agent.log
+logs/
+tmp/
+backups/
+*.pid
+*.log
+*.sqlite
+
+# ignore config files
+config.json
+.sequelizerc
+
+# ignore webpack build
+public/build
+public/views/build
+
+# ignore TypeScript built
+built/
+
+public/uploads/*
+!public/uploads/.gitkeep

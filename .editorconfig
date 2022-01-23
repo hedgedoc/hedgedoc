@@ -1,0 +1,25 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[{*.html,*.ejs}]
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+
+[*.md]
+trim_trailing_whitespace = false
+
+[{.travis.yml,npm-shrinkwrap.json,package.json}]
+indent_style = space
+indent_size = 2
+
+[locales/*.json]
+# this is the exact style poeditor.com exports, so this should prevent churn.
+insert_final_newline = false
+indent_style = space
+indent_size = 4
