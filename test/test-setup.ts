@@ -27,7 +27,6 @@ import { HistoryModule } from '../src/history/history.module';
 import { HistoryService } from '../src/history/history.service';
 import { IdentityModule } from '../src/identity/identity.module';
 import { IdentityService } from '../src/identity/identity.service';
-import { ConsoleLoggerService } from '../src/logger/console-logger.service';
 import { LoggerModule } from '../src/logger/logger.module';
 import { MediaModule } from '../src/media/media.module';
 import { MediaService } from '../src/media/media.service';
@@ -40,7 +39,6 @@ import { RevisionsModule } from '../src/revisions/revisions.module';
 import { UsersModule } from '../src/users/users.module';
 import { UsersService } from '../src/users/users.service';
 import { setupSessionMiddleware } from '../src/utils/session';
-import { setupValidationPipe } from '../src/utils/setup-pipes';
 
 export class TestSetup {
   moduleRef: TestingModule;
