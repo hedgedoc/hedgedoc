@@ -49,7 +49,7 @@
     "joi": "17.5.0",
     "minio": "7.0.26",
     "nest-router": "1.0.9",
-    "node-fetch": "2.6.7",
+    "node-fetch": "3.2.0",
     "passport": "0.5.2",
     "passport-http-bearer": "1.0.1",
     "passport-local": "1.0.0",
