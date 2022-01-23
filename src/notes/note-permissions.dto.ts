@@ -12,16 +12,13 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-import { GroupInfoDto } from '../groups/group-info.dto';
-import { UserInfoDto } from '../users/user-info.dto';
-
 export class NoteUserPermissionEntryDto {
   /**
-   * User this permission applies to
+   * Username of the User this permission applies to
    */
-  @ValidateNested()
-  @ApiProperty({ type: UserInfoDto })
-  user: UserInfoDto;
+  @IsString()
+  @ApiProperty()
+  username: string;
 
   /**
    * True if the user is allowed to edit the note
@@ -52,11 +49,11 @@ export class NoteUserPermissionUpdateDto {
 
 export class NoteGroupPermissionEntryDto {
   /**
-   * Group this permission applies to
+   * Name of the Group this permission applies to
    */
-  @ValidateNested()
-  @ApiProperty({ type: GroupInfoDto })
-  group: GroupInfoDto;
+  @IsString()
+  @ApiProperty()
+  groupName: string;
 
   /**
    * True if the group members are allowed to edit the note
@@ -74,7 +71,7 @@ export class NoteGroupPermissionUpdateDto {
    */
   @IsString()
   @ApiProperty()
-  groupname: string;
+  groupName: string;
 
   /**
    * True if the group members should be allowed to edit the note
@@ -87,12 +84,12 @@ export class NoteGroupPermissionUpdateDto {
 
 export class NotePermissionsDto {
   /**
-   * User this permission applies to
+   * Username of the User this permission applies to
    */
-  @ValidateNested()
-  @ApiPropertyOptional({ type: UserInfoDto })
+  @IsString()
+  @ApiPropertyOptional()
   @IsOptional()
-  owner: UserInfoDto | null;
+  owner: string | null;
 
   /**
    * List of users the note is shared with

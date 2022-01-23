@@ -77,10 +77,10 @@ export class NoteMetadataDto {
   /**
    * User that last edited the note
    */
-  @ValidateNested()
-  @ApiPropertyOptional({ type: UserInfoDto })
+  @IsString()
+  @ApiPropertyOptional()
   @IsOptional()
-  updateUser: UserInfoDto | null;
+  updateUsername: string | null;
 
   /**
    * Counts how many times the published note has been viewed

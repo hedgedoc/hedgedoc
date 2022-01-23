@@ -285,7 +285,7 @@ export class NotesService {
     );
 
     const groups = newPermissions.sharedToGroups.map(
-      (groupPermission) => groupPermission.groupname,
+      (groupPermission) => groupPermission.groupName,
     );
 
     if (checkArrayForDuplicates(users) || checkArrayForDuplicates(groups)) {
@@ -318,7 +318,7 @@ export class NotesService {
     // Create groupPermissions
     for (const newGroupPermission of newPermissions.sharedToGroups) {
       const group = await this.groupsService.getGroupByName(
-        newGroupPermission.groupname,
+        newGroupPermission.groupName,
       );
       const createdPermission = NoteGroupPermission.create(
         group,
@@ -373,13 +373,13 @@ export class NotesService {
     const userPermissions = await note.userPermissions;
     const groupPermissions = await note.groupPermissions;
     return {
-      owner: owner ? this.usersService.toUserDto(owner) : null,
+      owner: owner ? owner.username : null,
       sharedToUsers: userPermissions.map((noteUserPermission) => ({
-        user: this.usersService.toUserDto(noteUserPermission.user),
+        username: noteUserPermission.user.username,
         canEdit: noteUserPermission.canEdit,
       })),
       sharedToGroups: groupPermissions.map((noteGroupPermission) => ({
-        group: this.groupsService.toGroupDto(noteGroupPermission.group),
+        groupName: noteGroupPermission.group.name,
         canEdit: noteGroupPermission.canEdit,
       })),
     };
@@ -406,7 +406,7 @@ export class NotesService {
       permissions: await this.toNotePermissionsDto(note),
       tags: await this.toTagList(note),
       updatedAt: (await this.getLatestRevision(note)).createdAt,
-      updateUser: updateUser ? this.usersService.toUserDto(updateUser) : null,
+      updateUsername: updateUser ? updateUser.username : null,
       viewCount: note.viewCount,
     };
   }
