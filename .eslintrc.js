@@ -18,11 +18,16 @@ module.exports = {
         '@typescript-eslint/no-unsafe-argument': 'off',
         '@typescript-eslint/no-unsafe-member-access': 'off',
         '@typescript-eslint/require-await': 'off',
+        '@typescript-eslint/explicit-function-return-type': 'off',
         'jest/unbound-method': 'error',
         'jest/expect-expect': [
           'error',
           {
-            assertFunctionNames: ['expect', 'request.**.expect', 'agent.**.expect'],
+            assertFunctionNames: [
+              'expect',
+              'request.**.expect',
+              'agent.**.expect',
+            ],
           },
         ],
         'jest/no-standalone-expect': [
