@@ -151,7 +151,7 @@
     "bootstrap-validator": "0.11.9",
     "codemirror": "git+https://github.com/hedgedoc/CodeMirror.git",
     "copy-webpack-plugin": "6.4.1",
-    "css-loader": "5.2.7",
+    "css-loader": "6.5.1",
     "emojify.js": "1.1.0",
     "esbuild-loader": "2.18.0",
     "escape-html": "1.0.3",
