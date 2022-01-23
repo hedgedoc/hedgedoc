@@ -5310,7 +5310,7 @@ __metadata:
     rxjs: 7.5.2
     source-map-support: 0.5.21
     sqlite3: 5.0.2
-    supertest: 6.2.1
+    supertest: 6.2.2
     swagger-ui-express: 4.3.0
     ts-jest: 27.1.3
     ts-node: 10.4.0
@@ -9111,9 +9111,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"superagent@npm:^7.0.2":
-  version: 7.0.2
-  resolution: "superagent@npm:7.0.2"
+"superagent@npm:^7.1.0":
+  version: 7.1.1
+  resolution: "superagent@npm:7.1.1"
   dependencies:
     component-emitter: ^1.3.0
     cookiejar: ^2.1.3
@@ -9126,17 +9126,17 @@ __metadata:
     qs: ^6.10.1
     readable-stream: ^3.6.0
     semver: ^7.3.5
-  checksum: 144fce545496189ceacf984ab9c9d57396f526a46ea65a534949043e9ac351e5c604d4b531b4ce0abc83ee7745fedb32ab44b97fd65f511b7630233c988ca10b
+  checksum: 8710b84cf538f0b3e467b2e9be5ac41a169fe49656769301e01128fc5532900f5e447b9fb740cad2171a36b13b6939cd0f495e7ab4e805043b5cb13fe3051766
   languageName: node
   linkType: hard
 
-"supertest@npm:6.2.1":
-  version: 6.2.1
-  resolution: "supertest@npm:6.2.1"
+"supertest@npm:6.2.2":
+  version: 6.2.2
+  resolution: "supertest@npm:6.2.2"
   dependencies:
     methods: ^1.1.2
-    superagent: ^7.0.2
-  checksum: 02ebd09d7295d4d9274c48af9bfff655174c184c8cf496686fe744e27244b9b35247e8ab60bc76d1ea487dd36634f8fb6c425f0b7ab1fc761de936b424722a72
+    superagent: ^7.1.0
+  checksum: 3c1956d57e32db1dfc17b4e4eb3eb3c80a29f9ed1b5209e0425b796df0eda7fce8a5c6485a6e666c6d3019c44e238c0494d6851c18e11a2c8bec01ff32dc06e3
   languageName: node
   linkType: hard
 
