@@ -5,6 +5,7 @@
  */
 import { Module } from '@nestjs/common';
 
+import { GroupsModule } from '../../groups/groups.module';
 import { HistoryModule } from '../../history/history.module';
 import { LoggerModule } from '../../logger/logger.module';
 import { MediaModule } from '../../media/media.module';
@@ -21,6 +22,7 @@ import { NotesController } from './notes/notes.controller';
 
 @Module({
   imports: [
+    GroupsModule,
     UsersModule,
     HistoryModule,
     NotesModule,
