@@ -24,6 +24,7 @@ import customizationConfigMock from '../src/config/mock/customization.config.moc
 import externalServicesConfigMock from '../src/config/mock/external-services.config.mock';
 import mediaConfigMock from '../src/config/mock/media.config.mock';
 import noteConfigMock from '../src/config/mock/note.config.mock';
+import { ErrorExceptionMapping } from '../src/errors/error-mapping';
 import { FrontendConfigModule } from '../src/frontend-config/frontend-config.module';
 import { GroupsModule } from '../src/groups/groups.module';
 import { HistoryModule } from '../src/history/history.module';
@@ -128,6 +129,12 @@ export class TestSetupBuilder {
         AuthModule,
         FrontendConfigModule,
         IdentityModule,
+      ],
+      providers: [
+        {
+          provide: 'APP_FILTER',
+          useClass: ErrorExceptionMapping,
+        },
       ],
     });
     return testSetupBuilder;

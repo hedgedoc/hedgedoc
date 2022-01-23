@@ -123,7 +123,7 @@ describe('Notes', () => {
         .set('Content-Type', 'text/markdown')
         .send(content)
         .expect('Content-Type', /json/)
-        .expect(400);
+        .expect(409);
     });
   });
 

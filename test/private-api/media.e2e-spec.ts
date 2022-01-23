@@ -87,7 +87,7 @@ describe('Media', () => {
           .post('/api/private/media')
           .attach('file', 'test/private-api/fixtures/test.zip')
           .set('HedgeDoc-Note', 'i_dont_exist')
-          .expect(400);
+          .expect(404);
         await expect(fs.access(uploadPath)).rejects.toBeDefined();
       });
       it('mediaBackend error', async () => {
