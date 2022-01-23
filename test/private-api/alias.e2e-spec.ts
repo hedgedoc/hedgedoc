@@ -96,7 +96,7 @@ describe('Alias', () => {
           .post(`/api/private/alias`)
           .set('Content-Type', 'application/json')
           .send(newAliasDto)
-          .expect(400);
+          .expect(409);
       });
       it('because the user is not an owner', async () => {
         newAliasDto.newAlias = publicId;

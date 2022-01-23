@@ -79,7 +79,7 @@ describe('Media', () => {
           .post('/api/v2/media')
           .attach('file', 'test/public-api/fixtures/test.zip')
           .set('HedgeDoc-Note', 'i_dont_exist')
-          .expect(400);
+          .expect(404);
         await expect(fs.access(uploadPath)).rejects.toBeDefined();
       });
       it('mediaBackend error', async () => {
