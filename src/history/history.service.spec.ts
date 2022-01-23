@@ -35,7 +35,6 @@ describe('HistoryService', () => {
   let historyRepo: Repository<HistoryEntry>;
   let connection;
   let noteRepo: Repository<Note>;
-  let aliasRepo: Repository<Alias>;
 
   type MockConnection = {
     transaction: () => void;
@@ -102,7 +101,6 @@ describe('HistoryService', () => {
     historyRepo = module.get<Repository<HistoryEntry>>(
       getRepositoryToken(HistoryEntry),
     );
-    aliasRepo = module.get<Repository<Alias>>(getRepositoryToken(Alias));
     connection = module.get<Connection>(Connection);
     noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
   });
