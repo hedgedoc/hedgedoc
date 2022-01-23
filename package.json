@@ -98,7 +98,7 @@
     "store": "^2.0.12",
     "string": "^3.3.3",
     "toobusy-js": "^0.5.1",
-    "umzug": "^2.3.0",
+    "umzug": "^3.0.0",
     "uuid": "^8.0.0",
     "validator": "^13.0.0",
     "winston": "^3.1.0",
