@@ -47,6 +47,14 @@ Files: .idea/**
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC0-1.0
 
+Files: netlify.toml
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: .netlify/*
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
 Files: .github/ISSUE_TEMPLATE/*.md
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC-BY-SA-4.0

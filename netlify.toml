@@ -1,0 +1,6 @@
+[build]
+publish = ".next"
+command = "echo 'Assuming already built and cleaned Next.js app at ./.next/'"
+
+[[plugins]]
+package = "@netlify/plugin-nextjs"

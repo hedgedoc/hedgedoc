@@ -48,6 +48,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# netlify
+.netlify
+!.netlify/state.json
+
 # typescript
 *.tsbuildinfo
 
