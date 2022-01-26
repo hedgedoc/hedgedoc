@@ -53,7 +53,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - HedgeDoc instances can be branded either with a '@ \<custom string\>' or '@ \<custom logo\>' after the HedgeDoc logo and text
 - Images will be loaded via proxy if an image proxy is configured in the backend
 - The toolbar includes an emoji and fork-awesome icon picker.
-- Collapsable blocks can be added via a toolbar button or via autocompletion of "<details"
+- Collapsible blocks can be added via a toolbar button or via autocompletion of "<details"
 - Added shortcodes for [fork-awesome icons](https://forkaweso.me/Fork-Awesome/icons/) (e.g. `:fa-picture-o:`)
 - The code button now adds code fences even if the user selected nothing beforehand
 - Code blocks with 'csv' as language render as tables.

@@ -6,7 +6,7 @@
 
 import React, { useCallback } from 'react'
 import sanitize from 'sanitize-filename'
-import { store } from '../../../../redux'
+import { getGlobalState } from '../../../../redux'
 import { Trans, useTranslation } from 'react-i18next'
 import { download } from '../../../common/download/download'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
@@ -17,7 +17,7 @@ export const ExportMarkdownSidebarEntry: React.FC = () => {
   const { t } = useTranslation()
   const markdownContent = useNoteMarkdownContent()
   const onClick = useCallback(() => {
-    const sanitized = sanitize(store.getState().noteDetails.noteTitle)
+    const sanitized = sanitize(getGlobalState().noteDetails.noteTitle)
     download(markdownContent, `${sanitized !== '' ? sanitized : t('editor.untitledNote')}.md`, 'text/markdown')
   }, [markdownContent, t])
 

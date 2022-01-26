@@ -7,12 +7,13 @@
 import { MarkdownExtension } from './markdown-extension'
 import type MarkdownIt from 'markdown-it'
 import { Logger } from '../../../utils/logger'
+import { isDevMode } from '../../../utils/test-modes'
 
 const log = new Logger('DebuggerMarkdownExtension')
 
 export class DebuggerMarkdownExtension extends MarkdownExtension {
   public configureMarkdownItPost(markdownIt: MarkdownIt): void {
-    if (process.env.NODE_ENV !== 'production') {
+    if (isDevMode()) {
       markdownIt.core.ruler.push('printStateToConsole', (state) => {
         log.debug('Current state', state)
         return false

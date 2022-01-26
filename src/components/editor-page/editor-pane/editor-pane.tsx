@@ -5,7 +5,7 @@
  */
 
 import type { Editor, EditorChange } from 'codemirror'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useRef } from 'react'
 import type { ScrollProps } from '../synced-scroll/scroll-props'
 import { StatusBar } from './status-bar/status-bar'
 import { ToolBar } from './tool-bar/tool-bar'
@@ -18,14 +18,14 @@ import { useOnEditorFileDrop } from './hooks/use-on-editor-file-drop'
 import { useOnEditorScroll } from './hooks/use-on-editor-scroll'
 import { useApplyScrollState } from './hooks/use-apply-scroll-state'
 import { MaxLengthWarning } from './max-length-warning/max-length-warning'
-import { useCreateStatusBarInfo } from './hooks/use-create-status-bar-info'
 import { useOnImageUploadFromRenderer } from './hooks/use-on-image-upload-from-renderer'
 import { ExtendedCodemirror } from './extended-codemirror/extended-codemirror'
+import { useCursorActivityCallback } from './hooks/use-cursor-activity-callback'
 
 export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMakeScrollSource }) => {
   const markdownContent = useNoteMarkdownContent()
 
-  const [editor, setEditor] = useState<Editor>()
+  const editor = useRef<Editor>()
   const ligaturesEnabled = useApplicationState((state) => state.editorConfig.ligatures)
 
   const onPaste = useOnEditorPasteCallback()
@@ -36,38 +36,56 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
     setNoteContent(value)
   }, [])
 
-  const [statusBarInfo, updateStatusBarInfo] = useCreateStatusBarInfo()
+  useOnImageUploadFromRenderer()
 
-  useOnImageUploadFromRenderer(editor)
+  const onEditorDidMount = useCallback((mountedEditor: Editor) => {
+    editor.current = mountedEditor
+  }, [])
 
-  const onEditorDidMount = useCallback(
-    (mountedEditor: Editor) => {
-      updateStatusBarInfo(mountedEditor)
-      setEditor(mountedEditor)
-    },
-    [updateStatusBarInfo]
-  )
-
+  const onCursorActivity = useCursorActivityCallback()
   const onDrop = useOnEditorFileDrop()
   const codeMirrorOptions = useCodeMirrorOptions()
+
+  const editorFocus = useRef<boolean>(false)
+  const onFocus = useCallback(() => {
+    editorFocus.current = true
+    if (editor.current) {
+      onCursorActivity(editor.current)
+    }
+  }, [editor, onCursorActivity])
+
+  const onBlur = useCallback(() => {
+    editorFocus.current = false
+  }, [])
+
+  const cursorActivity = useCallback(
+    (editor: Editor) => {
+      if (editorFocus.current) {
+        onCursorActivity(editor)
+      }
+    },
+    [onCursorActivity]
+  )
 
   return (
     <div className={`d-flex flex-column h-100 position-relative`} onMouseEnter={onMakeScrollSource}>
       <MaxLengthWarning />
-      <ToolBar editor={editor} />
+      <ToolBar />
       <ExtendedCodemirror
         className={`overflow-hidden w-100 flex-fill`}
         value={markdownContent}
         options={codeMirrorOptions}
         onPaste={onPaste}
         onDrop={onDrop}
-        onCursorActivity={updateStatusBarInfo}
+        onCursorActivity={cursorActivity}
         editorDidMount={onEditorDidMount}
         onBeforeChange={onBeforeChange}
         onScroll={onEditorScroll}
+        onFocus={onFocus}
+        onBlur={onBlur}
         ligatures={ligaturesEnabled}
       />
-      <StatusBar statusBarInfo={statusBarInfo} />
+      <StatusBar />
     </div>
   )
 }

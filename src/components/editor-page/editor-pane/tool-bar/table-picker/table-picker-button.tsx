@@ -4,21 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type CodeMirror from 'codemirror'
 import React, { Fragment, useCallback, useMemo, useRef, useState } from 'react'
 import { Button, Overlay } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
-import { addTable } from '../utils/toolbarButtonUtils'
 import { cypressId } from '../../../../../utils/cypress-attribute'
 import { TableSizePickerPopover } from './table-size-picker-popover'
 import { CustomTableSizeModal } from './custom-table-size-modal'
 import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
 import { ShowIf } from '../../../../common/show-if/show-if'
-
-export interface TablePickerButtonProps {
-  editor: CodeMirror.Editor
-}
+import { addTableAtCursor } from '../../../../../redux/note-details/methods'
 
 enum PickerMode {
   INVISIBLE,
@@ -28,24 +23,19 @@ enum PickerMode {
 
 /**
  * Toggles the visibility of a table size picker overlay and inserts the result into the editor.
- *
- * @param editor The editor in which the result should get inserted
  */
-export const TablePickerButton: React.FC<TablePickerButtonProps> = ({ editor }) => {
+export const TablePickerButton: React.FC = () => {
   const { t } = useTranslation()
   const [pickerMode, setPickerMode] = useState<PickerMode>(PickerMode.INVISIBLE)
   const onDismiss = useCallback(() => setPickerMode(PickerMode.INVISIBLE), [])
   const onShowModal = useCallback(() => setPickerMode(PickerMode.CUSTOM), [])
 
-  const onSizeSelect = useCallback(
-    (rows: number, columns: number) => {
-      addTable(editor, rows, columns)
-      setPickerMode(PickerMode.INVISIBLE)
-    },
-    [editor]
-  )
+  const onSizeSelect = useCallback((rows: number, columns: number) => {
+    addTableAtCursor(rows, columns)
+    setPickerMode(PickerMode.INVISIBLE)
+  }, [])
 
-  const tableTitle = useMemo(() => t('editor.editorToolbar.table.title'), [t])
+  const tableTitle = useMemo(() => t('editor.editorToolbar.table.titleWithoutSize'), [t])
 
   const button = useRef(null)
 

@@ -6,7 +6,7 @@
 
 import equal from 'fast-deep-equal'
 import { useEffect, useRef } from 'react'
-import { store } from '../../../redux'
+import { getGlobalState } from '../../../redux'
 import type { HistoryEntry } from '../../../redux/history/types'
 import { HistoryEntryOrigin } from '../../../redux/history/types'
 import { updateLocalHistoryEntry } from '../../../redux/history/methods'
@@ -28,7 +28,7 @@ export const useUpdateLocalHistoryEntry = (updateReady: boolean): void => {
     if (currentNoteTitle === lastNoteTitle.current && equal(currentNoteTags, lastNoteTags.current)) {
       return
     }
-    const history = store.getState().history
+    const history = getGlobalState().history
     const entry: HistoryEntry = history.find((entry) => entry.identifier === id) ?? {
       identifier: id,
       title: '',

@@ -314,8 +314,9 @@
             "orderedList": "Ordered List",
             "checkList": "Checklist",
             "link": "Link",
-            "image": "Image",
+            "imageLink": "Image",
             "uploadImage": "Upload Image",
+            "highlight": "Highlight",
             "table": {
                 "titleWithoutSize": "Table",
                 "titleWithSize": "{{cols}}x{{rows}} Table",
@@ -324,8 +325,8 @@
                 "rows": "Rows",
                 "create": "Create Custom Table"
             },
-            "line": "Horizontal line",
-            "collapsableBlock": "Collapsable block",
+            "horizontalLine": "Horizontal line",
+            "collapsibleBlock": "Collapsible block",
             "comment": "Comment",
             "preferences": "Editor settings",
             "emoji": "Open emoji picker"

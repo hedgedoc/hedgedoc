@@ -6,10 +6,10 @@
 
 import React, { useMemo } from 'react'
 import { Trans } from 'react-i18next'
-import type { Position } from 'codemirror'
+import type { CursorPosition } from '../../../../redux/editor/types'
 
 export interface CursorPositionInfoProps {
-  cursorPosition: Position
+  cursorPosition: CursorPosition
 }
 
 /**
@@ -21,9 +21,9 @@ export const CursorPositionInfo: React.FC<CursorPositionInfoProps> = ({ cursorPo
   const translationOptions = useMemo(
     () => ({
       line: cursorPosition.line + 1,
-      columns: cursorPosition.ch + 1
+      columns: cursorPosition.character + 1
     }),
-    [cursorPosition.ch, cursorPosition.line]
+    [cursorPosition.character, cursorPosition.line]
   )
 
   return (

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { Position } from 'codemirror'
 import React from 'react'
 import styles from './status-bar.module.scss'
 import { RemainingCharactersInfo } from './remaining-characters-info'
@@ -13,9 +12,11 @@ import { CursorPositionInfo } from './cursor-position-info'
 import { SelectionInfo } from './selection-info'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { SeparatorDash } from './separator-dash'
+import type { CursorPosition } from '../../../../redux/editor/types'
+import { useCreateStatusBarInfo } from '../hooks/use-create-status-bar-info'
 
 export interface StatusBarInfo {
-  position: Position
+  position: CursorPosition
   selectedColumns: number
   selectedLines: number
   linesInDocument: number
@@ -24,7 +25,7 @@ export interface StatusBarInfo {
 }
 
 export const defaultState: StatusBarInfo = {
-  position: { line: 0, ch: 0 },
+  position: { line: 0, character: 0 },
   selectedColumns: 0,
   selectedLines: 0,
   linesInDocument: 0,
@@ -32,16 +33,12 @@ export const defaultState: StatusBarInfo = {
   remainingCharacters: 0
 }
 
-export interface StatusBarProps {
-  statusBarInfo: StatusBarInfo
-}
-
 /**
  * Shows additional information about the document length and the current selection.
- *
- * @param statusBarInfo The information to show
  */
-export const StatusBar: React.FC<StatusBarProps> = ({ statusBarInfo }) => {
+export const StatusBar: React.FC = () => {
+  const statusBarInfo = useCreateStatusBarInfo()
+
   return (
     <div className={`d-flex flex-row ${styles['status-bar']} px-2`}>
       <div>

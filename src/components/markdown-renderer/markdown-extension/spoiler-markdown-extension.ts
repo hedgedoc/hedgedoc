@@ -13,22 +13,25 @@ import { escapeHtml } from 'markdown-it/lib/common/utils'
 export class SpoilerMarkdownExtension extends MarkdownExtension {
   private static readonly spoilerRegEx = /^spoiler\s+(.*)$/
 
-  private static createSpoilerContainer(tokens: Token[], index: number): string {
+  /**
+   * Renders the opening and closing token of the container.
+   *
+   * @param tokens The tokens of the document
+   * @param index The currently viewed token
+   * @return The html rendering of the tokens
+   */
+  private static renderSpoilerContainer(tokens: Token[], index: number): string {
     const matches = SpoilerMarkdownExtension.spoilerRegEx.exec(tokens[index].info.trim())
 
-    if (tokens[index].nesting === 1 && matches && matches[1]) {
-      // opening tag
-      return `<details><summary>${escapeHtml(matches[1])}</summary>`
-    } else {
-      // closing tag
-      return '</details>\n'
-    }
+    return tokens[index].nesting === 1 && matches && matches[1]
+      ? `<details><summary>${escapeHtml(matches[1])}</summary>`
+      : '</details>\n'
   }
 
   public configureMarkdownIt(markdownIt: MarkdownIt): void {
     markdownItContainer(markdownIt, 'spoiler', {
       validate: (params: string) => SpoilerMarkdownExtension.spoilerRegEx.test(params),
-      render: SpoilerMarkdownExtension.createSpoilerContainer.bind(this)
+      render: SpoilerMarkdownExtension.renderSpoilerContainer.bind(this)
     })
   }
 }

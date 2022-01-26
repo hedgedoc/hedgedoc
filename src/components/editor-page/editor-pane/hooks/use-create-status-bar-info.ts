@@ -5,34 +5,31 @@
  */
 
 import type { StatusBarInfo } from '../status-bar/status-bar'
-import { defaultState } from '../status-bar/status-bar'
-import type { Editor } from 'codemirror'
-import { useCallback, useState } from 'react'
+import { useMemo } from 'react'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 /**
  * Provides a {@link StatusBarInfo} object and a function that can update this object using a {@link CodeMirror code mirror instance}.
  */
-export const useCreateStatusBarInfo = (): [
-  statusBarInfo: StatusBarInfo,
-  updateStatusBarInfo: (editor: Editor) => void
-] => {
+export const useCreateStatusBarInfo = (): StatusBarInfo => {
   const maxDocumentLength = useApplicationState((state) => state.config.maxDocumentLength)
-  const [statusBarInfo, setStatusBarInfo] = useState(defaultState)
+  const selection = useApplicationState((state) => state.noteDetails.selection)
+  const markdownContent = useApplicationState((state) => state.noteDetails.markdownContent)
+  const markdownContentLines = useApplicationState((state) => state.noteDetails.markdownContentLines)
 
-  const updateStatusBarInfo = useCallback(
-    (editor: Editor): void => {
-      setStatusBarInfo({
-        position: editor.getCursor(),
-        charactersInDocument: editor.getValue().length,
-        remainingCharacters: maxDocumentLength - editor.getValue().length,
-        linesInDocument: editor.lineCount(),
-        selectedColumns: editor.getSelection().length,
-        selectedLines: editor.getSelection().split('\n').length
-      })
-    },
-    [maxDocumentLength]
-  )
+  return useMemo(() => {
+    const startCharacter = selection.from.character
+    const endCharacter = selection.to?.character ?? 0
+    const startLine = selection.from.line
+    const endLine = selection.to?.line ?? 0
 
-  return [statusBarInfo, updateStatusBarInfo]
+    return {
+      position: { line: startLine, character: startCharacter },
+      charactersInDocument: markdownContent.length,
+      remainingCharacters: maxDocumentLength - markdownContent.length,
+      linesInDocument: markdownContentLines.length,
+      selectedColumns: endCharacter - startCharacter,
+      selectedLines: endLine - startLine
+    }
+  }, [markdownContent.length, markdownContentLines.length, maxDocumentLength, selection])
 }

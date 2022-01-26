@@ -16,6 +16,16 @@ export enum EditorConfigActionType {
   SET_SMART_PASTE = 'editor/preferences/setSmartPaste'
 }
 
+export interface CursorPosition {
+  line: number
+  character: number
+}
+
+export interface CursorSelection {
+  from: CursorPosition
+  to?: CursorPosition
+}
+
 export interface EditorConfig {
   editorMode: EditorMode
   syncScroll: boolean

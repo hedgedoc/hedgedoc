@@ -4,16 +4,25 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { Editor } from 'codemirror'
+import { getGlobalState } from '../../../../../redux'
 
-export const isCursorInCodefence = (editor: Editor): boolean => {
-  const currentLine = editor.getCursor().line
-  let codefenceCount = 0
-  for (let line = currentLine; line >= 0; --line) {
-    const markdownContentLine = editor.getDoc().getLine(line)
-    if (markdownContentLine.startsWith('```')) {
-      codefenceCount++
-    }
-  }
-  return codefenceCount % 2 === 1
+/**
+ * Checks if the start of the current {@link CursorSelection cursor selection} is in a code fence.
+ */
+export const isCursorInCodeFence = (): boolean => {
+  const lines = getGlobalState().noteDetails.markdownContentLines.slice(
+    0,
+    getGlobalState().noteDetails.selection.from.line
+  )
+  return countCodeFenceLinesUntilIndex(lines) % 2 === 1
+}
+
+/**
+ * Counts the lines that start or end a code fence.
+ *
+ * @param lines The lines that should be inspected
+ * @return the counted lines
+ */
+const countCodeFenceLinesUntilIndex = (lines: string[]): number => {
+  return lines.filter((line) => line.startsWith('```')).length
 }

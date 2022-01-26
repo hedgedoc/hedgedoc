@@ -18,7 +18,7 @@ import { SanitizerMarkdownExtension } from '../markdown-extension/sanitizer/sani
 /**
  * Renders markdown code into react elements
  *
- * @param markdownCode The markdown code that should be rendered
+ * @param markdownContentLines The markdown code lines that should be rendered
  * @param additionalMarkdownExtensions A list of {@link MarkdownExtension markdown extensions} that should be used
  * @param newlinesAreBreaks Defines if the alternative break mode of markdown it should be used
  * @return The React DOM that represents the rendered markdown code
@@ -77,7 +77,6 @@ export const useConvertMarkdownToReactDom = (
 
   return useMemo(() => {
     const html = markdownIt.render(markdownContentLines.join('\n'))
-
     htmlToReactTransformer.resetReplacers()
 
     return convertHtmlToReact(html, {

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { Editor } from 'codemirror'
 import React, { Fragment, useCallback, useRef } from 'react'
 import { Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
@@ -14,30 +13,17 @@ import { handleUpload } from '../upload-handler'
 import { acceptedMimeTypes } from '../../../common/upload-image-mimetypes'
 import { cypressId } from '../../../../utils/cypress-attribute'
 
-export interface UploadImageButtonProps {
-  editor?: Editor
-}
-
-export const UploadImageButton: React.FC<UploadImageButtonProps> = ({ editor }) => {
+export const UploadImageButton: React.FC = () => {
   const { t } = useTranslation()
   const clickRef = useRef<() => void>()
   const buttonClick = useCallback(() => {
     clickRef.current?.()
   }, [])
 
-  const onUploadImage = useCallback(
-    (file: File) => {
-      if (editor) {
-        handleUpload(file, editor)
-      }
-      return Promise.resolve()
-    },
-    [editor]
-  )
-
-  if (!editor) {
-    return null
-  }
+  const onUploadImage = useCallback((file: File) => {
+    handleUpload(file)
+    return Promise.resolve()
+  }, [])
 
   return (
     <Fragment>

@@ -45,14 +45,14 @@ describe('yaml frontmatter', () => {
 
   it('should parse an empty opengraph object', () => {
     const noteFrontmatter = createNoteFrontmatterFromYaml('opengraph:')
-    expect(noteFrontmatter.opengraph).toEqual(new Map<string, string>())
+    expect(noteFrontmatter.opengraph).toEqual({})
   })
 
   it('should parse an opengraph title', () => {
     const noteFrontmatter = createNoteFrontmatterFromYaml(`opengraph:
       title: Testtitle
     `)
-    expect(noteFrontmatter.opengraph.get('title')).toEqual('Testtitle')
+    expect(noteFrontmatter.opengraph.title).toEqual('Testtitle')
   })
 
   it('should parse multiple opengraph values', () => {
@@ -61,8 +61,8 @@ describe('yaml frontmatter', () => {
       image: https://dummyimage.com/48.png
       image:type: image/png
     `)
-    expect(noteFrontmatter.opengraph.get('title')).toEqual('Testtitle')
-    expect(noteFrontmatter.opengraph.get('image')).toEqual('https://dummyimage.com/48.png')
-    expect(noteFrontmatter.opengraph.get('image:type')).toEqual('image/png')
+    expect(noteFrontmatter.opengraph.title).toEqual('Testtitle')
+    expect(noteFrontmatter.opengraph.image).toEqual('https://dummyimage.com/48.png')
+    expect(noteFrontmatter.opengraph['image:type']).toEqual('image/png')
   })
 })

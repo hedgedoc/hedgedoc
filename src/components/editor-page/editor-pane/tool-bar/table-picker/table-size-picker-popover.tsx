@@ -58,7 +58,7 @@ export const TableSizePickerPopover: React.FC<TableSizePickerPopoverProps> = ({
               {...cypressAttribute('col', `${col + 1}`)}
               {...cypressAttribute('row', `${row + 1}`)}
               onMouseEnter={onSizeHover(row + 1, col + 1)}
-              title={t('editor.editorToolbar.table.size', { cols: col + 1, rows: row + 1 })}
+              title={t('editor.editorToolbar.table.titleWithSize', { cols: col + 1, rows: row + 1 })}
               onClick={() => onTableSizeSelected(row + 1, col + 1)}
             />
           )

@@ -9,7 +9,7 @@ import { Pos } from 'codemirror'
 import { DateTime } from 'luxon'
 import type { Hinter } from './index'
 import { findWordAtCursor } from './index'
-import { store } from '../../../../redux'
+import { getGlobalState } from '../../../../redux'
 
 const wordRegExp = /^(\[(.*])?)$/
 const allSupportedLinks = [
@@ -27,7 +27,7 @@ const allSupportedLinks = [
 ]
 
 const getUserName = (): string => {
-  const user = store.getState().user
+  const user = getGlobalState().user
   return user ? user.displayName : 'Anonymous'
 }
 

@@ -6,7 +6,7 @@
 
 import type { Editor, Hints } from 'codemirror'
 import { CodeBlockHinter } from './code-block'
-import { CollapsableBlockHinter } from './collapsable-block'
+import { CollapsibleBlockHinter } from './collapsible-block'
 import { ContainerHinter } from './container'
 import { EmojiHinter } from './emoji'
 import { HeaderHinter } from './header'
@@ -65,5 +65,5 @@ export const allHinters: Hinter[] = [
   ImageHinter,
   LinkAndExtraTagHinter,
   PDFHinter,
-  CollapsableBlockHinter
+  CollapsibleBlockHinter
 ]

@@ -8,7 +8,6 @@ import { useCallback } from 'react'
 import type { Editor } from 'codemirror'
 import type { PasteEvent } from '../tool-bar/utils/pasteHandlers'
 import { handleFilePaste, handleTablePaste } from '../tool-bar/utils/pasteHandlers'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import type { DomEvent } from 'react-codemirror2'
 
 /**
@@ -17,18 +16,13 @@ import type { DomEvent } from 'react-codemirror2'
  * @return the created callback
  */
 export const useOnEditorPasteCallback = (): DomEvent => {
-  const smartPasteEnabled = useApplicationState((state) => state.editorConfig.smartPaste)
-
-  return useCallback(
-    (pasteEditor: Editor, event: PasteEvent) => {
-      if (!event || !event.clipboardData) {
-        return
-      }
-      if (smartPasteEnabled && handleTablePaste(event, pasteEditor)) {
-        return
-      }
-      handleFilePaste(event, pasteEditor)
-    },
-    [smartPasteEnabled]
-  )
+  return useCallback((pasteEditor: Editor, event: PasteEvent) => {
+    if (!event || !event.clipboardData) {
+      return
+    }
+    if (handleTablePaste(event) || handleFilePaste(event)) {
+      event.preventDefault()
+      return
+    }
+  }, [])
 }

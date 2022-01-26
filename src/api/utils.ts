@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { store } from '../redux'
+import { getGlobalState } from '../redux'
 
 export const defaultFetchConfig: Partial<RequestInit> = {
   mode: 'cors',
@@ -19,7 +19,7 @@ export const defaultFetchConfig: Partial<RequestInit> = {
 }
 
 export const getApiUrl = (): string => {
-  return store.getState().apiUrl.apiUrl
+  return getGlobalState().apiUrl.apiUrl
 }
 
 export const expectResponseCode = (response: Response, code = 200): void => {

@@ -39,7 +39,7 @@ export const useOnEditorFileDrop = (): DomEvent => {
       const newCursor = dropEditor.coordsChar({ top: event.pageY, left: event.pageX }, 'page')
       dropEditor.setCursor(newCursor)
       const files: FileList = event.dataTransfer.files
-      handleUpload(files[0], dropEditor)
+      handleUpload(files[0])
     }
   }, [])
 }

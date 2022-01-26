@@ -4,11 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { Editor } from 'codemirror'
 import { convertClipboardTableToMarkdown, isTable } from '../../table-extractor'
 import { handleUpload } from '../../upload-handler'
-import { insertAtCursor } from './toolbarButtonUtils'
-import { isCursorInCodefence } from './codefenceDetection'
+import { replaceSelection } from '../../../../../redux/note-details/methods'
+import { isCursorInCodeFence } from './codefenceDetection'
+import { getGlobalState } from '../../../../../redux'
+import Optional from 'optional-js'
 
 type ClipboardDataFormats = 'text' | 'url' | 'text/plain' | 'text/uri-list' | 'text/html'
 
@@ -20,26 +21,41 @@ export interface PasteEvent {
   preventDefault: () => void
 }
 
-export const handleTablePaste = (event: PasteEvent, editor: Editor): boolean => {
-  const pasteText = event.clipboardData.getData('text')
-  if (!pasteText || isCursorInCodefence(editor) || !isTable(pasteText)) {
+/**
+ * Checks if the given {@link PasteEvent paste event} contains a text formatted table
+ * and inserts it into the markdown content.
+ * This happens only if smart paste was activated.
+ *
+ * @param event The {@link PasteEvent} from the browser
+ * @return {@code true} if the event was processed. {@code false} otherwise
+ */
+export const handleTablePaste = (event: PasteEvent): boolean => {
+  if (!getGlobalState().editorConfig.smartPaste || isCursorInCodeFence()) {
     return false
   }
-  event.preventDefault()
-  const markdownTable = convertClipboardTableToMarkdown(pasteText)
-  insertAtCursor(editor, markdownTable)
-  return true
+
+  return Optional.ofNullable(event.clipboardData.getData('text'))
+    .filter((pasteText) => !!pasteText && isTable(pasteText))
+    .map((pasteText) => convertClipboardTableToMarkdown(pasteText))
+    .map((markdownTable) => {
+      replaceSelection(markdownTable)
+      return true
+    })
+    .orElse(false)
 }
 
-export const handleFilePaste = (event: PasteEvent, editor: Editor): boolean => {
-  if (!event.clipboardData.files || event.clipboardData.files.length < 1) {
-    return false
-  }
-  event.preventDefault()
-  const files: FileList = event.clipboardData.files
-  if (files && files.length >= 1) {
-    handleUpload(files[0], editor)
-    return true
-  }
-  return false
+/**
+ * Checks if the given {@link PasteEvent paste event} contains files and uploads them.
+ *
+ * @param event The {@link PasteEvent} from the browser
+ * @return {@code true} if the event was processed. {@code false} otherwise
+ */
+export const handleFilePaste = (event: PasteEvent): boolean => {
+  return Optional.ofNullable(event.clipboardData.files)
+    .filter((files) => !!files && files.length > 0)
+    .map((files) => {
+      handleUpload(files[0])
+      return true
+    })
+    .orElse(false)
 }

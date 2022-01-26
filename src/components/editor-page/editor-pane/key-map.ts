@@ -7,14 +7,8 @@
 import type { Editor, KeyMap, Pass } from 'codemirror'
 import CodeMirror from 'codemirror'
 import { isMac } from '../utils'
-import {
-  addLink,
-  makeSelectionBold,
-  makeSelectionItalic,
-  markSelection,
-  strikeThroughSelection,
-  underlineSelection
-} from './tool-bar/utils/toolbarButtonUtils'
+import { formatSelection } from '../../../redux/note-details/methods'
+import { FormatType } from '../../../redux/note-details/types'
 
 const isVim = (keyMapName?: string) => keyMapName?.substr(0, 3) === 'vim'
 
@@ -83,11 +77,11 @@ export const createDefaultKeyMap: () => KeyMap = () => {
       'Cmd-Right': 'goLineRight',
       Home: 'goLineLeftSmart',
       End: 'goLineRight',
-      'Cmd-I': makeSelectionItalic,
-      'Cmd-B': makeSelectionBold,
-      'Cmd-U': underlineSelection,
-      'Cmd-D': strikeThroughSelection,
-      'Cmd-M': markSelection
+      'Cmd-I': () => formatSelection(FormatType.ITALIC),
+      'Cmd-B': () => formatSelection(FormatType.BOLD),
+      'Cmd-U': () => formatSelection(FormatType.UNDERLINE),
+      'Cmd-D': () => formatSelection(FormatType.STRIKETHROUGH),
+      'Cmd-M': () => formatSelection(FormatType.HIGHLIGHT)
     } as KeyMap
   } else {
     return {
@@ -99,12 +93,12 @@ export const createDefaultKeyMap: () => KeyMap = () => {
       Tab: tab,
       Home: 'goLineLeftSmart',
       End: 'goLineRight',
-      'Ctrl-I': makeSelectionItalic,
-      'Ctrl-B': makeSelectionBold,
-      'Ctrl-U': underlineSelection,
-      'Ctrl-D': strikeThroughSelection,
-      'Ctrl-M': markSelection,
-      'Ctrl-K': addLink
+      'Ctrl-I': () => formatSelection(FormatType.ITALIC),
+      'Ctrl-B': () => formatSelection(FormatType.BOLD),
+      'Ctrl-U': () => formatSelection(FormatType.UNDERLINE),
+      'Ctrl-D': () => formatSelection(FormatType.STRIKETHROUGH),
+      'Ctrl-M': () => formatSelection(FormatType.HIGHLIGHT),
+      'Ctrl-K': () => formatSelection(FormatType.LINK)
     } as KeyMap
   }
 }

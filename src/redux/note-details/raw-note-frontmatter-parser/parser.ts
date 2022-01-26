@@ -6,11 +6,11 @@
 
 import { load } from 'js-yaml'
 import type { SlideOptions } from '../types/slide-show-options'
-import type { NoteFrontmatter } from '../types/note-details'
+import type { Iso6391Language, NoteFrontmatter, OpenGraph } from '../types/note-details'
 import { NoteTextDirection, NoteType } from '../types/note-details'
 import { ISO6391 } from '../types/iso6391'
 import type { RawNoteFrontmatter } from './types'
-import { initialSlideOptions } from '../initial-state'
+import { initialSlideOptions, initialState } from '../initial-state'
 
 /**
  * Creates a new frontmatter metadata instance based on a raw yaml string.
@@ -37,28 +37,73 @@ const parseRawNoteFrontmatter = (rawData: RawNoteFrontmatter): NoteFrontmatter =
     tags = rawData?.tags?.filter((tag) => tag !== null) ?? []
     deprecatedTagsSyntax = false
   } else {
-    tags = []
+    tags = [...initialState.frontmatter.tags]
     deprecatedTagsSyntax = false
   }
 
   return {
-    title: rawData.title ?? '',
-    description: rawData.description ?? '',
-    robots: rawData.robots ?? '',
-    newlinesAreBreaks: rawData.breaks ?? true,
-    GA: rawData.GA ?? '',
-    disqus: rawData.disqus ?? '',
-    lang: (rawData.lang ? ISO6391.find((lang) => lang === rawData.lang) : undefined) ?? 'en',
-    type: rawData.type === NoteType.SLIDE ? NoteType.SLIDE : NoteType.DOCUMENT,
-    dir: rawData.dir === NoteTextDirection.LTR ? NoteTextDirection.LTR : NoteTextDirection.RTL,
-    opengraph: rawData?.opengraph
-      ? new Map<string, string>(Object.entries(rawData.opengraph))
-      : new Map<string, string>(),
-
+    title: rawData.title ?? initialState.frontmatter.title,
+    description: rawData.description ?? initialState.frontmatter.description,
+    robots: rawData.robots ?? initialState.frontmatter.robots,
+    newlinesAreBreaks: rawData.breaks ?? initialState.frontmatter.newlinesAreBreaks,
+    GA: rawData.GA ?? initialState.frontmatter.GA,
+    disqus: rawData.disqus ?? initialState.frontmatter.disqus,
+    lang: parseLanguage(rawData),
+    type: parseNoteType(rawData),
+    dir: parseTextDirection(rawData),
+    opengraph: parseOpenGraph(rawData),
     slideOptions: parseSlideOptions(rawData),
     tags,
     deprecatedTagsSyntax
   }
+}
+
+/**
+ * Parses the {@link OpenGraph open graph} from the {@link RawNoteFrontmatter}.
+ *
+ * @param rawData The raw note frontmatter data.
+ * @return the parsed {@link OpenGraph open graph}
+ */
+const parseOpenGraph = (rawData: RawNoteFrontmatter): OpenGraph => {
+  return { ...(rawData.opengraph ?? initialState.frontmatter.opengraph) }
+}
+
+/**
+ * Parses the {@link Iso6391Language iso 6391 language code} from the {@link RawNoteFrontmatter}.
+ *
+ * @param rawData The raw note frontmatter data.
+ * @return the parsed {@link Iso6391Language iso 6391 language code}
+ */
+const parseLanguage = (rawData: RawNoteFrontmatter): Iso6391Language => {
+  return (rawData.lang ? ISO6391.find((lang) => lang === rawData.lang) : undefined) ?? initialState.frontmatter.lang
+}
+
+/**
+ * Parses the {@link NoteType note type} from the {@link RawNoteFrontmatter}.
+ *
+ * @param rawData The raw note frontmatter data.
+ * @return the parsed {@link NoteType note type}
+ */
+const parseNoteType = (rawData: RawNoteFrontmatter): NoteType => {
+  return rawData.type !== undefined
+    ? rawData.type === NoteType.SLIDE
+      ? NoteType.SLIDE
+      : NoteType.DOCUMENT
+    : initialState.frontmatter.type
+}
+
+/**
+ * Parses the {@link NoteTextDirection note text direction} from the {@link RawNoteFrontmatter}.
+ *
+ * @param rawData The raw note frontmatter data.
+ * @return the parsed {@link NoteTextDirection note text direction}
+ */
+const parseTextDirection = (rawData: RawNoteFrontmatter): NoteTextDirection => {
+  return rawData.dir !== undefined
+    ? rawData.dir === NoteTextDirection.LTR
+      ? NoteTextDirection.LTR
+      : NoteTextDirection.RTL
+    : initialState.frontmatter.dir
 }
 
 /**

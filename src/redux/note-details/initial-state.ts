@@ -20,6 +20,7 @@ export const initialSlideOptions: SlideOptions = {
 export const initialState: NoteDetails = {
   markdownContent: '',
   markdownContentLines: [],
+  selection: { from: { line: 0, character: 0 } },
   rawFrontmatter: '',
   frontmatterRendererInfo: {
     frontmatterInvalid: false,
@@ -50,7 +51,7 @@ export const initialState: NoteDetails = {
     GA: '',
     disqus: '',
     type: NoteType.DOCUMENT,
-    opengraph: new Map<string, string>(),
+    opengraph: {},
     slideOptions: initialSlideOptions
   }
 }

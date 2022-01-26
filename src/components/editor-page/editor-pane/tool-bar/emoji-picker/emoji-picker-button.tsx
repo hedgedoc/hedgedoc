@@ -4,37 +4,34 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type CodeMirror from 'codemirror'
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useCallback, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
-import { addEmoji } from '../utils/toolbarButtonUtils'
 import { EmojiPicker } from './emoji-picker'
 import { cypressId } from '../../../../../utils/cypress-attribute'
+import { getEmojiShortCode } from '../utils/emojiUtils'
+import { replaceSelection } from '../../../../../redux/note-details/methods'
+import type { EmojiClickEventDetail } from 'emoji-picker-element/shared'
+import Optional from 'optional-js'
 
-export interface EmojiPickerButtonProps {
-  editor: CodeMirror.Editor
-}
-
-export const EmojiPickerButton: React.FC<EmojiPickerButtonProps> = ({ editor }) => {
+export const EmojiPickerButton: React.FC = () => {
   const { t } = useTranslation()
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+  const onEmojiSelected = useCallback((emoji: EmojiClickEventDetail) => {
+    setShowEmojiPicker(false)
+    Optional.ofNullable(getEmojiShortCode(emoji)).ifPresent((shortCode) => replaceSelection(shortCode))
+  }, [])
+  const hidePicker = useCallback(() => setShowEmojiPicker(false), [])
+  const showPicker = useCallback(() => setShowEmojiPicker(true), [])
 
   return (
     <Fragment>
-      <EmojiPicker
-        show={showEmojiPicker}
-        onEmojiSelected={(emoji) => {
-          setShowEmojiPicker(false)
-          addEmoji(emoji, editor)
-        }}
-        onDismiss={() => setShowEmojiPicker(false)}
-      />
+      <EmojiPicker show={showEmojiPicker} onEmojiSelected={onEmojiSelected} onDismiss={hidePicker} />
       <Button
         {...cypressId('show-emoji-picker')}
         variant='light'
-        onClick={() => setShowEmojiPicker((old) => !old)}
+        onClick={showPicker}
         title={t('editor.editorToolbar.emoji')}>
         <ForkAwesomeIcon icon='smile-o' />
       </Button>

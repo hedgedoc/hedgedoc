@@ -7,13 +7,19 @@
 import { store } from '..'
 import type { NoteDto } from '../../api/notes/types'
 import type {
+  AddTableAtCursorAction,
+  FormatSelectionAction,
+  FormatType,
+  InsertTextAtCursorAction,
   ReplaceInMarkdownContentAction,
   SetNoteDetailsFromServerAction,
   SetNoteDocumentContentAction,
+  UpdateCursorPositionAction,
   UpdateNoteTitleByFirstHeadingAction,
   UpdateTaskListCheckboxAction
 } from './types'
 import { NoteDetailsActionType } from './types'
+import type { CursorPosition, CursorSelection } from '../editor/types'
 
 /**
  * Sets the content of the current note, extracts and parses the frontmatter and extracts the markdown content part.
@@ -74,4 +80,57 @@ export const replaceInMarkdownContent = (replaceable: string, replacement: strin
     placeholder: replaceable,
     replacement
   } as ReplaceInMarkdownContentAction)
+}
+
+export const updateCursorPositions = (selection: CursorSelection): void => {
+  const correctedSelection: CursorSelection = isFromAfterTo(selection)
+    ? {
+        to: selection.from,
+        from: selection.to as CursorPosition
+      }
+    : selection
+
+  store.dispatch({
+    type: NoteDetailsActionType.UPDATE_CURSOR_POSITION,
+    selection: correctedSelection
+  } as UpdateCursorPositionAction)
+}
+
+/**
+ * Checks if the from cursor position in the given selection is after the to cursor position.
+ *
+ * @param selection The cursor selection to check
+ * @return {@code true} if the from cursor position is after the to position
+ */
+const isFromAfterTo = (selection: CursorSelection): boolean => {
+  if (selection.to === undefined) {
+    return false
+  }
+  if (selection.from.line < selection.to.line) {
+    return false
+  }
+  return selection.from.line !== selection.to.line || selection.from.character > selection.to.character
+}
+
+export const formatSelection = (formatType: FormatType): void => {
+  store.dispatch({
+    type: NoteDetailsActionType.FORMAT_SELECTION,
+    formatType
+  } as FormatSelectionAction)
+}
+
+export const addTableAtCursor = (rows: number, columns: number): void => {
+  store.dispatch({
+    type: NoteDetailsActionType.ADD_TABLE_AT_CURSOR,
+    rows,
+    columns
+  } as AddTableAtCursorAction)
+}
+
+export const replaceSelection = (text: string, cursorSelection?: CursorSelection): void => {
+  store.dispatch({
+    type: NoteDetailsActionType.REPLACE_SELECTION,
+    text,
+    cursorSelection
+  } as InsertTextAtCursorAction)
 }

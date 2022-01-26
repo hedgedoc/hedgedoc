@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { store } from '../index'
+import { getGlobalState, store } from '../index'
 import type {
   HistoryEntry,
   HistoryExportJson,
@@ -69,7 +69,7 @@ export const updateLocalHistoryEntry = (noteId: string, newEntry: HistoryEntry):
 }
 
 export const removeHistoryEntry = async (noteId: string): Promise<void> => {
-  const entryToDelete = store.getState().history.find((entry) => entry.identifier === noteId)
+  const entryToDelete = getGlobalState().history.find((entry) => entry.identifier === noteId)
   if (entryToDelete && entryToDelete.origin === HistoryEntryOrigin.REMOTE) {
     await deleteHistoryEntry(noteId)
   }
@@ -81,7 +81,7 @@ export const removeHistoryEntry = async (noteId: string): Promise<void> => {
 }
 
 export const toggleHistoryEntryPinning = async (noteId: string): Promise<void> => {
-  const state = store.getState().history
+  const state = getGlobalState().history
   const entryToUpdate = state.find((entry) => entry.identifier === noteId)
   if (!entryToUpdate) {
     return Promise.reject(`History entry for note '${noteId}' not found`)
@@ -100,7 +100,7 @@ export const toggleHistoryEntryPinning = async (noteId: string): Promise<void> =
 }
 
 export const downloadHistory = (): void => {
-  const history = store.getState().history
+  const history = getGlobalState().history
   history.forEach((entry: Partial<HistoryEntry>) => {
     delete entry.origin
   })
@@ -129,7 +129,7 @@ export const convertV1History = (oldHistory: V1HistoryEntry[]): HistoryEntry[] =
 
 export const refreshHistoryState = async (): Promise<void> => {
   const localEntries = loadLocalHistory()
-  if (!store.getState().user) {
+  if (!getGlobalState().user) {
     setHistoryEntries(localEntries)
     return
   }
@@ -143,7 +143,7 @@ export const safeRefreshHistoryState = (): void => {
 }
 
 export const storeLocalHistory = (): void => {
-  const history = store.getState().history
+  const history = getGlobalState().history
   const localEntries = history.filter((entry) => entry.origin === HistoryEntryOrigin.LOCAL)
   const entriesWithoutOrigin = localEntries.map((entry) => ({
     ...entry,
@@ -153,10 +153,10 @@ export const storeLocalHistory = (): void => {
 }
 
 export const storeRemoteHistory = (): Promise<void> => {
-  if (!store.getState().user) {
+  if (!getGlobalState().user) {
     return Promise.resolve()
   }
-  const history = store.getState().history
+  const history = getGlobalState().history
   const remoteEntries = history.filter((entry) => entry.origin === HistoryEntryOrigin.REMOTE)
   const remoteEntryDtos = remoteEntries.map(historyEntryToHistoryEntryPutDto)
   return postHistory(remoteEntryDtos)

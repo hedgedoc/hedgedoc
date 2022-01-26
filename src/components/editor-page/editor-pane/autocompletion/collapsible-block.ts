@@ -11,7 +11,7 @@ import { findWordAtCursor } from './index'
 
 const wordRegExp = /^(<d(?:e|et|eta|etai|etail|etails)?)$/
 
-const collapsableBlockHint = (editor: Editor): Promise<Hints | null> => {
+const collapsibleBlockHint = (editor: Editor): Promise<Hints | null> => {
   return new Promise((resolve) => {
     const searchTerm = findWordAtCursor(editor)
     const searchResult = wordRegExp.exec(searchTerm.text)
@@ -37,7 +37,7 @@ const collapsableBlockHint = (editor: Editor): Promise<Hints | null> => {
   })
 }
 
-export const CollapsableBlockHinter: Hinter = {
+export const CollapsibleBlockHinter: Hinter = {
   wordRegExp,
-  hint: collapsableBlockHint
+  hint: collapsibleBlockHint
 }
