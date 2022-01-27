@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { response } from 'express';
 import request from 'supertest';
 
 import { AliasCreateDto } from '../../src/notes/alias-create.dto';
