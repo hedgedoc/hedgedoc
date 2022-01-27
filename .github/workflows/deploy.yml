@@ -49,14 +49,14 @@ jobs:
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
-          env: Preview
+          env: "PR #${{ github.event.number }}"
           no_override: false
           ref: ${{ github.head_ref }}
 
       - name: Run netlify CLI deployment
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: bash netlify/deploy.sh "${{ github.event.number }}" "${{ github.head_ref }}"
+        run: bash netlify/deploy.sh "${{ github.event.number }}" "${{ github.head_ref }}" "${{ github.event.pull_request.title }}"
         id: netlify-result
 
       - name: Mark GitHub deployment as finished

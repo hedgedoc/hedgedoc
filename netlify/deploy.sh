@@ -6,7 +6,7 @@
 
 deployid="$1-$2"
 
-json=$(yarn netlify deploy --build --context deploy-preview --alias "${deployid}" --json)
+json=$(yarn netlify deploy --build --context deploy-preview --alias "${deployid}" --json --message "[#$1] $3")
 
 url=$(echo "${json}" | jq -r .deploy_url)
 logs=$(echo "${json}" | jq -r .logs)
