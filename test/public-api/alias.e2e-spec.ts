@@ -5,7 +5,6 @@
  */
 import request from 'supertest';
 
-import { AliasCreateDto } from '../../src/notes/alias-create.dto';
 import { AliasUpdateDto } from '../../src/notes/alias-update.dto';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
