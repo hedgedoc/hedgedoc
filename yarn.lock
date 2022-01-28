@@ -1704,7 +1704,7 @@ __metadata:
     "@hedgedoc/markdown-it-task-lists": 1.0.3
     "@matejmazur/react-katex": 3.1.3
     "@next/bundle-analyzer": 12.0.8
-    "@redux-devtools/core": 3.10.1
+    "@redux-devtools/core": 3.11.0
     "@svgr/webpack": 6.2.0
     "@testing-library/cypress": 8.0.2
     "@testing-library/jest-dom": 5.16.1
@@ -2914,24 +2914,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redux-devtools/core@npm:3.10.1":
-  version: 3.10.1
-  resolution: "@redux-devtools/core@npm:3.10.1"
+"@redux-devtools/core@npm:3.11.0":
+  version: 3.11.0
+  resolution: "@redux-devtools/core@npm:3.11.0"
   dependencies:
     "@babel/runtime": ^7.16.7
-    "@redux-devtools/instrument": ^2.0.1
+    "@redux-devtools/instrument": ^2.1.0
     "@types/prop-types": ^15.7.4
     lodash: ^4.17.21
-    prop-types: ^15.8.0
+    prop-types: ^15.8.1
   peerDependencies:
     react: ^0.14.9 || ^15.3.0 || ^16.0.0 || ^17.0.0
     react-redux: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
     redux: ^3.5.2 || ^4.0.0
-  checksum: 587eb4ab6b4cad1bed7f568d1d6d0b1e0519e7532b8dea11b4bfb8bfcc371c6ac668ba76b9f4156098eadd4b5250da413d78a26df89b8ef2d0e5b05d279890a7
+  checksum: 71394672d4a6de5472a16d61e7461e5da60d6834ab2afd72192b13d3fe3c4386e0a55386d50a1aef3cbc2a89ba0f2e551b40c6057fa06c7d2b3733ad582cf199
   languageName: node
   linkType: hard
 
-"@redux-devtools/instrument@npm:^2.0.1":
+"@redux-devtools/instrument@npm:^2.1.0":
   version: 2.1.0
   resolution: "@redux-devtools/instrument@npm:2.1.0"
   dependencies:
@@ -15749,7 +15749,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.8, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.0":
+"prop-types@npm:^15.5.8, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
