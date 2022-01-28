@@ -1772,7 +1772,7 @@ __metadata:
     markmap-lib: 0.12.0
     markmap-view: 0.2.7
     mermaid: 8.13.10
-    netlify-cli: 8.13.2
+    netlify-cli: 8.14.1
     next: 12.0.8
     optional-js: 2.3.0
     prettier: 2.5.1
@@ -14074,9 +14074,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"netlify-cli@npm:8.13.2":
-  version: 8.13.2
-  resolution: "netlify-cli@npm:8.13.2"
+"netlify-cli@npm:8.14.1":
+  version: 8.14.1
+  resolution: "netlify-cli@npm:8.14.1"
   dependencies:
     "@netlify/build": ^26.2.0
     "@netlify/config": ^17.0.6
@@ -14147,7 +14147,7 @@ __metadata:
     multiparty: ^4.2.1
     netlify: ^10.1.2
     netlify-headers-parser: ^6.0.1
-    netlify-onegraph-internal: 0.0.15
+    netlify-onegraph-internal: 0.0.16
     netlify-redirect-parser: ^13.0.1
     netlify-redirector: ^0.2.1
     node-fetch: ^2.6.0
@@ -14186,7 +14186,7 @@ __metadata:
   bin:
     netlify: bin/run
     ntl: bin/run
-  checksum: 090e293e2677c1ec19fddfe3478832bc24edae11c90f3952f090c1c2b421d43ad4412a11473f15c05f26178bd1ba286f3d7ef66fdf336eaf8e197fc5b5eabbcf
+  checksum: 81d8721b702ad9b21deb3051b280c7450ca11044ee40fb41b350780bf9c9083927da41b1f3587de9c2e68b234c5e392a4e7c487e5cd4aef65ad1d18e907522f8
   languageName: node
   linkType: hard
 
@@ -14203,14 +14203,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"netlify-onegraph-internal@npm:0.0.15":
-  version: 0.0.15
-  resolution: "netlify-onegraph-internal@npm:0.0.15"
+"netlify-onegraph-internal@npm:0.0.16":
+  version: 0.0.16
+  resolution: "netlify-onegraph-internal@npm:0.0.16"
   dependencies:
     graphql: 16.0.0
     node-fetch: ^2.6.0
     uuid: ^8.3.2
-  checksum: 2fa76979c62ecf634ff29b7194a883699e90257950e1e42ae1b705ebc1cf8e6962decadd97857f2aae829eb2137381f7bdb3227c6b1cfb89cc032955c0220631
+  checksum: bb2cc7a97885187953bcbcb6eebc0010d42a7b7c3d974f7d2883837d3a0bdd33ccdce0baff0ac38d1624d8101fc2bc1510bcc5435e856b8c8d700418334da355
   languageName: node
   linkType: hard
 
