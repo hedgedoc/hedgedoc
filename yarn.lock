@@ -1728,7 +1728,7 @@ __metadata:
     "@types/uuid": 8.3.4
     "@typescript-eslint/eslint-plugin": 5.10.0
     "@typescript-eslint/parser": 5.10.0
-    abcjs: 6.0.0-beta.36
+    abcjs: 6.0.0-beta.37
     bootstrap: 4.6.1
     codemirror: 5.65.1
     copy-webpack-plugin: 10.2.1
@@ -4615,10 +4615,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"abcjs@npm:6.0.0-beta.36":
-  version: 6.0.0-beta.36
-  resolution: "abcjs@npm:6.0.0-beta.36"
-  checksum: 27cee94c2ecfad24f92d2682aa4560f529147655a34bf328a86de4698f71f3a4cc3027e0dc5e0ffccbac710c13458eaf334a2052695831dba88b183e07ef5e2b
+"abcjs@npm:6.0.0-beta.37":
+  version: 6.0.0-beta.37
+  resolution: "abcjs@npm:6.0.0-beta.37"
+  checksum: 2c8c611f2d293c80fcf9ee967a8d719b79bb48732b803bed65aae7533264f48104bb70caffb8dc61cf4482117679cd97ef41050f91c21be8b01425a8a6a1c966
   languageName: node
   linkType: hard
 
