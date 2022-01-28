@@ -36,7 +36,7 @@
     ]
   },
   "dependencies": {
-    "@fontsource/source-sans-pro": "4.5.1",
+    "@fontsource/source-sans-pro": "4.5.2",
     "@hedgedoc/html-to-react": "1.1.1",
     "@hedgedoc/markdown-it-image-size": "1.0.3",
     "@hedgedoc/markdown-it-task-lists": "1.0.3",

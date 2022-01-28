@@ -1633,10 +1633,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource/source-sans-pro@npm:4.5.1":
-  version: 4.5.1
-  resolution: "@fontsource/source-sans-pro@npm:4.5.1"
-  checksum: a9073e9bda904a66a4114aef7b12dcf03bc362332f689e72587066b6882564777c3f63a7b1ddb6711014f36254cb9e4708ac58d517d2c4d7c5e2c0a0358700a8
+"@fontsource/source-sans-pro@npm:4.5.2":
+  version: 4.5.2
+  resolution: "@fontsource/source-sans-pro@npm:4.5.2"
+  checksum: b0d4b9dbea1ae60226dad0b9717a0f7a203e28eed076160dea1a1827efa193161bef36fd2e8628a5ede9794ee686c75dab5471e7a9e67773c03a19a9b0ec7fca
   languageName: node
   linkType: hard
 
@@ -1677,7 +1677,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/react-client@workspace:."
   dependencies:
-    "@fontsource/source-sans-pro": 4.5.1
+    "@fontsource/source-sans-pro": 4.5.2
     "@hedgedoc/html-to-react": 1.1.1
     "@hedgedoc/markdown-it-image-size": 1.0.3
     "@hedgedoc/markdown-it-task-lists": 1.0.3
