@@ -58,7 +58,7 @@ describe('Media', () => {
         .set('HedgeDoc-Note', 'test_upload_media')
         .expect('Content-Type', /json/)
         .expect(201);
-      const path: string = uploadResponse.body.link;
+      const path: string = uploadResponse.body.url;
       const testImage = await fs.readFile('test/public-api/fixtures/test.png');
       const downloadResponse = await request(testSetup.app.getHttpServer()).get(
         path,
