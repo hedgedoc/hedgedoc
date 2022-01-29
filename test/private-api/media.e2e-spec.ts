@@ -64,7 +64,7 @@ describe('Media', () => {
         .set('HedgeDoc-Note', 'test_upload_media')
         .expect('Content-Type', /json/)
         .expect(201);
-      const path: string = uploadResponse.body.link;
+      const path: string = uploadResponse.body.url;
       const testImage = await fs.readFile('test/private-api/fixtures/test.png');
       const downloadResponse = await agent.get(path);
       expect(downloadResponse.body).toEqual(testImage);
@@ -117,12 +117,12 @@ describe('Media', () => {
       'test_delete_media',
     );
     const testImage = await fs.readFile('test/private-api/fixtures/test.png');
-    const url = await testSetup.mediaService.saveFile(
+    const upload = await testSetup.mediaService.saveFile(
       testImage,
       user,
       testNote,
     );
-    const filename = url.split('/').pop() || '';
+    const filename = upload.fileUrl.split('/').pop() || '';
     await agent.delete('/api/private/media/' + filename).expect(204);
   });
 });

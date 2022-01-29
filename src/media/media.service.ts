@@ -77,7 +77,11 @@ export class MediaService {
    * @throws {NotInDBError} - the note or user is not in the database
    * @throws {MediaBackendError} - there was an error saving the file
    */
-  async saveFile(fileBuffer: Buffer, user: User, note: Note): Promise<string> {
+  async saveFile(
+    fileBuffer: Buffer,
+    user: User,
+    note: Note,
+  ): Promise<MediaUpload> {
     this.logger.debug(
       `Saving file for note '${note.id}' and user '${user.username}'`,
       'saveFile',
@@ -102,8 +106,7 @@ export class MediaService {
       url,
     );
     mediaUpload.backendData = backendData;
-    await this.mediaUploadRepository.save(mediaUpload);
-    return url;
+    return await this.mediaUploadRepository.save(mediaUpload);
   }
 
   /**
