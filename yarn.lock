@@ -1760,7 +1760,7 @@ __metadata:
     markmap-lib: 0.12.0
     markmap-view: 0.2.7
     mermaid: 8.13.10
-    netlify-cli: 8.14.1
+    netlify-cli: 8.15.0
     next: 12.0.9
     optional-js: 2.3.0
     prettier: 2.5.1
@@ -4795,6 +4795,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ansi2html@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "ansi2html@npm:0.0.1"
+  bin:
+    ansi2html: ./bin/ansi2html
+  checksum: 05997d7e86a230aa2e4c3330e414b1cb92456cbb02b86583017e1fffcbf7bccc7239307ada78fae1bd02bfa7528a00a26797f5753ac58085dfd0b23845659e91
+  languageName: node
+  linkType: hard
+
 "any-observable@npm:^0.3.0":
   version: 0.3.0
   resolution: "any-observable@npm:0.3.0"
@@ -6623,7 +6632,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cron-parser@npm:^4.1.0":
+"cron-parser@npm:^4.1.0, cron-parser@npm:^4.2.1":
   version: 4.2.1
   resolution: "cron-parser@npm:4.2.1"
   dependencies:
@@ -14011,9 +14020,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"netlify-cli@npm:8.14.1":
-  version: 8.14.1
-  resolution: "netlify-cli@npm:8.14.1"
+"netlify-cli@npm:8.15.0":
+  version: 8.15.0
+  resolution: "netlify-cli@npm:8.15.0"
   dependencies:
     "@netlify/build": ^26.2.0
     "@netlify/config": ^17.0.6
@@ -14027,6 +14036,7 @@ __metadata:
     "@sindresorhus/slugify": ^1.1.0
     ansi-escapes: ^5.0.0
     ansi-styles: ^5.0.0
+    ansi2html: ^0.0.1
     ascii-table: 0.0.9
     backoff: ^2.5.0
     better-opn: ^3.0.0
@@ -14041,6 +14051,7 @@ __metadata:
     content-type: ^1.0.4
     cookie: ^0.4.0
     copy-template-dir: ^1.4.0
+    cron-parser: ^4.2.1
     debug: ^4.1.1
     decache: ^4.6.0
     del: ^6.0.0
@@ -14123,7 +14134,7 @@ __metadata:
   bin:
     netlify: bin/run
     ntl: bin/run
-  checksum: 81d8721b702ad9b21deb3051b280c7450ca11044ee40fb41b350780bf9c9083927da41b1f3587de9c2e68b234c5e392a4e7c487e5cd4aef65ad1d18e907522f8
+  checksum: c9a641ef106a46d6d58ad3b10a61298752ff3cad0aabcf296a10bfb96dc43fe56452b595e1354be8f9e8d1949d46c27f32a46c95f05983772467e9deae2b2d59
   languageName: node
   linkType: hard
 
