@@ -128,16 +128,14 @@ export class IframeCommunicationDto extends BaseDto {
    * @example https://md.example.com
    */
   @IsUrl()
-  @IsOptional()
-  editorOrigin?: URL;
+  editorOrigin: URL;
 
   /**
    * The origin under which the renderer page will be served
    * @example https://md-renderer.example.com
    */
   @IsUrl()
-  @IsOptional()
-  rendererOrigin?: URL;
+  rendererOrigin: URL;
 }
 
 export class FrontendConfigDto extends BaseDto {
