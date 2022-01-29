@@ -143,8 +143,8 @@ describe('MediaService', () => {
             return [fileName, null];
           },
         );
-      const url = await service.saveFile(testImage, user, note);
-      expect(url).toEqual(fileId);
+      const upload = await service.saveFile(testImage, user, note);
+      expect(upload.fileUrl).toEqual(fileId);
     });
 
     describe('fails:', () => {

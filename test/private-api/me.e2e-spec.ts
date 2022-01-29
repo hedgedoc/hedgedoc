@@ -69,16 +69,16 @@ describe('Me', () => {
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
     const imageUrls = [];
     imageUrls.push(
-      await testSetup.mediaService.saveFile(testImage, user, note1),
+      (await testSetup.mediaService.saveFile(testImage, user, note1)).fileUrl,
     );
     imageUrls.push(
-      await testSetup.mediaService.saveFile(testImage, user, note1),
+      (await testSetup.mediaService.saveFile(testImage, user, note1)).fileUrl,
     );
     imageUrls.push(
-      await testSetup.mediaService.saveFile(testImage, user, note2),
+      (await testSetup.mediaService.saveFile(testImage, user, note2)).fileUrl,
     );
     imageUrls.push(
-      await testSetup.mediaService.saveFile(testImage, user, note2),
+      (await testSetup.mediaService.saveFile(testImage, user, note2)).fileUrl,
     );
 
     const response = await agent
@@ -112,12 +112,16 @@ describe('Me', () => {
 
   it('DELETE /me', async () => {
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-    const url0 = await testSetup.mediaService.saveFile(testImage, user, note1);
+    const upload = await testSetup.mediaService.saveFile(
+      testImage,
+      user,
+      note1,
+    );
     const dbUser = await testSetup.userService.getUserByUsername('hardcoded');
     expect(dbUser).toBeInstanceOf(User);
     const mediaUploads = await testSetup.mediaService.listUploadsByUser(dbUser);
     expect(mediaUploads).toHaveLength(1);
-    expect(mediaUploads[0].fileUrl).toEqual(url0);
+    expect(mediaUploads[0].fileUrl).toEqual(upload.fileUrl);
     await agent.delete('/api/private/me').expect(204);
     await expect(
       testSetup.userService.getUserByUsername('hardcoded'),

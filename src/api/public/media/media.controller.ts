@@ -88,8 +88,8 @@ export class MediaController {
       `Recieved filename '${file.originalname}' for note '${noteId}' from user '${user.username}'`,
       'uploadMedia',
     );
-    const url = await this.mediaService.saveFile(file.buffer, user, note);
-    return this.mediaService.toMediaUploadUrlDto(url);
+    const upload = await this.mediaService.saveFile(file.buffer, user, note);
+    return this.mediaService.toMediaUploadUrlDto(upload.fileUrl);
   }
 
   @Delete(':filename')

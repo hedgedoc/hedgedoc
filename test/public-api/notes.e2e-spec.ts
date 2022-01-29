@@ -159,7 +159,7 @@ describe('Notes', () => {
           user,
           noteId,
         );
-        const url = await testSetup.mediaService.saveFile(
+        const upload = await testSetup.mediaService.saveFile(
           testImage,
           user,
           note,
@@ -180,7 +180,7 @@ describe('Notes', () => {
           await testSetup.mediaService.listUploadsByUser(user),
         ).toHaveLength(1);
         // Remove /upload/ from path as we just need the filename.
-        const fileName = url.replace('/uploads/', '');
+        const fileName = upload.fileUrl.replace('/uploads/', '');
         // delete the file afterwards
         await fs.unlink(join(uploadPath, fileName));
       });
@@ -425,12 +425,12 @@ describe('Notes', () => {
       expect(response.body).toHaveLength(0);
 
       const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-      const url0 = await testSetup.mediaService.saveFile(
+      const upload0 = await testSetup.mediaService.saveFile(
         testImage,
         user,
         note1,
       );
-      const url1 = await testSetup.mediaService.saveFile(
+      const upload1 = await testSetup.mediaService.saveFile(
         testImage,
         user,
         note2,
@@ -441,10 +441,10 @@ describe('Notes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
       expect(responseAfter.body).toHaveLength(1);
-      expect(responseAfter.body[0].url).toEqual(url0);
-      expect(responseAfter.body[0].url).not.toEqual(url1);
-      for (const fileUrl of [url0, url1]) {
-        const fileName = fileUrl.replace('/uploads/', '');
+      expect(responseAfter.body[0].url).toEqual(upload0.fileUrl);
+      expect(responseAfter.body[0].url).not.toEqual(upload1.fileUrl);
+      for (const upload of [upload0, upload1]) {
+        const fileName = upload.fileUrl.replace('/uploads/', '');
         // delete the file afterwards
         await fs.unlink(join(uploadPath, fileName));
       }

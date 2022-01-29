@@ -19,7 +19,7 @@ import { ApiBody, ApiConsumes, ApiHeader, ApiTags } from '@nestjs/swagger';
 import { PermissionError } from '../../../errors/errors';
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { MediaUploadUrlDto } from '../../../media/media-upload-url.dto';
+import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
 import { MulterFile } from '../../../media/multer-file.interface';
 import { Note } from '../../../notes/note.entity';
@@ -63,7 +63,7 @@ export class MediaController {
     {
       code: 201,
       description: 'The file was uploaded successfully',
-      dto: MediaUploadUrlDto,
+      dto: MediaUploadDto,
     },
     400,
     403,
@@ -74,15 +74,15 @@ export class MediaController {
     @UploadedFile() file: MulterFile,
     @Headers('HedgeDoc-Note') noteId: string,
     @RequestUser() user: User,
-  ): Promise<MediaUploadUrlDto> {
+  ): Promise<MediaUploadDto> {
     // TODO: Move getting the Note object into a decorator
     const note: Note = await this.noteService.getNoteByIdOrAlias(noteId);
     this.logger.debug(
       `Recieved filename '${file.originalname}' for note '${noteId}' from user '${user.username}'`,
       'uploadMedia',
     );
-    const url = await this.mediaService.saveFile(file.buffer, user, note);
-    return this.mediaService.toMediaUploadUrlDto(url);
+    const upload = await this.mediaService.saveFile(file.buffer, user, note);
+    return await this.mediaService.toMediaUploadDto(upload);
   }
 
   @Delete(':filename')

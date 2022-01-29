@@ -108,12 +108,12 @@ describe('Media', () => {
 
   it('DELETE /media/{filename}', async () => {
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-    const url = await testSetup.mediaService.saveFile(
+    const upload = await testSetup.mediaService.saveFile(
       testImage,
       user,
       testNote,
     );
-    const filename = url.split('/').pop() || '';
+    const filename = upload.fileUrl.split('/').pop() || '';
     await request(testSetup.app.getHttpServer())
       .delete('/api/v2/media/' + filename)
       .expect(204);

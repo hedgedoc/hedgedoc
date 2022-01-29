@@ -204,16 +204,16 @@ describe('Me', () => {
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
     const imageUrls = [];
     imageUrls.push(
-      await testSetup.mediaService.saveFile(testImage, user, note1),
+      (await testSetup.mediaService.saveFile(testImage, user, note1)).fileUrl,
     );
     imageUrls.push(
-      await testSetup.mediaService.saveFile(testImage, user, note1),
+      (await testSetup.mediaService.saveFile(testImage, user, note1)).fileUrl,
     );
     imageUrls.push(
-      await testSetup.mediaService.saveFile(testImage, user, note2),
+      (await testSetup.mediaService.saveFile(testImage, user, note2)).fileUrl,
     );
     imageUrls.push(
-      await testSetup.mediaService.saveFile(testImage, user, note2),
+      (await testSetup.mediaService.saveFile(testImage, user, note2)).fileUrl,
     );
 
     const response = await request(httpServer)
