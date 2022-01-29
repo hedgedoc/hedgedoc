@@ -1065,15 +1065,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/mapped-types@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@nestjs/mapped-types@npm:1.0.0"
+"@nestjs/mapped-types@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@nestjs/mapped-types@npm:1.0.1"
   peerDependencies:
     "@nestjs/common": ^7.0.8 || ^8.0.0
-    class-transformer: ^0.2.0 || ^0.3.0 || ^0.4.0
+    class-transformer: ^0.2.0 || ^0.3.0 || ^0.4.0 || ^0.5.0
     class-validator: ^0.11.1 || ^0.12.0 || ^0.13.0
     reflect-metadata: ^0.1.12
-  checksum: 64e4bb9313a0d71c9535a36679e3c0d3590a8cfd3cd0897175213131afa9bb4b47f547607955f0e3578f26c509e755d7adc898bfcf47bb90117688b5d9b333fb
+  peerDependenciesMeta:
+    class-transformer:
+      optional: true
+    class-validator:
+      optional: true
+  checksum: ca8dae254f98e8550c92f264d90dee767f30598a5bbe40e80ea93cf622da5c67bd2bc8ef83828198919cc39c543421d4eb977d032ecbbb545863eaea9deb797c
   languageName: node
   linkType: hard
 
@@ -1132,11 +1137,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/swagger@npm:5.1.5":
-  version: 5.1.5
-  resolution: "@nestjs/swagger@npm:5.1.5"
+"@nestjs/swagger@npm:5.2.0":
+  version: 5.2.0
+  resolution: "@nestjs/swagger@npm:5.2.0"
   dependencies:
-    "@nestjs/mapped-types": 1.0.0
+    "@nestjs/mapped-types": 1.0.1
     lodash: 4.17.21
     path-to-regexp: 3.2.0
   peerDependencies:
@@ -1150,7 +1155,7 @@ __metadata:
       optional: true
     swagger-ui-express:
       optional: true
-  checksum: 76a92bd411904464ff34fc5b95357e56e4b3464af628a283562b2b21f134d6586386edc31623759b15a687740778659bdea11efde24c6b687ba17e81368db3e6
+  checksum: a8ec859b1100df67727a586b201749cc04bb481444dd4baad4bd7e07f60ed14b406d7c9fb88f569c3b4257e180b2699cca055dc1c7a4783675f003b090aa35f9
   languageName: node
   linkType: hard
 
@@ -5319,7 +5324,7 @@ __metadata:
     "@nestjs/platform-express": 8.2.6
     "@nestjs/schedule": 1.0.2
     "@nestjs/schematics": 8.0.5
-    "@nestjs/swagger": 5.1.5
+    "@nestjs/swagger": 5.2.0
     "@nestjs/testing": 8.2.6
     "@nestjs/typeorm": 8.0.3
     "@trivago/prettier-plugin-sort-imports": 3.1.1
