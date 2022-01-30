@@ -7,7 +7,7 @@
 describe('History', () => {
   describe('History Mode', () => {
     beforeEach(() => {
-      cy.visit('/history')
+      cy.visitHistory()
     })
 
     it('Cards', () => {
@@ -35,7 +35,7 @@ describe('History', () => {
             }
           ]
         })
-        cy.visit('/history')
+        cy.visitHistory()
       })
 
       it('in table view', () => {
@@ -62,7 +62,7 @@ describe('History', () => {
             }
           ]
         })
-        cy.visit('/history')
+        cy.visitHistory()
       })
 
       it('in table view', () => {
@@ -79,7 +79,7 @@ describe('History', () => {
 
   describe('Pinning', () => {
     beforeEach(() => {
-      cy.visit('/history')
+      cy.visitHistory()
     })
 
     describe('working', () => {
@@ -131,7 +131,7 @@ describe('History', () => {
       cy.intercept('GET', '/mock-backend/api/private/me/history', {
         body: []
       })
-      cy.visit('/history')
+      cy.visitHistory()
       cy.logout()
     })
 

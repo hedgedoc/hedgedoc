@@ -6,7 +6,7 @@
 
 describe('Link gets replaced with embedding: ', () => {
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
   })
 
   // TODO Add general testing of one-click-embedding component. The tests below just test a specific use of the component.

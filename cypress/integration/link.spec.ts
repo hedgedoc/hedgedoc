@@ -8,7 +8,7 @@ import '../support/index'
 
 describe('Links Intro', () => {
   beforeEach(() => {
-    cy.visit('/')
+    cy.visitHome()
   })
 
   it('History', () => {

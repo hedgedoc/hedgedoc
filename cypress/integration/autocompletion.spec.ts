@@ -6,7 +6,7 @@
 
 describe('Autocompletion works for', () => {
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
     cy.get('.CodeMirror').click().get('textarea').as('codeinput')
   })
 

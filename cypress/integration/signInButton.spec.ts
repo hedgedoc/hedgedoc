@@ -27,13 +27,13 @@ const initLoggedOutTestWithCustomAuthProviders = (
       ...enabledProviders
     }
   })
-  cy.visit('/')
+  cy.visitHome()
   cy.logout()
 }
 
 describe('When logged-in, ', () => {
   it('sign-in button is hidden', () => {
-    cy.visit('/')
+    cy.visitHome()
     cy.getByCypressId('sign-in-button').should('not.exist')
   })
 })

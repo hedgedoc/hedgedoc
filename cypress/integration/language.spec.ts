@@ -8,7 +8,7 @@ import { languages } from '../fixtures/languages'
 
 describe('Languages', () => {
   beforeEach(() => {
-    cy.visit('/')
+    cy.visitHome()
   })
 
   it('all languages are available', () => {

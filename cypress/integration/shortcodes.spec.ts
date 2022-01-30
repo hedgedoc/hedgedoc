@@ -6,7 +6,7 @@
 
 describe('Short code gets replaced or rendered: ', () => {
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
   })
 
   describe('pdf', () => {

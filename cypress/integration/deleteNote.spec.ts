@@ -6,7 +6,7 @@
 
 describe('Delete note', () => {
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
   })
 
   it('correctly deletes a note', () => {

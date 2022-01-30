@@ -8,7 +8,7 @@ describe('emojis', () => {
   const HEDGEHOG_UNICODE_CHARACTER = '\n🦔\n'
 
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
   })
 
   it('renders an emoji shortcode', () => {

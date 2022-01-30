@@ -9,7 +9,7 @@ import { branding } from '../support/config'
 const title = 'This is a test title'
 describe('Document Title', () => {
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
     cy.getByCypressId('view-mode-both').should('exist')
   })
 

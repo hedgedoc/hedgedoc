@@ -9,7 +9,7 @@ describe('Export', () => {
   const testContent = `---\ntitle: ${testTitle}\n---\nThis is some test content`
 
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
     cy.setCodemirrorContent(testContent)
   })
 

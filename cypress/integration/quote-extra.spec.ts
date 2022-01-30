@@ -6,7 +6,7 @@
 
 describe('Quote extra tags', function () {
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
   })
 
   describe('Name quote tag', () => {

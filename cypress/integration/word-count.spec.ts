@@ -6,7 +6,7 @@
 
 describe('Test word count with', () => {
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
   })
 
   it('empty note', () => {

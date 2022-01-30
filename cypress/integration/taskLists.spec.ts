@@ -11,7 +11,7 @@ const TEST_STRING_INVALID = '- [Y] abc\n\n* [  ] abc\n\n+ [-] abc\n\n1. [.] abc\
 
 describe('Task lists ', () => {
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
   })
 
   describe('render with checkboxes ', () => {

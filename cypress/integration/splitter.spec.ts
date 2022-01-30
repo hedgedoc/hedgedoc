@@ -6,7 +6,7 @@
 
 describe('Split view', () => {
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
   })
 
   it('can show both panes', () => {

@@ -6,7 +6,7 @@
 
 describe('markdown formatted links to', () => {
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
   })
 
   it('external domains render as external link', () => {
@@ -41,7 +41,7 @@ describe('markdown formatted links to', () => {
 
 describe('HTML anchor element links to', () => {
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
   })
 
   it('external domains render as external link', () => {

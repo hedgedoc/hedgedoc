@@ -8,7 +8,7 @@
 describe('Intro page', () => {
   beforeEach(() => {
     cy.intercept('/mock-backend/public/intro.md', 'test content')
-    cy.visit('/')
+    cy.visitHome()
   })
 
   describe('customizable content', () => {
@@ -20,7 +20,7 @@ describe('Intro page', () => {
       cy.intercept('/mock-backend/public/intro.md', {
         statusCode: 404
       })
-      cy.visit('/')
+      cy.visitHome()
 
       cy.getByCypressId('documentIframe').should('not.exist')
     })

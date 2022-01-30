@@ -48,7 +48,7 @@ describe('profile page', () => {
         body: []
       }
     )
-    cy.visit('/profile')
+    cy.visit('/profile', { retryOnNetworkFailure: true })
   })
 
   describe('access tokens', () => {

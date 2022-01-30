@@ -10,7 +10,7 @@ const findHljsCodeBlock = () => {
 
 describe('Code', () => {
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
   })
 
   describe('with just the language', () => {

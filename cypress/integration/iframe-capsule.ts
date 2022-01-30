@@ -6,7 +6,7 @@
 
 describe('Iframe capsule', () => {
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
   })
 
   it('shows a clickable click shield instead of the iframe', () => {

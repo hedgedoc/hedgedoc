@@ -28,13 +28,13 @@ describe('Motd', () => {
 
   it('shows the correct alert Motd text', () => {
     mockExistingMotd()
-    cy.visit('/')
+    cy.visitHome()
     cy.getByCypressId('motd').contains(motdMockContent)
   })
 
   it('can be dismissed using etag', () => {
     mockExistingMotd(true)
-    cy.visit('/')
+    cy.visitHome()
     cy.getByCypressId('motd').contains(motdMockContent)
     cy.getByCypressId('motd-dismiss')
       .click()
@@ -46,7 +46,7 @@ describe('Motd', () => {
 
   it('can be dismissed', () => {
     mockExistingMotd()
-    cy.visit('/')
+    cy.visitHome()
     cy.getByCypressId('motd').contains(motdMockContent)
     cy.getByCypressId('motd-dismiss')
       .click()
@@ -58,7 +58,7 @@ describe('Motd', () => {
 
   it("won't show again after dismiss and reload", () => {
     mockExistingMotd()
-    cy.visit('/')
+    cy.visitHome()
     cy.getByCypressId('motd').contains(motdMockContent)
     cy.getByCypressId('motd-dismiss')
       .click()
@@ -73,7 +73,7 @@ describe('Motd', () => {
 
   it('will show again after reload without dismiss', () => {
     mockExistingMotd()
-    cy.visit('/')
+    cy.visitHome()
     cy.getByCypressId('motd').contains(motdMockContent)
     cy.reload()
     cy.get('main').should('exist')
@@ -82,7 +82,7 @@ describe('Motd', () => {
 
   it("won't show again after dismiss and page navigation", () => {
     mockExistingMotd()
-    cy.visit('/')
+    cy.visitHome()
     cy.getByCypressId('motd').contains(motdMockContent)
     cy.getByCypressId('motd-dismiss')
       .click()
@@ -96,7 +96,7 @@ describe('Motd', () => {
   })
 
   it("won't show if no file exists", () => {
-    cy.visit('/')
+    cy.visitHome()
     cy.get('main').should('exist')
     cy.getByCypressId('motd').should('not.exist')
   })

@@ -6,7 +6,7 @@
 
 describe('Renderer mode', () => {
   beforeEach(() => {
-    cy.visitTestEditor()
+    cy.visitTestNote()
   })
 
   it("should be 'document' without type specified", () => {
