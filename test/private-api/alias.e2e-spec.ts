@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -25,7 +25,7 @@ describe('Alias', () => {
     await testSetup.app.init();
 
     forbiddenNoteId =
-      testSetup.configService.get('appConfig').forbiddenNoteIds[0];
+      testSetup.configService.get('noteConfig').forbiddenNoteIds[0];
     users = testSetup.users;
 
     agent1 = request.agent(testSetup.app.getHttpServer());

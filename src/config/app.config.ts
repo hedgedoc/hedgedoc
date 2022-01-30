@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,15 +7,13 @@ import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
 
 import { Loglevel } from './loglevel.enum';
-import { buildErrorMessage, parseOptionalInt, toArrayConfig } from './utils';
+import { buildErrorMessage, parseOptionalInt } from './utils';
 
 export interface AppConfig {
   domain: string;
   rendererOrigin: string;
   port: number;
   loglevel: Loglevel;
-  forbiddenNoteIds: string[];
-  maxDocumentLength: number;
 }
 
 const schema = Joi.object({
@@ -30,15 +28,6 @@ const schema = Joi.object({
     .default(Loglevel.WARN)
     .optional()
     .label('HD_LOGLEVEL'),
-  forbiddenNoteIds: Joi.array()
-    .items(Joi.string())
-    .optional()
-    .default([])
-    .label('HD_FORBIDDEN_NOTE_IDS'),
-  maxDocumentLength: Joi.number()
-    .default(100000)
-    .optional()
-    .label('HD_MAX_DOCUMENT_LENGTH'),
 });
 
 export default registerAs('appConfig', () => {
@@ -48,8 +37,6 @@ export default registerAs('appConfig', () => {
       rendererOrigin: process.env.HD_RENDERER_ORIGIN,
       port: parseOptionalInt(process.env.PORT),
       loglevel: process.env.HD_LOGLEVEL,
-      forbiddenNoteIds: toArrayConfig(process.env.HD_FORBIDDEN_NOTE_IDS, ','),
-      maxDocumentLength: parseOptionalInt(process.env.HD_MAX_DOCUMENT_LENGTH),
     },
     {
       abortEarly: false,

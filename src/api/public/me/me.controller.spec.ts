@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,7 @@ import { AuthToken } from '../../../auth/auth-token.entity';
 import { Author } from '../../../authors/author.entity';
 import appConfigMock from '../../../config/mock/app.config.mock';
 import mediaConfigMock from '../../../config/mock/media.config.mock';
+import noteConfigMock from '../../../config/mock/note.config.mock';
 import { Group } from '../../../groups/group.entity';
 import { HistoryEntry } from '../../../history/history-entry.entity';
 import { HistoryModule } from '../../../history/history.module';
@@ -44,7 +45,7 @@ describe('Me Controller', () => {
       imports: [
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [appConfigMock, mediaConfigMock],
+          load: [appConfigMock, noteConfigMock, mediaConfigMock],
         }),
         UsersModule,
         HistoryModule,

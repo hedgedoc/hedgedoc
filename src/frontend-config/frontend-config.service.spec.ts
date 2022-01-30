@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,6 +13,7 @@ import { CustomizationConfig } from '../config/customization.config';
 import { ExternalServicesConfig } from '../config/external-services.config';
 import { GitlabScope, GitlabVersion } from '../config/gitlab.enum';
 import { Loglevel } from '../config/loglevel.enum';
+import { NoteConfig } from '../config/note.config';
 import { LoggerModule } from '../logger/logger.module';
 import { getServerVersionFromPackageJson } from '../utils/serverVersion';
 import { AuthProviderType } from './frontend-config.dto';
@@ -194,8 +195,6 @@ describe('FrontendConfigService', () => {
                               rendererOrigin: renderOrigin ?? domain,
                               port: 3000,
                               loglevel: Loglevel.ERROR,
-                              forbiddenNoteIds: [],
-                              maxDocumentLength: maxDocumentLength,
                             };
                             const authConfig: AuthConfig = {
                               ...emptyAuthConfig,
@@ -221,6 +220,10 @@ describe('FrontendConfigService', () => {
                                 plantUmlServer: plantUmlServer,
                                 imageProxy: imageProxy,
                               };
+                            const noteConfig: NoteConfig = {
+                              forbiddenNoteIds: [],
+                              maxDocumentLength: maxDocumentLength,
+                            };
                             const module: TestingModule =
                               await Test.createTestingModule({
                                 imports: [
@@ -239,6 +242,10 @@ describe('FrontendConfigService', () => {
                                       registerAs(
                                         'externalServicesConfig',
                                         () => externalServicesConfig,
+                                      ),
+                                      registerAs(
+                                        'noteConfig',
+                                        () => noteConfig,
                                       ),
                                     ],
                                   }),

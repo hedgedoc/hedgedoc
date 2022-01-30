@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -33,12 +33,11 @@ describe('History', () => {
     testSetup = await TestSetupBuilder.create().build();
 
     forbiddenNoteId =
-      testSetup.configService.get('appConfig').forbiddenNoteIds[0];
+      testSetup.configService.get('noteConfig').forbiddenNoteIds[0];
 
     const moduleRef = testSetup.moduleRef;
 
     const config = moduleRef.get<ConfigService>(ConfigService);
-    forbiddenNoteId = config.get('appConfig').forbiddenNoteIds[0];
 
     const authConfig = config.get('authConfig') as AuthConfig;
     setupSessionMiddleware(testSetup.app, authConfig);

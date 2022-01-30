@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,7 @@ import { Repository } from 'typeorm';
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
 import appConfigMock from '../config/mock/app.config.mock';
+import noteConfigMock from '../config/mock/note.config.mock';
 import {
   AlreadyInDBError,
   ForbiddenIdError,
@@ -76,7 +77,7 @@ describe('NotesService', () => {
       imports: [
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [appConfigMock],
+          load: [appConfigMock, noteConfigMock],
         }),
         LoggerModule,
         UsersModule,
@@ -113,7 +114,7 @@ describe('NotesService', () => {
       .compile();
 
     const config = module.get<ConfigService>(ConfigService);
-    forbiddenNoteId = config.get('appConfig').forbiddenNoteIds[0];
+    forbiddenNoteId = config.get('noteConfig').forbiddenNoteIds[0];
     service = module.get<NotesService>(NotesService);
     noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
     revisionRepo = module.get<Repository<Revision>>(
