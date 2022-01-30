@@ -9,7 +9,11 @@ import { Repository } from 'typeorm';
 
 import { AlreadyInDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { FullUserInfoDto, UserInfoDto } from './user-info.dto';
+import {
+  FullUserInfoDto,
+  UserInfoDto,
+  UserLoginInfoDto,
+} from './user-info.dto';
 import { UserRelationEnum } from './user-relation.enum';
 import { User } from './user.entity';
 
@@ -130,5 +134,9 @@ export class UsersService {
       photo: this.getPhotoUrl(user),
       email: user.email ?? '',
     };
+  }
+
+  toUserLoginInfoDto(user: User, authProvider: string): UserLoginInfoDto {
+    return { ...this.toUserDto(user), authProvider };
   }
 }
