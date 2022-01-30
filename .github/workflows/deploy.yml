@@ -56,7 +56,7 @@ jobs:
       - name: Run netlify CLI deployment
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: bash netlify/deploy.sh "${{ github.event.number }}" "${{ github.head_ref }}" "${{ github.event.pull_request.title }}"
+        run: bash netlify/deploy.sh "${{ github.event.number }}" "${{ github.event.pull_request.title }}"
         id: netlify-result
 
       - name: Mark GitHub deployment as finished
