@@ -20,7 +20,10 @@ export const TagSelectionInput: React.FC = () => {
   const historyEntries = useApplicationState((state) => state.history)
 
   const tags = useMemo<string[]>(() => {
-    const allTags = historyEntries.map((entry) => entry.tags).flat()
+    const allTags = historyEntries
+      .map((entry) => entry.tags)
+      .flat()
+      .sort((first, second) => first.toLowerCase().localeCompare(second.toLowerCase()))
     return Array.from(new Set(allTags))
   }, [historyEntries])
 
