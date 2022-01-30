@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -21,6 +21,7 @@ import databaseConfig from './config/database.config';
 import externalConfig from './config/external-services.config';
 import hstsConfig from './config/hsts.config';
 import mediaConfig from './config/media.config';
+import noteConfig from './config/note.config';
 import { FrontendConfigModule } from './frontend-config/frontend-config.module';
 import { FrontendConfigService } from './frontend-config/frontend-config.service';
 import { GroupsModule } from './groups/groups.module';
@@ -57,6 +58,7 @@ const routes: Routes = [
     ConfigModule.forRoot({
       load: [
         appConfig,
+        noteConfig,
         mediaConfig,
         hstsConfig,
         cspConfig,

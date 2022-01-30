@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,6 +14,7 @@ import customizationConfiguration, {
 import externalServicesConfiguration, {
   ExternalServicesConfig,
 } from '../config/external-services.config';
+import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { getServerVersionFromPackageJson } from '../utils/serverVersion';
 import {
@@ -31,6 +32,8 @@ export class FrontendConfigService {
     private readonly logger: ConsoleLoggerService,
     @Inject(appConfiguration.KEY)
     private appConfig: AppConfig,
+    @Inject(noteConfiguration.KEY)
+    private noteConfig: NoteConfig,
     @Inject(authConfiguration.KEY)
     private authConfig: AuthConfig,
     @Inject(customizationConfiguration.KEY)
@@ -49,7 +52,7 @@ export class FrontendConfigService {
       authProviders: this.getAuthProviders(),
       branding: this.getBranding(),
       iframeCommunication: this.getIframeCommunication(),
-      maxDocumentLength: this.appConfig.maxDocumentLength,
+      maxDocumentLength: this.noteConfig.maxDocumentLength,
       plantUmlServer: this.externalServicesConfig.plantUmlServer
         ? new URL(this.externalServicesConfig.plantUmlServer)
         : undefined,

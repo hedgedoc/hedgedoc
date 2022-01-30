@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -23,6 +23,7 @@ import authConfigMock from '../src/config/mock/auth.config.mock';
 import customizationConfigMock from '../src/config/mock/customization.config.mock';
 import externalServicesConfigMock from '../src/config/mock/external-services.config.mock';
 import mediaConfigMock from '../src/config/mock/media.config.mock';
+import noteConfigMock from '../src/config/mock/note.config.mock';
 import { FrontendConfigModule } from '../src/frontend-config/frontend-config.module';
 import { GroupsModule } from '../src/groups/groups.module';
 import { HistoryModule } from '../src/history/history.module';
@@ -105,6 +106,7 @@ export class TestSetupBuilder {
           isGlobal: true,
           load: [
             appConfigMock,
+            noteConfigMock,
             authConfigMock,
             mediaConfigMock,
             customizationConfigMock,

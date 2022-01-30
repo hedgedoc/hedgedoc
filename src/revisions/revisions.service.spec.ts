@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,7 @@ import { Repository } from 'typeorm';
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
 import appConfigMock from '../config/mock/app.config.mock';
+import noteConfigMock from '../config/mock/note.config.mock';
 import { NotInDBError } from '../errors/errors';
 import { Group } from '../groups/group.entity';
 import { Identity } from '../identity/identity.entity';
@@ -45,7 +46,7 @@ describe('RevisionsService', () => {
         LoggerModule,
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [appConfigMock],
+          load: [appConfigMock, noteConfigMock],
         }),
       ],
     })

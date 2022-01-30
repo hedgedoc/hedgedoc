@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,6 +13,7 @@ import appConfigMock from '../../src/config/mock/app.config.mock';
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
 import mediaConfigMock from '../config/mock/media.config.mock';
+import noteConfigMock from '../config/mock/note.config.mock';
 import { ClientError, NotInDBError } from '../errors/errors';
 import { Group } from '../groups/group.entity';
 import { Identity } from '../identity/identity.entity';
@@ -51,7 +52,7 @@ describe('MediaService', () => {
       imports: [
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [mediaConfigMock, appConfigMock],
+          load: [mediaConfigMock, appConfigMock, noteConfigMock],
         }),
         LoggerModule,
         NotesModule,

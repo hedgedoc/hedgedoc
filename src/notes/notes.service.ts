@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,7 +7,7 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import appConfiguration, { AppConfig } from '../config/app.config';
+import noteConfiguration, { NoteConfig } from '../config/note.config';
 import {
   AlreadyInDBError,
   ForbiddenIdError,
@@ -47,8 +47,8 @@ export class NotesService {
     @Inject(GroupsService) private groupsService: GroupsService,
     @Inject(forwardRef(() => RevisionsService))
     private revisionsService: RevisionsService,
-    @Inject(appConfiguration.KEY)
-    private appConfig: AppConfig,
+    @Inject(noteConfiguration.KEY)
+    private noteConfig: NoteConfig,
   ) {
     this.logger.setContext(NotesService.name);
   }
@@ -227,7 +227,7 @@ export class NotesService {
    * @throws {ForbiddenIdError} the requested id or alias is forbidden
    */
   checkNoteIdOrAlias(noteIdOrAlias: string): void {
-    if (this.appConfig.forbiddenNoteIds.includes(noteIdOrAlias)) {
+    if (this.noteConfig.forbiddenNoteIds.includes(noteIdOrAlias)) {
       this.logger.debug(
         `A note with the alias '${noteIdOrAlias}' is forbidden by the administrator.`,
         'checkNoteIdOrAlias',
