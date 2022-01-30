@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,29 +10,31 @@ import { BackendType } from '../media/backends/backend-type.enum';
 import { buildErrorMessage } from './utils';
 
 export interface MediaConfig {
-  backend: {
-    use: BackendType;
-    filesystem: {
-      uploadPath: string;
-    };
-    s3: {
-      accessKeyId: string;
-      secretAccessKey: string;
-      bucket: string;
-      endPoint: string;
-    };
-    azure: {
-      connectionString: string;
-      container: string;
-    };
-    imgur: {
-      clientID: string;
-    };
-    webdav: {
-      connectionString: string;
-      uploadDir: string;
-      publicUrl: string;
-    };
+  backend: MediaBackendConfig;
+}
+
+export interface MediaBackendConfig {
+  use: BackendType;
+  filesystem: {
+    uploadPath: string;
+  };
+  s3: {
+    accessKeyId: string;
+    secretAccessKey: string;
+    bucket: string;
+    endPoint: string;
+  };
+  azure: {
+    connectionString: string;
+    container: string;
+  };
+  imgur: {
+    clientID: string;
+  };
+  webdav: {
+    connectionString: string;
+    uploadDir: string;
+    publicUrl: string;
   };
 }
 
