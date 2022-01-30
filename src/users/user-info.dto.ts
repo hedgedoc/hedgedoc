@@ -51,3 +51,12 @@ export class FullUserInfoDto extends UserInfoDto {
   @IsString()
   email: string;
 }
+
+export class UserLoginInfoDto extends UserInfoDto {
+  /**
+   * Identifier of the auth provider that was used to log in
+   */
+  @ApiProperty()
+  @IsString()
+  authProvider: string;
+}

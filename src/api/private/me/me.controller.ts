@@ -10,11 +10,12 @@ import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
-import { FullUserInfoDto } from '../../../users/user-info.dto';
+import { UserLoginInfoDto } from '../../../users/user-info.dto';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
 import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
+import { SessionAuthProvider } from '../../utils/session-authprovider.decorator';
 
 @UseGuards(SessionGuard)
 @OpenApi(401)
@@ -31,8 +32,11 @@ export class MeController {
 
   @Get()
   @OpenApi(200)
-  getMe(@RequestUser() user: User): FullUserInfoDto {
-    return this.userService.toFullUserDto(user);
+  getMe(
+    @RequestUser() user: User,
+    @SessionAuthProvider() authProvider: string,
+  ): UserInfoDto {
+    return this.userService.toUserLoginInfoDto(user, authProvider);
   }
 
   @Get('media')

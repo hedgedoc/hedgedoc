@@ -8,7 +8,7 @@ import request from 'supertest';
 
 import { NotInDBError } from '../../src/errors/errors';
 import { Note } from '../../src/notes/note.entity';
-import { FullUserInfoDto } from '../../src/users/user-info.dto';
+import { UserLoginInfoDto } from '../../src/users/user-info.dto';
 import { User } from '../../src/users/user.entity';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
@@ -50,12 +50,12 @@ describe('Me', () => {
   });
 
   it('GET /me', async () => {
-    const userInfo = testSetup.userService.toFullUserDto(user);
+    const userInfo = testSetup.userService.toUserLoginInfoDto(user, 'local');
     const response = await agent
       .get('/api/private/me')
       .expect('Content-Type', /json/)
       .expect(200);
-    const gotUser = response.body as FullUserInfoDto;
+    const gotUser = response.body as UserLoginInfoDto;
     expect(gotUser).toEqual(userInfo);
   });
 

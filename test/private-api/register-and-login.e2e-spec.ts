@@ -55,6 +55,7 @@ describe('Register and Login', () => {
     const profile = await session.get('/api/private/me').expect(200);
     expect(profile.body.username).toEqual(USERNAME);
     expect(profile.body.displayName).toEqual(DISPLAYNAME);
+    expect(profile.body.authProvider).toEqual('local');
 
     // logout again
     await session.delete('/api/private/auth/logout').expect(204);

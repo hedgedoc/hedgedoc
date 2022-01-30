@@ -75,11 +75,18 @@ export class AuthController {
   @Post('local/login')
   @OpenApi(201, 400, 401)
   login(
-    @Req() request: Request & { session: { user: string } },
+    @Req()
+    request: Request & {
+      session: {
+        authProvider: string;
+        user: string;
+      };
+    },
     @Body() loginDto: LoginDto,
   ): void {
     // There is no further testing needed as we only get to this point if LocalAuthGuard was successful
     request.session.user = loginDto.username;
+    request.session.authProvider = 'local';
   }
 
   @UseGuards(SessionGuard)
