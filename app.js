@@ -291,9 +291,9 @@ function syncAndListen () {
         process.exit(1)
       }
     })
-  }).catch(() => {
+  }).catch((dbError) => {
     if (currentDBTry < maxDBTries) {
-      logger.warn(`Database cannot be reached. Try ${currentDBTry} of ${maxDBTries}.`)
+      logger.warn(`Database cannot be reached. Try ${currentDBTry} of ${maxDBTries}. (${dbError})`)
       currentDBTry++
       setTimeout(function () {
         syncAndListen()
