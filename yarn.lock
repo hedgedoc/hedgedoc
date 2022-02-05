@@ -1714,7 +1714,6 @@ __metadata:
     cross-env: 7.0.3
     cypress: 9.4.1
     cypress-commands: 2.0.1
-    cypress-file-upload: 6.0.0-beta.0
     d3-graphviz: 3.2.0
     diff: 5.0.0
     dompurify: 2.3.5
@@ -6864,15 +6863,6 @@ __metadata:
   dependencies:
     path-browserify: ^1.0.1
   checksum: f1cebfeea4d9d63a319620dd1bc6718764c397f7051d8987480a9a6c3391796fa8feafda47914e231fb684a544f9ad1e8981b176143718c4722f008c3a993044
-  languageName: node
-  linkType: hard
-
-"cypress-file-upload@npm:6.0.0-beta.0":
-  version: 6.0.0-beta.0
-  resolution: "cypress-file-upload@npm:6.0.0-beta.0"
-  peerDependencies:
-    cypress: ">=6.0.0"
-  checksum: 3cb312ab0de1b9501c2dfef2ca45974a168b3ae388213d82ba31f562be65e67c7b145e6066dca29f84dae68d854465c65568e94213b9228fade7d1738643fb25
   languageName: node
   linkType: hard
 

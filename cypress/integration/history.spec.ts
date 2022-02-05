@@ -133,39 +133,58 @@ describe('History', () => {
       })
       cy.visitHistory()
       cy.logout()
+
+      cy.fixture('history.json').as('history')
+      cy.fixture('history-2.json').as('history-2')
+      cy.fixture('invalid-history.txt').as('invalid-history')
     })
 
     it('works with valid file', () => {
       cy.getByCypressId('import-history-file-button').should('be.visible')
-      cy.getByCypressId('import-history-file-input').attachFixture({
-        filePath: 'history.json',
-        mimeType: 'application/json'
-      })
+      cy.getByCypressId('import-history-file-input').selectFile(
+        {
+          contents: '@history',
+          fileName: 'history.json',
+          mimeType: 'application/json'
+        },
+        { force: true }
+      )
       cy.getByCypressId('history-entry-title').should('have.length', 1).contains('cy-Test')
     })
 
     it('fails on invalid file', () => {
       cy.getByCypressId('import-history-file-button').should('be.visible')
-      cy.getByCypressId('import-history-file-input').attachFixture({
-        filePath: 'invalid-history.txt',
-        mimeType: 'text/plain'
-      })
+      cy.getByCypressId('import-history-file-input').selectFile(
+        {
+          contents: '@invalid-history',
+          fileName: 'invalid-history.txt',
+          mimeType: 'text/plain'
+        },
+        { force: true }
+      )
       cy.getByCypressId('notification-toast').should('be.visible')
     })
 
     it('works when selecting two files with the same name', () => {
       cy.getByCypressId('import-history-file-button').should('be.visible')
-      cy.getByCypressId('import-history-file-input').attachFixture({
-        filePath: 'history.json',
-        mimeType: 'application/json'
-      })
+      cy.getByCypressId('import-history-file-input').selectFile(
+        {
+          contents: '@history',
+          fileName: 'history.json',
+          mimeType: 'application/json'
+        },
+        { force: true }
+      )
       cy.getByCypressId('history-entry-title').should('have.length', 1).contains('cy-Test')
       cy.getByCypressId('import-history-file-button').should('be.visible')
-      cy.getByCypressId('import-history-file-input').attachFixture({
-        filePath: 'history-2.json',
-        fileName: 'history.json',
-        mimeType: 'application/json'
-      })
+      cy.getByCypressId('import-history-file-input').selectFile(
+        {
+          contents: '@history-2',
+          fileName: 'history.json',
+          mimeType: 'application/json'
+        },
+        { force: true }
+      )
       cy.getByCypressId('history-entry-title').should('have.length', 2).contains('cy-Test2')
     })
   })

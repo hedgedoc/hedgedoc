@@ -7,15 +7,20 @@
 describe('Import markdown file', () => {
   beforeEach(() => {
     cy.visitTestNote()
+    cy.fixture('import.md').as('import')
   })
 
   it('import on blank note', () => {
     cy.getByCypressId('menu-import').click()
     cy.getByCypressId('menu-import-markdown-button').should('be.visible')
-    cy.getByCypressId('menu-import-markdown-input').attachFixture({
-      filePath: 'import.md',
-      mimeType: 'text/markdown'
-    })
+    cy.getByCypressId('menu-import-markdown-input').selectFile(
+      {
+        contents: '@import',
+        fileName: 'import.md',
+        mimeType: 'text/markdown'
+      },
+      { force: true }
+    )
     cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span').should(
       'have.text',
       '# Some short import test file'
@@ -27,10 +32,14 @@ describe('Import markdown file', () => {
     cy.setCodemirrorContent('test\nabc')
     cy.getByCypressId('menu-import').click()
     cy.getByCypressId('menu-import-markdown-button').should('be.visible')
-    cy.getByCypressId('menu-import-markdown-input').attachFixture({
-      filePath: 'import.md',
-      mimeType: 'text/markdown'
-    })
+    cy.getByCypressId('menu-import-markdown-input').selectFile(
+      {
+        contents: '@import',
+        fileName: 'import.md',
+        mimeType: 'text/markdown'
+      },
+      { force: true }
+    )
     cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span').should('have.text', 'test')
     cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span > span').should('have.text', 'abc')
     cy.get('.CodeMirror-code > div:nth-of-type(3) > .CodeMirror-line > span > span').should(

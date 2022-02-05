@@ -9,6 +9,7 @@ const imageUrl = 'http://example.com/non-existing.png'
 describe('File upload', () => {
   beforeEach(() => {
     cy.visitTestNote()
+    cy.fixture('demo.png').as('demoImage')
   })
 
   it("doesn't prevent drag'n'drop of plain text", () => {
@@ -41,10 +42,14 @@ describe('File upload', () => {
     })
     it('via button', () => {
       cy.getByCypressId('editor-toolbar-upload-image-button').should('be.visible')
-      cy.getByCypressId('editor-toolbar-upload-image-input').attachFixture({
-        filePath: 'demo.png',
-        mimeType: 'image/png'
-      })
+      cy.getByCypressId('editor-toolbar-upload-image-input').selectFile(
+        {
+          contents: '@demoImage',
+          fileName: 'demo.png',
+          mimeType: 'image/png'
+        },
+        { force: true }
+      )
       cy.get('.CodeMirror-activeline').contains(`![](${imageUrl})`)
     })
 
@@ -62,17 +67,15 @@ describe('File upload', () => {
     })
 
     it('via drag and drop', () => {
-      cy.fixture('demo.png').then((image: string) => {
-        const dropEvent = {
-          dataTransfer: {
-            files: [Cypress.Blob.base64StringToBlob(image, 'image/png')],
-            effectAllowed: 'uninitialized'
-          }
-        }
-        cy.get('.CodeMirror-scroll').trigger('dragenter', dropEvent)
-        cy.get('.CodeMirror-scroll').trigger('drop', dropEvent)
-        cy.get('.CodeMirror-activeline').contains(`![](${imageUrl})`)
-      })
+      cy.get('.CodeMirror-scroll').selectFile(
+        {
+          contents: '@demoImage',
+          fileName: 'demo.png',
+          mimeType: 'image/png'
+        },
+        { action: 'drag-drop', force: true }
+      )
+      cy.get('.CodeMirror-activeline').contains(`![](${imageUrl})`)
     })
   })
 
@@ -87,10 +90,14 @@ describe('File upload', () => {
       }
     )
     cy.getByCypressId('editor-toolbar-upload-image-button').should('be.visible')
-    cy.getByCypressId('editor-toolbar-upload-image-input').attachFixture({
-      filePath: 'demo.png',
-      mimeType: 'image/png'
-    })
+    cy.getByCypressId('editor-toolbar-upload-image-input').selectFile(
+      {
+        contents: '@demoImage',
+        fileName: 'demo.png',
+        mimeType: 'image/png'
+      },
+      { force: true }
+    )
     cy.get('.CodeMirror-activeline').contains('![upload of demo.png failed]()')
   })
 
