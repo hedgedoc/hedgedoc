@@ -1323,9 +1323,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trivago/prettier-plugin-sort-imports@npm:3.1.1":
-  version: 3.1.1
-  resolution: "@trivago/prettier-plugin-sort-imports@npm:3.1.1"
+"@trivago/prettier-plugin-sort-imports@npm:3.2.0":
+  version: 3.2.0
+  resolution: "@trivago/prettier-plugin-sort-imports@npm:3.2.0"
   dependencies:
     "@babel/core": 7.13.10
     "@babel/generator": 7.13.9
@@ -1336,7 +1336,7 @@ __metadata:
     lodash: 4.17.21
   peerDependencies:
     prettier: 2.x
-  checksum: 55c6e2d99319ccf4864f6e9a72ee81219b9a2aee962b989b6b2c4d113587daa95f0b96c803d08047790fa27e830a34bf75091e099ca9a088921fd36827af6116
+  checksum: 22461433fa0dc82621713cdfb88f8f527c6c41729e9859bb7f0106ef23c35b0da591ee7fed63516be7e8df5604dc8055f0c7e200fed1ef97f44000c9fe25a890
   languageName: node
   linkType: hard
 
@@ -5255,7 +5255,7 @@ __metadata:
     "@nestjs/swagger": 5.2.0
     "@nestjs/testing": 8.2.6
     "@nestjs/typeorm": 8.0.3
-    "@trivago/prettier-plugin-sort-imports": 3.1.1
+    "@trivago/prettier-plugin-sort-imports": 3.2.0
     "@tsconfig/node12": 1.0.9
     "@types/bcrypt": 5.0.0
     "@types/cli-color": 2.0.2
