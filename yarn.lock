@@ -1684,7 +1684,7 @@ __metadata:
     "@matejmazur/react-katex": 3.1.3
     "@next/bundle-analyzer": 12.0.9
     "@redux-devtools/core": 3.11.0
-    "@svgr/webpack": 6.2.0
+    "@svgr/webpack": 6.2.1
     "@testing-library/cypress": 8.0.2
     "@testing-library/jest-dom": 5.16.2
     "@testing-library/react": 12.1.2
@@ -3197,7 +3197,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/core@npm:^6.2.0":
+"@svgr/core@npm:^6.2.1":
   version: 6.2.1
   resolution: "@svgr/core@npm:6.2.1"
   dependencies:
@@ -3218,7 +3218,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/plugin-jsx@npm:^6.2.0, @svgr/plugin-jsx@npm:^6.2.1":
+"@svgr/plugin-jsx@npm:^6.2.1":
   version: 6.2.1
   resolution: "@svgr/plugin-jsx@npm:6.2.1"
   dependencies:
@@ -3245,19 +3245,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/webpack@npm:6.2.0":
-  version: 6.2.0
-  resolution: "@svgr/webpack@npm:6.2.0"
+"@svgr/webpack@npm:6.2.1":
+  version: 6.2.1
+  resolution: "@svgr/webpack@npm:6.2.1"
   dependencies:
     "@babel/core": ^7.15.5
     "@babel/plugin-transform-react-constant-elements": ^7.14.5
     "@babel/preset-env": ^7.15.6
     "@babel/preset-react": ^7.14.5
     "@babel/preset-typescript": ^7.15.0
-    "@svgr/core": ^6.2.0
-    "@svgr/plugin-jsx": ^6.2.0
+    "@svgr/core": ^6.2.1
+    "@svgr/plugin-jsx": ^6.2.1
     "@svgr/plugin-svgo": ^6.2.0
-  checksum: 4fae0ee56c0674a72d896bd3d0ad7f188eb7320f060db1467953f323055c7f75e2f3b827dcf1670a2888209fa4ef30f42c1d4f89db37ff90e3c1622e9b04bf3b
+  checksum: 3da7e61942d7fc3c5cdd0ffd2fbc5520168bc75bf783920e843e920bdc462f9869d47a16ca37be9f3435c90eb89c0d4acd044a0f2e1ad478ff2bc90d65e6c2dd
   languageName: node
   linkType: hard
 
