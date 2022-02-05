@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Body, Controller, Delete, Get, Post, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
@@ -35,7 +35,7 @@ export class MeController {
   getMe(
     @RequestUser() user: User,
     @SessionAuthProvider() authProvider: string,
-  ): UserInfoDto {
+  ): UserLoginInfoDto {
     return this.userService.toUserLoginInfoDto(user, authProvider);
   }
 
@@ -61,10 +61,19 @@ export class MeController {
   }
 
   @Post('profile')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        displayName: { type: 'string', nullable: false },
+      },
+      required: ['displayName'],
+    },
+  })
   @OpenApi(200)
   async updateDisplayName(
     @RequestUser() user: User,
-    @Body('name') newDisplayName: string,
+    @Body('displayName') newDisplayName: string,
   ): Promise<void> {
     await this.userService.changeDisplayName(user, newDisplayName);
   }

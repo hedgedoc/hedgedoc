@@ -103,7 +103,7 @@ describe('Me', () => {
     await agent
       .post('/api/private/me/profile')
       .send({
-        name: newDisplayName,
+        displayName: newDisplayName,
       })
       .expect(201);
     const dbUser = await testSetup.userService.getUserByUsername('hardcoded');
