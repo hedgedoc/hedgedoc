@@ -1730,7 +1730,7 @@ __metadata:
     eslint-plugin-testing-library: 5.0.5
     fast-deep-equal: 3.1.3
     firacode: 6.2.0
-    flowchart.js: 1.17.0
+    flowchart.js: 1.17.1
     fork-awesome: 1.2.0
     highlight.js: 11.4.0
     i18next: 21.6.10
@@ -9992,12 +9992,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flowchart.js@npm:1.17.0":
-  version: 1.17.0
-  resolution: "flowchart.js@npm:1.17.0"
+"flowchart.js@npm:1.17.1":
+  version: 1.17.1
+  resolution: "flowchart.js@npm:1.17.1"
   dependencies:
     raphael: 2.3.0
-  checksum: 0ac185104c8ab6e54aa9fe2d330d48288f9aee4e526d3c5c17b3c447739d105fa0cc59b2b5e4c4efb3a103dbd49bf981e738aedc0a49dc982485bbcd11fbae52
+  checksum: ae9283935e79fe7a69d854b958d0b5026c95a5aa6566cd9882e4652719f8c5054cff020c5fdabea8f7cdda2cce80633e2ea863a74c98fa4e7a8acc06fc27680f
   languageName: node
   linkType: hard
 
