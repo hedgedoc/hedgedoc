@@ -1779,7 +1779,7 @@ __metadata:
     reveal.js: 4.2.1
     sanitize-filename: 1.6.3
     sass: 1.49.0
-    sharp: 0.29.3
+    sharp: 0.30.0
     ts-loader: 9.2.6
     ts-mockery: 1.2.0
     ts-node: 10.4.0
@@ -6287,7 +6287,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color@npm:^4.0.1":
+"color@npm:^4.2.0":
   version: 4.2.0
   resolution: "color@npm:4.2.0"
   dependencies:
@@ -14409,7 +14409,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-addon-api@npm:^4.2.0":
+"node-addon-api@npm:^4.3.0":
   version: 4.3.0
   resolution: "node-addon-api@npm:4.3.0"
   dependencies:
@@ -15499,7 +15499,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prebuild-install@npm:^7.0.0":
+"prebuild-install@npm:^7.0.1":
   version: 7.0.1
   resolution: "prebuild-install@npm:7.0.1"
   dependencies:
@@ -17059,20 +17059,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sharp@npm:0.29.3":
-  version: 0.29.3
-  resolution: "sharp@npm:0.29.3"
+"sharp@npm:0.30.0":
+  version: 0.30.0
+  resolution: "sharp@npm:0.30.0"
   dependencies:
-    color: ^4.0.1
-    detect-libc: ^1.0.3
-    node-addon-api: ^4.2.0
+    color: ^4.2.0
+    detect-libc: ^2.0.0
+    node-addon-api: ^4.3.0
     node-gyp: latest
-    prebuild-install: ^7.0.0
+    prebuild-install: ^7.0.1
     semver: ^7.3.5
-    simple-get: ^4.0.0
+    simple-get: ^4.0.1
     tar-fs: ^2.1.1
     tunnel-agent: ^0.6.0
-  checksum: d496cdd546c9abe743aebcee013731295f735687819a18c2bdcbba6f31a6b259f3da95af5c11260a8fedc9d4ab95697f5f8c4f3cd65232792b5cfb876bea7c9a
+  checksum: 64f78d22bf9c86634d6bad967269da9c17a1e63c193ebcc591f6cc27ac936eaded8f8671dc9943968bc4a71ce0f5b3c4bf4fcf55d90fb40e71cf456f83d74467
   languageName: node
   linkType: hard
 
@@ -17117,7 +17117,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"simple-get@npm:^4.0.0":
+"simple-get@npm:^4.0.0, simple-get@npm:^4.0.1":
   version: 4.0.1
   resolution: "simple-get@npm:4.0.1"
   dependencies:
