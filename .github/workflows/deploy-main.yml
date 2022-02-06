@@ -1,0 +1,72 @@
+# SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+name: deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploys to netlify
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+      - name: Cache yarn cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-16-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn
+
+      - name: Set up NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build netlify variant
+        run: yarn build:netlify
+
+      - name: Remove Next.js cache to avoid it being deployed
+        run: rm -r .next/cache
+
+      - name: Mark GitHub deployment as started
+        uses: bobheadxi/deployments@v0.6.2
+        id: github-deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: "Latest main"
+          no_override: false
+          ref: ${{ github.ref }}
+
+      - name: Run netlify CLI deployment
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: bash netlify/deploy-main.sh "${{ github.event.head_commit.id }}" "${{ github.event.head_commit.message }}"
+        id: netlify-result
+
+      - name: Mark GitHub deployment as finished
+        if: always()
+        uses: bobheadxi/deployments@v0.6.2
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env_url: ${{ steps.netlify-result.outputs.url }}
+          logs: ${{ steps.netlify-result.outputs.logs }}
+          status: ${{ job.status }}
+          deployment_id: ${{ steps.github-deployment.outputs.deployment_id }}
+          no_override: false
