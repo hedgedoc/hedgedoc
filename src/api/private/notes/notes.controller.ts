@@ -46,7 +46,7 @@ import {
   unauthorizedDescription,
 } from '../../utils/descriptions';
 import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
-import { MarkdownBody } from '../../utils/markdownbody-decorator';
+import { MarkdownBody } from '../../utils/markdown-body.decorator';
 import { Permissions } from '../../utils/permissions.decorator';
 import { PermissionsGuard } from '../../utils/permissions.guard';
 import { RequestNote } from '../../utils/request-note.decorator';
