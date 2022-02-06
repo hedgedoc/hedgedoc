@@ -34,6 +34,7 @@ import { Note } from '../../../notes/note.entity';
 import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
 import { NotesService } from '../../../notes/notes.service';
 import { Permission } from '../../../permissions/permissions.enum';
+import { PermissionsService } from '../../../permissions/permissions.service';
 import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
@@ -61,6 +62,7 @@ export class NotesController {
     private revisionsService: RevisionsService,
     private historyService: HistoryService,
     private mediaService: MediaService,
+    private permissionService: PermissionsService,
   ) {
     this.logger.setContext(NotesController.name);
   }
@@ -224,7 +226,7 @@ export class NotesController {
     @Body() updateDto: NotePermissionsUpdateDto,
   ): Promise<NotePermissionsDto> {
     return await this.noteService.toNotePermissionsDto(
-      await this.noteService.updateNotePermissions(note, updateDto),
+      await this.permissionService.updateNotePermissions(note, updateDto),
     );
   }
 
@@ -266,22 +268,13 @@ export class NotesController {
     @Param('userName') username: string,
     @Body() canEdit: boolean,
   ): Promise<NotePermissionsDto> {
-    try {
-      const permissionUser = await this.userService.getUserByUsername(username);
-      const returnedNote = await this.noteService.setUserPermission(
-        note,
-        permissionUser,
-        canEdit,
-      );
-      return await this.noteService.toNotePermissionsDto(returnedNote);
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new BadRequestException(
-          "Can't add user to permissions. User not known.",
-        );
-      }
-      throw e;
-    }
+    const permissionUser = await this.userService.getUserByUsername(username);
+    const returnedNote = await this.permissionService.setUserPermission(
+      note,
+      permissionUser,
+      canEdit,
+    );
+    return await this.noteService.toNotePermissionsDto(returnedNote);
   }
 
   @UseInterceptors(GetNoteInterceptor)
@@ -304,7 +297,7 @@ export class NotesController {
   ): Promise<NotePermissionsDto> {
     try {
       const permissionUser = await this.userService.getUserByUsername(username);
-      const returnedNote = await this.noteService.removeUserPermission(
+      const returnedNote = await this.permissionService.removeUserPermission(
         note,
         permissionUser,
       );
@@ -338,22 +331,13 @@ export class NotesController {
     @Param('groupName') groupName: string,
     @Body() canEdit: boolean,
   ): Promise<NotePermissionsDto> {
-    try {
-      const permissionGroup = await this.groupService.getGroupByName(groupName);
-      const returnedNote = await this.noteService.setGroupPermission(
-        note,
-        permissionGroup,
-        canEdit,
-      );
-      return await this.noteService.toNotePermissionsDto(returnedNote);
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new BadRequestException(
-          "Can't add group to permissions. Group not known.",
-        );
-      }
-      throw e;
-    }
+    const permissionGroup = await this.groupService.getGroupByName(groupName);
+    const returnedNote = await this.permissionService.setGroupPermission(
+      note,
+      permissionGroup,
+      canEdit,
+    );
+    return await this.noteService.toNotePermissionsDto(returnedNote);
   }
 
   @UseInterceptors(GetNoteInterceptor)
@@ -374,21 +358,12 @@ export class NotesController {
     @RequestNote() note: Note,
     @Param('groupName') groupName: string,
   ): Promise<NotePermissionsDto> {
-    try {
-      const permissionGroup = await this.groupService.getGroupByName(groupName);
-      const returnedNote = await this.noteService.removeGroupPermission(
-        note,
-        permissionGroup,
-      );
-      return await this.noteService.toNotePermissionsDto(returnedNote);
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new BadRequestException(
-          "Can't remove group from permissions. Group not known.",
-        );
-      }
-      throw e;
-    }
+    const permissionGroup = await this.groupService.getGroupByName(groupName);
+    const returnedNote = await this.permissionService.removeGroupPermission(
+      note,
+      permissionGroup,
+    );
+    return await this.noteService.toNotePermissionsDto(returnedNote);
   }
 
   @UseInterceptors(GetNoteInterceptor)
@@ -409,17 +384,10 @@ export class NotesController {
     @RequestNote() note: Note,
     @Body() newOwner: string,
   ): Promise<NoteDto> {
-    try {
-      const owner = await this.userService.getUserByUsername(newOwner);
-      return await this.noteService.toNoteDto(
-        await this.noteService.changeOwner(note, owner),
-      );
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new BadRequestException("Can't set new owner. User not known.");
-      }
-      throw e;
-    }
+    const owner = await this.userService.getUserByUsername(newOwner);
+    return await this.noteService.toNoteDto(
+      await this.permissionService.changeOwner(note, owner),
+    );
   }
 
   @UseInterceptors(GetNoteInterceptor)
