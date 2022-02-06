@@ -12,26 +12,18 @@ import {
   AlreadyInDBError,
   ForbiddenIdError,
   NotInDBError,
-  PermissionsUpdateInconsistentError,
 } from '../errors/errors';
-import { Group } from '../groups/group.entity';
 import { GroupsService } from '../groups/groups.service';
 import { HistoryEntry } from '../history/history-entry.entity';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
-import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Revision } from '../revisions/revision.entity';
 import { RevisionsService } from '../revisions/revisions.service';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
-import { checkArrayForDuplicates } from '../utils/arrayDuplicatCheck';
 import { Alias } from './alias.entity';
 import { AliasService } from './alias.service';
 import { NoteMetadataDto } from './note-metadata.dto';
-import {
-  NotePermissionsDto,
-  NotePermissionsUpdateDto,
-} from './note-permissions.dto';
+import { NotePermissionsDto } from './note-permissions.dto';
 import { NoteDto } from './note.dto';
 import { Note } from './note.entity';
 import { Tag } from './tag.entity';
@@ -273,182 +265,6 @@ export class NotesService {
 
   /**
    * @async
-   * Update a notes permissions.
-   * @param {Note} note - the note
-   * @param {NotePermissionsUpdateDto} newPermissions - the permissions the not should be set to
-   * @return {Note} the note with the new permissions
-   * @throws {NotInDBError} there is no note with this id or alias
-   * @throws {PermissionsUpdateInconsistentError} the new permissions specify a user or group twice.
-   */
-  async updateNotePermissions(
-    note: Note,
-    newPermissions: NotePermissionsUpdateDto,
-  ): Promise<Note> {
-    const users = newPermissions.sharedToUsers.map(
-      (userPermission) => userPermission.username,
-    );
-
-    const groups = newPermissions.sharedToGroups.map(
-      (groupPermission) => groupPermission.groupName,
-    );
-
-    if (checkArrayForDuplicates(users) || checkArrayForDuplicates(groups)) {
-      this.logger.debug(
-        `The PermissionUpdate requested specifies the same user or group multiple times.`,
-        'updateNotePermissions',
-      );
-      throw new PermissionsUpdateInconsistentError(
-        'The PermissionUpdate requested specifies the same user or group multiple times.',
-      );
-    }
-
-    note.userPermissions = Promise.resolve([]);
-    note.groupPermissions = Promise.resolve([]);
-
-    // Create new userPermissions
-    for (const newUserPermission of newPermissions.sharedToUsers) {
-      const user = await this.usersService.getUserByUsername(
-        newUserPermission.username,
-      );
-      const createdPermission = NoteUserPermission.create(
-        user,
-        note,
-        newUserPermission.canEdit,
-      );
-      createdPermission.note = note;
-      (await note.userPermissions).push(createdPermission);
-    }
-
-    // Create groupPermissions
-    for (const newGroupPermission of newPermissions.sharedToGroups) {
-      const group = await this.groupsService.getGroupByName(
-        newGroupPermission.groupName,
-      );
-      const createdPermission = NoteGroupPermission.create(
-        group,
-        note,
-        newGroupPermission.canEdit,
-      );
-      createdPermission.note = note;
-      (await note.groupPermissions).push(createdPermission);
-    }
-
-    return await this.noteRepository.save(note);
-  }
-
-  /**
-   * @async
-   * Set permission for a specific user on a note.
-   * @param {Note} note - the note
-   * @param {User} permissionUser - the user for which the permission should be set
-   * @param {boolean} canEdit - specifies if the user can edit the note
-   * @return {Note} the note with the new permission
-   */
-  async setUserPermission(
-    note: Note,
-    permissionUser: User,
-    canEdit: boolean,
-  ): Promise<Note> {
-    const permissions = await note.userPermissions;
-    const permission = permissions.find(
-      (value: NoteUserPermission, index: number) => {
-        if (value.user.id == permissionUser.id) {
-          if (value.canEdit != canEdit) {
-            value.canEdit = canEdit;
-            permissions[index] = value;
-          }
-          return true;
-        }
-      },
-    );
-    if (permission == undefined) {
-      const noteUserPermission = NoteUserPermission.create(
-        permissionUser,
-        note,
-        canEdit,
-      );
-      (await note.userPermissions).push(noteUserPermission);
-    }
-    return await this.noteRepository.save(note);
-  }
-
-  /**
-   * @async
-   * Remove permission for a specific user on a note.
-   * @param {Note} note - the note
-   * @param {User} permissionUser - the user for which the permission should be set
-   * @return {Note} the note with the new permission
-   */
-  async removeUserPermission(note: Note, permissionUser: User): Promise<Note> {
-    const permissions = await note.userPermissions;
-    const permissionsFiltered = permissions.filter(
-      (value: NoteUserPermission) => {
-        return value.user.id != permissionUser.id;
-      },
-    );
-    note.userPermissions = Promise.resolve(permissionsFiltered);
-    return await this.noteRepository.save(note);
-  }
-
-  /**
-   * @async
-   * Set permission for a specific group on a note.
-   * @param {Note} note - the note
-   * @param {Group} permissionGroup - the group for which the permission should be set
-   * @param {boolean} canEdit - specifies if the group can edit the note
-   * @return {Note} the note with the new permission
-   */
-  async setGroupPermission(
-    note: Note,
-    permissionGroup: Group,
-    canEdit: boolean,
-  ): Promise<Note> {
-    const permissions = await note.groupPermissions;
-    const permission = permissions.find(
-      (value: NoteGroupPermission, index: number) => {
-        if (value.group.id == permissionGroup.id) {
-          if (value.canEdit != canEdit) {
-            value.canEdit = canEdit;
-            permissions[index] = value;
-          }
-          return true;
-        }
-      },
-    );
-    if (permission == undefined) {
-      const noteGroupPermission = NoteGroupPermission.create(
-        permissionGroup,
-        note,
-        canEdit,
-      );
-      (await note.groupPermissions).push(noteGroupPermission);
-    }
-    return await this.noteRepository.save(note);
-  }
-
-  /**
-   * @async
-   * Remove permission for a specific group on a note.
-   * @param {Note} note - the note
-   * @param {Group} permissionGroup - the group for which the permission should be set
-   * @return {Note} the note with the new permission
-   */
-  async removeGroupPermission(
-    note: Note,
-    permissionGroup: Group,
-  ): Promise<Note> {
-    const permissions = await note.groupPermissions;
-    const permissionsFiltered = permissions.filter(
-      (value: NoteGroupPermission) => {
-        return value.group.id != permissionGroup.id;
-      },
-    );
-    note.groupPermissions = Promise.resolve(permissionsFiltered);
-    return await this.noteRepository.save(note);
-  }
-
-  /**
-   * @async
    * Calculate the updateUser (for the NoteDto) for a Note.
    * @param {Note} note - the note to use
    * @return {User} user to be used as updateUser in the NoteDto
@@ -527,18 +343,6 @@ export class NotesService {
       updateUsername: updateUser ? updateUser.username : null,
       viewCount: note.viewCount,
     };
-  }
-
-  /**
-   * @async
-   * Updates the owner of a note.
-   * @param {Note} note - the note to use
-   * @param {User} owner - the new owner
-   * @return {Note} the updated note
-   */
-  async changeOwner(note: Note, owner: User): Promise<Note> {
-    note.owner = Promise.resolve(owner);
-    return await this.noteRepository.save(note);
   }
 
   /**

@@ -6,16 +6,23 @@
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
 import appConfigMock from '../config/mock/app.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
+import { PermissionsUpdateInconsistentError } from '../errors/errors';
 import { Group } from '../groups/group.entity';
+import { GroupsModule } from '../groups/groups.module';
 import { SpecialGroup } from '../groups/groups.special';
 import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
 import { Alias } from '../notes/alias.entity';
+import {
+  NoteGroupPermissionUpdateDto,
+  NoteUserPermissionUpdateDto,
+} from '../notes/note-permissions.dto';
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
@@ -30,25 +37,54 @@ import { PermissionsModule } from './permissions.module';
 import { GuestPermission, PermissionsService } from './permissions.service';
 
 describe('PermissionsService', () => {
-  let permissionsService: PermissionsService;
+  let service: PermissionsService;
   let notes: Note[];
+  let noteRepo: Repository<Note>;
+  let userRepo: Repository<User>;
+  let groupRepo: Repository<Group>;
 
   beforeAll(async () => {
+    /**
+     * We need to have *one* userRepo and *one* noteRepo for both the providers
+     * array and the overrideProvider call, as otherwise we have two instances
+     * and the mock of createQueryBuilder replaces the wrong one
+     * **/
+    userRepo = new Repository<User>();
+    noteRepo = new Repository<Note>();
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PermissionsService],
+      providers: [
+        PermissionsService,
+        {
+          provide: getRepositoryToken(Note),
+          useValue: noteRepo,
+        },
+        {
+          provide: getRepositoryToken(Group),
+          useClass: Repository,
+        },
+        {
+          provide: getRepositoryToken(User),
+          useValue: userRepo,
+        },
+      ],
       imports: [
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock],
+        }),
+        LoggerModule,
         PermissionsModule,
         UsersModule,
-        LoggerModule,
         NotesModule,
         ConfigModule.forRoot({
           isGlobal: true,
           load: [appConfigMock, noteConfigMock],
         }),
+        GroupsModule,
       ],
     })
       .overrideProvider(getRepositoryToken(User))
-      .useValue({})
+      .useValue(userRepo)
       .overrideProvider(getRepositoryToken(AuthToken))
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
@@ -58,7 +94,7 @@ describe('PermissionsService', () => {
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})
       .overrideProvider(getRepositoryToken(Note))
-      .useValue({})
+      .useValue(noteRepo)
       .overrideProvider(getRepositoryToken(Tag))
       .useValue({})
       .overrideProvider(getRepositoryToken(NoteGroupPermission))
@@ -66,7 +102,7 @@ describe('PermissionsService', () => {
       .overrideProvider(getRepositoryToken(NoteUserPermission))
       .useValue({})
       .overrideProvider(getRepositoryToken(Group))
-      .useValue({})
+      .useClass(Repository)
       .overrideProvider(getRepositoryToken(Session))
       .useValue({})
       .overrideProvider(getRepositoryToken(Author))
@@ -74,8 +110,10 @@ describe('PermissionsService', () => {
       .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .compile();
-    permissionsService = module.get<PermissionsService>(PermissionsService);
+    service = module.get<PermissionsService>(PermissionsService);
     notes = await createNoteUserPermissionNotes();
+    groupRepo = module.get<Repository<Group>>(getRepositoryToken(Group));
+    noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
   });
 
   // The two users we test with:
@@ -85,7 +123,7 @@ describe('PermissionsService', () => {
   user1.id = '1';
 
   it('should be defined', () => {
-    expect(permissionsService).toBeDefined();
+    expect(service).toBeDefined();
   });
 
   function createNote(owner: User): Note {
@@ -176,78 +214,78 @@ describe('PermissionsService', () => {
 
   describe('mayRead works with', () => {
     it('Owner', async () => {
-      permissionsService.guestPermission = GuestPermission.DENY;
-      expect(await permissionsService.mayRead(user1, notes[0])).toBeTruthy();
-      expect(await permissionsService.mayRead(user1, notes[7])).toBeFalsy();
+      service.guestPermission = GuestPermission.DENY;
+      expect(await service.mayRead(user1, notes[0])).toBeTruthy();
+      expect(await service.mayRead(user1, notes[7])).toBeFalsy();
     });
     it('userPermission read', async () => {
-      permissionsService.guestPermission = GuestPermission.DENY;
-      expect(await permissionsService.mayRead(user1, notes[1])).toBeTruthy();
-      expect(await permissionsService.mayRead(user1, notes[2])).toBeTruthy();
-      expect(await permissionsService.mayRead(user1, notes[3])).toBeTruthy();
+      service.guestPermission = GuestPermission.DENY;
+      expect(await service.mayRead(user1, notes[1])).toBeTruthy();
+      expect(await service.mayRead(user1, notes[2])).toBeTruthy();
+      expect(await service.mayRead(user1, notes[3])).toBeTruthy();
     });
     it('userPermission write', async () => {
-      permissionsService.guestPermission = GuestPermission.DENY;
-      expect(await permissionsService.mayRead(user1, notes[4])).toBeTruthy();
-      expect(await permissionsService.mayRead(user1, notes[5])).toBeTruthy();
-      expect(await permissionsService.mayRead(user1, notes[6])).toBeTruthy();
-      expect(await permissionsService.mayRead(user1, notes[7])).toBeFalsy();
+      service.guestPermission = GuestPermission.DENY;
+      expect(await service.mayRead(user1, notes[4])).toBeTruthy();
+      expect(await service.mayRead(user1, notes[5])).toBeTruthy();
+      expect(await service.mayRead(user1, notes[6])).toBeTruthy();
+      expect(await service.mayRead(user1, notes[7])).toBeFalsy();
     });
 
     describe('guest permission', () => {
       it('CREATE_ALIAS', async () => {
-        permissionsService.guestPermission = GuestPermission.CREATE_ALIAS;
-        expect(await permissionsService.mayRead(null, notes[8])).toBeTruthy();
+        service.guestPermission = GuestPermission.CREATE_ALIAS;
+        expect(await service.mayRead(null, notes[8])).toBeTruthy();
       });
       it('CREATE', async () => {
-        permissionsService.guestPermission = GuestPermission.CREATE;
-        expect(await permissionsService.mayRead(null, notes[8])).toBeTruthy();
+        service.guestPermission = GuestPermission.CREATE;
+        expect(await service.mayRead(null, notes[8])).toBeTruthy();
       });
       it('WRITE', async () => {
-        permissionsService.guestPermission = GuestPermission.WRITE;
-        expect(await permissionsService.mayRead(null, notes[8])).toBeTruthy();
+        service.guestPermission = GuestPermission.WRITE;
+        expect(await service.mayRead(null, notes[8])).toBeTruthy();
       });
       it('READ', async () => {
-        permissionsService.guestPermission = GuestPermission.READ;
-        expect(await permissionsService.mayRead(null, notes[8])).toBeTruthy();
+        service.guestPermission = GuestPermission.READ;
+        expect(await service.mayRead(null, notes[8])).toBeTruthy();
       });
     });
   });
   describe('mayWrite works with', () => {
     it('Owner', async () => {
-      permissionsService.guestPermission = GuestPermission.DENY;
-      expect(await permissionsService.mayWrite(user1, notes[0])).toBeTruthy();
-      expect(await permissionsService.mayWrite(user1, notes[7])).toBeFalsy();
+      service.guestPermission = GuestPermission.DENY;
+      expect(await service.mayWrite(user1, notes[0])).toBeTruthy();
+      expect(await service.mayWrite(user1, notes[7])).toBeFalsy();
     });
     it('userPermission read', async () => {
-      permissionsService.guestPermission = GuestPermission.DENY;
-      expect(await permissionsService.mayWrite(user1, notes[1])).toBeFalsy();
-      expect(await permissionsService.mayWrite(user1, notes[2])).toBeFalsy();
-      expect(await permissionsService.mayWrite(user1, notes[3])).toBeFalsy();
+      service.guestPermission = GuestPermission.DENY;
+      expect(await service.mayWrite(user1, notes[1])).toBeFalsy();
+      expect(await service.mayWrite(user1, notes[2])).toBeFalsy();
+      expect(await service.mayWrite(user1, notes[3])).toBeFalsy();
     });
     it('userPermission write', async () => {
-      permissionsService.guestPermission = GuestPermission.DENY;
-      expect(await permissionsService.mayWrite(user1, notes[4])).toBeTruthy();
-      expect(await permissionsService.mayWrite(user1, notes[5])).toBeTruthy();
-      expect(await permissionsService.mayWrite(user1, notes[6])).toBeTruthy();
-      expect(await permissionsService.mayWrite(user1, notes[7])).toBeFalsy();
+      service.guestPermission = GuestPermission.DENY;
+      expect(await service.mayWrite(user1, notes[4])).toBeTruthy();
+      expect(await service.mayWrite(user1, notes[5])).toBeTruthy();
+      expect(await service.mayWrite(user1, notes[6])).toBeTruthy();
+      expect(await service.mayWrite(user1, notes[7])).toBeFalsy();
     });
     describe('guest permission', () => {
       it('CREATE_ALIAS', async () => {
-        permissionsService.guestPermission = GuestPermission.CREATE_ALIAS;
-        expect(await permissionsService.mayWrite(null, notes[9])).toBeTruthy();
+        service.guestPermission = GuestPermission.CREATE_ALIAS;
+        expect(await service.mayWrite(null, notes[9])).toBeTruthy();
       });
       it('CREATE', async () => {
-        permissionsService.guestPermission = GuestPermission.CREATE;
-        expect(await permissionsService.mayWrite(null, notes[9])).toBeTruthy();
+        service.guestPermission = GuestPermission.CREATE;
+        expect(await service.mayWrite(null, notes[9])).toBeTruthy();
       });
       it('WRITE', async () => {
-        permissionsService.guestPermission = GuestPermission.WRITE;
-        expect(await permissionsService.mayWrite(null, notes[9])).toBeTruthy();
+        service.guestPermission = GuestPermission.WRITE;
+        expect(await service.mayWrite(null, notes[9])).toBeTruthy();
       });
       it('READ', async () => {
-        permissionsService.guestPermission = GuestPermission.READ;
-        expect(await permissionsService.mayWrite(null, notes[9])).toBeFalsy();
+        service.guestPermission = GuestPermission.READ;
+        expect(await service.mayWrite(null, notes[9])).toBeFalsy();
       });
     });
   });
@@ -512,14 +550,14 @@ describe('PermissionsService', () => {
         permissionString += ` ${perm.group.name}:${String(perm.canEdit)}`;
       }
       it(`mayWrite - test #${i}:${permissionString}`, async () => {
-        permissionsService.guestPermission = guestPermission;
-        expect(await permissionsService.mayWrite(user1, note)).toEqual(
+        service.guestPermission = guestPermission;
+        expect(await service.mayWrite(user1, note)).toEqual(
           permission.allowsWrite,
         );
       });
       it(`mayRead - test #${i}:${permissionString}`, async () => {
-        permissionsService.guestPermission = guestPermission;
-        expect(await permissionsService.mayRead(user1, note)).toEqual(
+        service.guestPermission = guestPermission;
+        expect(await service.mayRead(user1, note)).toEqual(
           permission.allowsRead,
         );
       });
@@ -529,39 +567,569 @@ describe('PermissionsService', () => {
 
   describe('mayCreate works for', () => {
     it('logged in', () => {
-      permissionsService.guestPermission = GuestPermission.DENY;
-      expect(permissionsService.mayCreate(user1)).toBeTruthy();
+      service.guestPermission = GuestPermission.DENY;
+      expect(service.mayCreate(user1)).toBeTruthy();
     });
     it('guest denied', () => {
-      permissionsService.guestPermission = GuestPermission.DENY;
-      expect(permissionsService.mayCreate(null)).toBeFalsy();
+      service.guestPermission = GuestPermission.DENY;
+      expect(service.mayCreate(null)).toBeFalsy();
     });
     it('guest read', () => {
-      permissionsService.guestPermission = GuestPermission.READ;
-      expect(permissionsService.mayCreate(null)).toBeFalsy();
+      service.guestPermission = GuestPermission.READ;
+      expect(service.mayCreate(null)).toBeFalsy();
     });
     it('guest write', () => {
-      permissionsService.guestPermission = GuestPermission.WRITE;
-      expect(permissionsService.mayCreate(null)).toBeFalsy();
+      service.guestPermission = GuestPermission.WRITE;
+      expect(service.mayCreate(null)).toBeFalsy();
     });
     it('guest create', () => {
-      permissionsService.guestPermission = GuestPermission.CREATE;
-      expect(permissionsService.mayCreate(null)).toBeTruthy();
+      service.guestPermission = GuestPermission.CREATE;
+      expect(service.mayCreate(null)).toBeTruthy();
     });
     it('guest create alias', () => {
-      permissionsService.guestPermission = GuestPermission.CREATE_ALIAS;
-      expect(permissionsService.mayCreate(null)).toBeTruthy();
+      service.guestPermission = GuestPermission.CREATE_ALIAS;
+      expect(service.mayCreate(null)).toBeTruthy();
     });
   });
 
   describe('isOwner works', () => {
     it('for positive case', async () => {
-      permissionsService.guestPermission = GuestPermission.DENY;
-      expect(await permissionsService.isOwner(user1, notes[0])).toBeTruthy();
+      service.guestPermission = GuestPermission.DENY;
+      expect(await service.isOwner(user1, notes[0])).toBeTruthy();
     });
     it('for negative case', async () => {
-      permissionsService.guestPermission = GuestPermission.DENY;
-      expect(await permissionsService.isOwner(user1, notes[1])).toBeFalsy();
+      service.guestPermission = GuestPermission.DENY;
+      expect(await service.isOwner(user1, notes[1])).toBeFalsy();
+    });
+  });
+
+  describe('updateNotePermissions', () => {
+    const userPermissionUpdate = new NoteUserPermissionUpdateDto();
+    userPermissionUpdate.username = 'hardcoded';
+    userPermissionUpdate.canEdit = true;
+    const groupPermissionUpdate = new NoteGroupPermissionUpdateDto();
+    groupPermissionUpdate.groupName = 'testGroup';
+    groupPermissionUpdate.canEdit = false;
+    const user = User.create(userPermissionUpdate.username, 'Testy') as User;
+    const group = Group.create(
+      groupPermissionUpdate.groupName,
+      groupPermissionUpdate.groupName,
+      false,
+    ) as Group;
+    const note = Note.create(user) as Note;
+    describe('works', () => {
+      it('with empty GroupPermissions and with empty UserPermissions', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        const savedNote = await service.updateNotePermissions(note, {
+          sharedToUsers: [],
+          sharedToGroups: [],
+        });
+        expect(await savedNote.userPermissions).toHaveLength(0);
+        expect(await savedNote.groupPermissions).toHaveLength(0);
+      });
+      it('with empty GroupPermissions and with new UserPermissions', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
+        const savedNote = await service.updateNotePermissions(note, {
+          sharedToUsers: [userPermissionUpdate],
+          sharedToGroups: [],
+        });
+        expect(await savedNote.userPermissions).toHaveLength(1);
+        expect((await savedNote.userPermissions)[0].user.username).toEqual(
+          userPermissionUpdate.username,
+        );
+        expect((await savedNote.userPermissions)[0].canEdit).toEqual(
+          userPermissionUpdate.canEdit,
+        );
+        expect(await savedNote.groupPermissions).toHaveLength(0);
+      });
+      it('with empty GroupPermissions and with existing UserPermissions', async () => {
+        const noteWithPreexistingPermissions: Note = { ...note };
+        noteWithPreexistingPermissions.userPermissions = Promise.resolve([
+          {
+            note: noteWithPreexistingPermissions,
+            user: user,
+            canEdit: !userPermissionUpdate.canEdit,
+          },
+        ]);
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
+        const savedNote = await service.updateNotePermissions(note, {
+          sharedToUsers: [userPermissionUpdate],
+          sharedToGroups: [],
+        });
+        expect(await savedNote.userPermissions).toHaveLength(1);
+        expect((await savedNote.userPermissions)[0].user.username).toEqual(
+          userPermissionUpdate.username,
+        );
+        expect((await savedNote.userPermissions)[0].canEdit).toEqual(
+          userPermissionUpdate.canEdit,
+        );
+        expect(await savedNote.groupPermissions).toHaveLength(0);
+      });
+      it('with new GroupPermissions and with empty UserPermissions', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
+        const savedNote = await service.updateNotePermissions(note, {
+          sharedToUsers: [],
+          sharedToGroups: [groupPermissionUpdate],
+        });
+        expect(await savedNote.userPermissions).toHaveLength(0);
+        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
+          groupPermissionUpdate.groupName,
+        );
+        expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
+          groupPermissionUpdate.canEdit,
+        );
+      });
+      it('with new GroupPermissions and with new UserPermissions', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
+        jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
+        const savedNote = await service.updateNotePermissions(note, {
+          sharedToUsers: [userPermissionUpdate],
+          sharedToGroups: [groupPermissionUpdate],
+        });
+        expect((await savedNote.userPermissions)[0].user.username).toEqual(
+          userPermissionUpdate.username,
+        );
+        expect((await savedNote.userPermissions)[0].canEdit).toEqual(
+          userPermissionUpdate.canEdit,
+        );
+        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
+          groupPermissionUpdate.groupName,
+        );
+        expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
+          groupPermissionUpdate.canEdit,
+        );
+      });
+      it('with new GroupPermissions and with existing UserPermissions', async () => {
+        const noteWithUserPermission: Note = { ...note };
+        noteWithUserPermission.userPermissions = Promise.resolve([
+          {
+            note: noteWithUserPermission,
+            user: user,
+            canEdit: !userPermissionUpdate.canEdit,
+          },
+        ]);
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
+        jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
+        const savedNote = await service.updateNotePermissions(
+          noteWithUserPermission,
+          {
+            sharedToUsers: [userPermissionUpdate],
+            sharedToGroups: [groupPermissionUpdate],
+          },
+        );
+        expect((await savedNote.userPermissions)[0].user.username).toEqual(
+          userPermissionUpdate.username,
+        );
+        expect((await savedNote.userPermissions)[0].canEdit).toEqual(
+          userPermissionUpdate.canEdit,
+        );
+        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
+          groupPermissionUpdate.groupName,
+        );
+        expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
+          groupPermissionUpdate.canEdit,
+        );
+      });
+      it('with existing GroupPermissions and with empty UserPermissions', async () => {
+        const noteWithPreexistingPermissions: Note = { ...note };
+        noteWithPreexistingPermissions.groupPermissions = Promise.resolve([
+          {
+            note: noteWithPreexistingPermissions,
+            group: group,
+            canEdit: !groupPermissionUpdate.canEdit,
+          },
+        ]);
+        jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        const savedNote = await service.updateNotePermissions(
+          noteWithPreexistingPermissions,
+          {
+            sharedToUsers: [],
+            sharedToGroups: [groupPermissionUpdate],
+          },
+        );
+        expect(await savedNote.userPermissions).toHaveLength(0);
+        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
+          groupPermissionUpdate.groupName,
+        );
+        expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
+          groupPermissionUpdate.canEdit,
+        );
+      });
+      it('with existing GroupPermissions and with new UserPermissions', async () => {
+        const noteWithPreexistingPermissions: Note = { ...note };
+        noteWithPreexistingPermissions.groupPermissions = Promise.resolve([
+          {
+            note: noteWithPreexistingPermissions,
+            group: group,
+            canEdit: !groupPermissionUpdate.canEdit,
+          },
+        ]);
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
+        jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
+        const savedNote = await service.updateNotePermissions(
+          noteWithPreexistingPermissions,
+          {
+            sharedToUsers: [userPermissionUpdate],
+            sharedToGroups: [groupPermissionUpdate],
+          },
+        );
+        expect((await savedNote.userPermissions)[0].user.username).toEqual(
+          userPermissionUpdate.username,
+        );
+        expect((await savedNote.userPermissions)[0].canEdit).toEqual(
+          userPermissionUpdate.canEdit,
+        );
+        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
+          groupPermissionUpdate.groupName,
+        );
+        expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
+          groupPermissionUpdate.canEdit,
+        );
+      });
+      it('with existing GroupPermissions and with existing UserPermissions', async () => {
+        const noteWithPreexistingPermissions: Note = { ...note };
+        noteWithPreexistingPermissions.groupPermissions = Promise.resolve([
+          {
+            note: noteWithPreexistingPermissions,
+            group: group,
+            canEdit: !groupPermissionUpdate.canEdit,
+          },
+        ]);
+        noteWithPreexistingPermissions.userPermissions = Promise.resolve([
+          {
+            note: noteWithPreexistingPermissions,
+            user: user,
+            canEdit: !userPermissionUpdate.canEdit,
+          },
+        ]);
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
+        jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
+        const savedNote = await service.updateNotePermissions(
+          noteWithPreexistingPermissions,
+          {
+            sharedToUsers: [userPermissionUpdate],
+            sharedToGroups: [groupPermissionUpdate],
+          },
+        );
+        expect((await savedNote.userPermissions)[0].user.username).toEqual(
+          userPermissionUpdate.username,
+        );
+        expect((await savedNote.userPermissions)[0].canEdit).toEqual(
+          userPermissionUpdate.canEdit,
+        );
+        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
+          groupPermissionUpdate.groupName,
+        );
+        expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
+          groupPermissionUpdate.canEdit,
+        );
+      });
+    });
+    describe('fails:', () => {
+      it('userPermissions has duplicate entries', async () => {
+        await expect(
+          service.updateNotePermissions(note, {
+            sharedToUsers: [userPermissionUpdate, userPermissionUpdate],
+            sharedToGroups: [],
+          }),
+        ).rejects.toThrow(PermissionsUpdateInconsistentError);
+      });
+
+      it('groupPermissions has duplicate entries', async () => {
+        await expect(
+          service.updateNotePermissions(note, {
+            sharedToUsers: [],
+            sharedToGroups: [groupPermissionUpdate, groupPermissionUpdate],
+          }),
+        ).rejects.toThrow(PermissionsUpdateInconsistentError);
+      });
+
+      it('userPermissions and groupPermissions have duplicate entries', async () => {
+        await expect(
+          service.updateNotePermissions(note, {
+            sharedToUsers: [userPermissionUpdate, userPermissionUpdate],
+            sharedToGroups: [groupPermissionUpdate, groupPermissionUpdate],
+          }),
+        ).rejects.toThrow(PermissionsUpdateInconsistentError);
+      });
+    });
+  });
+
+  describe('setUserPermission', () => {
+    describe('works', () => {
+      it('with user not added before and editable', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        const note = Note.create(null) as Note;
+        const user = User.create('test', 'Testy') as User;
+        const resultNote = await service.setUserPermission(note, user, true);
+        const noteUserPermission = NoteUserPermission.create(user, note, true);
+        expect((await resultNote.userPermissions)[0]).toStrictEqual(
+          noteUserPermission,
+        );
+      });
+      it('with user not added before and not editable', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        const note = Note.create(null) as Note;
+        const user = User.create('test', 'Testy') as User;
+        const resultNote = await service.setUserPermission(note, user, false);
+        const noteUserPermission = NoteUserPermission.create(user, note, false);
+        expect((await resultNote.userPermissions)[0]).toStrictEqual(
+          noteUserPermission,
+        );
+      });
+      it('with user added before and editable', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        const note = Note.create(null) as Note;
+        const user = User.create('test', 'Testy') as User;
+        note.userPermissions = Promise.resolve([
+          NoteUserPermission.create(user, note, false),
+        ]);
+
+        const resultNote = await service.setUserPermission(note, user, true);
+        const noteUserPermission = NoteUserPermission.create(user, note, true);
+        expect((await resultNote.userPermissions)[0]).toStrictEqual(
+          noteUserPermission,
+        );
+      });
+      it('with user added before and not editable', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        const note = Note.create(null) as Note;
+        const user = User.create('test', 'Testy') as User;
+        note.userPermissions = Promise.resolve([
+          NoteUserPermission.create(user, note, true),
+        ]);
+        const resultNote = await service.setUserPermission(note, user, false);
+        const noteUserPermission = NoteUserPermission.create(user, note, false);
+        expect((await resultNote.userPermissions)[0]).toStrictEqual(
+          noteUserPermission,
+        );
+      });
+    });
+  });
+
+  describe('removeUserPermission', () => {
+    describe('works', () => {
+      it('with user added before and editable', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        const note = Note.create(null) as Note;
+        const user = User.create('test', 'Testy') as User;
+        note.userPermissions = Promise.resolve([
+          NoteUserPermission.create(user, note, true),
+        ]);
+
+        const resultNote = await service.removeUserPermission(note, user);
+        expect((await resultNote.userPermissions).length).toStrictEqual(0);
+      });
+      it('with user not added before and not editable', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        const note = Note.create(null) as Note;
+        const user = User.create('test', 'Testy') as User;
+        note.userPermissions = Promise.resolve([
+          NoteUserPermission.create(user, note, false),
+        ]);
+        const resultNote = await service.removeUserPermission(note, user);
+        expect((await resultNote.userPermissions).length).toStrictEqual(0);
+      });
+    });
+  });
+
+  describe('setGroupPermission', () => {
+    describe('works', () => {
+      it('with group not added before and editable', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        const note = Note.create(null) as Note;
+        const group = Group.create('test', 'Testy', false) as Group;
+        const resultNote = await service.setGroupPermission(note, group, true);
+        const noteGroupPermission = NoteGroupPermission.create(
+          group,
+          note,
+          true,
+        );
+        expect((await resultNote.groupPermissions)[0]).toStrictEqual(
+          noteGroupPermission,
+        );
+      });
+      it('with group not added before and not editable', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        const note = Note.create(null) as Note;
+        const group = Group.create('test', 'Testy', false) as Group;
+        const resultNote = await service.setGroupPermission(note, group, false);
+        const noteGroupPermission = NoteGroupPermission.create(
+          group,
+          note,
+          false,
+        );
+        expect((await resultNote.groupPermissions)[0]).toStrictEqual(
+          noteGroupPermission,
+        );
+      });
+      it('with group added before and editable', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        const note = Note.create(null) as Note;
+        const group = Group.create('test', 'Testy', false) as Group;
+        note.groupPermissions = Promise.resolve([
+          NoteGroupPermission.create(group, note, false),
+        ]);
+
+        const resultNote = await service.setGroupPermission(note, group, true);
+        const noteGroupPermission = NoteGroupPermission.create(
+          group,
+          note,
+          true,
+        );
+        expect((await resultNote.groupPermissions)[0]).toStrictEqual(
+          noteGroupPermission,
+        );
+      });
+      it('with group added before and not editable', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        const note = Note.create(null) as Note;
+        const group = Group.create('test', 'Testy', false) as Group;
+        note.groupPermissions = Promise.resolve([
+          NoteGroupPermission.create(group, note, true),
+        ]);
+        const resultNote = await service.setGroupPermission(note, group, false);
+        const noteGroupPermission = NoteGroupPermission.create(
+          group,
+          note,
+          false,
+        );
+        expect((await resultNote.groupPermissions)[0]).toStrictEqual(
+          noteGroupPermission,
+        );
+      });
+    });
+  });
+
+  describe('removeGroupPermission', () => {
+    describe('works', () => {
+      it('with user added before and editable', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        const note = Note.create(null) as Note;
+        const group = Group.create('test', 'Testy', false) as Group;
+        note.groupPermissions = Promise.resolve([
+          NoteGroupPermission.create(group, note, true),
+        ]);
+
+        const resultNote = await service.removeGroupPermission(note, group);
+        expect((await resultNote.groupPermissions).length).toStrictEqual(0);
+      });
+      it('with user not added before and not editable', async () => {
+        jest
+          .spyOn(noteRepo, 'save')
+          .mockImplementationOnce(async (entry: Note) => {
+            return entry;
+          });
+        const note = Note.create(null) as Note;
+        const group = Group.create('test', 'Testy', false) as Group;
+        note.groupPermissions = Promise.resolve([
+          NoteGroupPermission.create(group, note, false),
+        ]);
+        const resultNote = await service.removeGroupPermission(note, group);
+        expect((await resultNote.groupPermissions).length).toStrictEqual(0);
+      });
+    });
+  });
+
+  describe('changeOwner', () => {
+    it('works', async () => {
+      const note = Note.create(null) as Note;
+      const user = User.create('test', 'Testy') as User;
+      jest
+        .spyOn(noteRepo, 'save')
+        .mockImplementationOnce(async (entry: Note) => {
+          return entry;
+        });
+      const resultNote = await service.changeOwner(note, user);
+      expect(await resultNote.owner).toStrictEqual(user);
     });
   });
 });
