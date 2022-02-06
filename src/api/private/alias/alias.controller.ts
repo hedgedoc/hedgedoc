@@ -21,7 +21,6 @@ import {
   ApiNotFoundResponse,
   ApiTags,
   ApiUnauthorizedResponse,
-  ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../identity/session.guard';
@@ -39,7 +38,6 @@ import {
   conflictDescription,
   notFoundDescription,
   unauthorizedDescription,
-  unprocessableEntityDescription,
 } from '../../utils/descriptions';
 import { RequestUser } from '../../utils/request-user.decorator';
 
@@ -58,6 +56,7 @@ export class AliasController {
   }
 
   @Post()
+  @ApiBadRequestResponse({ description: badRequestDescription })
   @ApiConflictResponse({ description: conflictDescription })
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   @ApiNotFoundResponse({ description: notFoundDescription })
@@ -104,8 +103,8 @@ export class AliasController {
   @HttpCode(204)
   @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   @ApiNotFoundResponse({ description: notFoundDescription })
-  @ApiUnprocessableEntityResponse({
-    description: unprocessableEntityDescription,
+  @ApiBadRequestResponse({
+    description: badRequestDescription,
   })
   async removeAlias(
     @RequestUser() user: User,
