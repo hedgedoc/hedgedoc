@@ -44,7 +44,6 @@ import { NoteDto } from '../../../notes/note.dto';
 import { Note } from '../../../notes/note.entity';
 import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
 import { NotesService } from '../../../notes/notes.service';
-import { Permissions } from '../../../permissions/permissions.decorator';
 import { Permission } from '../../../permissions/permissions.enum';
 import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
@@ -61,6 +60,7 @@ import {
 import { FullApi } from '../../utils/fullapi-decorator';
 import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
 import { MarkdownBody } from '../../utils/markdownbody-decorator';
+import { Permissions } from '../../utils/permissions.decorator';
 import { PermissionsGuard } from '../../utils/permissions.guard';
 import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
