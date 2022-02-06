@@ -200,7 +200,7 @@ describe('Notes', () => {
         },
       ];
       updateNotePermission.sharedToGroups = [];
-      await testSetup.notesService.updateNotePermissions(
+      await testSetup.permissionsService.updateNotePermissions(
         note,
         updateNotePermission,
       );
