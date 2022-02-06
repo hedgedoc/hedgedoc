@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -36,6 +36,7 @@ export class AliasService {
    * @param {Note} note - the note to add the alias to
    * @param {string} alias - the alias to add to the note
    * @throws {AlreadyInDBError} the alias is already in use.
+   * @throws {ForbiddenIdError} the requested id or alias is forbidden
    * @return {Alias} the new alias
    */
   async addAlias(note: Note, alias: string): Promise<Alias> {
@@ -79,6 +80,7 @@ export class AliasService {
    * Set the specified alias as the primary alias of the note.
    * @param {Note} note - the note to change the primary alias
    * @param {string} alias - the alias to be the new primary alias of the note
+   * @throws {ForbiddenIdError} the requested id or alias is forbidden
    * @throws {NotInDBError} the alias is not part of this note.
    * @return {Alias} the new primary alias
    */
@@ -86,6 +88,8 @@ export class AliasService {
     let newPrimaryFound = false;
     let oldPrimaryId = '';
     let newPrimaryId = '';
+
+    this.notesService.checkNoteIdOrAlias(alias);
 
     for (const anAlias of await note.aliases) {
       // found old primary
@@ -130,10 +134,12 @@ export class AliasService {
    * Remove the specified alias from the note.
    * @param {Note} note - the note to remove the alias from
    * @param {string} alias - the alias to remove from the note
+   * @throws {ForbiddenIdError} the requested id or alias is forbidden
    * @throws {NotInDBError} the alias is not part of this note.
    * @throws {PrimaryAliasDeletionForbiddenError} the primary alias can only be deleted if it's the only alias
    */
   async removeAlias(note: Note, alias: string): Promise<Note> {
+    this.notesService.checkNoteIdOrAlias(alias);
     const primaryAlias = await getPrimaryAlias(note);
 
     if (primaryAlias === alias && (await note.aliases).length !== 1) {

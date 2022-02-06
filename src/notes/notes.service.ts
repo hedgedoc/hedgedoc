@@ -157,20 +157,15 @@ export class NotesService {
    * @param {string} noteIdOrAlias - the notes id or alias
    * @return {Note} the note
    * @throws {NotInDBError} there is no note with this id or alias
+   * @throws {ForbiddenIdError} the requested id or alias is forbidden
    */
   async getNoteByIdOrAlias(noteIdOrAlias: string): Promise<Note> {
     this.logger.debug(
       `Trying to find note '${noteIdOrAlias}'`,
       'getNoteByIdOrAlias',
     );
-    try {
-      this.checkNoteIdOrAlias(noteIdOrAlias);
-    } catch (e) {
-      if (e instanceof ForbiddenIdError) {
-        throw new NotInDBError(e.message);
-      }
-      throw e;
-    }
+
+    this.checkNoteIdOrAlias(noteIdOrAlias);
 
     /**
      * This query gets the note's aliases, owner, groupPermissions (and the groups), userPermissions (and the users) and tags and
