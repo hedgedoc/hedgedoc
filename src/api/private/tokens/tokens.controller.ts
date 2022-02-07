@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,17 +8,12 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
   Param,
   Post,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiNotFoundResponse,
-  ApiTags,
-  ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 
 import { AuthTokenWithSecretDto } from '../../../auth/auth-token-with-secret.dto';
 import { AuthTokenDto } from '../../../auth/auth-token.dto';
@@ -27,13 +22,11 @@ import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { User } from '../../../users/user.entity';
 import { TimestampMillis } from '../../../utils/timestamp';
-import {
-  notFoundDescription,
-  unauthorizedDescription,
-} from '../../utils/descriptions';
+import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
+@OpenApi(401)
 @ApiTags('tokens')
 @Controller('tokens')
 export class TokensController {
@@ -45,7 +38,7 @@ export class TokensController {
   }
 
   @Get()
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @OpenApi(200)
   async getUserTokens(@RequestUser() user: User): Promise<AuthTokenDto[]> {
     return (await this.authService.getTokensByUser(user)).map((token) =>
       this.authService.toAuthTokenDto(token),
@@ -53,7 +46,7 @@ export class TokensController {
   }
 
   @Post()
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @OpenApi(201)
   async postTokenRequest(
     @Body('label') label: string,
     @Body('validUntil') validUntil: TimestampMillis,
@@ -63,9 +56,7 @@ export class TokensController {
   }
 
   @Delete('/:keyId')
-  @HttpCode(204)
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
+  @OpenApi(204, 404)
   async deleteToken(
     @RequestUser() user: User,
     @Param('keyId') keyId: string,

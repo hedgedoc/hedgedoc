@@ -1,23 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpCode,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
-import {
-  ApiInternalServerErrorResponse,
-  ApiNotFoundResponse,
-  ApiTags,
-  ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Post, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
@@ -26,14 +13,11 @@ import { MediaService } from '../../../media/media.service';
 import { UserInfoDto } from '../../../users/user-info.dto';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
-import {
-  internalServerErrorDescription,
-  notFoundDescription,
-  unauthorizedDescription,
-} from '../../utils/descriptions';
+import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
+@OpenApi(401)
 @ApiTags('me')
 @Controller('me')
 export class MeController {
@@ -45,13 +29,13 @@ export class MeController {
     this.logger.setContext(MeController.name);
   }
   @Get()
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @OpenApi(200)
   getMe(@RequestUser() user: User): UserInfoDto {
     return this.userService.toUserDto(user);
   }
 
   @Get('media')
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @OpenApi(200)
   async getMyMedia(@RequestUser() user: User): Promise<MediaUploadDto[]> {
     const media = await this.mediaService.listUploadsByUser(user);
     return await Promise.all(
@@ -60,12 +44,7 @@ export class MeController {
   }
 
   @Delete()
-  @HttpCode(204)
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
-  @ApiInternalServerErrorResponse({
-    description: internalServerErrorDescription,
-  })
+  @OpenApi(204, 404, 500)
   async deleteUser(@RequestUser() user: User): Promise<void> {
     const mediaUploads = await this.mediaService.listUploadsByUser(user);
     for (const mediaUpload of mediaUploads) {
@@ -77,8 +56,7 @@ export class MeController {
   }
 
   @Post('profile')
-  @HttpCode(200)
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @OpenApi(200)
   async updateDisplayName(
     @RequestUser() user: User,
     @Body('name') newDisplayName: string,

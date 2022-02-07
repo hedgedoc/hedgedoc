@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,19 +8,11 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
   Put,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import {
-  ApiNoContentResponse,
-  ApiNotFoundResponse,
-  ApiOkResponse,
-  ApiSecurity,
-  ApiTags,
-  ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 import { TokenAuthGuard } from '../../../auth/token.strategy';
 import { HistoryEntryUpdateDto } from '../../../history/history-entry-update.dto';
@@ -35,16 +27,13 @@ import { NotesService } from '../../../notes/notes.service';
 import { UserInfoDto } from '../../../users/user-info.dto';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
-import {
-  notFoundDescription,
-  successfullyDeletedDescription,
-  unauthorizedDescription,
-} from '../../utils/descriptions';
 import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
+import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(TokenAuthGuard)
+@OpenApi(401)
 @ApiTags('me')
 @ApiSecurity('token')
 @Controller('me')
@@ -60,22 +49,22 @@ export class MeController {
   }
 
   @Get()
-  @ApiOkResponse({
+  @OpenApi({
+    code: 200,
     description: 'The user information',
-    type: UserInfoDto,
+    dto: UserInfoDto,
   })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   getMe(@RequestUser() user: User): UserInfoDto {
     return this.usersService.toUserDto(user);
   }
 
   @Get('history')
-  @ApiOkResponse({
+  @OpenApi({
+    code: 200,
     description: 'The history entries of the user',
     isArray: true,
-    type: HistoryEntryDto,
+    dto: HistoryEntryDto,
   })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getUserHistory(@RequestUser() user: User): Promise<HistoryEntryDto[]> {
     const foundEntries = await this.historyService.getEntriesByUser(user);
     return await Promise.all(
@@ -85,12 +74,14 @@ export class MeController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Get('history/:noteIdOrAlias')
-  @ApiOkResponse({
-    description: 'The history entry of the user which points to the note',
-    type: HistoryEntryDto,
-  })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
+  @OpenApi(
+    {
+      code: 200,
+      description: 'The history entry of the user which points to the note',
+      dto: HistoryEntryDto,
+    },
+    404,
+  )
   async getHistoryEntry(
     @RequestUser() user: User,
     @RequestNote() note: Note,
@@ -101,12 +92,14 @@ export class MeController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Put('history/:noteIdOrAlias')
-  @ApiOkResponse({
-    description: 'The updated history entry',
-    type: HistoryEntryDto,
-  })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
+  @OpenApi(
+    {
+      code: 200,
+      description: 'The updated history entry',
+      dto: HistoryEntryDto,
+    },
+    404,
+  )
   async updateHistoryEntry(
     @RequestUser() user: User,
     @RequestNote() note: Note,
@@ -120,10 +113,7 @@ export class MeController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Delete('history/:noteIdOrAlias')
-  @HttpCode(204)
-  @ApiNoContentResponse({ description: successfullyDeletedDescription })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
+  @OpenApi(204, 404)
   async deleteHistoryEntry(
     @RequestUser() user: User,
     @RequestNote() note: Note,
@@ -133,12 +123,12 @@ export class MeController {
   }
 
   @Get('notes')
-  @ApiOkResponse({
+  @OpenApi({
+    code: 200,
     description: 'Metadata of all notes of the user',
     isArray: true,
-    type: NoteMetadataDto,
+    dto: NoteMetadataDto,
   })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getMyNotes(@RequestUser() user: User): Promise<NoteMetadataDto[]> {
     const notes = this.notesService.getUserNotes(user);
     return await Promise.all(
@@ -147,12 +137,12 @@ export class MeController {
   }
 
   @Get('media')
-  @ApiOkResponse({
+  @OpenApi({
+    code: 200,
     description: 'All media uploads of the user',
     isArray: true,
-    type: MediaUploadDto,
+    dto: MediaUploadDto,
   })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getMyMedia(@RequestUser() user: User): Promise<MediaUploadDto[]> {
     const media = await this.mediaService.listUploadsByUser(user);
     return await Promise.all(

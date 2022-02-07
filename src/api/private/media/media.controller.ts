@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,7 +7,6 @@ import {
   Controller,
   Delete,
   Headers,
-  HttpCode,
   Param,
   Post,
   UploadedFile,
@@ -15,19 +14,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import {
-  ApiBadRequestResponse,
-  ApiBody,
-  ApiConsumes,
-  ApiCreatedResponse,
-  ApiForbiddenResponse,
-  ApiHeader,
-  ApiInternalServerErrorResponse,
-  ApiNoContentResponse,
-  ApiNotFoundResponse,
-  ApiTags,
-  ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiHeader, ApiTags } from '@nestjs/swagger';
 
 import { PermissionError } from '../../../errors/errors';
 import { SessionGuard } from '../../../identity/session.guard';
@@ -38,18 +25,11 @@ import { MulterFile } from '../../../media/multer-file.interface';
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
 import { User } from '../../../users/user.entity';
-import {
-  badRequestDescription,
-  forbiddenDescription,
-  internalServerErrorDescription,
-  notFoundDescription,
-  successfullyDeletedDescription,
-  unauthorizedDescription,
-} from '../../utils/descriptions';
-import { FullApi } from '../../utils/fullapi-decorator';
+import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
+@OpenApi(401)
 @ApiTags('media')
 @Controller('media')
 export class MediaController {
@@ -79,18 +59,17 @@ export class MediaController {
     description: 'ID or alias of the parent note',
   })
   @UseInterceptors(FileInterceptor('file'))
-  @HttpCode(201)
-  @ApiCreatedResponse({
-    description: 'The file was uploaded successfully',
-    type: MediaUploadUrlDto,
-  })
-  @ApiBadRequestResponse({ description: badRequestDescription })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiForbiddenResponse({ description: forbiddenDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
-  @ApiInternalServerErrorResponse({
-    description: internalServerErrorDescription,
-  })
+  @OpenApi(
+    {
+      code: 201,
+      description: 'The file was uploaded successfully',
+      dto: MediaUploadUrlDto,
+    },
+    400,
+    403,
+    404,
+    500,
+  )
   async uploadMedia(
     @UploadedFile() file: MulterFile,
     @Headers('HedgeDoc-Note') noteId: string,
@@ -107,12 +86,7 @@ export class MediaController {
   }
 
   @Delete(':filename')
-  @HttpCode(204)
-  @ApiNoContentResponse({ description: successfullyDeletedDescription })
-  @FullApi
-  @ApiInternalServerErrorResponse({
-    description: internalServerErrorDescription,
-  })
+  @OpenApi(204, 403, 404, 500)
   async deleteMedia(
     @RequestUser() user: User,
     @Param('filename') filename: string,

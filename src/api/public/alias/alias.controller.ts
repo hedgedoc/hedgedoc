@@ -8,20 +8,13 @@ import {
   Body,
   Controller,
   Delete,
-  HttpCode,
   Param,
   Post,
   Put,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiBadRequestResponse,
-  ApiNoContentResponse,
-  ApiOkResponse,
-  ApiSecurity,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 import { TokenAuthGuard } from '../../../auth/token.strategy';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
@@ -32,11 +25,11 @@ import { AliasService } from '../../../notes/alias.service';
 import { NotesService } from '../../../notes/notes.service';
 import { PermissionsService } from '../../../permissions/permissions.service';
 import { User } from '../../../users/user.entity';
-import { badRequestDescription } from '../../utils/descriptions';
-import { FullApi } from '../../utils/fullapi-decorator';
+import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(TokenAuthGuard)
+@OpenApi(401)
 @ApiTags('alias')
 @ApiSecurity('token')
 @Controller('alias')
@@ -51,11 +44,15 @@ export class AliasController {
   }
 
   @Post()
-  @ApiOkResponse({
-    description: 'The new alias',
-    type: AliasDto,
-  })
-  @FullApi
+  @OpenApi(
+    {
+      code: 200,
+      description: 'The new alias',
+      dto: AliasDto,
+    },
+    403,
+    404,
+  )
   async addAlias(
     @RequestUser() user: User,
     @Body() newAliasDto: AliasCreateDto,
@@ -74,11 +71,15 @@ export class AliasController {
   }
 
   @Put(':alias')
-  @ApiOkResponse({
-    description: 'The updated alias',
-    type: AliasDto,
-  })
-  @FullApi
+  @OpenApi(
+    {
+      code: 200,
+      description: 'The updated alias',
+      dto: AliasDto,
+    },
+    403,
+    404,
+  )
   async makeAliasPrimary(
     @RequestUser() user: User,
     @Param('alias') alias: string,
@@ -98,14 +99,15 @@ export class AliasController {
   }
 
   @Delete(':alias')
-  @HttpCode(204)
-  @ApiNoContentResponse({
-    description: 'The alias was deleted',
-  })
-  @FullApi
-  @ApiBadRequestResponse({
-    description: badRequestDescription,
-  })
+  @OpenApi(
+    {
+      code: 204,
+      description: 'The alias was deleted',
+    },
+    400,
+    403,
+    404,
+  )
   async removeAlias(
     @RequestUser() user: User,
     @Param('alias') alias: string,
