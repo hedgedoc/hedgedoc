@@ -8,20 +8,13 @@ import {
   Body,
   Controller,
   Delete,
-  HttpCode,
   Param,
   Post,
   Put,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiBadRequestResponse,
-  ApiConflictResponse,
-  ApiNotFoundResponse,
-  ApiTags,
-  ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
@@ -33,15 +26,11 @@ import { NotesService } from '../../../notes/notes.service';
 import { PermissionsService } from '../../../permissions/permissions.service';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
-import {
-  badRequestDescription,
-  conflictDescription,
-  notFoundDescription,
-  unauthorizedDescription,
-} from '../../utils/descriptions';
+import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
+@OpenApi(401)
 @ApiTags('alias')
 @Controller('alias')
 export class AliasController {
@@ -56,10 +45,7 @@ export class AliasController {
   }
 
   @Post()
-  @ApiBadRequestResponse({ description: badRequestDescription })
-  @ApiConflictResponse({ description: conflictDescription })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
+  @OpenApi(201, 400, 404, 409)
   async addAlias(
     @RequestUser() user: User,
     @Body() newAliasDto: AliasCreateDto,
@@ -78,9 +64,7 @@ export class AliasController {
   }
 
   @Put(':alias')
-  @ApiBadRequestResponse({ description: badRequestDescription })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
+  @OpenApi(200, 400, 404)
   async makeAliasPrimary(
     @RequestUser() user: User,
     @Param('alias') alias: string,
@@ -100,12 +84,7 @@ export class AliasController {
   }
 
   @Delete(':alias')
-  @HttpCode(204)
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiNotFoundResponse({ description: notFoundDescription })
-  @ApiBadRequestResponse({
-    description: badRequestDescription,
-  })
+  @OpenApi(204, 400, 404)
   async removeAlias(
     @RequestUser() user: User,
     @Param('alias') alias: string,

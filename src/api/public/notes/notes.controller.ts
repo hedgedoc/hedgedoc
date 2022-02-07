@@ -8,27 +8,13 @@ import {
   Controller,
   Delete,
   Get,
-  Header,
-  HttpCode,
   Param,
   Post,
   Put,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import {
-  ApiBadRequestResponse,
-  ApiConflictResponse,
-  ApiCreatedResponse,
-  ApiForbiddenResponse,
-  ApiInternalServerErrorResponse,
-  ApiNoContentResponse,
-  ApiOkResponse,
-  ApiProduces,
-  ApiSecurity,
-  ApiTags,
-  ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 import { TokenAuthGuard } from '../../../auth/token.strategy';
 import { HistoryService } from '../../../history/history.service';
@@ -49,23 +35,16 @@ import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { User } from '../../../users/user.entity';
-import {
-  badRequestDescription,
-  conflictDescription,
-  forbiddenDescription,
-  internalServerErrorDescription,
-  successfullyDeletedDescription,
-  unauthorizedDescription,
-} from '../../utils/descriptions';
-import { FullApi } from '../../utils/fullapi-decorator';
 import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
 import { MarkdownBody } from '../../utils/markdown-body.decorator';
+import { OpenApi } from '../../utils/openapi.decorator';
 import { Permissions } from '../../utils/permissions.decorator';
 import { PermissionsGuard } from '../../utils/permissions.guard';
 import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
-@UseGuards(TokenAuthGuard)
+@UseGuards(TokenAuthGuard, PermissionsGuard)
+@OpenApi(401)
 @ApiTags('notes')
 @ApiSecurity('token')
 @Controller('notes')
@@ -81,11 +60,8 @@ export class NotesController {
   }
 
   @Permissions(Permission.CREATE)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Post()
-  @HttpCode(201)
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiForbiddenResponse({ description: forbiddenDescription })
+  @OpenApi(201, 403, 409)
   async createNote(
     @RequestUser() user: User,
     @MarkdownBody() text: string,
@@ -98,13 +74,16 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias')
-  @ApiOkResponse({
-    description: 'Get information about the newly created note',
-    type: NoteDto,
-  })
-  @FullApi
+  @OpenApi(
+    {
+      code: 200,
+      description: 'Get information about the newly created note',
+      dto: NoteDto,
+    },
+    403,
+    404,
+  )
   async getNote(
     @RequestUser() user: User,
     @RequestNote() note: Note,
@@ -116,15 +95,16 @@ export class NotesController {
   @Permissions(Permission.CREATE)
   @UseGuards(PermissionsGuard)
   @Post(':noteAlias')
-  @HttpCode(201)
-  @ApiCreatedResponse({
-    description: 'Get information about the newly created note',
-    type: NoteDto,
-  })
-  @ApiBadRequestResponse({ description: badRequestDescription })
-  @ApiConflictResponse({ description: conflictDescription })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiForbiddenResponse({ description: forbiddenDescription })
+  @OpenApi(
+    {
+      code: 201,
+      description: 'Get information about the newly created note',
+      dto: NoteDto,
+    },
+    400,
+    403,
+    409,
+  )
   async createNamedNote(
     @RequestUser() user: User,
     @Param('noteAlias') noteAlias: string,
@@ -138,14 +118,8 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(PermissionsGuard)
   @Delete(':noteIdOrAlias')
-  @HttpCode(204)
-  @ApiNoContentResponse({ description: successfullyDeletedDescription })
-  @FullApi
-  @ApiInternalServerErrorResponse({
-    description: internalServerErrorDescription,
-  })
+  @OpenApi(204, 403, 404, 500)
   async deleteNote(
     @RequestUser() user: User,
     @RequestNote() note: Note,
@@ -167,13 +141,16 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.WRITE)
-  @UseGuards(PermissionsGuard)
   @Put(':noteIdOrAlias')
-  @ApiOkResponse({
-    description: 'The new, changed note',
-    type: NoteDto,
-  })
-  @FullApi
+  @OpenApi(
+    {
+      code: 200,
+      description: 'The new, changed note',
+      dto: NoteDto,
+    },
+    403,
+    404,
+  )
   async updateNote(
     @RequestUser() user: User,
     @RequestNote() note: Note,
@@ -187,14 +164,16 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias/content')
-  @ApiProduces('text/markdown')
-  @ApiOkResponse({
-    description: 'The raw markdown content of the note',
-  })
-  @FullApi
-  @Header('content-type', 'text/markdown')
+  @OpenApi(
+    {
+      code: 200,
+      description: 'The raw markdown content of the note',
+      mimeType: 'text/markdown',
+    },
+    403,
+    404,
+  )
   async getNoteContent(
     @RequestUser() user: User,
     @RequestNote() note: Note,
@@ -204,13 +183,16 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias/metadata')
-  @ApiOkResponse({
-    description: 'The metadata of the note',
-    type: NoteMetadataDto,
-  })
-  @FullApi
+  @OpenApi(
+    {
+      code: 200,
+      description: 'The metadata of the note',
+      dto: NoteMetadataDto,
+    },
+    403,
+    404,
+  )
   async getNoteMetadata(
     @RequestUser() user: User,
     @RequestNote() note: Note,
@@ -220,13 +202,16 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(PermissionsGuard)
   @Put(':noteIdOrAlias/metadata/permissions')
-  @ApiOkResponse({
-    description: 'The updated permissions of the note',
-    type: NotePermissionsDto,
-  })
-  @FullApi
+  @OpenApi(
+    {
+      code: 200,
+      description: 'The updated permissions of the note',
+      dto: NotePermissionsDto,
+    },
+    403,
+    404,
+  )
   async updateNotePermissions(
     @RequestUser() user: User,
     @RequestNote() note: Note,
@@ -239,14 +224,17 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias/revisions')
-  @ApiOkResponse({
-    description: 'Revisions of the note',
-    isArray: true,
-    type: RevisionMetadataDto,
-  })
-  @FullApi
+  @OpenApi(
+    {
+      code: 200,
+      description: 'Revisions of the note',
+      isArray: true,
+      dto: RevisionMetadataDto,
+    },
+    403,
+    404,
+  )
   async getNoteRevisions(
     @RequestUser() user: User,
     @RequestNote() note: Note,
@@ -261,13 +249,16 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias/revisions/:revisionId')
-  @ApiOkResponse({
-    description: 'Revision of the note for the given id or alias',
-    type: RevisionDto,
-  })
-  @FullApi
+  @OpenApi(
+    {
+      code: 200,
+      description: 'Revision of the note for the given id or alias',
+      dto: RevisionDto,
+    },
+    403,
+    404,
+  )
   async getNoteRevision(
     @RequestUser() user: User,
     @RequestNote() note: Note,
@@ -280,14 +271,13 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(PermissionsGuard)
   @Get(':noteIdOrAlias/media')
-  @ApiOkResponse({
+  @OpenApi({
+    code: 200,
     description: 'All media uploads of the note',
     isArray: true,
-    type: MediaUploadDto,
+    dto: MediaUploadDto,
   })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
   async getNotesMedia(
     @RequestUser() user: User,
     @RequestNote() note: Note,

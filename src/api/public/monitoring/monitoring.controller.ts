@@ -1,27 +1,18 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Controller, Get, UseGuards } from '@nestjs/common';
-import {
-  ApiForbiddenResponse,
-  ApiOkResponse,
-  ApiProduces,
-  ApiSecurity,
-  ApiTags,
-  ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 import { TokenAuthGuard } from '../../../auth/token.strategy';
 import { MonitoringService } from '../../../monitoring/monitoring.service';
 import { ServerStatusDto } from '../../../monitoring/server-status.dto';
-import {
-  forbiddenDescription,
-  unauthorizedDescription,
-} from '../../utils/descriptions';
+import { OpenApi } from '../../utils/openapi.decorator';
 
 @UseGuards(TokenAuthGuard)
+@OpenApi(401)
 @ApiTags('monitoring')
 @ApiSecurity('token')
 @Controller('monitoring')
@@ -29,24 +20,28 @@ export class MonitoringController {
   constructor(private monitoringService: MonitoringService) {}
 
   @Get()
-  @ApiOkResponse({
-    description: 'The server info',
-    type: ServerStatusDto,
-  })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiForbiddenResponse({ description: forbiddenDescription })
+  @OpenApi(
+    {
+      code: 200,
+      description: 'The server info',
+      dto: ServerStatusDto,
+    },
+    403,
+  )
   getStatus(): Promise<ServerStatusDto> {
     // TODO: toServerStatusDto.
     return this.monitoringService.getServerStatus();
   }
 
   @Get('prometheus')
-  @ApiOkResponse({
-    description: 'Prometheus compatible monitoring data',
-  })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
-  @ApiForbiddenResponse({ description: forbiddenDescription })
-  @ApiProduces('text/plain')
+  @OpenApi(
+    {
+      code: 200,
+      description: 'Prometheus compatible monitoring data',
+      mimeType: 'text/plain',
+    },
+    403,
+  )
   getPrometheusStatus(): string {
     return '';
   }

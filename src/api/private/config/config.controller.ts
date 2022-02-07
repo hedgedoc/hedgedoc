@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { FrontendConfigDto } from '../../../frontend-config/frontend-config.dto';
 import { FrontendConfigService } from '../../../frontend-config/frontend-config.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
+import { OpenApi } from '../../utils/openapi.decorator';
 
 @ApiTags('config')
 @Controller('config')
@@ -21,6 +22,7 @@ export class ConfigController {
   }
 
   @Get()
+  @OpenApi(200)
   async getFrontendConfig(): Promise<FrontendConfigDto> {
     return await this.frontendConfigService.getFrontendConfig();
   }

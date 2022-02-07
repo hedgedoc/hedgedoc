@@ -13,12 +13,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiBadRequestResponse,
-  ApiConflictResponse,
-  ApiTags,
-  ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { Session } from 'express-session';
 
 import { IdentityService } from '../../../identity/identity.service';
@@ -30,12 +25,8 @@ import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
-import {
-  badRequestDescription,
-  conflictDescription,
-  unauthorizedDescription,
-} from '../../utils/descriptions';
 import { LoginEnabledGuard } from '../../utils/login-enabled.guard';
+import { OpenApi } from '../../utils/openapi.decorator';
 import { RegistrationEnabledGuard } from '../../utils/registration-enabled.guard';
 import { RequestUser } from '../../utils/request-user.decorator';
 
@@ -52,8 +43,7 @@ export class AuthController {
 
   @UseGuards(RegistrationEnabledGuard)
   @Post('local')
-  @ApiBadRequestResponse({ description: badRequestDescription })
-  @ApiConflictResponse({ description: conflictDescription })
+  @OpenApi(201, 400, 409)
   async registerUser(@Body() registerDto: RegisterDto): Promise<void> {
     const user = await this.usersService.createUser(
       registerDto.username,
@@ -65,8 +55,7 @@ export class AuthController {
 
   @UseGuards(LoginEnabledGuard, SessionGuard)
   @Put('local')
-  @ApiBadRequestResponse({ description: badRequestDescription })
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @OpenApi(200, 400, 401)
   async updatePassword(
     @RequestUser() user: User,
     @Body() changePasswordDto: UpdatePasswordDto,
@@ -84,7 +73,7 @@ export class AuthController {
 
   @UseGuards(LoginEnabledGuard, LocalAuthGuard)
   @Post('local/login')
-  @ApiUnauthorizedResponse({ description: unauthorizedDescription })
+  @OpenApi(201, 400, 401)
   login(
     @Req() request: Request & { session: { user: string } },
     @Body() loginDto: LoginDto,
@@ -95,7 +84,7 @@ export class AuthController {
 
   @UseGuards(SessionGuard)
   @Delete('logout')
-  @ApiBadRequestResponse({ description: badRequestDescription })
+  @OpenApi(204, 400, 401)
   logout(@Req() request: Request & { session: Session }): void {
     request.session.destroy((err) => {
       if (err) {
