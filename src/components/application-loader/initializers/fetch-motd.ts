@@ -17,12 +17,12 @@ const log = new Logger('Motd')
  * To check if the motd has changed the "last modified" header from the request
  * will be compared to the saved value from the browser's local storage.
  *
- * @param customizeAssetsUrl the URL where the motd.txt can be found.
+ * @param customizeAssetsUrl the URL where the motd.md can be found.
  * @return A promise that gets resolved if the motd was fetched successfully.
  */
 export const fetchMotd = async (customizeAssetsUrl: string): Promise<void> => {
   const cachedLastModified = window.localStorage.getItem(MOTD_LOCAL_STORAGE_KEY)
-  const motdUrl = `${customizeAssetsUrl}motd.txt`
+  const motdUrl = `${customizeAssetsUrl}motd.md`
 
   if (cachedLastModified) {
     const response = await fetch(motdUrl, {
@@ -48,7 +48,7 @@ export const fetchMotd = async (customizeAssetsUrl: string): Promise<void> => {
 
   const lastModified = response.headers.get('Last-Modified') || response.headers.get('etag')
   if (!lastModified) {
-    log.warn("'Last-Modified' or 'Etag' not found for motd.txt!")
+    log.warn("'Last-Modified' or 'Etag' not found for motd.md!")
   }
 
   const motdText = await response.text()

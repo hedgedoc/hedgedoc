@@ -68,11 +68,11 @@ Cypress.Commands.add('loadConfig', (additionalConfig?: Partial<typeof config>) =
 beforeEach(() => {
   cy.loadConfig()
 
-  cy.intercept('GET', '/mock-backend/public/motd.txt', {
+  cy.intercept('GET', '/mock-backend/public/motd.md', {
     body: '404 Not Found!',
     statusCode: 404
   })
-  cy.intercept('HEAD', '/mock-backend/public/motd.txt', {
+  cy.intercept('HEAD', '/mock-backend/public/motd.md', {
     statusCode: 404
   })
 })

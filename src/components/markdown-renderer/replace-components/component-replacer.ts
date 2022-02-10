@@ -6,7 +6,6 @@
 
 import type { Element, Node } from 'domhandler'
 import { isText } from 'domhandler'
-import type MarkdownIt from 'markdown-it'
 import type { ReactElement } from 'react'
 
 export type ValidReactDomElement = ReactElement | string | null
@@ -14,8 +13,6 @@ export type ValidReactDomElement = ReactElement | string | null
 export type SubNodeTransform = (node: Node, subKey: number | string) => NodeReplacement
 
 export type NativeRenderer = () => ValidReactDomElement
-
-export type MarkdownItPlugin = MarkdownIt.PluginSimple | MarkdownIt.PluginWithOptions | MarkdownIt.PluginWithParams
 
 export const REPLACE_WITH_NOTHING = null
 export const DO_NOT_REPLACE = undefined

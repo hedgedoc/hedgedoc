@@ -76,6 +76,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - Image tags with placeholder urls (`https://`) will be replaced with a placeholder frame.
 - Images that are currently uploading will be rendered as "uploading".
 - Code blocks with `plantuml` as language are rendered as [PlantUML](https://plantuml.com/) diagram using a configured render server.
+- File based motd that supports markdown without html.
 
 ### Changed
 

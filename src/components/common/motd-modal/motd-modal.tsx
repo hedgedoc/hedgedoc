@@ -4,13 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useCallback, useMemo } from 'react'
+import React, { Suspense, useCallback } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { CommonModal } from '../modals/common-modal'
 import { Trans, useTranslation } from 'react-i18next'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { dismissMotd } from '../../../redux/motd/methods'
 import { cypressId } from '../../../utils/cypress-attribute'
+import { WaitSpinner } from '../wait-spinner/wait-spinner'
+
+const MotdRenderer = React.lazy(() => import('./motd-renderer'))
 
 /**
  * Reads the motd from the global application state and shows it in a modal.
@@ -20,23 +23,6 @@ import { cypressId } from '../../../utils/cypress-attribute'
 export const MotdModal: React.FC = () => {
   useTranslation()
   const motdState = useApplicationState((state) => state.motd)
-
-  const domContent = useMemo(() => {
-    if (!motdState) {
-      return null
-    }
-    let index = 0
-    return motdState.text
-      ?.split('\n')
-      .map((line) => <span key={(index += 1)}>{line}</span>)
-      .reduce((previousLine, currentLine, currentLineIndex) => (
-        <Fragment key={currentLineIndex}>
-          {previousLine}
-          <br />
-          {currentLine}
-        </Fragment>
-      ))
-  }, [motdState])
 
   const dismiss = useCallback(() => {
     if (!motdState) {
@@ -49,8 +35,12 @@ export const MotdModal: React.FC = () => {
     return null
   } else {
     return (
-      <CommonModal {...cypressId('motd')} show={!!motdState} title={'motd.title'}>
-        <Modal.Body>{domContent}</Modal.Body>
+      <CommonModal {...cypressId('motd')} show={true} title={'motd.title'}>
+        <Modal.Body>
+          <Suspense fallback={<WaitSpinner />}>
+            <MotdRenderer />
+          </Suspense>
+        </Modal.Body>
         <Modal.Footer>
           <Button variant={'success'} onClick={dismiss} {...cypressId('motd-dismiss')}>
             <Trans i18nKey={'common.dismiss'} />

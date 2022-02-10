@@ -21,12 +21,14 @@ import { SanitizerMarkdownExtension } from '../markdown-extension/sanitizer/sani
  * @param markdownContentLines The markdown code lines that should be rendered
  * @param additionalMarkdownExtensions A list of {@link MarkdownExtension markdown extensions} that should be used
  * @param newlinesAreBreaks Defines if the alternative break mode of markdown it should be used
+ * @param allowHtml Defines if html is allowed in markdown
  * @return The React DOM that represents the rendered markdown code
  */
 export const useConvertMarkdownToReactDom = (
   markdownContentLines: string[],
   additionalMarkdownExtensions: MarkdownExtension[],
-  newlinesAreBreaks?: boolean
+  newlinesAreBreaks = true,
+  allowHtml = true
 ): ValidReactDomElement[] => {
   const lineNumberMapper = useMemo(() => new LineIdMapper(), [])
   const htmlToReactTransformer = useMemo(() => new NodeToReactTransformer(), [])
@@ -40,8 +42,8 @@ export const useConvertMarkdownToReactDom = (
 
   const markdownIt = useMemo(() => {
     const newMarkdownIt = new MarkdownIt('default', {
-      html: true,
-      breaks: newlinesAreBreaks ?? true,
+      html: allowHtml,
+      breaks: newlinesAreBreaks,
       langPrefix: '',
       typographer: true
     })
@@ -52,7 +54,7 @@ export const useConvertMarkdownToReactDom = (
       newMarkdownIt.use((markdownIt) => extension.configureMarkdownItPost(markdownIt))
     )
     return newMarkdownIt
-  }, [markdownExtensions, newlinesAreBreaks])
+  }, [allowHtml, markdownExtensions, newlinesAreBreaks])
 
   useMemo(() => {
     const replacers = markdownExtensions.reduce(
