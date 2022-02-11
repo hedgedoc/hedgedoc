@@ -6,6 +6,7 @@
 import {
   ArgumentsHost,
   BadRequestException,
+  Catch,
   ConflictException,
   InternalServerErrorException,
   NotFoundException,
@@ -67,6 +68,7 @@ const mapOfHedgeDocErrorsToHttpErrors: Map<string, HttpExceptionConstructor> =
     ],
   ]);
 
+@Catch()
 export class ErrorExceptionMapping extends BaseExceptionFilter<Error> {
   catch(error: Error, host: ArgumentsHost): void {
     super.catch(ErrorExceptionMapping.transformError(error), host);
