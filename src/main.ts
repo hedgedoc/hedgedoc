@@ -5,7 +5,7 @@
  */
 import { LogLevel } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
 import { AppModule } from './app.module';
@@ -79,7 +79,8 @@ async function bootstrap(): Promise<void> {
   app.useStaticAssets('public', {
     prefix: '/public/',
   });
-  app.useGlobalFilters(new ErrorExceptionMapping());
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new ErrorExceptionMapping(httpAdapter));
   await app.listen(appConfig.port);
   logger.log(`Listening on port ${appConfig.port}`, 'AppBootstrap');
 }
