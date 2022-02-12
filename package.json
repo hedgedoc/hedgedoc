@@ -143,7 +143,7 @@
     "eslint-plugin-promise": "6.0.0",
     "eslint-plugin-testing-library": "5.0.5",
     "jest": "27.5.1",
-    "netlify-cli": "8.19.3",
+    "netlify-cli": "9.4.0",
     "prettier": "2.5.1",
     "react-test-renderer": "17.0.2",
     "redux-devtools-extension": "2.13.9",
