@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       # renovate: datasource=docker depName=cypress/browsers versioning=docker
-      image: cypress/browsers:node16.5.0-chrome94-ff93
+      image: cypress/browsers:node16.13.2-chrome97-ff96
       options: --user 1001 --shm-size=2g
     strategy:
       fail-fast: false
