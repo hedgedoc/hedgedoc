@@ -52,7 +52,7 @@ async function bootstrap(): Promise<void> {
       `Serving OpenAPI docs for private api under '/private/apidoc'`,
       'AppBootstrap',
     );
-    setupFrontendProxy(app, logger);
+    await setupFrontendProxy(app, logger);
   }
 
   await setupSpecialGroups(app);
