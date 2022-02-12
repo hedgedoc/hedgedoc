@@ -5359,7 +5359,7 @@ __metadata:
     raw-body: 2.4.2
     reflect-metadata: 0.1.13
     rimraf: 3.0.2
-    rxjs: 7.5.2
+    rxjs: 7.5.4
     source-map-support: 0.5.21
     sqlite3: 5.0.2
     supertest: 6.2.2
@@ -8631,7 +8631,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:7.5.2, rxjs@npm:^7.2.0":
+"rxjs@npm:7.5.4":
+  version: 7.5.4
+  resolution: "rxjs@npm:7.5.4"
+  dependencies:
+    tslib: ^2.1.0
+  checksum: 6f55f835f2543bc8214900f9e28b6320e6adc95875011fbca63e80a66eb18c9ff7cfdccb23b2180cbb6412762b98ed158c89fd51cb020799d127c66ea38c3c0e
+  languageName: node
+  linkType: hard
+
+"rxjs@npm:^7.2.0":
   version: 7.5.2
   resolution: "rxjs@npm:7.5.2"
   dependencies:
