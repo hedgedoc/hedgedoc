@@ -26,7 +26,7 @@
   "dependencies": {
     "@azure/storage-blob": "12.8.0",
     "@nestjs/common": "8.2.6",
-    "@nestjs/config": "1.1.6",
+    "@nestjs/config": "1.1.7",
     "@nestjs/core": "8.2.6",
     "@nestjs/passport": "8.1.0",
     "@nestjs/platform-express": "8.2.6",
@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "@nestjs/cli": "8.2.0",
-    "@nestjs/schematics": "8.0.5",
+    "@nestjs/schematics": "8.0.6",
     "@nestjs/testing": "8.2.6",
     "@trivago/prettier-plugin-sort-imports": "3.2.0",
     "@tsconfig/node12": "1.0.9",
