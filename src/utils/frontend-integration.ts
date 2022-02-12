@@ -4,19 +4,20 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { createProxyMiddleware } from 'http-proxy-middleware';
 
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { useUnless } from './use-unless';
 
-export function setupFrontendProxy(
+export async function setupFrontendProxy(
   app: NestExpressApplication,
   logger: ConsoleLoggerService,
-): void {
+): Promise<void> {
   logger.log(
     `Setting up proxy to frontend dev server on port 3001`,
     'setupFrontendProxy',
   );
+  const createProxyMiddleware = (await import('http-proxy-middleware'))
+    .createProxyMiddleware;
   const frontendProxy = createProxyMiddleware({
     logProvider: () => {
       return {
