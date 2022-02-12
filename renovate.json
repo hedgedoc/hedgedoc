@@ -86,9 +86,12 @@
   ],
   "regexManagers": [
     {
-      "fileMatch": ["\\.yml$", "\\.yaml$"],
+      "fileMatch": [
+        "\\.yml$",
+        "\\.yaml$"
+      ],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s+\\S+:\\s+\"?(?<currentValue>[^\"]*?)\"?\\s"
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s+\\S+:\\s+\"?[^:]+:(?<currentValue>[^\"]*?)\"?\\s"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
