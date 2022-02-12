@@ -1768,7 +1768,7 @@ __metadata:
     markmap-lib: 0.12.0
     markmap-view: 0.2.7
     mermaid: 8.14.0
-    netlify-cli: 8.16.1
+    netlify-cli: 8.19.3
     next: 12.0.9
     optional-js: 2.3.0
     prettier: 2.5.1
@@ -2504,10 +2504,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/plugins-list@npm:^6.6.0, @netlify/plugins-list@npm:^6.7.0":
+"@netlify/plugin-edge-handlers@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "@netlify/plugin-edge-handlers@npm:3.0.6"
+  dependencies:
+    "@babel/core": ^7.11.4
+    "@babel/preset-env": ^7.11.5
+    "@rollup/plugin-babel": ^5.2.0
+    "@rollup/plugin-commonjs": ^21.0.0
+    "@rollup/plugin-inject": ^4.0.2
+    "@rollup/plugin-json": ^4.1.0
+    "@rollup/plugin-node-resolve": ^11.0.0
+    buffer-es6: ^4.9.3
+    del: ^6.0.0
+    node-fetch: ^3.0.0
+    path-type: ^5.0.0
+    process-es6: ^0.11.6
+    rollup: ^2.23.1
+    rollup-plugin-node-polyfills: ^0.2.1
+    rollup-plugin-terser: ^7.0.2
+  bin:
+    plugin-build-edge-handlers: src/cli.js
+  checksum: 9b8532dd859ca32bb544e829ca0fc75253a580671f9a1aa57a6a9f2d2efc7ce55a8c5a51f1a1ee6c3ce4c04193ad7c405bf11603ef6a9b6343f88bfeb4df8a55
+  languageName: node
+  linkType: hard
+
+"@netlify/plugins-list@npm:^6.6.0":
   version: 6.7.0
   resolution: "@netlify/plugins-list@npm:6.7.0"
   checksum: 66cb711fe08cbf880a9aaa0f139d5cab086ea001f64c5e65dbbaa35af3c6f026e1f86fa23dd60caa46e805c956a57e63c73ed536d6bb29f4c57b0590703ece43
+  languageName: node
+  linkType: hard
+
+"@netlify/plugins-list@npm:^6.9.0":
+  version: 6.10.2
+  resolution: "@netlify/plugins-list@npm:6.10.2"
+  checksum: 46d8d03eb6f206ba9e458315f5f75f59f0cbdd5c94f3b2c31e13e57be0684581a2db99341e4ddee99d9e0e9f089bd50e3eb117c890522ddbcedfc86873ce8536
   languageName: node
   linkType: hard
 
@@ -2569,7 +2601,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/zip-it-and-ship-it@npm:5.5.2, @netlify/zip-it-and-ship-it@npm:^5.5.2":
+"@netlify/zip-it-and-ship-it@npm:5.5.2":
   version: 5.5.2
   resolution: "@netlify/zip-it-and-ship-it@npm:5.5.2"
   dependencies:
@@ -2608,6 +2640,48 @@ __metadata:
   bin:
     zip-it-and-ship-it: dist/bin.js
   checksum: 6c04d787f094ea578ee7cd90286dfbad38c664a9e5500a621ce23ce3c64e21ae9defd01b12c30d0b0805964f53696946e8c3b8027c7d9034c55baa2d209e6101
+  languageName: node
+  linkType: hard
+
+"@netlify/zip-it-and-ship-it@npm:^5.7.0":
+  version: 5.7.4
+  resolution: "@netlify/zip-it-and-ship-it@npm:5.7.4"
+  dependencies:
+    "@babel/parser": 7.16.8
+    "@netlify/esbuild": ^0.13.6
+    "@vercel/nft": ^0.17.0
+    archiver: ^5.3.0
+    common-path-prefix: ^3.0.0
+    cp-file: ^9.0.0
+    del: ^6.0.0
+    elf-cam: ^0.1.1
+    end-of-stream: ^1.4.4
+    es-module-lexer: ^0.9.0
+    execa: ^5.0.0
+    filter-obj: ^2.0.1
+    find-up: ^5.0.0
+    glob: ^7.1.6
+    is-builtin-module: ^3.1.0
+    junk: ^3.1.0
+    locate-path: ^6.0.0
+    merge-options: ^3.0.4
+    minimatch: ^3.0.4
+    p-map: ^4.0.0
+    path-exists: ^4.0.0
+    pkg-dir: ^5.0.0
+    precinct: ^8.2.0
+    read-package-json-fast: ^2.0.2
+    require-package-name: ^2.0.1
+    resolve: ^2.0.0-next.1
+    semver: ^7.0.0
+    tmp-promise: ^3.0.2
+    toml: ^3.0.0
+    typescript: ^4.6.0-beta
+    unixify: ^1.0.0
+    yargs: ^16.0.0
+  bin:
+    zip-it-and-ship-it: dist/bin.js
+  checksum: cc37ea313bf674b6e685d5a3592a37953ba23e38452da0b94dfe5ac6e18bc1f5237046c6841b7529a97eaaea31f248e3dfc760457376ae803b42da4136d01b44
   languageName: node
   linkType: hard
 
@@ -6434,6 +6508,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "commander@npm:9.0.0"
+  checksum: 15066e433d528315ded8261d16bc600d1f3c5671c75021e685ae67e4d62f7551243ff28411b28dc0a6f8b23c2a0f033550ec6f3e66bdf9d11a4fdc2d33dd9802
+  languageName: node
+  linkType: hard
+
 "common-path-prefix@npm:^3.0.0":
   version: 3.0.0
   resolution: "common-path-prefix@npm:3.0.0"
@@ -8007,6 +8088,13 @@ __metadata:
   dependencies:
     assert-plus: ^1.0.0
   checksum: 3634c249570f7f34e3d34f866c93f866c5b417f0dd616275decae08147dcdf8fccfaa5947380ccfb0473998ea3a8057c0b4cd90c875740ee685d0624b2983598
+  languageName: node
+  linkType: hard
+
+"data-uri-to-buffer@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "data-uri-to-buffer@npm:4.0.0"
+  checksum: a010653869abe8bb51259432894ac62c52bf79ad761d418d94396f48c346f2ae739c46b254e8bb5987bded8a653d467db1968db3a69bab1d33aa5567baa5cfc7
   languageName: node
   linkType: hard
 
@@ -9813,6 +9901,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fetch-blob@npm:^3.1.2, fetch-blob@npm:^3.1.4":
+  version: 3.1.4
+  resolution: "fetch-blob@npm:3.1.4"
+  dependencies:
+    node-domexception: ^1.0.0
+    web-streams-polyfill: ^3.0.3
+  checksum: 81b074f38a2dbfd546dd58e482cefe14e605abd609e272804bf089d588d84f39e3e95b35640bfb376f71d5038c123d4d41be49d9cdf87e5ec8939d37738df0b6
+  languageName: node
+  linkType: hard
+
 "fetch-node-website@npm:^5.0.3":
   version: 5.0.3
   resolution: "fetch-node-website@npm:5.0.3"
@@ -9956,6 +10054,13 @@ __metadata:
   version: 2.0.2
   resolution: "filter-obj@npm:2.0.2"
   checksum: e0d71ebc89515a4305db5158aeb78c9f9a4bfef4bacf272e7de8cadf0d3b694191f6fdbd3b507ee330c266c4287f21804defa8c80693d8c6ad60f1cbfad4f477
+  languageName: node
+  linkType: hard
+
+"filter-obj@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "filter-obj@npm:3.0.0"
+  checksum: 93bee3cecc2bbd87cb9d786c4ba2ea36fbad5d237aec991deed419dcc892020dd46d0a77c982224ef45d922b1573c77be1588274b9d524c7389ccf8d1a91c330
   languageName: node
   linkType: hard
 
@@ -10126,6 +10231,15 @@ __metadata:
     combined-stream: ^1.0.6
     mime-types: ^2.1.12
   checksum: 10c1780fa13dbe1ff3100114c2ce1f9307f8be10b14bf16e103815356ff567b6be39d70fc4a40f8990b9660012dc24b0f5e1dde1b6426166eb23a445ba068ca3
+  languageName: node
+  linkType: hard
+
+"formdata-polyfill@npm:^4.0.10":
+  version: 4.0.10
+  resolution: "formdata-polyfill@npm:4.0.10"
+  dependencies:
+    fetch-blob: ^3.1.2
+  checksum: 82a34df292afadd82b43d4a740ce387bc08541e0a534358425193017bf9fb3567875dc5f69564984b1da979979b70703aa73dee715a17b6c229752ae736dd9db
   languageName: node
   linkType: hard
 
@@ -11744,6 +11858,13 @@ __metadata:
   version: 3.0.0
   resolution: "is-plain-obj@npm:3.0.0"
   checksum: a6ebdf8e12ab73f33530641972a72a4b8aed6df04f762070d823808303e4f76d87d5ea5bd76f96a7bbe83d93f04ac7764429c29413bd9049853a69cb630fb21c
+  languageName: node
+  linkType: hard
+
+"is-plain-obj@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "is-plain-obj@npm:4.0.0"
+  checksum: a6bb55a90636345a64c6153b74d85a9b6440f9975f4dcc57eed596c280b7ba228c71c406355a3147ed0488330d2743d5756e052c9492b1aa4f7dcd281f08c4b6
   languageName: node
   linkType: hard
 
@@ -14241,18 +14362,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"netlify-cli@npm:8.16.1":
-  version: 8.16.1
-  resolution: "netlify-cli@npm:8.16.1"
+"netlify-cli@npm:8.19.3":
+  version: 8.19.3
+  resolution: "netlify-cli@npm:8.19.3"
   dependencies:
     "@netlify/build": ^26.2.3
     "@netlify/config": ^17.0.6
     "@netlify/framework-info": ^9.0.0
     "@netlify/local-functions-proxy": ^1.1.1
-    "@netlify/plugin-edge-handlers": ^3.0.4
-    "@netlify/plugins-list": ^6.7.0
+    "@netlify/plugin-edge-handlers": ^3.0.6
+    "@netlify/plugins-list": ^6.9.0
     "@netlify/routing-local-proxy": ^0.34.1
-    "@netlify/zip-it-and-ship-it": ^5.5.2
+    "@netlify/zip-it-and-ship-it": ^5.7.0
     "@octokit/rest": ^18.0.0
     "@sindresorhus/slugify": ^1.1.0
     ansi-escapes: ^5.0.0
@@ -14266,7 +14387,7 @@ __metadata:
     chokidar: ^3.0.2
     ci-info: ^3.0.0
     clean-deep: ^3.0.2
-    commander: ^8.3.0
+    commander: ^9.0.0
     concordance: ^5.0.0
     configstore: ^5.0.0
     content-type: ^1.0.4
@@ -14315,10 +14436,10 @@ __metadata:
     memoize-one: ^6.0.0
     minimist: ^1.2.5
     multiparty: ^4.2.1
-    netlify: ^10.1.2
+    netlify: ^11.0.0
     netlify-headers-parser: ^6.0.1
-    netlify-onegraph-internal: 0.0.18
-    netlify-redirect-parser: ^13.0.1
+    netlify-onegraph-internal: 0.0.32
+    netlify-redirect-parser: ^13.0.2
     netlify-redirector: ^0.2.1
     node-fetch: ^2.6.0
     node-version-alias: ^1.0.1
@@ -14352,11 +14473,11 @@ __metadata:
     uuid: ^8.0.0
     wait-port: ^0.2.2
     winston: ^3.2.1
-    write-file-atomic: ^3.0.0
+    write-file-atomic: ^4.0.0
   bin:
     netlify: bin/run
     ntl: bin/run
-  checksum: e3600cf3c03ccdb8ef8e6d39dfe5d31ebfe4f97492503010d1791dc8610f405a52b555d7329721e08daabcec4eb3ac0fc5e77bdf65d41e05bb69052532cae91b
+  checksum: 95089cebe6955b6275e5dc059404481d3a3e1435400c19af1b126e1c6fba10fc2ca766f3f6bbcc731ec71341b8f4d0bb5a472a20664bcdc9f5626b6533577e67
   languageName: node
   linkType: hard
 
@@ -14373,14 +14494,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"netlify-onegraph-internal@npm:0.0.18":
-  version: 0.0.18
-  resolution: "netlify-onegraph-internal@npm:0.0.18"
+"netlify-onegraph-internal@npm:0.0.32":
+  version: 0.0.32
+  resolution: "netlify-onegraph-internal@npm:0.0.32"
   dependencies:
     graphql: 16.0.0
     node-fetch: ^2.6.0
     uuid: ^8.3.2
-  checksum: 104b0cc35f49cfdc9ef6ee7349efc54f82e88abfac0fde2d282755423d77bd257e7661aa2ff7a46070d6c5fdcd747e6e5982b9b50a6bb81059cee2331c033e0f
+  checksum: ebe57912d09dd2dacff98a8d03675a9cfae970ab75b0a0846865ca673bb92a2d801e7bd52460170e93b66c6d5abdb1af6e4e6053b606f179ce24d57239155491
   languageName: node
   linkType: hard
 
@@ -14393,6 +14514,18 @@ __metadata:
     path-exists: ^4.0.0
     toml: ^3.0.0
   checksum: 4da6e43b2579dd0881489b9d8c36e7c76aa030eb1151229deb8a20272377819d39e17a89c34596cc9584493dc1005355af1b8396bfcb52967582f4388b587c2b
+  languageName: node
+  linkType: hard
+
+"netlify-redirect-parser@npm:^13.0.2":
+  version: 13.0.2
+  resolution: "netlify-redirect-parser@npm:13.0.2"
+  dependencies:
+    filter-obj: ^3.0.0
+    is-plain-obj: ^4.0.0
+    path-exists: ^5.0.0
+    toml: ^3.0.0
+  checksum: 83b37aef69eade471fdf529b2e5a535dc892fabb1c5d1d4ed311207026a316d20d208e309eba9db9ab745b840bd50caaefc79a993a8289df2a0ac741026bac86
   languageName: node
   linkType: hard
 
@@ -14415,6 +14548,21 @@ __metadata:
     p-wait-for: ^3.2.0
     qs: ^6.9.6
   checksum: 41b9a71f6076a559777189e8a3b66ab0a09f9306bef3636b31ceec6a470604f0f5c806e835a81cdd479635cd987b717c454d5747d2ae143224f12cb2fac880ab
+  languageName: node
+  linkType: hard
+
+"netlify@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "netlify@npm:11.0.0"
+  dependencies:
+    "@netlify/open-api": ^2.8.0
+    lodash.camelcase: ^4.3.0
+    micro-api-client: ^3.3.0
+    node-fetch: ^3.0.0
+    omit.js: ^2.0.2
+    p-wait-for: ^4.0.0
+    qs: ^6.9.6
+  checksum: 243dd62493af25df554eaf41476520df35709c503afcf1f482be6d505f1c0ea9b31bb9e6211f23b85a32627a338607ef4ffa4346363d8774ec7fa335f0227ee9
   languageName: node
   linkType: hard
 
@@ -14498,6 +14646,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-domexception@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "node-domexception@npm:1.0.0"
+  checksum: ee1d37dd2a4eb26a8a92cd6b64dfc29caec72bff5e1ed9aba80c294f57a31ba4895a60fd48347cf17dd6e766da0ae87d75657dfd1f384ebfa60462c2283f5c7f
+  languageName: node
+  linkType: hard
+
 "node-fetch@npm:^2.3.0, node-fetch@npm:^2.6.0, node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.5, node-fetch@npm:^2.6.7":
   version: 2.6.7
   resolution: "node-fetch@npm:2.6.7"
@@ -14509,6 +14664,17 @@ __metadata:
     encoding:
       optional: true
   checksum: 8d816ffd1ee22cab8301c7756ef04f3437f18dace86a1dae22cf81db8ef29c0bf6655f3215cb0cdb22b420b6fe141e64b26905e7f33f9377a7fa59135ea3e10b
+  languageName: node
+  linkType: hard
+
+"node-fetch@npm:^3.0.0":
+  version: 3.2.0
+  resolution: "node-fetch@npm:3.2.0"
+  dependencies:
+    data-uri-to-buffer: ^4.0.0
+    fetch-blob: ^3.1.4
+    formdata-polyfill: ^4.0.10
+  checksum: 1c809a0f64dd11cc18b49f990440e22c471da47da2a6d6b3388a83beba9d23ba7eaca1b9bf706a792bd283b824cf1a76777910859b9c28ad33a59f2ae4e44f8e
   languageName: node
   linkType: hard
 
@@ -15270,6 +15436,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"p-timeout@npm:^5.0.0":
+  version: 5.0.2
+  resolution: "p-timeout@npm:5.0.2"
+  checksum: 69eda717e2cbc3d831617a805e069ce69f8cbf51b70f1d1760d3d118536c6b891bbc74f758a4e0d337180ff053f65cdbfc9f5dd04f368ab38173e76f47cf13a8
+  languageName: node
+  linkType: hard
+
 "p-try@npm:^1.0.0":
   version: 1.0.0
   resolution: "p-try@npm:1.0.0"
@@ -15290,6 +15463,15 @@ __metadata:
   dependencies:
     p-timeout: ^3.0.0
   checksum: 7f6840e9233d96836a233dee9c5b1c711bfdf76228d0eaea68fa74a79418f5eef6dc1915dadd28d17312a99f6a53daa308b1c18b779bc9c1dabcae3d6b35a086
+  languageName: node
+  linkType: hard
+
+"p-wait-for@npm:^4.0.0":
+  version: 4.1.0
+  resolution: "p-wait-for@npm:4.1.0"
+  dependencies:
+    p-timeout: ^5.0.0
+  checksum: 4f3ad4aa52b86d9f73ad558dcb00f9df6727a2c6c42dc1ba46e5ae2505898801f09016d753fd9ecb26eac925ba33ff7f8dbc0981856132c895d9df87dbb25d57
   languageName: node
   linkType: hard
 
@@ -15409,6 +15591,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"path-exists@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "path-exists@npm:5.0.0"
+  checksum: 8ca842868cab09423994596eb2c5ec2a971c17d1a3cb36dbf060592c730c725cd524b9067d7d2a1e031fef9ba7bd2ac6dc5ec9fb92aa693265f7be3987045254
+  languageName: node
+  linkType: hard
+
 "path-is-absolute@npm:^1.0.0":
   version: 1.0.1
   resolution: "path-is-absolute@npm:1.0.1"
@@ -15450,6 +15639,13 @@ __metadata:
   version: 4.0.0
   resolution: "path-type@npm:4.0.0"
   checksum: 5b1e2daa247062061325b8fdbfd1fb56dde0a448fb1455453276ea18c60685bdad23a445dc148cf87bc216be1573357509b7d4060494a6fd768c7efad833ee45
+  languageName: node
+  linkType: hard
+
+"path-type@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "path-type@npm:5.0.0"
+  checksum: 15ec24050e8932c2c98d085b72cfa0d6b4eeb4cbde151a0a05726d8afae85784fc5544f733d8dfc68536587d5143d29c0bd793623fad03d7e61cc00067291cd5
   languageName: node
   linkType: hard
 
@@ -17191,7 +17387,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"signal-exit@npm:^3.0.0, signal-exit@npm:^3.0.2, signal-exit@npm:^3.0.3":
+"signal-exit@npm:^3.0.0, signal-exit@npm:^3.0.2, signal-exit@npm:^3.0.3, signal-exit@npm:^3.0.7":
   version: 3.0.7
   resolution: "signal-exit@npm:3.0.7"
   checksum: a2f098f247adc367dffc27845853e9959b9e88b01cb301658cfe4194352d8d2bb32e18467c786a7fe15f1d44b233ea35633d076d5e737870b7139949d1ab6318
@@ -18723,6 +18919,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:^4.6.0-beta":
+  version: 4.6.0-dev.20220211
+  resolution: "typescript@npm:4.6.0-dev.20220211"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 74254f58fcd4c5fcadaef76f92a58c40beabc26fc1e5d7623795e221c8ac5eee437a2487a0306a7b0f895d346735d47c59e3b0c198801a3ed1cdfa309ac4f5cc
+  languageName: node
+  linkType: hard
+
 "typescript@patch:typescript@4.5.5#~builtin<compat/typescript>, typescript@patch:typescript@^4.4.3#~builtin<compat/typescript>, typescript@patch:typescript@^4.5.4#~builtin<compat/typescript>":
   version: 4.5.5
   resolution: "typescript@patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=493e53"
@@ -18740,6 +18946,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: dc7141ab555b23a8650a6787f98845fc11692063d02b75ff49433091b3af2fe3d773650dea18389d7c21f47d620fb3b110ea363dab4ab039417a6ccbbaf96fc2
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@^4.6.0-beta#~builtin<compat/typescript>":
+  version: 4.6.0-dev.20220211
+  resolution: "typescript@patch:typescript@npm%3A4.6.0-dev.20220211#~builtin<compat/typescript>::version=4.6.0-dev.20220211&hash=493e53"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 6985a7144bca8181f08a2c9b3ff5c86f42732817c9bb4df9d7d0e11ca6ddac8d406aacca205f8e5772063113563d2e12658a36a184eeaf7d3c9e2f98f056532a
   languageName: node
   linkType: hard
 
@@ -19618,6 +19834,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"web-streams-polyfill@npm:^3.0.3":
+  version: 3.2.0
+  resolution: "web-streams-polyfill@npm:3.2.0"
+  checksum: e23ad0649392fa0159dbfc6bb27474c308c3f332d9078cfef3c06c154165bef18732c5814126147c6c712f604216ddc950c171c854e3821f020e0d2d721a5958
+  languageName: node
+  linkType: hard
+
 "webidl-conversions@npm:^3.0.0":
   version: 3.0.1
   resolution: "webidl-conversions@npm:3.0.1"
@@ -19855,6 +20078,16 @@ __metadata:
     signal-exit: ^3.0.2
     typedarray-to-buffer: ^3.1.5
   checksum: c55b24617cc61c3a4379f425fc62a386cc51916a9b9d993f39734d005a09d5a4bb748bc251f1304e7abd71d0a26d339996c275955f527a131b1dcded67878280
+  languageName: node
+  linkType: hard
+
+"write-file-atomic@npm:^4.0.0":
+  version: 4.0.1
+  resolution: "write-file-atomic@npm:4.0.1"
+  dependencies:
+    imurmurhash: ^0.1.4
+    signal-exit: ^3.0.7
+  checksum: 8f780232533ca6223c63c9b9c01c4386ca8c625ebe5017a9ed17d037aec19462ae17109e0aa155bff5966ee4ae7a27b67a99f55caf3f32ffd84155e9da3929fc
   languageName: node
   linkType: hard
 
