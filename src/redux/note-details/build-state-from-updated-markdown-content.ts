@@ -10,6 +10,7 @@ import { initialState } from './initial-state'
 import type { PresentFrontmatterExtractionResult } from './frontmatter-extractor/types'
 import { createNoteFrontmatterFromYaml } from './raw-note-frontmatter-parser/parser'
 import { generateNoteTitle } from './generate-note-title'
+import { calculateLineStartIndexes } from './calculate-line-start-indexes'
 
 /**
  * Copies a {@link NoteDetails} but with another markdown content.
@@ -40,20 +41,27 @@ const buildStateFromMarkdownContentAndLines = (
   markdownContentLines: string[]
 ): NoteDetails => {
   const frontmatterExtraction = extractFrontmatter(markdownContentLines)
+  const lineStartIndexes = calculateLineStartIndexes(markdownContentLines)
   if (frontmatterExtraction.isPresent) {
     return buildStateFromFrontmatterUpdate(
       {
         ...state,
-        markdownContent: markdownContent,
-        markdownContentLines: markdownContentLines
+        markdownContent: {
+          plain: markdownContent,
+          lines: markdownContentLines,
+          lineStartIndexes
+        }
       },
       frontmatterExtraction
     )
   } else {
     return {
       ...state,
-      markdownContent: markdownContent,
-      markdownContentLines: markdownContentLines,
+      markdownContent: {
+        plain: markdownContent,
+        lines: markdownContentLines,
+        lineStartIndexes
+      },
       rawFrontmatter: '',
       noteTitle: generateNoteTitle(initialState.frontmatter, state.firstHeading),
       frontmatter: initialState.frontmatter,

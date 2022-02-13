@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import type { ScrollState } from '../editor-page/synced-scroll/scroll-props'
 import type { BaseConfiguration } from './window-post-message-communicator/rendering-message'
 import { CommunicationMessageType, RendererType } from './window-post-message-communicator/rendering-message'
@@ -27,26 +27,50 @@ export const IframeMarkdownRenderer: React.FC = () => {
 
   const communicator = useRendererToEditorCommunicator()
 
-  const countWordsInRenderedDocument = useCallback(() => {
-    const documentContainer = document.querySelector('[data-word-count-target]')
-    communicator.sendMessageToOtherSide({
-      type: CommunicationMessageType.ON_WORD_COUNT_CALCULATED,
-      words: documentContainer ? countWords(documentContainer) : 0
-    })
-  }, [communicator])
+  const sendScrolling = useRef<boolean>(false)
 
-  useRendererReceiveHandler(CommunicationMessageType.SET_BASE_CONFIGURATION, (values) =>
-    setBaseConfiguration(values.baseConfiguration)
+  useRendererReceiveHandler(
+    CommunicationMessageType.DISABLE_RENDERER_SCROLL_SOURCE,
+    useCallback(() => {
+      sendScrolling.current = false
+    }, [])
   )
-  useRendererReceiveHandler(CommunicationMessageType.SET_MARKDOWN_CONTENT, (values) =>
-    setMarkdownContentLines(values.content)
+
+  useRendererReceiveHandler(
+    CommunicationMessageType.SET_BASE_CONFIGURATION,
+    useCallback((values) => setBaseConfiguration(values.baseConfiguration), [])
   )
-  useRendererReceiveHandler(CommunicationMessageType.SET_DARKMODE, (values) => setDarkMode(values.activated))
-  useRendererReceiveHandler(CommunicationMessageType.SET_SCROLL_STATE, (values) => setScrollState(values.scrollState))
-  useRendererReceiveHandler(CommunicationMessageType.SET_FRONTMATTER_INFO, (values) =>
-    setFrontmatterInfo(values.frontmatterInfo)
+
+  useRendererReceiveHandler(
+    CommunicationMessageType.SET_MARKDOWN_CONTENT,
+    useCallback((values) => setMarkdownContentLines(values.content), [])
   )
-  useRendererReceiveHandler(CommunicationMessageType.GET_WORD_COUNT, () => countWordsInRenderedDocument())
+
+  useRendererReceiveHandler(
+    CommunicationMessageType.SET_DARKMODE,
+    useCallback((values) => setDarkMode(values.activated), [])
+  )
+
+  useRendererReceiveHandler(
+    CommunicationMessageType.SET_SCROLL_STATE,
+    useCallback((values) => setScrollState(values.scrollState), [])
+  )
+
+  useRendererReceiveHandler(
+    CommunicationMessageType.SET_FRONTMATTER_INFO,
+    useCallback((values) => setFrontmatterInfo(values.frontmatterInfo), [])
+  )
+
+  useRendererReceiveHandler(
+    CommunicationMessageType.GET_WORD_COUNT,
+    useCallback(() => {
+      const documentContainer = document.querySelector('[data-word-count-target]')
+      communicator.sendMessageToOtherSide({
+        type: CommunicationMessageType.ON_WORD_COUNT_CALCULATED,
+        words: documentContainer ? countWords(documentContainer) : 0
+      })
+    }, [communicator])
+  )
 
   const onTaskCheckedChange = useCallback(
     (lineInMarkdown: number, checked: boolean) => {
@@ -70,13 +94,17 @@ export const IframeMarkdownRenderer: React.FC = () => {
   )
 
   const onMakeScrollSource = useCallback(() => {
+    sendScrolling.current = true
     communicator.sendMessageToOtherSide({
-      type: CommunicationMessageType.SET_SCROLL_SOURCE_TO_RENDERER
+      type: CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE
     })
   }, [communicator])
 
   const onScroll = useCallback(
     (scrollState: ScrollState) => {
+      if (!sendScrolling.current) {
+        return
+      }
       communicator.sendMessageToOtherSide({
         type: CommunicationMessageType.SET_SCROLL_STATE,
         scrollState

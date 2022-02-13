@@ -17,11 +17,11 @@ declare namespace Cypress {
 }
 
 Cypress.Commands.add('visitHome', () => {
-  return cy.visit('/', { retryOnNetworkFailure: true })
+  return cy.visit('/', { retryOnNetworkFailure: true, retryOnStatusCodeFailure: true })
 })
 
 Cypress.Commands.add('visitHistory', () => {
-  return cy.visit(`/history`, { retryOnNetworkFailure: true })
+  return cy.visit(`/history`, { retryOnNetworkFailure: true, retryOnStatusCodeFailure: true })
 })
 
 export enum PAGE_MODE {
@@ -31,5 +31,8 @@ export enum PAGE_MODE {
 }
 
 Cypress.Commands.add('visitTestNote', (pageMode: PAGE_MODE = PAGE_MODE.EDITOR, query?: string) => {
-  return cy.visit(`/${pageMode}/${testNoteId}${query ? `?${query}` : ''}`, { retryOnNetworkFailure: true })
+  return cy.visit(`/${pageMode}/${testNoteId}${query ? `?${query}` : ''}`, {
+    retryOnNetworkFailure: true,
+    retryOnStatusCodeFailure: true
+  })
 })

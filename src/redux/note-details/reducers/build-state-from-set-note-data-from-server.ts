@@ -9,6 +9,7 @@ import type { NoteDetails } from '../types/note-details'
 import { buildStateFromUpdatedMarkdownContent } from '../build-state-from-updated-markdown-content'
 import { initialState } from '../initial-state'
 import { DateTime } from 'luxon'
+import { calculateLineStartIndexes } from '../calculate-line-start-indexes'
 
 /**
  * Builds a {@link NoteDetails} redux state from a DTO received as an API response.
@@ -17,7 +18,7 @@ import { DateTime } from 'luxon'
  */
 export const buildStateFromServerDto = (dto: NoteDto): NoteDetails => {
   const newState = convertNoteDtoToNoteDetails(dto)
-  return buildStateFromUpdatedMarkdownContent(newState, newState.markdownContent)
+  return buildStateFromUpdatedMarkdownContent(newState, newState.markdownContent.plain)
 }
 
 /**
@@ -27,10 +28,14 @@ export const buildStateFromServerDto = (dto: NoteDto): NoteDetails => {
  * @return The NoteDetails object corresponding to the DTO.
  */
 const convertNoteDtoToNoteDetails = (note: NoteDto): NoteDetails => {
+  const newLines = note.content.split('\n')
   return {
     ...initialState,
-    markdownContent: note.content,
-    markdownContentLines: note.content.split('\n'),
+    markdownContent: {
+      plain: note.content,
+      lines: newLines,
+      lineStartIndexes: calculateLineStartIndexes(newLines)
+    },
     rawFrontmatter: '',
     id: note.metadata.id,
     createTime: DateTime.fromISO(note.metadata.createTime),

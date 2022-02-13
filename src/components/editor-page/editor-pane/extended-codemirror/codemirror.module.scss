@@ -4,44 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-.extended-codemirror {
-  :global {
-    @import '~codemirror/lib/codemirror';
-    @import '~codemirror/addon/display/fullscreen';
-    @import '~codemirror/addon/fold/foldgutter';
-    @import '~codemirror/addon/dialog/dialog';
-    @import '~codemirror/theme/neat';
-    @import './one-dark';
-    @import './hints';
-
-    .CodeMirror {
-      & {
-        @import '../../../../../global-styles/variables.module';
-        font-family: "Fira Code", $font-family-emojis, Consolas, monaco, monospace;
-      }
-      letter-spacing: 0.025em;
-      line-height: 1.25;
-      font-size: 18px;
-      height: 100%;
-    }
-
-    .file-drag .CodeMirror-cursors {
-      visibility: visible;
-    }
+.extendedCodemirror {
+  :global(.cm-editor .cm-line) {
+    @import '../../../../../global-styles/variables.module';
+    font-family: "Fira Code", $font-family-emojis, Consolas, monaco, monospace;
   }
 
   &.no-ligatures {
-    :global {
-      .CodeMirror {
-
-        .CodeMirror-line, .CodeMirror-line-like {
-          font-feature-settings: inherit;
-        }
-
-        .CodeMirror-line, .CodeMirror-line-like {
-          font-variant-ligatures: none;
-        }
-      }
+    :global(.cm-editor .cm-line) {
+      font-variant-ligatures: none;
     }
   }
 }

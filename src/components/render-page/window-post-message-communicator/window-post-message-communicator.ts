@@ -11,12 +11,14 @@ import type { Logger } from '../../../utils/logger'
  */
 export class IframeCommunicatorSendingError extends Error {}
 
-export type Handler<MESSAGES, MESSAGE_TYPE extends string> =
-  | ((values: Extract<MESSAGES, PostMessage<MESSAGE_TYPE>>) => void)
-  | undefined
+export type Handler<MESSAGES, MESSAGE_TYPE extends string> = (
+  values: Extract<MESSAGES, PostMessage<MESSAGE_TYPE>>
+) => void
+
+export type MaybeHandler<MESSAGES, MESSAGE_TYPE extends string> = Handler<MESSAGES, MESSAGE_TYPE> | undefined
 
 export type HandlerMap<MESSAGES, MESSAGE_TYPE extends string> = Partial<{
-  [key in MESSAGE_TYPE]: Handler<MESSAGES, MESSAGE_TYPE>
+  [key in MESSAGE_TYPE]: MaybeHandler<MESSAGES, MESSAGE_TYPE>
 }>
 
 export interface PostMessage<MESSAGE_TYPE extends string> {
@@ -108,8 +110,9 @@ export abstract class WindowPostMessageCommunicator<
    * @param messageType The message type for which the handler should be called
    * @param handler The handler that processes messages with the given message type.
    */
-  public setHandler<R extends RECEIVE_TYPE>(messageType: R, handler: Handler<MESSAGES, R>): void {
-    this.handlers[messageType] = handler as Handler<MESSAGES, RECEIVE_TYPE>
+  public setHandler<R extends RECEIVE_TYPE>(messageType: R, handler: MaybeHandler<MESSAGES, R>): void {
+    this.log.debug('Set handler for', messageType)
+    this.handlers[messageType] = handler as MaybeHandler<MESSAGES, RECEIVE_TYPE>
   }
 
   /**

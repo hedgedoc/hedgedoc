@@ -4,13 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { EditorConfiguration } from 'codemirror'
 import { store } from '..'
 import type { EditorMode } from '../../components/editor-page/app-bar/editor-view-mode'
 import type {
   EditorConfig,
   SetEditorLigaturesAction,
-  SetEditorPreferencesAction,
   SetEditorSmartPasteAction,
   SetEditorSyncScrollAction,
   SetEditorViewModeAction
@@ -69,14 +67,6 @@ export const setEditorSmartPaste = (smartPaste: boolean): void => {
   const action: SetEditorSmartPasteAction = {
     type: EditorConfigActionType.SET_SMART_PASTE,
     smartPaste
-  }
-  store.dispatch(action)
-}
-
-export const mergeEditorPreferences = (preferences: EditorConfiguration): void => {
-  const action: SetEditorPreferencesAction = {
-    type: EditorConfigActionType.MERGE_EDITOR_PREFERENCES,
-    preferences
   }
   store.dispatch(action)
 }

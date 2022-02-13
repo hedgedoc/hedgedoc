@@ -3,33 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import 'cypress-fill-command'
 
 declare namespace Cypress {
   interface Chainable {
-    /**
-     * Custom command to fill an input field with text and trigger a change event.
-     * @example cy.get(input).fill('content')
-     */
-    fill(value: string): Chainable<Element>
-
     setCodemirrorContent(value: string): Chainable<Element>
   }
 }
 
-Cypress.Commands.add(
-  'fill',
-  {
-    prevSubject: 'element'
-  },
-  (subject, value) => {
-    return cy.wrap(subject).invoke('val', value).trigger('change', { force: true })
-  }
-)
-
 Cypress.Commands.add('setCodemirrorContent', (content: string) => {
   const line = content.split('\n').find((value) => value !== '')
-  cy.get('.CodeMirror').click().get('textarea').type('{ctrl}a').type('{backspace}').fill(content)
+  cy.get('.cm-editor').click().get('.cm-content').fill(content)
   if (line) {
-    cy.get('.CodeMirror').find('.CodeMirror-line').should('contain.text', line)
+    cy.get('.cm-editor').find('.cm-line').should('contain.text', line)
   }
 })

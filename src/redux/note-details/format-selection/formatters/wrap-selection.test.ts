@@ -9,57 +9,42 @@ import { wrapSelection } from './wrap-selection'
 describe('wrap selection', () => {
   it(`doesn't modify any line if no to-cursor is present`, () => {
     const actual = wrapSelection(
-      ['a', 'b', 'c'],
+      'a\nb\nc',
       {
-        from: {
-          line: 0,
-          character: 0
-        }
+        from: 0
       },
       'before',
       'after'
     )
 
-    expect(actual).toEqual(['a', 'b', 'c'])
+    expect(actual).toStrictEqual(['a\nb\nc', { from: 0 }])
   })
 
   it(`wraps the selected text in the same line`, () => {
     const actual = wrapSelection(
-      ['a', 'b', 'c'],
+      'a\nb\nc',
       {
-        from: {
-          line: 0,
-          character: 0
-        },
-        to: {
-          line: 0,
-          character: 1
-        }
+        from: 0,
+        to: 1
       },
       'before',
       'after'
     )
 
-    expect(actual).toEqual(['beforeaafter', 'b', 'c'])
+    expect(actual).toStrictEqual(['beforeaafter\nb\nc', { from: 0, to: 12 }])
   })
 
   it(`wraps the selected text in different lines`, () => {
     const actual = wrapSelection(
-      ['a', 'b', 'c'],
+      'a\nb\nc',
       {
-        from: {
-          line: 0,
-          character: 0
-        },
-        to: {
-          line: 2,
-          character: 1
-        }
+        from: 0,
+        to: 5
       },
       'before',
       'after'
     )
 
-    expect(actual).toEqual(['beforea', 'b', 'cafter'])
+    expect(actual).toStrictEqual(['beforea\nb\ncafter', { from: 0, to: 16 }])
   })
 })

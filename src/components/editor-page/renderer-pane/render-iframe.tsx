@@ -86,7 +86,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   )
 
   useEditorReceiveHandler(
-    CommunicationMessageType.SET_SCROLL_SOURCE_TO_RENDERER,
+    CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE,
     useCallback(() => onMakeScrollSource?.(), [onMakeScrollSource])
   )
 

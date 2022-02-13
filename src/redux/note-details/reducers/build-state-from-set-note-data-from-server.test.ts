@@ -118,10 +118,12 @@ describe('build state from set note data from server', () => {
         slideOptions: initialSlideOptions
       },
       noteTitle: '',
-      selection: { from: { line: 0, character: 0 } },
-
-      markdownContent: 'line1\nline2',
-      markdownContentLines: ['line1', 'line2'],
+      selection: { from: 0 },
+      markdownContent: {
+        plain: 'line1\nline2',
+        lines: ['line1', 'line2'],
+        lineStartIndexes: [0, 6]
+      },
       firstHeading: '',
       rawFrontmatter: '',
       id: 'id',

@@ -36,7 +36,7 @@ export const useOnImageUploadFromRenderer = (): void => {
         .then((blob) => {
           const file = new File([blob], fileName, { type: blob.type })
           const { cursorSelection, alt, title } = Optional.ofNullable(lineIndex)
-            .map((actualLineIndex) => findPlaceholderInMarkdownContent(actualLineIndex, placeholderIndexInLine))
+            .flatMap((actualLineIndex) => findPlaceholderInMarkdownContent(actualLineIndex, placeholderIndexInLine))
             .orElseGet(() => ({}))
           handleUpload(file, cursorSelection, alt, title)
         })
@@ -58,26 +58,25 @@ export interface ExtractResult {
  * @param replacementIndexInLine If multiple image placeholders are present in the target line then this number describes the index of the wanted placeholder.
  * @return the calculated start and end position or undefined if no position could be determined
  */
-const findPlaceholderInMarkdownContent = (lineIndex: number, replacementIndexInLine = 0): ExtractResult | undefined => {
-  const currentMarkdownContentLines = getGlobalState().noteDetails.markdownContent.split('\n')
-  const lineAtIndex = currentMarkdownContentLines[lineIndex]
-  if (lineAtIndex === undefined) {
-    return
-  }
-  return findImagePlaceholderInLine(currentMarkdownContentLines[lineIndex], lineIndex, replacementIndexInLine)
+const findPlaceholderInMarkdownContent = (lineIndex: number, replacementIndexInLine = 0): Optional<ExtractResult> => {
+  const noteDetails = getGlobalState().noteDetails
+  const currentMarkdownContentLines = noteDetails.markdownContent.lines
+  return Optional.ofNullable(noteDetails.markdownContent.lineStartIndexes[lineIndex]).map((startIndexOfLine) =>
+    findImagePlaceholderInLine(currentMarkdownContentLines[lineIndex], startIndexOfLine, replacementIndexInLine)
+  )
 }
 
 /**
  * Tries to find the right image placeholder in the given line.
  *
  * @param line The line that should be inspected
- * @param lineIndex The index of the line in the document
+ * @param startIndexOfLine The absolute start index of the line in the document
  * @param replacementIndexInLine If multiple image placeholders are present in the target line then this number describes the index of the wanted placeholder.
  * @return the calculated start and end position or undefined if no position could be determined
  */
 const findImagePlaceholderInLine = (
   line: string,
-  lineIndex: number,
+  startIndexOfLine: number,
   replacementIndexInLine = 0
 ): ExtractResult | undefined => {
   const startOfImageTag = findRegexMatchInText(line, imageWithPlaceholderLinkRegex, replacementIndexInLine)
@@ -85,16 +84,12 @@ const findImagePlaceholderInLine = (
     return
   }
 
+  const from = startIndexOfLine + startOfImageTag.index
+  const to = from + startOfImageTag[0].length
   return {
     cursorSelection: {
-      from: {
-        character: startOfImageTag.index,
-        line: lineIndex
-      },
-      to: {
-        character: startOfImageTag.index + startOfImageTag[0].length,
-        line: lineIndex
-      }
+      from,
+      to
     },
     alt: startOfImageTag[1],
     title: startOfImageTag[2]

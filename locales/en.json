@@ -345,10 +345,10 @@
             "pinnedToHistory": "Pinned to history"
         },
         "statusBar": {
-            "cursor": "Line {{line}}, Columns {{columns}}",
+            "cursor": "Line {{line}}, Character {{columns}}",
             "selection": {
-                "column": "Selected {{count}} columns",
-                "line": "Selected {{count}} lines"
+                "characters": "Selected {{count}} characters",
+                "lines": "Selected {{count}} lines"
             },
             "lines": "{{lines}} Lines",
             "length": "Length {{length}}",

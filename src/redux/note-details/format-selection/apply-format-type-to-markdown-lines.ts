@@ -7,70 +7,68 @@
 import { FormatType } from '../types'
 import { wrapSelection } from './formatters/wrap-selection'
 import { addLink } from './formatters/add-link'
-import { replaceLinesOfSelection } from './formatters/replace-lines-of-selection'
+import { prependLinesOfSelection } from './formatters/prepend-lines-of-selection'
 import type { CursorSelection } from '../../editor/types'
 import { changeCursorsToWholeLineIfNoToCursor } from './formatters/utils/change-cursors-to-whole-line-if-no-to-cursor'
 import { replaceSelection } from './formatters/replace-selection'
 
 export const applyFormatTypeToMarkdownLines = (
-  markdownContentLines: string[],
+  markdownContent: string,
   selection: CursorSelection,
   type: FormatType
-): string[] => {
+): [string, CursorSelection] => {
   switch (type) {
     case FormatType.BOLD:
-      return wrapSelection(markdownContentLines, selection, '**', '**')
+      return wrapSelection(markdownContent, selection, '**', '**')
     case FormatType.ITALIC:
-      return wrapSelection(markdownContentLines, selection, '*', '*')
+      return wrapSelection(markdownContent, selection, '*', '*')
     case FormatType.STRIKETHROUGH:
-      return wrapSelection(markdownContentLines, selection, '~~', '~~')
+      return wrapSelection(markdownContent, selection, '~~', '~~')
     case FormatType.UNDERLINE:
-      return wrapSelection(markdownContentLines, selection, '++', '++')
+      return wrapSelection(markdownContent, selection, '++', '++')
     case FormatType.SUBSCRIPT:
-      return wrapSelection(markdownContentLines, selection, '~', '~')
+      return wrapSelection(markdownContent, selection, '~', '~')
     case FormatType.SUPERSCRIPT:
-      return wrapSelection(markdownContentLines, selection, '^', '^')
+      return wrapSelection(markdownContent, selection, '^', '^')
     case FormatType.HIGHLIGHT:
-      return wrapSelection(markdownContentLines, selection, '==', '==')
+      return wrapSelection(markdownContent, selection, '==', '==')
     case FormatType.CODE_FENCE:
       return wrapSelection(
-        markdownContentLines,
-        changeCursorsToWholeLineIfNoToCursor(markdownContentLines, selection),
+        markdownContent,
+        changeCursorsToWholeLineIfNoToCursor(markdownContent, selection),
         '```\n',
         '\n```'
       )
     case FormatType.UNORDERED_LIST:
-      return replaceLinesOfSelection(markdownContentLines, selection, (line) => `- ${line}`)
+      return prependLinesOfSelection(markdownContent, selection, () => `- `)
     case FormatType.ORDERED_LIST:
-      return replaceLinesOfSelection(
-        markdownContentLines,
+      return prependLinesOfSelection(
+        markdownContent,
         selection,
-        (line, lineIndexInBlock) => `${lineIndexInBlock + 1}. ${line}`
+        (line, lineIndexInBlock) => `${lineIndexInBlock + 1}. `
       )
     case FormatType.CHECK_LIST:
-      return replaceLinesOfSelection(markdownContentLines, selection, (line) => `- [ ] ${line}`)
+      return prependLinesOfSelection(markdownContent, selection, () => `- [ ] `)
     case FormatType.QUOTES:
-      return replaceLinesOfSelection(markdownContentLines, selection, (line) => `> ${line}`)
+      return prependLinesOfSelection(markdownContent, selection, () => `> `)
     case FormatType.HEADER_LEVEL:
-      return replaceLinesOfSelection(markdownContentLines, selection, (line) =>
-        line.startsWith('#') ? `#${line}` : `# ${line}`
-      )
+      return prependLinesOfSelection(markdownContent, selection, (line) => (line.startsWith('#') ? `#` : `# `))
     case FormatType.HORIZONTAL_LINE:
-      return replaceSelection(markdownContentLines, { from: selection.to ?? selection.from }, '\n----')
+      return replaceSelection(markdownContent, { from: selection.to ?? selection.from }, '\n----')
     case FormatType.COMMENT:
-      return replaceSelection(markdownContentLines, { from: selection.to ?? selection.from }, '\n> []')
+      return replaceSelection(markdownContent, { from: selection.to ?? selection.from }, '\n> []')
     case FormatType.COLLAPSIBLE_BLOCK:
       return wrapSelection(
-        markdownContentLines,
-        changeCursorsToWholeLineIfNoToCursor(markdownContentLines, selection),
+        markdownContent,
+        changeCursorsToWholeLineIfNoToCursor(markdownContent, selection),
         ':::spoiler Toggle label\n',
         '\n:::'
       )
     case FormatType.LINK:
-      return addLink(markdownContentLines, selection)
+      return addLink(markdownContent, selection)
     case FormatType.IMAGE_LINK:
-      return addLink(markdownContentLines, selection, '!')
+      return addLink(markdownContent, selection, '!')
     default:
-      return markdownContentLines
+      return [markdownContent, selection]
   }
 }

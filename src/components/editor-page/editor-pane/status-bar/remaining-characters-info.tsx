@@ -7,11 +7,7 @@
 import React, { useMemo } from 'react'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { Trans, useTranslation } from 'react-i18next'
-
-export interface LengthInfoProps {
-  remainingCharacters: number
-  charactersInDocument: number
-}
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 /**
  * Renders a translated text that shows the number of remaining characters.
@@ -19,8 +15,12 @@ export interface LengthInfoProps {
  * @param remainingCharacters The number of characters that are still available in this document
  * @param charactersInDocument The total number of characters in the document
  */
-export const RemainingCharactersInfo: React.FC<LengthInfoProps> = ({ remainingCharacters, charactersInDocument }) => {
+export const RemainingCharactersInfo: React.FC = () => {
   const { t } = useTranslation()
+
+  const maxDocumentLength = useApplicationState((state) => state.config.maxDocumentLength)
+  const contentLength = useApplicationState((state) => state.noteDetails.markdownContent.plain.length)
+  const remainingCharacters = useMemo(() => maxDocumentLength - contentLength, [contentLength, maxDocumentLength])
 
   const remainingCharactersClass = useMemo(() => {
     if (remainingCharacters <= 0) {
@@ -42,7 +42,7 @@ export const RemainingCharactersInfo: React.FC<LengthInfoProps> = ({ remainingCh
     }
   }, [remainingCharacters, t])
 
-  const translationOptions = useMemo(() => ({ length: charactersInDocument }), [charactersInDocument])
+  const translationOptions = useMemo(() => ({ length: contentLength }), [contentLength])
 
   return (
     <span {...cypressId('remainingCharacters')} title={lengthTooltip} className={remainingCharactersClass}>

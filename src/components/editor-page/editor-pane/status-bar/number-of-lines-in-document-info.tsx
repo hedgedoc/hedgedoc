@@ -6,20 +6,18 @@
 
 import React, { useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-
-export interface LinesInDocumentInfoProps {
-  numberOfLinesInDocument: number
-}
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 /**
  * Renders a translated text that shows the number of lines in the document.
  *
  * @param linesInDocument The number of lines in the document
  */
-export const NumberOfLinesInDocumentInfo: React.FC<LinesInDocumentInfoProps> = ({ numberOfLinesInDocument }) => {
+export const NumberOfLinesInDocumentInfo: React.FC = () => {
   useTranslation()
 
-  const translationOptions = useMemo(() => ({ lines: numberOfLinesInDocument }), [numberOfLinesInDocument])
+  const linesInDocument = useApplicationState((state) => state.noteDetails.markdownContent.lines.length)
+  const translationOptions = useMemo(() => ({ lines: linesInDocument }), [linesInDocument])
 
   return (
     <span>

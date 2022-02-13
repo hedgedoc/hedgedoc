@@ -36,19 +36,15 @@ describe('build state from add table at cursor', () => {
     const actual = buildStateFromAddTableAtCursor(
       {
         ...initialState,
-        markdownContentLines: ['a', 'b', 'c'],
-        markdownContent: 'a\nb\nc',
+        markdownContent: { plain: 'a\nb\nc', lines: ['a', 'b', 'c'], lineStartIndexes: [0, 2, 4] },
         selection: {
-          from: {
-            line: 1,
-            character: 0
-          }
+          from: 2
         }
       },
       3,
       3
     )
-    expect(actual.markdownContent).toEqual(
+    expect(actual.markdownContent.plain).toEqual(
       'a\n\n|  # 1 |  # 2 |  # 3 |\n' +
         '| ---- | ---- | ---- |\n' +
         '| Text | Text | Text |\n' +

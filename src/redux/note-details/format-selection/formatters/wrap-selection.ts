@@ -10,7 +10,7 @@ import type { CursorSelection } from '../../../editor/types'
 /**
  * Creates a copy of the given markdown content lines but wraps the selection.
  *
- * @param markdownContentLines The lines of the document to modify
+ * @param markdownContent The lines of the document to modify
  * @param selection If the selection has no to cursor then nothing will happen.
  *                  If the selection has a to cursor then the selected text will be wrapped.
  * @param symbolStart A text that will be inserted before the from cursor
@@ -18,30 +18,19 @@ import type { CursorSelection } from '../../../editor/types'
  * @return the modified copy of lines
  */
 export const wrapSelection = (
-  markdownContentLines: string[],
+  markdownContent: string,
   selection: CursorSelection,
   symbolStart: string,
   symbolEnd: string
-): string[] => {
+): [string, CursorSelection] => {
   if (selection.to === undefined) {
-    return markdownContentLines
+    return [markdownContent, selection]
   }
 
   const to = selection.to ?? selection.from
   const from = selection.from
 
-  return markdownContentLines.map((currentLine, currentLineIndex) => {
-    if (currentLineIndex === to.line) {
-      if (to.line === from.line) {
-        const moddedLine = stringSplice(currentLine, to.character, symbolEnd)
-        return stringSplice(moddedLine, from.character, symbolStart)
-      } else {
-        return stringSplice(currentLine, to.character, symbolEnd)
-      }
-    } else if (currentLineIndex === from.line) {
-      return stringSplice(currentLine, from.character, symbolStart)
-    } else {
-      return currentLine
-    }
-  })
+  const afterToModify = stringSplice(markdownContent, to, symbolEnd)
+  const afterFromModify = stringSplice(afterToModify, from, symbolStart)
+  return [afterFromModify, { from, to: to + symbolEnd.length + symbolStart.length }]
 }

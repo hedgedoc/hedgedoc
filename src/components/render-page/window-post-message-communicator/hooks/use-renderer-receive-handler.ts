@@ -9,6 +9,11 @@ import type { CommunicationMessages, EditorToRendererMessageType } from '../rend
 import type { Handler } from '../window-post-message-communicator'
 import { useRendererToEditorCommunicator } from '../../../editor-page/render-context/renderer-to-editor-communicator-context-provider'
 
+export type CommunicationMessageHandler<MESSAGE_TYPE extends EditorToRendererMessageType> = Handler<
+  CommunicationMessages,
+  MESSAGE_TYPE
+>
+
 /**
  * Sets the handler for the given message type in the current renderer to editor communicator.
  *
@@ -17,7 +22,7 @@ import { useRendererToEditorCommunicator } from '../../../editor-page/render-con
  */
 export const useRendererReceiveHandler = <MESSAGE_TYPE extends EditorToRendererMessageType>(
   messageType: MESSAGE_TYPE,
-  handler: Handler<CommunicationMessages, MESSAGE_TYPE>
+  handler: CommunicationMessageHandler<MESSAGE_TYPE>
 ): void => {
   const editorToRendererCommunicator = useRendererToEditorCommunicator()
   useEffect(() => {

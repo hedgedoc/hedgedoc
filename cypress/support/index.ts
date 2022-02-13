@@ -20,7 +20,7 @@
 // ***********************************************************
 
 import 'cypress-commands'
-import './checkLinks'
+import './check-links'
 import './config'
 import './fill'
 import './get-by-id'

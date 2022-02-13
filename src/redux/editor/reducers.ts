@@ -14,13 +14,7 @@ const initialState: EditorConfig = {
   editorMode: EditorMode.BOTH,
   ligatures: true,
   syncScroll: true,
-  smartPaste: true,
-  preferences: {
-    theme: 'one-dark',
-    keyMap: 'sublime',
-    indentUnit: 4,
-    indentWithTabs: false
-  }
+  smartPaste: true
 }
 
 const getInitialState = (): EditorConfig => {
@@ -58,16 +52,6 @@ export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (
       newState = {
         ...state,
         smartPaste: action.smartPaste
-      }
-      saveToLocalStorage(newState)
-      return newState
-    case EditorConfigActionType.MERGE_EDITOR_PREFERENCES:
-      newState = {
-        ...state,
-        preferences: {
-          ...state.preferences,
-          ...action.preferences
-        }
       }
       saveToLocalStorage(newState)
       return newState

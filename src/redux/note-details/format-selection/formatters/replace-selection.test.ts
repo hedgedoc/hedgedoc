@@ -9,69 +9,48 @@ import { replaceSelection } from './replace-selection'
 describe('replace selection', () => {
   it('inserts a text after the from-cursor if no to-cursor is present', () => {
     const actual = replaceSelection(
-      ['text1'],
+      'text1',
       {
-        from: {
-          line: 0,
-          character: 2
-        }
+        from: 2
       },
       'text2'
     )
-    expect(actual).toEqual(['tetext2xt1'])
+    expect(actual).toEqual(['tetext2xt1', { from: 2, to: 7 }])
   })
 
   it('inserts a text if from-cursor and to-cursor are the same', () => {
     const actual = replaceSelection(
-      ['text1'],
+      'text1',
       {
-        from: {
-          line: 0,
-          character: 2
-        },
-        to: {
-          line: 0,
-          character: 2
-        }
+        from: 2,
+        to: 2
       },
       'text2'
     )
-    expect(actual).toEqual(['tetext2xt1'])
+    expect(actual).toEqual(['tetext2xt1', { from: 2, to: 7 }])
   })
 
   it('replaces a single line text', () => {
     const actual = replaceSelection(
-      ['text1', 'text2', 'text3'],
+      'text1\ntext2\ntext3',
       {
-        from: {
-          line: 1,
-          character: 1
-        },
-        to: {
-          line: 1,
-          character: 2
-        }
+        from: 7,
+        to: 8
       },
       'text4'
     )
-    expect(actual).toEqual(['text1', 'ttext4xt2', 'text3'])
+    expect(actual).toEqual(['text1\nttext4xt2\ntext3', { from: 7, to: 12 }])
   })
 
   it('replaces a multi line text', () => {
     const actual = replaceSelection(
-      ['text1', 'text2', 'text3'],
+      'text1\ntext2\ntext3',
       {
-        from: {
-          line: 0,
-          character: 2
-        },
-        to: {
-          line: 2,
-          character: 3
-        }
+        from: 2,
+        to: 15
       },
       'text4'
     )
-    expect(actual).toEqual(['tetext4', 't3'])
+    expect(actual).toEqual(['tetext4t3', { from: 2, to: 7 }])
   })
 })

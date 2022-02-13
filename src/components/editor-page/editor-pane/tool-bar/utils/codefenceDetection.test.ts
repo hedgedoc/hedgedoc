@@ -13,20 +13,19 @@ import { Mock } from 'ts-mockery'
 describe('Check whether cursor is in codefence', () => {
   const getGlobalStateMocked = jest.spyOn(storeModule, 'getGlobalState')
 
-  const mockRedux = (content: string, line: number): void => {
+  const mockRedux = (content: string, from: number): void => {
     const contentLines = content.split('\n')
     getGlobalStateMocked.mockImplementation(() =>
       Mock.from<ApplicationState>({
         noteDetails: {
           ...initialState,
           selection: {
-            from: {
-              line: line,
-              character: 0
-            }
+            from
           },
-          markdownContentLines: contentLines,
-          markdownContent: content
+          markdownContent: {
+            plain: content,
+            lines: contentLines
+          }
         }
       })
     )
@@ -46,22 +45,22 @@ describe('Check whether cursor is in codefence', () => {
   })
 
   it('returns true with one open codefence directly above', () => {
-    mockRedux('```\n', 1)
+    mockRedux('```\n', 4)
     expect(isCursorInCodeFence()).toBe(true)
   })
 
   it('returns true with one open codefence and empty lines above', () => {
-    mockRedux('```\n\n\n', 3)
+    mockRedux('```\n\n\n', 5)
     expect(isCursorInCodeFence()).toBe(true)
   })
 
   it('returns false with one completed codefence above', () => {
-    mockRedux('```\n\n```\n', 3)
+    mockRedux('```\n\n```\n', 8)
     expect(isCursorInCodeFence()).toBe(false)
   })
 
   it('returns true with one completed and one open codefence above', () => {
-    mockRedux('```\n\n```\n\n```\n\n', 6)
+    mockRedux('```\n\n```\n\n```\n\n', 13)
     expect(isCursorInCodeFence()).toBe(true)
   })
 })

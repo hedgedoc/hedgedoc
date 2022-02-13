@@ -15,8 +15,8 @@ export const useTrimmedNoteMarkdownContentWithoutFrontmatter = (): string[] => {
   const maxLength = useApplicationState((state) => state.config.maxDocumentLength)
   const markdownContent = useApplicationState(
     (state) => ({
-      lines: state.noteDetails.markdownContentLines,
-      content: state.noteDetails.markdownContent
+      lines: state.noteDetails.markdownContent.lines,
+      content: state.noteDetails.markdownContent.plain
     }),
     equal
   )

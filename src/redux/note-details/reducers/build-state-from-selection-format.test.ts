@@ -14,34 +14,38 @@ import { FormatType } from '../types'
 import type { CursorSelection } from '../../editor/types'
 
 describe('build state from selection format', () => {
-  const buildStateFromUpdatedMarkdownContentLinesMock = jest.spyOn(
+  const buildStateFromUpdatedMarkdownContentMock = jest.spyOn(
     buildStateFromUpdatedMarkdownContentLinesModule,
-    'buildStateFromUpdatedMarkdownContentLines'
+    'buildStateFromUpdatedMarkdownContent'
   )
-  const mockedNoteDetails = Mock.of<NoteDetails>()
+  const mockedNoteDetails = { content: 'mocked' } as unknown as NoteDetails
   const applyFormatTypeToMarkdownLinesMock = jest.spyOn(
     applyFormatTypeToMarkdownLinesModule,
     'applyFormatTypeToMarkdownLines'
   )
-  const mockedFormattedLines = ['formatted']
+  const mockedFormattedContent = 'formatted'
+  const mockedCursor = Mock.of<CursorSelection>()
 
   beforeAll(() => {
-    buildStateFromUpdatedMarkdownContentLinesMock.mockImplementation(() => mockedNoteDetails)
-    applyFormatTypeToMarkdownLinesMock.mockImplementation(() => mockedFormattedLines)
+    buildStateFromUpdatedMarkdownContentMock.mockImplementation(() => mockedNoteDetails)
+    applyFormatTypeToMarkdownLinesMock.mockImplementation(() => [mockedFormattedContent, mockedCursor])
   })
 
   afterAll(() => {
-    buildStateFromUpdatedMarkdownContentLinesMock.mockReset()
+    buildStateFromUpdatedMarkdownContentMock.mockReset()
     applyFormatTypeToMarkdownLinesMock.mockReset()
   })
 
   it('builds a new state with the formatted code', () => {
-    const originalLines = ['original']
-    const customCursor = Mock.of<CursorSelection>()
-    const startState = { ...initialState, markdownContentLines: originalLines, selection: customCursor }
+    const originalContent = 'original'
+    const startState: NoteDetails = {
+      ...initialState,
+      markdownContent: { ...initialState.markdownContent, plain: originalContent },
+      selection: mockedCursor
+    }
     const result = buildStateFromSelectionFormat(startState, FormatType.BOLD)
-    expect(result).toBe(mockedNoteDetails)
-    expect(buildStateFromUpdatedMarkdownContentLinesMock).toHaveBeenCalledWith(startState, mockedFormattedLines)
-    expect(applyFormatTypeToMarkdownLinesMock).toHaveBeenCalledWith(originalLines, customCursor, FormatType.BOLD)
+    expect(result).toStrictEqual({ content: 'mocked', selection: mockedCursor })
+    expect(buildStateFromUpdatedMarkdownContentMock).toHaveBeenCalledWith(startState, mockedFormattedContent)
+    expect(applyFormatTypeToMarkdownLinesMock).toHaveBeenCalledWith(originalContent, mockedCursor, FormatType.BOLD)
   })
 })

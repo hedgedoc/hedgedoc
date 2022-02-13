@@ -8,8 +8,28 @@ import type { NoteDetails } from '../types/note-details'
 import type { CursorSelection } from '../../editor/types'
 
 export const buildStateFromUpdateCursorPosition = (state: NoteDetails, selection: CursorSelection): NoteDetails => {
+  const correctedSelection = isFromAfterTo(selection)
+    ? {
+        to: selection.from,
+        from: selection.to as number
+      }
+    : selection
+
   return {
     ...state,
-    selection
+    selection: correctedSelection
   }
+}
+
+/**
+ * Checks if the from cursor position in the given selection is after the to cursor position.
+ *
+ * @param selection The cursor selection to check
+ * @return {@code true} if the from cursor position is after the to position
+ */
+const isFromAfterTo = (selection: CursorSelection): boolean => {
+  if (selection.to === undefined) {
+    return false
+  }
+  return selection.from > selection.to
 }

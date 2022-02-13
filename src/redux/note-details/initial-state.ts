@@ -18,9 +18,12 @@ export const initialSlideOptions: SlideOptions = {
 }
 
 export const initialState: NoteDetails = {
-  markdownContent: '',
-  markdownContentLines: [],
-  selection: { from: { line: 0, character: 0 } },
+  markdownContent: {
+    plain: '',
+    lines: [],
+    lineStartIndexes: []
+  },
+  selection: { from: 0 },
   rawFrontmatter: '',
   frontmatterRendererInfo: {
     frontmatterInvalid: false,

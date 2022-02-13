@@ -26,7 +26,10 @@ describe('build state from replace in markdown content', () => {
   })
 
   it('updates the markdown content with the replacement', () => {
-    const startState = { ...initialState, markdownContent: 'replaceable' }
+    const startState: NoteDetails = {
+      ...initialState,
+      markdownContent: { ...initialState.markdownContent, plain: 'replaceable' }
+    }
     const result = buildStateFromReplaceInMarkdownContent(startState, 'replaceable', 'replacement')
     expect(result).toBe(mockedNoteDetails)
     expect(buildStateFromUpdatedMarkdownContentMock).toHaveBeenCalledWith(startState, 'replacement')

@@ -28,14 +28,20 @@ describe('build state from task list update', () => {
   const markdownContentLines = ['no task', '- [ ] not checked', '- [x] checked']
 
   it(`doesn't change the state if the line doesn't contain a task`, () => {
-    const startState = { ...initialState, markdownContentLines: markdownContentLines }
+    const startState: NoteDetails = {
+      ...initialState,
+      markdownContent: { ...initialState.markdownContent, lines: markdownContentLines }
+    }
     const result = buildStateFromTaskListUpdate(startState, 0, true)
     expect(result).toBe(startState)
     expect(buildStateFromUpdatedMarkdownContentLinesMock).toBeCalledTimes(0)
   })
 
   it(`can change the state of a task to checked`, () => {
-    const startState = { ...initialState, markdownContentLines: markdownContentLines }
+    const startState: NoteDetails = {
+      ...initialState,
+      markdownContent: { ...initialState.markdownContent, lines: markdownContentLines }
+    }
     const result = buildStateFromTaskListUpdate(startState, 1, true)
     expect(result).toBe(mockedNoteDetails)
     expect(buildStateFromUpdatedMarkdownContentLinesMock).toBeCalledWith(startState, [
@@ -46,7 +52,10 @@ describe('build state from task list update', () => {
   })
 
   it(`can change the state of a task to unchecked`, () => {
-    const startState = { ...initialState, markdownContentLines: markdownContentLines }
+    const startState: NoteDetails = {
+      ...initialState,
+      markdownContent: { ...initialState.markdownContent, lines: markdownContentLines }
+    }
     const result = buildStateFromTaskListUpdate(startState, 2, false)
     expect(result).toBe(mockedNoteDetails)
     expect(buildStateFromUpdatedMarkdownContentLinesMock).toBeCalledWith(startState, [

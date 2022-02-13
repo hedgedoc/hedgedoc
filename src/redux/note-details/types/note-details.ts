@@ -13,8 +13,11 @@ import type { CursorSelection } from '../../editor/types'
  * Redux state containing the currently loaded note with its content and metadata.
  */
 export interface NoteDetails {
-  markdownContent: string
-  markdownContentLines: string[]
+  markdownContent: {
+    plain: string
+    lines: string[]
+    lineStartIndexes: number[]
+  }
   selection: CursorSelection
   rawFrontmatter: string
   frontmatter: NoteFrontmatter

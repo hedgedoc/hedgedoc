@@ -5,7 +5,7 @@
  */
 
 import type { NoteDetails } from '../types/note-details'
-import { buildStateFromUpdatedMarkdownContentLines } from '../build-state-from-updated-markdown-content'
+import { buildStateFromUpdatedMarkdownContent } from '../build-state-from-updated-markdown-content'
 import { replaceSelection } from '../format-selection/formatters/replace-selection'
 import { createNumberRangeArray } from '../../../components/common/number-range/number-range'
 
@@ -19,10 +19,16 @@ import { createNumberRangeArray } from '../../../components/common/number-range/
  */
 export const buildStateFromAddTableAtCursor = (state: NoteDetails, rows: number, columns: number): NoteDetails => {
   const table = createMarkdownTable(rows, columns)
-  return buildStateFromUpdatedMarkdownContentLines(
-    state,
-    replaceSelection(state.markdownContentLines, { from: state.selection.to ?? state.selection.from }, table)
+  const [newContent, newSelection] = replaceSelection(
+    state.markdownContent.plain,
+    { from: state.selection.to ?? state.selection.from },
+    table
   )
+  const newState = buildStateFromUpdatedMarkdownContent(state, newContent)
+  return {
+    ...newState,
+    selection: newSelection
+  }
 }
 
 /**

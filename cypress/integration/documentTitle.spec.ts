@@ -76,7 +76,8 @@ describe('Document Title', () => {
     it('katex code looks right', () => {
       cy.setCodemirrorContent(`# $\\alpha$-foo`)
       cy.getIframeBody().find('h1').should('contain', 'α')
-      cy.get('.CodeMirror textarea').type('{Enter}{Enter}{Enter}{Enter}{Enter}') //This is a workaround because I don't know how to make sure, that the title gets updated in time.
+      //TODO: Remove workaround after https://github.com/hedgedoc/react-client/issues/1816 has been fixed.
+      cy.get('.cm-editor .cm-content').type('{Enter}{Enter}{Enter}{Enter}{Enter}')
       cy.title().should('eq', `α-foo - HedgeDoc @ ${branding.name}`)
     })
   })

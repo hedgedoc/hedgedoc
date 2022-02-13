@@ -6,7 +6,6 @@
 
 import React from 'react'
 import { ButtonGroup, ButtonToolbar } from 'react-bootstrap'
-import { EditorPreferences } from './editor-preferences/editor-preferences'
 import { EmojiPickerButton } from './emoji-picker/emoji-picker-button'
 import { TablePickerButton } from './table-picker/table-picker-button'
 import styles from './tool-bar.module.scss'
@@ -45,9 +44,6 @@ export const ToolBar: React.FC = () => {
         <ToolbarButton icon={'caret-square-o-down'} formatType={FormatType.COLLAPSIBLE_BLOCK} />
         <ToolbarButton icon={'comment'} formatType={FormatType.COMMENT} />
         <EmojiPickerButton />
-      </ButtonGroup>
-      <ButtonGroup className={'mx-1 flex-wrap'}>
-        <EditorPreferences />
       </ButtonGroup>
     </ButtonToolbar>
   )

@@ -7,7 +7,7 @@
 import { useEffect } from 'react'
 import type { CommunicationMessages, RendererToEditorMessageType } from '../rendering-message'
 import { useEditorToRendererCommunicator } from '../../../editor-page/render-context/editor-to-renderer-communicator-context-provider'
-import type { Handler } from '../window-post-message-communicator'
+import type { MaybeHandler } from '../window-post-message-communicator'
 
 /**
  * Sets the handler for the given message type in the current editor to renderer communicator.
@@ -17,7 +17,7 @@ import type { Handler } from '../window-post-message-communicator'
  */
 export const useEditorReceiveHandler = <R extends RendererToEditorMessageType>(
   messageType: R,
-  handler: Handler<CommunicationMessages, R>
+  handler: MaybeHandler<CommunicationMessages, R>
 ): void => {
   const editorToRendererCommunicator = useEditorToRendererCommunicator()
   useEffect(() => {

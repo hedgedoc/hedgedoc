@@ -10,10 +10,8 @@ import { getGlobalState } from '../../../../../redux'
  * Checks if the start of the current {@link CursorSelection cursor selection} is in a code fence.
  */
 export const isCursorInCodeFence = (): boolean => {
-  const lines = getGlobalState().noteDetails.markdownContentLines.slice(
-    0,
-    getGlobalState().noteDetails.selection.from.line
-  )
+  const noteDetails = getGlobalState().noteDetails
+  const lines = noteDetails.markdownContent.plain.slice(0, noteDetails.selection.from).split('\n')
   return countCodeFenceLinesUntilIndex(lines) % 2 === 1
 }
 

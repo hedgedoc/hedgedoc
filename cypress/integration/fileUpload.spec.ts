@@ -12,19 +12,6 @@ describe('File upload', () => {
     cy.fixture('demo.png').as('demoImage')
   })
 
-  it("doesn't prevent drag'n'drop of plain text", () => {
-    const dataTransfer = new DataTransfer()
-    cy.setCodemirrorContent('line 1\nline 2\ndragline')
-    cy.get('.CodeMirror').click()
-    cy.get('.CodeMirror-line > span').last().dblclick()
-    cy.get('.CodeMirror-line > span > .cm-matchhighlight').trigger('dragstart', { dataTransfer })
-    cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span').trigger('drop', { dataTransfer })
-    cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span').should(
-      'have.text',
-      'lindraglinee 1'
-    )
-  })
-
   describe('works', () => {
     beforeEach(() => {
       cy.intercept(
@@ -50,7 +37,7 @@ describe('File upload', () => {
         },
         { force: true }
       )
-      cy.get('.CodeMirror-activeline').contains(`![](${imageUrl})`)
+      cy.get('.cm-line').contains(`![](${imageUrl})`)
     })
 
     it('via paste', () => {
@@ -61,13 +48,13 @@ describe('File upload', () => {
             getData: (_: string) => ''
           }
         }
-        cy.get('.CodeMirror-scroll').trigger('paste', pasteEvent)
-        cy.get('.CodeMirror-activeline').contains(`![](${imageUrl})`)
+        cy.get('.cm-content').trigger('paste', pasteEvent)
+        cy.get('.cm-line').contains(`![](${imageUrl})`)
       })
     })
 
     it('via drag and drop', () => {
-      cy.get('.CodeMirror-scroll').selectFile(
+      cy.get('.cm-content').selectFile(
         {
           contents: '@demoImage',
           fileName: 'demo.png',
@@ -75,7 +62,7 @@ describe('File upload', () => {
         },
         { action: 'drag-drop', force: true }
       )
-      cy.get('.CodeMirror-activeline').contains(`![](${imageUrl})`)
+      cy.get('.cm-line').contains(`![](${imageUrl})`)
     })
   })
 
@@ -98,7 +85,7 @@ describe('File upload', () => {
       },
       { force: true }
     )
-    cy.get('.CodeMirror-activeline').contains('![upload of demo.png failed]()')
+    cy.get('.cm-line').contains('![upload of demo.png failed]()')
   })
 
   it('lets text paste still work', () => {
@@ -108,7 +95,7 @@ describe('File upload', () => {
         getData: (type = 'text') => testText
       }
     }
-    cy.get('.CodeMirror-scroll').trigger('paste', pasteEvent)
-    cy.get('.CodeMirror-activeline').contains(`${testText}`)
+    cy.get('.cm-content').trigger('paste', pasteEvent)
+    cy.get('.cm-line').contains(`${testText}`)
   })
 })

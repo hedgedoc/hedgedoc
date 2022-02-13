@@ -12,7 +12,8 @@ export enum CommunicationMessageType {
   SET_DARKMODE = 'SET_DARKMODE',
   ON_TASK_CHECKBOX_CHANGE = 'ON_TASK_CHECKBOX_CHANGE',
   ON_FIRST_HEADING_CHANGE = 'ON_FIRST_HEADING_CHANGE',
-  SET_SCROLL_SOURCE_TO_RENDERER = 'SET_SCROLL_SOURCE_TO_RENDERER',
+  ENABLE_RENDERER_SCROLL_SOURCE = 'ENABLE_RENDERER_SCROLL_SOURCE',
+  DISABLE_RENDERER_SCROLL_SOURCE = 'DISABLE_RENDERER_SCROLL_SOURCE',
   SET_SCROLL_STATE = 'SET_SCROLL_STATE',
   IMAGE_CLICKED = 'IMAGE_CLICKED',
   ON_HEIGHT_CHANGE = 'ON_HEIGHT_CHANGE',
@@ -23,8 +24,8 @@ export enum CommunicationMessageType {
   IMAGE_UPLOAD = 'IMAGE_UPLOAD'
 }
 
-export interface NoPayloadMessage {
-  type: CommunicationMessageType.RENDERER_READY | CommunicationMessageType.SET_SCROLL_SOURCE_TO_RENDERER
+export interface NoPayloadMessage<TYPE extends CommunicationMessageType> {
+  type: TYPE
 }
 
 export interface SetDarkModeMessage {
@@ -97,7 +98,9 @@ export interface OnWordCountCalculatedMessage {
 }
 
 export type CommunicationMessages =
-  | NoPayloadMessage
+  | NoPayloadMessage<CommunicationMessageType.RENDERER_READY>
+  | NoPayloadMessage<CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE>
+  | NoPayloadMessage<CommunicationMessageType.DISABLE_RENDERER_SCROLL_SOURCE>
   | SetDarkModeMessage
   | SetBaseUrlMessage
   | GetWordCountMessage
@@ -118,10 +121,11 @@ export type EditorToRendererMessageType =
   | CommunicationMessageType.SET_BASE_CONFIGURATION
   | CommunicationMessageType.GET_WORD_COUNT
   | CommunicationMessageType.SET_FRONTMATTER_INFO
+  | CommunicationMessageType.DISABLE_RENDERER_SCROLL_SOURCE
 
 export type RendererToEditorMessageType =
   | CommunicationMessageType.RENDERER_READY
-  | CommunicationMessageType.SET_SCROLL_SOURCE_TO_RENDERER
+  | CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE
   | CommunicationMessageType.ON_FIRST_HEADING_CHANGE
   | CommunicationMessageType.ON_TASK_CHECKBOX_CHANGE
   | CommunicationMessageType.SET_SCROLL_STATE

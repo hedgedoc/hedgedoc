@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Suspense, useCallback, useMemo, useRef, useState } from 'react'
+import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { setCheckboxInMarkdownContent, updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
@@ -32,6 +32,7 @@ import type { NextPage } from 'next'
 import { isClientSideRendering } from '../../utils/is-client-side-rendering'
 import { LoadingScreen } from '../../components/application-loader/loading-screen/loading-screen'
 import { NoteAndAppTitleHead } from '../../components/layout/note-and-app-title-head'
+import equal from 'fast-deep-equal'
 
 const EditorPane = React.lazy(() => import('../../components/editor-page/editor-pane/editor-pane'))
 
@@ -64,22 +65,30 @@ export const EditorPage: NextPage = () => {
     (newScrollState: ScrollState) => {
       if (scrollSource.current === ScrollSource.RENDERER && editorSyncScroll) {
         setScrollState((old) => {
-          const newState = { editorScrollState: newScrollState, rendererScrollState: old.rendererScrollState }
-          log.debug('Set scroll state because of renderer scroll', newState)
-          return newState
+          const newState: DualScrollState = {
+            editorScrollState: newScrollState,
+            rendererScrollState: old.rendererScrollState
+          }
+          return equal(newState, old) ? old : newState
         })
       }
     },
     [editorSyncScroll]
   )
 
+  useEffect(() => {
+    log.debug('New scroll state', scrollState, scrollSource)
+  }, [scrollState])
+
   const onEditorScroll = useCallback(
     (newScrollState: ScrollState) => {
       if (scrollSource.current === ScrollSource.EDITOR && editorSyncScroll) {
         setScrollState((old) => {
-          const newState = { rendererScrollState: newScrollState, editorScrollState: old.editorScrollState }
-          log.debug('Set scroll state because of editor scroll', newState)
-          return newState
+          const newState: DualScrollState = {
+            rendererScrollState: newScrollState,
+            editorScrollState: old.editorScrollState
+          }
+          return equal(newState, old) ? old : newState
         })
       }
     },
@@ -95,13 +104,17 @@ export const EditorPage: NextPage = () => {
   useUpdateLocalHistoryEntry(!error && !loading)
 
   const setRendererToScrollSource = useCallback(() => {
-    scrollSource.current = ScrollSource.RENDERER
-    log.debug('Make renderer scroll source')
+    if (scrollSource.current !== ScrollSource.RENDERER) {
+      scrollSource.current = ScrollSource.RENDERER
+      log.debug('Make renderer scroll source')
+    }
   }, [])
 
   const setEditorToScrollSource = useCallback(() => {
-    scrollSource.current = ScrollSource.EDITOR
-    log.debug('Make editor scroll source')
+    if (scrollSource.current !== ScrollSource.EDITOR) {
+      scrollSource.current = ScrollSource.EDITOR
+      log.debug('Make editor scroll source')
+    }
   }, [])
 
   const leftPane = useMemo(

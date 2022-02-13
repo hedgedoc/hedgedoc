@@ -6,8 +6,24 @@
 
 import type { MutableRefObject } from 'react'
 import { useEffect, useRef } from 'react'
-import type { Editor } from 'codemirror'
 import type { ScrollState } from '../../synced-scroll/scroll-props'
+import type { ReactCodeMirrorRef } from '@uiw/react-codemirror'
+import { EditorView } from '@codemirror/view'
+import equal from 'fast-deep-equal'
+
+/**
+ * Applies the given {@link ScrollState scroll state} to the given {@link EditorView code mirror editor view}.
+ *
+ * @param view The {@link EditorView view} that should be scrolled
+ * @param scrollState The {@link ScrollState scroll state} that should be applied
+ */
+export const applyScrollState = (view: EditorView, scrollState: ScrollState): void => {
+  const line = view.state.doc.line(scrollState.firstLineInView)
+  const lineBlock = view.lineBlockAt(line.from)
+  const margin = Math.floor(lineBlock.height * scrollState.scrolledPercentage) / 100
+  const stateEffect = EditorView.scrollIntoView(line.from, { y: 'start', yMargin: -margin })
+  view.dispatch({ effects: [stateEffect] })
+}
 
 /**
  * Monitors the given scroll state and scrolls the editor to the state if changed.
@@ -16,22 +32,21 @@ import type { ScrollState } from '../../synced-scroll/scroll-props'
  * @param scrollState The scroll state that should be monitored
  */
 export const useApplyScrollState = (
-  editorRef: MutableRefObject<Editor | undefined>,
+  editorRef: MutableRefObject<ReactCodeMirrorRef | null>,
   scrollState?: ScrollState
 ): void => {
-  const lastScrollPosition = useRef<number>()
+  const lastScrollPosition = useRef<ScrollState>()
+
   useEffect(() => {
-    const editor = editorRef.current
-    if (!editor || !scrollState) {
+    const view = editorRef.current?.view
+    if (!view || !scrollState) {
       return
     }
-    const startYOfLine = editor.heightAtLine(scrollState.firstLineInView - 1, 'local')
-    const heightOfLine = (editor.lineInfo(scrollState.firstLineInView - 1).handle as { height: number }).height
-    const newPositionRaw = startYOfLine + (heightOfLine * scrollState.scrolledPercentage) / 100
-    const newPosition = Math.floor(newPositionRaw)
-    if (newPosition !== lastScrollPosition.current) {
-      lastScrollPosition.current = newPosition
-      editor.scrollTo(0, newPosition)
+
+    if (equal(scrollState, lastScrollPosition.current)) {
+      return
     }
+    applyScrollState(view, scrollState)
+    lastScrollPosition.current = scrollState
   }, [editorRef, scrollState])
 }

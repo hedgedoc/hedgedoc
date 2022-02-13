@@ -35,5 +35,5 @@ export const buildStateFromReplaceInMarkdownContent = (
   replaceable: string,
   replacement: string
 ): NoteDetails => {
-  return buildStateFromUpdatedMarkdownContent(state, replaceAll(state.markdownContent, replaceable, replacement))
+  return buildStateFromUpdatedMarkdownContent(state, replaceAll(state.markdownContent.plain, replaceable, replacement))
 }

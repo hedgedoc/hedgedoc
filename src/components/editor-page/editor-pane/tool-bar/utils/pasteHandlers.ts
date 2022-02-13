@@ -22,21 +22,20 @@ export interface PasteEvent {
 }
 
 /**
- * Checks if the given {@link PasteEvent paste event} contains a text formatted table
- * and inserts it into the markdown content.
- * This happens only if smart paste was activated.
+ * Checks if the given {@link DataTransfer clipboard data} contains a text formatted table
+ * and inserts it into the markdown content. This happens only if smart paste is activated.
  *
- * @param event The {@link PasteEvent} from the browser
+ * @param clipboardData The {@link DataTransfer} from the paste event
  * @return {@code true} if the event was processed. {@code false} otherwise
  */
-export const handleTablePaste = (event: PasteEvent): boolean => {
+export const handleTablePaste = (clipboardData: DataTransfer): boolean => {
   if (!getGlobalState().editorConfig.smartPaste || isCursorInCodeFence()) {
     return false
   }
 
-  return Optional.ofNullable(event.clipboardData.getData('text'))
-    .filter((pasteText) => !!pasteText && isTable(pasteText))
-    .map((pasteText) => convertClipboardTableToMarkdown(pasteText))
+  return Optional.ofNullable(clipboardData.getData('text'))
+    .filter(isTable)
+    .map(convertClipboardTableToMarkdown)
     .map((markdownTable) => {
       replaceSelection(markdownTable)
       return true
@@ -47,12 +46,12 @@ export const handleTablePaste = (event: PasteEvent): boolean => {
 /**
  * Checks if the given {@link PasteEvent paste event} contains files and uploads them.
  *
- * @param event The {@link PasteEvent} from the browser
+ * @param clipboardData The {@link DataTransfer} from the paste event
  * @return {@code true} if the event was processed. {@code false} otherwise
  */
-export const handleFilePaste = (event: PasteEvent): boolean => {
-  return Optional.ofNullable(event.clipboardData.files)
-    .filter((files) => !!files && files.length > 0)
+export const handleFilePaste = (clipboardData: DataTransfer): boolean => {
+  return Optional.of(clipboardData.files)
+    .filter((files) => files.length > 0)
     .map((files) => {
       handleUpload(files[0])
       return true

@@ -6,27 +6,23 @@
 
 import React, { useMemo } from 'react'
 import { Trans } from 'react-i18next'
-import type { CursorPosition } from '../../../../redux/editor/types'
-
-export interface CursorPositionInfoProps {
-  cursorPosition: CursorPosition
-}
+import { useLineBasedFromPosition } from '../hooks/use-line-based-position'
 
 /**
  * Renders a translated text that shows the given cursor position.
- *
- * @param cursorPosition The cursor position that should be included
  */
-export const CursorPositionInfo: React.FC<CursorPositionInfoProps> = ({ cursorPosition }) => {
+export const CursorPositionInfo: React.FC = () => {
+  const lineBasedPosition = useLineBasedFromPosition()
+
   const translationOptions = useMemo(
     () => ({
-      line: cursorPosition.line + 1,
-      columns: cursorPosition.character + 1
+      line: lineBasedPosition.line + 1,
+      columns: lineBasedPosition.character + 1
     }),
-    [cursorPosition.character, cursorPosition.line]
+    [lineBasedPosition]
   )
 
-  return (
+  return translationOptions === undefined ? null : (
     <span>
       <Trans i18nKey={'editor.statusBar.cursor'} values={translationOptions} />
     </span>

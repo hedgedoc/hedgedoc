@@ -21,11 +21,8 @@ describe('Import markdown file', () => {
       },
       { force: true }
     )
-    cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span').should(
-      'have.text',
-      '# Some short import test file'
-    )
-    cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span > span').should('have.text', ':)')
+    cy.get('.cm-editor .cm-line:nth-child(1)').should('have.text', '# Some short import test file')
+    cy.get('.cm-editor .cm-line:nth-child(2)').should('have.text', ':)')
   })
 
   it('import on note with content', () => {
@@ -40,12 +37,9 @@ describe('Import markdown file', () => {
       },
       { force: true }
     )
-    cy.get('.CodeMirror-code > div:nth-of-type(1) > .CodeMirror-line > span > span').should('have.text', 'test')
-    cy.get('.CodeMirror-code > div:nth-of-type(2) > .CodeMirror-line > span > span').should('have.text', 'abc')
-    cy.get('.CodeMirror-code > div:nth-of-type(3) > .CodeMirror-line > span > span').should(
-      'have.text',
-      '# Some short import test file'
-    )
-    cy.get('.CodeMirror-code > div:nth-of-type(4) > .CodeMirror-line > span > span').should('have.text', ':)')
+    cy.get('.cm-editor .cm-line:nth-child(1)').should('have.text', 'test')
+    cy.get('.cm-editor .cm-line:nth-child(2)').should('have.text', 'abc')
+    cy.get('.cm-editor .cm-line:nth-child(3)').should('have.text', '# Some short import test file')
+    cy.get('.cm-editor .cm-line:nth-child(4)').should('have.text', ':)')
   })
 })

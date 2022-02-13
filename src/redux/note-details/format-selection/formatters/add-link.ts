@@ -15,29 +15,23 @@ const afterLink = ')'
 /**
  * Creates a copy of the given markdown content lines but inserts a new link tag.
  *
- * @param markdownContentLines The lines of the document to modify
+ * @param markdownContent The content of the document to modify
  * @param selection If the selection has no to cursor then the tag will be inserted at this position.
  *                  If the selection has a to cursor then the selected text will be inserted into the description or the URL part.
  * @param prefix An optional prefix for the link
  * @return the modified copy of lines
  */
-export const addLink = (markdownContentLines: string[], selection: CursorSelection, prefix = ''): string[] => {
+export const addLink = (
+  markdownContent: string,
+  selection: CursorSelection,
+  prefix = ''
+): [string, CursorSelection] => {
   const from = selection.from
   const to = selection.to ?? from
-
-  return markdownContentLines.map((currentLine, currentLineIndex) => {
-    if (from.line === to.line && currentLineIndex === from.line) {
-      const selectedText = markdownContentLines[from.line].slice(from.character, to.character)
-      const link = buildLink(selectedText, prefix)
-      return stringSplice(currentLine, from.character, link, selectedText.length)
-    } else if (currentLineIndex === from.line) {
-      return stringSplice(currentLine, from.character, beforeDescription)
-    } else if (currentLineIndex === to.line) {
-      return stringSplice(currentLine, to.character, afterDescriptionBeforeLink + defaultUrl + afterLink)
-    } else {
-      return currentLine
-    }
-  })
+  const selectedText = markdownContent.slice(from, to)
+  const link = buildLink(selectedText, prefix)
+  const newContent = stringSplice(markdownContent, selection.from, link, selectedText.length)
+  return [newContent, { from, to: from + link.length }]
 }
 
 const buildLink = (selectedText: string, prefix: string): string => {

@@ -6,12 +6,18 @@
 
 import type { NoteDetails } from '../types/note-details'
 import type { CursorSelection } from '../../editor/types'
-import { buildStateFromUpdatedMarkdownContentLines } from '../build-state-from-updated-markdown-content'
+import { buildStateFromUpdatedMarkdownContent } from '../build-state-from-updated-markdown-content'
 import { replaceSelection } from '../format-selection/formatters/replace-selection'
 
 export const buildStateFromReplaceSelection = (state: NoteDetails, text: string, cursorSelection?: CursorSelection) => {
-  return buildStateFromUpdatedMarkdownContentLines(
-    state,
-    replaceSelection(state.markdownContentLines, cursorSelection ? cursorSelection : state.selection, text)
+  const [newContent, newSelection] = replaceSelection(
+    state.markdownContent.plain,
+    cursorSelection ? cursorSelection : state.selection,
+    text
   )
+  const newState = buildStateFromUpdatedMarkdownContent(state, newContent)
+  return {
+    ...newState,
+    selection: newSelection
+  }
 }

@@ -19,7 +19,7 @@ import type {
   UpdateTaskListCheckboxAction
 } from './types'
 import { NoteDetailsActionType } from './types'
-import type { CursorPosition, CursorSelection } from '../editor/types'
+import type { CursorSelection } from '../editor/types'
 
 /**
  * Sets the content of the current note, extracts and parses the frontmatter and extracts the markdown content part.
@@ -83,33 +83,10 @@ export const replaceInMarkdownContent = (replaceable: string, replacement: strin
 }
 
 export const updateCursorPositions = (selection: CursorSelection): void => {
-  const correctedSelection: CursorSelection = isFromAfterTo(selection)
-    ? {
-        to: selection.from,
-        from: selection.to as CursorPosition
-      }
-    : selection
-
   store.dispatch({
     type: NoteDetailsActionType.UPDATE_CURSOR_POSITION,
-    selection: correctedSelection
+    selection
   } as UpdateCursorPositionAction)
-}
-
-/**
- * Checks if the from cursor position in the given selection is after the to cursor position.
- *
- * @param selection The cursor selection to check
- * @return {@code true} if the from cursor position is after the to position
- */
-const isFromAfterTo = (selection: CursorSelection): boolean => {
-  if (selection.to === undefined) {
-    return false
-  }
-  if (selection.from.line < selection.to.line) {
-    return false
-  }
-  return selection.from.line !== selection.to.line || selection.from.character > selection.to.character
 }
 
 export const formatSelection = (formatType: FormatType): void => {

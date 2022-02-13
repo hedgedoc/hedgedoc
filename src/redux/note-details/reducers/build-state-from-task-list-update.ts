@@ -21,7 +21,7 @@ export const buildStateFromTaskListUpdate = (
   changedLineIndex: number,
   checkboxChecked: boolean
 ): NoteDetails => {
-  const lines = [...state.markdownContentLines]
+  const lines = [...state.markdownContent.lines]
   return Optional.ofNullable(TASK_REGEX.exec(lines[changedLineIndex]))
     .map((results) => {
       const [, beforeCheckbox, afterCheckbox] = results
