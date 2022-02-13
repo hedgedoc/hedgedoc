@@ -72,7 +72,7 @@ export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = (
           <div className={'d-flex flex-column'}>
             <EntryMenu
               id={entry.identifier}
-              title={entry.title}
+              title={entryTitle}
               origin={entry.origin}
               isDark={false}
               onRemove={onRemove}

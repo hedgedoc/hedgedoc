@@ -17,11 +17,7 @@ export const DeleteNoteItem: React.FC<DeleteNoteItemProps> = ({ noteTitle, onCon
     <DropdownItemWithDeletionModal
       onConfirm={onConfirm}
       itemI18nKey={'landing.history.menu.deleteNote'}
-      modalButtonI18nKey={'editor.modal.deleteNote.button'}
       modalIcon={'trash'}
-      modalTitleI18nKey={'editor.modal.deleteNote.title'}
-      modalQuestionI18nKey={'editor.modal.deleteNote.question'}
-      modalWarningI18nKey={'editor.modal.deleteNote.warning'}
       noteTitle={noteTitle}
     />
   )
