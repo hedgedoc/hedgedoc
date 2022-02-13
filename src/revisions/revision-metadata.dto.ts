@@ -5,7 +5,7 @@
  */
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsDate, IsNumber } from 'class-validator';
+import { IsDate, IsNumber, IsString } from 'class-validator';
 
 import { Revision } from './revision.entity';
 
@@ -34,4 +34,19 @@ export class RevisionMetadataDto {
   @IsNumber()
   @ApiProperty()
   length: number;
+
+  /**
+   * List of the usernames that have contributed to this revision
+   * Does not include anonymous users
+   */
+  @IsString()
+  @ApiProperty()
+  authorUsernames: string[];
+
+  /**
+   * Count of anonymous users that have contributed to this revision
+   */
+  @IsNumber()
+  @ApiProperty()
+  anonymousAuthorCount: number;
 }
