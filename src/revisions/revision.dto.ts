@@ -29,6 +29,14 @@ export class RevisionDto extends BaseDto {
   content: string;
 
   /**
+   * Number of characters in this revision
+   * @example 142
+   */
+  @IsNumber()
+  @ApiProperty()
+  length: number;
+
+  /**
    * Patch from the preceding revision to this one
    */
   @IsString()

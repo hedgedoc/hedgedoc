@@ -115,6 +115,7 @@ export class RevisionsService {
     return {
       id: revision.id,
       content: revision.content,
+      length: revision.length,
       createdAt: revision.createdAt,
       patch: revision.patch,
       edits: await Promise.all(
