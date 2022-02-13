@@ -1,9 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ApiProperty } from '@nestjs/swagger';
+
+import { BaseDto } from '../utils/base.dto.';
 
 export class ServerVersion {
   @ApiProperty()
@@ -18,7 +20,7 @@ export class ServerVersion {
   commit?: string;
 }
 
-export class ServerStatusDto {
+export class ServerStatusDto extends BaseDto {
   @ApiProperty()
   serverVersion: ServerVersion;
   @ApiProperty()

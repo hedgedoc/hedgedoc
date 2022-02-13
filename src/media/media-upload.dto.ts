@@ -1,12 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsOptional, IsString } from 'class-validator';
 
-export class MediaUploadDto {
+import { BaseDto } from '../utils/base.dto.';
+
+export class MediaUploadDto extends BaseDto {
   /**
    * The link to the media file.
    * @example "https://example.com/uploads/testfile123.jpg"

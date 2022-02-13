@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,9 +14,10 @@ import {
 } from 'class-validator';
 
 import { UserInfoDto } from '../users/user-info.dto';
+import { BaseDto } from '../utils/base.dto.';
 import { NotePermissionsDto } from './note-permissions.dto';
 
-export class NoteMetadataDto {
+export class NoteMetadataDto extends BaseDto {
   /**
    * ID of the note
    */
