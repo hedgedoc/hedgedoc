@@ -16,6 +16,11 @@ import { RevisionMetadataDto } from './revision-metadata.dto';
 import { RevisionDto } from './revision.dto';
 import { Revision } from './revision.entity';
 
+class RevisionUserInfo {
+  usernames: string[];
+  anonymousUserCount: number;
+}
+
 @Injectable()
 export class RevisionsService {
   constructor(
@@ -103,20 +108,42 @@ export class RevisionsService {
     return revision;
   }
 
-  toRevisionMetadataDto(revision: Revision): RevisionMetadataDto {
+  async getRevisionUserInfo(revision: Revision): Promise<RevisionUserInfo> {
+    const users = await Promise.all(
+      (
+        await revision.edits
+      ).map(async (edit) => await (await edit.author).user),
+    );
+    const usernames = users.flatMap((user) => (user ? [user.username] : []));
+    const anonymousUserCount = users.filter((user) => user === null).length;
+    return {
+      usernames: usernames,
+      anonymousUserCount: anonymousUserCount,
+    };
+  }
+
+  async toRevisionMetadataDto(
+    revision: Revision,
+  ): Promise<RevisionMetadataDto> {
+    const revisionUserInfo = await this.getRevisionUserInfo(revision);
     return {
       id: revision.id,
       length: revision.length,
       createdAt: revision.createdAt,
+      authorUsernames: revisionUserInfo.usernames,
+      anonymousAuthorCount: revisionUserInfo.anonymousUserCount,
     };
   }
 
   async toRevisionDto(revision: Revision): Promise<RevisionDto> {
+    const revisionUserInfo = await this.getRevisionUserInfo(revision);
     return {
       id: revision.id,
       content: revision.content,
       length: revision.length,
       createdAt: revision.createdAt,
+      authorUsernames: revisionUserInfo.usernames,
+      anonymousAuthorCount: revisionUserInfo.anonymousUserCount,
       patch: revision.patch,
       edits: await Promise.all(
         (
