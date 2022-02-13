@@ -151,7 +151,7 @@ export class PermissionsService {
    * @async
    * Update a notes permissions.
    * @param {Note} note - the note
-   * @param {NotePermissionsUpdateDto} newPermissions - the permissions the not should be set to
+   * @param {NotePermissionsUpdateDto} newPermissions - the permissions that should be applied to the note
    * @return {Note} the note with the new permissions
    * @throws {NotInDBError} there is no note with this id or alias
    * @throws {PermissionsUpdateInconsistentError} the new permissions specify a user or group twice.
