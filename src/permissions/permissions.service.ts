@@ -226,18 +226,15 @@ export class PermissionsService {
     canEdit: boolean,
   ): Promise<Note> {
     const permissions = await note.userPermissions;
-    const permission = permissions.find(
-      (value: NoteUserPermission, index: number) => {
-        if (value.user.id == permissionUser.id) {
-          if (value.canEdit != canEdit) {
-            value.canEdit = canEdit;
-            permissions[index] = value;
-          }
-          return true;
-        }
-      },
-    );
-    if (permission == undefined) {
+    let permissionIndex = 0;
+    const permission = permissions.find((value, index) => {
+      permissionIndex = index;
+      return value.user.id == permissionUser.id;
+    });
+    if (permission != undefined) {
+      permission.canEdit = canEdit;
+      permissions[permissionIndex] = permission;
+    } else {
       const noteUserPermission = NoteUserPermission.create(
         permissionUser,
         note,
@@ -258,9 +255,7 @@ export class PermissionsService {
   async removeUserPermission(note: Note, permissionUser: User): Promise<Note> {
     const permissions = await note.userPermissions;
     const permissionsFiltered = permissions.filter(
-      (value: NoteUserPermission) => {
-        return value.user.id != permissionUser.id;
-      },
+      (value) => value.user.id != permissionUser.id,
     );
     note.userPermissions = Promise.resolve(permissionsFiltered);
     return await this.noteRepository.save(note);
@@ -280,18 +275,15 @@ export class PermissionsService {
     canEdit: boolean,
   ): Promise<Note> {
     const permissions = await note.groupPermissions;
-    const permission = permissions.find(
-      (value: NoteGroupPermission, index: number) => {
-        if (value.group.id == permissionGroup.id) {
-          if (value.canEdit != canEdit) {
-            value.canEdit = canEdit;
-            permissions[index] = value;
-          }
-          return true;
-        }
-      },
-    );
-    if (permission == undefined) {
+    let permissionIndex = 0;
+    const permission = permissions.find((value, index) => {
+      permissionIndex = index;
+      return value.group.id == permissionGroup.id;
+    });
+    if (permission != undefined) {
+      permission.canEdit = canEdit;
+      permissions[permissionIndex] = permission;
+    } else {
       const noteGroupPermission = NoteGroupPermission.create(
         permissionGroup,
         note,
