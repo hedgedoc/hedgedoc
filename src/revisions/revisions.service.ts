@@ -11,6 +11,7 @@ import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
 import { NotesService } from '../notes/notes.service';
+import { EditService } from './edit.service';
 import { RevisionMetadataDto } from './revision-metadata.dto';
 import { RevisionDto } from './revision.dto';
 import { Revision } from './revision.entity';
@@ -22,6 +23,7 @@ export class RevisionsService {
     @InjectRepository(Revision)
     private revisionRepository: Repository<Revision>,
     @Inject(forwardRef(() => NotesService)) private notesService: NotesService,
+    private editService: EditService,
   ) {
     this.logger.setContext(RevisionsService.name);
   }
@@ -109,12 +111,17 @@ export class RevisionsService {
     };
   }
 
-  toRevisionDto(revision: Revision): RevisionDto {
+  async toRevisionDto(revision: Revision): Promise<RevisionDto> {
     return {
       id: revision.id,
       content: revision.content,
       createdAt: revision.createdAt,
       patch: revision.patch,
+      edits: await Promise.all(
+        (
+          await revision.edits
+        ).map(async (edit) => await this.editService.toEditDto(edit)),
+      ),
     };
   }
 

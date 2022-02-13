@@ -172,7 +172,7 @@ export class NotesController {
     @RequestNote() note: Note,
     @Param('revisionId') revisionId: number,
   ): Promise<RevisionDto> {
-    return this.revisionsService.toRevisionDto(
+    return await this.revisionsService.toRevisionDto(
       await this.revisionsService.getRevision(note, revisionId),
     );
   }

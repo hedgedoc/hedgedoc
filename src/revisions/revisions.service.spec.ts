@@ -25,6 +25,7 @@ import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { Edit } from './edit.entity';
+import { EditService } from './edit.service';
 import { Revision } from './revision.entity';
 import { RevisionsService } from './revisions.service';
 
@@ -36,6 +37,7 @@ describe('RevisionsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         RevisionsService,
+        EditService,
         {
           provide: getRepositoryToken(Revision),
           useClass: Repository,
