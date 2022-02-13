@@ -11,6 +11,7 @@ import { AuthorsModule } from '../authors/authors.module';
 import { LoggerModule } from '../logger/logger.module';
 import { NotesModule } from '../notes/notes.module';
 import { Edit } from './edit.entity';
+import { EditService } from './edit.service';
 import { Revision } from './revision.entity';
 import { RevisionsService } from './revisions.service';
 
@@ -22,7 +23,7 @@ import { RevisionsService } from './revisions.service';
     ConfigModule,
     AuthorsModule,
   ],
-  providers: [RevisionsService],
-  exports: [RevisionsService],
+  providers: [RevisionsService, EditService],
+  exports: [RevisionsService, EditService],
 })
 export class RevisionsModule {}

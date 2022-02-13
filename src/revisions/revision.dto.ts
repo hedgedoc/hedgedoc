@@ -5,9 +5,10 @@
  */
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsDate, IsNumber, IsString } from 'class-validator';
+import { IsDate, IsNumber, IsString, ValidateNested } from 'class-validator';
 
 import { BaseDto } from '../utils/base.dto.';
+import { EditDto } from './edit.dto';
 import { Revision } from './revision.entity';
 
 export class RevisionDto extends BaseDto {
@@ -42,4 +43,11 @@ export class RevisionDto extends BaseDto {
   @Type(() => Date)
   @ApiProperty()
   createdAt: Date;
+
+  /**
+   * All edit objects which are used in the revision.
+   */
+  @ValidateNested()
+  @ApiProperty()
+  edits: EditDto[];
 }
