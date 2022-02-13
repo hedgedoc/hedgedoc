@@ -406,6 +406,7 @@ export class NotesService {
       editedBy: (await this.getAuthorUsers(note)).map((user) => user.username),
       permissions: await this.toNotePermissionsDto(note),
       tags: await this.toTagList(note),
+      version: note.version,
       updatedAt: (await this.getLatestRevision(note)).createdAt,
       updateUsername: updateUser ? updateUser.username : null,
       viewCount: note.viewCount,

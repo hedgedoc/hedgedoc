@@ -89,6 +89,11 @@ export class Note {
   @JoinTable()
   tags: Promise<Tag[]>;
 
+  @Column({
+    default: 2,
+  })
+  version: number;
+
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
@@ -113,6 +118,7 @@ export class Note {
     newNote.description = null;
     newNote.title = null;
     newNote.tags = Promise.resolve([]);
+    newNote.version = 2;
     return newNote;
   }
 }
