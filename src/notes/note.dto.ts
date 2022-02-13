@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,9 +7,10 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsString, ValidateNested } from 'class-validator';
 
 import { EditDto } from '../revisions/edit.dto';
+import { BaseDto } from '../utils/base.dto.';
 import { NoteMetadataDto } from './note-metadata.dto';
 
-export class NoteDto {
+export class NoteDto extends BaseDto {
   /**
    * Markdown content of the note
    * @example "# I am a heading"

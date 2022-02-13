@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,7 +12,9 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-export class NoteUserPermissionEntryDto {
+import { BaseDto } from '../utils/base.dto.';
+
+export class NoteUserPermissionEntryDto extends BaseDto {
   /**
    * Username of the User this permission applies to
    */

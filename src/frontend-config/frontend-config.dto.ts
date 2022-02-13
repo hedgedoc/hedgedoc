@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,7 @@ import {
 import { URL } from 'url';
 
 import { ServerVersion } from '../monitoring/server-status.dto';
+import { BaseDto } from '../utils/base.dto.';
 
 export enum AuthProviderType {
   LOCAL = 'local',
@@ -43,7 +44,7 @@ export type AuthProviderTypeWithoutCustomName =
   | AuthProviderType.DROPBOX
   | AuthProviderType.GOOGLE;
 
-export class AuthProviderWithoutCustomNameDto {
+export class AuthProviderWithoutCustomNameDto extends BaseDto {
   /**
    * The type of the auth provider.
    */
@@ -51,7 +52,7 @@ export class AuthProviderWithoutCustomNameDto {
   type: AuthProviderTypeWithoutCustomName;
 }
 
-export class AuthProviderWithCustomNameDto {
+export class AuthProviderWithCustomNameDto extends BaseDto {
   /**
    * The type of the auth provider.
    */
@@ -77,7 +78,7 @@ export type AuthProviderDto =
   | AuthProviderWithCustomNameDto
   | AuthProviderWithoutCustomNameDto;
 
-export class BrandingDto {
+export class BrandingDto extends BaseDto {
   /**
    * The name to be displayed next to the HedgeDoc logo
    * @example ACME Corp
@@ -95,7 +96,7 @@ export class BrandingDto {
   logo?: URL;
 }
 
-export class SpecialUrlsDto {
+export class SpecialUrlsDto extends BaseDto {
   /**
    * A link to the privacy notice
    * @example https://md.example.com/n/privacy
@@ -121,7 +122,7 @@ export class SpecialUrlsDto {
   imprint?: URL;
 }
 
-export class IframeCommunicationDto {
+export class IframeCommunicationDto extends BaseDto {
   /**
    * The origin under which the editor page will be served
    * @example https://md.example.com
@@ -139,7 +140,7 @@ export class IframeCommunicationDto {
   rendererOrigin?: URL;
 }
 
-export class FrontendConfigDto {
+export class FrontendConfigDto extends BaseDto {
   /**
    * Is anonymous usage of the instance allowed?
    */

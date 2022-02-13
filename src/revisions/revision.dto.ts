@@ -1,14 +1,15 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsNumber, IsString } from 'class-validator';
 
+import { BaseDto } from '../utils/base.dto.';
 import { Revision } from './revision.entity';
 
-export class RevisionDto {
+export class RevisionDto extends BaseDto {
   /**
    * ID of this revision
    * @example 13
