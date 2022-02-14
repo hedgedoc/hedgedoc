@@ -5,13 +5,13 @@ info:
   version: 2.0.0
   contact:
     name: HedgeDoc on GitHub
-    url: https://github.com/codimd/server
+    url: https://github.com/hedgedoc/hedgedoc
   license:
     name: AGPLv3
-    url: https://github.com/codimd/server/blob/master/LICENSE
+    url: https://github.com/hedgedoc/hedgedoc/blob/develop/LICENSE
 externalDocs:
-  description: The CodiMD Documentation.
-  url: https://github.com/codimd/server/tree/master/docs
+  description: The HedgeDoc Documentation.
+  url: https://docs.hedgedoc.org
 servers:
   - url: "/api/v2"
     description: The base API Path.
