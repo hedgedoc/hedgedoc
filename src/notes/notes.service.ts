@@ -405,7 +405,7 @@ export class NotesService {
       ),
       primaryAddress: (await getPrimaryAlias(note)) ?? note.id,
       title: note.title ?? '',
-      createdAt: (await this.getFirstRevision(note)).createdAt,
+      createdAt: note.createdAt,
       description: note.description ?? '',
       editedBy: (await this.getAuthorUsers(note)).map((user) => user.username),
       permissions: await this.toNotePermissionsDto(note),

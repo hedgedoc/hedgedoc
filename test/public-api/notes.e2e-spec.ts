@@ -315,7 +315,7 @@ describe('Notes', () => {
         'test5a',
       );
       // save the creation time
-      const createDate = (await note.revisions)[0].createdAt;
+      const createDate = note.createdAt;
       // wait one second
       await new Promise((r) => setTimeout(r, 1000));
       // update the note

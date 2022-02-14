@@ -5,6 +5,7 @@
  */
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
@@ -94,6 +95,9 @@ export class Note {
   })
   version: number;
 
+  @CreateDateColumn()
+  createdAt: Date;
+
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
@@ -102,7 +106,10 @@ export class Note {
    * @param owner The owner of the note
    * @param alias Optional primary alias
    */
-  public static create(owner: User | null, alias?: string): Omit<Note, 'id'> {
+  public static create(
+    owner: User | null,
+    alias?: string,
+  ): Omit<Note, 'id' | 'createdAt'> {
     const newNote = new Note();
     newNote.publicId = generatePublicId();
     newNote.aliases = alias
