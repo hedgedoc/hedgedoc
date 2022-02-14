@@ -44,7 +44,7 @@ volumes:
   database:
   uploads:
 ```
-After executing `docker-compose up`, HedgeDoc should be available at [http://127.0.0.1:3000](http://127.0.0.1:3000).  
+After executing `docker-compose up`, HedgeDoc should be available at [http://localhost:3000](http://localhost:3000).  
 You can now continue to configure your container with environment variables.
 Check out [the configuration docs](/configuration) for more details.
 
