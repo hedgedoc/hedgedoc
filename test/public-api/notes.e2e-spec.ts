@@ -276,8 +276,8 @@ describe('Notes', () => {
         .get('/api/v2/notes/test5/metadata')
         .expect(200);
       expect(typeof metadata.body.id).toEqual('string');
-      expect(metadata.body.aliases).toEqual(['test5']);
-      expect(metadata.body.primaryAlias).toEqual('test5');
+      expect(metadata.body.aliases[0].name).toEqual('test5');
+      expect(metadata.body.primaryAddress).toEqual('test5');
       expect(metadata.body.title).toEqual('');
       expect(metadata.body.description).toEqual('');
       expect(typeof metadata.body.createdAt).toEqual('string');

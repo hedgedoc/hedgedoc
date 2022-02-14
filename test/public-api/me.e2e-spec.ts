@@ -179,7 +179,7 @@ describe('Me', () => {
       .expect(200);
     const noteMetaDtos = response.body as NoteMetadataDto[];
     expect(noteMetaDtos).toHaveLength(1);
-    expect(noteMetaDtos[0].primaryAlias).toEqual(noteName);
+    expect(noteMetaDtos[0].primaryAddress).toEqual(noteName);
     expect(noteMetaDtos[0].updateUsername).toEqual(user.username);
   });
 

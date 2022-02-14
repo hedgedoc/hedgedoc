@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Inject, Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -25,7 +25,7 @@ export class AliasService {
     private readonly logger: ConsoleLoggerService,
     @InjectRepository(Note) private noteRepository: Repository<Note>,
     @InjectRepository(Alias) private aliasRepository: Repository<Alias>,
-    @Inject(NotesService) private notesService: NotesService,
+    @Inject(forwardRef(() => NotesService)) private notesService: NotesService,
   ) {
     this.logger.setContext(AliasService.name);
   }
