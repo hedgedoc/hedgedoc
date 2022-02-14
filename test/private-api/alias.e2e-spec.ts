@@ -75,8 +75,12 @@ describe('Alias', () => {
       const note = await agent1
         .get(`/api/private/notes/${newAlias}`)
         .expect(200);
-      expect(note.body.metadata.aliases).toContain(newAlias);
-      expect(note.body.metadata.primaryAlias).toBeTruthy();
+      expect(note.body.metadata.aliases).toContainEqual({
+        name: 'normalAlias',
+        primaryAlias: false,
+        noteId: publicId,
+      });
+      expect(note.body.metadata.primaryAddress).toEqual(testAlias);
       expect(note.body.metadata.id).toEqual(publicId);
     });
 
@@ -142,8 +146,12 @@ describe('Alias', () => {
       const note = await agent1
         .get(`/api/private/notes/${newAlias}`)
         .expect(200);
-      expect(note.body.metadata.aliases).toContain(newAlias);
-      expect(note.body.metadata.primaryAlias).toBeTruthy();
+      expect(note.body.metadata.aliases).toContainEqual({
+        name: newAlias,
+        primaryAlias: true,
+        noteId: publicId,
+      });
+      expect(note.body.metadata.primaryAddress).toEqual(newAlias);
       expect(note.body.metadata.id).toEqual(publicId);
     });
 

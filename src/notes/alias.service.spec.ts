@@ -33,6 +33,7 @@ import { UsersModule } from '../users/users.module';
 import { Alias } from './alias.entity';
 import { AliasService } from './alias.service';
 import { Note } from './note.entity';
+import { NotesModule } from './notes.module';
 import { NotesService } from './notes.service';
 import { Tag } from './tag.entity';
 
@@ -72,6 +73,7 @@ describe('AliasService', () => {
         UsersModule,
         GroupsModule,
         RevisionsModule,
+        NotesModule,
       ],
     })
       .overrideProvider(getRepositoryToken(Note))

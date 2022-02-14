@@ -25,6 +25,7 @@ import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { checkArrayForDuplicates } from '../utils/arrayDuplicatCheck';
 import { Alias } from './alias.entity';
+import { AliasService } from './alias.service';
 import { NoteMetadataDto } from './note-metadata.dto';
 import {
   NotePermissionsDto,
@@ -49,6 +50,7 @@ export class NotesService {
     private revisionsService: RevisionsService,
     @Inject(noteConfiguration.KEY)
     private noteConfig: NoteConfig,
+    @Inject(forwardRef(() => AliasService)) private aliasService: AliasService,
   ) {
     this.logger.setContext(NotesService.name);
   }
@@ -397,9 +399,11 @@ export class NotesService {
     return {
       id: note.publicId,
       aliases: await Promise.all(
-        (await note.aliases).map((alias) => alias.name),
+        (
+          await note.aliases
+        ).map((alias) => this.aliasService.toAliasDto(alias, note)),
       ),
-      primaryAlias: (await getPrimaryAlias(note)) ?? null,
+      primaryAddress: (await getPrimaryAlias(note)) ?? note.id,
       title: note.title ?? '',
       createdAt: (await this.getFirstRevision(note)).createdAt,
       description: note.description ?? '',

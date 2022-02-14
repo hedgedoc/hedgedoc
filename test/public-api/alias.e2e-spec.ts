@@ -52,8 +52,12 @@ describe('Alias', () => {
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(200);
 
-      expect(note.body.metadata.aliases).toContain('normalAlias');
-      expect(note.body.metadata.primaryAlias).toBeTruthy();
+      expect(note.body.metadata.aliases).toContainEqual({
+        name: 'normalAlias',
+        primaryAlias: false,
+        noteId: publicId,
+      });
+      expect(note.body.metadata.primaryAddress).toEqual(testAlias);
       expect(note.body.metadata.id).toEqual(publicId);
     });
 
@@ -127,8 +131,12 @@ describe('Alias', () => {
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(200);
 
-      expect(note.body.metadata.aliases).toContain(testAlias);
-      expect(note.body.metadata.primaryAlias).toBeTruthy();
+      expect(note.body.metadata.aliases).toContainEqual({
+        name: testAlias,
+        primaryAlias: true,
+        noteId: publicId,
+      });
+      expect(note.body.metadata.primaryAddress).toEqual(testAlias);
       expect(note.body.metadata.id).toEqual(publicId);
     });
 

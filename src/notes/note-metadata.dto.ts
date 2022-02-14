@@ -15,6 +15,7 @@ import {
 } from 'class-validator';
 
 import { BaseDto } from '../utils/base.dto.';
+import { AliasDto } from './alias.dto';
 import { NotePermissionsDto } from './note-permissions.dto';
 
 export class NoteMetadataDto extends BaseDto {
@@ -29,16 +30,18 @@ export class NoteMetadataDto extends BaseDto {
    * All aliases of the note (including the primaryAlias)
    */
   @IsArray()
-  @IsString({ each: true })
+  @ValidateNested()
   @ApiProperty()
-  aliases: string[];
+  aliases: AliasDto[];
 
   /**
-   * The primary alias of the note
+   * The primary adress of the note
+   * If at least one alias is set, this is the primary alias
+   * If no alias is set, this is the note's ID
    */
   @IsString()
   @ApiProperty()
-  primaryAlias: string | null;
+  primaryAddress: string;
 
   /**
    * Title of the note

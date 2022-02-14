@@ -31,6 +31,7 @@ import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { Alias } from './alias.entity';
+import { AliasService } from './alias.service';
 import {
   NoteGroupPermissionUpdateDto,
   NoteUserPermissionUpdateDto,
@@ -57,6 +58,7 @@ describe('NotesService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         NotesService,
+        AliasService,
         {
           provide: getRepositoryToken(Note),
           useClass: Repository,
@@ -771,7 +773,7 @@ describe('NotesService', () => {
       const metadataDto = await service.toNoteMetadataDto(note);
       expect(metadataDto.id).toEqual(note.publicId);
       expect(metadataDto.aliases).toHaveLength(1);
-      expect(metadataDto.aliases[0]).toEqual((await note.aliases)[0].name);
+      expect(metadataDto.aliases[0].name).toEqual((await note.aliases)[0].name);
       expect(metadataDto.title).toEqual(note.title);
       expect(metadataDto.createdAt).toEqual(revisions[0].createdAt);
       expect(metadataDto.description).toEqual(note.description);
@@ -873,7 +875,9 @@ describe('NotesService', () => {
       const noteDto = await service.toNoteDto(note);
       expect(noteDto.metadata.id).toEqual(note.publicId);
       expect(noteDto.metadata.aliases).toHaveLength(1);
-      expect(noteDto.metadata.aliases[0]).toEqual((await note.aliases)[0].name);
+      expect(noteDto.metadata.aliases[0].name).toEqual(
+        (await note.aliases)[0].name,
+      );
       expect(noteDto.metadata.title).toEqual(note.title);
       expect(noteDto.metadata.createdAt).toEqual(revisions[0].createdAt);
       expect(noteDto.metadata.description).toEqual(note.description);
