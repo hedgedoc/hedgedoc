@@ -47,7 +47,7 @@ export class AuthController {
   async registerUser(@Body() registerDto: RegisterDto): Promise<void> {
     const user = await this.usersService.createUser(
       registerDto.username,
-      registerDto.displayname,
+      registerDto.displayName,
     );
     // ToDo: Figure out how to rollback user if anything with this calls goes wrong
     await this.identityService.createLocalIdentity(user, registerDto.password);

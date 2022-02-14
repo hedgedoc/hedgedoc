@@ -21,7 +21,7 @@ describe('Auth', () => {
   let testSetup: TestSetup;
 
   let username: string;
-  let displayname: string;
+  let displayName: string;
   let password: string;
 
   beforeAll(async () => {
@@ -29,7 +29,7 @@ describe('Auth', () => {
     await testSetup.app.init();
 
     username = 'hardcoded';
-    displayname = 'Testy';
+    displayName = 'Testy';
     password = 'test_password';
   });
 
@@ -40,7 +40,7 @@ describe('Auth', () => {
   describe('POST /auth/local', () => {
     it('works', async () => {
       const registrationDto: RegisterDto = {
-        displayname: displayname,
+        displayName: displayName,
         password: password,
         username: username,
       };
@@ -52,7 +52,7 @@ describe('Auth', () => {
       const newUser = await testSetup.userService.getUserByUsername(username, [
         UserRelationEnum.IDENTITIES,
       ]);
-      expect(newUser.displayName).toEqual(displayname);
+      expect(newUser.displayName).toEqual(displayName);
       await expect(newUser.identities).resolves.toHaveLength(1);
       await expect(
         checkPassword(
@@ -64,9 +64,9 @@ describe('Auth', () => {
     describe('fails', () => {
       it('when the user already exits', async () => {
         const username2 = 'already_existing';
-        await testSetup.userService.createUser(username2, displayname);
+        await testSetup.userService.createUser(username2, displayName);
         const registrationDto: RegisterDto = {
-          displayname: displayname,
+          displayName: displayName,
           password: password,
           username: username2,
         };
@@ -79,7 +79,7 @@ describe('Auth', () => {
       it('when registration is disabled', async () => {
         testSetup.configService.get('authConfig').local.enableRegister = false;
         const registrationDto: RegisterDto = {
-          displayname: displayname,
+          displayName: displayName,
           password: password,
           username: username,
         };
