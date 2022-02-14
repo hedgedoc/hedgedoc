@@ -29,7 +29,7 @@ describe('Register and Login', () => {
   test('a user can successfully create a local account and log in', async () => {
     // register a new user
     const registrationDto: RegisterDto = {
-      displayname: DISPLAYNAME,
+      displayName: DISPLAYNAME,
       password: PASSWORD,
       username: USERNAME,
     };
@@ -67,7 +67,7 @@ describe('Register and Login', () => {
   test('a username cannot be used twice', async () => {
     // register a new user
     const registrationDto: RegisterDto = {
-      displayname: DISPLAYNAME,
+      displayName: DISPLAYNAME,
       password: PASSWORD,
       username: USERNAME,
     };
@@ -88,7 +88,7 @@ describe('Register and Login', () => {
   test('a user can create a local account and change the password', async () => {
     // register a new user
     const registrationDto: RegisterDto = {
-      displayname: DISPLAYNAME,
+      displayName: DISPLAYNAME,
       password: PASSWORD,
       username: USERNAME,
     };
