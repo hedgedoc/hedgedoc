@@ -775,7 +775,6 @@ describe('NotesService', () => {
       expect(metadataDto.aliases).toHaveLength(1);
       expect(metadataDto.aliases[0].name).toEqual((await note.aliases)[0].name);
       expect(metadataDto.title).toEqual(note.title);
-      expect(metadataDto.createdAt).toEqual(revisions[0].createdAt);
       expect(metadataDto.description).toEqual(note.description);
       expect(metadataDto.editedBy).toHaveLength(1);
       expect(metadataDto.editedBy[0]).toEqual(user.username);
@@ -879,7 +878,6 @@ describe('NotesService', () => {
         (await note.aliases)[0].name,
       );
       expect(noteDto.metadata.title).toEqual(note.title);
-      expect(noteDto.metadata.createdAt).toEqual(revisions[0].createdAt);
       expect(noteDto.metadata.description).toEqual(note.description);
       expect(noteDto.metadata.editedBy).toHaveLength(1);
       expect(noteDto.metadata.editedBy[0]).toEqual(user.username);
@@ -900,7 +898,6 @@ describe('NotesService', () => {
       );
       expect(noteDto.metadata.tags).toHaveLength(1);
       expect(noteDto.metadata.tags[0]).toEqual((await note.tags)[0].name);
-      expect(noteDto.metadata.updatedAt).toEqual(revisions[0].createdAt);
       expect(noteDto.metadata.updateUsername).toEqual(user.username);
       expect(noteDto.metadata.viewCount).toEqual(note.viewCount);
       expect(noteDto.content).toEqual(content);
