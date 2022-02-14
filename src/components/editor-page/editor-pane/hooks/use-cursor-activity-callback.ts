@@ -5,12 +5,12 @@
  */
 
 import type { RefObject } from 'react'
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { updateCursorPositions } from '../../../../redux/note-details/methods'
 import type { ViewUpdate } from '@codemirror/view'
 import { EditorView } from '@codemirror/view'
 import { Logger } from '../../../../utils/logger'
-import type { Extension } from '@codemirror/state'
+import type { Extension, SelectionRange } from '@codemirror/state'
 
 const logger = new Logger('useCursorActivityCallback')
 
@@ -20,14 +20,20 @@ const logger = new Logger('useCursorActivityCallback')
  * @return the generated callback
  */
 export const useCursorActivityCallback = (editorFocused: RefObject<boolean>): Extension => {
+  const lastMainSelection = useRef<SelectionRange>()
+
   return useMemo(
     () =>
       EditorView.updateListener.of((viewUpdate: ViewUpdate): void => {
+        const firstSelection = viewUpdate.state.selection.main
+        if (lastMainSelection.current === firstSelection) {
+          return
+        }
+        lastMainSelection.current = firstSelection
         if (!editorFocused.current) {
           logger.debug("Don't post updated cursor because editor isn't focused")
           return
         }
-        const firstSelection = viewUpdate.state.selection.main
         const newCursorPos = {
           from: firstSelection.from,
           to: firstSelection.to === firstSelection.from ? undefined : firstSelection.to

@@ -91,7 +91,10 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
   const { t } = useTranslation()
 
   return (
-    <div className={`d-flex flex-column h-100 position-relative`} onMouseEnter={onMakeScrollSource}>
+    <div
+      className={`d-flex flex-column h-100 position-relative`}
+      onTouchStart={onMakeScrollSource}
+      onMouseEnter={onMakeScrollSource}>
       <MaxLengthWarning />
       <ToolBar />
       <ReactCodeMirror
@@ -112,5 +115,3 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
     </div>
   )
 }
-
-export default EditorPane

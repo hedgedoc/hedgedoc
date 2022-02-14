@@ -5,7 +5,7 @@
  */
 
 import type React from 'react'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import type { LineMarkerPosition } from '../../../markdown-renderer/markdown-extension/linemarker/types'
 import type { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
 import { useOnUserScroll } from './use-on-user-scroll'
@@ -17,7 +17,7 @@ export const useDocumentSyncScrolling = (
   numberOfLines: number,
   scrollState?: ScrollState,
   onScroll?: (scrollState: ScrollState) => void
-): [(lineMarkers: LineMarkerPosition[]) => void, () => void] => {
+): [(lineMarkers: LineMarkerPosition[]) => void, React.UIEventHandler<HTMLElement>] => {
   const [lineMarks, setLineMarks] = useState<LineMarkerPosition[]>()
 
   const onLineMarkerPositionChanged = useCallback(
@@ -40,5 +40,5 @@ export const useDocumentSyncScrolling = (
   const onUserScroll = useOnUserScroll(lineMarks, outerContainerRef, onScroll)
   useScrollToLineMark(scrollState, lineMarks, numberOfLines, outerContainerRef)
 
-  return [onLineMarkerPositionChanged, onUserScroll]
+  return useMemo(() => [onLineMarkerPositionChanged, onUserScroll], [onLineMarkerPositionChanged, onUserScroll])
 }

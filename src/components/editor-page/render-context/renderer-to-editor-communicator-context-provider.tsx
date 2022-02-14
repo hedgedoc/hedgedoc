@@ -27,20 +27,18 @@ export const useRendererToEditorCommunicator: () => RendererToEditorCommunicator
 
 export const RendererToEditorCommunicatorContextProvider: React.FC = ({ children }) => {
   const editorOrigin = useOriginFromConfig(ORIGIN_TYPE.EDITOR)
-  const communicator = useMemo<RendererToEditorCommunicator>(() => {
-    const newCommunicator = new RendererToEditorCommunicator()
-    newCommunicator.setMessageTarget(window.parent, editorOrigin)
-    return newCommunicator
-  }, [editorOrigin])
+  const communicator = useMemo<RendererToEditorCommunicator>(() => new RendererToEditorCommunicator(), [])
 
   useEffect(() => {
     const currentCommunicator = communicator
+    currentCommunicator.setMessageTarget(window.parent, editorOrigin)
+    currentCommunicator.registerEventListener()
     currentCommunicator.enableCommunication()
     currentCommunicator.sendMessageToOtherSide({
       type: CommunicationMessageType.RENDERER_READY
     })
     return () => currentCommunicator?.unregisterEventListener()
-  }, [communicator])
+  }, [communicator, editorOrigin])
 
   /**
    * Provides a {@link RendererToEditorCommunicator renderer to editor communicator} for the child components via Context.

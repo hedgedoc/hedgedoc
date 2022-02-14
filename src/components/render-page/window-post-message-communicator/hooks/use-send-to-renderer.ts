@@ -7,11 +7,11 @@
 import { useCallback } from 'react'
 import type { CommunicationMessages, EditorToRendererMessageType } from '../rendering-message'
 import { useEditorToRendererCommunicator } from '../../../editor-page/render-context/editor-to-renderer-communicator-context-provider'
-import type { PostMessage } from '../window-post-message-communicator'
+import type { MessagePayload } from '../window-post-message-communicator'
 import { useEffectOnRendererReady } from './use-effect-on-renderer-ready'
 
 export const useSendToRenderer = (
-  message: undefined | Extract<CommunicationMessages, PostMessage<EditorToRendererMessageType>>
+  message: undefined | Extract<CommunicationMessages, MessagePayload<EditorToRendererMessageType>>
 ): void => {
   const iframeCommunicator = useEditorToRendererCommunicator()
 

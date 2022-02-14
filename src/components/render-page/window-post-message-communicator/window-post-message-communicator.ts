@@ -5,6 +5,7 @@
  */
 
 import type { Logger } from '../../../utils/logger'
+import Optional from 'optional-js'
 
 /**
  * Error that will be thrown if a message couldn't be sent.
@@ -12,7 +13,7 @@ import type { Logger } from '../../../utils/logger'
 export class IframeCommunicatorSendingError extends Error {}
 
 export type Handler<MESSAGES, MESSAGE_TYPE extends string> = (
-  values: Extract<MESSAGES, PostMessage<MESSAGE_TYPE>>
+  values: Extract<MESSAGES, MessagePayload<MESSAGE_TYPE>>
 ) => void
 
 export type MaybeHandler<MESSAGES, MESSAGE_TYPE extends string> = Handler<MESSAGES, MESSAGE_TYPE> | undefined
@@ -21,7 +22,7 @@ export type HandlerMap<MESSAGES, MESSAGE_TYPE extends string> = Partial<{
   [key in MESSAGE_TYPE]: MaybeHandler<MESSAGES, MESSAGE_TYPE>
 }>
 
-export interface PostMessage<MESSAGE_TYPE extends string> {
+export interface MessagePayload<MESSAGE_TYPE extends string> {
   type: MESSAGE_TYPE
 }
 
@@ -31,16 +32,17 @@ export interface PostMessage<MESSAGE_TYPE extends string> {
 export abstract class WindowPostMessageCommunicator<
   RECEIVE_TYPE extends string,
   SEND_TYPE extends string,
-  MESSAGES extends PostMessage<RECEIVE_TYPE | SEND_TYPE>
+  MESSAGES extends MessagePayload<RECEIVE_TYPE | SEND_TYPE>
 > {
   private messageTarget?: Window
   private targetOrigin?: string
   private communicationEnabled: boolean
-  private handlers: HandlerMap<MESSAGES, RECEIVE_TYPE> = {}
-  private log
+  private readonly handlers: HandlerMap<MESSAGES, RECEIVE_TYPE> = {}
+  private readonly log: Logger
+  private readonly boundListener: (event: MessageEvent) => void
 
-  constructor() {
-    window.addEventListener('message', this.handleEvent.bind(this))
+  public constructor() {
+    this.boundListener = this.handleEvent.bind(this)
     this.communicationEnabled = false
     this.log = this.createLogger()
   }
@@ -48,10 +50,17 @@ export abstract class WindowPostMessageCommunicator<
   protected abstract createLogger(): Logger
 
   /**
-   * Removes the message event listener from the {@link window}
+   * Registers the event listener on the current global {@link window}.
+   */
+  public registerEventListener(): void {
+    window.addEventListener('message', this.boundListener, { passive: true })
+  }
+
+  /**
+   * Removes the message event listener from the {@link window}.
    */
   public unregisterEventListener(): void {
-    window.removeEventListener('message', this.handleEvent.bind(this))
+    window.removeEventListener('message', this.boundListener)
   }
 
   /**
@@ -90,7 +99,7 @@ export abstract class WindowPostMessageCommunicator<
    *
    * @param message The message to send.
    */
-  public sendMessageToOtherSide(message: Extract<MESSAGES, PostMessage<SEND_TYPE>>): void {
+  public sendMessageToOtherSide(message: Extract<MESSAGES, MessagePayload<SEND_TYPE>>): void {
     if (this.messageTarget === undefined || this.targetOrigin === undefined) {
       throw new IframeCommunicatorSendingError(`Other side is not set.\nMessage was: ${JSON.stringify(message)}`)
     }
@@ -121,18 +130,22 @@ export abstract class WindowPostMessageCommunicator<
    * @param event The received event
    * @return {@code true} if the event was processed.
    */
-  protected handleEvent(event: MessageEvent<PostMessage<RECEIVE_TYPE>>): boolean | undefined {
-    const data = event.data
+  protected handleEvent(event: MessageEvent<MessagePayload<RECEIVE_TYPE>>): void {
+    Optional.ofNullable(event.data).ifPresent((payload) => {
+      event.stopPropagation()
+      event.preventDefault()
+      this.processPayload(payload)
+    })
+  }
 
-    if (!(data.type in this.handlers)) {
-      return true
-    }
-    const handler = this.handlers[data.type]
-    if (!handler) {
-      return true
-    }
-    this.log.debug('Received event', data)
-    handler(data as Extract<MESSAGES, PostMessage<RECEIVE_TYPE>>)
-    return false
+  /**
+   * Processes a {@link MessagePayload message payload} using the correct {@link Handler handler}.
+   * @param payload The payload that should be processed
+   */
+  private processPayload(payload: MessagePayload<RECEIVE_TYPE>): void {
+    return Optional.ofNullable<Handler<MESSAGES, RECEIVE_TYPE>>(this.handlers[payload.type]).ifPresent((handler) => {
+      this.log.debug('Received event', payload)
+      handler(payload as Extract<MESSAGES, MessagePayload<RECEIVE_TYPE>>)
+    })
   }
 }

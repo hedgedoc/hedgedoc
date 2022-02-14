@@ -58,13 +58,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   const onIframeLoad = useForceRenderPageUrlOnIframeLoadCallback(frameReference, rendererOrigin, resetRendererReady)
   const [frameHeight, setFrameHeight] = useState<number>(0)
 
-  useEffect(
-    () => () => {
-      iframeCommunicator.unregisterEventListener()
-      setRendererStatus(false)
-    },
-    [iframeCommunicator]
-  )
+  useEffect(() => () => setRendererStatus(false), [iframeCommunicator])
 
   useEffect(() => {
     if (!rendererReady) {

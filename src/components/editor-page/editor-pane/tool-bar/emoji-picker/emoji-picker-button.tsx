@@ -38,3 +38,5 @@ export const EmojiPickerButton: React.FC = () => {
     </Fragment>
   )
 }
+
+export default EmojiPickerButton

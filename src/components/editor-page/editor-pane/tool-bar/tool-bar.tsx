@@ -4,14 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React from 'react'
+import React, { Fragment, Suspense } from 'react'
 import { ButtonGroup, ButtonToolbar } from 'react-bootstrap'
-import { EmojiPickerButton } from './emoji-picker/emoji-picker-button'
 import { TablePickerButton } from './table-picker/table-picker-button'
 import styles from './tool-bar.module.scss'
 import { UploadImageButton } from './upload-image-button'
 import { ToolbarButton } from './toolbar-button'
 import { FormatType } from '../../../../redux/note-details/types'
+
+const EmojiPickerButton = React.lazy(() => import('./emoji-picker/emoji-picker-button'))
 
 export const ToolBar: React.FC = () => {
   return (
@@ -43,7 +44,9 @@ export const ToolBar: React.FC = () => {
         <ToolbarButton icon={'minus'} formatType={FormatType.HORIZONTAL_LINE} />
         <ToolbarButton icon={'caret-square-o-down'} formatType={FormatType.COLLAPSIBLE_BLOCK} />
         <ToolbarButton icon={'comment'} formatType={FormatType.COMMENT} />
-        <EmojiPickerButton />
+        <Suspense fallback={<Fragment />}>
+          <EmojiPickerButton />
+        </Suspense>
       </ButtonGroup>
     </ButtonToolbar>
   )

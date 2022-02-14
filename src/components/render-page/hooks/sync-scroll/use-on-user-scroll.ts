@@ -4,16 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { RefObject } from 'react'
+import type React from 'react'
 import { useCallback } from 'react'
 import type { LineMarkerPosition } from '../../../markdown-renderer/markdown-extension/linemarker/types'
 import type { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
 
 export const useOnUserScroll = (
   lineMarks: LineMarkerPosition[] | undefined,
-  scrollContainer: RefObject<HTMLElement>,
+  scrollContainer: React.RefObject<HTMLElement>,
   onScroll: ((newScrollState: ScrollState) => void) | undefined
-): (() => void) => {
+): React.UIEventHandler<HTMLElement> => {
   return useCallback(() => {
     if (!scrollContainer.current || !lineMarks || lineMarks.length === 0 || !onScroll) {
       return

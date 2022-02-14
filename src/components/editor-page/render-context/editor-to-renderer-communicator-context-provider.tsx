@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { createContext, useContext, useMemo } from 'react'
+import React, { createContext, useContext, useEffect, useMemo } from 'react'
 import { EditorToRendererCommunicator } from '../../render-page/window-post-message-communicator/editor-to-renderer-communicator'
 
 const EditorToRendererCommunicatorContext = createContext<EditorToRendererCommunicator | undefined>(undefined)
@@ -28,6 +28,14 @@ export const useEditorToRendererCommunicator: () => EditorToRendererCommunicator
  */
 export const EditorToRendererCommunicatorContextProvider: React.FC = ({ children }) => {
   const communicator = useMemo<EditorToRendererCommunicator>(() => new EditorToRendererCommunicator(), [])
+
+  useEffect(() => {
+    const currentCommunicator = communicator
+    currentCommunicator.registerEventListener()
+    return () => {
+      currentCommunicator.unregisterEventListener()
+    }
+  }, [communicator])
 
   return (
     <EditorToRendererCommunicatorContext.Provider value={communicator}>

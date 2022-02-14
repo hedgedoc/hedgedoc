@@ -14,7 +14,14 @@ export interface JumpAnchorProps extends AllHTMLAttributes<HTMLAnchorElement> {
 export const JumpAnchor: React.FC<JumpAnchorProps> = ({ jumpTargetId, children, ...props }) => {
   const jumpToTargetId = useCallback(
     (event: React.MouseEvent<HTMLElement, MouseEvent>): void => {
-      document.getElementById(jumpTargetId)?.scrollIntoView({ behavior: 'smooth' })
+      const intoViewElement = document.getElementById(jumpTargetId)
+      const scrollElement = document.querySelector('[data-scroll-element]')
+      if (!intoViewElement || !scrollElement) {
+        return
+      }
+      //It would be much easier to use scrollIntoView here but since the code mirror also uses smooth scroll and bugs like
+      // https://stackoverflow.com/a/63563437/13103995 exist, we must use scrollTo.
+      scrollElement.scrollTo({ behavior: 'smooth', top: intoViewElement.offsetTop })
       event.preventDefault()
     },
     [jumpTargetId]
