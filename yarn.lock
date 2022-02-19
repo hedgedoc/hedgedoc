@@ -2269,7 +2269,7 @@ __metadata:
     prettier: 2.5.1
     react: 17.0.2
     react-bootstrap: 1.6.4
-    react-bootstrap-typeahead: 5.2.1
+    react-bootstrap-typeahead: 5.2.2
     react-diff-viewer: 3.1.1
     react-dom: 17.0.2
     react-i18next: 11.15.4
@@ -16813,9 +16813,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-bootstrap-typeahead@npm:5.2.1":
-  version: 5.2.1
-  resolution: "react-bootstrap-typeahead@npm:5.2.1"
+"react-bootstrap-typeahead@npm:5.2.2":
+  version: 5.2.2
+  resolution: "react-bootstrap-typeahead@npm:5.2.2"
   dependencies:
     "@babel/runtime": ^7.14.6
     "@restart/hooks": ^0.4.0
@@ -16831,7 +16831,7 @@ __metadata:
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: d67028a6e9746caabf348c4de284aebc104790e428f91180b7b62e70f32f3c834c067179fa63e6198b845543603fdfde2d2548da29bd69d351be6bb3b7f7898f
+  checksum: 041691d241b4520dce52f541a774c209f542bcffb580ee24a7fbb56f66058526437685002d0a8992f3215a321b408b79180c1791feb899f8457669e0c3a83ec0
   languageName: node
   linkType: hard
 
