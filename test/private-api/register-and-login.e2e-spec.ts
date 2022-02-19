@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -56,7 +56,7 @@ describe('Register and Login', () => {
     expect(profile.body.displayName).toEqual(DISPLAYNAME);
 
     // logout again
-    await session.delete('/api/private/auth/logout').expect(200);
+    await session.delete('/api/private/auth/logout').expect(204);
 
     // not allowed to request profile now
     await session.get('/api/private/me').expect(401);

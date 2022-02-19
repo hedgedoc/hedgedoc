@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -96,7 +96,7 @@ describe('Me', () => {
       .send({
         name: newDisplayName,
       })
-      .expect(200);
+      .expect(201);
     const dbUser = await testSetup.userService.getUserByUsername('hardcoded');
     expect(dbUser.displayName).toEqual(newDisplayName);
   });
