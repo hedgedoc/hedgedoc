@@ -36,8 +36,8 @@
     ]
   },
   "dependencies": {
-    "@codemirror/lang-markdown": "0.19.5",
-    "@codemirror/language-data": "0.19.1",
+    "@codemirror/lang-markdown": "0.19.6",
+    "@codemirror/language-data": "0.19.2",
     "@codemirror/theme-one-dark": "0.19.1",
     "@fontsource/source-sans-pro": "4.5.3",
     "@hedgedoc/html-to-react": "1.1.1",

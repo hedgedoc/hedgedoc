@@ -1688,22 +1688,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/lang-markdown@npm:0.19.5":
-  version: 0.19.5
-  resolution: "@codemirror/lang-markdown@npm:0.19.5"
-  dependencies:
-    "@codemirror/highlight": ^0.19.0
-    "@codemirror/lang-html": ^0.19.0
-    "@codemirror/language": ^0.19.0
-    "@codemirror/state": ^0.19.3
-    "@codemirror/view": ^0.19.0
-    "@lezer/common": ^0.15.0
-    "@lezer/markdown": ^0.15.0
-  checksum: 931b1721245b25d0098da279094fe9c3e23e5a9adfa47801665e09bb7ac6bdcb58f5d226726f35932d4a2d280951b237c030647958f14a3bd20e72ef05c8e882
-  languageName: node
-  linkType: hard
-
-"@codemirror/lang-markdown@npm:^0.19.0":
+"@codemirror/lang-markdown@npm:0.19.6, @codemirror/lang-markdown@npm:^0.19.0":
   version: 0.19.6
   resolution: "@codemirror/lang-markdown@npm:0.19.6"
   dependencies:
@@ -1792,9 +1777,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/language-data@npm:0.19.1":
-  version: 0.19.1
-  resolution: "@codemirror/language-data@npm:0.19.1"
+"@codemirror/language-data@npm:0.19.2":
+  version: 0.19.2
+  resolution: "@codemirror/language-data@npm:0.19.2"
   dependencies:
     "@codemirror/lang-cpp": ^0.19.0
     "@codemirror/lang-css": ^0.19.0
@@ -1812,7 +1797,7 @@ __metadata:
     "@codemirror/language": ^0.19.0
     "@codemirror/legacy-modes": ^0.19.0
     "@codemirror/stream-parser": ^0.19.0
-  checksum: 0c0a06f3dc1e1a5c4f3d5c5de102be0ca6f587fae624e1d0f99ecf0f173591a2b86f8f2e6e12918f7bb48ad89acdbecaa33758549357b8ca7412e7afbaa2120d
+  checksum: 34a05ce055a54ef0c463fd9c27a63c1de652f0070682ccea6e7870b89762dcc11bb094bdb2528876437963c14cdd9c1219df2adf37ff3eed8fcd58e73b643339
   languageName: node
   linkType: hard
 
@@ -2178,8 +2163,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/react-client@workspace:."
   dependencies:
-    "@codemirror/lang-markdown": 0.19.5
-    "@codemirror/language-data": 0.19.1
+    "@codemirror/lang-markdown": 0.19.6
+    "@codemirror/language-data": 0.19.2
     "@codemirror/theme-one-dark": 0.19.1
     "@fontsource/source-sans-pro": 4.5.3
     "@hedgedoc/html-to-react": 1.1.1
