@@ -80,7 +80,7 @@
     "eslint": "8.9.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.25.4",
-    "eslint-plugin-jest": "26.1.0",
+    "eslint-plugin-jest": "26.1.1",
     "eslint-plugin-local-rules": "1.1.0",
     "eslint-plugin-prettier": "4.0.0",
     "http-proxy-middleware": "2.0.3",
