@@ -177,7 +177,7 @@ describe('History', () => {
     expect(
       (await testSetup.historyService.getEntriesByUser(user)).length,
     ).toEqual(1);
-    await agent.delete('/api/private/me/history').expect(200);
+    await agent.delete('/api/private/me/history').expect(204);
     expect(
       (await testSetup.historyService.getEntriesByUser(user)).length,
     ).toEqual(0);
@@ -209,7 +209,7 @@ describe('History', () => {
     const entryDto = await historyService.toHistoryEntryDto(entry2);
     await agent
       .delete(`/api/private/me/history/${alias || 'undefined'}`)
-      .expect(200);
+      .expect(204);
     const userEntries = await historyService.getEntriesByUser(user);
     expect(userEntries.length).toEqual(1);
     const userEntryDto = await historyService.toHistoryEntryDto(userEntries[0]);
