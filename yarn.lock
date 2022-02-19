@@ -1724,7 +1724,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node-fetch@npm:2.5.12, @types/node-fetch@npm:^2.5.0":
+"@types/node-fetch@npm:2.6.1":
+  version: 2.6.1
+  resolution: "@types/node-fetch@npm:2.6.1"
+  dependencies:
+    "@types/node": "*"
+    form-data: ^3.0.0
+  checksum: a3e5d7f413d1638d795dff03f7b142b1b0e0c109ed210479000ce7b3ea11f9a6d89d9a024c96578d9249570c5fe5287a5f0f4aaba98199222230196ff2d6b283
+  languageName: node
+  linkType: hard
+
+"@types/node-fetch@npm:^2.5.0":
   version: 2.5.12
   resolution: "@types/node-fetch@npm:2.5.12"
   dependencies:
@@ -5362,7 +5372,7 @@ __metadata:
     "@types/jest": 27.4.0
     "@types/minio": 7.0.12
     "@types/node": 16.11.25
-    "@types/node-fetch": 2.5.12
+    "@types/node-fetch": 2.6.1
     "@types/passport-http-bearer": 1.0.37
     "@types/passport-local": 1.0.34
     "@types/source-map-support": 0.5.4
