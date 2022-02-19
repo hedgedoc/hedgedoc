@@ -59,7 +59,7 @@
     "rxjs": "7.5.4",
     "sqlite3": "5.0.2",
     "swagger-ui-express": "4.3.0",
-    "typeorm": "0.2.41"
+    "typeorm": "0.2.43"
   },
   "devDependencies": {
     "@nestjs/cli": "8.2.1",

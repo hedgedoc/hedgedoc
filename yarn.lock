@@ -5333,7 +5333,7 @@ __metadata:
     ts-jest: 27.1.3
     ts-node: 10.5.0
     tsconfig-paths: 3.12.0
-    typeorm: 0.2.41
+    typeorm: 0.2.43
     typescript: 4.5.5
   languageName: unknown
   linkType: soft
@@ -9683,9 +9683,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typeorm@npm:0.2.41":
-  version: 0.2.41
-  resolution: "typeorm@npm:0.2.41"
+"typeorm@npm:0.2.43":
+  version: 0.2.43
+  resolution: "typeorm@npm:0.2.43"
   dependencies:
     "@sqltools/formatter": ^1.2.2
     app-root-path: ^3.0.0
@@ -9700,25 +9700,26 @@ __metadata:
     reflect-metadata: ^0.1.13
     sha.js: ^2.4.11
     tslib: ^2.1.0
+    uuid: ^8.3.2
     xml2js: ^0.4.23
     yargs: ^17.0.1
     zen-observable-ts: ^1.0.0
   peerDependencies:
-    "@sap/hana-client": "*"
-    better-sqlite3: "*"
-    hdb-pool: "*"
-    ioredis: "*"
+    "@sap/hana-client": ^2.11.14
+    better-sqlite3: ^7.1.2
+    hdb-pool: ^0.1.6
+    ioredis: ^4.28.3
     mongodb: ^3.6.0
-    mssql: "*"
-    mysql2: "*"
-    oracledb: "*"
-    pg: "*"
-    pg-native: "*"
-    pg-query-stream: "*"
-    redis: "*"
-    sql.js: "*"
-    sqlite3: "*"
-    typeorm-aurora-data-api-driver: "*"
+    mssql: ^6.3.1
+    mysql2: ^2.2.5
+    oracledb: ^5.1.0
+    pg: ^8.5.1
+    pg-native: ^3.0.0
+    pg-query-stream: ^4.0.0
+    redis: ^3.1.1
+    sql.js: ^1.4.0
+    sqlite3: ^5.0.2
+    typeorm-aurora-data-api-driver: ^2.0.0
   peerDependenciesMeta:
     "@sap/hana-client":
       optional: true
@@ -9752,7 +9753,7 @@ __metadata:
       optional: true
   bin:
     typeorm: cli.js
-  checksum: edae24c359b54ca016363fa75566bd4797f6decfe1eda835f7d85957ff9db9f35a009243671e24dac89fe943874f4a807728ac3c4394d5a0b21be1dd5b8778ef
+  checksum: cd9dd1f5804ac2b56f8b913d5fe58cb371d27f28fe31297c2588d875927de92ad3dbb00b10e0cd8ed638e570ddc0e6813e69cf9251aefc97406f1f3578cbfa81
   languageName: node
   linkType: hard
 
@@ -9873,7 +9874,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:8.3.2, uuid@npm:^8.3.0":
+"uuid@npm:8.3.2, uuid@npm:^8.3.0, uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:
