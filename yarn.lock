@@ -2171,7 +2171,7 @@ __metadata:
     "@hedgedoc/markdown-it-image-size": 1.0.3
     "@hedgedoc/markdown-it-task-lists": 1.0.3
     "@matejmazur/react-katex": 3.1.3
-    "@next/bundle-analyzer": 12.0.9
+    "@next/bundle-analyzer": 12.1.0
     "@redux-devtools/core": 3.11.0
     "@svgr/webpack": 6.2.1
     "@testing-library/cypress": 8.0.2
@@ -3267,12 +3267,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/bundle-analyzer@npm:12.0.9":
-  version: 12.0.9
-  resolution: "@next/bundle-analyzer@npm:12.0.9"
+"@next/bundle-analyzer@npm:12.1.0":
+  version: 12.1.0
+  resolution: "@next/bundle-analyzer@npm:12.1.0"
   dependencies:
     webpack-bundle-analyzer: 4.3.0
-  checksum: 1f8ec7b0b454eabf696d8d2fc69cbbd9bf8becd06192ab10bfaa23d5e1ebdce5b91f2213dfd4da8a3feb434e08b4ee038f9b0fc7f240ca0a00ed19c6acf8bffd
+  checksum: 7085b903f9b6ffba3d9a4932de88bf9a4ee4ee48e4c6883edfbff32981b30992f65477511e632842ae98714cd12d40502467192b52bf6dd0af8b9ee9e6cf0d39
   languageName: node
   linkType: hard
 
