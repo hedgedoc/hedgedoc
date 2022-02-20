@@ -23,6 +23,7 @@ import { MeController } from './me/me.controller';
 import { MediaController } from './media/media.controller';
 import { NotesController } from './notes/notes.controller';
 import { TokensController } from './tokens/tokens.controller';
+import { UsersController } from './users/users.controller';
 
 @Module({
   imports: [
@@ -46,6 +47,8 @@ import { TokensController } from './tokens/tokens.controller';
     NotesController,
     AliasController,
     AuthController,
+    UsersController,
+    GroupController,
   ],
 })
 export class PrivateApiModule {}
