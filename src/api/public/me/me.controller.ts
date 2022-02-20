@@ -24,7 +24,7 @@ import { MediaService } from '../../../media/media.service';
 import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
-import { UserInfoDto } from '../../../users/user-info.dto';
+import { FullUserInfoDto } from '../../../users/user-info.dto';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
 import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
@@ -52,10 +52,10 @@ export class MeController {
   @OpenApi({
     code: 200,
     description: 'The user information',
-    dto: UserInfoDto,
+    dto: FullUserInfoDto,
   })
-  getMe(@RequestUser() user: User): UserInfoDto {
-    return this.usersService.toUserDto(user);
+  getMe(@RequestUser() user: User): FullUserInfoDto {
+    return this.usersService.toFullUserDto(user);
   }
 
   @Get('history')

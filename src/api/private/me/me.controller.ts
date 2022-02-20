@@ -10,7 +10,7 @@ import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
-import { UserInfoDto } from '../../../users/user-info.dto';
+import { FullUserInfoDto } from '../../../users/user-info.dto';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
 import { OpenApi } from '../../utils/openapi.decorator';
@@ -28,10 +28,11 @@ export class MeController {
   ) {
     this.logger.setContext(MeController.name);
   }
+
   @Get()
   @OpenApi(200)
-  getMe(@RequestUser() user: User): UserInfoDto {
-    return this.userService.toUserDto(user);
+  getMe(@RequestUser() user: User): FullUserInfoDto {
+    return this.userService.toFullUserDto(user);
   }
 
   @Get('media')

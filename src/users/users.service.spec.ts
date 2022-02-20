@@ -148,6 +148,18 @@ describe('UsersService', () => {
       expect(userDto.username).toEqual(username);
       expect(userDto.displayName).toEqual(displayname);
       expect(userDto.photo).toEqual('');
+    });
+  });
+
+  describe('toFullUserDto', () => {
+    const username = 'hardcoded';
+    const displayname = 'Testy';
+    const user = User.create(username, displayname) as User;
+    it('works if a user is provided', () => {
+      const userDto = service.toFullUserDto(user);
+      expect(userDto.username).toEqual(username);
+      expect(userDto.displayName).toEqual(displayname);
+      expect(userDto.photo).toEqual('');
       expect(userDto.email).toEqual('');
     });
   });
