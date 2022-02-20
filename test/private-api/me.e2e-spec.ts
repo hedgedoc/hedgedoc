@@ -9,7 +9,7 @@ import request from 'supertest';
 import { AuthConfig } from '../../src/config/auth.config';
 import { NotInDBError } from '../../src/errors/errors';
 import { Note } from '../../src/notes/note.entity';
-import { UserInfoDto } from '../../src/users/user-info.dto';
+import { FullUserInfoDto } from '../../src/users/user-info.dto';
 import { User } from '../../src/users/user.entity';
 import { setupSessionMiddleware } from '../../src/utils/session';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
@@ -50,12 +50,12 @@ describe('Me', () => {
   });
 
   it('GET /me', async () => {
-    const userInfo = testSetup.userService.toUserDto(user);
+    const userInfo = testSetup.userService.toFullUserDto(user);
     const response = await agent
       .get('/api/private/me')
       .expect('Content-Type', /json/)
       .expect(200);
-    const gotUser = response.body as UserInfoDto;
+    const gotUser = response.body as FullUserInfoDto;
     expect(gotUser).toEqual(userInfo);
   });
 

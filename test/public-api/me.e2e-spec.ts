@@ -32,7 +32,7 @@ describe('Me', () => {
   });
 
   it(`GET /me`, async () => {
-    const userInfo = testSetup.userService.toUserDto(user);
+    const userInfo = testSetup.userService.toFullUserDto(user);
     const response = await request(testSetup.app.getHttpServer())
       .get('/api/v2/me')
       .expect('Content-Type', /json/)

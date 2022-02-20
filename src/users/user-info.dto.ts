@@ -34,7 +34,13 @@ export class UserInfoDto extends BaseDto {
   })
   @IsString()
   photo: string;
+}
 
+/**
+ * This DTO contains all attributes of the standard UserInfoDto
+ * in addition to the email address.
+ */
+export class FullUserInfoDto extends UserInfoDto {
   /**
    * Email address of the user
    * @example "john.smith@example.com"

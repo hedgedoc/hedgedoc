@@ -9,7 +9,7 @@ import { Repository } from 'typeorm';
 
 import { AlreadyInDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { UserInfoDto } from './user-info.dto';
+import { FullUserInfoDto, UserInfoDto } from './user-info.dto';
 import { UserRelationEnum } from './user-relation.enum';
 import { User } from './user.entity';
 
@@ -111,6 +111,19 @@ export class UsersService {
    * @return {(UserInfoDto)} the built UserInfoDto
    */
   toUserDto(user: User): UserInfoDto {
+    return {
+      username: user.username,
+      displayName: user.displayName,
+      photo: this.getPhotoUrl(user),
+    };
+  }
+
+  /**
+   * Build FullUserInfoDto from a user.
+   * @param {User=} user - the user to use
+   * @return {(UserInfoDto)} the built FullUserInfoDto
+   */
+  toFullUserDto(user: User): FullUserInfoDto {
     return {
       username: user.username,
       displayName: user.displayName,
