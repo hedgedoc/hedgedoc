@@ -2205,7 +2205,7 @@ __metadata:
     cypress-fill-command: 1.0.2
     d3-graphviz: 3.2.0
     diff: 5.0.0
-    dompurify: 2.3.5
+    dompurify: 2.3.6
     emoji-picker-element: 1.10.1
     emoji-picker-element-data: 1.3.0
     eslint: 8.9.0
@@ -9187,6 +9187,13 @@ __metadata:
   version: 2.3.5
   resolution: "dompurify@npm:2.3.5"
   checksum: 06a7883b5ed0aed0da7c54606f3491d200ca427b8269834240110083c85908f96d7f7afdd56ee497fa6b2d500cb20b3026954219fec30b557cfea2535e0559c9
+  languageName: node
+  linkType: hard
+
+"dompurify@npm:2.3.6":
+  version: 2.3.6
+  resolution: "dompurify@npm:2.3.6"
+  checksum: 4b2bbf6bc68ebd776aec4a533cef74a5ae30391eed528f3df748af71da318afdc298b6f40449bef093b7454ffd2ae82656636560474de5a3b34316b762c85b12
   languageName: node
   linkType: hard
 
