@@ -39,6 +39,15 @@ export type HttpStatusCodes =
   | 409
   | 500;
 
+/**
+ * Defines what the open api route should document.
+ *
+ * This makes it possible to document
+ * - description
+ * - return object
+ * - if the return object is an array
+ * - the mimeType of the response
+ */
 export interface HttpStatusCodeWithExtraInformation {
   code: HttpStatusCodes;
   description?: string;
@@ -47,6 +56,17 @@ export interface HttpStatusCodeWithExtraInformation {
   mimeType?: string;
 }
 
+/**
+ * This decorator is used to document what an api route returns.
+ *
+ * The decorator can be used on a controller method or on a whole controller class (if one wants to document that every method of the controller returns something).
+ *
+ * @param httpStatusCodesMaybeWithExtraInformation - list of parameters can either be just the {@link HttpStatusCodes} or a {@link HttpStatusCodeWithExtraInformation}.
+ * If only a {@link HttpStatusCodes} is provided a default description will be used.
+ *
+ * For non-200 successful responses the appropriate {@link HttpCode} decorator is set
+ * @constructor
+ */
 // eslint-disable-next-line @typescript-eslint/naming-convention,func-style
 export const OpenApi = (
   ...httpStatusCodesMaybeWithExtraInformation: (
