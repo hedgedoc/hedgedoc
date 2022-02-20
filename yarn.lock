@@ -2275,7 +2275,7 @@ __metadata:
     use-resize-observer: 8.0.0
     uuid: 8.3.2
     vega: 5.21.0
-    vega-embed: 6.20.7
+    vega-embed: 6.20.8
     vega-lite: 5.2.0
     words-count: 2.0.2
   languageName: unknown
@@ -20024,9 +20024,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-embed@npm:6.20.7":
-  version: 6.20.7
-  resolution: "vega-embed@npm:6.20.7"
+"vega-embed@npm:6.20.8":
+  version: 6.20.8
+  resolution: "vega-embed@npm:6.20.8"
   dependencies:
     fast-json-patch: ^3.1.0
     json-stringify-pretty-compact: ^3.0.0
@@ -20039,7 +20039,7 @@ __metadata:
   peerDependencies:
     vega: ^5.21.0
     vega-lite: "*"
-  checksum: cf3f7c05879885b7d9d46b4c3d4d8182fcca69fa3f1a37f0bb6b8915ec07823188e6504629b9927137720313c08cd463e04657c46e4d1ae86fa619f0c6596ffe
+  checksum: b0bde3a00462783df20bb7470b980b3e4189e7ea7c898c3c61091fc346006021f0a69818620db69b1dbcd362243f99627851227569c2ed0452fd223d4b54eb59
   languageName: node
   linkType: hard
 
