@@ -106,7 +106,7 @@ export const OpenApi = (
           ApiOkResponse({
             description: description ?? okDescription,
             isArray: isArray,
-            type: () => dto,
+            type: dto ? (): BaseDto => dto as BaseDto : undefined,
           }),
         );
         break;
@@ -115,7 +115,7 @@ export const OpenApi = (
           ApiCreatedResponse({
             description: description ?? createdDescription,
             isArray: isArray,
-            type: () => dto,
+            type: dto ? (): BaseDto => dto as BaseDto : undefined,
           }),
           HttpCode(201),
         );
