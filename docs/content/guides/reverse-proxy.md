@@ -114,3 +114,25 @@ Here is an example config snippet:
   Include /etc/letsencrypt/options-ssl-apache.conf
 </VirtualHost>
 ```
+### Traefik
+
+In traefik we have to add the traefik labels and it is also very important: add our domain to "CMD_DOMAIN", "CMD_URL_ADDPORT=false", "CMD_PROTOCOL_USESSL=true".
+
+``` yaml
+  app:
+    # Make sure to use the latest release from https://hedgedoc.org/latest-release
+    image: quay.io/hedgedoc/hedgedoc:1.9.2
+    environment:
+      - CMD_DB_URL=postgres://hedgedoc:password@database:5432/hedgedoc
+      - CMD_DOMAIN=yourdomain.com
+      - CMD_URL_ADDPORT=false
+      - CMD_PROTOCOL_USESSL=true
+    volumes:
+      - uploads:/hedgedoc/public/uploads
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.hedgedoc.entryPoints=web-secure
+      - traefik.http.routers.hedgedoc.rule=Host(`yourdomain.com`)
+      - traefik.http.routers.hedgedoc.tls.certresolver=default
+      - traefik.http.services.hedgedoc.loadbalancer.server.port=3000
+```
