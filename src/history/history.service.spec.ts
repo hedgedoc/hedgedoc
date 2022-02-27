@@ -356,14 +356,14 @@ describe('HistoryService', () => {
       const note = Note.create(user, alias) as Note;
       const historyEntry = HistoryEntry.create(user, note);
       const historyEntryImport: HistoryEntryImportDto = {
-        lastVisited: new Date('2020-12-01 12:23:34'),
+        lastVisitedAt: new Date('2020-12-01 12:23:34'),
         note: alias,
         pinStatus: true,
       };
       const newlyCreatedHistoryEntry: HistoryEntry = {
         ...historyEntry,
         pinStatus: historyEntryImport.pinStatus,
-        updatedAt: historyEntryImport.lastVisited,
+        updatedAt: historyEntryImport.lastVisitedAt,
       };
       const createQueryBuilder = {
         leftJoinAndSelect: () => createQueryBuilder,
