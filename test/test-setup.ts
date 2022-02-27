@@ -27,6 +27,7 @@ import noteConfigMock from '../src/config/mock/note.config.mock';
 import { ErrorExceptionMapping } from '../src/errors/error-mapping';
 import { FrontendConfigModule } from '../src/frontend-config/frontend-config.module';
 import { GroupsModule } from '../src/groups/groups.module';
+import { GroupsService } from '../src/groups/groups.service';
 import { HistoryModule } from '../src/history/history.module';
 import { HistoryService } from '../src/history/history.service';
 import { IdentityModule } from '../src/identity/identity.module';
@@ -51,6 +52,7 @@ export class TestSetup {
   app: NestExpressApplication;
 
   userService: UsersService;
+  groupService: GroupsService;
   configService: ConfigService;
   identityService: IdentityService;
   notesService: NotesService;
@@ -152,6 +154,8 @@ export class TestSetupBuilder {
 
     this.testSetup.userService =
       this.testSetup.moduleRef.get<UsersService>(UsersService);
+    this.testSetup.groupService =
+      this.testSetup.moduleRef.get<GroupsService>(GroupsService);
     this.testSetup.configService =
       this.testSetup.moduleRef.get<ConfigService>(ConfigService);
     this.testSetup.identityService =
