@@ -44,13 +44,13 @@ jobs:
         run: rm -r .next/cache
 
       - name: Mark GitHub deployment as started
-        uses: bobheadxi/deployments@v0.6.2
+        uses: bobheadxi/deployments@v1.0.1
         id: github-deployment
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
           env: "PR #${{ github.event.number }}"
-          no_override: false
+          override: true
           ref: ${{ github.head_ref }}
 
       - name: Run netlify CLI deployment
@@ -61,7 +61,7 @@ jobs:
 
       - name: Mark GitHub deployment as finished
         if: always()
-        uses: bobheadxi/deployments@v0.6.2
+        uses: bobheadxi/deployments@v1.0.1
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -69,4 +69,4 @@ jobs:
           logs: ${{ steps.netlify-result.outputs.logs }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.github-deployment.outputs.deployment_id }}
-          no_override: false
+          override: true
