@@ -34,7 +34,7 @@ export class HistoryEntryImportDto extends BaseDto {
    */
   @IsDate()
   @Type(() => Date)
-  lastVisited: Date;
+  lastVisitedAt: Date;
 }
 
 export class HistoryEntryImportListDto extends BaseDto {

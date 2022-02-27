@@ -162,7 +162,7 @@ export class HistoryService {
         );
         const entry = HistoryEntry.create(user, note) as HistoryEntry;
         entry.pinStatus = historyEntry.pinStatus;
-        entry.updatedAt = historyEntry.lastVisited;
+        entry.updatedAt = historyEntry.lastVisitedAt;
         await manager.save<HistoryEntry>(entry);
       }
     });

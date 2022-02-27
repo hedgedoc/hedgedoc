@@ -93,7 +93,7 @@ describe('History', () => {
         (alias) => alias.primary,
       )[0].name;
       postEntryDto.pinStatus = pinStatus;
-      postEntryDto.lastVisited = lastVisited;
+      postEntryDto.lastVisitedAt = lastVisited;
       await agent
         .post('/api/private/me/history')
         .set('Content-Type', 'application/json')
@@ -132,13 +132,13 @@ describe('History', () => {
           (alias) => alias.primary,
         )[0].name;
         postEntryDto.pinStatus = pinStatus;
-        postEntryDto.lastVisited = lastVisited;
+        postEntryDto.lastVisitedAt = lastVisited;
       });
       it('with forbiddenId', async () => {
         const brokenEntryDto = new HistoryEntryImportDto();
         brokenEntryDto.note = forbiddenNoteId;
         brokenEntryDto.pinStatus = pinStatus;
-        brokenEntryDto.lastVisited = lastVisited;
+        brokenEntryDto.lastVisitedAt = lastVisited;
         await agent
           .post('/api/private/me/history')
           .set('Content-Type', 'application/json')
@@ -149,7 +149,7 @@ describe('History', () => {
         const brokenEntryDto = new HistoryEntryImportDto();
         brokenEntryDto.note = 'i_dont_exist';
         brokenEntryDto.pinStatus = pinStatus;
-        brokenEntryDto.lastVisited = lastVisited;
+        brokenEntryDto.lastVisitedAt = lastVisited;
         await agent
           .post('/api/private/me/history')
           .set('Content-Type', 'application/json')
