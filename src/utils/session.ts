@@ -32,7 +32,6 @@ export function setupSessionMiddleware(
       saveUninitialized: false,
       store: new TypeormStore({
         cleanupLimit: 2,
-        ttl: 86400,
       }).connect(app.get<Repository<Session>>(getRepositoryToken(Session))),
     }),
   );
