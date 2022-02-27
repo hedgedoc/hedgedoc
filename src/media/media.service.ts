@@ -24,7 +24,6 @@ import { ImgurBackend } from './backends/imgur-backend';
 import { S3Backend } from './backends/s3-backend';
 import { WebdavBackend } from './backends/webdav-backend';
 import { MediaBackend } from './media-backend.interface';
-import { MediaUploadUrlDto } from './media-upload-url.dto';
 import { MediaUploadDto } from './media-upload.dto';
 import { MediaUpload } from './media-upload.entity';
 
@@ -228,12 +227,6 @@ export class MediaService {
       noteId: (await mediaUpload.note)?.id ?? null,
       createdAt: mediaUpload.createdAt,
       username: (await mediaUpload.user).username,
-    };
-  }
-
-  toMediaUploadUrlDto(url: string): MediaUploadUrlDto {
-    return {
-      link: url,
     };
   }
 }
