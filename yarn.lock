@@ -1366,7 +1366,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.8, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.8, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.17.2
   resolution: "@babel/runtime@npm:7.17.2"
   dependencies:
@@ -1502,7 +1502,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/basic-setup@npm:^0.19.0":
+"@codemirror/basic-setup@npm:^0.19.1":
   version: 0.19.1
   resolution: "@codemirror/basic-setup@npm:0.19.1"
   dependencies:
@@ -1894,7 +1894,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/state@npm:^0.19.0, @codemirror/state@npm:^0.19.2, @codemirror/state@npm:^0.19.3, @codemirror/state@npm:^0.19.4, @codemirror/state@npm:^0.19.5, @codemirror/state@npm:^0.19.9":
+"@codemirror/state@npm:^0.19.0, @codemirror/state@npm:^0.19.2, @codemirror/state@npm:^0.19.3, @codemirror/state@npm:^0.19.4, @codemirror/state@npm:^0.19.9":
   version: 0.19.9
   resolution: "@codemirror/state@npm:0.19.9"
   dependencies:
@@ -1945,7 +1945,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:^0.19.0, @codemirror/view@npm:^0.19.15, @codemirror/view@npm:^0.19.22, @codemirror/view@npm:^0.19.23, @codemirror/view@npm:^0.19.31, @codemirror/view@npm:^0.19.34, @codemirror/view@npm:^0.19.44":
+"@codemirror/view@npm:^0.19.0, @codemirror/view@npm:^0.19.22, @codemirror/view@npm:^0.19.23, @codemirror/view@npm:^0.19.31, @codemirror/view@npm:^0.19.34, @codemirror/view@npm:^0.19.44, @codemirror/view@npm:^0.19.45":
   version: 0.19.45
   resolution: "@codemirror/view@npm:0.19.45"
   dependencies:
@@ -2195,7 +2195,7 @@ __metadata:
     "@types/uuid": 8.3.4
     "@typescript-eslint/eslint-plugin": 5.12.1
     "@typescript-eslint/parser": 5.12.1
-    "@uiw/react-codemirror": 4.4.3
+    "@uiw/react-codemirror": 4.5.1
     abcjs: 6.0.1
     bootstrap: 4.6.1
     copy-webpack-plugin: 10.2.4
@@ -5072,20 +5072,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uiw/react-codemirror@npm:4.4.3":
-  version: 4.4.3
-  resolution: "@uiw/react-codemirror@npm:4.4.3"
+"@uiw/react-codemirror@npm:4.5.1":
+  version: 4.5.1
+  resolution: "@uiw/react-codemirror@npm:4.5.1"
   dependencies:
-    "@babel/runtime": ^7.16.3
-    "@codemirror/basic-setup": ^0.19.0
-    "@codemirror/state": ^0.19.5
+    "@babel/runtime": ^7.17.2
+    "@codemirror/basic-setup": ^0.19.1
+    "@codemirror/state": ^0.19.9
     "@codemirror/theme-one-dark": ^0.19.1
-    "@codemirror/view": ^0.19.15
+    "@codemirror/view": ^0.19.45
   peerDependencies:
     "@babel/runtime": ">=7.11.0"
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: ad06fe78cdc3a77a2e14ddf2edf40eb63f08ced89ee3633befed7dd53241c424e2c05d46927aa2c9342f9cf8136522bf3e38704f7f901d945ae4e084d6b99620
+  checksum: 67bf8d03623adc7ffe99069524512b2c589d46ccbc9aaea130ba7edef5d3cf2307915b80c4caed27295865d4c82e867dacb26fdf6526a18c0be2a35f9b1e5c49
   languageName: node
   linkType: hard
 
