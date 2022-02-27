@@ -7,6 +7,7 @@ import { Module } from '@nestjs/common';
 
 import { AuthModule } from '../../auth/auth.module';
 import { FrontendConfigModule } from '../../frontend-config/frontend-config.module';
+import { GroupsModule } from '../../groups/groups.module';
 import { HistoryModule } from '../../history/history.module';
 import { IdentityModule } from '../../identity/identity.module';
 import { LoggerModule } from '../../logger/logger.module';
@@ -18,6 +19,7 @@ import { UsersModule } from '../../users/users.module';
 import { AliasController } from './alias/alias.controller';
 import { AuthController } from './auth/auth.controller';
 import { ConfigController } from './config/config.controller';
+import { GroupsController } from './groups/groups.controller';
 import { HistoryController } from './me/history/history.controller';
 import { MeController } from './me/me.controller';
 import { MediaController } from './media/media.controller';
@@ -37,6 +39,7 @@ import { UsersController } from './users/users.controller';
     MediaModule,
     RevisionsModule,
     IdentityModule,
+    GroupsModule,
   ],
   controllers: [
     TokensController,
@@ -48,7 +51,7 @@ import { UsersController } from './users/users.controller';
     AliasController,
     AuthController,
     UsersController,
-    GroupController,
+    GroupsController,
   ],
 })
 export class PrivateApiModule {}
