@@ -66,6 +66,7 @@ jobs:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
           env_url: ${{ steps.netlify-result.outputs.url }}
+          env: ${{ steps.github-deployment.outputs.env }}
           logs: ${{ steps.netlify-result.outputs.logs }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.github-deployment.outputs.deployment_id }}
