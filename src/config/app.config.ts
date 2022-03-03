@@ -17,8 +17,15 @@ export interface AppConfig {
 }
 
 const schema = Joi.object({
-  domain: Joi.string().label('HD_DOMAIN'),
+  domain: Joi.string()
+    .uri({
+      scheme: /https?/,
+    })
+    .label('HD_DOMAIN'),
   rendererOrigin: Joi.string()
+    .uri({
+      scheme: /https?/,
+    })
     .default(Joi.ref('domain'))
     .optional()
     .label('HD_RENDERER_ORIGIN'),
