@@ -6,6 +6,8 @@
     "group:socketio",
     "group:linters",
     "group:test",
+    "docker:enableMajor",
+    "default:automergeDigest",
     ":gitSignOff",
     ":prHourlyLimitNone",
     ":rebaseStalePrs",
