@@ -15,8 +15,10 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { AuthTokenWithSecretDto } from '../../../auth/auth-token-with-secret.dto';
-import { AuthTokenDto } from '../../../auth/auth-token.dto';
+import {
+  AuthTokenDto,
+  AuthTokenWithSecretDto,
+} from '../../../auth/auth-token.dto';
 import { AuthService } from '../../../auth/auth.service';
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
