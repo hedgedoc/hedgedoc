@@ -29,7 +29,13 @@ const schema = Joi.object({
     .default(Joi.ref('domain'))
     .optional()
     .label('HD_RENDERER_ORIGIN'),
-  port: Joi.number().default(3000).optional().label('PORT'),
+  port: Joi.number()
+    .positive()
+    .integer()
+    .default(3000)
+    .max(65535)
+    .optional()
+    .label('PORT'),
   loglevel: Joi.string()
     .valid(...Object.values(Loglevel))
     .default(Loglevel.WARN)
