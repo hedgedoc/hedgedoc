@@ -17,6 +17,7 @@ describe('Users', () => {
 
   afterEach(async () => {
     await testSetup.app.close();
+    await testSetup.cleanup();
   });
 
   test('details for existing users can be retrieved', async () => {

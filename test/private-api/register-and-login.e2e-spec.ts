@@ -23,6 +23,7 @@ describe('Register and Login', () => {
 
   afterEach(async () => {
     await testSetup.app.close();
+    await testSetup.cleanup();
   });
 
   test('a user can successfully create a local account and log in', async () => {

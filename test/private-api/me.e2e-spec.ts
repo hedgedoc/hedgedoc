@@ -49,6 +49,10 @@ describe('Me', () => {
       .expect(201);
   });
 
+  afterAll(async () => {
+    await testSetup.cleanup();
+  });
+
   it('GET /me', async () => {
     const userInfo = testSetup.userService.toFullUserDto(user);
     const response = await agent

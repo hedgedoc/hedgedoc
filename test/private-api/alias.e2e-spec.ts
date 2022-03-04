@@ -41,6 +41,10 @@ describe('Alias', () => {
       .expect(201);
   });
 
+  afterAll(async () => {
+    await testSetup.cleanup();
+  });
+
   describe('POST /alias', () => {
     const testAlias = 'aliasTest';
     const newAliasDto: AliasCreateDto = {

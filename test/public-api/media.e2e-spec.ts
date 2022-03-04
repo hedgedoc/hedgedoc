@@ -43,6 +43,13 @@ describe('Media', () => {
     );
   });
 
+  afterAll(async () => {
+    // Delete the upload folder
+    await ensureDeleted(uploadPath);
+    await testSetup.app.close();
+    await testSetup.cleanup();
+  });
+
   describe('POST /media', () => {
     it('works', async () => {
       const uploadResponse = await request(testSetup.app.getHttpServer())
@@ -110,11 +117,5 @@ describe('Media', () => {
     await request(testSetup.app.getHttpServer())
       .delete('/api/v2/media/' + filename)
       .expect(204);
-  });
-
-  afterAll(async () => {
-    // Delete the upload folder
-    await ensureDeleted(uploadPath);
-    await testSetup.app.close();
   });
 });

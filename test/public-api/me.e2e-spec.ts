@@ -31,6 +31,11 @@ describe('Me', () => {
     await testSetup.app.init();
   });
 
+  afterAll(async () => {
+    await testSetup.app.close();
+    await testSetup.cleanup();
+  });
+
   it(`GET /me`, async () => {
     const userInfo = testSetup.userService.toFullUserDto(user);
     const response = await request(testSetup.app.getHttpServer())
@@ -217,9 +222,5 @@ describe('Me', () => {
       await fs.unlink(join(uploadPath, fileName));
     }
     await fs.rm(uploadPath, { recursive: true });
-  });
-
-  afterAll(async () => {
-    await testSetup.app.close();
   });
 });

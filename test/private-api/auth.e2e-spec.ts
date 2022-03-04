@@ -38,6 +38,10 @@ describe('Auth', () => {
     password = 'test_password';
   });
 
+  afterAll(async () => {
+    await testSetup.cleanup();
+  });
+
   describe('POST /auth/local', () => {
     it('works', async () => {
       const registrationDto: RegisterDto = {

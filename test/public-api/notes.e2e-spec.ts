@@ -41,6 +41,11 @@ describe('Notes', () => {
     testImage = await fs.readFile('test/public-api/fixtures/test.png');
   });
 
+  afterAll(async () => {
+    await testSetup.app.close();
+    await testSetup.cleanup();
+  });
+
   it('POST /notes', async () => {
     const response = await request(testSetup.app.getHttpServer())
       .post('/api/v2/notes')
@@ -212,6 +217,7 @@ describe('Notes', () => {
       expect(await updatedNote.groupPermissions).toHaveLength(0);
       await request(testSetup.app.getHttpServer())
         .delete('/api/v2/notes/test3')
+        .send({ keepMedia: false })
         .expect(204);
       await expect(
         testSetup.notesService.getNoteByIdOrAlias('test3'),
@@ -462,9 +468,5 @@ describe('Notes', () => {
         .expect('Content-Type', /json/)
         .expect(403);
     });
-  });
-
-  afterAll(async () => {
-    await testSetup.app.close();
   });
 });

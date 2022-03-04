@@ -54,6 +54,11 @@ describe('Notes', () => {
       .expect(201);
   });
 
+  afterAll(async () => {
+    await testSetup.app.close();
+    await testSetup.cleanup();
+  });
+
   it('POST /notes', async () => {
     const response = await agent
       .post('/api/private/notes')
@@ -351,9 +356,5 @@ describe('Notes', () => {
         .expect('Content-Type', /json/)
         .expect(403);
     });
-  });
-
-  afterAll(async () => {
-    await testSetup.app.close();
   });
 });

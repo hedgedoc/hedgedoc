@@ -58,6 +58,11 @@ describe('History', () => {
       .expect(201);
   });
 
+  afterAll(async () => {
+    await testSetup.app.close();
+    await testSetup.cleanup();
+  });
+
   it('GET /me/history', async () => {
     const emptyResponse = await agent
       .get('/api/private/me/history')
@@ -218,9 +223,5 @@ describe('History', () => {
     expect(userEntryDto.tags).toEqual(entryDto.tags);
     expect(userEntryDto.pinStatus).toEqual(entryDto.pinStatus);
     expect(userEntryDto.lastVisitedAt).toEqual(entryDto.lastVisitedAt);
-  });
-
-  afterAll(async () => {
-    await testSetup.app.close();
   });
 });
