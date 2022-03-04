@@ -157,22 +157,9 @@ export class HistoryService {
         await manager.remove<HistoryEntry>(entry);
       }
       for (const historyEntry of history) {
-        this.notesService.checkNoteIdOrAlias(historyEntry.note);
-        const note = await manager
-          .createQueryBuilder<Note>(Note, 'note')
-          .innerJoin('note.aliases', 'alias')
-          .where('note.id = :id', { id: historyEntry.note })
-          .orWhere('alias.name = :id', { id: historyEntry.note })
-          .getOne();
-        if (note === undefined) {
-          this.logger.debug(
-            `Could not find note '${historyEntry.note}'`,
-            'setHistory',
-          );
-          throw new NotInDBError(
-            `Note with id/alias '${historyEntry.note}' not found.`,
-          );
-        }
+        const note = await this.notesService.getNoteByIdOrAlias(
+          historyEntry.note,
+        );
         const entry = HistoryEntry.create(user, note) as HistoryEntry;
         entry.pinStatus = historyEntry.pinStatus;
         entry.updatedAt = historyEntry.lastVisited;

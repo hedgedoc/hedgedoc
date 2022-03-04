@@ -59,6 +59,10 @@ describe('HistoryService', () => {
           provide: getRepositoryToken(HistoryEntry),
           useClass: Repository,
         },
+        {
+          provide: getRepositoryToken(Note),
+          useClass: Repository,
+        },
       ],
       imports: [
         LoggerModule,
@@ -362,11 +366,17 @@ describe('HistoryService', () => {
         updatedAt: historyEntryImport.lastVisited,
       };
       const createQueryBuilder = {
-        innerJoin: () => createQueryBuilder,
+        leftJoinAndSelect: () => createQueryBuilder,
         where: () => createQueryBuilder,
         orWhere: () => createQueryBuilder,
+        setParameter: () => createQueryBuilder,
         getOne: () => note,
       };
+      jest
+        .spyOn(noteRepo, 'createQueryBuilder')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementation(() => createQueryBuilder);
       const mockedManager = {
         find: jest.fn().mockResolvedValueOnce([historyEntry]),
         createQueryBuilder: () => createQueryBuilder,
