@@ -85,12 +85,16 @@ export class AuthController {
   @UseGuards(SessionGuard)
   @Delete('logout')
   @OpenApi(204, 400, 401)
-  logout(@Req() request: Request & { session: Session }): void {
-    request.session.destroy((err) => {
-      if (err) {
-        this.logger.error('Encountered an error while logging out: ${err}');
-        throw new BadRequestException('Unable to log out');
-      }
+  logout(@Req() request: Request & { session: Session }): Promise<void> {
+    return new Promise((resolve, reject) => {
+      request.session.destroy((err) => {
+        if (err) {
+          this.logger.error('Encountered an error while logging out: ${err}');
+          reject(new BadRequestException('Unable to log out'));
+        } else {
+          resolve();
+        }
+      });
     });
   }
 }
