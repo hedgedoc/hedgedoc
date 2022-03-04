@@ -6,8 +6,9 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { RouterModule, Routes } from 'nest-router';
+import { Connection, createConnection } from 'typeorm';
 
 import { PrivateApiModule } from '../src/api/private/private-api.module';
 import { PublicApiModule } from '../src/api/public/public-api.module';
@@ -32,6 +33,7 @@ import { HistoryModule } from '../src/history/history.module';
 import { HistoryService } from '../src/history/history.service';
 import { IdentityModule } from '../src/identity/identity.module';
 import { IdentityService } from '../src/identity/identity.service';
+import { ConsoleLoggerService } from '../src/logger/console-logger.service';
 import { LoggerModule } from '../src/logger/logger.module';
 import { MediaModule } from '../src/media/media.module';
 import { MediaService } from '../src/media/media.service';
@@ -46,6 +48,7 @@ import { User } from '../src/users/user.entity';
 import { UsersModule } from '../src/users/users.module';
 import { UsersService } from '../src/users/users.service';
 import { setupSessionMiddleware } from '../src/utils/session';
+import { setupValidationPipe } from '../src/utils/setup-pipes';
 
 export class TestSetup {
   moduleRef: TestingModule;
@@ -65,6 +68,36 @@ export class TestSetup {
   authTokens: AuthTokenWithSecretDto[] = [];
   anonymousNotes: Note[] = [];
   ownedNotes: Note[] = [];
+
+  /**
+   * Cleans up remnants from a test run from the database
+   */
+  public async cleanup() {
+    const appConnection = this.app.get<Connection>(Connection);
+    const connectionOptions = appConnection.options;
+    if (!connectionOptions.database) {
+      throw new Error('Database name not set in connection options');
+    }
+    if (connectionOptions.type === 'sqlite') {
+      // Bail out early, as SQLite runs from memory anyway
+      return;
+    }
+    if (appConnection.isConnected) {
+      await appConnection.close();
+    }
+    switch (connectionOptions.type) {
+      case 'postgres': {
+        const connection = await createConnection({
+          type: 'postgres',
+          username: 'hedgedoc',
+          password: 'hedgedoc',
+          database: 'postgres',
+        });
+        await connection.query(`DROP DATABASE ${connectionOptions.database}`);
+        await connection.close();
+      }
+    }
+  }
 }
 
 /**
@@ -80,11 +113,66 @@ export class TestSetupBuilder {
   private testingModuleBuilder: TestingModuleBuilder;
   private testSetup = new TestSetup();
 
+  private testId: string;
+
+  /**
+   * Prepares a test database
+   * @param dbName The name of the database to use
+   * @private
+   */
+  private static async setupTestDB(dbName: string) {
+    switch (process.env.HEDGEDOC_TEST_DB_TYPE || 'sqlite') {
+      case 'sqlite':
+        return;
+      case 'postgres': {
+        // Create a connection to internal postgres database to then create a test db
+        const connection = await createConnection({
+          type: 'postgres',
+          username: 'hedgedoc',
+          password: 'hedgedoc',
+          database: 'postgres',
+        });
+        await connection.query(`CREATE DATABASE ${dbName}`);
+        await connection.close();
+        return;
+      }
+      default:
+        throw new Error('Unknown database type in HEDGEDOC_TEST_DB_TYPE');
+    }
+  }
+
+  private static getTestDBConf(dbName: string): TypeOrmModuleOptions {
+    switch (process.env.HEDGEDOC_TEST_DB_TYPE || 'sqlite') {
+      case 'sqlite':
+        return {
+          type: 'sqlite',
+          database: ':memory:',
+          autoLoadEntities: true,
+          synchronize: true,
+          dropSchema: true,
+        };
+      case 'postgres':
+        return {
+          type: 'postgres',
+          database: dbName,
+          username: 'hedgedoc',
+          password: 'hedgedoc',
+          autoLoadEntities: true,
+          synchronize: true,
+          dropSchema: true,
+        };
+      default:
+        throw new Error('Unknown database type in HEDGEDOC_TEST_DB_TYPE');
+    }
+  }
+
   /**
    * Creates a new instance of TestSetupBuilder
    */
   public static create(): TestSetupBuilder {
     const testSetupBuilder = new TestSetupBuilder();
+    testSetupBuilder.testId =
+      'hedgedoc_test_' + Math.random().toString(36).substring(2, 15);
     const routes: Routes = [
       {
         path: '/api/v2',
@@ -98,13 +186,9 @@ export class TestSetupBuilder {
     testSetupBuilder.testingModuleBuilder = Test.createTestingModule({
       imports: [
         RouterModule.forRoutes(routes),
-        TypeOrmModule.forRoot({
-          type: 'sqlite',
-          database: ':memory:',
-          autoLoadEntities: true,
-          synchronize: true,
-          dropSchema: true,
-        }),
+        TypeOrmModule.forRoot(
+          TestSetupBuilder.getTestDBConf(testSetupBuilder.testId),
+        ),
         ConfigModule.forRoot({
           isGlobal: true,
           load: [
@@ -146,6 +230,8 @@ export class TestSetupBuilder {
    * Builds the final TestSetup from the configured builder
    */
   public async build(): Promise<TestSetup> {
+    await TestSetupBuilder.setupTestDB(this.testId);
+
     for (const setupFunction of this.setupPreCompile) {
       await setupFunction();
     }
