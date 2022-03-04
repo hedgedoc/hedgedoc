@@ -21,6 +21,8 @@ const schema = Joi.object({
     .label('HD_FORBIDDEN_NOTE_IDS'),
   maxDocumentLength: Joi.number()
     .default(100000)
+    .positive()
+    .integer()
     .optional()
     .label('HD_MAX_DOCUMENT_LENGTH'),
 });
