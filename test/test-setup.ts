@@ -263,6 +263,11 @@ export class TestSetupBuilder {
       this.testSetup.app,
       this.testSetup.configService.get<AuthConfig>('authConfig'),
     );
+    this.testSetup.app.useGlobalPipes(
+      setupValidationPipe(
+        await this.testSetup.app.resolve(ConsoleLoggerService),
+      ),
+    );
 
     for (const setupFunction of this.setupPostCompile) {
       await setupFunction();
