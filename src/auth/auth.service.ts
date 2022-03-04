@@ -56,7 +56,7 @@ export class AuthService {
   async createTokenForUser(
     user: User,
     identifier: string,
-    validUntil: TimestampMillis,
+    validUntil: TimestampMillis | undefined,
   ): Promise<AuthTokenWithSecretDto> {
     user.authTokens = this.getTokensByUser(user);
 
@@ -78,7 +78,7 @@ export class AuthService {
     // Tokens can only be valid for a maximum of 2 years
     const maximumTokenValidity =
       new Date().getTime() + 2 * 365 * 24 * 60 * 60 * 1000;
-    if (validUntil === 0 || validUntil > maximumTokenValidity) {
+    if (!validUntil || validUntil === 0 || validUntil > maximumTokenValidity) {
       token = AuthToken.create(
         keyId,
         user,
