@@ -22,7 +22,7 @@ export function setupValidationPipe(
         'ValidationPipe',
       );
       return new BadRequestException(
-        'Encountered an exception while validating the request.',
+        `Errors were encountered while validating a request:\n${errorMessage}`,
       );
     },
   });
