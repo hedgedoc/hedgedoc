@@ -15,7 +15,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { HistoryEntryImportDto } from '../../../../history/history-entry-import.dto';
+import { HistoryEntryImportListDto } from '../../../../history/history-entry-import.dto';
 import { HistoryEntryUpdateDto } from '../../../../history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../../../history/history-entry.dto';
 import { HistoryService } from '../../../../history/history.service';
@@ -53,9 +53,9 @@ export class HistoryController {
   @OpenApi(201, 404)
   async setHistory(
     @RequestUser() user: User,
-    @Body('history') history: HistoryEntryImportDto[],
+    @Body() historyImport: HistoryEntryImportListDto,
   ): Promise<void> {
-    await this.historyService.setHistory(user, history);
+    await this.historyService.setHistory(user, historyImport.history);
   }
 
   @Delete()

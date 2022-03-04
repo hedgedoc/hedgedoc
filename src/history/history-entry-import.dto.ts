@@ -4,7 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Type } from 'class-transformer';
-import { IsBoolean, IsDate, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsDate,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 
 import { BaseDto } from '../utils/base.dto.';
 
@@ -27,4 +33,11 @@ export class HistoryEntryImportDto extends BaseDto {
   @IsDate()
   @Type(() => Date)
   lastVisited: Date;
+}
+
+export class HistoryEntryImportListDto extends BaseDto {
+  @ValidateNested({ each: true })
+  @IsArray()
+  @Type(() => HistoryEntryImportDto)
+  history: HistoryEntryImportDto[];
 }
