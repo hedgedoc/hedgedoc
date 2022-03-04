@@ -35,6 +35,10 @@ describe('Tokens', () => {
       .expect(201);
   });
 
+  afterAll(async () => {
+    await testSetup.cleanup();
+  });
+
   it(`POST /tokens`, async () => {
     const tokenName = 'testToken';
     const response = await agent

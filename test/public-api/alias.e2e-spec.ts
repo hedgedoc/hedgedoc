@@ -28,6 +28,7 @@ describe('Alias', () => {
 
   afterEach(async () => {
     await testSetup.app.close();
+    await testSetup.cleanup();
   });
 
   describe('POST /alias', () => {

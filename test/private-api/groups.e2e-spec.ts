@@ -34,6 +34,7 @@ describe('Groups', () => {
 
   afterEach(async () => {
     await testSetup.app.close();
+    await testSetup.cleanup();
   });
 
   test('details for existing groups can be retrieved', async () => {

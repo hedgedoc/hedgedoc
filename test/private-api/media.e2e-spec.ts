@@ -53,6 +53,13 @@ describe('Media', () => {
       .expect(201);
   });
 
+  afterAll(async () => {
+    // Delete the upload folder
+    await ensureDeleted(uploadPath);
+    await testSetup.app.close();
+    await testSetup.cleanup();
+  });
+
   describe('POST /media', () => {
     it('works', async () => {
       const uploadResponse = await agent
@@ -121,11 +128,5 @@ describe('Media', () => {
     );
     const filename = url.split('/').pop() || '';
     await agent.delete('/api/private/media/' + filename).expect(204);
-  });
-
-  afterAll(async () => {
-    // Delete the upload folder
-    await ensureDeleted(uploadPath);
-    await testSetup.app.close();
   });
 });
