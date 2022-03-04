@@ -7,7 +7,7 @@ import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
 
 import { Loglevel } from './loglevel.enum';
-import { buildErrorMessage, parseOptionalInt } from './utils';
+import { buildErrorMessage, parseOptionalNumber } from './utils';
 
 export interface AppConfig {
   domain: string;
@@ -48,7 +48,7 @@ export default registerAs('appConfig', () => {
     {
       domain: process.env.HD_DOMAIN,
       rendererOrigin: process.env.HD_RENDERER_ORIGIN,
-      port: parseOptionalInt(process.env.PORT),
+      port: parseOptionalNumber(process.env.PORT),
       loglevel: process.env.HD_LOGLEVEL,
     },
     {

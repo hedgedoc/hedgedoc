@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
 
-import { buildErrorMessage, parseOptionalInt } from './utils';
+import { buildErrorMessage, parseOptionalNumber } from './utils';
 
 export interface HstsConfig {
   enable: boolean;
@@ -32,7 +32,7 @@ export default registerAs('hstsConfig', () => {
   const hstsConfig = hstsSchema.validate(
     {
       enable: process.env.HD_HSTS_ENABLE,
-      maxAgeSeconds: parseOptionalInt(process.env.HD_HSTS_MAX_AGE),
+      maxAgeSeconds: parseOptionalNumber(process.env.HD_HSTS_MAX_AGE),
       includeSubdomains: process.env.HD_HSTS_INCLUDE_SUBDOMAINS,
       preload: process.env.HD_HSTS_PRELOAD,
     },

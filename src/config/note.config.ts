@@ -6,7 +6,7 @@
 import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
 
-import { buildErrorMessage, parseOptionalInt, toArrayConfig } from './utils';
+import { buildErrorMessage, parseOptionalNumber, toArrayConfig } from './utils';
 
 export interface NoteConfig {
   forbiddenNoteIds: string[];
@@ -29,7 +29,9 @@ export default registerAs('noteConfig', () => {
   const noteConfig = schema.validate(
     {
       forbiddenNoteIds: toArrayConfig(process.env.HD_FORBIDDEN_NOTE_IDS, ','),
-      maxDocumentLength: parseOptionalInt(process.env.HD_MAX_DOCUMENT_LENGTH),
+      maxDocumentLength: parseOptionalNumber(
+        process.env.HD_MAX_DOCUMENT_LENGTH,
+      ),
     },
     {
       abortEarly: false,
