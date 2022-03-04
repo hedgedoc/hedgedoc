@@ -28,3 +28,8 @@ export class AuthTokenDto extends BaseDto {
   @IsOptional()
   lastUsedAt: Date | null;
 }
+
+export class AuthTokenWithSecretDto extends AuthTokenDto {
+  @IsString()
+  secret: string;
+}

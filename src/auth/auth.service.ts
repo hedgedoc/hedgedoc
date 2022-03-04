@@ -19,8 +19,7 @@ import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { bufferToBase64Url } from '../utils/password';
 import { TimestampMillis } from '../utils/timestamp';
-import { AuthTokenWithSecretDto } from './auth-token-with-secret.dto';
-import { AuthTokenDto } from './auth-token.dto';
+import { AuthTokenDto, AuthTokenWithSecretDto } from './auth-token.dto';
 import { AuthToken } from './auth-token.entity';
 
 @Injectable()

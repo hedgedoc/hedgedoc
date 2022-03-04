@@ -12,7 +12,7 @@ import { Connection, createConnection } from 'typeorm';
 
 import { PrivateApiModule } from '../src/api/private/private-api.module';
 import { PublicApiModule } from '../src/api/public/public-api.module';
-import { AuthTokenWithSecretDto } from '../src/auth/auth-token-with-secret.dto';
+import { AuthTokenWithSecretDto } from '../src/auth/auth-token.dto';
 import { AuthModule } from '../src/auth/auth.module';
 import { AuthService } from '../src/auth/auth.service';
 import { MockAuthGuard } from '../src/auth/mock-auth.guard';
