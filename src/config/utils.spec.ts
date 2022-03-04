@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Loglevel } from './loglevel.enum';
 import {
   needToLog,
-  parseOptionalInt,
+  parseOptionalNumber,
   replaceAuthErrorsWithEnvironmentVariables,
   toArrayConfig,
 } from './utils';
@@ -84,12 +84,15 @@ describe('config utils', () => {
       expect(needToLog(currentLevel, Loglevel.TRACE)).toBeTruthy();
     });
   });
-  describe('parseOptionalInt', () => {
+  describe('parseOptionalNumber', () => {
     it('returns undefined on undefined parameter', () => {
-      expect(parseOptionalInt(undefined)).toEqual(undefined);
+      expect(parseOptionalNumber(undefined)).toEqual(undefined);
     });
-    it('correctly parses a string', () => {
-      expect(parseOptionalInt('42')).toEqual(42);
+    it('correctly parses a integer string', () => {
+      expect(parseOptionalNumber('42')).toEqual(42);
+    });
+    it('correctly parses a float string', () => {
+      expect(parseOptionalNumber('3.14')).toEqual(3.14);
     });
   });
 });

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,7 +7,7 @@ import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
 
 import { DatabaseDialect } from './database-dialect.enum';
-import { buildErrorMessage, parseOptionalInt } from './utils';
+import { buildErrorMessage, parseOptionalNumber } from './utils';
 
 export interface DatabaseConfig {
   username: string;
@@ -62,7 +62,7 @@ export default registerAs('databaseConfig', () => {
       password: process.env.HD_DATABASE_PASS,
       database: process.env.HD_DATABASE_NAME,
       host: process.env.HD_DATABASE_HOST,
-      port: parseOptionalInt(process.env.HD_DATABASE_PORT),
+      port: parseOptionalNumber(process.env.HD_DATABASE_PORT),
       storage: process.env.HD_DATABASE_STORAGE,
       dialect: process.env.HD_DATABASE_DIALECT,
     },

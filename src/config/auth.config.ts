@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,7 +9,7 @@ import * as Joi from 'joi';
 import { GitlabScope, GitlabVersion } from './gitlab.enum';
 import {
   buildErrorMessage,
-  parseOptionalInt,
+  parseOptionalNumber,
   replaceAuthErrorsWithEnvironmentVariables,
   toArrayConfig,
 } from './utils';
@@ -346,7 +346,7 @@ export default registerAs('authConfig', () => {
     {
       session: {
         secret: process.env.HD_SESSION_SECRET,
-        lifetime: parseOptionalInt(process.env.HD_SESSION_LIFETIME),
+        lifetime: parseOptionalNumber(process.env.HD_SESSION_LIFETIME),
       },
       local: {
         enableLogin: process.env.HD_AUTH_LOCAL_ENABLE_LOGIN,
