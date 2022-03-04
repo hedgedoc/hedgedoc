@@ -45,12 +45,15 @@ describe('Tokens', () => {
       .post('/api/private/tokens')
       .send({
         label: tokenName,
+        validUntil: 0,
       })
       .expect('Content-Type', /json/)
       .expect(201);
     keyId = response.body.keyId;
     expect(response.body.label).toBe(tokenName);
-    expect(response.body.validUntil).toBe(null);
+    expect(new Date(response.body.validUntil).getTime()).toBeGreaterThan(
+      Date.now(),
+    );
     expect(response.body.lastUsedAt).toBe(null);
     expect(response.body.secret.length).toBe(98);
   });
@@ -62,7 +65,9 @@ describe('Tokens', () => {
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body[0].label).toBe(tokenName);
-    expect(response.body[0].validUntil).toBe(null);
+    expect(new Date(response.body[0].validUntil).getTime()).toBeGreaterThan(
+      Date.now(),
+    );
     expect(response.body[0].lastUsedAt).toBe(null);
     expect(response.body[0].secret).not.toBeDefined();
   });
