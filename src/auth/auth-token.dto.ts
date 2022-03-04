@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Type } from 'class-transformer';
-import { IsDate, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
 
 import { BaseDto } from '../utils/base.dto.';
+import { TimestampMillis } from '../utils/timestamp';
 
 export class AuthTokenDto extends BaseDto {
   @IsString()
@@ -32,4 +33,12 @@ export class AuthTokenDto extends BaseDto {
 export class AuthTokenWithSecretDto extends AuthTokenDto {
   @IsString()
   secret: string;
+}
+
+export class AuthTokenCreateDto extends BaseDto {
+  @IsString()
+  label: string;
+
+  @IsNumber()
+  validUntil: TimestampMillis;
 }

@@ -16,6 +16,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import {
+  AuthTokenCreateDto,
   AuthTokenDto,
   AuthTokenWithSecretDto,
 } from '../../../auth/auth-token.dto';
@@ -23,7 +24,6 @@ import { AuthService } from '../../../auth/auth.service';
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { User } from '../../../users/user.entity';
-import { TimestampMillis } from '../../../utils/timestamp';
 import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
@@ -50,11 +50,14 @@ export class TokensController {
   @Post()
   @OpenApi(201)
   async postTokenRequest(
-    @Body('label') label: string,
-    @Body('validUntil') validUntil: TimestampMillis,
+    @Body() createDto: AuthTokenCreateDto,
     @RequestUser() user: User,
   ): Promise<AuthTokenWithSecretDto> {
-    return await this.authService.createTokenForUser(user, label, validUntil);
+    return await this.authService.createTokenForUser(
+      user,
+      createDto.label,
+      createDto.validUntil,
+    );
   }
 
   @Delete('/:keyId')
