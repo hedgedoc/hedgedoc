@@ -2182,15 +2182,15 @@ __metadata:
     "@types/diff": 5.0.2
     "@types/dompurify": 2.3.3
     "@types/js-yaml": 4.0.5
-    "@types/luxon": 2.0.9
+    "@types/luxon": 2.3.0
     "@types/markdown-it": 12.2.3
     "@types/markdown-it-container": 2.0.5
     "@types/markdown-it-plantuml": 1.4.1
-    "@types/mermaid": 8.2.7
+    "@types/mermaid": 8.2.8
     "@types/node": 16.11.26
     "@types/react": 17.0.39
     "@types/react-bootstrap-typeahead": 5.1.8
-    "@types/react-dom": 17.0.11
+    "@types/react-dom": 17.0.13
     "@types/sass": 1.43.1
     "@types/uuid": 8.3.4
     "@typescript-eslint/eslint-plugin": 5.13.0
@@ -4636,10 +4636,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/luxon@npm:2.0.9":
-  version: 2.0.9
-  resolution: "@types/luxon@npm:2.0.9"
-  checksum: 6c99741e1735aca5b784981ecec3a6ad9497b8e46cc3dd0ba625901bb5b34af4c7b1bf33e32b3e8468312ce2850b31f553f712283a8301a0ee1aacb633276738
+"@types/luxon@npm:2.3.0":
+  version: 2.3.0
+  resolution: "@types/luxon@npm:2.3.0"
+  checksum: 163cadf3f2b6e0e6e73c5803916229a0ce1c08197caf77b7315c71df7c1ed24d213db4bcb7e04d58b9e081099eab5eedc7f3666131bf284f65b40187f3302892
   languageName: node
   linkType: hard
 
@@ -4678,10 +4678,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mermaid@npm:8.2.7":
-  version: 8.2.7
-  resolution: "@types/mermaid@npm:8.2.7"
-  checksum: 831df38a342388dd8683722af84dcab9751eeed352d65202e90560bf514351e5b627b41a1c341505e3866c1793595bec8d6505d04967aaa4421195bd00caa3bb
+"@types/mermaid@npm:8.2.8":
+  version: 8.2.8
+  resolution: "@types/mermaid@npm:8.2.8"
+  checksum: 6a628aeb33012bab61276df93aa48b80ee1dc1bf49537f2d5ef605ed79cd80a52b8de0c4f872ff80b0cfcb043aede8f440aaf05787148ab703aa11a69ef49067
   languageName: node
   linkType: hard
 
@@ -4760,21 +4760,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:*":
+"@types/react-dom@npm:*, @types/react-dom@npm:17.0.13":
   version: 17.0.13
   resolution: "@types/react-dom@npm:17.0.13"
   dependencies:
     "@types/react": "*"
   checksum: 62c42a54ac8961c23a0e74b9cdd8b0a78563757e462b1ab665b2aa365bfd8b86a73d3f6eafc09a4a80fb08659321db168f012aa597c41c0df36f645a94e9266b
-  languageName: node
-  linkType: hard
-
-"@types/react-dom@npm:17.0.11":
-  version: 17.0.11
-  resolution: "@types/react-dom@npm:17.0.11"
-  dependencies:
-    "@types/react": "*"
-  checksum: 4d5730dffbef86c887cecad7e3cecda424ce6a64d0b5441c63b5b015d48219868660a2bb1aa15e897e565ad8867fa6b885d4358b04e1c4e589ba4c07c3fda55c
   languageName: node
   linkType: hard
 
