@@ -7,10 +7,8 @@ import { promises as fs } from 'fs';
 import { join } from 'path';
 import request from 'supertest';
 
-import { AuthConfig } from '../../src/config/auth.config';
 import { NotInDBError } from '../../src/errors/errors';
 import { User } from '../../src/users/user.entity';
-import { setupSessionMiddleware } from '../../src/utils/session';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Notes', () => {
@@ -31,9 +29,6 @@ describe('Notes', () => {
       testSetup.configService.get('noteConfig').forbiddenNoteIds[0];
     uploadPath =
       testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
-
-    const authConfig = testSetup.configService.get('authConfig') as AuthConfig;
-    setupSessionMiddleware(testSetup.app, authConfig);
 
     await testSetup.app.init();
 

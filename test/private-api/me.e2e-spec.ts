@@ -6,12 +6,10 @@
 import { promises as fs } from 'fs';
 import request from 'supertest';
 
-import { AuthConfig } from '../../src/config/auth.config';
 import { NotInDBError } from '../../src/errors/errors';
 import { Note } from '../../src/notes/note.entity';
 import { FullUserInfoDto } from '../../src/users/user-info.dto';
 import { User } from '../../src/users/user.entity';
-import { setupSessionMiddleware } from '../../src/utils/session';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Me', () => {
@@ -31,8 +29,6 @@ describe('Me', () => {
     uploadPath =
       testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
 
-    const authConfig = testSetup.configService.get('authConfig') as AuthConfig;
-    setupSessionMiddleware(testSetup.app, authConfig);
     await testSetup.app.init();
 
     user = await testSetup.userService.createUser('hardcoded', 'Testy');
