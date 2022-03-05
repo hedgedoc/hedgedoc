@@ -104,11 +104,6 @@
     "winston": "^3.1.0",
     "xss": "^1.0.3"
   },
-  "resolutions": {
-    "**/tough-cookie": "~2.5.0",
-    "**/minimatch": "^3.0.2",
-    "**/request": "^2.88.0"
-  },
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || 16.x"
   },
