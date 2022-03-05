@@ -86,12 +86,12 @@ export class TestSetup {
       await appConnection.close();
     }
     switch (connectionOptions.type) {
-      case 'postgres': {
+      case 'postgres':
+      case 'mariadb': {
         const connection = await createConnection({
-          type: 'postgres',
+          type: connectionOptions.type,
           username: 'hedgedoc',
           password: 'hedgedoc',
-          database: 'postgres',
         });
         await connection.query(`DROP DATABASE ${connectionOptions.database}`);
         await connection.close();
@@ -121,24 +121,28 @@ export class TestSetupBuilder {
    * @private
    */
   private static async setupTestDB(dbName: string) {
-    switch (process.env.HEDGEDOC_TEST_DB_TYPE || 'sqlite') {
-      case 'sqlite':
-        return;
-      case 'postgres': {
-        // Create a connection to internal postgres database to then create a test db
-        const connection = await createConnection({
-          type: 'postgres',
-          username: 'hedgedoc',
-          password: 'hedgedoc',
-          database: 'postgres',
-        });
-        await connection.query(`CREATE DATABASE ${dbName}`);
-        await connection.close();
-        return;
-      }
-      default:
-        throw new Error('Unknown database type in HEDGEDOC_TEST_DB_TYPE');
+    const dbType = process.env.HEDGEDOC_TEST_DB_TYPE;
+    if (!dbType || dbType === 'sqlite') {
+      return;
     }
+
+    if (!['postgres', 'mariadb'].includes(dbType)) {
+      throw new Error('Unknown database type in HEDGEDOC_TEST_DB_TYPE');
+    }
+
+    const connection = await createConnection({
+      type: dbType as 'postgres' | 'mariadb',
+      username: dbType === 'mariadb' ? 'root' : 'hedgedoc',
+      password: 'hedgedoc',
+    });
+
+    await connection.query(`CREATE DATABASE ${dbName}`);
+    if (dbType === 'mariadb') {
+      await connection.query(
+        `GRANT ALL PRIVILEGES ON ${dbName}.* TO 'hedgedoc'@'%'`,
+      );
+    }
+    await connection.close();
   }
 
   private static getTestDBConf(dbName: string): TypeOrmModuleOptions {
@@ -152,8 +156,9 @@ export class TestSetupBuilder {
           dropSchema: true,
         };
       case 'postgres':
+      case 'mariadb':
         return {
-          type: 'postgres',
+          type: process.env.HEDGEDOC_TEST_DB_TYPE as 'postgres' | 'mariadb',
           database: dbName,
           username: 'hedgedoc',
           password: 'hedgedoc',

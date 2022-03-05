@@ -1724,6 +1724,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/mysql@npm:^2":
+  version: 2.15.21
+  resolution: "@types/mysql@npm:2.15.21"
+  dependencies:
+    "@types/node": "*"
+  checksum: 6f526e0183c2d03628ca3bdeec839900403863641d61397de3aa0431b8e92457f1580de16b54ee3cd81ccb3968f949a5fa9be939a2101f2148ed5ff3c775c0a7
+  languageName: node
+  linkType: hard
+
 "@types/node-fetch@npm:2.6.1, @types/node-fetch@npm:^2.5.0":
   version: 2.6.1
   resolution: "@types/node-fetch@npm:2.6.1"
@@ -2818,6 +2827,13 @@ __metadata:
     "@mapbox/node-pre-gyp": ^1.0.0
     node-addon-api: ^3.1.0
   checksum: b59625519f2b2891010b8094208588462b1c759ccacebfd74f0b9a4c1885743434ede246c26b615b94a5cf203dfcb9eb25a1e8dec315afd3098da2b848c0fa12
+  languageName: node
+  linkType: hard
+
+"bignumber.js@npm:9.0.0":
+  version: 9.0.0
+  resolution: "bignumber.js@npm:9.0.0"
+  checksum: 51f37890bca58bded63720add832b1c4898cf5b8ad95b5d4d9c3e763c461163d0355d11d91b740b0216b02e4e8cbb02455b28ee32140b775d96a39bbd817fdf6
   languageName: node
   linkType: hard
 
@@ -5375,6 +5391,7 @@ __metadata:
     "@types/express-session": 1.17.4
     "@types/jest": 27.4.1
     "@types/minio": 7.0.12
+    "@types/mysql": ^2
     "@types/node": 16.11.26
     "@types/node-fetch": 2.6.1
     "@types/passport-http-bearer": 1.0.37
@@ -5403,6 +5420,7 @@ __metadata:
     joi: 17.6.0
     minio: 7.0.26
     mocked-env: 1.3.5
+    mysql: ^2.18.1
     nest-router: 1.0.9
     node-fetch: 2.6.7
     passport: 0.5.2
@@ -7391,6 +7409,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mysql@npm:^2.18.1":
+  version: 2.18.1
+  resolution: "mysql@npm:2.18.1"
+  dependencies:
+    bignumber.js: 9.0.0
+    readable-stream: 2.3.7
+    safe-buffer: 5.1.2
+    sqlstring: 2.3.1
+  checksum: 430dec8525e849bbb53f78ffc7aa85b2d1535f49f96ae06064089219cfabfdb9b4051e1fabcbacc0e5b85174ae4c762b071b99d4fb4d062e98f90e723b1def0a
+  languageName: node
+  linkType: hard
+
 "mz@npm:^2.4.0":
   version: 2.7.0
   resolution: "mz@npm:2.7.0"
@@ -8557,7 +8587,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:^2.0.6, readable-stream@npm:^2.2.2":
+"readable-stream@npm:2.3.7, readable-stream@npm:^2.0.6, readable-stream@npm:^2.2.2":
   version: 2.3.7
   resolution: "readable-stream@npm:2.3.7"
   dependencies:
@@ -8808,17 +8838,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"safe-buffer@npm:5.1.2, safe-buffer@npm:~5.1.0, safe-buffer@npm:~5.1.1":
+  version: 5.1.2
+  resolution: "safe-buffer@npm:5.1.2"
+  checksum: f2f1f7943ca44a594893a852894055cf619c1fbcb611237fc39e461ae751187e7baf4dc391a72125e0ac4fb2d8c5c0b3c71529622e6a58f46b960211e704903c
+  languageName: node
+  linkType: hard
+
 "safe-buffer@npm:5.2.1, safe-buffer@npm:^5.0.1, safe-buffer@npm:^5.1.0, safe-buffer@npm:^5.1.1, safe-buffer@npm:^5.1.2, safe-buffer@npm:^5.2.0, safe-buffer@npm:^5.2.1, safe-buffer@npm:~5.2.0":
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
   checksum: b99c4b41fdd67a6aaf280fcd05e9ffb0813654894223afb78a31f14a19ad220bba8aba1cb14eddce1fcfb037155fe6de4e861784eb434f7d11ed58d1e70dd491
-  languageName: node
-  linkType: hard
-
-"safe-buffer@npm:~5.1.0, safe-buffer@npm:~5.1.1":
-  version: 5.1.2
-  resolution: "safe-buffer@npm:5.1.2"
-  checksum: f2f1f7943ca44a594893a852894055cf619c1fbcb611237fc39e461ae751187e7baf4dc391a72125e0ac4fb2d8c5c0b3c71529622e6a58f46b960211e704903c
   languageName: node
   linkType: hard
 
@@ -9131,6 +9161,13 @@ __metadata:
     node-gyp:
       optional: true
   checksum: 28ef541b3289c3a154c538f268c9e2656d1f5cc6c768bb6173b83037c02d1b889047f88233bc2e801885cea7e4c184d3a0d5b23ddced6fd6e192dc69c21a8961
+  languageName: node
+  linkType: hard
+
+"sqlstring@npm:2.3.1":
+  version: 2.3.1
+  resolution: "sqlstring@npm:2.3.1"
+  checksum: de4299cf9bd0f49abae5b4eddde42c7ae7c447e035498ec50b3264610d6f0efbe433eeed2d20d48b6362bf46fd96c85cf6db240e994dbe6d5c3f9dac6d7ffd31
   languageName: node
   linkType: hard
 
