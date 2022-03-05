@@ -14,7 +14,6 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-import { UserInfoDto } from '../users/user-info.dto';
 import { BaseDto } from '../utils/base.dto.';
 import { NotePermissionsDto } from './note-permissions.dto';
 
@@ -73,6 +72,7 @@ export class NoteMetadataDto extends BaseDto {
    * @example "2020-12-01 12:23:34"
    */
   @IsDate()
+  @Type(() => Date)
   @ApiProperty()
   updatedAt: Date;
 
@@ -97,6 +97,7 @@ export class NoteMetadataDto extends BaseDto {
    * @example "2020-12-01 12:23:34"
    */
   @IsDate()
+  @Type(() => Date)
   @ApiProperty()
   createdAt: Date;
 
