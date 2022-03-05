@@ -55,7 +55,7 @@ jobs:
           cache: yarn
       - run: yarn --frozen-lockfile --prefer-offline
       - run: yarn run build
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         if: github.ref == 'refs/heads/master' && matrix.node-version == '16'
         with:
           name: Prebuild with Node.js ${{ matrix.node-version }}
