@@ -5309,7 +5309,7 @@ __metadata:
     passport-http-bearer: 1.0.1
     passport-local: 1.0.0
     prettier: 2.5.1
-    raw-body: 2.5.0
+    raw-body: 2.5.1
     reflect-metadata: 0.1.13
     rimraf: 3.0.2
     rxjs: 7.5.4
@@ -8265,15 +8265,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"raw-body@npm:2.5.0":
-  version: 2.5.0
-  resolution: "raw-body@npm:2.5.0"
+"raw-body@npm:2.5.1":
+  version: 2.5.1
+  resolution: "raw-body@npm:2.5.1"
   dependencies:
     bytes: 3.1.2
     http-errors: 2.0.0
     iconv-lite: 0.4.24
     unpipe: 1.0.0
-  checksum: 2ff0683bbff500e6b4cb9dff7a147239fdb6673c33686ea933e5ac49cdb7e7a044581aed88d7c4308e51cc5a093a7a0ab586fe8edf943d6c4aa14d67139c5bd6
+  checksum: 5362adff1575d691bb3f75998803a0ffed8c64eabeaa06e54b4ada25a0cd1b2ae7f4f5ec46565d1bec337e08b5ac90c76eaa0758de6f72a633f025d754dec29e
   languageName: node
   linkType: hard
 
