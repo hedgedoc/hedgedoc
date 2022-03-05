@@ -127,9 +127,12 @@ declare module 'reveal.js' {
 
   export default class Reveal {
     constructor(options: RevealOptions)
-    initialize: () => Promise<void>
+
+    initialize: (options?: { url?: string }) => Promise<void>
 
     public configure: (diff: RevealOptions) => void
+
+    public destroy: () => void
 
     // Navigation
     public slide(indexh: number, indexv?: number, f?: number, o?: number): void

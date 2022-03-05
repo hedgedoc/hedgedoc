@@ -2263,7 +2263,7 @@ __metadata:
     react-use: 17.3.2
     redux: 4.1.2
     redux-devtools-extension: 2.13.9
-    reveal.js: 4.2.1
+    reveal.js: 4.3.0
     sanitize-filename: 1.6.3
     sass: 1.49.9
     sharp: 0.30.1
@@ -17637,10 +17637,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reveal.js@npm:4.2.1":
-  version: 4.2.1
-  resolution: "reveal.js@npm:4.2.1"
-  checksum: 44ac34b70ad42e7df027c327dee8bb89d8d4e21d7c49a60d459342a19318753d24fbc354d9cec6a710290158ca38efe95627b850e7349b1aef166be4d3a8ebb3
+"reveal.js@npm:4.3.0":
+  version: 4.3.0
+  resolution: "reveal.js@npm:4.3.0"
+  checksum: 3441519baf0334df830cab593e7e96896c58fb8fa1773e529c030c373c653a334cb831ec777b0f7e225ba141c54ac2f523b79ea5f6d26a48fa335c83b3a574f0
   languageName: node
   linkType: hard
 
