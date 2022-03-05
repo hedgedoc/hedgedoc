@@ -16,7 +16,7 @@ jobs:
     name: Lints all .ts and .tsx files
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -44,7 +44,7 @@ jobs:
     name: Checks codestyle of all .ts and .tsx files
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path

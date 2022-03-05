@@ -16,7 +16,7 @@ jobs:
     name: Build test build of frontend
     steps:
       - name: Check out repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Cache build
         uses: actions/cache@v2.1.7
@@ -76,7 +76,7 @@ jobs:
         containers: [ 1, 2, 3, 4, 5 ]
     steps:
       - name: Check out repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Download built frontend
         uses: actions/download-artifact@master
