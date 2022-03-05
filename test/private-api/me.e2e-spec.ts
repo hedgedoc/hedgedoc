@@ -71,20 +71,29 @@ describe('Me', () => {
     expect(responseBefore.body).toHaveLength(0);
 
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-    const url0 = await testSetup.mediaService.saveFile(testImage, user, note1);
-    const url1 = await testSetup.mediaService.saveFile(testImage, user, note1);
-    const url2 = await testSetup.mediaService.saveFile(testImage, user, note2);
-    const url3 = await testSetup.mediaService.saveFile(testImage, user, note2);
+    const imageUrls = [];
+    imageUrls.push(
+      await testSetup.mediaService.saveFile(testImage, user, note1),
+    );
+    imageUrls.push(
+      await testSetup.mediaService.saveFile(testImage, user, note1),
+    );
+    imageUrls.push(
+      await testSetup.mediaService.saveFile(testImage, user, note2),
+    );
+    imageUrls.push(
+      await testSetup.mediaService.saveFile(testImage, user, note2),
+    );
 
     const response = await agent
       .get('/api/private/me/media/')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body).toHaveLength(4);
-    expect(response.body[0].url).toEqual(url0);
-    expect(response.body[1].url).toEqual(url1);
-    expect(response.body[2].url).toEqual(url2);
-    expect(response.body[3].url).toEqual(url3);
+    expect(imageUrls).toContain(response.body[0].url);
+    expect(imageUrls).toContain(response.body[1].url);
+    expect(imageUrls).toContain(response.body[2].url);
+    expect(imageUrls).toContain(response.body[3].url);
     const mediaUploads = await testSetup.mediaService.listUploadsByUser(user);
     for (const upload of mediaUploads) {
       await testSetup.mediaService.deleteFile(upload);
