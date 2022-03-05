@@ -5,9 +5,7 @@
  */
 import request from 'supertest';
 
-import { AuthConfig } from '../../src/config/auth.config';
 import { User } from '../../src/users/user.entity';
-import { setupSessionMiddleware } from '../../src/utils/session';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Tokens', () => {
@@ -22,10 +20,6 @@ describe('Tokens', () => {
 
     user = await testSetup.userService.createUser('hardcoded', 'Testy');
     await testSetup.identityService.createLocalIdentity(user, 'test');
-
-    const authConfig = testSetup.configService.get('authConfig') as AuthConfig;
-    setupSessionMiddleware(testSetup.app, authConfig);
-
     await testSetup.app.init();
 
     agent = request.agent(testSetup.app.getHttpServer());

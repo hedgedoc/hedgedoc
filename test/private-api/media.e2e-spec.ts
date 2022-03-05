@@ -8,9 +8,7 @@ import { join } from 'path';
 import { User } from 'src/users/user.entity';
 import request from 'supertest';
 
-import { AuthConfig } from '../../src/config/auth.config';
 import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
-import { setupSessionMiddleware } from '../../src/utils/session';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 import { ensureDeleted } from '../utils';
 
@@ -30,8 +28,6 @@ describe('Media', () => {
     testSetup.app.useStaticAssets(uploadPath, {
       prefix: '/uploads',
     });
-    const authConfig = testSetup.configService.get('authConfig') as AuthConfig;
-    setupSessionMiddleware(testSetup.app, authConfig);
     await testSetup.app.init();
 
     const logger = await testSetup.app.resolve(ConsoleLoggerService);

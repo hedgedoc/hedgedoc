@@ -3,10 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ConfigService } from '@nestjs/config';
 import request from 'supertest';
 
-import { AuthConfig } from '../../src/config/auth.config';
 import { HistoryEntryImportDto } from '../../src/history/history-entry-import.dto';
 import { HistoryEntry } from '../../src/history/history-entry.entity';
 import { HistoryService } from '../../src/history/history.service';
@@ -15,7 +13,6 @@ import { Note } from '../../src/notes/note.entity';
 import { NotesService } from '../../src/notes/notes.service';
 import { User } from '../../src/users/user.entity';
 import { UsersService } from '../../src/users/users.service';
-import { setupSessionMiddleware } from '../../src/utils/session';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('History', () => {
@@ -37,10 +34,6 @@ describe('History', () => {
 
     const moduleRef = testSetup.moduleRef;
 
-    const config = moduleRef.get<ConfigService>(ConfigService);
-
-    const authConfig = config.get('authConfig') as AuthConfig;
-    setupSessionMiddleware(testSetup.app, authConfig);
     await testSetup.app.init();
     content = 'This is a test note.';
     historyService = moduleRef.get(HistoryService);

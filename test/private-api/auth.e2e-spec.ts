@@ -10,13 +10,11 @@
 */
 import request from 'supertest';
 
-import { AuthConfig } from '../../src/config/auth.config';
 import { LoginDto } from '../../src/identity/local/login.dto';
 import { RegisterDto } from '../../src/identity/local/register.dto';
 import { UpdatePasswordDto } from '../../src/identity/local/update-password.dto';
 import { UserRelationEnum } from '../../src/users/user-relation.enum';
 import { checkPassword } from '../../src/utils/password';
-import { setupSessionMiddleware } from '../../src/utils/session';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Auth', () => {
@@ -28,9 +26,6 @@ describe('Auth', () => {
 
   beforeAll(async () => {
     testSetup = await TestSetupBuilder.create().build();
-
-    const authConfig = testSetup.configService.get('authConfig') as AuthConfig;
-    setupSessionMiddleware(testSetup.app, authConfig);
     await testSetup.app.init();
 
     username = 'hardcoded';
