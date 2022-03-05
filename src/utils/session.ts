@@ -10,16 +10,20 @@ import session from 'express-session';
 import { Repository } from 'typeorm';
 
 import { AuthConfig } from '../config/auth.config';
+import { DatabaseDialect } from '../config/database-dialect.enum';
+import { DatabaseConfig } from '../config/database.config';
 import { Session } from '../users/session.entity';
 
 /**
  * Setup the session middleware via the given authConfig.
  * @param {INestApplication} app - the nest application to configure the middleware for.
  * @param {AuthConfig} authConfig - the authConfig to configure the middleware with.
+ * @param {DatabaseConfig} dbConfig - the DatabaseConfig to configure the middleware with.
  */
 export function setupSessionMiddleware(
   app: INestApplication,
   authConfig: AuthConfig,
+  dbConfig: DatabaseConfig,
 ): void {
   app.use(
     session({
@@ -32,6 +36,7 @@ export function setupSessionMiddleware(
       saveUninitialized: false,
       store: new TypeormStore({
         cleanupLimit: 2,
+        limitSubquery: dbConfig.dialect !== DatabaseDialect.MARIADB,
       }).connect(app.get<Repository<Session>>(getRepositoryToken(Session))),
     }),
   );

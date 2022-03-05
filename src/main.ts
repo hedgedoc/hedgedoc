@@ -11,6 +11,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { AppConfig } from './config/app.config';
 import { AuthConfig } from './config/auth.config';
+import { DatabaseConfig } from './config/database.config';
 import { MediaConfig } from './config/media.config';
 import { ErrorExceptionMapping } from './errors/error-mapping';
 import { ConsoleLoggerService } from './logger/console-logger.service';
@@ -31,10 +32,11 @@ async function bootstrap(): Promise<void> {
   app.useLogger(logger);
   const configService = app.get(ConfigService);
   const appConfig = configService.get<AppConfig>('appConfig');
+  const databaseConfig = configService.get<DatabaseConfig>('databaseConfig');
   const authConfig = configService.get<AuthConfig>('authConfig');
   const mediaConfig = configService.get<MediaConfig>('mediaConfig');
 
-  if (!appConfig || !authConfig || !mediaConfig) {
+  if (!appConfig || !databaseConfig || !authConfig || !mediaConfig) {
     logger.error('Could not initialize config, aborting.', 'AppBootstrap');
     process.exit(1);
   }
@@ -55,7 +57,7 @@ async function bootstrap(): Promise<void> {
 
   await setupSpecialGroups(app);
 
-  setupSessionMiddleware(app, authConfig);
+  setupSessionMiddleware(app, authConfig, databaseConfig);
 
   app.enableCors({
     origin: appConfig.rendererOrigin,
