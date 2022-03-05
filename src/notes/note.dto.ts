@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import { IsArray, IsString, ValidateNested } from 'class-validator';
 
 import { EditDto } from '../revisions/edit.dto';
@@ -31,6 +32,7 @@ export class NoteDto extends BaseDto {
    */
   @IsArray()
   @ValidateNested({ each: true })
+  @Type(() => EditDto)
   @ApiProperty({ isArray: true, type: EditDto })
   editedByAtPosition: EditDto[];
 }

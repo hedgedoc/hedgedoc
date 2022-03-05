@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsArray,
   IsBoolean,
@@ -96,16 +97,18 @@ export class NotePermissionsDto {
   /**
    * List of users the note is shared with
    */
-  @ValidateNested()
+  @ValidateNested({ each: true })
   @IsArray()
+  @Type(() => NoteUserPermissionEntryDto)
   @ApiProperty({ isArray: true, type: NoteUserPermissionEntryDto })
   sharedToUsers: NoteUserPermissionEntryDto[];
 
   /**
    * List of groups the note is shared with
    */
-  @ValidateNested()
+  @ValidateNested({ each: true })
   @IsArray()
+  @Type(() => NoteGroupPermissionEntryDto)
   @ApiProperty({ isArray: true, type: NoteGroupPermissionEntryDto })
   sharedToGroups: NoteGroupPermissionEntryDto[];
 }
@@ -115,7 +118,8 @@ export class NotePermissionsUpdateDto {
    * List of users the note should be shared with
    */
   @IsArray()
-  @ValidateNested()
+  @ValidateNested({ each: true })
+  @Type(() => NoteUserPermissionUpdateDto)
   @ApiProperty({ isArray: true, type: NoteUserPermissionUpdateDto })
   sharedToUsers: NoteUserPermissionUpdateDto[];
 
@@ -123,7 +127,8 @@ export class NotePermissionsUpdateDto {
    * List of groups the note should be shared with
    */
   @IsArray()
-  @ValidateNested()
+  @ValidateNested({ each: true })
+  @Type(() => NoteGroupPermissionUpdateDto)
   @ApiProperty({ isArray: true, type: NoteGroupPermissionUpdateDto })
   sharedToGroups: NoteGroupPermissionUpdateDto[];
 }
