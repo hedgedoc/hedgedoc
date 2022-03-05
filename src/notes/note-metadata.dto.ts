@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsArray,
   IsDate,
@@ -104,14 +105,15 @@ export class NoteMetadataDto extends BaseDto {
    * @example "['john.smith', 'jane.smith']"
    */
   @IsArray()
-  @ValidateNested()
+  @IsString({ each: true })
   @ApiProperty()
-  editedBy: UserInfoDto['username'][];
+  editedBy: string[];
 
   /**
    * Permissions currently in effect for the note
    */
-  @ValidateNested()
+  @ValidateNested({ each: true })
+  @Type(() => NotePermissionsDto)
   @ApiProperty({ type: NotePermissionsDto })
   permissions: NotePermissionsDto;
 }
