@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import { IsDate, IsNumber } from 'class-validator';
 
 import { Revision } from './revision.entity';
@@ -22,6 +23,7 @@ export class RevisionMetadataDto {
    * @example "2020-12-01 12:23:34"
    */
   @IsDate()
+  @Type(() => Date)
   @ApiProperty()
   createdAt: Date;
 
