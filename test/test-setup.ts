@@ -19,6 +19,7 @@ import { MockAuthGuard } from '../src/auth/mock-auth.guard';
 import { TokenAuthGuard } from '../src/auth/token.strategy';
 import { AuthorsModule } from '../src/authors/authors.module';
 import { AuthConfig } from '../src/config/auth.config';
+import { DatabaseConfig } from '../src/config/database.config';
 import appConfigMock from '../src/config/mock/app.config.mock';
 import authConfigMock from '../src/config/mock/auth.config.mock';
 import customizationConfigMock from '../src/config/mock/customization.config.mock';
@@ -267,6 +268,7 @@ export class TestSetupBuilder {
     setupSessionMiddleware(
       this.testSetup.app,
       this.testSetup.configService.get<AuthConfig>('authConfig'),
+      this.testSetup.configService.get<DatabaseConfig>('databaseConfig'),
     );
     this.testSetup.app.useGlobalPipes(
       setupValidationPipe(
