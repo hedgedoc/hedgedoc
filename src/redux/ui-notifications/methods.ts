@@ -7,7 +7,7 @@
 import type { TOptions } from 'i18next'
 import { t } from 'i18next'
 import { store } from '../index'
-import type { DismissUiNotificationAction, DispatchOptions } from './types'
+import type { DismissUiNotificationAction, DispatchOptions, DispatchUiNotificationAction } from './types'
 import { UiNotificationActionType } from './types'
 import { DateTime } from 'luxon'
 import { Logger } from '../../utils/logger'
@@ -50,7 +50,7 @@ export const dispatchUiNotification = async (
         buttons: buttons ?? [],
         icon: icon
       }
-    })
+    } as DispatchUiNotificationAction)
   })
 }
 

@@ -45,13 +45,13 @@ export const ImportHistoryButton: React.FC = () => {
     uploadInput.current.value = ''
   }, [uploadInput])
 
-  const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { validity, files } = event.target
     if (files && files[0] && validity.valid) {
       const file = files[0]
       setFilename(file.name)
       if (file.type !== 'application/json' && file.type !== '') {
-        await dispatchUiNotification('common.errorOccurred', 'landing.history.modal.importHistoryError.textWithFile', {
+        void dispatchUiNotification('common.errorOccurred', 'landing.history.modal.importHistoryError.textWithFile', {
           contentI18nOptions: {
             fileName
           }
@@ -60,7 +60,7 @@ export const ImportHistoryButton: React.FC = () => {
         return
       }
       const fileReader = new FileReader()
-      fileReader.onload = async (event) => {
+      fileReader.onload = (event) => {
         if (event.target && event.target.result) {
           try {
             const result = event.target.result as string
@@ -71,7 +71,7 @@ export const ImportHistoryButton: React.FC = () => {
                   onImportHistory(data.entries)
                 } else {
                   // probably a newer version we can't support
-                  await dispatchUiNotification(
+                  void dispatchUiNotification(
                     'common.errorOccurred',
                     'landing.history.modal.importHistoryError.tooNewVersion',
                     {
@@ -88,7 +88,7 @@ export const ImportHistoryButton: React.FC = () => {
             }
             resetInputField()
           } catch {
-            await dispatchUiNotification(
+            void dispatchUiNotification(
               'common.errorOccurred',
               'landing.history.modal.importHistoryError.textWithFile',
               {
@@ -102,7 +102,7 @@ export const ImportHistoryButton: React.FC = () => {
       }
       fileReader.readAsText(file)
     } else {
-      await dispatchUiNotification(
+      void dispatchUiNotification(
         'common.errorOccurred',
         'landing.history.modal.importHistoryError.textWithOutFile',
         {}
