@@ -1,0 +1,82 @@
+# SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+name: E2E Tests
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  sqlite: # This run also collects coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Use Node.js 17
+        uses: actions/setup-node@v3
+        with:
+          node-version: 17
+          cache: 'yarn'
+      - run: yarn install --immutable
+      - run: yarn run test:e2e:cov
+      - uses: codecov/codecov-action@v2
+        with:
+          directory: coverage-e2e
+          flags: e2e-tests
+
+  mariadb:
+    runs-on: ubuntu-latest
+    services:
+      mariadb:
+        image: mariadb
+        env:
+          MYSQL_USER: hedgedoc
+          MYSQL_PASSWORD: hedgedoc
+          MYSQL_DATABASE: hedgedoc
+          MYSQL_ROOT_PASSWORD: hedgedoc
+        options: --health-cmd "mysqladmin ping" --health-interval 5s --health-timeout 2s --health-retries 5
+        ports:
+          - 3306:3306
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Use Node.js 17
+        uses: actions/setup-node@v3
+        with:
+          node-version: 17
+          cache: 'yarn'
+      - run: yarn install --immutable
+      - run: yarn run test:e2e
+        env:
+          HEDGEDOC_TEST_DB_TYPE: mariadb
+
+  postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: hedgedoc
+          POSTGRES_USER: hedgedoc
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 2s --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Use Node.js 17
+        uses: actions/setup-node@v3
+        with:
+          node-version: 17
+          cache: 'yarn'
+      - run: yarn install --immutable
+      - run: yarn run test:e2e
+        env:
+          HEDGEDOC_TEST_DB_TYPE: postgres

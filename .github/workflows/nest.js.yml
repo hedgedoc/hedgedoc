@@ -60,21 +60,3 @@ jobs:
         with:
           directory: coverage
           flags: integration-tests
-
-  e2e-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Use Node.js 17
-        uses: actions/setup-node@v3
-        with:
-          node-version: 17
-          cache: 'yarn'
-      - run: yarn install --immutable
-      - run: yarn run test:e2e:cov
-      - uses: codecov/codecov-action@v2
-        with:
-          directory: coverage-e2e
-          flags: e2e-tests
