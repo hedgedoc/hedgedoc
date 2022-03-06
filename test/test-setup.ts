@@ -23,6 +23,7 @@ import { DatabaseConfig } from '../src/config/database.config';
 import appConfigMock from '../src/config/mock/app.config.mock';
 import authConfigMock from '../src/config/mock/auth.config.mock';
 import customizationConfigMock from '../src/config/mock/customization.config.mock';
+import databaseConfigMock from '../src/config/mock/database.config.mock';
 import externalServicesConfigMock from '../src/config/mock/external-services.config.mock';
 import mediaConfigMock from '../src/config/mock/media.config.mock';
 import noteConfigMock from '../src/config/mock/note.config.mock';
@@ -199,6 +200,7 @@ export class TestSetupBuilder {
           isGlobal: true,
           load: [
             appConfigMock,
+            databaseConfigMock,
             noteConfigMock,
             authConfigMock,
             mediaConfigMock,
