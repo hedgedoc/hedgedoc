@@ -11,6 +11,8 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
+// This needs to be here because of weird import-behaviour during tests
+import 'reflect-metadata';
 
 import { BaseDto } from '../utils/base.dto.';
 
