@@ -1731,7 +1731,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mysql@npm:^2":
+"@types/mysql@npm:2.15.21":
   version: 2.15.21
   resolution: "@types/mysql@npm:2.15.21"
   dependencies:
@@ -1812,7 +1812,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/pg@npm:^8":
+"@types/pg@npm:8.6.4":
   version: 8.6.4
   resolution: "@types/pg@npm:8.6.4"
   dependencies:
@@ -5337,12 +5337,12 @@ __metadata:
     "@types/express-session": 1.17.4
     "@types/jest": 27.4.1
     "@types/minio": 7.0.12
-    "@types/mysql": ^2
+    "@types/mysql": 2.15.21
     "@types/node": 16.11.26
     "@types/node-fetch": 2.6.1
     "@types/passport-http-bearer": 1.0.37
     "@types/passport-local": 1.0.34
-    "@types/pg": ^8
+    "@types/pg": 8.6.4
     "@types/source-map-support": 0.5.4
     "@types/supertest": 2.0.11
     "@typescript-eslint/eslint-plugin": 5.13.0
