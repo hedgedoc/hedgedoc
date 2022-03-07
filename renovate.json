@@ -7,6 +7,7 @@
     "group:linters",
     "group:test",
     "docker:enableMajor",
+    "docker:pinDigests",
     "default:automergeDigest",
     ":gitSignOff",
     ":prHourlyLimitNone",
