@@ -212,6 +212,7 @@ app.locals.authProviders = {
   ldap: config.isLDAPEnable,
   ldapProviderName: config.ldap.providerName,
   saml: config.isSAMLEnable,
+  samlProviderName: config.saml.providerName,
   oauth2: config.isOAuth2Enable,
   oauth2ProviderName: config.oauth2.providerName,
   openID: config.isOpenIDEnable,
