@@ -45,7 +45,7 @@
                 <% } %>
                 <% if (authProviders.saml) { %>
                 <a href="<%- serverURL %>/auth/saml" class="btn btn-lg btn-block btn-social btn-success">
-                    <i class="fa fa-users"></i> <%= __('Sign in via %s', 'SAML') %>
+                    <i class="fa fa-users"></i> <%= __('Sign in via %s', authProviders.samlProviderName || 'SAML') %>
                 </a>
                 <% } %>
                 <% if (authProviders.oauth2) { %>

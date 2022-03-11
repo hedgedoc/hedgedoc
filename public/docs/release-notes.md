@@ -8,6 +8,7 @@
 ### Enhancements
 - Libravatar avatars render as ident-icons when no avatar image was uploaded to Libravatar or Gravatar
 - Add database connection error message to log output
+- Allow SAML authentication provider to be named
 
 ## <i class="fa fa-tag"></i> 1.9.2 <i class="fa fa-calendar-o"></i> 2021-12-03
 
