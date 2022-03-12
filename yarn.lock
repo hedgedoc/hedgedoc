@@ -2206,7 +2206,7 @@ __metadata:
     d3-graphviz: 3.2.0
     diff: 5.0.0
     dompurify: 2.3.6
-    emoji-picker-element: 1.10.1
+    emoji-picker-element: 1.11.0
     emoji-picker-element-data: 1.3.0
     eslint: 8.11.0
     eslint-config-next: 12.1.0
@@ -9346,10 +9346,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emoji-picker-element@npm:1.10.1":
-  version: 1.10.1
-  resolution: "emoji-picker-element@npm:1.10.1"
-  checksum: f95ab27cf29372fab961c1d86c8d70d685191a2fba806ce652e1c7bc56a786cc94fe9e8aa97de9ff5bd85f7c3d852116ccc6cce98aa26028b425bf7c511bbc79
+"emoji-picker-element@npm:1.11.0":
+  version: 1.11.0
+  resolution: "emoji-picker-element@npm:1.11.0"
+  checksum: 724c3dc30c67e15f00f34f564fef8fcd7585a1c113b2ab320f8d91079f9fc6a5878419d003b1defa14c399e1d51b92cc969cb2287d2a03cca14b4e3e80195690
   languageName: node
   linkType: hard
 
