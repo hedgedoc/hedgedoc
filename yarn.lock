@@ -2248,7 +2248,7 @@ __metadata:
     markmap-lib: 0.12.0
     markmap-view: 0.2.7
     mermaid: 8.14.0
-    netlify-cli: 9.12.3
+    netlify-cli: 9.13.0
     next: 12.1.0
     optional-js: 2.3.0
     prettier: 2.5.1
@@ -2737,7 +2737,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/build@npm:^26.3.14":
+"@netlify/build@npm:^26.4.0":
   version: 26.4.0
   resolution: "@netlify/build@npm:26.4.0"
   dependencies:
@@ -11102,6 +11102,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"git-clone@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "git-clone@npm:0.2.0"
+  checksum: 51ad9e14a3973b12b7edea8ffa5cd143de56d0ccd61ab281d362764bd02e18d28890275b4f8d15dd4d77a594d2be2f9323b3d5b0beee46ccafc60544084d4595
+  languageName: node
+  linkType: hard
+
 "git-repo-info@npm:^2.1.0":
   version: 2.1.1
   resolution: "git-repo-info@npm:2.1.1"
@@ -14980,11 +14987,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"netlify-cli@npm:9.12.3":
-  version: 9.12.3
-  resolution: "netlify-cli@npm:9.12.3"
+"netlify-cli@npm:9.13.0":
+  version: 9.13.0
+  resolution: "netlify-cli@npm:9.13.0"
   dependencies:
-    "@netlify/build": ^26.3.14
+    "@netlify/build": ^26.4.0
     "@netlify/config": ^17.0.18
     "@netlify/framework-info": ^9.0.2
     "@netlify/local-functions-proxy": ^1.1.1
@@ -15029,6 +15036,7 @@ __metadata:
     fuzzy: ^0.1.3
     get-port: ^5.1.0
     gh-release-fetch: ^3.0.0
+    git-clone: ^0.2.0
     git-repo-info: ^2.1.0
     gitconfiglocal: ^2.1.0
     graphql: ^16.1.0
@@ -15095,7 +15103,7 @@ __metadata:
   bin:
     netlify: bin/run
     ntl: bin/run
-  checksum: 58c5cae90fac2d9d0f40f693a2a1d7a5596e9aaf263e1a691cb82d5ad7c575df837da29eafb92a7dd5c7c3ded5fa850bd52a997a4a0f01c266691ac009ebadb5
+  checksum: 312f1a3ab93036679a67970aef77a4c04281652600ab55bc542eb04c8edbd6e8d4f0ba54a8cc271a6a9e0f9f3c7a231a2bd334f52ffc08fdc1166f5666197416
   languageName: node
   linkType: hard
 
