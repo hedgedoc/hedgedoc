@@ -2220,7 +2220,7 @@ __metadata:
     firacode: 6.2.0
     flowchart.js: 1.17.1
     fork-awesome: 1.2.0
-    highlight.js: 11.4.0
+    highlight.js: 11.5.0
     i18next: 21.6.13
     i18next-browser-languagedetector: 6.1.3
     i18next-resources-to-backend: 1.0.0
@@ -11593,10 +11593,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highlight.js@npm:11.4.0":
-  version: 11.4.0
-  resolution: "highlight.js@npm:11.4.0"
-  checksum: df57994d1e6d8d32a0c8826d9b3019b86b36bae570fd849f807b538f12a2188b1aa775e1653c2b591c24eacd736c262dfb193e2bd3b155800ea6f882a611989c
+"highlight.js@npm:11.5.0":
+  version: 11.5.0
+  resolution: "highlight.js@npm:11.5.0"
+  checksum: a4339278d5be464fa29047fd00bc91f3d3966f5acbbb861ec51a09f3eea7c79ca63c2e0a2ba0c7b3d3663ee56b11c6470ab2759c7278e0d11af5cb0efa26e6eb
   languageName: node
   linkType: hard
 
