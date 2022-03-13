@@ -5437,7 +5437,7 @@ __metadata:
     eslint-plugin-prettier: 4.0.0
     express-session: 1.17.2
     file-type: 16.5.3
-    http-proxy-middleware: 2.0.3
+    http-proxy-middleware: 2.0.4
     jest: 27.5.1
     joi: 17.6.0
     minio: 7.0.26
@@ -5562,9 +5562,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"http-proxy-middleware@npm:2.0.3":
-  version: 2.0.3
-  resolution: "http-proxy-middleware@npm:2.0.3"
+"http-proxy-middleware@npm:2.0.4":
+  version: 2.0.4
+  resolution: "http-proxy-middleware@npm:2.0.4"
   dependencies:
     "@types/http-proxy": ^1.17.8
     http-proxy: ^1.18.1
@@ -5576,7 +5576,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/express":
       optional: true
-  checksum: f121d5515e3c4613b6e9299f03ab70021bf2b5794a4052bcd5218cc754a19b3375e4d3744f3e70c682d9a1a5e125c8769a211d883cd0a24455ef18a5a310abf5
+  checksum: 16d5b398a31f86de8d545b54b484b701429e8e6d7114e63c04591a734e9efaa63f0901ac7b2d7b7d5a15977b9e945cd81cbef68116fe59214a4a82f5ee8e4411
   languageName: node
   linkType: hard
 
