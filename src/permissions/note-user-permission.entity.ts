@@ -20,12 +20,14 @@ export class NoteUserPermission {
   @ManyToOne((_) => User, {
     primary: true,
     onDelete: 'CASCADE', // This deletes the NoteUserPermission, when the associated Note is deleted
+    orphanedRowAction: 'delete', // This ensures the whole row is deleted when the Permission stops being referenced
   })
   user: User;
 
   @ManyToOne((_) => Note, (note) => note.userPermissions, {
     primary: true,
     onDelete: 'CASCADE', // This deletes the NoteUserPermission, when the associated Note is deleted
+    orphanedRowAction: 'delete', // This ensures the whole row is deleted when the Permission stops being referenced
   })
   note: Note;
 
