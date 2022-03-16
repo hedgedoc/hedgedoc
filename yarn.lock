@@ -5461,6 +5461,7 @@ __metadata:
     nest-router: 1.0.9
     node-fetch: 2.6.7
     passport: 0.5.2
+    passport-custom: ^1.1.1
     passport-http-bearer: 1.0.1
     passport-local: 1.0.0
     pg: 8.7.3
@@ -8076,6 +8077,15 @@ __metadata:
   version: 1.3.3
   resolution: "parseurl@npm:1.3.3"
   checksum: 407cee8e0a3a4c5cd472559bca8b6a45b82c124e9a4703302326e9ab60fc1081442ada4e02628efef1eb16197ddc7f8822f5a91fd7d7c86b51f530aedb17dfa2
+  languageName: node
+  linkType: hard
+
+"passport-custom@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "passport-custom@npm:1.1.1"
+  dependencies:
+    passport-strategy: 1.x.x
+  checksum: 245b265491c83186002a19db1c812565bb95fd2a7b842f8e8de58f3e22d669f680178b623db6a4be22aecacecd75097b96fa06f35c2b35fe3ef71e9ec77a538d
   languageName: node
   linkType: hard
 
