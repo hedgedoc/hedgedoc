@@ -14,7 +14,8 @@ import {
 describe('config utils', () => {
   describe('toArrayConfig', () => {
     it('empty', () => {
-      expect(toArrayConfig('')).toEqual([]);
+      expect(toArrayConfig('')).toEqual(undefined);
+      expect(toArrayConfig(undefined)).toEqual(undefined);
     });
     it('one element', () => {
       expect(toArrayConfig('one')).toEqual(['one']);
