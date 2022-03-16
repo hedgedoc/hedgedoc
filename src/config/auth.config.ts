@@ -387,33 +387,38 @@ export default registerAs('authConfig', () => {
   if (authConfig.error) {
     const errorMessages = authConfig.error.details
       .map((detail) => detail.message)
-      .map((error) => {
-        error = replaceAuthErrorsWithEnvironmentVariables(
+      .map((error) =>
+        replaceAuthErrorsWithEnvironmentVariables(
           error,
           'gitlab',
           'HD_AUTH_GITLAB_',
           gitlabNames,
-        );
-        error = replaceAuthErrorsWithEnvironmentVariables(
+        ),
+      )
+      .map((error) =>
+        replaceAuthErrorsWithEnvironmentVariables(
           error,
           'ldap',
           'HD_AUTH_LDAP_',
           ldapNames,
-        );
-        error = replaceAuthErrorsWithEnvironmentVariables(
+        ),
+      )
+      .map((error) =>
+        replaceAuthErrorsWithEnvironmentVariables(
           error,
           'saml',
           'HD_AUTH_SAML_',
           samlNames,
-        );
-        error = replaceAuthErrorsWithEnvironmentVariables(
+        ),
+      )
+      .map((error) =>
+        replaceAuthErrorsWithEnvironmentVariables(
           error,
           'oauth2',
           'HD_AUTH_OAUTH2_',
           oauth2Names,
-        );
-        return error;
-      });
+        ),
+      );
     throw new Error(buildErrorMessage(errorMessages));
   }
   return authConfig.value as AuthConfig;

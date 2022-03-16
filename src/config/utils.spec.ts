@@ -41,6 +41,26 @@ describe('config utils', () => {
         ),
       ).toEqual('"HD_AUTH_GITLAB_test_SCOPE');
     });
+    it('"ldap[0].url', () => {
+      expect(
+        replaceAuthErrorsWithEnvironmentVariables(
+          '"ldap[0].url',
+          'ldap',
+          'HD_AUTH_LDAP_',
+          ['test'],
+        ),
+      ).toEqual('"HD_AUTH_LDAP_test_URL');
+    });
+    it('"ldap[0].url is not changed by gitlab call', () => {
+      expect(
+        replaceAuthErrorsWithEnvironmentVariables(
+          '"ldap[0].url',
+          'gitlab',
+          'HD_AUTH_GITLAB_',
+          ['test'],
+        ),
+      ).toEqual('"ldap[0].url');
+    });
   });
   describe('needToLog', () => {
     it('currentLevel ERROR', () => {
