@@ -34,59 +34,67 @@ export function replaceAuthErrorsWithEnvironmentVariables(
 ): string {
   // this builds a regex like /"gitlab\[(\d+)]\./ to extract the position in the arrayOfNames
   const regex = new RegExp('"' + name + '\\[(\\d+)]\\.', 'g');
-  message = message.replace(
+  let newMessage = message.replace(
     regex,
     (_, index: number) => `"${replacement}${arrayOfNames[index]}.`,
   );
-  message = message.replace('.providerName', '_PROVIDER_NAME');
-  message = message.replace('.baseURL', '_BASE_URL');
-  message = message.replace('.clientID', '_CLIENT_ID');
-  message = message.replace('.clientSecret', '_CLIENT_SECRET');
-  message = message.replace('.scope', '_SCOPE');
-  message = message.replace('.version', '_GITLAB_VERSION');
-  message = message.replace('.url', '_URL');
-  message = message.replace('.bindDn', '_BIND_DN');
-  message = message.replace('.bindCredentials', '_BIND_CREDENTIALS');
-  message = message.replace('.searchBase', '_SEARCH_BASE');
-  message = message.replace('.searchFilter', '_SEARCH_FILTER');
-  message = message.replace('.searchAttributes', '_SEARCH_ATTRIBUTES');
-  message = message.replace('.usernameField', '_USERNAME_FIELD');
-  message = message.replace('.useridField', '_USERID_FIELD');
-  message = message.replace('.tlsCa', '_TLS_CA');
-  message = message.replace('.idpSsoUrl', '_IDP_SSO_URL');
-  message = message.replace('.idpCert', '_IDP_CERT');
-  message = message.replace('.clientCert', '_CLIENT_CERT');
-  message = message.replace('.issuer', '_ISSUER');
-  message = message.replace('.identifierFormat', '_IDENTIFIER_FORMAT');
-  message = message.replace(
-    '.disableRequestedAuthnContext',
-    '_DISABLE_REQUESTED_AUTHN_CONTEXT',
-  );
-  message = message.replace('.groupAttribute', '_GROUP_ATTRIBUTE');
-  message = message.replace('.requiredGroups', '_REQUIRED_GROUPS');
-  message = message.replace('.externalGroups', '_EXTERNAL_GROUPS');
-  message = message.replace('.attribute.id', '_ATTRIBUTE_ID');
-  message = message.replace('.attribute.username', '_ATTRIBUTE_USERNAME');
-  message = message.replace('.attribute.email', '_ATTRIBUTE_USERNAME');
-  message = message.replace('.userProfileURL', '_USER_PROFILE_URL');
-  message = message.replace('.userProfileIdAttr', '_USER_PROFILE_ID_ATTR');
-  message = message.replace(
-    '.userProfileUsernameAttr',
-    '_USER_PROFILE_USERNAME_ATTR',
-  );
-  message = message.replace(
-    '.userProfileDisplayNameAttr',
-    '_USER_PROFILE_DISPLAY_NAME_ATTR',
-  );
-  message = message.replace(
-    '.userProfileEmailAttr',
-    '_USER_PROFILE_EMAIL_ATTR',
-  );
-  message = message.replace('.tokenURL', '_TOKEN_URL');
-  message = message.replace('.authorizationURL', '_AUTHORIZATION_URL');
-  message = message.replace('.rolesClaim', '_ROLES_CLAIM');
-  message = message.replace('.accessRole', '_ACCESS_ROLE');
-  return message;
+  if (newMessage != message) {
+    newMessage = newMessage.replace('.providerName', '_PROVIDER_NAME');
+    newMessage = newMessage.replace('.baseURL', '_BASE_URL');
+    newMessage = newMessage.replace('.clientID', '_CLIENT_ID');
+    newMessage = newMessage.replace('.clientSecret', '_CLIENT_SECRET');
+    newMessage = newMessage.replace('.scope', '_SCOPE');
+    newMessage = newMessage.replace('.version', '_GITLAB_VERSION');
+    newMessage = newMessage.replace('.url', '_URL');
+    newMessage = newMessage.replace('.bindDn', '_BIND_DN');
+    newMessage = newMessage.replace('.bindCredentials', '_BIND_CREDENTIALS');
+    newMessage = newMessage.replace('.searchBase', '_SEARCH_BASE');
+    newMessage = newMessage.replace('.searchFilter', '_SEARCH_FILTER');
+    newMessage = newMessage.replace('.searchAttributes', '_SEARCH_ATTRIBUTES');
+    newMessage = newMessage.replace('.usernameField', '_USERNAME_FIELD');
+    newMessage = newMessage.replace('.useridField', '_USERID_FIELD');
+    newMessage = newMessage.replace('.tlsCa', '_TLS_CA');
+    newMessage = newMessage.replace('.idpSsoUrl', '_IDP_SSO_URL');
+    newMessage = newMessage.replace('.idpCert', '_IDP_CERT');
+    newMessage = newMessage.replace('.clientCert', '_CLIENT_CERT');
+    newMessage = newMessage.replace('.issuer', '_ISSUER');
+    newMessage = newMessage.replace('.identifierFormat', '_IDENTIFIER_FORMAT');
+    newMessage = newMessage.replace(
+      '.disableRequestedAuthnContext',
+      '_DISABLE_REQUESTED_AUTHN_CONTEXT',
+    );
+    newMessage = newMessage.replace('.groupAttribute', '_GROUP_ATTRIBUTE');
+    newMessage = newMessage.replace('.requiredGroups', '_REQUIRED_GROUPS');
+    newMessage = newMessage.replace('.externalGroups', '_EXTERNAL_GROUPS');
+    newMessage = newMessage.replace('.attribute.id', '_ATTRIBUTE_ID');
+    newMessage = newMessage.replace(
+      '.attribute.username',
+      '_ATTRIBUTE_USERNAME',
+    );
+    newMessage = newMessage.replace('.attribute.email', '_ATTRIBUTE_USERNAME');
+    newMessage = newMessage.replace('.userProfileURL', '_USER_PROFILE_URL');
+    newMessage = newMessage.replace(
+      '.userProfileIdAttr',
+      '_USER_PROFILE_ID_ATTR',
+    );
+    newMessage = newMessage.replace(
+      '.userProfileUsernameAttr',
+      '_USER_PROFILE_USERNAME_ATTR',
+    );
+    newMessage = newMessage.replace(
+      '.userProfileDisplayNameAttr',
+      '_USER_PROFILE_DISPLAY_NAME_ATTR',
+    );
+    newMessage = newMessage.replace(
+      '.userProfileEmailAttr',
+      '_USER_PROFILE_EMAIL_ATTR',
+    );
+    newMessage = newMessage.replace('.tokenURL', '_TOKEN_URL');
+    newMessage = newMessage.replace('.authorizationURL', '_AUTHORIZATION_URL');
+    newMessage = newMessage.replace('.rolesClaim', '_ROLES_CLAIM');
+    newMessage = newMessage.replace('.accessRole', '_ACCESS_ROLE');
+  }
+  return newMessage;
 }
 
 export function needToLog(
