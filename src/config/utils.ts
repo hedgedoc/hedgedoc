@@ -5,9 +5,12 @@
  */
 import { Loglevel } from './loglevel.enum';
 
-export function toArrayConfig(configValue?: string, separator = ','): string[] {
+export function toArrayConfig(
+  configValue?: string,
+  separator = ',',
+): string[] | undefined {
   if (!configValue) {
-    return [];
+    return undefined;
   }
   if (!configValue.includes(separator)) {
     return [configValue.trim()];

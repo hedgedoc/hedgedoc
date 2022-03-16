@@ -121,7 +121,7 @@ describe('FrontendConfigService', () => {
       disableRequestedAuthnContext: 'samlTestUrl',
       groupAttribute: 'samlTestUrl',
       requiredGroups: ['samlTestUrl'],
-      externalGroups: 'samlTestUrl',
+      externalGroups: ['samlTestUrl'],
       attribute: {
         id: 'samlTestUrl',
         username: 'samlTestUrl',
