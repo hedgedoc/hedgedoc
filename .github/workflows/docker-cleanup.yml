@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+name: Delete old container images
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # every day at midnight
+  workflow_dispatch:
+
+jobs:
+  clean-ghcr:
+    name: Cleanup CI containers
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cleanup CI containers
+        uses: snok/container-retention-policy@v1
+        with:
+          image-names: ${{ github.event.repository.name }}-ci
+          cut-off: A day ago UTC
+          account-type: org
+          org-name: ${{ github.repository_owner }}
+          token: ${{ secrets.PAT_IMAGE_CLEANUP }}
