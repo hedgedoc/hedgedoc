@@ -60,7 +60,7 @@ export class GroupsService {
     const group = await this.groupRepository.findOne({
       where: { name: name },
     });
-    if (group === undefined) {
+    if (group === null) {
       throw new NotInDBError(`Group with name '${name}' not found`);
     }
     return group;

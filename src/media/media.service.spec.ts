@@ -210,7 +210,7 @@ describe('MediaService', () => {
     });
     it("fails: can't find mediaUpload", async () => {
       const testFileName = 'testFilename';
-      jest.spyOn(mediaRepo, 'findOne').mockResolvedValueOnce(undefined);
+      jest.spyOn(mediaRepo, 'findOne').mockResolvedValueOnce(null);
       await expect(service.findUploadByFilename(testFileName)).rejects.toThrow(
         NotInDBError,
       );
@@ -243,8 +243,8 @@ describe('MediaService', () => {
         } as User);
         expect(mediaList).toEqual([]);
       });
-      it('with error (undefined as return value of find)', async () => {
-        jest.spyOn(mediaRepo, 'find').mockResolvedValueOnce(undefined);
+      it('with error (null as return value of find)', async () => {
+        jest.spyOn(mediaRepo, 'find').mockResolvedValueOnce(null);
         const mediaList = await service.listUploadsByUser({
           username: username,
         } as User);

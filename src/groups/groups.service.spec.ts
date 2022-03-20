@@ -82,7 +82,7 @@ describe('GroupsService', () => {
       expect(foundGroup.special).toEqual(group.special);
     });
     it('fails with non-existing group', async () => {
-      jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(undefined);
+      jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(null);
       await expect(service.getGroupByName('i_dont_exist')).rejects.toThrow(
         NotInDBError,
       );

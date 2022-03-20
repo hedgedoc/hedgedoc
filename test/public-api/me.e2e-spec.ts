@@ -114,6 +114,7 @@ describe('Me', () => {
       const history = await testSetup.historyService.getEntriesByUser(user);
       const historyEntry: HistoryEntryDto = response.body;
       expect(historyEntry.pinStatus).toEqual(true);
+
       let theEntry: HistoryEntryDto;
       for (const entry of history) {
         if (

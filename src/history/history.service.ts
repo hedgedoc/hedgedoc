@@ -5,7 +5,7 @@
  */
 import { Injectable } from '@nestjs/common';
 import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
-import { Connection, Repository } from 'typeorm';
+import { Connection, Equal, Repository } from 'typeorm';
 
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
@@ -41,7 +41,7 @@ export class HistoryService {
    */
   async getEntriesByUser(user: User): Promise<HistoryEntry[]> {
     return await this.historyEntryRepository.find({
-      where: { user: user },
+      where: { user: Equal(user) },
       relations: ['note', 'note.aliases', 'user'],
     });
   }
@@ -56,8 +56,8 @@ export class HistoryService {
   async getEntryByNote(note: Note, user: User): Promise<HistoryEntry> {
     const entry = await this.historyEntryRepository.findOne({
       where: {
-        note: note,
-        user: user,
+        note: Equal(note),
+        user: Equal(user),
       },
       relations: ['note', 'note.aliases', 'user'],
     });
@@ -150,7 +150,7 @@ export class HistoryService {
   ): Promise<void> {
     await this.connection.transaction(async (manager) => {
       const currentHistory = await manager.find<HistoryEntry>(HistoryEntry, {
-        where: { user: user },
+        where: { user: Equal(user) },
         relations: ['note', 'note.aliases', 'user'],
       });
       for (const entry of currentHistory) {

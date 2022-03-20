@@ -3,7 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Column, Entity, ManyToOne, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 import { Note } from '../notes/note.entity';
 import { User } from '../users/user.entity';
@@ -16,16 +22,19 @@ export class HistoryEntry {
    * primary keys.
    * See https://github.com/typeorm/typeorm/issues/6908
    */
+  @PrimaryColumn()
+  userId: string;
 
   @ManyToOne((_) => User, (user) => user.historyEntries, {
     onDelete: 'CASCADE',
-    primary: true,
   })
   user: User;
 
+  @PrimaryColumn()
+  noteId: string;
+
   @ManyToOne((_) => Note, (note) => note.historyEntries, {
     onDelete: 'CASCADE',
-    primary: true,
   })
   note: Note;
 

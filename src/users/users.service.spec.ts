@@ -115,7 +115,7 @@ describe('UsersService', () => {
       expect(getUser.displayName).toEqual(displayname);
     });
     it('fails when user does not exits', async () => {
-      jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(undefined);
+      jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(null);
       await expect(service.getUserByUsername(username)).rejects.toThrow(
         NotInDBError,
       );

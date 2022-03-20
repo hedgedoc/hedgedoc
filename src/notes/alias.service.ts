@@ -45,7 +45,7 @@ export class AliasService {
     const foundAlias = await this.aliasRepository.findOne({
       where: { name: alias },
     });
-    if (foundAlias !== undefined) {
+    if (foundAlias !== null) {
       this.logger.debug(`The alias '${alias}' is already used.`, 'addAlias');
       throw new AlreadyInDBError(`The alias '${alias}' is already used.`);
     }
@@ -53,7 +53,7 @@ export class AliasService {
     const foundNote = await this.noteRepository.findOne({
       where: { publicId: alias },
     });
-    if (foundNote !== undefined) {
+    if (foundNote !== null) {
       this.logger.debug(
         `The alias '${alias}' is already a public id.`,
         'addAlias',
@@ -113,8 +113,12 @@ export class AliasService {
       throw new NotInDBError(`The alias '${alias}' is not used by this note.`);
     }
 
-    const oldPrimary = await this.aliasRepository.findOne(oldPrimaryId);
-    const newPrimary = await this.aliasRepository.findOne(newPrimaryId);
+    const oldPrimary = await this.aliasRepository.findOneBy({
+      id: oldPrimaryId,
+    });
+    const newPrimary = await this.aliasRepository.findOneBy({
+      id: newPrimaryId,
+    });
 
     if (!oldPrimary || !newPrimary) {
       throw new Error('This should not happen!');

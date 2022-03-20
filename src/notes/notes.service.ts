@@ -5,7 +5,7 @@
  */
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Equal, Repository } from 'typeorm';
 
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import {
@@ -56,7 +56,7 @@ export class NotesService {
    */
   async getUserNotes(user: User): Promise<Note[]> {
     const notes = await this.noteRepository.find({
-      where: { owner: user },
+      where: { owner: Equal(user) },
       relations: [
         'owner',
         'userPermissions',
@@ -65,7 +65,7 @@ export class NotesService {
         'aliases',
       ],
     });
-    if (notes === undefined) {
+    if (notes === null) {
       return [];
     }
     return notes;
@@ -188,7 +188,7 @@ export class NotesService {
       .setParameter('noteIdOrAlias', noteIdOrAlias)
       .getOne();
 
-    if (note === undefined) {
+    if (note === null) {
       this.logger.debug(
         `Could not find note '${noteIdOrAlias}'`,
         'getNoteByIdOrAlias',

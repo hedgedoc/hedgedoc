@@ -6,7 +6,7 @@
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, EntityManager, Repository } from 'typeorm';
 
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
@@ -49,8 +49,26 @@ describe('PermissionsService', () => {
      * array and the overrideProvider call, as otherwise we have two instances
      * and the mock of createQueryBuilder replaces the wrong one
      * **/
-    userRepo = new Repository<User>();
-    noteRepo = new Repository<Note>();
+    userRepo = new Repository<User>(
+      '',
+      new EntityManager(
+        new DataSource({
+          type: 'sqlite',
+          database: ':memory:',
+        }),
+      ),
+      undefined,
+    );
+    noteRepo = new Repository<Note>(
+      '',
+      new EntityManager(
+        new DataSource({
+          type: 'sqlite',
+          database: ':memory:',
+        }),
+      ),
+      undefined,
+    );
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PermissionsService,
@@ -655,7 +673,9 @@ describe('PermissionsService', () => {
         const noteWithPreexistingPermissions: Note = { ...note };
         noteWithPreexistingPermissions.userPermissions = Promise.resolve([
           {
+            noteId: '',
             note: noteWithPreexistingPermissions,
+            userId: '',
             user: user,
             canEdit: !userPermissionUpdate.canEdit,
           },
@@ -727,7 +747,9 @@ describe('PermissionsService', () => {
         const noteWithUserPermission: Note = { ...note };
         noteWithUserPermission.userPermissions = Promise.resolve([
           {
+            noteId: '',
             note: noteWithUserPermission,
+            userId: '',
             user: user,
             canEdit: !userPermissionUpdate.canEdit,
           },
@@ -763,7 +785,9 @@ describe('PermissionsService', () => {
         const noteWithPreexistingPermissions: Note = { ...note };
         noteWithPreexistingPermissions.groupPermissions = Promise.resolve([
           {
+            noteId: '',
             note: noteWithPreexistingPermissions,
+            groupId: 0,
             group: group,
             canEdit: !groupPermissionUpdate.canEdit,
           },
@@ -793,7 +817,9 @@ describe('PermissionsService', () => {
         const noteWithPreexistingPermissions: Note = { ...note };
         noteWithPreexistingPermissions.groupPermissions = Promise.resolve([
           {
+            noteId: '',
             note: noteWithPreexistingPermissions,
+            groupId: 0,
             group: group,
             canEdit: !groupPermissionUpdate.canEdit,
           },
@@ -829,14 +855,18 @@ describe('PermissionsService', () => {
         const noteWithPreexistingPermissions: Note = { ...note };
         noteWithPreexistingPermissions.groupPermissions = Promise.resolve([
           {
+            noteId: '',
             note: noteWithPreexistingPermissions,
+            groupId: 0,
             group: group,
             canEdit: !groupPermissionUpdate.canEdit,
           },
         ]);
         noteWithPreexistingPermissions.userPermissions = Promise.resolve([
           {
+            noteId: '',
             note: noteWithPreexistingPermissions,
+            userId: '',
             user: user,
             canEdit: !userPermissionUpdate.canEdit,
           },

@@ -7,7 +7,7 @@ import { Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import crypto, { randomBytes } from 'crypto';
-import { Repository } from 'typeorm';
+import { Equal, Repository } from 'typeorm';
 
 import {
   NotInDBError,
@@ -104,7 +104,7 @@ export class AuthService {
     const accessToken = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
     });
-    if (accessToken === undefined) {
+    if (accessToken === null) {
       throw new NotInDBError(`AuthToken for key '${keyId}' not found`);
     }
     accessToken.lastUsedAt = new Date();
@@ -119,7 +119,7 @@ export class AuthService {
       where: { keyId: keyId },
       relations: ['user'],
     });
-    if (accessToken === undefined) {
+    if (accessToken === null) {
       throw new NotInDBError(`AuthToken '${token}' not found`);
     }
     // Hash the user-provided token
@@ -150,9 +150,9 @@ export class AuthService {
 
   async getTokensByUser(user: User): Promise<AuthToken[]> {
     const tokens = await this.authTokenRepository.find({
-      where: { user: user },
+      where: { user: Equal(user) },
     });
-    if (tokens === undefined) {
+    if (tokens === null) {
       return [];
     }
     return tokens;
@@ -162,7 +162,7 @@ export class AuthService {
     const token = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
     });
-    if (token === undefined) {
+    if (token === null) {
       throw new NotInDBError(`AuthToken for key '${keyId}' not found`);
     }
     await this.authTokenRepository.remove(token);
