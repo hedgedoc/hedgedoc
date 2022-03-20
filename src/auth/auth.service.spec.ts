@@ -108,7 +108,7 @@ describe('AuthService', () => {
     });
     describe('fails:', () => {
       it('AuthToken could not be found', async () => {
-        jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(undefined);
+        jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(null);
         await expect(
           service.getAuthTokenAndValidate(authToken.keyId, token),
         ).rejects.toThrow(NotInDBError);
@@ -157,7 +157,7 @@ describe('AuthService', () => {
       await service.setLastUsedToken(authToken.keyId);
     });
     it('throws if the token is not in the database', async () => {
-      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(undefined);
+      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(null);
       await expect(service.setLastUsedToken(authToken.keyId)).rejects.toThrow(
         NotInDBError,
       );
@@ -226,7 +226,7 @@ describe('AuthService', () => {
       await service.removeToken(authToken.keyId);
     });
     it('throws if the token is not in the database', async () => {
-      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(undefined);
+      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(null);
       await expect(service.removeToken(authToken.keyId)).rejects.toThrow(
         NotInDBError,
       );

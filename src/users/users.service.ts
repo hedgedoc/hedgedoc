@@ -89,7 +89,7 @@ export class UsersService {
       where: { username: username },
       relations: withRelations,
     });
-    if (user === undefined) {
+    if (user === null) {
       throw new NotInDBError(`User with username '${username}' not found`);
     }
     return user;

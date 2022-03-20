@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 
 import { Group } from '../groups/group.entity';
 import { Note } from '../notes/note.entity';
@@ -17,14 +17,18 @@ export class NoteGroupPermission {
    * See https://github.com/typeorm/typeorm/issues/6908
    */
 
+  @PrimaryColumn()
+  groupId: number;
+
   @ManyToOne((_) => Group, {
-    primary: true,
     onDelete: 'CASCADE', // This deletes the NoteGroupPermission, when the associated Group is deleted
   })
   group: Group;
 
+  @PrimaryColumn()
+  noteId: string;
+
   @ManyToOne((_) => Note, (note) => note.groupPermissions, {
-    primary: true,
     onDelete: 'CASCADE', // This deletes the NoteGroupPermission, when the associated Note is deleted
   })
   note: Note;

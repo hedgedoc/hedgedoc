@@ -8,7 +8,7 @@ import { ModuleRef } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import crypto from 'crypto';
 import * as FileType from 'file-type';
-import { Repository } from 'typeorm';
+import { Equal, Repository } from 'typeorm';
 
 import mediaConfiguration, { MediaConfig } from '../config/media.config';
 import { ClientError, NotInDBError } from '../errors/errors';
@@ -128,10 +128,11 @@ export class MediaService {
    * @throws {MediaBackendError} - there was an error retrieving the url
    */
   async findUploadByFilename(filename: string): Promise<MediaUpload> {
-    const mediaUpload = await this.mediaUploadRepository.findOne(filename, {
+    const mediaUpload = await this.mediaUploadRepository.findOne({
+      where: { id: filename },
       relations: ['user'],
     });
-    if (mediaUpload === undefined) {
+    if (mediaUpload === null) {
       throw new NotInDBError(
         `MediaUpload with filename '${filename}' not found`,
       );
@@ -147,10 +148,10 @@ export class MediaService {
    */
   async listUploadsByUser(user: User): Promise<MediaUpload[]> {
     const mediaUploads = await this.mediaUploadRepository.find({
-      where: { user: user },
+      where: { user: Equal(user) },
       relations: ['user', 'note'],
     });
-    if (mediaUploads === undefined) {
+    if (mediaUploads === null) {
       return [];
     }
     return mediaUploads;
@@ -164,10 +165,10 @@ export class MediaService {
    */
   async listUploadsByNote(note: Note): Promise<MediaUpload[]> {
     const mediaUploads = await this.mediaUploadRepository.find({
-      where: { note: note },
+      where: { note: Equal(note) },
       relations: ['user', 'note'],
     });
-    if (mediaUploads === undefined) {
+    if (mediaUploads === null) {
       return [];
     }
     return mediaUploads;

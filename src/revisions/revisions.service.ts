@@ -5,7 +5,7 @@
  */
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Equal, Repository } from 'typeorm';
 
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
@@ -36,7 +36,7 @@ export class RevisionsService {
   async getAllRevisions(note: Note): Promise<Revision[]> {
     return await this.revisionRepository.find({
       where: {
-        note: note,
+        note: Equal(note),
       },
     });
   }
@@ -50,7 +50,7 @@ export class RevisionsService {
   async purgeRevisions(note: Note): Promise<Revision[]> {
     const revisions = await this.revisionRepository.find({
       where: {
-        note: note,
+        note: Equal(note),
       },
     });
     const latestRevison = await this.getLatestRevision(note);
@@ -66,10 +66,10 @@ export class RevisionsService {
     const revision = await this.revisionRepository.findOne({
       where: {
         id: revisionId,
-        note: note,
+        note: Equal(note),
       },
     });
-    if (revision === undefined) {
+    if (revision === null) {
       throw new NotInDBError(
         `Revision with ID ${revisionId} for note ${note.id} not found.`,
       );
@@ -80,14 +80,14 @@ export class RevisionsService {
   async getLatestRevision(note: Note): Promise<Revision> {
     const revision = await this.revisionRepository.findOne({
       where: {
-        note: note,
+        note: Equal(note),
       },
       order: {
         createdAt: 'DESC',
         id: 'DESC',
       },
     });
-    if (revision === undefined) {
+    if (revision === null) {
       throw new NotInDBError(`Revision for note ${note.id} not found.`);
     }
     return revision;
@@ -96,13 +96,13 @@ export class RevisionsService {
   async getFirstRevision(note: Note): Promise<Revision> {
     const revision = await this.revisionRepository.findOne({
       where: {
-        note: note,
+        note: Equal(note),
       },
       order: {
         createdAt: 'ASC',
       },
     });
-    if (revision === undefined) {
+    if (revision === null) {
       throw new NotInDBError(`Revision for note ${note.id} not found.`);
     }
     return revision;

@@ -120,8 +120,8 @@ describe('AliasService', () => {
         jest
           .spyOn(noteRepo, 'save')
           .mockImplementationOnce(async (note: Note): Promise<Note> => note);
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
-        jest.spyOn(aliasRepo, 'findOne').mockResolvedValueOnce(undefined);
+        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(null);
+        jest.spyOn(aliasRepo, 'findOne').mockResolvedValueOnce(null);
         const savedAlias = await service.addAlias(note, alias);
         expect(savedAlias.name).toEqual(alias);
         expect(savedAlias.primary).toBeTruthy();
@@ -131,8 +131,8 @@ describe('AliasService', () => {
         jest
           .spyOn(noteRepo, 'save')
           .mockImplementationOnce(async (note: Note): Promise<Note> => note);
-        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(undefined);
-        jest.spyOn(aliasRepo, 'findOne').mockResolvedValueOnce(undefined);
+        jest.spyOn(noteRepo, 'findOne').mockResolvedValueOnce(null);
+        jest.spyOn(aliasRepo, 'findOne').mockResolvedValueOnce(null);
         const savedAlias = await service.addAlias(note, alias2);
         expect(savedAlias.name).toEqual(alias2);
         expect(savedAlias.primary).toBeFalsy();
@@ -230,7 +230,7 @@ describe('AliasService', () => {
 
     it('mark the alias as primary', async () => {
       jest
-        .spyOn(aliasRepo, 'findOne')
+        .spyOn(aliasRepo, 'findOneBy')
         .mockResolvedValueOnce(alias)
         .mockResolvedValueOnce(alias2);
       jest

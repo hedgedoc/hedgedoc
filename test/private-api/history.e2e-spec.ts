@@ -190,7 +190,7 @@ describe('History', () => {
     const alias = (await entry.note.aliases).filter((alias) => alias.primary)[0]
       .name;
     await agent
-      .put(`/api/private/me/history/${alias || 'undefined'}`)
+      .put(`/api/private/me/history/${alias || 'null'}`)
       .send({ pinStatus: true })
       .expect(200);
     const userEntries = await testSetup.historyService.getEntriesByUser(user);
@@ -206,7 +206,7 @@ describe('History', () => {
     const entry2 = await historyService.updateHistoryEntryTimestamp(note, user);
     const entryDto = await historyService.toHistoryEntryDto(entry2);
     await agent
-      .delete(`/api/private/me/history/${alias || 'undefined'}`)
+      .delete(`/api/private/me/history/${alias || 'null'}`)
       .expect(204);
     const userEntries = await historyService.getEntriesByUser(user);
     expect(userEntries.length).toEqual(1);

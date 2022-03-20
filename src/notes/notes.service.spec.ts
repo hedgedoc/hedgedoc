@@ -6,7 +6,7 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, EntityManager, Repository } from 'typeorm';
 
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
@@ -121,7 +121,16 @@ describe('NotesService', () => {
      * the overrideProvider call, as otherwise we have two instances
      * and the mock of createQueryBuilder replaces the wrong one
      * **/
-    userRepo = new Repository<User>();
+    userRepo = new Repository<User>(
+      '',
+      new EntityManager(
+        new DataSource({
+          type: 'sqlite',
+          database: ':memory:',
+        }),
+      ),
+      undefined,
+    );
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         NotesService,
@@ -202,7 +211,7 @@ describe('NotesService', () => {
       const note = Note.create(user, alias) as Note;
 
       it('with no note', async () => {
-        jest.spyOn(noteRepo, 'find').mockResolvedValueOnce(undefined);
+        jest.spyOn(noteRepo, 'find').mockResolvedValueOnce(null);
         const notes = await service.getUserNotes(user);
         expect(notes).toEqual([]);
       });
@@ -374,7 +383,7 @@ describe('NotesService', () => {
           where: () => createQueryBuilder,
           orWhere: () => createQueryBuilder,
           setParameter: () => createQueryBuilder,
-          getOne: () => undefined,
+          getOne: () => null,
         };
         jest
           .spyOn(noteRepo, 'createQueryBuilder')

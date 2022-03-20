@@ -98,7 +98,7 @@ describe('RevisionsService', () => {
       expect(await service.getRevision({} as Note, 1)).toEqual(revision);
     });
     it('throws if the revision is not in the databse', async () => {
-      jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(undefined);
+      jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(null);
       await expect(service.getRevision({} as Note, 1)).rejects.toThrow(
         NotInDBError,
       );

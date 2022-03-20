@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 
 import { Note } from '../notes/note.entity';
 import { User } from '../users/user.entity';
@@ -17,15 +17,19 @@ export class NoteUserPermission {
    * See https://github.com/typeorm/typeorm/issues/6908
    */
 
+  @PrimaryColumn()
+  userId: string;
+
   @ManyToOne((_) => User, {
-    primary: true,
     onDelete: 'CASCADE', // This deletes the NoteUserPermission, when the associated Note is deleted
     orphanedRowAction: 'delete', // This ensures the whole row is deleted when the Permission stops being referenced
   })
   user: User;
 
+  @PrimaryColumn()
+  noteId: string;
+
   @ManyToOne((_) => Note, (note) => note.userPermissions, {
-    primary: true,
     onDelete: 'CASCADE', // This deletes the NoteUserPermission, when the associated Note is deleted
     orphanedRowAction: 'delete', // This ensures the whole row is deleted when the Permission stops being referenced
   })
