@@ -2248,7 +2248,7 @@ __metadata:
     markmap-lib: 0.12.0
     markmap-view: 0.2.7
     mermaid: 8.14.0
-    netlify-cli: 9.13.0
+    netlify-cli: 9.13.3
     next: 12.1.0
     optional-js: 2.3.0
     prettier: 2.6.0
@@ -2737,9 +2737,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/build@npm:^26.4.0":
-  version: 26.4.0
-  resolution: "@netlify/build@npm:26.4.0"
+"@netlify/build@npm:^26.5.0":
+  version: 26.5.0
+  resolution: "@netlify/build@npm:26.5.0"
   dependencies:
     "@bugsnag/js": ^7.0.0
     "@netlify/cache-utils": ^4.0.0
@@ -2796,7 +2796,7 @@ __metadata:
     yargs: ^17.3.1
   bin:
     netlify-build: src/core/bin.js
-  checksum: b00e03f3ecdc94d341573d7c6066a16eaa16a5a61e96571a36c7a5ec5c8f6bcf9af2e1c728ec069ccfad7c3049c1a54a5161ad49a678d3178e47bea5e1a393e8
+  checksum: 4ace1411637560357251b4276b794641922df5791e33a7f85370ac927be731d2b5d21697e04c59526c63581f6e3958978a40e6fb56fdad6389b8497f92cf573f
   languageName: node
   linkType: hard
 
@@ -3089,6 +3089,13 @@ __metadata:
   version: 6.16.0
   resolution: "@netlify/plugins-list@npm:6.16.0"
   checksum: 18c508f9ffe163f480bc1a50b4b68738c1f346777e9643ce6d5df4720263b12e1ee855fe6bc9e7baeed0a1e485977fbe6a30ae549a0c29f0e217b571a8d2a3ec
+  languageName: node
+  linkType: hard
+
+"@netlify/plugins-list@npm:^6.16.1":
+  version: 6.16.1
+  resolution: "@netlify/plugins-list@npm:6.16.1"
+  checksum: 15bd980874e822d56d7dbda3e0bd9f13eb98bf769d8673c8f6ccf94a44b71cc693a696bf024bda44ddacdb830ae277ee2e4954ef5392a63b209a23a2ab349dc9
   languageName: node
   linkType: hard
 
@@ -15007,16 +15014,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"netlify-cli@npm:9.13.0":
-  version: 9.13.0
-  resolution: "netlify-cli@npm:9.13.0"
+"netlify-cli@npm:9.13.3":
+  version: 9.13.3
+  resolution: "netlify-cli@npm:9.13.3"
   dependencies:
-    "@netlify/build": ^26.4.0
+    "@netlify/build": ^26.5.0
     "@netlify/config": ^17.0.18
     "@netlify/framework-info": ^9.0.2
     "@netlify/local-functions-proxy": ^1.1.1
     "@netlify/plugin-edge-handlers": ^3.0.7
-    "@netlify/plugins-list": ^6.16.0
+    "@netlify/plugins-list": ^6.16.1
     "@netlify/routing-local-proxy": ^0.34.1
     "@netlify/zip-it-and-ship-it": ^5.9.0
     "@octokit/rest": ^18.0.0
@@ -15123,7 +15130,7 @@ __metadata:
   bin:
     netlify: bin/run
     ntl: bin/run
-  checksum: 312f1a3ab93036679a67970aef77a4c04281652600ab55bc542eb04c8edbd6e8d4f0ba54a8cc271a6a9e0f9f3c7a231a2bd334f52ffc08fdc1166f5666197416
+  checksum: 3060ea2fc7bf885147cc75d97aa12afa2a5e9ae14fc4324573d0d2dc311f00359fab2ad89a61b2cb297eeb7df4d8487e5d2a9c74aea2d0c7189bad457bc6c1ac
   languageName: node
   linkType: hard
 
