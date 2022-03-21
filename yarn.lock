@@ -1729,13 +1729,13 @@ __metadata:
   linkType: hard
 
 "@codemirror/lang-rust@npm:^0.19.0":
-  version: 0.19.1
-  resolution: "@codemirror/lang-rust@npm:0.19.1"
+  version: 0.19.2
+  resolution: "@codemirror/lang-rust@npm:0.19.2"
   dependencies:
-    "@codemirror/highlight": ^0.19.0
+    "@codemirror/highlight": ^0.19.7
     "@codemirror/language": ^0.19.0
     "@lezer/rust": ^0.15.0
-  checksum: 4438f2e7387d0e161e758b982e19dbb501c77e49a7cea9286829ee6f110196312b756cb32cd97a368b6588e7e39f35d2ad92b6e522e5ba32d83389f67e962a52
+  checksum: 44f0b325c7e87afea3525e14ff038413f5ffd128905c51fe30dfc02104a446222e6526ca60ef6d500560e4db8ba7ff5d6a37265e8696f2b1e79c67a52de11c48
   languageName: node
   linkType: hard
 
@@ -2681,11 +2681,11 @@ __metadata:
   linkType: hard
 
 "@lezer/rust@npm:^0.15.0":
-  version: 0.15.0
-  resolution: "@lezer/rust@npm:0.15.0"
+  version: 0.15.1
+  resolution: "@lezer/rust@npm:0.15.1"
   dependencies:
     "@lezer/lr": ^0.15.0
-  checksum: 3ebcf6df77453fdd0f88f2e0ce3c6ce5dbe4250030e3e41810942cb371a02bcad07596224234c0102b2133b671be1ce827c065b9894d8a3dcaadd914aa332a0f
+  checksum: ced59250470442d668e3e258c9de48393f03b15bd35a5f33f636f5949d2b9a60e6008c65fe0288d93e3d9a8b0c3218977718fc35874a4a5b6c5c2fc62e642944
   languageName: node
   linkType: hard
 
