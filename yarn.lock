@@ -5376,7 +5376,7 @@ __metadata:
     swagger-ui-express: 4.3.0
     ts-jest: 27.1.3
     ts-node: 10.7.0
-    tsconfig-paths: 3.14.0
+    tsconfig-paths: 3.14.1
     typeorm: 0.2.45
     typescript: 4.6.2
   languageName: unknown
@@ -7150,6 +7150,13 @@ __metadata:
   version: 1.2.5
   resolution: "minimist@npm:1.2.5"
   checksum: 86706ce5b36c16bfc35c5fe3dbb01d5acdc9a22f2b6cc810b6680656a1d2c0e44a0159c9a3ba51fb072bb5c203e49e10b51dcd0eec39c481f4c42086719bae52
+  languageName: node
+  linkType: hard
+
+"minimist@npm:^1.2.6":
+  version: 1.2.6
+  resolution: "minimist@npm:1.2.6"
+  checksum: d15428cd1e11eb14e1233bcfb88ae07ed7a147de251441d61158619dfb32c4d7e9061d09cab4825fdee18ecd6fce323228c8c47b5ba7cd20af378ca4048fb3fb
   languageName: node
   linkType: hard
 
@@ -9782,6 +9789,18 @@ __metadata:
     minimist: ^1.2.0
     strip-bom: ^3.0.0
   checksum: edd81e8f053a67e4a308037d2668c1fff06b01d4c3989170b90eb7eae5bdbebcc4910a8b7fbe0af3c21c62b68f67c1a9b9de5d9fe96cfe15ca45f7a198ee2c0c
+  languageName: node
+  linkType: hard
+
+"tsconfig-paths@npm:3.14.1":
+  version: 3.14.1
+  resolution: "tsconfig-paths@npm:3.14.1"
+  dependencies:
+    "@types/json5": ^0.0.29
+    json5: ^1.0.1
+    minimist: ^1.2.6
+    strip-bom: ^3.0.0
+  checksum: 8afa01c673ebb4782ba53d3a12df97fa837ce524f8ad38ee4e2b2fd57f5ac79abc21c574e9e9eb014d93efe7fe8214001b96233b5c6ea75bd1ea82afe17a4c6d
   languageName: node
   linkType: hard
 
