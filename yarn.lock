@@ -2274,7 +2274,7 @@ __metadata:
     typescript: 4.6.2
     use-resize-observer: 8.0.0
     uuid: 8.3.2
-    vega: 5.22.0
+    vega: 5.22.1
     vega-embed: 6.20.8
     vega-lite: 5.2.0
     words-count: 2.0.2
@@ -20365,7 +20365,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-scenegraph@npm:^4.10.0, vega-scenegraph@npm:^4.9.2, vega-scenegraph@npm:^4.9.3, vega-scenegraph@npm:~4.10.0":
+"vega-scenegraph@npm:^4.10.0, vega-scenegraph@npm:^4.9.2, vega-scenegraph@npm:^4.9.3":
   version: 4.10.0
   resolution: "vega-scenegraph@npm:4.10.0"
   dependencies:
@@ -20376,6 +20376,20 @@ __metadata:
     vega-scale: ^7.2.0
     vega-util: ^1.15.2
   checksum: b572db72f3d1af66b5aaed40480fb7891427c497bf169c6deb2f0a4a4798e5fc9e08fa5eb995f9c36251826a7e8d3aa5130c9898cbddcffdb4bce900d1fb9d64
+  languageName: node
+  linkType: hard
+
+"vega-scenegraph@npm:~4.10.1":
+  version: 4.10.1
+  resolution: "vega-scenegraph@npm:4.10.1"
+  dependencies:
+    d3-path: ^3.0.1
+    d3-shape: ^3.1.0
+    vega-canvas: ^1.2.5
+    vega-loader: ^4.4.0
+    vega-scale: ^7.2.0
+    vega-util: ^1.15.2
+  checksum: b897e9408d5fad25a1ebcbb468892f188c0713a1305fa739093d124a0787125b84a198ec0fb23b2c3f843c572e515f95240fba06457fbca7e19331a68e5b5be4
   languageName: node
   linkType: hard
 
@@ -20518,9 +20532,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega@npm:5.22.0":
-  version: 5.22.0
-  resolution: "vega@npm:5.22.0"
+"vega@npm:5.22.1":
+  version: 5.22.1
+  resolution: "vega@npm:5.22.1"
   dependencies:
     vega-crossfilter: ~4.1.0
     vega-dataflow: ~5.7.4
@@ -20539,7 +20553,7 @@ __metadata:
     vega-regression: ~1.1.0
     vega-runtime: ~6.1.3
     vega-scale: ~7.2.0
-    vega-scenegraph: ~4.10.0
+    vega-scenegraph: ~4.10.1
     vega-statistics: ~1.8.0
     vega-time: ~2.1.0
     vega-transforms: ~4.10.0
@@ -20549,7 +20563,7 @@ __metadata:
     vega-view-transforms: ~4.5.8
     vega-voronoi: ~4.2.0
     vega-wordcloud: ~4.1.3
-  checksum: cdfbe262ba65220803e961b27378b8f458ac02764aff92dd8421e1b9ed1032f7579cb29a7f869596191f855073afc9f54f7a948f36c6e3e15290c4b829cac1a8
+  checksum: dc58536dd39fc62850a494d4893b0f8b84664b42f4410fa7aafe52ad54aea62a619804d62e2ae8b9d67bd587ee8ead7c1cf63695b980fce824e5af576928c857
   languageName: node
   linkType: hard
 
