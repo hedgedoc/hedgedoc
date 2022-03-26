@@ -2186,9 +2186,9 @@ __metadata:
     "@types/markdown-it": 12.2.3
     "@types/markdown-it-container": 2.0.5
     "@types/markdown-it-plantuml": 1.4.1
-    "@types/mermaid": 8.2.8
+    "@types/mermaid": 8.2.9
     "@types/node": 16.11.26
-    "@types/react": 17.0.41
+    "@types/react": 17.0.43
     "@types/react-bootstrap-typeahead": 5.1.8
     "@types/react-dom": 17.0.14
     "@types/sass": 1.43.1
@@ -4678,10 +4678,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mermaid@npm:8.2.8":
-  version: 8.2.8
-  resolution: "@types/mermaid@npm:8.2.8"
-  checksum: 6a628aeb33012bab61276df93aa48b80ee1dc1bf49537f2d5ef605ed79cd80a52b8de0c4f872ff80b0cfcb043aede8f440aaf05787148ab703aa11a69ef49067
+"@types/mermaid@npm:8.2.9":
+  version: 8.2.9
+  resolution: "@types/mermaid@npm:8.2.9"
+  checksum: 5602d4bc3a1ae9cbe7b5f674cdf19c1d0334e1be6c35546ca216ae28763cf1693c2d1f8364c5c801d73c1ff85bf37d77a07abc832ffcbe0450453ceb39907ec8
   languageName: node
   linkType: hard
 
@@ -4790,7 +4790,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:17.0.41, @types/react@npm:>=16.14.8, @types/react@npm:>=16.9.11, @types/react@npm:^17.0.11":
+"@types/react@npm:*, @types/react@npm:>=16.14.8, @types/react@npm:>=16.9.11, @types/react@npm:^17.0.11":
   version: 17.0.41
   resolution: "@types/react@npm:17.0.41"
   dependencies:
@@ -4798,6 +4798,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 1b086ec0ea5d666f05e19e0724e41278d27a2ca29a2cd71b9d9ab3fe27dba233806eb728d744e092c9fe9637ac738d8c5a05983cde84d215342949b47ecba2ef
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:17.0.43":
+  version: 17.0.43
+  resolution: "@types/react@npm:17.0.43"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 981b0993f5b3ea9d3488b8cc883201e8ae47ba7732929f788f450a79fd72829e658080d5084e67caa008e58d989b0abc1d5f36ff0a1cda09315ea3a3c0c9dc11
   languageName: node
   linkType: hard
 
