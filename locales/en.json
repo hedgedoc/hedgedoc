@@ -496,11 +496,13 @@
         "avatarOf": "avatar of '{{name}}'",
         "why": "Why?",
         "loading": "Loading ...",
-        "successfullyCopied": "Copied!",
-        "copyError": "Error while copying!",
         "errorOccurred": "An error occurred",
         "errorWhileLoadingLibrary": "An unexpected error occurred while loading '{{name}}'.\nCheck the browser console for more information.\nReport this error only if it comes up again.",
         "readForMoreInfo": "Read here for more information"
+    },
+    "copyOverlay": {
+      "error": "Error while copying!",
+      "success": "Copied!"
     },
     "login": {
         "chooseMethod": "Choose method",

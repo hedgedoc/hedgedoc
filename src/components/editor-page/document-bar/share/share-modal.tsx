@@ -26,18 +26,14 @@ export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => 
     <CommonModal show={show} onHide={onHide} showCloseButton={true} title={'editor.modal.shareLink.title'}>
       <Modal.Body>
         <Trans i18nKey={'editor.modal.shareLink.editorDescription'} />
-        <CopyableField
-          content={`${baseUrl}n/${id}?${editorMode}`}
-          nativeShareButton={true}
-          url={`${baseUrl}n/${id}?${editorMode}`}
-        />
+        <CopyableField content={`${baseUrl}n/${id}?${editorMode}`} shareOriginUrl={`${baseUrl}n/${id}?${editorMode}`} />
         <ShowIf condition={noteFrontmatter.type === NoteType.SLIDE}>
           <Trans i18nKey={'editor.modal.shareLink.slidesDescription'} />
-          <CopyableField content={`${baseUrl}p/${id}`} nativeShareButton={true} url={`${baseUrl}p/${id}`} />
+          <CopyableField content={`${baseUrl}p/${id}`} shareOriginUrl={`${baseUrl}p/${id}`} />
         </ShowIf>
         <ShowIf condition={noteFrontmatter.type === NoteType.DOCUMENT}>
           <Trans i18nKey={'editor.modal.shareLink.viewOnlyDescription'} />
-          <CopyableField content={`${baseUrl}s/${id}`} nativeShareButton={true} url={`${baseUrl}s/${id}`} />
+          <CopyableField content={`${baseUrl}s/${id}`} shareOriginUrl={`${baseUrl}s/${id}`} />
         </ShowIf>
       </Modal.Body>
     </CommonModal>

@@ -142,6 +142,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
         ref={frameReference}
         referrerPolicy={'no-referrer'}
         className={`border-0 ${frameClasses ?? ''}`}
+        allow={'clipboard-write'}
         {...cypressAttribute('renderer-ready', rendererReady ? 'true' : 'false')}
         {...cypressAttribute('renderer-type', rendererType)}
       />

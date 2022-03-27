@@ -4,62 +4,64 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Button, FormControl, InputGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../../show-if/show-if'
-import { CopyOverlay } from '../copy-overlay'
 import { Logger } from '../../../../utils/logger'
 import { isClientSideRendering } from '../../../../utils/is-client-side-rendering'
+import { CopyToClipboardButton } from '../copy-to-clipboard-button/copy-to-clipboard-button'
 
 export interface CopyableFieldProps {
   content: string
-  nativeShareButton?: boolean
-  url?: string
+  shareOriginUrl?: string
 }
 
 const log = new Logger('CopyableField')
 
-export const CopyableField: React.FC<CopyableFieldProps> = ({ content, nativeShareButton, url }) => {
+/**
+ * Provides an input field with an attached copy button and a share button (if supported by the browser)
+ *
+ * @param content The content to present
+ * @param shareOriginUrl The URL of the page to which the shared content should be linked. If this value is omitted then the share button won't be shown.
+ */
+export const CopyableField: React.FC<CopyableFieldProps> = ({ content, shareOriginUrl }) => {
   useTranslation()
-  const copyButton = useRef<HTMLButtonElement>(null)
+
+  const sharingSupported = useMemo(
+    () => shareOriginUrl !== undefined && isClientSideRendering() && typeof navigator.share === 'function',
+    [shareOriginUrl]
+  )
 
   const doShareAction = useCallback(() => {
-    if (!isClientSideRendering()) {
-      log.error('Native sharing not available in server side rendering')
+    if (!sharingSupported) {
+      log.error('Native sharing not available')
       return
     }
     navigator
       .share({
         text: content,
-        url: url
+        url: shareOriginUrl
       })
       .catch((error: Error) => {
         log.error('Native sharing failed', error)
       })
-  }, [content, url])
-
-  const sharingSupported = useMemo(() => isClientSideRendering() && typeof navigator.share === 'function', [])
+  }, [content, shareOriginUrl, sharingSupported])
 
   return (
-    <Fragment>
-      <InputGroup className='my-3'>
-        <FormControl readOnly={true} className={'text-center'} value={content} />
+    <InputGroup className='my-3'>
+      <FormControl readOnly={true} className={'text-center'} value={content} />
+      <InputGroup.Append>
+        <CopyToClipboardButton variant={'outline-secondary'} content={content} />
+      </InputGroup.Append>
+      <ShowIf condition={sharingSupported}>
         <InputGroup.Append>
-          <Button variant='outline-secondary' ref={copyButton} title={'Copy'}>
-            <ForkAwesomeIcon icon='files-o' />
+          <Button variant='outline-secondary' title={'Share'} onClick={doShareAction}>
+            <ForkAwesomeIcon icon='share-alt' />
           </Button>
         </InputGroup.Append>
-        <ShowIf condition={!!nativeShareButton && sharingSupported}>
-          <InputGroup.Append>
-            <Button variant='outline-secondary' title={'Share'} onClick={doShareAction}>
-              <ForkAwesomeIcon icon='share-alt' />
-            </Button>
-          </InputGroup.Append>
-        </ShowIf>
-      </InputGroup>
-      <CopyOverlay content={content} clickComponent={copyButton} />
-    </Fragment>
+      </ShowIf>
+    </InputGroup>
   )
 }
