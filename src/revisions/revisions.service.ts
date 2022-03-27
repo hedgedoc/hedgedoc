@@ -34,11 +34,11 @@ export class RevisionsService {
   }
 
   async getAllRevisions(note: Note): Promise<Revision[]> {
-    return await this.revisionRepository.find({
-      where: {
-        note: Equal(note),
-      },
-    });
+    this.logger.debug(`Getting all revisions for note ${note.id}`);
+    return await this.revisionRepository
+      .createQueryBuilder('revision')
+      .where('revision.note = :note', { note: note.id })
+      .getMany();
   }
 
   /**
