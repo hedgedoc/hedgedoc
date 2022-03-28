@@ -14,7 +14,7 @@ import { CustomTagWithIdComponentReplacer } from '../../replace-components/custo
 import { YouTubeFrame } from './youtube-frame'
 
 /**
- * Adds youtube video embeddings using link detection and the legacy youtube short code syntax.
+ * Adds YouTube video embeddings using link detection and the legacy YouTube short code syntax.
  */
 export class YoutubeMarkdownExtension extends MarkdownExtension {
   public static readonly tagName = 'app-youtube'
