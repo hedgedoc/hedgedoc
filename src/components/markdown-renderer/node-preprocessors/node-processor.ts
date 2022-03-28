@@ -7,5 +7,5 @@
 import type { Document } from 'domhandler'
 
 export abstract class NodeProcessor {
-  public abstract process(nodes: Document): Document
+  public abstract process(document: Document): Document
 }

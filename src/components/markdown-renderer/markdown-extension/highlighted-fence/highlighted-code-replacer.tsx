@@ -30,17 +30,9 @@ export class HighlightedCodeReplacer extends ComponentReplacer {
     const language = codeNode.attribs['data-highlight-language']
     const extraData = codeNode.attribs['data-extra']
     const extraInfos = /(=(\d+|\+)?)?(!?)/.exec(extraData)
-
-    let showLineNumbers = false
-    let startLineNumberAttribute = ''
-    let wrapLines = false
-
-    if (extraInfos) {
-      showLineNumbers = extraInfos[1]?.startsWith('=') || false
-      startLineNumberAttribute = extraInfos[2]
-      wrapLines = extraInfos[3] === '!'
-    }
-
+    const showLineNumbers = extraInfos ? extraInfos[1]?.startsWith('=') : false
+    const startLineNumberAttribute = extraInfos?.[2] ?? ''
+    const wrapLines = extraInfos?.[3] === '!'
     const startLineNumber =
       startLineNumberAttribute === '+' ? this.lastLineNumber : parseInt(startLineNumberAttribute) || 1
 

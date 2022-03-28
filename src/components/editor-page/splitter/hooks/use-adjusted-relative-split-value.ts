@@ -20,14 +20,11 @@ export const useAdjustedRelativeSplitValue = (
   relativeSplitValue: number
 ): number =>
   useMemo(() => {
-    let splitValue: number
     if (!showLeft && showRight) {
-      splitValue = 0
+      return 0
     } else if (showLeft && !showRight) {
-      splitValue = 100
+      return 100
     } else {
-      splitValue = relativeSplitValue
+      return Math.min(100, Math.max(0, relativeSplitValue))
     }
-
-    return Math.min(100, Math.max(0, splitValue))
   }, [relativeSplitValue, showLeft, showRight])
