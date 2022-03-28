@@ -15,14 +15,14 @@ import { HighlightedCode } from './highlighted-code'
 export class HighlightedCodeReplacer extends ComponentReplacer {
   private lastLineNumber = 0
 
-  private extractCode(codeNode: Element): string | undefined {
+  private static extractCode(codeNode: Element): string | undefined {
     return codeNode.name === 'code' && !!codeNode.attribs['data-highlight-language'] && !!codeNode.children[0]
       ? ComponentReplacer.extractTextChildContent(codeNode)
       : undefined
   }
 
   public replace(codeNode: Element): React.ReactElement | undefined {
-    const code = this.extractCode(codeNode)
+    const code = HighlightedCodeReplacer.extractCode(codeNode)
     if (!code) {
       return
     }

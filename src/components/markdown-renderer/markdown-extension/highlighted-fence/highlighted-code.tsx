@@ -4,15 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { ReactElement } from 'react'
-import React, { Fragment, useEffect, useState } from 'react'
-import convertHtmlToReact from '@hedgedoc/html-to-react'
+import React from 'react'
 import { CopyToClipboardButton } from '../../../common/copyable/copy-to-clipboard-button/copy-to-clipboard-button'
 import styles from './highlighted-code.module.scss'
-import { Logger } from '../../../../utils/logger'
 import { cypressAttribute, cypressId } from '../../../../utils/cypress-attribute'
-
-const log = new Logger('HighlightedCode')
+import { AsyncLibraryLoadingBoundary } from '../../../common/async-library-loading-boundary'
+import { useAsyncHighlightedCodeDom } from './hooks/use-async-highlighted-code-dom'
+import { useAttachLineNumbers } from './hooks/use-attach-line-numbers'
 
 export interface HighlightedCodeProps {
   code: string
@@ -21,68 +19,34 @@ export interface HighlightedCodeProps {
   wrapLines: boolean
 }
 
-/*
- TODO: Test method or rewrite code so this is not necessary anymore
+/**
+ * Shows the given code as highlighted code block.
+ *
+ * @param code The code to highlight
+ * @param language The language that should be used for highlighting
+ * @param startLineNumber The number of the first line in the block. Will be 1 if omitted.
+ * @param wrapLines Defines if lines should be wrapped or if the block should show a scroll bar.
  */
-const escapeHtml = (unsafe: string): string => {
-  return unsafe
-    .replaceAll(/&/g, '&amp;')
-    .replaceAll(/</g, '&lt;')
-    .replaceAll(/>/g, '&gt;')
-    .replaceAll(/"/g, '&quot;')
-    .replaceAll(/'/g, '&#039;')
-}
-
-const replaceCode = (code: string): (ReactElement | null | string)[][] => {
-  return code
-    .split('\n')
-    .filter((line) => !!line)
-    .map((line) => convertHtmlToReact(line, {}))
-}
-
 export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language, startLineNumber, wrapLines }) => {
-  const [dom, setDom] = useState<ReactElement[]>()
-
-  useEffect(() => {
-    import(/* webpackChunkName: "highlight.js" */ '../../../common/hljs/hljs')
-      .then((hljs) => {
-        const languageSupported = (lang: string) => hljs.default.listLanguages().includes(lang)
-        const unreplacedCode =
-          !!language && languageSupported(language)
-            ? hljs.default.highlight(code, { language }).value
-            : escapeHtml(code)
-        const replacedDom = replaceCode(unreplacedCode).map((line, index) => (
-          <Fragment key={index}>
-            <span {...cypressId('linenumber')} className={styles['linenumber']}>
-              {(startLineNumber || 1) + index}
-            </span>
-            <div {...cypressId('codeline')} className={styles['codeline']}>
-              {line}
-            </div>
-          </Fragment>
-        ))
-        setDom(replacedDom)
-      })
-      .catch((error: Error) => {
-        log.error('Error while loading highlight.js', error)
-      })
-  }, [code, language, startLineNumber])
-
   const showGutter = startLineNumber !== undefined
+  const { loading, error, value: highlightedLines } = useAsyncHighlightedCodeDom(code, language)
+  const wrappedDomLines = useAttachLineNumbers(highlightedLines, startLineNumber)
 
   return (
-    <div className={styles['code-highlighter']} {...cypressId('highlighted-code-block')}>
-      <code
-        {...cypressId('code-highlighter')}
-        {...cypressAttribute('showgutter', showGutter ? 'true' : 'false')}
-        {...cypressAttribute('wraplines', wrapLines ? 'true' : 'false')}
-        className={`hljs ${showGutter ? styles['showGutter'] : ''} ${wrapLines ? styles['wrapLines'] : ''}`}>
-        {dom}
-      </code>
-      <div className={'text-right button-inside'}>
-        <CopyToClipboardButton content={code} {...cypressId('copy-code-button')} />
+    <AsyncLibraryLoadingBoundary loading={loading} error={error} componentName={'highlight.js'}>
+      <div className={styles['code-highlighter']} {...cypressId('highlighted-code-block')}>
+        <code
+          {...cypressId('code-highlighter')}
+          {...cypressAttribute('showgutter', showGutter ? 'true' : 'false')}
+          {...cypressAttribute('wraplines', wrapLines ? 'true' : 'false')}
+          className={`hljs ${showGutter ? styles['showGutter'] : ''} ${wrapLines ? styles['wrapLines'] : ''}`}>
+          {wrappedDomLines}
+        </code>
+        <div className={'text-right button-inside'}>
+          <CopyToClipboardButton content={code} {...cypressId('copy-code-button')} />
+        </div>
       </div>
-    </div>
+    </AsyncLibraryLoadingBoundary>
   )
 }
 
