@@ -20,6 +20,7 @@ const customJestConfig = {
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
   },
   roots: ["<rootDir>/src"],
+  testEnvironment: 'jsdom',
   testPathIgnorePatterns: ["/node_modules/", "/cypress/"]
 }
 

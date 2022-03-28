@@ -8,7 +8,7 @@ import React from 'react'
 import { CopyToClipboardButton } from '../../../common/copyable/copy-to-clipboard-button/copy-to-clipboard-button'
 import styles from './highlighted-code.module.scss'
 import { cypressAttribute, cypressId } from '../../../../utils/cypress-attribute'
-import { AsyncLibraryLoadingBoundary } from '../../../common/async-library-loading-boundary'
+import { AsyncLoadingBoundary } from '../../../common/async-loading-boundary'
 import { useAsyncHighlightedCodeDom } from './hooks/use-async-highlighted-code-dom'
 import { useAttachLineNumbers } from './hooks/use-attach-line-numbers'
 
@@ -33,7 +33,7 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
   const wrappedDomLines = useAttachLineNumbers(highlightedLines, startLineNumber)
 
   return (
-    <AsyncLibraryLoadingBoundary loading={loading} error={error} componentName={'highlight.js'}>
+    <AsyncLoadingBoundary loading={loading} error={!!error} componentName={'highlight.js'}>
       <div className={styles['code-highlighter']} {...cypressId('highlighted-code-block')}>
         <code
           {...cypressId('code-highlighter')}
@@ -46,7 +46,7 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
           <CopyToClipboardButton content={code} {...cypressId('copy-code-button')} />
         </div>
       </div>
-    </AsyncLibraryLoadingBoundary>
+    </AsyncLoadingBoundary>
   )
 }
 

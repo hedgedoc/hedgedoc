@@ -11,7 +11,7 @@ import { Alert } from 'react-bootstrap'
 
 export interface AsyncLoadingBoundaryProps {
   loading: boolean
-  error?: Error
+  error?: boolean
   componentName: string
 }
 
@@ -21,17 +21,17 @@ export interface AsyncLoadingBoundaryProps {
  *
  * @param loading Indicates that the component is currently loading. Setting this will show a spinner instead of the children.
  * @param error Indicates that an error occurred during the loading process. Setting this to any non-null value will show an error message instead of the children.
- * @param libraryName The name of the component that is currently loading. It will be shown in the error message.
+ * @param componentName The name of the component that is currently loading. It will be shown in the error message.
  * @param children The child {@link ReactElement elements} that are only shown if the component isn't in loading or error state
  */
-export const AsyncLibraryLoadingBoundary: React.FC<AsyncLoadingBoundaryProps> = ({
+export const AsyncLoadingBoundary: React.FC<AsyncLoadingBoundaryProps> = ({
   loading,
   error,
   componentName,
   children
 }) => {
   useTranslation()
-  if (error) {
+  if (error === true) {
     return (
       <Alert variant={'danger'}>
         <Trans i18nKey={'common.errorWhileLoading'} values={{ name: componentName }} />
