@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { registerAs } from '@nestjs/config';
+import * as fs from 'fs';
 import * as Joi from 'joi';
 
 import { GitlabScope, GitlabVersion } from './gitlab.enum';
@@ -13,6 +14,21 @@ import {
   replaceAuthErrorsWithEnvironmentVariables,
   toArrayConfig,
 } from './utils';
+
+export interface LDAPConfig {
+  identifier: string;
+  providerName: string;
+  url: string;
+  bindDn?: string;
+  bindCredentials?: string;
+  searchBase: string;
+  searchFilter: string;
+  searchAttributes: string[];
+  userIdField: string;
+  displayNameField: string;
+  profilePictureField: string;
+  tlsCaCerts?: string[];
+}
 
 export interface AuthConfig {
   session: {
@@ -55,19 +71,7 @@ export interface AuthConfig {
     version: GitlabVersion;
   }[];
   // ToDo: tlsOptions exist in config.json.example. See https://nodejs.org/api/tls.html#tls_tls_connect_options_callback
-  ldap: {
-    identifier: string;
-    providerName: string;
-    url: string;
-    bindDn: string;
-    bindCredentials: string;
-    searchBase: string;
-    searchFilter: string;
-    searchAttributes: string[];
-    usernameField: string;
-    useridField: string;
-    tlsCa?: string[];
-  }[];
+  ldap: LDAPConfig[];
   saml: {
     identifier: string;
     providerName: string;
@@ -181,13 +185,11 @@ const authSchema = Joi.object({
         bindCredentials: Joi.string().optional(),
         searchBase: Joi.string(),
         searchFilter: Joi.string().default('(uid={{username}})').optional(),
-        searchAttributes: Joi.array()
-          .items(Joi.string())
-          .default(['displayName', 'mail'])
-          .optional(),
-        usernameField: Joi.string().optional(),
-        useridField: Joi.string(),
-        tlsCa: Joi.array().items(Joi.string()).optional(),
+        searchAttributes: Joi.array().items(Joi.string()).optional(),
+        userIdField: Joi.string().default('uid').optional(),
+        displayNameField: Joi.string().default('displayName').optional(),
+        profilePictureField: Joi.string().default('jpegPhoto').optional(),
+        tlsCaCerts: Joi.array().items(Joi.string()).optional(),
       }).optional(),
     )
     .optional(),
@@ -267,6 +269,18 @@ export default registerAs('authConfig', () => {
   });
 
   const ldaps = ldapNames.map((ldapName) => {
+    const caFiles = toArrayConfig(
+      process.env[`HD_AUTH_LDAP_${ldapName}_TLS_CERT_PATHS`],
+      ',',
+    );
+    let tlsCaCerts = undefined;
+    if (caFiles) {
+      tlsCaCerts = caFiles.map((fileName) => {
+        if (fs.existsSync(fileName)) {
+          return fs.readFileSync(fileName, 'utf8');
+        }
+      });
+    }
     return {
       identifier: ldapName,
       providerName: process.env[`HD_AUTH_LDAP_${ldapName}_PROVIDER_NAME`],
@@ -279,9 +293,12 @@ export default registerAs('authConfig', () => {
         process.env[`HD_AUTH_LDAP_${ldapName}_SEARCH_ATTRIBUTES`],
         ',',
       ),
-      usernameField: process.env[`HD_AUTH_LDAP_${ldapName}_USERNAME_FIELD`],
-      useridField: process.env[`HD_AUTH_LDAP_${ldapName}_USERID_FIELD`],
-      tlsCa: toArrayConfig(process.env[`HD_AUTH_LDAP_${ldapName}_TLS_CA`], ','),
+      userIdField: process.env[`HD_AUTH_LDAP_${ldapName}_USER_ID_FIELD`],
+      displayNameField:
+        process.env[`HD_AUTH_LDAP_${ldapName}_DISPLAY_NAME_FIELD`],
+      profilePictureField:
+        process.env[`HD_AUTH_LDAP_${ldapName}_PROFILE_PICTURE_FIELD`],
+      tlsCaCerts: tlsCaCerts,
     };
   });
 
@@ -309,7 +326,7 @@ export default registerAs('authConfig', () => {
       attribute: {
         id: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_ID`],
         username: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_USERNAME`],
-        local: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_USERNAME`],
+        local: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_LOCAL`],
       },
     };
   });
