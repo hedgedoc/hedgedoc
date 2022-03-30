@@ -104,9 +104,10 @@ describe('FrontendConfigService', () => {
       searchBase: 'ldapTestSearchBase',
       searchFilter: 'ldapTestSearchFilter',
       searchAttributes: ['ldapTestSearchAttribute'],
-      usernameField: 'ldapTestUsername',
-      useridField: 'ldapTestUserId',
-      tlsCa: ['ldapTestTlsCa'],
+      userIdField: 'ldapTestUserId',
+      displayNameField: 'ldapTestDisplayName',
+      profilePictureField: 'ldapTestProfilePicture',
+      tlsCaCerts: ['ldapTestTlsCa'],
     },
   ];
   const saml: AuthConfig['saml'] = [

@@ -54,9 +54,13 @@ export function replaceAuthErrorsWithEnvironmentVariables(
     newMessage = newMessage.replace('.searchBase', '_SEARCH_BASE');
     newMessage = newMessage.replace('.searchFilter', '_SEARCH_FILTER');
     newMessage = newMessage.replace('.searchAttributes', '_SEARCH_ATTRIBUTES');
-    newMessage = newMessage.replace('.usernameField', '_USERNAME_FIELD');
-    newMessage = newMessage.replace('.useridField', '_USERID_FIELD');
-    newMessage = newMessage.replace('.tlsCa', '_TLS_CA');
+    newMessage = newMessage.replace('.userIdField', '_USER_ID_FIELD');
+    newMessage = newMessage.replace('.displayNameField', '_DISPLAY_NAME_FIELD');
+    newMessage = newMessage.replace(
+      '.profilePictureField',
+      '_PROFILE_PICTURE_FIELD',
+    );
+    newMessage = newMessage.replace('.tlsCaCerts', '_TLS_CERT_PATHS');
     newMessage = newMessage.replace('.idpSsoUrl', '_IDP_SSO_URL');
     newMessage = newMessage.replace('.idpCert', '_IDP_CERT');
     newMessage = newMessage.replace('.clientCert', '_CLIENT_CERT');
@@ -74,7 +78,7 @@ export function replaceAuthErrorsWithEnvironmentVariables(
       '.attribute.username',
       '_ATTRIBUTE_USERNAME',
     );
-    newMessage = newMessage.replace('.attribute.email', '_ATTRIBUTE_USERNAME');
+    newMessage = newMessage.replace('.attribute.local', '_ATTRIBUTE_LOCAL');
     newMessage = newMessage.replace('.userProfileURL', '_USER_PROFILE_URL');
     newMessage = newMessage.replace(
       '.userProfileIdAttr',
