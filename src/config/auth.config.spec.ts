@@ -22,11 +22,13 @@ describe('authConfig', () => {
     const searchBase = 'ou=people,dc=planetexpress,dc=com';
     const searchFilter = '(mail={{username}})';
     const searchAttributes = ['mail', 'uid'];
-    const useridField = 'uid';
-    const usernameField = 'username';
+    const userIdField = 'non_default_uid';
+    const displayNameField = 'non_default_display_name';
+    const profilePictureField = 'non_default_profile_picture';
     const bindDn = 'cn=admin,dc=planetexpress,dc=com';
     const bindCredentials = 'GoodNewsEveryone';
-    const tlsCa = ['./hedgedoc.pem'];
+    const tlsCa = ['./test/private-api/fixtures/hedgedoc.pem'];
+    const tlsCaContent = ['test-cert\n'];
     const completeLdapConfig = {
       /* eslint-disable @typescript-eslint/naming-convention */
       HD_AUTH_LDAPS: ldapNames.join(','),
@@ -35,11 +37,12 @@ describe('authConfig', () => {
       HD_AUTH_LDAP_FUTURAMA_SEARCH_BASE: searchBase,
       HD_AUTH_LDAP_FUTURAMA_SEARCH_FILTER: searchFilter,
       HD_AUTH_LDAP_FUTURAMA_SEARCH_ATTRIBUTES: searchAttributes.join(','),
-      HD_AUTH_LDAP_FUTURAMA_USERID_FIELD: useridField,
-      HD_AUTH_LDAP_FUTURAMA_USERNAME_FIELD: usernameField,
+      HD_AUTH_LDAP_FUTURAMA_USER_ID_FIELD: userIdField,
+      HD_AUTH_LDAP_FUTURAMA_DISPLAY_NAME_FIELD: displayNameField,
+      HD_AUTH_LDAP_FUTURAMA_PROFILE_PICTURE_FIELD: profilePictureField,
       HD_AUTH_LDAP_FUTURAMA_BIND_DN: bindDn,
       HD_AUTH_LDAP_FUTURAMA_BIND_CREDENTIALS: bindCredentials,
-      HD_AUTH_LDAP_FUTURAMA_TLS_CA: tlsCa.join(','),
+      HD_AUTH_LDAP_FUTURAMA_TLS_CERT_PATHS: tlsCa.join(','),
       /* eslint-enable @typescript-eslint/naming-convention */
     };
     describe('is correctly parsed', () => {
@@ -64,11 +67,12 @@ describe('authConfig', () => {
         expect(firstLdap.searchBase).toEqual(searchBase);
         expect(firstLdap.searchFilter).toEqual(searchFilter);
         expect(firstLdap.searchAttributes).toEqual(searchAttributes);
-        expect(firstLdap.useridField).toEqual(useridField);
-        expect(firstLdap.usernameField).toEqual(usernameField);
+        expect(firstLdap.userIdField).toEqual(userIdField);
+        expect(firstLdap.displayNameField).toEqual(displayNameField);
+        expect(firstLdap.profilePictureField).toEqual(profilePictureField);
         expect(firstLdap.bindDn).toEqual(bindDn);
         expect(firstLdap.bindCredentials).toEqual(bindCredentials);
-        expect(firstLdap.tlsCa).toEqual(tlsCa);
+        expect(firstLdap.tlsCaCerts).toEqual(tlsCaContent);
         restore();
       });
 
@@ -94,11 +98,12 @@ describe('authConfig', () => {
         expect(firstLdap.searchBase).toEqual(searchBase);
         expect(firstLdap.searchFilter).toEqual(searchFilter);
         expect(firstLdap.searchAttributes).toEqual(searchAttributes);
-        expect(firstLdap.useridField).toEqual(useridField);
-        expect(firstLdap.usernameField).toEqual(usernameField);
+        expect(firstLdap.userIdField).toEqual(userIdField);
+        expect(firstLdap.displayNameField).toEqual(displayNameField);
+        expect(firstLdap.profilePictureField).toEqual(profilePictureField);
         expect(firstLdap.bindDn).toEqual(bindDn);
         expect(firstLdap.bindCredentials).toEqual(bindCredentials);
-        expect(firstLdap.tlsCa).toEqual(tlsCa);
+        expect(firstLdap.tlsCaCerts).toEqual(tlsCaContent);
         restore();
       });
 
@@ -124,53 +129,22 @@ describe('authConfig', () => {
         expect(firstLdap.searchBase).toEqual(searchBase);
         expect(firstLdap.searchFilter).toEqual('(uid={{username}})');
         expect(firstLdap.searchAttributes).toEqual(searchAttributes);
-        expect(firstLdap.useridField).toEqual(useridField);
-        expect(firstLdap.usernameField).toEqual(usernameField);
+        expect(firstLdap.userIdField).toEqual(userIdField);
+        expect(firstLdap.displayNameField).toEqual(displayNameField);
+        expect(firstLdap.profilePictureField).toEqual(profilePictureField);
         expect(firstLdap.bindDn).toEqual(bindDn);
         expect(firstLdap.bindCredentials).toEqual(bindCredentials);
-        expect(firstLdap.tlsCa).toEqual(tlsCa);
+        expect(firstLdap.tlsCaCerts).toEqual(tlsCaContent);
         restore();
       });
 
-      it('when no HD_AUTH_LDAP_FUTURAMA_SEARCH_ATTRIBUTES is not set', () => {
+      it('when no HD_AUTH_LDAP_FUTURAMA_USER_ID_FIELD is not set', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLdapConfig,
-            HD_AUTH_LDAP_FUTURAMA_SEARCH_ATTRIBUTES: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
-          },
-          {
-            clear: true,
-          },
-        );
-        const config = authConfig();
-        expect(config.ldap).toHaveLength(1);
-        const firstLdap = config.ldap[0];
-        expect(firstLdap.identifier).toEqual(ldapNames[0].toUpperCase());
-        expect(firstLdap.url).toEqual(url);
-        expect(firstLdap.providerName).toEqual(providerName);
-        expect(firstLdap.searchBase).toEqual(searchBase);
-        expect(firstLdap.searchFilter).toEqual(searchFilter);
-        expect(firstLdap.searchAttributes).toHaveLength(2);
-        expect(firstLdap.searchAttributes[0]).toEqual('displayName');
-        expect(firstLdap.searchAttributes[1]).toEqual('mail');
-        expect(firstLdap.useridField).toEqual(useridField);
-        expect(firstLdap.usernameField).toEqual(usernameField);
-        expect(firstLdap.bindDn).toEqual(bindDn);
-        expect(firstLdap.bindCredentials).toEqual(bindCredentials);
-        expect(firstLdap.tlsCa).toEqual(tlsCa);
-        restore();
-      });
-
-      it('when no HD_AUTH_LDAP_FUTURAMA_USERID_FIELD is not set', () => {
-        const restore = mockedEnv(
-          {
-            /* eslint-disable @typescript-eslint/naming-convention */
-            ...neededAuthConfig,
-            ...completeLdapConfig,
-            HD_AUTH_LDAP_FUTURAMA_USERID_FIELD: undefined,
+            HD_AUTH_LDAP_FUTURAMA_USER_ID_FIELD: undefined,
             /* eslint-enable @typescript-eslint/naming-convention */
           },
           {
@@ -186,21 +160,22 @@ describe('authConfig', () => {
         expect(firstLdap.searchBase).toEqual(searchBase);
         expect(firstLdap.searchFilter).toEqual(searchFilter);
         expect(firstLdap.searchAttributes).toEqual(searchAttributes);
-        expect(firstLdap.useridField).toBe(undefined);
-        expect(firstLdap.usernameField).toEqual(usernameField);
+        expect(firstLdap.userIdField).toBe('uid');
+        expect(firstLdap.displayNameField).toEqual(displayNameField);
+        expect(firstLdap.profilePictureField).toEqual(profilePictureField);
         expect(firstLdap.bindDn).toEqual(bindDn);
         expect(firstLdap.bindCredentials).toEqual(bindCredentials);
-        expect(firstLdap.tlsCa).toEqual(tlsCa);
+        expect(firstLdap.tlsCaCerts).toEqual(tlsCaContent);
         restore();
       });
 
-      it('when no HD_AUTH_LDAP_FUTURAMA_USERNAME_FIELD is not set', () => {
+      it('when no HD_AUTH_LDAP_FUTURAMA_DISPLAY_NAME_FIELD is not set', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLdapConfig,
-            HD_AUTH_LDAP_FUTURAMA_USERNAME_FIELD: undefined,
+            HD_AUTH_LDAP_FUTURAMA_DISPLAY_NAME_FIELD: undefined,
             /* eslint-enable @typescript-eslint/naming-convention */
           },
           {
@@ -216,11 +191,43 @@ describe('authConfig', () => {
         expect(firstLdap.searchBase).toEqual(searchBase);
         expect(firstLdap.searchFilter).toEqual(searchFilter);
         expect(firstLdap.searchAttributes).toEqual(searchAttributes);
-        expect(firstLdap.useridField).toEqual(useridField);
-        expect(firstLdap.usernameField).toBe(undefined);
+        expect(firstLdap.userIdField).toEqual(userIdField);
+        expect(firstLdap.displayNameField).toEqual('displayName');
+        expect(firstLdap.profilePictureField).toEqual(profilePictureField);
         expect(firstLdap.bindDn).toEqual(bindDn);
         expect(firstLdap.bindCredentials).toEqual(bindCredentials);
-        expect(firstLdap.tlsCa).toEqual(tlsCa);
+        expect(firstLdap.tlsCaCerts).toEqual(tlsCaContent);
+        restore();
+      });
+
+      it('when no HD_AUTH_LDAP_FUTURAMA_PROFILE_PICTURE_FIELD is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeLdapConfig,
+            HD_AUTH_LDAP_FUTURAMA_PROFILE_PICTURE_FIELD: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.ldap).toHaveLength(1);
+        const firstLdap = config.ldap[0];
+        expect(firstLdap.identifier).toEqual(ldapNames[0].toUpperCase());
+        expect(firstLdap.url).toEqual(url);
+        expect(firstLdap.providerName).toEqual(providerName);
+        expect(firstLdap.searchBase).toEqual(searchBase);
+        expect(firstLdap.searchFilter).toEqual(searchFilter);
+        expect(firstLdap.searchAttributes).toEqual(searchAttributes);
+        expect(firstLdap.userIdField).toEqual(userIdField);
+        expect(firstLdap.displayNameField).toEqual(displayNameField);
+        expect(firstLdap.profilePictureField).toEqual('jpegPhoto');
+        expect(firstLdap.bindDn).toEqual(bindDn);
+        expect(firstLdap.bindCredentials).toEqual(bindCredentials);
+        expect(firstLdap.tlsCaCerts).toEqual(tlsCaContent);
         restore();
       });
 
@@ -246,11 +253,12 @@ describe('authConfig', () => {
         expect(firstLdap.searchBase).toEqual(searchBase);
         expect(firstLdap.searchFilter).toEqual(searchFilter);
         expect(firstLdap.searchAttributes).toEqual(searchAttributes);
-        expect(firstLdap.useridField).toEqual(useridField);
-        expect(firstLdap.usernameField).toEqual(usernameField);
+        expect(firstLdap.userIdField).toEqual(userIdField);
+        expect(firstLdap.displayNameField).toEqual(displayNameField);
+        expect(firstLdap.profilePictureField).toEqual(profilePictureField);
         expect(firstLdap.bindDn).toBe(undefined);
         expect(firstLdap.bindCredentials).toEqual(bindCredentials);
-        expect(firstLdap.tlsCa).toEqual(tlsCa);
+        expect(firstLdap.tlsCaCerts).toEqual(tlsCaContent);
         restore();
       });
 
@@ -276,21 +284,22 @@ describe('authConfig', () => {
         expect(firstLdap.searchBase).toEqual(searchBase);
         expect(firstLdap.searchFilter).toEqual(searchFilter);
         expect(firstLdap.searchAttributes).toEqual(searchAttributes);
-        expect(firstLdap.useridField).toEqual(useridField);
-        expect(firstLdap.usernameField).toEqual(usernameField);
+        expect(firstLdap.userIdField).toEqual(userIdField);
+        expect(firstLdap.displayNameField).toEqual(displayNameField);
+        expect(firstLdap.profilePictureField).toEqual(profilePictureField);
         expect(firstLdap.bindDn).toEqual(bindDn);
         expect(firstLdap.bindCredentials).toBe(undefined);
-        expect(firstLdap.tlsCa).toEqual(tlsCa);
+        expect(firstLdap.tlsCaCerts).toEqual(tlsCaContent);
         restore();
       });
 
-      it('when no HD_AUTH_LDAP_FUTURAMA_TLS_CA is not set', () => {
+      it('when no HD_AUTH_LDAP_FUTURAMA_TLS_CERT_PATHS is not set', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLdapConfig,
-            HD_AUTH_LDAP_FUTURAMA_TLS_CA: undefined,
+            HD_AUTH_LDAP_FUTURAMA_TLS_CERT_PATHS: undefined,
             /* eslint-enable @typescript-eslint/naming-convention */
           },
           {
@@ -306,11 +315,12 @@ describe('authConfig', () => {
         expect(firstLdap.searchBase).toEqual(searchBase);
         expect(firstLdap.searchFilter).toEqual(searchFilter);
         expect(firstLdap.searchAttributes).toEqual(searchAttributes);
-        expect(firstLdap.useridField).toEqual(useridField);
-        expect(firstLdap.usernameField).toEqual(usernameField);
+        expect(firstLdap.userIdField).toEqual(userIdField);
+        expect(firstLdap.displayNameField).toEqual(displayNameField);
+        expect(firstLdap.profilePictureField).toEqual(profilePictureField);
         expect(firstLdap.bindDn).toEqual(bindDn);
         expect(firstLdap.bindCredentials).toEqual(bindCredentials);
-        expect(firstLdap.tlsCa).toBe(undefined);
+        expect(firstLdap.tlsCaCerts).toBe(undefined);
         restore();
       });
     });
@@ -348,6 +358,24 @@ describe('authConfig', () => {
         );
         expect(() => authConfig()).toThrow(
           '"HD_AUTH_LDAP_FUTURAMA_SEARCH_BASE" is required',
+        );
+        restore();
+      });
+      it('when HD_AUTH_LDAP_FUTURAMA_TLS_CERT_PATHS is wrong', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeLdapConfig,
+            HD_AUTH_LDAP_FUTURAMA_TLS_CERT_PATHS: 'not-a-file.pem',
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        expect(() => authConfig()).toThrow(
+          '"HD_AUTH_LDAP_FUTURAMA_TLS_CERT_PATHS[0]" must not be a sparse array item',
         );
         restore();
       });
