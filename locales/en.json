@@ -1,471 +1,471 @@
 {
-    "app": {
-        "slogan": "The best platform to write and share markdown.",
-        "title": "Collaborative markdown notes",
-        "icon": "HedgeDoc logo with text"
+  "app": {
+    "slogan": "The best platform to write and share markdown.",
+    "title": "Collaborative markdown notes",
+    "icon": "HedgeDoc logo with text"
+  },
+  "notificationTest": {
+    "title": "Test",
+    "content": "It works!"
+  },
+  "renderer": {
+    "highlightCode": {
+      "copyCode": "Copy code to clipboard"
     },
-    "notificationTest": {
-      "title": "Test",
-      "content": "It works!"
+    "markmap": {
+      "locked": "Mouse input locked",
+      "unlocked": "Mouse input unlocked"
     },
-    "renderer": {
-        "highlightCode": {
-            "copyCode": "Copy code to clipboard"
+    "plantuml": {
+      "notConfigured": "PlantUML plugin is enabled but not properly configured."
+    },
+    "flowchart": {
+      "invalidSyntax": "Invalid flowchart.js syntax!"
+    },
+    "mermaid": {
+      "unknownError": "Unknown rendering error. Please check your browser console."
+    },
+    "sequence": {
+      "deprecationWarning": "The use of 'sequence' as code block language is deprecated."
+    },
+    "vega-lite": {
+      "png": "Save as PNG",
+      "svg": "Save as SVG",
+      "errorJson": "Error parsing the JSON"
+    },
+    "clickShield": {
+      "previewHoverText": "Click to load content from {{target}}"
+    },
+    "uploadIndicator": {
+      "uploadMessage": "Uploading file"
+    }
+  },
+  "landing": {
+    "intro": {
+      "exploreFeatures": "Explore all features",
+      "features": {
+        "collaboration": "Real time collaboration",
+        "katex": "Works with charts and KaTeX",
+        "slides": "Supports slide mode"
+      },
+      "markdownWhileLoading": "Loading...",
+      "markdownLoadingError": "Error while fetching intro content"
+    },
+    "history": {
+      "error": {
+        "getHistory": {
+          "title": "Load History Error",
+          "text": "While trying to load the history form the server an error occurred"
         },
-        "markmap": {
-            "locked": "Mouse input locked",
-            "unlocked": "Mouse input unlocked"
+        "deleteHistory": {
+          "title": "Delete History Error",
+          "text": "While trying to delete the history on the server an error occurred"
         },
-        "plantuml": {
-            "notConfigured": "PlantUML plugin is enabled but not properly configured."
+        "setHistory": {
+          "title": "Upload History Error",
+          "text": "While trying to upload the history to the server an error occurred"
         },
-        "flowchart": {
-            "invalidSyntax": "Invalid flowchart.js syntax!"
+        "deleteNote": {
+          "title": "Delete Note Error",
+          "text": "While trying to delete a note on the server an error occurred"
         },
-        "mermaid": {
-            "unknownError": "Unknown rendering error. Please check your browser console."
+        "updateEntry": {
+          "title": "Update History Entry Error",
+          "text": "While trying to update a history entry on the server an error occurred"
         },
-        "sequence": {
-            "deprecationWarning": "The use of 'sequence' as code block language is deprecated."
+        "deleteEntry": {
+          "title": "Delete History Entry Error",
+          "text": "While trying to delete a history entry on the server an error occurred"
         },
-        "vega-lite": {
-            "png": "Save as PNG",
-            "svg": "Save as SVG",
-            "errorJson": "Error parsing the JSON"
-        },
-        "clickShield": {
-          "previewHoverText": "Click to load content from {{target}}"
-        },
-        "uploadIndicator": {
-          "uploadMessage": "Uploading file"
+        "notFoundEntry": {
+          "title": "History Entry not found",
+          "text": "We can't find the history entry you requested."
         }
-    },
-    "landing": {
-        "intro": {
-            "exploreFeatures": "Explore all features",
-            "features": {
-                "collaboration": "Real time collaboration",
-                "katex": "Works with charts and KaTeX",
-                "slides": "Supports slide mode"
-            },
-            "markdownWhileLoading": "Loading...",
-            "markdownLoadingError": "Error while fetching intro content"
+      },
+      "noHistory": "No history",
+      "localHistory": "Below is history from this browser",
+      "toolbar": {
+        "cards": "Cards",
+        "table": "Table",
+        "selectTags": "Select tags…",
+        "searchKeywords": "Search keyword…",
+        "sortByTitle": "Sort by title",
+        "sortByLastVisited": "Sort by time",
+        "export": "Export history",
+        "import": "Import history",
+        "clear": "Clear history",
+        "refresh": "Refresh history",
+        "uploadAll": "Sync the complete history to the server"
+      },
+      "modal": {
+        "clearHistory": {
+          "title": "Delete history",
+          "question": "Do you want to clear the history?",
+          "disclaimer": "This won't delete any notes."
         },
-        "history": {
-            "error": {
-                "getHistory": {
-                    "title": "Load History Error",
-                    "text": "While trying to load the history form the server an error occurred"
-                },
-                "deleteHistory": {
-                    "title": "Delete History Error",
-                    "text": "While trying to delete the history on the server an error occurred"
-                },
-                "setHistory": {
-                    "title": "Upload History Error",
-                    "text": "While trying to upload the history to the server an error occurred"
-                },
-                "deleteNote": {
-                    "title": "Delete Note Error",
-                    "text": "While trying to delete a note on the server an error occurred"
-                },
-                "updateEntry": {
-                    "title": "Update History Entry Error",
-                    "text": "While trying to update a history entry on the server an error occurred"
-                },
-                "deleteEntry": {
-                    "title": "Delete History Entry Error",
-                    "text": "While trying to delete a history entry on the server an error occurred"
-                },
-                "notFoundEntry": {
-                    "title": "History Entry not found",
-                    "text": "We can't find the history entry you requested."
-                }
-            },
-            "noHistory": "No history",
-            "localHistory": "Below is history from this browser",
-            "toolbar": {
-                "cards": "Cards",
-                "table": "Table",
-                "selectTags": "Select tags…",
-                "searchKeywords": "Search keyword…",
-                "sortByTitle": "Sort by title",
-                "sortByLastVisited": "Sort by time",
-                "export": "Export history",
-                "import": "Import history",
-                "clear": "Clear history",
-                "refresh": "Refresh history",
-                "uploadAll": "Sync the complete history to the server"
-            },
-            "modal": {
-                "clearHistory": {
-                    "title": "Delete history",
-                    "question": "Do you want to clear the history?",
-                    "disclaimer": "This won't delete any notes."
-                },
-                "importHistoryError": {
-                    "title": "An error occurred",
-                    "textWithFile": "While trying to import history from '{{fileName}}' an error occurred.",
-                    "textWithoutFile": "You did not provide any files to upload the history from.",
-                    "tooNewVersion": "The file '{{fileName}}' comes from a newer client and can't be imported."
-                },
-                "removeNote": {
-                    "title": "Remove note from history",
-                    "question": "Do you really want to remove this note from your history?",
-                    "warning": "This just removes the history entry and won't delete the note itself.",
-                    "button": "Remove note from history"
-                }
-            },
-            "tableHeader": {
-                "title": "Title",
-                "actions": "Actions",
-                "tags": "Tags",
-                "lastVisit": "Last Visit"
-            },
-            "menu": {
-                "recentNotes": "Recent notes",
-                "entryLocal": "Saved in your browser history",
-                "entryRemote": "Saved in your user history",
-                "removeEntry": "Remove from history",
-                "deleteNote": "Delete note"
-            }
+        "importHistoryError": {
+          "title": "An error occurred",
+          "textWithFile": "While trying to import history from '{{fileName}}' an error occurred.",
+          "textWithoutFile": "You did not provide any files to upload the history from.",
+          "tooNewVersion": "The file '{{fileName}}' comes from a newer client and can't be imported."
         },
-        "navigation": {
-            "intro": "Intro",
-            "history": "History",
-            "newGuestNote": "New guest note",
-            "newNote": "New note"
-        },
-        "footer": {
-            "releases": "Releases",
-            "poweredBy": "Powered by <0></0>",
-            "imprint": "Imprint",
-            "followUs": "Follow us on <0></0>, <1></1>, <2></2>, <3></3>, and <4></4>.",
-            "privacy": "Privacy",
-            "termsOfUse": "Terms of Use"
-        },
-        "versionInfo": {
-            "issueTracker": "Found a bug? Fill an issue!",
-            "sourceCode": "Read the source code",
-            "versionInfo": "Version info",
-            "serverVersion": "Server version",
-            "clientVersion": "Client version",
-            "title": "You are using"
+        "removeNote": {
+          "title": "Remove note from history",
+          "question": "Do you really want to remove this note from your history?",
+          "warning": "This just removes the history entry and won't delete the note itself.",
+          "button": "Remove note from history"
         }
+      },
+      "tableHeader": {
+        "title": "Title",
+        "actions": "Actions",
+        "tags": "Tags",
+        "lastVisit": "Last Visit"
+      },
+      "menu": {
+        "recentNotes": "Recent notes",
+        "entryLocal": "Saved in your browser history",
+        "entryRemote": "Saved in your user history",
+        "removeEntry": "Remove from history",
+        "deleteNote": "Delete note"
+      }
     },
-    "profile": {
-        "userProfile": "User profile",
-        "displayName": "Display name",
-        "displayNameInfo": "This name will be shown publicly on notes you created or edited.",
-        "changePassword": {
-            "title": "Change password",
-            "old": "Old password",
-            "new": "New password",
-            "newAgain": "New password again",
-            "info": "Your new password should contain at least 6 characters.",
-            "failed": "Changing your password failed. Check your old password and try again."
+    "navigation": {
+      "intro": "Intro",
+      "history": "History",
+      "newGuestNote": "New guest note",
+      "newNote": "New note"
+    },
+    "footer": {
+      "releases": "Releases",
+      "poweredBy": "Powered by <0></0>",
+      "imprint": "Imprint",
+      "followUs": "Follow us on <0></0>, <1></1>, <2></2>, <3></3>, and <4></4>.",
+      "privacy": "Privacy",
+      "termsOfUse": "Terms of Use"
+    },
+    "versionInfo": {
+      "issueTracker": "Found a bug? Fill an issue!",
+      "sourceCode": "Read the source code",
+      "versionInfo": "Version info",
+      "serverVersion": "Server version",
+      "clientVersion": "Client version",
+      "title": "You are using"
+    }
+  },
+  "profile": {
+    "userProfile": "User profile",
+    "displayName": "Display name",
+    "displayNameInfo": "This name will be shown publicly on notes you created or edited.",
+    "changePassword": {
+      "title": "Change password",
+      "old": "Old password",
+      "new": "New password",
+      "newAgain": "New password again",
+      "info": "Your new password should contain at least 6 characters.",
+      "failed": "Changing your password failed. Check your old password and try again."
+    },
+    "changeDisplayNameFailed": "There was an error changing your display name.",
+    "accountManagement": "Account management",
+    "deleteUser": "Delete user",
+    "exportUserData": "Export user data",
+    "accessTokens": {
+      "title": "Access tokens",
+      "info": "Access tokens are an password-less authentication method for the CLI or third-party applications.",
+      "infoDev": "Developers can use these to access the public API.",
+      "noTokens": "You don't have any tokens generated yet.",
+      "createToken": "Create token",
+      "label": "Token label",
+      "created": "created {{time}}",
+      "lastUsed": "last used {{time}}",
+      "loadingFailed": "Fetching your access tokens has failed. Try reloading this page.",
+      "creationFailed": "Creating the access token failed.",
+      "expiry": "Expiry date"
+    },
+    "modal": {
+      "deleteUser": {
+        "title": "Delete user",
+        "message": "Do you really want to delete your user account?",
+        "subMessage": "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.",
+        "failed": "There was an error deleting your account. Please try it again or contact your instance's administrator.",
+        "notificationTitle": "Account deleted",
+        "notificationText": "Your account has been successfully deleted."
+      },
+      "addedAccessToken": {
+        "title": "Token added",
+        "message": "The access token '{{label}}' was created. Copy it from the field below now, as you won't be able to view it again."
+      },
+      "deleteAccessToken": {
+        "title": "Really delete token?",
+        "message": "When deleting an access token, the applications that used it won't have access to your account anymore. You eventually need a new token to continue using those applications.",
+        "notificationTitle": "Access token deleted",
+        "notificationText": "The access token '{{label}}' has been deleted.",
+        "failed": "There was an error deleting the access token. Please try it again or contact your instance's administrator."
+      }
+    }
+  },
+  "editor": {
+    "upload": {
+      "uploadFile": {
+        "withoutDescription": "Uploading file {{fileName}}",
+        "withDescription": "Uploading file {{fileName}} - {{description}}"
+      },
+      "dropImage": "Drop Image to insert",
+      "failed": "Error while uploading {{fileName}}"
+    },
+    "untitledNote": "Untitled",
+    "placeholder": "← Start by entering a title here\n===\nVisit the features page if you don't know what to do.\nHappy hacking :)",
+    "invalidYaml": "The yaml-header is invalid. See <0></0> for more information.",
+    "deprecatedTags": "The comma-separated definition of tags in the yaml-metadata is deprecated. Use a yaml-array instead.",
+    "infoToc": "Structure your note with headings to see a table-of-contents here.",
+    "help": {
+      "shortcuts": {
+        "title": "Shortcuts",
+        "bold": "Make selection bold",
+        "italic": "Make selection italic",
+        "underline": "Underline selection",
+        "strikethrough": "Strike selection through",
+        "mark": "Mark selection",
+        "link": "Add link around selection",
+        "view": "Show only View",
+        "both": "Show View and Edit",
+        "edit": "Show only Edit"
+      },
+      "links": {
+        "title": "Links"
+      },
+      "contacts": {
+        "title": "Contacts",
+        "community": "Join the community",
+        "meetUsOn": "Meet us on {{service}}",
+        "helpTranslating": "Help us translating",
+        "reportIssue": "Report an issue"
+      },
+      "documents": {
+        "title": "Documents",
+        "features": "Features",
+        "yamlMetadata": "YAML Metadata",
+        "slideExample": "Slide Example"
+      },
+      "cheatsheet": {
+        "title": "Cheatsheet",
+        "example": "Example",
+        "syntax": "Syntax",
+        "exampleAlert": "This is an alert area.",
+        "highlightedText": "Highlight"
+      }
+    },
+    "onlineStatus": {
+      "online": "Online"
+    },
+    "error": {
+      "locked": {
+        "title": "This note is locked",
+        "description": "Sorry, only the owner can edit this note."
+      },
+      "limitReached": {
+        "title": "Reached the limit",
+        "description": "Sorry, this note reached its maximum length. Notes can be up to {{maxLength}} characters long.",
+        "advice": "Please shorten the note."
+      },
+      "incompatible": {
+        "title": "Your client's version is incompatible.",
+        "description": "The server requires a newer version of the editor.",
+        "advice": "Refresh to update."
+      },
+      "newVersion": {
+        "title": "New version available!",
+        "description": "A new version of HedgeDoc is available",
+        "linkText": "See releases notes here",
+        "advice": "Refresh to enjoy new features."
+      },
+      "userStateChanged": {
+        "title": "Your user state has changed.",
+        "description": "Refresh to load new user state."
+      }
+    },
+    "viewMode": {
+      "edit": "Edit",
+      "view": "View",
+      "both": "Both"
+    },
+    "darkMode": {
+      "switchToDark": "Switch to Dark Mode",
+      "switchToLight": "Switch to Light Mode"
+    },
+    "appBar": {
+      "new": "New",
+      "syncScroll": {
+        "disable": "Disable sync scroll",
+        "enable": "Enable sync scroll"
+      }
+    },
+    "editorToolbar": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "underline": "Underline",
+      "strikethrough": "Strikethrough",
+      "subscript": "Subscript",
+      "superscript": "Superscript",
+      "header": "Heading",
+      "code": "Code",
+      "blockquote": "Blockquote",
+      "unorderedList": "Unordered List",
+      "orderedList": "Ordered List",
+      "checkList": "Checklist",
+      "link": "Link",
+      "imageLink": "Image",
+      "uploadImage": "Upload Image",
+      "highlight": "Highlight",
+      "table": {
+        "titleWithoutSize": "Table",
+        "titleWithSize": "{{cols}}x{{rows}} Table",
+        "customSize": "Custom Size",
+        "cols": "Cols",
+        "rows": "Rows",
+        "create": "Create Custom Table"
+      },
+      "horizontalLine": "Horizontal line",
+      "collapsibleBlock": "Collapsible block",
+      "comment": "Comment",
+      "preferences": "Editor settings",
+      "emoji": "Open emoji picker"
+    },
+    "documentBar": {
+      "menu": "Menu",
+      "import": "Import",
+      "export": "Export",
+      "extra": "Extra",
+      "slideMode": "Slide Mode",
+      "readOnlyMode": "Read-only mode",
+      "download": "Download",
+      "help": "Help",
+      "deleteNote": "Delete note",
+      "pinNoteToHistory": "Pin note to history",
+      "pinnedToHistory": "Pinned to history"
+    },
+    "statusBar": {
+      "cursor": "Line {{line}}, Character {{columns}}",
+      "selection": {
+        "characters": "Selected {{count}} characters",
+        "lines": "Selected {{count}} lines"
+      },
+      "lines": "{{lines}} Lines",
+      "length": "Length {{length}}",
+      "lengthTooltip": {
+        "maximumReached": "You've reached the maximum length of this note.",
+        "remaining": "You may still write {{remaining}} characters until you reach the limit for this note.",
+        "exceeded": "You've exceeded the maximum length of this note by {{exceeded}} characters. Consider shortening it."
+      }
+    },
+    "export": {
+      "rawHtml": "Raw HTML",
+      "pdf": "PDF export is unavailable.",
+      "markdown-file": "Markdown file"
+    },
+    "import": {
+      "clipboard": "Clipboard",
+      "file": "Markdown file"
+    },
+    "modal": {
+      "snippetImport": {
+        "title": "Import from Snippet",
+        "selectProject": "Select From Available Projects",
+        "selectSnippet": "Select From Available Snippets"
+      },
+      "documentInfo": {
+        "title": "Document info",
+        "created": "<0></0> created this note <1></1>",
+        "edited": "<0></0> was the last editor <1></1>",
+        "usersContributed": "<0></0> users contributed to this document",
+        "revisions": "<0></0> revisions are saved",
+        "words": "<0></0> words in document"
+      },
+      "gistImport": {
+        "title": "Import from Gist",
+        "insertGistUrl": "Paste your gist url here…"
+      },
+      "snippetExport": {
+        "title": "Export to Snippet",
+        "visibilityLevel": "Select Visibility Level"
+      },
+      "revision": {
+        "title": "Revisions",
+        "revertButton": "Revert",
+        "error": "An error occurred while fetching the revisions of this note.",
+        "length": "Length",
+        "download": "Download selected revision"
+      },
+      "clipboardImport": {
+        "title": "Import from clipboard",
+        "insertMarkdown": "Paste your markdown or webpage here…"
+      },
+      "deleteNote": {
+        "title": "Delete note",
+        "question": "Do you really want to delete this note?",
+        "warning": "All users will lose their connection. This process is irreversible.",
+        "button": "Delete note"
+      },
+      "permissions": {
+        "title": "Permissions",
+        "owner": "Owner",
+        "sharedWithUsers": "Shared with users",
+        "sharedWithGroups": "Also share with…",
+        "editUser": "Change {{name}}'s permissions to view and edit",
+        "viewOnlyUser": "Change {{name}}'s permissions to view only",
+        "removeUser": "Remove {{name}}'s permissions",
+        "addUser": "Add user",
+        "editGroup": "Change permissions of group \"{{name}}\" to view & edit",
+        "viewOnlyGroup": "Change permissions of group \"{{name}}\" to view only",
+        "denyGroup": "Deny access to group \"{{name}}\"",
+        "addGroup": "Add group",
+        "allUser": "Everyone",
+        "allLoggedInUser": "All logged-in users",
+        "error": "An error occurred while fetching the user information of this note."
+      },
+      "shareLink": {
+        "title": "Share link",
+        "editorDescription": "This link points to this note in the editor as you currently see it.",
+        "viewOnlyDescription": "This link points to a read-only version of this note. You can use this e.g. for feedback from friends and colleagues.",
+        "slidesDescription": "This link points to the presentation view of the slides."
+      },
+      "preferences": {
+        "title": "Preferences",
+        "theme": {
+          "label": "Editor theme",
+          "one-dark": "Dark",
+          "neat": "Light"
         },
-        "changeDisplayNameFailed": "There was an error changing your display name.",
-        "accountManagement": "Account management",
-        "deleteUser": "Delete user",
-        "exportUserData": "Export user data",
-        "accessTokens": {
-            "title": "Access tokens",
-            "info": "Access tokens are an password-less authentication method for the CLI or third-party applications.",
-            "infoDev": "Developers can use these to access the public API.",
-            "noTokens": "You don't have any tokens generated yet.",
-            "createToken": "Create token",
-            "label": "Token label",
-            "created": "created {{time}}",
-            "lastUsed": "last used {{time}}",
-            "loadingFailed": "Fetching your access tokens has failed. Try reloading this page.",
-            "creationFailed": "Creating the access token failed.",
-            "expiry": "Expiry date"
+        "keyMap": {
+          "label": "Keymap",
+          "sublime": "Sublime",
+          "emacs": "Emacs",
+          "vim": "Vim"
         },
-        "modal": {
-            "deleteUser": {
-                "title": "Delete user",
-                "message": "Do you really want to delete your user account?",
-                "subMessage": "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.",
-                "failed": "There was an error deleting your account. Please try it again or contact your instance's administrator.",
-                "notificationTitle": "Account deleted",
-                "notificationText": "Your account has been successfully deleted."
-            },
-            "addedAccessToken": {
-                "title": "Token added",
-                "message": "The access token '{{label}}' was created. Copy it from the field below now, as you won't be able to view it again."
-            },
-            "deleteAccessToken": {
-                "title": "Really delete token?",
-                "message": "When deleting an access token, the applications that used it won't have access to your account anymore. You eventually need a new token to continue using those applications.",
-                "notificationTitle": "Access token deleted",
-                "notificationText": "The access token '{{label}}' has been deleted.",
-                "failed": "There was an error deleting the access token. Please try it again or contact your instance's administrator."
-            }
+        "indentWithTabs": {
+          "label": "Tab character",
+          "on": "Tabs",
+          "off": "Spaces"
+        },
+        "indentUnit": "Number of spaces per tab",
+        "spellcheck": {
+          "label": "Spell checking"
+        },
+        "ligatures": {
+          "label": "Show ligatures"
+        },
+        "smartPaste": {
+          "label": "Auto format pasted content"
         }
+      }
     },
-    "editor": {
-        "upload": {
-            "uploadFile": {
-              "withoutDescription": "Uploading file {{fileName}}",
-              "withDescription": "Uploading file {{fileName}} - {{description}}"
-            },
-            "dropImage": "Drop Image to insert",
-            "failed": "Error while uploading {{fileName}}"
-        },
-        "untitledNote": "Untitled",
-        "placeholder": "← Start by entering a title here\n===\nVisit the features page if you don't know what to do.\nHappy hacking :)",
-        "invalidYaml": "The yaml-header is invalid. See <0></0> for more information.",
-        "deprecatedTags": "The comma-separated definition of tags in the yaml-metadata is deprecated. Use a yaml-array instead.",
-        "infoToc": "Structure your note with headings to see a table-of-contents here.",
-        "help": {
-            "shortcuts": {
-                "title": "Shortcuts",
-                "bold": "Make selection bold",
-                "italic": "Make selection italic",
-                "underline": "Underline selection",
-                "strikethrough": "Strike selection through",
-                "mark": "Mark selection",
-                "link": "Add link around selection",
-                "view": "Show only View",
-                "both": "Show View and Edit",
-                "edit": "Show only Edit"
-            },
-            "links": {
-                "title": "Links"
-            },
-            "contacts": {
-                "title": "Contacts",
-                "community": "Join the community",
-                "meetUsOn": "Meet us on {{service}}",
-                "helpTranslating": "Help us translating",
-                "reportIssue": "Report an issue"
-            },
-            "documents": {
-                "title": "Documents",
-                "features": "Features",
-                "yamlMetadata": "YAML Metadata",
-                "slideExample": "Slide Example"
-            },
-            "cheatsheet": {
-                "title": "Cheatsheet",
-                "example": "Example",
-                "syntax": "Syntax",
-                "exampleAlert": "This is an alert area.",
-                "highlightedText": "Highlight"
-            }
-        },
-        "onlineStatus": {
-            "online": "Online"
-        },
-        "error": {
-            "locked": {
-                "title": "This note is locked",
-                "description": "Sorry, only the owner can edit this note."
-            },
-            "limitReached": {
-                "title": "Reached the limit",
-                "description": "Sorry, this note reached its maximum length. Notes can be up to {{maxLength}} characters long.",
-                "advice": "Please shorten the note."
-            },
-            "incompatible": {
-                "title": "Your client's version is incompatible.",
-                "description": "The server requires a newer version of the editor.",
-                "advice": "Refresh to update."
-            },
-            "newVersion": {
-                "title": "New version available!",
-                "description": "A new version of HedgeDoc is available",
-                "linkText": "See releases notes here",
-                "advice": "Refresh to enjoy new features."
-            },
-            "userStateChanged": {
-                "title": "Your user state has changed.",
-                "description": "Refresh to load new user state."
-            }
-        },
-        "viewMode": {
-            "edit": "Edit",
-            "view": "View",
-            "both": "Both"
-        },
-        "darkMode": {
-            "switchToDark": "Switch to Dark Mode",
-            "switchToLight": "Switch to Light Mode"
-        },
-        "appBar": {
-            "new": "New",
-            "syncScroll": {
-                "disable": "Disable sync scroll",
-                "enable": "Enable sync scroll"
-            }
-        },
-        "editorToolbar": {
-            "bold": "Bold",
-            "italic": "Italic",
-            "underline": "Underline",
-            "strikethrough": "Strikethrough",
-            "subscript": "Subscript",
-            "superscript": "Superscript",
-            "header": "Heading",
-            "code": "Code",
-            "blockquote": "Blockquote",
-            "unorderedList": "Unordered List",
-            "orderedList": "Ordered List",
-            "checkList": "Checklist",
-            "link": "Link",
-            "imageLink": "Image",
-            "uploadImage": "Upload Image",
-            "highlight": "Highlight",
-            "table": {
-                "titleWithoutSize": "Table",
-                "titleWithSize": "{{cols}}x{{rows}} Table",
-                "customSize": "Custom Size",
-                "cols": "Cols",
-                "rows": "Rows",
-                "create": "Create Custom Table"
-            },
-            "horizontalLine": "Horizontal line",
-            "collapsibleBlock": "Collapsible block",
-            "comment": "Comment",
-            "preferences": "Editor settings",
-            "emoji": "Open emoji picker"
-        },
-        "documentBar": {
-            "menu": "Menu",
-            "import": "Import",
-            "export": "Export",
-            "extra": "Extra",
-            "slideMode": "Slide Mode",
-            "readOnlyMode": "Read-only mode",
-            "download": "Download",
-            "help": "Help",
-            "deleteNote": "Delete note",
-            "pinNoteToHistory": "Pin note to history",
-            "pinnedToHistory": "Pinned to history"
-        },
-        "statusBar": {
-            "cursor": "Line {{line}}, Character {{columns}}",
-            "selection": {
-                "characters": "Selected {{count}} characters",
-                "lines": "Selected {{count}} lines"
-            },
-            "lines": "{{lines}} Lines",
-            "length": "Length {{length}}",
-            "lengthTooltip": {
-                "maximumReached": "You've reached the maximum length of this note.",
-                "remaining": "You may still write {{remaining}} characters until you reach the limit for this note.",
-                "exceeded": "You've exceeded the maximum length of this note by {{exceeded}} characters. Consider shortening it."
-            }
-        },
-        "export": {
-            "rawHtml": "Raw HTML",
-            "pdf": "PDF export is unavailable.",
-            "markdown-file": "Markdown file"
-        },
-        "import": {
-            "clipboard": "Clipboard",
-            "file": "Markdown file"
-        },
-        "modal": {
-            "snippetImport": {
-                "title": "Import from Snippet",
-                "selectProject": "Select From Available Projects",
-                "selectSnippet": "Select From Available Snippets"
-            },
-            "documentInfo": {
-                "title": "Document info",
-                "created": "<0></0> created this note <1></1>",
-                "edited": "<0></0> was the last editor <1></1>",
-                "usersContributed": "<0></0> users contributed to this document",
-                "revisions": "<0></0> revisions are saved",
-                "words": "<0></0> words in document"
-            },
-            "gistImport": {
-                "title": "Import from Gist",
-                "insertGistUrl": "Paste your gist url here…"
-            },
-            "snippetExport": {
-                "title": "Export to Snippet",
-                "visibilityLevel": "Select Visibility Level"
-            },
-            "revision": {
-                "title": "Revisions",
-                "revertButton": "Revert",
-                "error": "An error occurred while fetching the revisions of this note.",
-                "length": "Length",
-                "download": "Download selected revision"
-            },
-            "clipboardImport": {
-                "title": "Import from clipboard",
-                "insertMarkdown": "Paste your markdown or webpage here…"
-            },
-            "deleteNote": {
-                "title": "Delete note",
-                "question": "Do you really want to delete this note?",
-                "warning": "All users will lose their connection. This process is irreversible.",
-                "button": "Delete note"
-            },
-            "permissions": {
-                "title": "Permissions",
-                "owner": "Owner",
-                "sharedWithUsers": "Shared with users",
-                "sharedWithGroups": "Also share with…",
-                "editUser": "Change {{name}}'s permissions to view and edit",
-                "viewOnlyUser": "Change {{name}}'s permissions to view only",
-                "removeUser": "Remove {{name}}'s permissions",
-                "addUser": "Add user",
-                "editGroup": "Change permissions of group \"{{name}}\" to view & edit",
-                "viewOnlyGroup": "Change permissions of group \"{{name}}\" to view only",
-                "denyGroup": "Deny access to group \"{{name}}\"",
-                "addGroup": "Add group",
-                "allUser": "Everyone",
-                "allLoggedInUser": "All logged-in users",
-                "error": "An error occurred while fetching the user information of this note."
-            },
-            "shareLink": {
-                "title": "Share link",
-                "editorDescription": "This link points to this note in the editor as you currently see it.",
-                "viewOnlyDescription": "This link points to a read-only version of this note. You can use this e.g. for feedback from friends and colleagues.",
-                "slidesDescription": "This link points to the presentation view of the slides."
-            },
-            "preferences": {
-                "title": "Preferences",
-                "theme": {
-                    "label": "Editor theme",
-                    "one-dark": "Dark",
-                    "neat": "Light"
-                },
-                "keyMap": {
-                    "label": "Keymap",
-                    "sublime": "Sublime",
-                    "emacs": "Emacs",
-                    "vim": "Vim"
-                },
-                "indentWithTabs": {
-                    "label": "Tab character",
-                    "on": "Tabs",
-                    "off": "Spaces"
-                },
-                "indentUnit": "Number of spaces per tab",
-                "spellcheck": {
-                    "label": "Spell checking"
-                },
-                "ligatures": {
-                    "label": "Show ligatures"
-                },
-                "smartPaste": {
-                    "label": "Auto format pasted content"
-                }
-            }
-        },
-        "embeddings": {
-            "clickToLoad": "Click to load",
-            "placeholderImage": {
-                "placeholderText": "Placeholder",
-                "upload": "Upload image"
-            }
-        },
+    "embeddings": {
+      "clickToLoad": "Click to load",
+      "placeholderImage": {
+        "placeholderText": "Placeholder",
+        "upload": "Upload image"
+      }
+    },
     "abcJs": {
       "errorWhileRendering": "Error while rendering your score. Please check if the code is correct."
     }
