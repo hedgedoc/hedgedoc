@@ -5,7 +5,7 @@
  */
 
 import type { MutableRefObject } from 'react'
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { TableOfContentsMarkdownExtension } from '../markdown-extension/table-of-contents-markdown-extension'
 import { VegaLiteMarkdownExtension } from '../markdown-extension/vega-lite/vega-lite-markdown-extension'
 //TODO: fix dependency issues in markmap
@@ -42,6 +42,7 @@ import type { MarkdownExtension } from '../markdown-extension/markdown-extension
 import { IframeCapsuleMarkdownExtension } from '../markdown-extension/iframe-capsule/iframe-capsule-markdown-extension'
 import { ImagePlaceholderMarkdownExtension } from '../markdown-extension/image-placeholder/image-placeholder-markdown-extension'
 import { UploadIndicatingImageFrameMarkdownExtension } from '../markdown-extension/upload-indicating-image-frame/upload-indicating-image-frame-markdown-extension'
+import { useOnRefChange } from './use-on-ref-change'
 
 /**
  * Provides a list of {@link MarkdownExtension markdown extensions} that is a combination of the common extensions and the given additional.
@@ -65,10 +66,12 @@ export const useMarkdownExtensions = (
   onTocChange?: (ast?: TocAst) => void
 ): MarkdownExtension[] => {
   const plantumlServer = useApplicationState((state) => state.config.plantumlServer)
+  const toc = useRef<TocAst | undefined>(undefined)
+  useOnRefChange(toc, onTocChange)
 
   return useMemo(() => {
     return [
-      new TableOfContentsMarkdownExtension(onTocChange),
+      new TableOfContentsMarkdownExtension((ast?: TocAst) => (toc.current = ast)),
       ...additionalExtensions,
       new VegaLiteMarkdownExtension(),
       // new MarkmapMarkdownExtension(),
@@ -103,14 +106,5 @@ export const useMarkdownExtensions = (
       new HighlightedCodeMarkdownExtension(),
       new DebuggerMarkdownExtension()
     ]
-  }, [
-    additionalExtensions,
-    baseUrl,
-    currentLineMarkers,
-    lineOffset,
-    onImageClick,
-    onTaskCheckedChange,
-    onTocChange,
-    plantumlServer
-  ])
+  }, [additionalExtensions, baseUrl, currentLineMarkers, lineOffset, onImageClick, onTaskCheckedChange, plantumlServer])
 }
