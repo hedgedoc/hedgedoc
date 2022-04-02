@@ -1,8 +1,9 @@
-# SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+# SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
 # SPDX-License-Identifier: CC0-1.0
 
 ignore:
   - "src/utils/test-utils"
+  - "src/realtime/realtime-note/test-utils"
 
 codecov:
   notify:

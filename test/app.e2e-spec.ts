@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { getConfigToken } from '@nestjs/config';
+import { WsAdapter } from '@nestjs/platform-ws';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
 
@@ -50,6 +51,7 @@ describe('App', () => {
      * is done.
      */
     const app = moduleRef.createNestApplication();
+    app.useWebSocketAdapter(new WsAdapter(app));
     await app.init();
     await request(app.getHttpServer()).get('/').expect(404);
     await app.close();

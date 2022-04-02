@@ -11,6 +11,7 @@ import { DataSource, EntityManager, Repository } from 'typeorm';
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
 import appConfigMock from '../config/mock/app.config.mock';
+import authConfigMock from '../config/mock/auth.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
 import { PermissionsUpdateInconsistentError } from '../errors/errors';
@@ -93,7 +94,12 @@ describe('PermissionsService', () => {
         NotesModule,
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [appConfigMock, databaseConfigMock, noteConfigMock],
+          load: [
+            appConfigMock,
+            databaseConfigMock,
+            authConfigMock,
+            noteConfigMock,
+          ],
         }),
         GroupsModule,
       ],

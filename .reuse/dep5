@@ -58,3 +58,7 @@ License: LicenseRef-DCO
 Files: docs/content/theme/styles/Roboto/*
 Copyright: 2011 Christian Robertson
 License: Apache-2.0
+
+Files: public/*.md
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0

@@ -33,6 +33,7 @@ import { MediaModule } from './media/media.module';
 import { MonitoringModule } from './monitoring/monitoring.module';
 import { NotesModule } from './notes/notes.module';
 import { PermissionsModule } from './permissions/permissions.module';
+import { WebsocketModule } from './realtime/websocket/websocket.module';
 import { RevisionsModule } from './revisions/revisions.module';
 import { SessionModule } from './session/session.module';
 import { UsersModule } from './users/users.module';
@@ -101,6 +102,7 @@ const routes: Routes = [
     MediaModule,
     AuthModule,
     FrontendConfigModule,
+    WebsocketModule,
     IdentityModule,
     SessionModule,
   ],

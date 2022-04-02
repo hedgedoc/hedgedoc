@@ -5,6 +5,7 @@
  */
 import { HttpAdapterHost } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { WsAdapter } from '@nestjs/platform-ws';
 
 import { AppConfig } from './config/app.config';
 import { AuthConfig } from './config/auth.config';
@@ -14,7 +15,6 @@ import { ConsoleLoggerService } from './logger/console-logger.service';
 import { BackendType } from './media/backends/backend-type.enum';
 import { SessionService } from './session/session.service';
 import { setupSpecialGroups } from './utils/createSpecialGroups';
-import { setupFrontendProxy } from './utils/frontend-integration';
 import { setupSessionMiddleware } from './utils/session';
 import { setupValidationPipe } from './utils/setup-pipes';
 import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
@@ -41,8 +41,6 @@ export async function setupApp(
       `Serving OpenAPI docs for private api under '/private/apidoc'`,
       'AppBootstrap',
     );
-
-    await setupFrontendProxy(app, logger);
   }
 
   await setupSpecialGroups(app);
@@ -80,4 +78,5 @@ export async function setupApp(
 
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new ErrorExceptionMapping(httpAdapter));
+  app.useWebSocketAdapter(new WsAdapter(app));
 }
