@@ -8,6 +8,7 @@ import {
   Body,
   Controller,
   Delete,
+  Param,
   Post,
   Put,
   Req,
@@ -17,6 +18,8 @@ import { ApiTags } from '@nestjs/swagger';
 import { Session } from 'express-session';
 
 import { IdentityService } from '../../../identity/identity.service';
+import { LdapLoginDto } from '../../../identity/ldap/ldap-login.dto';
+import { LdapAuthGuard } from '../../../identity/ldap/ldap.strategy';
 import { LocalAuthGuard } from '../../../identity/local/local.strategy';
 import { LoginDto } from '../../../identity/local/login.dto';
 import { RegisterDto } from '../../../identity/local/register.dto';
@@ -29,6 +32,13 @@ import { LoginEnabledGuard } from '../../utils/login-enabled.guard';
 import { OpenApi } from '../../utils/openapi.decorator';
 import { RegistrationEnabledGuard } from '../../utils/registration-enabled.guard';
 import { RequestUser } from '../../utils/request-user.decorator';
+
+type RequestWithSession = Request & {
+  session: {
+    authProvider: string;
+    user: string;
+  };
+};
 
 @ApiTags('auth')
 @Controller('auth')
@@ -76,17 +86,26 @@ export class AuthController {
   @OpenApi(201, 400, 401)
   login(
     @Req()
-    request: Request & {
-      session: {
-        authProvider: string;
-        user: string;
-      };
-    },
+    request: RequestWithSession,
     @Body() loginDto: LoginDto,
   ): void {
     // There is no further testing needed as we only get to this point if LocalAuthGuard was successful
     request.session.user = loginDto.username;
     request.session.authProvider = 'local';
+  }
+
+  @UseGuards(LdapAuthGuard)
+  @Post('ldap/:ldapIdentifier')
+  @OpenApi(201, 400, 401)
+  loginWithLdap(
+    @Req()
+    request: RequestWithSession,
+    @Param('ldapIdentifier') ldapIdentifier: string,
+    @Body() loginDto: LdapLoginDto,
+  ): void {
+    // There is no further testing needed as we only get to this point if LocalAuthGuard was successful
+    request.session.user = loginDto.username;
+    request.session.authProvider = 'ldap';
   }
 
   @UseGuards(SessionGuard)
