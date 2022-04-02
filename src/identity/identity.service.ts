@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,7 @@ import authConfiguration, { AuthConfig } from '../config/auth.config';
 import {
   InvalidCredentialsError,
   NoLocalIdentityError,
+  NotInDBError,
 } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { User } from '../users/user.entity';
@@ -29,6 +30,84 @@ export class IdentityService {
     private authConfig: AuthConfig,
   ) {
     this.logger.setContext(IdentityService.name);
+  }
+
+  /**
+   * @async
+   * Retrieve an identity by userId and providerType.
+   * @param {string} userId - the userId of the wanted identity
+   * @param {ProviderType} providerType - the providerType of the wanted identity
+   */
+  async getIdentityFromUserIdAndProviderType(
+    userId: string,
+    providerType: ProviderType,
+  ): Promise<Identity> {
+    const identity = await this.identityRepository.findOne({
+      where: {
+        providerUserId: userId,
+        providerType: providerType,
+      },
+      relations: ['user'],
+    });
+    if (identity === undefined) {
+      throw new NotInDBError(`Identity for user id '${userId}' not found`);
+    }
+    return identity;
+  }
+
+  /**
+   * @async
+   * Update the given Identity with the given information
+   * @param {Identity} identity - the identity to update
+   * @param {string | undefined} displayName - the displayName to update the user with
+   * @param {string | undefined} email - the email to update the user with
+   * @param {string | undefined} profilePicture - the profilePicture to update the user with
+   */
+  async updateIdentity(
+    identity: Identity,
+    displayName?: string,
+    email?: string,
+    profilePicture?: string,
+  ): Promise<Identity> {
+    if (identity.syncSource) {
+      // The identity is the syncSource and the user should be changed accordingly
+      const user = await identity.user;
+      let shouldSave = false;
+      if (displayName) {
+        user.displayName = displayName;
+        shouldSave = true;
+      }
+      if (email) {
+        user.email = email;
+        shouldSave = true;
+      }
+      if (profilePicture) {
+        // ToDo: sync image
+      }
+      if (shouldSave) {
+        identity.user = Promise.resolve(user);
+        return await this.identityRepository.save(identity);
+      }
+    }
+    return identity;
+  }
+
+  /**
+   * @async
+   * Create a new generic identity.
+   * @param {User} user - the user the identity should be added to
+   * @param {ProviderType} providerType - the providerType of the identity
+   * @param {string} userId - the userId the identity should have
+   * @return {Identity} the new local identity
+   */
+  async createIdentity(
+    user: User,
+    providerType: ProviderType,
+    userId: string,
+  ): Promise<Identity> {
+    const identity = Identity.create(user, providerType, false);
+    identity.providerUserId = userId;
+    return await this.identityRepository.save(identity);
   }
 
   /**
