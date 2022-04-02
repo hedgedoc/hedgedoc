@@ -12,6 +12,7 @@ import { Repository } from 'typeorm';
 import appConfigMock from '../../src/config/mock/app.config.mock';
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
+import authConfigMock from '../config/mock/auth.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
 import mediaConfigMock from '../config/mock/media.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
@@ -57,6 +58,7 @@ describe('MediaService', () => {
             mediaConfigMock,
             appConfigMock,
             databaseConfigMock,
+            authConfigMock,
             noteConfigMock,
           ],
         }),

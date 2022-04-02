@@ -66,11 +66,9 @@ dataSource
 
     for (let i = 0; i < 3; i++) {
       const author = (await dataSource.manager.save(
-        dataSource.manager.create(Author, Author.create(1)),
+        Author.create(1),
       )) as Author;
-      const user = (await dataSource.manager.save(
-        dataSource.manager.create(User, users[i]),
-      )) as User;
+      const user = (await dataSource.manager.save(users[i])) as User;
       const identity = Identity.create(user, ProviderType.LOCAL, false);
       identity.passwordHash = await hashPassword(password);
       dataSource.manager.create(Identity, identity);
@@ -95,6 +93,49 @@ dataSource
         identity,
       ]);
     }
+    const createdUsers = await dataSource.manager.find(User);
+    const groupEveryone = Group.create('_EVERYONE', 'Everyone', true) as Group;
+    const groupLoggedIn = Group.create(
+      '_LOGGED_IN',
+      'Logged-in users',
+      true,
+    ) as Group;
+    await dataSource.manager.save([groupEveryone, groupLoggedIn]);
+
+    for (let i = 0; i < 3; i++) {
+      if (i === 0) {
+        const permission1 = NoteUserPermission.create(
+          createdUsers[0],
+          notes[i],
+          true,
+        );
+        const permission2 = NoteUserPermission.create(
+          createdUsers[1],
+          notes[i],
+          false,
+        );
+        notes[i].userPermissions = Promise.resolve([permission1, permission2]);
+        notes[i].groupPermissions = Promise.resolve([]);
+        await dataSource.manager.save([notes[i], permission1, permission2]);
+      }
+
+      if (i === 1) {
+        const readPermission = NoteGroupPermission.create(
+          groupEveryone,
+          notes[i],
+          false,
+        );
+        notes[i].userPermissions = Promise.resolve([]);
+        notes[i].groupPermissions = Promise.resolve([readPermission]);
+        await dataSource.manager.save([notes[i], readPermission]);
+      }
+
+      if (i === 2) {
+        notes[i].owner = Promise.resolve(createdUsers[0]);
+        await dataSource.manager.save([notes[i]]);
+      }
+    }
+
     const foundUsers = await dataSource.manager.find(User);
     if (!foundUsers) {
       throw new Error('Could not find freshly seeded users. Aborting.');
