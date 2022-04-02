@@ -51,23 +51,38 @@ createConnection({
   dropSchema: true,
 })
   .then(async (connection) => {
-    const password = 'test_password';
+    const password = 'TopSecret!';
     const users = [];
-    users.push(User.create('hardcoded', 'Test User 1'));
-    users.push(User.create('hardcoded_2', 'Test User 2'));
-    users.push(User.create('hardcoded_3', 'Test User 3'));
+    users.push(User.create('backend1', 'Backend User 1'));
+    users.push(User.create('backend2', 'Backend User 2'));
+    users.push(User.create('backend3', 'Backend User 3'));
     const notes: Note[] = [];
-    notes.push(Note.create(null, 'test') as Note);
-    notes.push(Note.create(null, 'test2') as Note);
-    notes.push(Note.create(null, 'test3') as Note);
+    notes.push(Note.create(null, 'note1') as Note);
+    notes.push(Note.create(null, 'note2') as Note);
+    notes.push(Note.create(null, 'note3') as Note);
 
     for (let i = 0; i < 3; i++) {
-      const author = connection.manager.create(Author, Author.create(1));
       const user = connection.manager.create(User, users[i]);
       const identity = Identity.create(user, ProviderType.LOCAL, false);
       identity.passwordHash = await hashPassword(password);
       connection.manager.create(Identity, identity);
-      author.user = Promise.resolve(user);
+      await connection.manager.save([user, identity]);
+    }
+
+    const createdUsers = await connection.manager.find(User);
+    const groupEveryone = connection.manager.create(
+      Group,
+      Group.create('_EVERYONE', 'Everyone', true),
+    );
+    const groupLoggedIn = connection.manager.create(
+      Group,
+      Group.create('_LOGGED_IN', 'Logged-in users', true),
+    );
+    await connection.manager.save([groupEveryone, groupLoggedIn]);
+
+    for (let i = 0; i < 3; i++) {
+      const author = connection.manager.create(Author, Author.create(1));
+      author.user = Promise.resolve(createdUsers[0]);
       const revision = Revision.create(
         'This is a test note',
         'This is a test note',
@@ -76,17 +91,39 @@ createConnection({
       const edit = Edit.create(author, 1, 42) as Edit;
       revision.edits = Promise.resolve([edit]);
       notes[i].revisions = Promise.all([revision]);
-      notes[i].userPermissions = Promise.resolve([]);
-      notes[i].groupPermissions = Promise.resolve([]);
-      user.ownedNotes = Promise.resolve([notes[i]]);
-      await connection.manager.save([
-        notes[i],
-        user,
-        revision,
-        edit,
-        author,
-        identity,
-      ]);
+      await connection.manager.save([notes[i], revision, edit, author]);
+
+      if (i === 0) {
+        const permission1 = NoteUserPermission.create(
+          createdUsers[0],
+          notes[i],
+          true,
+        );
+        const permission2 = NoteUserPermission.create(
+          createdUsers[1],
+          notes[i],
+          false,
+        );
+        notes[i].userPermissions = Promise.resolve([permission1, permission2]);
+        notes[i].groupPermissions = Promise.resolve([]);
+        await connection.manager.save([notes[i], permission1, permission2]);
+      }
+
+      if (i === 1) {
+        const readPermission = NoteGroupPermission.create(
+          groupEveryone,
+          notes[i],
+          false,
+        );
+        notes[i].userPermissions = Promise.resolve([]);
+        notes[i].groupPermissions = Promise.resolve([readPermission]);
+        await connection.manager.save([notes[i], readPermission]);
+      }
+
+      if (i === 2) {
+        notes[i].owner = Promise.resolve(createdUsers[0]);
+        await connection.manager.save([notes[i]]);
+      }
     }
     const foundUsers = await connection.manager.find(User);
     if (!foundUsers) {
