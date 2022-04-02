@@ -2195,7 +2195,7 @@ __metadata:
     "@types/uuid": 8.3.4
     "@typescript-eslint/eslint-plugin": 5.17.0
     "@typescript-eslint/parser": 5.17.0
-    "@uiw/react-codemirror": 4.5.1
+    "@uiw/react-codemirror": 4.5.3
     abcjs: 6.0.2
     bootstrap: 4.6.1
     copy-webpack-plugin: 10.2.4
@@ -5155,9 +5155,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uiw/react-codemirror@npm:4.5.1":
-  version: 4.5.1
-  resolution: "@uiw/react-codemirror@npm:4.5.1"
+"@uiw/react-codemirror@npm:4.5.3":
+  version: 4.5.3
+  resolution: "@uiw/react-codemirror@npm:4.5.3"
   dependencies:
     "@babel/runtime": ^7.17.2
     "@codemirror/basic-setup": ^0.19.1
@@ -5168,7 +5168,7 @@ __metadata:
     "@babel/runtime": ">=7.11.0"
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 67bf8d03623adc7ffe99069524512b2c589d46ccbc9aaea130ba7edef5d3cf2307915b80c4caed27295865d4c82e867dacb26fdf6526a18c0be2a35f9b1e5c49
+  checksum: 5d8f8a990e3c60a45a166157245443dc7f0f8f75af48fddd4766683d47d77727ea2a43ae8e55f3a785b814eb5ce826dbf3bb59ccf91ad42313fe744d747e49e7
   languageName: node
   linkType: hard
 
