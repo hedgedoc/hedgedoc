@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "@nestjs/cli": "8.2.4",
-    "@nestjs/schematics": "8.0.8",
+    "@nestjs/schematics": "8.0.9",
     "@nestjs/testing": "8.4.3",
     "@trivago/prettier-plugin-sort-imports": "3.2.0",
     "@tsconfig/node12": "1.0.9",
