@@ -2248,7 +2248,7 @@ __metadata:
     markmap-lib: 0.12.0
     markmap-view: 0.2.7
     mermaid: 8.14.0
-    netlify-cli: 9.13.5
+    netlify-cli: 9.16.1
     next: 12.1.0
     optional-js: 2.3.0
     prettier: 2.6.1
@@ -3089,6 +3089,13 @@ __metadata:
   version: 6.17.0
   resolution: "@netlify/plugins-list@npm:6.17.0"
   checksum: 3e357d1e10871b2285591aa7bc57ec15408371b1bbb27068a4290b08b3a7254402b5849b4beb2526f3c163decab9aadc8800c3d2f544980d5e89bb7bc234f66e
+  languageName: node
+  linkType: hard
+
+"@netlify/plugins-list@npm:^6.18.1":
+  version: 6.18.1
+  resolution: "@netlify/plugins-list@npm:6.18.1"
+  checksum: 24267db5b66731946874c4121b487ad74b1e8b3a377734c067a9a560e4d40eb37bf4d1df3f9c2760dd3550023f47c4387c1f25607a87ead5c9d4758aa2d8cbad
   languageName: node
   linkType: hard
 
@@ -15056,16 +15063,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"netlify-cli@npm:9.13.5":
-  version: 9.13.5
-  resolution: "netlify-cli@npm:9.13.5"
+"netlify-cli@npm:9.16.1":
+  version: 9.16.1
+  resolution: "netlify-cli@npm:9.16.1"
   dependencies:
     "@netlify/build": ^26.5.1
     "@netlify/config": ^17.0.19
     "@netlify/framework-info": ^9.0.2
     "@netlify/local-functions-proxy": ^1.1.1
     "@netlify/plugin-edge-handlers": ^3.0.7
-    "@netlify/plugins-list": ^6.17.0
+    "@netlify/plugins-list": ^6.18.1
     "@netlify/routing-local-proxy": ^0.34.1
     "@netlify/zip-it-and-ship-it": ^5.9.0
     "@octokit/rest": ^18.0.0
@@ -15172,7 +15179,7 @@ __metadata:
   bin:
     netlify: bin/run
     ntl: bin/run
-  checksum: 074a79c55be69787e5355650acfc8fc070cfa494881bf866037e09b8b0df1ea931c84b021133d4f3e4043f59a091a4a77cf023be9d76796ca3ff7a77926e88d0
+  checksum: 3dec0441892c50082fffdfe8f9efc2bd703874419cfd95e51ea5d0635f7b2a5639d638934313ea320f7baf5e802e942f2c61fadbbf564e44593ee86ebb84c76e
   languageName: node
   linkType: hard
 
