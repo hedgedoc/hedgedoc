@@ -46,8 +46,8 @@ export const parseBlockquoteExtraTag = (
     labelEndIndex,
     valueStartIndex,
     valueEndIndex,
-    label: line.substr(labelStartIndex, labelEndIndex - labelStartIndex),
-    value: line.substr(valueStartIndex, valueEndIndex - valueStartIndex)
+    label: line.slice(labelStartIndex, labelEndIndex),
+    value: line.slice(valueStartIndex, valueEndIndex)
   }
 }
 

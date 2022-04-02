@@ -26,10 +26,10 @@ export class AnchorNodePreprocessor extends TravelerNodeProcessor {
       return
     }
 
-    const isJumpMark = url.substr(0, 1) === '#'
+    const isJumpMark = url.slice(0, 1) === '#'
 
     if (isJumpMark) {
-      node.attribs['data-jump-target-id'] = url.substr(1)
+      node.attribs['data-jump-target-id'] = url.slice(1)
     } else {
       node.attribs.rel = 'noreferer noopener'
       node.attribs.target = '_blank'

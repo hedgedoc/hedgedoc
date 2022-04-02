@@ -32,7 +32,7 @@ export const buildReactDomFromTocAst = (
   const content = (
     <Fragment>
       <ShowIf condition={toc.l > 0}>
-        <JumpAnchor href={headlineUrl} title={rawName} jumpTargetId={slug.substr(1)}>
+        <JumpAnchor href={headlineUrl} title={rawName} jumpTargetId={slug.slice(1)}>
           {rawName}
         </JumpAnchor>
       </ShowIf>

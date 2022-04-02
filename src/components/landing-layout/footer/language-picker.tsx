@@ -54,7 +54,7 @@ const languages = {
  */
 const findLanguageCode = (wantedLanguage: string): string =>
   Object.keys(languages).find((supportedLanguage) => wantedLanguage === supportedLanguage) ??
-  Object.keys(languages).find((supportedLanguage) => wantedLanguage.substr(0, 2) === supportedLanguage) ??
+  Object.keys(languages).find((supportedLanguage) => wantedLanguage.slice(0, 2) === supportedLanguage) ??
   ''
 
 export const LanguagePicker: React.FC = () => {
