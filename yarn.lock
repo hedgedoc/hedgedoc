@@ -2251,14 +2251,14 @@ __metadata:
     next: 12.1.4
     optional-js: 2.3.0
     prettier: 2.6.2
-    react: 17.0.2
+    react: 18.0.0
     react-bootstrap: 1.6.4
     react-bootstrap-typeahead: 5.2.2
     react-diff-viewer: 3.1.1
-    react-dom: 17.0.2
+    react-dom: 18.0.0
     react-i18next: 11.16.3
     react-redux: 7.2.8
-    react-test-renderer: 17.0.2
+    react-test-renderer: 18.0.0
     react-use: 17.3.2
     redux: 4.1.2
     redux-devtools-extension: 2.13.9
@@ -17379,7 +17379,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:17.0.2":
+"react-dom@npm:18.0.0":
+  version: 18.0.0
+  resolution: "react-dom@npm:18.0.0"
+  dependencies:
+    loose-envify: ^1.1.0
+    scheduler: ^0.21.0
+  peerDependencies:
+    react: ^18.0.0
+  checksum: dd0ba9f2f31dd728076c892a95b2f5a8dfe79136431b0289afb46eec39d0ca6b6f0f40a60fd8aa6ef702c98ce7c26100d3d4dbc35c7c9e87429cd04f84cb58bd
+  languageName: node
+  linkType: hard
+
+"react-dom@npm:^17.0.2":
   version: 17.0.2
   resolution: "react-dom@npm:17.0.2"
   dependencies:
@@ -17434,6 +17446,13 @@ __metadata:
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: f7a19ac3496de32ca9ae12aa030f00f14a3d45374f1ceca0af707c831b2a6098ef0d6bdae51bd437b0a306d7f01d4677fcc8de7c0d331eb47ad0f46130e53c5f
+  languageName: node
+  linkType: hard
+
+"react-is@npm:^18.0.0":
+  version: 18.0.0
+  resolution: "react-is@npm:18.0.0"
+  checksum: d38f6afee4d8d791cdd69c715841c01a503c9b06da6158e0893447cea6ba50cd262dca9bde84127720cf44fd05c58185eafc32accace4bb2deb03b3cdbeb6b6b
   languageName: node
   linkType: hard
 
@@ -17513,17 +17532,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-test-renderer@npm:17.0.2":
-  version: 17.0.2
-  resolution: "react-test-renderer@npm:17.0.2"
+"react-test-renderer@npm:18.0.0":
+  version: 18.0.0
+  resolution: "react-test-renderer@npm:18.0.0"
   dependencies:
-    object-assign: ^4.1.1
-    react-is: ^17.0.2
+    react-is: ^18.0.0
     react-shallow-renderer: ^16.13.1
-    scheduler: ^0.20.2
+    scheduler: ^0.21.0
   peerDependencies:
-    react: 17.0.2
-  checksum: e6b5c6ed2a0bde2c34f1ab9523ff9bc4c141a271daf730d6b852374e83acc0155d58ab71a318251e953ebfa65b8bebb9c5dce3eba1ccfcbef7cc4e1e8261c401
+    react: ^18.0.0
+  checksum: c0e5250fa2e4c3650e247b986c262631bec68f18c06817269ab7a4e2cffa5a152bb58ce0fe4182ffa8c333e6c2a8d763ac92e0928e5f6914a7aa188c2de1943a
   languageName: node
   linkType: hard
 
@@ -17577,7 +17595,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:17.0.2":
+"react@npm:18.0.0":
+  version: 18.0.0
+  resolution: "react@npm:18.0.0"
+  dependencies:
+    loose-envify: ^1.1.0
+  checksum: 293020b96536b3c7113ee57ca5c990a3f25649d1751b1c7a3aabd16dff0691fe9f1eed1206616d0906d05933536052037340a0c8d0941ff870b0eb469a2f975b
+  languageName: node
+  linkType: hard
+
+"react@npm:^17.0.2":
   version: 17.0.2
   resolution: "react@npm:17.0.2"
   dependencies:
