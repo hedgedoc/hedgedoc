@@ -199,6 +199,9 @@ describe('Notes', () => {
   describe('GET /notes/{note}/revisions', () => {
     it('works with existing alias', async () => {
       await testSetup.notesService.createNote(content, user, 'test4');
+      // create a second note to check for a regression, where typeorm always returned
+      // all revisions in the database
+      await testSetup.notesService.createNote(content, user, 'test4a');
       const response = await agent
         .get('/api/private/notes/test4/revisions')
         .expect('Content-Type', /json/)
