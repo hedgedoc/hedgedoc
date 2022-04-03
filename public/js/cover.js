@@ -32,6 +32,8 @@ require('./locale')
 require('../css/cover.css')
 require('../css/site.css')
 
+require('./fix-aria-hidden-for-modals')
+
 const options = {
   valueNames: ['id', 'text', 'timestamp', 'fromNow', 'time', 'tags', 'pinned'],
   item: `<li class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
