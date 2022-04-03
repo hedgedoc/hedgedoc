@@ -263,9 +263,17 @@ describe('MediaService', () => {
             id: '123',
           } as Note),
         } as MediaUpload;
+        const createQueryBuilder = {
+          where: () => createQueryBuilder,
+          getMany: async () => {
+            return [mockMediaUploadEntry];
+          },
+        };
         jest
-          .spyOn(mediaRepo, 'find')
-          .mockResolvedValueOnce([mockMediaUploadEntry]);
+          .spyOn(mediaRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => createQueryBuilder);
         const mediaList = await service.listUploadsByNote({
           id: '123',
         } as Note);
@@ -273,14 +281,34 @@ describe('MediaService', () => {
       });
 
       it('without uploads to note', async () => {
-        jest.spyOn(mediaRepo, 'find').mockResolvedValueOnce([]);
+        const createQueryBuilder = {
+          where: () => createQueryBuilder,
+          getMany: async () => {
+            return [];
+          },
+        };
+        jest
+          .spyOn(mediaRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => createQueryBuilder);
         const mediaList = await service.listUploadsByNote({
           id: '123',
         } as Note);
         expect(mediaList).toEqual([]);
       });
-      it('with error (undefined as return value of find)', async () => {
-        jest.spyOn(mediaRepo, 'find').mockResolvedValueOnce([]);
+      it('with error (null as return value of find)', async () => {
+        const createQueryBuilder = {
+          where: () => createQueryBuilder,
+          getMany: async () => {
+            return null;
+          },
+        };
+        jest
+          .spyOn(mediaRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => createQueryBuilder);
         const mediaList = await service.listUploadsByNote({
           id: '123',
         } as Note);
