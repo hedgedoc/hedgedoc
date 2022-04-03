@@ -17,7 +17,7 @@ jobs:
       - name: Cleanup CI containers
         uses: snok/container-retention-policy@v1
         with:
-          image-names: ${{ github.event.repository.name }}-ci
+          image-names: hedgedoc-ci
           cut-off: A day ago UTC
           account-type: org
           org-name: ${{ github.repository_owner }}
