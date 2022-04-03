@@ -30,6 +30,7 @@ import { EditorView } from '@codemirror/view'
 import { autocompletion } from '@codemirror/autocomplete'
 import { useCodeMirrorFocusReference } from './hooks/use-code-mirror-focus-reference'
 import { useOffScreenScrollProtection } from './hooks/use-off-screen-scroll-protection'
+import { cypressId } from '../../../utils/cypress-attribute'
 
 const logger = new Logger('EditorPane')
 
@@ -94,7 +95,8 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
     <div
       className={`d-flex flex-column h-100 position-relative`}
       onTouchStart={onMakeScrollSource}
-      onMouseEnter={onMakeScrollSource}>
+      onMouseEnter={onMakeScrollSource}
+      {...cypressId('editor-pane')}>
       <MaxLengthWarning />
       <ToolBar />
       <ReactCodeMirror

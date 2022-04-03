@@ -1,0 +1,304 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Splitter can render both panes 1`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="splitter left "
+      style="width: calc(50% - 5px);"
+    >
+      left
+    </div>
+    <div
+      class="splitter separator"
+    >
+      <div
+        class="split-divider"
+        data-testid="splitter-divider"
+      />
+    </div>
+    <div
+      class="splitter right "
+      style="width: calc(100% - 50%);"
+    >
+      right
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter can render only the left pane 1`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="splitter left "
+      style="width: calc(100% - 5px);"
+    >
+      left
+    </div>
+    <div
+      class="splitter right d-none"
+      style="width: calc(100% - 100%);"
+    >
+      right
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter can render only the right pane 1`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="splitter left d-none"
+      style="width: calc(0% - 5px);"
+    >
+      left
+    </div>
+    <div
+      class="splitter right "
+      style="width: calc(100% - 0%);"
+    >
+      right
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with mouse 1`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="splitter left "
+      style="width: calc(50% - 5px);"
+    >
+      left
+    </div>
+    <div
+      class="splitter separator"
+    >
+      <div
+        class="split-divider"
+        data-testid="splitter-divider"
+      />
+    </div>
+    <div
+      class="splitter right "
+      style="width: calc(100% - 50%);"
+    >
+      right
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with mouse 2`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="splitter left "
+      style="width: calc(100% - 5px);"
+    >
+      left
+    </div>
+    <div
+      class="splitter separator"
+    >
+      <div
+        class="split-divider"
+        data-testid="splitter-divider"
+      />
+    </div>
+    <div
+      class="splitter right "
+      style="width: calc(100% - 100%);"
+    >
+      right
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with mouse 3`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="splitter left "
+      style="width: calc(0% - 5px);"
+    >
+      left
+    </div>
+    <div
+      class="splitter separator"
+    >
+      <div
+        class="split-divider"
+        data-testid="splitter-divider"
+      />
+    </div>
+    <div
+      class="splitter right "
+      style="width: calc(100% - 0%);"
+    >
+      right
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with mouse 4`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="splitter left "
+      style="width: calc(0% - 5px);"
+    >
+      left
+    </div>
+    <div
+      class="splitter separator"
+    >
+      <div
+        class="split-divider"
+        data-testid="splitter-divider"
+      />
+    </div>
+    <div
+      class="splitter right "
+      style="width: calc(100% - 0%);"
+    >
+      right
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with touch 1`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="splitter left "
+      style="width: calc(50% - 5px);"
+    >
+      left
+    </div>
+    <div
+      class="splitter separator"
+    >
+      <div
+        class="split-divider"
+        data-testid="splitter-divider"
+      />
+    </div>
+    <div
+      class="splitter right "
+      style="width: calc(100% - 50%);"
+    >
+      right
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with touch 2`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="splitter left "
+      style="width: calc(NaN% - 5px);"
+    >
+      left
+    </div>
+    <div
+      class="splitter separator"
+    >
+      <div
+        class="split-divider"
+        data-testid="splitter-divider"
+      />
+    </div>
+    <div
+      class="splitter right "
+      style="width: calc(100% - NaN%);"
+    >
+      right
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with touch 3`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="splitter left "
+      style="width: calc(NaN% - 5px);"
+    >
+      left
+    </div>
+    <div
+      class="splitter separator"
+    >
+      <div
+        class="split-divider"
+        data-testid="splitter-divider"
+      />
+    </div>
+    <div
+      class="splitter right "
+      style="width: calc(100% - NaN%);"
+    >
+      right
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with touch 4`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="splitter left "
+      style="width: calc(NaN% - 5px);"
+    >
+      left
+    </div>
+    <div
+      class="splitter separator"
+    >
+      <div
+        class="split-divider"
+        data-testid="splitter-divider"
+      />
+    </div>
+    <div
+      class="splitter right "
+      style="width: calc(100% - NaN%);"
+    >
+      right
+    </div>
+  </div>
+</div>
+`;

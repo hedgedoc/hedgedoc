@@ -5,12 +5,12 @@
  */
 
 import type { ReactElement } from 'react'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SplitDivider } from './split-divider/split-divider'
 import styles from './splitter.module.scss'
 import { useAdjustedRelativeSplitValue } from './hooks/use-adjusted-relative-split-value'
-import { cypressId } from '../../../utils/cypress-attribute'
+import { useBindPointerMovementEventOnWindow } from '../../../hooks/common/use-bind-pointer-movement-event-on-window'
 
 export interface SplitterProps {
   left?: ReactElement
@@ -41,9 +41,9 @@ const isLeftMouseButtonClicked = (mouseEvent: MouseEvent): boolean => {
  */
 const extractHorizontalPosition = (moveEvent: MouseEvent | TouchEvent): number => {
   if (isMouseEvent(moveEvent)) {
-    return moveEvent.pageX
+    return moveEvent.clientX
   } else {
-    return moveEvent.touches[0]?.pageX
+    return moveEvent.touches[0]?.clientX
   }
 }
 
@@ -107,42 +107,21 @@ export const Splitter: React.FC<SplitterProps> = ({
     moveEvent.preventDefault()
   }, [])
 
-  /**
-   * Registers and unregisters necessary event listeners on the body so you can use the split even if the mouse isn't moving over it.
-   */
-  useEffect(() => {
-    const moveHandler = onMove
-    const stopResizeHandler = onStopResizing
-    window.addEventListener('touchmove', moveHandler)
-    window.addEventListener('mousemove', moveHandler)
-    window.addEventListener('touchcancel', stopResizeHandler)
-    window.addEventListener('touchend', stopResizeHandler)
-    window.addEventListener('mouseup', stopResizeHandler)
-
-    return () => {
-      window.removeEventListener('touchmove', moveHandler)
-      window.removeEventListener('mousemove', moveHandler)
-      window.removeEventListener('touchcancel', stopResizeHandler)
-      window.removeEventListener('touchend', stopResizeHandler)
-      window.removeEventListener('mouseup', stopResizeHandler)
-    }
-  }, [resizingInProgress, onMove, onStopResizing])
+  useBindPointerMovementEventOnWindow(onMove, onStopResizing)
 
   return (
     <div ref={splitContainer} className={`flex-fill flex-row d-flex ${additionalContainerClassName || ''}`}>
       <div
-        {...cypressId('splitter-left')}
         className={`${styles['splitter']} ${styles['left']} ${!showLeft ? 'd-none' : ''}`}
         style={{ width: `calc(${adjustedRelativeSplitValue}% - 5px)` }}>
         {left}
       </div>
       <ShowIf condition={showLeft && showRight}>
-        <div className={`${styles['splitter']} ${styles['separator']}`} {...cypressId('splitter-separator')}>
+        <div className={`${styles['splitter']} ${styles['separator']}`}>
           <SplitDivider onGrab={onStartResizing} />
         </div>
       </ShowIf>
       <div
-        {...cypressId('splitter-right')}
         className={`${styles['splitter']} ${styles['right']} ${!showRight ? 'd-none' : ''}`}
         style={{ width: `calc(100% - ${adjustedRelativeSplitValue}%)` }}>
         {right}

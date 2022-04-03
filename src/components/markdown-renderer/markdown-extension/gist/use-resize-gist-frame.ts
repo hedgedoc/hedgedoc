@@ -5,7 +5,8 @@
  */
 
 import type React from 'react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
+import { useBindPointerMovementEventOnWindow } from '../../../../hooks/common/use-bind-pointer-movement-event-on-window'
 
 /**
  * Determines if the left mouse button is pressed in the given event
@@ -82,23 +83,7 @@ export const useResizeGistFrame = (initialFrameHeight: number): [number, Pointer
     }
   }, [])
 
-  useEffect(() => {
-    const moveHandler = onMove
-    const stopResizeHandler = onStopResizing
-    window.addEventListener('touchmove', moveHandler)
-    window.addEventListener('mousemove', moveHandler)
-    window.addEventListener('touchcancel', stopResizeHandler)
-    window.addEventListener('touchend', stopResizeHandler)
-    window.addEventListener('mouseup', stopResizeHandler)
-
-    return () => {
-      window.removeEventListener('touchmove', moveHandler)
-      window.removeEventListener('mousemove', moveHandler)
-      window.removeEventListener('touchcancel', stopResizeHandler)
-      window.removeEventListener('touchend', stopResizeHandler)
-      window.removeEventListener('mouseup', stopResizeHandler)
-    }
-  }, [onMove, onStopResizing])
+  useBindPointerMovementEventOnWindow(onMove, onStopResizing)
 
   return [frameHeight, onStartResizing]
 }
