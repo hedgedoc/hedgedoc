@@ -1921,9 +1921,12 @@ $('#snippetExportModalConfirm').click(function () {
 
   const data = {
     title: $('#snippetExportModalTitle').val(),
-    file_name: $('#snippetExportModalFileName').val(),
-    code: editor.getValue(),
-    visibility_level: $('#snippetExportModalVisibility').val(),
+    files: [
+      {
+        file_path: $('#snippetExportModalFileName').val(),
+        content: editor.getValue()
+      }
+    ],
     visibility:
       $('#snippetExportModalVisibility').val() === '0'
         ? 'private'
@@ -1934,40 +1937,27 @@ $('#snippetExportModalConfirm').click(function () {
 
   if (
     !data.title ||
-    !data.file_name ||
-    !data.code ||
-    !data.visibility_level ||
+    !data.files[0].file_path ||
+    !data.files[0].content ||
     !$('#snippetExportModalProjects').val()
   ) { return }
   $('#snippetExportModalLoading').show()
-  const fullURL =
-    baseURL +
-    '/api/' +
-    version +
-    '/projects/' +
-    $('#snippetExportModalProjects').val() +
-    '/snippets?access_token=' +
-    accesstoken
-  $.post(fullURL, data, function (ret) {
-    $('#snippetExportModalLoading').hide()
-    $('#snippetExportModal').modal('hide')
-    const redirect =
-      baseURL +
-      '/' +
-      $(
-        "#snippetExportModalProjects option[value='" +
-          $('#snippetExportModalProjects').val() +
-          "']"
-      ).text() +
-      '/snippets/' +
-      ret.id
-    showMessageModal(
-      '<i class="fa fa-gitlab"></i> Export to Snippet',
-      'Export Successful!',
-      redirect,
-      'View Snippet Here',
-      true
-    )
+  const fullURL = `${baseURL}/api/${version}/projects/${$('#snippetExportModalProjects').val()}/snippets?access_token=${accesstoken}`
+  $.ajax(fullURL, {
+    data: JSON.stringify(data),
+    contentType: 'application/json',
+    type: 'POST',
+    success: function (ret) {
+      $('#snippetExportModalLoading').hide()
+      $('#snippetExportModal').modal('hide')
+      showMessageModal(
+        '<i class="fa fa-gitlab"></i> Export to Snippet',
+        'Export Successful!',
+        ret.web_url,
+        'View Snippet Here',
+        true
+      )
+    }
   })
 })
 

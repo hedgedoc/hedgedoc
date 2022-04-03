@@ -29,6 +29,9 @@ describe('Content security policies', function () {
       },
       dropbox: {
         appKey: undefined
+      },
+      gitlab: {
+        baseURL: undefined
       }
     }
   })
