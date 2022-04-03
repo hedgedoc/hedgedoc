@@ -122,9 +122,9 @@
     "Freely - Anyone can edit": "Libre - Tout le monde peut éditer",
     "Editable - Signed-in people can edit": "Editable - Les personnes inscrites peuvent éditer",
     "Limited - Signed-in people can edit (forbid guests)": "Limité - Les personnes inscrites peuvent éditer (invité interdit)",
-    "Locked - Only owner can edit": "Verrouillé - Seul le propiétaire peut éditer",
-    "Protected - Only owner can edit (forbid guests)": "Protégé - Seul le propiétaire peut éditer (invité interdit)",
-    "Private - Only owner can view & edit": "Privé - Seul le propiétaire peut visualiser et éditer",
+    "Locked - Only owner can edit": "Verrouillé - Seul le propriétaire peut éditer",
+    "Protected - Only owner can edit (forbid guests)": "Protégé - Seul le propriétaire peut éditer (invité interdit)",
+    "Private - Only owner can view & edit": "Privé - Seul le propriétaire peut visualiser et éditer",
     "changed": "changé",
     "created": "créé"
 }
