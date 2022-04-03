@@ -92,8 +92,8 @@ const options = {
 	reset: resetUser,
 };
 
-// Perform commandline-parsing
-const argv = minimist(process.argv.slice(2));
+// Perform commandline-parsing and always treat 'pass' argument as string
+const argv = minimist(process.argv.slice(2), {string: ["pass"]});
 
 const keys = Object.keys(options);
 const opts = keys.filter((key) => argv[key] !== undefined);

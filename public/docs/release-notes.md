@@ -4,6 +4,7 @@
 
 ### Bugfixes
 - Fix error that Libravatar user avatars were not shown when using OAuth2 login
+- Fix `bin/manage_users` not accepting numeric passwords (thanks to [@carr0t2](https://github.com/carr0t2) for reporting)
 
 ### Enhancements
 - Libravatar avatars render as ident-icons when no avatar image was uploaded to Libravatar or Gravatar
