@@ -54,13 +54,12 @@ export class HistoryService {
    * @return {HistoryEntry} the requested history entry
    */
   async getEntryByNote(note: Note, user: User): Promise<HistoryEntry> {
-    const entry = await this.historyEntryRepository.findOne({
-      where: {
-        note: Equal(note),
-        user: Equal(user),
-      },
-      relations: ['note', 'note.aliases', 'user'],
-    });
+    const entry = await this.historyEntryRepository
+      .createQueryBuilder('entry')
+      .where('entry.note = :note', { note: note.id })
+      .andWhere('entry.user = :user', { user: user.id })
+      .leftJoinAndSelect('entry.note', 'note')
+      .getOne();
     if (!entry) {
       throw new NotInDBError(
         `User '${user.username}' has no HistoryEntry for Note with id '${note.id}'`,

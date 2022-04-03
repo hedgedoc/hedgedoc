@@ -152,7 +152,19 @@ describe('HistoryService', () => {
         Note.create(user, alias) as Note,
       ) as HistoryEntry;
       it('without an preexisting entry', async () => {
-        jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
+        const createQueryBuilder = {
+          where: () => createQueryBuilder,
+          andWhere: () => createQueryBuilder,
+          leftJoinAndSelect: () => createQueryBuilder,
+          getOne: async () => {
+            return null;
+          },
+        };
+        jest
+          .spyOn(historyRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => createQueryBuilder);
         jest
           .spyOn(historyRepo, 'save')
           .mockImplementation(
@@ -170,7 +182,19 @@ describe('HistoryService', () => {
       });
 
       it('with an preexisting entry', async () => {
-        jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(historyEntry);
+        const createQueryBuilder = {
+          where: () => createQueryBuilder,
+          andWhere: () => createQueryBuilder,
+          leftJoinAndSelect: () => createQueryBuilder,
+          getOne: async () => {
+            return historyEntry;
+          },
+        };
+        jest
+          .spyOn(historyRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => createQueryBuilder);
         jest
           .spyOn(historyRepo, 'save')
           .mockImplementation(
@@ -213,7 +237,19 @@ describe('HistoryService', () => {
     describe('works', () => {
       it('with an entry', async () => {
         const historyEntry = HistoryEntry.create(user, note) as HistoryEntry;
-        jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(historyEntry);
+        const createQueryBuilder = {
+          where: () => createQueryBuilder,
+          andWhere: () => createQueryBuilder,
+          leftJoinAndSelect: () => createQueryBuilder,
+          getOne: async () => {
+            return historyEntry;
+          },
+        };
+        jest
+          .spyOn(historyRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => createQueryBuilder);
         jest
           .spyOn(historyRepo, 'save')
           .mockImplementation(
@@ -234,7 +270,19 @@ describe('HistoryService', () => {
       });
 
       it('without an entry', async () => {
-        jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
+        const createQueryBuilder = {
+          where: () => createQueryBuilder,
+          andWhere: () => createQueryBuilder,
+          leftJoinAndSelect: () => createQueryBuilder,
+          getOne: async () => {
+            return null;
+          },
+        };
+        jest
+          .spyOn(historyRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => createQueryBuilder);
         await expect(
           service.updateHistoryEntry(note, user, {
             pinStatus: true,
@@ -300,19 +348,31 @@ describe('HistoryService', () => {
         const alias = 'alias';
         const note = Note.create(user, alias) as Note;
         const historyEntry = HistoryEntry.create(user, note) as HistoryEntry;
-        jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(historyEntry);
-        const createQueryBuilder = {
-          leftJoinAndSelect: () => createQueryBuilder,
-          where: () => createQueryBuilder,
-          orWhere: () => createQueryBuilder,
-          setParameter: () => createQueryBuilder,
+        const historyQueryBuilder = {
+          where: () => historyQueryBuilder,
+          andWhere: () => historyQueryBuilder,
+          leftJoinAndSelect: () => historyQueryBuilder,
+          getOne: async () => {
+            return historyEntry;
+          },
+        };
+        jest
+          .spyOn(historyRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => historyQueryBuilder);
+        const noteQueryBuilder = {
+          leftJoinAndSelect: () => noteQueryBuilder,
+          where: () => noteQueryBuilder,
+          orWhere: () => noteQueryBuilder,
+          setParameter: () => noteQueryBuilder,
           getOne: () => note,
         };
         jest
           .spyOn(noteRepo, 'createQueryBuilder')
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          .mockImplementation(() => createQueryBuilder);
+          .mockImplementation(() => noteQueryBuilder);
         jest
           .spyOn(historyRepo, 'remove')
           .mockImplementation(
@@ -341,7 +401,19 @@ describe('HistoryService', () => {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           .mockImplementation(() => createQueryBuilder);
-        jest.spyOn(historyRepo, 'findOne').mockResolvedValueOnce(undefined);
+        const historyQueryBuilder = {
+          where: () => historyQueryBuilder,
+          andWhere: () => historyQueryBuilder,
+          leftJoinAndSelect: () => historyQueryBuilder,
+          getOne: async () => {
+            return null;
+          },
+        };
+        jest
+          .spyOn(historyRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => historyQueryBuilder);
         await expect(service.deleteHistoryEntry(note, user)).rejects.toThrow(
           NotInDBError,
         );
