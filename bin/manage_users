@@ -42,7 +42,10 @@ async function createUser(argv) {
 	}
 
 	const pass = getPass(argv, "add");
-
+  if (pass.length === 0) {
+    console.log("Password cannot be empty!");
+    process.exit(1);
+  }
 
 	// Lets try to create, and check success
 	const ref = await models.User.create({email: argv["add"], password: pass});
