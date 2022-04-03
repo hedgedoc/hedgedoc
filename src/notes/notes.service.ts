@@ -5,7 +5,7 @@
  */
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Equal, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import {
@@ -55,16 +55,10 @@ export class NotesService {
    * @return {Note[]} arary of notes owned by the user
    */
   async getUserNotes(user: User): Promise<Note[]> {
-    const notes = await this.noteRepository.find({
-      where: { owner: Equal(user) },
-      relations: [
-        'owner',
-        'userPermissions',
-        'groupPermissions',
-        'tags',
-        'aliases',
-      ],
-    });
+    const notes = await this.noteRepository
+      .createQueryBuilder('note')
+      .where('note.owner = :user', { user: user.id })
+      .getMany();
     if (notes === null) {
       return [];
     }

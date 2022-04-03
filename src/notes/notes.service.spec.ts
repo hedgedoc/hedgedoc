@@ -211,19 +211,49 @@ describe('NotesService', () => {
       const note = Note.create(user, alias) as Note;
 
       it('with no note', async () => {
-        jest.spyOn(noteRepo, 'find').mockResolvedValueOnce(null);
+        const createQueryBuilder = {
+          where: () => createQueryBuilder,
+          getMany: async () => {
+            return null;
+          },
+        };
+        jest
+          .spyOn(noteRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => createQueryBuilder);
         const notes = await service.getUserNotes(user);
         expect(notes).toEqual([]);
       });
 
       it('with one note', async () => {
-        jest.spyOn(noteRepo, 'find').mockResolvedValueOnce([note]);
+        const createQueryBuilder = {
+          where: () => createQueryBuilder,
+          getMany: async () => {
+            return [note];
+          },
+        };
+        jest
+          .spyOn(noteRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => createQueryBuilder);
         const notes = await service.getUserNotes(user);
         expect(notes).toEqual([note]);
       });
 
       it('with multiple note', async () => {
-        jest.spyOn(noteRepo, 'find').mockResolvedValueOnce([note, note]);
+        const createQueryBuilder = {
+          where: () => createQueryBuilder,
+          getMany: async () => {
+            return [note, note];
+          },
+        };
+        jest
+          .spyOn(noteRepo, 'createQueryBuilder')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .mockImplementation(() => createQueryBuilder);
         const notes = await service.getUserNotes(user);
         expect(notes).toEqual([note, note]);
       });
