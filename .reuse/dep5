@@ -63,4 +63,6 @@ Files: .github/pull_request_template.md
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC-BY-SA-4.0
 
-
+Files: **/__snapshots__/*.snap
+Copyright: 2022 The HedgeDoc developers (see AUTHORS file)
+License: AGPL-3.0-only
