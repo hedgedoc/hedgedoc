@@ -164,10 +164,10 @@ export class MediaService {
    * @return {MediaUpload[]} arary of media uploads owned by the user
    */
   async listUploadsByNote(note: Note): Promise<MediaUpload[]> {
-    const mediaUploads = await this.mediaUploadRepository.find({
-      where: { note: Equal(note) },
-      relations: ['user', 'note'],
-    });
+    const mediaUploads = await this.mediaUploadRepository
+      .createQueryBuilder('upload')
+      .where('upload.note = :note', { note: note.id })
+      .getMany();
     if (mediaUploads === null) {
       return [];
     }
