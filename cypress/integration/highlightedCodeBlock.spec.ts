@@ -91,21 +91,4 @@ describe('Code', () => {
       })
     })
   })
-
-  it('has a working copy button', () => {
-    cy.setCodemirrorContent('```javascript \nlet x = 0\n```')
-
-    cy.getByCypressId('documentIframe').then((element: JQuery<HTMLElement>) => {
-      const frame = element.get(0) as HTMLIFrameElement
-      if (frame === null || frame.contentWindow === null) {
-        return cy.wrap(null)
-      }
-
-      cy.spy(frame.contentWindow.navigator.clipboard, 'writeText').as('copy')
-    })
-
-    cy.getIframeBody().findByCypressId('copy-code-button').click()
-
-    cy.get('@copy').should('be.calledWithExactly', 'let x = 0\n')
-  })
 })

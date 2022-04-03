@@ -5,15 +5,22 @@
  */
 
 import type { ReactElement, RefObject } from 'react'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Overlay, Tooltip } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { v4 as uuid } from 'uuid'
 import { ShowIf } from '../../show-if/show-if'
 import { Logger } from '../../../../utils/logger'
 import { isClientSideRendering } from '../../../../utils/is-client-side-rendering'
+import { useTimeoutFn } from 'react-use'
 
 const log = new Logger('useCopyOverlay')
+
+enum SHOW_STATE {
+  SUCCESS,
+  ERROR,
+  HIDDEN
+}
 
 /**
  * Provides a function that writes the given text into the browser clipboard and an {@link Overlay overlay} that is shown when the copy action was successful.
@@ -27,48 +34,54 @@ export const useCopyOverlay = (
   content: string
 ): [copyToCliphoard: () => void, overlayElement: ReactElement] => {
   useTranslation()
-  const [showCopiedTooltip, setShowCopiedTooltip] = useState(false)
-  const [error, setError] = useState(false)
+  const [showState, setShowState] = useState<SHOW_STATE>(SHOW_STATE.HIDDEN)
   const [tooltipId] = useState<string>(() => uuid())
+
+  const [, , reset] = useTimeoutFn(() => setShowState(SHOW_STATE.HIDDEN), 2000)
+
+  useEffect(() => {
+    if (showState !== SHOW_STATE.HIDDEN) {
+      reset()
+    }
+  }, [reset, showState])
 
   const copyToClipboard = useCallback(() => {
     if (!isClientSideRendering()) {
+      setShowState(SHOW_STATE.ERROR)
       log.error('Clipboard not available in server side rendering')
+      return
+    }
+    if (typeof navigator.clipboard === 'undefined') {
+      setShowState(SHOW_STATE.ERROR)
       return
     }
     navigator.clipboard
       .writeText(content)
       .then(() => {
-        setError(false)
+        setShowState(SHOW_STATE.SUCCESS)
       })
       .catch((error: Error) => {
-        setError(true)
+        setShowState(SHOW_STATE.ERROR)
         log.error('Copy failed', error)
-      })
-      .finally(() => {
-        setShowCopiedTooltip(true)
-        setTimeout(() => {
-          setShowCopiedTooltip(false)
-        }, 2000)
       })
   }, [content])
 
   const overlayElement = useMemo(
     () => (
-      <Overlay target={clickComponent} show={showCopiedTooltip} placement='top'>
+      <Overlay target={clickComponent} show={showState !== SHOW_STATE.HIDDEN} placement='top'>
         {(props) => (
           <Tooltip id={`copied_${tooltipId}`} {...props}>
-            <ShowIf condition={error}>
+            <ShowIf condition={showState === SHOW_STATE.ERROR}>
               <Trans i18nKey={'copyOverlay.error'} />
             </ShowIf>
-            <ShowIf condition={!error}>
+            <ShowIf condition={showState === SHOW_STATE.SUCCESS}>
               <Trans i18nKey={'copyOverlay.success'} />
             </ShowIf>
           </Tooltip>
         )}
       </Overlay>
     ),
-    [clickComponent, error, showCopiedTooltip, tooltipId]
+    [clickComponent, showState, tooltipId]
   )
 
   return [copyToClipboard, overlayElement]
