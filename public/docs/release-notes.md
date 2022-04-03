@@ -4,6 +4,10 @@
 
 This release fixes a security issue. We recommend upgrading as soon as possible.
 
+⚠️ **Warning:** If you deploy HedgeDoc and MariaDB with docker-compose using a checkout of our
+[container repo](https://github.com/hedgedoc/container), you will need to manually convert the character set
+of the database to utf8mb4 when updating. See the [corresponding PR](https://github.com/hedgedoc/container/pull/287) for more information.
+
 ### Security Fixes
 - Fix [Enumerable upload file names](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-q6vv-2q26-j7rx)
 
