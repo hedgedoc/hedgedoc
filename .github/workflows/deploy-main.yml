@@ -43,31 +43,7 @@ jobs:
       - name: Remove Next.js cache to avoid it being deployed
         run: rm -r .next/cache
 
-      - name: Mark GitHub deployment as started
-        uses: bobheadxi/deployments@v1.1.0
-        id: github-deployment
-        with:
-          step: start
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env: "Latest main"
-          override: true
-          ref: ${{ github.ref }}
-
       - name: Run netlify CLI deployment
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: bash netlify/deploy-main.sh "${{ github.event.head_commit.id }}" "${{ github.event.head_commit.message }}"
-        id: netlify-result
-
-      - name: Mark GitHub deployment as finished
-        if: always()
-        uses: bobheadxi/deployments@v1.1.0
-        with:
-          step: finish
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env_url: ${{ steps.netlify-result.outputs.url }}
-          env: ${{ steps.github-deployment.outputs.env }}
-          logs: ${{ steps.netlify-result.outputs.logs }}
-          status: ${{ job.status }}
-          deployment_id: ${{ steps.github-deployment.outputs.deployment_id }}
-          override: true
