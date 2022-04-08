@@ -1,7 +1,7 @@
 /* eslint-env browser, jquery */
 /* eslint no-console: ["error", { allow: ["warn", "error", "debug"] }] */
 /* global Cookies, moment, serverurl,
-   key, Dropbox, hex2rgb, Visibility */
+   key, Dropbox, Visibility */
 
 import TurndownService from 'turndown'
 import CodeMirror from 'codemirror/lib/codemirror.js'
@@ -14,6 +14,7 @@ import Idle from 'Idle.Js'
 import '../vendor/jquery-textcomplete/jquery.textcomplete'
 
 import { ot } from '../vendor/ot/ot.min.js'
+import hex2rgb from '../vendor/ot/hex2rgb'
 
 import { saveAs } from 'file-saver'
 import randomColor from 'randomcolor'
