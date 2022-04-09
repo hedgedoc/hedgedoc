@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import type { PropsWithChildren } from 'react'
 import React, { createContext, useState } from 'react'
 import type { HistoryToolbarStateWithDispatcher } from './toolbar-context'
 import { SortModeEnum } from '../../sort-button/sort-button'
@@ -19,7 +20,7 @@ export const historyToolbarStateContext = createContext<HistoryToolbarStateWithD
  *
  * @param children The children that should receive the toolbar state via context.
  */
-export const HistoryToolbarStateContextProvider: React.FC = ({ children }) => {
+export const HistoryToolbarStateContextProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
   const urlParameterSearch = useSingleStringUrlParameter('search', '')
   const urlParameterSelectedTags = useArrayStringUrlParameter('selectedTags')
 

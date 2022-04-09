@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import type { PropsWithChildren } from 'react'
 import React, { Fragment, useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
@@ -21,7 +22,7 @@ import { ShowIf } from '../../../common/show-if/show-if'
  * @param hide {@code true} if the entry shouldn't be visible
  * @param className Additional css class names for the sidebar entry
  */
-export const DeleteNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ hide, className }) => {
+export const DeleteNoteSidebarEntry: React.FC<PropsWithChildren<SpecificSidebarEntryProps>> = ({ hide, className }) => {
   useTranslation()
   const [showDialog, setShowDialog] = useState(false)
   const noteId = useApplicationState((state) => state.noteDetails.id)

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import type { PropsWithChildren } from 'react'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import type { IconName } from '../../../common/fork-awesome/types'
@@ -38,7 +39,7 @@ interface ClickShieldProps extends PropsWithDataCypressId {
  * @param fallbackBackgroundColor A color that should be used if no background image was provided or could be loaded.
  * @param children The children element that should be shielded.
  */
-export const ClickShield: React.FC<ClickShieldProps> = ({
+export const ClickShield: React.FC<PropsWithChildren<ClickShieldProps>> = ({
   containerClassName,
   onImageFetch,
   fallbackPreviewImageUrl,

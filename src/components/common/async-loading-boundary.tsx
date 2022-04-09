@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import type { PropsWithChildren } from 'react'
 import React, { Fragment } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { WaitSpinner } from './wait-spinner/wait-spinner'
@@ -24,7 +25,7 @@ export interface AsyncLoadingBoundaryProps {
  * @param componentName The name of the component that is currently loading. It will be shown in the error message.
  * @param children The child {@link ReactElement elements} that are only shown if the component isn't in loading or error state
  */
-export const AsyncLoadingBoundary: React.FC<AsyncLoadingBoundaryProps> = ({
+export const AsyncLoadingBoundary: React.FC<PropsWithChildren<AsyncLoadingBoundaryProps>> = ({
   loading,
   error,
   componentName,

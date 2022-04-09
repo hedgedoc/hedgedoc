@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import type { PropsWithChildren } from 'react'
 import React, { useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ShowIf } from '../../../common/show-if/show-if'
@@ -20,7 +21,7 @@ import { cypressId } from '../../../../utils/cypress-attribute'
  * Creates a new info line for the document information dialog that holds the
  * word count of the note, based on counting in the rendered output.
  */
-export const DocumentInfoLineWordCount: React.FC = () => {
+export const DocumentInfoLineWordCount: React.FC<PropsWithChildren<unknown>> = () => {
   useTranslation()
   const editorToRendererCommunicator = useEditorToRendererCommunicator()
   const [wordCount, setWordCount] = useState<number | null>(null)

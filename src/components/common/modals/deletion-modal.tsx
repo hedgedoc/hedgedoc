@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
@@ -16,7 +17,7 @@ export interface DeletionModalProps extends CommonModalProps {
   deletionButtonI18nKey: string
 }
 
-export const DeletionModal: React.FC<DeletionModalProps> = ({
+export const DeletionModal: React.FC<PropsWithChildren<DeletionModalProps>> = ({
   show,
   onHide,
   title,

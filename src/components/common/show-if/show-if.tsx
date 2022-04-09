@@ -4,12 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import type { PropsWithChildren } from 'react'
 import React, { Fragment } from 'react'
 
 export interface ShowIfProps {
   condition: boolean
 }
 
-export const ShowIf: React.FC<ShowIfProps> = ({ children, condition }) => {
+export const ShowIf: React.FC<PropsWithChildren<ShowIfProps>> = ({ children, condition }) => {
   return condition ? <Fragment>{children}</Fragment> : null
 }

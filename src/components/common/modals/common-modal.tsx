@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import type { PropsWithChildren } from 'react'
 import React, { useMemo } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
@@ -29,7 +30,7 @@ export interface ModalContentProps {
 
 export type CommonModalProps = PropsWithDataCypressId & ModalVisibilityProps & ModalContentProps
 
-export const CommonModal: React.FC<CommonModalProps> = ({
+export const CommonModal: React.FC<PropsWithChildren<CommonModalProps>> = ({
   show,
   onHide,
   title,

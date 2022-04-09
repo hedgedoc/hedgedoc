@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import type { PropsWithChildren } from 'react'
 import React, { Fragment, useEffect } from 'react'
 
 export interface PagerPageProps {
@@ -12,7 +13,7 @@ export interface PagerPageProps {
   onLastPageIndexChange: (lastPageIndex: number) => void
 }
 
-export const Pager: React.FC<PagerPageProps> = ({
+export const Pager: React.FC<PropsWithChildren<PagerPageProps>> = ({
   children,
   numberOfElementsPerPage,
   pageIndex,

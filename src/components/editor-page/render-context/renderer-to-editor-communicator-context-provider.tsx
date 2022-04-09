@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import type { PropsWithChildren } from 'react'
 import React, { createContext, useContext, useEffect, useMemo } from 'react'
 import { RendererToEditorCommunicator } from '../../render-page/window-post-message-communicator/renderer-to-editor-communicator'
 import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
@@ -25,7 +26,7 @@ export const useRendererToEditorCommunicator: () => RendererToEditorCommunicator
   return communicatorFromContext
 }
 
-export const RendererToEditorCommunicatorContextProvider: React.FC = ({ children }) => {
+export const RendererToEditorCommunicatorContextProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
   const editorOrigin = useOriginFromConfig(ORIGIN_TYPE.EDITOR)
   const communicator = useMemo<RendererToEditorCommunicator>(() => new RendererToEditorCommunicator(), [])
 

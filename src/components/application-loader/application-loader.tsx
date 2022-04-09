@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import type { PropsWithChildren } from 'react'
 import React, { Suspense } from 'react'
 import { useBackendBaseUrl } from '../../hooks/common/use-backend-base-url'
 import { createSetUpTaskList } from './initializers'
@@ -15,7 +16,7 @@ import { ApplicationLoaderError } from './application-loader-error'
 
 const log = new Logger('ApplicationLoader')
 
-export const ApplicationLoader: React.FC = ({ children }) => {
+export const ApplicationLoader: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
   const backendBaseUrl = useBackendBaseUrl()
   const customizeAssetsUrl = useCustomizeAssetsUrl()
 

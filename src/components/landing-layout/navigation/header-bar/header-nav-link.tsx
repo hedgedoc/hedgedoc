@@ -5,6 +5,7 @@
  */
 
 import Link from 'next/link'
+import type { PropsWithChildren } from 'react'
 import React, { useMemo } from 'react'
 import { Nav } from 'react-bootstrap'
 import type { PropsWithDataCypressId } from '../../../../utils/cypress-attribute'
@@ -23,7 +24,7 @@ export interface HeaderNavLinkProps extends PropsWithDataCypressId {
  * @param children The react elements inside of link for more description
  * @param props Other navigation item props
  */
-export const HeaderNavLink: React.FC<HeaderNavLinkProps> = ({ to, children, ...props }) => {
+export const HeaderNavLink: React.FC<PropsWithChildren<HeaderNavLinkProps>> = ({ to, children, ...props }) => {
   const { route } = useRouter()
 
   const activeClass = useMemo(() => {

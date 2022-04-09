@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { ErrorInfo, ReactNode } from 'react'
+import type { ErrorInfo, PropsWithChildren, ReactNode } from 'react'
 import React, { Component } from 'react'
 import { Button, Container } from 'react-bootstrap'
 import links from '../../links.json'
@@ -15,7 +15,7 @@ import { Logger } from '../../utils/logger'
 
 const log = new Logger('ErrorBoundary')
 
-export class ErrorBoundary extends Component {
+export class ErrorBoundary extends Component<PropsWithChildren<unknown>> {
   state: {
     hasError: boolean
   }

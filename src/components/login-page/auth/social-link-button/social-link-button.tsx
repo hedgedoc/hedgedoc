@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import type { IconName } from '../../../common/fork-awesome/types'
@@ -16,7 +17,13 @@ export interface SocialButtonProps {
   title?: string
 }
 
-export const SocialLinkButton: React.FC<SocialButtonProps> = ({ title, backgroundClass, href, icon, children }) => {
+export const SocialLinkButton: React.FC<PropsWithChildren<SocialButtonProps>> = ({
+  title,
+  backgroundClass,
+  href,
+  icon,
+  children
+}) => {
   return (
     <a
       href={href}

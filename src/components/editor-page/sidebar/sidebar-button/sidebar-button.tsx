@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import type { PropsWithChildren } from 'react'
 import React, { useMemo } from 'react'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import type { IconName } from '../../../common/fork-awesome/types'
@@ -19,14 +20,14 @@ export interface SidebarButton extends SidebarEntryProps {
  * A button that should be rendered in the sidebar.
  *
  * @param children The react elements in the button
- * @param icon The icon at the left side of the button
+ * @param icon The icon on the left side of the button
  * @param className Additional css class names
  * @param buttonRef A reference to the button
  * @param hide Should be {@code true} if the button should be invisible
  * @param variant An alternative theme for the button
  * @param props Other button props
  */
-export const SidebarButton: React.FC<SidebarButton> = ({
+export const SidebarButton: React.FC<PropsWithChildren<SidebarButton>> = ({
   children,
   icon,
   className,

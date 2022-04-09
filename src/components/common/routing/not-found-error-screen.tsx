@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { LandingLayout } from '../../landing-layout/landing-layout'
 
-export const NotFoundErrorScreen: React.FC = () => {
+export const NotFoundErrorScreen: React.FC<PropsWithChildren<unknown>> = () => {
   return (
     <LandingLayout>
       <div className='text-light d-flex align-items-center justify-content-center my-5'>

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import type { PropsWithChildren } from 'react'
 import React, { Fragment } from 'react'
 import { Container } from 'react-bootstrap'
 import { MotdModal } from '../common/motd-modal/motd-modal'
@@ -11,7 +12,7 @@ import { Footer } from './footer/footer'
 import { HeaderBar } from './navigation/header-bar/header-bar'
 import { UiNotifications } from '../notifications/ui-notifications'
 
-export const LandingLayout: React.FC = ({ children }) => {
+export const LandingLayout: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <Fragment>
       <UiNotifications />
