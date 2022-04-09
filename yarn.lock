@@ -3066,6 +3066,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"buffer-crc32@npm:^0.2.13":
+  version: 0.2.13
+  resolution: "buffer-crc32@npm:0.2.13"
+  checksum: 06252347ae6daca3453b94e4b2f1d3754a3b146a111d81c68924c22d91889a40623264e95e67955b1cb4a68cbedf317abeabb5140a9766ed248973096db5ce1c
+  languageName: node
+  linkType: hard
+
 "buffer-from@npm:^1.0.0":
   version: 1.1.2
   resolution: "buffer-from@npm:1.1.2"
@@ -5448,7 +5455,7 @@ __metadata:
     http-proxy-middleware: 2.0.4
     jest: 27.5.1
     joi: 17.6.0
-    minio: 7.0.26
+    minio: 7.0.27
     mocked-env: 1.3.5
     mysql: 2.18.1
     nest-router: 1.0.9
@@ -7243,13 +7250,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minio@npm:7.0.26":
-  version: 7.0.26
-  resolution: "minio@npm:7.0.26"
+"minio@npm:7.0.27":
+  version: 7.0.27
+  resolution: "minio@npm:7.0.27"
   dependencies:
     async: ^3.1.0
     block-stream2: ^2.0.0
     browser-or-node: ^1.3.0
+    buffer-crc32: ^0.2.13
     crypto-browserify: ^3.12.0
     es6-error: ^4.1.1
     fast-xml-parser: ^3.17.5
@@ -7263,7 +7271,7 @@ __metadata:
     web-encoding: ^1.1.5
     xml: ^1.0.0
     xml2js: ^0.4.15
-  checksum: ea77c3183030ec221c8d48085b995b477d63989d6e044b2362e88960d35b253115b71fbf94e39659a894e4e7b04fc7c3f7be75adcf4fcced80b8cb4e925a0eb3
+  checksum: 853471d62418627631cdbc1d9dd9fcc13dcb37f7aad85acfcf5cb7923f444213e73f25f9aaa0fd573ba0eafa61b28ba4bcdd53f3a42c86b84e2a94a3126879c5
   languageName: node
   linkType: hard
 
