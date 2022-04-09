@@ -2133,15 +2133,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hedgedoc/html-to-react@npm:1.1.1":
-  version: 1.1.1
-  resolution: "@hedgedoc/html-to-react@npm:1.1.1"
+"@hedgedoc/html-to-react@npm:1.2.0":
+  version: 1.2.0
+  resolution: "@hedgedoc/html-to-react@npm:1.2.0"
   dependencies:
-    "@types/react": ^17.0.11
     htmlparser2: ^7.0.0
-    react: ^17.0.2
-    react-dom: ^17.0.2
-  checksum: 52492dfc20ca8fad1ec06efcb53377f5430befafb7de6b81e009b7fc71905a51e4e82f794f3ead4532bdcf7bd1d5572ff53f40c36d484dd4ad1a99788c2c18ec
+    react: ^17.0.2 || ^18.0
+    react-dom: ^17.0.2 || ^18.0
+  checksum: 1bc1f696be91b71bcba12e7380f7c40977d5f67f03b939e2f98f63ef4d5777547b2a4468e92130e4281e7e93cd354a634748e6260666cffcc128e62a5ffb4808
   languageName: node
   linkType: hard
 
@@ -2167,7 +2166,7 @@ __metadata:
     "@codemirror/language-data": 0.19.2
     "@codemirror/theme-one-dark": 0.19.1
     "@fontsource/source-sans-pro": 4.5.6
-    "@hedgedoc/html-to-react": 1.1.1
+    "@hedgedoc/html-to-react": 1.2.0
     "@hedgedoc/markdown-it-image-size": 1.0.3
     "@hedgedoc/markdown-it-task-lists": 1.0.3
     "@matejmazur/react-katex": 3.1.3
@@ -4854,7 +4853,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:>=16.14.8, @types/react@npm:>=16.9.11, @types/react@npm:^17.0.11":
+"@types/react@npm:*, @types/react@npm:>=16.14.8, @types/react@npm:>=16.9.11":
   version: 17.0.43
   resolution: "@types/react@npm:17.0.43"
   dependencies:
@@ -17167,7 +17166,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:17.0.2, react-dom@npm:^17.0.2":
+"react-dom@npm:17.0.2":
   version: 17.0.2
   resolution: "react-dom@npm:17.0.2"
   dependencies:
@@ -17177,6 +17176,18 @@ __metadata:
   peerDependencies:
     react: 17.0.2
   checksum: 1c1eaa3bca7c7228d24b70932e3d7c99e70d1d04e13bb0843bbf321582bc25d7961d6b8a6978a58a598af2af496d1cedcfb1bf65f6b0960a0a8161cb8dab743c
+  languageName: node
+  linkType: hard
+
+"react-dom@npm:^17.0.2 || ^18.0":
+  version: 18.0.0
+  resolution: "react-dom@npm:18.0.0"
+  dependencies:
+    loose-envify: ^1.1.0
+    scheduler: ^0.21.0
+  peerDependencies:
+    react: ^18.0.0
+  checksum: dd0ba9f2f31dd728076c892a95b2f5a8dfe79136431b0289afb46eec39d0ca6b6f0f40a60fd8aa6ef702c98ce7c26100d3d4dbc35c7c9e87429cd04f84cb58bd
   languageName: node
   linkType: hard
 
@@ -17353,13 +17364,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:17.0.2, react@npm:^17.0.2":
+"react@npm:17.0.2":
   version: 17.0.2
   resolution: "react@npm:17.0.2"
   dependencies:
     loose-envify: ^1.1.0
     object-assign: ^4.1.1
   checksum: b254cc17ce3011788330f7bbf383ab653c6848902d7936a87b09d835d091e3f295f7e9dd1597c6daac5dc80f90e778c8230218ba8ad599f74adcc11e33b9d61b
+  languageName: node
+  linkType: hard
+
+"react@npm:^17.0.2 || ^18.0":
+  version: 18.0.0
+  resolution: "react@npm:18.0.0"
+  dependencies:
+    loose-envify: ^1.1.0
+  checksum: 293020b96536b3c7113ee57ca5c990a3f25649d1751b1c7a3aabd16dff0691fe9f1eed1206616d0906d05933536052037340a0c8d0941ff870b0eb469a2f975b
   languageName: node
   linkType: hard
 
@@ -18086,6 +18106,15 @@ __metadata:
     loose-envify: ^1.1.0
     object-assign: ^4.1.1
   checksum: c4b35cf967c8f0d3e65753252d0f260271f81a81e427241295c5a7b783abf4ea9e905f22f815ab66676f5313be0a25f47be582254db8f9241b259213e999b8fc
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:^0.21.0":
+  version: 0.21.0
+  resolution: "scheduler@npm:0.21.0"
+  dependencies:
+    loose-envify: ^1.1.0
+  checksum: 4f8285076041ed2c81acdd1faa987f1655fdbd30554bc667c1ea64743fc74fb3a04ca7d27454b3d678735df5a230137a3b84756061b43dc5796e80701b66d124
   languageName: node
   linkType: hard
 
