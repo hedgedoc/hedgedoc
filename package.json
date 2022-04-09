@@ -100,7 +100,7 @@
     "redux": "4.1.2",
     "reveal.js": "4.3.1",
     "sanitize-filename": "1.6.3",
-    "sass": "1.49.11",
+    "sass": "1.50.0",
     "sharp": "0.30.3",
     "twemoji-colr-font": "0.0.4",
     "use-resize-observer": "8.0.0",
