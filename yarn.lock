@@ -2220,7 +2220,7 @@ __metadata:
     flowchart.js: 1.17.1
     fork-awesome: 1.2.0
     highlight.js: 11.5.0
-    i18next: 21.6.14
+    i18next: 21.6.15
     i18next-browser-languagedetector: 6.1.4
     i18next-resources-to-backend: 1.0.0
     jest: 27.5.1
@@ -2256,7 +2256,7 @@ __metadata:
     react-bootstrap-typeahead: 5.2.2
     react-diff-viewer: 3.1.1
     react-dom: 17.0.2
-    react-i18next: 11.16.2
+    react-i18next: 11.16.3
     react-redux: 7.2.8
     react-test-renderer: 17.0.2
     react-use: 17.3.2
@@ -12125,12 +12125,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:21.6.14":
-  version: 21.6.14
-  resolution: "i18next@npm:21.6.14"
+"i18next@npm:21.6.15":
+  version: 21.6.15
+  resolution: "i18next@npm:21.6.15"
   dependencies:
     "@babel/runtime": ^7.17.2
-  checksum: bc6e117874d9b69a39d6ad322851d25f75908c7fa977c8771b98ba7b0273aceba96e82326ed0855b8db098b1490c5a0decbe62b4f61dac84fdc677c2fdc52bb8
+  checksum: b3d445c296b3d3ba9318273dde9fb27cb12d2d6dcd8a8a2de1318934ac4a5852e90afe0c6868f3c173d55242efc3d2f062f6c07f8e3cdfc2004a1a62132133d0
   languageName: node
   linkType: hard
 
@@ -17399,9 +17399,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:11.16.2":
-  version: 11.16.2
-  resolution: "react-i18next@npm:11.16.2"
+"react-i18next@npm:11.16.3":
+  version: 11.16.3
+  resolution: "react-i18next@npm:11.16.3"
   dependencies:
     "@babel/runtime": ^7.14.5
     html-escaper: ^2.0.2
@@ -17414,7 +17414,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 3e86c5e7a73eef88eff7487bbc87ecf3d5c6808ce3d0cc1e9599e6a1b72466d2d6ced2b1b600c18a2309757bea49d1670526a1bc8953a9bf377964e9ea3c9166
+  checksum: b910a34bdf6d46fa1fb22a90b1904f6dce158a591b7fae4d1bb150e3946feb498b5ce56801ca7c3682d40677d7b64dc122f5bc76a9a0b8eb7da01ffefcbf4f2f
   languageName: node
   linkType: hard
 
