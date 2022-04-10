@@ -1918,6 +1918,8 @@ $('#snippetExportModalConfirm').click(function () {
   const accesstoken = $('#snippetExportModalAccessToken').val()
   const baseURL = $('#snippetExportModalBaseURL').val()
   const version = $('#snippetExportModalVersion').val()
+  const projectId = $('#snippetExportModalProjects').val()
+  const visibilityValue = $('#snippetExportModalVisibility').val()
 
   const data = {
     title: $('#snippetExportModalTitle').val(),
@@ -1928,9 +1930,9 @@ $('#snippetExportModalConfirm').click(function () {
       }
     ],
     visibility:
-      $('#snippetExportModalVisibility').val() === '0'
+      visibilityValue === '0'
         ? 'private'
-        : $('#snippetExportModalVisibility').val() === '10'
+        : visibilityValue === '10'
           ? 'internal'
           : 'private'
   }
@@ -1939,10 +1941,10 @@ $('#snippetExportModalConfirm').click(function () {
     !data.title ||
     !data.files[0].file_path ||
     !data.files[0].content ||
-    !$('#snippetExportModalProjects').val()
+    !projectId
   ) { return }
   $('#snippetExportModalLoading').show()
-  const fullURL = `${baseURL}/api/${version}/projects/${$('#snippetExportModalProjects').val()}/snippets?access_token=${accesstoken}`
+  const fullURL = `${baseURL}/api/${version}/projects/${projectId}/snippets?access_token=${accesstoken}`
   $.ajax(fullURL, {
     data: JSON.stringify(data),
     contentType: 'application/json',
