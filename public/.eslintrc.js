@@ -20,7 +20,6 @@ module.exports = {
     FilePicker: false,
     ot: false,
     MediaUploader: false,
-    hex2rgb: false,
     num_loaded: false,
     Visibility: false,
     inlineAttachment: false
