@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -101,15 +101,30 @@ export class ConsoleLoggerService implements LoggerService {
     return context;
   }
 
+  static sanitize(input: string): string {
+    return (
+      input
+        // remove ASCII control characters
+        .replace(/\p{C}/gu, '')
+        // replace all non-zeros width spaces with one space
+        .replace(/\p{Zs}/gu, ' ')
+    );
+  }
+
   private printMessage(
     message: unknown,
     color: (message: string) => string,
     context = '',
     isTimeDiffEnabled?: boolean,
   ): void {
-    const output = isObject(message)
-      ? `${color('Object:')}\n${JSON.stringify(message, null, 2)}\n`
-      : color(message as string);
+    let output;
+    if (isObject(message)) {
+      output = ConsoleLoggerService.sanitize(
+        `${color('Object:')}\n${JSON.stringify(message, null, 2)}\n`,
+      );
+    } else {
+      output = ConsoleLoggerService.sanitize(color(message as string));
+    }
 
     const localeStringOptions: DateTimeFormatOptions = {
       year: 'numeric',
