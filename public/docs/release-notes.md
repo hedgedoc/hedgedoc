@@ -1,6 +1,21 @@
 # Release Notes
 
-## UNRELEASED
+## <i class="fa fa-tag"></i> 1.9.3 <i class="fa fa-calendar-o"></i> 2022-04-10
+
+This release fixes a security issue. We recommend upgrading as soon as possible.
+
+⚠️ **Warning:** If you deploy HedgeDoc and MariaDB with docker-compose using a checkout of our
+[container repo](https://github.com/hedgedoc/container), you will need to manually convert the character set
+of the database to utf8mb4 when updating. See the [corresponding PR](https://github.com/hedgedoc/container/pull/287) for more information.
+
+### Security Fixes
+- Fix [Enumerable upload file names](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-q6vv-2q26-j7rx)
+
+### Enhancements
+- Libravatar avatars render as ident-icons when no avatar image was uploaded to Libravatar or Gravatar
+- Add database connection error message to log output
+- Allow SAML authentication provider to be named
+- Suppress error message when `git` binary is not found
 
 ### Bugfixes
 - Fix error that Libravatar user avatars were not shown when using OAuth2 login
@@ -9,10 +24,20 @@
 - Fix GitLab snippet export (thanks to [@semjongeist](https://github.com/semjongeist) for reporting)
 - Fix missing inline authorship colors (thanks to [@EBendinelli](https://github.com/EBendinelli) for reporting)
 
-### Enhancements
-- Libravatar avatars render as ident-icons when no avatar image was uploaded to Libravatar or Gravatar
-- Add database connection error message to log output
-- Allow SAML authentication provider to be named
+### Contributors
+- ced (translator)
+- deluxghost (translator)
+- [Dennis Gaida](https://github.com/DennisGaida)
+- Michael Hauer (translator)
+- [Moritz Schlarb](https://github.com/moschlar)
+- Mostafa Ahangarha (translator)
+- [Sandro](https://github.com/SuperSandro2000)
+- Sergio Varela (translator)
+- Tạ Quang Khôi (translator)
+- Tiago Triques (translator)
+- tmpod (translator)
+- [Uchiha Kakashi](https://github.com/licy183)
+
 
 ## <i class="fa fa-tag"></i> 1.9.2 <i class="fa fa-calendar-o"></i> 2021-12-03
 
