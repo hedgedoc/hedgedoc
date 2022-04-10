@@ -59,7 +59,7 @@ jobs:
           cache: 'yarn'
       - run: yarn install --immutable
       - run: yarn run test:cov
-      - uses: codecov/codecov-action@v2
+      - uses: codecov/codecov-action@v3
         with:
           directory: coverage
           flags: integration-tests
