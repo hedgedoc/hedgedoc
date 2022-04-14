@@ -47,10 +47,10 @@ if [ ! -f config.json ]; then
 fi
 
 echo "Installing packages..."
-yarn install --production=true --pure-lockfile
+yarn install --production=true --frozen-lockfile
 
 cat << EOF
-If you want to build the frontend yourself, you need to run 'yarn install' before 'yarn build' to install the devDependencies for the build process.
+If you want to build the frontend yourself, you need to run 'yarn install --frozen-lockfile' before 'yarn build' to install the devDependencies for the build process.
 
 Edit the following config file to setup HedgeDoc server and client.
 Read more info at https://docs.hedgedoc.org/configuration/
