@@ -7,7 +7,7 @@
 import type { TocAst } from 'markdown-it-toc-done-right'
 import type { MutableRefObject } from 'react'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import useResizeObserver from 'use-resize-observer'
+import useResizeObserver from '@react-hook/resize-observer'
 import { YamlArrayDeprecationAlert } from '../editor-page/renderer-pane/yaml-array-deprecation-alert'
 import { useDocumentSyncScrolling } from './hooks/sync-scroll/use-document-sync-scrolling'
 import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
@@ -53,22 +53,21 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
   frontmatterInfo
 }) => {
   const rendererRef = useRef<HTMLDivElement | null>(null)
-  const rendererSize = useResizeObserver({ ref: rendererRef.current })
+  const [rendererSize, setRendererSize] = useState<DOMRectReadOnly>()
+  useResizeObserver(rendererRef.current, (entry) => {
+    setRendererSize(entry.contentRect)
+  })
+  useEffect(() => onHeightChange?.((rendererSize?.height ?? 0) + 1), [rendererSize, onHeightChange])
 
   const internalDocumentRenderPaneRef = useRef<HTMLDivElement>(null)
-  const internalDocumentRenderPaneSize = useResizeObserver({ ref: internalDocumentRenderPaneRef.current })
-  const containerWidth = internalDocumentRenderPaneSize.width ?? 0
+  const [internalDocumentRenderPaneSize, setInternalDocumentRenderPaneSize] = useState<DOMRectReadOnly>()
+  useResizeObserver(internalDocumentRenderPaneRef.current, (entry) =>
+    setInternalDocumentRenderPaneSize(entry.contentRect)
+  )
 
+  const containerWidth = internalDocumentRenderPaneSize?.width ?? 0
   const [tocAst, setTocAst] = useState<TocAst>()
-
   const newlinesAreBreaks = useApplicationState((state) => state.noteDetails.frontmatter.newlinesAreBreaks)
-
-  useEffect(() => {
-    if (!onHeightChange) {
-      return
-    }
-    onHeightChange(rendererSize.height ? rendererSize.height + 1 : 0)
-  }, [rendererSize.height, onHeightChange])
 
   const contentLineCount = useMemo(() => markdownContentLines.length, [markdownContentLines])
   const [onLineMarkerPositionChanged, onUserScroll] = useDocumentSyncScrolling(

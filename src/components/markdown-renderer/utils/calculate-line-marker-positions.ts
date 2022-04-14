@@ -7,9 +7,9 @@
 import equal from 'fast-deep-equal'
 import type { RefObject } from 'react'
 import { useCallback, useEffect, useRef } from 'react'
-import useResizeObserver from 'use-resize-observer'
 import type { LineMarkerPosition } from '../markdown-extension/linemarker/types'
 import type { LineMarkers } from '../markdown-extension/linemarker/add-line-marker-markdown-it-plugin'
+import useResizeObserver from '@react-hook/resize-observer'
 
 export const calculateLineMarkerPositions = (
   documentElement: HTMLDivElement,
@@ -72,8 +72,5 @@ export const useCalculateLineMarkerPosition = (
     calculateNewLineMarkerPositions()
   }, [calculateNewLineMarkerPositions])
 
-  useResizeObserver({
-    ref: documentElement,
-    onResize: () => calculateNewLineMarkerPositions()
-  })
+  useResizeObserver(documentElement, calculateNewLineMarkerPositions)
 }
