@@ -1356,7 +1356,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.8, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:>=7.11.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.8, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.17.9
   resolution: "@babel/runtime@npm:7.17.9"
   dependencies:
@@ -2185,7 +2185,7 @@ __metadata:
     "@types/uuid": 8.3.4
     "@typescript-eslint/eslint-plugin": 5.18.0
     "@typescript-eslint/parser": 5.18.0
-    "@uiw/react-codemirror": 4.5.3
+    "@uiw/react-codemirror": 4.6.0
     abcjs: 6.0.2
     bootstrap: 4.6.1
     copy-webpack-plugin: 10.2.4
@@ -5195,11 +5195,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uiw/react-codemirror@npm:4.5.3":
-  version: 4.5.3
-  resolution: "@uiw/react-codemirror@npm:4.5.3"
+"@uiw/react-codemirror@npm:4.6.0":
+  version: 4.6.0
+  resolution: "@uiw/react-codemirror@npm:4.6.0"
   dependencies:
-    "@babel/runtime": ^7.17.2
+    "@babel/runtime": ">=7.11.0"
     "@codemirror/basic-setup": ^0.19.1
     "@codemirror/state": ^0.19.9
     "@codemirror/theme-one-dark": ^0.19.1
@@ -5208,7 +5208,7 @@ __metadata:
     "@babel/runtime": ">=7.11.0"
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 5d8f8a990e3c60a45a166157245443dc7f0f8f75af48fddd4766683d47d77727ea2a43ae8e55f3a785b814eb5ce826dbf3bb59ccf91ad42313fe744d747e49e7
+  checksum: b8a6d85a07f6400ac917bbb6c2094b2b900597002011fc483e34226c77d911d496897ac60c9e1e29c696f099656f92b25deb38b7a32d356852dc9dab89bdaf27
   languageName: node
   linkType: hard
 
