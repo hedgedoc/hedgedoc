@@ -2238,7 +2238,7 @@ __metadata:
     markmap-lib: 0.12.0
     markmap-view: 0.2.7
     mermaid: 9.0.0
-    netlify-cli: 9.16.4
+    netlify-cli: 9.16.6
     next: 12.1.4
     optional-js: 2.3.0
     prettier: 2.6.2
@@ -2730,9 +2730,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/build@npm:^26.5.2":
-  version: 26.5.2
-  resolution: "@netlify/build@npm:26.5.2"
+"@netlify/build@npm:^26.5.3":
+  version: 26.5.3
+  resolution: "@netlify/build@npm:26.5.3"
   dependencies:
     "@bugsnag/js": ^7.0.0
     "@netlify/cache-utils": ^4.0.0
@@ -2740,7 +2740,7 @@ __metadata:
     "@netlify/functions-utils": ^4.0.0
     "@netlify/git-utils": ^4.0.0
     "@netlify/plugin-edge-handlers": ^3.0.7
-    "@netlify/plugins-list": ^6.18.1
+    "@netlify/plugins-list": ^6.19.0
     "@netlify/run-utils": ^4.0.0
     "@netlify/zip-it-and-ship-it": 5.9.0
     "@sindresorhus/slugify": ^2.0.0
@@ -2789,7 +2789,7 @@ __metadata:
     yargs: ^17.3.1
   bin:
     netlify-build: src/core/bin.js
-  checksum: fb54422fadf9b538cb604be2f2a8af43ca64a8803a2d81d20c62215c16f9e42d1decfd183004350609e73c06426578b57912d3cf92983717e0ea94cee8dbddd2
+  checksum: 71a6c41ce2b2f051155647f3e950b10176db55c95d471a5452c2cd32dc393eaf87553f7ed48465d5597a191d014e496e13d1f7da6b92025e2629a2ec1ecfb87f
   languageName: node
   linkType: hard
 
@@ -3078,7 +3078,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/plugins-list@npm:^6.18.1, @netlify/plugins-list@npm:^6.19.0":
+"@netlify/plugins-list@npm:^6.19.0":
   version: 6.19.0
   resolution: "@netlify/plugins-list@npm:6.19.0"
   checksum: e3c9824b0b780f756500f43efa3cb063900cbe1961bf65b5f2041bb3d41dc70758c5588295d0c106dcee30c590c70ed710b4663a4e5777a96f7abdd5c0a28a41
@@ -15251,11 +15251,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"netlify-cli@npm:9.16.4":
-  version: 9.16.4
-  resolution: "netlify-cli@npm:9.16.4"
+"netlify-cli@npm:9.16.6":
+  version: 9.16.6
+  resolution: "netlify-cli@npm:9.16.6"
   dependencies:
-    "@netlify/build": ^26.5.2
+    "@netlify/build": ^26.5.3
     "@netlify/config": ^17.0.20
     "@netlify/framework-info": ^9.0.2
     "@netlify/local-functions-proxy": ^1.1.1
@@ -15367,7 +15367,7 @@ __metadata:
   bin:
     netlify: bin/run
     ntl: bin/run
-  checksum: c12c61f4ff03b69152091092e2b19098bfda5426ebf9830e3d4826870ae96b53579c20edeb90104e240bb42a6eddfc41f0e108d0d4d4dbd0b63cd96782ff37a3
+  checksum: 7aaaa8bd274214f622a7b66c4c5b5ec883ca8ca3c5c97f474dd52b60d86098873e3c284d0fd1c5ab8ca5c1ad244ab3c68ef281c91341972e6b82f67a7702fd14
   languageName: node
   linkType: hard
 
