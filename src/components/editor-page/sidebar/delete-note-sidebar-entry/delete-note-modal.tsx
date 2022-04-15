@@ -45,7 +45,7 @@ export const DeleteNoteModal: React.FC<DeleteNoteModalProps & DeleteHistoryNoteM
   modalWarningI18nKey,
   modalButtonI18nKey
 }) => {
-  const noteTitle = useApplicationState((state) => state.noteDetails.noteTitle)
+  const noteTitle = useApplicationState((state) => state.noteDetails.title)
 
   return (
     <DeletionModal

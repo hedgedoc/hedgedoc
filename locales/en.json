@@ -163,7 +163,9 @@
       "new": "New password",
       "newAgain": "New password again",
       "info": "Your new password should contain at least 6 characters.",
-      "failed": "Changing your password failed. Check your old password and try again."
+      "failed": "Changing your password failed. Check your old password and try again.",
+      "successTitle": "Password changed",
+      "successText": "Your password has been changed successfully."
     },
     "changeDisplayNameFailed": "There was an error changing your display name.",
     "accountManagement": "Account management",
@@ -178,6 +180,7 @@
       "label": "Token label",
       "created": "created {{time}}",
       "lastUsed": "last used {{time}}",
+      "neverUsed": "never used",
       "loadingFailed": "Fetching your access tokens has failed. Try reloading this page.",
       "creationFailed": "Creating the access token failed.",
       "expiry": "Expiry date"
@@ -375,7 +378,7 @@
       },
       "documentInfo": {
         "title": "Document info",
-        "created": "<0></0> created this note <1></1>",
+        "created": "This note was created <0></0>",
         "edited": "<0></0> was the last editor <1></1>",
         "usersContributed": "<0></0> users contributed to this document",
         "revisions": "<0></0> revisions are saved",
@@ -393,6 +396,7 @@
         "title": "Revisions",
         "revertButton": "Revert",
         "error": "An error occurred while fetching the revisions of this note.",
+        "errorUser": "An error occurred while fetching the user information for this revision.",
         "length": "Length",
         "download": "Download selected revision"
       },
@@ -410,18 +414,25 @@
         "title": "Permissions",
         "owner": "Owner",
         "sharedWithUsers": "Shared with users",
-        "sharedWithGroups": "Also share with…",
+        "sharedWithGroups": "Shared with groups",
+        "sharedWithElse": "Shared with else...",
         "editUser": "Change {{name}}'s permissions to view and edit",
         "viewOnlyUser": "Change {{name}}'s permissions to view only",
         "removeUser": "Remove {{name}}'s permissions",
         "addUser": "Add user",
         "editGroup": "Change permissions of group \"{{name}}\" to view & edit",
         "viewOnlyGroup": "Change permissions of group \"{{name}}\" to view only",
+        "removeGroup": "Remove permissions of group \"{{name}}\"",
         "denyGroup": "Deny access to group \"{{name}}\"",
         "addGroup": "Add group",
         "allUser": "Everyone",
         "allLoggedInUser": "All logged-in users",
-        "error": "An error occurred while fetching the user information of this note."
+        "error": "An error occurred while updating the permissions of this note.",
+        "ownerChange": {
+          "error": "There was an error changing the owner of this note.",
+          "placeholder": "Enter username of new note owner",
+          "button": "Change the owner of this note"
+        }
       },
       "shareLink": {
         "title": "Share link",
@@ -499,9 +510,10 @@
     "avatarOf": "avatar of '{{name}}'",
     "why": "Why?",
     "loading": "Loading ...",
-    "errorOccurred": "An error occurred",
     "errorWhileLoading": "An unexpected error occurred while loading '{{name}}'.\nCheck the browser console for more information.\nReport this error only if it comes up again.",
-    "readForMoreInfo": "Read here for more information"
+    "errorOccurred": "An error occurred",
+    "readForMoreInfo": "Read here for more information",
+    "guestUser": "Guest user"
   },
   "copyOverlay": {
     "error": "Error while copying!",

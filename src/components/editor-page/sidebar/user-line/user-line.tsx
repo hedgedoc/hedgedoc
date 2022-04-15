@@ -1,30 +1,38 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React from 'react'
-import { UserAvatar } from '../../../common/user-avatar/user-avatar'
 import type { ActiveIndicatorStatus } from '../users-online-sidebar-menu/active-indicator'
 import { ActiveIndicator } from '../users-online-sidebar-menu/active-indicator'
 import styles from './user-line.module.scss'
+import { UserAvatarForUsername } from '../../../common/user-avatar/user-avatar-for-username'
 
 export interface UserLineProps {
-  name: string
-  photo: string
+  username: string | null
   color: string
   status: ActiveIndicatorStatus
 }
 
-export const UserLine: React.FC<UserLineProps> = ({ name, photo, color, status }) => {
+/**
+ * Represents a user in the realtime activity status.
+ * @param username The name of the user to show.
+ * @param color The color of the user's edits.
+ * @param status The user's current online status.
+ */
+export const UserLine: React.FC<UserLineProps> = ({ username, color, status }) => {
   return (
     <div className={'d-flex align-items-center h-100 w-100'}>
       <div
         className={`d-inline-flex align-items-bottom ${styles['user-line-color-indicator']}`}
         style={{ borderLeftColor: color }}
       />
-      <UserAvatar photo={photo} name={name} additionalClasses={'flex-fill overflow-hidden px-2 text-nowrap w-100'} />
+      <UserAvatarForUsername
+        username={username}
+        additionalClasses={'flex-fill overflow-hidden px-2 text-nowrap w-100'}
+      />
       <div className={styles['active-indicator-container']}>
         <ActiveIndicator status={status} />
       </div>

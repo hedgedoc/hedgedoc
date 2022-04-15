@@ -1,7 +1,0 @@
-{
-  "id": "emcrx",
-  "photo": "/mock-backend/public/img/avatar.png",
-  "name": "Erik",
-  "status": "ok",
-  "provider": "internal"
-}

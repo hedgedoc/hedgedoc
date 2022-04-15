@@ -7,18 +7,16 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { fetchFrontPageContent } from '../requests'
-import { useCustomizeAssetsUrl } from '../../../hooks/common/use-customize-assets-url'
 
 export const useIntroPageContent = (): string[] | undefined => {
   const { t } = useTranslation()
   const [content, setContent] = useState<string[] | undefined>(undefined)
-  const customizeAssetsUrl = useCustomizeAssetsUrl()
 
   useEffect(() => {
-    fetchFrontPageContent(customizeAssetsUrl)
+    fetchFrontPageContent()
       .then((content) => setContent(content.split('\n')))
       .catch(() => setContent(undefined))
-  }, [customizeAssetsUrl, t])
+  }, [t])
 
   return content
 }

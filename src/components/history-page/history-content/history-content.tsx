@@ -11,32 +11,35 @@ import { PagerPagination } from '../../common/pagination/pager-pagination'
 import { HistoryCardList } from '../history-card/history-card-list'
 import { HistoryTable } from '../history-table/history-table'
 import { ViewStateEnum } from '../history-toolbar/history-toolbar'
-import type { HistoryEntry } from '../../../redux/history/types'
 import { removeHistoryEntry, toggleHistoryEntryPinning } from '../../../redux/history/methods'
 import { deleteNote } from '../../../api/notes'
 import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { sortAndFilterEntries } from '../utils'
 import { useHistoryToolbarState } from '../history-toolbar/toolbar-context/use-history-toolbar-state'
+import type { HistoryEntryWithOrigin } from '../../../api/history/types'
 
 type OnEntryClick = (entryId: string) => void
 
 export interface HistoryEventHandlers {
   onPinClick: OnEntryClick
-  onRemoveClick: OnEntryClick
-  onDeleteClick: OnEntryClick
+  onRemoveEntryClick: OnEntryClick
+  onDeleteNoteClick: OnEntryClick
 }
 
 export interface HistoryEntryProps {
-  entry: HistoryEntry
+  entry: HistoryEntryWithOrigin
 }
 
 export interface HistoryEntriesProps {
-  entries: HistoryEntry[]
+  entries: HistoryEntryWithOrigin[]
   pageIndex: number
   onLastPageIndexChange: (lastPageIndex: number) => void
 }
 
+/**
+ * Renders the content of the history based on the current history toolbar state.
+ */
 export const HistoryContent: React.FC = () => {
   useTranslation()
   const [pageIndex, setPageIndex] = useState(0)
@@ -46,7 +49,7 @@ export const HistoryContent: React.FC = () => {
 
   const [historyToolbarState] = useHistoryToolbarState()
 
-  const entriesToShow = useMemo<HistoryEntry[]>(
+  const entriesToShow = useMemo<HistoryEntryWithOrigin[]>(
     () => sortAndFilterEntries(allEntries, historyToolbarState),
     [allEntries, historyToolbarState]
   )
@@ -72,8 +75,8 @@ export const HistoryContent: React.FC = () => {
           <HistoryTable
             entries={entriesToShow}
             onPinClick={onPinClick}
-            onRemoveClick={onRemoveClick}
-            onDeleteClick={onDeleteClick}
+            onRemoveEntryClick={onRemoveClick}
+            onDeleteNoteClick={onDeleteClick}
             pageIndex={pageIndex}
             onLastPageIndexChange={setLastPageIndex}
           />
@@ -83,8 +86,8 @@ export const HistoryContent: React.FC = () => {
           <HistoryCardList
             entries={entriesToShow}
             onPinClick={onPinClick}
-            onRemoveClick={onRemoveClick}
-            onDeleteClick={onDeleteClick}
+            onRemoveEntryClick={onRemoveClick}
+            onDeleteNoteClick={onDeleteClick}
             pageIndex={pageIndex}
             onLastPageIndexChange={setLastPageIndex}
           />

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,20 +20,23 @@ export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => 
   const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)
   const editorMode = useApplicationState((state) => state.editorConfig.editorMode)
   const baseUrl = useFrontendBaseUrl()
-  const id = useApplicationState((state) => state.noteDetails.id)
+  const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
 
   return (
     <CommonModal show={show} onHide={onHide} showCloseButton={true} title={'editor.modal.shareLink.title'}>
       <Modal.Body>
         <Trans i18nKey={'editor.modal.shareLink.editorDescription'} />
-        <CopyableField content={`${baseUrl}n/${id}?${editorMode}`} shareOriginUrl={`${baseUrl}n/${id}?${editorMode}`} />
+        <CopyableField
+          content={`${baseUrl}n/${noteIdentifier}?${editorMode}`}
+          shareOriginUrl={`${baseUrl}n/${noteIdentifier}?${editorMode}`}
+        />
         <ShowIf condition={noteFrontmatter.type === NoteType.SLIDE}>
           <Trans i18nKey={'editor.modal.shareLink.slidesDescription'} />
-          <CopyableField content={`${baseUrl}p/${id}`} shareOriginUrl={`${baseUrl}p/${id}`} />
+          <CopyableField content={`${baseUrl}p/${noteIdentifier}`} shareOriginUrl={`${baseUrl}p/${noteIdentifier}`} />
         </ShowIf>
         <ShowIf condition={noteFrontmatter.type === NoteType.DOCUMENT}>
           <Trans i18nKey={'editor.modal.shareLink.viewOnlyDescription'} />
-          <CopyableField content={`${baseUrl}s/${id}`} shareOriginUrl={`${baseUrl}s/${id}`} />
+          <CopyableField content={`${baseUrl}s/${noteIdentifier}`} shareOriginUrl={`${baseUrl}s/${noteIdentifier}`} />
         </ShowIf>
       </Modal.Body>
     </CommonModal>

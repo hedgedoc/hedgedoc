@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Pagination } from 'react-bootstrap'
 import { ShowIf } from '../show-if/show-if'
 import { PagerItem } from './pager-item'
@@ -33,25 +33,34 @@ export const PagerPagination: React.FC<PaginationProps> = ({
     onPageChange(pageIndex)
   }, [onPageChange, pageIndex])
 
-  const correctedLowerPageIndex = Math.min(
-    Math.max(Math.min(wantedLowerPageIndex, wantedLowerPageIndex + lastPageIndex - wantedUpperPageIndex), 0),
-    lastPageIndex
+  const correctedLowerPageIndex = useMemo(
+    () =>
+      Math.min(
+        Math.max(Math.min(wantedLowerPageIndex, wantedLowerPageIndex + lastPageIndex - wantedUpperPageIndex), 0),
+        lastPageIndex
+      ),
+    [wantedLowerPageIndex, lastPageIndex, wantedUpperPageIndex]
   )
 
-  const correctedUpperPageIndex = Math.max(
-    Math.min(Math.max(wantedUpperPageIndex, wantedUpperPageIndex - wantedLowerPageIndex), lastPageIndex),
-    0
+  const correctedUpperPageIndex = useMemo(
+    () =>
+      Math.max(Math.min(Math.max(wantedUpperPageIndex, wantedUpperPageIndex - wantedLowerPageIndex), lastPageIndex), 0),
+    [wantedUpperPageIndex, lastPageIndex, wantedLowerPageIndex]
   )
 
-  const paginationItemsBefore = Array.from(new Array(correctedPageIndex - correctedLowerPageIndex)).map((k, index) => {
-    const itemIndex = correctedLowerPageIndex + index
-    return <PagerItem key={itemIndex} index={itemIndex} onClick={setPageIndex} />
-  })
+  const paginationItemsBefore = useMemo(() => {
+    return new Array(correctedPageIndex - correctedLowerPageIndex).map((k, index) => {
+      const itemIndex = correctedLowerPageIndex + index
+      return <PagerItem key={itemIndex} index={itemIndex} onClick={setPageIndex} />
+    })
+  }, [correctedPageIndex, correctedLowerPageIndex, setPageIndex])
 
-  const paginationItemsAfter = Array.from(new Array(correctedUpperPageIndex - correctedPageIndex)).map((k, index) => {
-    const itemIndex = correctedPageIndex + index + 1
-    return <PagerItem key={itemIndex} index={itemIndex} onClick={setPageIndex} />
-  })
+  const paginationItemsAfter = useMemo(() => {
+    return new Array(correctedUpperPageIndex - correctedPageIndex).map((k, index) => {
+      const itemIndex = correctedPageIndex + index + 1
+      return <PagerItem key={itemIndex} index={itemIndex} onClick={setPageIndex} />
+    })
+  }, [correctedUpperPageIndex, correctedPageIndex, setPageIndex])
 
   return (
     <Pagination dir='ltr'>

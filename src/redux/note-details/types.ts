@@ -1,16 +1,17 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import type { Action } from 'redux'
-import type { NoteDto } from '../../api/notes/types'
+import type { Note, NotePermissions } from '../../api/notes/types'
 import type { CursorSelection } from '../editor/types'
 
 export enum NoteDetailsActionType {
   SET_DOCUMENT_CONTENT = 'note-details/content/set',
   SET_NOTE_DATA_FROM_SERVER = 'note-details/data/server/set',
+  SET_NOTE_PERMISSIONS_FROM_SERVER = 'note-details/data/permissions/set',
   UPDATE_NOTE_TITLE_BY_FIRST_HEADING = 'note-details/update-note-title-by-first-heading',
   UPDATE_TASK_LIST_CHECKBOX = 'note-details/update-task-list-checkbox',
   UPDATE_CURSOR_POSITION = 'note-details/updateCursorPosition',
@@ -44,6 +45,7 @@ export enum FormatType {
 export type NoteDetailsActions =
   | SetNoteDocumentContentAction
   | SetNoteDetailsFromServerAction
+  | SetNotePermissionsFromServerAction
   | UpdateNoteTitleByFirstHeadingAction
   | UpdateTaskListCheckboxAction
   | UpdateCursorPositionAction
@@ -65,7 +67,15 @@ export interface SetNoteDocumentContentAction extends Action<NoteDetailsActionTy
  */
 export interface SetNoteDetailsFromServerAction extends Action<NoteDetailsActionType> {
   type: NoteDetailsActionType.SET_NOTE_DATA_FROM_SERVER
-  dto: NoteDto
+  noteFromServer: Note
+}
+
+/**
+ * Action for overwriting the current permission state with the data received from the API.
+ */
+export interface SetNotePermissionsFromServerAction extends Action<NoteDetailsActionType> {
+  type: NoteDetailsActionType.SET_NOTE_PERMISSIONS_FROM_SERVER
+  notePermissionsFromServer: NotePermissions
 }
 
 /**

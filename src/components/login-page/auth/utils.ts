@@ -6,7 +6,8 @@
 
 import { getMe } from '../../../api/me'
 import { setUser } from '../../../redux/user/methods'
-import { LoginProvider } from '../../../redux/user/types'
+import type { AuthProvider } from '../../../api/config/types'
+import { authProviderTypeOneClick } from '../../../api/config/types'
 
 /**
  * Fetches metadata about the currently signed-in user from the API and stores it into the redux.
@@ -18,10 +19,19 @@ export const fetchAndSetUser: () => Promise<void> = async () => {
       username: me.username,
       displayName: me.displayName,
       photo: me.photo,
-      provider: LoginProvider.LOCAL, // TODO Use real provider instead
+      authProvider: me.authProvider,
       email: me.email
     })
   } catch (error) {
     console.error(error)
   }
+}
+
+/**
+ * Filter to apply to a list of auth providers to get only one-click providers.
+ * @param provider The provider to test whether it is a one-click provider or not.
+ * @return true when the provider is a one-click one, false otherwise.
+ */
+export const filterOneClickProviders = (provider: AuthProvider): boolean => {
+  return authProviderTypeOneClick.includes(provider.type)
 }

@@ -13,11 +13,14 @@ import { SidebarButton } from '../sidebar-button/sidebar-button'
 import { useNoteMarkdownContent } from '../../../../hooks/common/use-note-markdown-content'
 import { cypressId } from '../../../../utils/cypress-attribute'
 
+/**
+ * Editor sidebar entry for exporting the markdown content into a local file.
+ */
 export const ExportMarkdownSidebarEntry: React.FC = () => {
   const { t } = useTranslation()
   const markdownContent = useNoteMarkdownContent()
   const onClick = useCallback(() => {
-    const sanitized = sanitize(getGlobalState().noteDetails.noteTitle)
+    const sanitized = sanitize(getGlobalState().noteDetails.title)
     download(markdownContent, `${sanitized !== '' ? sanitized : t('editor.untitledNote')}.md`, 'text/markdown')
   }, [markdownContent, t])
 

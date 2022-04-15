@@ -4,19 +4,19 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { NoteDto } from '../../../api/notes/types'
 import type { NoteDetails } from '../types/note-details'
 import { buildStateFromUpdatedMarkdownContent } from '../build-state-from-updated-markdown-content'
 import { initialState } from '../initial-state'
 import { DateTime } from 'luxon'
 import { calculateLineStartIndexes } from '../calculate-line-start-indexes'
+import type { Note } from '../../../api/notes/types'
 
 /**
  * Builds a {@link NoteDetails} redux state from a DTO received as an API response.
  * @param dto The first DTO received from the API containing the relevant information about the note.
  * @return An updated {@link NoteDetails} redux state.
  */
-export const buildStateFromServerDto = (dto: NoteDto): NoteDetails => {
+export const buildStateFromServerDto = (dto: Note): NoteDetails => {
   const newState = convertNoteDtoToNoteDetails(dto)
   return buildStateFromUpdatedMarkdownContent(newState, newState.markdownContent.plain)
 }
@@ -27,24 +27,26 @@ export const buildStateFromServerDto = (dto: NoteDto): NoteDetails => {
  * @param note The NoteDTO as defined in the backend.
  * @return The NoteDetails object corresponding to the DTO.
  */
-const convertNoteDtoToNoteDetails = (note: NoteDto): NoteDetails => {
+const convertNoteDtoToNoteDetails = (note: Note): NoteDetails => {
   const newLines = note.content.split('\n')
   return {
     ...initialState,
+    updateUsername: note.metadata.updateUsername,
+    permissions: note.metadata.permissions,
+    editedBy: note.metadata.editedBy,
+    primaryAddress: note.metadata.primaryAddress,
+    id: note.metadata.id,
+    aliases: note.metadata.aliases,
+    title: note.metadata.title,
+    version: note.metadata.version,
+    viewCount: note.metadata.viewCount,
     markdownContent: {
       plain: note.content,
       lines: newLines,
       lineStartIndexes: calculateLineStartIndexes(newLines)
     },
     rawFrontmatter: '',
-    id: note.metadata.id,
-    createTime: DateTime.fromISO(note.metadata.createTime),
-    lastChange: {
-      username: note.metadata.updateUser.username,
-      timestamp: DateTime.fromISO(note.metadata.updateTime)
-    },
-    viewCount: note.metadata.viewCount,
-    alias: note.metadata.alias,
-    authorship: note.metadata.editedBy
+    createdAt: DateTime.fromISO(note.metadata.createdAt),
+    updatedAt: DateTime.fromISO(note.metadata.updatedAt)
   }
 }

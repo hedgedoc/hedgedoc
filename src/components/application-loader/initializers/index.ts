@@ -7,7 +7,6 @@
 import { setUpI18n } from './setupI18n'
 import { refreshHistoryState } from '../../../redux/history/methods'
 import { fetchMotd } from './fetch-motd'
-import { setApiUrl } from '../../../redux/api-url/methods'
 import { fetchAndSetUser } from '../../login-page/auth/utils'
 import { fetchFrontendConfig } from './fetch-frontend-config'
 import { loadDarkMode } from './load-dark-mode'
@@ -25,11 +24,7 @@ export interface InitTask {
   task: Promise<void>
 }
 
-export const createSetUpTaskList = (customizeAssetsUrl: string, backendBaseUrl: string): InitTask[] => {
-  setApiUrl({
-    apiUrl: `${backendBaseUrl}api/private/`
-  })
-
+export const createSetUpTaskList = (): InitTask[] => {
   return [
     {
       name: 'Load dark mode',
@@ -49,7 +44,7 @@ export const createSetUpTaskList = (customizeAssetsUrl: string, backendBaseUrl: 
     },
     {
       name: 'Motd',
-      task: fetchMotd(customizeAssetsUrl)
+      task: fetchMotd()
     },
     {
       name: 'Load history state',

@@ -11,12 +11,15 @@ import { useTranslation } from 'react-i18next'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import Link from 'next/link'
 
+/**
+ * Button that links to the slide-show presentation of the current note.
+ */
 export const SlideModeButton: React.FC = () => {
   const { t } = useTranslation()
-  const id = useApplicationState((state) => state.noteDetails.id)
+  const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
 
   return (
-    <Link href={`/p/${id}`}>
+    <Link href={`/p/${noteIdentifier}`}>
       <a target='_blank'>
         <Button
           title={t('editor.documentBar.slideMode')}

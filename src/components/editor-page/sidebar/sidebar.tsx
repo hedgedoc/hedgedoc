@@ -7,7 +7,7 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
 import { DeleteNoteSidebarEntry } from './delete-note-sidebar-entry/delete-note-sidebar-entry'
-import { DocumentInfoSidebarEntry } from './specific-sidebar-entries/document-info-sidebar-entry'
+import { NoteInfoSidebarEntry } from './specific-sidebar-entries/note-info-sidebar-entry'
 import { ExportMenuSidebarMenu } from './specific-sidebar-entries/export-menu-sidebar-menu'
 import { ImportMenuSidebarMenu } from './specific-sidebar-entries/import-menu-sidebar-menu'
 import { PermissionsSidebarEntry } from './specific-sidebar-entries/permissions-sidebar-entry'
@@ -44,7 +44,7 @@ export const Sidebar: React.FC = () => {
           selectedMenuId={selectedMenu}
           onClick={toggleValue}
         />
-        <DocumentInfoSidebarEntry hide={selectionIsNotNone} />
+        <NoteInfoSidebarEntry hide={selectionIsNotNone} />
         <RevisionSidebarEntry hide={selectionIsNotNone} />
         <PermissionsSidebarEntry hide={selectionIsNotNone} />
         <ImportMenuSidebarMenu

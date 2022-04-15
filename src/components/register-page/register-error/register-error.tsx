@@ -5,7 +5,7 @@
  */
 
 import React, { useMemo } from 'react'
-import { RegisterError as RegisterErrorType } from '../../../api/auth'
+import { RegisterError as RegisterErrorType } from '../../../api/auth/types'
 import { Trans, useTranslation } from 'react-i18next'
 import { Alert } from 'react-bootstrap'
 

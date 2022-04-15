@@ -4,14 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { testNoteId } from '../support/visit-test-editor'
+
 describe('Delete note', () => {
   beforeEach(() => {
     cy.visitTestNote()
   })
 
   it('correctly deletes a note', () => {
-    cy.intercept('DELETE', '/mock-backend/api/private/notes/mock_note_id', {
-      statusCode: 200
+    cy.intercept('DELETE', `/api/mock-backend/private/notes/${testNoteId}`, {
+      statusCode: 204
     })
     cy.getByCypressId('sidebar.deleteNote.button').click()
     cy.getByCypressId('sidebar.deleteNote.modal').should('be.visible')

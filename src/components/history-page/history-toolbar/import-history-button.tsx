@@ -8,8 +8,7 @@ import React, { useCallback, useRef, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
-import type { HistoryEntry, HistoryExportJson, V1HistoryEntry } from '../../../redux/history/types'
-import { HistoryEntryOrigin } from '../../../redux/history/types'
+import type { HistoryExportJson, V1HistoryEntry } from '../../../redux/history/types'
 import {
   convertV1History,
   importHistoryEntries,
@@ -19,7 +18,12 @@ import {
 import { dispatchUiNotification, showErrorNotification } from '../../../redux/ui-notifications/methods'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { cypressId } from '../../../utils/cypress-attribute'
+import type { HistoryEntryWithOrigin } from '../../../api/history/types'
+import { HistoryEntryOrigin } from '../../../api/history/types'
 
+/**
+ * Button that lets the user select a history JSON file and uploads imports that into the history.
+ */
 export const ImportHistoryButton: React.FC = () => {
   const { t } = useTranslation()
   const userExists = useApplicationState((state) => !!state.user)
@@ -28,7 +32,7 @@ export const ImportHistoryButton: React.FC = () => {
   const [fileName, setFilename] = useState('')
 
   const onImportHistory = useCallback(
-    (entries: HistoryEntry[]): void => {
+    (entries: HistoryEntryWithOrigin[]): void => {
       entries.forEach((entry) => (entry.origin = userExists ? HistoryEntryOrigin.REMOTE : HistoryEntryOrigin.LOCAL))
       importHistoryEntries(mergeHistoryEntries(historyState, entries)).catch((error: Error) => {
         showErrorNotification('landing.history.error.setHistory.text')(error)
@@ -44,6 +48,8 @@ export const ImportHistoryButton: React.FC = () => {
     }
     uploadInput.current.value = ''
   }, [uploadInput])
+
+  const onUploadButtonClick = useCallback(() => uploadInput.current?.click(), [uploadInput])
 
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { validity, files } = event.target
@@ -124,7 +130,7 @@ export const ImportHistoryButton: React.FC = () => {
       <Button
         variant={'light'}
         title={t('landing.history.toolbar.import')}
-        onClick={() => uploadInput.current?.click()}
+        onClick={onUploadButtonClick}
         {...cypressId('import-history-file-button')}>
         <ForkAwesomeIcon icon='upload' />
       </Button>

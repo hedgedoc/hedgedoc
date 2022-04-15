@@ -6,10 +6,8 @@
 
 import type { PropsWithChildren } from 'react'
 import React, { Suspense } from 'react'
-import { useBackendBaseUrl } from '../../hooks/common/use-backend-base-url'
 import { createSetUpTaskList } from './initializers'
 import { LoadingScreen } from './loading-screen/loading-screen'
-import { useCustomizeAssetsUrl } from '../../hooks/common/use-customize-assets-url'
 import { Logger } from '../../utils/logger'
 import { useAsync } from 'react-use'
 import { ApplicationLoaderError } from './application-loader-error'
@@ -17,11 +15,8 @@ import { ApplicationLoaderError } from './application-loader-error'
 const log = new Logger('ApplicationLoader')
 
 export const ApplicationLoader: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
-  const backendBaseUrl = useBackendBaseUrl()
-  const customizeAssetsUrl = useCustomizeAssetsUrl()
-
   const { error, loading } = useAsync(async () => {
-    const initTasks = createSetUpTaskList(customizeAssetsUrl, backendBaseUrl)
+    const initTasks = createSetUpTaskList()
     for (const task of initTasks) {
       try {
         await task.task

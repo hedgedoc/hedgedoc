@@ -1,7 +1,0 @@
-{
-  "id": "dermolly",
-  "photo": "/mock-backend/public/img/avatar.png",
-  "name": "Philip",
-  "status": "ok",
-  "provider": "internal"
-}

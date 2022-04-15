@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,7 +13,6 @@ import { DocumentSidebarMenuSelection } from '../types'
 import { ActiveIndicatorStatus } from './active-indicator'
 import styles from './online-counter.module.scss'
 import { UserLine } from '../user-line/user-line'
-import { useCustomizeAssetsUrl } from '../../../../hooks/common/use-customize-assets-url'
 
 export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   className,
@@ -36,8 +35,8 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
     onClick(menuId)
   }, [menuId, onClick])
 
-  const avatarUrl = useCustomizeAssetsUrl() + 'img/avatar.png'
-
+  // TODO Use real users here
+  // see https://github.com/hedgedoc/react-client/issues/1988
   return (
     <Fragment>
       <SidebarButton
@@ -51,10 +50,10 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
       </SidebarButton>
       <SidebarMenu expand={expand}>
         <SidebarButton>
-          <UserLine name='Philip Molares' photo={avatarUrl} color='red' status={ActiveIndicatorStatus.INACTIVE} />
+          <UserLine username={null} color='red' status={ActiveIndicatorStatus.INACTIVE} />
         </SidebarButton>
         <SidebarButton>
-          <UserLine name='Tilman Vatteroth' photo={avatarUrl} color='blue' status={ActiveIndicatorStatus.ACTIVE} />
+          <UserLine username={null} color='blue' status={ActiveIndicatorStatus.ACTIVE} />
         </SidebarButton>
       </SidebarMenu>
     </Fragment>

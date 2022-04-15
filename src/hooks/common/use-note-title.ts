@@ -14,7 +14,7 @@ import { useMemo } from 'react'
 export const useNoteTitle = (): string => {
   const { t } = useTranslation()
   const untitledNote = useMemo(() => t('editor.untitledNote'), [t])
-  const noteTitle = useApplicationState((state) => state.noteDetails.noteTitle)
+  const noteTitle = useApplicationState((state) => state.noteDetails.title)
 
   return useMemo(() => (noteTitle === '' ? untitledNote : noteTitle), [noteTitle, untitledNote])
 }

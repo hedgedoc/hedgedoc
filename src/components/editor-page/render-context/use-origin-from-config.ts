@@ -25,6 +25,6 @@ export const useOriginFromConfig = (originType: ORIGIN_TYPE): string => {
   return useMemo(() => {
     return process.env.NEXT_PUBLIC_IGNORE_IFRAME_ORIGIN_CONFIG !== undefined
       ? window.location.origin + '/'
-      : originFromConfig
+      : originFromConfig ?? ''
   }, [originFromConfig])
 }

@@ -8,31 +8,26 @@ import type { DateTime } from 'luxon'
 import type { SlideOptions } from './slide-show-options'
 import type { ISO6391 } from './iso6391'
 import type { CursorSelection } from '../../editor/types'
+import type { NoteMetadata } from '../../../api/notes/types'
+
+type UnnecessaryNoteAttributes = 'updatedAt' | 'createdAt' | 'tags' | 'description'
 
 /**
  * Redux state containing the currently loaded note with its content and metadata.
  */
-export interface NoteDetails {
+export interface NoteDetails extends Omit<NoteMetadata, UnnecessaryNoteAttributes> {
+  updatedAt: DateTime
+  createdAt: DateTime
   markdownContent: {
     plain: string
     lines: string[]
     lineStartIndexes: number[]
   }
   selection: CursorSelection
+  firstHeading?: string
   rawFrontmatter: string
   frontmatter: NoteFrontmatter
   frontmatterRendererInfo: RendererFrontmatterInfo
-  id: string
-  createTime: DateTime
-  lastChange: {
-    username: string
-    timestamp: DateTime
-  }
-  viewCount: number
-  alias: string
-  authorship: string[]
-  noteTitle: string
-  firstHeading?: string
 }
 
 export type Iso6391Language = typeof ISO6391[number]

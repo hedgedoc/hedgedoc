@@ -19,8 +19,8 @@ describe('build state from first heading update', () => {
   })
 
   it('generates a new state with the given first heading', () => {
-    const startState = { ...initialState, firstHeading: 'heading', noteTitle: 'noteTitle' }
+    const startState = { ...initialState, firstHeading: 'heading', title: 'noteTitle' }
     const actual = buildStateFromFirstHeadingUpdate(startState, 'new first heading')
-    expect(actual).toStrictEqual({ ...initialState, firstHeading: 'new first heading', noteTitle: 'generated title' })
+    expect(actual).toStrictEqual({ ...initialState, firstHeading: 'new first heading', title: 'generated title' })
   })
 })

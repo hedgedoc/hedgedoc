@@ -5,15 +5,16 @@
  */
 
 import type { Reducer } from 'redux'
-import type { HistoryActions, HistoryEntry } from './types'
+import type { HistoryActions } from './types'
 import { HistoryActionType } from './types'
+import type { HistoryEntryWithOrigin } from '../../api/history/types'
 
 // Q: Why is the reducer initialized with an empty array instead of the actual history entries like in the config reducer?
 // A: The history reducer will be created without entries because of async entry retrieval.
 //    Entries will be added after reducer initialization.
 
-export const HistoryReducer: Reducer<HistoryEntry[], HistoryActions> = (
-  state: HistoryEntry[] = [],
+export const HistoryReducer: Reducer<HistoryEntryWithOrigin[], HistoryActions> = (
+  state: HistoryEntryWithOrigin[] = [],
   action: HistoryActions
 ) => {
   switch (action.type) {

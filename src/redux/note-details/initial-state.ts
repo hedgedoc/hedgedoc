@@ -18,6 +18,9 @@ export const initialSlideOptions: SlideOptions = {
 }
 
 export const initialState: NoteDetails = {
+  updatedAt: DateTime.fromSeconds(0),
+  updateUsername: null,
+  version: 0,
   markdownContent: {
     plain: '',
     lines: [],
@@ -32,15 +35,17 @@ export const initialState: NoteDetails = {
     slideOptions: initialSlideOptions
   },
   id: '',
-  createTime: DateTime.fromSeconds(0),
-  lastChange: {
-    timestamp: DateTime.fromSeconds(0),
-    username: ''
+  createdAt: DateTime.fromSeconds(0),
+  aliases: [],
+  primaryAddress: '',
+  permissions: {
+    owner: null,
+    sharedToGroups: [],
+    sharedToUsers: []
   },
-  alias: '',
   viewCount: 0,
-  authorship: [],
-  noteTitle: '',
+  editedBy: [],
+  title: '',
   firstHeading: '',
   frontmatter: {
     title: '',

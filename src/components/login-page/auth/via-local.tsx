@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { ChangeEvent, FormEvent } from 'react'
+import type { FormEvent } from 'react'
 import React, { useCallback, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
@@ -12,11 +12,12 @@ import { doLocalLogin } from '../../../api/auth/local'
 import { ShowIf } from '../../common/show-if/show-if'
 import { fetchAndSetUser } from './utils'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { AuthError as AuthErrorType } from '../../../api/auth'
+import { AuthError as AuthErrorType } from '../../../api/auth/types'
 import { UsernameField } from './fields/username-field'
 import { PasswordField } from './fields/password-field'
 import { AuthError } from './auth-error/auth-error'
 import Link from 'next/link'
+import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
 
 /**
  * Renders the local login box with username and password field and the optional button for registering a new user.
@@ -44,13 +45,8 @@ export const ViaLocal: React.FC = () => {
     [username, password]
   )
 
-  const onUsernameChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value)
-  }, [])
-
-  const onPasswordChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value)
-  }, [])
+  const onUsernameChange = useOnInputChange(setUsername)
+  const onPasswordChange = useOnInputChange(setPassword)
 
   return (
     <Card className='bg-dark mb-4'>

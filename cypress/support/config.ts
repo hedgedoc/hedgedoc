@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { AuthProviderType } from '../../src/api/config/types'
+
 declare namespace Cypress {
   interface Chainable {
     loadConfig(): Chainable<Window>
@@ -12,43 +14,70 @@ declare namespace Cypress {
 
 export const branding = {
   name: 'DEMO Corp',
-  logo: '/mock-backend/public/img/demo.png'
+  logo: '/mock-public/img/demo.png'
 }
 
-export const authProviders = {
-  facebook: true,
-  github: true,
-  twitter: true,
-  gitlab: true,
-  dropbox: true,
-  ldap: true,
-  google: true,
-  saml: true,
-  oauth2: true,
-  local: true
-}
+export const authProviders = [
+  {
+    type: AuthProviderType.FACEBOOK
+  },
+  {
+    type: AuthProviderType.GITHUB
+  },
+  {
+    type: AuthProviderType.TWITTER
+  },
+  {
+    type: AuthProviderType.DROPBOX
+  },
+  {
+    type: AuthProviderType.GOOGLE
+  },
+  {
+    type: AuthProviderType.LOCAL
+  },
+  {
+    type: AuthProviderType.LDAP,
+    identifier: 'test-ldap',
+    providerName: 'Test LDAP'
+  },
+  {
+    type: AuthProviderType.OAUTH2,
+    identifier: 'test-oauth2',
+    providerName: 'Test OAuth2'
+  },
+  {
+    type: AuthProviderType.SAML,
+    identifier: 'test-saml',
+    providerName: 'Test SAML'
+  },
+  {
+    type: AuthProviderType.GITLAB,
+    identifier: 'test-gitlab',
+    providerName: 'Test GitLab'
+  }
+]
 
 export const config = {
   allowAnonymous: true,
+  allowRegister: true,
   authProviders: authProviders,
   branding: branding,
-  customAuthNames: {
-    ldap: 'FooBar',
-    oauth2: 'Olaf2',
-    saml: 'aufSAMLn.de'
-  },
-  maxDocumentLength: 200,
+  useImageProxy: false,
   specialUrls: {
     privacy: 'https://example.com/privacy',
     termsOfUse: 'https://example.com/termsOfUse',
     imprint: 'https://example.com/imprint'
   },
-  plantumlServer: 'http://mock-plantuml.local',
   version: {
-    version: 'mock',
-    sourceCodeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    issueTrackerUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+    major: 0,
+    minor: 0,
+    patch: 0,
+    preRelease: '',
+    commit: 'MOCK'
   },
+  plantumlServer: 'http://mock-plantuml.local',
+  maxDocumentLength: 200,
   iframeCommunication: {
     editorOrigin: 'http://127.0.0.1:3001/',
     rendererOrigin: 'http://127.0.0.1:3001/'
@@ -56,7 +85,7 @@ export const config = {
 }
 
 Cypress.Commands.add('loadConfig', (additionalConfig?: Partial<typeof config>) => {
-  return cy.intercept('/mock-backend/api/private/config', {
+  return cy.intercept('/api/mock-backend/private/config', {
     statusCode: 200,
     body: {
       ...config,
@@ -68,11 +97,11 @@ Cypress.Commands.add('loadConfig', (additionalConfig?: Partial<typeof config>) =
 beforeEach(() => {
   cy.loadConfig()
 
-  cy.intercept('GET', '/mock-backend/public/motd.md', {
+  cy.intercept('GET', '/mock-public/motd.md', {
     body: '404 Not Found!',
     statusCode: 404
   })
-  cy.intercept('HEAD', '/mock-backend/public/motd.md', {
+  cy.intercept('HEAD', '/mock-public/motd.md', {
     statusCode: 404
   })
 })

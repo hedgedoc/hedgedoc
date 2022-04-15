@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,13 +16,13 @@ describe('File upload', () => {
     beforeEach(() => {
       cy.intercept(
         {
-          method: 'GET',
-          url: '/mock-backend/api/private/media/upload-post'
+          method: 'POST',
+          url: '/api/mock-backend/private/media'
         },
         {
-          statusCode: 200,
+          statusCode: 201,
           body: {
-            link: imageUrl
+            url: imageUrl
           }
         }
       )
@@ -69,8 +69,8 @@ describe('File upload', () => {
   it('fails', () => {
     cy.intercept(
       {
-        method: 'GET',
-        url: '/mock-backend/api/private/media/upload-post'
+        method: 'POST',
+        url: '/api/mock-backend/private/media'
       },
       {
         statusCode: 400

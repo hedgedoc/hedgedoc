@@ -1,37 +1,42 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { AccessToken, AccessTokenWithSecret, CreateAccessTokenDto } from './types'
+import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
+import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
+import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 
-import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
-import type { AccessToken, AccessTokenWithSecret } from './types'
-
+/**
+ * Retrieves the access tokens for the current user.
+ * @return List of access token metadata.
+ */
 export const getAccessTokenList = async (): Promise<AccessToken[]> => {
-  const response = await fetch(`${getApiUrl()}tokens`, {
-    ...defaultFetchConfig
-  })
-  expectResponseCode(response)
-  return (await response.json()) as AccessToken[]
+  const response = await new GetApiRequestBuilder<AccessToken[]>('tokens').sendRequest()
+  return response.asParsedJsonObject()
 }
 
-export const postNewAccessToken = async (label: string, expiryDate: string): Promise<AccessTokenWithSecret> => {
-  const response = await fetch(`${getApiUrl()}tokens`, {
-    ...defaultFetchConfig,
-    method: 'POST',
-    body: JSON.stringify({
-      label: label,
-      validUntil: expiryDate
+/**
+ * Creates a new access token for the current user.
+ * @param label The user-defined label for the new access token.
+ * @param validUntil The user-defined expiry date of the new access token in milliseconds of unix time.
+ * @return The new access token metadata along with its secret.
+ */
+export const postNewAccessToken = async (label: string, validUntil: number): Promise<AccessTokenWithSecret> => {
+  const response = await new PostApiRequestBuilder<AccessTokenWithSecret, CreateAccessTokenDto>('tokens')
+    .withJsonBody({
+      label,
+      validUntil
     })
-  })
-  expectResponseCode(response)
-  return (await response.json()) as AccessTokenWithSecret
+    .sendRequest()
+  return response.asParsedJsonObject()
 }
 
+/**
+ * Removes an access token from the current user account.
+ * @param keyId The key id of the access token to delete.
+ */
 export const deleteAccessToken = async (keyId: string): Promise<void> => {
-  const response = await fetch(`${getApiUrl()}tokens/${keyId}`, {
-    ...defaultFetchConfig,
-    method: 'DELETE'
-  })
-  expectResponseCode(response)
+  await new DeleteApiRequestBuilder('tokens/' + keyId).sendRequest()
 }

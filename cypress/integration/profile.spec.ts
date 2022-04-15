@@ -8,7 +8,7 @@ describe('profile page', () => {
   beforeEach(() => {
     cy.intercept(
       {
-        url: '/mock-backend/api/private/tokens',
+        url: '/api/mock-backend/private/tokens',
         method: 'GET'
       },
       {
@@ -25,7 +25,7 @@ describe('profile page', () => {
     )
     cy.intercept(
       {
-        url: '/mock-backend/api/private/tokens',
+        url: '/api/mock-backend/private/tokens',
         method: 'POST'
       },
       {
@@ -36,16 +36,18 @@ describe('profile page', () => {
           createdAt: '2021-11-21T01:11:12+01:00',
           lastUsed: '2021-11-21T01:11:12+01:00',
           validUntil: '2023-11-21'
-        }
+        },
+        statusCode: 201
       }
     )
     cy.intercept(
       {
-        url: '/mock-backend/api/private/tokens/cypress',
+        url: '/api/mock-backend/private/tokens/cypress',
         method: 'DELETE'
       },
       {
-        body: []
+        body: [],
+        statusCode: 204
       }
     )
     cy.visit('/profile', { retryOnNetworkFailure: true })

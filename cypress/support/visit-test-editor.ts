@@ -3,26 +3,30 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 export const testNoteId = 'test'
 
 beforeEach(() => {
-  cy.intercept(`/mock-backend/api/private/notes/${testNoteId}-get`, {
+  cy.intercept(`/api/mock-backend/private/notes/${testNoteId}`, {
     content: '',
     metadata: {
-      id: 'mock_note_id',
-      alias: 'mockNote',
-      version: 2,
-      viewCount: 0,
+      id: testNoteId,
+      alias: ['mock-note'],
+      primaryAlias: 'mock-note',
+      title: 'Mock Note',
+      description: 'Mocked note for testing',
+      tags: ['test', 'mock', 'cypress'],
       updateTime: '2021-04-24T09:27:51.000Z',
-      updateUser: {
-        userName: 'test',
-        displayName: 'Testy',
-        photo: '',
-        email: ''
-      },
+      updateUser: null,
+      viewCount: 0,
+      version: 2,
       createTime: '2021-04-24T09:27:51.000Z',
-      editedBy: []
-    }
+      editedBy: [],
+      permissions: {
+        owner: null,
+        sharedToUsers: [],
+        sharedToGroups: []
+      }
+    },
+    editedByAtPosition: []
   })
 })

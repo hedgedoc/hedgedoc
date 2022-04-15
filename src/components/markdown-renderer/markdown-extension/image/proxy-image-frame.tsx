@@ -20,7 +20,7 @@ export const ProxyImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>
       return
     }
     getProxiedUrl(src)
-      .then((proxyResponse) => setImageUrl(proxyResponse.src))
+      .then((proxyResponse) => setImageUrl(proxyResponse.url))
       .catch((err) => log.error(err))
   }, [imageProxyEnabled, src])
 

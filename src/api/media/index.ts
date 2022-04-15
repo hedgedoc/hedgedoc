@@ -1,49 +1,47 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { ImageProxyRequestDto, ImageProxyResponse, MediaUpload } from './types'
+import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
+import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 
-import { isMockMode, isTestMode } from '../../utils/test-modes'
-import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
-
-export interface ImageProxyResponse {
-  src: string
-}
-
+/**
+ * Requests an image-proxy URL from the backend for a given image URL.
+ * @param imageUrl The image URL which should be proxied.
+ * @return The proxy URL for the image.
+ */
 export const getProxiedUrl = async (imageUrl: string): Promise<ImageProxyResponse> => {
-  const response = await fetch(getApiUrl() + 'media/proxy', {
-    ...defaultFetchConfig,
-    method: 'POST',
-    body: JSON.stringify({
-      src: imageUrl
+  const response = await new PostApiRequestBuilder<ImageProxyResponse, ImageProxyRequestDto>('media/proxy')
+    .withJsonBody({
+      url: imageUrl
     })
-  })
-  expectResponseCode(response)
-  return (await response.json()) as Promise<ImageProxyResponse>
+    .sendRequest()
+  return response.asParsedJsonObject()
 }
 
-export interface UploadedMedia {
-  link: string
+/**
+ * Uploads a media file to the backend.
+ * @param noteIdOrAlias The id or alias of the note from which the media is uploaded.
+ * @param media The binary media content.
+ * @return The URL of the uploaded media object.
+ */
+export const uploadFile = async (noteIdOrAlias: string, media: Blob): Promise<MediaUpload> => {
+  const postData = new FormData()
+  postData.append('file', media)
+  const response = await new PostApiRequestBuilder<MediaUpload, void>('media')
+    .withHeader('Content-Type', 'multipart/form-data')
+    .withHeader('HedgeDoc-Note', noteIdOrAlias)
+    .withBody(postData)
+    .sendRequest()
+  return response.asParsedJsonObject()
 }
 
-export const uploadFile = async (noteId: string, media: Blob): Promise<UploadedMedia> => {
-  const response = await fetch(`${getApiUrl()}media/upload${isMockMode() ? '-post' : ''}`, {
-    ...defaultFetchConfig,
-    headers: {
-      'Content-Type': media.type,
-      'HedgeDoc-Note': noteId
-    },
-    method: isMockMode() ? 'GET' : 'POST',
-    body: isMockMode() ? undefined : media
-  })
-
-  if (isMockMode() && !isTestMode()) {
-    await new Promise((resolve) => {
-      setTimeout(resolve, 3000)
-    })
-  }
-
-  expectResponseCode(response, isMockMode() ? 200 : 201)
-  return (await response.json()) as Promise<UploadedMedia>
+/**
+ * Deletes some uploaded media object.
+ * @param mediaId The identifier of the media object to delete.
+ */
+export const deleteUploadedMedia = async (mediaId: string): Promise<void> => {
+  await new DeleteApiRequestBuilder('media/' + mediaId).sendRequest()
 }

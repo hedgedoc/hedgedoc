@@ -7,7 +7,6 @@
 import { MarkdownExtension } from '../markdown-extension'
 import type MarkdownIt from 'markdown-it'
 import plantuml from 'markdown-it-plantuml'
-import type { RenderRule } from 'markdown-it/lib/renderer'
 import type Renderer from 'markdown-it/lib/renderer'
 import type Token from 'markdown-it/lib/token'
 import type { Options } from 'markdown-it/lib'
@@ -15,12 +14,12 @@ import type { ComponentReplacer } from '../../replace-components/component-repla
 import { PlantumlNotConfiguredComponentReplacer } from './plantuml-not-configured-component-replacer'
 
 export class PlantumlMarkdownExtension extends MarkdownExtension {
-  constructor(private plantumlServer: string | null) {
+  constructor(private plantumlServer?: string) {
     super()
   }
 
   private plantumlError(markdownIt: MarkdownIt): void {
-    const defaultRenderer: RenderRule = markdownIt.renderer.rules.fence || (() => '')
+    const defaultRenderer: Renderer.RenderRule = markdownIt.renderer.rules.fence || (() => '')
     markdownIt.renderer.rules.fence = (tokens: Token[], idx: number, options: Options, env, slf: Renderer) => {
       return tokens[idx].info === 'plantuml'
         ? '<plantuml-not-configured></plantuml-not-configured>'

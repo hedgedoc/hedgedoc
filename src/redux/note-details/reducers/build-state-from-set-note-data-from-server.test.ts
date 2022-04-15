@@ -3,8 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { NoteDto } from '../../../api/notes/types'
 import { buildStateFromServerDto } from './build-state-from-set-note-data-from-server'
 import * as buildStateFromUpdatedMarkdownContentModule from '../build-state-from-updated-markdown-content'
 import { Mock } from 'ts-mockery'
@@ -12,6 +10,7 @@ import type { NoteDetails } from '../types/note-details'
 import { NoteTextDirection, NoteType } from '../types/note-details'
 import { DateTime } from 'luxon'
 import { initialSlideOptions } from '../initial-state'
+import type { Note } from '../../../api/notes/types'
 
 describe('build state from set note data from server', () => {
   const buildStateFromUpdatedMarkdownContentMock = jest.spyOn(
@@ -29,54 +28,42 @@ describe('build state from set note data from server', () => {
   })
 
   it('builds a new state from the given note dto', () => {
-    const noteDto: NoteDto = {
+    const noteDto: Note = {
       content: 'line1\nline2',
       metadata: {
+        primaryAddress: 'alias',
         version: 5678,
-        alias: 'alias',
+        aliases: [
+          {
+            noteId: 'id',
+            primaryAlias: true,
+            name: 'alias'
+          }
+        ],
         id: 'id',
-        createTime: '2012-05-25T09:08:34.123',
+        createdAt: '2012-05-25T09:08:34.123',
         description: 'description',
         editedBy: ['editedBy'],
         permissions: {
-          owner: {
-            username: 'username',
-            photo: 'photo',
-            email: 'email',
-            displayName: 'displayName'
-          },
+          owner: 'username',
           sharedToGroups: [
             {
               canEdit: true,
-              group: {
-                displayName: 'groupdisplayname',
-                name: 'groupname',
-                special: true
-              }
+              groupName: 'groupName'
             }
           ],
           sharedToUsers: [
             {
               canEdit: true,
-              user: {
-                username: 'shareusername',
-                email: 'shareemail',
-                photo: 'sharephoto',
-                displayName: 'sharedisplayname'
-              }
+              username: 'shareusername'
             }
           ]
         },
         viewCount: 987,
         tags: ['tag'],
         title: 'title',
-        updateTime: '2020-05-25T09:08:34.123',
-        updateUser: {
-          username: 'updateusername',
-          photo: 'updatephoto',
-          email: 'updateemail',
-          displayName: 'updatedisplayname'
-        }
+        updatedAt: '2020-05-25T09:08:34.123',
+        updateUsername: 'updateusername'
       },
       editedByAtPosition: [
         {
@@ -84,7 +71,7 @@ describe('build state from set note data from server', () => {
           createdAt: 'createdAt',
           startPos: 9,
           updatedAt: 'updatedAt',
-          userName: 'userName'
+          username: 'userName'
         }
       ]
     }
@@ -117,7 +104,7 @@ describe('build state from set note data from server', () => {
         lineOffset: 0,
         slideOptions: initialSlideOptions
       },
-      noteTitle: '',
+      title: 'title',
       selection: { from: 0 },
       markdownContent: {
         plain: 'line1\nline2',
@@ -127,14 +114,35 @@ describe('build state from set note data from server', () => {
       firstHeading: '',
       rawFrontmatter: '',
       id: 'id',
-      createTime: DateTime.fromISO('2012-05-25T09:08:34.123'),
-      lastChange: {
-        username: 'updateusername',
-        timestamp: DateTime.fromISO('2020-05-25T09:08:34.123')
-      },
+      createdAt: DateTime.fromISO('2012-05-25T09:08:34.123'),
+      updatedAt: DateTime.fromISO('2020-05-25T09:08:34.123'),
+      updateUsername: 'updateusername',
       viewCount: 987,
-      alias: 'alias',
-      authorship: ['editedBy']
+      aliases: [
+        {
+          name: 'alias',
+          noteId: 'id',
+          primaryAlias: true
+        }
+      ],
+      primaryAddress: 'alias',
+      version: 5678,
+      editedBy: ['editedBy'],
+      permissions: {
+        owner: 'username',
+        sharedToGroups: [
+          {
+            canEdit: true,
+            groupName: 'groupName'
+          }
+        ],
+        sharedToUsers: [
+          {
+            canEdit: true,
+            username: 'shareusername'
+          }
+        ]
+      }
     }
 
     const result = buildStateFromServerDto(noteDto)

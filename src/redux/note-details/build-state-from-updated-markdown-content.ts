@@ -63,7 +63,7 @@ const buildStateFromMarkdownContentAndLines = (
         lineStartIndexes
       },
       rawFrontmatter: '',
-      noteTitle: generateNoteTitle(initialState.frontmatter, state.firstHeading),
+      title: generateNoteTitle(initialState.frontmatter, state.firstHeading),
       frontmatter: initialState.frontmatter,
       frontmatterRendererInfo: initialState.frontmatterRendererInfo
     }
@@ -89,7 +89,7 @@ const buildStateFromFrontmatterUpdate = (
       ...state,
       rawFrontmatter: frontmatterExtraction.rawText,
       frontmatter: frontmatter,
-      noteTitle: generateNoteTitle(frontmatter, state.firstHeading),
+      title: generateNoteTitle(frontmatter, state.firstHeading),
       frontmatterRendererInfo: {
         lineOffset: frontmatterExtraction.lineOffset,
         deprecatedSyntax: frontmatter.deprecatedTagsSyntax,
@@ -100,7 +100,7 @@ const buildStateFromFrontmatterUpdate = (
   } catch (e) {
     return {
       ...state,
-      noteTitle: generateNoteTitle(initialState.frontmatter, state.firstHeading),
+      title: generateNoteTitle(initialState.frontmatter, state.firstHeading),
       rawFrontmatter: frontmatterExtraction.rawText,
       frontmatter: initialState.frontmatter,
       frontmatterRendererInfo: {

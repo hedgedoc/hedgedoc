@@ -11,12 +11,15 @@ import { useTranslation } from 'react-i18next'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import Link from 'next/link'
 
+/**
+ * Button that links to the read-only version of a note.
+ */
 export const ReadOnlyModeButton: React.FC = () => {
   const { t } = useTranslation()
-  const id = useApplicationState((state) => state.noteDetails.id)
+  const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
 
   return (
-    <Link href={`/s/${id}`}>
+    <Link href={`/s/${noteIdentifier}`}>
       <a target='_blank'>
         <Button
           title={t('editor.documentBar.readOnlyMode')}

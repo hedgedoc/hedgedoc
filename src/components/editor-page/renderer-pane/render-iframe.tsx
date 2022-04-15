@@ -110,7 +110,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
         log.error('Load triggered without content window')
         return
       }
-      log.debug(`Set iframecommunicator window with origin ${rendererOrigin}`)
+      log.debug(`Set iframecommunicator window with origin ${rendererOrigin ?? 'undefined'}`)
       iframeCommunicator.setMessageTarget(otherWindow, rendererOrigin)
       iframeCommunicator.enableCommunication()
       iframeCommunicator.sendMessageToOtherSide({
@@ -137,7 +137,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
         {...cypressId('documentIframe')}
         onLoad={onIframeLoad}
         title='render'
-        {...(isTestMode() ? {} : { sandbox: 'allow-downloads allow-same-origin allow-scripts allow-popups' })}
+        {...(isTestMode ? {} : { sandbox: 'allow-downloads allow-same-origin allow-scripts allow-popups' })}
         allowFullScreen={true}
         ref={frameReference}
         referrerPolicy={'no-referrer'}

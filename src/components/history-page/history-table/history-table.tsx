@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Table } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { Pager } from '../../common/pagination/pager'
@@ -13,15 +13,37 @@ import { HistoryTableRow } from './history-table-row'
 import styles from './history-table.module.scss'
 import { cypressId } from '../../../utils/cypress-attribute'
 
+/**
+ * Renders a paginated table of history entries.
+ * @param entries The history entries to render.
+ * @param onPinClick Callback that is fired when the pinning button was clicked for an entry.
+ * @param onRemoveEntryClick Callback that is fired when the entry removal button was clicked for an entry.
+ * @param onDeleteNoteClick Callback that is fired when the note deletion button was clicked for an entry.
+ * @param pageIndex The currently selected page.
+ * @param onLastPageIndexChange Callback returning the last page index of the pager.
+ */
 export const HistoryTable: React.FC<HistoryEntriesProps & HistoryEventHandlers> = ({
   entries,
   onPinClick,
-  onRemoveClick,
-  onDeleteClick,
+  onRemoveEntryClick,
+  onDeleteNoteClick,
   pageIndex,
   onLastPageIndexChange
 }) => {
   useTranslation()
+
+  const tableRows = useMemo(() => {
+    return entries.map((entry) => (
+      <HistoryTableRow
+        key={entry.identifier}
+        entry={entry}
+        onPinClick={onPinClick}
+        onRemoveEntryClick={onRemoveEntryClick}
+        onDeleteNoteClick={onDeleteNoteClick}
+      />
+    ))
+  }, [entries, onPinClick, onRemoveEntryClick, onDeleteNoteClick])
+
   return (
     <Table
       striped
@@ -49,15 +71,7 @@ export const HistoryTable: React.FC<HistoryEntriesProps & HistoryEventHandlers> 
       </thead>
       <tbody>
         <Pager numberOfElementsPerPage={12} pageIndex={pageIndex} onLastPageIndexChange={onLastPageIndexChange}>
-          {entries.map((entry) => (
-            <HistoryTableRow
-              key={entry.identifier}
-              entry={entry}
-              onPinClick={onPinClick}
-              onRemoveClick={onRemoveClick}
-              onDeleteClick={onDeleteClick}
-            />
-          ))}
+          {tableRows}
         </Pager>
       </tbody>
     </Table>

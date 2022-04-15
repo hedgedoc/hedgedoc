@@ -5,7 +5,7 @@
  */
 
 import React, { useMemo } from 'react'
-import { AuthError as AuthErrorType } from '../../../../api/auth'
+import { AuthError as AuthErrorType } from '../../../../api/auth/types'
 import { Trans, useTranslation } from 'react-i18next'
 import { Alert } from 'react-bootstrap'
 

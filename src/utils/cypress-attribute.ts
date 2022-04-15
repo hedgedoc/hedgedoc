@@ -21,7 +21,7 @@ export interface PropsWithDataCypressId {
 export const cypressId = (
   identifier: string | undefined | PropsWithDataCypressId
 ): Record<'data-cypress-id', string> | undefined => {
-  if (!isTestMode() || !identifier) {
+  if (!isTestMode || !identifier) {
     return
   }
 
@@ -45,7 +45,7 @@ export const cypressAttribute = (
   attribute: string,
   value: string | undefined
 ): Record<string, string | undefined> | undefined => {
-  if (!isTestMode()) {
+  if (!isTestMode) {
     return
   }
 

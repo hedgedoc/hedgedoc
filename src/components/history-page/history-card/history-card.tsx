@@ -17,19 +17,30 @@ import { useHistoryEntryTitle } from '../use-history-entry-title'
 import { cypressId } from '../../../utils/cypress-attribute'
 import Link from 'next/link'
 
+/**
+ * Renders a history entry as a card.
+ * @param entry The history entry.
+ * @param onPinClick Callback that is fired when the pinning button was clicked.
+ * @param onRemoveEntryClick Callback that is fired when the entry removal button was clicked.
+ * @param onDeleteNoteClick Callback that is fired when the note deletion button was clicked.
+ */
 export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = ({
   entry,
   onPinClick,
-  onRemoveClick,
-  onDeleteClick
+  onRemoveEntryClick,
+  onDeleteNoteClick
 }) => {
-  const onRemove = useCallback(() => {
-    onRemoveClick(entry.identifier)
-  }, [onRemoveClick, entry.identifier])
+  const onRemoveEntry = useCallback(() => {
+    onRemoveEntryClick(entry.identifier)
+  }, [onRemoveEntryClick, entry.identifier])
 
-  const onDelete = useCallback(() => {
-    onDeleteClick(entry.identifier)
-  }, [onDeleteClick, entry.identifier])
+  const onDeleteNote = useCallback(() => {
+    onDeleteNoteClick(entry.identifier)
+  }, [onDeleteNoteClick, entry.identifier])
+
+  const onPinEntry = useCallback(() => {
+    onPinClick(entry.identifier)
+  }, [onPinClick, entry.identifier])
 
   const entryTitle = useHistoryEntryTitle(entry)
 
@@ -43,14 +54,14 @@ export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = (
     [entry.tags]
   )
 
-  const lastVisited = useMemo(() => formatHistoryDate(entry.lastVisited), [entry.lastVisited])
+  const lastVisited = useMemo(() => formatHistoryDate(entry.lastVisitedAt), [entry.lastVisitedAt])
 
   return (
     <div className='p-2 col-xs-12 col-sm-6 col-md-6 col-lg-4' {...cypressId('history-card')}>
       <Card className={styles['card-min-height']} text={'dark'} bg={'light'}>
         <Card.Body className='p-2 d-flex flex-row justify-content-between'>
           <div className={'d-flex flex-column'}>
-            <PinButton isDark={false} isPinned={entry.pinStatus} onPinClick={() => onPinClick(entry.identifier)} />
+            <PinButton isDark={false} isPinned={entry.pinStatus} onPinClick={onPinEntry} />
           </div>
           <Link href={`/n/${entry.identifier}`}>
             <a className='text-decoration-none flex-fill text-dark'>
@@ -60,7 +71,7 @@ export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = (
                 </Card.Title>
                 <div>
                   <div className='text-black-50 mt-2'>
-                    <ForkAwesomeIcon icon='clock-o' /> {DateTime.fromISO(entry.lastVisited).toRelative()}
+                    <ForkAwesomeIcon icon='clock-o' /> {DateTime.fromISO(entry.lastVisitedAt).toRelative()}
                     <br />
                     {lastVisited}
                   </div>
@@ -74,9 +85,8 @@ export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = (
               id={entry.identifier}
               title={entryTitle}
               origin={entry.origin}
-              isDark={false}
-              onRemove={onRemove}
-              onDelete={onDelete}
+              onRemoveFromHistory={onRemoveEntry}
+              onDeleteNote={onDeleteNote}
             />
           </div>
         </Card.Body>

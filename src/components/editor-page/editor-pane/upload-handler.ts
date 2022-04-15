@@ -7,7 +7,7 @@
 import { uploadFile } from '../../../api/media'
 import { getGlobalState } from '../../../redux'
 import { supportedMimeTypes } from '../../common/upload-image-mimetypes'
-import { replaceSelection, replaceInMarkdownContent } from '../../../redux/note-details/methods'
+import { replaceInMarkdownContent, replaceSelection } from '../../../redux/note-details/methods'
 import { t } from 'i18next'
 import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 import type { CursorSelection } from '../../../redux/editor/types'
@@ -42,8 +42,8 @@ export const handleUpload = (
 
   replaceSelection(uploadPlaceholder, cursorSelection)
   uploadFile(noteId, file)
-    .then(({ link }) => {
-      replaceInMarkdownContent(uploadPlaceholder, `![${description ?? ''}](${link}${additionalUrlText ?? ''})`)
+    .then(({ url }) => {
+      replaceInMarkdownContent(uploadPlaceholder, `![${description ?? ''}](${url}${additionalUrlText ?? ''})`)
     })
     .catch((error: Error) => {
       showErrorNotification('editor.upload.failed', { fileName: file.name })(error)

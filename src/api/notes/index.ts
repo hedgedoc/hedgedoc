@@ -1,27 +1,65 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { Note } from './types'
+import type { MediaUpload } from '../media/types'
+import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
+import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
+import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 
-import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
-import type { NoteDto } from './types'
-import { isMockMode } from '../../utils/test-modes'
-
-export const getNote = async (noteId: string): Promise<NoteDto> => {
-  // The "-get" suffix is necessary, because in our mock api (filesystem) the note id might already be a folder.
-  // TODO: [mrdrogdrog] replace -get with actual api route as soon as api backend is ready.
-  const response = await fetch(getApiUrl() + `notes/${noteId}${isMockMode() ? '-get' : ''}`, {
-    ...defaultFetchConfig
-  })
-  expectResponseCode(response)
-  return (await response.json()) as Promise<NoteDto>
+/**
+ * Retrieves the content and metadata about the specified note.
+ * @param noteIdOrAlias The id or alias of the note.
+ * @return Content and metadata of the specified note.
+ */
+export const getNote = async (noteIdOrAlias: string): Promise<Note> => {
+  const response = await new GetApiRequestBuilder<Note>('notes/' + noteIdOrAlias).sendRequest()
+  return response.asParsedJsonObject()
 }
 
-export const deleteNote = async (noteId: string): Promise<void> => {
-  const response = await fetch(getApiUrl() + `notes/${noteId}`, {
-    ...defaultFetchConfig,
-    method: 'DELETE'
-  })
-  expectResponseCode(response)
+/**
+ * Returns a list of media objects associated with the specified note.
+ * @param noteIdOrAlias The id or alias of the note.
+ * @return List of media object metadata associated with specified note.
+ */
+export const getMediaForNote = async (noteIdOrAlias: string): Promise<MediaUpload[]> => {
+  const response = await new GetApiRequestBuilder<MediaUpload[]>(`notes/${noteIdOrAlias}/media`).sendRequest()
+  return response.asParsedJsonObject()
+}
+
+/**
+ * Creates a new note with a given markdown content.
+ * @param markdown The content of the new note.
+ * @return Content and metadata of the new note.
+ */
+export const createNote = async (markdown: string): Promise<Note> => {
+  const response = await new PostApiRequestBuilder<Note, void>('notes')
+    .withHeader('Content-Type', 'text/markdown')
+    .withBody(markdown)
+    .sendRequest()
+  return response.asParsedJsonObject()
+}
+
+/**
+ * Creates a new note with a given markdown content and a defined primary alias.
+ * @param markdown The content of the new note.
+ * @param primaryAlias The primary alias of the new note.
+ * @return Content and metadata of the new note.
+ */
+export const createNoteWithPrimaryAlias = async (markdown: string, primaryAlias: string): Promise<Note> => {
+  const response = await new PostApiRequestBuilder<Note, void>('notes/' + primaryAlias)
+    .withHeader('Content-Type', 'text/markdown')
+    .withBody(markdown)
+    .sendRequest()
+  return response.asParsedJsonObject()
+}
+
+/**
+ * Deletes the specified note.
+ * @param noteIdOrAlias The id or alias of the note to delete.
+ */
+export const deleteNote = async (noteIdOrAlias: string): Promise<void> => {
+  await new DeleteApiRequestBuilder('notes/' + noteIdOrAlias).sendRequest()
 }

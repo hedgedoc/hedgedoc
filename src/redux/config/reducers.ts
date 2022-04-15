@@ -12,40 +12,24 @@ import { ConfigActionType } from './types'
 export const initialState: Config = {
   allowAnonymous: true,
   allowRegister: true,
-  authProviders: {
-    facebook: false,
-    github: false,
-    twitter: false,
-    gitlab: false,
-    dropbox: false,
-    ldap: false,
-    google: false,
-    saml: false,
-    oauth2: false,
-    local: false
-  },
+  authProviders: [],
   branding: {
     name: '',
     logo: ''
   },
-  customAuthNames: {
-    ldap: '',
-    oauth2: '',
-    saml: ''
-  },
-  maxDocumentLength: 0,
   useImageProxy: false,
-  plantumlServer: null,
   specialUrls: {
-    privacy: '',
-    termsOfUse: '',
-    imprint: ''
+    privacy: undefined,
+    termsOfUse: undefined,
+    imprint: undefined
   },
   version: {
-    major: -1,
-    minor: -1,
-    patch: -1
+    major: 0,
+    minor: 0,
+    patch: 0
   },
+  plantumlServer: undefined,
+  maxDocumentLength: 0,
   iframeCommunication: {
     editorOrigin: '',
     rendererOrigin: ''

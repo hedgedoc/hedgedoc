@@ -15,6 +15,7 @@ import { AccessTokenCreationFormExpiryField } from './access-token-creation-form
 import { AccessTokenCreationFormSubmitButton } from './access-token-creation-form-submit-button'
 import { useExpiryDates } from './hooks/use-expiry-dates'
 import { useOnCreateToken } from './hooks/use-on-create-token'
+import type { AccessTokenUpdateProps } from '../profile-access-tokens'
 
 interface NewTokenFormValues {
   label: string
@@ -23,8 +24,9 @@ interface NewTokenFormValues {
 
 /**
  * Form for creating a new access token.
+ * @param onUpdateList Callback that is fired when a token was created to update the list.
  */
-export const AccessTokenCreationForm: React.FC = () => {
+export const AccessTokenCreationForm: React.FC<AccessTokenUpdateProps> = ({ onUpdateList }) => {
   useTranslation()
   const expiryDates = useExpiryDates()
 
@@ -41,7 +43,8 @@ export const AccessTokenCreationForm: React.FC = () => {
   const onHideCreatedModal = useCallback(() => {
     setFormValues(formValuesInitialState)
     setNewTokenWithSecret(undefined)
-  }, [formValuesInitialState])
+    onUpdateList()
+  }, [formValuesInitialState, onUpdateList])
 
   const onCreateToken = useOnCreateToken(formValues.label, formValues.expiryDate, setNewTokenWithSecret)
 

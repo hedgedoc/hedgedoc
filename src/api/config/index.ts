@@ -1,16 +1,17 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { defaultFetchConfig, expectResponseCode, getApiUrl } from '../utils'
 import type { Config } from './types'
+import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
 
+/**
+ * Fetches the frontend config from the backend.
+ * @return The frontend config.
+ */
 export const getConfig = async (): Promise<Config> => {
-  const response = await fetch(getApiUrl() + 'config', {
-    ...defaultFetchConfig
-  })
-  expectResponseCode(response)
-  return (await response.json()) as Promise<Config>
+  const response = await new GetApiRequestBuilder<Config>('config').sendRequest()
+  return response.asParsedJsonObject()
 }

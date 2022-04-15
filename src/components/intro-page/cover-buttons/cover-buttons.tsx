@@ -17,9 +17,7 @@ import Link from 'next/link'
 export const CoverButtons: React.FC = () => {
   useTranslation()
   const userExists = useApplicationState((state) => !!state.user)
-  const anyAuthProviderActivated = useApplicationState((state) =>
-    Object.values(state.config.authProviders).includes(true)
-  )
+  const anyAuthProviderActivated = useApplicationState((state) => state.config.authProviders.length > 0)
 
   if (userExists) {
     return null

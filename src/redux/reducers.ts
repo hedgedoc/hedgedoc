@@ -9,7 +9,6 @@ import { combineReducers } from 'redux'
 import { UserReducer } from './user/reducers'
 import { ConfigReducer } from './config/reducers'
 import { MotdReducer } from './motd/reducers'
-import { ApiUrlReducer } from './api-url/reducers'
 import { HistoryReducer } from './history/reducers'
 import { EditorConfigReducer } from './editor/reducers'
 import { DarkModeConfigReducer } from './dark-mode/reducers'
@@ -22,7 +21,6 @@ export const allReducers: Reducer<ApplicationState> = combineReducers<Applicatio
   user: UserReducer,
   config: ConfigReducer,
   motd: MotdReducer,
-  apiUrl: ApiUrlReducer,
   history: HistoryReducer,
   editorConfig: EditorConfigReducer,
   darkMode: DarkModeConfigReducer,

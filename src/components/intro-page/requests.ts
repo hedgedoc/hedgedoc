@@ -1,17 +1,20 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { defaultFetchConfig, expectResponseCode } from '../../api/utils'
+import { customizeAssetsUrl } from '../../utils/customize-assets-url'
+import { defaultConfig } from '../../api/common/default-config'
 
-export const fetchFrontPageContent = async (customizeAssetsUrl: string): Promise<string> => {
+export const fetchFrontPageContent = async (): Promise<string> => {
   const response = await fetch(customizeAssetsUrl + 'intro.md', {
-    ...defaultFetchConfig,
+    ...defaultConfig,
     method: 'GET'
   })
-  expectResponseCode(response)
+  if (response.status !== 200) {
+    throw new Error('Error fetching intro content')
+  }
 
   return await response.text()
 }

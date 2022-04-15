@@ -12,7 +12,6 @@ import { ShowIf } from '../../common/show-if/show-if'
 import { ClearHistoryButton } from './clear-history-button'
 import { ExportHistoryButton } from './export-history-button'
 import { ImportHistoryButton } from './import-history-button'
-import { HistoryEntryOrigin } from '../../../redux/history/types'
 import { importHistoryEntries, safeRefreshHistoryState, setHistoryEntries } from '../../../redux/history/methods'
 import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
@@ -23,6 +22,7 @@ import { SortByTitleButton } from './sort-by-title-button'
 import { SortByLastVisitedButton } from './sort-by-last-visited-button'
 import { HistoryViewModeToggleButton } from './history-view-mode-toggle-button'
 import { useSyncToolbarStateToUrlEffect } from './toolbar-context/use-sync-toolbar-state-to-url-effect'
+import { HistoryEntryOrigin } from '../../../api/history/types'
 
 export enum ViewStateEnum {
   CARD,

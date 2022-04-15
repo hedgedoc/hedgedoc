@@ -1,6 +1,0 @@
-{
-    "username": "mockUser",
-    "photo": "/mock-backend/public/img/avatar.png",
-    "displayName": "Test",
-    "email": "mock@hedgedoc.dev"
-}

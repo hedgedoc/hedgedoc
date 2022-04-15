@@ -5,20 +5,7 @@
  */
 
 import type { Action } from 'redux'
-
-export enum HistoryEntryOrigin {
-  LOCAL,
-  REMOTE
-}
-
-export interface HistoryEntry {
-  identifier: string
-  title: string
-  lastVisited: string
-  tags: string[]
-  pinStatus: boolean
-  origin: HistoryEntryOrigin
-}
+import type { HistoryEntryWithOrigin } from '../../api/history/types'
 
 export interface V1HistoryEntry {
   id: string
@@ -30,7 +17,7 @@ export interface V1HistoryEntry {
 
 export interface HistoryExportJson {
   version: number
-  entries: HistoryEntry[]
+  entries: HistoryEntryWithOrigin[]
 }
 
 export enum HistoryActionType {
@@ -44,21 +31,21 @@ export type HistoryActions = SetEntriesAction | AddEntryAction | UpdateEntryActi
 
 export interface SetEntriesAction extends Action<HistoryActionType> {
   type: HistoryActionType.SET_ENTRIES
-  entries: HistoryEntry[]
+  entries: HistoryEntryWithOrigin[]
 }
 
 export interface AddEntryAction extends Action<HistoryActionType> {
   type: HistoryActionType.ADD_ENTRY
-  newEntry: HistoryEntry
+  newEntry: HistoryEntryWithOrigin
 }
 
 export interface UpdateEntryAction extends Action<HistoryActionType> {
   type: HistoryActionType.UPDATE_ENTRY
   noteId: string
-  newEntry: HistoryEntry
+  newEntry: HistoryEntryWithOrigin
 }
 
-export interface RemoveEntryAction extends HistoryEntry {
+export interface RemoveEntryAction extends Action<HistoryActionType> {
   type: HistoryActionType.REMOVE_ENTRY
   noteId: string
 }

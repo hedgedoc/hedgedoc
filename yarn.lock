@@ -2194,6 +2194,7 @@ __metadata:
     cypress-commands: 2.0.1
     cypress-fill-command: 1.0.2
     d3-graphviz: 4.1.1
+    deepmerge: 4.2.2
     diff: 5.0.0
     dompurify: 2.3.6
     emoji-picker-element: 1.11.2
@@ -9035,7 +9036,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deepmerge@npm:^4.2.2":
+"deepmerge@npm:4.2.2, deepmerge@npm:^4.2.2":
   version: 4.2.2
   resolution: "deepmerge@npm:4.2.2"
   checksum: a8c43a1ed8d6d1ed2b5bf569fa4c8eb9f0924034baf75d5d406e47e157a451075c4db353efea7b6bcc56ec48116a8ce72fccf867b6e078e7c561904b5897530b

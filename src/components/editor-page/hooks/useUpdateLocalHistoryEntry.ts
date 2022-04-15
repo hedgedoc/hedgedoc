@@ -7,15 +7,15 @@
 import equal from 'fast-deep-equal'
 import { useEffect, useRef } from 'react'
 import { getGlobalState } from '../../../redux'
-import type { HistoryEntry } from '../../../redux/history/types'
-import { HistoryEntryOrigin } from '../../../redux/history/types'
 import { updateLocalHistoryEntry } from '../../../redux/history/methods'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
+import type { HistoryEntryWithOrigin } from '../../../api/history/types'
+import { HistoryEntryOrigin } from '../../../api/history/types'
 
 export const useUpdateLocalHistoryEntry = (updateReady: boolean): void => {
   const id = useApplicationState((state) => state.noteDetails.id)
   const userExists = useApplicationState((state) => !!state.user)
-  const currentNoteTitle = useApplicationState((state) => state.noteDetails.noteTitle)
+  const currentNoteTitle = useApplicationState((state) => state.noteDetails.title)
   const currentNoteTags = useApplicationState((state) => state.noteDetails.frontmatter.tags)
 
   const lastNoteTitle = useRef('')
@@ -29,11 +29,11 @@ export const useUpdateLocalHistoryEntry = (updateReady: boolean): void => {
       return
     }
     const history = getGlobalState().history
-    const entry: HistoryEntry = history.find((entry) => entry.identifier === id) ?? {
+    const entry: HistoryEntryWithOrigin = history.find((entry) => entry.identifier === id) ?? {
       identifier: id,
       title: '',
       pinStatus: false,
-      lastVisited: '',
+      lastVisitedAt: '',
       tags: [],
       origin: HistoryEntryOrigin.LOCAL
     }
@@ -42,7 +42,7 @@ export const useUpdateLocalHistoryEntry = (updateReady: boolean): void => {
     }
     entry.title = currentNoteTitle
     entry.tags = currentNoteTags
-    entry.lastVisited = new Date().toISOString()
+    entry.lastVisitedAt = new Date().toISOString()
     updateLocalHistoryEntry(id, entry)
     lastNoteTitle.current = currentNoteTitle
     lastNoteTags.current = currentNoteTags

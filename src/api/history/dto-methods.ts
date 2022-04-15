@@ -3,32 +3,20 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { HistoryEntry, HistoryEntryPutDto, HistoryEntryWithOrigin } from './types'
+import { HistoryEntryOrigin } from './types'
 
-import type { HistoryEntry } from '../../redux/history/types'
-import { HistoryEntryOrigin } from '../../redux/history/types'
-import type { HistoryEntryDto, HistoryEntryPutDto, HistoryEntryUpdateDto } from './types'
-
-export const historyEntryDtoToHistoryEntry = (entryDto: HistoryEntryDto): HistoryEntry => {
+export const addRemoteOriginToHistoryEntry = (entryDto: HistoryEntry): HistoryEntryWithOrigin => {
   return {
-    origin: HistoryEntryOrigin.REMOTE,
-    title: entryDto.title,
-    pinStatus: entryDto.pinStatus,
-    identifier: entryDto.identifier,
-    tags: entryDto.tags,
-    lastVisited: entryDto.lastVisited
+    ...entryDto,
+    origin: HistoryEntryOrigin.REMOTE
   }
 }
 
 export const historyEntryToHistoryEntryPutDto = (entry: HistoryEntry): HistoryEntryPutDto => {
   return {
     pinStatus: entry.pinStatus,
-    lastVisited: entry.lastVisited,
+    lastVisitedAt: entry.lastVisitedAt,
     note: entry.identifier
-  }
-}
-
-export const historyEntryToHistoryEntryUpdateDto = (entry: HistoryEntry): HistoryEntryUpdateDto => {
-  return {
-    pinStatus: entry.pinStatus
   }
 }

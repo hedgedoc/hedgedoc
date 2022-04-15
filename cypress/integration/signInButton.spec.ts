@@ -4,28 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-const authProvidersDisabled = {
-  facebook: false,
-  github: false,
-  twitter: false,
-  gitlab: false,
-  dropbox: false,
-  ldap: false,
-  google: false,
-  saml: false,
-  oauth2: false,
-  local: false
-}
+import type { AuthProvider } from '../../src/api/config/types'
+import { AuthProviderType } from '../../src/api/config/types'
 
-const initLoggedOutTestWithCustomAuthProviders = (
-  cy: Cypress.cy,
-  enabledProviders: Partial<typeof authProvidersDisabled>
-) => {
+const initLoggedOutTestWithCustomAuthProviders = (cy: Cypress.cy, enabledProviders: AuthProvider[]) => {
   cy.loadConfig({
-    authProviders: {
-      ...authProvidersDisabled,
-      ...enabledProviders
-    }
+    authProviders: enabledProviders
   })
   cy.visitHome()
   cy.logout()
@@ -41,55 +25,71 @@ describe('When logged-in, ', () => {
 describe('When logged-out ', () => {
   describe('and no auth-provider is enabled, ', () => {
     it('sign-in button is hidden', () => {
-      initLoggedOutTestWithCustomAuthProviders(cy, {})
+      initLoggedOutTestWithCustomAuthProviders(cy, [])
       cy.getByCypressId('sign-in-button').should('not.exist')
     })
   })
 
   describe('and an interactive auth-provider is enabled, ', () => {
     it('sign-in button points to login route: internal', () => {
-      initLoggedOutTestWithCustomAuthProviders(cy, {
-        local: true
-      })
+      initLoggedOutTestWithCustomAuthProviders(cy, [
+        {
+          type: AuthProviderType.LOCAL
+        }
+      ])
       cy.getByCypressId('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
     })
 
     it('sign-in button points to login route: ldap', () => {
-      initLoggedOutTestWithCustomAuthProviders(cy, {
-        ldap: true
-      })
+      initLoggedOutTestWithCustomAuthProviders(cy, [
+        {
+          type: AuthProviderType.LDAP,
+          identifier: 'cy-ldap',
+          providerName: 'cy LDAP'
+        }
+      ])
       cy.getByCypressId('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
     })
   })
 
   describe('and only one one-click auth-provider is enabled, ', () => {
     it('sign-in button points to auth-provider', () => {
-      initLoggedOutTestWithCustomAuthProviders(cy, {
-        saml: true
-      })
+      initLoggedOutTestWithCustomAuthProviders(cy, [
+        {
+          type: AuthProviderType.GITHUB
+        }
+      ])
       cy.getByCypressId('sign-in-button')
         .should('be.visible')
         // The absolute URL is used because it is defined as API base URL absolute.
-        .should('have.attr', 'href', '/mock-backend/auth/saml')
+        .should('have.attr', 'href', '/auth/github')
     })
   })
 
   describe('and multiple one-click auth-providers are enabled, ', () => {
     it('sign-in button points to login route', () => {
-      initLoggedOutTestWithCustomAuthProviders(cy, {
-        saml: true,
-        github: true
-      })
+      initLoggedOutTestWithCustomAuthProviders(cy, [
+        {
+          type: AuthProviderType.GITHUB
+        },
+        {
+          type: AuthProviderType.GOOGLE
+        }
+      ])
       cy.getByCypressId('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
     })
   })
 
   describe('and one-click- as well as interactive auth-providers are enabled, ', () => {
     it('sign-in button points to login route', () => {
-      initLoggedOutTestWithCustomAuthProviders(cy, {
-        saml: true,
-        local: true
-      })
+      initLoggedOutTestWithCustomAuthProviders(cy, [
+        {
+          type: AuthProviderType.GITHUB
+        },
+        {
+          type: AuthProviderType.LOCAL
+        }
+      ])
       cy.getByCypressId('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
     })
   })

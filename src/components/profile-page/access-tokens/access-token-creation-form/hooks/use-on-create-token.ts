@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { DateTime } from 'luxon'
 import type { FormEvent } from 'react'
 import { useCallback } from 'react'
 import { postNewAccessToken } from '../../../../../api/tokens'
@@ -25,7 +26,8 @@ export const useOnCreateToken = (
   return useCallback(
     (event: FormEvent) => {
       event.preventDefault()
-      postNewAccessToken(label, expiryDate)
+      const expiryInMillis = DateTime.fromFormat(expiryDate, 'yyyy-MM-dd').toMillis()
+      postNewAccessToken(label, expiryInMillis)
         .then((tokenWithSecret) => {
           setNewTokenWithSecret(tokenWithSecret)
         })

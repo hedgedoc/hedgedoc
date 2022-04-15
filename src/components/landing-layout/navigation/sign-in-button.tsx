@@ -9,34 +9,34 @@ import { Button } from 'react-bootstrap'
 import type { ButtonProps } from 'react-bootstrap/Button'
 import { Trans, useTranslation } from 'react-i18next'
 import { ShowIf } from '../../common/show-if/show-if'
-import { INTERACTIVE_LOGIN_METHODS } from '../../../api/auth'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { cypressId } from '../../../utils/cypress-attribute'
-import { useBackendBaseUrl } from '../../../hooks/common/use-backend-base-url'
 import Link from 'next/link'
+import { filterOneClickProviders } from '../../login-page/auth/utils'
+import { getOneClickProviderMetadata } from '../../login-page/auth/utils/get-one-click-provider-metadata'
 
 export type SignInButtonProps = Omit<ButtonProps, 'href'>
 
+/**
+ * Renders a sign-in button if auth providers are defined. It links to either the login page or if only a single one-click provider is configured, to this one.
+ * @param variant The style variant as inferred from the common button component.
+ * @param props Further props inferred from the common button component.
+ */
 export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props }) => {
   const { t } = useTranslation()
-  const backendBaseUrl = useBackendBaseUrl()
   const authProviders = useApplicationState((state) => state.config.authProviders)
-  const authEnabled = useMemo(() => Object.values(authProviders).includes(true), [authProviders])
 
   const loginLink = useMemo(() => {
-    const activeProviders = Object.entries(authProviders)
-      .filter((entry: [string, boolean]) => entry[1])
-      .map((entry) => entry[0])
-    const activeOneClickProviders = activeProviders.filter((entry) => !INTERACTIVE_LOGIN_METHODS.includes(entry))
-
-    if (activeProviders.length === 1 && activeOneClickProviders.length === 1) {
-      return `${backendBaseUrl}auth/${activeOneClickProviders[0]}`
+    const oneClickProviders = authProviders.filter(filterOneClickProviders)
+    if (authProviders.length === 1 && oneClickProviders.length === 1) {
+      const metadata = getOneClickProviderMetadata(oneClickProviders[0])
+      return metadata.url
     }
     return '/login'
-  }, [authProviders, backendBaseUrl])
+  }, [authProviders])
 
   return (
-    <ShowIf condition={authEnabled}>
+    <ShowIf condition={authProviders.length > 0}>
       <Link href={loginLink} passHref={true}>
         <Button title={t('login.signIn')} {...cypressId('sign-in-button')} variant={variant || 'success'} {...props}>
           <Trans i18nKey='login.signIn' />

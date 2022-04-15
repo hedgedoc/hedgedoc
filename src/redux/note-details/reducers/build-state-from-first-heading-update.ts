@@ -17,6 +17,6 @@ export const buildStateFromFirstHeadingUpdate = (state: NoteDetails, firstHeadin
   return {
     ...state,
     firstHeading: firstHeading,
-    noteTitle: generateNoteTitle(state.frontmatter, firstHeading)
+    title: generateNoteTitle(state.frontmatter, firstHeading)
   }
 }
