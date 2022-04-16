@@ -1730,12 +1730,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/minio@npm:7.0.12":
-  version: 7.0.12
-  resolution: "@types/minio@npm:7.0.12"
+"@types/minio@npm:7.0.13":
+  version: 7.0.13
+  resolution: "@types/minio@npm:7.0.13"
   dependencies:
     "@types/node": "*"
-  checksum: 16869d496e56cf12e147071e3afc090c58594eb71b8f85ca7e65742795e7d9498ae8edd8bb2f33e5280a54f7d54f49dfe728b571489725784727e645b19aaef0
+  checksum: a23ddc452e8bd8dc47b7dbd47c71f6c18118f6e3288a8a980db977851cd81f7c1ffc97bd500f5dcbb34689a8651ca30af748a16d7ea25f7ac6d38bf9b22aab25
   languageName: node
   linkType: hard
 
@@ -1765,10 +1765,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:16.11.26":
-  version: 16.11.26
-  resolution: "@types/node@npm:16.11.26"
-  checksum: 57757caaba3f0d95de82198cb276a1002c49b710108c932a1d02d7c91ff2fa57cfe2dd19fde60853b6dd90b0964b3cf35557981d2628e20aed6a909057aedfe6
+"@types/node@npm:16.11.27":
+  version: 16.11.27
+  resolution: "@types/node@npm:16.11.27"
+  checksum: 6ed0c8c4d29a549d0cfd607d19edf9a4668fbd39087701d923b4a04cd760564e47ad27f9403968cb9c11ee006f0ea6ab698b2491b4b2d2dec3f4a53d0fc22df7
   languageName: node
   linkType: hard
 
@@ -5427,9 +5427,9 @@ __metadata:
     "@types/express": 4.17.13
     "@types/express-session": 1.17.4
     "@types/jest": 27.4.1
-    "@types/minio": 7.0.12
+    "@types/minio": 7.0.13
     "@types/mysql": 2.15.21
-    "@types/node": 16.11.26
+    "@types/node": 16.11.27
     "@types/node-fetch": 2.6.1
     "@types/passport-http-bearer": 1.0.37
     "@types/passport-local": 1.0.34
