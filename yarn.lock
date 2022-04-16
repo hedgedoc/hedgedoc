@@ -2197,7 +2197,7 @@ __metadata:
     deepmerge: 4.2.2
     diff: 5.0.0
     dompurify: 2.3.6
-    emoji-picker-element: 1.11.2
+    emoji-picker-element: 1.11.3
     emoji-picker-element-data: 1.3.0
     eslint: 8.13.0
     eslint-config-next: 12.1.5
@@ -9583,10 +9583,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emoji-picker-element@npm:1.11.2":
-  version: 1.11.2
-  resolution: "emoji-picker-element@npm:1.11.2"
-  checksum: 22cd055bc0f8fab06e204c744b9b712df2f8d11e4f4b7bfeb5c84725c5e35a887988dd5720557f8afc22d8d497ef0420c7fa41ab582abf717db1a7a9c1e89509
+"emoji-picker-element@npm:1.11.3":
+  version: 1.11.3
+  resolution: "emoji-picker-element@npm:1.11.3"
+  checksum: 509b698ebb118227246c479293de957a8d4b0df071981a6c9bcd5e22ba940974cc582239130e35c3532cdfdf1ac351b6b82edb08c917c4f5c0acd4de37ef0019
   languageName: node
   linkType: hard
 
