@@ -5,8 +5,8 @@
  */
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { getConnectionToken, getRepositoryToken } from '@nestjs/typeorm';
-import { Connection, Repository } from 'typeorm';
+import { getDataSourceToken, getRepositoryToken } from '@nestjs/typeorm';
+import { DataSource, Repository } from 'typeorm';
 
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
@@ -34,7 +34,7 @@ import { HistoryService } from './history.service';
 describe('HistoryService', () => {
   let service: HistoryService;
   let historyRepo: Repository<HistoryEntry>;
-  let connection;
+  let dataSource: DataSource;
   let noteRepo: Repository<Note>;
 
   type MockConnection = {
@@ -52,7 +52,7 @@ describe('HistoryService', () => {
       providers: [
         HistoryService,
         {
-          provide: getConnectionToken(),
+          provide: getDataSourceToken(),
           useFactory: mockConnection,
         },
         {
@@ -106,7 +106,7 @@ describe('HistoryService', () => {
     historyRepo = module.get<Repository<HistoryEntry>>(
       getRepositoryToken(HistoryEntry),
     );
-    connection = module.get<Connection>(Connection);
+    dataSource = module.get<DataSource>(DataSource);
     noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
   });
 
@@ -467,8 +467,10 @@ describe('HistoryService', () => {
           expect(entry.updatedAt).toEqual(newlyCreatedHistoryEntry.updatedAt);
         }),
       };
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      connection.transaction.mockImplementation((cb) => {
+      dataSource.transaction.mockImplementation((cb) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         cb(mockedManager);
       });
