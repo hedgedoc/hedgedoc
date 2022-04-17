@@ -2166,8 +2166,8 @@ __metadata:
     "@svgr/webpack": 6.2.1
     "@testing-library/cypress": 8.0.2
     "@testing-library/jest-dom": 5.16.4
-    "@testing-library/react": 13.0.1
-    "@testing-library/user-event": 14.1.0
+    "@testing-library/react": 13.1.1
+    "@testing-library/user-event": 14.1.1
     "@types/d3-graphviz": 2.6.7
     "@types/diff": 5.0.2
     "@types/dompurify": 2.3.3
@@ -3990,9 +3990,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:13.0.1":
-  version: 13.0.1
-  resolution: "@testing-library/react@npm:13.0.1"
+"@testing-library/react@npm:13.1.1":
+  version: 13.1.1
+  resolution: "@testing-library/react@npm:13.1.1"
   dependencies:
     "@babel/runtime": ^7.12.5
     "@testing-library/dom": ^8.5.0
@@ -4000,16 +4000,16 @@ __metadata:
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: fb38255439eeb79118f4704d3e37eb2435fdd2ccaa709298a3ee04c1fcf630731bcd96937a50203f3c1b60a6886d1490493a2e360f9bcac76571edb52fd4a2c3
+  checksum: 9a0043be5623630936e6badcd87bcbed14d6d6c64c2b16413b66de90c36670bbd6766b7fc6c09cfc67aa6c1c49d8123ed97d3897c4103836c77de40349b187c6
   languageName: node
   linkType: hard
 
-"@testing-library/user-event@npm:14.1.0":
-  version: 14.1.0
-  resolution: "@testing-library/user-event@npm:14.1.0"
+"@testing-library/user-event@npm:14.1.1":
+  version: 14.1.1
+  resolution: "@testing-library/user-event@npm:14.1.1"
   peerDependencies:
     "@testing-library/dom": ">=7.21.4"
-  checksum: 6fabd42a0ea747912183d1780063a1128609007703647ce5e4f2d88a43c9db02771e737403722a7ee5211dbe47b14fd3088aaaafa24d341ca086875546e5a83b
+  checksum: dd02aecbde64002aa3c58392137672156101fc3bb821f43db99e3c652e6a6d34b3eb29b2524eb41ad2a317cfdff6ab2e88d7027605d88dccaacf4f07a08dc7a9
   languageName: node
   linkType: hard
 
