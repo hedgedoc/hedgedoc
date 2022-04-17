@@ -331,7 +331,7 @@ export class NotesService {
           await note.aliases
         ).map((alias) => this.aliasService.toAliasDto(alias, note)),
       ),
-      primaryAddress: (await getPrimaryAlias(note)) ?? note.id,
+      primaryAddress: (await getPrimaryAlias(note)) ?? note.publicId,
       title: note.title ?? '',
       createdAt: note.createdAt,
       description: note.description ?? '',
