@@ -119,11 +119,11 @@ export class ConsoleLoggerService implements LoggerService {
   ): void {
     let output;
     if (isObject(message)) {
-      output = ConsoleLoggerService.sanitize(
-        `${color('Object:')}\n${JSON.stringify(message, null, 2)}\n`,
-      );
+      output = `${color('Object:')}\n${ConsoleLoggerService.sanitize(
+        JSON.stringify(message, null, 2),
+      )}\n`;
     } else {
-      output = ConsoleLoggerService.sanitize(color(message as string));
+      output = color(ConsoleLoggerService.sanitize(message as string));
     }
 
     const localeStringOptions: DateTimeFormatOptions = {
