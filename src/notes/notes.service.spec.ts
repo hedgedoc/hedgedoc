@@ -91,14 +91,18 @@ describe('NotesService', () => {
     note.owner = Promise.resolve(user);
     note.userPermissions = Promise.resolve([
       {
+        noteId: note.id,
         note: note,
+        userId: user.id,
         user: user,
         canEdit: true,
       },
     ]);
     note.groupPermissions = Promise.resolve([
       {
+        noteId: note.id,
         note: note,
+        groupId: group.id,
         group: group,
         canEdit: true,
       },

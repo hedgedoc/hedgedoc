@@ -49,7 +49,7 @@ export class IdentityService {
       },
       relations: ['user'],
     });
-    if (identity === undefined) {
+    if (identity === null) {
       throw new NotInDBError(`Identity for user id '${userId}' not found`);
     }
     return identity;

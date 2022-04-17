@@ -59,6 +59,7 @@ export class HistoryService {
       .where('entry.note = :note', { note: note.id })
       .andWhere('entry.user = :user', { user: user.id })
       .leftJoinAndSelect('entry.note', 'note')
+      .leftJoinAndSelect('entry.user', 'user')
       .getOne();
     if (!entry) {
       throw new NotInDBError(
