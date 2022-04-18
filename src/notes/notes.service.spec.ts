@@ -42,6 +42,79 @@ describe('NotesService', () => {
   let userRepo: Repository<User>;
   let forbiddenNoteId: string;
 
+  /**
+   * Creates a Note and a corresponding User and Group for testing.
+   * The Note does not have any aliases.
+   */
+  async function getMockData(): Promise<[Note, User, Group]> {
+    const user = User.create('hardcoded', 'Testy') as User;
+    const author = Author.create(1);
+    author.user = Promise.resolve(user);
+    const group = Group.create('testGroup', 'testGroup', false) as Group;
+    const content = 'testContent';
+    jest
+      .spyOn(noteRepo, 'save')
+      .mockImplementation(async (note: Note): Promise<Note> => note);
+    const note = await service.createNote(content, null);
+    const revisions = await note.revisions;
+    revisions[0].edits = Promise.resolve([
+      {
+        revisions: Promise.resolve(revisions),
+        startPos: 0,
+        endPos: 1,
+        updatedAt: new Date(1549312452000),
+        author: Promise.resolve(author),
+      } as Edit,
+      {
+        revisions: Promise.resolve(revisions),
+        startPos: 0,
+        endPos: 1,
+        updatedAt: new Date(1549312452001),
+        author: Promise.resolve(author),
+      } as Edit,
+    ]);
+    revisions[0].createdAt = new Date(1549312452000);
+    jest.spyOn(revisionRepo, 'findOne').mockResolvedValue(revisions[0]);
+    const createQueryBuilder = {
+      innerJoin: () => createQueryBuilder,
+      where: () => createQueryBuilder,
+      getMany: () => [user],
+    };
+    jest
+      .spyOn(userRepo, 'createQueryBuilder')
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      .mockImplementation(() => createQueryBuilder);
+    note.publicId = 'testId';
+    note.title = 'testTitle';
+    note.description = 'testDescription';
+    note.owner = Promise.resolve(user);
+    note.userPermissions = Promise.resolve([
+      {
+        note: note,
+        user: user,
+        canEdit: true,
+      },
+    ]);
+    note.groupPermissions = Promise.resolve([
+      {
+        note: note,
+        group: group,
+        canEdit: true,
+      },
+    ]);
+    note.tags = Promise.resolve([
+      {
+        id: 1,
+        name: 'testTag',
+        notes: Promise.resolve([note]),
+      },
+    ]);
+    note.viewCount = 1337;
+
+    return [note, user, group];
+  }
+
   beforeEach(async () => {
     /**
      * We need to have *one* userRepo for both the providers array and
@@ -336,14 +409,8 @@ describe('NotesService', () => {
 
   describe('updateNote', () => {
     it('works', async () => {
-      const user = User.create('hardcoded', 'Testy') as User;
-      const note = Note.create(user) as Note;
+      const [note, ,] = await getMockData();
       const revisionLength = (await note.revisions).length;
-      jest
-        .spyOn(noteRepo, 'save')
-        .mockImplementationOnce(async (entry: Note) => {
-          return entry;
-        });
       const updatedNote = await service.updateNote(note, 'newContent');
       expect(await updatedNote.revisions).toHaveLength(revisionLength + 1);
     });
@@ -367,23 +434,7 @@ describe('NotesService', () => {
 
   describe('toNotePermissionsDto', () => {
     it('works', async () => {
-      const user = User.create('hardcoded', 'Testy') as User;
-      const group = Group.create('testGroup', 'testGroup', false) as Group;
-      const note = Note.create(user) as Note;
-      note.userPermissions = Promise.resolve([
-        {
-          note: note,
-          user: user,
-          canEdit: true,
-        },
-      ]);
-      note.groupPermissions = Promise.resolve([
-        {
-          note: note,
-          group: group,
-          canEdit: true,
-        },
-      ]);
+      const [note, user, group] = await getMockData();
       const permissions = await service.toNotePermissionsDto(note);
       expect(permissions.owner).toEqual(user.username);
       expect(permissions.sharedToUsers).toHaveLength(1);
@@ -399,77 +450,16 @@ describe('NotesService', () => {
 
   describe('toNoteMetadataDto', () => {
     it('works', async () => {
-      const user = User.create('hardcoded', 'Testy') as User;
-      const author = Author.create(1);
-      author.user = Promise.resolve(user);
-      const group = Group.create('testGroup', 'testGroup', false) as Group;
-      const content = 'testContent';
-      jest
-        .spyOn(noteRepo, 'save')
-        .mockImplementation(async (note: Note): Promise<Note> => note);
-      const note = await service.createNote(content, null);
-      const revisions = await note.revisions;
-      revisions[0].edits = Promise.resolve([
-        {
-          revisions: Promise.resolve(revisions),
-          startPos: 0,
-          endPos: 1,
-          updatedAt: new Date(1549312452000),
-          author: Promise.resolve(author),
-        } as Edit,
-        {
-          revisions: Promise.resolve(revisions),
-          startPos: 0,
-          endPos: 1,
-          updatedAt: new Date(1549312452001),
-          author: Promise.resolve(author),
-        } as Edit,
-      ]);
-      revisions[0].createdAt = new Date(1549312452000);
-      jest.spyOn(revisionRepo, 'findOne').mockResolvedValue(revisions[0]);
-      const createQueryBuilder = {
-        innerJoin: () => createQueryBuilder,
-        where: () => createQueryBuilder,
-        getMany: () => [user],
-      };
-      jest
-        .spyOn(userRepo, 'createQueryBuilder')
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        .mockImplementation(() => createQueryBuilder);
-      note.publicId = 'testId';
+      const [note, user, group] = await getMockData();
       note.aliases = Promise.resolve([
         Alias.create('testAlias', note, true) as Alias,
       ]);
-      note.title = 'testTitle';
-      note.description = 'testDescription';
-      note.owner = Promise.resolve(user);
-      note.userPermissions = Promise.resolve([
-        {
-          note: note,
-          user: user,
-          canEdit: true,
-        },
-      ]);
-      note.groupPermissions = Promise.resolve([
-        {
-          note: note,
-          group: group,
-          canEdit: true,
-        },
-      ]);
-      note.tags = Promise.resolve([
-        {
-          id: 1,
-          name: 'testTag',
-          notes: Promise.resolve([note]),
-        },
-      ]);
-      note.viewCount = 1337;
+
       const metadataDto = await service.toNoteMetadataDto(note);
       expect(metadataDto.id).toEqual(note.publicId);
       expect(metadataDto.aliases).toHaveLength(1);
       expect(metadataDto.aliases[0].name).toEqual((await note.aliases)[0].name);
+      expect(metadataDto.primaryAddress).toEqual('testAlias');
       expect(metadataDto.title).toEqual(note.title);
       expect(metadataDto.description).toEqual(note.description);
       expect(metadataDto.editedBy).toHaveLength(1);
@@ -487,7 +477,9 @@ describe('NotesService', () => {
       expect(metadataDto.permissions.sharedToGroups[0].canEdit).toEqual(true);
       expect(metadataDto.tags).toHaveLength(1);
       expect(metadataDto.tags[0]).toEqual((await note.tags)[0].name);
-      expect(metadataDto.updatedAt).toEqual(revisions[0].createdAt);
+      expect(metadataDto.updatedAt).toEqual(
+        (await note.revisions)[0].createdAt,
+      );
       expect(metadataDto.updateUsername).toEqual(user.username);
       expect(metadataDto.viewCount).toEqual(note.viewCount);
     });
@@ -495,78 +487,11 @@ describe('NotesService', () => {
 
   describe('toNoteDto', () => {
     it('works', async () => {
-      const user = User.create('hardcoded', 'Testy') as User;
-      const author = Author.create(1);
-      author.user = Promise.resolve(user);
-      const otherUser = User.create('other hardcoded', 'Testy2') as User;
-      otherUser.username = 'other hardcoded user';
-      const group = Group.create('testGroup', 'testGroup', false) as Group;
-      const content = 'testContent';
-      jest
-        .spyOn(noteRepo, 'save')
-        .mockImplementation(async (note: Note): Promise<Note> => note);
-      const note = await service.createNote(content, null);
-      const revisions = await note.revisions;
-      revisions[0].edits = Promise.resolve([
-        {
-          revisions: Promise.resolve(revisions),
-          startPos: 0,
-          endPos: 1,
-          updatedAt: new Date(1549312452000),
-          author: Promise.resolve(author),
-        } as Edit,
-        {
-          revisions: Promise.resolve(revisions),
-          startPos: 0,
-          endPos: 1,
-          updatedAt: new Date(1549312452001),
-          author: Promise.resolve(author),
-        } as Edit,
-      ]);
-      revisions[0].createdAt = new Date(1549312452000);
-      jest
-        .spyOn(revisionRepo, 'findOne')
-        .mockResolvedValue(revisions[0])
-        .mockResolvedValue(revisions[0]);
-      const createQueryBuilder = {
-        innerJoin: () => createQueryBuilder,
-        where: () => createQueryBuilder,
-        getMany: () => [user],
-      };
-      jest
-        .spyOn(userRepo, 'createQueryBuilder')
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        .mockImplementation(() => createQueryBuilder);
-      note.publicId = 'testId';
+      const [note, user, group] = await getMockData();
       note.aliases = Promise.resolve([
         Alias.create('testAlias', note, true) as Alias,
       ]);
-      note.title = 'testTitle';
-      note.description = 'testDescription';
-      note.owner = Promise.resolve(user);
-      note.userPermissions = Promise.resolve([
-        {
-          note: note,
-          user: user,
-          canEdit: true,
-        },
-      ]);
-      note.groupPermissions = Promise.resolve([
-        {
-          note: note,
-          group: group,
-          canEdit: true,
-        },
-      ]);
-      note.tags = Promise.resolve([
-        {
-          id: 1,
-          name: 'testTag',
-          notes: Promise.resolve([note]),
-        },
-      ]);
-      note.viewCount = 1337;
+
       const noteDto = await service.toNoteDto(note);
       expect(noteDto.metadata.id).toEqual(note.publicId);
       expect(noteDto.metadata.aliases).toHaveLength(1);
@@ -596,7 +521,7 @@ describe('NotesService', () => {
       expect(noteDto.metadata.tags[0]).toEqual((await note.tags)[0].name);
       expect(noteDto.metadata.updateUsername).toEqual(user.username);
       expect(noteDto.metadata.viewCount).toEqual(note.viewCount);
-      expect(noteDto.content).toEqual(content);
+      expect(noteDto.content).toEqual('testContent');
     });
   });
 });
