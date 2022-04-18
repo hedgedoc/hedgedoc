@@ -10,7 +10,7 @@ import session from 'express-session';
 import { Repository } from 'typeorm';
 
 import { AuthConfig } from '../config/auth.config';
-import { DatabaseDialect } from '../config/database-dialect.enum';
+import { DatabaseType } from '../config/database-type.enum';
 import { DatabaseConfig } from '../config/database.config';
 import { Session } from '../users/session.entity';
 
@@ -36,7 +36,7 @@ export function setupSessionMiddleware(
       saveUninitialized: false,
       store: new TypeormStore({
         cleanupLimit: 2,
-        limitSubquery: dbConfig.dialect !== DatabaseDialect.MARIADB,
+        limitSubquery: dbConfig.type !== DatabaseType.MARIADB,
       }).connect(app.get<Repository<Session>>(getRepositoryToken(Session))),
     }),
   );

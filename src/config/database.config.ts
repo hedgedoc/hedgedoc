@@ -6,7 +6,7 @@
 import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
 
-import { DatabaseDialect } from './database-dialect.enum';
+import { DatabaseType } from './database-type.enum';
 import { buildErrorMessage, parseOptionalNumber } from './utils';
 
 export interface DatabaseConfig {
@@ -15,56 +15,48 @@ export interface DatabaseConfig {
   database: string;
   host: string;
   port: number;
-  storage: string;
-  dialect: DatabaseDialect;
+  type: DatabaseType;
 }
 
 const databaseSchema = Joi.object({
-  username: Joi.when('dialect', {
-    is: Joi.invalid(DatabaseDialect.SQLITE),
+  type: Joi.string()
+    .valid(...Object.values(DatabaseType))
+    .label('HD_DATABASE_TYPE'),
+
+  // This is the database name, except for SQLite,
+  // where it is the path to the database file.
+  database: Joi.string().label('HD_DATABASE_NAME'),
+  username: Joi.when('type', {
+    is: Joi.invalid(DatabaseType.SQLITE),
     then: Joi.string(),
     otherwise: Joi.optional(),
   }).label('HD_DATABASE_USER'),
-  password: Joi.when('dialect', {
-    is: Joi.invalid(DatabaseDialect.SQLITE),
+  password: Joi.when('type', {
+    is: Joi.invalid(DatabaseType.SQLITE),
     then: Joi.string(),
     otherwise: Joi.optional(),
   }).label('HD_DATABASE_PASS'),
-  database: Joi.when('dialect', {
-    is: Joi.invalid(DatabaseDialect.SQLITE),
-    then: Joi.string(),
-    otherwise: Joi.optional(),
-  }).label('HD_DATABASE_NAME'),
-  host: Joi.when('dialect', {
-    is: Joi.invalid(DatabaseDialect.SQLITE),
+  host: Joi.when('type', {
+    is: Joi.invalid(DatabaseType.SQLITE),
     then: Joi.string(),
     otherwise: Joi.optional(),
   }).label('HD_DATABASE_HOST'),
-  port: Joi.when('dialect', {
-    is: Joi.invalid(DatabaseDialect.SQLITE),
+  port: Joi.when('type', {
+    is: Joi.invalid(DatabaseType.SQLITE),
     then: Joi.number(),
     otherwise: Joi.optional(),
   }).label('HD_DATABASE_PORT'),
-  storage: Joi.when('dialect', {
-    is: Joi.valid(DatabaseDialect.SQLITE),
-    then: Joi.string(),
-    otherwise: Joi.optional(),
-  }).label('HD_DATABASE_STORAGE'),
-  dialect: Joi.string()
-    .valid(...Object.values(DatabaseDialect))
-    .label('HD_DATABASE_DIALECT'),
 });
 
 export default registerAs('databaseConfig', () => {
   const databaseConfig = databaseSchema.validate(
     {
+      type: process.env.HD_DATABASE_TYPE,
       username: process.env.HD_DATABASE_USER,
       password: process.env.HD_DATABASE_PASS,
       database: process.env.HD_DATABASE_NAME,
       host: process.env.HD_DATABASE_HOST,
       port: parseOptionalNumber(process.env.HD_DATABASE_PORT),
-      storage: process.env.HD_DATABASE_STORAGE,
-      dialect: process.env.HD_DATABASE_DIALECT,
     },
     {
       abortEarly: false,

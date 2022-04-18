@@ -33,8 +33,8 @@ describe('App', () => {
       })
       .overrideProvider(getConfigToken('databaseConfig'))
       .useValue({
-        storage: ':memory:',
-        dialect: 'sqlite',
+        database: ':memory:',
+        type: 'sqlite',
       })
       .overrideProvider(getConfigToken('authConfig'))
       .useValue({
