@@ -23,6 +23,7 @@ import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
 export class ConsoleLoggerService implements LoggerService {
   private classContext: string | undefined;
   private lastTimestamp: number;
+  private skipColor = false;
 
   constructor(
     @Inject(appConfiguration.KEY)
@@ -34,6 +35,10 @@ export class ConsoleLoggerService implements LoggerService {
 
   setContext(context: string): void {
     this.classContext = context;
+  }
+
+  setSkipColor(skipColor: boolean): void {
+    this.skipColor = skipColor;
   }
 
   error(message: unknown, trace = '', functionContext?: string): void {
@@ -118,12 +123,22 @@ export class ConsoleLoggerService implements LoggerService {
     isTimeDiffEnabled?: boolean,
   ): void {
     let output;
-    if (isObject(message)) {
-      output = `${color('Object:')}\n${ConsoleLoggerService.sanitize(
-        JSON.stringify(message, null, 2),
-      )}\n`;
+
+    // if skipColor is set, we do not use colors and skip sanitizing
+    if (this.skipColor) {
+      if (isObject(message)) {
+        output = `${color('Object:')}\n${JSON.stringify(message, null, 2)}\n`;
+      } else {
+        output = message as string;
+      }
     } else {
-      output = color(ConsoleLoggerService.sanitize(message as string));
+      if (isObject(message)) {
+        output = `${color('Object:')}\n${ConsoleLoggerService.sanitize(
+          JSON.stringify(message, null, 2),
+        )}\n`;
+      } else {
+        output = color(ConsoleLoggerService.sanitize(message as string));
+      }
     }
 
     const localeStringOptions: DateTimeFormatOptions = {
