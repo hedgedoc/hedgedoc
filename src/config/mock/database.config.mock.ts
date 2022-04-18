@@ -5,18 +5,18 @@
  */
 import { registerAs } from '@nestjs/config';
 
-import { DatabaseDialect } from '../database-dialect.enum';
+import { DatabaseType } from '../database-type.enum';
 import { DatabaseConfig } from '../database.config';
 
 export default registerAs(
   'databaseConfig',
   (): DatabaseConfig => ({
-    dialect: (process.env.HEDGEDOC_TEST_DB_TYPE || 'sqlite') as DatabaseDialect,
+    type: (process.env.HEDGEDOC_TEST_DB_TYPE ||
+      DatabaseType.SQLITE) as DatabaseType,
     database: 'hedgedoc',
     password: 'hedgedoc',
     host: 'localhost',
     port: 0,
-    storage: '',
     username: 'hedgedoc',
   }),
 );

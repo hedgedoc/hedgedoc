@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export enum DatabaseDialect {
+export enum DatabaseType {
   POSTGRES = 'postgres',
   MYSQL = 'mysql',
   MARIADB = 'mariadb',
