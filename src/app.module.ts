@@ -17,7 +17,7 @@ import appConfig from './config/app.config';
 import authConfig from './config/auth.config';
 import cspConfig from './config/csp.config';
 import customizationConfig from './config/customization.config';
-import databaseConfig from './config/database.config';
+import databaseConfig, { DatabaseConfig } from './config/database.config';
 import externalConfig from './config/external-services.config';
 import hstsConfig from './config/hsts.config';
 import mediaConfig from './config/media.config';
@@ -49,11 +49,21 @@ const routes: Routes = [
 @Module({
   imports: [
     RouterModule.forRoutes(routes),
-    TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: './hedgedoc.sqlite',
-      autoLoadEntities: true,
-      synchronize: true, // ToDo: Remove this before release
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [databaseConfig.KEY],
+      useFactory: (databaseConfig: DatabaseConfig) => {
+        return {
+          type: databaseConfig.type,
+          host: databaseConfig.host,
+          port: databaseConfig.port,
+          username: databaseConfig.username,
+          password: databaseConfig.password,
+          database: databaseConfig.database,
+          autoLoadEntities: true,
+          synchronize: true, // ToDo: Remove this before release
+        };
+      },
     }),
     ConfigModule.forRoot({
       load: [
