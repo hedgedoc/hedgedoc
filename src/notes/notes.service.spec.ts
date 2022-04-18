@@ -483,6 +483,11 @@ describe('NotesService', () => {
       expect(metadataDto.updateUsername).toEqual(user.username);
       expect(metadataDto.viewCount).toEqual(note.viewCount);
     });
+    it('returns publicId if no alias exists', async () => {
+      const [note, ,] = await getMockData();
+      const metadataDto = await service.toNoteMetadataDto(note);
+      expect(metadataDto.primaryAddress).toEqual(note.publicId);
+    });
   });
 
   describe('toNoteDto', () => {
