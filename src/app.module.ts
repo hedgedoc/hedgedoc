@@ -28,6 +28,7 @@ import { GroupsModule } from './groups/groups.module';
 import { HistoryModule } from './history/history.module';
 import { IdentityModule } from './identity/identity.module';
 import { LoggerModule } from './logger/logger.module';
+import { TypeormLoggerService } from './logger/typeorm-logger.service';
 import { MediaModule } from './media/media.module';
 import { MonitoringModule } from './monitoring/monitoring.module';
 import { NotesModule } from './notes/notes.module';
@@ -50,9 +51,12 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoutes(routes),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [databaseConfig.KEY],
-      useFactory: (databaseConfig: DatabaseConfig) => {
+      imports: [ConfigModule, LoggerModule],
+      inject: [databaseConfig.KEY, TypeormLoggerService],
+      useFactory: (
+        databaseConfig: DatabaseConfig,
+        logger: TypeormLoggerService,
+      ) => {
         return {
           type: databaseConfig.type,
           host: databaseConfig.host,
@@ -62,6 +66,8 @@ const routes: Routes = [
           database: databaseConfig.database,
           autoLoadEntities: true,
           synchronize: true, // ToDo: Remove this before release
+          logging: true,
+          logger: logger,
         };
       },
     }),
