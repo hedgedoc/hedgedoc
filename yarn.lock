@@ -6795,10 +6795,10 @@ merge2@^1.3.0, merge2@^1.4.1:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
-mermaid@9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/mermaid/-/mermaid-9.0.0.tgz#a1a43b02210b7d7e77932a673c0ec42987fedd15"
-  integrity sha512-HN0gHZ1+2RnyCR/7pS3ceRMGlt/2PpWAM5dUAzTEQ4nmMOM2Ix7XodcPkQbA7BradLQ5LwFhlH5jcMu1LARl1Q==
+mermaid@9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/mermaid/-/mermaid-9.0.1.tgz#b804f372d827936ab8a8cbde72a5b79fb2629680"
+  integrity sha512-TXXffALLhCACez+MUky4cOOcGXEXiJhHwN8eRV7bBqD8F6KdcjssyPZClVgzrC2KQzSGLqQkj7ce8ea7MhWz+Q==
   dependencies:
     "@braintree/sanitize-url" "^6.0.0"
     cypress-image-snapshot "^4.0.1"
