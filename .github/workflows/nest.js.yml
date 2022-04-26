@@ -12,7 +12,7 @@ on:
     branches: [ develop ]
 
 env:
-  NODEJS_VERSION: 17
+  NODEJS_VERSION: 18
 
 jobs:
   lint:
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x, 17.x ]
+        node-version: [12.x, 14.x, 16.x, 18.x ]
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
