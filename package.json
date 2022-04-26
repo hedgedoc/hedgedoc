@@ -150,7 +150,7 @@
     "emojify.js": "1.1.0",
     "esbuild-loader": "2.18.0",
     "escape-html": "1.0.3",
-    "eslint": "8.13.0",
+    "eslint": "8.14.0",
     "eslint-config-standard": "16.0.3",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-node": "11.1.0",
