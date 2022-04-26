@@ -2238,7 +2238,7 @@ __metadata:
     markmap-common: 0.1.6
     markmap-lib: 0.12.0
     markmap-view: 0.2.7
-    mermaid: 9.0.0
+    mermaid: 9.0.1
     netlify-cli: 9.16.6
     next: 12.1.5
     optional-js: 2.3.0
@@ -14819,9 +14819,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mermaid@npm:9.0.0":
-  version: 9.0.0
-  resolution: "mermaid@npm:9.0.0"
+"mermaid@npm:9.0.1":
+  version: 9.0.1
+  resolution: "mermaid@npm:9.0.1"
   dependencies:
     "@braintree/sanitize-url": ^6.0.0
     cypress-image-snapshot: ^4.0.1
@@ -14833,7 +14833,7 @@ __metadata:
     khroma: ^1.4.1
     moment-mini: ^2.24.0
     stylis: ^4.0.10
-  checksum: 5050fddc1ea49dbd517414a3aa1ebfae97fb735fbe73812bb592add01074977b018f3d710fe8545b13b59ea0d3cb77d571465cdb8cdb3956358dd6eb0a9edfd2
+  checksum: d82a8880409875b01db0b8ffb0c3f45e327b092b7edc2413068cece7949ec7f27db6765fd5f3c7f082bdc3f7ce103ed45936c7defcb55c5b5b1882fb0bf3219a
   languageName: node
   linkType: hard
 
