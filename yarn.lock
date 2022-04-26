@@ -2239,7 +2239,7 @@ __metadata:
     markmap-lib: 0.12.0
     markmap-view: 0.2.7
     mermaid: 9.0.1
-    netlify-cli: 9.16.6
+    netlify-cli: 9.16.7
     next: 12.1.5
     optional-js: 2.3.0
     prettier: 2.6.2
@@ -15286,9 +15286,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"netlify-cli@npm:9.16.6":
-  version: 9.16.6
-  resolution: "netlify-cli@npm:9.16.6"
+"netlify-cli@npm:9.16.7":
+  version: 9.16.7
+  resolution: "netlify-cli@npm:9.16.7"
   dependencies:
     "@netlify/build": ^26.5.3
     "@netlify/config": ^17.0.20
@@ -15402,7 +15402,7 @@ __metadata:
   bin:
     netlify: bin/run
     ntl: bin/run
-  checksum: 7aaaa8bd274214f622a7b66c4c5b5ec883ca8ca3c5c97f474dd52b60d86098873e3c284d0fd1c5ab8ca5c1ad244ab3c68ef281c91341972e6b82f67a7702fd14
+  checksum: c641344d3df3b1de192fc89bf497bc0282b863b2909e6e6ab6cf2dd0d57c402478a8f7ccf48c213bf3c0372042aafc5d648577cd34a7169a7d4d7fd356e39ecc
   languageName: node
   linkType: hard
 
