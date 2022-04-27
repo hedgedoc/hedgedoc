@@ -24,13 +24,8 @@ export class CsvReplacer extends ComponentReplacer {
     const extraRegex = /\s*(delimiter=([^\s]*))?\s*(header)?/
     const extraInfos = extraRegex.exec(extraData)
 
-    let delimiter = ','
-    let showHeader = false
-
-    if (extraInfos) {
-      delimiter = extraInfos[2] || delimiter
-      showHeader = extraInfos[3] !== undefined
-    }
+    const delimiter = extraInfos?.[2] ?? ','
+    const showHeader = extraInfos?.[3] !== undefined
 
     return <CsvTable code={code} delimiter={delimiter} showHeader={showHeader} />
   }

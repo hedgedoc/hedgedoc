@@ -5,9 +5,8 @@
  */
 
 import { MarkdownExtension } from '../markdown-extension'
-import markdownItRegex from 'markdown-it-regex'
-import { replaceYouTubeLink } from './replace-youtube-link'
-import { replaceLegacyYoutubeShortCode } from './replace-legacy-youtube-short-code'
+import { replaceYouTubeLinkMarkdownItPlugin } from './replace-youtube-link'
+import { replaceLegacyYoutubeShortCodeMarkdownItPlugin } from './replace-legacy-youtube-short-code'
 import type MarkdownIt from 'markdown-it'
 import type { ComponentReplacer } from '../../replace-components/component-replacer'
 import { CustomTagWithIdComponentReplacer } from '../../replace-components/custom-tag-with-id-component-replacer'
@@ -20,8 +19,8 @@ export class YoutubeMarkdownExtension extends MarkdownExtension {
   public static readonly tagName = 'app-youtube'
 
   public configureMarkdownIt(markdownIt: MarkdownIt): void {
-    markdownItRegex(markdownIt, replaceYouTubeLink)
-    markdownItRegex(markdownIt, replaceLegacyYoutubeShortCode)
+    replaceYouTubeLinkMarkdownItPlugin(markdownIt)
+    replaceLegacyYoutubeShortCodeMarkdownItPlugin(markdownIt)
   }
 
   public buildReplacers(): ComponentReplacer[] {

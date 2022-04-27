@@ -21,7 +21,7 @@ export const parseCsv = (csvText: string, csvColumnDelimiter: string): string[][
 }
 
 /**
- * Escapes regex characters in the given string so it can be used as literal string in another regex.
+ * Escapes regex characters in the given string, so it can be used as literal string in another regex.
  * @param unsafe The unescaped string
  * @return The escaped string
  */

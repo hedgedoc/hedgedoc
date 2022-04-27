@@ -6,6 +6,7 @@
 
 import markdownItRegex from 'markdown-it-regex'
 import type MarkdownIt from 'markdown-it/lib'
+import type { RegexOptions } from '../../../../external-types/markdown-it-regex/interface'
 
 const finalRegex = /^{%slideshare (\w+\/[\w-]+) ?%}$/
 
@@ -13,6 +14,6 @@ export const legacySlideshareShortCode: MarkdownIt.PluginSimple = (markdownIt) =
   markdownItRegex(markdownIt, {
     name: 'legacy-slideshare-short-code',
     regex: finalRegex,
-    replace: (match: string) => `<a href='https://www.slideshare.net/${match}'>https://www.slideshare.net/${match}</a>`
-  })
+    replace: (match) => `<a href='https://www.slideshare.net/${match}'>https://www.slideshare.net/${match}</a>`
+  } as RegexOptions)
 }

@@ -28,7 +28,7 @@ export const AbcFrame: React.FC<CodeProps> = ({ code }) => {
     value: abcLib
   } = useAsync(async () => {
     try {
-      return await import(/* webpackChunkName: "abc.js" */ 'abcjs')
+      return import(/* webpackChunkName: "abc.js" */ 'abcjs')
     } catch (error) {
       log.error('Error while loading abcjs', error)
       throw error

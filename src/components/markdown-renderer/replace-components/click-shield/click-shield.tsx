@@ -19,7 +19,7 @@ import { ProxyImageFrame } from '../../markdown-extension/image/proxy-image-fram
 
 const log = new Logger('OneClickEmbedding')
 
-interface ClickShieldProps extends PropsWithDataCypressId {
+export interface ClickShieldProps extends PropsWithChildren<PropsWithDataCypressId> {
   onImageFetch?: () => Promise<string>
   fallbackPreviewImageUrl?: string
   hoverIcon: IconName
@@ -39,7 +39,7 @@ interface ClickShieldProps extends PropsWithDataCypressId {
  * @param fallbackBackgroundColor A color that should be used if no background image was provided or could be loaded.
  * @param children The children element that should be shielded.
  */
-export const ClickShield: React.FC<PropsWithChildren<ClickShieldProps>> = ({
+export const ClickShield: React.FC<ClickShieldProps> = ({
   containerClassName,
   onImageFetch,
   fallbackPreviewImageUrl,

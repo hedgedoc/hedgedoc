@@ -6,6 +6,8 @@
 
 import type { RegexOptions } from '../../../../external-types/markdown-it-regex/interface'
 import { VimeoMarkdownExtension } from './vimeo-markdown-extension'
+import type MarkdownIt from 'markdown-it'
+import markdownItRegex from 'markdown-it-regex'
 
 const protocolRegex = /(?:http(?:s)?:\/\/)?/
 const domainRegex = /(?:player\.)?(?:vimeo\.com\/)(?:(?:channels|album|ondemand|groups)\/\w+\/)?(?:video\/)?/
@@ -16,7 +18,7 @@ const vimeoVideoUrlRegex = new RegExp(
 )
 const linkRegex = new RegExp(`^${vimeoVideoUrlRegex.source}$`, 'i')
 
-export const replaceVimeoLink: RegexOptions = {
+const replaceVimeoLink: RegexOptions = {
   name: 'vimeo-link',
   regex: linkRegex,
   replace: (match) => {
@@ -25,3 +27,6 @@ export const replaceVimeoLink: RegexOptions = {
     return `<${VimeoMarkdownExtension.tagName} id='${match}'></${VimeoMarkdownExtension.tagName}>`
   }
 }
+
+export const replaceVimeoLinkMarkdownItPlugin: MarkdownIt.PluginSimple = (markdownIt: MarkdownIt) =>
+  markdownItRegex(markdownIt, replaceVimeoLink)

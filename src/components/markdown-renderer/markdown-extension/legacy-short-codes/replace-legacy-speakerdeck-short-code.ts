@@ -6,6 +6,7 @@
 
 import markdownItRegex from 'markdown-it-regex'
 import type MarkdownIt from 'markdown-it/lib'
+import type { RegexOptions } from '../../../../external-types/markdown-it-regex/interface'
 
 const finalRegex = /^{%speakerdeck (\w+\/[\w-]+) ?%}$/
 
@@ -13,6 +14,6 @@ export const legacySpeakerdeckShortCode: MarkdownIt.PluginSimple = (markdownIt) 
   markdownItRegex(markdownIt, {
     name: 'legacy-speakerdeck-short-code',
     regex: finalRegex,
-    replace: (match: string) => `<a href="https://speakerdeck.com/${match}">https://speakerdeck.com/${match}</a>`
-  })
+    replace: (match) => `<a href="https://speakerdeck.com/${match}">https://speakerdeck.com/${match}</a>`
+  } as RegexOptions)
 }

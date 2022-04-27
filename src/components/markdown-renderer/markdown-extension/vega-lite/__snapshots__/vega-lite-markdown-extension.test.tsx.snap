@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Vega-Lite markdown extensions renders a vega-lite codeblock 1`] = `
+<div>
+  <pre>
+    <span>
+      this is a mock for vega lite
+      <code>
+        {"$schema":"https://vega.github.io/schema/vega-lite/v4.json","data":{"values":[{"a":"","b":28}]},"mark":"bar","encoding":{"x":{"field":"a"},"y":{"field":"b"}}}
+
+      </code>
+    </span>
+  </pre>
+  
+
+</div>
+`;

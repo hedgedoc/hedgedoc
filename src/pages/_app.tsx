@@ -4,14 +4,13 @@
  SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { AppProps } from 'next/app'
-import { store } from '../redux'
-import { Provider } from 'react-redux'
 import { ErrorBoundary } from '../components/error-boundary/error-boundary'
 import { ApplicationLoader } from '../components/application-loader/application-loader'
 import '../../global-styles/dark.scss'
 import '../../global-styles/index.scss'
 import type { NextPage } from 'next'
 import { BaseHead } from '../components/layout/base-head'
+import { StoreProvider } from '../redux/store-provider'
 
 /**
  * The actual hedgedoc next js app.
@@ -19,14 +18,14 @@ import { BaseHead } from '../components/layout/base-head'
  */
 const HedgeDocApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
-    <Provider store={store}>
+    <StoreProvider>
       <BaseHead />
       <ApplicationLoader>
         <ErrorBoundary>
           <Component {...pageProps} />
         </ErrorBoundary>
       </ApplicationLoader>
-    </Provider>
+    </StoreProvider>
   )
 }
 

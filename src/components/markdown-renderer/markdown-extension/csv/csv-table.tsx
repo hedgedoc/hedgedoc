@@ -25,26 +25,21 @@ export const CsvTable: React.FC<CsvTableProps> = ({
 }) => {
   const { rowsWithColumns, headerRow } = useMemo(() => {
     const rowsWithColumns = parseCsv(code.trim(), delimiter)
-    let headerRow: string[] = []
-    if (showHeader) {
-      headerRow = rowsWithColumns.splice(0, 1)[0]
-    }
+    const headerRow = showHeader ? rowsWithColumns.splice(0, 1)[0] : []
     return { rowsWithColumns, headerRow }
   }, [code, delimiter, showHeader])
 
-  const renderTableHeader = useMemo(
-    () =>
-      headerRow === [] ? undefined : (
-        <thead>
-          <tr>
-            {headerRow.map((column, columnNumber) => (
-              <th key={`header-${columnNumber}`}>{column}</th>
-            ))}
-          </tr>
-        </thead>
-      ),
-    [headerRow]
-  )
+  const renderTableHeader = useMemo(() => {
+    return headerRow.length === 0 ? undefined : (
+      <thead>
+        <tr>
+          {headerRow.map((column, columnNumber) => (
+            <th key={`header-${columnNumber}`}>{column}</th>
+          ))}
+        </tr>
+      </thead>
+    )
+  }, [headerRow])
 
   const renderTableBody = useMemo(
     () => (

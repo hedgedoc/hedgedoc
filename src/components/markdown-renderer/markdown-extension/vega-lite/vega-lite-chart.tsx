@@ -4,73 +4,64 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Alert } from 'react-bootstrap'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import type { VisualizationSpec } from 'vega-embed'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { Logger } from '../../../../utils/logger'
 import type { CodeProps } from '../../replace-components/code-block-component-replacer'
+import { useAsync } from 'react-use'
+import { AsyncLoadingBoundary } from '../../../common/async-loading-boundary'
 
 const log = new Logger('VegaChart')
 
 export const VegaLiteChart: React.FC<CodeProps> = ({ code }) => {
   const diagramContainer = useRef<HTMLDivElement>(null)
-  const [error, setError] = useState<string>()
   const { t } = useTranslation()
 
-  const showError = useCallback((error: string) => {
-    if (!diagramContainer.current) {
+  const {
+    value: vegaEmbed,
+    error: libLoadingError,
+    loading: libLoading
+  } = useAsync(async () => (await import(/* webpackChunkName: "vega" */ 'vega-embed')).default, [])
+
+  const { error: renderingError } = useAsync(async () => {
+    const container = diagramContainer.current
+    if (!container || !vegaEmbed) {
       return
     }
-    log.error(error)
-    setError(error)
-  }, [])
+    const spec = JSON.parse(code) as VisualizationSpec
+    await vegaEmbed(container, spec, {
+      actions: {
+        export: true,
+        source: false,
+        compiled: false,
+        editor: false
+      },
+      i18n: {
+        PNG_ACTION: t('renderer.vega-lite.png'),
+        SVG_ACTION: t('renderer.vega-lite.svg')
+      }
+    })
+  }, [code, vegaEmbed])
 
   useEffect(() => {
-    if (!diagramContainer.current) {
-      return
+    if (renderingError) {
+      log.error('Error while rendering vega lite diagram', renderingError)
     }
-    import(/* webpackChunkName: "vega" */ 'vega-embed')
-      .then((embed) => {
-        try {
-          if (!diagramContainer.current) {
-            return
-          }
-
-          const spec = JSON.parse(code) as VisualizationSpec
-          embed
-            .default(diagramContainer.current, spec, {
-              actions: {
-                export: true,
-                source: false,
-                compiled: false,
-                editor: false
-              },
-              i18n: {
-                PNG_ACTION: t('renderer.vega-lite.png'),
-                SVG_ACTION: t('renderer.vega-lite.svg')
-              }
-            })
-            .then(() => setError(undefined))
-            .catch((error: Error) => showError(error.message))
-        } catch (error) {
-          showError(t('renderer.vega-lite.errorJson'))
-        }
-      })
-      .catch((error: Error) => {
-        log.error('Error while loading vega-light', error)
-      })
-  }, [code, showError, t])
+  }, [renderingError])
 
   return (
-    <Fragment>
-      <ShowIf condition={!!error}>
-        <Alert variant={'danger'}>{error}</Alert>
+    <AsyncLoadingBoundary loading={libLoading} error={libLoadingError} componentName={'Vega Lite'}>
+      <ShowIf condition={!!renderingError}>
+        <Alert variant={'danger'}>
+          <Trans i18nKey={'renderer.vega-lite.errorJson'} />
+        </Alert>
       </ShowIf>
       <div className={'text-center'}>
         <div ref={diagramContainer} />
       </div>
-    </Fragment>
+    </AsyncLoadingBoundary>
   )
 }

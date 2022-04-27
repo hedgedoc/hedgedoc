@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CSV Table renders correctly with header 1`] = `
+<div>
+  <table
+    class="csv-html-table table-striped"
+  >
+    <thead>
+      <tr>
+        <th>
+          a
+        </th>
+        <th>
+          b
+        </th>
+        <th>
+          c
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          d
+        </td>
+        <td>
+          e
+        </td>
+        <td>
+          f
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`CSV Table renders correctly without code 1`] = `
+<div>
+  <table
+    class="csv-html-table table-striped"
+  >
+    <tbody />
+  </table>
+</div>
+`;
+
+exports[`CSV Table renders correctly without header 1`] = `
+<div>
+  <table
+    class="csv-html-table table-striped"
+  >
+    <tbody>
+      <tr>
+        <td>
+          a
+        </td>
+        <td>
+          b
+        </td>
+        <td>
+          c
+        </td>
+      </tr>
+      <tr>
+        <td>
+          d
+        </td>
+        <td>
+          e
+        </td>
+        <td>
+          f
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

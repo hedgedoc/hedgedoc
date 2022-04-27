@@ -11,6 +11,7 @@ import { cypressAttribute, cypressId } from '../../../../utils/cypress-attribute
 import { AsyncLoadingBoundary } from '../../../common/async-loading-boundary'
 import { useAsyncHighlightedCodeDom } from './hooks/use-async-highlighted-code-dom'
 import { useAttachLineNumbers } from './hooks/use-attach-line-numbers'
+import { testId } from '../../../../utils/test-id'
 
 export interface HighlightedCodeProps {
   code: string
@@ -36,6 +37,7 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
     <AsyncLoadingBoundary loading={loading} error={!!error} componentName={'highlight.js'}>
       <div className={styles['code-highlighter']} {...cypressId('highlighted-code-block')}>
         <code
+          {...testId('code-highlighter')}
           {...cypressId('code-highlighter')}
           {...cypressAttribute('showgutter', showGutter ? 'true' : 'false')}
           {...cypressAttribute('wraplines', wrapLines ? 'true' : 'false')}

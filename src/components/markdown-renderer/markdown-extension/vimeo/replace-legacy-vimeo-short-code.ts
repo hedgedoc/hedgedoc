@@ -6,8 +6,10 @@
 
 import type { RegexOptions } from '../../../../external-types/markdown-it-regex/interface'
 import { VimeoMarkdownExtension } from './vimeo-markdown-extension'
+import type MarkdownIt from 'markdown-it'
+import markdownItRegex from 'markdown-it-regex'
 
-export const replaceLegacyVimeoShortCode: RegexOptions = {
+const replaceLegacyVimeoShortCode: RegexOptions = {
   name: 'legacy-vimeo-short-code',
   regex: /^{%vimeo ([\d]{6,11}) ?%}$/,
   replace: (match) => {
@@ -16,3 +18,6 @@ export const replaceLegacyVimeoShortCode: RegexOptions = {
     return `<${VimeoMarkdownExtension.tagName} id="${match}"></${VimeoMarkdownExtension.tagName}>`
   }
 }
+
+export const replaceLegacyVimeoShortCodeMarkdownItPlugin: MarkdownIt.PluginSimple = (markdownIt: MarkdownIt) =>
+  markdownItRegex(markdownIt, replaceLegacyVimeoShortCode)

@@ -6,13 +6,16 @@
 
 import type { RegexOptions } from '../../../../external-types/markdown-it-regex/interface'
 import { YoutubeMarkdownExtension } from './youtube-markdown-extension'
+import markdownItRegex from 'markdown-it-regex'
+import type MarkdownIt from 'markdown-it'
 
-export const replaceLegacyYoutubeShortCode: RegexOptions = {
-  name: 'legacy-youtube-short-code',
-  regex: /^{%youtube ([^"&?\\/\s]{11}) ?%}$/,
-  replace: (match) => {
-    // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
-    // noinspection CheckTagEmptyBody
-    return `<${YoutubeMarkdownExtension.tagName} id="${match}"></${YoutubeMarkdownExtension.tagName}>`
-  }
-}
+export const replaceLegacyYoutubeShortCodeMarkdownItPlugin: MarkdownIt.PluginSimple = (markdownIt: MarkdownIt): void =>
+  markdownItRegex(markdownIt, {
+    name: 'legacy-youtube-short-code',
+    regex: /^{%youtube ([^"&?\\/\s]{11}) ?%}$/,
+    replace: (match) => {
+      // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
+      // noinspection CheckTagEmptyBody
+      return `<${YoutubeMarkdownExtension.tagName} id="${match}"></${YoutubeMarkdownExtension.tagName}>`
+    }
+  } as RegexOptions)
