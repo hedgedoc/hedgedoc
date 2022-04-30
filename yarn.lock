@@ -1737,10 +1737,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:16.11.27":
-  version: 16.11.27
-  resolution: "@types/node@npm:16.11.27"
-  checksum: 6ed0c8c4d29a549d0cfd607d19edf9a4668fbd39087701d923b4a04cd760564e47ad27f9403968cb9c11ee006f0ea6ab698b2491b4b2d2dec3f4a53d0fc22df7
+"@types/node@npm:16.11.32":
+  version: 16.11.32
+  resolution: "@types/node@npm:16.11.32"
+  checksum: 21f1bcd4f47a443f8a78a58b6ca3488dd9418c71b1185ba067d02222047fb194a3bfba244c32259bcb0cae4d55870b43a908b1f2832ec4aa4f31158f809625fe
   languageName: node
   linkType: hard
 
@@ -5281,7 +5281,7 @@ __metadata:
     "@types/jest": 27.4.1
     "@types/minio": 7.0.13
     "@types/mysql": 2.15.21
-    "@types/node": 16.11.27
+    "@types/node": 16.11.32
     "@types/node-fetch": 2.6.1
     "@types/passport-http-bearer": 1.0.37
     "@types/passport-local": 1.0.34
