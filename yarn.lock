@@ -5308,7 +5308,7 @@ __metadata:
     jest: 27.5.1
     joi: 17.6.0
     ldapauth-fork: ^5.0.2
-    minio: 7.0.27
+    minio: 7.0.28
     mocked-env: 1.3.5
     mysql: 2.18.1
     nest-router: 1.0.9
@@ -7091,9 +7091,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minio@npm:7.0.27":
-  version: 7.0.27
-  resolution: "minio@npm:7.0.27"
+"minio@npm:7.0.28":
+  version: 7.0.28
+  resolution: "minio@npm:7.0.28"
   dependencies:
     async: ^3.1.0
     block-stream2: ^2.0.0
@@ -7112,7 +7112,7 @@ __metadata:
     web-encoding: ^1.1.5
     xml: ^1.0.0
     xml2js: ^0.4.15
-  checksum: 853471d62418627631cdbc1d9dd9fcc13dcb37f7aad85acfcf5cb7923f444213e73f25f9aaa0fd573ba0eafa61b28ba4bcdd53f3a42c86b84e2a94a3126879c5
+  checksum: 07ca35ff232a432dc74da63352ad3b73cb8e4caad1d80e7d1ba446a7b8c5a0c4d73fa09c63fd94a0e3a153b9269d06dc2786a5ddad2bec74bd0257ddd1ddc2f4
   languageName: node
   linkType: hard
 
