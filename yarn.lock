@@ -1356,7 +1356,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:>=7.11.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.8, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:>=7.11.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.8, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.17.9, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.17.9
   resolution: "@babel/runtime@npm:7.17.9"
   dependencies:
@@ -2162,7 +2162,7 @@ __metadata:
     "@matejmazur/react-katex": 3.1.3
     "@next/bundle-analyzer": 12.1.5
     "@react-hook/resize-observer": 1.2.5
-    "@redux-devtools/core": 3.11.0
+    "@redux-devtools/core": 3.12.0
     "@svgr/webpack": 6.2.1
     "@testing-library/cypress": 8.0.2
     "@testing-library/jest-dom": 5.16.4
@@ -3526,20 +3526,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redux-devtools/core@npm:3.11.0":
-  version: 3.11.0
-  resolution: "@redux-devtools/core@npm:3.11.0"
+"@redux-devtools/core@npm:3.12.0":
+  version: 3.12.0
+  resolution: "@redux-devtools/core@npm:3.12.0"
   dependencies:
-    "@babel/runtime": ^7.16.7
+    "@babel/runtime": ^7.17.9
     "@redux-devtools/instrument": ^2.1.0
-    "@types/prop-types": ^15.7.4
+    "@types/prop-types": ^15.7.5
     lodash: ^4.17.21
     prop-types: ^15.8.1
   peerDependencies:
     react: ^0.14.9 || ^15.3.0 || ^16.0.0 || ^17.0.0
-    react-redux: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
+    react-redux: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
     redux: ^3.5.2 || ^4.0.0
-  checksum: 71394672d4a6de5472a16d61e7461e5da60d6834ab2afd72192b13d3fe3c4386e0a55386d50a1aef3cbc2a89ba0f2e551b40c6057fa06c7d2b3733ad582cf199
+  checksum: 26987454e1f2a27a30e3e8e6cb40b75bdf9542b93e56c028bb27f94f020fba9f1f1f9a8ca30cac89b50afd29b239958fd806a6afd5b55b0c97ce275f6d704c86
   languageName: node
   linkType: hard
 
@@ -4783,7 +4783,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:*, @types/prop-types@npm:^15.7.3, @types/prop-types@npm:^15.7.4":
+"@types/prop-types@npm:*, @types/prop-types@npm:^15.7.3, @types/prop-types@npm:^15.7.5":
   version: 15.7.5
   resolution: "@types/prop-types@npm:15.7.5"
   checksum: 5b43b8b15415e1f298243165f1d44390403bb2bd42e662bca3b5b5633fdd39c938e91b7fce3a9483699db0f7a715d08cef220c121f723a634972fdf596aec980
