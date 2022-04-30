@@ -2258,7 +2258,7 @@ __metadata:
     sanitize-filename: 1.6.3
     sass: 1.51.0
     sharp: 0.30.4
-    ts-loader: 9.2.8
+    ts-loader: 9.3.0
     ts-mockery: 1.2.0
     ts-node: 10.7.0
     twemoji-colr-font: 0.0.4
@@ -19916,9 +19916,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-loader@npm:9.2.8":
-  version: 9.2.8
-  resolution: "ts-loader@npm:9.2.8"
+"ts-loader@npm:9.3.0":
+  version: 9.3.0
+  resolution: "ts-loader@npm:9.3.0"
   dependencies:
     chalk: ^4.1.0
     enhanced-resolve: ^5.0.0
@@ -19927,7 +19927,7 @@ __metadata:
   peerDependencies:
     typescript: "*"
     webpack: ^5.0.0
-  checksum: 3afd9a4cc1d46738ac3f2decc7dfa655e0183d4d2d48c7a113ea9f3ac313304f54be59252cde2ef04757c791e28cfcfc63323d3dd1f2f949485242c1ea4835e5
+  checksum: 90755ac5850890ff433f2f8c7186d57ae4e172d389342d874b50ab233675f06c47c69043c517e2a2eeaf2251637ecfac607ac6190c89340f246ceff8c7f4af7a
   languageName: node
   linkType: hard
 
