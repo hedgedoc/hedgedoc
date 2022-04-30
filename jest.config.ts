@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -18,6 +18,8 @@ const customJestConfig = {
   moduleNameMapper: {
     // Handle module aliases (this will be automatically configured for you soon)
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
+    // fix uuid / jest problem https://github.com/uuidjs/uuid/pull/616
+    '^uuid$': require.resolve('uuid'),
   },
   roots: ["<rootDir>/src"],
   testEnvironment: 'jsdom',
