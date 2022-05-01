@@ -4,11 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { createStore } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 import { allReducers } from './reducers'
 import type { ApplicationState } from './application-state'
+import { configureStore } from '@reduxjs/toolkit'
+import { isDevMode } from '../utils/test-modes'
 
-export const store = createStore(allReducers, composeWithDevTools())
+export const store = configureStore({
+  reducer: allReducers,
+  devTools: isDevMode
+})
 
 export const getGlobalState = (): ApplicationState => store.getState()
