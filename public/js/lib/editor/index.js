@@ -99,7 +99,7 @@ export default class Editor {
           const ch = match[1].length
           const pos = {
             line: cursor.line,
-            ch: ch
+            ch
           }
           if (cm.getOption('indentWithTabs')) {
             cm.replaceRange(tab, pos, pos, '+input')
@@ -618,7 +618,7 @@ export default class Editor {
       mode: defaultEditorMode,
       backdrop: defaultEditorMode,
       keyMap: 'sublime',
-      viewportMargin: viewportMargin,
+      viewportMargin,
       styleActiveLine: true,
       lineNumbers: true,
       lineWrapping: true,

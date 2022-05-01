@@ -46,7 +46,7 @@ if (config.useSSL) {
   const options = {
     key: fs.readFileSync(config.sslKeyPath, 'utf8'),
     cert: fs.readFileSync(config.sslCertPath, 'utf8'),
-    ca: ca,
+    ca,
     dhparam: fs.readFileSync(config.dhParamPath, 'utf8'),
     requestCert: false,
     rejectUnauthorized: false
@@ -242,7 +242,7 @@ app.get('*', function (req, res) {
 io.use(realtime.secure)
 // socket.io auth
 io.use(passportSocketIo.authorize({
-  cookieParser: cookieParser,
+  cookieParser,
   key: config.sessionName,
   secret: config.sessionSecret,
   store: sessionStore,
