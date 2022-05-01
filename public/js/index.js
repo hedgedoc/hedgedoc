@@ -1230,7 +1230,7 @@ ui.toolbar.export.dropbox.click(function (event) {
     files: [
       {
         url: noteurl + '/download',
-        filename: filename
+        filename
       }
     ],
     error: function (errorMessage) {
@@ -1538,7 +1538,7 @@ function initRevisionViewer () {
   const revisionViewerTextArea = document.getElementById('revisionViewer')
   revisionViewer = CodeMirror.fromTextArea(revisionViewerTextArea, {
     mode: defaultEditorMode,
-    viewportMargin: viewportMargin,
+    viewportMargin,
     lineNumbers: true,
     lineWrapping: true,
     showCursorWhenSelecting: true,
@@ -2005,7 +2005,7 @@ function importFromUrl (url) {
   }
   $.ajax({
     method: 'GET',
-    url: url,
+    url,
     success: function (data) {
       const extension = url.split('.').pop()
       if (extension === 'html') {
@@ -2999,7 +2999,7 @@ function emitUserStatus (force) {
 
   const userStatus = {
     idle: idle.isAway,
-    type: type
+    type
   }
 
   if (force || JSON.stringify(userStatus) !== JSON.stringify(userStatusCache)) {

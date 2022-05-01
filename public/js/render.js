@@ -36,7 +36,7 @@ whiteList.figcaption = []
 
 const filterXSSOptions = {
   allowCommentTag: true,
-  whiteList: whiteList,
+  whiteList,
   escapeHtml: function (html) {
     // allow html comment in multiple lines
     return html.replace(/<(?!!--)/g, '&lt;').replace(/-->/g, '__HTML_COMMENT_END__').replace(/>/g, '&gt;').replace(/__HTML_COMMENT_END__/g, '-->')
@@ -73,6 +73,6 @@ function preventXSS (html) {
 window.preventXSS = preventXSS
 
 module.exports = {
-  preventXSS: preventXSS,
+  preventXSS,
   escapeAttrValue: filterXSS.escapeAttrValue
 }
