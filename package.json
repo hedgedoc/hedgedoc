@@ -117,7 +117,8 @@
       "ts-jest": {
         "tsconfig": "test/tsconfig.json"
       }
-    }
+    },
+    "reporters": ["default", "github-actions"]
   },
   "packageManager": "yarn@3.2.0"
 }
