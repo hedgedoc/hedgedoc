@@ -1,5 +1,10 @@
 # Release Notes
 
+## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
+
+This release drops support for Node.js 12, as it has reached end-of-life.
+
+
 ## <i class="fa fa-tag"></i> 1.9.3 <i class="fa fa-calendar-o"></i> 2022-04-10
 
 This release fixes a security issue. We recommend upgrading as soon as possible.
