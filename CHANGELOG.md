@@ -77,6 +77,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - Images that are currently uploading will be rendered as "uploading".
 - Code blocks with `plantuml` as language are rendered as [PlantUML](https://plantuml.com/) diagram using a configured render server.
 - File based motd that supports markdown without html.
+- New notes can be created with a pre-given content when accessing `/new?content=Example%20content`.
 
 ### Changed
 

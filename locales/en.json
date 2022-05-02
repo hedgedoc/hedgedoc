@@ -551,5 +551,15 @@
   },
   "motd": {
     "title": "Information"
+  },
+  "errors": {
+    "notFound": {
+      "title": "404 - page not found",
+      "description": "The requested page either does not exist or you don't have permission to access it."
+    },
+    "noteCreationFailed": {
+      "title": "Note could not be created",
+      "description": "The note could not be created. Maybe you don't have permission to create notes."
+    }
   }
 }

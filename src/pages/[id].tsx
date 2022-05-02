@@ -1,16 +1,16 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React from 'react'
 import { getNote } from '../api/notes'
-import { NotFoundErrorScreen } from '../components/common/routing/not-found-error-screen'
 import type { NextPage } from 'next'
 import { useAsync } from 'react-use'
 import { Redirect } from '../components/common/redirect'
 import { useSingleStringUrlParameter } from '../hooks/common/use-single-string-url-parameter'
+import { CommonErrorPage } from '../components/error-pages/common-error-page'
 
 /**
  * Redirects the user to the editor if the link is a root level direct link to a version 1 note.
@@ -30,7 +30,7 @@ export const DirectLinkFallback: NextPage = () => {
   })
 
   if (error !== undefined) {
-    return <NotFoundErrorScreen />
+    return <CommonErrorPage titleI18nKey={'errors.notFound.title'} descriptionI18nKey={'errors.notFound.description'} />
   } else if (value !== undefined) {
     return <Redirect to={`/n/${value}`} />
   } else {
