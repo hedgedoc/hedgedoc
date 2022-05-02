@@ -9,9 +9,10 @@ import { CopyToClipboardButton } from '../../../common/copyable/copy-to-clipboar
 import styles from './highlighted-code.module.scss'
 import { cypressAttribute, cypressId } from '../../../../utils/cypress-attribute'
 import { AsyncLoadingBoundary } from '../../../common/async-loading-boundary'
-import { useAsyncHighlightedCodeDom } from './hooks/use-async-highlighted-code-dom'
+import { useAsyncHighlightJsImport } from './hooks/use-async-highlight-js-import'
 import { useAttachLineNumbers } from './hooks/use-attach-line-numbers'
 import { testId } from '../../../../utils/test-id'
+import { useCodeDom } from './hooks/use-code-dom'
 
 export interface HighlightedCodeProps {
   code: string
@@ -30,8 +31,9 @@ export interface HighlightedCodeProps {
  */
 export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language, startLineNumber, wrapLines }) => {
   const showGutter = startLineNumber !== undefined
-  const { loading, error, value: highlightedLines } = useAsyncHighlightedCodeDom(code, language)
-  const wrappedDomLines = useAttachLineNumbers(highlightedLines, startLineNumber)
+  const { value: hljsApi, loading, error } = useAsyncHighlightJsImport()
+  const codeDom = useCodeDom(code, hljsApi, language)
+  const wrappedDomLines = useAttachLineNumbers(codeDom, startLineNumber)
 
   return (
     <AsyncLoadingBoundary loading={loading} error={!!error} componentName={'highlight.js'}>

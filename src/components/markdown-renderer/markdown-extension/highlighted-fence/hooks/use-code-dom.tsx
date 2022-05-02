@@ -5,12 +5,32 @@
  */
 
 import type { ReactElement } from 'react'
-import React, { Fragment } from 'react'
+import React, { Fragment, useMemo } from 'react'
 import { MarkdownExtensionCollection } from '../../markdown-extension-collection'
 import convertHtmlToReact from '@hedgedoc/html-to-react'
-import { useAsync } from 'react-use'
-import { Logger } from '../../../../../utils/logger'
-import type { AsyncState } from 'react-use/lib/useAsyncFn'
+import type { HLJSApi } from 'highlight.js'
+
+/**
+ * Highlights the given code using highlight.js. If the language wasn't recognized then it won't be highlighted.
+ *
+ * @param code The code to highlight
+ * @param hljs The highlight.js API. Needs to be imported or lazy loaded.
+ * @param language The language of the code to use for highlighting
+ * @return The react elements that represent the highlighted code
+ */
+export const useCodeDom = (code: string, hljs: HLJSApi | undefined, language?: string): ReactElement[] | undefined => {
+  return useMemo(() => {
+    if (!hljs) {
+      return
+    }
+    if (!!language && hljs.listLanguages().includes(language)) {
+      const highlightedHtml = hljs.highlight(code, { language }).value
+      return createHtmlLinesToReactDOM(omitNewLineAtEnd(highlightedHtml).split('\n'))
+    } else {
+      return createPlaintextToReactDOM(code)
+    }
+  }, [code, hljs, language])
+}
 
 const nodeProcessor = new MarkdownExtensionCollection([]).buildFlatNodeProcessor()
 
@@ -38,38 +58,6 @@ const createHtmlLinesToReactDOM = (code: string[]): ReactElement[] => {
  */
 const createPlaintextToReactDOM = (text: string): ReactElement[] => {
   return text.split('\n').map((line, lineIndex) => React.createElement('span', { key: lineIndex }, line))
-}
-
-export interface HighlightedCodeProps {
-  code: string
-  language?: string
-  startLineNumber?: number
-}
-
-const log = new Logger('HighlightedCode')
-
-/**
- * Highlights the given code using highlight.js. If the language wasn't recognized then it won't be highlighted.
- *
- * @param code The code to highlight
- * @param language The language of the code to use for highlighting
- * @return {@link AsyncState async state} that contains the converted React elements
- */
-export const useAsyncHighlightedCodeDom = (code: string, language?: string): AsyncState<ReactElement[]> => {
-  return useAsync(async () => {
-    try {
-      const hljs = (await import(/* webpackChunkName: "highlight.js" */ '../../../../common/hljs/hljs')).default
-      if (!!language && hljs.listLanguages().includes(language)) {
-        const highlightedHtml = hljs.highlight(code, { language }).value
-        return createHtmlLinesToReactDOM(omitNewLineAtEnd(highlightedHtml).split('\n'))
-      } else {
-        return createPlaintextToReactDOM(code)
-      }
-    } catch (error) {
-      log.error('Error while loading highlight.js', error)
-      throw error
-    }
-  }, [code, language])
 }
 
 /**
