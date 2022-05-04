@@ -1,0 +1,93 @@
+/*!
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
+}
+
+@keyframes particle {
+  0% {
+    opacity: 0.3;
+    transform: translate(300px, 300px) rotateZ(360deg);
+    border-radius: 0;
+    color: #ffffff;
+  }
+  20% {
+    border-radius: 0;
+  }
+  70% {
+    opacity: 1;
+    transform: translate(120px, 120px) rotateZ(180deg);
+    border-radius: 10px;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0px, 0px) rotateZ(0deg);
+    color: rgb(181, 31, 8);
+  }
+}
+
+@keyframes fill {
+  0% {
+    height: 0%;
+  }
+
+  50% {
+    height: 70%;
+  }
+
+  100%{
+    height: 100%;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: #ffffff00 0 0 200px 100px;
+  }
+
+  30% {
+    box-shadow: #ffffff33 0 0 200px 100px;
+  }
+
+  100% {
+    box-shadow: #ffffff00 0 0 200px 100px;
+  }
+}

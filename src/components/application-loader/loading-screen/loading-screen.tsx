@@ -6,7 +6,7 @@
 
 import React from 'react'
 import { Alert } from 'react-bootstrap'
-import { AnimatedHedgeDocLogo, AnimationType } from './animated-hedge-doc-logo/animated-hedge-doc-logo'
+import { LoadingAnimation } from './loading-animation'
 import { ShowIf } from '../../common/show-if/show-if'
 import styles from '../application-loader.module.scss'
 
@@ -24,7 +24,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ failedTaskName }) 
     <div className={`${styles.loader} ${styles.middle} text-light overflow-hidden`}>
       <div className='mb-3 text-light'>
         <span className={`d-block`}>
-          <AnimatedHedgeDocLogo animation={failedTaskName ? AnimationType.SHAKE : AnimationType.JUMP} />
+          <LoadingAnimation error={!!failedTaskName} />
         </span>
       </div>
       <ShowIf condition={!!failedTaskName}>

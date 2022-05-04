@@ -1,0 +1,97 @@
+/*!
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+@import "keyframes";
+
+.rows {
+  transition: opacity 0.2s;
+
+  .row {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+
+  .particle {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    font-size: 1.3em !important;
+    top: calc(50% - 12px);
+    left: calc(50% - 12px);
+    animation: particle 3s infinite;
+  }
+
+  @for $i from 1 through 12 {
+    .row:nth-child(#{$i}) {
+      transform: rotateZ(30deg * ($i - 1));
+
+      @for $j from 1 through 10 {
+        & .particle:nth-child(#{$j}) {
+          opacity: 0;
+          animation-timing-function: ease-out;
+          animation-delay: -$i * 830ms - $j * 600ms;
+        }
+      }
+    }
+  }
+}
+
+.logo {
+  z-index: 1000;
+  position: relative;
+  font-size: 3em;
+  height: 240px;
+  width: 203px;
+  color: #ffffff;
+  text-shadow: 4px 4px 0 #3b4045;
+
+  .overlay {
+    color: rgb(181, 31, 8);
+    height: 0;
+    overflow: hidden;
+    animation: fill 6s infinite;
+    width: 100%;
+
+    &, :global(.fa) {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+  }
+}
+
+.pulse {
+  animation: 3s pulse infinite;
+  box-shadow: #404040 0 0 200px 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  border-radius: 100%;
+  margin: auto;
+  right: 0;
+  bottom: 0;
+}
+
+.error {
+  .channels {
+    opacity: 0;
+  }
+
+  .pulse {
+    animation: none;
+  }
+
+  .logo {
+    .overlay {
+      animation: none;
+    }
+
+    color: rgb(181, 31, 8);
+    animation: 1s shake;
+  }
+}
