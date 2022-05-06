@@ -12,7 +12,11 @@ import { fetchFrontendConfig } from './fetch-frontend-config'
 import { loadDarkMode } from './load-dark-mode'
 
 const customDelay: () => Promise<void> = async () => {
-  if (window.localStorage.getItem('customDelay')) {
+  if (
+    typeof window !== 'undefined' &&
+    typeof window.localStorage !== 'undefined' &&
+    (window.location.search.startsWith('?customDelay=') || window.localStorage.getItem('customDelay'))
+  ) {
     return new Promise((resolve) => setTimeout(resolve, 5000))
   } else {
     return Promise.resolve()
