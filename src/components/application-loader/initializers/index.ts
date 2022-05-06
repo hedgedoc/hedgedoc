@@ -10,14 +10,16 @@ import { fetchMotd } from './fetch-motd'
 import { fetchAndSetUser } from '../../login-page/auth/utils'
 import { fetchFrontendConfig } from './fetch-frontend-config'
 import { loadDarkMode } from './load-dark-mode'
+import { isDevMode, isTestMode } from '../../../utils/test-modes'
 
 const customDelay: () => Promise<void> = async () => {
   if (
+    (isDevMode || isTestMode) &&
     typeof window !== 'undefined' &&
     typeof window.localStorage !== 'undefined' &&
     (window.location.search.startsWith('?customDelay=') || window.localStorage.getItem('customDelay'))
   ) {
-    return new Promise((resolve) => setTimeout(resolve, 5000))
+    return new Promise((resolve) => setTimeout(resolve, 500000000))
   } else {
     return Promise.resolve()
   }
