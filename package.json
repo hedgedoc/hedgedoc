@@ -40,7 +40,7 @@
     "@codemirror/lang-markdown": "0.20.0",
     "@codemirror/language-data": "0.20.0",
     "@codemirror/theme-one-dark": "0.20.0",
-    "@fontsource/source-sans-pro": "4.5.6",
+    "@fontsource/source-sans-pro": "4.5.9",
     "@hedgedoc/html-to-react": "1.2.0",
     "@hedgedoc/markdown-it-image-size": "1.0.3",
     "@hedgedoc/markdown-it-task-lists": "1.0.3",

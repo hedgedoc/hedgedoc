@@ -1931,10 +1931,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource/source-sans-pro@npm:4.5.6":
-  version: 4.5.6
-  resolution: "@fontsource/source-sans-pro@npm:4.5.6"
-  checksum: fedccd741c0749987ea48093aa5651c752d1b4a7b2169de470d3fa375602139ed6bb6af2647b18d5d7b08b0ecd42304d2c7d739dc152fa5dbdcfeae077c8230d
+"@fontsource/source-sans-pro@npm:4.5.9":
+  version: 4.5.9
+  resolution: "@fontsource/source-sans-pro@npm:4.5.9"
+  checksum: 48a35a7f356b717fdb3d201a780ed012ef2b5880c10ecc2573a39af75c90d650217b09a43c37034bed86f2e90bfad935b491692003a09b7d809089d681975eb0
   languageName: node
   linkType: hard
 
@@ -1977,7 +1977,7 @@ __metadata:
     "@codemirror/lang-markdown": 0.20.0
     "@codemirror/language-data": 0.20.0
     "@codemirror/theme-one-dark": 0.20.0
-    "@fontsource/source-sans-pro": 4.5.6
+    "@fontsource/source-sans-pro": 4.5.9
     "@hedgedoc/html-to-react": 1.2.0
     "@hedgedoc/markdown-it-image-size": 1.0.3
     "@hedgedoc/markdown-it-task-lists": 1.0.3
