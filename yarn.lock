@@ -34,6 +34,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@angular-devkit/core@npm:13.3.5":
+  version: 13.3.5
+  resolution: "@angular-devkit/core@npm:13.3.5"
+  dependencies:
+    ajv: 8.9.0
+    ajv-formats: 2.1.1
+    fast-json-stable-stringify: 2.1.0
+    magic-string: 0.25.7
+    rxjs: 6.6.7
+    source-map: 0.7.3
+  peerDependencies:
+    chokidar: ^3.5.2
+  peerDependenciesMeta:
+    chokidar:
+      optional: true
+  checksum: 9c0c3a5e9468ded33b881c8378c31871df234e5a2b9d876b9292d7a2ae8fb8c6a07b52eecdb170d80ec857090a5cd6c5058e06baabeac805fc62359865440093
+  languageName: node
+  linkType: hard
+
 "@angular-devkit/schematics-cli@npm:13.3.2":
   version: 13.3.2
   resolution: "@angular-devkit/schematics-cli@npm:13.3.2"
@@ -60,6 +79,19 @@ __metadata:
     ora: 5.4.1
     rxjs: 6.6.7
   checksum: 796a2f613a39e30fea1c83a8c2eb422064702d795fdd7749d57d7a72a5c40c9d569209c4cf7ad199ef61ccbb2df8f082d352b931104886a883d85071b553c448
+  languageName: node
+  linkType: hard
+
+"@angular-devkit/schematics@npm:13.3.5":
+  version: 13.3.5
+  resolution: "@angular-devkit/schematics@npm:13.3.5"
+  dependencies:
+    "@angular-devkit/core": 13.3.5
+    jsonc-parser: 3.0.0
+    magic-string: 0.25.7
+    ora: 5.4.1
+    rxjs: 6.6.7
+  checksum: 804fbe646342941324d46c73eed938ea1c1d304fef6705c50a7791bae1fd81a915067f5b37a88f4d0eedf20de22173c2e574e9eff8a21d25610c2ddfd86d82df
   languageName: node
   linkType: hard
 
@@ -1131,7 +1163,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/schematics@npm:8.0.10, @nestjs/schematics@npm:^8.0.3":
+"@nestjs/schematics@npm:8.0.11":
+  version: 8.0.11
+  resolution: "@nestjs/schematics@npm:8.0.11"
+  dependencies:
+    "@angular-devkit/core": 13.3.5
+    "@angular-devkit/schematics": 13.3.5
+    fs-extra: 10.1.0
+    jsonc-parser: 3.0.0
+    pluralize: 8.0.0
+  peerDependencies:
+    typescript: ^3.4.5 || ^4.3.5
+  checksum: f32df90df297c626b54783bbae51ebc56b6b98f81180792558de33423de6f315abdb522f01bf6de3e02a22a0871b9332d07efaafbae0bed918eb8b1d00389765
+  languageName: node
+  linkType: hard
+
+"@nestjs/schematics@npm:^8.0.3":
   version: 8.0.10
   resolution: "@nestjs/schematics@npm:8.0.10"
   dependencies:
@@ -4904,7 +4951,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:^10.0.0":
+"fs-extra@npm:10.1.0, fs-extra@npm:^10.0.0":
   version: 10.1.0
   resolution: "fs-extra@npm:10.1.0"
   dependencies:
@@ -5247,7 +5294,7 @@ __metadata:
     "@nestjs/passport": 8.2.1
     "@nestjs/platform-express": 8.4.4
     "@nestjs/schedule": 1.1.0
-    "@nestjs/schematics": 8.0.10
+    "@nestjs/schematics": 8.0.11
     "@nestjs/swagger": 5.2.1
     "@nestjs/testing": 8.4.4
     "@nestjs/typeorm": 8.0.3
