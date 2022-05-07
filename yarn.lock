@@ -2043,7 +2043,7 @@ __metadata:
     js-yaml: 4.1.0
     katex: 0.15.3
     luxon: 2.3.2
-    markdown-it: 13.0.0
+    markdown-it: 13.0.1
     markdown-it-abbr: 1.0.4
     markdown-it-anchor: 8.6.2
     markdown-it-container: 3.0.0
@@ -14124,12 +14124,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"linkify-it@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "linkify-it@npm:4.0.0"
+"linkify-it@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "linkify-it@npm:4.0.1"
   dependencies:
     uc.micro: ^1.0.1
-  checksum: 40b7b02482ecf2f9f7a4b1e276ed75028ba4e356c1ee3af88457d08e04692dfa0ebaa93ccfd6ef09ae072927d640b47a3ba5a2a62ceb0918619f4cedc36b3f9b
+  checksum: 3e0a29921269c14eb7ac6f5db2da68d4854ea9acca6e9014a323f75f2dd39b197ffab57c1fbd6a906ceb021aad3ee6d7ba7d0181236dd9630ffc452b392f7f71
   languageName: node
   linkType: hard
 
@@ -14741,18 +14741,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it@npm:13.0.0":
-  version: 13.0.0
-  resolution: "markdown-it@npm:13.0.0"
+"markdown-it@npm:13.0.1":
+  version: 13.0.1
+  resolution: "markdown-it@npm:13.0.1"
   dependencies:
     argparse: ^2.0.1
     entities: ~3.0.1
-    linkify-it: ^4.0.0
+    linkify-it: ^4.0.1
     mdurl: ^1.0.1
     uc.micro: ^1.0.5
   bin:
     markdown-it: bin/markdown-it.js
-  checksum: aa355b3f08928c746bda88c19602152d8af70d5eee3caca61a66065e1878bdd2074b2d73947b6ed5dcc6f975a9560b6c026044c4d80cd861d5d5d6757093eaba
+  checksum: faf5891d389dc433bcf21d3fbff2009beb044b42b117c92f4848899780ca1a2282a209e3ff4672db4afed726a7248304ec473e6e242a7d6498af7113d31974e7
   languageName: node
   linkType: hard
 
