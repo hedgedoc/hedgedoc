@@ -19,6 +19,7 @@ nav:
           - 'YunoHost App': setup/yunohost.md
           - 'Cloudron App': setup/cloudron.md
           - 'Arch Linux Package': setup/arch-linux.md
+          - 'PikaPods Hosting': setup/pikapods.md
   - Guides:
       - 'Reverse Proxy': guides/reverse-proxy.md
       - Authentication:
