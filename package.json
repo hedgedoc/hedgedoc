@@ -91,7 +91,7 @@
     "markmap-lib": "0.12.0",
     "markmap-view": "0.2.7",
     "mermaid": "9.0.1",
-    "next": "12.1.5",
+    "next": "12.1.6",
     "optional-js": "2.3.0",
     "react": "18.1.0",
     "react-bootstrap": "1.6.4",
@@ -114,7 +114,7 @@
     "words-count": "2.0.2"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "12.1.5",
+    "@next/bundle-analyzer": "12.1.6",
     "@testing-library/cypress": "8.0.2",
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "13.2.0",
