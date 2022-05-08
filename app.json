@@ -8,7 +8,7 @@
     ],
     "website": "https://hedgedoc.org",
     "repository": "https://github.com/hedgedoc/hedgedoc",
-    "logo": "https://github.com/hedgedoc/hedgedoc/raw/master/public/hedgedoc-icon-1024.png",
+    "logo": "https://github.com/hedgedoc/hedgedoc-logo/raw/main/LOGOTYPE/PNG/HedgeDoc-Logo%201.png",
     "success_url": "/",
     "env": {
         "NPM_CONFIG_PRODUCTION": {
@@ -40,8 +40,8 @@
             "required": false
         },
         "CMD_DOMAIN": {
-            "description": "domain name",
-            "required": false
+            "description": "your instance domain, like `example.herokuapp.com`",
+            "required": true
         },
         "CMD_URL_PATH": {
             "description": "sub url path, like `www.example.com/<URL_PATH>`",
