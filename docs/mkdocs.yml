@@ -88,3 +88,14 @@ theme:
 extra_css:
   - theme/styles/hedgedoc-custom.css
   - theme/styles/roboto.css
+
+plugins:
+  - redirects:
+      redirect_maps:
+        'setup/docker-linuxserver.md': 'setup/community.md'
+        'setup/kubernetes-helm.md': 'setup/community.md'
+        'setup/yunohost.md': 'setup/community.md'
+        'setup/cloudron.md': 'setup/community.md'
+        'setup/arch-linux.md': 'setup/community.md'
+        'setup/pikapods.md': 'setup/community.md'
+        'setup/heroku.md': 'setup/community.md'
