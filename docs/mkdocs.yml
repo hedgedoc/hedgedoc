@@ -34,6 +34,7 @@ nav:
           - Mattermost: guides/auth/mattermost-self-hosted.md
           - Nextcloud: guides/auth/nextcloud.md
           - Twitter: guides/auth/twitter.md
+          - Authelia: guides/auth/authelia.md
       - Media Backend:
           - MinIO: guides/minio-image-upload.md
           - S3: guides/s3-image-upload.md
@@ -42,7 +43,9 @@ nav:
       - Terms of Use Setup: guides/providing-terms.md
   - Configuration: configuration.md
   - References:
-    - 'HedgeDoc Flavored Markdown': references/hfm.md
+      - 'HedgeDoc Flavored Markdown': references/hfm.md
+      - 'Slide options': references/slide-options.md
+      - 'URL scheme': references/url-scheme.md
   - Developer:
       - 'Getting Started': dev/getting-started.md
       - API: dev/api.md
