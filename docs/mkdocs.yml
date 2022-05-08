@@ -12,14 +12,7 @@ nav:
       - Official installation methods:
           - 'Docker Image': setup/docker.md
           - 'Manual Installation': setup/manual-setup.md
-          - Heroku: setup/heroku.md
-      - Community installation methods:
-          - 'LinuxServer Docker Image': setup/docker-linuxserver.md
-          - 'Helm Chart': setup/kubernetes-helm.md
-          - 'YunoHost App': setup/yunohost.md
-          - 'Cloudron App': setup/cloudron.md
-          - 'Arch Linux Package': setup/arch-linux.md
-          - 'PikaPods Hosting': setup/pikapods.md
+      - 'Community installation methods': setup/community.md
   - Guides:
       - 'Reverse Proxy': guides/reverse-proxy.md
       - Authentication:

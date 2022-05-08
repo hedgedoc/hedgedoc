@@ -2,7 +2,7 @@
 
 ## Preparing for running the code
 
-**Notice:** *There's [specialised instructions for docker](../setup/docker.md) or [heroku](../setup/heroku.md), if you prefer running code this way!*
+**Notice:** *There's [specialised instructions for docker](../setup/docker.md) if you prefer running code this way!*
 
 1. Clone the repository with `git clone https://github.com/hedgedoc/hedgedoc.git hedgedoc-server`
    (cloning is the preferred way, but you can also download and unzip a release)
