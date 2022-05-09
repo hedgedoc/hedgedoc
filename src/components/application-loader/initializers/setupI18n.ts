@@ -10,6 +10,7 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import resourcesToBackend from 'i18next-resources-to-backend'
 import { Settings } from 'luxon'
 import { initReactI18next } from 'react-i18next'
+import { isDevMode } from '../../../utils/test-modes'
 
 export const setUpI18n = async (): Promise<void> => {
   await i18nUse(
@@ -27,7 +28,7 @@ export const setUpI18n = async (): Promise<void> => {
     .use(initReactI18next)
     .init({
       fallbackLng: 'en',
-      debug: process.env.NODE_ENV !== 'production',
+      debug: isDevMode,
       interpolation: {
         escapeValue: false
       }
