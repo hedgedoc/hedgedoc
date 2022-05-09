@@ -73,7 +73,7 @@ const rawNextConfig = {
     )
     return config
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   redirects: () => {
     return Promise.resolve([
       {
