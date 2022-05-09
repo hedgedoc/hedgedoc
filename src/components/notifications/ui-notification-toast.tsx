@@ -16,6 +16,7 @@ import { cypressId } from '../../utils/cypress-attribute'
 import { useEffectOnce, useInterval } from 'react-use'
 import { dismissUiNotification } from '../../redux/ui-notifications/methods'
 import styles from './notifications.module.scss'
+import { DateTime } from 'luxon'
 
 const STEPS_PER_SECOND = 10
 const log = new Logger('UiNotificationToast')
@@ -89,6 +90,8 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
       })
   }, [contentI18nKey, contentI18nOptions, t])
 
+  const formattedDate = useMemo(() => DateTime.fromSeconds(date).toRelative({ style: 'short' }), [date])
+
   return (
     <Toast className={styles.toast} show={!dismissed} onClose={dismissNow} {...cypressId('notification-toast')}>
       <Toast.Header>
@@ -98,7 +101,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
           </ShowIf>
           <Trans i18nKey={titleI18nKey} tOptions={titleI18nOptions} />
         </strong>
-        <small>{date.toRelative({ style: 'short' })}</small>
+        <small>{formattedDate}</small>
       </Toast.Header>
       <Toast.Body>{contentDom}</Toast.Body>
       <ProgressBar

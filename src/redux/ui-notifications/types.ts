@@ -5,7 +5,6 @@
  */
 
 import type { Action } from 'redux'
-import type { DateTime } from 'luxon'
 import type { IconName } from '../../components/common/fork-awesome/types'
 import type { TOptions } from 'i18next'
 
@@ -30,7 +29,7 @@ export interface DispatchOptions {
 export interface UiNotification extends DispatchOptions {
   titleI18nKey: string
   contentI18nKey: string
-  date: DateTime
+  date: number
   dismissed: boolean
 }
 
