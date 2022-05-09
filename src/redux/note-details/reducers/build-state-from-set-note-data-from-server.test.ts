@@ -114,8 +114,8 @@ describe('build state from set note data from server', () => {
       firstHeading: '',
       rawFrontmatter: '',
       id: 'id',
-      createdAt: DateTime.fromISO('2012-05-25T09:08:34.123'),
-      updatedAt: DateTime.fromISO('2020-05-25T09:08:34.123'),
+      createdAt: DateTime.fromISO('2012-05-25T09:08:34.123').toSeconds(),
+      updatedAt: DateTime.fromISO('2020-05-25T09:08:34.123').toSeconds(),
       updateUsername: 'updateusername',
       viewCount: 987,
       aliases: [

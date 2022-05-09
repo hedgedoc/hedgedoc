@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { DateTime } from 'luxon'
 import type { SlideOptions } from './slide-show-options'
 import type { ISO6391 } from './iso6391'
 import type { CursorSelection } from '../../editor/types'
@@ -16,8 +15,8 @@ type UnnecessaryNoteAttributes = 'updatedAt' | 'createdAt' | 'tags' | 'descripti
  * Redux state containing the currently loaded note with its content and metadata.
  */
 export interface NoteDetails extends Omit<NoteMetadata, UnnecessaryNoteAttributes> {
-  updatedAt: DateTime
-  createdAt: DateTime
+  updatedAt: number
+  createdAt: number
   markdownContent: {
     plain: string
     lines: string[]

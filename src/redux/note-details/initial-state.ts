@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { DateTime } from 'luxon'
 import type { NoteDetails } from './types/note-details'
 import { NoteTextDirection, NoteType } from './types/note-details'
 import type { SlideOptions } from './types/slide-show-options'
@@ -18,7 +17,6 @@ export const initialSlideOptions: SlideOptions = {
 }
 
 export const initialState: NoteDetails = {
-  updatedAt: DateTime.fromSeconds(0),
   updateUsername: null,
   version: 0,
   markdownContent: {
@@ -35,7 +33,8 @@ export const initialState: NoteDetails = {
     slideOptions: initialSlideOptions
   },
   id: '',
-  createdAt: DateTime.fromSeconds(0),
+  createdAt: 0,
+  updatedAt: 0,
   aliases: [],
   primaryAddress: '',
   permissions: {

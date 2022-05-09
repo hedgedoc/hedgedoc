@@ -46,7 +46,7 @@ const convertNoteDtoToNoteDetails = (note: Note): NoteDetails => {
       lineStartIndexes: calculateLineStartIndexes(newLines)
     },
     rawFrontmatter: '',
-    createdAt: DateTime.fromISO(note.metadata.createdAt),
-    updatedAt: DateTime.fromISO(note.metadata.updatedAt)
+    createdAt: DateTime.fromISO(note.metadata.createdAt).toSeconds(),
+    updatedAt: DateTime.fromISO(note.metadata.updatedAt).toSeconds()
   }
 }
