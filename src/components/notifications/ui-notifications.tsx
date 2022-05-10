@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { UiNotificationToast } from './ui-notification-toast'
 import styles from './notifications.module.scss'
 import { useApplicationState } from '../../hooks/common/use-application-state'
@@ -12,11 +12,15 @@ import { useApplicationState } from '../../hooks/common/use-application-state'
 export const UiNotifications: React.FC = () => {
   const notifications = useApplicationState((state) => state.uiNotifications)
 
+  const notificationElements = useMemo(() => {
+    return notifications.map((notification, notificationIndex) => (
+      <UiNotificationToast key={notificationIndex} notificationId={notificationIndex} {...notification} />
+    ))
+  }, [notifications])
+
   return (
     <div className={styles['notifications-area']} aria-live='polite' aria-atomic='true'>
-      {notifications.map((notification, notificationIndex) => (
-        <UiNotificationToast key={notificationIndex} notificationId={notificationIndex} {...notification} />
-      ))}
+      {notificationElements}
     </div>
   )
 }

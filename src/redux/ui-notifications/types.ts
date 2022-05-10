@@ -29,7 +29,7 @@ export interface DispatchOptions {
 export interface UiNotification extends DispatchOptions {
   titleI18nKey: string
   contentI18nKey: string
-  date: number
+  createdAtTimestamp: number
   dismissed: boolean
 }
 

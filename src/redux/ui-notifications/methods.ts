@@ -42,7 +42,7 @@ export const dispatchUiNotification = async (
       notification: {
         titleI18nKey,
         contentI18nKey,
-        date: DateTime.now().toSeconds(),
+        createdAtTimestamp: DateTime.now().toSeconds(),
         dismissed: false,
         titleI18nOptions: titleI18nOptions ?? {},
         contentI18nOptions: contentI18nOptions ?? {},

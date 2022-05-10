@@ -30,7 +30,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
   contentI18nKey,
   titleI18nOptions,
   contentI18nOptions,
-  date,
+  createdAtTimestamp,
   icon,
   dismissed,
   notificationId,
@@ -49,8 +49,17 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
     log.debug(`Show notification ${notificationId}`)
   })
 
+  const formatCreatedAtDate = useCallback(() => {
+    return DateTime.fromSeconds(createdAtTimestamp).toRelative({ style: 'short' })
+  }, [createdAtTimestamp])
+
+  const [formattedCreatedAtDate, setFormattedCreatedAtDate] = useState(() => formatCreatedAtDate())
+
   useInterval(
-    () => setRemainingSteps((lastRemainingSteps) => lastRemainingSteps - 1),
+    () => {
+      setRemainingSteps((lastRemainingSteps) => lastRemainingSteps - 1)
+      setFormattedCreatedAtDate(formatCreatedAtDate())
+    },
     !dismissed && remainingSteps > 0 ? 1000 / STEPS_PER_SECOND : null
   )
 
@@ -90,8 +99,6 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
       })
   }, [contentI18nKey, contentI18nOptions, t])
 
-  const formattedDate = useMemo(() => DateTime.fromSeconds(date).toRelative({ style: 'short' }), [date])
-
   return (
     <Toast className={styles.toast} show={!dismissed} onClose={dismissNow} {...cypressId('notification-toast')}>
       <Toast.Header>
@@ -101,7 +108,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({
           </ShowIf>
           <Trans i18nKey={titleI18nKey} tOptions={titleI18nOptions} />
         </strong>
-        <small>{formattedDate}</small>
+        <small>{formattedCreatedAtDate}</small>
       </Toast.Header>
       <Toast.Body>{contentDom}</Toast.Body>
       <ProgressBar
