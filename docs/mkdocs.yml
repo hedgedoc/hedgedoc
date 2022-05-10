@@ -9,7 +9,6 @@ nav:
   - Home: index.md
   - Installation:
       - 'Getting Started': setup/getting-started.md
-      - 'YAML Metadata': yaml-metadata.md
       - Official installation methods:
           - 'Docker Image': setup/docker.md
           - 'Manual Installation': setup/manual-setup.md
@@ -23,6 +22,7 @@ nav:
           - 'PikaPods Hosting': setup/pikapods.md
   - Guides:
       - 'Reverse Proxy': guides/reverse-proxy.md
+      - 'YAML Metadata': yaml-metadata.md
       - Authentication:
           - LDAP: guides/auth/ldap-ad.md
           - OAuth: guides/auth/oauth.md
