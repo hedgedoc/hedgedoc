@@ -22,7 +22,6 @@ nav:
           - 'PikaPods Hosting': setup/pikapods.md
   - Guides:
       - 'Reverse Proxy': guides/reverse-proxy.md
-      - 'YAML Metadata': yaml-metadata.md
       - Authentication:
           - LDAP: guides/auth/ldap-ad.md
           - OAuth: guides/auth/oauth.md
@@ -44,6 +43,7 @@ nav:
   - Configuration: configuration.md
   - References:
     - 'HedgeDoc Flavored Markdown': references/hfm.md
+    - 'YAML Metadata': yaml-metadata.md
   - Developer:
       - 'Getting Started': dev/getting-started.md
       - API: dev/api.md
