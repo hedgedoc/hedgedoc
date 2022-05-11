@@ -5,7 +5,7 @@
  */
 
 import type { PropsWithChildren } from 'react'
-import React, { Suspense } from 'react'
+import React, { Fragment, Suspense, useMemo } from 'react'
 import { createSetUpTaskList } from './initializers'
 import { LoadingScreen } from './loading-screen/loading-screen'
 import { Logger } from '../../utils/logger'
@@ -27,8 +27,20 @@ export const ApplicationLoader: React.FC<PropsWithChildren<unknown>> = ({ childr
     }
   }, [])
 
-  if (loading) {
-    return <LoadingScreen failedTaskName={error?.message} />
+  const errorBlock = useMemo(() => {
+    if (error) {
+      return (
+        <Fragment>
+          {error.message}
+          <br />
+          For further information look into the browser console.
+        </Fragment>
+      )
+    }
+  }, [error])
+
+  if (loading || !!errorBlock) {
+    return <LoadingScreen errorMessage={errorBlock} />
   } else {
     return <Suspense fallback={<LoadingScreen />}>{children}</Suspense>
   }

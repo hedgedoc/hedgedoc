@@ -12,7 +12,7 @@ import { useApplicationState } from '../../../hooks/common/use-application-state
 import type { HistoryEntryWithOrigin } from '../../../api/history/types'
 import { HistoryEntryOrigin } from '../../../api/history/types'
 
-export const useUpdateLocalHistoryEntry = (updateReady: boolean): void => {
+export const useUpdateLocalHistoryEntry = (): void => {
   const id = useApplicationState((state) => state.noteDetails.id)
   const userExists = useApplicationState((state) => !!state.user)
   const currentNoteTitle = useApplicationState((state) => state.noteDetails.title)
@@ -22,7 +22,7 @@ export const useUpdateLocalHistoryEntry = (updateReady: boolean): void => {
   const lastNoteTags = useRef<string[]>([])
 
   useEffect(() => {
-    if (!updateReady || userExists) {
+    if (userExists) {
       return
     }
     if (currentNoteTitle === lastNoteTitle.current && equal(currentNoteTags, lastNoteTags.current)) {
@@ -46,5 +46,5 @@ export const useUpdateLocalHistoryEntry = (updateReady: boolean): void => {
     updateLocalHistoryEntry(id, entry)
     lastNoteTitle.current = currentNoteTitle
     lastNoteTags.current = currentNoteTags
-  }, [updateReady, id, userExists, currentNoteTitle, currentNoteTags])
+  }, [id, userExists, currentNoteTitle, currentNoteTags])
 }

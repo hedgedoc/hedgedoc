@@ -5,6 +5,6 @@
  */
 export class ApplicationLoaderError extends Error {
   constructor(taskName: string) {
-    super(`Task ${taskName} failed`)
+    super(`The task ${taskName} failed`)
   }
 }

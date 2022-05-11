@@ -120,7 +120,7 @@ export abstract class WindowPostMessageCommunicator<
    * @param handler The handler that processes messages with the given message type.
    */
   public setHandler<R extends RECEIVE_TYPE>(messageType: R, handler: MaybeHandler<MESSAGES, R>): void {
-    this.log.debug('Set handler for', messageType)
+    this.log.debug(handler === undefined ? 'Unset' : 'Set', 'handler for', messageType)
     this.handlers[messageType] = handler as MaybeHandler<MESSAGES, RECEIVE_TYPE>
   }
 

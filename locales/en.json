@@ -40,6 +40,15 @@
       "uploadMessage": "Uploading file"
     }
   },
+  "noteLoadingBoundary": {
+    "errorWhileLoadingContent": "Error while loading note."
+  },
+  "api": {
+    "note": {
+      "notFound": "Note not found.",
+      "accessDenied": "You don't have the needed permission to access this note."
+    }
+  },
   "landing": {
     "intro": {
       "exploreFeatures": "Explore all features",

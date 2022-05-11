@@ -15,7 +15,9 @@ import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-ap
  * @return Content and metadata of the specified note.
  */
 export const getNote = async (noteIdOrAlias: string): Promise<Note> => {
-  const response = await new GetApiRequestBuilder<Note>('notes/' + noteIdOrAlias).sendRequest()
+  const response = await new GetApiRequestBuilder<Note>('notes/' + noteIdOrAlias)
+    .withStatusCodeErrorMapping({ 404: 'api.note.notFound', 403: 'api.note.accessDenied' })
+    .sendRequest()
   return response.asParsedJsonObject()
 }
 

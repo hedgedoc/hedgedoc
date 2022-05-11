@@ -9,12 +9,8 @@ import { useTranslation } from 'react-i18next'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { setCheckboxInMarkdownContent, updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
 import { MotdModal } from '../common/motd-modal/motd-modal'
-import { ShowIf } from '../common/show-if/show-if'
-import { ErrorWhileLoadingNoteAlert } from '../document-read-only-page/ErrorWhileLoadingNoteAlert'
-import { LoadingNoteAlert } from '../document-read-only-page/LoadingNoteAlert'
 import { AppBar, AppBarMode } from './app-bar/app-bar'
 import { EditorMode } from './app-bar/editor-view-mode'
-import { useLoadNoteFromServer } from './hooks/useLoadNoteFromServer'
 import { useViewModeShortcuts } from './hooks/useViewModeShortcuts'
 import { Sidebar } from './sidebar/sidebar'
 import { Splitter } from './splitter/splitter'
@@ -30,10 +26,6 @@ import { NoteType } from '../../redux/note-details/types/note-details'
 import { NoteAndAppTitleHead } from '../layout/note-and-app-title-head'
 import equal from 'fast-deep-equal'
 import { EditorPane } from './editor-pane/editor-pane'
-
-export interface EditorPagePathParams {
-  id: string
-}
 
 export enum ScrollSource {
   EDITOR = 'editor',
@@ -94,9 +86,7 @@ export const EditorPageContent: React.FC = () => {
   useApplyDarkMode()
   useEditorModeFromUrl()
 
-  const [error, loading] = useLoadNoteFromServer()
-
-  useUpdateLocalHistoryEntry(!error && !loading)
+  useUpdateLocalHistoryEntry()
 
   const setRendererToScrollSource = useCallback(() => {
     if (scrollSource.current !== ScrollSource.RENDERER) {
@@ -146,22 +136,16 @@ export const EditorPageContent: React.FC = () => {
       <MotdModal />
       <div className={'d-flex flex-column vh-100'}>
         <AppBar mode={AppBarMode.EDITOR} />
-        <div className={'container'}>
-          <ErrorWhileLoadingNoteAlert show={error} />
-          <LoadingNoteAlert show={loading} />
+        <div className={'flex-fill d-flex h-100 w-100 overflow-hidden flex-row'}>
+          <Splitter
+            showLeft={editorMode === EditorMode.EDITOR || editorMode === EditorMode.BOTH}
+            left={leftPane}
+            showRight={editorMode === EditorMode.PREVIEW || editorMode === EditorMode.BOTH}
+            right={rightPane}
+            additionalContainerClassName={'overflow-hidden'}
+          />
+          <Sidebar />
         </div>
-        <ShowIf condition={!error && !loading}>
-          <div className={'flex-fill d-flex h-100 w-100 overflow-hidden flex-row'}>
-            <Splitter
-              showLeft={editorMode === EditorMode.EDITOR || editorMode === EditorMode.BOTH}
-              left={leftPane}
-              showRight={editorMode === EditorMode.PREVIEW || editorMode === EditorMode.BOTH}
-              right={rightPane}
-              additionalContainerClassName={'overflow-hidden'}
-            />
-            <Sidebar />
-          </div>
-        </ShowIf>
       </div>
     </Fragment>
   )
