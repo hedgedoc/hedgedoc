@@ -2068,7 +2068,7 @@ __metadata:
     optional-js: 2.3.0
     prettier: 2.6.2
     react: 18.1.0
-    react-bootstrap: 1.6.4
+    react-bootstrap: 1.6.5
     react-bootstrap-typeahead: 5.2.2
     react-diff-viewer: 3.1.1
     react-dom: 18.1.0
@@ -3635,7 +3635,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@restart/hooks@npm:^0.4.0":
+"@restart/hooks@npm:^0.4.0, @restart/hooks@npm:^0.4.7":
   version: 0.4.7
   resolution: "@restart/hooks@npm:0.4.7"
   dependencies:
@@ -17237,13 +17237,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-bootstrap@npm:1.6.4":
-  version: 1.6.4
-  resolution: "react-bootstrap@npm:1.6.4"
+"react-bootstrap@npm:1.6.5":
+  version: 1.6.5
+  resolution: "react-bootstrap@npm:1.6.5"
   dependencies:
     "@babel/runtime": ^7.14.0
     "@restart/context": ^2.1.4
-    "@restart/hooks": ^0.3.26
+    "@restart/hooks": ^0.4.7
     "@types/invariant": ^2.2.33
     "@types/prop-types": ^15.7.3
     "@types/react": ">=16.14.8"
@@ -17254,14 +17254,14 @@ __metadata:
     invariant: ^2.2.4
     prop-types: ^15.7.2
     prop-types-extra: ^1.1.0
-    react-overlays: ^5.1.1
+    react-overlays: ^5.1.2
     react-transition-group: ^4.4.1
     uncontrollable: ^7.2.1
     warning: ^4.0.3
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: c68ecd9becbcd55328a899ee4ae246d0a0a21082ab603caf10da22f27a635088227e93ea3e3c380c883538a8e07e0b8e017868f562dcd72fa85998a830be8124
+  checksum: d579f5ba3a436a594d9c254206319f2506da4156e413ac8d8b7fa3b854a447a094e9c962b129e2390ae283bfaf1e87ec0d3a290513489cd635325425c8e8f26c
   languageName: node
   linkType: hard
 
@@ -17341,7 +17341,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-overlays@npm:^5.1.0, react-overlays@npm:^5.1.1":
+"react-overlays@npm:^5.1.0":
   version: 5.1.1
   resolution: "react-overlays@npm:5.1.1"
   dependencies:
@@ -17357,6 +17357,25 @@ __metadata:
     react: ">=16.3.0"
     react-dom: ">=16.3.0"
   checksum: 8145f066ea7a70d51901561e5c883a638b12217baa523330506323f92bae515c557247aa4846b6d537fa8dd7fd1ddcea53cab6b2a1e3d216922590b5cdc94ddf
+  languageName: node
+  linkType: hard
+
+"react-overlays@npm:^5.1.2":
+  version: 5.1.2
+  resolution: "react-overlays@npm:5.1.2"
+  dependencies:
+    "@babel/runtime": ^7.13.8
+    "@popperjs/core": ^2.8.6
+    "@restart/hooks": ^0.4.7
+    "@types/warning": ^3.0.0
+    dom-helpers: ^5.2.0
+    prop-types: ^15.7.2
+    uncontrollable: ^7.2.1
+    warning: ^4.0.3
+  peerDependencies:
+    react: ">=16.3.0"
+    react-dom: ">=16.3.0"
+  checksum: 5ccbb425cccdcb5bd0d0dc5ea155a66b12bac53b8b1393b10a2dedc530bde8b7c1d820db9aee2cc48820012649876998c3c792394330e513ade252ec1dd80ba5
   languageName: node
   linkType: hard
 
