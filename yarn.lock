@@ -2000,10 +2000,10 @@ __metadata:
     "@types/markdown-it-container": 2.0.5
     "@types/markdown-it-plantuml": 1.4.1
     "@types/mermaid": 8.2.9
-    "@types/node": 16.11.33
+    "@types/node": 16.11.35
     "@types/react": 18.0.9
     "@types/react-bootstrap-typeahead": 5.1.8
-    "@types/react-dom": 18.0.3
+    "@types/react-dom": 18.0.4
     "@types/sass": 1.43.1
     "@types/uuid": 8.3.4
     "@typescript-eslint/eslint-plugin": 5.22.0
@@ -4718,10 +4718,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:16.11.33, @types/node@npm:^16.0.0":
-  version: 16.11.33
-  resolution: "@types/node@npm:16.11.33"
-  checksum: 5c86d3f1e3b996607b41405d368d2e19d410eee0054595cef73d230368a609a2863926e75ad19f5091f0fd742cd018b667d54c51292018dd8020a202a5b29fa9
+"@types/node@npm:16.11.35":
+  version: 16.11.35
+  resolution: "@types/node@npm:16.11.35"
+  checksum: c06e8716f579ba41e65f27bfc8a90276f2b0c3324f33372dab75ca73a11971da12dbfb89fffd2289d890b3ec31136c55c2bf6afdf5ae06183d0f4590512ec3db
   languageName: node
   linkType: hard
 
@@ -4729,6 +4729,13 @@ __metadata:
   version: 14.18.16
   resolution: "@types/node@npm:14.18.16"
   checksum: 1999799309dc8620a2adf9a5d5e48416af87321bae4c950b4aa8018fcef2c3b6c1fcf98c39eae06f6492c03a643a5a44e2bb3750cd2574d9cf7eac33bac50e24
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^16.0.0":
+  version: 16.11.33
+  resolution: "@types/node@npm:16.11.33"
+  checksum: 5c86d3f1e3b996607b41405d368d2e19d410eee0054595cef73d230368a609a2863926e75ad19f5091f0fd742cd018b667d54c51292018dd8020a202a5b29fa9
   languageName: node
   linkType: hard
 
@@ -4783,7 +4790,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.0.3, @types/react-dom@npm:^18.0.0":
+"@types/react-dom@npm:18.0.4":
+  version: 18.0.4
+  resolution: "@types/react-dom@npm:18.0.4"
+  dependencies:
+    "@types/react": "*"
+  checksum: decde42d02a90ac2fe94fd6bfd9c78d002c03762a2d940df9422bf61af89c03d05e2113fd55fe45521fe27fa872a79dfd654b7d6b89652b455425efdcb763c58
+  languageName: node
+  linkType: hard
+
+"@types/react-dom@npm:^18.0.0":
   version: 18.0.3
   resolution: "@types/react-dom@npm:18.0.3"
   dependencies:
