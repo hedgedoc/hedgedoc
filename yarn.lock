@@ -4523,7 +4523,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express-session@npm:1.17.2, express-session@npm:^1.15.6":
+"express-session@npm:1.17.3":
+  version: 1.17.3
+  resolution: "express-session@npm:1.17.3"
+  dependencies:
+    cookie: 0.4.2
+    cookie-signature: 1.0.6
+    debug: 2.6.9
+    depd: ~2.0.0
+    on-headers: ~1.0.2
+    parseurl: ~1.3.3
+    safe-buffer: 5.2.1
+    uid-safe: ~2.1.5
+  checksum: 1021a793433cbc6a1b32c803fcb2daa1e03a8f50dd907e8745ae57994370315a5cfde5b6ef7b062d9a9a0754ff268844bda211c08240b3a0e01014dcf1073ec5
+  languageName: node
+  linkType: hard
+
+"express-session@npm:^1.15.6":
   version: 1.17.2
   resolution: "express-session@npm:1.17.2"
   dependencies:
@@ -5258,7 +5274,7 @@ __metadata:
     eslint-plugin-jest: 26.1.5
     eslint-plugin-local-rules: 1.1.0
     eslint-plugin-prettier: 4.0.0
-    express-session: 1.17.2
+    express-session: 1.17.3
     file-type: 16.5.3
     http-proxy-middleware: 2.0.6
     jest: 28.1.0
