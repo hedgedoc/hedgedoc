@@ -34,7 +34,7 @@
     "@nestjs/swagger": "5.2.1",
     "@nestjs/typeorm": "8.0.3",
     "@types/bcrypt": "5.0.0",
-    "@types/cron": "1.7.3",
+    "@types/cron": "2.0.0",
     "@types/minio": "7.0.13",
     "@types/node-fetch": "2.6.1",
     "@types/passport-http-bearer": "1.0.37",
