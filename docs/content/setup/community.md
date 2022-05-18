@@ -1,16 +1,18 @@
-# Community installation methods
+# Community Installation Methods
 
 The HedgeDoc community has created and tested many options for deploying HedgeDoc on other platforms or operating systems.
 You can check them out below. Feel free to create a PR to add your tested community installation method.
 
+These are not officially supported by the HegeDoc maintainers. If you encounter issues or have questions, please first reach out to downstream packagers.
+
 ## Container Deployments
 
-### LinuxServer.io Docker image
+### LinuxServer.io Docker Image
 
 [![Discord](https://img.shields.io/discord/354974912613449730.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=Discord&logo=discord)](https://discord.gg/YWrKVTn "realtime support / chat with the community and the team.")
 [![GitHub Release](https://img.shields.io/github/release/linuxserver/docker-hedgedoc.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-hedgedoc/releases)
 
-[LinuxServer.io](https://linuxserver.io) have created an Ubuntu-based multi-arch container image for x86-64, arm64 and armhf.
+[LinuxServer.io](https://linuxserver.io) have created an Alpine-based multi-arch container image for x86-64, arm64 and armhf.
 
 - It supports all the environment variables detailed in the [configuration documentation](../configuration.md) to modify it according to your needs.
 - It gets rebuilt on new releases from HedgeDoc and also weekly if necessary to update any other package changes in the underlying container, making it easy to keep your HedgeDoc instance up to date.
