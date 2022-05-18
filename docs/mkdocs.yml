@@ -9,10 +9,10 @@ nav:
   - Home: index.md
   - Installation:
       - 'Getting Started': setup/getting-started.md
-      - Official installation methods:
+      - Official Installation Methods:
           - 'Docker Image': setup/docker.md
           - 'Manual Installation': setup/manual-setup.md
-      - 'Community installation methods': setup/community.md
+      - 'Community Installation Methods': setup/community.md
   - Guides:
       - 'Reverse Proxy': guides/reverse-proxy.md
       - Authentication:
