@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,7 @@ import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
 import type { IconName } from '../fork-awesome/types'
 import { ShowIf } from '../show-if/show-if'
 import styles from './icon-button.module.scss'
+import { testId } from '../../../utils/test-id'
 
 export interface IconButtonProps extends ButtonProps {
   icon: IconName
@@ -32,7 +33,8 @@ export const IconButton: React.FC<IconButtonProps> = ({
       {...props}
       className={`${styles['btn-icon']} p-0 d-inline-flex align-items-stretch ${border ? styles['with-border'] : ''} ${
         className ?? ''
-      }`}>
+      }`}
+      {...testId('icon-button')}>
       <span className={`${styles['icon-part']} d-flex align-items-center`}>
         <ForkAwesomeIcon icon={icon} fixedWidth={iconFixedWidth} className={'icon'} />
       </span>
