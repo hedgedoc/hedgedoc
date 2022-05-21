@@ -2011,7 +2011,7 @@ __metadata:
     "@uiw/react-codemirror": 4.7.0
     abcjs: 6.0.2
     bootstrap: 4.6.1
-    copy-webpack-plugin: 10.2.4
+    copy-webpack-plugin: 11.0.0
     cross-env: 7.0.3
     cypress: 9.6.1
     cypress-commands: 2.0.1
@@ -5677,13 +5677,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"array-union@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "array-union@npm:3.0.1"
-  checksum: 47b29f88258e8f37ffb93ddaa327d4308edd950b52943c172b73558afdd3fa74cfd68816ba5aa4b894242cf281fa3c6d0362ae057e4a18bddbaedbe46ebe7112
-  languageName: node
-  linkType: hard
-
 "array-uniq@npm:^1.0.1":
   version: 1.0.3
   resolution: "array-uniq@npm:1.0.3"
@@ -7196,19 +7189,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"copy-webpack-plugin@npm:10.2.4":
-  version: 10.2.4
-  resolution: "copy-webpack-plugin@npm:10.2.4"
+"copy-webpack-plugin@npm:11.0.0":
+  version: 11.0.0
+  resolution: "copy-webpack-plugin@npm:11.0.0"
   dependencies:
-    fast-glob: ^3.2.7
+    fast-glob: ^3.2.11
     glob-parent: ^6.0.1
-    globby: ^12.0.2
+    globby: ^13.1.1
     normalize-path: ^3.0.0
     schema-utils: ^4.0.0
     serialize-javascript: ^6.0.0
   peerDependencies:
     webpack: ^5.1.0
-  checksum: 87f0f4530ab3e58ec06a7c3182028dfd8cc85b045a0d18c4464caafeae1ed1141c2aad6eae37e100a74a72b69dc48c93af358c07038b7a22f490a678c0ab142e
+  checksum: df4f8743f003a29ee7dd3d9b1789998a3a99051c92afb2ba2203d3dacfa696f4e757b275560fafb8f206e520a0aa78af34b990324a0e36c2326cefdeef3ca82e
   languageName: node
   linkType: hard
 
@@ -10420,7 +10413,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.7, fast-glob@npm:^3.2.9":
+"fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.9":
   version: 3.2.11
   resolution: "fast-glob@npm:3.2.11"
   dependencies:
@@ -11378,21 +11371,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globby@npm:^12.0.2":
-  version: 12.2.0
-  resolution: "globby@npm:12.2.0"
-  dependencies:
-    array-union: ^3.0.1
-    dir-glob: ^3.0.1
-    fast-glob: ^3.2.7
-    ignore: ^5.1.9
-    merge2: ^1.4.1
-    slash: ^4.0.0
-  checksum: 2539379a7fff3473d3e7c68b4540ba38f36970f43f760e36e301515d5cb98a0c5736554957d90390906bee632327beb2f9518d1acd6911f61e436db11b0da5b5
-  languageName: node
-  linkType: hard
-
-"globby@npm:^13.0.0":
+"globby@npm:^13.0.0, globby@npm:^13.1.1":
   version: 13.1.1
   resolution: "globby@npm:13.1.1"
   dependencies:
@@ -11992,7 +11971,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ignore@npm:^5.1.1, ignore@npm:^5.1.8, ignore@npm:^5.1.9, ignore@npm:^5.2.0":
+"ignore@npm:^5.1.1, ignore@npm:^5.1.8, ignore@npm:^5.2.0":
   version: 5.2.0
   resolution: "ignore@npm:5.2.0"
   checksum: 6b1f926792d614f64c6c83da3a1f9c83f6196c2839aa41e1e32dd7b8d174cef2e329d75caabb62cb61ce9dc432f75e67d07d122a037312db7caa73166a1bdb77

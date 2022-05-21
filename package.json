@@ -52,7 +52,7 @@
     "@uiw/react-codemirror": "4.7.0",
     "abcjs": "6.0.2",
     "bootstrap": "4.6.1",
-    "copy-webpack-plugin": "10.2.4",
+    "copy-webpack-plugin": "11.0.0",
     "cross-env": "7.0.3",
     "d3-graphviz": "4.1.1",
     "deepmerge": "4.2.2",
