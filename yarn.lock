@@ -2000,7 +2000,7 @@ __metadata:
     "@types/markdown-it-container": 2.0.5
     "@types/markdown-it-plantuml": 1.4.1
     "@types/mermaid": 8.2.9
-    "@types/node": 16.11.35
+    "@types/node": 16.11.36
     "@types/react": 18.0.9
     "@types/react-bootstrap-typeahead": 5.1.8
     "@types/react-dom": 18.0.4
@@ -4707,10 +4707,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:16.11.35, @types/node@npm:^16.0.0":
-  version: 16.11.35
-  resolution: "@types/node@npm:16.11.35"
-  checksum: c06e8716f579ba41e65f27bfc8a90276f2b0c3324f33372dab75ca73a11971da12dbfb89fffd2289d890b3ec31136c55c2bf6afdf5ae06183d0f4590512ec3db
+"@types/node@npm:16.11.36":
+  version: 16.11.36
+  resolution: "@types/node@npm:16.11.36"
+  checksum: 878e8e2032869785dd4f73dd862042c7eb588fb9a27199f1b493a7029438ccb58f96e203c35c2e66e08307ca3f9767133cae888958c15e031982f7e9719e5e47
   languageName: node
   linkType: hard
 
@@ -4718,6 +4718,13 @@ __metadata:
   version: 14.18.18
   resolution: "@types/node@npm:14.18.18"
   checksum: a165225cd2603f6e62af8407449e4a4407305e03b41c1adf6b186fdf546e1a03c8214217659b5b36c556947c0c06234993ac880d4db6378136a7a810d47e0742
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^16.0.0":
+  version: 16.11.35
+  resolution: "@types/node@npm:16.11.35"
+  checksum: c06e8716f579ba41e65f27bfc8a90276f2b0c3324f33372dab75ca73a11971da12dbfb89fffd2289d890b3ec31136c55c2bf6afdf5ae06183d0f4590512ec3db
   languageName: node
   linkType: hard
 
