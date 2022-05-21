@@ -1589,7 +1589,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/lang-markdown@npm:0.20.0, @codemirror/lang-markdown@npm:^0.20.0":
+"@codemirror/lang-markdown@npm:0.20.1":
+  version: 0.20.1
+  resolution: "@codemirror/lang-markdown@npm:0.20.1"
+  dependencies:
+    "@codemirror/lang-html": ^0.20.0
+    "@codemirror/language": ^0.20.0
+    "@codemirror/state": ^0.20.0
+    "@codemirror/view": ^0.20.0
+    "@lezer/common": ^0.16.0
+    "@lezer/markdown": ^0.16.0
+  checksum: cc8ba82f8d5c1e279ad5d64d096c476327b9b83e5f9dda70c63258fcf21d97be3d66ada90d32af7f4fdd6f6bea51bf493e247a5875f0d05b8a34c34b701bcab3
+  languageName: node
+  linkType: hard
+
+"@codemirror/lang-markdown@npm:^0.20.0":
   version: 0.20.0
   resolution: "@codemirror/lang-markdown@npm:0.20.0"
   dependencies:
@@ -1974,7 +1988,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/react-client@workspace:."
   dependencies:
-    "@codemirror/lang-markdown": 0.20.0
+    "@codemirror/lang-markdown": 0.20.1
     "@codemirror/language-data": 0.20.0
     "@codemirror/theme-one-dark": 0.20.0
     "@fontsource/source-sans-pro": 4.5.9

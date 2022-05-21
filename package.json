@@ -37,7 +37,7 @@
     ]
   },
   "dependencies": {
-    "@codemirror/lang-markdown": "0.20.0",
+    "@codemirror/lang-markdown": "0.20.1",
     "@codemirror/language-data": "0.20.0",
     "@codemirror/theme-one-dark": "0.20.0",
     "@fontsource/source-sans-pro": "4.5.9",
