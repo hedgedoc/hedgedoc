@@ -6,9 +6,10 @@
 
 import type MarkdownIt from 'markdown-it'
 import type { RuleCore } from 'markdown-it/lib/parser_core'
+import Optional from 'optional-js'
+import { parseCodeBlockParameters } from './code-block-parameters'
 
 const ruleName = 'code-highlighter'
-const codeFenceArguments = /^ *([\w-]*)(.*)$/
 
 /**
  * Extracts the language name and additional flags from the code fence parameter and sets them as attributes in the token.
@@ -19,16 +20,13 @@ const codeFenceArguments = /^ *([\w-]*)(.*)$/
 const rule: RuleCore = (state) => {
   state.tokens.forEach((token) => {
     if (token.type === 'fence') {
-      const highlightInfos = codeFenceArguments.exec(token.info)
-      if (!highlightInfos) {
-        return
-      }
-      if (highlightInfos[1]) {
-        token.attrJoin('data-highlight-language', highlightInfos[1])
-      }
-      if (highlightInfos[2]) {
-        token.attrJoin('data-extra', highlightInfos[2])
-      }
+      const highlightInfos = parseCodeBlockParameters(token.info)
+      Optional.ofNullable(highlightInfos.language).ifPresent((language) =>
+        token.attrJoin('data-highlight-language', language)
+      )
+      Optional.ofNullable(highlightInfos.codeFenceParameters).ifPresent((language) =>
+        token.attrJoin('data-extra', language)
+      )
     }
   })
   return true

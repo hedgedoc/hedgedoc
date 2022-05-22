@@ -25,12 +25,13 @@ import { useCodeMirrorScrollWatchExtension } from './hooks/code-mirror-extension
 import { useCodeMirrorPasteExtension } from './hooks/code-mirror-extensions/use-code-mirror-paste-extension'
 import { useCodeMirrorFileDropExtension } from './hooks/code-mirror-extensions/use-code-mirror-file-drop-extension'
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
-import { languages } from '@codemirror/language-data'
 import { EditorView } from '@codemirror/view'
 import { autocompletion } from '@codemirror/autocomplete'
 import { useCodeMirrorFocusReference } from './hooks/use-code-mirror-focus-reference'
 import { useOffScreenScrollProtection } from './hooks/use-off-screen-scroll-protection'
 import { cypressId } from '../../../utils/cypress-attribute'
+import { findLanguageByCodeBlockName } from '../../markdown-renderer/markdown-extension/code-block-markdown-extension/find-language-by-code-block-name'
+import { languages } from '@codemirror/language-data'
 
 const logger = new Logger('EditorPane')
 
@@ -62,7 +63,10 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
 
   const extensions = useMemo(
     () => [
-      markdown({ base: markdownLanguage, codeLanguages: languages }),
+      markdown({
+        base: markdownLanguage,
+        codeLanguages: (input) => findLanguageByCodeBlockName(languages, input)
+      }),
       ...saveOffFocusScrollStateExtensions,
       focusExtension,
       EditorView.lineWrapping,
