@@ -1177,17 +1177,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/schedule@npm:1.1.0":
-  version: 1.1.0
-  resolution: "@nestjs/schedule@npm:1.1.0"
+"@nestjs/schedule@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@nestjs/schedule@npm:2.0.1"
   dependencies:
-    cron: 1.8.2
+    cron: 2.0.0
     uuid: 8.3.2
   peerDependencies:
     "@nestjs/common": ^6.10.11 || ^7.0.0 || ^8.0.0
     "@nestjs/core": ^7.0.0 || ^8.0.0
     reflect-metadata: ^0.1.12
-  checksum: 382345a993e88f5a8a2f13ee7315c103ef4b4bf437af8c7b4fe4a35cdc0aae0a73e5d64a798561dd9534b52768fa4381752e94439b9320962a8e117b22cfb3f9
+  checksum: 2819ef98fabcf90cdae1e98ca7c76cac2195b0de0c717f95afafc1df62b9c09f3353a72a942793c2b0642704a04bacb1bddaa2f3637d1e07b9f08f76e605d3f7
   languageName: node
   linkType: hard
 
@@ -3693,12 +3693,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cron@npm:1.8.2":
-  version: 1.8.2
-  resolution: "cron@npm:1.8.2"
+"cron@npm:2.0.0":
+  version: 2.0.0
+  resolution: "cron@npm:2.0.0"
   dependencies:
-    moment-timezone: ^0.5.x
-  checksum: 9df2d2e24684e1ebce37e3e29c183b1dfecf7adb5fb16f84435014e7205926fc9868e9bfacfa5f7b93c556c9f4a6fbcce5fde9bee1306d20bc848568bb587791
+    luxon: ^1.23.x
+  checksum: 179ec137ada4ceb44cafe51c55491e84954308d7012d2a44539f0dadbbb1ffbbe3072c2f7aaa88595d60bd56e0d536aae2e4aaa4430c869317d6c2abd966988b
   languageName: node
   linkType: hard
 
@@ -5283,7 +5283,7 @@ __metadata:
     "@nestjs/core": 8.4.5
     "@nestjs/passport": 8.2.1
     "@nestjs/platform-express": 8.4.5
-    "@nestjs/schedule": 1.1.0
+    "@nestjs/schedule": 2.0.1
     "@nestjs/schematics": 8.0.11
     "@nestjs/swagger": 5.2.1
     "@nestjs/testing": 8.4.5
@@ -6767,6 +6767,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"luxon@npm:^1.23.x":
+  version: 1.28.0
+  resolution: "luxon@npm:1.28.0"
+  checksum: 5250cb9f138b6048eeb0b3a9044a4ac994d0058f680c72a0da4b6aeaec8612460385639cba2b1052ef6d5564879e9ed144d686f26d9d97b38ab920d82e18281c
+  languageName: node
+  linkType: hard
+
 "macos-release@npm:^2.5.0":
   version: 2.5.0
   resolution: "macos-release@npm:2.5.0"
@@ -7171,16 +7178,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment-timezone@npm:^0.5.x":
-  version: 0.5.34
-  resolution: "moment-timezone@npm:0.5.34"
-  dependencies:
-    moment: ">= 2.9.0"
-  checksum: 12a1d3d52e4ba509cf1fa36bbda59d898a08fa80ab35f6c358747e93aec1f07e617cec647eaf2e8acf5f9132e581d4704d34a9edffa9a80c5cd04bf23b277595
-  languageName: node
-  linkType: hard
-
-"moment@npm:>= 2.9.0, moment@npm:>=2.14.0":
+"moment@npm:>=2.14.0":
   version: 2.29.3
   resolution: "moment@npm:2.29.3"
   checksum: 2e780e36d9a1823c08a1b6313cbb08bd01ecbb2a9062095820a34f42c878991ccba53abaa6abb103fd5c01e763724f295162a8c50b7e95b4f1c992ef0772d3f0
