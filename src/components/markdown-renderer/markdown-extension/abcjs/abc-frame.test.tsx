@@ -10,9 +10,11 @@ import { AbcFrame } from './abc-frame'
 import { mockI18n } from '../../test-utils/mock-i18n'
 
 describe('AbcFrame', () => {
-  beforeEach(async () => {
+  afterEach(() => {
     jest.resetModules()
     jest.restoreAllMocks()
+  })
+  beforeEach(async () => {
     await mockI18n()
   })
 
