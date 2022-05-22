@@ -109,16 +109,21 @@ export class RevisionsService {
   }
 
   async getRevisionUserInfo(revision: Revision): Promise<RevisionUserInfo> {
-    const users = await Promise.all(
-      (
-        await revision.edits
-      ).map(async (edit) => await (await edit.author).user),
+    // get a deduplicated list of all authors
+    let authors = await Promise.all(
+      (await revision.edits).map(async (edit) => await edit.author),
     );
+    authors = [...new Set(authors)]; // remove duplicates with Set
+
+    // retrieve user objects of the authors
+    const users = await Promise.all(
+      authors.map(async (author) => await author.user),
+    );
+    // collect usernames of the users
     const usernames = users.flatMap((user) => (user ? [user.username] : []));
-    const anonymousUserCount = users.filter((user) => user === null).length;
     return {
       usernames: usernames,
-      anonymousUserCount: anonymousUserCount,
+      anonymousUserCount: users.length - usernames.length,
     };
   }
 

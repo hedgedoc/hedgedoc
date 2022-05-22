@@ -163,4 +163,26 @@ describe('RevisionsService', () => {
       expect(revisions).toEqual(updatedRevisions);
     });
   });
+
+  describe('getRevisionUserInfo', () => {
+    it('counts users correctly', async () => {
+      const user = User.create('test', 'test') as User;
+      const author = Author.create(123) as Author;
+      author.user = Promise.resolve(user);
+      const anonAuthor = Author.create(123) as Author;
+      const anonAuthor2 = Author.create(123) as Author;
+      const edits = [Edit.create(author, 12, 15) as Edit];
+      edits.push(Edit.create(author, 16, 18) as Edit);
+      edits.push(Edit.create(author, 29, 20) as Edit);
+      edits.push(Edit.create(anonAuthor, 29, 20) as Edit);
+      edits.push(Edit.create(anonAuthor, 29, 20) as Edit);
+      edits.push(Edit.create(anonAuthor2, 29, 20) as Edit);
+      const revision = Revision.create('', '', {} as Note) as Revision;
+      revision.edits = Promise.resolve(edits);
+
+      const userInfo = await service.getRevisionUserInfo(revision);
+      expect(userInfo.usernames.length).toEqual(1);
+      expect(userInfo.anonymousUserCount).toEqual(2);
+    });
+  });
 });
