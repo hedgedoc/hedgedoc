@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import noteConfiguration, { NoteConfig } from '../config/note.config';
 import {
   AlreadyInDBError,
   ForbiddenIdError,
@@ -22,6 +21,7 @@ import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { Alias } from './alias.entity';
 import { AliasService } from './alias.service';
+import { ForbiddenNoteIdOrAliasService } from './forbidden-note-id-or-alias.service';
 import { NoteMetadataDto } from './note-metadata.dto';
 import { NotePermissionsDto } from './note-permissions.dto';
 import { NoteDto } from './note.dto';
@@ -39,11 +39,9 @@ export class NotesService {
     @InjectRepository(User) private userRepository: Repository<User>,
     @Inject(UsersService) private usersService: UsersService,
     @Inject(GroupsService) private groupsService: GroupsService,
-    @Inject(forwardRef(() => RevisionsService))
     private revisionsService: RevisionsService,
-    @Inject(noteConfiguration.KEY)
-    private noteConfig: NoteConfig,
-    @Inject(forwardRef(() => AliasService)) private aliasService: AliasService,
+    private aliasService: AliasService,
+    private forbiddenNoteIdOrAliasService: ForbiddenNoteIdOrAliasService,
   ) {
     this.logger.setContext(NotesService.name);
   }
@@ -87,7 +85,7 @@ export class NotesService {
     alias?: string,
   ): Promise<Note> {
     if (alias) {
-      this.checkNoteIdOrAlias(alias);
+      this.forbiddenNoteIdOrAliasService.isForbiddenNoteIdOrAlias(alias);
     }
     const newNote = Note.create(owner, alias);
     //TODO: Calculate patch
@@ -160,7 +158,9 @@ export class NotesService {
       'getNoteByIdOrAlias',
     );
 
-    this.checkNoteIdOrAlias(noteIdOrAlias);
+    this.forbiddenNoteIdOrAliasService.isForbiddenNoteIdOrAlias(
+      noteIdOrAlias,
+    );
 
     /**
      * This query gets the note's aliases, owner, groupPermissions (and the groups), userPermissions (and the users) and tags and
@@ -215,23 +215,6 @@ export class NotesService {
       .innerJoin('revision.note', 'note')
       .where('note.id = :id', { id: note.id })
       .getMany();
-  }
-
-  /**
-   * Check if the provided note id or alias is not forbidden
-   * @param noteIdOrAlias - the alias or id in question
-   * @throws {ForbiddenIdError} the requested id or alias is forbidden
-   */
-  checkNoteIdOrAlias(noteIdOrAlias: string): void {
-    if (this.noteConfig.forbiddenNoteIds.includes(noteIdOrAlias)) {
-      this.logger.debug(
-        `A note with the alias '${noteIdOrAlias}' is forbidden by the administrator.`,
-        'checkNoteIdOrAlias',
-      );
-      throw new ForbiddenIdError(
-        `A note with the alias '${noteIdOrAlias}' is forbidden by the administrator.`,
-      );
-    }
   }
 
   /**

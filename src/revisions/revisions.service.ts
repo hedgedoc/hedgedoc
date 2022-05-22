@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
-import { NotesService } from '../notes/notes.service';
 import { EditService } from './edit.service';
 import { RevisionMetadataDto } from './revision-metadata.dto';
 import { RevisionDto } from './revision.dto';
@@ -27,7 +26,6 @@ export class RevisionsService {
     private readonly logger: ConsoleLoggerService,
     @InjectRepository(Revision)
     private revisionRepository: Repository<Revision>,
-    @Inject(forwardRef(() => NotesService)) private notesService: NotesService,
     private editService: EditService,
   ) {
     this.logger.setContext(RevisionsService.name);

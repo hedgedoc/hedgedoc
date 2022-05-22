@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -15,8 +15,8 @@ import {
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { AliasDto } from './alias.dto';
 import { Alias } from './alias.entity';
+import { ForbiddenNoteIdOrAliasService } from './forbidden-note-id-or-alias.service';
 import { Note } from './note.entity';
-import { NotesService } from './notes.service';
 import { getPrimaryAlias } from './utils';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class AliasService {
     private readonly logger: ConsoleLoggerService,
     @InjectRepository(Note) private noteRepository: Repository<Note>,
     @InjectRepository(Alias) private aliasRepository: Repository<Alias>,
-    @Inject(forwardRef(() => NotesService)) private notesService: NotesService,
+    private forbiddenNoteIdOrAliasService: ForbiddenNoteIdOrAliasService,
   ) {
     this.logger.setContext(AliasService.name);
   }
@@ -40,7 +40,7 @@ export class AliasService {
    * @return {Alias} the new alias
    */
   async addAlias(note: Note, alias: string): Promise<Alias> {
-    this.notesService.checkNoteIdOrAlias(alias);
+    this.forbiddenNoteIdOrAliasService.isForbiddenNoteIdOrAlias(alias);
 
     const foundAlias = await this.aliasRepository.findOne({
       where: { name: alias },
@@ -89,7 +89,7 @@ export class AliasService {
     let oldPrimaryId = '';
     let newPrimaryId = '';
 
-    this.notesService.checkNoteIdOrAlias(alias);
+    this.forbiddenNoteIdOrAliasService.isForbiddenNoteIdOrAlias(alias);
 
     for (const anAlias of await note.aliases) {
       // found old primary
@@ -139,7 +139,7 @@ export class AliasService {
    * @throws {PrimaryAliasDeletionForbiddenError} the primary alias can only be deleted if it's the only alias
    */
   async removeAlias(note: Note, alias: string): Promise<Note> {
-    this.notesService.checkNoteIdOrAlias(alias);
+    this.forbiddenNoteIdOrAliasService.isForbiddenNoteIdOrAlias(alias);
     const primaryAlias = await getPrimaryAlias(note);
 
     if (primaryAlias === alias && (await note.aliases).length !== 1) {
