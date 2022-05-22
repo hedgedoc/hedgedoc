@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TranslatedExternalLink renders with i18nKey 1`] = `
+<div>
+  <a
+    class="text-light"
+    dir="auto"
+    href="https://example.com"
+    rel="noopener noreferrer"
+    target="_blank"
+  >
+    testi18nKey
+  </a>
+</div>
+`;
