@@ -61,348 +61,375 @@ describe('FrontendConfigService', () => {
     saml: [],
     oauth2: [],
   };
-  const facebook: AuthConfig['facebook'] = {
-    clientID: 'facebookTestId',
-    clientSecret: 'facebookTestSecret',
-  };
-  const twitter: AuthConfig['twitter'] = {
-    consumerKey: 'twitterTestId',
-    consumerSecret: 'twitterTestSecret',
-  };
-  const github: AuthConfig['github'] = {
-    clientID: 'githubTestId',
-    clientSecret: 'githubTestSecret',
-  };
-  const dropbox: AuthConfig['dropbox'] = {
-    clientID: 'dropboxTestId',
-    clientSecret: 'dropboxTestSecret',
-    appKey: 'dropboxTestKey',
-  };
-  const google: AuthConfig['google'] = {
-    clientID: 'googleTestId',
-    clientSecret: 'googleTestSecret',
-    apiKey: 'googleTestKey',
-  };
-  const gitlab: AuthConfig['gitlab'] = [
-    {
-      identifier: 'gitlabTestIdentifier',
-      providerName: 'gitlabTestName',
-      baseURL: 'gitlabTestUrl',
-      clientID: 'gitlabTestId',
-      clientSecret: 'gitlabTestSecret',
-      scope: GitlabScope.API,
-      version: GitlabVersion.V4,
-    },
-  ];
-  const ldap: AuthConfig['ldap'] = [
-    {
-      identifier: 'ldapTestIdentifier',
-      providerName: 'ldapTestName',
-      url: 'ldapTestUrl',
-      bindDn: 'ldapTestBindDn',
-      bindCredentials: 'ldapTestBindCredentials',
-      searchBase: 'ldapTestSearchBase',
-      searchFilter: 'ldapTestSearchFilter',
-      searchAttributes: ['ldapTestSearchAttribute'],
-      userIdField: 'ldapTestUserId',
-      displayNameField: 'ldapTestDisplayName',
-      profilePictureField: 'ldapTestProfilePicture',
-      tlsCaCerts: ['ldapTestTlsCa'],
-    },
-  ];
-  const saml: AuthConfig['saml'] = [
-    {
-      identifier: 'samlTestIdentifier',
-      providerName: 'samlTestName',
-      idpSsoUrl: 'samlTestUrl',
-      idpCert: 'samlTestCert',
-      clientCert: 'samlTestClientCert',
-      issuer: 'samlTestIssuer',
-      identifierFormat: 'samlTestUrl',
-      disableRequestedAuthnContext: 'samlTestUrl',
-      groupAttribute: 'samlTestUrl',
-      requiredGroups: ['samlTestUrl'],
-      externalGroups: ['samlTestUrl'],
-      attribute: {
-        id: 'samlTestUrl',
-        username: 'samlTestUrl',
-        email: 'samlTestUrl',
+
+  describe('getAuthProviders', () => {
+    const facebook: AuthConfig['facebook'] = {
+      clientID: 'facebookTestId',
+      clientSecret: 'facebookTestSecret',
+    };
+    const twitter: AuthConfig['twitter'] = {
+      consumerKey: 'twitterTestId',
+      consumerSecret: 'twitterTestSecret',
+    };
+    const github: AuthConfig['github'] = {
+      clientID: 'githubTestId',
+      clientSecret: 'githubTestSecret',
+    };
+    const dropbox: AuthConfig['dropbox'] = {
+      clientID: 'dropboxTestId',
+      clientSecret: 'dropboxTestSecret',
+      appKey: 'dropboxTestKey',
+    };
+    const google: AuthConfig['google'] = {
+      clientID: 'googleTestId',
+      clientSecret: 'googleTestSecret',
+      apiKey: 'googleTestKey',
+    };
+    const gitlab: AuthConfig['gitlab'] = [
+      {
+        identifier: 'gitlabTestIdentifier',
+        providerName: 'gitlabTestName',
+        baseURL: 'gitlabTestUrl',
+        clientID: 'gitlabTestId',
+        clientSecret: 'gitlabTestSecret',
+        scope: GitlabScope.API,
+        version: GitlabVersion.V4,
       },
-    },
-  ];
-  const oauth2: AuthConfig['oauth2'] = [
-    {
-      identifier: 'oauth2Testidentifier',
-      providerName: 'oauth2TestName',
-      baseURL: 'oauth2TestUrl',
-      userProfileURL: 'oauth2TestProfileUrl',
-      userProfileIdAttr: 'oauth2TestProfileId',
-      userProfileUsernameAttr: 'oauth2TestProfileUsername',
-      userProfileDisplayNameAttr: 'oauth2TestProfileDisplay',
-      userProfileEmailAttr: 'oauth2TestProfileEmail',
-      tokenURL: 'oauth2TestTokenUrl',
-      authorizationURL: 'oauth2TestAuthUrl',
-      clientID: 'oauth2TestId',
-      clientSecret: 'oauth2TestSecret',
-      scope: 'oauth2TestScope',
-      rolesClaim: 'oauth2TestRoles',
-      accessRole: 'oauth2TestAccess',
-    },
-  ];
+    ];
+    const ldap: AuthConfig['ldap'] = [
+      {
+        identifier: 'ldapTestIdentifier',
+        providerName: 'ldapTestName',
+        url: 'ldapTestUrl',
+        bindDn: 'ldapTestBindDn',
+        bindCredentials: 'ldapTestBindCredentials',
+        searchBase: 'ldapTestSearchBase',
+        searchFilter: 'ldapTestSearchFilter',
+        searchAttributes: ['ldapTestSearchAttribute'],
+        userIdField: 'ldapTestUserId',
+        displayNameField: 'ldapTestDisplayName',
+        profilePictureField: 'ldapTestProfilePicture',
+        tlsCaCerts: ['ldapTestTlsCa'],
+      },
+    ];
+    const saml: AuthConfig['saml'] = [
+      {
+        identifier: 'samlTestIdentifier',
+        providerName: 'samlTestName',
+        idpSsoUrl: 'samlTestUrl',
+        idpCert: 'samlTestCert',
+        clientCert: 'samlTestClientCert',
+        issuer: 'samlTestIssuer',
+        identifierFormat: 'samlTestUrl',
+        disableRequestedAuthnContext: 'samlTestUrl',
+        groupAttribute: 'samlTestUrl',
+        requiredGroups: ['samlTestUrl'],
+        externalGroups: ['samlTestUrl'],
+        attribute: {
+          id: 'samlTestUrl',
+          username: 'samlTestUrl',
+          email: 'samlTestUrl',
+        },
+      },
+    ];
+    const oauth2: AuthConfig['oauth2'] = [
+      {
+        identifier: 'oauth2Testidentifier',
+        providerName: 'oauth2TestName',
+        baseURL: 'oauth2TestUrl',
+        userProfileURL: 'oauth2TestProfileUrl',
+        userProfileIdAttr: 'oauth2TestProfileId',
+        userProfileUsernameAttr: 'oauth2TestProfileUsername',
+        userProfileDisplayNameAttr: 'oauth2TestProfileDisplay',
+        userProfileEmailAttr: 'oauth2TestProfileEmail',
+        tokenURL: 'oauth2TestTokenUrl',
+        authorizationURL: 'oauth2TestAuthUrl',
+        clientID: 'oauth2TestId',
+        clientSecret: 'oauth2TestSecret',
+        scope: 'oauth2TestScope',
+        rolesClaim: 'oauth2TestRoles',
+        accessRole: 'oauth2TestAccess',
+      },
+    ];
+    for (const authConfigConfigured of [
+      facebook,
+      twitter,
+      github,
+      dropbox,
+      google,
+      gitlab,
+      ldap,
+      saml,
+      oauth2,
+    ]) {
+      it(`works with ${JSON.stringify(authConfigConfigured)}`, async () => {
+        const appConfig: AppConfig = {
+          domain: domain,
+          rendererOrigin: domain,
+          port: 3000,
+          loglevel: Loglevel.ERROR,
+        };
+        const authConfig: AuthConfig = {
+          ...emptyAuthConfig,
+          ...authConfigConfigured,
+        };
+        const module: TestingModule = await Test.createTestingModule({
+          imports: [
+            ConfigModule.forRoot({
+              isGlobal: true,
+              load: [
+                registerAs('appConfig', () => appConfig),
+                registerAs('authConfig', () => authConfig),
+                registerAs('customizationConfig', () => {
+                  return { branding: {}, specialUrls: {} };
+                }),
+                registerAs('externalServicesConfig', () => {
+                  return {};
+                }),
+                registerAs('noteConfig', () => {
+                  return {
+                    forbiddenNoteIds: [],
+                    maxDocumentLength: 200,
+                  };
+                }),
+              ],
+            }),
+            LoggerModule,
+          ],
+          providers: [FrontendConfigService],
+        }).compile();
+        const service = module.get(FrontendConfigService);
+        const config = await service.getFrontendConfig();
+        if (authConfig.dropbox.clientID) {
+          expect(config.authProviders).toContainEqual({
+            type: AuthProviderType.DROPBOX,
+          });
+        }
+        if (authConfig.facebook.clientID) {
+          expect(config.authProviders).toContainEqual({
+            type: AuthProviderType.FACEBOOK,
+          });
+        }
+        if (authConfig.google.clientID) {
+          expect(config.authProviders).toContainEqual({
+            type: AuthProviderType.GOOGLE,
+          });
+        }
+        if (authConfig.github.clientID) {
+          expect(config.authProviders).toContainEqual({
+            type: AuthProviderType.GITHUB,
+          });
+        }
+        if (authConfig.local.enableLogin) {
+          expect(config.authProviders).toContainEqual({
+            type: AuthProviderType.LOCAL,
+          });
+        }
+        if (authConfig.twitter.consumerKey) {
+          expect(config.authProviders).toContainEqual({
+            type: AuthProviderType.TWITTER,
+          });
+        }
+        expect(
+          config.authProviders.filter(
+            (provider) => provider.type === AuthProviderType.GITLAB,
+          ).length,
+        ).toEqual(authConfig.gitlab.length);
+        expect(
+          config.authProviders.filter(
+            (provider) => provider.type === AuthProviderType.LDAP,
+          ).length,
+        ).toEqual(authConfig.ldap.length);
+        expect(
+          config.authProviders.filter(
+            (provider) => provider.type === AuthProviderType.SAML,
+          ).length,
+        ).toEqual(authConfig.saml.length);
+        expect(
+          config.authProviders.filter(
+            (provider) => provider.type === AuthProviderType.OAUTH2,
+          ).length,
+        ).toEqual(authConfig.oauth2.length);
+        if (authConfig.gitlab.length > 0) {
+          expect(
+            config.authProviders.find(
+              (provider) => provider.type === AuthProviderType.GITLAB,
+            ),
+          ).toEqual({
+            type: AuthProviderType.GITLAB,
+            providerName: authConfig.gitlab[0].providerName,
+            identifier: authConfig.gitlab[0].identifier,
+          });
+        }
+        if (authConfig.ldap.length > 0) {
+          expect(
+            config.authProviders.find(
+              (provider) => provider.type === AuthProviderType.LDAP,
+            ),
+          ).toEqual({
+            type: AuthProviderType.LDAP,
+            providerName: authConfig.ldap[0].providerName,
+            identifier: authConfig.ldap[0].identifier,
+          });
+        }
+        if (authConfig.saml.length > 0) {
+          expect(
+            config.authProviders.find(
+              (provider) => provider.type === AuthProviderType.SAML,
+            ),
+          ).toEqual({
+            type: AuthProviderType.SAML,
+            providerName: authConfig.saml[0].providerName,
+            identifier: authConfig.saml[0].identifier,
+          });
+        }
+        if (authConfig.oauth2.length > 0) {
+          expect(
+            config.authProviders.find(
+              (provider) => provider.type === AuthProviderType.OAUTH2,
+            ),
+          ).toEqual({
+            type: AuthProviderType.OAUTH2,
+            providerName: authConfig.oauth2[0].providerName,
+            identifier: authConfig.oauth2[0].identifier,
+          });
+        }
+      });
+    }
+  });
+
   let index = 1;
   for (const renderOrigin of [undefined, 'http://md-renderer.example.com']) {
     for (const maxDocumentLength of [100000, 900]) {
       for (const enableLogin of [true, false]) {
         for (const enableRegister of [true, false]) {
-          for (const authConfigConfigured of [
-            facebook,
-            twitter,
-            github,
-            dropbox,
-            google,
-            gitlab,
-            ldap,
-            saml,
-            oauth2,
-          ]) {
-            for (const customName of [undefined, 'Test Branding Name']) {
-              for (const customLogo of [
+          for (const customName of [undefined, 'Test Branding Name']) {
+            for (const customLogo of [
+              undefined,
+              'https://example.com/logo.png',
+            ]) {
+              for (const privacyLink of [
                 undefined,
-                'https://example.com/logo.png',
+                'https://example.com/privacy',
               ]) {
-                for (const privacyLink of [
+                for (const termsOfUseLink of [
                   undefined,
-                  'https://example.com/privacy',
+                  'https://example.com/terms',
                 ]) {
-                  for (const termsOfUseLink of [
+                  for (const imprintLink of [
                     undefined,
-                    'https://example.com/terms',
+                    'https://example.com/imprint',
                   ]) {
-                    for (const imprintLink of [
+                    for (const plantUmlServer of [
                       undefined,
-                      'https://example.com/imprint',
+                      'https://plantuml.example.com',
                     ]) {
-                      for (const plantUmlServer of [
+                      for (const imageProxy of [
                         undefined,
-                        'https://plantuml.example.com',
+                        'https://imageProxy.example.com',
                       ]) {
-                        for (const imageProxy of [
-                          undefined,
-                          'https://imageProxy.example.com',
-                        ]) {
-                          it(`combination #${index} works`, async () => {
-                            const appConfig: AppConfig = {
-                              domain: domain,
-                              rendererOrigin: renderOrigin ?? domain,
-                              port: 3000,
-                              loglevel: Loglevel.ERROR,
-                            };
-                            const authConfig: AuthConfig = {
-                              ...emptyAuthConfig,
-                              local: {
-                                enableLogin,
-                                enableRegister,
-                              },
-                              ...authConfigConfigured,
-                            };
-                            const customizationConfig: CustomizationConfig = {
-                              branding: {
-                                customName: customName,
-                                customLogo: customLogo,
-                              },
-                              specialUrls: {
-                                privacy: privacyLink,
-                                termsOfUse: termsOfUseLink,
-                                imprint: imprintLink,
-                              },
-                            };
-                            const externalServicesConfig: ExternalServicesConfig =
-                              {
-                                plantUmlServer: plantUmlServer,
-                                imageProxy: imageProxy,
-                              };
-                            const noteConfig: NoteConfig = {
-                              forbiddenNoteIds: [],
-                              maxDocumentLength: maxDocumentLength,
-                            };
-                            const module: TestingModule =
-                              await Test.createTestingModule({
-                                imports: [
-                                  ConfigModule.forRoot({
-                                    isGlobal: true,
-                                    load: [
-                                      registerAs('appConfig', () => appConfig),
-                                      registerAs(
-                                        'authConfig',
-                                        () => authConfig,
-                                      ),
-                                      registerAs(
-                                        'customizationConfig',
-                                        () => customizationConfig,
-                                      ),
-                                      registerAs(
-                                        'externalServicesConfig',
-                                        () => externalServicesConfig,
-                                      ),
-                                      registerAs(
-                                        'noteConfig',
-                                        () => noteConfig,
-                                      ),
-                                    ],
-                                  }),
-                                  LoggerModule,
-                                ],
-                                providers: [FrontendConfigService],
-                              }).compile();
-
-                            const service = module.get(FrontendConfigService);
-                            const config = await service.getFrontendConfig();
-                            expect(config.allowRegister).toEqual(
+                        it(`combination #${index} works`, async () => {
+                          const appConfig: AppConfig = {
+                            domain: domain,
+                            rendererOrigin: renderOrigin ?? domain,
+                            port: 3000,
+                            loglevel: Loglevel.ERROR,
+                          };
+                          const authConfig: AuthConfig = {
+                            ...emptyAuthConfig,
+                            local: {
+                              enableLogin,
                               enableRegister,
-                            );
-                            if (authConfig.dropbox.clientID) {
-                              expect(config.authProviders).toContainEqual({
-                                type: AuthProviderType.DROPBOX,
-                              });
-                            }
-                            if (authConfig.facebook.clientID) {
-                              expect(config.authProviders).toContainEqual({
-                                type: AuthProviderType.FACEBOOK,
-                              });
-                            }
-                            if (authConfig.google.clientID) {
-                              expect(config.authProviders).toContainEqual({
-                                type: AuthProviderType.GOOGLE,
-                              });
-                            }
-                            if (authConfig.github.clientID) {
-                              expect(config.authProviders).toContainEqual({
-                                type: AuthProviderType.GITHUB,
-                              });
-                            }
-                            if (authConfig.local.enableLogin) {
-                              expect(config.authProviders).toContainEqual({
-                                type: AuthProviderType.LOCAL,
-                              });
-                            }
-                            if (authConfig.twitter.consumerKey) {
-                              expect(config.authProviders).toContainEqual({
-                                type: AuthProviderType.TWITTER,
-                              });
-                            }
-                            expect(
-                              config.authProviders.filter(
-                                (provider) =>
-                                  provider.type === AuthProviderType.GITLAB,
-                              ).length,
-                            ).toEqual(authConfig.gitlab.length);
-                            expect(
-                              config.authProviders.filter(
-                                (provider) =>
-                                  provider.type === AuthProviderType.LDAP,
-                              ).length,
-                            ).toEqual(authConfig.ldap.length);
-                            expect(
-                              config.authProviders.filter(
-                                (provider) =>
-                                  provider.type === AuthProviderType.SAML,
-                              ).length,
-                            ).toEqual(authConfig.saml.length);
-                            expect(
-                              config.authProviders.filter(
-                                (provider) =>
-                                  provider.type === AuthProviderType.OAUTH2,
-                              ).length,
-                            ).toEqual(authConfig.oauth2.length);
-                            if (authConfig.gitlab.length > 0) {
-                              expect(
-                                config.authProviders.find(
-                                  (provider) =>
-                                    provider.type === AuthProviderType.GITLAB,
-                                ),
-                              ).toEqual({
-                                type: AuthProviderType.GITLAB,
-                                providerName: authConfig.gitlab[0].providerName,
-                                identifier: authConfig.gitlab[0].identifier,
-                              });
-                            }
-                            if (authConfig.ldap.length > 0) {
-                              expect(
-                                config.authProviders.find(
-                                  (provider) =>
-                                    provider.type === AuthProviderType.LDAP,
-                                ),
-                              ).toEqual({
-                                type: AuthProviderType.LDAP,
-                                providerName: authConfig.ldap[0].providerName,
-                                identifier: authConfig.ldap[0].identifier,
-                              });
-                            }
-                            if (authConfig.saml.length > 0) {
-                              expect(
-                                config.authProviders.find(
-                                  (provider) =>
-                                    provider.type === AuthProviderType.SAML,
-                                ),
-                              ).toEqual({
-                                type: AuthProviderType.SAML,
-                                providerName: authConfig.saml[0].providerName,
-                                identifier: authConfig.saml[0].identifier,
-                              });
-                            }
-                            if (authConfig.oauth2.length > 0) {
-                              expect(
-                                config.authProviders.find(
-                                  (provider) =>
-                                    provider.type === AuthProviderType.OAUTH2,
-                                ),
-                              ).toEqual({
-                                type: AuthProviderType.OAUTH2,
-                                providerName: authConfig.oauth2[0].providerName,
-                                identifier: authConfig.oauth2[0].identifier,
-                              });
-                            }
-                            expect(config.allowAnonymous).toEqual(false);
-                            expect(config.branding.name).toEqual(customName);
-                            expect(config.branding.logo).toEqual(
-                              customLogo ? new URL(customLogo) : undefined,
-                            );
-                            expect(
-                              config.iframeCommunication.editorOrigin,
-                            ).toEqual(new URL(appConfig.domain));
-                            expect(
-                              config.iframeCommunication.rendererOrigin,
-                            ).toEqual(
-                              appConfig.rendererOrigin
-                                ? new URL(appConfig.rendererOrigin)
-                                : new URL(appConfig.domain),
-                            );
-                            expect(config.maxDocumentLength).toEqual(
-                              maxDocumentLength,
-                            );
-                            expect(config.plantUmlServer).toEqual(
-                              plantUmlServer
-                                ? new URL(plantUmlServer)
-                                : undefined,
-                            );
-                            expect(config.specialUrls.imprint).toEqual(
-                              imprintLink ? new URL(imprintLink) : undefined,
-                            );
-                            expect(config.specialUrls.privacy).toEqual(
-                              privacyLink ? new URL(privacyLink) : undefined,
-                            );
-                            expect(config.specialUrls.termsOfUse).toEqual(
-                              termsOfUseLink
-                                ? new URL(termsOfUseLink)
-                                : undefined,
-                            );
-                            expect(config.useImageProxy).toEqual(!!imageProxy);
-                            expect(config.version).toEqual(
-                              await getServerVersionFromPackageJson(),
-                            );
-                          });
-                          index += 1;
-                        }
+                            },
+                          };
+                          const customizationConfig: CustomizationConfig = {
+                            branding: {
+                              customName: customName,
+                              customLogo: customLogo,
+                            },
+                            specialUrls: {
+                              privacy: privacyLink,
+                              termsOfUse: termsOfUseLink,
+                              imprint: imprintLink,
+                            },
+                          };
+                          const externalServicesConfig: ExternalServicesConfig =
+                            {
+                              plantUmlServer: plantUmlServer,
+                              imageProxy: imageProxy,
+                            };
+                          const noteConfig: NoteConfig = {
+                            forbiddenNoteIds: [],
+                            maxDocumentLength: maxDocumentLength,
+                          };
+                          const module: TestingModule =
+                            await Test.createTestingModule({
+                              imports: [
+                                ConfigModule.forRoot({
+                                  isGlobal: true,
+                                  load: [
+                                    registerAs('appConfig', () => appConfig),
+                                    registerAs('authConfig', () => authConfig),
+                                    registerAs(
+                                      'customizationConfig',
+                                      () => customizationConfig,
+                                    ),
+                                    registerAs(
+                                      'externalServicesConfig',
+                                      () => externalServicesConfig,
+                                    ),
+                                    registerAs('noteConfig', () => noteConfig),
+                                  ],
+                                }),
+                                LoggerModule,
+                              ],
+                              providers: [FrontendConfigService],
+                            }).compile();
+
+                          const service = module.get(FrontendConfigService);
+                          const config = await service.getFrontendConfig();
+                          expect(config.allowRegister).toEqual(enableRegister);
+
+                          expect(config.allowAnonymous).toEqual(false);
+                          expect(config.branding.name).toEqual(customName);
+                          expect(config.branding.logo).toEqual(
+                            customLogo ? new URL(customLogo) : undefined,
+                          );
+                          expect(
+                            config.iframeCommunication.editorOrigin,
+                          ).toEqual(new URL(appConfig.domain));
+                          expect(
+                            config.iframeCommunication.rendererOrigin,
+                          ).toEqual(
+                            appConfig.rendererOrigin
+                              ? new URL(appConfig.rendererOrigin)
+                              : new URL(appConfig.domain),
+                          );
+                          expect(config.maxDocumentLength).toEqual(
+                            maxDocumentLength,
+                          );
+                          expect(config.plantUmlServer).toEqual(
+                            plantUmlServer
+                              ? new URL(plantUmlServer)
+                              : undefined,
+                          );
+                          expect(config.specialUrls.imprint).toEqual(
+                            imprintLink ? new URL(imprintLink) : undefined,
+                          );
+                          expect(config.specialUrls.privacy).toEqual(
+                            privacyLink ? new URL(privacyLink) : undefined,
+                          );
+                          expect(config.specialUrls.termsOfUse).toEqual(
+                            termsOfUseLink
+                              ? new URL(termsOfUseLink)
+                              : undefined,
+                          );
+                          expect(config.useImageProxy).toEqual(!!imageProxy);
+                          expect(config.version).toEqual(
+                            await getServerVersionFromPackageJson(),
+                          );
+                        });
+                        index += 1;
                       }
                     }
                   }
