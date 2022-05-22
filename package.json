@@ -30,7 +30,7 @@
     "@nestjs/core": "8.4.5",
     "@nestjs/passport": "8.2.1",
     "@nestjs/platform-express": "8.4.5",
-    "@nestjs/schedule": "1.1.0",
+    "@nestjs/schedule": "2.0.1",
     "@nestjs/swagger": "5.2.1",
     "@nestjs/typeorm": "8.0.3",
     "@types/bcrypt": "5.0.0",
