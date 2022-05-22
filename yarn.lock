@@ -2049,7 +2049,7 @@ __metadata:
     flowchart.js: 1.17.1
     fork-awesome: 1.2.0
     highlight.js: 11.5.1
-    i18next: 21.8.2
+    i18next: 21.8.3
     i18next-browser-languagedetector: 6.1.4
     i18next-resources-to-backend: 1.0.0
     jest: 28.1.0
@@ -12020,12 +12020,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:21.8.2":
-  version: 21.8.2
-  resolution: "i18next@npm:21.8.2"
+"i18next@npm:21.8.3":
+  version: 21.8.3
+  resolution: "i18next@npm:21.8.3"
   dependencies:
     "@babel/runtime": ^7.17.2
-  checksum: 6114fafa9604073f783bdeb25c0b81cdadbe00ac7ae85a756576c52e4191f5ba3e4bc818bf57826493fc1770edfd69940fdcd337abb8a52dd50d0bc7819175cc
+  checksum: c1b6c57255befb716e0b491d50584f9d0875f3f848b4b5a192421dc6302453d73f4f646eca5526eaea3874d742c5d1ff73ceffa3bbc84a5621a4183f71952432
   languageName: node
   linkType: hard
 
