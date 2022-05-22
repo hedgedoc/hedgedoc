@@ -298,143 +298,116 @@ describe('FrontendConfigService', () => {
     }
   });
 
+  const maxDocumentLength = 100000;
+  const enableRegister = true;
+  const imageProxy = 'https://imageProxy.example.com';
+  const customName = 'Test Branding Name';
+
   let index = 1;
   for (const renderOrigin of [undefined, 'http://md-renderer.example.com']) {
-    for (const maxDocumentLength of [100000, 900]) {
-      for (const enableLogin of [true, false]) {
-        for (const enableRegister of [true, false]) {
-          for (const customName of [undefined, 'Test Branding Name']) {
-            for (const customLogo of [
+    for (const customLogo of [undefined, 'https://example.com/logo.png']) {
+      for (const privacyLink of [undefined, 'https://example.com/privacy']) {
+        for (const termsOfUseLink of [undefined, 'https://example.com/terms']) {
+          for (const imprintLink of [
+            undefined,
+            'https://example.com/imprint',
+          ]) {
+            for (const plantUmlServer of [
               undefined,
-              'https://example.com/logo.png',
+              'https://plantuml.example.com',
             ]) {
-              for (const privacyLink of [
-                undefined,
-                'https://example.com/privacy',
-              ]) {
-                for (const termsOfUseLink of [
-                  undefined,
-                  'https://example.com/terms',
-                ]) {
-                  for (const imprintLink of [
-                    undefined,
-                    'https://example.com/imprint',
-                  ]) {
-                    for (const plantUmlServer of [
-                      undefined,
-                      'https://plantuml.example.com',
-                    ]) {
-                      for (const imageProxy of [
-                        undefined,
-                        'https://imageProxy.example.com',
-                      ]) {
-                        it(`combination #${index} works`, async () => {
-                          const appConfig: AppConfig = {
-                            domain: domain,
-                            rendererOrigin: renderOrigin ?? domain,
-                            port: 3000,
-                            loglevel: Loglevel.ERROR,
-                          };
-                          const authConfig: AuthConfig = {
-                            ...emptyAuthConfig,
-                            local: {
-                              enableLogin,
-                              enableRegister,
-                            },
-                          };
-                          const customizationConfig: CustomizationConfig = {
-                            branding: {
-                              customName: customName,
-                              customLogo: customLogo,
-                            },
-                            specialUrls: {
-                              privacy: privacyLink,
-                              termsOfUse: termsOfUseLink,
-                              imprint: imprintLink,
-                            },
-                          };
-                          const externalServicesConfig: ExternalServicesConfig =
-                            {
-                              plantUmlServer: plantUmlServer,
-                              imageProxy: imageProxy,
-                            };
-                          const noteConfig: NoteConfig = {
-                            forbiddenNoteIds: [],
-                            maxDocumentLength: maxDocumentLength,
-                          };
-                          const module: TestingModule =
-                            await Test.createTestingModule({
-                              imports: [
-                                ConfigModule.forRoot({
-                                  isGlobal: true,
-                                  load: [
-                                    registerAs('appConfig', () => appConfig),
-                                    registerAs('authConfig', () => authConfig),
-                                    registerAs(
-                                      'customizationConfig',
-                                      () => customizationConfig,
-                                    ),
-                                    registerAs(
-                                      'externalServicesConfig',
-                                      () => externalServicesConfig,
-                                    ),
-                                    registerAs('noteConfig', () => noteConfig),
-                                  ],
-                                }),
-                                LoggerModule,
-                              ],
-                              providers: [FrontendConfigService],
-                            }).compile();
+              it(`combination #${index} works`, async () => {
+                const appConfig: AppConfig = {
+                  domain: domain,
+                  rendererOrigin: renderOrigin ?? domain,
+                  port: 3000,
+                  loglevel: Loglevel.ERROR,
+                };
+                const authConfig: AuthConfig = {
+                  ...emptyAuthConfig,
+                  local: {
+                    enableLogin: true,
+                    enableRegister,
+                  },
+                };
+                const customizationConfig: CustomizationConfig = {
+                  branding: {
+                    customName: customName,
+                    customLogo: customLogo,
+                  },
+                  specialUrls: {
+                    privacy: privacyLink,
+                    termsOfUse: termsOfUseLink,
+                    imprint: imprintLink,
+                  },
+                };
+                const externalServicesConfig: ExternalServicesConfig = {
+                  plantUmlServer: plantUmlServer,
+                  imageProxy: imageProxy,
+                };
+                const noteConfig: NoteConfig = {
+                  forbiddenNoteIds: [],
+                  maxDocumentLength: maxDocumentLength,
+                };
+                const module: TestingModule = await Test.createTestingModule({
+                  imports: [
+                    ConfigModule.forRoot({
+                      isGlobal: true,
+                      load: [
+                        registerAs('appConfig', () => appConfig),
+                        registerAs('authConfig', () => authConfig),
+                        registerAs(
+                          'customizationConfig',
+                          () => customizationConfig,
+                        ),
+                        registerAs(
+                          'externalServicesConfig',
+                          () => externalServicesConfig,
+                        ),
+                        registerAs('noteConfig', () => noteConfig),
+                      ],
+                    }),
+                    LoggerModule,
+                  ],
+                  providers: [FrontendConfigService],
+                }).compile();
 
-                          const service = module.get(FrontendConfigService);
-                          const config = await service.getFrontendConfig();
-                          expect(config.allowRegister).toEqual(enableRegister);
+                const service = module.get(FrontendConfigService);
+                const config = await service.getFrontendConfig();
+                expect(config.allowRegister).toEqual(enableRegister);
 
-                          expect(config.allowAnonymous).toEqual(false);
-                          expect(config.branding.name).toEqual(customName);
-                          expect(config.branding.logo).toEqual(
-                            customLogo ? new URL(customLogo) : undefined,
-                          );
-                          expect(
-                            config.iframeCommunication.editorOrigin,
-                          ).toEqual(new URL(appConfig.domain));
-                          expect(
-                            config.iframeCommunication.rendererOrigin,
-                          ).toEqual(
-                            appConfig.rendererOrigin
-                              ? new URL(appConfig.rendererOrigin)
-                              : new URL(appConfig.domain),
-                          );
-                          expect(config.maxDocumentLength).toEqual(
-                            maxDocumentLength,
-                          );
-                          expect(config.plantUmlServer).toEqual(
-                            plantUmlServer
-                              ? new URL(plantUmlServer)
-                              : undefined,
-                          );
-                          expect(config.specialUrls.imprint).toEqual(
-                            imprintLink ? new URL(imprintLink) : undefined,
-                          );
-                          expect(config.specialUrls.privacy).toEqual(
-                            privacyLink ? new URL(privacyLink) : undefined,
-                          );
-                          expect(config.specialUrls.termsOfUse).toEqual(
-                            termsOfUseLink
-                              ? new URL(termsOfUseLink)
-                              : undefined,
-                          );
-                          expect(config.useImageProxy).toEqual(!!imageProxy);
-                          expect(config.version).toEqual(
-                            await getServerVersionFromPackageJson(),
-                          );
-                        });
-                        index += 1;
-                      }
-                    }
-                  }
-                }
-              }
+                expect(config.allowAnonymous).toEqual(false);
+                expect(config.branding.name).toEqual(customName);
+                expect(config.branding.logo).toEqual(
+                  customLogo ? new URL(customLogo) : undefined,
+                );
+                expect(config.iframeCommunication.editorOrigin).toEqual(
+                  new URL(appConfig.domain),
+                );
+                expect(config.iframeCommunication.rendererOrigin).toEqual(
+                  appConfig.rendererOrigin
+                    ? new URL(appConfig.rendererOrigin)
+                    : new URL(appConfig.domain),
+                );
+                expect(config.maxDocumentLength).toEqual(maxDocumentLength);
+                expect(config.plantUmlServer).toEqual(
+                  plantUmlServer ? new URL(plantUmlServer) : undefined,
+                );
+                expect(config.specialUrls.imprint).toEqual(
+                  imprintLink ? new URL(imprintLink) : undefined,
+                );
+                expect(config.specialUrls.privacy).toEqual(
+                  privacyLink ? new URL(privacyLink) : undefined,
+                );
+                expect(config.specialUrls.termsOfUse).toEqual(
+                  termsOfUseLink ? new URL(termsOfUseLink) : undefined,
+                );
+                expect(config.useImageProxy).toEqual(!!imageProxy);
+                expect(config.version).toEqual(
+                  await getServerVersionFromPackageJson(),
+                );
+              });
+              index += 1;
             }
           }
         }
