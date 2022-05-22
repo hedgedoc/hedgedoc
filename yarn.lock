@@ -5301,7 +5301,7 @@ __metadata:
     mysql: 2.18.1
     nest-router: 1.0.9
     node-fetch: 2.6.7
-    passport: 0.5.2
+    passport: 0.5.3
     passport-custom: ^1.1.1
     passport-http-bearer: 1.0.1
     passport-local: 1.0.0
@@ -7701,13 +7701,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"passport@npm:0.5.2":
-  version: 0.5.2
-  resolution: "passport@npm:0.5.2"
+"passport@npm:0.5.3":
+  version: 0.5.3
+  resolution: "passport@npm:0.5.3"
   dependencies:
     passport-strategy: 1.x.x
     pause: 0.0.1
-  checksum: be17a64a069f412299dea342fea1f4c755aea66fcd71e9422c5e254be18b069a39b00d141e4c63fb852f1bfea6030e8e170593d7f0db5c197fddec781e9e8de4
+  checksum: 5430b31b7e2066cff9954c8b151fb44479faf98ea7de210d4388961168a00990dbe52d3cc110d4b778650ebab7613ff4bdda5bbe1e297eb35298c6b83456f507
   languageName: node
   linkType: hard
 
