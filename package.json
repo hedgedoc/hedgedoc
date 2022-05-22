@@ -76,7 +76,7 @@
     "@types/express-session": "1.17.4",
     "@types/jest": "27.5.1",
     "@types/mysql": "2.15.21",
-    "@types/node": "16.11.35",
+    "@types/node": "16.11.36",
     "@types/passport-local": "1.0.34",
     "@types/pg": "8.6.5",
     "@types/source-map-support": "0.5.4",
