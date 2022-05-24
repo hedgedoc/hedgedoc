@@ -43,7 +43,7 @@ nav:
   - Configuration: configuration.md
   - References:
     - 'HedgeDoc Flavored Markdown': references/hfm.md
-    - 'YAML Metadata': yaml-metadata.md
+    - 'YAML Metadata': references/yaml-metadata.md
   - Developer:
       - 'Getting Started': dev/getting-started.md
       - API: dev/api.md

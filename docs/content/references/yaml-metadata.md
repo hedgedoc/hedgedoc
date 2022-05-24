@@ -19,7 +19,7 @@ You can also refer to this note's source code.
 
 ## title
 
-This option will set the note title which prior than content title.
+This option will set the note title which will be used in place of the content title.
 
 > default: not set
 
