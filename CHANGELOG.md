@@ -5,3 +5,5 @@ Please refer to the release notes published under
 
 These are also available on each HedgeDoc instance under
 <https://[domain-name]/release-notes>
+
+* Move yaml-metadata.md from public to docs (fix #1427)
