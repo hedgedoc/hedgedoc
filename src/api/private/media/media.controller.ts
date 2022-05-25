@@ -6,7 +6,6 @@
 import {
   Controller,
   Delete,
-  Headers,
   Param,
   Post,
   UploadedFile,
@@ -25,7 +24,9 @@ import { MulterFile } from '../../../media/multer-file.interface';
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
 import { User } from '../../../users/user.entity';
+import { NoteHeaderInterceptor } from '../../utils/note-header.interceptor';
 import { OpenApi } from '../../utils/openapi.decorator';
+import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
@@ -59,6 +60,7 @@ export class MediaController {
     description: 'ID or alias of the parent note',
   })
   @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(NoteHeaderInterceptor)
   @OpenApi(
     {
       code: 201,
@@ -72,13 +74,11 @@ export class MediaController {
   )
   async uploadMedia(
     @UploadedFile() file: MulterFile,
-    @Headers('HedgeDoc-Note') noteId: string,
+    @RequestNote() note: Note,
     @RequestUser() user: User,
   ): Promise<MediaUploadDto> {
-    // TODO: Move getting the Note object into a decorator
-    const note: Note = await this.noteService.getNoteByIdOrAlias(noteId);
     this.logger.debug(
-      `Recieved filename '${file.originalname}' for note '${noteId}' from user '${user.username}'`,
+      `Recieved filename '${file.originalname}' for note '${note.id}' from user '${user.username}'`,
       'uploadMedia',
     );
     const upload = await this.mediaService.saveFile(file.buffer, user, note);
