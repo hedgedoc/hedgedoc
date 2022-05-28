@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+#
+# SPDX-License-Identifier: CC0-1.0
+
+# virtualenv
+venv/
+ENV/
+
+# Build files
+/build
+/MANIFEST
+/site
