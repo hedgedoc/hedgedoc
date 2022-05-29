@@ -2026,7 +2026,7 @@ __metadata:
     "@types/node": 16.11.36
     "@types/react": 18.0.9
     "@types/react-bootstrap-typeahead": 5.1.8
-    "@types/react-dom": 18.0.4
+    "@types/react-dom": 18.0.5
     "@types/sass": 1.43.1
     "@types/uuid": 8.3.4
     "@typescript-eslint/eslint-plugin": 5.25.0
@@ -4812,7 +4812,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.0.4, @types/react-dom@npm:^18.0.0":
+"@types/react-dom@npm:18.0.5":
+  version: 18.0.5
+  resolution: "@types/react-dom@npm:18.0.5"
+  dependencies:
+    "@types/react": "*"
+  checksum: cd48b81950f499b52a3f0c08261f00046f9b7c96699fa249c9664e257e820daf6ecac815cd1028cebc9d105094adc39d047d1efd79214394b8b2d515574c0787
+  languageName: node
+  linkType: hard
+
+"@types/react-dom@npm:^18.0.0":
   version: 18.0.4
   resolution: "@types/react-dom@npm:18.0.4"
   dependencies:
