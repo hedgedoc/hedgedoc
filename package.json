@@ -56,7 +56,7 @@
     "cross-env": "7.0.3",
     "d3-graphviz": "4.1.1",
     "deepmerge": "4.2.2",
-    "diff": "5.0.0",
+    "diff": "5.1.0",
     "dompurify": "2.3.8",
     "emoji-picker-element": "1.11.3",
     "emoji-picker-element-data": "1.3.0",
