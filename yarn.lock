@@ -2096,7 +2096,7 @@ __metadata:
     react-diff-viewer: 3.1.1
     react-dom: 18.1.0
     react-i18next: 11.16.9
-    react-redux: 8.0.1
+    react-redux: 8.0.2
     react-test-renderer: 18.1.0
     react-use: 17.4.0
     redux: 4.2.0
@@ -17258,9 +17258,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-redux@npm:8.0.1":
-  version: 8.0.1
-  resolution: "react-redux@npm:8.0.1"
+"react-redux@npm:8.0.2":
+  version: 8.0.2
+  resolution: "react-redux@npm:8.0.2"
   dependencies:
     "@babel/runtime": ^7.12.1
     "@types/hoist-non-react-statics": ^3.3.1
@@ -17286,7 +17286,7 @@ __metadata:
       optional: true
     redux:
       optional: true
-  checksum: d7c004b4bfb4e4cd9a5fc21fa30734cf2fc1c04b1483f0c0ea1446e00b7792e9d7ef16cf62d38254f68f6058bac34f759da6a204772a0982e029d2e83cc80512
+  checksum: 44c1739c45dad04ecc65a290897c73828ff0bf43f2b7618ed5ef6d4ceecedae38e76cecd189a5ecedf579c28ead05427bc000fb45ad30b9fcd5c2be27cd3ac73
   languageName: node
   linkType: hard
 
