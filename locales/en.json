@@ -268,7 +268,8 @@
       }
     },
     "onlineStatus": {
-      "online": "Online"
+      "online": "Online",
+      "noUsers": "No users online"
     },
     "error": {
       "locked": {

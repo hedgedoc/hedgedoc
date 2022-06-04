@@ -1,16 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React from 'react'
 import styles from './active-indicator.module.scss'
-
-export enum ActiveIndicatorStatus {
-  ACTIVE = 'active',
-  INACTIVE = 'inactive'
-}
+import type { ActiveIndicatorStatus } from '../../../../redux/realtime/types'
 
 export interface ActiveIndicatorProps {
   status: ActiveIndicatorStatus

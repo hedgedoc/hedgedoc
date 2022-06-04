@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useMemo, useRef } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import { SidebarMenu } from '../sidebar-menu/sidebar-menu'
 import type { SpecificSidebarMenuProps } from '../types'
 import { DocumentSidebarMenuSelection } from '../types'
-import { ActiveIndicatorStatus } from './active-indicator'
 import styles from './online-counter.module.scss'
 import { UserLine } from '../user-line/user-line'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   className,
@@ -21,22 +21,39 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   selectedMenuId
 }) => {
   const buttonRef = useRef<HTMLButtonElement>(null)
-  const [counter] = useState(2)
+  const onlineUsers = useApplicationState((state) => state.realtime.users)
   useTranslation()
 
   useEffect(() => {
-    const value = `${counter}`
+    const value = `${Object.keys(onlineUsers).length}`
     buttonRef.current?.style.setProperty('--users-online', `"${value}"`)
-  }, [counter])
+  }, [onlineUsers])
 
   const hide = selectedMenuId !== DocumentSidebarMenuSelection.NONE && selectedMenuId !== menuId
   const expand = selectedMenuId === menuId
-  const onClickHandler = useCallback(() => {
-    onClick(menuId)
-  }, [menuId, onClick])
+  const onClickHandler = useCallback(() => onClick(menuId), [menuId, onClick])
 
-  // TODO Use real users here
-  // see https://github.com/hedgedoc/react-client/issues/1988
+  const onlineUserElements = useMemo(() => {
+    const entries = Object.entries(onlineUsers)
+    if (entries.length === 0) {
+      return (
+        <SidebarButton>
+          <span className={'ml-3'}>
+            <Trans i18nKey={'editor.onlineStatus.noUsers'}></Trans>
+          </span>
+        </SidebarButton>
+      )
+    } else {
+      return entries.map(([clientId, onlineUser]) => {
+        return (
+          <SidebarButton key={clientId}>
+            <UserLine username={onlineUser.username} color={onlineUser.color} status={onlineUser.active} />
+          </SidebarButton>
+        )
+      })
+    }
+  }, [onlineUsers])
+
   return (
     <Fragment>
       <SidebarButton
@@ -48,14 +65,7 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         variant={'primary'}>
         <Trans i18nKey={'editor.onlineStatus.online'} />
       </SidebarButton>
-      <SidebarMenu expand={expand}>
-        <SidebarButton>
-          <UserLine username={null} color='red' status={ActiveIndicatorStatus.INACTIVE} />
-        </SidebarButton>
-        <SidebarButton>
-          <UserLine username={null} color='blue' status={ActiveIndicatorStatus.ACTIVE} />
-        </SidebarButton>
-      </SidebarMenu>
+      <SidebarMenu expand={expand}>{onlineUserElements}</SidebarMenu>
     </Fragment>
   )
 }

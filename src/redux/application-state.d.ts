@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,6 +13,7 @@ import type { NoteDetails } from './note-details/types/note-details'
 import type { UiNotificationState } from './ui-notifications/types'
 import type { RendererStatus } from './renderer-status/types'
 import type { HistoryEntryWithOrigin } from '../api/history/types'
+import type { RealtimeState } from './realtime/types'
 
 export interface ApplicationState {
   user: OptionalUserState
@@ -24,4 +25,5 @@ export interface ApplicationState {
   noteDetails: NoteDetails
   uiNotifications: UiNotificationState
   rendererStatus: RendererStatus
+  realtime: RealtimeState
 }

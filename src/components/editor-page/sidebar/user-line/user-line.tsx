@@ -5,10 +5,10 @@
  */
 
 import React from 'react'
-import type { ActiveIndicatorStatus } from '../users-online-sidebar-menu/active-indicator'
 import { ActiveIndicator } from '../users-online-sidebar-menu/active-indicator'
 import styles from './user-line.module.scss'
 import { UserAvatarForUsername } from '../../../common/user-avatar/user-avatar-for-username'
+import type { ActiveIndicatorStatus } from '../../../../redux/realtime/types'
 
 export interface UserLineProps {
   username: string | null

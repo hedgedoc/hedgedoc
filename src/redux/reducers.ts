@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,6 +16,7 @@ import { NoteDetailsReducer } from './note-details/reducer'
 import { UiNotificationReducer } from './ui-notifications/reducers'
 import { RendererStatusReducer } from './renderer-status/reducers'
 import type { ApplicationState } from './application-state'
+import { RealtimeReducer } from './realtime/reducers'
 
 export const allReducers: Reducer<ApplicationState> = combineReducers<ApplicationState>({
   user: UserReducer,
@@ -26,5 +27,6 @@ export const allReducers: Reducer<ApplicationState> = combineReducers<Applicatio
   darkMode: DarkModeConfigReducer,
   noteDetails: NoteDetailsReducer,
   uiNotifications: UiNotificationReducer,
-  rendererStatus: RendererStatusReducer
+  rendererStatus: RendererStatusReducer,
+  realtime: RealtimeReducer
 })
