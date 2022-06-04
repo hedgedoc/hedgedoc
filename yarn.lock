@@ -1694,13 +1694,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:27.5.1":
-  version: 27.5.1
-  resolution: "@types/jest@npm:27.5.1"
+"@types/jest@npm:27.5.2":
+  version: 27.5.2
+  resolution: "@types/jest@npm:27.5.2"
   dependencies:
     jest-matcher-utils: ^27.0.0
     pretty-format: ^27.0.0
-  checksum: be20e39f7aaf17179109c0060d0a0489cec2034d4e2e28a631284c7ecd13c5ae52f62697a33a0e89b03b6cfe54e9d5e8c2bd387ab2bd90d6071d68c63b86d1e3
+  checksum: 7e11c6826aa429ad990dc262e4e4b54aa36573287fddf15773e4137f07d11d3105f0dd9f1baff73252160a057df23f5529bb83b1bf83cd3f45f9460a5ca5c22e
   languageName: node
   linkType: hard
 
@@ -5184,7 +5184,7 @@ __metadata:
     "@types/cron": 1.7.3
     "@types/express": 4.17.13
     "@types/express-session": 1.17.4
-    "@types/jest": 27.5.1
+    "@types/jest": 27.5.2
     "@types/minio": 7.0.13
     "@types/mysql": 2.15.21
     "@types/node": 16.11.38
@@ -5233,7 +5233,7 @@ __metadata:
     sqlite3: 5.0.8
     supertest: 6.2.3
     swagger-ui-express: 4.4.0
-    ts-jest: 28.0.3
+    ts-jest: 28.0.4
     ts-node: 10.8.1
     tsconfig-paths: 4.0.0
     typeorm: 0.2.45
@@ -9141,9 +9141,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:28.0.3":
-  version: 28.0.3
-  resolution: "ts-jest@npm:28.0.3"
+"ts-jest@npm:28.0.4":
+  version: 28.0.4
+  resolution: "ts-jest@npm:28.0.4"
   dependencies:
     bs-logger: 0.x
     fast-json-stable-stringify: 2.x
@@ -9155,14 +9155,11 @@ __metadata:
     yargs-parser: ^20.x
   peerDependencies:
     "@babel/core": ">=7.0.0-beta.0 <8"
-    "@types/jest": ^27.0.0
     babel-jest: ^28.0.0
     jest: ^28.0.0
     typescript: ">=4.3"
   peerDependenciesMeta:
     "@babel/core":
-      optional: true
-    "@types/jest":
       optional: true
     babel-jest:
       optional: true
@@ -9170,7 +9167,7 @@ __metadata:
       optional: true
   bin:
     ts-jest: cli.js
-  checksum: dc6f49507cef996abb75d5870f6ce09c9f191d135a5bb2c38c46adac890f10fd4610b7697a0045b9b37315ce4e075f39d5578da8034d6791952eebc7951475c2
+  checksum: 21028e1917f60f086e0af6d057039f31385ca0f5b85736dc19bdd670ccbb5675c7ecde2eb30a5d01fcccdc7a59054498db0c4419306fc5fab0a596e3cf001023
   languageName: node
   linkType: hard
 
