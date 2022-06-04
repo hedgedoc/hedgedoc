@@ -10,7 +10,7 @@ exports[`UserAvatar adds additionalClasses props to wrapping span 1`] = `
       class="rounded user-image"
       height="20"
       src="https://example.com/test.png"
-      title="Boaty McBoatFace"
+      title="common.avatarOf"
       width="20"
     />
     <span
@@ -32,7 +32,7 @@ exports[`UserAvatar does not show names if showName prop is false 1`] = `
       class="rounded user-image"
       height="20"
       src="https://example.com/test.png"
-      title="Boaty McBoatFace"
+      title="common.avatarOf"
       width="20"
     />
   </span>
@@ -49,7 +49,7 @@ exports[`UserAvatar renders the user avatar correctly 1`] = `
       class="rounded user-image"
       height="20"
       src="https://example.com/test.png"
-      title="Boaty McBoatFace"
+      title="common.avatarOf"
       width="20"
     />
     <span
@@ -71,7 +71,7 @@ exports[`UserAvatar renders the user avatar in size lg 1`] = `
       class="rounded user-image"
       height="30"
       src="https://example.com/test.png"
-      title="Boaty McBoatFace"
+      title="common.avatarOf"
       width="30"
     />
     <span
@@ -93,7 +93,7 @@ exports[`UserAvatar renders the user avatar in size sm 1`] = `
       class="rounded user-image"
       height="16"
       src="https://example.com/test.png"
-      title="Boaty McBoatFace"
+      title="common.avatarOf"
       width="16"
     />
     <span

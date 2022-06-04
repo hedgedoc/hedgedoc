@@ -4,11 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ShowIf } from '../show-if/show-if'
 import styles from './user-avatar.module.scss'
 import type { UserInfo } from '../../../api/users/types'
+import defaultAvatar from './default-avatar.png'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
 
 export interface UserAvatarProps {
   size?: 'sm' | 'lg'
@@ -39,19 +42,36 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({ user, size, additionalCl
     }
   }, [size])
 
+  const avatarUrl = useMemo(() => {
+    return user.photo !== '' ? user.photo : defaultAvatar.src
+  }, [user.photo])
+
+  const imgDescription = useMemo(() => t('common.avatarOf', { name: user.displayName }), [t, user])
+
+  const tooltip = useCallback(
+    (props: OverlayInjectedProps) => (
+      <Tooltip id={user.displayName} {...props}>
+        {user.displayName}
+      </Tooltip>
+    ),
+    [user]
+  )
+
   return (
     <span className={'d-inline-flex align-items-center ' + additionalClasses}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={user.photo}
+        src={avatarUrl}
         className={`rounded ${styles['user-image']}`}
-        alt={t('common.avatarOf', { name: user.displayName })}
-        title={user.displayName}
+        alt={imgDescription}
+        title={imgDescription}
         height={imageSize}
         width={imageSize}
       />
       <ShowIf condition={showName}>
-        <span className={`ml-2 mr-1 ${styles['user-line-name']}`}>{user.displayName}</span>
+        <OverlayTrigger overlay={tooltip}>
+          <span className={`ml-2 mr-1 ${styles['user-line-name']}`}>{user.displayName}</span>
+        </OverlayTrigger>
       </ShowIf>
     </span>
   )
