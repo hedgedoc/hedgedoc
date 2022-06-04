@@ -115,9 +115,9 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "12.1.6",
-    "@testing-library/cypress": "8.0.2",
+    "@testing-library/cypress": "8.0.3",
     "@testing-library/jest-dom": "5.16.4",
-    "@testing-library/react": "13.2.0",
+    "@testing-library/react": "13.3.0",
     "@testing-library/user-event": "14.2.0",
     "@types/d3-graphviz": "2.6.7",
     "@types/diff": "5.0.2",
