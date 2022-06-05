@@ -59,3 +59,7 @@ successfully with Nextcloud 14 and Nextcloud 20).
     CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR=ocs.data.display-name
     CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR=ocs.data.email
     ```
+
+!!! info
+    If you are using a [CA not trusted by Node.js](https://github.com/nodejs/node/issues/4175) (like Let's Encrypt e.g) for your NextCloud instance you can set the [`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/cli.html#cli_node_extra_ca_certs_file) environment variable to the CA certificate file path of your CA.  
+    Remember to also make the file available inside the Docker container, if you're running HedgeDoc in Docker container.

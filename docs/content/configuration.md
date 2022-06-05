@@ -211,6 +211,11 @@ these are rarely used for various reasons.
 |             | `CMD_OAUTH2_ROLES_CLAIM`                    | **no default**, `roles`                                                                                                                                                                                             | ID token claim, which is supposed to provide an array of strings of roles                                                                                                                                                                                                              |
 |             | `CMD_OAUTH2_ACCESS_ROLE`                    | **no default**, `role/hedgedoc`                                                                                                                                                                                     | The role which should be included in the ID token roles claim to grant access                                                                                                                                                                                                          |
 
+!!! info
+    If you are using a [CA not trusted by Node.js](https://github.com/nodejs/node/issues/4175) (like Let's Encrypt e.g) for your OAuth2 provider you can set the [`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/cli.html#cli_node_extra_ca_certs_file) environment variable to the CA certificate file path of your CA.  
+    Remember to also make the file available inside the Docker container, if you're running HedgeDoc in Docker container.
+
+
 ### SAML Login
 
 | config file | environment                             | **default** and example value                                                                                                                                                                                                          | description                                                                                                                                            |
