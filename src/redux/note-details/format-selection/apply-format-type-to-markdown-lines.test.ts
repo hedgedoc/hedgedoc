@@ -117,7 +117,7 @@ describe('apply format type to markdown lines', () => {
     expect(prependLinesOfSelectionMock).toBeCalledWith(markdownContentMock, cursorSelectionMock, expect.anything())
   })
 
-  it('can process the format type unordered list', () => {
+  it('can process the format type ordered list', () => {
     const result = applyFormatTypeToMarkdownLines(markdownContentMock, cursorSelectionMock, FormatType.ORDERED_LIST)
     expect(result).toEqual(['1. input', cursorSelectionMock])
     expect(prependLinesOfSelectionMock).toBeCalledWith(markdownContentMock, cursorSelectionMock, expect.anything())

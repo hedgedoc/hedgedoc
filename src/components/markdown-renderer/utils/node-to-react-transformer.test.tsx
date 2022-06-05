@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,7 +8,7 @@ import { NodeToReactTransformer } from './node-to-react-transformer'
 import { Element } from 'domhandler'
 import type { ReactElement, ReactHTMLElement } from 'react'
 import type { NodeReplacement } from '../replace-components/component-replacer'
-import { DO_NOT_REPLACE, REPLACE_WITH_NOTHING } from '../replace-components/component-replacer'
+import { ComponentReplacer, DO_NOT_REPLACE, REPLACE_WITH_NOTHING } from '../replace-components/component-replacer'
 
 describe('node to react transformer', () => {
   let nodeToReactTransformer: NodeToReactTransformer
@@ -28,11 +28,11 @@ describe('node to react transformer', () => {
 
     it('can replace an element nothing', () => {
       nodeToReactTransformer.setReplacers([
-        {
+        new (class extends ComponentReplacer {
           replace(): NodeReplacement {
             return REPLACE_WITH_NOTHING
           }
-        }
+        })()
       ])
       const translation = nodeToReactTransformer.translateNodeToReactElement(defaultTestSpanElement, 1) as ReactElement
       expect(translation).toEqual(null)
@@ -40,11 +40,11 @@ describe('node to react transformer', () => {
 
     it('can translate an element with no matching replacer', () => {
       nodeToReactTransformer.setReplacers([
-        {
+        new (class extends ComponentReplacer {
           replace(): NodeReplacement {
             return DO_NOT_REPLACE
           }
-        }
+        })()
       ])
       const translation = nodeToReactTransformer.translateNodeToReactElement(defaultTestSpanElement, 1) as ReactElement
 
@@ -54,11 +54,11 @@ describe('node to react transformer', () => {
 
     it('can replace an element', () => {
       nodeToReactTransformer.setReplacers([
-        {
+        new (class extends ComponentReplacer {
           replace(): NodeReplacement {
             return <div data-test2={'test2'} />
           }
-        }
+        })()
       ])
       const translation = nodeToReactTransformer.translateNodeToReactElement(defaultTestSpanElement, 1) as ReactElement
 
