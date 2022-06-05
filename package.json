@@ -32,7 +32,7 @@
     "@nestjs/platform-express": "8.4.6",
     "@nestjs/schedule": "2.0.1",
     "@nestjs/swagger": "5.2.1",
-    "@nestjs/typeorm": "8.0.4",
+    "@nestjs/typeorm": "8.1.2",
     "@types/bcrypt": "5.0.0",
     "@types/cron": "1.7.3",
     "@types/minio": "7.0.13",
@@ -63,7 +63,7 @@
     "rxjs": "7.5.5",
     "sqlite3": "5.0.8",
     "swagger-ui-express": "4.4.0",
-    "typeorm": "0.3.4"
+    "typeorm": "0.3.6"
   },
   "devDependencies": {
     "@nestjs/cli": "8.2.6",
