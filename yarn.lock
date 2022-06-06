@@ -1968,14 +1968,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hedgedoc/html-to-react@npm:1.3.0":
-  version: 1.3.0
-  resolution: "@hedgedoc/html-to-react@npm:1.3.0"
+"@hedgedoc/html-to-react@npm:1.4.1":
+  version: 1.4.1
+  resolution: "@hedgedoc/html-to-react@npm:1.4.1"
   dependencies:
     htmlparser2: ^8.0.0
-    react: ^17.0.2 || ^18.0
-    react-dom: ^17.0.2 || ^18.0
-  checksum: 06a41ac9e9e27c57e49da2b708fd09491ba083cadc723686da1704e743f0e7d881a360e3ab2fab633c106aae7c786584ef637f693c9c9a904ab01239aab0a0a8
+  peerDependencies:
+    react: ">=16.0"
+  checksum: d998709f5bc71688b2027d7dd56cabd8bccb8e1c6ab295d4604f5a5c3d2d5a26c4f7e078010194aadd842edc0434df8a3213c30bfd15aefe9a5e24e1afd61bf6
   languageName: node
   linkType: hard
 
@@ -2001,7 +2001,7 @@ __metadata:
     "@codemirror/language-data": 0.20.0
     "@codemirror/theme-one-dark": 0.20.0
     "@fontsource/source-sans-pro": 4.5.10
-    "@hedgedoc/html-to-react": 1.3.0
+    "@hedgedoc/html-to-react": 1.4.1
     "@hedgedoc/markdown-it-image-size": 1.0.3
     "@hedgedoc/markdown-it-task-lists": 1.0.3
     "@matejmazur/react-katex": 3.1.3
@@ -4659,12 +4659,12 @@ __metadata:
   linkType: hard
 
 "@types/jest@npm:*":
-  version: 28.1.0
-  resolution: "@types/jest@npm:28.1.0"
+  version: 28.1.1
+  resolution: "@types/jest@npm:28.1.1"
   dependencies:
     jest-matcher-utils: ^27.0.0
     pretty-format: ^27.0.0
-  checksum: be4d887b2452e8c1367cd19b23906ba4b64af95e22ca871f81c7af5e945bd39b370e124086356aa9380c4543123b1387448bc2c00a604c6f0a92bc3e4a24e9ce
+  checksum: 0a8b045a7b660372decc807c390d3f99a2b12bb1659a1cd593afe04557f4b7c235b0576a5e35b1577710d20e42759d3d8755eb8bed6edc8733f47007e75a5509
   languageName: node
   linkType: hard
 
@@ -4797,9 +4797,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 17.0.39
-  resolution: "@types/node@npm:17.0.39"
-  checksum: 1258561d0af920e52a64cdebb58534ba6cf82fd58697d12a55a11a3747b211f98d316a05fb59cd5b453af5305682dade835ec27666d7fe557156080ea645efb8
+  version: 17.0.40
+  resolution: "@types/node@npm:17.0.40"
+  checksum: e3b2fe876672fbe4be84ce17773944eb2f5eaba50e2c6c0536bdf6d4972ed6488581580581f154183fdc8f2d56fa42a42e3d6e83b9b71ee25adea16a84765e92
   languageName: node
   linkType: hard
 
@@ -4886,18 +4886,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:>=16.14.8, @types/react@npm:>=16.9.11":
-  version: 18.0.11
-  resolution: "@types/react@npm:18.0.11"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: a2138d6929c36a398b0b43eb815b4e67c4f15aeebbdf8b1959edac56b8662d7409020a00540369b4eb1054579b1e8c9549447ae9b0335d5d1ec4ed4e1be2d628
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:18.0.12":
+"@types/react@npm:*, @types/react@npm:18.0.12, @types/react@npm:>=16.14.8, @types/react@npm:>=16.9.11":
   version: 18.0.12
   resolution: "@types/react@npm:18.0.12"
   dependencies:
@@ -8736,9 +8725,9 @@ __metadata:
   linkType: hard
 
 "dayjs@npm:^1.10.4":
-  version: 1.11.2
-  resolution: "dayjs@npm:1.11.2"
-  checksum: 78f8bd04a9e5f5554aa06eacda65a7d59e162d39f621a46fd34fb3b51367c3662426d86b4e2f4ac535f81e0c4d5af3e8a83b37e672412eb556267d726c61f8f3
+  version: 1.11.3
+  resolution: "dayjs@npm:1.11.3"
+  checksum: c87e06b562a51ae6568cc5b840c7579d82a0f8af7163128c858fe512d3d71d07bd8e8e464b8cc41b8698a9e26b80ab2c082d14a1cd4c33df5692d77ccdfc5a43
   languageName: node
   linkType: hard
 
@@ -9312,16 +9301,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"domhandler@npm:^4.2.0, domhandler@npm:^4.3.1":
-  version: 4.3.1
-  resolution: "domhandler@npm:4.3.1"
-  dependencies:
-    domelementtype: ^2.2.0
-  checksum: 4c665ceed016e1911bf7d1dadc09dc888090b64dee7851cccd2fcf5442747ec39c647bb1cb8c8919f8bbdd0f0c625a6bafeeed4b2d656bbecdbae893f43ffaaa
-  languageName: node
-  linkType: hard
-
-"domhandler@npm:^5.0.1, domhandler@npm:^5.0.2":
+"domhandler@npm:5.0.3":
   version: 5.0.3
   resolution: "domhandler@npm:5.0.3"
   dependencies:
@@ -9644,11 +9624,11 @@ __metadata:
   linkType: hard
 
 "error-stack-parser@npm:^2.0.2, error-stack-parser@npm:^2.0.3, error-stack-parser@npm:^2.0.6":
-  version: 2.0.7
-  resolution: "error-stack-parser@npm:2.0.7"
+  version: 2.1.2
+  resolution: "error-stack-parser@npm:2.1.2"
   dependencies:
-    stackframe: ^1.1.1
-  checksum: fe30bba934db08487dd2c5a8dfe785f64debf4948b5c79a531b610b4468d96b918a806c0f3d44f634e70945533d23f44cb3af0a2d2f934b1c698930307d1b73b
+    stackframe: ^1.3.4
+  checksum: 397a9118cc38c40bb7775d01ae4db62be12c0accaecc9cc3dea445a5e03e03ec61a44518dbe8fb16e61246907bbf618aece8a330a491ecf78a2c786851b56e7e
   languageName: node
   linkType: hard
 
@@ -14064,11 +14044,11 @@ __metadata:
   linkType: hard
 
 "locate-path@npm:^7.0.0, locate-path@npm:^7.1.0":
-  version: 7.1.0
-  resolution: "locate-path@npm:7.1.0"
+  version: 7.1.1
+  resolution: "locate-path@npm:7.1.1"
   dependencies:
     p-locate: ^6.0.0
-  checksum: 17d5eb6c04ff31856f8a6ae4ee3e3091d41485657428d1a91bd5f66aa1fcd7a90db3de6e8ffb905c2ff1a0014b77509b98dd6410424505efc08b1726d50bcbfc
+  checksum: 1d88af5b512d6e6398026252e17382907126683ab09ae5d6b8918d0bc72ca2642e1ad6e2fe635c5920840e369618e5d748c08deb57ba537fdd3f78e87ca993e0
   languageName: node
   linkType: hard
 
@@ -17137,7 +17117,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.1.0, react-dom@npm:^17.0.2 || ^18.0":
+"react-dom@npm:18.1.0":
   version: 18.1.0
   resolution: "react-dom@npm:18.1.0"
   dependencies:
@@ -17339,7 +17319,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.1.0, react@npm:^17.0.2 || ^18.0":
+"react@npm:18.1.0":
   version: 18.1.0
   resolution: "react@npm:18.1.0"
   dependencies:
@@ -18633,11 +18613,11 @@ __metadata:
   linkType: hard
 
 "stack-generator@npm:^2.0.3, stack-generator@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "stack-generator@npm:2.0.5"
+  version: 2.0.9
+  resolution: "stack-generator@npm:2.0.9"
   dependencies:
-    stackframe: ^1.1.1
-  checksum: a85c45a6f166319b31e9298da1e05b778b768553c2126eeeccfa5c4402fc810de1c541ec0b92db63238d68b3e08f4f57544adc27255e52f25f8edcabcc9caf63
+    stackframe: ^1.3.1
+  checksum: 861fab3724274e6610646cfae9a8c0404dd358f2128c467df785ccaafd0c1491001ba71cc63b94a74b2f4d9d35479b74d3bee9bffc2443e22258a543030412e4
   languageName: node
   linkType: hard
 
@@ -18657,20 +18637,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stackframe@npm:^1.1.1":
-  version: 1.2.1
-  resolution: "stackframe@npm:1.2.1"
-  checksum: 1a3f281014bb1d2178b7c2ab26d657fb0f83c21d7d34ab33d858fd0b652a035254619fce8601278a2cf22ddb3382af21c4ea29b429806da75f3077fbd5e5bf17
+"stackframe@npm:^1.3.1, stackframe@npm:^1.3.2, stackframe@npm:^1.3.4":
+  version: 1.3.4
+  resolution: "stackframe@npm:1.3.4"
+  checksum: bae1596873595c4610993fa84f86a3387d67586401c1816ea048c0196800c0646c4d2da98c2ee80557fd9eff05877efe33b91ba6cd052658ed96ddc85d19067d
   languageName: node
   linkType: hard
 
 "stacktrace-gps@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "stacktrace-gps@npm:3.0.4"
+  version: 3.1.1
+  resolution: "stacktrace-gps@npm:3.1.1"
   dependencies:
     source-map: 0.5.6
-    stackframe: ^1.1.1
-  checksum: b98cb77632d38e6cbc243da4c47ca5f4bef918985c233bb4cfe8bfdc60fde92b53ce0630b16cf24d81560f1442e2ff92ccf6e2fe19031c90fb775d8e86037d9b
+    stackframe: ^1.3.2
+  checksum: 81a8a52b0e3cc260448ca3a803323e20d56418ed5a77362e51c07b78601aa4a37d9543e9496823e31b893d9dd7ac17cb8ebdfd5380e95ea67e8a39e850ce7f8f
   languageName: node
   linkType: hard
 
