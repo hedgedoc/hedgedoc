@@ -129,7 +129,7 @@
     "@types/markdown-it-plantuml": "1.4.1",
     "@types/mermaid": "8.2.9",
     "@types/node": "16.11.38",
-    "@types/react": "18.0.11",
+    "@types/react": "18.0.12",
     "@types/react-bootstrap-typeahead": "5.1.8",
     "@types/react-dom": "18.0.5",
     "@types/sass": "1.43.1",

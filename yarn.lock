@@ -2024,7 +2024,7 @@ __metadata:
     "@types/markdown-it-plantuml": 1.4.1
     "@types/mermaid": 8.2.9
     "@types/node": 16.11.38
-    "@types/react": 18.0.11
+    "@types/react": 18.0.12
     "@types/react-bootstrap-typeahead": 5.1.8
     "@types/react-dom": 18.0.5
     "@types/sass": 1.43.1
@@ -4886,7 +4886,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:18.0.11, @types/react@npm:>=16.14.8, @types/react@npm:>=16.9.11":
+"@types/react@npm:*, @types/react@npm:>=16.14.8, @types/react@npm:>=16.9.11":
   version: 18.0.11
   resolution: "@types/react@npm:18.0.11"
   dependencies:
@@ -4894,6 +4894,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: a2138d6929c36a398b0b43eb815b4e67c4f15aeebbdf8b1959edac56b8662d7409020a00540369b4eb1054579b1e8c9549447ae9b0335d5d1ec4ed4e1be2d628
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:18.0.12":
+  version: 18.0.12
+  resolution: "@types/react@npm:18.0.12"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 526ea13b3adf7fe4b475e55b7426510a7861ef2910664a9014ef42cba0c699d5167dc378eb161e2ec26c07a3b6fde9b6bdcbbb6f4b5580612246bc289395ef03
   languageName: node
   linkType: hard
 
