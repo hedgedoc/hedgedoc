@@ -99,3 +99,4 @@ plugins:
         'setup/arch-linux.md': 'setup/community.md'
         'setup/pikapods.md': 'setup/community.md'
         'setup/heroku.md': 'setup/community.md'
+        'history.md': https://hedgedoc.org/history/details
