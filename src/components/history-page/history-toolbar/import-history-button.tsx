@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -65,6 +65,8 @@ export const ImportHistoryButton: React.FC = () => {
         resetInputField()
         return
       }
+      //TODO: [mrdrogdrog] The following whole block can be shortened using our `readFile` util.
+      // But I won't do it right now because the whole components needs a make over and that's definitely out of scope for my current PR.
       const fileReader = new FileReader()
       fileReader.onload = (event) => {
         if (event.target && event.target.result) {

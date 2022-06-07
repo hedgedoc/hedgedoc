@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,9 +8,25 @@ import React, { Fragment, Suspense } from 'react'
 import { ButtonGroup, ButtonToolbar } from 'react-bootstrap'
 import { TablePickerButton } from './table-picker/table-picker-button'
 import styles from './tool-bar.module.scss'
-import { UploadImageButton } from './upload-image-button'
-import { ToolbarButton } from './toolbar-button'
-import { FormatType } from '../../../../redux/note-details/types'
+import { UploadImageButton } from './upload-image-button/upload-image-button'
+import { BoldButton } from './buttons/bold-button'
+import { ItalicButton } from './buttons/italic-button'
+import { UnderlineButton } from './buttons/underline-button'
+import { StrikethroughButton } from './buttons/strikethrough-button'
+import { SubscriptButton } from './buttons/subscript-button'
+import { SuperscriptButton } from './buttons/superscript-button'
+import { HighlightButton } from './buttons/highlight-button'
+import { HeaderLevelButton } from './buttons/header-level-button'
+import { CodeFenceButton } from './buttons/code-fence-button'
+import { QuotesButton } from './buttons/quotes-button'
+import { UnorderedListButton } from './buttons/unordered-list-button'
+import { OrderedListButton } from './buttons/ordered-list-button'
+import { CheckListButton } from './buttons/check-list-button'
+import { LinkButton } from './buttons/link-button'
+import { ImageLinkButton } from './buttons/image-link-button'
+import { HorizontalLineButton } from './buttons/horizontal-line-button'
+import { CollapsibleBlockButton } from './buttons/collapsible-block-button'
+import { CommentButton } from './buttons/comment-button'
 
 const EmojiPickerButton = React.lazy(() => import('./emoji-picker/emoji-picker-button'))
 
@@ -18,32 +34,32 @@ export const ToolBar: React.FC = () => {
   return (
     <ButtonToolbar className={`bg-light ${styles.toolbar}`}>
       <ButtonGroup className={'mx-1 flex-wrap'}>
-        <ToolbarButton icon={'bold'} formatType={FormatType.BOLD} />
-        <ToolbarButton icon={'italic'} formatType={FormatType.ITALIC} />
-        <ToolbarButton icon={'underline'} formatType={FormatType.UNDERLINE} />
-        <ToolbarButton icon={'strikethrough'} formatType={FormatType.STRIKETHROUGH} />
-        <ToolbarButton icon={'subscript'} formatType={FormatType.SUBSCRIPT} />
-        <ToolbarButton icon={'superscript'} formatType={FormatType.SUPERSCRIPT} />
-        <ToolbarButton icon={'eraser'} formatType={FormatType.HIGHLIGHT} />
+        <BoldButton />
+        <ItalicButton />
+        <UnderlineButton />
+        <StrikethroughButton />
+        <SubscriptButton />
+        <SuperscriptButton />
+        <HighlightButton />
       </ButtonGroup>
       <ButtonGroup className={'mx-1 flex-wrap'}>
-        <ToolbarButton icon={'header'} formatType={FormatType.HEADER_LEVEL} />
-        <ToolbarButton icon={'code'} formatType={FormatType.CODE_FENCE} />
-        <ToolbarButton icon={'quote-right'} formatType={FormatType.QUOTES} />
-        <ToolbarButton icon={'list'} formatType={FormatType.UNORDERED_LIST} />
-        <ToolbarButton icon={'list-ol'} formatType={FormatType.ORDERED_LIST} />
-        <ToolbarButton icon={'check-square'} formatType={FormatType.CHECK_LIST} />
+        <HeaderLevelButton />
+        <CodeFenceButton />
+        <QuotesButton />
+        <UnorderedListButton />
+        <OrderedListButton />
+        <CheckListButton />
       </ButtonGroup>
       <ButtonGroup className={'mx-1 flex-wrap'}>
-        <ToolbarButton icon={'link'} formatType={FormatType.LINK} />
-        <ToolbarButton icon={'picture-o'} formatType={FormatType.IMAGE_LINK} />
+        <LinkButton />
+        <ImageLinkButton />
         <UploadImageButton />
       </ButtonGroup>
       <ButtonGroup className={'mx-1 flex-wrap'}>
         <TablePickerButton />
-        <ToolbarButton icon={'minus'} formatType={FormatType.HORIZONTAL_LINE} />
-        <ToolbarButton icon={'caret-square-o-down'} formatType={FormatType.COLLAPSIBLE_BLOCK} />
-        <ToolbarButton icon={'comment'} formatType={FormatType.COMMENT} />
+        <HorizontalLineButton />
+        <CollapsibleBlockButton />
+        <CommentButton />
         <Suspense fallback={<Fragment />}>
           <EmojiPickerButton />
         </Suspense>

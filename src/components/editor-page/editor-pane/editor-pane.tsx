@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import type { ScrollProps } from '../synced-scroll/scroll-props'
 import { StatusBar } from './status-bar/status-bar'
 import { ToolBar } from './tool-bar/tool-bar'
@@ -12,54 +12,50 @@ import { useApplicationState } from '../../../hooks/common/use-application-state
 import { setNoteContent } from '../../../redux/note-details/methods'
 import { useNoteMarkdownContent } from '../../../hooks/common/use-note-markdown-content'
 import { MaxLengthWarning } from './max-length-warning/max-length-warning'
-import { useOnImageUploadFromRenderer } from './hooks/use-on-image-upload-from-renderer'
-import type { ReactCodeMirrorRef } from '@uiw/react-codemirror'
 import ReactCodeMirror from '@uiw/react-codemirror'
-import { useCursorActivityCallback } from './hooks/use-cursor-activity-callback'
 import { useApplyScrollState } from './hooks/use-apply-scroll-state'
 import styles from './extended-codemirror/codemirror.module.scss'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { useTranslation } from 'react-i18next'
-import { Logger } from '../../../utils/logger'
 import { useCodeMirrorScrollWatchExtension } from './hooks/code-mirror-extensions/use-code-mirror-scroll-watch-extension'
-import { useCodeMirrorPasteExtension } from './hooks/code-mirror-extensions/use-code-mirror-paste-extension'
-import { useCodeMirrorFileDropExtension } from './hooks/code-mirror-extensions/use-code-mirror-file-drop-extension'
+import { useCodeMirrorFileInsertExtension } from './hooks/code-mirror-extensions/use-code-mirror-file-insert-extension'
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { EditorView } from '@codemirror/view'
 import { autocompletion } from '@codemirror/autocomplete'
-import { useCodeMirrorFocusReference } from './hooks/use-code-mirror-focus-reference'
-import { useOffScreenScrollProtection } from './hooks/use-off-screen-scroll-protection'
-import { cypressId } from '../../../utils/cypress-attribute'
+import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { findLanguageByCodeBlockName } from '../../markdown-renderer/markdown-extension/code-block-markdown-extension/find-language-by-code-block-name'
 import { languages } from '@codemirror/language-data'
-
-const logger = new Logger('EditorPane')
+import { useCursorActivityCallback } from './hooks/use-cursor-activity-callback'
+import { useCodeMirrorReference, useSetCodeMirrorReference } from '../change-content-context/change-content-context'
+import { useCodeMirrorTablePasteExtension } from './hooks/table-paste/use-code-mirror-table-paste-extension'
+import { useOnImageUploadFromRenderer } from './hooks/image-upload-from-renderer/use-on-image-upload-from-renderer'
 
 export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMakeScrollSource }) => {
   const markdownContent = useNoteMarkdownContent()
 
   const ligaturesEnabled = useApplicationState((state) => state.editorConfig.ligatures)
-  const codeMirrorRef = useRef<ReactCodeMirrorRef | null>(null)
 
-  useApplyScrollState(codeMirrorRef, scrollState)
+  useApplyScrollState(scrollState)
 
   const editorScrollExtension = useCodeMirrorScrollWatchExtension(onScroll)
-  const editorPasteExtension = useCodeMirrorPasteExtension()
-  const dropExtension = useCodeMirrorFileDropExtension()
-  const [focusExtension, editorFocused] = useCodeMirrorFocusReference()
-  const saveOffFocusScrollStateExtensions = useOffScreenScrollProtection()
-  const cursorActivityExtension = useCursorActivityCallback(editorFocused)
+  const tablePasteExtensions = useCodeMirrorTablePasteExtension()
+  const fileInsertExtension = useCodeMirrorFileInsertExtension()
+  const cursorActivityExtension = useCursorActivityCallback()
 
-  const onBeforeChange = useCallback(
-    (value: string): void => {
-      if (!editorFocused.current) {
-        logger.debug("Don't post content change because editor isn't focused")
-      } else {
-        setNoteContent(value)
+  const onBeforeChange = useCallback((value: string): void => {
+    setNoteContent(value)
+  }, [])
+
+  const codeMirrorRef = useCodeMirrorReference()
+  const setCodeMirrorReference = useSetCodeMirrorReference()
+
+  const updateViewContext = useMemo(() => {
+    return EditorView.updateListener.of((update) => {
+      if (codeMirrorRef !== update.view) {
+        setCodeMirrorReference(update.view)
       }
-    },
-    [editorFocused]
-  )
+    })
+  }, [codeMirrorRef, setCodeMirrorReference])
 
   const extensions = useMemo(
     () => [
@@ -67,23 +63,15 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
         base: markdownLanguage,
         codeLanguages: (input) => findLanguageByCodeBlockName(languages, input)
       }),
-      ...saveOffFocusScrollStateExtensions,
-      focusExtension,
       EditorView.lineWrapping,
       editorScrollExtension,
-      editorPasteExtension,
-      dropExtension,
+      tablePasteExtensions,
+      fileInsertExtension,
       autocompletion(),
-      cursorActivityExtension
-    ],
-    [
       cursorActivityExtension,
-      dropExtension,
-      editorPasteExtension,
-      editorScrollExtension,
-      focusExtension,
-      saveOffFocusScrollStateExtensions
-    ]
+      updateViewContext
+    ],
+    [cursorActivityExtension, fileInsertExtension, tablePasteExtensions, editorScrollExtension, updateViewContext]
   )
 
   useOnImageUploadFromRenderer()
@@ -100,7 +88,8 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
       className={`d-flex flex-column h-100 position-relative`}
       onTouchStart={onMakeScrollSource}
       onMouseEnter={onMakeScrollSource}
-      {...cypressId('editor-pane')}>
+      {...cypressId('editor-pane')}
+      {...cypressAttribute('editor-ready', String(codeMirrorRef !== undefined))}>
       <MaxLengthWarning />
       <ToolBar />
       <ReactCodeMirror
@@ -115,7 +104,6 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
         theme={oneDark}
         value={markdownContent}
         onChange={onBeforeChange}
-        ref={codeMirrorRef}
       />
       <StatusBar />
     </div>

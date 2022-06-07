@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
-import { setCheckboxInMarkdownContent, updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
+import { updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
 import { MotdModal } from '../common/motd-modal/motd-modal'
 import { AppBar, AppBarMode } from './app-bar/app-bar'
 import { EditorMode } from './app-bar/editor-view-mode'
@@ -15,17 +15,16 @@ import { useViewModeShortcuts } from './hooks/useViewModeShortcuts'
 import { Sidebar } from './sidebar/sidebar'
 import { Splitter } from './splitter/splitter'
 import type { DualScrollState, ScrollState } from './synced-scroll/scroll-props'
-import { RendererType } from '../render-page/window-post-message-communicator/rendering-message'
 import { useEditorModeFromUrl } from './hooks/useEditorModeFromUrl'
 import { UiNotifications } from '../notifications/ui-notifications'
 import { useUpdateLocalHistoryEntry } from './hooks/useUpdateLocalHistoryEntry'
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { EditorDocumentRenderer } from './editor-document-renderer/editor-document-renderer'
 import { Logger } from '../../utils/logger'
-import { NoteType } from '../../redux/note-details/types/note-details'
 import { NoteAndAppTitleHead } from '../layout/note-and-app-title-head'
 import equal from 'fast-deep-equal'
 import { EditorPane } from './editor-pane/editor-pane'
+import { ChangeEditorContentContextProvider } from './change-content-context/change-content-context'
 
 export enum ScrollSource {
   EDITOR = 'editor',
@@ -112,7 +111,6 @@ export const EditorPageContent: React.FC = () => {
     ),
     [onEditorScroll, scrollState.editorScrollState, setEditorToScrollSource]
   )
-  const noteType: NoteType = useApplicationState((state) => state.noteDetails.frontmatter.type)
 
   const rightPane = useMemo(
     () => (
@@ -120,17 +118,15 @@ export const EditorPageContent: React.FC = () => {
         frameClasses={'h-100 w-100'}
         onMakeScrollSource={setRendererToScrollSource}
         onFirstHeadingChange={updateNoteTitleByFirstHeading}
-        onTaskCheckedChange={setCheckboxInMarkdownContent}
         onScroll={onMarkdownRendererScroll}
         scrollState={scrollState.rendererScrollState}
-        rendererType={noteType === NoteType.SLIDE ? RendererType.SLIDESHOW : RendererType.DOCUMENT}
       />
     ),
-    [noteType, onMarkdownRendererScroll, scrollState.rendererScrollState, setRendererToScrollSource]
+    [onMarkdownRendererScroll, scrollState.rendererScrollState, setRendererToScrollSource]
   )
 
   return (
-    <Fragment>
+    <ChangeEditorContentContextProvider>
       <NoteAndAppTitleHead />
       <UiNotifications />
       <MotdModal />
@@ -147,6 +143,6 @@ export const EditorPageContent: React.FC = () => {
           <Sidebar />
         </div>
       </div>
-    </Fragment>
+    </ChangeEditorContentContextProvider>
   )
 }

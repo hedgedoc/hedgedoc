@@ -7,20 +7,14 @@
 import { store } from '..'
 import type { Note, NotePermissions } from '../../api/notes/types'
 import type {
-  AddTableAtCursorAction,
-  FormatSelectionAction,
-  FormatType,
-  InsertTextAtCursorAction,
-  ReplaceInMarkdownContentAction,
   SetNoteDetailsFromServerAction,
   SetNoteDocumentContentAction,
   SetNotePermissionsFromServerAction,
   UpdateCursorPositionAction,
-  UpdateNoteTitleByFirstHeadingAction,
-  UpdateTaskListCheckboxAction
+  UpdateNoteTitleByFirstHeadingAction
 } from './types'
 import { NoteDetailsActionType } from './types'
-import type { CursorSelection } from '../editor/types'
+import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
 
 /**
  * Sets the content of the current note, extracts and parses the frontmatter and extracts the markdown content part.
@@ -66,60 +60,9 @@ export const updateNoteTitleByFirstHeading = (firstHeading?: string): void => {
   } as UpdateNoteTitleByFirstHeadingAction)
 }
 
-/**
- * Changes a checkbox state in the note document content. Triggered when a checkbox in the rendering is clicked.
- *
- * @param lineInDocumentContent The line in the document content to change.
- * @param checked true if the checkbox is checked, false otherwise.
- */
-export const setCheckboxInMarkdownContent = (lineInDocumentContent: number, checked: boolean): void => {
-  store.dispatch({
-    type: NoteDetailsActionType.UPDATE_TASK_LIST_CHECKBOX,
-    checkboxChecked: checked,
-    changedLine: lineInDocumentContent
-  } as UpdateTaskListCheckboxAction)
-}
-
-/**
- * Replaces a string in the markdown content in the global application state.
- *
- * @param replaceable The string that should be replaced
- * @param replacement The replacement for the replaceable
- */
-export const replaceInMarkdownContent = (replaceable: string, replacement: string): void => {
-  store.dispatch({
-    type: NoteDetailsActionType.REPLACE_IN_MARKDOWN_CONTENT,
-    placeholder: replaceable,
-    replacement
-  } as ReplaceInMarkdownContentAction)
-}
-
 export const updateCursorPositions = (selection: CursorSelection): void => {
   store.dispatch({
     type: NoteDetailsActionType.UPDATE_CURSOR_POSITION,
     selection
   } as UpdateCursorPositionAction)
-}
-
-export const formatSelection = (formatType: FormatType): void => {
-  store.dispatch({
-    type: NoteDetailsActionType.FORMAT_SELECTION,
-    formatType
-  } as FormatSelectionAction)
-}
-
-export const addTableAtCursor = (rows: number, columns: number): void => {
-  store.dispatch({
-    type: NoteDetailsActionType.ADD_TABLE_AT_CURSOR,
-    rows,
-    columns
-  } as AddTableAtCursorAction)
-}
-
-export const replaceSelection = (text: string, cursorSelection?: CursorSelection): void => {
-  store.dispatch({
-    type: NoteDetailsActionType.REPLACE_SELECTION,
-    text,
-    cursorSelection
-  } as InsertTextAtCursorAction)
 }

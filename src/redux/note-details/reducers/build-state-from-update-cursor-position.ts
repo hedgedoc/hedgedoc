@@ -5,7 +5,7 @@
  */
 
 import type { NoteDetails } from '../types/note-details'
-import type { CursorSelection } from '../../editor/types'
+import type { CursorSelection } from '../../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
 
 export const buildStateFromUpdateCursorPosition = (state: NoteDetails, selection: CursorSelection): NoteDetails => {
   const correctedSelection = isFromAfterTo(selection)

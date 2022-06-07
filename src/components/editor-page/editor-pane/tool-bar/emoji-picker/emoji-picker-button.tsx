@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,18 +10,26 @@ import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
 import { EmojiPicker } from './emoji-picker'
 import { cypressId } from '../../../../../utils/cypress-attribute'
-import { getEmojiShortCode } from '../utils/emojiUtils'
-import { replaceSelection } from '../../../../../redux/note-details/methods'
 import type { EmojiClickEventDetail } from 'emoji-picker-element/shared'
 import Optional from 'optional-js'
+import { useChangeEditorContentCallback } from '../../../change-content-context/use-change-editor-content-callback'
+import { replaceSelection } from '../formatters/replace-selection'
+import { extractEmojiShortCode } from './extract-emoji-short-code'
 
 export const EmojiPickerButton: React.FC = () => {
   const { t } = useTranslation()
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
-  const onEmojiSelected = useCallback((emoji: EmojiClickEventDetail) => {
-    setShowEmojiPicker(false)
-    Optional.ofNullable(getEmojiShortCode(emoji)).ifPresent((shortCode) => replaceSelection(shortCode))
-  }, [])
+  const changeEditorContent = useChangeEditorContentCallback()
+
+  const onEmojiSelected = useCallback(
+    (emojiClickEvent: EmojiClickEventDetail) => {
+      setShowEmojiPicker(false)
+      Optional.ofNullable(extractEmojiShortCode(emojiClickEvent)).ifPresent((shortCode) => {
+        changeEditorContent?.(({ currentSelection }) => replaceSelection(currentSelection, shortCode, false))
+      })
+    },
+    [changeEditorContent]
+  )
   const hidePicker = useCallback(() => setShowEmojiPicker(false), [])
   const showPicker = useCallback(() => setShowEmojiPicker(true), [])
 
@@ -32,7 +40,8 @@ export const EmojiPickerButton: React.FC = () => {
         {...cypressId('show-emoji-picker')}
         variant='light'
         onClick={showPicker}
-        title={t('editor.editorToolbar.emoji')}>
+        title={t('editor.editorToolbar.emoji')}
+        disabled={!changeEditorContent}>
         <ForkAwesomeIcon icon='smile-o' />
       </Button>
     </Fragment>

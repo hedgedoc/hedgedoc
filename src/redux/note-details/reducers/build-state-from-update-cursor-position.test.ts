@@ -5,9 +5,9 @@
  */
 
 import { initialState } from '../initial-state'
-import type { CursorSelection } from '../../editor/types'
 import { Mock } from 'ts-mockery'
 import { buildStateFromUpdateCursorPosition } from './build-state-from-update-cursor-position'
+import type { CursorSelection } from '../../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
 
 describe('build state from update cursor position', () => {
   it('creates a new state with the given cursor', () => {

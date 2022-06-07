@@ -1,15 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { MutableRefObject } from 'react'
 import { useEffect, useRef } from 'react'
 import type { ScrollState } from '../../synced-scroll/scroll-props'
-import type { ReactCodeMirrorRef } from '@uiw/react-codemirror'
 import { EditorView } from '@codemirror/view'
 import equal from 'fast-deep-equal'
+import { useCodeMirrorReference } from '../../change-content-context/change-content-context'
 
 /**
  * Applies the given {@link ScrollState scroll state} to the given {@link EditorView code mirror editor view}.
@@ -31,14 +30,12 @@ export const applyScrollState = (view: EditorView, scrollState: ScrollState): vo
  * @param editorRef The editor that should be manipulated
  * @param scrollState The scroll state that should be monitored
  */
-export const useApplyScrollState = (
-  editorRef: MutableRefObject<ReactCodeMirrorRef | null>,
-  scrollState?: ScrollState
-): void => {
+export const useApplyScrollState = (scrollState?: ScrollState): void => {
   const lastScrollPosition = useRef<ScrollState>()
+  const codeMirrorRef = useCodeMirrorReference()
 
   useEffect(() => {
-    const view = editorRef.current?.view
+    const view = codeMirrorRef
     if (!view || !scrollState) {
       return
     }
@@ -48,5 +45,5 @@ export const useApplyScrollState = (
     }
     applyScrollState(view, scrollState)
     lastScrollPosition.current = scrollState
-  }, [editorRef, scrollState])
+  }, [codeMirrorRef, scrollState])
 }

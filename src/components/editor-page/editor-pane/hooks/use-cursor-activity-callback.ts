@@ -4,22 +4,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { RefObject } from 'react'
 import { useMemo, useRef } from 'react'
 import { updateCursorPositions } from '../../../../redux/note-details/methods'
 import type { ViewUpdate } from '@codemirror/view'
 import { EditorView } from '@codemirror/view'
-import { Logger } from '../../../../utils/logger'
 import type { Extension, SelectionRange } from '@codemirror/state'
-
-const logger = new Logger('useCursorActivityCallback')
 
 /**
  * Provides a callback for codemirror that handles cursor changes
  *
  * @return the generated callback
  */
-export const useCursorActivityCallback = (editorFocused: RefObject<boolean>): Extension => {
+export const useCursorActivityCallback = (): Extension => {
   const lastMainSelection = useRef<SelectionRange>()
 
   return useMemo(
@@ -30,16 +26,11 @@ export const useCursorActivityCallback = (editorFocused: RefObject<boolean>): Ex
           return
         }
         lastMainSelection.current = firstSelection
-        if (!editorFocused.current) {
-          logger.debug("Don't post updated cursor because editor isn't focused")
-          return
-        }
-        const newCursorPos = {
+        updateCursorPositions({
           from: firstSelection.from,
           to: firstSelection.to === firstSelection.from ? undefined : firstSelection.to
-        }
-        updateCursorPositions(newCursorPos)
+        })
       }),
-    [editorFocused]
+    []
   )
 }

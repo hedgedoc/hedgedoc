@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,6 +20,7 @@ export interface SidebarEntryProps extends PropsWithDataCypressId {
   hide?: boolean
   className?: string
   onClick?: () => void
+  disabled?: boolean
 }
 
 export interface SidebarMenuProps {

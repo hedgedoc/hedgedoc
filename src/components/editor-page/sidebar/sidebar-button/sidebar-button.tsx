@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -34,6 +34,7 @@ export const SidebarButton: React.FC<PropsWithChildren<SidebarButton>> = ({
   buttonRef,
   hide,
   variant,
+  disabled,
   ...props
 }) => {
   const variantClass = useMemo(() => {
@@ -44,6 +45,7 @@ export const SidebarButton: React.FC<PropsWithChildren<SidebarButton>> = ({
     <button
       ref={buttonRef}
       className={`${styles['sidebar-button']} ${variantClass} ${hide ? styles['hide'] : ''} ${className ?? ''}`}
+      disabled={disabled}
       {...props}>
       <ShowIf condition={!!icon}>
         <span className={`sidebar-button-icon ${styles['sidebar-icon']}`}>

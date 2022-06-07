@@ -28,6 +28,7 @@ describe('File upload', () => {
       )
     })
     it('via button', () => {
+      cy.getByCypressId('editor-pane').should('have.attr', 'data-cypress-editor-ready', 'true')
       cy.getByCypressId('editor-toolbar-upload-image-button').should('be.visible')
       cy.getByCypressId('editor-toolbar-upload-image-input').selectFile(
         {
@@ -37,15 +38,16 @@ describe('File upload', () => {
         },
         { force: true }
       )
-      cy.get('.cm-line').contains(`![](${imageUrl})`)
+      cy.get('.cm-line').contains(`![demo.png](${imageUrl})`)
     })
 
     it('via paste', () => {
+      cy.getByCypressId('editor-pane').should('have.attr', 'data-cypress-editor-ready', 'true')
       cy.fixture('demo.png').then((image: string) => {
         const pasteEvent = {
           clipboardData: {
             files: [Cypress.Blob.base64StringToBlob(image, 'image/png')],
-            getData: (_: string) => ''
+            getData: () => ''
           }
         }
         cy.get('.cm-content').trigger('paste', pasteEvent)
@@ -54,6 +56,7 @@ describe('File upload', () => {
     })
 
     it('via drag and drop', () => {
+      cy.getByCypressId('editor-pane').should('have.attr', 'data-cypress-editor-ready', 'true')
       cy.get('.cm-content').selectFile(
         {
           contents: '@demoImage',
@@ -62,11 +65,12 @@ describe('File upload', () => {
         },
         { action: 'drag-drop', force: true }
       )
-      cy.get('.cm-line').contains(`![](${imageUrl})`)
+      cy.get('.cm-line').contains(`![demo.png](${imageUrl})`)
     })
   })
 
   it('fails', () => {
+    cy.getByCypressId('editor-pane').should('have.attr', 'data-cypress-editor-ready', 'true')
     cy.intercept(
       {
         method: 'POST',
@@ -89,12 +93,16 @@ describe('File upload', () => {
   })
 
   it('lets text paste still work', () => {
+    cy.getByCypressId('editor-pane').should('have.attr', 'data-cypress-editor-ready', 'true')
     const testText = 'a long test text'
-    const pasteEvent = {
+
+    const pasteEvent: Event = Object.assign(new Event('paste', { bubbles: true, cancelable: true }), {
       clipboardData: {
-        getData: (type = 'text') => testText
+        files: [],
+        getData: () => testText
       }
-    }
+    })
+
     cy.get('.cm-content').trigger('paste', pasteEvent)
     cy.get('.cm-line').contains(`${testText}`)
   })

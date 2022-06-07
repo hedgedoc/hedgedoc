@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,23 +8,9 @@ import { useRendererToEditorCommunicator } from '../../../../editor-page/render-
 import { useCallback } from 'react'
 import { CommunicationMessageType } from '../../../../render-page/window-post-message-communicator/rendering-message'
 import { Logger } from '../../../../../utils/logger'
+import { FileContentFormat, readFile } from '../../../../../utils/read-file'
 
 const log = new Logger('useOnImageUpload')
-
-/**
- * Converts a {@link File} to a data url.
- *
- * @param file The file to convert
- * @return The file content represented as data url
- */
-const readFileAsDataUrl = (file: File): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result as string)
-    reader.onerror = (error) => reject(error)
-  })
-}
 
 /**
  * Provides a callback that sends a {@link File file} to the editor via iframe communication.
@@ -40,7 +26,7 @@ export const useOnImageUpload = (
 
   return useCallback(
     (file: File) => {
-      readFileAsDataUrl(file)
+      readFile(file, FileContentFormat.DATA_URL)
         .then((dataUri) => {
           communicator.sendMessageToOtherSide({
             type: CommunicationMessageType.IMAGE_UPLOAD,

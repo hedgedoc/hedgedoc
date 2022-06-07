@@ -6,8 +6,8 @@
 
 import type { SlideOptions } from './slide-show-options'
 import type { ISO6391 } from './iso6391'
-import type { CursorSelection } from '../../editor/types'
 import type { NoteMetadata } from '../../../api/notes/types'
+import type { CursorSelection } from '../../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
 
 type UnnecessaryNoteAttributes = 'updatedAt' | 'createdAt' | 'tags' | 'description'
 
