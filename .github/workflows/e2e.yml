@@ -84,7 +84,7 @@ jobs:
           name: next-build
           path: .next
 
-      - uses: cypress-io/github-action@v2
+      - uses: cypress-io/github-action@v4
         with:
           browser: ${{ matrix.browser }}
           start: 'yarn start:ci'

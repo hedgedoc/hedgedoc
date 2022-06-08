@@ -1,7 +1,8 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
+    "noEmit": true,
     "strict": true,
-    "baseUrl": "../node_modules",
     "target": "es6",
     "lib": [
       "es6",
@@ -14,6 +15,8 @@
     ]
   },
   "include": [
-    "**/*.ts"
-  ]
+    "../node_modules/cypress",
+    "./**/*.ts"
+  ],
+  "exclude": []
 }

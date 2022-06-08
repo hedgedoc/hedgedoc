@@ -136,7 +136,7 @@
     "@types/uuid": "8.3.4",
     "@typescript-eslint/eslint-plugin": "5.27.0",
     "@typescript-eslint/parser": "5.27.0",
-    "cypress": "9.7.0",
+    "cypress": "10.0.3",
     "cypress-commands": "2.0.1",
     "cypress-fill-command": "1.0.2",
     "eslint": "8.17.0",
