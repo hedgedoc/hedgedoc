@@ -25,14 +25,14 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-16-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-18-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn
+            ${{ runner.os }}-yarn-18
 
       - name: Set up NodeJS
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
 
       - name: Install dependencies
         run: yarn install --immutable

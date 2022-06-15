@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '14', '16' ]
+        node: [ '14', '16', '18' ]
     name: Test and build with NodeJS ${{ matrix.node }}
     steps:
       - name: Checkout repository
@@ -30,7 +30,7 @@ jobs:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-${{ matrix.node }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-yarn-18
       - name: Set up NodeJS
         uses: actions/setup-node@v3
         with:

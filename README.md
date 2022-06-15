@@ -17,7 +17,7 @@ react and to improve it.
 
 ## Preparation
 
-You need at least Node 14 (we recommend Node 16) and [yarn](https://yarnpkg.com/).
+You need at least Node 14 (we recommend Node 18) and [yarn](https://yarnpkg.com/).
 
 ## Development mode
 
