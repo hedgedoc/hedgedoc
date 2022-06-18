@@ -2098,7 +2098,7 @@ __metadata:
     typescript: 4.7.3
     uuid: 8.3.2
     vega: 5.22.1
-    vega-embed: 6.20.8
+    vega-embed: 6.21.0
     vega-lite: 5.2.0
     words-count: 2.0.2
   languageName: unknown
@@ -10507,7 +10507,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-json-patch@npm:^3.1.0":
+"fast-json-patch@npm:^3.1.1":
   version: 3.1.1
   resolution: "fast-json-patch@npm:3.1.1"
   checksum: c4525b61b2471df60d4b025b4118b036d99778a93431aa44d1084218182841d82ce93056f0f3bbd731a24e6a8e69820128adf1873eb2199a26c62ef58d137833
@@ -19671,7 +19671,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.3.1":
+"tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.4.0":
   version: 2.4.0
   resolution: "tslib@npm:2.4.0"
   checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
@@ -20209,22 +20209,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-embed@npm:6.20.8":
-  version: 6.20.8
-  resolution: "vega-embed@npm:6.20.8"
+"vega-embed@npm:6.21.0":
+  version: 6.21.0
+  resolution: "vega-embed@npm:6.21.0"
   dependencies:
-    fast-json-patch: ^3.1.0
+    fast-json-patch: ^3.1.1
     json-stringify-pretty-compact: ^3.0.0
-    semver: ^7.3.5
-    tslib: ^2.3.1
+    semver: ^7.3.7
+    tslib: ^2.4.0
     vega-interpreter: ^1.0.4
     vega-schema-url-parser: ^2.2.0
     vega-themes: ^2.10.0
     vega-tooltip: ^0.28.0
+    yallist: "*"
   peerDependencies:
     vega: ^5.21.0
     vega-lite: "*"
-  checksum: b0bde3a00462783df20bb7470b980b3e4189e7ea7c898c3c61091fc346006021f0a69818620db69b1dbcd362243f99627851227569c2ed0452fd223d4b54eb59
+  checksum: dc4634f92906c8499ae94b9c3690c10b50060b1ea8538103412dc57a3930ea35d7f402ec40f0785250e469f6471fbfbc4f8eb6c0479fbb87fed00368112c5058
   languageName: node
   linkType: hard
 
@@ -21039,17 +21040,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"yallist@npm:*, yallist@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "yallist@npm:4.0.0"
+  checksum: 343617202af32df2a15a3be36a5a8c0c8545208f3d3dfbc6bb7c3e3b7e8c6f8e7485432e4f3b88da3031a6e20afa7c711eded32ddfb122896ac5d914e75848d5
+  languageName: node
+  linkType: hard
+
 "yallist@npm:^3.0.0, yallist@npm:^3.1.1":
   version: 3.1.1
   resolution: "yallist@npm:3.1.1"
   checksum: 48f7bb00dc19fc635a13a39fe547f527b10c9290e7b3e836b9a8f1ca04d4d342e85714416b3c2ab74949c9c66f9cebb0473e6bc353b79035356103b47641285d
-  languageName: node
-  linkType: hard
-
-"yallist@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "yallist@npm:4.0.0"
-  checksum: 343617202af32df2a15a3be36a5a8c0c8545208f3d3dfbc6bb7c3e3b7e8c6f8e7485432e4f3b88da3031a6e20afa7c711eded32ddfb122896ac5d914e75848d5
   languageName: node
   linkType: hard
 
