@@ -2022,7 +2022,7 @@ __metadata:
     copy-webpack-plugin: 11.0.0
     cross-env: 7.0.3
     cypress: 10.1.0
-    cypress-commands: 2.0.1
+    cypress-commands: 3.0.0
     cypress-fill-command: 1.0.2
     d3-graphviz: 4.1.1
     deepmerge: 4.2.2
@@ -7668,12 +7668,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-commands@npm:2.0.1":
-  version: 2.0.1
-  resolution: "cypress-commands@npm:2.0.1"
+"cypress-commands@npm:3.0.0":
+  version: 3.0.0
+  resolution: "cypress-commands@npm:3.0.0"
   dependencies:
     path-browserify: ^1.0.1
-  checksum: f1cebfeea4d9d63a319620dd1bc6718764c397f7051d8987480a9a6c3391796fa8feafda47914e231fb684a544f9ad1e8981b176143718c4722f008c3a993044
+  checksum: 43552b98a97174cd6d4fc01a1af1b5a6069e53d898e16fd4448ad0d01c43a0ffeb881d22e3a493e1bb81d9bf1d520f64c6c58396fde6164b84a1ceb06064055e
   languageName: node
   linkType: hard
 
