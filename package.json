@@ -74,7 +74,7 @@
     "@types/cli-color": "2.0.2",
     "@types/express": "4.17.13",
     "@types/express-session": "1.17.4",
-    "@types/jest": "28.1.1",
+    "@types/jest": "28.1.2",
     "@types/mysql": "2.15.21",
     "@types/node": "16.11.41",
     "@types/passport-local": "1.0.34",
@@ -95,7 +95,7 @@
     "prettier": "2.6.2",
     "source-map-support": "0.5.21",
     "supertest": "6.2.3",
-    "ts-jest": "28.0.4",
+    "ts-jest": "28.0.5",
     "ts-node": "10.8.1",
     "tsconfig-paths": "4.0.0",
     "typescript": "4.7.3"
