@@ -2071,7 +2071,7 @@ __metadata:
     markmap-common: 0.1.6
     markmap-lib: 0.12.0
     markmap-view: 0.2.7
-    mermaid: 9.1.1
+    mermaid: 9.1.2
     netlify-cli: 10.5.1
     next: 12.1.6
     optional-js: 2.3.0
@@ -9309,13 +9309,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:2.3.6":
-  version: 2.3.6
-  resolution: "dompurify@npm:2.3.6"
-  checksum: 4b2bbf6bc68ebd776aec4a533cef74a5ae30391eed528f3df748af71da318afdc298b6f40449bef093b7454ffd2ae82656636560474de5a3b34316b762c85b12
-  languageName: node
-  linkType: hard
-
 "dompurify@npm:2.3.8":
   version: 2.3.8
   resolution: "dompurify@npm:2.3.8"
@@ -14694,20 +14687,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mermaid@npm:9.1.1":
-  version: 9.1.1
-  resolution: "mermaid@npm:9.1.1"
+"mermaid@npm:9.1.2":
+  version: 9.1.2
+  resolution: "mermaid@npm:9.1.2"
   dependencies:
     "@braintree/sanitize-url": ^6.0.0
     d3: ^7.0.0
     dagre: ^0.8.5
     dagre-d3: ^0.6.4
-    dompurify: 2.3.6
+    dompurify: 2.3.8
     graphlib: ^2.1.8
     khroma: ^2.0.0
     moment-mini: ^2.24.0
     stylis: ^4.0.10
-  checksum: 7c92609eff6ef63805e2bc09116d6a65d5d4d45688f2fca07919582393be14965505f04292c88a47dfef37cecf95c456ccf6b3187bd613ea69567410e0c7aa61
+  checksum: d2666f4736bdad4aac323ef6b848fab130b181c1617c402785e418dd48455fb1626df4ebfd732022c88633f6b6b4243201a84fc6c24c7579f436d2d23bf4ed95
   languageName: node
   linkType: hard
 
