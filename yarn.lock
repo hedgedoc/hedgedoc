@@ -2008,8 +2008,8 @@ __metadata:
     "@types/markdown-it-container": 2.0.5
     "@types/markdown-it-plantuml": 1.4.1
     "@types/mermaid": 8.2.9
-    "@types/node": 16.11.39
-    "@types/react": 18.0.12
+    "@types/node": 16.11.41
+    "@types/react": 18.0.14
     "@types/react-bootstrap-typeahead": 5.1.8
     "@types/react-dom": 18.0.5
     "@types/sass": 1.43.1
@@ -4789,10 +4789,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:16.11.39, @types/node@npm:^16.0.0":
-  version: 16.11.39
-  resolution: "@types/node@npm:16.11.39"
-  checksum: bc97b9773ac6b3194800f990b349fad7f66c6126dacef59291b10a2c8b6813d6f67f947b7e12a6c9952790f7065d576fe38355b8fe034a6af60f317cfc570f69
+"@types/node@npm:16.11.41":
+  version: 16.11.41
+  resolution: "@types/node@npm:16.11.41"
+  checksum: 808e4d65757bb13cf25e88dfa4e65880efef06652b04baecb051eb90cf090dda9812aa3505b31e963a48041eed7dbe0fc59c44c7c5e117da952ff951bf3a584a
   languageName: node
   linkType: hard
 
@@ -4800,6 +4800,13 @@ __metadata:
   version: 14.18.21
   resolution: "@types/node@npm:14.18.21"
   checksum: 4ed35b76609647a4e36a194702e31cdda9ed42174ddaf7937bc5498984e98a99e8a42ea895ea17dd9c5ec18080112c29ab670c34f90eb9f7a4703b85b31e34fa
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^16.0.0":
+  version: 16.11.39
+  resolution: "@types/node@npm:16.11.39"
+  checksum: bc97b9773ac6b3194800f990b349fad7f66c6126dacef59291b10a2c8b6813d6f67f947b7e12a6c9952790f7065d576fe38355b8fe034a6af60f317cfc570f69
   languageName: node
   linkType: hard
 
@@ -4872,7 +4879,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:18.0.12, @types/react@npm:>=16.14.8, @types/react@npm:>=16.9.11":
+"@types/react@npm:*, @types/react@npm:>=16.14.8, @types/react@npm:>=16.9.11":
   version: 18.0.12
   resolution: "@types/react@npm:18.0.12"
   dependencies:
@@ -4880,6 +4887,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 526ea13b3adf7fe4b475e55b7426510a7861ef2910664a9014ef42cba0c699d5167dc378eb161e2ec26c07a3b6fde9b6bdcbbb6f4b5580612246bc289395ef03
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:18.0.14":
+  version: 18.0.14
+  resolution: "@types/react@npm:18.0.14"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 608eb57a383eedc54c79949673e5e8314f6b0c61542bff58721c8c47a18c23e2832e77c656050c2c2c004b62cf25582136c7c56fe1b6263a285c065fae31dbcf
   languageName: node
   linkType: hard
 
