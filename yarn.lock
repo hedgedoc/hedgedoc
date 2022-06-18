@@ -1794,7 +1794,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node-fetch@npm:2.6.1, @types/node-fetch@npm:^2.5.0":
+"@types/node-fetch@npm:2.6.2":
+  version: 2.6.2
+  resolution: "@types/node-fetch@npm:2.6.2"
+  dependencies:
+    "@types/node": "*"
+    form-data: ^3.0.0
+  checksum: 6f73b1470000d303d25a6fb92875ea837a216656cb7474f66cdd67bb014aa81a5a11e7ac9c21fe19bee9ecb2ef87c1962bceeaec31386119d1ac86e4c30ad7a6
+  languageName: node
+  linkType: hard
+
+"@types/node-fetch@npm:^2.5.0":
   version: 2.6.1
   resolution: "@types/node-fetch@npm:2.6.1"
   dependencies:
@@ -1811,10 +1821,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:16.11.39":
-  version: 16.11.39
-  resolution: "@types/node@npm:16.11.39"
-  checksum: bc97b9773ac6b3194800f990b349fad7f66c6126dacef59291b10a2c8b6813d6f67f947b7e12a6c9952790f7065d576fe38355b8fe034a6af60f317cfc570f69
+"@types/node@npm:16.11.41":
+  version: 16.11.41
+  resolution: "@types/node@npm:16.11.41"
+  checksum: 808e4d65757bb13cf25e88dfa4e65880efef06652b04baecb051eb90cf090dda9812aa3505b31e963a48041eed7dbe0fc59c44c7c5e117da952ff951bf3a584a
   languageName: node
   linkType: hard
 
@@ -5197,8 +5207,8 @@ __metadata:
     "@types/jest": 28.1.1
     "@types/minio": 7.0.13
     "@types/mysql": 2.15.21
-    "@types/node": 16.11.39
-    "@types/node-fetch": 2.6.1
+    "@types/node": 16.11.41
+    "@types/node-fetch": 2.6.2
     "@types/passport-http-bearer": 1.0.37
     "@types/passport-local": 1.0.34
     "@types/pg": 8.6.5
