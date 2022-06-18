@@ -78,6 +78,13 @@
       "matchPackagePatterns": [
         "^@testing-library/"
       ]
+    },
+    {
+      "groupName": "CodeMirror",
+      "matchPackagePatterns": [
+        "^@codemirror/",
+        "@uiw/react-codemirror"
+      ]
     }
   ],
   "prHourlyLimit": 0,
