@@ -1671,9 +1671,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/language-data@npm:6.0.0":
-  version: 6.0.0
-  resolution: "@codemirror/language-data@npm:6.0.0"
+"@codemirror/language-data@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@codemirror/language-data@npm:6.1.0"
   dependencies:
     "@codemirror/lang-cpp": ^6.0.0
     "@codemirror/lang-css": ^6.0.0
@@ -1689,8 +1689,8 @@ __metadata:
     "@codemirror/lang-wast": ^6.0.0
     "@codemirror/lang-xml": ^6.0.0
     "@codemirror/language": ^6.0.0
-    "@codemirror/legacy-modes": ^6.0.0
-  checksum: 2d0f8973497dd970c8577e4a8265161d44b966f6a00a46bcc263a7ad4147c6e6c1d3869a9e1d84d507193d180ae2f031c098bd5bb472eaf7d42736321499abc0
+    "@codemirror/legacy-modes": ^6.1.0
+  checksum: 785ac3025b67c7968f3036642b69822992c401a0e008ba7ef35dae698356f1973803395601589bac3c98a1db92d3f3fcd292675843bf9db8999a72d95ee60e27
   languageName: node
   linkType: hard
 
@@ -1708,12 +1708,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/legacy-modes@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "@codemirror/legacy-modes@npm:6.0.0"
+"@codemirror/legacy-modes@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "@codemirror/legacy-modes@npm:6.1.0"
   dependencies:
     "@codemirror/language": ^6.0.0
-  checksum: ac4de26e792403610f13c67a2a12b058866e2422e00f8fc742ea7b624c03026e10117b2d870eb04a324f6dcf2147e2d8a7612756e48a5f5803ce935b23c53775
+  checksum: bc0e3b771360de435735e0203c47feef8336749738da364c744da50e838d1ad5b36402da00131323238b579f657868210659029d44a1935baf3de8cb964903a6
   languageName: node
   linkType: hard
 
@@ -1983,7 +1983,7 @@ __metadata:
   resolution: "@hedgedoc/react-client@workspace:."
   dependencies:
     "@codemirror/lang-markdown": 6.0.0
-    "@codemirror/language-data": 6.0.0
+    "@codemirror/language-data": 6.1.0
     "@codemirror/theme-one-dark": 6.0.0
     "@fontsource/source-sans-pro": 4.5.10
     "@hedgedoc/html-to-react": 1.4.1
