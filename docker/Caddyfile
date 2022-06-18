@@ -1,0 +1,16 @@
+#
+# SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+#
+
+:8080
+
+log {
+	output stdout
+}
+
+reverse_proxy /realtime http://127.0.0.1:3000
+reverse_proxy /api/* http://127.0.0.1:3000
+reverse_proxy /public/* http://127.0.0.1:3000
+reverse_proxy /* http://127.0.0.1:3001

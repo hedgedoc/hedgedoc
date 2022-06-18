@@ -1739,7 +1739,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/state@npm:^6.0.0":
+"@codemirror/state@npm:6.0.0, @codemirror/state@npm:^6.0.0":
   version: 6.0.0
   resolution: "@codemirror/state@npm:6.0.0"
   checksum: 7f6286d8e8b8c5e7018f9ee81943b35324150fd15ccc77ae220b904a73e10fa480ab51a89663d956a9c2fae70b13d754da0bf535092759158cc3707743aa236f
@@ -1758,7 +1758,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:^6.0.0":
+"@codemirror/view@npm:6.0.0, @codemirror/view@npm:^6.0.0":
   version: 6.0.0
   resolution: "@codemirror/view@npm:6.0.0"
   dependencies:
@@ -1984,11 +1984,14 @@ __metadata:
   dependencies:
     "@codemirror/lang-markdown": 6.0.0
     "@codemirror/language-data": 6.1.0
+    "@codemirror/state": 6.0.0
     "@codemirror/theme-one-dark": 6.0.0
+    "@codemirror/view": 6.0.0
     "@fontsource/source-sans-pro": 4.5.10
     "@hedgedoc/html-to-react": 1.4.1
     "@hedgedoc/markdown-it-image-size": 1.0.3
     "@hedgedoc/markdown-it-task-lists": 1.0.3
+    "@hedgedoc/realtime": 0.0.3
     "@matejmazur/react-katex": 3.1.3
     "@next/bundle-analyzer": 12.1.6
     "@react-hook/resize-observer": 1.2.5
@@ -2101,8 +2104,23 @@ __metadata:
     vega-embed: 6.21.0
     vega-lite: 5.2.0
     words-count: 2.0.2
+    y-codemirror.next: 0.3.0
+    y-protocols: 1.0.5
   languageName: unknown
   linkType: soft
+
+"@hedgedoc/realtime@npm:0.0.3":
+  version: 0.0.3
+  resolution: "@hedgedoc/realtime@npm:0.0.3"
+  dependencies:
+    isomorphic-ws: 4.0.1
+    lib0: 0.2.51
+    typed-emitter: 2.1.0
+    y-protocols: 1.0.5
+    yjs: 13.5.38
+  checksum: cfb1dc7459b1699841a9ed29147ffe5397206b9b87bb5410d6c4000d1a3a4db6f4d7862930bbff8a0b1aaf7ba8bdcac8904ed0fd626df684c486121afab6f089
+  languageName: node
+  linkType: hard
 
 "@hpcc-js/wasm@npm:1.12.8":
   version: 1.12.8
@@ -12954,6 +12972,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"isomorphic-ws@npm:4.0.1":
+  version: 4.0.1
+  resolution: "isomorphic-ws@npm:4.0.1"
+  peerDependencies:
+    ws: "*"
+  checksum: d7190eadefdc28bdb93d67b5f0c603385aaf87724fa2974abb382ac1ec9756ed2cfb27065cbe76122879c2d452e2982bc4314317f3d6c737ddda6c047328771a
+  languageName: node
+  linkType: hard
+
+"isomorphic.js@npm:^0.2.4":
+  version: 0.2.5
+  resolution: "isomorphic.js@npm:0.2.5"
+  checksum: d8d1b083f05f3c337a06628b982ac3ce6db953bbef14a9de8ad49131250c3592f864b73c12030fdc9ef138ce97b76ef55c7d96a849561ac215b1b4b9d301c8e9
+  languageName: node
+  linkType: hard
+
 "isstream@npm:~0.1.2":
   version: 0.1.2
   resolution: "isstream@npm:0.1.2"
@@ -14021,6 +14055,15 @@ __metadata:
     prelude-ls: ~1.1.2
     type-check: ~0.3.2
   checksum: 0d084a524231a8246bb10fec48cdbb35282099f6954838604f3c7fc66f2e16fa66fd9cc2f3f20a541a113c4dafdf181e822c887c8a319c9195444e6c64ac395e
+  languageName: node
+  linkType: hard
+
+"lib0@npm:0.2.51, lib0@npm:^0.2.42, lib0@npm:^0.2.49":
+  version: 0.2.51
+  resolution: "lib0@npm:0.2.51"
+  dependencies:
+    isomorphic.js: ^0.2.4
+  checksum: bdd00ba42b66d27d048fc169e7d472b9dfe9140e067daeb92db82f40209365d9399aaed679078cc440c496c43d429427b0e231dbaaf171793d98ea6f5476aa3a
   languageName: node
   linkType: hard
 
@@ -18028,21 +18071,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rxjs@npm:*, rxjs@npm:^7.5.1":
+  version: 7.5.5
+  resolution: "rxjs@npm:7.5.5"
+  dependencies:
+    tslib: ^2.1.0
+  checksum: e034f60805210cce756dd2f49664a8108780b117cf5d0e2281506e9e6387f7b4f1532d974a8c8b09314fa7a16dd2f6cff3462072a5789672b5dcb45c4173f3c6
+  languageName: node
+  linkType: hard
+
 "rxjs@npm:^6.3.3, rxjs@npm:^6.4.0, rxjs@npm:^6.6.2":
   version: 6.6.7
   resolution: "rxjs@npm:6.6.7"
   dependencies:
     tslib: ^1.9.0
   checksum: bc334edef1bb8bbf56590b0b25734ba0deaf8825b703256a93714308ea36dff8a11d25533671adf8e104e5e8f256aa6fdfe39b2e248cdbd7a5f90c260acbbd1b
-  languageName: node
-  linkType: hard
-
-"rxjs@npm:^7.5.1":
-  version: 7.5.5
-  resolution: "rxjs@npm:7.5.5"
-  dependencies:
-    tslib: ^2.1.0
-  checksum: e034f60805210cce756dd2f49664a8108780b117cf5d0e2281506e9e6387f7b4f1532d974a8c8b09314fa7a16dd2f6cff3462072a5789672b5dcb45c4173f3c6
   languageName: node
   linkType: hard
 
@@ -19906,6 +19949,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typed-emitter@npm:2.1.0":
+  version: 2.1.0
+  resolution: "typed-emitter@npm:2.1.0"
+  dependencies:
+    rxjs: "*"
+  dependenciesMeta:
+    rxjs:
+      optional: true
+  checksum: 95821a9e05784b972cc9d152891fd12a56cb4b1a7c57e768c02bea6a8984da7aff8f19404a7b69eea11fae2a3b6c0c510a4c510f575f50162c759ae9059f2520
+  languageName: node
+  linkType: hard
+
 "typed-styles@npm:^0.0.7":
   version: 0.0.7
   resolution: "typed-styles@npm:0.0.7"
@@ -21149,6 +21204,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"y-codemirror.next@npm:0.3.0":
+  version: 0.3.0
+  resolution: "y-codemirror.next@npm:0.3.0"
+  dependencies:
+    lib0: ^0.2.42
+  peerDependencies:
+    "@codemirror/state": ^6.0.0
+    "@codemirror/view": ^6.0.0
+    yjs: ^13.5.6
+  checksum: f9aa8fade4cfa632df83e0eb87d736b8c3c5bbbab835affaaaf9c0a98c115329332586d58d5a8279c5502a19cbad77b83ca22f74f5d5dd7ccc4ce8bca85f6885
+  languageName: node
+  linkType: hard
+
+"y-protocols@npm:1.0.5":
+  version: 1.0.5
+  resolution: "y-protocols@npm:1.0.5"
+  dependencies:
+    lib0: ^0.2.42
+  checksum: d19404a4ebafcf3761c28b881abe8c32ab6e457db0e5ffc7dbb749cbc2c3bb98e003a43f3e8eba7f245b2698c76f2c4cdd1c2db869f8ec0c6ef94736d9a88652
+  languageName: node
+  linkType: hard
+
 "y18n@npm:^5.0.5":
   version: 5.0.8
   resolution: "y18n@npm:5.0.8"
@@ -21243,6 +21320,15 @@ __metadata:
     buffer-crc32: ~0.2.3
     fd-slicer: ~1.1.0
   checksum: 7f21fe0bbad6e2cb130044a5d1d0d5a0e5bf3d8d4f8c4e6ee12163ce798fee3de7388d22a7a0907f563ac5f9d40f8699a223d3d5c1718da90b0156da6904022b
+  languageName: node
+  linkType: hard
+
+"yjs@npm:13.5.38":
+  version: 13.5.38
+  resolution: "yjs@npm:13.5.38"
+  dependencies:
+    lib0: ^0.2.49
+  checksum: 48be9cfe514b5f9f7c64cddf38f7fd59142fe56553200ba88543c6c2c5df6a6be6876440d40f8b1a0f34e5a92ba8efe6b8da5da657278393ceb5171c4fc3a4e0
   languageName: node
   linkType: hard
 

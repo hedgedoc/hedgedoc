@@ -1,5 +1,5 @@
-/*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+/*!
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,5 +14,13 @@
     :global(.cm-editor .cm-line) {
       font-variant-ligatures: none;
     }
+  }
+
+  :global {
+    .cm-widgetBuffer {
+      display: none;
+    }
+
+    //workarounds for line break problem.. see https://github.com/yjs/y-codemirror.next/pull/12
   }
 }

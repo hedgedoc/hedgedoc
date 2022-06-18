@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,7 +19,7 @@ export const ApplicationLoader: React.FC<PropsWithChildren<unknown>> = ({ childr
     const initTasks = createSetUpTaskList()
     for (const task of initTasks) {
       try {
-        await task.task
+        await task.task()
       } catch (reason: unknown) {
         log.error('Error while initialising application', reason)
         throw new ApplicationLoaderError(task.name)

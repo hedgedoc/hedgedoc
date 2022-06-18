@@ -9,6 +9,9 @@ import type { ScrollState } from '../../synced-scroll/scroll-props'
 import { EditorView } from '@codemirror/view'
 import equal from 'fast-deep-equal'
 import { useCodeMirrorReference } from '../../change-content-context/change-content-context'
+import { Logger } from '../../../../utils/logger'
+
+const logger = new Logger('useApplyScrollState')
 
 /**
  * Applies the given {@link ScrollState scroll state} to the given {@link EditorView code mirror editor view}.
@@ -16,12 +19,16 @@ import { useCodeMirrorReference } from '../../change-content-context/change-cont
  * @param view The {@link EditorView view} that should be scrolled
  * @param scrollState The {@link ScrollState scroll state} that should be applied
  */
-export const applyScrollState = (view: EditorView, scrollState: ScrollState): void => {
-  const line = view.state.doc.line(scrollState.firstLineInView)
-  const lineBlock = view.lineBlockAt(line.from)
-  const margin = Math.floor(lineBlock.height * scrollState.scrolledPercentage) / 100
-  const stateEffect = EditorView.scrollIntoView(line.from, { y: 'start', yMargin: -margin })
-  view.dispatch({ effects: [stateEffect] })
+const applyScrollState = (view: EditorView, scrollState: ScrollState): void => {
+  try {
+    const line = view.state.doc.line(scrollState.firstLineInView)
+    const lineBlock = view.lineBlockAt(line.from)
+    const margin = Math.floor(lineBlock.height * scrollState.scrolledPercentage) / 100
+    const stateEffect = EditorView.scrollIntoView(line.from, { y: 'start', yMargin: -margin })
+    view.dispatch({ effects: [stateEffect] })
+  } catch (error) {
+    logger.error('Error while applying scroll status', error)
+  }
 }
 
 /**

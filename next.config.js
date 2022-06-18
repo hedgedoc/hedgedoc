@@ -1,12 +1,24 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+//TODO: [mrdrogdrog] The following function and two constants already exist in typescript code.
+// However, this file must be a js file and therefore can't access the ts function.
+// I have no idea how to resolve this redundancy without extracting it into a node module.
+const isPositiveAnswer = (value) => {
+  const lowerValue = value.toLowerCase()
+  return lowerValue === 'yes' || lowerValue === '1' || lowerValue === 'true'
+}
+
+const isTestMode = !!process.env.NEXT_PUBLIC_TEST_MODE && isPositiveAnswer(process.env.NEXT_PUBLIC_TEST_MODE)
+
+const isMockMode = !!process.env.NEXT_PUBLIC_USE_MOCK_API && isPositiveAnswer(process.env.NEXT_PUBLIC_USE_MOCK_API)
+
 console.log('Node env is', process.env.NODE_ENV)
 
-if (process.env.NEXT_PUBLIC_USE_MOCK_API === 'true') {
+if (isMockMode) {
   console.log('Uses mock API')
 } else if (!!process.env.NEXT_PUBLIC_BACKEND_BASE_URL) {
   console.log('Backend base url is', process.env.NEXT_PUBLIC_BACKEND_BASE_URL)
@@ -20,11 +32,23 @@ If you want to create a build that uses the mock api then use build:mock instead
 }
 
 if (!!process.env.NEXT_PUBLIC_IGNORE_IFRAME_ORIGIN_CONFIG) {
-  console.warn("You have set NEXT_PUBLIC_IGNORE_IFRAME_ORIGIN_CONFIG. This flag is ONLY for testing purposes and will decrease the security of the editor if used in production!")
+  console.warn(
+    'You have set NEXT_PUBLIC_IGNORE_IFRAME_ORIGIN_CONFIG. This flag is ONLY for testing purposes and will decrease the security of the editor if used in production!'
+  )
 }
 
-if (!!process.env.NEXT_PUBLIC_TEST_MODE) {
-  console.warn('This build runs in test mode. This means:\n - no sandboxed iframe\n - Additional data-attributes for e2e tests added to DOM')
+if (isTestMode) {
+  console.warn(`This build runs in test mode. This means:
+ - no sandboxed iframe
+ - Additional data-attributes for e2e tests added to DOM`)
+}
+
+if (!!isMockMode) {
+  console.warn(`This build runs in mock mode. This means:
+ - No real data. All API responses are mocked
+ - No persistent data
+ - No realtime editing
+ `)
 }
 
 const path = require('path')

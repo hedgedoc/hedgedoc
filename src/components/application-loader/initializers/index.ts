@@ -27,38 +27,38 @@ const customDelay: () => Promise<void> = async () => {
 
 export interface InitTask {
   name: string
-  task: Promise<void>
+  task: () => Promise<void>
 }
 
 export const createSetUpTaskList = (): InitTask[] => {
   return [
     {
       name: 'Load dark mode',
-      task: loadDarkMode()
+      task: loadDarkMode
     },
     {
       name: 'Load Translations',
-      task: setUpI18n()
+      task: setUpI18n
     },
     {
       name: 'Load config',
-      task: fetchFrontendConfig()
+      task: fetchFrontendConfig
     },
     {
       name: 'Fetch user information',
-      task: fetchAndSetUser()
+      task: fetchAndSetUser
     },
     {
       name: 'Motd',
-      task: fetchMotd()
+      task: fetchMotd
     },
     {
       name: 'Load history state',
-      task: refreshHistoryState()
+      task: refreshHistoryState
     },
     {
       name: 'Add Delay',
-      task: customDelay()
+      task: customDelay
     }
   ]
 }

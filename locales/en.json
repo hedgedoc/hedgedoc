@@ -517,7 +517,7 @@
     "delete": "Delete",
     "or": "or",
     "and": "and",
-    "avatarOf": "avatar of '{{name}}'",
+    "avatarOf": "Avatar of '{{name}}'",
     "why": "Why?",
     "loading": "Loading ...",
     "errorWhileLoading": "An unexpected error occurred while loading '{{name}}'.\nCheck the browser console for more information.\nReport this error only if it comes up again.",
