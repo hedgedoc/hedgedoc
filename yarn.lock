@@ -1439,7 +1439,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/node12@npm:1.0.10, @tsconfig/node12@npm:^1.0.7":
+"@tsconfig/node12@npm:1.0.11":
+  version: 1.0.11
+  resolution: "@tsconfig/node12@npm:1.0.11"
+  checksum: 5ce29a41b13e7897a58b8e2df11269c5395999e588b9a467386f99d1d26f6c77d1af2719e407621412520ea30517d718d5192a32403b8dfcc163bf33e40a338a
+  languageName: node
+  linkType: hard
+
+"@tsconfig/node12@npm:^1.0.7":
   version: 1.0.10
   resolution: "@tsconfig/node12@npm:1.0.10"
   checksum: 3683668703d5a2b43fe9b3135c5e475c401b5aaf7a586df8bb7eead1184b901d6606b6aee093dbb82e2d23b58f26104da433c86601a2912f512c1c935e4144a0
@@ -5198,7 +5205,7 @@ __metadata:
     "@nestjs/testing": 8.4.6
     "@nestjs/typeorm": 8.1.2
     "@trivago/prettier-plugin-sort-imports": 3.2.0
-    "@tsconfig/node12": 1.0.10
+    "@tsconfig/node12": 1.0.11
     "@types/bcrypt": 5.0.0
     "@types/cli-color": 2.0.2
     "@types/cron": 1.7.3
