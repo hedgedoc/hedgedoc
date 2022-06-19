@@ -5,84 +5,52 @@
  */
 import { LogLevel } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
+import { setupApp } from './app-init';
 import { AppModule } from './app.module';
 import { AppConfig } from './config/app.config';
 import { AuthConfig } from './config/auth.config';
 import { DatabaseConfig } from './config/database.config';
 import { MediaConfig } from './config/media.config';
-import { ErrorExceptionMapping } from './errors/error-mapping';
 import { ConsoleLoggerService } from './logger/console-logger.service';
-import { BackendType } from './media/backends/backend-type.enum';
-import { setupSpecialGroups } from './utils/createSpecialGroups';
-import { setupFrontendProxy } from './utils/frontend-integration';
-import { setupSessionMiddleware } from './utils/session';
-import { setupValidationPipe } from './utils/setup-pipes';
-import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
 
 async function bootstrap(): Promise<void> {
+  // Initialize AppModule
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger: ['error', 'warn', 'log'] as LogLevel[],
     bufferLogs: true,
   });
+
+  // Set up our custom logger
   const logger = await app.resolve(ConsoleLoggerService);
   logger.log('Switching logger', 'AppBootstrap');
   app.useLogger(logger);
+
+  // Initialize config and abort if we don't have a valid config
   const configService = app.get(ConfigService);
   const appConfig = configService.get<AppConfig>('appConfig');
   const databaseConfig = configService.get<DatabaseConfig>('databaseConfig');
   const authConfig = configService.get<AuthConfig>('authConfig');
   const mediaConfig = configService.get<MediaConfig>('mediaConfig');
-
   if (!appConfig || !databaseConfig || !authConfig || !mediaConfig) {
     logger.error('Could not initialize config, aborting.', 'AppBootstrap');
     process.exit(1);
   }
 
-  setupPublicApiDocs(app);
-  logger.log(
-    `Serving OpenAPI docs for public api under '/apidoc'`,
-    'AppBootstrap',
+  // Call common setup function which handles the rest
+  // Setup code must be added there!
+  await setupApp(
+    app,
+    appConfig,
+    authConfig,
+    databaseConfig,
+    mediaConfig,
+    logger,
   );
-  if (process.env.NODE_ENV === 'development') {
-    setupPrivateApiDocs(app);
-    logger.log(
-      `Serving OpenAPI docs for private api under '/private/apidoc'`,
-      'AppBootstrap',
-    );
-    await setupFrontendProxy(app, logger);
-  }
 
-  await setupSpecialGroups(app);
-
-  setupSessionMiddleware(app, authConfig, databaseConfig);
-
-  app.enableCors({
-    origin: appConfig.rendererOrigin,
-  });
-  logger.log(`Enabling CORS for '${appConfig.rendererOrigin}'`, 'AppBootstrap');
-
-  app.useGlobalPipes(setupValidationPipe(logger));
-  if (mediaConfig.backend.use === BackendType.FILESYSTEM) {
-    logger.log(
-      `Serving the local folder '${mediaConfig.backend.filesystem.uploadPath}' under '/uploads'`,
-      'AppBootstrap',
-    );
-    app.useStaticAssets(mediaConfig.backend.filesystem.uploadPath, {
-      prefix: '/uploads/',
-    });
-  }
-  logger.log(
-    `Serving the local folder 'public' under '/public'`,
-    'AppBootstrap',
-  );
-  app.useStaticAssets('public', {
-    prefix: '/public/',
-  });
-  const { httpAdapter } = app.get(HttpAdapterHost);
-  app.useGlobalFilters(new ErrorExceptionMapping(httpAdapter));
+  // Start the server
   await app.listen(appConfig.port);
   logger.log(`Listening on port ${appConfig.port}`, 'AppBootstrap');
 }
