@@ -19,7 +19,6 @@ describe('App', () => {
       .useValue({
         domain: 'localhost',
         port: 3333,
-        loglevel: 'debug',
       })
       .overrideProvider(getConfigToken('mediaConfig'))
       .useValue({
