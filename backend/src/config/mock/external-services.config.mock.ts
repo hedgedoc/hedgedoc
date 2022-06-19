@@ -10,8 +10,8 @@ import { ExternalServicesConfig } from '../external-services.config';
 
 export function createDefaultMockExternalServicesConfig(): ExternalServicesConfig {
   return {
-    plantUmlServer: 'plantuml.example.com',
-    imageProxy: 'imageProxy.example.com',
+    plantUmlServer: 'https://plantuml.example.com',
+    imageProxy: 'https://imageProxy.example.com',
   };
 }
 
