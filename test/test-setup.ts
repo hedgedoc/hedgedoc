@@ -12,14 +12,17 @@ import { Connection, createConnection } from 'typeorm';
 
 import { PrivateApiModule } from '../src/api/private/private-api.module';
 import { PublicApiModule } from '../src/api/public/public-api.module';
+import { setupApp } from '../src/app-init';
 import { AuthTokenWithSecretDto } from '../src/auth/auth-token.dto';
 import { AuthModule } from '../src/auth/auth.module';
 import { AuthService } from '../src/auth/auth.service';
 import { MockAuthGuard } from '../src/auth/mock-auth.guard';
 import { TokenAuthGuard } from '../src/auth/token.strategy';
 import { AuthorsModule } from '../src/authors/authors.module';
+import { AppConfig } from '../src/config/app.config';
 import { AuthConfig } from '../src/config/auth.config';
 import { DatabaseConfig } from '../src/config/database.config';
+import { MediaConfig } from '../src/config/media.config';
 import appConfigMock from '../src/config/mock/app.config.mock';
 import authConfigMock from '../src/config/mock/auth.config.mock';
 import customizationConfigMock from '../src/config/mock/customization.config.mock';
@@ -50,8 +53,6 @@ import { RevisionsModule } from '../src/revisions/revisions.module';
 import { User } from '../src/users/user.entity';
 import { UsersModule } from '../src/users/users.module';
 import { UsersService } from '../src/users/users.service';
-import { setupSessionMiddleware } from '../src/utils/session';
-import { setupValidationPipe } from '../src/utils/setup-pipes';
 
 export class TestSetup {
   moduleRef: TestingModule;
@@ -271,15 +272,13 @@ export class TestSetupBuilder {
 
     this.testSetup.app = this.testSetup.moduleRef.createNestApplication();
 
-    setupSessionMiddleware(
+    await setupApp(
       this.testSetup.app,
+      this.testSetup.configService.get<AppConfig>('appConfig'),
       this.testSetup.configService.get<AuthConfig>('authConfig'),
       this.testSetup.configService.get<DatabaseConfig>('databaseConfig'),
-    );
-    this.testSetup.app.useGlobalPipes(
-      setupValidationPipe(
-        await this.testSetup.app.resolve(ConsoleLoggerService),
-      ),
+      this.testSetup.configService.get<MediaConfig>('mediaConfig'),
+      await this.testSetup.app.resolve(ConsoleLoggerService),
     );
 
     for (const setupFunction of this.setupPostCompile) {
