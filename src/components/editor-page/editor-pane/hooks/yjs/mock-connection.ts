@@ -7,6 +7,7 @@
 import { YDocMessageTransporter } from '@hedgedoc/realtime'
 import type { Doc } from 'yjs'
 import type { Awareness } from 'y-protocols/awareness'
+import { MARKDOWN_CONTENT_CHANNEL_NAME } from './use-markdown-content-y-text'
 
 /**
  * A mocked connection that doesn't send or receive any data and is instantly ready.
@@ -16,7 +17,17 @@ export class MockConnection extends YDocMessageTransporter {
     super(doc, awareness)
     this.onOpen()
     this.emit('ready')
-    this.markAsSynced()
+  }
+
+  /**
+   * Simulates a complete sync from the server by inserting the given content at position 0 of the editor yText channel.
+   *
+   * @param content The content to insert
+   */
+  public simulateFirstSync(content: string): void {
+    const yText = this.doc.getText(MARKDOWN_CONTENT_CHANNEL_NAME)
+    yText.insert(0, content)
+    super.markAsSynced()
   }
 
   disconnect(): void {

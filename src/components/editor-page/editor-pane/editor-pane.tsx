@@ -32,7 +32,10 @@ import { useYDoc } from './hooks/yjs/use-y-doc'
 import { useAwareness } from './hooks/yjs/use-awareness'
 import { useWebsocketConnection } from './hooks/yjs/use-websocket-connection'
 import { useBindYTextToRedux } from './hooks/yjs/use-bind-y-text-to-redux'
-import { useInsertInitialNoteContentIntoEditorInMockMode } from './hooks/yjs/use-insert-initial-note-content-into-editor-in-mock-mode'
+import { useInsertNoteContentIntoYTextInMockModeEffect } from './hooks/yjs/use-insert-note-content-into-y-text-in-mock-mode-effect'
+import { useOnFirstEditorUpdateExtension } from './hooks/yjs/use-on-first-editor-update-extension'
+import { useIsConnectionSynced } from './hooks/yjs/use-is-connection-synced'
+import { useMarkdownContentYText } from './hooks/yjs/use-markdown-content-y-text'
 
 export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMakeScrollSource }) => {
   const ligaturesEnabled = useApplicationState((state) => state.editorConfig.ligatures)
@@ -57,13 +60,14 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
 
   const yDoc = useYDoc()
   const awareness = useAwareness(yDoc)
-  const yText = useMemo(() => yDoc.getText('markdownContent'), [yDoc])
-
-  useWebsocketConnection(yDoc, awareness)
+  const yText = useMarkdownContentYText(yDoc)
+  const websocketConnection = useWebsocketConnection(yDoc, awareness)
+  const connectionSynced = useIsConnectionSynced(websocketConnection)
   useBindYTextToRedux(yText)
 
   const yjsExtension = useCodeMirrorYjsExtension(yText, awareness)
-  const mockContentExtension = useInsertInitialNoteContentIntoEditorInMockMode(yText)
+  const [firstEditorUpdateExtension, firstUpdateHappened] = useOnFirstEditorUpdateExtension()
+  useInsertNoteContentIntoYTextInMockModeEffect(firstUpdateHappened, websocketConnection)
 
   const extensions = useMemo(
     () => [
@@ -79,7 +83,7 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
       cursorActivityExtension,
       updateViewContext,
       yjsExtension,
-      ...(mockContentExtension ? [mockContentExtension] : [])
+      firstEditorUpdateExtension
     ],
     [
       editorScrollExtension,
@@ -88,7 +92,7 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
       cursorActivityExtension,
       updateViewContext,
       yjsExtension,
-      mockContentExtension
+      firstEditorUpdateExtension
     ]
   )
 
@@ -107,10 +111,11 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
       onTouchStart={onMakeScrollSource}
       onMouseEnter={onMakeScrollSource}
       {...cypressId('editor-pane')}
-      {...cypressAttribute('editor-ready', String(codeMirrorRef !== undefined))}>
+      {...cypressAttribute('editor-ready', String(firstUpdateHappened && connectionSynced))}>
       <MaxLengthWarning />
       <ToolBar />
       <ReactCodeMirror
+        editable={firstUpdateHappened && connectionSynced}
         placeholder={t('editor.placeholder')}
         extensions={extensions}
         width={'100%'}
