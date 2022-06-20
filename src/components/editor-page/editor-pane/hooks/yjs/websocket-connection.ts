@@ -7,9 +7,9 @@
 import {
   encodeAwarenessUpdateMessage,
   encodeCompleteAwarenessStateRequestMessage,
-  encodeDocumentUpdateMessage
+  encodeDocumentUpdateMessage,
+  WebsocketTransporter
 } from '@hedgedoc/realtime'
-import { WebsocketTransporter } from '@hedgedoc/realtime'
 import type { Doc } from 'yjs'
 import type { Awareness } from 'y-protocols/awareness'
 
@@ -23,7 +23,6 @@ export class WebsocketConnection extends WebsocketTransporter {
     this.bindAwarenessMessageEvents(awareness)
     const websocket = new WebSocket(url)
     this.setupWebsocket(websocket)
-    websocket.addEventListener('open', this.onOpen.bind(this))
   }
 
   private bindAwarenessMessageEvents(awareness: Awareness) {

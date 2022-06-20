@@ -1991,7 +1991,7 @@ __metadata:
     "@hedgedoc/html-to-react": 1.4.1
     "@hedgedoc/markdown-it-image-size": 1.0.3
     "@hedgedoc/markdown-it-task-lists": 1.0.3
-    "@hedgedoc/realtime": 0.0.3
+    "@hedgedoc/realtime": 0.0.5
     "@matejmazur/react-katex": 3.1.3
     "@next/bundle-analyzer": 12.1.6
     "@react-hook/resize-observer": 1.2.5
@@ -2109,16 +2109,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hedgedoc/realtime@npm:0.0.3":
-  version: 0.0.3
-  resolution: "@hedgedoc/realtime@npm:0.0.3"
+"@hedgedoc/realtime@npm:0.0.5":
+  version: 0.0.5
+  resolution: "@hedgedoc/realtime@npm:0.0.5"
   dependencies:
     isomorphic-ws: 4.0.1
     lib0: 0.2.51
     typed-emitter: 2.1.0
     y-protocols: 1.0.5
-    yjs: 13.5.38
-  checksum: cfb1dc7459b1699841a9ed29147ffe5397206b9b87bb5410d6c4000d1a3a4db6f4d7862930bbff8a0b1aaf7ba8bdcac8904ed0fd626df684c486121afab6f089
+    yjs: 13.5.39
+  checksum: fabc5e20d85c86e153801adcddd5c390909b69c48c647ba9c09bd22266028658ec50a554399dd31b3b446a42452592d54837d4573b9b1f95bff1cd79899399f7
   languageName: node
   linkType: hard
 
@@ -21323,12 +21323,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs@npm:13.5.38":
-  version: 13.5.38
-  resolution: "yjs@npm:13.5.38"
+"yjs@npm:13.5.39":
+  version: 13.5.39
+  resolution: "yjs@npm:13.5.39"
   dependencies:
     lib0: ^0.2.49
-  checksum: 48be9cfe514b5f9f7c64cddf38f7fd59142fe56553200ba88543c6c2c5df6a6be6876440d40f8b1a0f34e5a92ba8efe6b8da5da657278393ceb5171c4fc3a4e0
+  checksum: 59a3a0307425a7fbc03ed1d632d3080383a40dd1d9ce5c6272dd083dd2674dd4b92f3678d43e4701150f1d9f46692e7a3b0fc9ace48d4a9e20cdea270108697b
   languageName: node
   linkType: hard
 
