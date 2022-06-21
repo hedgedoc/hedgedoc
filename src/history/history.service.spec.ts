@@ -6,11 +6,12 @@
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getDataSourceToken, getRepositoryToken } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, EntityManager, Repository } from 'typeorm';
 
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
 import appConfigMock from '../config/mock/app.config.mock';
+import databaseConfigMock from '../config/mock/database.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
 import { NotInDBError } from '../errors/errors';
 import { Group } from '../groups/group.entity';
@@ -48,6 +49,16 @@ describe('HistoryService', () => {
   }
 
   beforeEach(async () => {
+    noteRepo = new Repository<Note>(
+      '',
+      new EntityManager(
+        new DataSource({
+          type: 'sqlite',
+          database: ':memory:',
+        }),
+      ),
+      undefined,
+    );
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         HistoryService,
@@ -61,7 +72,7 @@ describe('HistoryService', () => {
         },
         {
           provide: getRepositoryToken(Note),
-          useClass: Repository,
+          useValue: noteRepo,
         },
       ],
       imports: [
@@ -70,7 +81,7 @@ describe('HistoryService', () => {
         NotesModule,
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [appConfigMock, noteConfigMock],
+          load: [appConfigMock, databaseConfigMock, noteConfigMock],
         }),
       ],
     })
@@ -85,7 +96,7 @@ describe('HistoryService', () => {
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})
       .overrideProvider(getRepositoryToken(Note))
-      .useClass(Repository)
+      .useValue(noteRepo)
       .overrideProvider(getRepositoryToken(Tag))
       .useValue({})
       .overrideProvider(getRepositoryToken(NoteGroupPermission))

@@ -6,11 +6,12 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, EntityManager, Repository } from 'typeorm';
 
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
 import appConfigMock from '../config/mock/app.config.mock';
+import databaseConfigMock from '../config/mock/database.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
 import {
   AlreadyInDBError,
@@ -43,13 +44,23 @@ describe('AliasService', () => {
   let aliasRepo: Repository<Alias>;
   let forbiddenNoteId: string;
   beforeEach(async () => {
+    noteRepo = new Repository<Note>(
+      '',
+      new EntityManager(
+        new DataSource({
+          type: 'sqlite',
+          database: ':memory:',
+        }),
+      ),
+      undefined,
+    );
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AliasService,
         NotesService,
         {
           provide: getRepositoryToken(Note),
-          useClass: Repository,
+          useValue: noteRepo,
         },
         {
           provide: getRepositoryToken(Alias),
@@ -67,7 +78,7 @@ describe('AliasService', () => {
       imports: [
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [appConfigMock, noteConfigMock],
+          load: [appConfigMock, databaseConfigMock, noteConfigMock],
         }),
         LoggerModule,
         UsersModule,
@@ -77,7 +88,7 @@ describe('AliasService', () => {
       ],
     })
       .overrideProvider(getRepositoryToken(Note))
-      .useClass(Repository)
+      .useValue(noteRepo)
       .overrideProvider(getRepositoryToken(Tag))
       .useClass(Repository)
       .overrideProvider(getRepositoryToken(Alias))

@@ -11,6 +11,7 @@ import { DataSource, EntityManager, Repository } from 'typeorm';
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
 import appConfigMock from '../config/mock/app.config.mock';
+import databaseConfigMock from '../config/mock/database.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
 import {
   AlreadyInDBError,
@@ -135,13 +136,23 @@ describe('NotesService', () => {
       ),
       undefined,
     );
+    noteRepo = new Repository<Note>(
+      '',
+      new EntityManager(
+        new DataSource({
+          type: 'sqlite',
+          database: ':memory:',
+        }),
+      ),
+      undefined,
+    );
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         NotesService,
         AliasService,
         {
           provide: getRepositoryToken(Note),
-          useClass: Repository,
+          useValue: noteRepo,
         },
         {
           provide: getRepositoryToken(Tag),
@@ -157,18 +168,18 @@ describe('NotesService', () => {
         },
       ],
       imports: [
-        ConfigModule.forRoot({
-          isGlobal: true,
-          load: [appConfigMock, noteConfigMock],
-        }),
         LoggerModule,
         UsersModule,
         GroupsModule,
         RevisionsModule,
+        ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock, databaseConfigMock, noteConfigMock],
+        }),
       ],
     })
       .overrideProvider(getRepositoryToken(Note))
-      .useClass(Repository)
+      .useValue(noteRepo)
       .overrideProvider(getRepositoryToken(Tag))
       .useClass(Repository)
       .overrideProvider(getRepositoryToken(Alias))
