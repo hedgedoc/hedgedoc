@@ -12,6 +12,7 @@ import { Repository } from 'typeorm';
 import appConfigMock from '../../src/config/mock/app.config.mock';
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
+import databaseConfigMock from '../config/mock/database.config.mock';
 import mediaConfigMock from '../config/mock/media.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
 import { ClientError, NotInDBError } from '../errors/errors';
@@ -52,7 +53,12 @@ describe('MediaService', () => {
       imports: [
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [mediaConfigMock, appConfigMock, noteConfigMock],
+          load: [
+            mediaConfigMock,
+            appConfigMock,
+            databaseConfigMock,
+            noteConfigMock,
+          ],
         }),
         LoggerModule,
         NotesModule,

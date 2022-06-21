@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -31,24 +31,16 @@ async function bootstrap(): Promise<void> {
   // Initialize config and abort if we don't have a valid config
   const configService = app.get(ConfigService);
   const appConfig = configService.get<AppConfig>('appConfig');
-  const databaseConfig = configService.get<DatabaseConfig>('databaseConfig');
   const authConfig = configService.get<AuthConfig>('authConfig');
   const mediaConfig = configService.get<MediaConfig>('mediaConfig');
-  if (!appConfig || !databaseConfig || !authConfig || !mediaConfig) {
+  if (!appConfig || !authConfig || !mediaConfig) {
     logger.error('Could not initialize config, aborting.', 'AppBootstrap');
     process.exit(1);
   }
 
   // Call common setup function which handles the rest
   // Setup code must be added there!
-  await setupApp(
-    app,
-    appConfig,
-    authConfig,
-    databaseConfig,
-    mediaConfig,
-    logger,
-  );
+  await setupApp(app, appConfig, authConfig, mediaConfig, logger);
 
   // Start the server
   await app.listen(appConfig.port);

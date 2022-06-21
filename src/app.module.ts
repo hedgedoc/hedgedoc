@@ -34,6 +34,7 @@ import { MonitoringModule } from './monitoring/monitoring.module';
 import { NotesModule } from './notes/notes.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { RevisionsModule } from './revisions/revisions.module';
+import { SessionModule } from './session/session.module';
 import { UsersModule } from './users/users.module';
 
 const routes: Routes = [
@@ -101,6 +102,7 @@ const routes: Routes = [
     AuthModule,
     FrontendConfigModule,
     IdentityModule,
+    SessionModule,
   ],
   controllers: [],
   providers: [FrontendConfigService],

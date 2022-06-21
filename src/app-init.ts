@@ -8,11 +8,11 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 
 import { AppConfig } from './config/app.config';
 import { AuthConfig } from './config/auth.config';
-import { DatabaseConfig } from './config/database.config';
 import { MediaConfig } from './config/media.config';
 import { ErrorExceptionMapping } from './errors/error-mapping';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { BackendType } from './media/backends/backend-type.enum';
+import { SessionService } from './session/session.service';
 import { setupSpecialGroups } from './utils/createSpecialGroups';
 import { setupFrontendProxy } from './utils/frontend-integration';
 import { setupSessionMiddleware } from './utils/session';
@@ -26,7 +26,6 @@ export async function setupApp(
   app: NestExpressApplication,
   appConfig: AppConfig,
   authConfig: AuthConfig,
-  databaseConfig: DatabaseConfig,
   mediaConfig: MediaConfig,
   logger: ConsoleLoggerService,
 ): Promise<void> {
@@ -48,7 +47,11 @@ export async function setupApp(
 
   await setupSpecialGroups(app);
 
-  setupSessionMiddleware(app, authConfig, databaseConfig);
+  setupSessionMiddleware(
+    app,
+    authConfig,
+    app.get(SessionService).getTypeormStore(),
+  );
 
   app.enableCors({
     origin: appConfig.rendererOrigin,

@@ -5325,6 +5325,7 @@ __metadata:
     supertest: 6.2.4
     swagger-ui-express: 4.4.0
     ts-jest: 28.0.5
+    ts-mockery: ^1.2.0
     ts-node: 10.8.2
     tsconfig-paths: 4.0.0
     typeorm: 0.3.7
@@ -9173,6 +9174,15 @@ __metadata:
   bin:
     ts-jest: cli.js
   checksum: 53e05db5b7e1e4f4137c47594f902f5caf585ebc73dda67c4552c1ed784d4fde532c5693a61d877d9462290c7965233c2124050b0f00fd4c85cde9bb1a51c974
+  languageName: node
+  linkType: hard
+
+"ts-mockery@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "ts-mockery@npm:1.2.0"
+  peerDependencies:
+    typescript: ">= 2.8"
+  checksum: 01c5b8cbbc2b716ed96acbcc78679a27cc787b575a76fed7eb1beaa8deed8da274e091a9e7dcc77941e290f46481307b550b6e9799ba631410c5173a7be3f442
   languageName: node
   linkType: hard
 

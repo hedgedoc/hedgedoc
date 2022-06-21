@@ -50,6 +50,9 @@ import { NotesService } from '../src/notes/notes.service';
 import { PermissionsModule } from '../src/permissions/permissions.module';
 import { PermissionsService } from '../src/permissions/permissions.service';
 import { RevisionsModule } from '../src/revisions/revisions.module';
+import { RevisionsService } from '../src/revisions/revisions.service';
+import { SessionModule } from '../src/session/session.module';
+import { SessionService } from '../src/session/session.service';
 import { User } from '../src/users/user.entity';
 import { UsersModule } from '../src/users/users.module';
 import { UsersService } from '../src/users/users.service';
@@ -67,6 +70,8 @@ export class TestSetup {
   historyService: HistoryService;
   aliasService: AliasService;
   authService: AuthService;
+  sessionService: SessionService;
+  revisionsService: RevisionsService;
 
   users: User[] = [];
   authTokens: AuthTokenWithSecretDto[] = [];
@@ -226,6 +231,7 @@ export class TestSetupBuilder {
         AuthModule,
         FrontendConfigModule,
         IdentityModule,
+        SessionModule,
       ],
       providers: [
         {
@@ -269,6 +275,10 @@ export class TestSetupBuilder {
       this.testSetup.moduleRef.get<AuthService>(AuthService);
     this.testSetup.permissionsService =
       this.testSetup.moduleRef.get<PermissionsService>(PermissionsService);
+    this.testSetup.sessionService =
+      this.testSetup.moduleRef.get<SessionService>(SessionService);
+    this.testSetup.revisionsService =
+      this.testSetup.moduleRef.get<RevisionsService>(RevisionsService);
 
     this.testSetup.app = this.testSetup.moduleRef.createNestApplication();
 
@@ -276,7 +286,6 @@ export class TestSetupBuilder {
       this.testSetup.app,
       this.testSetup.configService.get<AppConfig>('appConfig'),
       this.testSetup.configService.get<AuthConfig>('authConfig'),
-      this.testSetup.configService.get<DatabaseConfig>('databaseConfig'),
       this.testSetup.configService.get<MediaConfig>('mediaConfig'),
       await this.testSetup.app.resolve(ConsoleLoggerService),
     );
