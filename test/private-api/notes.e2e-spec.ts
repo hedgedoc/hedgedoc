@@ -269,7 +269,7 @@ describe('Notes', () => {
         user,
         'test5',
       );
-      const revision = await testSetup.notesService.getLatestRevision(note);
+      const revision = await testSetup.revisionsService.getLatestRevision(note);
       const response = await agent
         .get(`/api/private/notes/test5/revisions/${revision.id}`)
         .expect('Content-Type', /json/)

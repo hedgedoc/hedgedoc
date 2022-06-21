@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -30,7 +30,7 @@ import { Tag } from './tag.entity';
       User,
       Alias,
     ]),
-    forwardRef(() => RevisionsModule),
+    RevisionsModule,
     UsersModule,
     GroupsModule,
     LoggerModule,

@@ -39,7 +39,6 @@ export class NotesService {
     @InjectRepository(User) private userRepository: Repository<User>,
     @Inject(UsersService) private usersService: UsersService,
     @Inject(GroupsService) private groupsService: GroupsService,
-    @Inject(forwardRef(() => RevisionsService))
     private revisionsService: RevisionsService,
     @Inject(noteConfiguration.KEY)
     private noteConfig: NoteConfig,
@@ -117,27 +116,7 @@ export class NotesService {
    * @return {string} the content of the note
    */
   async getNoteContent(note: Note): Promise<string> {
-    return (await this.getLatestRevision(note)).content;
-  }
-
-  /**
-   * @async
-   * Get the first revision of the note.
-   * @param {Note} note - the note to use
-   * @return {Revision} the first revision of the note
-   */
-  async getLatestRevision(note: Note): Promise<Revision> {
-    return await this.revisionsService.getLatestRevision(note);
-  }
-
-  /**
-   * @async
-   * Get the last revision of the note.
-   * @param {Note} note - the note to use
-   * @return {Revision} the last revision of the note
-   */
-  async getFirstRevision(note: Note): Promise<Revision> {
-    return await this.revisionsService.getFirstRevision(note);
+    return (await this.revisionsService.getLatestRevision(note)).content;
   }
 
   /**
@@ -264,7 +243,7 @@ export class NotesService {
    * @return {User} user to be used as updateUser in the NoteDto
    */
   async calculateUpdateUser(note: Note): Promise<User | null> {
-    const lastRevision = await this.getLatestRevision(note);
+    const lastRevision = await this.revisionsService.getLatestRevision(note);
     const edits = await lastRevision.edits;
     if (edits.length > 0) {
       // Sort the last Revisions Edits by their updatedAt Date to get the latest one
@@ -333,7 +312,8 @@ export class NotesService {
       permissions: await this.toNotePermissionsDto(note),
       tags: await this.toTagList(note),
       version: note.version,
-      updatedAt: (await this.getLatestRevision(note)).createdAt,
+      updatedAt: (await this.revisionsService.getLatestRevision(note))
+        .createdAt,
       updateUsername: updateUser ? updateUser.username : null,
       viewCount: note.viewCount,
     };

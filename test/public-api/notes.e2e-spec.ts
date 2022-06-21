@@ -361,7 +361,7 @@ describe('Notes', () => {
 
         'test7',
       );
-      const revision = await testSetup.notesService.getLatestRevision(note);
+      const revision = await testSetup.revisionsService.getLatestRevision(note);
       const response = await request(testSetup.app.getHttpServer())
         .get(`/api/v2/notes/test7/revisions/${revision.id}`)
         .expect('Content-Type', /json/)
