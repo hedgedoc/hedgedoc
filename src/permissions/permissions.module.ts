@@ -9,14 +9,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GroupsModule } from '../groups/groups.module';
 import { LoggerModule } from '../logger/logger.module';
 import { Note } from '../notes/note.entity';
-import { NotesModule } from '../notes/notes.module';
 import { UsersModule } from '../users/users.module';
 import { PermissionsService } from './permissions.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Note]),
-    NotesModule,
     UsersModule,
     GroupsModule,
     LoggerModule,

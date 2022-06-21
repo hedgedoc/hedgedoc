@@ -14,7 +14,6 @@ import { SpecialGroup } from '../groups/groups.special';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { NotePermissionsUpdateDto } from '../notes/note-permissions.dto';
 import { Note } from '../notes/note.entity';
-import { NotesService } from '../notes/notes.service';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { checkArrayForDuplicates } from '../utils/arrayDuplicatCheck';
@@ -33,7 +32,6 @@ export enum GuestPermission {
 @Injectable()
 export class PermissionsService {
   constructor(
-    public notesService: NotesService,
     public usersService: UsersService,
     public groupsService: GroupsService,
     @InjectRepository(Note) private noteRepository: Repository<Note>,
