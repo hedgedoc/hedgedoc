@@ -11,7 +11,7 @@ import { useCallback } from 'react'
 import { getGlobalState } from '../../../../../redux'
 import { Logger } from '../../../../../utils/logger'
 import { findRegexMatchInText } from './find-regex-match-in-text'
-import Optional from 'optional-js'
+import { Optional } from '@mrdrogdrog/optional'
 import { useHandleUpload } from '../use-handle-upload'
 import type { CursorSelection } from '../../tool-bar/formatters/types/cursor-selection'
 
@@ -40,7 +40,7 @@ export const useOnImageUploadFromRenderer = (): void => {
             const file = new File([blob], fileName, { type: blob.type })
             const { cursorSelection, alt, title } = Optional.ofNullable(lineIndex)
               .flatMap((actualLineIndex) => findPlaceholderInMarkdownContent(actualLineIndex, placeholderIndexInLine))
-              .orElseGet(() => ({}))
+              .orElse({} as ExtractResult)
             handleUpload(file, cursorSelection, alt, title)
           })
           .catch((error) => log.error(error))

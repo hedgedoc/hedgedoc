@@ -8,7 +8,7 @@ import { useMemo } from 'react'
 import { EditorView } from '@codemirror/view'
 import type { Extension } from '@codemirror/state'
 import { handleUpload } from '../use-handle-upload'
-import Optional from 'optional-js'
+import { Optional } from '@mrdrogdrog/optional'
 import type { CursorSelection } from '../../tool-bar/formatters/types/cursor-selection'
 
 const calculateCursorPositionInEditor = (view: EditorView, event: MouseEvent): number => {

@@ -7,7 +7,7 @@
 import { useChangeEditorContentCallback } from '../../change-content-context/use-change-editor-content-callback'
 import { useCallback } from 'react'
 import type { ContentEdits } from '../../editor-pane/tool-bar/formatters/types/changes'
-import Optional from 'optional-js'
+import { Optional } from '@mrdrogdrog/optional'
 
 const TASK_REGEX = /(\s*(?:[-*+]|\d+[.)]) )(\[[ xX]?])/
 
@@ -23,7 +23,7 @@ export const useSetCheckboxInEditor = () => {
         const lines = markdownContent.split('\n')
         const lineStartIndex = findStartIndexOfLine(lines, changedLineIndex)
         const edits = Optional.ofNullable(TASK_REGEX.exec(lines[changedLineIndex]))
-          .map<ContentEdits>(([, beforeCheckbox, oldCheckbox]) => {
+          .map(([, beforeCheckbox, oldCheckbox]) => {
             const checkboxStartIndex = lineStartIndex + beforeCheckbox.length
             return createCheckboxContentEdit(checkboxStartIndex, oldCheckbox, checkboxChecked)
           })

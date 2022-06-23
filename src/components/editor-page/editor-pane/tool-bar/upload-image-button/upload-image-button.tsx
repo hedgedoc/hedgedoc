@@ -15,7 +15,7 @@ import { useHandleUpload } from '../../hooks/use-handle-upload'
 import { ShowIf } from '../../../../common/show-if/show-if'
 import { useCodeMirrorReference } from '../../../change-content-context/change-content-context'
 import { extractSelectedText } from './extract-selected-text'
-import Optional from 'optional-js'
+import { Optional } from '@mrdrogdrog/optional'
 
 /**
  * Shows a button that uploads a chosen file to the backend and adds the link to the note.
@@ -33,7 +33,7 @@ export const UploadImageButton: React.FC = () => {
   const onUploadImage = useCallback(
     (file: File) => {
       const description = Optional.ofNullable(codeMirror?.state)
-        .map<string | undefined>((state) => extractSelectedText(state))
+        .map((state) => extractSelectedText(state))
         .orElse(undefined)
       handleUpload(file, undefined, description)
       return Promise.resolve()

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,7 +11,7 @@ import type { ForkAwesomeIconProps } from '../../../common/fork-awesome/fork-awe
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import type { IconName } from '../../../common/fork-awesome/types'
 import { ForkAwesomeIcons } from '../../../common/fork-awesome/fork-awesome-icons'
-import Optional from 'optional-js'
+import { Optional } from '@mrdrogdrog/optional'
 import type { ReactElement } from 'react'
 import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
 
@@ -44,9 +44,7 @@ export class BlockquoteExtraTagReplacer extends ComponentReplacer {
   private buildIconElement(node: Element): ReactElement<ForkAwesomeIconProps> | undefined {
     return Optional.ofNullable(node.attribs['data-icon'] as IconName)
       .filter((iconName) => ForkAwesomeIcons.includes(iconName))
-      .map<ReactElement<ForkAwesomeIconProps> | undefined>((iconName) => (
-        <ForkAwesomeIcon key='icon' className={'mx-1'} icon={iconName} />
-      ))
+      .map((iconName) => <ForkAwesomeIcon key='icon' className={'mx-1'} icon={iconName} />)
       .orElse(undefined)
   }
 }

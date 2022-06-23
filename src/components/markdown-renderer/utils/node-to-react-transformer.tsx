@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,7 +11,7 @@ import type { ComponentReplacer, NodeReplacement, ValidReactDomElement } from '.
 import { DO_NOT_REPLACE, REPLACE_WITH_NOTHING } from '../replace-components/component-replacer'
 import React from 'react'
 import type { LineWithId } from '../markdown-extension/linemarker/types'
-import Optional from 'optional-js'
+import { Optional } from '@mrdrogdrog/optional'
 import { LinemarkerMarkdownExtension } from '../markdown-extension/linemarker/linemarker-markdown-extension'
 
 type LineIndexPair = [startLineIndex: number, endLineIndex: number]

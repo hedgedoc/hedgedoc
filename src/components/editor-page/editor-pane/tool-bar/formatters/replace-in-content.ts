@@ -5,7 +5,7 @@
  */
 
 import type { ContentEdits } from './types/changes'
-import Optional from 'optional-js'
+import { Optional } from '@mrdrogdrog/optional'
 
 export const replaceInContent = (currentContent: string, replaceable: string, replacement: string): ContentEdits => {
   return Optional.ofNullable(currentContent.indexOf(replaceable))

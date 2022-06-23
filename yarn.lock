@@ -1993,6 +1993,7 @@ __metadata:
     "@hedgedoc/markdown-it-task-lists": 1.0.3
     "@hedgedoc/realtime": 0.0.5
     "@matejmazur/react-katex": 3.1.3
+    "@mrdrogdrog/optional": 0.0.4
     "@next/bundle-analyzer": 12.1.6
     "@react-hook/resize-observer": 1.2.5
     "@redux-devtools/core": 3.13.1
@@ -2077,7 +2078,6 @@ __metadata:
     mermaid: 9.1.2
     netlify-cli: 10.5.1
     next: 12.1.6
-    optional-js: 2.3.0
     prettier: 2.7.1
     react: 18.2.0
     react-bootstrap: 1.6.5
@@ -2670,6 +2670,13 @@ __metadata:
     katex: ">=0.9"
     react: ">=16"
   checksum: db9e9aa03d3b094fcb9854abeab3676732b04dbe4fbfe2dbf26782a6d50c197351d06ad833c78b90f7e418d769b77c30460a60906e80e800d84e16c938f3d6d1
+  languageName: node
+  linkType: hard
+
+"@mrdrogdrog/optional@npm:0.0.4":
+  version: 0.0.4
+  resolution: "@mrdrogdrog/optional@npm:0.0.4"
+  checksum: f23ece2f8e72f8f807a185f739a681661879c8e66137f1ec07764133353b224876e56852215bab79114d4885e5eab1fa4447a3f584c551eb57f832cc7f4e43bf
   languageName: node
   linkType: hard
 
@@ -16118,13 +16125,6 @@ __metadata:
   dependencies:
     is-wsl: ^1.1.0
   checksum: 35b677b5a1fd6c8cb1996b0607671ba79f7ce9fa029217d54eafaf6bee13eb7e700691c6a415009140fd02a435fffdfd143875f3b233b60f3f9d631c6f6b81a0
-  languageName: node
-  linkType: hard
-
-"optional-js@npm:2.3.0":
-  version: 2.3.0
-  resolution: "optional-js@npm:2.3.0"
-  checksum: f957ed47291c23b4fc54cd46df10606f2c8e7784210ee200446900b1bec9dcafc9e80f351e88939a4b5a03d405b0513a8dbdf7a39599d780e6d980015928be01
   languageName: node
   linkType: hard
 

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,7 +7,7 @@
 import type MarkdownIt from 'markdown-it/lib'
 import type Token from 'markdown-it/lib/token'
 import type { IconName } from '../../../common/fork-awesome/types'
-import Optional from 'optional-js'
+import { Optional } from '@mrdrogdrog/optional'
 import type StateInline from 'markdown-it/lib/rules_inline/state_inline'
 import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
 import type { RuleInline } from 'markdown-it/lib/parser_inline'

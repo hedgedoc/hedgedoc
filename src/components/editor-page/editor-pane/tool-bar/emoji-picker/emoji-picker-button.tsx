@@ -11,7 +11,7 @@ import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-ic
 import { EmojiPicker } from './emoji-picker'
 import { cypressId } from '../../../../../utils/cypress-attribute'
 import type { EmojiClickEventDetail } from 'emoji-picker-element/shared'
-import Optional from 'optional-js'
+import { Optional } from '@mrdrogdrog/optional'
 import { useChangeEditorContentCallback } from '../../../change-content-context/use-change-editor-content-callback'
 import { replaceSelection } from '../formatters/replace-selection'
 import { extractEmojiShortCode } from './extract-emoji-short-code'

@@ -6,7 +6,7 @@
 
 import type { PropsWithChildren } from 'react'
 import React, { createContext, useContext, useState } from 'react'
-import Optional from 'optional-js'
+import { Optional } from '@mrdrogdrog/optional'
 import type { EditorView } from '@codemirror/view'
 import type { ContentEdits } from '../editor-pane/tool-bar/formatters/types/changes'
 import type { CursorSelection } from '../editor-pane/tool-bar/formatters/types/cursor-selection'

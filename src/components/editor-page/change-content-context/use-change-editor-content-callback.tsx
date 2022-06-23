@@ -5,8 +5,7 @@
  */
 
 import { useMemo } from 'react'
-import Optional from 'optional-js'
-import type { CodeMirrorSelection } from './code-mirror-selection'
+import { Optional } from '@mrdrogdrog/optional'
 import type { ContentFormatter } from './change-content-context'
 import { useCodeMirrorReference } from './change-content-context'
 import type { CursorSelection } from '../editor-pane/tool-bar/formatters/types/cursor-selection'
@@ -45,6 +44,6 @@ export const useChangeEditorContentCallback = () => {
 
 const convertSelectionToCodeMirrorSelection = (selection: CursorSelection | undefined) => {
   return Optional.ofNullable(selection)
-    .map<CodeMirrorSelection | undefined>((selection) => ({ anchor: selection.from, head: selection.to }))
+    .map((selection) => ({ anchor: selection.from, head: selection.to }))
     .orElse(undefined)
 }

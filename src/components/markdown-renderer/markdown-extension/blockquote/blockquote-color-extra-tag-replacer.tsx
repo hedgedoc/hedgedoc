@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,9 +10,9 @@ import type { Element } from 'domhandler'
 import { isText } from 'domhandler'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { cssColor } from './blockquote-border-color-node-preprocessor'
-import Optional from 'optional-js'
 import type { Text } from 'domhandler/lib/node'
 import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
+import { Optional } from '@mrdrogdrog/optional'
 
 /**
  * Replaces <blockquote-tag> elements with "color" as label and a valid color as content
@@ -32,7 +32,7 @@ export class BlockquoteColorExtraTagReplacer extends ComponentReplacer {
         .filter(isText)
         .map((child) => (child as Text).data)
         .filter((content) => cssColor.test(content))
-        .map<NodeReplacement>((color) => (
+        .map((color) => (
           <span className={'blockquote-extra'} key={(index += 1)} style={{ color: color }}>
             <ForkAwesomeIcon key='icon' className={'mx-1'} icon={'tag'} />
           </span>

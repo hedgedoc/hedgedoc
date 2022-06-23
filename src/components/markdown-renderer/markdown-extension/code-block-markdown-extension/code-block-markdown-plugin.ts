@@ -6,7 +6,7 @@
 
 import type MarkdownIt from 'markdown-it'
 import type { RuleCore } from 'markdown-it/lib/parser_core'
-import Optional from 'optional-js'
+import { Optional } from '@mrdrogdrog/optional'
 import { parseCodeBlockParameters } from './code-block-parameters'
 
 const ruleName = 'code-highlighter'

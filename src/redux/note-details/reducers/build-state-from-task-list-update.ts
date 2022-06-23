@@ -5,7 +5,7 @@
  */
 
 import type { NoteDetails } from '../types/note-details'
-import Optional from 'optional-js'
+import { Optional } from '@mrdrogdrog/optional'
 import { buildStateFromUpdatedMarkdownContentLines } from '../build-state-from-updated-markdown-content'
 
 const TASK_REGEX = /(\s*(?:[-*+]|\d+[.)]) )\[[ xX]?]( .*)/

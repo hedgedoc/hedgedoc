@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import Optional from 'optional-js'
+import { Optional } from '@mrdrogdrog/optional'
 import type { LanguageDescription } from '@codemirror/language'
 import { parseCodeBlockParameters } from './code-block-parameters'
 
@@ -21,7 +21,7 @@ export const findLanguageByCodeBlockName = (
   inputLanguageName: string
 ): LanguageDescription | null => {
   return Optional.ofNullable(parseCodeBlockParameters(inputLanguageName).language)
-    .map<LanguageDescription | null>((filteredLanguage) =>
+    .map((filteredLanguage) =>
       languages.find((language) => language.name === filteredLanguage || language.alias.includes(filteredLanguage))
     )
     .orElse(null)
