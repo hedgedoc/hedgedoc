@@ -5322,7 +5322,7 @@ __metadata:
     nest-router: 1.0.9
     node-fetch: 2.6.7
     passport: 0.6.0
-    passport-custom: ^1.1.1
+    passport-custom: 1.1.1
     passport-http-bearer: 1.0.1
     passport-local: 1.0.0
     pg: 8.7.3
@@ -7642,7 +7642,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"passport-custom@npm:^1.1.1":
+"passport-custom@npm:1.1.1":
   version: 1.1.1
   resolution: "passport-custom@npm:1.1.1"
   dependencies:
