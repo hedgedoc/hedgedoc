@@ -44,7 +44,7 @@ jobs:
         run: rm -r .next/cache
 
       - name: Mark GitHub deployment as started
-        uses: bobheadxi/deployments@v1.2.0
+        uses: bobheadxi/deployments@v1.3.0
         id: github-deployment
         with:
           step: start
@@ -61,7 +61,7 @@ jobs:
 
       - name: Mark GitHub deployment as finished
         if: always()
-        uses: bobheadxi/deployments@v1.2.0
+        uses: bobheadxi/deployments@v1.3.0
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
