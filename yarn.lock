@@ -1993,7 +1993,7 @@ __metadata:
     "@hedgedoc/markdown-it-task-lists": 1.0.3
     "@hedgedoc/realtime": 0.0.5
     "@matejmazur/react-katex": 3.1.3
-    "@mrdrogdrog/optional": 0.0.5
+    "@mrdrogdrog/optional": 0.1.0
     "@next/bundle-analyzer": 12.1.6
     "@react-hook/resize-observer": 1.2.5
     "@redux-devtools/core": 3.13.1
@@ -2673,10 +2673,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mrdrogdrog/optional@npm:0.0.5":
-  version: 0.0.5
-  resolution: "@mrdrogdrog/optional@npm:0.0.5"
-  checksum: 493ddf7214b7e0b97e9c6b6627d0f1b4e629b81bb67e10d1a8dae41697cb5e5671c2c6f0eeacaccc9bc437ab9b29d68ac605040ca059d60988b009bdad38a004
+"@mrdrogdrog/optional@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@mrdrogdrog/optional@npm:0.1.0"
+  checksum: 96a4f0779b343ad35eb25c660cd645f604fe37c6ec87565b06626b4732f88c4938fbc98d6ef8c90b2c577c326d313e45235e92b7e52518855dd22276cf5168d2
   languageName: node
   linkType: hard
 
