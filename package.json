@@ -47,7 +47,7 @@
     "express-session": "1.17.3",
     "file-type": "16.5.3",
     "joi": "17.6.0",
-    "ldapauth-fork": "^5.0.2",
+    "ldapauth-fork": "5.0.5",
     "minio": "7.0.28",
     "mysql": "2.18.1",
     "nest-router": "1.0.9",
