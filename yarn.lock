@@ -1763,7 +1763,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:6.0.1, @codemirror/view@npm:^6.0.0":
+"@codemirror/view@npm:6.0.2":
+  version: 6.0.2
+  resolution: "@codemirror/view@npm:6.0.2"
+  dependencies:
+    "@codemirror/state": ^6.0.0
+    style-mod: ^4.0.0
+    w3c-keyname: ^2.2.4
+  checksum: a9dbc2b97cb1aa8d88bd0cdcc9560660c89ecff93fd86b6ecdda920a6bd22b0e1ccf72c010ac743d7daf4185a03c78bafecd9860e336585bbcca0b93dde55566
+  languageName: node
+  linkType: hard
+
+"@codemirror/view@npm:^6.0.0":
   version: 6.0.1
   resolution: "@codemirror/view@npm:6.0.1"
   dependencies:
@@ -1975,7 +1986,7 @@ __metadata:
     "@codemirror/language-data": 6.1.0
     "@codemirror/state": 6.0.1
     "@codemirror/theme-one-dark": 6.0.0
-    "@codemirror/view": 6.0.1
+    "@codemirror/view": 6.0.2
     "@fontsource/source-sans-pro": 4.5.10
     "@hedgedoc/html-to-react": 1.4.1
     "@hedgedoc/markdown-it-image-size": 1.0.3
@@ -2009,7 +2020,7 @@ __metadata:
     "@types/uuid": 8.3.4
     "@typescript-eslint/eslint-plugin": 5.29.0
     "@typescript-eslint/parser": 5.29.0
-    "@uiw/react-codemirror": 4.8.1
+    "@uiw/react-codemirror": 4.9.4
     abcjs: 6.0.2
     bootstrap: 4.6.1
     copy-webpack-plugin: 11.0.0
@@ -5198,9 +5209,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uiw/react-codemirror@npm:4.8.1":
-  version: 4.8.1
-  resolution: "@uiw/react-codemirror@npm:4.8.1"
+"@uiw/react-codemirror@npm:4.9.4":
+  version: 4.9.4
+  resolution: "@uiw/react-codemirror@npm:4.9.4"
   dependencies:
     "@babel/runtime": ">=7.11.0"
     "@codemirror/theme-one-dark": ^6.0.0
@@ -5209,7 +5220,7 @@ __metadata:
     "@babel/runtime": ">=7.11.0"
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: ddaaaba4497073e79916c6712986f67b85178e9a4e6c3e6ca3aeb07f2c2fac2881afb3e7230d414f4b574f8959cbaa40a6e2ed92c05d96ae1ef9d8b90256912e
+  checksum: 615dd262607a723743d39896c5e7fee3f504f475c53ac65c8328c993ceb7a3a6c65e2e0cc35ea11b67d21f2a86b9a9882a6e86aca5d0e372c269339b37a92020
   languageName: node
   linkType: hard
 
