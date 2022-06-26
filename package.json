@@ -191,7 +191,7 @@
     "remark-preset-lint-markdown-style-guide": "5.1.2",
     "reveal.js": "3.9.2",
     "select2": "3.5.2-browserify",
-    "socket.io-client": "2.4.0",
+    "socket.io-client": "2.5.0",
     "spin.js": "4.1.1",
     "string-loader": "0.0.1",
     "turndown": "7.1.1",
