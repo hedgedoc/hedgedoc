@@ -12,22 +12,16 @@ describe('Tokens', () => {
   let testSetup: TestSetup;
   let agent: request.SuperAgentTest;
 
-  let user: User;
   let keyId: string;
 
   beforeAll(async () => {
-    testSetup = await TestSetupBuilder.create().build();
-    const username = 'hardcoded';
-    const password = 'AHardcodedStrongP@ssword123';
-
-    user = await testSetup.userService.createUser(username, 'Testy');
-    await testSetup.identityService.createLocalIdentity(user, password);
+    testSetup = await TestSetupBuilder.create().withUsers().build();
     await testSetup.app.init();
 
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
       .post('/api/private/auth/local/login')
-      .send({ username: username, password: password })
+      .send({ username: 'testuser1', password: 'testuser1' })
       .expect(201);
   });
 
@@ -55,7 +49,7 @@ describe('Tokens', () => {
   });
 
   it(`GET /tokens`, async () => {
-    const tokenName = 'testToken';
+    const tokenName = 'test';
     const response = await agent
       .get('/api/private/tokens/')
       .expect('Content-Type', /json/)
@@ -68,16 +62,31 @@ describe('Tokens', () => {
     expect(response.body[0].secret).not.toBeDefined();
   });
   it(`DELETE /tokens/:keyid`, async () => {
-    const response = await agent
+    // try to delete token with wrong user
+    const agent2 = request.agent(testSetup.app.getHttpServer());
+    await agent2
+      .post('/api/private/auth/local/login')
+      .send({ username: 'testuser2', password: 'testuser2' })
+      .expect(201);
+    let response = await agent2
       .delete('/api/private/tokens/' + keyId)
-      .expect(204);
+      .expect(401);
+    expect(response.body.statusCode).toEqual(401);
+
+    // delete token with correct user
+    response = await agent.delete('/api/private/tokens/' + keyId).expect(204);
     expect(response.body).toStrictEqual({});
-  });
-  it(`GET /tokens 2`, async () => {
-    const response = await agent
+
+    // token should be deleted
+    response = await agent
       .get('/api/private/tokens/')
       .expect('Content-Type', /json/)
       .expect(200);
-    expect(response.body).toStrictEqual([]);
+    const tokenList: any[] = response.body;
+    expect(
+      tokenList.find((token: any) => {
+        return token.keyId === keyId;
+      }),
+    ).toBeUndefined();
   });
 });
