@@ -20,9 +20,7 @@ describe('Media', () => {
   let user: User;
 
   beforeAll(async () => {
-    const username = 'hardcoded';
-    const password = 'AHardcodedStrongP@ssword123';
-    testSetup = await TestSetupBuilder.create().build();
+    testSetup = await TestSetupBuilder.create().withUsers().build();
 
     uploadPath =
       testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
@@ -41,13 +39,12 @@ describe('Media', () => {
       null,
       'test_upload_media',
     );
-    user = await testSetup.userService.createUser(username, 'Testy');
-    await testSetup.identityService.createLocalIdentity(user, password);
+    user = testSetup.users[0];
 
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
       .post('/api/private/auth/local/login')
-      .send({ username: username, password: password })
+      .send({ username: 'testuser1', password: 'testuser1' })
       .expect(201);
   });
 
@@ -120,6 +117,7 @@ describe('Media', () => {
   });
 
   it('DELETE /media/{filename}', async () => {
+    // upload a file with the default test user
     const testNote = await testSetup.notesService.createNote(
       'test content',
       null,
@@ -132,6 +130,18 @@ describe('Media', () => {
       testNote,
     );
     const filename = upload.fileUrl.split('/').pop() || '';
+
+    // login with a different user;
+    const agent2 = request.agent(testSetup.app.getHttpServer());
+    await agent2
+      .post('/api/private/auth/local/login')
+      .send({ username: 'testuser2', password: 'testuser2' })
+      .expect(201);
+
+    // try to delete upload with second user
+    await agent2.delete('/api/private/media/' + filename).expect(401);
+
+    // delete upload for real
     await agent.delete('/api/private/media/' + filename).expect(204);
   });
 });
