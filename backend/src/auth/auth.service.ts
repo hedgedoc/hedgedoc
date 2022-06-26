@@ -160,10 +160,9 @@ export class AuthService {
   }
 
   async getTokensByUser(user: User): Promise<AuthToken[]> {
-    const tokens = await this.authTokenRepository
-      .createQueryBuilder('token')
-      .where('token.userId = :userId', { userId: user.id })
-      .getMany();
+    const tokens = await this.authTokenRepository.find({
+      where: { user: { id: user.id } },
+    });
     if (tokens === null) {
       return [];
     }
