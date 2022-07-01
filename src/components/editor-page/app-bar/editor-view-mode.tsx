@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -31,11 +31,11 @@ export const EditorViewMode: React.FC = () => {
         setEditorMode(value)
       }}>
       <ToggleButton
-        {...cypressId('view-mode-preview')}
-        value={EditorMode.PREVIEW}
+        {...cypressId('view-mode-editor')}
+        value={EditorMode.EDITOR}
         variant='outline-secondary'
-        title={t('editor.viewMode.view')}>
-        <ForkAwesomeIcon icon='eye' />
+        title={t('editor.viewMode.edit')}>
+        <ForkAwesomeIcon icon='pencil' />
       </ToggleButton>
       <ToggleButton
         {...cypressId('view-mode-both')}
@@ -45,11 +45,11 @@ export const EditorViewMode: React.FC = () => {
         <ForkAwesomeIcon icon='columns' />
       </ToggleButton>
       <ToggleButton
-        {...cypressId('view-mode-editor')}
-        value={EditorMode.EDITOR}
+        {...cypressId('view-mode-preview')}
+        value={EditorMode.PREVIEW}
         variant='outline-secondary'
-        title={t('editor.viewMode.edit')}>
-        <ForkAwesomeIcon icon='pencil' />
+        title={t('editor.viewMode.view')}>
+        <ForkAwesomeIcon icon='eye' />
       </ToggleButton>
     </ToggleButtonGroup>
   )
