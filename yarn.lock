@@ -2088,7 +2088,7 @@ __metadata:
     sharp: 0.30.7
     ts-loader: 9.3.1
     ts-mockery: 1.2.0
-    ts-node: 10.8.1
+    ts-node: 10.8.2
     twemoji-colr-font: 0.0.4
     typescript: 4.7.4
     uuid: 8.3.2
@@ -19591,7 +19591,45 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@npm:10.8.1, ts-node@npm:^10.6.0":
+"ts-node@npm:10.8.2":
+  version: 10.8.2
+  resolution: "ts-node@npm:10.8.2"
+  dependencies:
+    "@cspotcode/source-map-support": ^0.8.0
+    "@tsconfig/node10": ^1.0.7
+    "@tsconfig/node12": ^1.0.7
+    "@tsconfig/node14": ^1.0.0
+    "@tsconfig/node16": ^1.0.2
+    acorn: ^8.4.1
+    acorn-walk: ^8.1.1
+    arg: ^4.1.0
+    create-require: ^1.1.0
+    diff: ^4.0.1
+    make-error: ^1.1.1
+    v8-compile-cache-lib: ^3.0.1
+    yn: 3.1.1
+  peerDependencies:
+    "@swc/core": ">=1.2.50"
+    "@swc/wasm": ">=1.2.50"
+    "@types/node": "*"
+    typescript: ">=2.7"
+  peerDependenciesMeta:
+    "@swc/core":
+      optional: true
+    "@swc/wasm":
+      optional: true
+  bin:
+    ts-node: dist/bin.js
+    ts-node-cwd: dist/bin-cwd.js
+    ts-node-esm: dist/bin-esm.js
+    ts-node-script: dist/bin-script.js
+    ts-node-transpile-only: dist/bin-transpile.js
+    ts-script: dist/bin-script-deprecated.js
+  checksum: 1eede939beed9f4db35bcc88d78ef803815b99dcdbed1ecac728d861d74dc694918a7f0f437aa08d026193743a31e7e00e2ee34f875f909b5879981c1808e2a7
+  languageName: node
+  linkType: hard
+
+"ts-node@npm:^10.6.0":
   version: 10.8.1
   resolution: "ts-node@npm:10.8.1"
   dependencies:
