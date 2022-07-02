@@ -1491,7 +1491,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/autocomplete@npm:^6.0.0":
+"@codemirror/autocomplete@npm:6.0.2, @codemirror/autocomplete@npm:^6.0.0":
   version: 6.0.2
   resolution: "@codemirror/autocomplete@npm:6.0.2"
   dependencies:
@@ -1744,17 +1744,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/state@npm:6.1.0":
+"@codemirror/state@npm:6.1.0, @codemirror/state@npm:^6.0.0":
   version: 6.1.0
   resolution: "@codemirror/state@npm:6.1.0"
   checksum: 5185df31f2ee0f178b74a2a5420d78a84a31fc9f245c1b6a01fcf037fcad06770c9611ef9fce905a8f7bb0a42f42a241721dd9042255cbd848ceadd2ee0d0d39
-  languageName: node
-  linkType: hard
-
-"@codemirror/state@npm:^6.0.0":
-  version: 6.0.1
-  resolution: "@codemirror/state@npm:6.0.1"
-  checksum: fcb5aa5e1ce455ed1261616beb6cdb9e855f9cf11618a1ef7f61142622a0aba4551605356d381d2fa96f021f932b71323808369bf8edadfa69d745252b7e6ccd
   languageName: node
   linkType: hard
 
@@ -1978,6 +1971,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/react-client@workspace:."
   dependencies:
+    "@codemirror/autocomplete": 6.0.2
     "@codemirror/lang-markdown": 6.0.0
     "@codemirror/language-data": 6.1.0
     "@codemirror/state": 6.1.0
