@@ -158,7 +158,7 @@
     "eslint-plugin-testing-library": "5.5.1",
     "jest": "28.1.2",
     "jest-environment-jsdom": "28.1.2",
-    "netlify-cli": "10.6.2",
+    "netlify-cli": "10.7.1",
     "prettier": "2.7.1",
     "react-test-renderer": "18.2.0",
     "redux-devtools-extension": "2.13.9",
