@@ -1981,7 +1981,7 @@ __metadata:
     "@hedgedoc/html-to-react": 1.4.1
     "@hedgedoc/markdown-it-image-size": 1.0.3
     "@hedgedoc/markdown-it-task-lists": 1.0.3
-    "@hedgedoc/realtime": 0.0.5
+    "@hedgedoc/realtime": 0.1.0
     "@matejmazur/react-katex": 3.1.3
     "@mrdrogdrog/optional": 0.1.0
     "@next/bundle-analyzer": 12.1.6
@@ -2099,16 +2099,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hedgedoc/realtime@npm:0.0.5":
-  version: 0.0.5
-  resolution: "@hedgedoc/realtime@npm:0.0.5"
+"@hedgedoc/realtime@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@hedgedoc/realtime@npm:0.1.0"
   dependencies:
     isomorphic-ws: 4.0.1
     lib0: 0.2.51
     typed-emitter: 2.1.0
     y-protocols: 1.0.5
     yjs: 13.5.39
-  checksum: fabc5e20d85c86e153801adcddd5c390909b69c48c647ba9c09bd22266028658ec50a554399dd31b3b446a42452592d54837d4573b9b1f95bff1cd79899399f7
+  checksum: 437786442217ae55241dd09185145eeb99f57850330c525a42b2f20de053615c13138294ce6d54f16926a02a7bc1e0901998bfc5044b42b773ab9743abfdfc96
   languageName: node
   linkType: hard
 
