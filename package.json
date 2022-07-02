@@ -155,6 +155,7 @@
     "eslint-plugin-cypress": "2.12.1",
     "eslint-plugin-jest": "26.5.3",
     "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-promise": "6.0.0",
     "eslint-plugin-testing-library": "5.5.1",
     "jest": "28.1.2",
