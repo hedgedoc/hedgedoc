@@ -1,11 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import type React from 'react'
-import { useCallback, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { Optional } from '@mrdrogdrog/optional'
 
 /**
  * Extracts the plain text content of a {@link ChildNode node}.
@@ -53,17 +54,35 @@ export const useExtractFirstHeadline = (
   documentElement: React.RefObject<HTMLDivElement>,
   onFirstHeadingChange?: (firstHeading: string | undefined) => void
 ): (() => void) => {
-  const lastFirstHeading = useRef<string | undefined>()
+  const lastFirstHeadingContent = useRef<string | undefined>()
+  const currentFirstHeadingElement = useRef<HTMLHeadingElement | null>(null)
 
-  return useCallback(() => {
-    if (!onFirstHeadingChange || !documentElement.current) {
+  const extractHeaderText = useCallback(() => {
+    if (!onFirstHeadingChange) {
       return
     }
-    const firstHeading = documentElement.current.getElementsByTagName('h1').item(0)
-    const headingText = extractInnerText(firstHeading).trim()
-    if (headingText !== lastFirstHeading.current) {
-      lastFirstHeading.current = headingText
+    const headingText = extractInnerText(currentFirstHeadingElement.current).trim()
+    if (headingText !== lastFirstHeadingContent.current) {
+      lastFirstHeadingContent.current = headingText
       onFirstHeadingChange(headingText)
     }
-  }, [documentElement, onFirstHeadingChange])
+  }, [onFirstHeadingChange])
+
+  const mutationObserver = useMemo(() => new MutationObserver(() => extractHeaderText()), [extractHeaderText])
+  useEffect(() => () => mutationObserver.disconnect(), [mutationObserver])
+
+  return useCallback(() => {
+    const foundFirstHeading = Optional.ofNullable(documentElement.current)
+      .map((currentDocumentElement) => currentDocumentElement.getElementsByTagName('h1').item(0))
+      .orElse(null)
+    if (foundFirstHeading === currentFirstHeadingElement.current) {
+      return
+    }
+    mutationObserver.disconnect()
+    currentFirstHeadingElement.current = foundFirstHeading
+    if (foundFirstHeading !== null) {
+      mutationObserver.observe(foundFirstHeading, { subtree: true, childList: true })
+    }
+    extractHeaderText()
+  }, [documentElement, extractHeaderText, mutationObserver])
 }
