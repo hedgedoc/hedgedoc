@@ -41,7 +41,7 @@
   "dependencies": {
     "@codemirror/lang-markdown": "6.0.0",
     "@codemirror/language-data": "6.1.0",
-    "@codemirror/state": "6.0.1",
+    "@codemirror/state": "6.1.0",
     "@codemirror/theme-one-dark": "6.0.0",
     "@codemirror/view": "6.0.2",
     "@fontsource/source-sans-pro": "4.5.10",
@@ -55,7 +55,7 @@
     "@redux-devtools/core": "3.13.1",
     "@reduxjs/toolkit": "1.8.2",
     "@svgr/webpack": "6.2.1",
-    "@uiw/react-codemirror": "4.9.4",
+    "@uiw/react-codemirror": "4.10.3",
     "abcjs": "6.0.2",
     "bootstrap": "4.6.1",
     "copy-webpack-plugin": "11.0.0",

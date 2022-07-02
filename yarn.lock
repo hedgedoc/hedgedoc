@@ -1744,7 +1744,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/state@npm:6.0.1, @codemirror/state@npm:^6.0.0":
+"@codemirror/state@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@codemirror/state@npm:6.1.0"
+  checksum: 5185df31f2ee0f178b74a2a5420d78a84a31fc9f245c1b6a01fcf037fcad06770c9611ef9fce905a8f7bb0a42f42a241721dd9042255cbd848ceadd2ee0d0d39
+  languageName: node
+  linkType: hard
+
+"@codemirror/state@npm:^6.0.0":
   version: 6.0.1
   resolution: "@codemirror/state@npm:6.0.1"
   checksum: fcb5aa5e1ce455ed1261616beb6cdb9e855f9cf11618a1ef7f61142622a0aba4551605356d381d2fa96f021f932b71323808369bf8edadfa69d745252b7e6ccd
@@ -1973,7 +1980,7 @@ __metadata:
   dependencies:
     "@codemirror/lang-markdown": 6.0.0
     "@codemirror/language-data": 6.1.0
-    "@codemirror/state": 6.0.1
+    "@codemirror/state": 6.1.0
     "@codemirror/theme-one-dark": 6.0.0
     "@codemirror/view": 6.0.2
     "@fontsource/source-sans-pro": 4.5.10
@@ -2009,7 +2016,7 @@ __metadata:
     "@types/uuid": 8.3.4
     "@typescript-eslint/eslint-plugin": 5.29.0
     "@typescript-eslint/parser": 5.29.0
-    "@uiw/react-codemirror": 4.9.4
+    "@uiw/react-codemirror": 4.10.3
     abcjs: 6.0.2
     bootstrap: 4.6.1
     copy-webpack-plugin: 11.0.0
@@ -5113,9 +5120,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uiw/react-codemirror@npm:4.9.4":
-  version: 4.9.4
-  resolution: "@uiw/react-codemirror@npm:4.9.4"
+"@uiw/react-codemirror@npm:4.10.3":
+  version: 4.10.3
+  resolution: "@uiw/react-codemirror@npm:4.10.3"
   dependencies:
     "@babel/runtime": ">=7.11.0"
     "@codemirror/theme-one-dark": ^6.0.0
@@ -5124,7 +5131,7 @@ __metadata:
     "@babel/runtime": ">=7.11.0"
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 615dd262607a723743d39896c5e7fee3f504f475c53ac65c8328c993ceb7a3a6c65e2e0cc35ea11b67d21f2a86b9a9882a6e86aca5d0e372c269339b37a92020
+  checksum: a66414816b33fa33bb600c2d18cc15f1367c5f877ab85352e36449e4a85d51d0ba2216193962080a6b28db50140d2ab8d4d305883750e0b85c1832717a6f7fab
   languageName: node
   linkType: hard
 
