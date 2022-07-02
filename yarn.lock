@@ -1960,10 +1960,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hedgedoc/markdown-it-task-lists@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@hedgedoc/markdown-it-task-lists@npm:1.0.3"
-  checksum: 06308842b871453d0c0170e61396b96f98326344331043756cd383531817529a3628d359b921ca6f77bfc23e6a7eb18c82922342daf13a90f38daa003a816ff3
+"@hedgedoc/markdown-it-task-lists@npm:1.0.4":
+  version: 1.0.4
+  resolution: "@hedgedoc/markdown-it-task-lists@npm:1.0.4"
+  peerDependencies:
+    markdown-it: ">=12"
+  checksum: ac536c3a2a97c37f886b9dbd1e1f3a3f1e79c0be3392c44139d151e881c48f8fc0f2e26b8cc264952f0e667aed891954583c6540117df68d8116945b63e0221b
   languageName: node
   linkType: hard
 
@@ -1980,7 +1982,7 @@ __metadata:
     "@fontsource/source-sans-pro": 4.5.10
     "@hedgedoc/html-to-react": 1.4.1
     "@hedgedoc/markdown-it-image-size": 1.0.3
-    "@hedgedoc/markdown-it-task-lists": 1.0.3
+    "@hedgedoc/markdown-it-task-lists": 1.0.4
     "@hedgedoc/realtime": 0.1.0
     "@matejmazur/react-katex": 3.1.3
     "@mrdrogdrog/optional": 0.1.2
