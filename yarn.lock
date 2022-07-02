@@ -2065,9 +2065,9 @@ __metadata:
     markdown-it-sup: 1.0.0
     markdown-it-task-lists: 2.1.1
     markdown-it-toc-done-right: 4.2.0
-    markmap-common: 0.1.6
-    markmap-lib: 0.12.0
-    markmap-view: 0.2.7
+    markmap-common: 0.13.4
+    markmap-lib: 0.13.5
+    markmap-view: 0.13.5
     mermaid: 9.1.3
     netlify-cli: 10.7.1
     next: 12.2.0
@@ -14593,40 +14593,40 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markmap-common@npm:0.1.6, markmap-common@npm:^0.1.6":
-  version: 0.1.6
-  resolution: "markmap-common@npm:0.1.6"
+"markmap-common@npm:0.13.4, markmap-common@npm:^0.13.4":
+  version: 0.13.4
+  resolution: "markmap-common@npm:0.13.4"
   dependencies:
     "@babel/runtime": ^7.12.1
-  checksum: 06021273f067b55a885c030c4718369a624b70bcd3f8a072e0ebf29950aa8ab4c047f4c822c8530facc0e19240aebf74aa08dd8febcb7ca4cbfeabc3d4b7f410
+  checksum: 6597aa4fb9292f5ace8aceb76d63e1bdad30661e3ad8b7e00ac58e2aedf082d7d217f72960f0e28877efea99a2055b2fd431eda7a2482de2538740a1fbf5a7d7
   languageName: node
   linkType: hard
 
-"markmap-lib@npm:0.12.0":
-  version: 0.12.0
-  resolution: "markmap-lib@npm:0.12.0"
+"markmap-lib@npm:0.13.5":
+  version: 0.13.5
+  resolution: "markmap-lib@npm:0.13.5"
   dependencies:
     "@babel/runtime": ^7.16.3
     js-yaml: ^4.1.0
     katex: ^0.15.1
-    markmap-common: ^0.1.6
+    markmap-common: ^0.13.4
     prismjs: ^1.25.0
     remarkable: ^2.0.1
     remarkable-katex: ^1.1.8
-  checksum: cf1899ee3e4b4d46ec68cd97b551c84bd321204d975dcd605501c72779c4fae0def104494322add2bf5ad001568316715664af1fb75ecc536a86c9fcacc292a6
+  checksum: 469932bba42e5fe466c3451fea1ee741d1f2ac1b5d20df92f620a116d6adc0c49ed5930c483b7d29c70094c6e188b6ce235f1a457cd8dca67b53ead1225bc8f4
   languageName: node
   linkType: hard
 
-"markmap-view@npm:0.2.7":
-  version: 0.2.7
-  resolution: "markmap-view@npm:0.2.7"
+"markmap-view@npm:0.13.5":
+  version: 0.13.5
+  resolution: "markmap-view@npm:0.13.5"
   dependencies:
     "@babel/runtime": ^7.12.5
     "@types/d3": ^6.0.0
     d3: ^6.2.0
     d3-flextree: ^2.1.1
-    markmap-common: ^0.1.6
-  checksum: 073ea776c8977acfe57da768fc485ca3720d8ce5a37a233a47a6d22fceddf2bf6e6ef834baa10be2968dec9ca45fad1aceccae7fba9e7f3be13bb88159f9f5b4
+    markmap-common: ^0.13.4
+  checksum: 86a09552c51c4aae0c477524fe39507bbc298144f0635628fa2016db152ff9703b82759e558224fcde2c1e71d05dea62a2de5d96862ad3eb9cd9d11d9520c283
   languageName: node
   linkType: hard
 
