@@ -9,6 +9,8 @@ import React, { Fragment } from 'react'
 import { useLoadNoteFromServer } from './hooks/use-load-note-from-server'
 import { LoadingScreen } from '../../application-loader/loading-screen/loading-screen'
 import { CommonErrorPage } from '../../error-pages/common-error-page'
+import { CreateNonExistingNoteHint } from './create-non-existing-note-hint'
+import { ShowIf } from '../show-if/show-if'
 
 /**
  * Loads the note identified by the note-id in the URL.
@@ -24,10 +26,11 @@ export const NoteLoadingBoundary: React.FC<PropsWithChildren<unknown>> = ({ chil
     return <LoadingScreen />
   } else if (error) {
     return (
-      <CommonErrorPage
-        titleI18nKey={'noteLoadingBoundary.errorWhileLoadingContent'}
-        descriptionI18nKey={error.message}
-      />
+      <CommonErrorPage titleI18nKey={`${error.message}.title`} descriptionI18nKey={`${error.message}.description`}>
+        <ShowIf condition={error.message === 'api.note.notFound'}>
+          <CreateNonExistingNoteHint />
+        </ShowIf>
+      </CommonErrorPage>
     )
   } else {
     return <Fragment>{children}</Fragment>

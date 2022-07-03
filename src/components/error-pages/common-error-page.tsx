@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React from 'react'
 import type { PropsWithChildren } from 'react'
+import React from 'react'
 import { LandingLayout } from '../landing-layout/landing-layout'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
+import { ShowIf } from '../common/show-if/show-if'
 
 export interface CommonErrorPageProps {
   titleI18nKey: string
@@ -26,17 +27,20 @@ export const CommonErrorPage: React.FC<PropsWithChildren<CommonErrorPageProps>> 
   descriptionI18nKey,
   children
 }) => {
-  const { t } = useTranslation()
+  useTranslation()
 
   return (
     <LandingLayout>
-      <div className='text-light d-flex align-items-center justify-content-center my-5'>
-        <div>
-          <h1>{t(titleI18nKey)}</h1>
-          <br />
-          {descriptionI18nKey ? t(descriptionI18nKey) : null}
-          {children}
-        </div>
+      <div className='text-light d-flex flex-column align-items-center justify-content-center my-5'>
+        <h1>
+          <Trans i18nKey={titleI18nKey} />
+        </h1>
+        <ShowIf condition={!!descriptionI18nKey}>
+          <h3>
+            <Trans i18nKey={descriptionI18nKey} />
+          </h3>
+        </ShowIf>
+        {children}
       </div>
     </LandingLayout>
   )

@@ -41,12 +41,23 @@
     }
   },
   "noteLoadingBoundary": {
-    "errorWhileLoadingContent": "Error while loading note."
+    "createNote": {
+      "question": "Do you want to create a note with alias '{{aliasName}}'?",
+      "create": "Create note",
+      "creating": "Creating note...",
+      "error": "Note couldn't be created."
+    }
   },
   "api": {
     "note": {
-      "notFound": "Note not found.",
-      "accessDenied": "You don't have the needed permission to access this note."
+      "notFound": {
+        "title": "Note not found",
+        "description": "The requested note doesn't exist."
+      },
+      "forbidden": {
+        "title": "Access denied",
+        "description": "You don't have the needed permission to access this note"
+      }
     }
   },
   "landing": {
@@ -495,12 +506,7 @@
     "presentation": {},
     "readOnly": {
       "viewCount": "views",
-      "editNote": "Edit this note",
-      "loading": "Loading note contents ...",
-      "error": {
-        "title": "Error while loading note",
-        "description": "Probably the requested note does not exist or was deleted."
-      }
+      "editNote": "Edit this note"
     }
   },
   "common": {
@@ -564,7 +570,7 @@
   },
   "errors": {
     "notFound": {
-      "title": "404 - page not found",
+      "title": "Page not found",
       "description": "The requested page either does not exist or you don't have permission to access it."
     },
     "noteCreationFailed": {

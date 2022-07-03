@@ -19,14 +19,17 @@ exports[`Note loading boundary shows an error 1`] = `
   </span>
   <span>
     titleI18nKey: 
-    noteLoadingBoundary.errorWhileLoadingContent
+    api.note.notFound.title
   </span>
   <span>
     descriptionI18nKey: 
-    CRAAAAASH
+    api.note.notFound.description
   </span>
   <span>
     children: 
+    <span>
+      This is a mock for CreateNonExistingNoteHint
+    </span>
   </span>
 </div>
 `;

@@ -10,7 +10,7 @@ import type { NextPage } from 'next'
 import { useAsync } from 'react-use'
 import { Redirect } from '../components/common/redirect'
 import { useSingleStringUrlParameter } from '../hooks/common/use-single-string-url-parameter'
-import { CommonErrorPage } from '../components/error-pages/common-error-page'
+import Custom404 from './404'
 
 /**
  * Redirects the user to the editor if the link is a root level direct link to a version 1 note.
@@ -30,7 +30,7 @@ export const DirectLinkFallback: NextPage = () => {
   })
 
   if (error !== undefined) {
-    return <CommonErrorPage titleI18nKey={'errors.notFound.title'} descriptionI18nKey={'errors.notFound.description'} />
+    return <Custom404 />
   } else if (value !== undefined) {
     return <Redirect to={`/n/${value}`} />
   } else {

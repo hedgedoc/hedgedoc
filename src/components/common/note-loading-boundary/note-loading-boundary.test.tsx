@@ -15,6 +15,7 @@ import { Fragment } from 'react'
 import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
 import * as CommonErrorPageModule from '../../error-pages/common-error-page'
 import * as LoadingScreenModule from '../../../components/application-loader/loading-screen/loading-screen'
+import * as CreateNonExistingNoteHintModule from './create-non-existing-note-hint'
 
 describe('Note loading boundary', () => {
   const mockedNoteId = 'mockedNoteId'
@@ -26,6 +27,13 @@ describe('Note loading boundary', () => {
 
   beforeEach(async () => {
     await mockI18n()
+    jest.spyOn(CreateNonExistingNoteHintModule, 'CreateNonExistingNoteHint').mockImplementation(() => {
+      return (
+        <Fragment>
+          <span>This is a mock for CreateNonExistingNoteHint</span>
+        </Fragment>
+      )
+    })
     jest.spyOn(LoadingScreenModule, 'LoadingScreen').mockImplementation(({ errorMessage }) => {
       return (
         <Fragment>
@@ -70,7 +78,7 @@ describe('Note loading boundary', () => {
     jest.spyOn(getNoteModule, 'getNote').mockImplementation((id) => {
       expect(id).toBe(mockedNoteId)
       return new Promise((resolve, reject) => {
-        setTimeout(() => reject(new Error('CRAAAAASH')), 0)
+        setTimeout(() => reject(new Error('api.note.notFound')), 0)
       })
     })
   }
