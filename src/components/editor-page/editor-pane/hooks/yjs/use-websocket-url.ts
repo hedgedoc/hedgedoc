@@ -22,7 +22,7 @@ export const useWebsocketUrl = (): URL => {
       return process.env.NEXT_PUBLIC_REALTIME_URL ?? LOCAL_FALLBACK_URL
     }
     try {
-      const backendBaseUrlParsed = new URL(backendUrl)
+      const backendBaseUrlParsed = new URL(backendUrl, window.location.toString())
       backendBaseUrlParsed.protocol = backendBaseUrlParsed.protocol === 'https:' ? 'wss:' : 'ws:'
       backendBaseUrlParsed.pathname += 'realtime'
       return backendBaseUrlParsed.toString()
