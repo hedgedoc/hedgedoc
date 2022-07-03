@@ -2099,6 +2099,7 @@ __metadata:
     words-count: 2.0.2
     y-codemirror.next: 0.3.0
     y-protocols: 1.0.5
+    yjs: 13.5.39
   languageName: unknown
   linkType: soft
 
@@ -21188,7 +21189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs@npm:^13.0.0":
+"yjs@npm:13.5.39, yjs@npm:^13.0.0":
   version: 13.5.39
   resolution: "yjs@npm:13.5.39"
   dependencies:
