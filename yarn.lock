@@ -1942,14 +1942,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hedgedoc/html-to-react@npm:1.4.1":
-  version: 1.4.1
-  resolution: "@hedgedoc/html-to-react@npm:1.4.1"
+"@hedgedoc/html-to-react@npm:1.4.3":
+  version: 1.4.3
+  resolution: "@hedgedoc/html-to-react@npm:1.4.3"
   dependencies:
+    domhandler: ^5.0.3
     htmlparser2: ^8.0.0
   peerDependencies:
     react: ">=16.0"
-  checksum: d998709f5bc71688b2027d7dd56cabd8bccb8e1c6ab295d4604f5a5c3d2d5a26c4f7e078010194aadd842edc0434df8a3213c30bfd15aefe9a5e24e1afd61bf6
+  checksum: d38cbc484661fdb82e23886058291919b3e76c047423f76db42d8ceedc58a9291ba6dab879478cb07946b9a9b389c2faa3058a69053922be9b8060047f176dc1
   languageName: node
   linkType: hard
 
@@ -1980,7 +1981,7 @@ __metadata:
     "@codemirror/theme-one-dark": 6.0.0
     "@codemirror/view": 6.0.2
     "@fontsource/source-sans-pro": 4.5.10
-    "@hedgedoc/html-to-react": 1.4.1
+    "@hedgedoc/html-to-react": 1.4.3
     "@hedgedoc/markdown-it-image-size": 1.0.3
     "@hedgedoc/markdown-it-task-lists": 1.0.4
     "@hedgedoc/realtime": 0.1.0
