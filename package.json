@@ -163,7 +163,6 @@
     "netlify-cli": "10.7.1",
     "prettier": "2.7.1",
     "react-test-renderer": "18.2.0",
-    "redux-devtools-extension": "2.13.9",
     "ts-loader": "9.3.1",
     "ts-mockery": "1.2.0",
     "ts-node": "10.8.2",
