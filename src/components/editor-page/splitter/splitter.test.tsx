@@ -6,6 +6,7 @@
 
 import { fireEvent, render, screen } from '@testing-library/react'
 import { Splitter } from './splitter'
+import { Mock } from 'ts-mockery'
 
 describe('Splitter', () => {
   it('can render only the left pane', () => {
@@ -35,16 +36,16 @@ describe('Splitter', () => {
       const divider = await screen.findByTestId('splitter-divider')
 
       fireEvent.mouseDown(divider, {})
-      fireEvent.mouseMove(window, { buttons: 1, clientX: 1920 })
+      fireEvent.mouseMove(window, Mock.of<MouseEvent>({ buttons: 1, clientX: 1920 }))
       fireEvent.mouseUp(window)
       expect(view.container).toMatchSnapshot()
 
       fireEvent.mouseDown(divider, {})
-      fireEvent.mouseMove(window, { buttons: 1, clientX: 0 })
+      fireEvent.mouseMove(window, Mock.of<MouseEvent>({ buttons: 1, clientX: 0 }))
       fireEvent.mouseUp(window)
       expect(view.container).toMatchSnapshot()
 
-      fireEvent.mouseMove(window, { buttons: 1, clientX: 1920 })
+      fireEvent.mouseMove(window, Mock.of<MouseEvent>({ buttons: 1, clientX: 1920 }))
       expect(view.container).toMatchSnapshot()
     })
 
@@ -54,16 +55,16 @@ describe('Splitter', () => {
       const divider = await screen.findByTestId('splitter-divider')
 
       fireEvent.touchStart(divider, {})
-      fireEvent.touchMove(window, { buttons: 1, clientX: 1920 })
+      fireEvent.touchMove(window, Mock.of<TouchEvent>({ touches: [{ clientX: 1920 }, { clientX: 200 }] }))
       fireEvent.touchEnd(window)
       expect(view.container).toMatchSnapshot()
 
       fireEvent.touchStart(divider, {})
-      fireEvent.touchMove(window, { buttons: 1, clientX: 0 })
+      fireEvent.touchMove(window, Mock.of<TouchEvent>({ touches: [{ clientX: 0 }, { clientX: 100 }] }))
       fireEvent.touchCancel(window)
       expect(view.container).toMatchSnapshot()
 
-      fireEvent.touchMove(window, { buttons: 1, clientX: 1920 })
+      fireEvent.touchMove(window, Mock.of<TouchEvent>({ touches: [{ clientX: 500 }, { clientX: 900 }] }))
       expect(view.container).toMatchSnapshot()
     })
   })

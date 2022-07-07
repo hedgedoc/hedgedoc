@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -39,7 +39,7 @@ const isLeftMouseButtonClicked = (mouseEvent: MouseEvent): boolean => {
  *
  * @param moveEvent
  */
-const extractHorizontalPosition = (moveEvent: MouseEvent | TouchEvent): number => {
+const extractHorizontalPosition = (moveEvent: MouseEvent | TouchEvent): number | undefined => {
   if (isMouseEvent(moveEvent)) {
     return moveEvent.clientX
   } else {
@@ -101,6 +101,9 @@ export const Splitter: React.FC<SplitterProps> = ({
     }
 
     const horizontalPosition = extractHorizontalPosition(moveEvent)
+    if (horizontalPosition === undefined) {
+      return
+    }
     const horizontalPositionInSplitContainer = horizontalPosition - splitContainer.current.offsetLeft
     const newRelativeSize = horizontalPositionInSplitContainer / splitContainer.current.clientWidth
     setRelativeSplitValue(newRelativeSize * 100)

@@ -223,7 +223,7 @@ exports[`Splitter resize can change size with touch 2`] = `
   >
     <div
       class="splitter left "
-      style="width: calc(NaN% - 5px);"
+      style="width: calc(100% - 5px);"
     >
       left
     </div>
@@ -237,7 +237,7 @@ exports[`Splitter resize can change size with touch 2`] = `
     </div>
     <div
       class="splitter right "
-      style="width: calc(100% - NaN%);"
+      style="width: calc(100% - 100%);"
     >
       right
     </div>
@@ -252,7 +252,7 @@ exports[`Splitter resize can change size with touch 3`] = `
   >
     <div
       class="splitter left "
-      style="width: calc(NaN% - 5px);"
+      style="width: calc(0% - 5px);"
     >
       left
     </div>
@@ -266,7 +266,7 @@ exports[`Splitter resize can change size with touch 3`] = `
     </div>
     <div
       class="splitter right "
-      style="width: calc(100% - NaN%);"
+      style="width: calc(100% - 0%);"
     >
       right
     </div>
@@ -281,7 +281,7 @@ exports[`Splitter resize can change size with touch 4`] = `
   >
     <div
       class="splitter left "
-      style="width: calc(NaN% - 5px);"
+      style="width: calc(0% - 5px);"
     >
       left
     </div>
@@ -295,7 +295,7 @@ exports[`Splitter resize can change size with touch 4`] = `
     </div>
     <div
       class="splitter right "
-      style="width: calc(100% - NaN%);"
+      style="width: calc(100% - 0%);"
     >
       right
     </div>
