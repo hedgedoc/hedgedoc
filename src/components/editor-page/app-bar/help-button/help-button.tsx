@@ -1,20 +1,20 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useCallback, useState } from 'react'
+import React, { Fragment } from 'react'
 import { Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { HelpModal } from './help-modal'
 import { cypressId } from '../../../../utils/cypress-attribute'
+import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
 
 export const HelpButton: React.FC = () => {
   const { t } = useTranslation()
-  const [show, setShow] = useState(false)
-  const onHide = useCallback(() => setShow(false), [])
+  const [modalVisibility, showModal, closeModal] = useBooleanState()
 
   return (
     <Fragment>
@@ -24,10 +24,10 @@ export const HelpButton: React.FC = () => {
         className='ml-2 text-secondary'
         size='sm'
         variant='outline-light'
-        onClick={() => setShow(true)}>
+        onClick={showModal}>
         <ForkAwesomeIcon icon='question-circle' />
       </Button>
-      <HelpModal show={show} onHide={onHide} />
+      <HelpModal show={modalVisibility} onHide={closeModal} />
     </Fragment>
   )
 }

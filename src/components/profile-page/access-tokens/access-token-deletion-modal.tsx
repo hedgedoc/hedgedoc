@@ -37,11 +37,7 @@ export const AccessTokenDeletionModal: React.FC<AccessTokenDeletionModalProps> =
         )
       })
       .catch(showErrorNotification('profile.modal.deleteAccessToken.failed'))
-      .finally(() => {
-        if (onHide) {
-          onHide()
-        }
-      })
+      .finally(() => onHide?.())
   }, [token, onHide])
 
   return (

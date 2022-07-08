@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Col, ListGroup, Row } from 'react-bootstrap'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { Trans, useTranslation } from 'react-i18next'
@@ -13,6 +13,7 @@ import { IconButton } from '../../common/icon-button/icon-button'
 import type { AccessToken } from '../../../api/tokens/types'
 import { AccessTokenDeletionModal } from './access-token-deletion-modal'
 import type { AccessTokenUpdateProps } from './profile-access-tokens'
+import { useBooleanState } from '../../../hooks/common/use-boolean-state'
 
 export interface AccessTokenListEntryProps {
   token: AccessToken
@@ -28,16 +29,12 @@ export const AccessTokenListEntry: React.FC<AccessTokenListEntryProps & AccessTo
   onUpdateList
 }) => {
   useTranslation()
-  const [showDeletionModal, setShowDeletionModal] = useState(false)
-
-  const onShowDeletionModal = useCallback(() => {
-    setShowDeletionModal(true)
-  }, [])
+  const [modalVisibility, showModal, closeModal] = useBooleanState()
 
   const onHideDeletionModal = useCallback(() => {
-    setShowDeletionModal(false)
+    closeModal()
     onUpdateList()
-  }, [onUpdateList])
+  }, [closeModal, onUpdateList])
 
   const lastUsed = useMemo(() => {
     if (!token.lastUsedAt) {
@@ -66,12 +63,12 @@ export const AccessTokenListEntry: React.FC<AccessTokenListEntryProps & AccessTo
           <IconButton
             icon='trash-o'
             variant='danger'
-            onClick={onShowDeletionModal}
+            onClick={showModal}
             {...cypressId('access-token-delete-button')}
           />
         </Col>
       </Row>
-      <AccessTokenDeletionModal token={token} show={showDeletionModal} onHide={onHideDeletionModal} />
+      <AccessTokenDeletionModal token={token} show={modalVisibility} onHide={onHideDeletionModal} />
     </ListGroup.Item>
   )
 }

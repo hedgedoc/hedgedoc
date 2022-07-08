@@ -1,16 +1,17 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useCallback, useState } from 'react'
+import React, { Fragment, useCallback } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import type { IconName } from '../../common/fork-awesome/types'
 import type { DeleteHistoryNoteModalProps } from '../../editor-page/sidebar/delete-note-sidebar-entry/delete-note-modal'
 import { DeleteNoteModal } from '../../editor-page/sidebar/delete-note-sidebar-entry/delete-note-modal'
+import { useBooleanState } from '../../../hooks/common/use-boolean-state'
 
 export interface DropdownItemWithDeletionModalProps {
   onConfirm: () => void
@@ -47,24 +48,24 @@ export const DropdownItemWithDeletionModal: React.FC<
   className
 }) => {
   useTranslation()
-  const [showDialog, setShowDialog] = useState(false)
+  const [modalVisibility, showModal, closeModal] = useBooleanState()
+
   const handleConfirm = useCallback(() => {
-    setShowDialog(false)
+    closeModal()
     onConfirm()
-  }, [onConfirm])
-  const onHide = useCallback(() => setShowDialog(false), [])
+  }, [closeModal, onConfirm])
 
   return (
     <Fragment>
-      <Dropdown.Item onClick={() => setShowDialog(true)} className={className}>
+      <Dropdown.Item onClick={showModal} className={className}>
         <ForkAwesomeIcon icon={modalIcon} fixedWidth={true} className='mx-2' />
         <Trans i18nKey={itemI18nKey} />
       </Dropdown.Item>
       <DeleteNoteModal
         optionalNoteTitle={noteTitle}
         onConfirm={handleConfirm}
-        show={showDialog}
-        onHide={onHide}
+        show={modalVisibility}
+        onHide={closeModal}
         modalTitleI18nKey={modalTitleI18nKey}
         modalButtonI18nKey={modalButtonI18nKey}
         modalQuestionI18nKey={modalQuestionI18nKey}
