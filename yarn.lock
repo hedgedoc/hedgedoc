@@ -2053,7 +2053,7 @@ __metadata:
     jest-environment-jsdom: 28.1.2
     js-yaml: 4.1.0
     katex: 0.16.0
-    luxon: 2.4.0
+    luxon: 3.0.0
     markdown-it: 13.0.1
     markdown-it-abbr: 1.0.4
     markdown-it-anchor: 8.6.4
@@ -14278,7 +14278,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:2.4.0, luxon@npm:^2.4.0":
+"luxon@npm:3.0.0":
+  version: 3.0.0
+  resolution: "luxon@npm:3.0.0"
+  checksum: c2d13ec1939962a318f5568fc750611346b64fe41041a2ab1c677450b7b41c699ee12ef080ff04d5a2027bf26d962d46661c7c87e394a20f6d60f14edb832c54
+  languageName: node
+  linkType: hard
+
+"luxon@npm:^2.4.0":
   version: 2.4.0
   resolution: "luxon@npm:2.4.0"
   checksum: 6071028d65cc3d3bdab5e6a3995dd97411c92bb3b3163a02deb7b7014318ad3a6fd750ae77131c42141b717c14aef8880d3130f265281d500ef2365f7265b3f3
