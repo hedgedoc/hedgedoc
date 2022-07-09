@@ -5327,7 +5327,7 @@ __metadata:
     ts-jest: 28.0.5
     ts-node: 10.8.2
     tsconfig-paths: 4.0.0
-    typeorm: 0.3.6
+    typeorm: 0.3.7
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
@@ -9341,9 +9341,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typeorm@npm:0.3.6":
-  version: 0.3.6
-  resolution: "typeorm@npm:0.3.6"
+"typeorm@npm:0.3.7":
+  version: 0.3.7
+  resolution: "typeorm@npm:0.3.7"
   dependencies:
     "@sqltools/formatter": ^1.2.2
     app-root-path: ^3.0.0
@@ -9364,12 +9364,12 @@ __metadata:
     yargs: ^17.3.1
   peerDependencies:
     "@google-cloud/spanner": ^5.18.0
-    "@sap/hana-client": ^2.11.14
+    "@sap/hana-client": ^2.12.25
     better-sqlite3: ^7.1.2
     hdb-pool: ^0.1.6
-    ioredis: ^4.28.3
+    ioredis: ^5.0.4
     mongodb: ^3.6.0
-    mssql: ^6.3.1
+    mssql: ^7.3.0
     mysql2: ^2.2.5
     oracledb: ^5.1.0
     pg: ^8.5.1
@@ -9377,7 +9377,7 @@ __metadata:
     pg-query-stream: ^4.0.0
     redis: ^3.1.1 || ^4.0.0
     sql.js: ^1.4.0
-    sqlite3: ^5.0.2
+    sqlite3: ^5.0.3
     ts-node: ^10.7.0
     typeorm-aurora-data-api-driver: ^2.0.0
   peerDependenciesMeta:
@@ -9419,7 +9419,7 @@ __metadata:
     typeorm: cli.js
     typeorm-ts-node-commonjs: cli-ts-node-commonjs.js
     typeorm-ts-node-esm: cli-ts-node-esm.js
-  checksum: 7353b87a8161146c9bab765824857683f4755614c866326b1b260fdddc63470c7679e45c544f4761b7352d26b9f86bc933e1b44b0b1de4512cdc0ca5677db39a
+  checksum: b9a709fa1c103c98340ff055419f5de7fde478e35f246b2f6b212ad6c8954085f347c5a97ed2d94634cf9d51577035d8d71c4c4ccfd58b5f7a9579f434e71802
   languageName: node
   linkType: hard
 
