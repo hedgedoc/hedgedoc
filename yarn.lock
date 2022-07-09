@@ -639,10 +639,10 @@ JSV@^4.0.x:
   resolved "https://registry.yarnpkg.com/JSV/-/JSV-4.0.2.tgz#d077f6825571f82132f9dffaed587b4029feff57"
   integrity sha512-ZJ6wx9xaKJ3yFUhq5/sk82PJMuUyLk277I8mQeyDgCTjGdjWJIvPfaU5LIXaMuaN2UO1X3kZH4+lgphublZUHw==
 
-abcjs@6.0.2:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/abcjs/-/abcjs-6.0.2.tgz#a5f067168f48da80831817c72882cc6a64e94065"
-  integrity sha512-kLKqP1PoxWuq5U634swDnthSIVkhldSgPMJVGszdQAvTOca3gycu87WtlNvnpRrX9e4QXDrqHO9hmcY7vr/UGw==
+abcjs@6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/abcjs/-/abcjs-6.0.3.tgz#e0f3b46cec82fc25243773c2b32d518517cfb1d0"
+  integrity sha512-GtJ8NU7z5W+jDJ7/TrGemHelr7uYi1LdZi1rnDcbRPPnmf2REgoNb3f3uWo72+jx3LZYIv8443vpFQUf+g9BGA==
 
 abstract-logging@^2.0.0:
   version "2.0.1"
