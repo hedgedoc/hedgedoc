@@ -134,7 +134,7 @@
     "url": "https://github.com/hedgedoc/hedgedoc.git"
   },
   "devDependencies": {
-    "abcjs": "6.0.2",
+    "abcjs": "6.0.3",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
     "babel-loader": "7.1.5",
