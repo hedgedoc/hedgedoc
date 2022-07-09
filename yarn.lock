@@ -2099,7 +2099,7 @@ __metadata:
     uuid: 8.3.2
     vega: 5.22.1
     vega-embed: 6.21.0
-    vega-lite: 5.2.0
+    vega-lite: 5.3.0
     words-count: 2.0.2
     y-codemirror.next: 0.3.0
     y-protocols: 1.0.5
@@ -19474,17 +19474,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.4.0":
+"tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.4.0, tslib@npm:~2.4.0":
   version: 2.4.0
   resolution: "tslib@npm:2.4.0"
   checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
-  languageName: node
-  linkType: hard
-
-"tslib@npm:~2.3.1":
-  version: 2.3.1
-  resolution: "tslib@npm:2.3.1"
-  checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
   languageName: node
   linkType: hard
 
@@ -20186,9 +20179,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-lite@npm:5.2.0":
-  version: 5.2.0
-  resolution: "vega-lite@npm:5.2.0"
+"vega-lite@npm:5.3.0":
+  version: 5.3.0
+  resolution: "vega-lite@npm:5.3.0"
   dependencies:
     "@types/clone": ~2.1.1
     array-flat-polyfill: ^1.0.1
@@ -20196,19 +20189,19 @@ __metadata:
     fast-deep-equal: ~3.1.3
     fast-json-stable-stringify: ~2.1.0
     json-stringify-pretty-compact: ~3.0.0
-    tslib: ~2.3.1
+    tslib: ~2.4.0
     vega-event-selector: ~3.0.0
     vega-expression: ~5.0.0
     vega-util: ~1.17.0
-    yargs: ~17.2.1
+    yargs: ~17.5.1
   peerDependencies:
-    vega: ^5.21.0
+    vega: ^5.22.0
   bin:
     vl2pdf: bin/vl2pdf
     vl2png: bin/vl2png
     vl2svg: bin/vl2svg
     vl2vg: bin/vl2vg
-  checksum: fdb234f6d60b8b710e35a766df1249dd6eb41ca5af644d5d9bf7ba6d8876645b8035e23052b62ae084b0f0922d0395140688bf73244d91f5c649aa0e11e3b232
+  checksum: 8c2420cf0890cf060c051f1d10154e3dda4c4cef04205370a6932ff1d3326aeaaf80d2c4234ea5bdbf86f555208c40cbec9ee6b58c5bf550a1e965018efeb905
   languageName: node
   linkType: hard
 
@@ -20914,13 +20907,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs-parser@npm:^20.2.2":
-  version: 20.2.9
-  resolution: "yargs-parser@npm:20.2.9"
-  checksum: 8bb69015f2b0ff9e17b2c8e6bfe224ab463dd00ca211eece72a4cd8a906224d2703fb8a326d36fdd0e68701e201b2a60ed7cf81ce0fd9b3799f9fe7745977ae3
-  languageName: node
-  linkType: hard
-
 "yargs-parser@npm:^21.0.0":
   version: 21.0.1
   resolution: "yargs-parser@npm:21.0.1"
@@ -20928,7 +20914,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.0.0, yargs@npm:^17.3.1":
+"yargs@npm:^17.0.0, yargs@npm:^17.3.1, yargs@npm:~17.5.1":
   version: 17.5.1
   resolution: "yargs@npm:17.5.1"
   dependencies:
@@ -20940,21 +20926,6 @@ __metadata:
     y18n: ^5.0.5
     yargs-parser: ^21.0.0
   checksum: 00d58a2c052937fa044834313f07910fd0a115dec5ee35919e857eeee3736b21a4eafa8264535800ba8bac312991ce785ecb8a51f4d2cc8c4676d865af1cfbde
-  languageName: node
-  linkType: hard
-
-"yargs@npm:~17.2.1":
-  version: 17.2.1
-  resolution: "yargs@npm:17.2.1"
-  dependencies:
-    cliui: ^7.0.2
-    escalade: ^3.1.1
-    get-caller-file: ^2.0.5
-    require-directory: ^2.1.1
-    string-width: ^4.2.0
-    y18n: ^5.0.5
-    yargs-parser: ^20.2.2
-  checksum: 451aac46f82da776f436018feed0244bc0e7b4355f7e397bcb53d34c691b177c0d71db3dda9653760e1bc240254d8b763a252ff918ef9e235a8d202e2909c4eb
   languageName: node
   linkType: hard
 
