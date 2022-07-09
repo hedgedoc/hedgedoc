@@ -3356,16 +3356,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cli-color@npm:2.0.2":
-  version: 2.0.2
-  resolution: "cli-color@npm:2.0.2"
+"cli-color@npm:2.0.3":
+  version: 2.0.3
+  resolution: "cli-color@npm:2.0.3"
   dependencies:
     d: ^1.0.1
-    es5-ext: ^0.10.59
+    es5-ext: ^0.10.61
     es6-iterator: ^2.0.3
     memoizee: ^0.4.15
     timers-ext: ^0.1.7
-  checksum: a1d8cb11128bb02fbffbccc92eb137a1fc280a04c50f125a884c03bfef19b8a0832636d023abd0a1c326618673ee2555785d10261daf65b840ea514da81cfe8e
+  checksum: b1c5f3d0ec29cbe22be7a01d90bd0cfa080ffed6f1c321ea20ae3f10c6041f0e411e28ee2b98025945bee3548931deed1ae849b53c21b523ba74efef855cd73d
   languageName: node
   linkType: hard
 
@@ -4137,7 +4137,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es5-ext@npm:^0.10.35, es5-ext@npm:^0.10.46, es5-ext@npm:^0.10.50, es5-ext@npm:^0.10.53, es5-ext@npm:^0.10.59, es5-ext@npm:~0.10.14, es5-ext@npm:~0.10.2, es5-ext@npm:~0.10.46":
+"es5-ext@npm:^0.10.35, es5-ext@npm:^0.10.46, es5-ext@npm:^0.10.50, es5-ext@npm:^0.10.53, es5-ext@npm:^0.10.61, es5-ext@npm:~0.10.14, es5-ext@npm:~0.10.2, es5-ext@npm:~0.10.46":
   version: 0.10.61
   resolution: "es5-ext@npm:0.10.61"
   dependencies:
@@ -5291,7 +5291,7 @@ __metadata:
     bcrypt: 5.0.1
     class-transformer: 0.5.1
     class-validator: 0.13.2
-    cli-color: 2.0.2
+    cli-color: 2.0.3
     connect-typeorm: 1.1.4
     eslint: 8.18.0
     eslint-config-prettier: 8.5.0
