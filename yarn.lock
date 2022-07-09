@@ -7023,10 +7023,10 @@ minimist@^1.0.0, minimist@^1.2.0, minimist@^1.2.6:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.6.tgz#8637a5b759ea0d6e98702cfb3a9283323c93af44"
   integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
 
-minio@7.0.28:
-  version "7.0.28"
-  resolved "https://registry.yarnpkg.com/minio/-/minio-7.0.28.tgz#1f527ded42df457833e0b203ea51316d6d3d58a4"
-  integrity sha512-4Oua0R73oCxxmxhh2NiXDJo4Md159I/mdG8ybu6351leMQoB2Sy8S4HmgG6CxuPlEJ0h9M8/WyaI2CARDeeDTQ==
+minio@7.0.29:
+  version "7.0.29"
+  resolved "https://registry.yarnpkg.com/minio/-/minio-7.0.29.tgz#888bf939ea25b8aef369bc26d9ea3dd3285fba1c"
+  integrity sha512-0pgQVPq0ULqczn7FrYeLHO1hWaWn+roYzE63FVGNmOoqjte2jvjDfBJtT23437zlrDuL33gZOmGFdVfbvQGsPg==
   dependencies:
     async "^3.1.0"
     block-stream2 "^2.0.0"
