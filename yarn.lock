@@ -746,7 +746,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/core@npm:^28.1.1, @jest/core@npm:^28.1.2":
+"@jest/core@npm:^28.1.2":
   version: 28.1.2
   resolution: "@jest/core@npm:28.1.2"
   dependencies:
@@ -1743,13 +1743,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:28.1.3":
-  version: 28.1.3
-  resolution: "@types/jest@npm:28.1.3"
+"@types/jest@npm:28.1.4":
+  version: 28.1.4
+  resolution: "@types/jest@npm:28.1.4"
   dependencies:
     jest-matcher-utils: ^28.0.0
     pretty-format: ^28.0.0
-  checksum: 28141f2d5b3bafd063362de9790cb8f219488d9b0ad47524a84bef1142a4f0d9d35be0c56988d9f922205225cc83c986acd4be424bd8653b38dc27ab672455e2
+  checksum: 97e22c600397bb4f30e39b595f8285ae92e4eb29a1ef6d1689749e4a4da683d88ecfe717b64492f6adc4c17c1c989520c3546f938c84a7d435c6ac3acf1a2bdc
   languageName: node
   linkType: hard
 
@@ -5275,7 +5275,7 @@ __metadata:
     "@types/cron": 1.7.3
     "@types/express": 4.17.13
     "@types/express-session": 1.17.4
-    "@types/jest": 28.1.3
+    "@types/jest": 28.1.4
     "@types/minio": 7.0.13
     "@types/mysql": 2.15.21
     "@types/node": 16.11.41
@@ -5302,7 +5302,7 @@ __metadata:
     express-session: 1.17.3
     file-type: 16.5.3
     http-proxy-middleware: 2.0.6
-    jest: 28.1.1
+    jest: 28.1.2
     joi: 17.6.0
     ldapauth-fork: 5.0.5
     minio: 7.0.28
@@ -5322,7 +5322,7 @@ __metadata:
     rxjs: 7.5.5
     source-map-support: 0.5.21
     sqlite3: 5.0.8
-    supertest: 6.2.3
+    supertest: 6.2.4
     swagger-ui-express: 4.4.0
     ts-jest: 28.0.5
     ts-node: 10.8.2
@@ -5992,7 +5992,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-cli@npm:^28.1.1":
+"jest-cli@npm:^28.1.2":
   version: 28.1.2
   resolution: "jest-cli@npm:28.1.2"
   dependencies:
@@ -6386,14 +6386,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:28.1.1":
-  version: 28.1.1
-  resolution: "jest@npm:28.1.1"
+"jest@npm:28.1.2":
+  version: 28.1.2
+  resolution: "jest@npm:28.1.2"
   dependencies:
-    "@jest/core": ^28.1.1
+    "@jest/core": ^28.1.2
     "@jest/types": ^28.1.1
     import-local: ^3.0.2
-    jest-cli: ^28.1.1
+    jest-cli: ^28.1.2
   peerDependencies:
     node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
   peerDependenciesMeta:
@@ -6401,7 +6401,7 @@ __metadata:
       optional: true
   bin:
     jest: bin/jest.js
-  checksum: 398a143d9ef1a78e2ba516a09b6343cb926bf20e29ad400141dd3bd57e964195b82817a60eb8745ba9006fcd7c028ceda5108e3c426fa4e29877f28d87cf88a3
+  checksum: 8ad37088c42cd5a6decb54c61dfe6a45131a50dfe4c805aef1228cae4ca91b0fc7dfe2991ea771d88118151f5f1697d113b6f45c9b0d88b2ece2aac229e77150
   languageName: node
   linkType: hard
 
@@ -6910,7 +6910,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime@npm:^2.5.0":
+"mime@npm:2.6.0":
   version: 2.6.0
   resolution: "mime@npm:2.6.0"
   bin:
@@ -8828,9 +8828,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"superagent@npm:^7.1.3":
-  version: 7.1.5
-  resolution: "superagent@npm:7.1.5"
+"superagent@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "superagent@npm:8.0.0"
   dependencies:
     component-emitter: ^1.3.0
     cookiejar: ^2.1.3
@@ -8839,21 +8839,21 @@ __metadata:
     form-data: ^4.0.0
     formidable: ^2.0.1
     methods: ^1.1.2
-    mime: ^2.5.0
+    mime: 2.6.0
     qs: ^6.10.3
     readable-stream: ^3.6.0
     semver: ^7.3.7
-  checksum: 4782ca099b18a0933705f93ac4678290bcfcd5e57ca1286dd4f733c7fbb554ca0c7cc1c97261254dc29623ac258aa64fc40aaa18da960cbe759085efa3e4b8f6
+  checksum: 14343e59327eafd85fa230acb876017079d5efcecc72a56566abc0f965220bb460af2e070dddecd9e2856410b2d2b318d81d9cc1d342aa5922da93c29a295dd7
   languageName: node
   linkType: hard
 
-"supertest@npm:6.2.3":
-  version: 6.2.3
-  resolution: "supertest@npm:6.2.3"
+"supertest@npm:6.2.4":
+  version: 6.2.4
+  resolution: "supertest@npm:6.2.4"
   dependencies:
     methods: ^1.1.2
-    superagent: ^7.1.3
-  checksum: c1bed86c31723a4bc461153a58176fd80d675deb7d23ab7bd170213040673b35c38e3cbeab9a4eb8a325cf736176c08c6f6522e42f0293314f183e192a6681fa
+    superagent: ^8.0.0
+  checksum: f2ddc4f3ba467a5c4036dd4aad41351e4b60eb13c39ecf5233ccd2ebb425504073b2b7036c973a70c7047f5c6bc1b9fef096b7bbff114d357cbe80654441db23
   languageName: node
   linkType: hard
 
