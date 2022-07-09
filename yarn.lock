@@ -176,9 +176,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@azure/storage-blob@npm:12.10.0":
-  version: 12.10.0
-  resolution: "@azure/storage-blob@npm:12.10.0"
+"@azure/storage-blob@npm:12.11.0":
+  version: 12.11.0
+  resolution: "@azure/storage-blob@npm:12.11.0"
   dependencies:
     "@azure/abort-controller": ^1.0.0
     "@azure/core-http": ^2.0.0
@@ -188,7 +188,7 @@ __metadata:
     "@azure/logger": ^1.0.0
     events: ^3.0.0
     tslib: ^2.2.0
-  checksum: f910eed46a2f7a78379c1092a4b8a2179ee16b280129be88d43517b69b5b944cfe2fb18c16cf965263800d0917f7a7f8189e5e7d8523704565f107c829111a46
+  checksum: f43501d66f10fb3f8e63b0e1e6e90827240e0ff41d722181c52b3abb13fa1b1b89dd985d0b6e488f6ffeee030e4afc1b6a9b6e2f18078ff6472dc494c5b199cb
   languageName: node
   linkType: hard
 
@@ -5256,7 +5256,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hedgedoc@workspace:."
   dependencies:
-    "@azure/storage-blob": 12.10.0
+    "@azure/storage-blob": 12.11.0
     "@nestjs/cli": 8.2.8
     "@nestjs/common": 8.4.7
     "@nestjs/config": 2.1.0
