@@ -118,13 +118,13 @@
     "Powered by %s": "Λειτουργεί με %s",
     "Help us translating": "Βοηθήστε μας στη μετάφραση",
     "Join the community": "Μπείτε στην κοινότητα",
-    "Imprint": "Imprint",
+    "Imprint": "αποτύπωμα",
     "Freely - Anyone can edit": "Ελεύθερα - οποιοδήποτε μπορεί να κάνει αλλαγές",
     "Editable - Signed-in people can edit": "Επεξεργάσιμο - Εγγεγραμμένοι χρήστες μπορούν να κάνουν αλλαγές",
     "Limited - Signed-in people can edit (forbid guests)": "Περιορισμένο - Εγγεγραμμένοι χρήστες μπορούν να κάνουν αλλαγές (όχι επισκέπτες)",
     "Locked - Only owner can edit": "Κλειδωμένο - Τροποποιείται μόνο από τον ιδιοκτήτη",
     "Protected - Only owner can edit (forbid guests)": "Προστατευμένο - Τροποποιείται μόνο από τον ιδιοκτήτη (δεν επιτρέπει προσκεκλημένους)",
     "Private - Only owner can view & edit": "Προσωπικό - Διαβάζεται και τροποποιείται μόνο από τον ιδιοκτήτη",
-    "changed": "changed",
-    "created": "created"
+    "changed": "άλλαξε",
+    "created": "δημιουργήθηκε"
 }
