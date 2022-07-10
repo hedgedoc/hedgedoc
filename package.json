@@ -94,7 +94,7 @@
     "sequelize": "^5.21.1",
     "shortid": "2.2.16",
     "socket.io": "^2.1.1",
-    "sqlite3": "npm:@vscode/sqlite3@^5.0.7",
+    "sqlite3": "^5.0.8",
     "store": "^2.0.12",
     "string": "^3.3.3",
     "toobusy-js": "^0.5.1",
