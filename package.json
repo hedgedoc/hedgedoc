@@ -112,7 +112,7 @@
     "sanitize-filename": "1.6.3",
     "sass": "1.53.0",
     "sharp": "0.30.7",
-    "twemoji-colr-font": "0.0.4",
+    "twemoji-colr-font": "14.0.2",
     "uuid": "8.3.2",
     "vega": "5.22.1",
     "vega-embed": "6.21.0",

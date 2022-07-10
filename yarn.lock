@@ -2094,7 +2094,7 @@ __metadata:
     ts-loader: 9.3.1
     ts-mockery: 1.2.0
     ts-node: 10.8.2
-    twemoji-colr-font: 0.0.4
+    twemoji-colr-font: 14.0.2
     typescript: 4.7.4
     uuid: 8.3.2
     vega: 5.22.1
@@ -19465,10 +19465,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"twemoji-colr-font@npm:0.0.4":
-  version: 0.0.4
-  resolution: "twemoji-colr-font@npm:0.0.4"
-  checksum: 8da8f7baa91d7906cfb51b0103adf07009aaa1096301be8fd1045d60a43f24d7e4b2cb4501b4196d7048f5e3160fc2401329ef51549ee4d98a39ab677298d498
+"twemoji-colr-font@npm:14.0.2":
+  version: 14.0.2
+  resolution: "twemoji-colr-font@npm:14.0.2"
+  checksum: 447d8b87702bf7c3f33ae5fa1f497f058e0f7d18258ac1a7e2b405b5a3d30922009f8b4408fe05b15aafecb9582d3b3ece32ae8ecd9f8cb5bcfd8f38cefe77a5
   languageName: node
   linkType: hard
 
