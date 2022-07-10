@@ -1,12 +1,19 @@
 # Release Notes
 
-## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
+## <i class="fa fa-tag"></i> 1.9.4 <i class="fa fa-calendar-o"></i> 2022-07-10
+
+**Please note:** This release dropped support for Node 12, which is end-of-life since April 2022.
+You now need at least Node 14.13.1 or Node 16 to run HedgeDoc. We don't support more recent versions of Node.
 
 ### Enhancements
 - Remove unexpected shell call during migrations
+- More S3 config options: upload folder & public ACL (thanks to [@lautaroalvarez](https://github.com/lautaroalvarez))
 
-This release drops support for Node.js 12, as it has reached end-of-life.
-
+### Contributors
+- Al_x (translator)
+- Emmanuel Courreges (translator)
+- paranic (translator)
+- Quentin PAGÈS (translator)
 
 ## <i class="fa fa-tag"></i> 1.9.3 <i class="fa fa-calendar-o"></i> 2022-04-10
 
