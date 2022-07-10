@@ -41,7 +41,7 @@
    ```
    This way it's easier to see warnings or errors that might occur.  
    <small>You can leave out `NODE_ENV=production` for development.</small>  
-7. If you use the example config, HedgeDoc should now be available at [http://127.0.0.1:3000](http://127.0.0.1:3000).
+7. If you use the example config, HedgeDoc should now be available at [http://localhost:3000](http://localhost:3000).
 8. Run the server as you like (node, forever, pm2, systemd, Init-Scripts).  
    See [below](#systemd-unit-example) for an example using systemd.
 
