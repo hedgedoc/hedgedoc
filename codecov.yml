@@ -1,6 +1,9 @@
 # SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 # SPDX-License-Identifier: CC0-1.0
 
+ignore:
+  - "src/utils/test-utils"
+
 codecov:
   notify:
     # We currently have integration tests and E2E tests. Codecov should wait until both are done.
