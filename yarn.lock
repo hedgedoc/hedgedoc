@@ -1698,21 +1698,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express-session@npm:1.17.5":
+"@types/express-session@npm:1.17.5, @types/express-session@npm:^1.15.5":
   version: 1.17.5
   resolution: "@types/express-session@npm:1.17.5"
   dependencies:
     "@types/express": "*"
   checksum: f6995f7720a18546bcb10cc707cf8c9c92455eb4319c0c50c57e9b9b10ed20dc379d74d5e4c3323fe4e924238b75e13c97822c9d81a80fa064ddc71654c1059d
-  languageName: node
-  linkType: hard
-
-"@types/express-session@npm:^1.15.5":
-  version: 1.17.4
-  resolution: "@types/express-session@npm:1.17.4"
-  dependencies:
-    "@types/express": "*"
-  checksum: 3047c30e3eafec89a670445ca7162ff595e25d8baa9490a2e1a0dfcb41eb09d0fb680515b8ba9ab36abfe7303438833ef90f6cbbce319b5be0d80b09ae4f795f
   languageName: node
   linkType: hard
 
