@@ -4,7 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ISession } from 'connect-typeorm';
-import { Column, Entity, Index, ManyToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  DeleteDateColumn,
+  Entity,
+  Index,
+  ManyToOne,
+  PrimaryColumn,
+} from 'typeorm';
 
 import { Author } from '../authors/author.entity';
 
@@ -19,6 +26,9 @@ export class Session implements ISession {
 
   @Column('text')
   public json = '';
+
+  @DeleteDateColumn()
+  public destroyedAt?: Date;
 
   @ManyToOne(() => Author, (author) => author.sessions)
   author: Promise<Author>;
