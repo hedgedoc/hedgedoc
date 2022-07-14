@@ -5,7 +5,7 @@
  */
 
 import { DateTime } from 'luxon'
-import React, { useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { ListGroup } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
@@ -20,22 +20,19 @@ import { WaitSpinner } from '../../../common/wait-spinner/wait-spinner'
 
 export interface RevisionListEntryProps {
   active: boolean
-  onSelect: (selectedId: number) => void
+  onSelect: () => void
   revision: RevisionMetadata
 }
 
 /**
  * Renders an entry in the revision list.
+ *
  * @param active true if this is the currently selected revision entry.
  * @param onSelect Callback that is fired  when this revision entry is selected.
  * @param revision The metadata for this revision entry.
  */
 export const RevisionListEntry: React.FC<RevisionListEntryProps> = ({ active, onSelect, revision }) => {
   useTranslation()
-
-  const onSelectRevision = useCallback(() => {
-    onSelect(revision.id)
-  }, [revision, onSelect])
 
   const revisionCreationTime = useMemo(() => {
     return DateTime.fromISO(revision.createdAt).toFormat('DDDD T')
@@ -55,9 +52,8 @@ export const RevisionListEntry: React.FC<RevisionListEntryProps> = ({ active, on
 
   return (
     <ListGroup.Item
-      as='li'
       active={active}
-      onClick={onSelectRevision}
+      onClick={onSelect}
       className={`user-select-none ${styles['revision-item']} d-flex flex-column`}>
       <span>
         <ForkAwesomeIcon icon={'clock-o'} className='mx-2' />
