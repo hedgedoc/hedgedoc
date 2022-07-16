@@ -1373,7 +1373,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:>=7.11.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.8, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.8, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.18.6
   resolution: "@babel/runtime@npm:7.18.6"
   dependencies:
@@ -2017,7 +2017,7 @@ __metadata:
     "@types/uuid": 8.3.4
     "@typescript-eslint/eslint-plugin": 5.30.6
     "@typescript-eslint/parser": 5.30.6
-    "@uiw/react-codemirror": 4.11.0
+    "@uiw/react-codemirror": 4.11.4
     abcjs: 6.0.3
     bootstrap: 4.6.1
     copy-webpack-plugin: 11.0.0
@@ -5246,18 +5246,45 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uiw/react-codemirror@npm:4.11.0":
-  version: 4.11.0
-  resolution: "@uiw/react-codemirror@npm:4.11.0"
+"@uiw/codemirror-extensions-basic-setup@npm:4.11.4":
+  version: 4.11.4
+  resolution: "@uiw/codemirror-extensions-basic-setup@npm:4.11.4"
   dependencies:
-    "@babel/runtime": ">=7.11.0"
+    "@codemirror/autocomplete": ^6.0.0
+    "@codemirror/commands": ^6.0.0
+    "@codemirror/language": ^6.0.0
+    "@codemirror/lint": ^6.0.0
+    "@codemirror/search": ^6.0.0
+    "@codemirror/state": ^6.0.0
+    "@codemirror/view": ^6.0.0
+  peerDependencies:
+    "@codemirror/autocomplete": ">=6.0.0"
+    "@codemirror/commands": ">=6.0.0"
+    "@codemirror/language": ">=6.0.0"
+    "@codemirror/lint": ">=6.0.0"
+    "@codemirror/search": ">=6.0.0"
+    "@codemirror/state": ">=6.0.0"
+    "@codemirror/view": ">=6.0.0"
+  checksum: c66398c31a13d7e44a8cdd4ffc2eac0ef641278e49bb6df4b2cffd03a0030854c2db80ca617087cb29a2ea68cb26fddff7872ff15c5e0d37249a8ef48ca7a0e0
+  languageName: node
+  linkType: hard
+
+"@uiw/react-codemirror@npm:4.11.4":
+  version: 4.11.4
+  resolution: "@uiw/react-codemirror@npm:4.11.4"
+  dependencies:
+    "@babel/runtime": ^7.18.6
     "@codemirror/theme-one-dark": ^6.0.0
+    "@uiw/codemirror-extensions-basic-setup": 4.11.4
     codemirror: ^6.0.0
   peerDependencies:
     "@babel/runtime": ">=7.11.0"
+    "@codemirror/theme-one-dark": ">=6.0.0"
+    "@codemirror/view": ">=6.0.0"
+    codemirror: ">=6.0.0"
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 6a8d1c2e387df29f33b988d4f13dc3e43912e73f5892a5339ddda3d4c301abcd3d056732deb0cac737823d5ecf6b4d2e3cd6b752a1e16785115d94ad4368aa00
+  checksum: 884fd978a33d40c8e01f9f598e452945a7741ce96e99a081761eb0f8be6d23f840b25eda7fc9b0e5bddb393dad65bf83d378c5c1a8a343fadbb75f804bbac6f0
   languageName: node
   linkType: hard
 
