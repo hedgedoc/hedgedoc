@@ -5389,7 +5389,7 @@ __metadata:
     source-map-support: 0.5.21
     sqlite3: 5.0.9
     supertest: 6.2.4
-    ts-jest: 28.0.6
+    ts-jest: 28.0.7
     ts-mockery: 1.2.0
     ts-node: 10.8.2
     tsconfig-paths: 4.0.0
@@ -9284,9 +9284,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:28.0.6":
-  version: 28.0.6
-  resolution: "ts-jest@npm:28.0.6"
+"ts-jest@npm:28.0.7":
+  version: 28.0.7
+  resolution: "ts-jest@npm:28.0.7"
   dependencies:
     bs-logger: 0.x
     fast-json-stable-stringify: 2.x
@@ -9305,13 +9305,15 @@ __metadata:
   peerDependenciesMeta:
     "@babel/core":
       optional: true
+    "@jest/types":
+      optional: true
     babel-jest:
       optional: true
     esbuild:
       optional: true
   bin:
     ts-jest: cli.js
-  checksum: 76f3c7a5a81bc757eb38f4d3be7c255e4fc6107abd8da84134908c867b5a9505af1d8591c77115d719176a52856e4adf04278df384e0a113a7ce60fed8be1f41
+  checksum: be6ad6382e3b2e7b0c45d06616a4a02aeb6815bad2026fe8eeb4e0941205faa50ac3f5930adb7ba2fda5fea6a5739bfa507e2eac8764d2c729ddc8010681707a
   languageName: node
   linkType: hard
 
