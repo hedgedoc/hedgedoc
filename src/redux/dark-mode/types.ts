@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,13 +10,14 @@ export enum DarkModeConfigActionType {
   SET_DARK_MODE = 'dark-mode/set'
 }
 
+export enum DarkModePreference {
+  DARK,
+  LIGHT,
+  AUTO
+}
+
 export interface DarkModeConfig {
-  darkMode: boolean
+  darkModePreference: DarkModePreference
 }
 
-export type DarkModeConfigActions = SetDarkModeConfigAction
-
-export interface SetDarkModeConfigAction extends Action<DarkModeConfigActionType> {
-  type: DarkModeConfigActionType.SET_DARK_MODE
-  darkMode: boolean
-}
+export type DarkModeConfigAction = Action<DarkModeConfigActionType.SET_DARK_MODE> & DarkModeConfig

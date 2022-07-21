@@ -14,6 +14,7 @@ import { NewUserNoteButton } from '../new-user-note-button'
 import { SignInButton } from '../sign-in-button'
 import { UserDropdown } from '../user-dropdown'
 import { cypressId } from '../../../../utils/cypress-attribute'
+import { SettingsButton } from '../../../layout/settings-dialog/settings-button'
 
 /**
  * Renders a header bar for the intro and history page.
@@ -33,6 +34,7 @@ const HeaderBar: React.FC = () => {
         </HeaderNavLink>
       </div>
       <div className='d-inline-flex'>
+        <SettingsButton className={'p-1 mx-2'} variant={'outline-light'} />
         {!userExists ? (
           <Fragment>
             <span className={'mx-1 d-flex'}>

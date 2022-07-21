@@ -11,7 +11,7 @@ import type { Extension } from '@codemirror/state'
 import type { EditorView } from '@codemirror/view'
 import { optionalAppExtensions } from '../../../../extensions/extra-integrations/optional-app-extensions'
 import { FrontmatterLinter } from './frontmatter-linter'
-import { useIsDarkModeActivated } from '../../../../hooks/common/use-is-dark-mode-activated'
+import { useDarkModeState } from '../../../../hooks/common/use-dark-mode-state'
 
 /**
  * The Linter interface.
@@ -37,7 +37,7 @@ const createLinterExtension = () =>
  * @return The build codemirror linter extension
  */
 export const useLinter = (): Extension => {
-  const darkModeActivated = useIsDarkModeActivated()
+  const darkModeActivated = useDarkModeState()
 
   return useMemo(() => (darkModeActivated ? createLinterExtension() : createLinterExtension()), [darkModeActivated])
 }

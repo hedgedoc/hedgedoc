@@ -5,6 +5,7 @@
  */
 import type { ScrollState } from '../../editor-page/synced-scroll/scroll-props'
 import type { SlideOptions } from '../../../redux/note-details/types/slide-show-options'
+import type { DarkModePreference } from '../../../redux/dark-mode/types'
 
 export enum CommunicationMessageType {
   SET_MARKDOWN_CONTENT = 'SET_MARKDOWN_CONTENT',
@@ -29,7 +30,7 @@ export interface NoPayloadMessage<TYPE extends CommunicationMessageType> {
 
 export interface SetDarkModeMessage {
   type: CommunicationMessageType.SET_DARKMODE
-  activated: boolean
+  preference: DarkModePreference
 }
 
 export interface ExtensionEvent {

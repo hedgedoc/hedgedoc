@@ -7,7 +7,7 @@
 import { Picker } from 'emoji-picker-element'
 import type { CustomEmoji, EmojiClickEvent, EmojiClickEventDetail } from 'emoji-picker-element/shared'
 import React, { useEffect, useRef } from 'react'
-import { useIsDarkModeActivated } from '../../../../../hooks/common/use-is-dark-mode-activated'
+import { useDarkModeState } from '../../../../../hooks/common/use-dark-mode-state'
 import styles from './emoji-picker.module.scss'
 import forkawesomeIcon from './forkawesome.png'
 import { ForkAwesomeIcons } from '../../../../common/fork-awesome/fork-awesome-icons'
@@ -49,7 +49,7 @@ export interface EmojiPickerProps extends PopoverProps {
  */
 export const EmojiPickerPopover = React.forwardRef<HTMLDivElement, EmojiPickerProps>(
   ({ onEmojiSelected, ...props }, ref) => {
-    const darkModeEnabled = useIsDarkModeActivated()
+    const darkModeEnabled = useDarkModeState()
     const pickerContainerRef = useRef<HTMLDivElement>(null)
     const pickerRef = useRef<Picker>()
 

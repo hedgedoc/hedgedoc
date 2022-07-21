@@ -8,7 +8,7 @@ import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 import { useAsync } from 'react-use'
 import { getRevision } from '../../../../api/revisions'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { useIsDarkModeActivated } from '../../../../hooks/common/use-is-dark-mode-activated'
+import { useDarkModeState } from '../../../../hooks/common/use-dark-mode-state'
 import { AsyncLoadingBoundary } from '../../../common/async-loading-boundary'
 import { applyPatch, parsePatch } from 'diff'
 import { invertUnifiedPatch } from './invert-unified-patch'
@@ -26,7 +26,7 @@ export interface RevisionViewerProps {
  */
 export const RevisionViewer: React.FC<RevisionViewerProps> = ({ selectedRevisionId }) => {
   const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
-  const darkModeEnabled = useIsDarkModeActivated()
+  const darkModeEnabled = useDarkModeState()
 
   const { value, error, loading } = useAsync(async () => {
     if (selectedRevisionId === undefined) {

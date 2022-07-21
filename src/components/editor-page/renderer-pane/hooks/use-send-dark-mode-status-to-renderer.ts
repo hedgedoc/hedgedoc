@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { useIsDarkModeActivated } from '../../../../hooks/common/use-is-dark-mode-activated'
 import { useMemo } from 'react'
 import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
 import { useSendToRenderer } from '../../../render-page/window-post-message-communicator/hooks/use-send-to-renderer'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 /**
  * Sends the current dark mode setting to the renderer.
@@ -16,15 +16,15 @@ import { useSendToRenderer } from '../../../render-page/window-post-message-comm
  * @param rendererReady Defines if the target renderer is ready
  */
 export const useSendDarkModeStatusToRenderer = (forcedDarkMode: boolean | undefined, rendererReady: boolean): void => {
-  const savedDarkMode = useIsDarkModeActivated()
+  const darkModePreference = useApplicationState((state) => state.darkMode.darkModePreference)
 
   useSendToRenderer(
     useMemo(
       () => ({
         type: CommunicationMessageType.SET_DARKMODE,
-        activated: forcedDarkMode ?? savedDarkMode
+        preference: darkModePreference
       }),
-      [forcedDarkMode, savedDarkMode]
+      [darkModePreference]
     ),
     rendererReady
   )

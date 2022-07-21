@@ -8,8 +8,8 @@ import { Settings } from 'luxon'
 import React, { useCallback, useMemo } from 'react'
 import { Form } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import { Logger } from '../../../utils/logger'
-import { cypressId } from '../../../utils/cypress-attribute'
+import { Logger } from '../../../../utils/logger'
+import { cypressId } from '../../../../utils/cypress-attribute'
 
 const log = new Logger('LanguagePicker')
 const languages = {
@@ -88,8 +88,7 @@ export const LanguagePicker: React.FC = () => {
   return (
     <Form.Select
       as='select'
-      size='sm'
-      className='mb-2 mx-auto w-auto'
+      className='w-auto'
       value={languageCode}
       onChange={onChangeLang}
       {...cypressId('language-picker')}>

@@ -9,12 +9,18 @@ import { FlowChart } from './flowchart'
 import type * as flowchartJsModule from 'flowchart.js'
 import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
 import { StoreProvider } from '../../../redux/store-provider'
+import * as useMediaQuery from '@restart/hooks/useMediaQuery'
+
+jest.mock('@restart/hooks/useMediaQuery')
 
 describe('Flowchart', () => {
   const successText = 'Flowchart rendering succeeded!'
   const expectedValidFlowchartCode = 'test code'
 
-  beforeAll(() => mockI18n())
+  beforeAll(async () => {
+    jest.spyOn(useMediaQuery, 'default').mockImplementation(() => false)
+    await mockI18n()
+  })
 
   afterEach(() => {
     jest.resetModules()

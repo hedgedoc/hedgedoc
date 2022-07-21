@@ -13,7 +13,7 @@ import type { CodeProps } from '../../../components/markdown-renderer/replace-co
 import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary'
 import { ShowIf } from '../../../components/common/show-if/show-if'
 import { testId } from '../../../utils/test-id'
-import { useIsDarkModeActivated } from '../../../hooks/common/use-is-dark-mode-activated'
+import { useDarkModeState } from '../../../hooks/common/use-dark-mode-state'
 import { Logger } from '../../../utils/logger'
 
 const log = new Logger('FlowChart')
@@ -27,7 +27,7 @@ const log = new Logger('FlowChart')
 export const FlowChart: React.FC<CodeProps> = ({ code }) => {
   const diagramRef = useRef<HTMLDivElement>(null)
   const [syntaxError, setSyntaxError] = useState(false)
-  const darkModeActivated = useIsDarkModeActivated()
+  const darkModeActivated = useDarkModeState()
 
   useTranslation()
 

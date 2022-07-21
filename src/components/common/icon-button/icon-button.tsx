@@ -11,9 +11,10 @@ import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
 import type { IconName } from '../fork-awesome/types'
 import { ShowIf } from '../show-if/show-if'
 import styles from './icon-button.module.scss'
+import type { PropsWithDataTestId } from '../../../utils/test-id'
 import { testId } from '../../../utils/test-id'
 
-export interface IconButtonProps extends ButtonProps {
+export interface IconButtonProps extends ButtonProps, PropsWithDataTestId {
   icon: IconName
   onClick?: () => void
   border?: boolean

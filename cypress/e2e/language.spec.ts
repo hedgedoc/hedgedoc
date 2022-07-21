@@ -9,6 +9,7 @@ import { languages } from '../fixtures/languages'
 describe('Languages', () => {
   beforeEach(() => {
     cy.visitHome()
+    cy.getByCypressId('settingsButton').click()
   })
 
   it('all languages are available', () => {

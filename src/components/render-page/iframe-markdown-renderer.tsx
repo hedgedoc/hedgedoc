@@ -8,7 +8,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ScrollState } from '../editor-page/synced-scroll/scroll-props'
 import type { BaseConfiguration } from './window-post-message-communicator/rendering-message'
 import { CommunicationMessageType, RendererType } from './window-post-message-communicator/rendering-message'
-import { setDarkMode } from '../../redux/dark-mode/methods'
+import { setDarkModePreference } from '../../redux/dark-mode/methods'
 import { MarkdownDocument } from './markdown-document'
 import { countWords } from './word-counter'
 import { useRendererToEditorCommunicator } from '../editor-page/render-context/renderer-to-editor-communicator-context-provider'
@@ -55,7 +55,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
 
   useRendererReceiveHandler(
     CommunicationMessageType.SET_DARKMODE,
-    useCallback((values) => setDarkMode(values.activated), [])
+    useCallback((values) => setDarkModePreference(values.preference), [])
   )
 
   useRendererReceiveHandler(

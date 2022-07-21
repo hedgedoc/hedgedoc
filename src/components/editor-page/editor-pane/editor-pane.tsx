@@ -40,7 +40,7 @@ import { lintGutter } from '@codemirror/lint'
 import { useLinter } from './linter/linter'
 import { useOnNoteDeleted } from './hooks/yjs/use-on-note-deleted'
 import { findLanguageByCodeBlockName } from '../../markdown-renderer/extensions/base/code-block-markdown-extension/find-language-by-code-block-name'
-import { useIsDarkModeActivated } from '../../../hooks/common/use-is-dark-mode-activated'
+import { useDarkModeState } from '../../../hooks/common/use-dark-mode-state'
 
 /**
  * Renders the text editor pane of the editor.
@@ -128,7 +128,7 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
 
   const { t } = useTranslation()
 
-  const darkModeActivated = useIsDarkModeActivated()
+  const darkModeActivated = useDarkModeState()
 
   return (
     <div

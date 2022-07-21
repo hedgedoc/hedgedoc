@@ -9,15 +9,14 @@ import { Nav, Navbar } from 'react-bootstrap'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SignInButton } from '../../landing-layout/navigation/sign-in-button'
 import { UserDropdown } from '../../landing-layout/navigation/user-dropdown'
-import { DarkModeButton } from './dark-mode-button'
 import { HelpButton } from './help-button/help-button'
 import { NavbarBranding } from './navbar-branding'
-import { SyncScrollButtons } from './sync-scroll-buttons/sync-scroll-buttons'
 import { SlideModeButton } from './slide-mode-button'
 import { ReadOnlyModeButton } from './read-only-mode-button'
 import { NewNoteButton } from './new-note-button'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { NoteType } from '../../../redux/note-details/types/note-details'
+import { SettingsButton } from '../../layout/settings-dialog/settings-button'
 
 export enum AppBarMode {
   BASIC,
@@ -42,10 +41,6 @@ export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
       <Nav className='me-auto d-flex align-items-center'>
         <NavbarBranding />
         <ShowIf condition={mode === AppBarMode.EDITOR}>
-          <SyncScrollButtons />
-        </ShowIf>
-        <DarkModeButton />
-        <ShowIf condition={mode === AppBarMode.EDITOR}>
           <ShowIf condition={noteFrontmatter.type === NoteType.SLIDE}>
             <SlideModeButton />
           </ShowIf>
@@ -56,6 +51,7 @@ export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
         </ShowIf>
       </Nav>
       <Nav className='d-flex align-items-center text-secondary justify-content-end'>
+        <SettingsButton className={'p-1 mx-2'} variant={'outline-dark'} />
         <NewNoteButton />
         <ShowIf condition={!userExists}>
           <SignInButton size={'sm'} />

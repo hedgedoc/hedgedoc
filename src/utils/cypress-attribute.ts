@@ -18,18 +18,14 @@ export interface PropsWithDataCypressId {
  * @param identifier The identifier that is used to find the element
  * @return An object if in test mode, {@link undefined} otherwise.
  */
-export const cypressId = (
-  identifier: string | undefined | PropsWithDataCypressId
-): Record<'data-cypress-id', string> | undefined => {
+export const cypressId = (identifier: string | undefined | PropsWithDataCypressId): PropsWithDataCypressId => {
   if (!isTestMode || !identifier) {
-    return
+    return {}
   }
 
   const attributeContent = typeof identifier === 'string' ? identifier : identifier['data-cypress-id']
 
-  if (attributeContent !== undefined) {
-    return { 'data-cypress-id': attributeContent }
-  }
+  return attributeContent !== undefined ? { 'data-cypress-id': attributeContent } : {}
 }
 
 /**

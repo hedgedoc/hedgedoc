@@ -7,7 +7,7 @@
 import React from 'react'
 import { Navbar } from 'react-bootstrap'
 import Link from 'next/link'
-import { useIsDarkModeActivated } from '../../../hooks/common/use-is-dark-mode-activated'
+import { useDarkModeState } from '../../../hooks/common/use-dark-mode-state'
 import { Branding } from '../../common/branding/branding'
 import {
   HedgeDocLogoSize,
@@ -19,7 +19,7 @@ import {
  * Renders the branding for the {@link AppBar}
  */
 export const NavbarBranding: React.FC = () => {
-  const darkModeActivated = useIsDarkModeActivated()
+  const darkModeActivated = useDarkModeState()
 
   return (
     <Navbar.Brand>

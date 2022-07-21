@@ -307,16 +307,8 @@
       "view": "View",
       "both": "Both"
     },
-    "darkMode": {
-      "switchToDark": "Switch to Dark Mode",
-      "switchToLight": "Switch to Light Mode"
-    },
     "appBar": {
-      "new": "New",
-      "syncScroll": {
-        "disable": "Disable sync scroll",
-        "enable": "Enable sync scroll"
-      }
+      "new": "New"
     },
     "editorToolbar": {
       "bold": "Bold",
@@ -516,6 +508,8 @@
   "common": {
     "yes": "Yes",
     "no": "No",
+    "on": "On",
+    "off": "Off",
     "import": "Import",
     "export": "Export",
     "refresh": "Refresh",
@@ -590,6 +584,47 @@
     "noteDeleted": {
       "title": "Note '{{noteTitle}}' deleted",
       "text": "You were redirected to the history page, because the note you just edited was deleted."
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "editor": {
+      "label": "Editor",
+      "ligatures": {
+        "label": "Ligatures",
+        "help": "(De)Activates support for ligatures in the editor."
+      },
+      "smartPaste": {
+        "label": "Smart Paste",
+        "help": "Smart paste detects common formats (like tables) when pasting content into the editor and formats them as markdown."
+      },
+      "syncScroll": {
+        "label": "Sync Scrolling",
+        "help": "Synchronizes the scroll state of editor and rendering view."
+      }
+    },
+    "global": {
+      "label": "Global",
+      "darkMode": {
+        "label": "Dark mode",
+        "help": "Enforces the (de)activation of the dark mode for the app or lets the browser decide.",
+        "dark": {
+          "tooltip": "Switch to dark mode",
+          "label": "Dark"
+        },
+        "light": {
+          "tooltip": "Switch to light mode",
+          "label": "Light"
+        },
+        "browser": {
+          "tooltip": "Let browser decide",
+          "label": "Auto"
+        }
+      },
+      "language": {
+        "label": "Language",
+        "help": "The primary user interface language"
+      }
     }
   }
 }
