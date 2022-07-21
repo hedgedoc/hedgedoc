@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,7 +13,12 @@ import type { CodeProps } from '../../replace-components/code-block-component-re
 import { useRouter } from 'next/router'
 
 const log = new Logger('GraphvizFrame')
-
+/**
+ * Renders a graphviz diagram.
+ *
+ * @param code The code for the diagram
+ * @see https://graphviz.org/
+ */
 export const GraphvizFrame: React.FC<CodeProps> = ({ code }) => {
   const container = useRef<HTMLDivElement>(null)
   const [error, setError] = useState<string>()

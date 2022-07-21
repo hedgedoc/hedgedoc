@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,13 @@ export interface JumpAnchorProps extends AllHTMLAttributes<HTMLAnchorElement> {
   jumpTargetId: string
 }
 
+/**
+ * Renders jump anchors.
+ *
+ * @param jumpTargetId The target id
+ * @param children Children rendered into the link.
+ * @param props Additional props directly given to the link
+ */
 export const JumpAnchor: React.FC<JumpAnchorProps> = ({ jumpTargetId, children, ...props }) => {
   const jumpToTargetId = useCallback(
     (event: React.MouseEvent<HTMLElement, MouseEvent>): void => {

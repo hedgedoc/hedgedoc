@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,6 +16,15 @@ export interface ImageLightboxModalProps extends ModalVisibilityProps {
   title?: string
 }
 
+/**
+ * Renders a lightbox modal for images.
+ *
+ * @param show If the modal should be shown
+ * @param onHide The callback to hide the modal
+ * @param src The image source
+ * @param alt The alt text of the image
+ * @param title The title of the image
+ */
 export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({ show, onHide, src, alt, title }) => {
   return (
     <CommonModal

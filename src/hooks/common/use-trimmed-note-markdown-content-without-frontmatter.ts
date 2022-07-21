@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,8 @@ import { useApplicationState } from './use-application-state'
 
 /**
  * Returns the markdown content from the global application state trimmed to the maximal note length and without the frontmatter lines.
+ *
+ * @return The array of markdown content lines
  */
 export const useTrimmedNoteMarkdownContentWithoutFrontmatter = (): string[] => {
   const maxLength = useApplicationState((state) => state.config.maxDocumentLength)

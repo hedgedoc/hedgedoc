@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -18,7 +18,9 @@ import { getOneClickProviderMetadata } from '../../login-page/auth/utils/get-one
 export type SignInButtonProps = Omit<ButtonProps, 'href'>
 
 /**
- * Renders a sign-in button if auth providers are defined. It links to either the login page or if only a single one-click provider is configured, to this one.
+ * Renders a sign-in button if auth providers are defined.
+ * It links to either the login page or if only a single one-click provider is configured, to that one.
+ *
  * @param variant The style variant as inferred from the common button component.
  * @param props Further props inferred from the common button component.
  */

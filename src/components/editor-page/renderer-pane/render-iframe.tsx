@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -36,6 +36,21 @@ export interface RenderIframeProps extends RendererProps {
 
 const log = new Logger('RenderIframe')
 
+/**
+ * Renders the iframe for the HTML-rendering of the markdown content.
+ * The iframe is enhanced by the {@link useEditorToRendererCommunicator iframe communicator} which is used for
+ * passing data from the parent frame into the iframe as well as receiving status messages and data from the iframe.
+ *
+ * @param markdownContentLines Array of lines of the markdown content
+ * @param onTaskCheckedChange Callback that is fired when a task-list item in the iframe is checked
+ * @param scrollState The current {@link ScrollState}
+ * @param onFirstHeadingChange Callback that is fired when the first heading of the note changes
+ * @param onScroll Callback that is fired when the user scrolls in the iframe
+ * @param onMakeScrollSource Callback that is fired when the renderer requests to be set as the current scroll source
+ * @param frameClasses CSS classes that should be applied to the iframe
+ * @param rendererType The {@link RendererType type} of the renderer to use.
+ * @param forcedDarkMode If set, the dark mode will be set to the given value. Otherwise, the dark mode won't be changed.
+ */
 export const RenderIframe: React.FC<RenderIframeProps> = ({
   markdownContentLines,
   onTaskCheckedChange,

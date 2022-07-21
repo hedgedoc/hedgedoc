@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,9 @@ import {
   HedgeDocLogoWithText
 } from '../../common/hedge-doc-logo/hedge-doc-logo-with-text'
 
+/**
+ * Renders the branding for the {@link AppBar}
+ */
 export const NavbarBranding: React.FC = () => {
   const darkModeActivated = useIsDarkModeActivated()
 

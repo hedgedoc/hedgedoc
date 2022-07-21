@@ -7,6 +7,9 @@
 import { backendUrl } from './backend-url'
 import { isMockMode } from './test-modes'
 
+/**
+ * Generates the url to the assets.
+ */
 export const customizeAssetsUrl = isMockMode
   ? `/mock-public/`
   : process.env.NEXT_PUBLIC_CUSTOMIZE_ASSETS_URL || `${backendUrl}public/`

@@ -22,10 +22,10 @@ export const buildStateFromUpdateCursorPosition = (state: NoteDetails, selection
 }
 
 /**
- * Checks if the from cursor position in the given selection is after the to cursor position.
+ * Checks if the from-cursor position in the given selection is after the to -cursor position.
  *
  * @param selection The cursor selection to check
- * @return {@code true} if the from cursor position is after the to position
+ * @return {@link true} if the from-cursor position is after the to position
  */
 const isFromAfterTo = (selection: CursorSelection): boolean => {
   if (selection.to === undefined) {

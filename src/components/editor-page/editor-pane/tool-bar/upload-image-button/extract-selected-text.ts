@@ -10,7 +10,7 @@ import { Optional } from '@mrdrogdrog/optional'
  * Extracts the currently selected text from the given CodeMirror state.
  *
  * @param state The CodeMirror state that provides the content and the selection
- * @return The selected text or {@code undefined} if no text was selected
+ * @return The selected text or {@link undefined} if no text was selected
  */
 export const extractSelectedText = (state: EditorState): string | undefined => {
   return Optional.ofNullable(state.selection.main)

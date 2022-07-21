@@ -39,7 +39,7 @@ export class BlockquoteExtraTagReplacer extends ComponentReplacer {
    * Extracts a fork awesome icon name from the node and builds a {@link ForkAwesomeIcon fork awesome icon react element}.
    *
    * @param node The node that holds the "data-icon" attribute.
-   * @return the {@link ForkAwesomeIcon fork awesome icon react element} or {@code undefined} if no icon name was found.
+   * @return the {@link ForkAwesomeIcon fork awesome icon react element} or {@link undefined} if no icon name was found.
    */
   private buildIconElement(node: Element): ReactElement<ForkAwesomeIconProps> | undefined {
     return Optional.ofNullable(node.attribs['data-icon'] as IconName)

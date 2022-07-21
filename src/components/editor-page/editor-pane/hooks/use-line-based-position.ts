@@ -22,7 +22,7 @@ const calculateLineBasedPosition = (absolutePosition: number, lineStartIndexes: 
 }
 
 /**
- * Returns the line+character based position of the to cursor, if available.
+ * Returns the line+character based position of the to-cursor, if available.
  */
 export const useLineBasedToPosition = (): LineBasedPosition | undefined => {
   const lineStartIndexes = useApplicationState((state) => state.noteDetails.markdownContent.lineStartIndexes)
@@ -38,7 +38,7 @@ export const useLineBasedToPosition = (): LineBasedPosition | undefined => {
 }
 
 /**
- * Returns the line+character based position of the from cursor.
+ * Returns the line+character based position of the from-cursor.
  */
 export const useLineBasedFromPosition = (): LineBasedPosition => {
   const lineStartIndexes = useApplicationState((state) => state.noteDetails.markdownContent.lineStartIndexes)

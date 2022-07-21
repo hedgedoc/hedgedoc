@@ -25,6 +25,7 @@ const logger = new Logger('GetOneClickProviderMetadata')
 
 /**
  * Returns metadata about the given one-click provider for rendering a relevant login button.
+ *
  * @param provider The provider for which to retrieve the metadata.
  * @return Name, icon, URL and CSS class of the given provider for rendering a login button.
  */

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,7 +16,7 @@ export interface PropsWithDataCypressId {
  * This works only if the runtime is built in test mode.
  *
  * @param identifier The identifier that is used to find the element
- * @return An object if in test mode, undefined otherwise.
+ * @return An object if in test mode, {@link undefined} otherwise.
  */
 export const cypressId = (
   identifier: string | undefined | PropsWithDataCypressId

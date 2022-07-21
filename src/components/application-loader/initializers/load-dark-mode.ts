@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -31,7 +31,8 @@ export const loadDarkMode = async (): Promise<void> => {
 /**
  * Tries to read the saved dark mode settings from the browser local storage.
  *
- * @return {@code true} if the local storage has saved that the user prefers dark mode. {@code false} if the user doesn't or if the value could be read from local storage.
+ * @return {@link true} if the local storage has saved that the user prefers dark mode.
+ *         {@link false} if the user doesn't prefer dark mode or if the value couldn't be read from local storage.
  */
 const fetchDarkModeFromLocalStorage = (): boolean => {
   if (!isClientSideRendering()) {
@@ -48,7 +49,9 @@ const fetchDarkModeFromLocalStorage = (): boolean => {
 /**
  * Tries to read the preferred dark mode setting from the browser settings.
  *
- * @return {@code true} if the browser has reported that the user prefers dark mode. {@code false} if the user doesn't or if the browser doesn't support the `prefers-color-scheme` media query.
+ * @return {@link true} if the browser has reported that the user prefers dark mode.
+ *         {@link false} if the browser doesn't prefer dark mode.
+ *         {@link undefined} if the browser doesn't support the `prefers-color-scheme` media query.
  */
 const determineDarkModeBrowserSettings = (): DarkModeConfig | undefined => {
   if (!isClientSideRendering()) {

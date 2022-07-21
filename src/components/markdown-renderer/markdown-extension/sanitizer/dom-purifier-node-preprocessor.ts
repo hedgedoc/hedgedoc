@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,6 +12,8 @@ import { NodeProcessor } from '../../node-preprocessors/node-processor'
 
 /**
  * Sanitizes the given {@link Document document}.
+ *
+ * @see https://cure53.de/purify
  */
 export class SanitizerNodePreprocessor extends NodeProcessor {
   constructor(private tagNameWhiteList: string[]) {

@@ -19,6 +19,7 @@ export interface RevisionModalFooterProps {
 /**
  * Renders the footer of the revision modal that includes buttons to download the currently selected revision or to
  * revert the note content back to that revision.
+ *
  * @param selectedRevisionId The currently selected revision id or undefined if no revision was selected.
  * @param onHide Callback that is fired when the modal is about to be closed.
  */

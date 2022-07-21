@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,6 +19,17 @@ export enum HelpTabStatus {
   Links = 'links.title'
 }
 
+/**
+ * Renders the help modal.
+ * This modal shows the user the markdown cheatsheet, shortcuts and different links with further help.
+ *
+ * @see CheatsheetTabContent
+ * @see ShortcutTabContent
+ * @see LinksTabContent
+ *
+ * @param show If the modal should be shown
+ * @param onHide A callback when the modal should be closed again
+ */
 export const HelpModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   const [tab, setTab] = useState<HelpTabStatus>(HelpTabStatus.Cheatsheet)
   const { t } = useTranslation()

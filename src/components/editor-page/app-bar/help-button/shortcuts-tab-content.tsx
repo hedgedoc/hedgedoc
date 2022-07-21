@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,9 @@ import { Card, ListGroup, Row } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
 import { isMac } from '../../utils'
 
+/**
+ * Renders a list of shortcuts usable in HedgeDoc.
+ */
 export const ShortcutTabContent: React.FC = () => {
   const modifierKey = useMemo(() => (isMac() ? <kbd>⌘</kbd> : <kbd>Ctrl</kbd>), [])
   const altKey = useMemo(() => (isMac() ? <kbd>⌥</kbd> : <kbd>Alt</kbd>), [])

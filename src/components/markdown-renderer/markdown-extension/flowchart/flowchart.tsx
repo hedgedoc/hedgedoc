@@ -18,6 +18,12 @@ import { testId } from '../../../../utils/test-id'
 
 const log = new Logger('FlowChart')
 
+/**
+ * Renders a flowchart.
+ *
+ * @param code The code to render the flowchart.
+ * @see https://flowchart.js.org/
+ */
 export const FlowChart: React.FC<CodeProps> = ({ code }) => {
   const diagramRef = useRef<HTMLDivElement>(null)
   const [syntaxError, setSyntaxError] = useState(false)

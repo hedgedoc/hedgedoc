@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,9 @@ import { SignInButton } from '../sign-in-button'
 import { UserDropdown } from '../user-dropdown'
 import { cypressId } from '../../../../utils/cypress-attribute'
 
+/**
+ * Renders a header bar for the intro and history page.
+ */
 const HeaderBar: React.FC = () => {
   useTranslation()
   const userExists = useApplicationState((state) => !!state.user)

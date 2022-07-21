@@ -11,11 +11,11 @@ import type { ApiResponse } from '../api-response'
  * Builder to construct a GET request to the API.
  *
  * @param ResponseType The type of the expected response.
- * @see {ApiRequestBuilder}
+ * @see ApiRequestBuilder
  */
 export class GetApiRequestBuilder<ResponseType> extends ApiRequestBuilder<ResponseType> {
   /**
-   * @see {ApiRequestBuilder#sendRequest}
+   * @see ApiRequestBuilder#sendRequest
    */
   sendRequest(): Promise<ApiResponse<ResponseType>> {
     return this.sendRequestAndVerifyResponse('GET', 200)

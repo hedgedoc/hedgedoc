@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,6 +14,9 @@ import { cypressId } from '../../../utils/cypress-attribute'
 import { SignOutDropdownButton } from './sign-out-dropdown-button'
 import Link from 'next/link'
 
+/**
+ * Renders a dropdown menu with user-relevant actions.
+ */
 export const UserDropdown: React.FC = () => {
   useTranslation()
   const user = useApplicationState((state) => state.user)

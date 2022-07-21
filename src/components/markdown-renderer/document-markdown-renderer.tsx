@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,6 +20,21 @@ export interface DocumentMarkdownRendererProps extends CommonMarkdownRendererPro
   onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void
 }
 
+/**
+ * Renders the note as normal document.
+ *
+ * @param className Additional class names directly given to the div
+ * @param markdownContentLines The markdown lines
+ * @param onFirstHeadingChange The callback to call if the first heading changes.
+ * @param onLineMarkerPositionChanged The callback to call with changed {@link LineMarkers}
+ * @param onTaskCheckedChange The callback to call if a task is checked or unchecked.
+ * @param onTocChange The callback to call if the toc changes.
+ * @param baseUrl The base url of the renderer
+ * @param onImageClick The callback to call if a image is clicked
+ * @param outerContainerRef A reference for the outer container
+ * @param newlinesAreBreaks If newlines are rendered as breaks or not
+ * @param lineOffset The line offset
+ */
 export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> = ({
   className,
   markdownContentLines,

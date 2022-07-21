@@ -10,6 +10,9 @@ import { wrapSelection } from '../formatters/wrap-selection'
 import { changeCursorsToWholeLineIfNoToCursor } from '../formatters/utils/change-cursors-to-whole-line-if-no-to-cursor'
 import type { ContentFormatter } from '../../../change-content-context/change-content-context'
 
+/**
+ * Renders a button to create a spoiler section in the {@link Editor editor}.
+ */
 export const CollapsibleBlockButton: React.FC = () => {
   const formatter: ContentFormatter = useCallback(({ currentSelection, markdownContent }) => {
     return wrapSelection(

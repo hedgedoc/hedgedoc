@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,6 +16,7 @@ import { dispatchUiNotification, showErrorNotification } from '../../../redux/ui
 
 /**
  * Confirmation modal for deleting your account.
+ *
  * @param show True if the modal should be shown, false otherwise.
  * @param onHide Callback that is fired when the modal is closed.
  */

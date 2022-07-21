@@ -10,7 +10,7 @@ import type { YText } from 'yjs/dist/src/types/YText'
 
 /**
  * One-Way-synchronizes the text of the given {@link YText y-text} into the global application state.
- *4
+ *
  * @param yText The source text
  */
 export const useBindYTextToRedux = (yText: YText): void => {

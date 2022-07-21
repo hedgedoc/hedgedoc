@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,7 +13,7 @@ export enum ORIGIN_TYPE {
 }
 
 /**
- * Returns the url origin of the editor or the renderer
+ * Returns the url origin of the editor or the renderer.
  */
 export const useOriginFromConfig = (originType: ORIGIN_TYPE): string => {
   const originFromConfig = useApplicationState((state) =>

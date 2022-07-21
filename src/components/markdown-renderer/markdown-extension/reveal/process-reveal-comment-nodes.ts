@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -63,6 +63,7 @@ const processCommentNode = (node: DataNode): void => {
  *
  * @param node The node whose ancestor should be found.
  * @param selector The found ancestor node or null if no node could be found.
+ * @return The ancestor element, if it exists. {@link undefined} otherwise.
  */
 const findTargetElement = (node: Node, selector: string): Element | null => {
   if (selector === 'slide') {
@@ -78,6 +79,7 @@ const findTargetElement = (node: Node, selector: string): Element | null => {
  * Returns the parent node if it is an {@link Element}.
  *
  * @param node the found node or null if no parent node exists or if the parent node isn't an {@link Element}.
+ * @return The parent node, if it exists. {@link undefined} otherwise.
  */
 const findParentElement = (node: Node): Element | null => {
   return node.parentNode !== null && isTag(node.parentNode) ? node.parentNode : null
@@ -87,6 +89,7 @@ const findParentElement = (node: Node): Element | null => {
  * Looks for the nearest ancestor of the node that is a section element.
  *
  * @param node the found section node or null if no section ancestor could be found.
+ * @return The nearest ancestor element, if it exists. {@link undefined} otherwise.
  */
 const findNearestAncestorSection = (node: Node): Element | null => {
   let currentNode = node.parentNode

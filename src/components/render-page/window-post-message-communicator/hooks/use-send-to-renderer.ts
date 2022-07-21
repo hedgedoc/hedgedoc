@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,6 +10,11 @@ import { useEditorToRendererCommunicator } from '../../../editor-page/render-con
 import type { MessagePayload } from '../window-post-message-communicator'
 import { useEffectOnRendererReady } from './use-effect-on-renderer-ready'
 
+/**
+ * Sends the given message to the renderer.
+ *
+ * @param message The message to send
+ */
 export const useSendToRenderer = (
   message: undefined | Extract<CommunicationMessages, MessagePayload<EditorToRendererMessageType>>
 ): void => {

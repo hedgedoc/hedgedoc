@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,7 +14,7 @@ import type { MarkdownExtension } from '../markdown-extension/markdown-extension
 import { MarkdownExtensionCollection } from '../markdown-extension/markdown-extension-collection'
 
 /**
- * Renders Markdown-Code into react elements
+ * Renders Markdown-Code into react elements.
  *
  * @param markdownContentLines The markdown code lines that should be rendered
  * @param additionalMarkdownExtensions A list of {@link MarkdownExtension markdown extensions} that should be used

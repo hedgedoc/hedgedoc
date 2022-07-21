@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,6 +17,13 @@ const HighlightedCode = React.lazy(
 )
 const DocumentMarkdownRenderer = React.lazy(() => import('../../../markdown-renderer/document-markdown-renderer'))
 
+/**
+ * Renders one line in the {@link CheatsheetTabContent cheat sheet}.
+ * This line shows an minimal markdown example and how it would be rendered.
+ *
+ * @param markdown The markdown to be shown and rendered
+ * @param onTaskCheckedChange A callback to call if a task would be clicked
+ */
 export const CheatsheetLine: React.FC<CheatsheetLineProps> = ({ markdown, onTaskCheckedChange }) => {
   const lines = useMemo(() => markdown.split('\n'), [markdown])
   const checkboxClick = useCallback(

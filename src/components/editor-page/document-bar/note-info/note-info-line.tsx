@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,6 +14,14 @@ export interface NoteInfoLineProps {
   size?: '2x' | '3x' | '4x' | '5x' | undefined
 }
 
+/**
+ * This is the base component for all note info lines.
+ * It renders an icon and some children in italic.
+ *
+ * @param icon The icon be shown
+ * @param size Which size the icon should be
+ * @param children The children to render
+ */
 export const NoteInfoLine: React.FC<PropsWithChildren<NoteInfoLineProps>> = ({ icon, size, children }) => {
   return (
     <span className={'d-flex align-items-center'}>

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -21,6 +21,21 @@ export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererPr
   slideOptions: SlideOptions
 }
 
+/**
+ * Renders the note as a reveal.js presentation.
+ *
+ * @param className Additional class names directly given to the div
+ * @param markdownContentLines The markdown lines
+ * @param onFirstHeadingChange The callback to call if the first heading changes.
+ * @param onLineMarkerPositionChanged The callback to call with changed {@link LineMarkers}
+ * @param onTaskCheckedChange The callback to call if a task is checked or unchecked.
+ * @param onTocChange The callback to call if the toc changes.
+ * @param baseUrl The base url of the renderer
+ * @param onImageClick The callback to call if a image is clicked
+ * @param newlinesAreBreaks If newlines are rendered as breaks or not
+ * @param lineOffset The line offset
+ * @param slideOptions The {@link SlideOptions} to use
+ */
 export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps & ScrollProps> = ({
   className,
   markdownContentLines,

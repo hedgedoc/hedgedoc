@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,6 +14,9 @@ const tailRegex = /(?:[./?#].*)?/
 const gistUrlRegex = new RegExp(`(?:${protocolRegex.source}${domainRegex.source}${idRegex.source}${tailRegex.source})`)
 const linkRegex = new RegExp(`^${gistUrlRegex.source}$`, 'i')
 
+/**
+ * Replacer for gist links.
+ */
 export const replaceGistLink: RegexOptions = {
   name: 'gist-link',
   regex: linkRegex,

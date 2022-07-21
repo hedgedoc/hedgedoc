@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,22 +14,16 @@ import forkawesomeIcon from './forkawesome.png'
 import { ForkAwesomeIcons } from '../../../../common/fork-awesome/fork-awesome-icons'
 import fontStyles from '../../../../../../global-styles/variables.module.scss'
 
-export interface EmojiPickerProps {
-  show: boolean
-  onEmojiSelected: (emoji: EmojiClickEventDetail) => void
-  onDismiss: () => void
-}
-
-export const customEmojis: CustomEmoji[] = ForkAwesomeIcons.map((name) => ({
+const customEmojis: CustomEmoji[] = ForkAwesomeIcons.map((name) => ({
   name: `fa-${name}`,
   shortcodes: [`fa-${name.toLowerCase()}`],
   url: forkawesomeIcon.src,
   category: 'ForkAwesome'
 }))
 
-export const EMOJI_DATA_PATH = '/_next/static/js/emoji-data.json'
+const EMOJI_DATA_PATH = '/_next/static/js/emoji-data.json'
 
-export const emojiPickerConfig = {
+const emojiPickerConfig = {
   customEmoji: customEmojis,
   dataSource: EMOJI_DATA_PATH
 }
@@ -40,6 +34,20 @@ const twemojiStyle = (): HTMLStyleElement => {
   return style
 }
 
+export interface EmojiPickerProps {
+  show: boolean
+  onEmojiSelected: (emoji: EmojiClickEventDetail) => void
+  onDismiss: () => void
+}
+
+/**
+ * Renders the emoji picker.
+ *
+ * @param show If the emoji picker should be shown
+ * @param onEmojiSelected The callback, that will be called if an emoji is selected
+ * @param onDismiss The callback, that will be called if the picker should be closed.
+ * @external {Picker} https://www.npmjs.com/package/emoji-picker-element
+ */
 export const EmojiPicker: React.FC<EmojiPickerProps> = ({ show, onEmojiSelected, onDismiss }) => {
   const darkModeEnabled = useIsDarkModeActivated()
   const pickerContainerRef = useRef<HTMLDivElement>(null)

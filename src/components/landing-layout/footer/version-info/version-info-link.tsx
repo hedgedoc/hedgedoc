@@ -10,6 +10,9 @@ import { VersionInfoModal } from './version-info-modal'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
 
+/**
+ * Renders a link for the version info and the {@link VersionInfoModal}.
+ */
 export const VersionInfoLink: React.FC = () => {
   const [modalVisibility, showModal, closeModal] = useBooleanState()
 

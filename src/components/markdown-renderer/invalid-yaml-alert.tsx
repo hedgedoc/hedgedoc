@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,11 @@ import { InternalLink } from '../common/links/internal-link'
 import { ShowIf } from '../common/show-if/show-if'
 import type { SimpleAlertProps } from '../common/simple-alert/simple-alert-props'
 
+/**
+ * Renders an alert if the frontmatter yaml is invalid.
+ *
+ * @param show If this alert should be shown
+ */
 export const InvalidYamlAlert: React.FC<SimpleAlertProps> = ({ show }) => {
   useTranslation()
 

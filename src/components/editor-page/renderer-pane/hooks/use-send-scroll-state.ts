@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,6 +13,7 @@ import { useEditorToRendererCommunicator } from '../../render-context/editor-to-
 
 /**
  * Sends the given {@link ScrollState scroll state} to the renderer if the content changed.
+ *
  * @param scrollState The scroll state to send
  */
 export const useSendScrollState = (scrollState: ScrollState | undefined): void => {

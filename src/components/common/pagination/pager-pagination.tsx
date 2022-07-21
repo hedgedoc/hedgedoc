@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,13 @@ export interface PaginationProps {
   lastPageIndex: number
 }
 
+/**
+ * Renders a pagination menu to move back and forth between pages.
+ *
+ * @param numberOfPageButtonsToShowAfterAndBeforeCurrent The number of buttons that should be shown before and after the current button.
+ * @param onPageChange The callback when one of the buttons is clicked
+ * @param lastPageIndex The index of the last page
+ */
 export const PagerPagination: React.FC<PaginationProps> = ({
   numberOfPageButtonsToShowAfterAndBeforeCurrent,
   onPageChange,

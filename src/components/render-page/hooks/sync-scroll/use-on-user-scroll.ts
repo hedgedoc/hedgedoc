@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,14 @@ import { useCallback } from 'react'
 import type { LineMarkerPosition } from '../../../markdown-renderer/markdown-extension/linemarker/types'
 import type { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
 
+/**
+ * Provides a callback to handle user scrolling.
+ *
+ * @param lineMarks An array of the current {@link LineMarkerPosition LineMarkerPositions}
+ * @param scrollContainer The container to scroll in
+ * @param onScroll A callback that posts new scroll states.
+ * @return A callback that can be called when the user is scrolling.
+ */
 export const useOnUserScroll = (
   lineMarks: LineMarkerPosition[] | undefined,
   scrollContainer: React.RefObject<HTMLElement>,

@@ -23,8 +23,9 @@ export interface SidebarButton extends SidebarEntryProps {
  * @param icon The icon on the left side of the button
  * @param className Additional css class names
  * @param buttonRef A reference to the button
- * @param hide Should be {@code true} if the button should be invisible
+ * @param hide Should be {@link true} if the button should be invisible
  * @param variant An alternative theme for the button
+ * @param disabled If the button should be disabled
  * @param props Other button props
  */
 export const SidebarButton: React.FC<PropsWithChildren<SidebarButton>> = ({

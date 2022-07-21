@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,6 +17,12 @@ const blockHandler = (event: Event): void => {
   event.stopPropagation()
 }
 
+/**
+ * Renders a markmap diagram.
+ *
+ * @param code The code for the diagram.
+ * @see https://markmap.js.org/
+ */
 export const MarkmapFrame: React.FC<CodeProps> = ({ code }) => {
   const { t } = useTranslation()
   const diagramContainer = useRef<HTMLDivElement>(null)

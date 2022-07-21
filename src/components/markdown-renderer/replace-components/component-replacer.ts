@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -36,7 +36,7 @@ export abstract class ComponentReplacer {
   }
 
   /**
-   * Applies the given {@link SubNodeTransform sub node transformer} to every children of the given {@link Node}
+   * Applies the given {@link SubNodeTransform sub node transformer} to every children of the given {@link Node}.
    *
    * @param node The node whose children should be transformed
    * @param subNodeTransform The transformer that should be used.

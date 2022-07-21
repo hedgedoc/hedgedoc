@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,7 @@ import type { HistoryEntryWithOrigin } from '../../api/history/types'
 
 /**
  * Parses a given ISO formatted date string and outputs it as a date and time string.
+ *
  * @param date The date in ISO format.
  * @return The date formatted as date and time string.
  */
@@ -18,6 +19,7 @@ export const formatHistoryDate = (date: string): string => DateTime.fromISO(date
 
 /**
  * Applies sorting and filter rules that match a given toolbar state to a list of history entries.
+ *
  * @param entries The history entries to sort and filter.
  * @param toolbarState The state of the history toolbar (sorting rules, keyword and tag input).
  * @return The list of filtered and sorted history entries.
@@ -33,6 +35,7 @@ export const sortAndFilterEntries = (
 
 /**
  * Filters the given history entries by the given tags.
+ *
  * @param entries The history entries to filter.
  * @param selectedTags The tags that were selected as filter criteria.
  * @return The list of filtered history entries.
@@ -45,6 +48,7 @@ const filterBySelectedTags = (entries: HistoryEntryWithOrigin[], selectedTags: s
 
 /**
  * Checks whether the entries of array 1 are contained in array 2.
+ *
  * @param array1 The first input array.
  * @param array2 The second input array.
  * @return true if all entries from array 1 are contained in array 2, false otherwise.
@@ -56,6 +60,7 @@ const arrayCommonCheck = <T>(array1: T[], array2: T[]): boolean => {
 
 /**
  * Filters the given history entries by the given search term. Works case-insensitive.
+ *
  * @param entries The history entries to filter.
  * @param keywords The search term.
  * @return The history entries that contain the search term in their title.
@@ -67,6 +72,7 @@ const filterByKeywordSearch = (entries: HistoryEntryWithOrigin[], keywords: stri
 
 /**
  * Sorts the given history entries by the sorting rules of the provided toolbar state.
+ *
  * @param entries The history entries to sort.
  * @param viewState The toolbar state containing the sorting options.
  * @return The sorted history entries.

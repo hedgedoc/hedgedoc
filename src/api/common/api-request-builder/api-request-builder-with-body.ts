@@ -29,7 +29,7 @@ export abstract class ApiRequestBuilderWithBody<ResponseType, RequestBodyType> e
    *
    * @param bodyData The data to use as request body. Will get stringified to JSON.
    * @return The API request instance itself for chaining.
-   * @see {withBody}
+   * @see withBody
    */
   withJsonBody(bodyData: RequestBodyType): this {
     this.withHeader('Content-Type', 'application/json')

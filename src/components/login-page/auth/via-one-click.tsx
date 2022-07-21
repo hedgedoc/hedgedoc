@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,7 @@ export interface ViaOneClickProps {
 
 /**
  * Renders a login button for the given one-click login provider.
+ *
  * @param provider The one-click login provider. In case of ones that can be defined multiple times, an identifier and a label is required.
  */
 export const ViaOneClick: React.FC<ViaOneClickProps> = ({ provider }) => {

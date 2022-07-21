@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,6 +17,7 @@ interface AccessTokenCreationFormExpiryFieldProps extends AccessTokenCreationFor
 
 /**
  * Input field for expiry of a new token.
+ *
  * @param formValues The values of the stored form values.
  * @param onChangeExpiry Callback that updates the stored expiry form value.
  */

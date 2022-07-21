@@ -165,6 +165,7 @@ export class NodeToReactTransformer {
    *
    * @param node The node to render
    * @param key The unique key for the node
+   * @return The rendered {@link ValidReactDomElement}
    */
   private renderNativeNode = (node: Element, key: string): ValidReactDomElement => {
     if (node.attribs === undefined) {

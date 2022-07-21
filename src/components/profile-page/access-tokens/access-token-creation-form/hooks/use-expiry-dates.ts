@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,7 @@ interface ExpiryDates {
 
 /**
  * Returns the minimal, maximal and default expiry date for new access tokens.
+ *
  * @return Memoized expiry dates.
  */
 export const useExpiryDates = (): ExpiryDates => {

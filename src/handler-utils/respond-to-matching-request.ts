@@ -22,7 +22,7 @@ export enum HttpMethod {
  * @param res The response object.
  * @param response The response data that will be returned when the HTTP method was the expected one.
  * @param statusCode The status code with which the response will be sent.
- * @return true if the HTTP method of the request is the expected one, false otherwise.
+ * @return {@link true} if the HTTP method of the request is the expected one, {@link false} otherwise.
  */
 export const respondToMatchingRequest = <T>(
   method: HttpMethod,

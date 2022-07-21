@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -70,7 +70,7 @@ export class LineIdMapper {
    * Defines if the given {@link LineChange change} is neither adding or removing lines.
    *
    * @param change The {@link LineChange change} to check.
-   * @return {@code true} if the given change is neither adding or removing lines.
+   * @return {@link true} if the given change is neither adding nor removing lines.
    */
   private static changeIsNotChangingLines(change: LineChange): boolean {
     return change.added === undefined && change.removed === undefined
@@ -80,7 +80,7 @@ export class LineIdMapper {
    * Defines if the given {@link LineChange change} contains new, not existing lines.
    *
    * @param change The {@link LineChange change} to check.
-   * @return {@code true} if the given change contains {@link NewLine new lines}
+   * @return {@link true} if the given change contains {@link NewLine new lines}
    */
   private static changeIsAddingLines(change: LineChange): change is ArrayChange<NewLine> {
     return change.removed === true

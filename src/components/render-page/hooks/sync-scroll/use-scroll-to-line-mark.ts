@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,6 +10,14 @@ import type { LineMarkerPosition } from '../../../markdown-renderer/markdown-ext
 import type { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
 import { findLineMarks } from '../../../editor-page/synced-scroll/utils'
 
+/**
+ * Scrolls the given container to the correct {@link LineMarkerPosition}.
+ *
+ * @param scrollState The current {@link ScrollState}
+ * @param lineMarks An array of the current {@link LineMarkerPosition LineMarkerPositions}.
+ * @param contentLineCount The number of lines
+ * @param scrollContainer The container to scroll in
+ */
 export const useScrollToLineMark = (
   scrollState: ScrollState | undefined,
   lineMarks: LineMarkerPosition[] | undefined,

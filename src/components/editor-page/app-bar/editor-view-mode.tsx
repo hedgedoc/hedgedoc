@@ -18,6 +18,10 @@ export enum EditorMode {
   EDITOR = 'edit'
 }
 
+/**
+ * Renders the button group to set the editor mode.
+ * @see EditorMode
+ */
 export const EditorViewMode: React.FC = () => {
   const { t } = useTranslation()
   const editorMode = useApplicationState((state) => state.editorConfig.editorMode)

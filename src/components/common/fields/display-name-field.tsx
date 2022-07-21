@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,7 @@ interface DisplayNameFieldProps extends CommonFieldProps {
 
 /**
  * Renders an input field for the display name when registering.
+ *
  * @param onChange Hook that is called when the entered display name changes.
  * @param value The currently entered display name.
  * @param initialValue The initial input field value.

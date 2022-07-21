@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,7 +15,8 @@ export interface RegisterErrorProps {
 
 /**
  * Renders an error message for registration fields when an error is present.
- * @param error The error to render. Can be {@code undefined} when no error should be rendered.
+ *
+ * @param error The error to render. Can be {@link undefined} when no error should be rendered.
  */
 export const RegisterError: React.FC<RegisterErrorProps> = ({ error }) => {
   useTranslation()

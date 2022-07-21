@@ -11,14 +11,14 @@ import { ApiRequestBuilderWithBody } from './api-request-builder-with-body'
  *
  * @param ResponseType The type of the expected response.
  * @param RequestBodyType The type of the request body
- * @see {ApiRequestBuilder}
+ * @see ApiRequestBuilder
  */
 export class PutApiRequestBuilder<ResponseType, RequestBodyType> extends ApiRequestBuilderWithBody<
   ResponseType,
   RequestBodyType
 > {
   /**
-   * @see {ApiRequestBuilder#sendRequest}
+   * @see ApiRequestBuilder#sendRequest
    */
   sendRequest(): Promise<ApiResponse<ResponseType>> {
     return this.sendRequestAndVerifyResponse('PUT', 200)

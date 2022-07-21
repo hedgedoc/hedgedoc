@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,6 +14,7 @@ import { PermissionSectionSpecialGroups } from './permission-section-special-gro
 
 /**
  * Modal for viewing and managing the permissions of the note.
+ *
  * @param show true to show the modal, false otherwise.
  * @param onHide Callback that is fired when the modal is about to be closed.
  */

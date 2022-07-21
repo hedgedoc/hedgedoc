@@ -10,10 +10,12 @@ import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-requ
 
 /**
  * Requests to do a local login with a provided username and password.
+ *
  * @param username The username for which the login should be tried.
  * @param password The password which should be used to log in.
  * @throws {AuthError.INVALID_CREDENTIALS} when the username or password is wrong.
  * @throws {AuthError.LOGIN_DISABLED} when the local login is disabled on the backend.
+ * @throws {Error} when the api request wasn't successful.
  */
 export const doLocalLogin = async (username: string, password: string): Promise<void> => {
   await new PostApiRequestBuilder<void, LoginDto>('auth/local/login')
@@ -30,11 +32,13 @@ export const doLocalLogin = async (username: string, password: string): Promise<
 
 /**
  * Requests to register a new local user in the backend.
+ *
  * @param username The username of the new user.
  * @param displayName The display name of the new user.
  * @param password The password of the new user.
  * @throws {RegisterError.USERNAME_EXISTING} when there is already an existing user with the same username.
  * @throws {RegisterError.REGISTRATION_DISABLED} when the registration of local users has been disabled on the backend.
+ * @throws {Error} when the api request wasn't successful.
  */
 export const doLocalRegister = async (username: string, displayName: string, password: string): Promise<void> => {
   await new PostApiRequestBuilder<void, RegisterDto>('auth/local')

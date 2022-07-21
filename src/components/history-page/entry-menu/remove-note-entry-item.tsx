@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,6 +13,12 @@ export interface RemoveNoteEntryItemProps {
   noteTitle: string
 }
 
+/**
+ * Renders a menu item for note deletion with a modal for confirmation.
+ *
+ * @param noteTitle The title of the note
+ * @param onConfirm The callback to delete the note
+ */
 export const RemoveNoteEntryItem: React.FC<RemoveNoteEntryItemProps> = ({ noteTitle, onConfirm }) => {
   return (
     <DropdownItemWithDeletionModal

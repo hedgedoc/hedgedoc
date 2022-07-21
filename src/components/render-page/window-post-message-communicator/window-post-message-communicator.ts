@@ -67,9 +67,9 @@ export abstract class WindowPostMessageCommunicator<
    * Sets the target for message sending.
    * Messages can be sent as soon as the communication is enabled.
    *
-   * @see enableCommunication
    * @param otherSide The target {@link Window} that should receive the messages.
    * @param otherOrigin The origin from the URL of the target. If this isn't correct then the message sending will produce CORS errors.
+   * @see enableCommunication
    */
   public setMessageTarget(otherSide: Window, otherOrigin: string): void {
     this.messageTarget = otherSide
@@ -128,7 +128,7 @@ export abstract class WindowPostMessageCommunicator<
    * Receives the message events and calls the handler that is mapped to the correct type.
    *
    * @param event The received event
-   * @return {@code true} if the event was processed.
+   * @return {@link true} if the event was processed.
    */
   protected handleEvent(event: MessageEvent<MessagePayload<RECEIVE_TYPE>>): void {
     Optional.ofNullable(event.data).ifPresent((payload) => {

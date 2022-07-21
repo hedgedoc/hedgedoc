@@ -17,6 +17,7 @@ export interface PermissionAddEntryFieldProps {
 
 /**
  * Permission entry row containing a field for adding new user permission entries.
+ *
  * @param onAddEntry Callback that is fired with the entered username as identifier of the entry to add.
  * @param i18nKey The localization key for the submit button.
  */

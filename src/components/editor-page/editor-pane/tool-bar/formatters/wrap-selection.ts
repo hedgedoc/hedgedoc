@@ -10,10 +10,10 @@ import type { CursorSelection } from './types/cursor-selection'
 /**
  * Creates a copy of the given markdown content lines but wraps the selection.
  *
- * @param selection If the selection has no to cursor then nothing will happen.
- *                  If the selection has a to cursor then the selected text will be wrapped.
- * @param symbolStart A text that will be inserted before the from cursor
- * @param symbolEnd A text that will be inserted after the to cursor
+ * @param selection If the selection has no to-cursor then nothing will happen.
+ *                  If the selection has a to-cursor then the selected text will be wrapped.
+ * @param symbolStart A text that will be inserted before the from-cursor
+ * @param symbolEnd A text that will be inserted after the to-cursor
  * @return the modified copy of lines
  */
 export const wrapSelection = (

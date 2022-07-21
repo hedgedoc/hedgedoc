@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,7 +11,7 @@ import type { ComponentReplacer } from '../../replace-components/component-repla
 import { ImagePlaceholderReplacer } from './image-placeholder-replacer'
 
 /**
- * A markdown extension that
+ * Adds support for {@link ImagePlaceholder}.
  */
 export class ImagePlaceholderMarkdownExtension extends MarkdownExtension {
   public static readonly PLACEHOLDER_URL = 'https://'

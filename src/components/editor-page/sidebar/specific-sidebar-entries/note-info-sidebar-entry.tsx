@@ -12,6 +12,12 @@ import type { SpecificSidebarEntryProps } from '../types'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
 
+/**
+ * Sidebar entry that allows to open the {@link NoteInfoModal} containing information about the current note.
+ *
+ * @param className CSS classes to add to the sidebar button
+ * @param hide true when the sidebar button should be hidden, false otherwise
+ */
 export const NoteInfoSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
   const [modalVisibility, showModal, closeModal] = useBooleanState()
   useTranslation()

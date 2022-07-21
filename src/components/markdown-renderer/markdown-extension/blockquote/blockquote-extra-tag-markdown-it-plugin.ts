@@ -165,6 +165,7 @@ export class BlockquoteExtraTagMarkdownItPlugin {
    * @param line The line in which the tag is.
    * @param startIndex The start index of the tag.
    * @param dontSearchAfterIndex The maximal position for the search.
+   * @return The value part of the blockquote tag
    */
   private static parseValue(line: string, startIndex: number, dontSearchAfterIndex: number): number | undefined {
     let level = 0
@@ -187,6 +188,7 @@ export class BlockquoteExtraTagMarkdownItPlugin {
    * @param line The line in which the tag is.
    * @param startIndex The start index of the tag.
    * @param dontSearchAfterIndex The maximal position for the search.
+   * @return The label of the blockquote tag.
    */
   private static parseLabel(line: string, startIndex: number, dontSearchAfterIndex: number): number | undefined {
     for (let pos = startIndex; pos <= dontSearchAfterIndex; pos += 1) {

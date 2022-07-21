@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,6 +19,12 @@ import { Trans } from 'react-i18next'
 
 const log = new Logger('AbcFrame')
 
+/**
+ * Renders an abc.js note sheet.
+ *
+ * @param code The code to render.
+ * @see https://www.abcjs.net/
+ */
 export const AbcFrame: React.FC<CodeProps> = ({ code }) => {
   const container = useRef<HTMLDivElement>(null)
 

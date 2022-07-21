@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,6 +17,19 @@ export interface DeletionModalProps extends CommonModalProps {
   deletionButtonI18nKey: string
 }
 
+/**
+ * Renders a generic modal for deletion.
+ * This means in addition to most things for the {@link CommonModal} there is also a button to confirm the deletion and a corresponding callback.
+ *
+ * @param show If the modal should be shown or not.
+ * @param onHide The callback to hide the modal again
+ * @param title The title in the header of the modal
+ * @param onConfirm The callback for the delete button.
+ * @param deletionButtonI18nKey The i18n key for the deletion button.
+ * @param titleIcon An optional title icon
+ * @param children The children to render into the modal.
+ * @param props Additional props directly given to the modal
+ */
 export const DeletionModal: React.FC<PropsWithChildren<DeletionModalProps>> = ({
   show,
   onHide,

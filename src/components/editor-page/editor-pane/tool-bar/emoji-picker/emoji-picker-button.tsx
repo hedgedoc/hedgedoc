@@ -16,6 +16,10 @@ import { useChangeEditorContentCallback } from '../../../change-content-context/
 import { replaceSelection } from '../formatters/replace-selection'
 import { extractEmojiShortCode } from './extract-emoji-short-code'
 
+/**
+ * Renders a button to open the emoji picker.
+ * @see EmojiPicker
+ */
 export const EmojiPickerButton: React.FC = () => {
   const { t } = useTranslation()
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)

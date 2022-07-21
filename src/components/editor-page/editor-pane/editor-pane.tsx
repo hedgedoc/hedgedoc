@@ -37,6 +37,15 @@ import { useOnFirstEditorUpdateExtension } from './hooks/yjs/use-on-first-editor
 import { useIsConnectionSynced } from './hooks/yjs/use-is-connection-synced'
 import { useMarkdownContentYText } from './hooks/yjs/use-markdown-content-y-text'
 
+/**
+ * Renders the text editor pane of the editor.
+ * The used editor is {@link ReactCodeMirror code mirror}.
+ *
+ * @param scrollState The current {@link ScrollState}
+ * @param onScroll The callback to update the {@link ScrollState}
+ * @param onMakeScrollSource The callback to request to become the scroll source.
+ * @external {ReactCodeMirror} https://npmjs.com/@uiw/react-codemirror
+ */
 export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMakeScrollSource }) => {
   const ligaturesEnabled = useApplicationState((state) => state.editorConfig.ligatures)
 

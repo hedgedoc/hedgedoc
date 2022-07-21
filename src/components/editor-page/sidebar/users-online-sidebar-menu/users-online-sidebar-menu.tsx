@@ -14,6 +14,15 @@ import styles from './online-counter.module.scss'
 import { UserLine } from '../user-line/user-line'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
+/**
+ * Sidebar menu that contains the list of currently online users in the current note session.
+ * When the menu is collapsed, the amount of currently online users is shown, otherwise the full list.
+ *
+ * @param className CSS classes to add to the sidebar menu
+ * @param menuId The id of this sidebar menu
+ * @param onClick Callback that is fired when the menu is clicked
+ * @param selectedMenuId The currently opened sidebar menu
+ */
 export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   className,
   menuId,

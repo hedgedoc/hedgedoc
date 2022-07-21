@@ -14,6 +14,10 @@ import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { useBooleanState } from '../../../hooks/common/use-boolean-state'
 
+/**
+ * Renders a button to clear the complete history of the user.
+ * A confirmation modal will be presented to the user after clicking the button.
+ */
 export const ClearHistoryButton: React.FC = () => {
   const { t } = useTranslation()
   const [modalVisibility, showModal, closeModal] = useBooleanState()

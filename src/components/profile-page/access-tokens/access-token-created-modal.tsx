@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,6 +19,7 @@ export interface AccessTokenCreatedModalProps extends ModalVisibilityProps {
 
 /**
  * Modal that shows the secret of a freshly created access token.
+ *
  * @param show True when the modal should be shown, false otherwise.
  * @param onHide Callback that gets called when the modal should be dismissed.
  * @param tokenWithSecret The token altogether with its secret.

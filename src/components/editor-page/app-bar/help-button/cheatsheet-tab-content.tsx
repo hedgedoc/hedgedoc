@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,6 +10,9 @@ import { Trans, useTranslation } from 'react-i18next'
 import { CheatsheetLine } from './cheatsheet-line'
 import styles from './cheatsheet.module.scss'
 
+/**
+ * Renders the content of the cheat sheet for the {@link HelpModal}.
+ */
 export const CheatsheetTabContent: React.FC = () => {
   const { t } = useTranslation()
   const [checked, setChecked] = useState<boolean>(false)

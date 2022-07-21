@@ -54,7 +54,7 @@ export const UploadImageButton: React.FC = () => {
       <ShowIf condition={!!codeMirror}>
         <UploadInput
           onLoad={onUploadImage}
-          acceptedFiles={acceptedMimeTypes}
+          allowedFileTypes={acceptedMimeTypes}
           onClickRef={clickRef}
           {...cypressId('editor-toolbar-upload-image-input')}
         />

@@ -14,7 +14,7 @@ export enum FileContentFormat {
  *
  * @param file The file to read
  * @param fileReaderMode Defines as what the file content should be formatted.
- * @throws Error if an invalid read mode was given or if the file couldn't be read.
+ * @throws {Error} if an invalid read mode was given or if the file couldn't be read.
  * @return the file content
  */
 export const readFile = async (file: Blob, fileReaderMode: FileContentFormat): Promise<string> => {

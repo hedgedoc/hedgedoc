@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,7 +15,10 @@ export interface CountdownButtonProps extends ButtonProps {
 
 /**
  * Button that starts a countdown on render and is only clickable after the countdown has finished.
+ *
  * @param countdownStartSeconds The initial amount of seconds for the countdown.
+ * @param children The children that should be displayed after the countdown has elapsed.
+ * @param props Additional props given to the {@link Button}.
  */
 export const CountdownButton: React.FC<CountdownButtonProps> = ({ countdownStartSeconds, children, ...props }) => {
   const [secondsRemaining, setSecondsRemaining] = useState(countdownStartSeconds)

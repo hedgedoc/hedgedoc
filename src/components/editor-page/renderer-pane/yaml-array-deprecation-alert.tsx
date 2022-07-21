@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,6 +13,11 @@ import { ShowIf } from '../../common/show-if/show-if'
 import type { CommonModalProps } from '../../common/modals/common-modal'
 import { cypressId } from '../../../utils/cypress-attribute'
 
+/**
+ * Renders an alert that indicated that the front matter tags property is using a deprecated format.
+ *
+ * @param show If the alert should be shown.
+ */
 export const YamlArrayDeprecationAlert: React.FC<Partial<CommonModalProps>> = ({ show }) => {
   useTranslation()
 

@@ -34,17 +34,19 @@ export const cssColor =
 
 /**
  * Checks if the given {@link Element} is a blockquote with children.
+ *
  * @param element The {@link Element} to check
- * @return {@code true} if the element is a blockquote with children.
+ * @return {@link true} if the element is a blockquote with children.
  */
 const isBlockquoteWithChildren = (element: Element): boolean => {
   return element.name !== 'blockquote' || !element.children || element.children.length < 1
 }
 
 /**
- * Searches for a blockquote color definition tag
+ * Searches for a blockquote color definition tag.
+ *
  * @param elements The {@link Element} elements that should be searched through.
- * @return The parent paragraph and the extracted color if a color definition was found. {@code undefined} otherwise.
+ * @return The parent paragraph and the extracted color if a color definition was found. {@link undefined} otherwise.
  */
 const findBlockquoteColorDefinitionAndParent = (
   elements: Node[]
@@ -68,7 +70,7 @@ const findBlockquoteColorDefinitionAndParent = (
 }
 
 /**
- * Checks if the given node is a blockquote color definition
+ * Checks if the given node is a blockquote color definition.
  *
  * @param element The {@link Element} to check
  * @return true if the checked node is a blockquote color definition
@@ -85,7 +87,8 @@ const extractBlockquoteColorDefinition = (element: Element): string | undefined 
 }
 
 /**
- * Removes all color definition elements from the given paragraph {@link Element}
+ * Removes all color definition elements from the given paragraph {@link Element}.
+ *
  * @param paragraph The {@link Element} whose children should be filtered
  */
 const removeColorDefinitionsFromParagraph = (paragraph: Element): void => {

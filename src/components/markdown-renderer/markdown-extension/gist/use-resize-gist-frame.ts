@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,7 +12,7 @@ import { useBindPointerMovementEventOnWindow } from '../../../../hooks/common/us
  * Determines if the left mouse button is pressed in the given event
  *
  * @param mouseEvent the mouse event that should be checked
- * @return {@code true} if the left mouse button is pressed. {@code false} otherwise.
+ * @return {@link true} if the left mouse button is pressed. {@link false} otherwise.
  */
 const isLeftMouseButtonPressed = (mouseEvent: MouseEvent): boolean => {
   return mouseEvent.buttons === 1
@@ -35,9 +35,10 @@ const extractVerticalPointerPosition = (
 }
 
 /**
- * Checks if the given {@link Event} is a {@link MouseEvent} or a {@link React.MouseEvent}
+ * Checks if the given {@link Event} is a {@link MouseEvent} or a {@link React.MouseEvent}.
+ *
  * @param event the event to check
- * @return {@code true} if the given event is a {@link MouseEvent} or a {@link React.MouseEvent}
+ * @return {@link true} if the given event is a {@link MouseEvent} or a {@link React.MouseEvent}
  */
 const isMouseEvent = (event: Event | React.UIEvent): event is MouseEvent | React.MouseEvent => {
   return (event as MouseEvent).buttons !== undefined

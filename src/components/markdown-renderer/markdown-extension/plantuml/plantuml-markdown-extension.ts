@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,6 +13,11 @@ import type { Options } from 'markdown-it/lib'
 import type { ComponentReplacer } from '../../replace-components/component-replacer'
 import { PlantumlNotConfiguredComponentReplacer } from './plantuml-not-configured-component-replacer'
 
+/**
+ * Adds support for chart rendering using plantuml to the markdown rendering using code fences with "plantuml" as language.
+ *
+ * @see https://plantuml.com
+ */
 export class PlantumlMarkdownExtension extends MarkdownExtension {
   constructor(private plantumlServer?: string) {
     super()

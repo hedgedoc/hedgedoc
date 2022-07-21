@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -29,8 +29,9 @@ export const fetchAndSetUser: () => Promise<void> = async () => {
 
 /**
  * Filter to apply to a list of auth providers to get only one-click providers.
+ *
  * @param provider The provider to test whether it is a one-click provider or not.
- * @return true when the provider is a one-click one, false otherwise.
+ * @return {@link true} when the provider is a one-click one, {@link false} otherwise.
  */
 export const filterOneClickProviders = (provider: AuthProvider): boolean => {
   return authProviderTypeOneClick.includes(provider.type)

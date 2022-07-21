@@ -31,6 +31,7 @@ export interface PermissionEntryButtonsProps {
 
 /**
  * Buttons next to a user or group permission entry to change the permissions or remove the entry.
+ *
  * @param name The name of the user or group.
  * @param type The type of the entry. Either {@link PermissionType.USER} or {@link PermissionType.GROUP}.
  * @param currentSetting How the permission is currently set.

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,6 +20,7 @@ export interface AccessTokenDeletionModalProps extends ModalVisibilityProps {
 
 /**
  * Modal that asks for confirmation when deleting an access token.
+ *
  * @param show True when the deletion modal should be shown, false otherwise.
  * @param token The access token to delete.
  * @param onHide Callback that is fired when the modal is closed.

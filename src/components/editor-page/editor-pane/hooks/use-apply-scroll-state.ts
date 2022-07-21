@@ -34,7 +34,6 @@ const applyScrollState = (view: EditorView, scrollState: ScrollState): void => {
 /**
  * Monitors the given scroll state and scrolls the editor to the state if changed.
  *
- * @param editorRef The editor that should be manipulated
  * @param scrollState The scroll state that should be monitored
  */
 export const useApplyScrollState = (scrollState?: ScrollState): void => {

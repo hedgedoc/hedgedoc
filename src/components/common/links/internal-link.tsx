@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,17 @@ import type { IconName } from '../fork-awesome/types'
 import { ShowIf } from '../show-if/show-if'
 import type { LinkWithTextProps } from './types'
 
+/**
+ * An internal link.
+ * This should be used for linking pages of the HedgeDoc instance.
+ *
+ * @param href The links location
+ * @param text The links text
+ * @param icon An optional icon to be shown before the links text
+ * @param id An id for the link object
+ * @param className Additional class names added to the link object
+ * @param title The title of the link
+ */
 export const InternalLink: React.FC<LinkWithTextProps> = ({
   href,
   text,

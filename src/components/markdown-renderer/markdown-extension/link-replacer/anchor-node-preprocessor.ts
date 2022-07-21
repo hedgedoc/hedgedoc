@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,6 +8,9 @@ import { TravelerNodeProcessor } from '../../node-preprocessors/traveler-node-pr
 import type { Node } from 'domhandler'
 import { isTag } from 'domhandler'
 
+/**
+ * A preprocessor for links. It filters script and data links, converts relative URLs into absolute URLs and fixes jump marks.
+ */
 export class AnchorNodePreprocessor extends TravelerNodeProcessor {
   constructor(private baseUrl: string) {
     super()

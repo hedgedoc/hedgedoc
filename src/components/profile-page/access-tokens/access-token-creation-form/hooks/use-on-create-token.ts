@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,6 +13,7 @@ import type { AccessTokenWithSecret } from '../../../../../api/tokens/types'
 
 /**
  * Callback for requesting a new access token from the API and returning the response token and secret.
+ *
  * @param label The label for the new access token.
  * @param expiryDate The expiry date of the new access token.
  * @param setNewTokenWithSecret Callback to set the new access token with the secret from the API.

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -26,6 +26,14 @@ export interface TableSize {
   columns: number
 }
 
+/**
+ * Renders a popover to select the size of a new table to be inserted.
+ *
+ * @param onShowCustomSizeModal The callback, that will be called if the {@link CustomTableSizeModal} should be shown.
+ * @param onTableSizeSelected The callback, that will be called if a table size was selected.
+ * @param onRefUpdate The callback, that will be called if ref was updated.
+ * @param props Additional props given directly to the modal
+ */
 export const TableSizePickerPopover: React.FC<TableSizePickerPopoverProps> = ({
   onShowCustomSizeModal,
   onTableSizeSelected,

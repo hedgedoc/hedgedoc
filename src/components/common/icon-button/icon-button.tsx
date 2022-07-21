@@ -20,6 +20,16 @@ export interface IconButtonProps extends ButtonProps {
   iconFixedWidth?: boolean
 }
 
+/**
+ * A generic {@link Button button} with an {@link ForkAwesomeIcon icon} in it.
+ *
+ * @param icon Which icon should be used
+ * @param children The children that will be added as the content of the button.
+ * @param iconFixedWidth If the icon should be of fixed width.
+ * @param border Should the button have a border.
+ * @param className Additional class names added to the button.
+ * @param props Additional props for the button.
+ */
 export const IconButton: React.FC<IconButtonProps> = ({
   icon,
   children,

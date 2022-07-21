@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,6 +12,8 @@ import { KatexReplacer } from './katex-replacer'
 
 /**
  * Adds support for rendering of LaTeX code using KaTeX.
+ *
+ * @see https://katex.org/
  */
 export class KatexMarkdownExtension extends MarkdownExtension {
   public static readonly tagName = 'app-katex'

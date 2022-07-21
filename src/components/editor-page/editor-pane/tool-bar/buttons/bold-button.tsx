@@ -9,6 +9,9 @@ import { ToolbarButton } from '../toolbar-button'
 import { wrapSelection } from '../formatters/wrap-selection'
 import type { ContentFormatter } from '../../../change-content-context/change-content-context'
 
+/**
+ * Renders a button to make the selection in the {@link Editor editor} bold.
+ */
 export const BoldButton: React.FC = () => {
   const formatter: ContentFormatter = useCallback(({ currentSelection }) => {
     return wrapSelection(currentSelection, '**', '**')

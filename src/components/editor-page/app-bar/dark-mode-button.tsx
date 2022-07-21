@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,6 +16,9 @@ enum DarkModeState {
   LIGHT
 }
 
+/**
+ * Renders a button group to activate / deactivate the dark mode.
+ */
 const DarkModeButton: React.FC = () => {
   const { t } = useTranslation()
   const darkModeEnabled = useIsDarkModeActivated() ? DarkModeState.DARK : DarkModeState.LIGHT

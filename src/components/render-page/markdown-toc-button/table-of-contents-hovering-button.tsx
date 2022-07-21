@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -21,7 +21,6 @@ export interface MarkdownTocButtonProps {
  *
  * @param tocAst the {@link TocAst AST} that should be rendered.
  * @param baseUrl the base url that will be used to generate the links
- * @return the created component
  */
 export const TableOfContentsHoveringButton: React.FC<MarkdownTocButtonProps> = ({ tocAst, baseUrl }) => {
   return (

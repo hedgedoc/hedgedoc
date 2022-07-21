@@ -7,12 +7,12 @@
 import type { CursorSelection } from '../types/cursor-selection'
 
 /**
- * If the given cursor selection has no to position then the selection will be changed to cover the whole line of the from cursor.
+ * If the given cursor selection has no to position then the selection will be changed to cover the whole line of the from-cursor.
  *
  * @param markdownContent The markdown content that is used to calculate the start and end position of the line
  * @param selection The selection that is in the line whose start and end index should be calculated
- * @return The corrected selection if no to cursor is present or the unmodified selection otherwise
- * @throws Error if the line, that the from cursor is referring to, doesn't exist.
+ * @return The corrected selection if no to-cursor is present or the unmodified selection otherwise
+ * @throws Error if the line, that the from-cursor is referring to, doesn't exist.
  */
 export const changeCursorsToWholeLineIfNoToCursor = (
   markdownContent: string,

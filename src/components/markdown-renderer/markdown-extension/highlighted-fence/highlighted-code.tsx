@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -28,6 +28,7 @@ export interface HighlightedCodeProps {
  * @param language The language that should be used for highlighting
  * @param startLineNumber The number of the first line in the block. Will be 1 if omitted.
  * @param wrapLines Defines if lines should be wrapped or if the block should show a scroll bar.
+ * @see https://highlightjs.org/
  */
 export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language, startLineNumber, wrapLines }) => {
   const showGutter = startLineNumber !== undefined

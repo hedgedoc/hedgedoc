@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -24,7 +24,6 @@ const MAX_WIDTH_FOR_BUTTON_VISIBILITY = 1100
  * @param tocAst the {@link TocAst AST} that should be rendered.
  * @param width the width that should be used to determine if the button should be shown.
  * @param baseUrl the base url that will be used to generate the links //TODO: replace with consumer/provider
- * @return the created component
  */
 export const WidthBasedTableOfContents: React.FC<DocumentExternalTocProps> = ({ tocAst, width, baseUrl }) => {
   if (width >= MAX_WIDTH_FOR_BUTTON_VISIBILITY) {

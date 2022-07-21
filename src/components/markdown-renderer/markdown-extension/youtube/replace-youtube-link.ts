@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,6 +19,9 @@ const youtubeVideoUrlRegex = new RegExp(
 )
 const linkRegex = new RegExp(`^${youtubeVideoUrlRegex.source}$`, 'i')
 
+/**
+ * Replacer for youtube links.
+ */
 export const replaceYouTubeLinkMarkdownItPlugin: MarkdownIt.PluginSimple = (markdownIt: MarkdownIt) =>
   markdownItRegex(markdownIt, {
     name: 'youtube-link',

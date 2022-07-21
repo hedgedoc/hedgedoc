@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -18,6 +18,14 @@ export interface TableOfContentsProps {
   baseUrl?: string
 }
 
+/**
+ * Renders the table of contents for the note.
+ *
+ * @param ast The ast of the headings in the current note.
+ * @param maxDepth The maximal depth of that is considered in the tree
+ * @param className Additional classes directly given to the div
+ * @param baseUrl The base url of the instance.
+ */
 export const TableOfContents: React.FC<TableOfContentsProps> = ({ ast, maxDepth = 3, className, baseUrl }) => {
   useTranslation()
   const tocTree = useMemo(

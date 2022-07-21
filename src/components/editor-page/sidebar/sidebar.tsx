@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -18,6 +18,9 @@ import styles from './style/sidebar.module.scss'
 import { DocumentSidebarMenuSelection } from './types'
 import { UsersOnlineSidebarMenu } from './users-online-sidebar-menu/users-online-sidebar-menu'
 
+/**
+ * Renders the sidebar for the editor.
+ */
 export const Sidebar: React.FC = () => {
   const sideBarRef = useRef<HTMLDivElement>(null)
   const [selectedMenu, setSelectedMenu] = useState<DocumentSidebarMenuSelection>(DocumentSidebarMenuSelection.NONE)

@@ -14,7 +14,13 @@ import { ApplicationLoaderError } from './application-loader-error'
 
 const log = new Logger('ApplicationLoader')
 
-export const ApplicationLoader: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
+/**
+ * Initializes the application and executes all the setup tasks.
+ * It renders a {@link LoadingScreen} while this is happening. If there are any error, they will be displayed in the {@link LoadingScreen}.
+ *
+ * @param children The children in the React dom that should be shown once the application is loaded.
+ */
+export const ApplicationLoader: React.FC<PropsWithChildren> = ({ children }) => {
   const { error, loading } = useAsync(async () => {
     const initTasks = createSetUpTaskList()
     for (const task of initTasks) {

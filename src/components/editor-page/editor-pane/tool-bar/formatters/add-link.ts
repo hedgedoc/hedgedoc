@@ -16,8 +16,8 @@ const afterLink = ')'
  * Creates a copy of the given markdown content lines but inserts a new link tag.
  *
  * @param markdownContent The content of the document to modify
- * @param selection If the selection has no to cursor then the tag will be inserted at this position.
- *                  If the selection has a to cursor then the selected text will be inserted into the description or the URL part.
+ * @param selection If the selection has no to-cursor then the tag will be inserted at this position.
+ *                  If the selection has a to-cursor then the selected text will be inserted into the description or the URL part.
  * @param prefix An optional prefix for the link
  * @return the modified copy of lines
  */

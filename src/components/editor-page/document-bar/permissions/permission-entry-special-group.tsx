@@ -20,6 +20,7 @@ export interface PermissionEntrySpecialGroupProps {
 
 /**
  * Permission entry that represents one of the built-in special groups.
+ *
  * @param level The access level that is currently set for the group.
  * @param type The type of the special group. Must be either {@link SpecialGroup.EVERYONE} or {@link SpecialGroup.LOGGED_IN}.
  */

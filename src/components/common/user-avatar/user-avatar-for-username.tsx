@@ -21,9 +21,10 @@ export interface UserAvatarForUsernameProps extends Omit<UserAvatarProps, 'user'
  * Renders the user avatar for a given username.
  * When no username is given, the guest user will be used as fallback.
  *
- * @see {UserAvatar}
+ * @see UserAvatar
  *
  * @param username The username for which to show the avatar or null to show the guest user avatar.
+ * @param props Additional props directly given to the {@link UserAvatar}
  */
 export const UserAvatarForUsername: React.FC<UserAvatarForUsernameProps> = ({ username, ...props }) => {
   const { t } = useTranslation()

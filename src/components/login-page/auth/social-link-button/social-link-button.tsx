@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,6 +17,15 @@ export interface SocialButtonProps {
   title?: string
 }
 
+/**
+ * Renders a link for a social login.
+ *
+ * @param title The link title
+ * @param backgroundClass Additional classes for the a-tag
+ * @param href The link
+ * @param icon The icon to be used
+ * @param children The children to be rendered in addition to the icon.
+ */
 export const SocialLinkButton: React.FC<PropsWithChildren<SocialButtonProps>> = ({
   title,
   backgroundClass,

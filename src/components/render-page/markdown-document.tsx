@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -37,6 +37,24 @@ export interface MarkdownDocumentProps extends RendererProps {
   frontmatterInfo?: RendererFrontmatterInfo
 }
 
+/**
+ * Renders a markdown document and handles scrolling, yaml metadata and a floating table of contents.
+ *
+ * @param additionalOuterContainerClasses Additional classes given to the outer container directly
+ * @param additionalRendererClasses Additional classes given {@link DocumentMarkdownRenderer} directly
+ * @param onFirstHeadingChange The callback to call when the first heading changes.
+ * @param onMakeScrollSource The callback to call if a change of the scroll source is requested-
+ * @param onTaskCheckedChange The callback to call if a task get's checked or unchecked.
+ * @param baseUrl The base url for the renderer
+ * @param markdownContentLines The current content of the markdown document.
+ * @param onImageClick The callback to call if an image is clicked.
+ * @param onScroll The callback to call if the renderer is scrolling.
+ * @param scrollState The current {@link ScrollState}
+ * @param onHeightChange The callback to call if the height of the document changes
+ * @param disableToc If the table of contents should be disabled.
+ * @param frontmatterInfo The frontmatter information for the renderer.
+ * @see https://markdown-it.github.io/
+ */
 export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
   additionalOuterContainerClasses,
   additionalRendererClasses,

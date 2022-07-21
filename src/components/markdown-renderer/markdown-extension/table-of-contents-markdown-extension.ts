@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,7 +9,9 @@ import type MarkdownIt from 'markdown-it'
 import type { TocAst } from 'markdown-it-toc-done-right'
 import toc from 'markdown-it-toc-done-right'
 import { tocSlugify } from '../../editor-page/table-of-contents/toc-slugify'
-
+/**
+ * Adds table of content to the markdown rendering.
+ */
 export class TableOfContentsMarkdownExtension extends MarkdownExtension {
   constructor(private onTocChange?: (ast: TocAst) => void) {
     super()

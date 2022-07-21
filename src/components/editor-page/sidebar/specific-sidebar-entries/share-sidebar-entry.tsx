@@ -11,6 +11,12 @@ import { SidebarButton } from '../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../types'
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
 
+/**
+ * Renders a button to open the share modal for the sidebar.
+ *
+ * @param className Additional classes directly given to the button
+ * @param hide If the button should be hidden
+ */
 export const ShareSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
   const [modalVisibility, showModal, closeModal] = useBooleanState()
   useTranslation()

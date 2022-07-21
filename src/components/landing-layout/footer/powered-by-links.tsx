@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,6 +13,9 @@ import { TranslatedInternalLink } from '../../common/links/translated-internal-l
 import { VersionInfoLink } from './version-info/version-info-link'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 
+/**
+ * Renders a powered-by link.
+ */
 export const PoweredByLinks: React.FC = () => {
   useTranslation()
 

@@ -8,7 +8,9 @@ import { createNumberRangeArray } from '../../../../common/number-range/number-r
 
 /**
  * Checks if the given text is a tab-and-new-line-separated table.
+ *
  * @param text The text to check
+ * @return If the text is a table or not
  */
 export const isTable = (text: string): boolean => {
   // Tables must consist of multiple rows and columns
@@ -32,7 +34,8 @@ export const isTable = (text: string): boolean => {
 }
 
 /**
- * Reformat the given text as Markdown table
+ * Reformat the given text as Markdown table.
+ *
  * @param pasteData The plain text table separated by tabs and new-lines
  * @return the formatted Markdown table
  */

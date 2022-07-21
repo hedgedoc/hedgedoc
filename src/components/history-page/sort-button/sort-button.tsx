@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,12 @@ export enum SortModeEnum {
   no = 0
 }
 
+/**
+ * Returns the proper icon for the given sorting direction.
+ *
+ * @param direction The sorting direction for which to get the icon
+ * @return The name of the icon fitting to the given sorting direction
+ */
 const getIcon = (direction: SortModeEnum): IconName => {
   switch (direction) {
     case SortModeEnum.no:
@@ -33,6 +39,12 @@ export interface SortButtonProps extends ButtonProps {
   direction: SortModeEnum
 }
 
+/**
+ * Switches the sorting direction based on the previous direction.
+ *
+ * @param direction The previous sorting direction
+ * @return The new sorting direction
+ */
 const toggleDirection = (direction: SortModeEnum) => {
   switch (direction) {
     case SortModeEnum.no:
@@ -45,6 +57,14 @@ const toggleDirection = (direction: SortModeEnum) => {
   }
 }
 
+/**
+ * Renders a button to change the sorting order of a list.
+ *
+ * @param children The children elements that should be rendered inside the button
+ * @param variant The variant of the button
+ * @param onDirectionChange Callback that is fired when the sorting direction is changed
+ * @param direction The sorting direction that is used
+ */
 export const SortButton: React.FC<SortButtonProps> = ({ children, variant, onDirectionChange, direction }) => {
   const toggleSort = () => {
     onDirectionChange(toggleDirection(direction))

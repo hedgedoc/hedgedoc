@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -25,6 +25,20 @@ export interface UiNotificationProps extends UiNotification {
   notificationId: number
 }
 
+/**
+ * Renders a single notification.
+ *
+ * @param titleI18nKey The i18n key for the title
+ * @param contentI18nKey The i18n key for the content
+ * @param titleI18nOptions The i18n options for the title
+ * @param contentI18nOptions The i18n options for the content
+ * @param createdAtTimestamp The timestamp, when this notification was created.
+ * @param icon The optional icon to be used
+ * @param dismissed If the notification is already dismissed
+ * @param notificationId The notification id
+ * @param durationInSecond How long the notification should be shown
+ * @param buttons A list of {@link UiNotificationButton UiNotificationButtons} to be displayed
+ */
 export const UiNotificationToast: React.FC<UiNotificationProps> = ({
   titleI18nKey,
   contentI18nKey,

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,6 +12,9 @@ import { fetchFrontendConfig } from './fetch-frontend-config'
 import { loadDarkMode } from './load-dark-mode'
 import { isDevMode, isTestMode } from '../../../utils/test-modes'
 
+/**
+ * Create a custom delay in the loading of the application.
+ */
 const customDelay: () => Promise<void> = async () => {
   if (
     (isDevMode || isTestMode) &&
@@ -30,6 +33,9 @@ export interface InitTask {
   task: () => Promise<void>
 }
 
+/**
+ * Create a list of tasks, that need to be fulfilled on startup.
+ */
 export const createSetUpTaskList = (): InitTask[] => {
   return [
     {

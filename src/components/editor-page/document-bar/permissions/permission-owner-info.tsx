@@ -17,6 +17,7 @@ export interface PermissionOwnerInfoProps {
 
 /**
  * Content for the owner section of the permission modal that shows the current note owner.
+ *
  * @param onEditOwner Callback that is fired when the user chooses to change the note owner.
  */
 export const PermissionOwnerInfo: React.FC<PermissionOwnerInfoProps> = ({ onEditOwner }) => {

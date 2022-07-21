@@ -15,6 +15,12 @@ import { useApplicationState } from '../../../../hooks/common/use-application-st
 import { NoteType } from '../../../../redux/note-details/types/note-details'
 import { useFrontendBaseUrl } from '../../../../hooks/common/use-frontend-base-url'
 
+/**
+ * Renders a modal which provides shareable URLs of this note.
+ *
+ * @param show If the modal should be shown
+ * @param onHide The callback when the modal should be closed
+ */
 export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   useTranslation()
   const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)

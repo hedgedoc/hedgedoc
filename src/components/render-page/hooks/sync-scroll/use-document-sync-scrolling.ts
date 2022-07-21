@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,18 @@ import type { ScrollState } from '../../../editor-page/synced-scroll/scroll-prop
 import { useOnUserScroll } from './use-on-user-scroll'
 import { useScrollToLineMark } from './use-scroll-to-line-mark'
 
+/**
+ * Synchronizes the scroll status of the given container with the given scroll state and posts changes if the user scrolls.
+ *
+ * @param outerContainerRef A reference for the outer container.
+ * @param rendererRef A reference for the renderer
+ * @param numberOfLines The number of lines
+ * @param scrollState The current {@link ScrollState}
+ * @param onScroll A callback that posts new scroll states
+ * @return A tuple of two callbacks.
+ *         The first one should be executed if the {@link LineMarkerPosition line marker positions} are updated.
+ *         The second one should be executed if the user actually scrolls. Usually it should be attached to the DOM element that the user scrolls.
+ */
 export const useDocumentSyncScrolling = (
   outerContainerRef: React.RefObject<HTMLElement>,
   rendererRef: React.RefObject<HTMLElement>,

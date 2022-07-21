@@ -13,6 +13,9 @@ import { useChangeEditorContentCallback } from '../../change-content-context/use
 import { ShowIf } from '../../../common/show-if/show-if'
 import { FileContentFormat, readFile } from '../../../../utils/read-file'
 
+/**
+ * Renders a sidebar entry that allows to import the content of markdown files into the currently opened note.
+ */
 export const ImportMarkdownSidebarEntry: React.FC = () => {
   useTranslation()
   const changeEditorContent = useChangeEditorContentCallback()
@@ -55,7 +58,7 @@ export const ImportMarkdownSidebarEntry: React.FC = () => {
         <UploadInput
           onLoad={onImportMarkdown}
           {...cypressId('menu-import-markdown-input')}
-          acceptedFiles={'.md, text/markdown, text/plain'}
+          allowedFileTypes={'.md, text/markdown, text/plain'}
           onClickRef={clickRef}
         />
       </ShowIf>

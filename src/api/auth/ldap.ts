@@ -9,11 +9,13 @@ import { AuthError } from './types'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 
 /**
- * Requests to login a user via LDAP credentials.
+ * Requests to log in a user via LDAP credentials.
+ *
  * @param provider The identifier of the LDAP provider with which to login.
  * @param username The username with which to try the login.
  * @param password The password of the user.
  * @throws {AuthError.INVALID_CREDENTIALS} if the LDAP provider denied the given credentials.
+ * @throws {Error} when the api request wasn't successfull
  */
 export const doLdapLogin = async (provider: string, username: string, password: string): Promise<void> => {
   await new PostApiRequestBuilder<void, LoginDto>('auth/ldap/' + provider)

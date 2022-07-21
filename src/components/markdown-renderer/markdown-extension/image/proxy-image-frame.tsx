@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,14 @@ import { Logger } from '../../../../utils/logger'
 
 const log = new Logger('ProxyImageFrame')
 
+/**
+ * Renders an image using the image proxy.
+ *
+ * @param src The image source
+ * @param title The title of the image
+ * @param alt The alt text of the image
+ * @param props Additional props directly given to the image
+ */
 export const ProxyImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ src, title, alt, ...props }) => {
   const [imageUrl, setImageUrl] = useState('')
   const imageProxyEnabled = useApplicationState((state) => state.config.useImageProxy)

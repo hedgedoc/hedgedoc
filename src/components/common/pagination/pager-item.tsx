@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,12 @@ export interface PageItemProps {
   index: number
 }
 
+/**
+ * Renders a number and adds an onClick handler to it.
+ *
+ * @param index The number to render
+ * @param onClick The onClick Handler
+ */
 export const PagerItem: React.FC<PageItemProps> = ({ index, onClick }) => {
   return (
     <li className='page-item'>

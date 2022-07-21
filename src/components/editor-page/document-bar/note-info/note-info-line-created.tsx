@@ -13,6 +13,7 @@ import { DateTime } from 'luxon'
 
 /**
  * Renders an info line about the creation of the current note.
+ *
  * @param size The size in which the line should be displayed.
  */
 export const NoteInfoLineCreated: React.FC<NoteInfoTimeLineProps> = ({ size }) => {

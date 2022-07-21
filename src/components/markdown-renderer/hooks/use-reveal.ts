@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -26,7 +26,14 @@ const initialSlideState: SlideState = {
   indexHorizontal: 0,
   indexVertical: 0
 }
-
+/**
+ * Initialize reveal.js and renders the document as a reveal.js presentation.
+ *
+ * @param markdownContentLines An array of markdown lines.
+ * @param slideOptions The slide options.
+ * @return The current state of reveal.js
+ * @see https://revealjs.com/
+ */
 export const useReveal = (markdownContentLines: string[], slideOptions?: SlideOptions): REVEAL_STATUS => {
   const [deck, setDeck] = useState<Reveal>()
   const [revealStatus, setRevealStatus] = useState<REVEAL_STATUS>(REVEAL_STATUS.NOT_INITIALISED)

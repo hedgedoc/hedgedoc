@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -18,6 +18,10 @@ enum SyncScrollState {
   UNSYNCED
 }
 
+/**
+ * Renders a button group with two states for the sync scroll buttons.
+ * This makes it possible to activate or deactivate sync scrolling.
+ */
 export const SyncScrollButtons: React.FC = () => {
   const syncScrollEnabled = useApplicationState((state) => state.editorConfig.syncScroll)
     ? SyncScrollState.SYNCED

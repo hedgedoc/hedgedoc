@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,7 @@ import { cypressId } from '../../../utils/cypress-attribute'
 
 /**
  * Renders a paginated table of history entries.
+ *
  * @param entries The history entries to render.
  * @param onPinClick Callback that is fired when the pinning button was clicked for an entry.
  * @param onRemoveEntryClick Callback that is fired when the entry removal button was clicked for an entry.

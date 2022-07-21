@@ -30,6 +30,9 @@ import { CommentButton } from './buttons/comment-button'
 
 const EmojiPickerButton = React.lazy(() => import('./emoji-picker/emoji-picker-button'))
 
+/**
+ * Renders the toolbar of the editor with buttons for formatting or inserting text.
+ */
 export const ToolBar: React.FC = () => {
   return (
     <ButtonToolbar className={`bg-light ${styles.toolbar}`}>

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,9 @@ import { GistMarkdownExtension } from './gist-markdown-extension'
 
 const finalRegex = /^{%gist (\w+\/\w+) ?%}$/
 
+/**
+ * Replacer for legacy hedgedoc 1 gist shortcodes.
+ */
 export const replaceLegacyGistShortCode: RegexOptions = {
   name: 'legacy-gist-short-code',
   regex: finalRegex,

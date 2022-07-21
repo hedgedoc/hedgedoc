@@ -11,7 +11,7 @@ import { EditorView } from '@codemirror/view'
 import type { Extension, SelectionRange } from '@codemirror/state'
 
 /**
- * Provides a callback for codemirror that handles cursor changes
+ * Provides a callback for codemirror that handles cursor changes.
  *
  * @return the generated callback
  */

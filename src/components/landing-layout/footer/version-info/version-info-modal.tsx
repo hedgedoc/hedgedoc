@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,12 @@ import type { BackendVersion } from '../../../../api/config/types'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { cypressId } from '../../../../utils/cypress-attribute'
 
+/**
+ * Renders a modal with the version information.
+ *
+ * @param onHide The callback to call if the modal should be closed
+ * @param show If the modal should be shown.
+ */
 export const VersionInfoModal: React.FC<CommonModalProps> = ({ onHide, show }) => {
   const serverVersion: BackendVersion = useApplicationState((state) => state.config.version)
   const backendVersion = useMemo(() => {

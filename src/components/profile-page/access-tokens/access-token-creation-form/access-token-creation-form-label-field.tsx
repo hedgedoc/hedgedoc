@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,6 +16,7 @@ interface AccessTokenCreationFormLabelFieldProps extends AccessTokenCreationForm
 
 /**
  * Input field for the label of a new token.
+ *
  * @param onChangeLabel Callback for updating the stored label form value.
  * @param formValues The stored form values.
  */

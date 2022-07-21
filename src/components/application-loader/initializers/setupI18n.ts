@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,6 +12,9 @@ import { Settings } from 'luxon'
 import { initReactI18next } from 'react-i18next'
 import { isDevMode } from '../../../utils/test-modes'
 
+/**
+ * Set up the internationalisation framework i18n.
+ */
 export const setUpI18n = async (): Promise<void> => {
   await i18nUse(
     resourcesToBackend((language, namespace, callback) => {

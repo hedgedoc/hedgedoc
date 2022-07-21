@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,7 +13,7 @@ import { NoteInfoLineCreated } from '../editor-page/document-bar/note-info/note-
 import { NoteInfoLineUpdated } from '../editor-page/document-bar/note-info/note-info-line-updated'
 
 /**
- * Renders an infobar with metadata about the current note.
+ * Renders an info bar with metadata about the current note.
  */
 export const DocumentInfobar: React.FC = () => {
   const { t } = useTranslation()

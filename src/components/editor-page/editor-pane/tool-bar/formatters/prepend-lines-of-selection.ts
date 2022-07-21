@@ -12,8 +12,8 @@ import type { ContentEdits } from './types/changes'
  * Creates a copy of the given markdown content lines but modifies the whole selected lines.
  *
  * @param markdownContent The lines of the document to modify
- * @param selection If the selection has no to cursor then only the from line will be modified.
- *                  If the selection has a to cursor then all lines in the selection will be modified.
+ * @param selection If the selection has no to-cursor then only the from-line will be modified.
+ *                  If the selection has a to-cursor then all lines in the selection will be modified.
  * @param modifyLine A function that modifies the selected lines
  * @return the modified copy of lines
  */

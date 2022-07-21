@@ -10,6 +10,9 @@ import { wrapSelection } from '../formatters/wrap-selection'
 import type { ContentFormatter } from '../../../change-content-context/change-content-context'
 import { changeCursorsToWholeLineIfNoToCursor } from '../formatters/utils/change-cursors-to-whole-line-if-no-to-cursor'
 
+/**
+ * Renders a button to create a code fence in the {@link Editor editor}.
+ */
 export const CodeFenceButton: React.FC = () => {
   const formatter: ContentFormatter = useCallback(({ currentSelection, markdownContent }) => {
     return wrapSelection(changeCursorsToWholeLineIfNoToCursor(markdownContent, currentSelection), '```\n', '\n```')

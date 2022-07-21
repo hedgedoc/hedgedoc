@@ -108,7 +108,7 @@ export abstract class ApiRequestBuilder<ResponseType> {
    * Send the prepared API call as a GET request. A default status code of 200 is expected.
    *
    * @return The API response.
-   * @throws Error when the status code does not match the expected one or is defined as in the custom status code
+   * @throws {Error} when the status code does not match the expected one or is defined as in the custom status code
    *         error mapping.
    */
   abstract sendRequest(): Promise<ApiResponse<ResponseType>>

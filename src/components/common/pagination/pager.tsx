@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,6 +13,14 @@ export interface PagerPageProps {
   onLastPageIndexChange: (lastPageIndex: number) => void
 }
 
+/**
+ * Renders a limited number of the given children.
+ *
+ * @param children The children to render
+ * @param numberOfElementsPerPage The number of elements per page
+ * @param pageIndex Which page of the children to render
+ * @param onLastPageIndexChange A callback to notify about changes to the maximal page number
+ */
 export const Pager: React.FC<PropsWithChildren<PagerPageProps>> = ({
   children,
   numberOfElementsPerPage,

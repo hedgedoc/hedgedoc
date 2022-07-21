@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,7 +11,7 @@ import { Logger } from '../../../../utils/logger'
 const log = new Logger('IframeLoader')
 
 /**
- * Generates a callback for a iframe load handler, that enforces a given URL if frame navigates away.
+ * Generates a callback for an iframe load handler, that enforces a given URL if frame navigates away.
  *
  * @param iFrameReference A reference to the iframe react dom element.
  * @param rendererOrigin The base url that should be enforced.

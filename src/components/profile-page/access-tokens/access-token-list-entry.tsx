@@ -21,6 +21,7 @@ export interface AccessTokenListEntryProps {
 
 /**
  * List entry that represents an access token with the possibility to delete it.
+ *
  * @param token The access token.
  * @param onUpdateList Callback that is fired when the deletion modal is closed to update the token list.
  */

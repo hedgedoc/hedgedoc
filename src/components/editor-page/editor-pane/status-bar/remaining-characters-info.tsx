@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,9 +11,6 @@ import { useApplicationState } from '../../../../hooks/common/use-application-st
 
 /**
  * Renders a translated text that shows the number of remaining characters.
- *
- * @param remainingCharacters The number of characters that are still available in this document
- * @param charactersInDocument The total number of characters in the document
  */
 export const RemainingCharactersInfo: React.FC = () => {
   const { t } = useTranslation()

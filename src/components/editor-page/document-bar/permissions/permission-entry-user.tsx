@@ -22,6 +22,7 @@ export interface PermissionEntryUserProps {
 
 /**
  * Permission entry for a user that can be set to read-only or writeable and can be removed.
+ *
  * @param entry The permission entry.
  */
 export const PermissionEntryUser: React.FC<PermissionEntryUserProps> = ({ entry }) => {

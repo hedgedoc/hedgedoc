@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,9 @@ import { Trans, useTranslation } from 'react-i18next'
 import links from '../../../links.json'
 import { ExternalLink } from '../../common/links/external-link'
 
+/**
+ * Renders links to the social networks.
+ */
 export const SocialLink: React.FC = () => {
   useTranslation()
   return (

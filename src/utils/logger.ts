@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,7 +16,7 @@ export enum LogLevel {
 type OutputFunction = (...data: unknown[]) => void
 
 /**
- * Simple logger that prefixes messages with a timestamp and a name
+ * Simple logger that prefixes messages with a timestamp and a name.
  */
 export class Logger {
   private readonly scope: string
@@ -26,7 +26,8 @@ export class Logger {
   }
 
   /**
-   * Logs a debug message
+   * Logs a debug message.
+   *
    * @param data data to log
    */
   debug(...data: unknown[]): void {
@@ -34,7 +35,8 @@ export class Logger {
   }
 
   /**
-   * Logs a normal informative message
+   * Logs a normal informative message.
+   *
    * @param data data to log
    */
   info(...data: unknown[]): void {
@@ -42,7 +44,8 @@ export class Logger {
   }
 
   /**
-   * Logs a warning
+   * Logs a warning.
+   *
    * @param data data to log
    */
   warn(...data: unknown[]): void {
@@ -50,7 +53,8 @@ export class Logger {
   }
 
   /**
-   * Logs an error
+   * Logs an error.
+   *
    * @param data data to log
    */
   error(...data: unknown[]): void {

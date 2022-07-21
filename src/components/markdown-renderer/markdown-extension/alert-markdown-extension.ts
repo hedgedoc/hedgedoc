@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,6 +12,9 @@ import type Renderer from 'markdown-it/lib/renderer'
 
 export const alertLevels = ['success', 'danger', 'info', 'warning']
 
+/**
+ * Adds alert boxes to the markdown rendering.
+ */
 export class AlertMarkdownExtension extends MarkdownExtension {
   public configureMarkdownIt(markdownIt: MarkdownIt): void {
     alertLevels.forEach((level) => {

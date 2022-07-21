@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,6 +19,9 @@ import { SlideshowMarkdownRenderer } from '../markdown-renderer/slideshow-markdo
 import { initialState } from '../../redux/note-details/initial-state'
 import type { RendererFrontmatterInfo } from '../../redux/note-details/types/note-details'
 
+/**
+ * Wraps the markdown rendering in an iframe.
+ */
 export const IframeMarkdownRenderer: React.FC = () => {
   const [markdownContentLines, setMarkdownContentLines] = useState<string[]>([])
   const [scrollState, setScrollState] = useState<ScrollState>({ firstLineInView: 1, scrolledPercentage: 0 })

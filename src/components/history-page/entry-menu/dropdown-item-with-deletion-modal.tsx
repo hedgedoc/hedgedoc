@@ -22,7 +22,7 @@ export interface DropdownItemWithDeletionModalProps {
 }
 
 /**
- * Renders a dropdown item and the corresponding deletion modal
+ * Renders a dropdown item and the corresponding deletion modal.
  *
  * @param onConfirm A callback that fires if the user confirmed the request
  * @param noteTitle The note title to be displayed

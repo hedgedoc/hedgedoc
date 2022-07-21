@@ -10,6 +10,9 @@ import { Trans, useTranslation } from 'react-i18next'
 import { Button } from 'react-bootstrap'
 import Link from 'next/link'
 
+/**
+ * Renders a button to create a new note.
+ */
 export const NewNoteButton: React.FC = () => {
   useTranslation()
 

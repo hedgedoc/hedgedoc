@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,6 +16,15 @@ export interface CsvTableProps {
   tableColumnClassName?: string
 }
 
+/**
+ * Renders a csv table.
+ *
+ * @param code The csv code
+ * @param delimiter The delimiter to be used
+ * @param showHeader If the header should be shown.
+ * @param tableRowClassName Additional class name for the rows.
+ * @param tableColumnClassNameA Additional class name for the columns.
+ */
 export const CsvTable: React.FC<CsvTableProps> = ({
   code,
   delimiter,

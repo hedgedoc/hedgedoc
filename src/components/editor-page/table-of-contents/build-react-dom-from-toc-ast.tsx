@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,15 @@ import { ShowIf } from '../../common/show-if/show-if'
 import { tocSlugify } from './toc-slugify'
 import { JumpAnchor } from '../../markdown-renderer/markdown-extension/link-replacer/jump-anchor'
 
+/**
+ * Generates a React DOM part for the table of contents from the given AST of the document.
+ *
+ * @param toc The abstract syntax tree of the document for TOC generation
+ * @param levelsToShowUnderThis The amount of levels which should be shown below this TOC item
+ * @param headerCounts Map that contains the number of occurrences of single header names to allow suffixing them with a number to make them distinguishable
+ * @param wrapInListItem Whether to wrap the TOC content in a list item
+ * @param baseUrl The base URL used for generating absolute links to the note with the correct slug anchor
+ */
 export const buildReactDomFromTocAst = (
   toc: TocAst,
   levelsToShowUnderThis: number,

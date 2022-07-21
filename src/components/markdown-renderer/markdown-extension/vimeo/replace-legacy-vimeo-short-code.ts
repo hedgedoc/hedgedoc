@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,11 @@ import { VimeoMarkdownExtension } from './vimeo-markdown-extension'
 import type MarkdownIt from 'markdown-it'
 import markdownItRegex from 'markdown-it-regex'
 
+/**
+ * Configure the given {@link MarkdownIt} to render legacy hedgedoc 1 vimeo short codes as embeddings.
+ *
+ * @param markdownIt The {@link MarkdownIt} to configure
+ */
 const replaceLegacyVimeoShortCode: RegexOptions = {
   name: 'legacy-vimeo-short-code',
   regex: /^{%vimeo ([\d]{6,11}) ?%}$/,

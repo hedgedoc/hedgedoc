@@ -11,14 +11,14 @@ import { ApiRequestBuilderWithBody } from './api-request-builder-with-body'
  *
  * @param ResponseType The type of the expected response.
  * @param RequestBodyType The type of the request body
- * @see {ApiRequestBuilder}
+ * @see ApiRequestBuilder
  */
 export class PostApiRequestBuilder<ResponseType, RequestBodyType> extends ApiRequestBuilderWithBody<
   ResponseType,
   RequestBodyType
 > {
   /**
-   * @see {ApiRequestBuilder#sendRequest}
+   * @see ApiRequestBuilder#sendRequest
    */
   sendRequest(): Promise<ApiResponse<ResponseType>> {
     return this.sendRequestAndVerifyResponse('POST', 201)

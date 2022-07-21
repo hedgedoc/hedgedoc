@@ -11,14 +11,14 @@ import { ApiRequestBuilderWithBody } from './api-request-builder-with-body'
  *
  * @param ResponseType The type of the expected response. Defaults to no response body.
  * @param RequestBodyType The type of the request body. Defaults to no request body.
- * @see {ApiRequestBuilder}
+ * @see ApiRequestBuilder
  */
 export class DeleteApiRequestBuilder<ResponseType = void, RequestBodyType = unknown> extends ApiRequestBuilderWithBody<
   ResponseType,
   RequestBodyType
 > {
   /**
-   * @see {ApiRequestBuilder#sendRequest}
+   * @see ApiRequestBuilder#sendRequest
    */
   sendRequest(): Promise<ApiResponse<ResponseType>> {
     return this.sendRequestAndVerifyResponse('DELETE', 204)

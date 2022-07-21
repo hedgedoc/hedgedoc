@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,9 @@ import links from '../../../../links.json'
 import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
 import { TranslatedInternalLink } from '../../../common/links/translated-internal-link'
 
+/**
+ * Renders a bunch of links, where further help can be requested.
+ */
 export const LinksTabContent: React.FC = () => {
   useTranslation()
 

@@ -11,8 +11,8 @@ import { createNumberRangeArray } from '../../../../common/number-range/number-r
  *
  * @param rows The number of table rows
  * @param columns The number of table columns
- * @throws Error if an invalid table size was given
  * @return The created Markdown table
+ * @throws Error if an invalid table size was given
  */
 export const createMarkdownTable = (rows: number, columns: number): string => {
   if (rows <= 0) {

@@ -14,7 +14,7 @@ import type { Doc } from 'yjs'
 import type { Awareness } from 'y-protocols/awareness'
 
 /**
- * Handles the communication with the realtime endpoint of the backend and synchronizes the given y-doc and awareness with other clients..
+ * Handles the communication with the realtime endpoint of the backend and synchronizes the given y-doc and awareness with other clients.
  */
 export class WebsocketConnection extends WebsocketTransporter {
   constructor(url: URL, doc: Doc, awareness: Awareness) {

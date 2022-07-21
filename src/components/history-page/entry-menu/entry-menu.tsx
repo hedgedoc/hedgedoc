@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -27,6 +27,7 @@ export interface EntryMenuProps {
 
 /**
  * Renders the dropdown menu for a history entry containing options like removing the entry or deleting the note.
+ *
  * @param id The unique identifier of the history entry.
  * @param title The title of the note of the history entry.
  * @param origin The origin of the entry. Must be either {@link HistoryEntryOrigin.LOCAL} or {@link HistoryEntryOrigin.REMOTE}.

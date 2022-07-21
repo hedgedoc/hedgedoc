@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,6 +16,12 @@ import { AsyncLoadingBoundary } from '../../../common/async-loading-boundary'
 
 const log = new Logger('VegaChart')
 
+/**
+ * Renders a vega lite diagram.
+ *
+ * @param code The code for the diagram.
+ * @see https://vega.github.io/vega-lite/
+ */
 export const VegaLiteChart: React.FC<CodeProps> = ({ code }) => {
   const diagramContainer = useRef<HTMLDivElement>(null)
   const { t } = useTranslation()

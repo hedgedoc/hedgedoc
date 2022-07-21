@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,7 +15,7 @@ import { KatexMarkdownExtension } from './katex-markdown-extension'
  * Checks if the given node is a KaTeX block.
  *
  * @param node the node to check
- * @return The given node if it is a KaTeX block element, undefined otherwise.
+ * @return The given node if it is a KaTeX block element, {@link undefined} otherwise.
  */
 const containsKatexBlock = (node: Element): Element | undefined => {
   if (node.name !== 'p' || !node.children || node.children.length === 0) {
@@ -31,7 +31,7 @@ const containsKatexBlock = (node: Element): Element | undefined => {
  *
  * @param node the node to check
  * @param expectedInline defines if the found katex element is expected to be an inline or block element.
- * @return {@code true} if the given node is a katex element.
+ * @return {@link true} if the given node is a katex element.
  */
 const isKatexTag = (node: Element, expectedInline: boolean) => {
   return (

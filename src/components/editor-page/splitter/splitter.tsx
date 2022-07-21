@@ -21,9 +21,10 @@ export interface SplitterProps {
 }
 
 /**
- * Checks if the given {@link Event} is a {@link MouseEvent}
+ * Checks if the given {@link Event} is a {@link MouseEvent}.
+ *
  * @param event the event to check
- * @return {@code true} if the given event is a {@link MouseEvent}
+ * @return {@link true} if the given event is a {@link MouseEvent}
  */
 const isMouseEvent = (event: Event): event is MouseEvent => {
   return (event as MouseEvent).buttons !== undefined
@@ -34,10 +35,10 @@ const isLeftMouseButtonClicked = (mouseEvent: MouseEvent): boolean => {
 }
 
 /**
- * Extracts the absolute horizontal position of the mouse or touch point from the event.
- * If no position could be found or
+ * Extracts the absolute horizontal position of the mouse or first touch point from the event.
  *
- * @param moveEvent
+ * @param moveEvent The mouse or touch event that contains a pointer position
+ * @return the extracted horizontal position or {@link undefined} if no position could be extracted
  */
 const extractHorizontalPosition = (moveEvent: MouseEvent | TouchEvent): number | undefined => {
   if (isMouseEvent(moveEvent)) {
@@ -70,14 +71,14 @@ export const Splitter: React.FC<SplitterProps> = ({
   const splitContainer = useRef<HTMLDivElement>(null)
 
   /**
-   * Starts the splitter resizing
+   * Starts the splitter resizing.
    */
   const onStartResizing = useCallback(() => {
     resizingInProgress.current = true
   }, [])
 
   /**
-   * Stops the splitter resizing
+   * Stops the splitter resizing.
    */
   const onStopResizing = useCallback(() => {
     if (resizingInProgress.current) {

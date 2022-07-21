@@ -19,7 +19,7 @@ import type { ContentFormatter } from '../../change-content-context/change-conte
 import { useCodeMirrorReference } from '../../change-content-context/change-content-context'
 
 /**
- * Processes the upload of the given file and inserts the correct Markdown code
+ * Processes the upload of the given file and inserts the correct Markdown code.
  *
  * @param view the codemirror instance that is used to insert the Markdown code
  * @param file The file to upload

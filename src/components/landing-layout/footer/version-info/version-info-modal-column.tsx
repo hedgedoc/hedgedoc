@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -18,6 +18,15 @@ export interface VersionInfoModalColumnProps {
   issueTrackerLink: string
 }
 
+/**
+ * Renders a column in the {@link VersionInfoModal}.
+ *
+ * @param titleI18nKey
+ * @param issueTrackerLink
+ * @param sourceCodeLink
+ * @param version
+ * @constructor
+ */
 export const VersionInfoModalColumn: React.FC<VersionInfoModalColumnProps> = ({
   titleI18nKey,
   issueTrackerLink,

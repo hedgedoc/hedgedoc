@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -21,6 +21,12 @@ interface MermaidParseError {
 
 let mermaidInitialized = false
 
+/**
+ * Renders a mermaid diagram.
+ *
+ * @param code The code for the diagram.
+ * @see https://mermaid-js.github.io/mermaid/#/
+ */
 export const MermaidChart: React.FC<CodeProps> = ({ code }) => {
   const diagramContainer = useRef<HTMLDivElement>(null)
   const [error, setError] = useState<string>()

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -25,6 +25,11 @@ const shortcutHandler = (event: KeyboardEvent): void => {
   }
 }
 
+/**
+ * Adds global view mode keyboard shortcuts and removes them again, if the hook is dismissed.
+ *
+ * @see shortcutHandler
+ */
 export const useViewModeShortcuts = (): void => {
   useEffect(() => {
     document.addEventListener('keydown', shortcutHandler, false)

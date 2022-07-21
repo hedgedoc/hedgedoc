@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,9 @@ import marked from 'markdown-it-mark'
 import footnote from 'markdown-it-footnote'
 import { imageSize } from '@hedgedoc/markdown-it-image-size'
 
+/**
+ * Adds some common markdown syntaxes to the markdown rendering.
+ */
 export class GenericSyntaxMarkdownExtension extends MarkdownExtension {
   public configureMarkdownIt(markdownIt: MarkdownIt): void {
     abbreviation(markdownIt)

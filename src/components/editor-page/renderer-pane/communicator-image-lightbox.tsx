@@ -14,6 +14,9 @@ import { CommunicationMessageType } from '../../render-page/window-post-message-
 import { useEditorReceiveHandler } from '../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
 import { useBooleanState } from '../../../hooks/common/use-boolean-state'
 
+/**
+ * Handles messages from the render in the iframe to open a {@link ImageLightboxModal}.
+ */
 export const CommunicatorImageLightbox: React.FC = () => {
   const [lightboxDetails, setLightboxDetails] = useState<ImageDetails | undefined>(undefined)
   const [modalVisibility, showModal, closeModal] = useBooleanState()

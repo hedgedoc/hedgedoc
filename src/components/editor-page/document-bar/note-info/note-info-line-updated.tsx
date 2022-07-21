@@ -15,6 +15,7 @@ import { DateTime } from 'luxon'
 
 /**
  * Renders an info line about the last update of the current note.
+ *
  * @param size The size in which line and user avatar should be displayed.
  */
 export const NoteInfoLineUpdated: React.FC<NoteInfoTimeLineProps> = ({ size }) => {

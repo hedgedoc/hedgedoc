@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,6 +12,10 @@ import { useApplicationState } from '../../../hooks/common/use-application-state
 import type { HistoryEntryWithOrigin } from '../../../api/history/types'
 import { HistoryEntryOrigin } from '../../../api/history/types'
 
+/**
+ * An effect that uses information of the current note state to update a local {@link HistoryEntryWithOrigin history entry}.
+ * The entry is updated when the title or tags of the note change.
+ */
 export const useUpdateLocalHistoryEntry = (): void => {
   const id = useApplicationState((state) => state.noteDetails.id)
   const userExists = useApplicationState((state) => !!state.user)

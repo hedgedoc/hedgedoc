@@ -14,6 +14,12 @@ export interface SimpleMarkdownRendererProps {
   extensions: MarkdownExtension[]
 }
 
+/**
+ * A markdown renderer for tests.
+ *
+ * @param content The content to be rendered.
+ * @param extensions The {@link MarkdownExtension MarkdownExtensions} to use for rendering.
+ */
 export const TestMarkdownRenderer: React.FC<SimpleMarkdownRendererProps> = ({ content, extensions }) => {
   const lines = useMemo(() => content.split('\n'), [content])
   const dom = useConvertMarkdownToReactDom(lines, extensions, true, false)

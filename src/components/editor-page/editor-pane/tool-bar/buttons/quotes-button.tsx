@@ -9,6 +9,9 @@ import { ToolbarButton } from '../toolbar-button'
 import type { ContentFormatter } from '../../../change-content-context/change-content-context'
 import { prependLinesOfSelection } from '../formatters/prepend-lines-of-selection'
 
+/**
+ * Renders a button to insert a quotation in the {@link Editor editor}.
+ */
 export const QuotesButton: React.FC = () => {
   const formatter: ContentFormatter = useCallback(({ currentSelection, markdownContent }) => {
     return prependLinesOfSelection(markdownContent, currentSelection, () => `> `)

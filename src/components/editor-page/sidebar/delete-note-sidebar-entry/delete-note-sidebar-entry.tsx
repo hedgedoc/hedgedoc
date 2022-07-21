@@ -19,7 +19,7 @@ import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
 /**
  * Sidebar entry that can be used to delete the current note.
  *
- * @param hide {@code true} if the entry shouldn't be visible
+ * @param hide {@link true} if the entry shouldn't be visible
  * @param className Additional css class names for the sidebar entry
  */
 export const DeleteNoteSidebarEntry: React.FC<PropsWithChildren<SpecificSidebarEntryProps>> = ({ hide, className }) => {

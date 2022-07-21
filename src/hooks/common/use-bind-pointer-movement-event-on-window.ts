@@ -15,7 +15,7 @@ import { useEffect } from 'react'
 export const useBindPointerMovementEventOnWindow = (
   onPointerMovement: (event: MouseEvent | TouchEvent) => void,
   onPointerRelease: () => void
-) => {
+): void => {
   useEffect(() => {
     const pointerMovement = onPointerMovement
     const pointerRelease = onPointerRelease

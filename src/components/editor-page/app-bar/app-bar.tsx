@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -29,6 +29,11 @@ export interface AppBarProps {
   mode: AppBarMode
 }
 
+/**
+ * Renders the app bar.
+ *
+ * @param mode Which mode the app bar should be rendered in. This mainly adds / removes buttons for the editor.
+ */
 export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
   const userExists = useApplicationState((state) => !!state.user)
   const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)

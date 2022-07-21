@@ -12,6 +12,7 @@ export class ApiResponse<ResponseType> {
 
   /**
    * Initializes a new API response instance based on an HTTP response.
+   *
    * @param response The HTTP response from the fetch call.
    */
   constructor(response: Response) {
@@ -31,7 +32,7 @@ export class ApiResponse<ResponseType> {
    * Returns the response as parsed JSON. An error will be thrown if the response is not JSON encoded.
    *
    * @return The parsed JSON response.
-   * @throws Error if the response is not JSON encoded.
+   * @throws {Error} if the response is not JSON encoded.
    */
   async asParsedJsonObject(): Promise<ResponseType> {
     if (!this.response.headers.get('Content-Type')?.startsWith('application/json')) {

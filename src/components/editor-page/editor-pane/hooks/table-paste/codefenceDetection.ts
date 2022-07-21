@@ -9,7 +9,7 @@
  *
  * @param markdownContent The markdown content whose content should be checked
  * @param cursorPosition The cursor position that may or may not be in a code fence
- * @return {@code true} if the given cursor position is in a code fence
+ * @return {@link true} if the given cursor position is in a code fence
  */
 export const isCursorInCodeFence = (markdownContent: string, cursorPosition: number): boolean => {
   const lines = markdownContent.slice(0, cursorPosition).split('\n')

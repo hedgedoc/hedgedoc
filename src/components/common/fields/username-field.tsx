@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,7 @@ import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Renders an input field for the username when registering.
+ *
  * @param onChange Hook that is called when the entered username changes.
  * @param value The currently entered username.
  */

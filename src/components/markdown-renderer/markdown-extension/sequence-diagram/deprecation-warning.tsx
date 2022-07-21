@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,9 @@ import links from '../../../../links.json'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
 
+/**
+ * Renders a deprecation warning.
+ */
 export const DeprecationWarning: React.FC = () => {
   useTranslation()
 

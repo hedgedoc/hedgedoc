@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,8 +10,6 @@ import { useApplicationState } from '../../../../hooks/common/use-application-st
 
 /**
  * Renders a translated text that shows the number of lines in the document.
- *
- * @param linesInDocument The number of lines in the document
  */
 export const NumberOfLinesInDocumentInfo: React.FC = () => {
   useTranslation()

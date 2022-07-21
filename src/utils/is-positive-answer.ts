@@ -5,7 +5,8 @@
  */
 
 /**
- * Checks if the given string is a positive answer (yes, true or 1)
+ * Checks if the given string is a positive answer (yes, true or 1).
+ *
  * @param value The value to check
  */
 export const isPositiveAnswer = (value: string) => {

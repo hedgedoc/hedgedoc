@@ -18,6 +18,7 @@ export interface UserLineProps {
 
 /**
  * Represents a user in the realtime activity status.
+ *
  * @param username The name of the user to show.
  * @param color The color of the user's edits.
  * @param status The user's current online status.

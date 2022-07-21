@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,6 +12,11 @@ import { Footer } from './footer/footer'
 import { HeaderBar } from './navigation/header-bar/header-bar'
 import { UiNotifications } from '../notifications/ui-notifications'
 
+/**
+ * Renders the layout for both intro and history page.
+ *
+ * @param children The children that should be rendered on the page.
+ */
 export const LandingLayout: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <Fragment>

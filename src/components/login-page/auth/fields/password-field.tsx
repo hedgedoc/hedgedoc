@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 
 /**
  * Renders an input field for the password of a user.
+ *
  * @param onChange Hook that is called when the entered password changes.
  * @param invalid True when the entered password is invalid, false otherwise.
  */

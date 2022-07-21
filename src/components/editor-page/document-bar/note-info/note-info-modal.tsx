@@ -17,6 +17,7 @@ import { NoteInfoLineContributors } from './note-info-line-contributors'
 
 /**
  * Modal that shows informational data about the current note.
+ *
  * @param show true when the modal should be visible, false otherwise.
  * @param onHide Callback that is fired when the modal is going to be closed.
  */

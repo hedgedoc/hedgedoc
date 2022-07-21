@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,6 +14,14 @@ import type { SpecificSidebarMenuProps } from '../types'
 import { DocumentSidebarMenuSelection } from '../types'
 import { cypressId } from '../../../../utils/cypress-attribute'
 
+/**
+ * Renders the export menu for the sidebar.
+ *
+ * @param className Additional class names given to the menu button
+ * @param menuId The id of the menu
+ * @param onClick The callback, that should be called when the menu button is pressed
+ * @param selectedMenuId The currently selected menu id
+ */
 export const ExportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   className,
   menuId,

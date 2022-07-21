@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,6 +16,7 @@ import Link from 'next/link'
 
 /**
  * Renders a history entry as a table row.
+ *
  * @param entry The history entry.
  * @param onPinClick Callback that is fired when the pinning button was clicked.
  * @param onRemoveEntryClick Callback that is fired when the entry removal button was clicked.

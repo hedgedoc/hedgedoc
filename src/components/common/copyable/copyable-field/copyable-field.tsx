@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -21,7 +21,7 @@ export interface CopyableFieldProps {
 const log = new Logger('CopyableField')
 
 /**
- * Provides an input field with an attached copy button and a share button (if supported by the browser)
+ * Provides an input field with an attached copy button and a share button (if supported by the browser).
  *
  * @param content The content to present
  * @param shareOriginUrl The URL of the page to which the shared content should be linked. If this value is omitted then the share button won't be shown.

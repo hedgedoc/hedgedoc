@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,6 +13,7 @@ const DISPLAY_MAX_USERS_PER_REVISION = 9
 
 /**
  * Downloads a given revision's content as markdown document in the browser.
+ *
  * @param noteId The id of the note from which to download the revision.
  * @param revision The revision details object containing the content to download.
  */
@@ -25,6 +26,7 @@ export const downloadRevision = (noteId: string, revision: RevisionDetails | nul
 
 /**
  * Fetches user details for the given usernames while returning a maximum of 9 users.
+ *
  * @param usernames The list of usernames to fetch.
  * @throws {Error} in case the user-data request failed.
  * @return An array of user details.

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -30,6 +30,20 @@ export interface ModalContentProps {
 
 export type CommonModalProps = PropsWithDataCypressId & ModalVisibilityProps & ModalContentProps
 
+/**
+ * Renders a generic modal.
+ *
+ * @param show If the modal should be shown or not.
+ * @param onHide The callback to hide the modal again
+ * @param title The title in the header of the modal
+ * @param showCloseButton If a close button should be shown
+ * @param titleIcon An optional title icon
+ * @param additionalClasses Additional class names for the modal
+ * @param modalSize The modal size
+ * @param children The children to render into the modal.
+ * @param titleIsI18nKey If the title is a i18n key and should be used as such
+ * @param props Additional props directly given to the modal
+ */
 export const CommonModal: React.FC<PropsWithChildren<CommonModalProps>> = ({
   show,
   onHide,

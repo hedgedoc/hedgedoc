@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,9 @@ import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { cypressId } from '../../../utils/cypress-attribute'
 import Link from 'next/link'
 
+/**
+ * Renders a button to create a new note as a logged in user.
+ */
 export const NewUserNoteButton: React.FC = () => {
   const { t } = useTranslation()
   return (

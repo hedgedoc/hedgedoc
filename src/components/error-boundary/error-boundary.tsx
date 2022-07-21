@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,11 @@ import { Logger } from '../../utils/logger'
 
 const log = new Logger('ErrorBoundary')
 
+/**
+ * An error boundary for the whole application.
+ * The text in this is not translated, because the error could be part of the translation framework,
+ * and we still want to display something to the user that's meaningful (and searchable).
+ */
 export class ErrorBoundary extends Component<PropsWithChildren<unknown>> {
   state: {
     hasError: boolean

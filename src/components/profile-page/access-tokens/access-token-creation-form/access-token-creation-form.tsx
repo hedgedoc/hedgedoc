@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -24,6 +24,7 @@ interface NewTokenFormValues {
 
 /**
  * Form for creating a new access token.
+ *
  * @param onUpdateList Callback that is fired when a token was created to update the list.
  */
 export const AccessTokenCreationForm: React.FC<AccessTokenUpdateProps> = ({ onUpdateList }) => {

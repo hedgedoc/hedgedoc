@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,7 @@ interface PasswordAgainFieldProps extends CommonFieldProps {
 
 /**
  * Renders an input field for typing the new password again when registering.
+ *
  * @param onChange Hook that is called when the entered retype of the password changes.
  * @param value The currently entered retype of the password.
  * @param password The password entered into the password input field.

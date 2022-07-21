@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,6 +17,14 @@ export interface PinButtonProps {
   className?: string
 }
 
+/**
+ * Renders a button with a pin icon.
+ *
+ * @param isPinned The initial state of this button.
+ * @param onPinClick The callback, that is fired when the button is clicked.
+ * @param isDark If the button should be rendered in dark or not.
+ * @param className Additional classes directly given to the button
+ */
 export const PinButton: React.FC<PinButtonProps> = ({ isPinned, onPinClick, isDark, className }) => {
   return (
     <Button
