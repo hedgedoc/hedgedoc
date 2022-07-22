@@ -7,16 +7,24 @@ import { EventEmitter } from 'events';
 import { Mock } from 'ts-mockery';
 import TypedEmitter from 'typed-emitter';
 
+import { Note } from '../../../notes/note.entity';
 import { RealtimeNote, RealtimeNoteEvents } from '../realtime-note';
 import { WebsocketAwareness } from '../websocket-awareness';
 import { WebsocketDoc } from '../websocket-doc';
+import { mockAwareness } from './mock-awareness';
+import { mockWebsocketDoc } from './mock-websocket-doc';
 
 class MockRealtimeNote extends (EventEmitter as new () => TypedEmitter<RealtimeNoteEvents>) {
   constructor(
+    private note: Note,
     private doc: WebsocketDoc,
     private awareness: WebsocketAwareness,
   ) {
     super();
+  }
+
+  public getNote(): Note {
+    return this.note;
   }
 
   public getYDoc(): WebsocketDoc {
@@ -30,6 +38,10 @@ class MockRealtimeNote extends (EventEmitter as new () => TypedEmitter<RealtimeN
   public removeClient(): void {
     //left blank for mock
   }
+
+  public destroy(): void {
+    //left blank for mock
+  }
 }
 
 /**
@@ -38,8 +50,15 @@ class MockRealtimeNote extends (EventEmitter as new () => TypedEmitter<RealtimeN
  * @param awareness Defines the return value for `getAwareness`
  */
 export function mockRealtimeNote(
-  doc: WebsocketDoc,
-  awareness: WebsocketAwareness,
+  note?: Note,
+  doc?: WebsocketDoc,
+  awareness?: WebsocketAwareness,
 ): RealtimeNote {
-  return Mock.from<RealtimeNote>(new MockRealtimeNote(doc, awareness));
+  return Mock.from<RealtimeNote>(
+    new MockRealtimeNote(
+      note ?? Mock.of<Note>(),
+      doc ?? mockWebsocketDoc(),
+      awareness ?? mockAwareness(),
+    ),
+  );
 }

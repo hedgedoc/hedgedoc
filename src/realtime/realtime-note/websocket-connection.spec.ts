@@ -9,6 +9,7 @@ import { Mock } from 'ts-mockery';
 import WebSocket from 'ws';
 import * as yProtocolsAwarenessModule from 'y-protocols/awareness';
 
+import { Note } from '../../notes/note.entity';
 import { User } from '../../users/user.entity';
 import * as realtimeNoteModule from './realtime-note';
 import { RealtimeNote } from './realtime-note';
@@ -38,7 +39,11 @@ describe('websocket connection', () => {
     jest.resetModules();
     mockedDoc = mockWebsocketDoc();
     mockedAwareness = mockAwareness();
-    mockedRealtimeNote = mockRealtimeNote(mockedDoc, mockedAwareness);
+    mockedRealtimeNote = mockRealtimeNote(
+      Mock.of<Note>(),
+      mockedDoc,
+      mockedAwareness,
+    );
     mockedWebsocket = Mock.of<WebSocket>({});
     mockedUser = Mock.of<User>({});
     mockedWebsocketTransporter = mockWebsocketTransporter();

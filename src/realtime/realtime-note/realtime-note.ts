@@ -8,11 +8,13 @@ import { EventEmitter } from 'events';
 import TypedEventEmitter, { EventMap } from 'typed-emitter';
 import { Awareness } from 'y-protocols/awareness';
 
+import { Note } from '../../notes/note.entity';
 import { WebsocketAwareness } from './websocket-awareness';
 import { WebsocketConnection } from './websocket-connection';
 import { WebsocketDoc } from './websocket-doc';
 
 export type RealtimeNoteEvents = {
+  beforeDestroy: () => void;
   destroy: () => void;
 };
 
@@ -29,12 +31,12 @@ export class RealtimeNote extends (EventEmitter as TypedEventEmitterConstructor<
   private readonly clients = new Set<WebsocketConnection>();
   private isClosing = false;
 
-  constructor(private readonly noteId: string, initialContent: string) {
+  constructor(private readonly note: Note, initialContent: string) {
     super();
-    this.logger = new Logger(`${RealtimeNote.name} ${noteId}`);
+    this.logger = new Logger(`${RealtimeNote.name} ${note.id}`);
     this.websocketDoc = new WebsocketDoc(this, initialContent);
     this.websocketAwareness = new WebsocketAwareness(this);
-    this.logger.debug(`New realtime session for note ${noteId} created.`);
+    this.logger.debug(`New realtime session for note ${note.id} created.`);
   }
 
   /**
@@ -76,6 +78,7 @@ export class RealtimeNote extends (EventEmitter as TypedEventEmitterConstructor<
       throw new Error('Note already destroyed');
     }
     this.logger.debug('Destroying realtime note.');
+    this.emit('beforeDestroy');
     this.isClosing = true;
     this.websocketDoc.destroy();
     this.websocketAwareness.destroy();
@@ -117,5 +120,14 @@ export class RealtimeNote extends (EventEmitter as TypedEventEmitterConstructor<
    */
   public getAwareness(): Awareness {
     return this.websocketAwareness;
+  }
+
+  /**
+   * Get the {@link Note note} that is edited.
+   *
+   * @return the {@link Note note}
+   */
+  public getNote(): Note {
+    return this.note;
   }
 }

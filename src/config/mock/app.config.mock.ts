@@ -15,5 +15,6 @@ export default registerAs(
     rendererOrigin: 'md-renderer.example.com',
     port: 3000,
     loglevel: Loglevel.ERROR,
+    persistInterval: 10,
   }),
 );

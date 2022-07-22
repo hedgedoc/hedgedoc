@@ -14,6 +14,7 @@ export interface AppConfig {
   rendererOrigin: string;
   port: number;
   loglevel: Loglevel;
+  persistInterval: number;
 }
 
 const schema = Joi.object({
@@ -41,6 +42,12 @@ const schema = Joi.object({
     .default(Loglevel.WARN)
     .optional()
     .label('HD_LOGLEVEL'),
+  persistInterval: Joi.number()
+    .integer()
+    .min(0)
+    .default(10)
+    .optional()
+    .label('HD_PERSIST_INTERVAL'),
 });
 
 export default registerAs('appConfig', () => {
@@ -50,6 +57,7 @@ export default registerAs('appConfig', () => {
       rendererOrigin: process.env.HD_RENDERER_ORIGIN,
       port: parseOptionalNumber(process.env.PORT),
       loglevel: process.env.HD_LOGLEVEL,
+      persistInterval: process.env.HD_PERSIST_INTERVAL,
     },
     {
       abortEarly: false,

@@ -42,6 +42,13 @@ async function bootstrap(): Promise<void> {
   // Setup code must be added there!
   await setupApp(app, appConfig, authConfig, mediaConfig, logger);
 
+  /**
+   * enableShutdownHooks consumes memory by starting listeners. In cases where you are running multiple Nest apps in a
+   * single Node process (e.g., when running parallel tests with Jest), Node may complain about excessive listener processes.
+   * For this reason, enableShutdownHooks is not enabled in the tests.
+   */
+  app.enableShutdownHooks();
+
   // Start the server
   await app.listen(appConfig.port);
   logger.log(`Listening on port ${appConfig.port}`, 'AppBootstrap');

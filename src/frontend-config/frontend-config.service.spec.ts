@@ -168,6 +168,7 @@ describe('FrontendConfigService', () => {
           rendererOrigin: domain,
           port: 3000,
           loglevel: Loglevel.ERROR,
+          persistInterval: 10,
         };
         const authConfig: AuthConfig = {
           ...emptyAuthConfig,
@@ -322,6 +323,7 @@ describe('FrontendConfigService', () => {
                   rendererOrigin: renderOrigin ?? domain,
                   port: 3000,
                   loglevel: Loglevel.ERROR,
+                  persistInterval: 10,
                 };
                 const authConfig: AuthConfig = {
                   ...emptyAuthConfig,

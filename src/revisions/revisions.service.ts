@@ -1,10 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { createPatch } from 'diff';
 import { Equal, Repository } from 'typeorm';
 
 import { NotInDBError } from '../errors/errors';
@@ -51,10 +52,10 @@ export class RevisionsService {
         note: Equal(note),
       },
     });
-    const latestRevison = await this.getLatestRevision(note);
+    const latestRevision = await this.getLatestRevision(note);
     // get all revisions except the latest
     const oldRevisions = revisions.filter(
-      (item) => item.id !== latestRevison.id,
+      (item) => item.id !== latestRevision.id,
     );
     // delete the old revisions
     return await this.revisionRepository.remove(oldRevisions);
@@ -83,21 +84,6 @@ export class RevisionsService {
       order: {
         createdAt: 'DESC',
         id: 'DESC',
-      },
-    });
-    if (revision === null) {
-      throw new NotInDBError(`Revision for note ${note.id} not found.`);
-    }
-    return revision;
-  }
-
-  async getFirstRevision(note: Note): Promise<Revision> {
-    const revision = await this.revisionRepository.findOne({
-      where: {
-        note: Equal(note),
-      },
-      order: {
-        createdAt: 'ASC',
       },
     });
     if (revision === null) {
@@ -156,14 +142,22 @@ export class RevisionsService {
     };
   }
 
-  createRevision(content: string): Revision {
-    // TODO: Add previous revision
-    // TODO: Calculate patch
+  async createRevision(
+    note: Note,
+    newContent: string,
+  ): Promise<Revision | undefined> {
     // TODO: Save metadata
-    return this.revisionRepository.create({
-      content: content,
-      length: content.length,
-      patch: '',
-    });
+    const latestRevision = await this.getLatestRevision(note);
+    const oldContent = latestRevision.content;
+    if (oldContent === newContent) {
+      return undefined;
+    }
+    const patch = createPatch(
+      'markdownContent',
+      latestRevision.content,
+      newContent,
+    );
+    const revision = Revision.create(newContent, patch, note);
+    return await this.revisionRepository.save(revision);
   }
 }

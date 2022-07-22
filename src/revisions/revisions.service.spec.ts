@@ -6,6 +6,7 @@
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Mock } from 'ts-mockery';
 import { Repository } from 'typeorm';
 
 import { AuthToken } from '../auth/auth-token.entity';
@@ -99,7 +100,7 @@ describe('RevisionsService', () => {
 
   describe('getRevision', () => {
     it('returns a revision', async () => {
-      const note = {} as Note;
+      const note = Mock.of<Note>({});
       const revision = Revision.create('', '', note) as Revision;
       jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revision);
       expect(await service.getRevision({} as Note, 1)).toEqual(revision);
@@ -190,6 +191,50 @@ describe('RevisionsService', () => {
       const userInfo = await service.getRevisionUserInfo(revision);
       expect(userInfo.usernames.length).toEqual(1);
       expect(userInfo.anonymousUserCount).toEqual(2);
+    });
+  });
+
+  describe('createRevision', () => {
+    it('creates a new revision', async () => {
+      const note = Mock.of<Note>({});
+      const oldContent = 'old content\n';
+      const newContent = 'new content\n';
+
+      const oldRevision = Mock.of<Revision>({ content: oldContent });
+      jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(oldRevision);
+      jest
+        .spyOn(revisionRepo, 'save')
+        .mockImplementation((revision) =>
+          Promise.resolve(revision as Revision),
+        );
+
+      const createdRevision = await service.createRevision(note, newContent);
+      expect(createdRevision).not.toBeUndefined();
+      expect(createdRevision?.content).toBe(newContent);
+      await expect(createdRevision?.note).resolves.toBe(note);
+      expect(createdRevision?.patch).toMatchInlineSnapshot(`
+        "Index: markdownContent
+        ===================================================================
+        --- markdownContent
+        +++ markdownContent
+        @@ -1,1 +1,1 @@
+        -old content
+        +new content
+        "
+      `);
+    });
+
+    it("won't create a revision if content is unchanged", async () => {
+      const note = Mock.of<Note>({});
+      const oldContent = 'old content\n';
+
+      const oldRevision = Mock.of<Revision>({ content: oldContent });
+      jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(oldRevision);
+      const saveSpy = jest.spyOn(revisionRepo, 'save').mockImplementation();
+
+      const createdRevision = await service.createRevision(note, oldContent);
+      expect(createdRevision).toBeUndefined();
+      expect(saveSpy).not.toBeCalled();
     });
   });
 });

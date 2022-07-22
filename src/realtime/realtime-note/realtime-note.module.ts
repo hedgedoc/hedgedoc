@@ -4,12 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Module } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
 
 import { LoggerModule } from '../../logger/logger.module';
 import { PermissionsModule } from '../../permissions/permissions.module';
 import { RevisionsModule } from '../../revisions/revisions.module';
 import { SessionModule } from '../../session/session.module';
 import { UsersModule } from '../../users/users.module';
+import { RealtimeNoteStore } from './realtime-note-store.service';
 import { RealtimeNoteService } from './realtime-note.service';
 
 @Module({
@@ -19,8 +21,9 @@ import { RealtimeNoteService } from './realtime-note.service';
     PermissionsModule,
     SessionModule,
     RevisionsModule,
+    ScheduleModule.forRoot(),
   ],
-  exports: [RealtimeNoteService],
-  providers: [RealtimeNoteService],
+  exports: [RealtimeNoteService, RealtimeNoteStore],
+  providers: [RealtimeNoteService, RealtimeNoteStore],
 })
 export class RealtimeNoteModule {}
