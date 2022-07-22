@@ -19,14 +19,15 @@ We also provide an `.env.example` file containing a minimal configuration in the
 
 ## General
 
-| environment variable     | default   | example                      | description                                                                                       |
-|--------------------------|-----------|------------------------------|---------------------------------------------------------------------------------------------------|
-| `HD_DOMAIN`              | -         | `https://md.example.com`     | The URL the HedgeDoc instance runs on.                                                            |
-| `PORT`                   | 3000      |                              | The port the HedgeDoc instance runs on.                                                           |
-| `HD_RENDERER_ORIGIN`     | HD_DOMAIN |                              | The URL the renderer runs on. If omitted this will be same as `HD_DOMAIN`.                        |
-| `HD_LOGLEVEL`            | warn      |                              | The loglevel that should be used. Options are `error`, `warn`, `info`, `debug` or `trace`.        |
-| `HD_FORBIDDEN_NOTE_IDS`  | -         | `notAllowed, alsoNotAllowed` | A list of note ids (separated by `,`), that are not allowed to be created or requested by anyone. |
-| `HD_MAX_DOCUMENT_LENGTH` | 100000    |                              | The maximum length of any one document. Changes to this will impact performance for your users.   |
+| environment variable     | default   | example                      | description                                                                                                                                            |
+|--------------------------|-----------|------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `HD_DOMAIN`              | -         | `https://md.example.com`     | The URL the HedgeDoc instance runs on.                                                                                                                 |
+| `PORT`                   | 3000      |                              | The port the HedgeDoc instance runs on.                                                                                                                |
+| `HD_RENDERER_ORIGIN`     | HD_DOMAIN |                              | The URL the renderer runs on. If omitted this will be same as `HD_DOMAIN`.                                                                             |
+| `HD_LOGLEVEL`            | warn      |                              | The loglevel that should be used. Options are `error`, `warn`, `info`, `debug` or `trace`.                                                             |
+| `HD_FORBIDDEN_NOTE_IDS`  | -         | `notAllowed, alsoNotAllowed` | A list of note ids (separated by `,`), that are not allowed to be created or requested by anyone.                                                      |
+| `HD_MAX_DOCUMENT_LENGTH` | 100000    |                              | The maximum length of any one document. Changes to this will impact performance for your users.                                                        |
+| `HD_PERSIST_INTERVAL`    | 10        | `0`, `5`, `10`, `20`         | The time interval in **minutes** for the periodic note revision creation during realtime editing. `0` deactivates the periodic note revision creation. |
 
 ### Why should I want to run my renderer on a different (sub-)domain?
 

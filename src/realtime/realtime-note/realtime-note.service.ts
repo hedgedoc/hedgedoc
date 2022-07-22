@@ -3,17 +3,47 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Injectable } from '@nestjs/common';
+import { Optional } from '@mrdrogdrog/optional';
+import { BeforeApplicationShutdown, Inject, Injectable } from '@nestjs/common';
+import { SchedulerRegistry } from '@nestjs/schedule';
 
+import appConfiguration, { AppConfig } from '../../config/app.config';
+import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { Note } from '../../notes/note.entity';
 import { RevisionsService } from '../../revisions/revisions.service';
 import { RealtimeNote } from './realtime-note';
+import { RealtimeNoteStore } from './realtime-note-store.service';
 
 @Injectable()
-export class RealtimeNoteService {
-  constructor(private revisionsService: RevisionsService) {}
+export class RealtimeNoteService implements BeforeApplicationShutdown {
+  constructor(
+    private revisionsService: RevisionsService,
+    private readonly logger: ConsoleLoggerService,
+    private realtimeNoteStore: RealtimeNoteStore,
+    private schedulerRegistry: SchedulerRegistry,
+    @Inject(appConfiguration.KEY)
+    private appConfig: AppConfig,
+  ) {}
 
-  private noteIdToRealtimeNote = new Map<string, RealtimeNote>();
+  beforeApplicationShutdown(): void {
+    this.realtimeNoteStore
+      .getAllRealtimeNotes()
+      .forEach((realtimeNote) => realtimeNote.destroy());
+  }
+
+  /**
+   * Reads the current content from the given {@link RealtimeNote} and creates a new {@link Revision} for the linked {@link Note}.
+   *
+   * @param realtimeNote The realtime note for which a revision should be created
+   */
+  public saveRealtimeNote(realtimeNote: RealtimeNote): void {
+    this.revisionsService
+      .createRevision(
+        realtimeNote.getNote(),
+        realtimeNote.getYDoc().getCurrentContent(),
+      )
+      .catch((reason) => this.logger.error(reason));
+  }
 
   /**
    * Creates or reuses a {@link RealtimeNote} that is handling the real time editing of the {@link Note} which is identified by the given note id.
@@ -23,13 +53,13 @@ export class RealtimeNoteService {
    */
   public async getOrCreateRealtimeNote(note: Note): Promise<RealtimeNote> {
     return (
-      this.noteIdToRealtimeNote.get(note.id) ??
+      this.realtimeNoteStore.find(note.id) ??
       (await this.createNewRealtimeNote(note))
     );
   }
 
   /**
-   * Creates a new {@link RealtimeNote} for the given {@link Note} and memorizes it.
+   * Creates a new {@link RealtimeNote} for the given {@link Note}.
    *
    * @param note The note for which the realtime note should be created
    * @throws NotInDBError if note doesn't exist or has no revisions.
@@ -38,20 +68,37 @@ export class RealtimeNoteService {
   private async createNewRealtimeNote(note: Note): Promise<RealtimeNote> {
     const initialContent = (await this.revisionsService.getLatestRevision(note))
       .content;
-    const realtimeNote = new RealtimeNote(note.id, initialContent);
-    realtimeNote.on('destroy', () => {
-      this.noteIdToRealtimeNote.delete(note.id);
+    const realtimeNote = this.realtimeNoteStore.create(note, initialContent);
+    realtimeNote.on('beforeDestroy', () => {
+      this.saveRealtimeNote(realtimeNote);
     });
-    this.noteIdToRealtimeNote.set(note.id, realtimeNote);
+    this.startPersistTimer(realtimeNote);
     return realtimeNote;
   }
 
   /**
-   * Retrieves a {@link RealtimeNote} that is linked to the given {@link Note} id.
-   * @param noteId The id of the {@link Note}
-   * @return A {@link RealtimeNote} or {@code undefined} if no instance is existing.
+   * Starts a timer that persists the realtime note in a periodic interval depending on the {@link AppConfig}.
+
+   * @param realtimeNote The realtime note for which the timer should be started
    */
-  public getRealtimeNote(noteId: string): RealtimeNote | undefined {
-    return this.noteIdToRealtimeNote.get(noteId);
+  private startPersistTimer(realtimeNote: RealtimeNote): void {
+    Optional.of(this.appConfig.persistInterval)
+      .filter((value) => value > 0)
+      .ifPresent((persistInterval) => {
+        const intervalId = setInterval(
+          this.saveRealtimeNote.bind(this, realtimeNote),
+          persistInterval * 60 * 1000,
+        );
+        this.schedulerRegistry.addInterval(
+          `periodic-persist-${realtimeNote.getNote().id}`,
+          intervalId,
+        );
+        realtimeNote.on('destroy', () => {
+          clearInterval(intervalId);
+          this.schedulerRegistry.deleteInterval(
+            `periodic-persist-${realtimeNote.getNote().id}`,
+          );
+        });
+      });
   }
 }

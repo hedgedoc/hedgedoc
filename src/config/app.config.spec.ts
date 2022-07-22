@@ -19,6 +19,7 @@ describe('appConfig', () => {
   const invalidPort = 'not-a-port';
   const loglevel = Loglevel.TRACE;
   const invalidLoglevel = 'not-a-loglevel';
+  const invalidPersistInterval = -1;
 
   describe('correctly parses config', () => {
     it('when given correct and complete environment variables', async () => {
@@ -29,6 +30,7 @@ describe('appConfig', () => {
           HD_RENDERER_ORIGIN: rendererOrigin,
           PORT: port.toString(),
           HD_LOGLEVEL: loglevel,
+          HD_PERSIST_INTERVAL: '100',
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -40,6 +42,7 @@ describe('appConfig', () => {
       expect(config.rendererOrigin).toEqual(rendererOrigin);
       expect(config.port).toEqual(port);
       expect(config.loglevel).toEqual(loglevel);
+      expect(config.persistInterval).toEqual(100);
       restore();
     });
 
@@ -50,6 +53,7 @@ describe('appConfig', () => {
           HD_DOMAIN: domain,
           PORT: port.toString(),
           HD_LOGLEVEL: loglevel,
+          HD_PERSIST_INTERVAL: '100',
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -61,6 +65,7 @@ describe('appConfig', () => {
       expect(config.rendererOrigin).toEqual(domain);
       expect(config.port).toEqual(port);
       expect(config.loglevel).toEqual(loglevel);
+      expect(config.persistInterval).toEqual(100);
       restore();
     });
 
@@ -71,6 +76,7 @@ describe('appConfig', () => {
           HD_DOMAIN: domain,
           HD_RENDERER_ORIGIN: rendererOrigin,
           HD_LOGLEVEL: loglevel,
+          HD_PERSIST_INTERVAL: '100',
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -82,6 +88,7 @@ describe('appConfig', () => {
       expect(config.rendererOrigin).toEqual(rendererOrigin);
       expect(config.port).toEqual(3000);
       expect(config.loglevel).toEqual(loglevel);
+      expect(config.persistInterval).toEqual(100);
       restore();
     });
 
@@ -92,6 +99,7 @@ describe('appConfig', () => {
           HD_DOMAIN: domain,
           HD_RENDERER_ORIGIN: rendererOrigin,
           PORT: port.toString(),
+          HD_PERSIST_INTERVAL: '100',
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -103,6 +111,54 @@ describe('appConfig', () => {
       expect(config.rendererOrigin).toEqual(rendererOrigin);
       expect(config.port).toEqual(port);
       expect(config.loglevel).toEqual(Loglevel.WARN);
+      expect(config.persistInterval).toEqual(100);
+      restore();
+    });
+
+    it('when no HD_PERSIST_INTERVAL is set', () => {
+      const restore = mockedEnv(
+        {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          HD_DOMAIN: domain,
+          HD_RENDERER_ORIGIN: rendererOrigin,
+          HD_LOGLEVEL: loglevel,
+          PORT: port.toString(),
+          /* eslint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      const config = appConfig();
+      expect(config.domain).toEqual(domain);
+      expect(config.rendererOrigin).toEqual(rendererOrigin);
+      expect(config.port).toEqual(port);
+      expect(config.loglevel).toEqual(Loglevel.TRACE);
+      expect(config.persistInterval).toEqual(10);
+      restore();
+    });
+
+    it('when HD_PERSIST_INTERVAL is zero', () => {
+      const restore = mockedEnv(
+        {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          HD_DOMAIN: domain,
+          HD_RENDERER_ORIGIN: rendererOrigin,
+          HD_LOGLEVEL: loglevel,
+          PORT: port.toString(),
+          HD_PERSIST_INTERVAL: '0',
+          /* eslint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      const config = appConfig();
+      expect(config.domain).toEqual(domain);
+      expect(config.rendererOrigin).toEqual(rendererOrigin);
+      expect(config.port).toEqual(port);
+      expect(config.loglevel).toEqual(Loglevel.TRACE);
+      expect(config.persistInterval).toEqual(0);
       restore();
     });
   });
@@ -208,6 +264,24 @@ describe('appConfig', () => {
         },
       );
       expect(() => appConfig()).toThrow('HD_LOGLEVEL');
+      restore();
+    });
+
+    it('when given a negative HD_PERSIST_INTERVAL', () => {
+      const restore = mockedEnv(
+        {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          HD_DOMAIN: domain,
+          PORT: port.toString(),
+          HD_LOGLEVEL: invalidLoglevel,
+          HD_PERSIST_INTERVAL: invalidPersistInterval.toString(),
+          /* eslint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      expect(() => appConfig()).toThrow('HD_PERSIST_INTERVAL');
       restore();
     });
   });

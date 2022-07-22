@@ -3,6 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { Mock } from 'ts-mockery';
+
+import { Note } from '../../notes/note.entity';
 import { RealtimeNote } from './realtime-note';
 import { mockAwareness } from './test-utils/mock-awareness';
 import { mockConnection } from './test-utils/mock-connection';
@@ -15,6 +18,7 @@ import { WebsocketDoc } from './websocket-doc';
 describe('realtime note', () => {
   let mockedDoc: WebsocketDoc;
   let mockedAwareness: WebsocketAwareness;
+  let mockedNote: Note;
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -27,6 +31,8 @@ describe('realtime note', () => {
     jest
       .spyOn(websocketAwarenessModule, 'WebsocketAwareness')
       .mockImplementation(() => mockedAwareness);
+
+    mockedNote = Mock.of<Note>({ id: 'mock-note' });
   });
 
   afterAll(() => {
@@ -34,8 +40,13 @@ describe('realtime note', () => {
     jest.resetModules();
   });
 
+  it('can return the given note', () => {
+    const sut = new RealtimeNote(mockedNote, 'nothing');
+    expect(sut.getNote()).toBe(mockedNote);
+  });
+
   it('can connect and disconnect clients', () => {
-    const sut = new RealtimeNote('mock-note', 'nothing');
+    const sut = new RealtimeNote(mockedNote, 'nothing');
     const client1 = mockConnection(true);
     sut.addClient(client1);
     expect(sut.getConnections()).toStrictEqual([client1]);
@@ -46,13 +57,13 @@ describe('realtime note', () => {
   });
 
   it('creates a y-doc and y-awareness', () => {
-    const sut = new RealtimeNote('mock-note', 'nothing');
+    const sut = new RealtimeNote(mockedNote, 'nothing');
     expect(sut.getYDoc()).toBe(mockedDoc);
     expect(sut.getAwareness()).toBe(mockedAwareness);
   });
 
   it('destroys y-doc and y-awareness on self-destruction', () => {
-    const sut = new RealtimeNote('mock-note', 'nothing');
+    const sut = new RealtimeNote(mockedNote, 'nothing');
     const docDestroy = jest.spyOn(mockedDoc, 'destroy');
     const awarenessDestroy = jest.spyOn(mockedAwareness, 'destroy');
     sut.destroy();
@@ -61,7 +72,7 @@ describe('realtime note', () => {
   });
 
   it('emits destroy event on destruction', async () => {
-    const sut = new RealtimeNote('mock-note', 'nothing');
+    const sut = new RealtimeNote(mockedNote, 'nothing');
     const destroyPromise = new Promise<void>((resolve) => {
       sut.once('destroy', () => {
         resolve();
@@ -72,7 +83,7 @@ describe('realtime note', () => {
   });
 
   it("doesn't destroy a destroyed note", () => {
-    const sut = new RealtimeNote('mock-note', 'nothing');
+    const sut = new RealtimeNote(mockedNote, 'nothing');
     sut.destroy();
     expect(() => sut.destroy()).toThrow();
   });
