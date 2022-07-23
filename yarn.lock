@@ -1999,7 +1999,7 @@ __metadata:
     "@testing-library/cypress": 8.0.3
     "@testing-library/jest-dom": 5.16.4
     "@testing-library/react": 13.3.0
-    "@testing-library/user-event": 14.2.5
+    "@testing-library/user-event": 14.3.0
     "@types/d3-graphviz": 2.6.7
     "@types/diff": 5.0.2
     "@types/dompurify": 2.3.3
@@ -4060,12 +4060,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/user-event@npm:14.2.5":
-  version: 14.2.5
-  resolution: "@testing-library/user-event@npm:14.2.5"
+"@testing-library/user-event@npm:14.3.0":
+  version: 14.3.0
+  resolution: "@testing-library/user-event@npm:14.3.0"
   peerDependencies:
     "@testing-library/dom": ">=7.21.4"
-  checksum: 9656b11c8c1682626ff7f0b38b058e1de50d31f801342e9229a7ebaae9cab435411697d0ff180e9e916361e5a831d73ffad74b224da433154ed19e6a54368991
+  checksum: cbd5954460496519cb2ff3fa506ca598d7e4c2e3d2f2e129b21909758f5ec87573aad7d6c79aebffd4bd0ea843315b3064a2a76e545f196bd4c82489cb3afc1d
   languageName: node
   linkType: hard
 
