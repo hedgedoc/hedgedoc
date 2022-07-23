@@ -2162,7 +2162,7 @@ __metadata:
     "@types/diff": 5.0.2
     "@types/dompurify": 2.3.3
     "@types/js-yaml": 4.0.5
-    "@types/luxon": 2.3.2
+    "@types/luxon": 2.4.0
     "@types/markdown-it": 12.2.3
     "@types/markdown-it-container": 2.0.5
     "@types/markdown-it-plantuml": 1.4.1
@@ -4879,10 +4879,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/luxon@npm:2.3.2":
-  version: 2.3.2
-  resolution: "@types/luxon@npm:2.3.2"
-  checksum: b9fe79118681f4bb9f2e37696a7df992a82683ba4448e7ad1af8cc241443ffc64ef08fdeaad749de9e6259b42b0d4b6540d7e880bca39bb504e0f3863d503c98
+"@types/luxon@npm:2.4.0":
+  version: 2.4.0
+  resolution: "@types/luxon@npm:2.4.0"
+  checksum: eeb16a1bfe5440464c1a9635700d103cd18d3cd8da6063a1938478e435cfba6ab8e893aa80c95a407e541187c1e997c3e4481322726bc1258551cb8606d0e5ad
   languageName: node
   linkType: hard
 
