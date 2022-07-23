@@ -2019,7 +2019,7 @@ __metadata:
     "@typescript-eslint/parser": 5.30.7
     "@uiw/react-codemirror": 4.11.4
     abcjs: 6.0.4
-    bootstrap: 4.6.1
+    bootstrap: 4.6.2
     copy-webpack-plugin: 11.0.0
     cross-env: 7.0.3
     cypress: 10.3.0
@@ -6298,13 +6298,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap@npm:4.6.1":
-  version: 4.6.1
-  resolution: "bootstrap@npm:4.6.1"
+"bootstrap@npm:4.6.2":
+  version: 4.6.2
+  resolution: "bootstrap@npm:4.6.2"
   peerDependencies:
     jquery: 1.9.1 - 3
     popper.js: ^1.16.1
-  checksum: ff44e13787aafe1e2b8ac77802eae0f19bf957ea53a40ce3d9d4af9b67eab8adc585dc5a62cb6be82a3bc33e7ae67b0efd75f02282c0ddca09272d5c18a0b379
+  checksum: 3f4e7768ff7d618c49d4bf4f02aa54a9bfb679d4eecb0f3854fa4af1a17b9114b147009c435946432cdd1572efffc71d88ec385c55943a12fa66253cde0876b0
   languageName: node
   linkType: hard
 
