@@ -57,7 +57,7 @@
     "@reduxjs/toolkit": "1.8.3",
     "@svgr/webpack": "6.2.1",
     "@uiw/react-codemirror": "4.11.4",
-    "abcjs": "6.0.3",
+    "abcjs": "6.0.4",
     "bootstrap": "4.6.1",
     "copy-webpack-plugin": "11.0.0",
     "cross-env": "7.0.3",
