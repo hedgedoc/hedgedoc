@@ -1653,7 +1653,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/autocomplete@npm:6.0.4, @codemirror/autocomplete@npm:^6.0.0":
+"@codemirror/autocomplete@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@codemirror/autocomplete@npm:6.1.0"
+  dependencies:
+    "@codemirror/language": ^6.0.0
+    "@codemirror/state": ^6.0.0
+    "@codemirror/view": ^6.0.0
+    "@lezer/common": ^1.0.0
+  peerDependencies:
+    "@codemirror/language": ^6.0.0
+    "@codemirror/state": ^6.0.0
+    "@codemirror/view": ^6.0.0
+    "@lezer/common": ^1.0.0
+  checksum: f29b521935c46d233f35afacb968b789a22984032999e905c74f4dfc6225125c787538725f7a7b5be194253cbb79ea0d76c0b0c7163489d31cdbba33156ab540
+  languageName: node
+  linkType: hard
+
+"@codemirror/autocomplete@npm:^6.0.0":
   version: 6.0.4
   resolution: "@codemirror/autocomplete@npm:6.0.4"
   dependencies:
@@ -1925,7 +1942,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:6.0.3, @codemirror/view@npm:^6.0.0":
+"@codemirror/view@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@codemirror/view@npm:6.1.0"
+  dependencies:
+    "@codemirror/state": ^6.0.0
+    style-mod: ^4.0.0
+    w3c-keyname: ^2.2.4
+  checksum: d5892064d8bccaf0a10f864267b7e1c3349070bd96d8dd207988b48dbe7fef50322a00c4cb3f0b68439e4a9f32734cece019534ee0cb3a81dd61b1566cf500c6
+  languageName: node
+  linkType: hard
+
+"@codemirror/view@npm:^6.0.0":
   version: 6.0.3
   resolution: "@codemirror/view@npm:6.0.3"
   dependencies:
@@ -2136,12 +2164,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/react-client@workspace:."
   dependencies:
-    "@codemirror/autocomplete": 6.0.4
+    "@codemirror/autocomplete": 6.1.0
     "@codemirror/lang-markdown": 6.0.0
     "@codemirror/language-data": 6.1.0
     "@codemirror/state": 6.1.0
     "@codemirror/theme-one-dark": 6.0.0
-    "@codemirror/view": 6.0.3
+    "@codemirror/view": 6.1.0
     "@fontsource/source-sans-pro": 4.5.10
     "@hedgedoc/html-to-react": 1.4.4
     "@hedgedoc/markdown-it-image-size": 1.0.3
