@@ -50,7 +50,7 @@
     "connect-typeorm": "1.1.4",
     "cookie": "0.5.0",
     "express-session": "1.17.3",
-    "file-type": "16.5.3",
+    "file-type": "16.5.4",
     "joi": "17.6.0",
     "ldapauth-fork": "5.0.5",
     "lib0": "0.2.51",
