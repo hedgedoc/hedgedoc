@@ -2289,7 +2289,7 @@ __metadata:
     words-count: 2.0.2
     y-codemirror.next: 0.3.0
     y-protocols: 1.0.5
-    yjs: 13.5.39
+    yjs: 13.5.40
   languageName: unknown
   linkType: soft
 
@@ -21150,12 +21150,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs@npm:13.5.39, yjs@npm:^13.0.0":
-  version: 13.5.39
-  resolution: "yjs@npm:13.5.39"
+"yjs@npm:13.5.40, yjs@npm:^13.0.0":
+  version: 13.5.40
+  resolution: "yjs@npm:13.5.40"
   dependencies:
     lib0: ^0.2.49
-  checksum: 59a3a0307425a7fbc03ed1d632d3080383a40dd1d9ce5c6272dd083dd2674dd4b92f3678d43e4701150f1d9f46692e7a3b0fc9ace48d4a9e20cdea270108697b
+  checksum: 9d3f0c820b297bac3f2be3f5d03fd107defb2e8bb8682eba73b484e87cdeb44f8b470701387e0f3f0e4b492e023b27bad5eff7b74bc6c2499fa9a80db468aaeb
   languageName: node
   linkType: hard
 
