@@ -126,7 +126,7 @@ export const Splitter: React.FC<SplitterProps> = ({
         </div>
       </ShowIf>
       <div
-        className={`${styles['splitter']} ${styles['right']} ${!showRight ? 'd-none' : ''}`}
+        className={`${styles['splitter']}${!showRight ? ' d-none' : ''}`}
         style={{ width: `calc(100% - ${adjustedRelativeSplitValue}%)` }}>
         {right}
       </div>

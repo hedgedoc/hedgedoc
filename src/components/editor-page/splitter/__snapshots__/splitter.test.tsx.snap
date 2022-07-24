@@ -20,7 +20,7 @@ exports[`Splitter can render both panes 1`] = `
       />
     </div>
     <div
-      class="splitter right "
+      class="splitter"
       style="width: calc(100% - 50%);"
     >
       right
@@ -41,7 +41,7 @@ exports[`Splitter can render only the left pane 1`] = `
       left
     </div>
     <div
-      class="splitter right d-none"
+      class="splitter d-none"
       style="width: calc(100% - 100%);"
     >
       right
@@ -62,7 +62,7 @@ exports[`Splitter can render only the right pane 1`] = `
       left
     </div>
     <div
-      class="splitter right "
+      class="splitter"
       style="width: calc(100% - 0%);"
     >
       right
@@ -91,7 +91,7 @@ exports[`Splitter resize can change size with mouse 1`] = `
       />
     </div>
     <div
-      class="splitter right "
+      class="splitter"
       style="width: calc(100% - 50%);"
     >
       right
@@ -120,7 +120,7 @@ exports[`Splitter resize can change size with mouse 2`] = `
       />
     </div>
     <div
-      class="splitter right "
+      class="splitter"
       style="width: calc(100% - 100%);"
     >
       right
@@ -149,7 +149,7 @@ exports[`Splitter resize can change size with mouse 3`] = `
       />
     </div>
     <div
-      class="splitter right "
+      class="splitter"
       style="width: calc(100% - 0%);"
     >
       right
@@ -178,7 +178,7 @@ exports[`Splitter resize can change size with mouse 4`] = `
       />
     </div>
     <div
-      class="splitter right "
+      class="splitter"
       style="width: calc(100% - 0%);"
     >
       right
@@ -207,7 +207,7 @@ exports[`Splitter resize can change size with touch 1`] = `
       />
     </div>
     <div
-      class="splitter right "
+      class="splitter"
       style="width: calc(100% - 50%);"
     >
       right
@@ -236,7 +236,7 @@ exports[`Splitter resize can change size with touch 2`] = `
       />
     </div>
     <div
-      class="splitter right "
+      class="splitter"
       style="width: calc(100% - 100%);"
     >
       right
@@ -265,7 +265,7 @@ exports[`Splitter resize can change size with touch 3`] = `
       />
     </div>
     <div
-      class="splitter right "
+      class="splitter"
       style="width: calc(100% - 0%);"
     >
       right
@@ -294,7 +294,7 @@ exports[`Splitter resize can change size with touch 4`] = `
       />
     </div>
     <div
-      class="splitter right "
+      class="splitter"
       style="width: calc(100% - 0%);"
     >
       right
