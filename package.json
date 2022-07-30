@@ -52,7 +52,7 @@
     "@hedgedoc/realtime": "0.1.1",
     "@matejmazur/react-katex": "3.1.3",
     "@mrdrogdrog/optional": "0.1.2",
-    "@react-hook/resize-observer": "1.2.5",
+    "@react-hook/resize-observer": "1.2.6",
     "@redux-devtools/core": "3.13.1",
     "@reduxjs/toolkit": "1.8.3",
     "@svgr/webpack": "6.3.1",
