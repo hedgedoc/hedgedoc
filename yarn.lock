@@ -2125,7 +2125,7 @@ __metadata:
     vega-embed: 6.21.0
     vega-lite: 5.3.0
     words-count: 2.0.2
-    y-codemirror.next: 0.3.0
+    y-codemirror.next: 0.3.2
     y-protocols: 1.0.5
     yjs: 13.5.40
   languageName: unknown
@@ -20819,16 +20819,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"y-codemirror.next@npm:0.3.0":
-  version: 0.3.0
-  resolution: "y-codemirror.next@npm:0.3.0"
+"y-codemirror.next@npm:0.3.2":
+  version: 0.3.2
+  resolution: "y-codemirror.next@npm:0.3.2"
   dependencies:
     lib0: ^0.2.42
   peerDependencies:
     "@codemirror/state": ^6.0.0
     "@codemirror/view": ^6.0.0
     yjs: ^13.5.6
-  checksum: f9aa8fade4cfa632df83e0eb87d736b8c3c5bbbab835affaaaf9c0a98c115329332586d58d5a8279c5502a19cbad77b83ca22f74f5d5dd7ccc4ce8bca85f6885
+  checksum: d86cae29fe654ad4e556782c08055eb3e4ee1706cdb1bd7bf5b15c2ce1c91cb5b9d7785c8b0a9ee85444337fd3a0dba84d9d276895114a62dba9dab6d9d05ca0
   languageName: node
   linkType: hard
 
