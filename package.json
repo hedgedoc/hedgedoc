@@ -120,7 +120,7 @@
     "words-count": "2.0.2",
     "y-codemirror.next": "0.3.2",
     "y-protocols": "1.0.5",
-    "yjs": "13.5.40"
+    "yjs": "13.5.41"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "12.2.2",
