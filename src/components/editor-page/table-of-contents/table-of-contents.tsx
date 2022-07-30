@@ -5,17 +5,17 @@
  */
 
 import type { TocAst } from 'markdown-it-toc-done-right'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ShowIf } from '../../common/show-if/show-if'
-import { buildReactDomFromTocAst } from './build-react-dom-from-toc-ast'
 import styles from './table-of-contents.module.scss'
+import { useBuildReactDomFromTocAst } from './use-build-react-dom-from-toc-ast'
 
 export interface TableOfContentsProps {
   ast: TocAst
   maxDepth?: number
   className?: string
-  baseUrl?: string
+  baseUrl: string
 }
 
 /**
@@ -28,10 +28,7 @@ export interface TableOfContentsProps {
  */
 export const TableOfContents: React.FC<TableOfContentsProps> = ({ ast, maxDepth = 3, className, baseUrl }) => {
   useTranslation()
-  const tocTree = useMemo(
-    () => buildReactDomFromTocAst(ast, maxDepth, new Map<string, number>(), false, baseUrl),
-    [ast, maxDepth, baseUrl]
-  )
+  const tocTree = useBuildReactDomFromTocAst(ast, maxDepth, baseUrl)
 
   return (
     <div className={`${styles['markdown-toc']} ${className ?? ''}`}>

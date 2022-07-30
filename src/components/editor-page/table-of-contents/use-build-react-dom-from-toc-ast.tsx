@@ -6,7 +6,7 @@
 
 import type { TocAst } from 'markdown-it-toc-done-right'
 import type { ReactElement } from 'react'
-import React, { Fragment } from 'react'
+import React, { Fragment, useMemo } from 'react'
 import { ShowIf } from '../../common/show-if/show-if'
 import { tocSlugify } from './toc-slugify'
 import { JumpAnchor } from '../../markdown-renderer/markdown-extension/link-replacer/jump-anchor'
@@ -17,15 +17,13 @@ import { JumpAnchor } from '../../markdown-renderer/markdown-extension/link-repl
  * @param toc The abstract syntax tree of the document for TOC generation
  * @param levelsToShowUnderThis The amount of levels which should be shown below this TOC item
  * @param headerCounts Map that contains the number of occurrences of single header names to allow suffixing them with a number to make them distinguishable
- * @param wrapInListItem Whether to wrap the TOC content in a list item
  * @param baseUrl The base URL used for generating absolute links to the note with the correct slug anchor
  */
-export const buildReactDomFromTocAst = (
+const buildReactDomFromTocAst = (
   toc: TocAst,
   levelsToShowUnderThis: number,
   headerCounts: Map<string, number>,
-  wrapInListItem: boolean,
-  baseUrl?: string
+  baseUrl: string
 ): ReactElement | null => {
   if (levelsToShowUnderThis < 0) {
     return null
@@ -38,24 +36,35 @@ export const buildReactDomFromTocAst = (
 
   headerCounts.set(rawName, nameCount)
 
-  const content = (
+  const children = toc.c
+    .map((child) => buildReactDomFromTocAst(child, levelsToShowUnderThis - 1, headerCounts, baseUrl))
+    .filter((value) => !!value)
+    .map((child, index) => <li key={index}>{child}</li>)
+
+  return (
     <Fragment>
       <ShowIf condition={toc.l > 0}>
         <JumpAnchor href={headlineUrl} title={rawName} jumpTargetId={slug.slice(1)}>
           {rawName}
         </JumpAnchor>
       </ShowIf>
-      <ShowIf condition={toc.c.length > 0}>
-        <ul>
-          {toc.c.map((child) => buildReactDomFromTocAst(child, levelsToShowUnderThis - 1, headerCounts, true, baseUrl))}
-        </ul>
+      <ShowIf condition={children.length > 0}>
+        <ul>{children}</ul>
       </ShowIf>
     </Fragment>
   )
+}
 
-  if (wrapInListItem) {
-    return <li key={headlineUrl}>{content}</li>
-  } else {
-    return content
-  }
+/**
+ * Generates a React DOM part for the table of contents from the given AST of the document.
+ *
+ * @param toc The abstract syntax tree of the document for TOC generation
+ * @param maxDepth The maximum depth of levels which should be shown in the TOC
+ * @param baseUrl The base URL used for generating absolute links to the note with the correct slug anchor
+ */
+export const useBuildReactDomFromTocAst = (toc: TocAst, maxDepth: number, baseUrl: string) => {
+  return useMemo(
+    () => buildReactDomFromTocAst(toc, maxDepth, new Map<string, number>(), baseUrl),
+    [toc, maxDepth, baseUrl]
+  )
 }
