@@ -71,7 +71,7 @@
     "typeorm": "0.3.7",
     "ws": "8.8.1",
     "y-protocols": "1.0.5",
-    "yjs": "13.5.39"
+    "yjs": "13.5.41"
   },
   "devDependencies": {
     "@nestjs/cli": "9.0.0",

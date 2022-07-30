@@ -5472,7 +5472,7 @@ __metadata:
     typescript: 4.7.4
     ws: 8.8.1
     y-protocols: 1.0.5
-    yjs: 13.5.39
+    yjs: 13.5.41
   languageName: unknown
   linkType: soft
 
@@ -10131,7 +10131,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs@npm:13.5.39, yjs@npm:^13.0.0":
+"yjs@npm:13.5.41":
+  version: 13.5.41
+  resolution: "yjs@npm:13.5.41"
+  dependencies:
+    lib0: ^0.2.49
+  checksum: a1ed0690b5286d0fae71672a968b5c4325d10494f316ea099ebd9a2a4b890d7b2851dabd96432fea676243bf835118b7f307a8fe3519d5314977361af987f8d1
+  languageName: node
+  linkType: hard
+
+"yjs@npm:^13.0.0":
   version: 13.5.39
   resolution: "yjs@npm:13.5.39"
   dependencies:
