@@ -6,12 +6,11 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 #
 
-cd "$(dirname "$0")"
-json=$(./netlify-cli.sh deploy --build --context deploy-preview --alias "$1" --json --message "[#$1] $2")
+json=$($(dirname "$0")/netlify-cli.sh deploy --build --context deploy-preview --alias "$1" --json --message "[#$1] $2")
 
 if [ $? -ne 0 ]; then
     echo "Error while executing netlify! Will try again without json..."
-    ./netlify-cli.sh deploy --build --context deploy-preview --alias "$1" --message "[#$1] $2"
+    $(dirname "$0")/netlify-cli.sh deploy --build --context deploy-preview --alias "$1" --message "[#$1] $2"
     exit 1
 fi
 

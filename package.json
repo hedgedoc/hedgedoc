@@ -4,7 +4,7 @@
   "license": "AGPL-3.0",
   "scripts": {
     "build": "next build",
-    "build:netlify": "bash netlify/patch-files.sh && cross-env NEXT_PUBLIC_IGNORE_IFRAME_ORIGIN_CONFIG=true yarn build:mock",
+    "build:netlify": "cross-env NEXT_PUBLIC_IGNORE_IFRAME_ORIGIN_CONFIG=true yarn build:mock",
     "build:mock": "cross-env NEXT_PUBLIC_USE_MOCK_API=true next build",
     "build:test": "cross-env NEXT_PUBLIC_USE_MOCK_API=true NEXT_PUBLIC_TEST_MODE=true next build",
     "build:for-real-backend": "cross-env NEXT_PUBLIC_USE_MOCK_API=false NEXT_PUBLIC_BACKEND_BASE_URL=/ next build",

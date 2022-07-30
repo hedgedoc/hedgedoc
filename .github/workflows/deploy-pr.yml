@@ -34,6 +34,9 @@ jobs:
         with:
           node-version: 18
 
+      - name: Patch files
+        run: bash netlify/patch-files.sh
+
       - name: Install dependencies
         run: yarn install --immutable
 

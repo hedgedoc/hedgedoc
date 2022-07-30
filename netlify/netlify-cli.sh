@@ -7,4 +7,4 @@
 #
 
 NETLIFY_VERSION=10.13.0
-exec npx --yes netlify-cli@${NETLIFY_VERSION}
+exec npx --yes netlify-cli@${NETLIFY_VERSION} $@
