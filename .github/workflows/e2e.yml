@@ -66,7 +66,6 @@ jobs:
     needs: build-frontend
     runs-on: ubuntu-latest
     container:
-      # renovate: datasource=docker depName=cypress/browsers versioning=docker
       image: cypress/browsers:node16.14.2-slim-chrome103-ff102
       options: --user 1001 --shm-size=2g
     strategy:
@@ -78,22 +77,46 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v3
 
+      - name: Cache build
+        uses: actions/cache@v3.0.5
+        id: build-cache
+        with:
+          path: .next
+          key: build-${{ github.sha }}
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        if: steps.build-cache.outputs.cache-hit != 'true'
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+      - name: Cache yarn cache
+        uses: actions/cache@v3
+        id: yarn-cache
+        if: steps.build-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-16-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-16
+
+      - name: Install dependencies
+        if: steps.build-cache.outputs.cache-hit != 'true'
+        run: yarn install --immutable
+
       - name: Download built frontend
         uses: actions/download-artifact@master
         with:
           name: next-build
           path: .next
 
-      - uses: cypress-io/github-action@v4
-        with:
-          browser: ${{ matrix.browser }}
-          start: 'yarn start:ci'
-          parallel: true
-          record: true
-          group: "UI - ${{ matrix.browser }}"
-          wait-on: 'http://127.0.0.1:3001/'
-          wait-on-timeout: 120
-          install-command: yarn install --immutable --silent
+      - name: Run server
+        run: yarn start:ci &
+
+      - name: Wait for server
+        run: curl --max-time 120 http://127.0.0.1:3001/
+
+      - name: Run cypress
+        run: "yarn cy:run:${{ matrix.browser }} --record true --parallel --group \"UI - ${{ matrix.browser }}\""
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

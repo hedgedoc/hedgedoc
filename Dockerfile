@@ -28,7 +28,7 @@ COPY --chown=node .yarn/ .yarn/
 COPY --chown=node public/ public/
 COPY --chown=node --from=builder /usr/src/app/.next/ .next/
 USER node
-RUN yarn workspaces focus --all --production && rm -rf .yarn/cache
+RUN yarn workspaces focus --all --production
 
 EXPOSE 3001/tcp
 CMD ["/usr/local/bin/yarn", "start:for-real-backend"]

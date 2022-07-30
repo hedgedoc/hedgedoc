@@ -12,18 +12,16 @@ const createJestConfig = nextJest({
 
 // Add any custom config to be passed to Jest
 const customJestConfig = {
-  setupFilesAfterEnv: [
-    '@testing-library/jest-dom/extend-expect'
-  ],
+  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
   moduleNameMapper: {
     // Handle module aliases (this will be automatically configured for you soon)
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
     // fix uuid / jest problem https://github.com/uuidjs/uuid/pull/616
-    '^uuid$': require.resolve('uuid'),
+    '^uuid$': require.resolve('uuid')
   },
-  roots: ["<rootDir>/src"],
+  roots: ['<rootDir>/src'],
   testEnvironment: 'jsdom',
-  testPathIgnorePatterns: ["/node_modules/", "/cypress/"]
+  testPathIgnorePatterns: ['/node_modules/', '/cypress/']
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

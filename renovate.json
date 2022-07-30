@@ -94,13 +94,13 @@
   "regexManagers": [
     {
       "fileMatch": [
-        "\\.yml$",
-        "\\.yaml$"
+        "netlify-cli.sh$"
       ],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s+\\S+:\\s+\"?[^:]+:(?<currentValue>[^\"]*?)\"?\\s"
+        "NETLIFY_VERSION=(?<currentValue>.*?)\\n"
       ],
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+      "datasourceTemplate" : "npm",
+      "depNameTemplate" : "netlify-cli"
     }
   ]
 }

@@ -1,14 +1,17 @@
 #!/bin/bash
 
-# SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+#
+# SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
 #
 # SPDX-License-Identifier: AGPL-3.0-only
+#
 
-json=$(yarn netlify deploy --build --context deploy-preview --alias "$1" --json --message "[#$1] $2")
+cd "$(dirname "$0")"
+json=$(./netlify-cli.sh deploy --build --context deploy-preview --alias "$1" --json --message "[#$1] $2")
 
 if [ $? -ne 0 ]; then
     echo "Error while executing netlify! Will try again without json..."
-    yarn netlify deploy --build --context deploy-preview --alias "$1" --message "[#$1] $2"
+    ./netlify-cli.sh deploy --build --context deploy-preview --alias "$1" --message "[#$1] $2"
     exit 1
 fi
 

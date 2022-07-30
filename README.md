@@ -18,6 +18,7 @@ react and to improve it.
 ## Preparation
 
 You need at least Node 14 (we recommend Node 18) and [yarn](https://yarnpkg.com/).
+You MUST use yarn! There is no support for npm.
 
 ## Development mode
 

@@ -11,7 +11,8 @@
     "types": [
       "cypress",
       "cypress-commands",
-      "cypress-file-upload"
+      "cypress-file-upload",
+      "node"
     ]
   },
   "include": [
