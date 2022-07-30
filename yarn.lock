@@ -2123,7 +2123,7 @@ __metadata:
     uuid: 8.3.2
     vega: 5.22.1
     vega-embed: 6.21.0
-    vega-lite: 5.3.0
+    vega-lite: 5.4.0
     words-count: 2.0.2
     y-codemirror.next: 0.3.2
     y-protocols: 1.0.5
@@ -20134,9 +20134,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-lite@npm:5.3.0":
-  version: 5.3.0
-  resolution: "vega-lite@npm:5.3.0"
+"vega-lite@npm:5.4.0":
+  version: 5.4.0
+  resolution: "vega-lite@npm:5.4.0"
   dependencies:
     "@types/clone": ~2.1.1
     array-flat-polyfill: ^1.0.1
@@ -20156,7 +20156,7 @@ __metadata:
     vl2png: bin/vl2png
     vl2svg: bin/vl2svg
     vl2vg: bin/vl2vg
-  checksum: 8c2420cf0890cf060c051f1d10154e3dda4c4cef04205370a6932ff1d3326aeaaf80d2c4234ea5bdbf86f555208c40cbec9ee6b58c5bf550a1e965018efeb905
+  checksum: d711e5df927a1a9be9ebfd869f4226467e7553bcf8135c5fae61e9a3473667f3aa58f4ecd6b7440d9eab8994960b5d8d0569af312fc46837be517f6f057cea4f
   languageName: node
   linkType: hard
 
