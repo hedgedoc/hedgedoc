@@ -8,7 +8,7 @@ import markdownItRegex from 'markdown-it-regex'
 import type MarkdownIt from 'markdown-it/lib'
 import type { RegexOptions } from '../../../../external-types/markdown-it-regex/interface'
 
-const finalRegex = /^{%speakerdeck (\w+\/[\w-]+) ?%}$/
+export const legacySpeakerdeckRegex = /^{%speakerdeck (\w+\/[\w-]+) ?%}$/
 
 /**
  * Configure the given {@link MarkdownIt} to render legacy hedgedoc 1 speakerdeck shortcodes as HTML links.
@@ -18,7 +18,7 @@ const finalRegex = /^{%speakerdeck (\w+\/[\w-]+) ?%}$/
 export const legacySpeakerdeckShortCode: MarkdownIt.PluginSimple = (markdownIt) => {
   markdownItRegex(markdownIt, {
     name: 'legacy-speakerdeck-short-code',
-    regex: finalRegex,
+    regex: legacySpeakerdeckRegex,
     replace: (match) => `<a href="https://speakerdeck.com/${match}">https://speakerdeck.com/${match}</a>`
   } as RegexOptions)
 }

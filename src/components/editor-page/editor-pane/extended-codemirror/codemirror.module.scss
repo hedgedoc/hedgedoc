@@ -21,6 +21,11 @@
       display: none;
     }
 
+    .cm-diagnostic {
+      max-width: 400px;
+      padding: 10px;
+    }
+
     //workarounds for line break problem.. see https://github.com/yjs/y-codemirror.next/pull/12
   }
 }

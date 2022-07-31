@@ -7,6 +7,7 @@
 import type MarkdownIt from 'markdown-it'
 import type { NodeProcessor } from '../node-preprocessors/node-processor'
 import type { ComponentReplacer } from '../replace-components/component-replacer'
+import type { Linter } from '../../editor-page/editor-pane/linter/linter'
 
 /**
  * Base class for Markdown extensions.
@@ -31,6 +32,10 @@ export abstract class MarkdownExtension {
   }
 
   public buildTagNameWhitelist(): string[] {
+    return []
+  }
+
+  public buildLinter(): Linter[] {
     return []
   }
 }

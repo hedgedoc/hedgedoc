@@ -92,7 +92,6 @@ const buildStateFromFrontmatterUpdate = (
       title: generateNoteTitle(frontmatter, state.firstHeading),
       frontmatterRendererInfo: {
         lineOffset: frontmatterExtraction.lineOffset,
-        deprecatedSyntax: frontmatter.deprecatedTagsSyntax,
         frontmatterInvalid: false,
         slideOptions: frontmatter.slideOptions
       }
@@ -105,7 +104,6 @@ const buildStateFromFrontmatterUpdate = (
       frontmatter: initialState.frontmatter,
       frontmatterRendererInfo: {
         lineOffset: frontmatterExtraction.lineOffset,
-        deprecatedSyntax: false,
         frontmatterInvalid: true,
         slideOptions: initialState.frontmatterRendererInfo.slideOptions
       }

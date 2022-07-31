@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -37,7 +37,6 @@ export interface NoteFrontmatter {
   title: string
   description: string
   tags: string[]
-  deprecatedTagsSyntax: boolean
   robots: string
   lang: Iso6391Language
   dir: NoteTextDirection
@@ -62,6 +61,5 @@ export enum NoteType {
 export interface RendererFrontmatterInfo {
   lineOffset: number
   frontmatterInvalid: boolean
-  deprecatedSyntax: boolean
   slideOptions: SlideOptions
 }

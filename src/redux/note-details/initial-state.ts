@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -28,7 +28,6 @@ export const initialState: NoteDetails = {
   rawFrontmatter: '',
   frontmatterRendererInfo: {
     frontmatterInvalid: false,
-    deprecatedSyntax: false,
     lineOffset: 0,
     slideOptions: initialSlideOptions
   },
@@ -50,7 +49,6 @@ export const initialState: NoteDetails = {
     title: '',
     description: '',
     tags: [],
-    deprecatedTagsSyntax: false,
     robots: '',
     lang: 'en',
     dir: NoteTextDirection.LTR,

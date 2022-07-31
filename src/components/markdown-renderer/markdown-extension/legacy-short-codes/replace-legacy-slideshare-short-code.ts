@@ -8,7 +8,7 @@ import markdownItRegex from 'markdown-it-regex'
 import type MarkdownIt from 'markdown-it/lib'
 import type { RegexOptions } from '../../../../external-types/markdown-it-regex/interface'
 
-const finalRegex = /^{%slideshare (\w+\/[\w-]+) ?%}$/
+export const legacySlideshareRegex = /^{%slideshare (\w+\/[\w-]+) ?%}$/
 
 /**
  * Configure the given {@link MarkdownIt} to render legacy hedgedoc 1 slideshare shortcodes as HTML links.
@@ -18,7 +18,7 @@ const finalRegex = /^{%slideshare (\w+\/[\w-]+) ?%}$/
 export const legacySlideshareShortCode: MarkdownIt.PluginSimple = (markdownIt) => {
   markdownItRegex(markdownIt, {
     name: 'legacy-slideshare-short-code',
-    regex: finalRegex,
+    regex: legacySlideshareRegex,
     replace: (match) => `<a href='https://www.slideshare.net/${match}'>https://www.slideshare.net/${match}</a>`
   } as RegexOptions)
 }

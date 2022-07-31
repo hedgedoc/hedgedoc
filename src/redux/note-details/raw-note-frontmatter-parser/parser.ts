@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -29,16 +29,12 @@ export const createNoteFrontmatterFromYaml = (rawYaml: string): NoteFrontmatter 
  */
 const parseRawNoteFrontmatter = (rawData: RawNoteFrontmatter): NoteFrontmatter => {
   let tags: string[]
-  let deprecatedTagsSyntax: boolean
   if (typeof rawData?.tags === 'string') {
     tags = rawData?.tags?.split(',').map((entry) => entry.trim()) ?? []
-    deprecatedTagsSyntax = true
   } else if (typeof rawData?.tags === 'object') {
     tags = rawData?.tags?.filter((tag) => tag !== null) ?? []
-    deprecatedTagsSyntax = false
   } else {
     tags = [...initialState.frontmatter.tags]
-    deprecatedTagsSyntax = false
   }
 
   return {
@@ -53,8 +49,7 @@ const parseRawNoteFrontmatter = (rawData: RawNoteFrontmatter): NoteFrontmatter =
     dir: parseTextDirection(rawData),
     opengraph: parseOpenGraph(rawData),
     slideOptions: parseSlideOptions(rawData),
-    tags,
-    deprecatedTagsSyntax
+    tags
   }
 }
 

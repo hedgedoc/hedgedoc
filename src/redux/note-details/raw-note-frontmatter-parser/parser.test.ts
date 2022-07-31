@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,7 +20,6 @@ describe('yaml frontmatter', () => {
   it('should parse the deprecated tags syntax', () => {
     const noteFrontmatter = createNoteFrontmatterFromYaml('tags: test123, abc')
     expect(noteFrontmatter.tags).toEqual(['test123', 'abc'])
-    expect(noteFrontmatter.deprecatedTagsSyntax).toEqual(true)
   })
 
   it('should parse the tags list syntax', () => {
@@ -29,13 +28,11 @@ describe('yaml frontmatter', () => {
       - abc
     `)
     expect(noteFrontmatter.tags).toEqual(['test123', 'abc'])
-    expect(noteFrontmatter.deprecatedTagsSyntax).toEqual(false)
   })
 
   it('should parse the tag inline-list syntax', () => {
     const noteFrontmatter = createNoteFrontmatterFromYaml("tags: ['test123', 'abc']")
     expect(noteFrontmatter.tags).toEqual(['test123', 'abc'])
-    expect(noteFrontmatter.deprecatedTagsSyntax).toEqual(false)
   })
 
   it('should parse "breaks"', () => {

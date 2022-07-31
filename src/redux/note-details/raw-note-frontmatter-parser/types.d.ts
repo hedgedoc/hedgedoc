@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,7 +7,7 @@
 export interface RawNoteFrontmatter {
   title: string | undefined
   description: string | undefined
-  tags: string | string[] | undefined
+  tags: string | number | string[] | undefined
   robots: string | undefined
   lang: string | undefined
   dir: string | undefined

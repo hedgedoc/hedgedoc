@@ -25,9 +25,6 @@
     "mermaid": {
       "unknownError": "Unknown rendering error. Please check your browser console."
     },
-    "sequence": {
-      "deprecationWarning": "The use of 'sequence' as code block language is deprecated."
-    },
     "vega-lite": {
       "png": "Save as PNG",
       "svg": "Save as SVG",
@@ -228,6 +225,13 @@
     }
   },
   "editor": {
+    "linter": {
+      "defaultAction": "Fix",
+      "sequence": "The use of 'sequence' as code block language is deprecated and will be removed in a future release.",
+      "shortcode": "The {{shortcode}} short-code is deprecated and will be removed in a future release. Use a single line URL instead.",
+      "frontmatter": "The yaml-metadata is invalid.",
+      "frontmatter-tags": "The comma-separated definition of tags in the yaml-metadata is deprecated. Use a yaml-array instead."
+    },
     "upload": {
       "uploadFile": {
         "withoutDescription": "Uploading file {{fileName}}",
@@ -238,8 +242,6 @@
     },
     "untitledNote": "Untitled",
     "placeholder": "← Start by entering a title here\n===\nVisit the features page if you don't know what to do.\nHappy hacking :)",
-    "invalidYaml": "The yaml-header is invalid. See <0></0> for more information.",
-    "deprecatedTags": "The comma-separated definition of tags in the yaml-metadata is deprecated. Use a yaml-array instead.",
     "infoToc": "Structure your note with headings to see a table-of-contents here.",
     "help": {
       "shortcuts": {

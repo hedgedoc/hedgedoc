@@ -9,6 +9,8 @@ import { VimeoMarkdownExtension } from './vimeo-markdown-extension'
 import type MarkdownIt from 'markdown-it'
 import markdownItRegex from 'markdown-it-regex'
 
+export const legacyVimeoRegex = /^{%vimeo ([\d]{6,11}) ?%}$/
+
 /**
  * Configure the given {@link MarkdownIt} to render legacy hedgedoc 1 vimeo short codes as embeddings.
  *
@@ -16,7 +18,7 @@ import markdownItRegex from 'markdown-it-regex'
  */
 const replaceLegacyVimeoShortCode: RegexOptions = {
   name: 'legacy-vimeo-short-code',
-  regex: /^{%vimeo ([\d]{6,11}) ?%}$/,
+  regex: legacyVimeoRegex,
   replace: (match) => {
     // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
     // noinspection CheckTagEmptyBody

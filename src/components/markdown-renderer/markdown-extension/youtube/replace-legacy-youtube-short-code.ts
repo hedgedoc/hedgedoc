@@ -9,6 +9,8 @@ import { YoutubeMarkdownExtension } from './youtube-markdown-extension'
 import markdownItRegex from 'markdown-it-regex'
 import type MarkdownIt from 'markdown-it'
 
+export const legacyYouTubeRegex = /^{%youtube ([^"&?\\/\s]{11}) ?%}$/
+
 /**
  * Configure the given {@link MarkdownIt} to render legacy hedgedoc 1 youtube short codes as embeddings.
  *
@@ -17,7 +19,7 @@ import type MarkdownIt from 'markdown-it'
 export const replaceLegacyYoutubeShortCodeMarkdownItPlugin: MarkdownIt.PluginSimple = (markdownIt: MarkdownIt): void =>
   markdownItRegex(markdownIt, {
     name: 'legacy-youtube-short-code',
-    regex: /^{%youtube ([^"&?\\/\s]{11}) ?%}$/,
+    regex: legacyYouTubeRegex,
     replace: (match) => {
       // ESLint wants to collapse this tag, but then the tag won't be valid html anymore.
       // noinspection CheckTagEmptyBody

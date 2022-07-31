@@ -81,7 +81,6 @@ describe('build state from set note data from server', () => {
         title: '',
         description: '',
         tags: [],
-        deprecatedTagsSyntax: false,
         robots: '',
         lang: 'en',
         dir: NoteTextDirection.LTR,
@@ -100,7 +99,6 @@ describe('build state from set note data from server', () => {
       },
       frontmatterRendererInfo: {
         frontmatterInvalid: false,
-        deprecatedSyntax: false,
         lineOffset: 0,
         slideOptions: initialSlideOptions
       },

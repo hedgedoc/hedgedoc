@@ -36,6 +36,13 @@ import { useInsertNoteContentIntoYTextInMockModeEffect } from './hooks/yjs/use-i
 import { useOnFirstEditorUpdateExtension } from './hooks/yjs/use-on-first-editor-update-extension'
 import { useIsConnectionSynced } from './hooks/yjs/use-is-connection-synced'
 import { useMarkdownContentYText } from './hooks/yjs/use-markdown-content-y-text'
+import { lintGutter } from '@codemirror/lint'
+import { useLinter } from './linter/linter'
+import { YoutubeMarkdownExtension } from '../../markdown-renderer/markdown-extension/youtube/youtube-markdown-extension'
+import { VimeoMarkdownExtension } from '../../markdown-renderer/markdown-extension/vimeo/vimeo-markdown-extension'
+import { SequenceDiagramMarkdownExtension } from '../../markdown-renderer/markdown-extension/sequence-diagram/sequence-diagram-markdown-extension'
+import { LegacyShortcodesMarkdownExtension } from '../../markdown-renderer/markdown-extension/legacy-short-codes/legacy-shortcodes-markdown-extension'
+import { FrontmatterLinter } from './linter/frontmatter-linter'
 
 /**
  * Renders the text editor pane of the editor.
@@ -78,8 +85,23 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
   const [firstEditorUpdateExtension, firstUpdateHappened] = useOnFirstEditorUpdateExtension()
   useInsertNoteContentIntoYTextInMockModeEffect(firstUpdateHappened, websocketConnection)
 
+  // ToDo: Don't initialize new extension array here, instead refactor to global extension array
+  const markdownExtensionsLinters = useMemo(() => {
+    return [
+      new YoutubeMarkdownExtension(),
+      new VimeoMarkdownExtension(),
+      new SequenceDiagramMarkdownExtension(),
+      new LegacyShortcodesMarkdownExtension()
+    ]
+      .flatMap((extension) => extension.buildLinter())
+      .concat(new FrontmatterLinter())
+  }, [])
+  const linter = useLinter(markdownExtensionsLinters)
+
   const extensions = useMemo(
     () => [
+      linter,
+      lintGutter(),
       markdown({
         base: markdownLanguage,
         codeLanguages: (input) => findLanguageByCodeBlockName(languages, input)
@@ -95,6 +117,7 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
       firstEditorUpdateExtension
     ],
     [
+      linter,
       editorScrollExtension,
       tablePasteExtensions,
       fileInsertExtension,
