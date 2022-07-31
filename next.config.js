@@ -110,7 +110,8 @@ const rawNextConfig = {
         permanent: true
       }
     ])
-  }
+  },
+  output: 'standalone',
 }
 
 const completeNextConfig = withBundleAnalyzer(rawNextConfig)

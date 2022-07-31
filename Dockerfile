@@ -3,32 +3,28 @@
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 # BUILD
-
-FROM node:18 AS builder
+FROM node:18-alpine AS builder
 ENV NEXT_TELEMETRY_DISABLED=1
 
-WORKDIR /usr/src/app
-RUN chown -R node:node . /usr/src/app
-USER node
-COPY --chown=node . ./
+WORKDIR /app
+COPY . ./
 RUN yarn install --immutable && \
-    yarn build:for-real-backend && \
-    rm -rf .next/cache
+    yarn build:for-real-backend
 
 # RUNNER
-
-FROM node:18-slim
+FROM node:18-alpine
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 WORKDIR /app
 RUN chown node:node -R /app
-COPY --chown=node package.json yarn.lock .yarnrc.yml ./
-COPY --chown=node .yarn/ .yarn/
-COPY --chown=node public/ public/
-COPY --chown=node --from=builder /usr/src/app/.next/ .next/
+
+COPY --from=builder --chown=node:node /app/.next/standalone ./
+COPY --from=builder --chown=node:node /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./package.json
+
 USER node
-RUN yarn workspaces focus --all --production
 
 EXPOSE 3001/tcp
-CMD ["/usr/local/bin/yarn", "start:for-real-backend"]
+CMD ["node", "server.js"]
