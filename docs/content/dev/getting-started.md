@@ -2,7 +2,7 @@
 
 ## Preparing for running the backend code
 
-**ToDo:** Document how to setup development environment using docker.
+**ToDo:** Document how to set up development environment using docker.
 
 1. Clone the repository with `git clone https://github.com/hedgedoc/hedgedoc.git`
    (cloning is the preferred way, but you can also download and unzip a release)
@@ -18,16 +18,16 @@
  
 ## Preparing for running the frontend code
 
-**ToDo:** Document how to setup development environment using docker.
+**ToDo:** Document how to set up development environment using docker.
 
 1. Clone the repository with `git clone https://github.com/hedgedoc/react-client.git`
    (cloning is the preferred way, but you can also download and unzip a release)
 
 2. Enter the directory and run `yarn install`.
 
-## Running Hedgedoc with auto-reload
+## Running HedgeDoc with auto-reload
 
-We will run Hedgedoc in development mode, which means the backend and frontend will automatically rebuild or restart when you make changes.
+We will run HedgeDoc in development mode, which means the backend and frontend will automatically rebuild or restart when you make changes.
 
 The commands will stay active in your terminal, so you will need multiple tabs
 to run both at the same time.
@@ -40,8 +40,8 @@ to run both at the same time.
 
 ## Testing
 
-- After starting both frontend and backend, Hedgedoc will be available at `http://localhost:3000`.
+- After starting both frontend and backend, HedgeDoc will be available at `http://localhost:3000`.
 
 **Note:** If you only started the frontend, it will be available at `http://localhost:3001`.
 
-**Note:** If you want to use Hedgedoc with the real backend, point your browser at `http://localhost:3000`, as the backend proxies requests to the frontend and you'll get CORS errors if you try to use the frontend directly.
+**Note:** If you want to use HedgeDoc with the real backend, point your browser at `http://localhost:3000`, as the backend proxies requests to the frontend and you'll get CORS errors if you try to use the frontend directly.
