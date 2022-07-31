@@ -7,6 +7,7 @@
 import { UserAvatar } from './user-avatar'
 import { render } from '@testing-library/react'
 import type { UserInfo } from '../../../api/users/types'
+import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
 
 describe('UserAvatar', () => {
   const user: UserInfo = {
@@ -14,6 +15,11 @@ describe('UserAvatar', () => {
     displayName: 'Boaty McBoatFace',
     photo: 'https://example.com/test.png'
   }
+
+  beforeEach(async () => {
+    await mockI18n()
+  })
+
   it('renders the user avatar correctly', () => {
     const view = render(<UserAvatar user={user} />)
     expect(view.container).toMatchSnapshot()

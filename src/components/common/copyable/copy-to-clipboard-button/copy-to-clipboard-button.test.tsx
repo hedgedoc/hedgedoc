@@ -4,15 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-/*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
-
 import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
 import { CopyToClipboardButton } from './copy-to-clipboard-button'
-import { render, screen } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import * as uuidModule from 'uuid'
 
 jest.mock('uuid')
@@ -46,7 +40,9 @@ describe('Copy to clipboard button', () => {
     const view = render(copyToClipboardButton)
     expect(view.container).toMatchSnapshot()
     const button = await screen.findByTitle('renderer.highlightCode.copyCode')
-    button.click()
+    act(() => {
+      button.click()
+    })
     const tooltip = await screen.findByRole('tooltip')
     expect(tooltip).toHaveTextContent(expectSuccess ? 'copyOverlay.success' : 'copyOverlay.error')
     expect(tooltip).toHaveAttribute('id', overlayId)

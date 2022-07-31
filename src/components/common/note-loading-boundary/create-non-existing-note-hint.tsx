@@ -54,7 +54,7 @@ export const CreateNonExistingNoteHint: React.FC = () => {
     )
   } else {
     return (
-      <Alert variant={'info'} {...testId('failedMessage')} className={'mt-5'}>
+      <Alert variant={'info'} {...testId('createNoteMessage')} className={'mt-5'}>
         <span>
           <Trans i18nKey={'noteLoadingBoundary.createNote.question'} values={{ aliasName: noteIdFromUrl }} />
         </span>

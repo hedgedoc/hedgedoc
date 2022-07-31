@@ -35,7 +35,7 @@ exports[`create non existing note hint renders an button as initial state 1`] = 
 <div>
   <div
     class="fade mt-5 alert alert-info show"
-    data-testid="failedMessage"
+    data-testid="createNoteMessage"
     role="alert"
   >
     <span>
@@ -59,14 +59,14 @@ exports[`create non existing note hint renders an button as initial state 1`] = 
 exports[`create non existing note hint shows an error message if note couldn't be created 1`] = `
 <div>
   <div
-    class="fade mt-5 alert alert-info show"
-    data-testid="loadingMessage"
+    class="fade mt-5 alert alert-danger show"
+    data-testid="failedMessage"
     role="alert"
   >
     <i
-      class="fa  fa-spinner fa-spin mr-2 "
+      class="fa  fa-exclamation-triangle mr-1 "
     />
-    noteLoadingBoundary.createNote.creating
+    noteLoadingBoundary.createNote.error
   </div>
 </div>
 `;

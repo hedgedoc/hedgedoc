@@ -6,11 +6,12 @@
 
 import * as useSingleStringUrlParameterModule from '../../../hooks/common/use-single-string-url-parameter'
 import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
-import { render, screen } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import { CreateNonExistingNoteHint } from './create-non-existing-note-hint'
 import * as createNoteWithPrimaryAliasModule from '../../../api/notes'
 import type { Note, NoteMetadata } from '../../../api/notes/types'
 import { Mock } from 'ts-mockery'
+import { waitForOtherPromisesToFinish } from '../../../utils/wait-for-other-promises-to-finish'
 
 describe('create non existing note hint', () => {
   const mockedNoteId = 'mockedNoteId'
@@ -26,37 +27,43 @@ describe('create non existing note hint', () => {
   const mockCreateNoteWithPrimaryAlias = () => {
     jest
       .spyOn(createNoteWithPrimaryAliasModule, 'createNoteWithPrimaryAlias')
-      .mockImplementation((markdown, primaryAlias): Promise<Note> => {
+      .mockImplementation(async (markdown, primaryAlias): Promise<Note> => {
         expect(markdown).toBe('')
         expect(primaryAlias).toBe(mockedNoteId)
         const metadata: NoteMetadata = Mock.of<NoteMetadata>({ primaryAddress: 'mockedPrimaryAlias' })
-        return Promise.resolve(Mock.of<Note>({ metadata }))
+        await waitForOtherPromisesToFinish()
+        return Mock.of<Note>({ metadata })
       })
   }
 
   const mockFailingCreateNoteWithPrimaryAlias = () => {
     jest
       .spyOn(createNoteWithPrimaryAliasModule, 'createNoteWithPrimaryAlias')
-      .mockImplementation((markdown, primaryAlias): Promise<Note> => {
+      .mockImplementation(async (markdown, primaryAlias): Promise<Note> => {
         expect(markdown).toBe('')
         expect(primaryAlias).toBe(mockedNoteId)
-        return Promise.reject("couldn't create note")
+        await waitForOtherPromisesToFinish()
+        throw new Error("couldn't create note")
       })
   }
+
+  beforeAll(async () => {
+    await mockI18n()
+  })
 
   afterEach(() => {
     jest.resetAllMocks()
     jest.resetModules()
   })
 
-  beforeEach(async () => {
-    await mockI18n()
+  beforeEach(() => {
     mockGetNoteIdQueryParameter()
   })
 
-  it('renders an button as initial state', () => {
+  it('renders an button as initial state', async () => {
     mockCreateNoteWithPrimaryAlias()
     const view = render(<CreateNonExistingNoteHint></CreateNonExistingNoteHint>)
+    await screen.findByTestId('createNoteMessage')
     expect(view.container).toMatchSnapshot()
   })
 
@@ -64,7 +71,9 @@ describe('create non existing note hint', () => {
     mockCreateNoteWithPrimaryAlias()
     const view = render(<CreateNonExistingNoteHint></CreateNonExistingNoteHint>)
     const button = await screen.findByTestId('createNoteButton')
-    button.click()
+    act(() => {
+      button.click()
+    })
     await screen.findByTestId('loadingMessage')
     expect(view.container).toMatchSnapshot()
   })
@@ -73,7 +82,9 @@ describe('create non existing note hint', () => {
     mockCreateNoteWithPrimaryAlias()
     const view = render(<CreateNonExistingNoteHint></CreateNonExistingNoteHint>)
     const button = await screen.findByTestId('createNoteButton')
-    button.click()
+    act(() => {
+      button.click()
+    })
     await screen.findByTestId('redirect')
     expect(view.container).toMatchSnapshot()
   })
@@ -82,7 +93,9 @@ describe('create non existing note hint', () => {
     mockFailingCreateNoteWithPrimaryAlias()
     const view = render(<CreateNonExistingNoteHint></CreateNonExistingNoteHint>)
     const button = await screen.findByTestId('createNoteButton')
-    button.click()
+    act(() => {
+      button.click()
+    })
     await screen.findByTestId('failedMessage')
     expect(view.container).toMatchSnapshot()
   })
