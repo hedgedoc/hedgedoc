@@ -3508,17 +3508,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"connect-typeorm@npm:1.1.4":
-  version: 1.1.4
-  resolution: "connect-typeorm@npm:1.1.4"
+"connect-typeorm@npm:2.0.0":
+  version: 2.0.0
+  resolution: "connect-typeorm@npm:2.0.0"
   dependencies:
     "@types/debug": 0.0.31
     "@types/express-session": ^1.15.5
     debug: ^4.1.1
     express-session: ^1.15.6
   peerDependencies:
-    typeorm: ^0.1.4 || ^0.2.5
-  checksum: 53e8d718f51d58149af562908b11ddbc3a716563a06e13f9c0ffc52d89774c1dd1660ca5e9958ecfe66469ac7d023d68fddf5b10aefb48c061da6c42b766ab28
+    typeorm: ^0.3.0
+  checksum: 48889a1b2c6031f7f643e92ecb9fcee9b2e20d4b6b4f98470ee66111a13caa4de93e5b17e9161f218026ba8d458a344088b8ebff2506eda3a0d3401541307b6b
   languageName: node
   linkType: hard
 
@@ -5264,7 +5264,7 @@ __metadata:
     class-transformer: 0.5.1
     class-validator: 0.13.2
     cli-color: 2.0.3
-    connect-typeorm: 1.1.4
+    connect-typeorm: 2.0.0
     cookie: 0.5.0
     eslint: 8.20.0
     eslint-config-prettier: 8.5.0
