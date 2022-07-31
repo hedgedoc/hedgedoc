@@ -34,6 +34,11 @@ describe('Auth', () => {
   });
 
   afterAll(async () => {
+    // Yes, this is a bad hack, but there is a race somewhere and I have
+    // no idea how to fix it.
+    await new Promise((resolve) => {
+      setTimeout(resolve, 1000);
+    });
     await testSetup.cleanup();
   });
 
