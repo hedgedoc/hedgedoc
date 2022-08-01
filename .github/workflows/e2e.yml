@@ -113,7 +113,7 @@ jobs:
         run: yarn start:ci &
 
       - name: Wait for server
-        run: curl --max-time 120 http://127.0.0.1:3001/
+        run: "sleep 3 && curl --max-time 120 http://127.0.0.1:3001/"
 
       - name: Run cypress
         run: "yarn cy:run:${{ matrix.browser }} --record true --parallel --group \"UI - ${{ matrix.browser }}\""
