@@ -54,7 +54,6 @@
     "@hedgedoc/markdown-it-task-lists": "1.0.5",
     "@hedgedoc/realtime": "0.1.1",
     "@hpcc-js/wasm": "1.12.8",
-    "@lezer/common": "1.0.0",
     "@matejmazur/react-katex": "3.1.3",
     "@mrdrogdrog/optional": "0.1.2",
     "@react-hook/resize-observer": "1.2.6",
