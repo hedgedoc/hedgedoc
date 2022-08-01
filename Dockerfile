@@ -17,12 +17,11 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 WORKDIR /app
-RUN chown node:node -R /app
 
-COPY --from=builder --chown=node:node /app/.next/standalone ./
+COPY --from=builder /app/next.config.js ./
+COPY --from=builder /app/public ./public
 COPY --from=builder --chown=node:node /app/.next/static ./.next/static
-COPY --from=builder --chown=node:node /app/public ./public
-COPY --from=builder --chown=node:node /app/package.json ./package.json
+COPY --from=builder --chown=node:node /app/.next/standalone ./
 
 USER node
 
