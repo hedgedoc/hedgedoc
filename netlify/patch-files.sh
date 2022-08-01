@@ -7,8 +7,6 @@
 
 set -e
 
-echo 'Patch yarnrc to use node_modules'
-sed -i "s/nodeLinker: pnp/nodeLinker: node-modules/" .yarnrc.yml
 echo 'Patch intro.md to include netlify banner.'
 cp netlify/intro.md public/mock-public/intro.md
 echo 'Patch motd.md to include privacy policy.'
