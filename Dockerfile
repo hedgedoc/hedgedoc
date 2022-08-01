@@ -25,5 +25,6 @@ COPY --from=builder --chown=node:node /app/.next/standalone ./
 
 USER node
 
-EXPOSE 3001/tcp
+ENV PORT 3000
+EXPOSE 3000/tcp
 CMD ["node", "server.js"]
