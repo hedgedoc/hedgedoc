@@ -23,13 +23,14 @@ export class FrontmatterLinter implements Linter {
     if (!frontmatterExtraction.isPresent) {
       return []
     }
-    const frontmatterLines = lines.slice(0, frontmatterExtraction.lineOffset + 1)
+    const startOfYaml = lines[0].length + 1
+    const frontmatterLines = lines.slice(1, frontmatterExtraction.lineOffset - 1)
     const rawNoteFrontmatter = FrontmatterLinter.loadYaml(frontmatterExtraction.rawText)
     if (rawNoteFrontmatter === undefined) {
       return [
         {
-          from: 0,
-          to: frontmatterLines.join('\n').length,
+          from: startOfYaml,
+          to: startOfYaml + frontmatterLines.join('\n').length,
           message: t('editor.linter.frontmatter'),
           severity: 'error'
         }
@@ -46,7 +47,7 @@ export class FrontmatterLinter implements Linter {
     const replacedText = 'tags:\n- ' + tags.join('\n- ')
     const tagsLineIndex = frontmatterLines.findIndex((value) => value.startsWith('tags: '))
     const linesBeforeTagsLine = frontmatterLines.slice(0, tagsLineIndex)
-    const from = linesBeforeTagsLine.join('\n').length + 1
+    const from = startOfYaml + linesBeforeTagsLine.join('\n').length + 1
     const to = from + frontmatterLines[tagsLineIndex].length
     return [
       {

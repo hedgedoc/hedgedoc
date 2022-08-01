@@ -45,8 +45,8 @@ describe('FrontmatterLinter', () => {
       testFrontmatterLinter(
         '---\ntags: a\n---',
         {
-          from: 4,
-          to: 11,
+          from: 5,
+          to: 12,
           severity: 'warning'
         },
         'tags:\n- a'
@@ -56,8 +56,8 @@ describe('FrontmatterLinter', () => {
       testFrontmatterLinter(
         '---\ntags: 1\n---',
         {
-          from: 4,
-          to: 11,
+          from: 5,
+          to: 12,
           severity: 'warning'
         },
         'tags:\n- 1'
@@ -67,8 +67,8 @@ describe('FrontmatterLinter', () => {
       testFrontmatterLinter(
         '---\ntags: 123, a\n---',
         {
-          from: 4,
-          to: 16,
+          from: 5,
+          to: 17,
           severity: 'warning'
         },
         'tags:\n- 123\n- a'
@@ -77,8 +77,8 @@ describe('FrontmatterLinter', () => {
   })
   it('with invalid yaml', () => {
     testFrontmatterLinter('---\n1\n  2: 3\n---', {
-      from: 0,
-      to: 16,
+      from: 4,
+      to: 12,
       severity: 'error'
     })
   })
