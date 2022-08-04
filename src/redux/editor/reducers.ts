@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,7 +14,8 @@ const initialState: EditorConfig = {
   editorMode: EditorMode.BOTH,
   ligatures: true,
   syncScroll: true,
-  smartPaste: true
+  smartPaste: true,
+  spellCheck: false
 }
 
 const getInitialState = (): EditorConfig => {
@@ -52,6 +53,13 @@ export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (
       newState = {
         ...state,
         smartPaste: action.smartPaste
+      }
+      saveToLocalStorage(newState)
+      return newState
+    case EditorConfigActionType.SET_SPELL_CHECK:
+      newState = {
+        ...state,
+        spellCheck: action.spellCheck
       }
       saveToLocalStorage(newState)
       return newState

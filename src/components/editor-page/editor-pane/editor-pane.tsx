@@ -84,6 +84,7 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
   const yjsExtension = useCodeMirrorYjsExtension(yText, awareness)
   const [firstEditorUpdateExtension, firstUpdateHappened] = useOnFirstEditorUpdateExtension()
   useInsertNoteContentIntoYTextInMockModeEffect(firstUpdateHappened, websocketConnection)
+  const spellCheck = useApplicationState((state) => state.editorConfig.spellCheck)
 
   // ToDo: Don't initialize new extension array here, instead refactor to global extension array
   const markdownExtensionsLinters = useMemo(() => {
@@ -114,7 +115,8 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
       cursorActivityExtension,
       updateViewContext,
       yjsExtension,
-      firstEditorUpdateExtension
+      firstEditorUpdateExtension,
+      EditorView.contentAttributes.of({ spellcheck: String(spellCheck) })
     ],
     [
       linter,
@@ -124,7 +126,8 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
       cursorActivityExtension,
       updateViewContext,
       yjsExtension,
-      firstEditorUpdateExtension
+      firstEditorUpdateExtension,
+      spellCheck
     ]
   )
 
