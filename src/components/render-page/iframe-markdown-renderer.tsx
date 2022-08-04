@@ -16,8 +16,7 @@ import { countWords } from './word-counter'
 import { useRendererToEditorCommunicator } from '../editor-page/render-context/renderer-to-editor-communicator-context-provider'
 import { useRendererReceiveHandler } from './window-post-message-communicator/hooks/use-renderer-receive-handler'
 import { SlideshowMarkdownRenderer } from '../markdown-renderer/slideshow-markdown-renderer'
-import { initialState } from '../../redux/note-details/initial-state'
-import type { RendererFrontmatterInfo } from '../../redux/note-details/types/note-details'
+import type { SlideOptions } from '../../redux/note-details/types/slide-show-options'
 
 /**
  * Wraps the markdown rendering in an iframe.
@@ -26,11 +25,16 @@ export const IframeMarkdownRenderer: React.FC = () => {
   const [markdownContentLines, setMarkdownContentLines] = useState<string[]>([])
   const [scrollState, setScrollState] = useState<ScrollState>({ firstLineInView: 1, scrolledPercentage: 0 })
   const [baseConfiguration, setBaseConfiguration] = useState<BaseConfiguration | undefined>(undefined)
-  const [frontmatterInfo, setFrontmatterInfo] = useState<RendererFrontmatterInfo>(initialState.frontmatterRendererInfo)
+  const [slideOptions, setSlideOptions] = useState<SlideOptions>()
 
   const communicator = useRendererToEditorCommunicator()
 
   const sendScrolling = useRef<boolean>(false)
+
+  useRendererReceiveHandler(
+    CommunicationMessageType.SET_SLIDE_OPTIONS,
+    useCallback((values) => setSlideOptions(values.slideOptions), [])
+  )
 
   useRendererReceiveHandler(
     CommunicationMessageType.DISABLE_RENDERER_SCROLL_SOURCE,
@@ -57,11 +61,6 @@ export const IframeMarkdownRenderer: React.FC = () => {
   useRendererReceiveHandler(
     CommunicationMessageType.SET_SCROLL_STATE,
     useCallback((values) => setScrollState(values.scrollState), [])
-  )
-
-  useRendererReceiveHandler(
-    CommunicationMessageType.SET_FRONTMATTER_INFO,
-    useCallback((values) => setFrontmatterInfo(values.frontmatterInfo), [])
   )
 
   useRendererReceiveHandler(
@@ -145,7 +144,6 @@ export const IframeMarkdownRenderer: React.FC = () => {
           onScroll={onScroll}
           baseUrl={baseConfiguration.baseUrl}
           onImageClick={onImageClick}
-          frontmatterInfo={frontmatterInfo}
         />
       )
     case RendererType.SLIDESHOW:
@@ -156,8 +154,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
           onFirstHeadingChange={onFirstHeadingChange}
           onImageClick={onImageClick}
           scrollState={scrollState}
-          lineOffset={frontmatterInfo.lineOffset}
-          slideOptions={frontmatterInfo.slideOptions}
+          slideOptions={slideOptions}
         />
       )
     case RendererType.INTRO:

@@ -16,7 +16,7 @@ import { ImagePlaceholderMarkdownExtension } from './image-placeholder-markdown-
 export class ImagePlaceholderReplacer extends ComponentReplacer {
   private countPerSourceLine = new Map<number, number>()
 
-  constructor(private lineOffset: number) {
+  constructor() {
     super()
   }
 
@@ -35,7 +35,7 @@ export class ImagePlaceholderReplacer extends ComponentReplacer {
           title={node.attribs.title}
           width={node.attribs.width}
           height={node.attribs.height}
-          lineIndex={isNaN(lineIndex) ? undefined : lineIndex + this.lineOffset}
+          lineIndex={isNaN(lineIndex) ? undefined : lineIndex}
           placeholderIndexInLine={indexInLine}
         />
       )

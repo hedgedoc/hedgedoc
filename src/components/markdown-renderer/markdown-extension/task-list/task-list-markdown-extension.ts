@@ -15,7 +15,7 @@ import markdownItTaskLists from '@hedgedoc/markdown-it-task-lists'
  * Adds support for interactive checkbox lists to the markdown rendering using the github checklist syntax.
  */
 export class TaskListMarkdownExtension extends MarkdownExtension {
-  constructor(private frontmatterLinesToSkip: number, private onTaskCheckedChange?: TaskCheckedChangeHandler) {
+  constructor(private onTaskCheckedChange?: TaskCheckedChangeHandler) {
     super()
   }
 
@@ -28,6 +28,6 @@ export class TaskListMarkdownExtension extends MarkdownExtension {
   }
 
   public buildReplacers(): ComponentReplacer[] {
-    return [new TaskListReplacer(this.frontmatterLinesToSkip, this.onTaskCheckedChange)]
+    return [new TaskListReplacer(this.onTaskCheckedChange)]
   }
 }

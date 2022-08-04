@@ -16,7 +16,7 @@ import { ImagePlaceholderReplacer } from './image-placeholder-replacer'
 export class ImagePlaceholderMarkdownExtension extends MarkdownExtension {
   public static readonly PLACEHOLDER_URL = 'https://'
 
-  constructor(private lineOffset: number) {
+  constructor() {
     super()
   }
 
@@ -25,6 +25,6 @@ export class ImagePlaceholderMarkdownExtension extends MarkdownExtension {
   }
 
   buildReplacers(): ComponentReplacer[] {
-    return [new ImagePlaceholderReplacer(this.lineOffset)]
+    return [new ImagePlaceholderReplacer()]
   }
 }

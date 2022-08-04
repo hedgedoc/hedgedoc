@@ -9,6 +9,9 @@ import { TestMarkdownRenderer } from '../../test-utils/test-markdown-renderer'
 import React from 'react'
 import { PlantumlMarkdownExtension } from './plantuml-markdown-extension'
 import { mockI18n } from '../../test-utils/mock-i18n'
+import * as reduxModule from '../../../../redux'
+import { Mock } from 'ts-mockery'
+import type { ApplicationState } from '../../../../redux/application-state'
 
 describe('PlantUML markdown extensions', () => {
   beforeAll(async () => {
@@ -16,9 +19,17 @@ describe('PlantUML markdown extensions', () => {
   })
 
   it('renders a plantuml codeblock', () => {
+    jest.spyOn(reduxModule, 'getGlobalState').mockReturnValue(
+      Mock.of<ApplicationState>({
+        config: {
+          plantumlServer: 'https://example.org'
+        }
+      })
+    )
+
     const view = render(
       <TestMarkdownRenderer
-        extensions={[new PlantumlMarkdownExtension('http://example.org')]}
+        extensions={[new PlantumlMarkdownExtension()]}
         content={'```plantuml\nclass Example\n```'}
       />
     )
@@ -26,9 +37,17 @@ describe('PlantUML markdown extensions', () => {
   })
 
   it('renders an error if no server is defined', () => {
+    jest.spyOn(reduxModule, 'getGlobalState').mockReturnValue(
+      Mock.of<ApplicationState>({
+        config: {
+          plantumlServer: undefined
+        }
+      })
+    )
+
     const view = render(
       <TestMarkdownRenderer
-        extensions={[new PlantumlMarkdownExtension(null)]}
+        extensions={[new PlantumlMarkdownExtension()]}
         content={'```plantuml\nclass Example\n```'}
       />
     )

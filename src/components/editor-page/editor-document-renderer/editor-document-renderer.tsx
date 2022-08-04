@@ -7,12 +7,13 @@
 import React from 'react'
 import type { RenderIframeProps } from '../renderer-pane/render-iframe'
 import { RenderIframe } from '../renderer-pane/render-iframe'
-import { useSendFrontmatterInfoFromReduxToRenderer } from '../renderer-pane/hooks/use-send-frontmatter-info-from-redux-to-renderer'
 import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../../hooks/common/use-trimmed-note-markdown-content-without-frontmatter'
 import { NoteType } from '../../../redux/note-details/types/note-details'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
 import { useSetCheckboxInEditor } from './hooks/use-set-checkbox-in-editor'
+import { useOnScrollWithLineOffset } from './hooks/use-on-scroll-with-line-offset'
+import { useScrollStateWithoutLineOffset } from './hooks/use-scroll-state-without-line-offset'
 
 export type EditorDocumentRendererProps = Omit<
   RenderIframeProps,
@@ -22,17 +23,22 @@ export type EditorDocumentRendererProps = Omit<
 /**
  * Renders the markdown content from the global application state with the iframe renderer.
  *
- * @param props Every property from the {@link RenderIframe} except the markdown content.
+ * @param scrollState The {@link ScrollState} that should be sent to the renderer
+ * @param onScroll A callback that is executed when the view in the rendered is scrolled
+ * @param props Every property from the {@link RenderIframe} except the markdown content
  */
-export const EditorDocumentRenderer: React.FC<EditorDocumentRendererProps> = (props) => {
-  useSendFrontmatterInfoFromReduxToRenderer()
+export const EditorDocumentRenderer: React.FC<EditorDocumentRendererProps> = ({ scrollState, onScroll, ...props }) => {
   const trimmedContentLines = useTrimmedNoteMarkdownContentWithoutFrontmatter()
   const noteType: NoteType = useApplicationState((state) => state.noteDetails.frontmatter.type)
   const setCheckboxInEditor = useSetCheckboxInEditor()
+  const adjustedOnScroll = useOnScrollWithLineOffset(onScroll)
+  const adjustedScrollState = useScrollStateWithoutLineOffset(scrollState)
 
   return (
     <RenderIframe
       {...props}
+      onScroll={adjustedOnScroll}
+      scrollState={adjustedScrollState}
       onTaskCheckedChange={setCheckboxInEditor}
       rendererType={noteType === NoteType.SLIDE ? RendererType.SLIDESHOW : RendererType.DOCUMENT}
       markdownContentLines={trimmedContentLines}

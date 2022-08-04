@@ -12,6 +12,8 @@ import type Token from 'markdown-it/lib/token'
 import type { Options } from 'markdown-it/lib'
 import type { ComponentReplacer } from '../../replace-components/component-replacer'
 import { PlantumlNotConfiguredComponentReplacer } from './plantuml-not-configured-component-replacer'
+import { getGlobalState } from '../../../../redux'
+import { Optional } from '@mrdrogdrog/optional'
 
 /**
  * Adds support for chart rendering using plantuml to the markdown rendering using code fences with "plantuml" as language.
@@ -19,7 +21,7 @@ import { PlantumlNotConfiguredComponentReplacer } from './plantuml-not-configure
  * @see https://plantuml.com
  */
 export class PlantumlMarkdownExtension extends MarkdownExtension {
-  constructor(private plantumlServer?: string) {
+  constructor() {
     super()
   }
 
@@ -33,15 +35,15 @@ export class PlantumlMarkdownExtension extends MarkdownExtension {
   }
 
   public configureMarkdownIt(markdownIt: MarkdownIt): void {
-    if (this.plantumlServer) {
-      plantuml(markdownIt, {
-        openMarker: '```plantuml',
-        closeMarker: '```',
-        server: this.plantumlServer
-      })
-    } else {
-      this.plantumlError(markdownIt)
-    }
+    Optional.ofNullable(getGlobalState().config.plantumlServer)
+      .map((plantumlServer) =>
+        plantuml(markdownIt, {
+          openMarker: '```plantuml',
+          closeMarker: '```',
+          server: plantumlServer
+        })
+      )
+      .orElseGet(() => this.plantumlError(markdownIt))
   }
 
   public buildTagNameWhitelist(): string[] {

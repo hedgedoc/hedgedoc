@@ -17,12 +17,12 @@ import type MarkdownIt from 'markdown-it'
 export class LinemarkerMarkdownExtension extends MarkdownExtension {
   public static readonly tagName = 'app-linemarker'
 
-  constructor(private lineOffset: number, private onLineMarkers?: (lineMarkers: LineMarkers[]) => void) {
+  constructor(private onLineMarkers?: (lineMarkers: LineMarkers[]) => void) {
     super()
   }
 
   public configureMarkdownIt(markdownIt: MarkdownIt): void {
-    addLineMarkerMarkdownItPlugin(markdownIt, this.lineOffset ?? 0, this.onLineMarkers)
+    addLineMarkerMarkdownItPlugin(markdownIt, this.onLineMarkers)
   }
 
   public buildReplacers(): ComponentReplacer[] {

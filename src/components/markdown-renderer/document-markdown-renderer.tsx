@@ -33,7 +33,6 @@ export interface DocumentMarkdownRendererProps extends CommonMarkdownRendererPro
  * @param onImageClick The callback to call if a image is clicked
  * @param outerContainerRef A reference for the outer container
  * @param newlinesAreBreaks If newlines are rendered as breaks or not
- * @param lineOffset The line offset
  */
 export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> = ({
   className,
@@ -45,8 +44,7 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
   baseUrl,
   onImageClick,
   outerContainerRef,
-  newlinesAreBreaks,
-  lineOffset
+  newlinesAreBreaks
 }) => {
   const markdownBodyRef = useRef<HTMLDivElement>(null)
   const currentLineMarkers = useRef<LineMarkers[]>()
@@ -55,7 +53,6 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
     baseUrl,
     currentLineMarkers,
     useMemo(() => [new HeadlineAnchorsMarkdownExtension()], []),
-    lineOffset ?? 0,
     onTaskCheckedChange,
     onImageClick,
     onTocChange

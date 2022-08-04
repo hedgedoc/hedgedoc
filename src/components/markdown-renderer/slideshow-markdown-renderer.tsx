@@ -18,7 +18,7 @@ import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
 import type { SlideOptions } from '../../redux/note-details/types/slide-show-options'
 
 export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererProps {
-  slideOptions: SlideOptions
+  slideOptions?: SlideOptions
 }
 
 /**
@@ -33,7 +33,6 @@ export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererPr
  * @param baseUrl The base url of the renderer
  * @param onImageClick The callback to call if a image is clicked
  * @param newlinesAreBreaks If newlines are rendered as breaks or not
- * @param lineOffset The line offset
  * @param slideOptions The {@link SlideOptions} to use
  */
 export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps & ScrollProps> = ({
@@ -45,7 +44,6 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
   baseUrl,
   onImageClick,
   newlinesAreBreaks,
-  lineOffset,
   slideOptions
 }) => {
   const markdownBodyRef = useRef<HTMLDivElement>(null)
@@ -55,7 +53,6 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
     baseUrl,
     undefined,
     useMemo(() => [new RevealMarkdownExtension()], []),
-    lineOffset ?? 0,
     onTaskCheckedChange,
     onImageClick,
     onTocChange

@@ -4,7 +4,7 @@ exports[`PlantUML markdown extensions renders a plantuml codeblock 1`] = `
 <div>
   <img
     alt="uml diagram"
-    src="http://example.org/svg/SoWkIImgAStDuKhEIImkLd2jICmjo4dbSaZDIm6A0W00"
+    src="https://example.org/svg/SoWkIImgAStDuKhEIImkLd2jICmjo4dbSaZDIm6A0W00"
   />
   
 

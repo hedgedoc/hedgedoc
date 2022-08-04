@@ -39,7 +39,10 @@ export const useOnImageUploadFromRenderer = (): void => {
           .then((blob) => {
             const file = new File([blob], fileName, { type: blob.type })
             const { cursorSelection, alt, title } = Optional.ofNullable(lineIndex)
-              .flatMap((actualLineIndex) => findPlaceholderInMarkdownContent(actualLineIndex, placeholderIndexInLine))
+              .flatMap((actualLineIndex) => {
+                const lineOffset = getGlobalState().noteDetails.frontmatterRendererInfo.lineOffset
+                return findPlaceholderInMarkdownContent(actualLineIndex + lineOffset, placeholderIndexInLine)
+              })
               .orElse({} as ExtractResult)
             handleUpload(file, cursorSelection, alt, title)
           })

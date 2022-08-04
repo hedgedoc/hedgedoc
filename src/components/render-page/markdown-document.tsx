@@ -16,7 +16,6 @@ import styles from './markdown-document.module.scss'
 import { WidthBasedTableOfContents } from './width-based-table-of-contents'
 import { ShowIf } from '../common/show-if/show-if'
 import { useApplicationState } from '../../hooks/common/use-application-state'
-import type { RendererFrontmatterInfo } from '../../redux/note-details/types/note-details'
 
 export interface RendererProps extends ScrollProps {
   onFirstHeadingChange?: (firstHeading: string | undefined) => void
@@ -32,7 +31,6 @@ export interface MarkdownDocumentProps extends RendererProps {
   additionalRendererClasses?: string
   disableToc?: boolean
   baseUrl: string
-  frontmatterInfo?: RendererFrontmatterInfo
 }
 
 /**
@@ -50,7 +48,6 @@ export interface MarkdownDocumentProps extends RendererProps {
  * @param scrollState The current {@link ScrollState}
  * @param onHeightChange The callback to call if the height of the document changes
  * @param disableToc If the table of contents should be disabled.
- * @param frontmatterInfo The frontmatter information for the renderer.
  * @see https://markdown-it.github.io/
  */
 export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
@@ -65,8 +62,7 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
   onScroll,
   scrollState,
   onHeightChange,
-  disableToc,
-  frontmatterInfo
+  disableToc
 }) => {
   const rendererRef = useRef<HTMLDivElement | null>(null)
   const [rendererSize, setRendererSize] = useState<DOMRectReadOnly>()
@@ -115,7 +111,6 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
           baseUrl={baseUrl}
           onImageClick={onImageClick}
           newlinesAreBreaks={newlinesAreBreaks}
-          lineOffset={frontmatterInfo?.lineOffset}
         />
       </div>
       <div className={`${styles['markdown-document-side']} pt-4`}>

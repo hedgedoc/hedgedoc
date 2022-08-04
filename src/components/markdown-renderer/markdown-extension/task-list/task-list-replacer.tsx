@@ -18,13 +18,13 @@ export type TaskCheckedChangeHandler = (lineInMarkdown: number, checked: boolean
 export class TaskListReplacer extends ComponentReplacer {
   onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
 
-  constructor(frontmatterLinesToSkip: number, onTaskCheckedChange?: TaskCheckedChangeHandler) {
+  constructor(onTaskCheckedChange?: TaskCheckedChangeHandler) {
     super()
     this.onTaskCheckedChange = (lineInMarkdown, checked) => {
       if (onTaskCheckedChange === undefined) {
         return
       }
-      onTaskCheckedChange(frontmatterLinesToSkip + lineInMarkdown, checked)
+      onTaskCheckedChange(lineInMarkdown, checked)
     }
   }
 

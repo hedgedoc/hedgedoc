@@ -27,6 +27,7 @@ import { Logger } from '../../../utils/logger'
 import { useEffectOnRenderTypeChange } from './hooks/use-effect-on-render-type-change'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { ORIGIN_TYPE, useOriginFromConfig } from '../render-context/use-origin-from-config'
+import { getGlobalState } from '../../../redux'
 
 export interface RenderIframeProps extends RendererProps {
   rendererType: RendererType
@@ -90,11 +91,6 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   )
 
   useEditorReceiveHandler(
-    CommunicationMessageType.SET_SCROLL_STATE,
-    useCallback((values: SetScrollStateMessage) => onScroll?.(values.scrollState), [onScroll])
-  )
-
-  useEditorReceiveHandler(
     CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE,
     useCallback(() => onMakeScrollSource?.(), [onMakeScrollSource])
   )
@@ -102,7 +98,10 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   useEditorReceiveHandler(
     CommunicationMessageType.ON_TASK_CHECKBOX_CHANGE,
     useCallback(
-      (values: OnTaskCheckboxChangeMessage) => onTaskCheckedChange?.(values.lineInMarkdown, values.checked),
+      (values: OnTaskCheckboxChangeMessage) => {
+        const lineOffset = getGlobalState().noteDetails.frontmatterRendererInfo.lineOffset
+        onTaskCheckedChange?.(values.lineInMarkdown + lineOffset, values.checked)
+      },
       [onTaskCheckedChange]
     )
   )
@@ -140,9 +139,15 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   )
 
   useEffectOnRenderTypeChange(rendererType, onIframeLoad)
-  useSendScrollState(scrollState)
   useSendDarkModeStatusToRenderer(forcedDarkMode)
   useSendMarkdownToRenderer(markdownContentLines)
+
+  useSendScrollState(scrollState)
+
+  useEditorReceiveHandler(
+    CommunicationMessageType.SET_SCROLL_STATE,
+    useCallback((values: SetScrollStateMessage) => onScroll?.(values.scrollState), [onScroll])
+  )
 
   return (
     <Fragment>

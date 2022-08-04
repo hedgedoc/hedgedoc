@@ -34,7 +34,6 @@ import { SpoilerMarkdownExtension } from '../markdown-extension/spoiler-markdown
 import { LinkifyFixMarkdownExtension } from '../markdown-extension/linkify-fix-markdown-extension'
 import { HighlightedCodeMarkdownExtension } from '../markdown-extension/highlighted-fence/highlighted-code-markdown-extension'
 import { DebuggerMarkdownExtension } from '../markdown-extension/debugger-markdown-extension'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
 import type { LineMarkers } from '../markdown-extension/linemarker/add-line-marker-markdown-it-plugin'
 import type { ImageClickHandler } from '../markdown-extension/image/proxy-image-replacer'
 import type { TocAst } from 'markdown-it-toc-done-right'
@@ -50,7 +49,6 @@ import { useOnRefChange } from './use-on-ref-change'
  * @param baseUrl The base url for the {@link LinkAdjustmentMarkdownExtension}
  * @param currentLineMarkers A {@link MutableRefObject reference} to {@link LineMarkers} for the {@link LinemarkerMarkdownExtension}
  * @param additionalExtensions The additional extensions that should be included in the list
- * @param lineOffset The line offset for the {@link LinemarkerMarkdownExtension} and {@link TaskListMarkdownExtension}
  * @param onTaskCheckedChange The checkbox click callback for the {@link TaskListMarkdownExtension}
  * @param onImageClick The image click callback for the {@link ProxyImageMarkdownExtension}
  * @param onTocChange The toc-changed callback for the {@link TableOfContentsMarkdownExtension}
@@ -60,12 +58,10 @@ export const useMarkdownExtensions = (
   baseUrl: string,
   currentLineMarkers: MutableRefObject<LineMarkers[] | undefined> | undefined,
   additionalExtensions: MarkdownExtension[],
-  lineOffset: number,
   onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void,
   onImageClick?: ImageClickHandler,
   onTocChange?: (ast?: TocAst) => void
 ): MarkdownExtension[] => {
-  const plantumlServer = useApplicationState((state) => state.config.plantumlServer)
   const toc = useRef<TocAst | undefined>(undefined)
   useOnRefChange(toc, onTocChange)
 
@@ -76,11 +72,10 @@ export const useMarkdownExtensions = (
       new VegaLiteMarkdownExtension(),
       // new MarkmapMarkdownExtension(),
       new LinemarkerMarkdownExtension(
-        lineOffset,
         currentLineMarkers ? (lineMarkers) => (currentLineMarkers.current = lineMarkers) : undefined
       ),
       new IframeCapsuleMarkdownExtension(),
-      new ImagePlaceholderMarkdownExtension(lineOffset),
+      new ImagePlaceholderMarkdownExtension(),
       new UploadIndicatingImageFrameMarkdownExtension(),
       new GistMarkdownExtension(),
       new YoutubeMarkdownExtension(),
@@ -95,8 +90,8 @@ export const useMarkdownExtensions = (
       new BlockquoteExtraTagMarkdownExtension(),
       new LinkAdjustmentMarkdownExtension(baseUrl),
       new KatexMarkdownExtension(),
-      new TaskListMarkdownExtension(lineOffset, onTaskCheckedChange),
-      new PlantumlMarkdownExtension(plantumlServer),
+      new TaskListMarkdownExtension(onTaskCheckedChange),
+      new PlantumlMarkdownExtension(),
       new LegacyShortcodesMarkdownExtension(),
       new EmojiMarkdownExtension(),
       new GenericSyntaxMarkdownExtension(),
@@ -106,5 +101,5 @@ export const useMarkdownExtensions = (
       new HighlightedCodeMarkdownExtension(),
       new DebuggerMarkdownExtension()
     ]
-  }, [additionalExtensions, baseUrl, currentLineMarkers, lineOffset, onImageClick, onTaskCheckedChange, plantumlServer])
+  }, [additionalExtensions, baseUrl, currentLineMarkers, onImageClick, onTaskCheckedChange])
 }

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { ScrollState } from '../../editor-page/synced-scroll/scroll-props'
-import type { RendererFrontmatterInfo } from '../../../redux/note-details/types/note-details'
+import type { SlideOptions } from '../../../redux/note-details/types/slide-show-options'
 
 export enum CommunicationMessageType {
   SET_MARKDOWN_CONTENT = 'SET_MARKDOWN_CONTENT',
@@ -20,7 +20,7 @@ export enum CommunicationMessageType {
   SET_BASE_CONFIGURATION = 'SET_BASE_CONFIGURATION',
   GET_WORD_COUNT = 'GET_WORD_COUNT',
   ON_WORD_COUNT_CALCULATED = 'ON_WORD_COUNT_CALCULATED',
-  SET_FRONTMATTER_INFO = 'SET_FRONTMATTER_INFO',
+  SET_SLIDE_OPTIONS = 'SET_SLIDE_OPTIONS',
   IMAGE_UPLOAD = 'IMAGE_UPLOAD'
 }
 
@@ -82,9 +82,9 @@ export interface OnFirstHeadingChangeMessage {
   firstHeading: string | undefined
 }
 
-export interface SetFrontmatterInfoMessage {
-  type: CommunicationMessageType.SET_FRONTMATTER_INFO
-  frontmatterInfo: RendererFrontmatterInfo
+export interface SetSlideOptionsMessage {
+  type: CommunicationMessageType.SET_SLIDE_OPTIONS
+  slideOptions: SlideOptions
 }
 
 export interface OnHeightChangeMessage {
@@ -109,7 +109,7 @@ export type CommunicationMessages =
   | SetScrollStateMessage
   | OnTaskCheckboxChangeMessage
   | OnFirstHeadingChangeMessage
-  | SetFrontmatterInfoMessage
+  | SetSlideOptionsMessage
   | OnHeightChangeMessage
   | OnWordCountCalculatedMessage
   | ImageUploadMessage
@@ -120,7 +120,7 @@ export type EditorToRendererMessageType =
   | CommunicationMessageType.SET_SCROLL_STATE
   | CommunicationMessageType.SET_BASE_CONFIGURATION
   | CommunicationMessageType.GET_WORD_COUNT
-  | CommunicationMessageType.SET_FRONTMATTER_INFO
+  | CommunicationMessageType.SET_SLIDE_OPTIONS
   | CommunicationMessageType.DISABLE_RENDERER_SCROLL_SOURCE
 
 export type RendererToEditorMessageType =
