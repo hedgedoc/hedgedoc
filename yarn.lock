@@ -2004,7 +2004,7 @@ __metadata:
     markmap-common: 0.13.4
     markmap-lib: 0.13.5
     markmap-view: 0.13.5
-    mermaid: 9.1.3
+    mermaid: 9.1.4
     next: 12.2.2
     prettier: 2.7.1
     react: 18.2.0
@@ -6947,13 +6947,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:2.3.8":
-  version: 2.3.8
-  resolution: "dompurify@npm:2.3.8"
-  checksum: dc7b32ee57a03fe5166a850071200897cc13fa069287a709e3b2138052d73ec09a87026b9e28c8d2f254a74eaa52ef30644e98e54294c30acbca2a53f1bbc5f4
-  languageName: node
-  linkType: hard
-
 "domutils@npm:^2.8.0":
   version: 2.8.0
   resolution: "domutils@npm:2.8.0"
@@ -10198,20 +10191,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mermaid@npm:9.1.3":
-  version: 9.1.3
-  resolution: "mermaid@npm:9.1.3"
+"mermaid@npm:9.1.4":
+  version: 9.1.4
+  resolution: "mermaid@npm:9.1.4"
   dependencies:
     "@braintree/sanitize-url": ^6.0.0
     d3: ^7.0.0
     dagre: ^0.8.5
     dagre-d3: ^0.6.4
-    dompurify: 2.3.8
+    dompurify: 2.3.10
     graphlib: ^2.1.8
     khroma: ^2.0.0
     moment-mini: ^2.24.0
     stylis: ^4.0.10
-  checksum: 7cec272241258977f539853f9e07eac0cdb81815a5046ba32ddc8f71f24b9102a3a54d2a2042ef151306ad82e11ab57fee5bb590689ff43e9520e3fbbc136d52
+  checksum: 333ac9aa4298bde7c0c8cb1ca290c5c73d0af984583e1e5187d40da81144fd7068b426430b56f21ea6210d4d39b791c5e6143dd78cd76617018dff8a4bf14256
   languageName: node
   linkType: hard
 
