@@ -1684,10 +1684,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/state@npm:6.1.0, @codemirror/state@npm:^6.0.0":
-  version: 6.1.0
-  resolution: "@codemirror/state@npm:6.1.0"
-  checksum: 5185df31f2ee0f178b74a2a5420d78a84a31fc9f245c1b6a01fcf037fcad06770c9611ef9fce905a8f7bb0a42f42a241721dd9042255cbd848ceadd2ee0d0d39
+"@codemirror/state@npm:6.1.1, @codemirror/state@npm:^6.0.0":
+  version: 6.1.1
+  resolution: "@codemirror/state@npm:6.1.1"
+  checksum: 26b767af3a3385479d9bb6a31b5d4fb7d2485d4f502c3056aa3117c12ba0b4e80bbbf358d81e81a03d147e404b7ef65cc1449058b2f869f698882d1969b74996
   languageName: node
   linkType: hard
 
@@ -1703,14 +1703,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:6.1.2, @codemirror/view@npm:^6.0.0":
-  version: 6.1.2
-  resolution: "@codemirror/view@npm:6.1.2"
+"@codemirror/view@npm:6.2.0, @codemirror/view@npm:^6.0.0":
+  version: 6.2.0
+  resolution: "@codemirror/view@npm:6.2.0"
   dependencies:
     "@codemirror/state": ^6.0.0
     style-mod: ^4.0.0
     w3c-keyname: ^2.2.4
-  checksum: 4ba84d4453e779cb08216414ac4d8eee0fc2efcdb4653d7dd2512d96a4f6c6b0415032779cc0e55c9b26b9036c4cb82e240d316fe473e9b551bce2b67473bdd0
+  checksum: 984ef8b6f41055ce221d322263726e95185c22eca23284c3612b449b5a2d2e63ff091b8e4bbc80ae9e980889d3d8929929076528fa9d1125c67a41c4af3a5193
   languageName: node
   linkType: hard
 
@@ -1910,9 +1910,9 @@ __metadata:
     "@codemirror/language": 6.2.1
     "@codemirror/language-data": 6.1.0
     "@codemirror/lint": 6.0.0
-    "@codemirror/state": 6.1.0
+    "@codemirror/state": 6.1.1
     "@codemirror/theme-one-dark": 6.0.0
-    "@codemirror/view": 6.1.2
+    "@codemirror/view": 6.2.0
     "@fontsource/source-sans-pro": 4.5.10
     "@hedgedoc/html-to-react": 1.4.5
     "@hedgedoc/markdown-it-image-size": 1.0.3
