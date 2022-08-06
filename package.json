@@ -54,7 +54,7 @@
     "joi": "17.6.0",
     "ldapauth-fork": "5.0.5",
     "lib0": "0.2.52",
-    "minio": "7.0.29",
+    "minio": "7.0.30",
     "mysql": "2.18.1",
     "nest-router": "1.0.9",
     "node-fetch": "2.6.7",
