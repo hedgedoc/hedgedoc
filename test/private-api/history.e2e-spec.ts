@@ -161,7 +161,9 @@ describe('History', () => {
           user,
         );
         expect(historyEntries).toHaveLength(1);
-        expect(historyEntries[0].note.aliases).toEqual(prevEntry.note.aliases);
+        expect(await historyEntries[0].note.aliases).toEqual(
+          await prevEntry.note.aliases,
+        );
         expect(historyEntries[0].user.username).toEqual(
           prevEntry.user.username,
         );
