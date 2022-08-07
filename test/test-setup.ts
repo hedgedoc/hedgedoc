@@ -89,6 +89,7 @@ export class TestSetup {
     }
     if (connectionOptions.type === 'sqlite') {
       // Bail out early, as SQLite runs from memory anyway
+      await this.app.close();
       return;
     }
     if (appConnection.isConnected) {
@@ -106,6 +107,7 @@ export class TestSetup {
         await connection.close();
       }
     }
+    await this.app.close();
   }
 }
 

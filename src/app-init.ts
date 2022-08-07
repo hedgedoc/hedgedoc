@@ -79,4 +79,5 @@ export async function setupApp(
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new ErrorExceptionMapping(httpAdapter));
   app.useWebSocketAdapter(new WsAdapter(app));
+  app.enableShutdownHooks();
 }
