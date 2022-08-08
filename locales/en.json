@@ -60,11 +60,6 @@
   "landing": {
     "intro": {
       "exploreFeatures": "Explore all features",
-      "features": {
-        "collaboration": "Real time collaboration",
-        "katex": "Works with charts and KaTeX",
-        "slides": "Supports slide mode"
-      },
       "markdownWhileLoading": "Loading...",
       "markdownLoadingError": "Error while fetching intro content"
     },

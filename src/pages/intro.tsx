@@ -1,7 +1,7 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { NextPage } from 'next'
 import { LandingLayout } from '../components/landing-layout/landing-layout'
@@ -14,7 +14,6 @@ import {
 import { Trans } from 'react-i18next'
 import { Branding } from '../components/common/branding/branding'
 import { CoverButtons } from '../components/intro-page/cover-buttons/cover-buttons'
-import { FeatureLinks } from '../components/intro-page/feature-links'
 import React from 'react'
 import { IntroCustomContent } from '../components/intro-page/intro-custom-content'
 
@@ -39,7 +38,6 @@ const IntroPage: NextPage = () => {
           <IntroCustomContent />
           <hr className={'mb-5'} />
         </div>
-        <FeatureLinks />
       </EditorToRendererCommunicatorContextProvider>
     </LandingLayout>
   )
