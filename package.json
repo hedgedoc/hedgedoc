@@ -48,7 +48,7 @@
     "@codemirror/state": "6.1.1",
     "@codemirror/theme-one-dark": "6.0.0",
     "@codemirror/view": "6.2.0",
-    "@fontsource/source-sans-pro": "4.5.10",
+    "@fontsource/source-sans-pro": "4.5.11",
     "@hedgedoc/html-to-react": "1.4.5",
     "@hedgedoc/markdown-it-image-size": "1.0.3",
     "@hedgedoc/markdown-it-task-lists": "1.0.5",
