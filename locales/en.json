@@ -42,7 +42,8 @@
       "question": "Do you want to create a note with alias '{{aliasName}}'?",
       "create": "Create note",
       "creating": "Creating note...",
-      "error": "Note couldn't be created."
+      "error": "Note couldn't be created.",
+      "success": "Note has been created."
     }
   },
   "api": {

@@ -62,41 +62,49 @@ describe('create non existing note hint', () => {
 
   it('renders an button as initial state', async () => {
     mockCreateNoteWithPrimaryAlias()
-    const view = render(<CreateNonExistingNoteHint></CreateNonExistingNoteHint>)
+    const onNoteCreatedCallback = jest.fn()
+    const view = render(<CreateNonExistingNoteHint onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>)
     await screen.findByTestId('createNoteMessage')
+    expect(onNoteCreatedCallback).not.toBeCalled()
     expect(view.container).toMatchSnapshot()
   })
 
   it('renders a waiting message when button is clicked', async () => {
     mockCreateNoteWithPrimaryAlias()
-    const view = render(<CreateNonExistingNoteHint></CreateNonExistingNoteHint>)
+    const onNoteCreatedCallback = jest.fn()
+    const view = render(<CreateNonExistingNoteHint onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>)
     const button = await screen.findByTestId('createNoteButton')
     act(() => {
       button.click()
     })
     await screen.findByTestId('loadingMessage')
+    expect(onNoteCreatedCallback).not.toBeCalled()
     expect(view.container).toMatchSnapshot()
   })
 
-  it('redirects when the note has been created', async () => {
+  it('shows success message when the note has been created', async () => {
     mockCreateNoteWithPrimaryAlias()
-    const view = render(<CreateNonExistingNoteHint></CreateNonExistingNoteHint>)
+    const onNoteCreatedCallback = jest.fn()
+    const view = render(<CreateNonExistingNoteHint onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>)
     const button = await screen.findByTestId('createNoteButton')
     act(() => {
       button.click()
     })
-    await screen.findByTestId('redirect')
+    await screen.findByTestId('noteCreated')
+    expect(onNoteCreatedCallback).toBeCalled()
     expect(view.container).toMatchSnapshot()
   })
 
   it("shows an error message if note couldn't be created", async () => {
     mockFailingCreateNoteWithPrimaryAlias()
-    const view = render(<CreateNonExistingNoteHint></CreateNonExistingNoteHint>)
+    const onNoteCreatedCallback = jest.fn()
+    const view = render(<CreateNonExistingNoteHint onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>)
     const button = await screen.findByTestId('createNoteButton')
     act(() => {
       button.click()
     })
     await screen.findByTestId('failedMessage')
+    expect(onNoteCreatedCallback).not.toBeCalled()
     expect(view.container).toMatchSnapshot()
   })
 })

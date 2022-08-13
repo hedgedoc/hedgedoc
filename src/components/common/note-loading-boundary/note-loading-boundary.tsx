@@ -5,7 +5,7 @@
  */
 
 import type { PropsWithChildren } from 'react'
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { useLoadNoteFromServer } from './hooks/use-load-note-from-server'
 import { LoadingScreen } from '../../application-loader/loading-screen/loading-screen'
 import { CommonErrorPage } from '../../error-pages/common-error-page'
@@ -20,7 +20,11 @@ import { ShowIf } from '../show-if/show-if'
  * @param children The react elements that will be shown when the loading was successful.
  */
 export const NoteLoadingBoundary: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
-  const { error, loading } = useLoadNoteFromServer()
+  const [{ error, loading }, loadNoteFromServer] = useLoadNoteFromServer()
+
+  useEffect(() => {
+    loadNoteFromServer()
+  }, [loadNoteFromServer])
 
   if (loading) {
     return <LoadingScreen />
@@ -28,7 +32,7 @@ export const NoteLoadingBoundary: React.FC<PropsWithChildren<unknown>> = ({ chil
     return (
       <CommonErrorPage titleI18nKey={`${error.message}.title`} descriptionI18nKey={`${error.message}.description`}>
         <ShowIf condition={error.message === 'api.note.notFound'}>
-          <CreateNonExistingNoteHint />
+          <CreateNonExistingNoteHint onNoteCreated={loadNoteFromServer} />
         </ShowIf>
       </CommonErrorPage>
     )

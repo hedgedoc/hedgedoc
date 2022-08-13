@@ -1,18 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`create non existing note hint redirects when the note has been created 1`] = `
+exports[`create non existing note hint shows success message when the note has been created 1`] = `
 <div>
-  <span
-    data-testid="redirect"
+  <div
+    class="fade mt-5 alert alert-info show"
+    data-testid="noteCreated"
+    role="alert"
   >
-    Redirecting to
-     
-    <a
-      href="/n/mockedPrimaryAlias"
-    >
-      /n/mockedPrimaryAlias
-    </a>
-  </span>
+    <i
+      class="fa  fa-check-circle mr-2 "
+    />
+    noteLoadingBoundary.createNote.success
+  </div>
 </div>
 `;
 
