@@ -1992,8 +1992,8 @@ __metadata:
     fork-awesome: 1.2.0
     highlight.js: 11.6.0
     htmlparser2: 8.0.1
-    i18next: 21.8.16
-    i18next-browser-languagedetector: 6.1.4
+    i18next: 21.9.0
+    i18next-browser-languagedetector: 6.1.5
     i18next-resources-to-backend: 1.0.0
     jest: 28.1.3
     jest-environment-jsdom: 28.1.3
@@ -8429,12 +8429,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next-browser-languagedetector@npm:6.1.4":
-  version: 6.1.4
-  resolution: "i18next-browser-languagedetector@npm:6.1.4"
+"i18next-browser-languagedetector@npm:6.1.5":
+  version: 6.1.5
+  resolution: "i18next-browser-languagedetector@npm:6.1.5"
   dependencies:
-    "@babel/runtime": ^7.14.6
-  checksum: 379dba3527c359c3adeb26c1e16e6b7e007989763c4361d43662e4d9412c538ca35e28a6a12df0654edc0adb78b44ff5afdf4c5d842bbf0e83db59d5e9e02f55
+    "@babel/runtime": ^7.18.9
+  checksum: af3a785454dfb7e3595215c3738062b82173601a788b0a7c6fe78b6c50f0f46cd89508300f694c324d4a07b19743d2410be50aa6e6494967a75aedb17ad5033f
   languageName: node
   linkType: hard
 
@@ -8447,12 +8447,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:21.8.16":
-  version: 21.8.16
-  resolution: "i18next@npm:21.8.16"
+"i18next@npm:21.9.0":
+  version: 21.9.0
+  resolution: "i18next@npm:21.9.0"
   dependencies:
     "@babel/runtime": ^7.17.2
-  checksum: b29d0cfd3e69edb01ba55fac7f642cde921a47880bfb0552756dffdd2aaa866da17ae0825e47b6972b2c1249aa22a6e9f8813ce18a5072975a0dc720c408a4e5
+  checksum: b3d2f06cdecefd8e7d25a5961f6a6d26e7fb08aeb35c9cb548d08fd8acf809ec977052a1ba3a01a2da63cff6c8484829c26aa3ff627a803f8f2d5a38de923469
   languageName: node
   linkType: hard
 
