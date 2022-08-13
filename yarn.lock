@@ -2019,7 +2019,7 @@ __metadata:
     markmap-common: 0.13.4
     markmap-lib: 0.13.5
     markmap-view: 0.13.5
-    mermaid: 9.1.4
+    mermaid: 9.1.5
     next: 12.2.2
     prettier: 2.7.1
     react: 18.2.0
@@ -10112,9 +10112,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mermaid@npm:9.1.4":
-  version: 9.1.4
-  resolution: "mermaid@npm:9.1.4"
+"mermaid@npm:9.1.5":
+  version: 9.1.5
+  resolution: "mermaid@npm:9.1.5"
   dependencies:
     "@braintree/sanitize-url": ^6.0.0
     d3: ^7.0.0
@@ -10123,9 +10123,9 @@ __metadata:
     dompurify: 2.3.10
     graphlib: ^2.1.8
     khroma: ^2.0.0
-    moment-mini: ^2.24.0
+    moment-mini: 2.24.0
     stylis: ^4.0.10
-  checksum: 333ac9aa4298bde7c0c8cb1ca290c5c73d0af984583e1e5187d40da81144fd7068b426430b56f21ea6210d4d39b791c5e6143dd78cd76617018dff8a4bf14256
+  checksum: a63fbb8365b381fdcc825e4a2b9e1f023cdf4fddd7db6ba57f9839b32a02239b42e124d7bcefd751408a1d05e53152f53dff5578bab651c1dce9be20c4273ea6
   languageName: node
   linkType: hard
 
@@ -10287,10 +10287,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment-mini@npm:^2.24.0":
-  version: 2.29.4
-  resolution: "moment-mini@npm:2.29.4"
-  checksum: 5d386872d04202c36653442a65f0e06a4e33cf3b25cef4e9df17877a8e76e93f218a1dfd4ccc0946c228815a4e1e53d79ae340de82791ffce90007769eb85120
+"moment-mini@npm:2.24.0":
+  version: 2.24.0
+  resolution: "moment-mini@npm:2.24.0"
+  checksum: c1162322fd05a305cf5d403107fe702a928e5a72c56a614142fae4882846f66bb21c423cef397fe56802564b0353386f1bca46c8bb080d2097e68cbd687d589e
   languageName: node
   linkType: hard
 
