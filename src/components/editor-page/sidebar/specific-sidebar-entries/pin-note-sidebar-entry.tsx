@@ -11,6 +11,7 @@ import type { SpecificSidebarEntryProps } from '../types'
 import { toggleHistoryEntryPinning } from '../../../../redux/history/methods'
 import { showErrorNotification } from '../../../../redux/ui-notifications/methods'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import styles from './pin-note-sidebar-entry.module.css'
 
 /**
  * Sidebar entry button that toggles the pinned status of the current note in the history.
@@ -40,7 +41,7 @@ export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
       icon={'thumb-tack'}
       hide={hide}
       onClick={onPinClicked}
-      className={`${className ?? ''} ${isPinned ? 'icon-highlighted' : ''}`}>
+      className={`${className ?? ''} ${isPinned ? styles['highlighted'] : ''}`}>
       <Trans i18nKey={isPinned ? 'editor.documentBar.pinnedToHistory' : 'editor.documentBar.pinNoteToHistory'} />
     </SidebarButton>
   )

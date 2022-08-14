@@ -106,15 +106,15 @@ export const toggleHistoryEntryPinning = async (noteId: string): Promise<void> =
   if (!entryToUpdate) {
     return Promise.reject(`History entry for note '${noteId}' not found`)
   }
-  if (entryToUpdate.pinStatus === undefined) {
-    entryToUpdate.pinStatus = false
+  const updatedEntry = {
+    ...entryToUpdate,
+    pinStatus: !entryToUpdate.pinStatus
   }
-  entryToUpdate.pinStatus = !entryToUpdate.pinStatus
   if (entryToUpdate.origin === HistoryEntryOrigin.LOCAL) {
-    updateLocalHistoryEntry(noteId, entryToUpdate)
+    updateLocalHistoryEntry(noteId, updatedEntry)
   } else {
-    await updateRemoteHistoryEntryPinStatus(noteId, entryToUpdate.pinStatus)
-    updateHistoryEntryRedux(noteId, entryToUpdate)
+    await updateRemoteHistoryEntryPinStatus(noteId, updatedEntry.pinStatus)
+    updateHistoryEntryRedux(noteId, updatedEntry)
   }
 }
 
