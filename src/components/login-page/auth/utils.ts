@@ -13,18 +13,14 @@ import { authProviderTypeOneClick } from '../../../api/config/types'
  * Fetches metadata about the currently signed-in user from the API and stores it into the redux.
  */
 export const fetchAndSetUser: () => Promise<void> = async () => {
-  try {
-    const me = await getMe()
-    setUser({
-      username: me.username,
-      displayName: me.displayName,
-      photo: me.photo,
-      authProvider: me.authProvider,
-      email: me.email
-    })
-  } catch (error) {
-    console.error(error)
-  }
+  const me = await getMe()
+  setUser({
+    username: me.username,
+    displayName: me.displayName,
+    photo: me.photo,
+    authProvider: me.authProvider,
+    email: me.email
+  })
 }
 
 /**
