@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import type { FormEvent } from 'react'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Card, Col, Form, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { doLocalRegister } from '../api/auth/local'
@@ -20,12 +20,8 @@ import { PasswordAgainField } from '../components/common/fields/password-again-f
 import { useOnInputChange } from '../hooks/common/use-on-input-change'
 import { RegisterError } from '../components/register-page/register-error/register-error'
 import { LandingLayout } from '../components/landing-layout/landing-layout'
-import { useRouter } from 'next/router'
 import type { NextPage } from 'next'
-import { Logger } from '../utils/logger'
 import { Redirect } from '../components/common/redirect'
-
-const logger = new Logger('register-page')
 
 /**
  * Renders the registration page with fields for username, display name, password, password retype and information about terms and conditions.
@@ -71,15 +67,6 @@ export const RegisterPage: NextPage = () => {
   const onDisplayNameChange = useOnInputChange(setDisplayName)
   const onPasswordChange = useOnInputChange(setPassword)
   const onPasswordAgainChange = useOnInputChange(setPasswordAgain)
-
-  const router = useRouter()
-  useEffect(() => {
-    if (!allowRegister) {
-      router.push('/login').catch((reason) => logger.error('Error while redirecting to /login', reason))
-    } else if (userExists) {
-      router.push('/intro').catch((reason) => logger.error('Error while redirecting to /intro', reason))
-    }
-  }, [allowRegister, router, userExists])
 
   if (userExists) {
     return <Redirect to={'/intro'} />
