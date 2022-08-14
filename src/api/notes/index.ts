@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { Note } from './types'
+import type { Note, NoteDeletionOptions } from './types'
 import type { MediaUpload } from '../media/types'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
@@ -73,5 +73,11 @@ export const createNoteWithPrimaryAlias = async (markdown: string, primaryAlias:
  * @throws {Error} when the api request wasn't successful.
  */
 export const deleteNote = async (noteIdOrAlias: string): Promise<void> => {
-  await new DeleteApiRequestBuilder('notes/' + noteIdOrAlias).sendRequest()
+  await new DeleteApiRequestBuilder<void, NoteDeletionOptions>('notes/' + noteIdOrAlias)
+    .withJsonBody({
+      keepMedia: false
+      // TODO Ask whether the user wants to keep the media uploaded to the note.
+      // https://github.com/hedgedoc/react-client/issues/2288
+    })
+    .sendRequest()
 }

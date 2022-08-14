@@ -15,6 +15,10 @@ import { showErrorNotification } from '../../../../redux/ui-notifications/method
 import { deleteNote } from '../../../../api/notes'
 import { DeleteNoteModal } from './delete-note-modal'
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
+import { useRouter } from 'next/router'
+import { Logger } from '../../../../utils/logger'
+
+const logger = new Logger('note-deletion')
 
 /**
  * Sidebar entry that can be used to delete the current note.
@@ -24,11 +28,17 @@ import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
  */
 export const DeleteNoteSidebarEntry: React.FC<PropsWithChildren<SpecificSidebarEntryProps>> = ({ hide, className }) => {
   useTranslation()
+  const router = useRouter()
   const noteId = useApplicationState((state) => state.noteDetails.id)
   const [modalVisibility, showModal, closeModal] = useBooleanState()
   const deleteNoteAndCloseDialog = useCallback(() => {
-    deleteNote(noteId).catch(showErrorNotification('landing.history.error.deleteNote.text')).finally(closeModal)
-  }, [closeModal, noteId])
+    deleteNote(noteId)
+      .then(() => {
+        router.push('/history').catch((reason) => logger.error('Error while redirecting to /history', reason))
+      })
+      .catch(showErrorNotification('landing.history.error.deleteNote.text'))
+      .finally(closeModal)
+  }, [closeModal, noteId, router])
 
   return (
     <Fragment>
