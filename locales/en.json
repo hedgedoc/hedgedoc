@@ -213,7 +213,7 @@
       },
       "deleteAccessToken": {
         "title": "Really delete token?",
-        "message": "When deleting an access token, the applications that used it won't have access to your account anymore. You eventually need a new token to continue using those applications.",
+        "message": "When deleting the access token '{{label}}', the applications that used it won't have access to your account anymore. You eventually need a new token to continue using those applications.",
         "notificationTitle": "Access token deleted",
         "notificationText": "The access token '{{label}}' has been deleted.",
         "failed": "There was an error deleting the access token. Please try it again or contact your instance's administrator."

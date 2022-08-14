@@ -34,7 +34,11 @@ export const AccessTokenDeletionModal: React.FC<AccessTokenDeletionModalProps> =
         return dispatchUiNotification(
           'profile.modal.deleteAccessToken.notificationTitle',
           'profile.modal.deleteAccessToken.notificationText',
-          {}
+          {
+            contentI18nOptions: {
+              label: token.label
+            }
+          }
         )
       })
       .catch(showErrorNotification('profile.modal.deleteAccessToken.failed'))
@@ -48,7 +52,7 @@ export const AccessTokenDeletionModal: React.FC<AccessTokenDeletionModalProps> =
       title={'profile.modal.deleteAccessToken.title'}
       {...cypressId('access-token-modal-delete')}>
       <Modal.Body>
-        <Trans i18nKey='profile.modal.deleteAccessToken.message' />
+        <Trans i18nKey='profile.modal.deleteAccessToken.message' values={{ label: token.label }} />
       </Modal.Body>
       <Modal.Footer>
         <Button variant='danger' onClick={onConfirmDelete}>
