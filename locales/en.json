@@ -556,6 +556,10 @@
       "usernameInfo": "The username is your unique identifier for login.",
       "passwordInfo": "Choose a unique and secure password. It must contain at least 8 characters.",
       "infoTermsPrivacy": "With the registration of my user account I agree to the following terms:",
+      "success": {
+        "title": "Successfully registered",
+        "message": "Your account has been registered successfully. You can now log in with your username and password."
+      },
       "error": {
         "registrationDisabled": "The registration is disabled",
         "usernameExisting": "There is already an account with this username.",

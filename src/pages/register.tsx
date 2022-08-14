@@ -20,14 +20,17 @@ import { PasswordAgainField } from '../components/common/fields/password-again-f
 import { useOnInputChange } from '../hooks/common/use-on-input-change'
 import { RegisterError } from '../components/register-page/register-error/register-error'
 import { LandingLayout } from '../components/landing-layout/landing-layout'
+import { useRouter } from 'next/router'
 import type { NextPage } from 'next'
 import { Redirect } from '../components/common/redirect'
+import { dispatchUiNotification } from '../redux/ui-notifications/methods'
 
 /**
  * Renders the registration page with fields for username, display name, password, password retype and information about terms and conditions.
  */
 export const RegisterPage: NextPage = () => {
   useTranslation()
+  const router = useRouter()
   const allowRegister = useApplicationState((state) => state.config.allowRegister)
   const userExists = useApplicationState((state) => !!state.user)
 
@@ -41,6 +44,8 @@ export const RegisterPage: NextPage = () => {
     (event: FormEvent) => {
       doLocalRegister(username, displayName, password)
         .then(() => fetchAndSetUser())
+        .then(() => dispatchUiNotification('login.register.success.title', 'login.register.success.message', {}))
+        .then(() => router.push('/'))
         .catch((error: Error) => {
           setError(
             Object.values(RegisterErrorType).includes(error.message as RegisterErrorType)
@@ -50,7 +55,7 @@ export const RegisterPage: NextPage = () => {
         })
       event.preventDefault()
     },
-    [username, displayName, password]
+    [username, displayName, password, router]
   )
 
   const ready = useMemo(() => {
