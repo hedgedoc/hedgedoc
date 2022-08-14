@@ -11,6 +11,9 @@ import { fetchAndSetUser } from '../../login-page/auth/utils'
 import { fetchFrontendConfig } from './fetch-frontend-config'
 import { loadDarkMode } from './load-dark-mode'
 import { isDevMode, isTestMode } from '../../../utils/test-modes'
+import { Logger } from '../../../utils/logger'
+
+const logger = new Logger('Application Loader')
 
 /**
  * Create a custom delay in the loading of the application.
@@ -33,6 +36,14 @@ export interface InitTask {
   task: () => Promise<void>
 }
 
+const fetchUserInformation = async (): Promise<void> => {
+  try {
+    await fetchAndSetUser()
+  } catch (error) {
+    logger.error("Couldn't load user. Probably not logged in.")
+  }
+}
+
 /**
  * Create a list of tasks, that need to be fulfilled on startup.
  */
@@ -52,7 +63,7 @@ export const createSetUpTaskList = (): InitTask[] => {
     },
     {
       name: 'Fetch user information',
-      task: fetchAndSetUser
+      task: fetchUserInformation
     },
     {
       name: 'Motd',
