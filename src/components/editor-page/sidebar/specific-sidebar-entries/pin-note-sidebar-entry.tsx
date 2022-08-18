@@ -9,9 +9,9 @@ import { Trans, useTranslation } from 'react-i18next'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../types'
 import { toggleHistoryEntryPinning } from '../../../../redux/history/methods'
-import { showErrorNotification } from '../../../../redux/ui-notifications/methods'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import styles from './pin-note-sidebar-entry.module.css'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 
 /**
  * Sidebar entry button that toggles the pinned status of the current note in the history.
@@ -23,6 +23,7 @@ export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
   useTranslation()
   const id = useApplicationState((state) => state.noteDetails.id)
   const history = useApplicationState((state) => state.history)
+  const { showErrorNotification } = useUiNotifications()
 
   const isPinned = useMemo(() => {
     const entry = history.find((entry) => entry.identifier === id)
@@ -34,7 +35,7 @@ export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
 
   const onPinClicked = useCallback(() => {
     toggleHistoryEntryPinning(id).catch(showErrorNotification('landing.history.error.updateEntry.text'))
-  }, [id])
+  }, [id, showErrorNotification])
 
   return (
     <SidebarButton

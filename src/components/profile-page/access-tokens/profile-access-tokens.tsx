@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,7 +11,7 @@ import type { AccessToken } from '../../../api/tokens/types'
 import { ShowIf } from '../../common/show-if/show-if'
 import { AccessTokenListEntry } from './access-token-list-entry'
 import { AccessTokenCreationForm } from './access-token-creation-form/access-token-creation-form'
-import { showErrorNotification } from '../../../redux/ui-notifications/methods'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 
 export interface AccessTokenUpdateProps {
   onUpdateList: () => void
@@ -23,6 +23,7 @@ export interface AccessTokenUpdateProps {
 export const ProfileAccessTokens: React.FC = () => {
   useTranslation()
   const [accessTokens, setAccessTokens] = useState<AccessToken[]>([])
+  const { showErrorNotification } = useUiNotifications()
 
   const refreshAccessTokens = useCallback(() => {
     getAccessTokenList()
@@ -30,7 +31,7 @@ export const ProfileAccessTokens: React.FC = () => {
         setAccessTokens(tokens)
       })
       .catch(showErrorNotification('profile.accessTokens.loadingFailed'))
-  }, [])
+  }, [showErrorNotification])
 
   useEffect(() => {
     refreshAccessTokens()

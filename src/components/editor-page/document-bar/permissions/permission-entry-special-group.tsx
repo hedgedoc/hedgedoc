@@ -11,7 +11,7 @@ import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { removeGroupPermission, setGroupPermission } from '../../../../api/permissions'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { setNotePermissionsFromServer } from '../../../../redux/note-details/methods'
-import { showErrorNotification } from '../../../../redux/ui-notifications/methods'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 
 export interface PermissionEntrySpecialGroupProps {
   level: AccessLevel
@@ -27,6 +27,7 @@ export interface PermissionEntrySpecialGroupProps {
 export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupProps> = ({ level, type }) => {
   const noteId = useApplicationState((state) => state.noteDetails.primaryAddress)
   const { t } = useTranslation()
+  const { showErrorNotification } = useUiNotifications()
 
   const onSetEntryReadOnly = useCallback(() => {
     setGroupPermission(noteId, type, false)
@@ -34,7 +35,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteId, type])
+  }, [noteId, showErrorNotification, type])
 
   const onSetEntryWriteable = useCallback(() => {
     setGroupPermission(noteId, type, true)
@@ -42,7 +43,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteId, type])
+  }, [noteId, showErrorNotification, type])
 
   const onSetEntryDenied = useCallback(() => {
     removeGroupPermission(noteId, type)
@@ -50,7 +51,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteId, type])
+  }, [noteId, showErrorNotification, type])
 
   const name = useMemo(() => {
     switch (type) {

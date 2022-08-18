@@ -7,18 +7,22 @@
 import React, { useMemo } from 'react'
 import { UiNotificationToast } from './ui-notification-toast'
 import styles from './notifications.module.scss'
-import { useApplicationState } from '../../hooks/common/use-application-state'
+import type { UiNotification } from './types'
+
+export interface UiNotificationsProps {
+  notifications: UiNotification[]
+}
 
 /**
- * Renders {@link UiNotification notifications} in the top right corner.
+ * Renders {@link UiNotification notifications} in the top right corner sorted by creation time..
+ *
+ * @param notifications The notification to render
  */
-export const UiNotifications: React.FC = () => {
-  const notifications = useApplicationState((state) => state.uiNotifications)
-
+export const UiNotifications: React.FC<UiNotificationsProps> = ({ notifications }) => {
   const notificationElements = useMemo(() => {
-    return notifications.map((notification, notificationIndex) => (
-      <UiNotificationToast key={notificationIndex} notificationId={notificationIndex} {...notification} />
-    ))
+    return notifications
+      .sort((a, b) => b.createdAtTimestamp - a.createdAtTimestamp)
+      .map((notification) => <UiNotificationToast key={notification.uuid} notification={notification} />)
   }, [notifications])
 
   return (

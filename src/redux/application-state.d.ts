@@ -10,7 +10,6 @@ import type { OptionalMotdState } from './motd/types'
 import type { EditorConfig } from './editor/types'
 import type { DarkModeConfig } from './dark-mode/types'
 import type { NoteDetails } from './note-details/types/note-details'
-import type { UiNotificationState } from './ui-notifications/types'
 import type { RendererStatus } from './renderer-status/types'
 import type { HistoryEntryWithOrigin } from '../api/history/types'
 import type { RealtimeState } from './realtime/types'
@@ -23,7 +22,6 @@ export interface ApplicationState {
   editorConfig: EditorConfig
   darkMode: DarkModeConfig
   noteDetails: NoteDetails
-  uiNotifications: UiNotificationState
   rendererStatus: RendererStatus
   realtime: RealtimeState
 }

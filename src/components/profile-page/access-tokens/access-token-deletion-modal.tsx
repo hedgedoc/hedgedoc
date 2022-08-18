@@ -12,7 +12,7 @@ import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import type { AccessToken } from '../../../api/tokens/types'
 import { deleteAccessToken } from '../../../api/tokens'
-import { dispatchUiNotification, showErrorNotification } from '../../../redux/ui-notifications/methods'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 
 export interface AccessTokenDeletionModalProps extends ModalVisibilityProps {
   token: AccessToken
@@ -27,6 +27,7 @@ export interface AccessTokenDeletionModalProps extends ModalVisibilityProps {
  */
 export const AccessTokenDeletionModal: React.FC<AccessTokenDeletionModalProps> = ({ show, token, onHide }) => {
   useTranslation()
+  const { showErrorNotification, dispatchUiNotification } = useUiNotifications()
 
   const onConfirmDelete = useCallback(() => {
     deleteAccessToken(token.keyId)
@@ -43,7 +44,7 @@ export const AccessTokenDeletionModal: React.FC<AccessTokenDeletionModalProps> =
       })
       .catch(showErrorNotification('profile.modal.deleteAccessToken.failed'))
       .finally(() => onHide?.())
-  }, [token, onHide])
+  }, [token.keyId, token.label, showErrorNotification, dispatchUiNotification, onHide])
 
   return (
     <CommonModal

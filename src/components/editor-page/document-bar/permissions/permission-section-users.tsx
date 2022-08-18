@@ -10,7 +10,7 @@ import { PermissionEntryUser } from './permission-entry-user'
 import { PermissionAddEntryField } from './permission-add-entry-field'
 import { setUserPermission } from '../../../../api/permissions'
 import { setNotePermissionsFromServer } from '../../../../redux/note-details/methods'
-import { showErrorNotification } from '../../../../redux/ui-notifications/methods'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 
 /**
  * Section of the permission modal for managing user access to the note.
@@ -19,6 +19,7 @@ export const PermissionSectionUsers: React.FC = () => {
   useTranslation()
   const userPermissions = useApplicationState((state) => state.noteDetails.permissions.sharedToUsers)
   const noteId = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const { showErrorNotification } = useUiNotifications()
 
   const userEntries = useMemo(() => {
     return userPermissions.map((entry) => <PermissionEntryUser key={entry.username} entry={entry} />)
@@ -32,7 +33,7 @@ export const PermissionSectionUsers: React.FC = () => {
         })
         .catch(showErrorNotification('editor.modal.permissions.error'))
     },
-    [noteId]
+    [noteId, showErrorNotification]
   )
 
   return (

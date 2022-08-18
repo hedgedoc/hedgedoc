@@ -9,10 +9,11 @@ import { Button } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { DeletionModal } from '../../common/modals/deletion-modal'
-import { deleteAllHistoryEntries, safeRefreshHistoryState } from '../../../redux/history/methods'
-import { showErrorNotification } from '../../../redux/ui-notifications/methods'
+import { deleteAllHistoryEntries } from '../../../redux/history/methods'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { useBooleanState } from '../../../hooks/common/use-boolean-state'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
+import { useSafeRefreshHistoryStateCallback } from './hooks/use-safe-refresh-history-state'
 
 /**
  * Renders a button to clear the complete history of the user.
@@ -21,6 +22,8 @@ import { useBooleanState } from '../../../hooks/common/use-boolean-state'
 export const ClearHistoryButton: React.FC = () => {
   const { t } = useTranslation()
   const [modalVisibility, showModal, closeModal] = useBooleanState()
+  const { showErrorNotification } = useUiNotifications()
+  const safeRefreshHistoryState = useSafeRefreshHistoryStateCallback()
 
   const onConfirm = useCallback(() => {
     deleteAllHistoryEntries().catch((error: Error) => {
@@ -28,7 +31,7 @@ export const ClearHistoryButton: React.FC = () => {
       safeRefreshHistoryState()
     })
     closeModal()
-  }, [closeModal])
+  }, [closeModal, safeRefreshHistoryState, showErrorNotification])
 
   return (
     <Fragment>

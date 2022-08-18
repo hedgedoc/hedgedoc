@@ -10,7 +10,7 @@ import { downloadRevision } from './utils'
 import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { getRevision } from '../../../../api/revisions'
-import { showErrorNotification } from '../../../../redux/ui-notifications/methods'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 
 export interface RevisionModalFooterProps {
   selectedRevisionId?: number
@@ -29,6 +29,7 @@ export const RevisionModalFooter: React.FC<RevisionModalFooterProps & Pick<Modal
 }) => {
   useTranslation()
   const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const { showErrorNotification } = useUiNotifications()
 
   const onRevertToRevision = useCallback(() => {
     // TODO Websocket message handler missing
@@ -45,7 +46,7 @@ export const RevisionModalFooter: React.FC<RevisionModalFooterProps & Pick<Modal
         downloadRevision(noteIdentifier, revision)
       })
       .catch(showErrorNotification(''))
-  }, [noteIdentifier, selectedRevisionId])
+  }, [noteIdentifier, selectedRevisionId, showErrorNotification])
 
   return (
     <Modal.Footer>

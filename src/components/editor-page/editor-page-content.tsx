@@ -16,7 +16,6 @@ import { Sidebar } from './sidebar/sidebar'
 import { Splitter } from './splitter/splitter'
 import type { DualScrollState, ScrollState } from './synced-scroll/scroll-props'
 import { useEditorModeFromUrl } from './hooks/use-editor-mode-from-url'
-import { UiNotifications } from '../notifications/ui-notifications'
 import { useUpdateLocalHistoryEntry } from './hooks/use-update-local-history-entry'
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { EditorDocumentRenderer } from './editor-document-renderer/editor-document-renderer'
@@ -128,7 +127,6 @@ export const EditorPageContent: React.FC = () => {
   return (
     <ChangeEditorContentContextProvider>
       <NoteAndAppTitleHead />
-      <UiNotifications />
       <MotdModal />
       <div className={'d-flex flex-column vh-100'}>
         <AppBar mode={AppBarMode.EDITOR} />

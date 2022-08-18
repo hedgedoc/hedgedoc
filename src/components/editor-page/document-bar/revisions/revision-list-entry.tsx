@@ -13,10 +13,10 @@ import { UserAvatar } from '../../../common/user-avatar/user-avatar'
 import styles from './revision-list-entry.module.scss'
 import type { RevisionMetadata } from '../../../../api/revisions/types'
 import { getUserDataForRevision } from './utils'
-import { showErrorNotification } from '../../../../redux/ui-notifications/methods'
 import { useAsync } from 'react-use'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { WaitSpinner } from '../../../common/wait-spinner/wait-spinner'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 
 export interface RevisionListEntryProps {
   active: boolean
@@ -33,6 +33,7 @@ export interface RevisionListEntryProps {
  */
 export const RevisionListEntry: React.FC<RevisionListEntryProps> = ({ active, onSelect, revision }) => {
   useTranslation()
+  const { showErrorNotification } = useUiNotifications()
 
   const revisionCreationTime = useMemo(() => {
     return DateTime.fromISO(revision.createdAt).toFormat('DDDD T')

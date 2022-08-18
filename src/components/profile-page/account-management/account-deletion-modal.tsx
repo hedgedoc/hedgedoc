@@ -12,7 +12,7 @@ import { Button, Modal } from 'react-bootstrap'
 import { CountdownButton } from '../../common/countdown-button/countdown-button'
 import { deleteUser } from '../../../api/me'
 import { clearUser } from '../../../redux/user/methods'
-import { dispatchUiNotification, showErrorNotification } from '../../../redux/ui-notifications/methods'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 
 /**
  * Confirmation modal for deleting your account.
@@ -22,6 +22,7 @@ import { dispatchUiNotification, showErrorNotification } from '../../../redux/ui
  */
 export const AccountDeletionModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   useTranslation()
+  const { showErrorNotification, dispatchUiNotification } = useUiNotifications()
 
   const deleteUserAccount = useCallback(() => {
     deleteUser()
@@ -39,7 +40,7 @@ export const AccountDeletionModal: React.FC<ModalVisibilityProps> = ({ show, onH
           onHide()
         }
       })
-  }, [onHide])
+  }, [dispatchUiNotification, onHide, showErrorNotification])
 
   return (
     <CommonModal show={show} title={'profile.modal.deleteUser.message'} onHide={onHide} showCloseButton={true}>

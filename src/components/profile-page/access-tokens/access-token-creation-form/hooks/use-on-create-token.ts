@@ -8,8 +8,8 @@ import { DateTime } from 'luxon'
 import type { FormEvent } from 'react'
 import { useCallback } from 'react'
 import { postNewAccessToken } from '../../../../../api/tokens'
-import { showErrorNotification } from '../../../../../redux/ui-notifications/methods'
 import type { AccessTokenWithSecret } from '../../../../../api/tokens/types'
+import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
 
 /**
  * Callback for requesting a new access token from the API and returning the response token and secret.
@@ -24,6 +24,8 @@ export const useOnCreateToken = (
   expiryDate: string,
   setNewTokenWithSecret: (token: AccessTokenWithSecret) => void
 ): ((event: FormEvent) => void) => {
+  const { showErrorNotification } = useUiNotifications()
+
   return useCallback(
     (event: FormEvent) => {
       event.preventDefault()
@@ -34,6 +36,6 @@ export const useOnCreateToken = (
         })
         .catch(showErrorNotification('profile.accessTokens.creationFailed'))
     },
-    [expiryDate, label, setNewTokenWithSecret]
+    [expiryDate, label, setNewTokenWithSecret, showErrorNotification]
   )
 }

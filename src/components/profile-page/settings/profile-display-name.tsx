@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,9 +11,9 @@ import { Trans, useTranslation } from 'react-i18next'
 import { updateDisplayName } from '../../../api/me'
 import { fetchAndSetUser } from '../../login-page/auth/utils'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 import { DisplayNameField } from '../../common/fields/display-name-field'
 import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 
 /**
  * Profile page section for changing the current display name.
@@ -22,6 +22,7 @@ export const ProfileDisplayName: React.FC = () => {
   useTranslation()
   const userName = useApplicationState((state) => state.user?.displayName)
   const [displayName, setDisplayName] = useState(userName ?? '')
+  const { showErrorNotification } = useUiNotifications()
 
   const onChangeDisplayName = useOnInputChange(setDisplayName)
   const onSubmitNameChange = useCallback(
@@ -31,7 +32,7 @@ export const ProfileDisplayName: React.FC = () => {
         .then(fetchAndSetUser)
         .catch(showErrorNotification('profile.changeDisplayNameFailed'))
     },
-    [displayName]
+    [displayName, showErrorNotification]
   )
 
   const formSubmittable = useMemo(() => {

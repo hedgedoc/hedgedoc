@@ -9,17 +9,13 @@ import { Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import type { HistoryExportJson, V1HistoryEntry } from '../../../redux/history/types'
-import {
-  convertV1History,
-  importHistoryEntries,
-  mergeHistoryEntries,
-  safeRefreshHistoryState
-} from '../../../redux/history/methods'
-import { dispatchUiNotification, showErrorNotification } from '../../../redux/ui-notifications/methods'
+import { convertV1History, importHistoryEntries, mergeHistoryEntries } from '../../../redux/history/methods'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { cypressId } from '../../../utils/cypress-attribute'
 import type { HistoryEntryWithOrigin } from '../../../api/history/types'
 import { HistoryEntryOrigin } from '../../../api/history/types'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
+import { useSafeRefreshHistoryStateCallback } from './hooks/use-safe-refresh-history-state'
 
 /**
  * Button that lets the user select a history JSON file and uploads imports that into the history.
@@ -30,6 +26,8 @@ export const ImportHistoryButton: React.FC = () => {
   const historyState = useApplicationState((state) => state.history)
   const uploadInput = useRef<HTMLInputElement>(null)
   const [fileName, setFilename] = useState('')
+  const { showErrorNotification, dispatchUiNotification } = useUiNotifications()
+  const safeRefreshHistoryState = useSafeRefreshHistoryStateCallback()
 
   const onImportHistory = useCallback(
     (entries: HistoryEntryWithOrigin[]): void => {
@@ -39,7 +37,7 @@ export const ImportHistoryButton: React.FC = () => {
         safeRefreshHistoryState()
       })
     },
-    [historyState, userExists]
+    [historyState, safeRefreshHistoryState, showErrorNotification, userExists]
   )
 
   const resetInputField = useCallback(() => {

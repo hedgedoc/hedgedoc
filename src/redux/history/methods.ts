@@ -20,7 +20,6 @@ import { addRemoteOriginToHistoryEntry, historyEntryToHistoryEntryPutDto } from 
 import { Logger } from '../../utils/logger'
 import type { HistoryEntry, HistoryEntryWithOrigin } from '../../api/history/types'
 import { HistoryEntryOrigin } from '../../api/history/types'
-import { showErrorNotification } from '../ui-notifications/methods'
 
 const log = new Logger('Redux > History')
 
@@ -175,13 +174,6 @@ export const refreshHistoryState = async (): Promise<void> => {
   const remoteEntries = await loadRemoteHistory()
   const allEntries = mergeHistoryEntries(localEntries, remoteEntries)
   setHistoryEntries(allEntries)
-}
-
-/**
- * Refreshes the history state and shows an error in case of failure.
- */
-export const safeRefreshHistoryState = (): void => {
-  refreshHistoryState().catch(showErrorNotification('landing.history.error.getHistory.text'))
 }
 
 /**

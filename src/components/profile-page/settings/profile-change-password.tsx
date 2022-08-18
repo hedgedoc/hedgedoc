@@ -9,17 +9,18 @@ import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { doLocalPasswordChange } from '../../../api/auth/local'
-import { dispatchUiNotification, showErrorNotification } from '../../../redux/ui-notifications/methods'
 import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
 import { NewPasswordField } from '../../common/fields/new-password-field'
 import { PasswordAgainField } from '../../common/fields/password-again-field'
 import { CurrentPasswordField } from '../../common/fields/current-password-field'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 
 /**
  * Profile page section for changing the password when using internal login.
  */
 export const ProfileChangePassword: React.FC = () => {
   useTranslation()
+  const { showErrorNotification, dispatchUiNotification } = useUiNotifications()
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [newPasswordAgain, setNewPasswordAgain] = useState('')
@@ -34,11 +35,11 @@ export const ProfileChangePassword: React.FC = () => {
     (event: FormEvent) => {
       event.preventDefault()
       doLocalPasswordChange(oldPassword, newPassword)
-        .then(() => {
-          return dispatchUiNotification('profile.changePassword.successTitle', 'profile.changePassword.successText', {
+        .then(() =>
+          dispatchUiNotification('profile.changePassword.successTitle', 'profile.changePassword.successText', {
             icon: 'check'
           })
-        })
+        )
         .catch(showErrorNotification('profile.changePassword.failed'))
         .finally(() => {
           if (formRef.current) {
@@ -49,7 +50,7 @@ export const ProfileChangePassword: React.FC = () => {
           setNewPasswordAgain('')
         })
     },
-    [oldPassword, newPassword]
+    [oldPassword, newPassword, showErrorNotification, dispatchUiNotification]
   )
 
   const ready = useMemo(() => {

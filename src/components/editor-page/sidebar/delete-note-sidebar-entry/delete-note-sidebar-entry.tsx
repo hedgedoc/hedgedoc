@@ -11,12 +11,12 @@ import { SidebarButton } from '../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../types'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { cypressId } from '../../../../utils/cypress-attribute'
-import { showErrorNotification } from '../../../../redux/ui-notifications/methods'
 import { deleteNote } from '../../../../api/notes'
 import { DeleteNoteModal } from './delete-note-modal'
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
 import { useRouter } from 'next/router'
 import { Logger } from '../../../../utils/logger'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 
 const logger = new Logger('note-deletion')
 
@@ -31,6 +31,8 @@ export const DeleteNoteSidebarEntry: React.FC<PropsWithChildren<SpecificSidebarE
   const router = useRouter()
   const noteId = useApplicationState((state) => state.noteDetails.id)
   const [modalVisibility, showModal, closeModal] = useBooleanState()
+  const { showErrorNotification } = useUiNotifications()
+
   const deleteNoteAndCloseDialog = useCallback(() => {
     deleteNote(noteId)
       .then(() => {
@@ -38,7 +40,7 @@ export const DeleteNoteSidebarEntry: React.FC<PropsWithChildren<SpecificSidebarE
       })
       .catch(showErrorNotification('landing.history.error.deleteNote.text'))
       .finally(closeModal)
-  }, [closeModal, noteId, router])
+  }, [closeModal, noteId, router, showErrorNotification])
 
   return (
     <Fragment>

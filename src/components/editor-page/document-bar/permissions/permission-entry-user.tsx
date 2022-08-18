@@ -14,7 +14,7 @@ import { ShowIf } from '../../../common/show-if/show-if'
 import { removeUserPermission, setUserPermission } from '../../../../api/permissions'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { setNotePermissionsFromServer } from '../../../../redux/note-details/methods'
-import { showErrorNotification } from '../../../../redux/ui-notifications/methods'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 
 export interface PermissionEntryUserProps {
   entry: NoteUserPermissionEntry
@@ -27,6 +27,7 @@ export interface PermissionEntryUserProps {
  */
 export const PermissionEntryUser: React.FC<PermissionEntryUserProps> = ({ entry }) => {
   const noteId = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const { showErrorNotification } = useUiNotifications()
 
   const onRemoveEntry = useCallback(() => {
     removeUserPermission(noteId, entry.username)
@@ -34,7 +35,7 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps> = ({ entry 
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteId, entry.username])
+  }, [noteId, entry.username, showErrorNotification])
 
   const onSetEntryReadOnly = useCallback(() => {
     setUserPermission(noteId, entry.username, false)
@@ -42,7 +43,7 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps> = ({ entry 
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteId, entry.username])
+  }, [noteId, entry.username, showErrorNotification])
 
   const onSetEntryWriteable = useCallback(() => {
     setUserPermission(noteId, entry.username, true)
@@ -50,7 +51,7 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps> = ({ entry 
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteId, entry.username])
+  }, [noteId, entry.username, showErrorNotification])
 
   const { value, loading, error } = useAsync(async () => {
     return await getUser(entry.username)

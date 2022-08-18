@@ -23,7 +23,7 @@ import { LandingLayout } from '../components/landing-layout/landing-layout'
 import { useRouter } from 'next/router'
 import type { NextPage } from 'next'
 import { Redirect } from '../components/common/redirect'
-import { dispatchUiNotification } from '../redux/ui-notifications/methods'
+import { useUiNotifications } from '../components/notifications/ui-notification-boundary'
 
 /**
  * Renders the registration page with fields for username, display name, password, password retype and information about terms and conditions.
@@ -40,6 +40,8 @@ export const RegisterPage: NextPage = () => {
   const [passwordAgain, setPasswordAgain] = useState('')
   const [error, setError] = useState<RegisterErrorType>()
 
+  const { dispatchUiNotification } = useUiNotifications()
+
   const doRegisterSubmit = useCallback(
     (event: FormEvent) => {
       doLocalRegister(username, displayName, password)
@@ -55,7 +57,7 @@ export const RegisterPage: NextPage = () => {
         })
       event.preventDefault()
     },
-    [username, displayName, password, router]
+    [username, displayName, password, dispatchUiNotification, router]
   )
 
   const ready = useMemo(() => {

@@ -9,8 +9,8 @@ import { PermissionOwnerChange } from './permission-owner-change'
 import { PermissionOwnerInfo } from './permission-owner-info'
 import { setNoteOwner } from '../../../../api/permissions'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { showErrorNotification } from '../../../../redux/ui-notifications/methods'
 import { setNotePermissionsFromServer } from '../../../../redux/note-details/methods'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 
 /**
  * Section in the permissions modal for managing the owner of a note.
@@ -18,6 +18,7 @@ import { setNotePermissionsFromServer } from '../../../../redux/note-details/met
 export const PermissionSectionOwner: React.FC = () => {
   const noteId = useApplicationState((state) => state.noteDetails.primaryAddress)
   const [changeOwner, setChangeOwner] = useState(false)
+  const { showErrorNotification } = useUiNotifications()
 
   const onSetChangeOwner = useCallback(() => {
     setChangeOwner(true)
@@ -34,7 +35,7 @@ export const PermissionSectionOwner: React.FC = () => {
           setChangeOwner(false)
         })
     },
-    [noteId]
+    [noteId, showErrorNotification]
   )
 
   return (

@@ -1,14 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback } from 'react'
+import React from 'react'
 import { Button } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
-import { safeRefreshHistoryState } from '../../../redux/history/methods'
 import { useTranslation } from 'react-i18next'
+import { useSafeRefreshHistoryStateCallback } from './hooks/use-safe-refresh-history-state'
 
 /**
  * Fetches the current history from the server.
@@ -16,9 +16,7 @@ import { useTranslation } from 'react-i18next'
 export const HistoryRefreshButton: React.FC = () => {
   const { t } = useTranslation()
 
-  const refreshHistory = useCallback(() => {
-    safeRefreshHistoryState()
-  }, [])
+  const refreshHistory = useSafeRefreshHistoryStateCallback()
 
   return (
     <Button variant={'light'} title={t('landing.history.toolbar.refresh')} onClick={refreshHistory}>

@@ -10,7 +10,6 @@ import { Container } from 'react-bootstrap'
 import { MotdModal } from '../common/motd-modal/motd-modal'
 import { Footer } from './footer/footer'
 import { HeaderBar } from './navigation/header-bar/header-bar'
-import { UiNotifications } from '../notifications/ui-notifications'
 
 /**
  * Renders the layout for both intro and history page.
@@ -20,7 +19,6 @@ import { UiNotifications } from '../notifications/ui-notifications'
 export const LandingLayout: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <Fragment>
-      <UiNotifications />
       <MotdModal />
       <Container className='text-light d-flex flex-column mvh-100'>
         <HeaderBar />

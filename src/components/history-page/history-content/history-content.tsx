@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,11 +13,11 @@ import { HistoryTable } from '../history-table/history-table'
 import { ViewStateEnum } from '../history-toolbar/history-toolbar'
 import { removeHistoryEntry, toggleHistoryEntryPinning } from '../../../redux/history/methods'
 import { deleteNote } from '../../../api/notes'
-import { showErrorNotification } from '../../../redux/ui-notifications/methods'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { sortAndFilterEntries } from '../utils'
 import { useHistoryToolbarState } from '../history-toolbar/toolbar-context/use-history-toolbar-state'
 import type { HistoryEntryWithOrigin } from '../../../api/history/types'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 
 type OnEntryClick = (entryId: string) => void
 
@@ -46,27 +46,36 @@ export const HistoryContent: React.FC = () => {
   const [lastPageIndex, setLastPageIndex] = useState(0)
 
   const allEntries = useApplicationState((state) => state.history)
-
   const [historyToolbarState] = useHistoryToolbarState()
+  const { showErrorNotification } = useUiNotifications()
 
   const entriesToShow = useMemo<HistoryEntryWithOrigin[]>(
     () => sortAndFilterEntries(allEntries, historyToolbarState),
     [allEntries, historyToolbarState]
   )
 
-  const onPinClick = useCallback((noteId: string) => {
-    toggleHistoryEntryPinning(noteId).catch(showErrorNotification('landing.history.error.updateEntry.text'))
-  }, [])
+  const onPinClick = useCallback(
+    (noteId: string) => {
+      toggleHistoryEntryPinning(noteId).catch(showErrorNotification('landing.history.error.updateEntry.text'))
+    },
+    [showErrorNotification]
+  )
 
-  const onDeleteClick = useCallback((noteId: string) => {
-    deleteNote(noteId)
-      .then(() => removeHistoryEntry(noteId))
-      .catch(showErrorNotification('landing.history.error.deleteNote.text'))
-  }, [])
+  const onDeleteClick = useCallback(
+    (noteId: string) => {
+      deleteNote(noteId)
+        .then(() => removeHistoryEntry(noteId))
+        .catch(showErrorNotification('landing.history.error.deleteNote.text'))
+    },
+    [showErrorNotification]
+  )
 
-  const onRemoveClick = useCallback((noteId: string) => {
-    removeHistoryEntry(noteId).catch(showErrorNotification('landing.history.error.deleteEntry.text'))
-  }, [])
+  const onRemoveClick = useCallback(
+    (noteId: string) => {
+      removeHistoryEntry(noteId).catch(showErrorNotification('landing.history.error.deleteEntry.text'))
+    },
+    [showErrorNotification]
+  )
 
   const historyContent = useMemo(() => {
     switch (historyToolbarState.viewState) {

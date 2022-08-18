@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,8 +12,7 @@ import { ShowIf } from '../../common/show-if/show-if'
 import { ClearHistoryButton } from './clear-history-button'
 import { ExportHistoryButton } from './export-history-button'
 import { ImportHistoryButton } from './import-history-button'
-import { importHistoryEntries, safeRefreshHistoryState, setHistoryEntries } from '../../../redux/history/methods'
-import { showErrorNotification } from '../../../redux/ui-notifications/methods'
+import { importHistoryEntries, setHistoryEntries } from '../../../redux/history/methods'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { KeywordSearchInput } from './keyword-search-input'
 import { TagSelectionInput } from './tag-selection-input'
@@ -23,6 +22,8 @@ import { SortByLastVisitedButton } from './sort-by-last-visited-button'
 import { HistoryViewModeToggleButton } from './history-view-mode-toggle-button'
 import { useSyncToolbarStateToUrlEffect } from './toolbar-context/use-sync-toolbar-state-to-url-effect'
 import { HistoryEntryOrigin } from '../../../api/history/types'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
+import { useSafeRefreshHistoryStateCallback } from './hooks/use-safe-refresh-history-state'
 
 export enum ViewStateEnum {
   CARD,
@@ -36,7 +37,8 @@ export const HistoryToolbar: React.FC = () => {
   const { t } = useTranslation()
   const historyEntries = useApplicationState((state) => state.history)
   const userExists = useApplicationState((state) => !!state.user)
-
+  const { showErrorNotification } = useUiNotifications()
+  const safeRefreshHistoryState = useSafeRefreshHistoryStateCallback()
   useSyncToolbarStateToUrlEffect()
 
   const onUploadAllToRemote = useCallback(() => {
@@ -57,7 +59,7 @@ export const HistoryToolbar: React.FC = () => {
       setHistoryEntries(historyEntries)
       safeRefreshHistoryState()
     })
-  }, [userExists, historyEntries])
+  }, [userExists, historyEntries, showErrorNotification, safeRefreshHistoryState])
 
   return (
     <Form inline={true}>
