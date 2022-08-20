@@ -1456,7 +1456,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/commands@npm:6.0.1, @codemirror/commands@npm:^6.0.0":
+"@codemirror/commands@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@codemirror/commands@npm:6.1.0"
+  dependencies:
+    "@codemirror/language": ^6.0.0
+    "@codemirror/state": ^6.0.0
+    "@codemirror/view": ^6.0.0
+    "@lezer/common": ^1.0.0
+  checksum: 0b95ed5b657590adda3171ef8cb1b662078ed1c02109b414bbd71503ae8cac3d5d56a56a159020178a4e8f1e7168bd3c5f5782eb2d90a6e25f067fc8c39dbc87
+  languageName: node
+  linkType: hard
+
+"@codemirror/commands@npm:^6.0.0":
   version: 6.0.1
   resolution: "@codemirror/commands@npm:6.0.1"
   dependencies:
@@ -1913,7 +1925,7 @@ __metadata:
   resolution: "@hedgedoc/react-client@workspace:."
   dependencies:
     "@codemirror/autocomplete": 6.1.0
-    "@codemirror/commands": 6.0.1
+    "@codemirror/commands": 6.1.0
     "@codemirror/lang-markdown": 6.0.1
     "@codemirror/language": 6.2.1
     "@codemirror/language-data": 6.1.0
