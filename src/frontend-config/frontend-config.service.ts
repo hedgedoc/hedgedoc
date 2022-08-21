@@ -46,8 +46,7 @@ export class FrontendConfigService {
 
   async getFrontendConfig(): Promise<FrontendConfigDto> {
     return {
-      // ToDo: use actual value here
-      allowAnonymous: false,
+      allowAnonymous: this.noteConfig.guestAccess,
       allowRegister: this.authConfig.local.enableRegister,
       authProviders: this.getAuthProviders(),
       branding: this.getBranding(),

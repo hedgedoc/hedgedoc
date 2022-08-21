@@ -10,6 +10,7 @@ import { URL } from 'url';
 import { AppConfig } from '../config/app.config';
 import { AuthConfig } from '../config/auth.config';
 import { CustomizationConfig } from '../config/customization.config';
+import { DefaultAccessPermission } from '../config/default-access-permission.enum';
 import { ExternalServicesConfig } from '../config/external-services.config';
 import { GitlabScope, GitlabVersion } from '../config/gitlab.enum';
 import { Loglevel } from '../config/loglevel.enum';
@@ -191,7 +192,14 @@ describe('FrontendConfigService', () => {
                   return {
                     forbiddenNoteIds: [],
                     maxDocumentLength: 200,
-                  };
+                    guestAccess: true,
+                    permissions: {
+                      default: {
+                        everyone: DefaultAccessPermission.READ,
+                        loggedIn: DefaultAccessPermission.WRITE,
+                      },
+                    },
+                  } as NoteConfig;
                 }),
               ],
             }),
@@ -350,6 +358,13 @@ describe('FrontendConfigService', () => {
                 const noteConfig: NoteConfig = {
                   forbiddenNoteIds: [],
                   maxDocumentLength: maxDocumentLength,
+                  guestAccess: true,
+                  permissions: {
+                    default: {
+                      everyone: DefaultAccessPermission.READ,
+                      loggedIn: DefaultAccessPermission.WRITE,
+                    },
+                  },
                 };
                 const module: TestingModule = await Test.createTestingModule({
                   imports: [
@@ -377,8 +392,7 @@ describe('FrontendConfigService', () => {
                 const service = module.get(FrontendConfigService);
                 const config = await service.getFrontendConfig();
                 expect(config.allowRegister).toEqual(enableRegister);
-
-                expect(config.allowAnonymous).toEqual(false);
+                expect(config.allowAnonymous).toEqual(noteConfig.guestAccess);
                 expect(config.branding.name).toEqual(customName);
                 expect(config.branding.logo).toEqual(
                   customLogo ? new URL(customLogo) : undefined,

@@ -6,12 +6,21 @@
 import { ConfigFactoryKeyHost, registerAs } from '@nestjs/config';
 import { ConfigFactory } from '@nestjs/config/dist/interfaces';
 
+import { DefaultAccessPermission } from '../default-access-permission.enum';
+import { DefaultAccessPermission } from '../default-access-permission.enum';
 import { NoteConfig } from '../note.config';
+import { GuestAccess } from '../guest_access.enum';
 
 export function createDefaultMockNoteConfig(): NoteConfig {
   return {
     maxDocumentLength: 100000,
     forbiddenNoteIds: ['forbiddenNoteId'],
+    permissions: {
+      default: {
+        everyone: DefaultAccessPermission.READ,
+        loggedIn: DefaultAccessPermission.WRITE,
+      },
+    },
   };
 }
 

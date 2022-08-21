@@ -8,7 +8,7 @@ NestJS - the framework we use - is reading the variables from the environment an
 
 ## How the config code works
 
-The config of HedgeDoc is split up into **eight** different modules:
+The config of HedgeDoc is split up into **nine** different modules:
 
 `app.config.ts`
 : General configuration of the app
@@ -33,6 +33,9 @@ The config of HedgeDoc is split up into **eight** different modules:
 
 `media.config.ts`
 : Where media files are being stored
+
+`note.config.ts`
+: Configuration for notes
 
 Each of those files (except `auth.config.ts` which is discussed later) consists of three parts:
 
