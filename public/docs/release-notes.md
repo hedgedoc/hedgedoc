@@ -5,7 +5,7 @@
 - Add dark mode toggle in mobile view
 
 ### Bugfixes
-
+- Fix a crash when using LDAP authentication with custom search attributes (thanks to [@aboettger-tuhh](https://github.com/aboettger-tuhh) for reporting)
 
 ## <i class="fa fa-tag"></i> 1.9.4 <i class="fa fa-calendar-o"></i> 2022-07-10
 
