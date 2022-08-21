@@ -20,6 +20,7 @@ import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
+import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
 import { NoteDto } from '../../../notes/note.dto';
 import { Note } from '../../../notes/note.entity';
 import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
@@ -125,6 +126,16 @@ export class NotesController {
     await this.noteService.deleteNote(note);
     this.logger.debug('Successfully deleted ' + note.id, 'deleteNote');
     return;
+  }
+
+  @UseInterceptors(GetNoteInterceptor)
+  @Permissions(Permission.READ)
+  @Get(':noteIdOrAlias/metadata')
+  async getNoteMetadata(
+    @RequestUser() user: User,
+    @RequestNote() note: Note,
+  ): Promise<NoteMetadataDto> {
+    return await this.noteService.toNoteMetadataDto(note);
   }
 
   @Get(':noteIdOrAlias/revisions')
