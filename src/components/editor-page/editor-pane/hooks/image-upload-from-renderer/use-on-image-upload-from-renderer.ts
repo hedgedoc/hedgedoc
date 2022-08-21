@@ -14,6 +14,7 @@ import { findRegexMatchInText } from './find-regex-match-in-text'
 import { Optional } from '@mrdrogdrog/optional'
 import { useHandleUpload } from '../use-handle-upload'
 import type { CursorSelection } from '../../tool-bar/formatters/types/cursor-selection'
+import { useCodeMirrorReference } from '../../../change-content-context/change-content-context'
 
 const log = new Logger('useOnImageUpload')
 const imageWithPlaceholderLinkRegex = /!\[([^\]]*)]\(https:\/\/([^)]*)\)/g
@@ -22,12 +23,17 @@ const imageWithPlaceholderLinkRegex = /!\[([^\]]*)]\(https:\/\/([^)]*)\)/g
  * Receives {@link CommunicationMessageType.IMAGE_UPLOAD image upload events} via iframe communication and processes the attached uploads.
  */
 export const useOnImageUploadFromRenderer = (): void => {
+  const codeMirrorReference = useCodeMirrorReference()
   const handleUpload = useHandleUpload()
 
   useEditorReceiveHandler(
     CommunicationMessageType.IMAGE_UPLOAD,
     useCallback(
       (values: ImageUploadMessage) => {
+        if (codeMirrorReference === undefined) {
+          log.error("Can't upload image without codemirror reference")
+          return
+        }
         const { dataUri, fileName, lineIndex, placeholderIndexInLine } = values
         if (!dataUri.startsWith('data:image/')) {
           log.error('Received uri is no data uri and image!')
@@ -44,11 +50,11 @@ export const useOnImageUploadFromRenderer = (): void => {
                 return findPlaceholderInMarkdownContent(actualLineIndex + lineOffset, placeholderIndexInLine)
               })
               .orElse({} as ExtractResult)
-            handleUpload(file, cursorSelection, alt, title)
+            handleUpload(codeMirrorReference, file, cursorSelection, alt, title)
           })
           .catch((error) => log.error(error))
       },
-      [handleUpload]
+      [codeMirrorReference, handleUpload]
     )
   )
 }

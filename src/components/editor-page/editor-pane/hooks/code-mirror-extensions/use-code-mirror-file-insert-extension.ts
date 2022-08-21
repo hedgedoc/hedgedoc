@@ -7,7 +7,7 @@
 import { useMemo } from 'react'
 import { EditorView } from '@codemirror/view'
 import type { Extension } from '@codemirror/state'
-import { handleUpload } from '../use-handle-upload'
+import { useHandleUpload } from '../use-handle-upload'
 import { Optional } from '@mrdrogdrog/optional'
 
 const calculateCursorPositionInEditor = (view: EditorView, event: MouseEvent): number => {
@@ -32,6 +32,8 @@ const extractFirstFile = (fileList?: FileList): Optional<File> => {
  * @return the code mirror callback
  */
 export const useCodeMirrorFileInsertExtension = (): Extension => {
+  const handleUpload = useHandleUpload()
+
   return useMemo(() => {
     return EditorView.domEventHandlers({
       drop: (event, view) => {
@@ -47,5 +49,5 @@ export const useCodeMirrorFileInsertExtension = (): Extension => {
         })
       }
     })
-  }, [])
+  }, [handleUpload])
 }

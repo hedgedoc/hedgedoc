@@ -16,6 +16,9 @@ import { ShowIf } from '../../../../common/show-if/show-if'
 import { useCodeMirrorReference } from '../../../change-content-context/change-content-context'
 import { extractSelectedText } from './extract-selected-text'
 import { Optional } from '@mrdrogdrog/optional'
+import { Logger } from '../../../../../utils/logger'
+
+const logger = new Logger('Upload image button')
 
 /**
  * Shows a button that uploads a chosen file to the backend and adds the link to the note.
@@ -27,15 +30,19 @@ export const UploadImageButton: React.FC = () => {
     clickRef.current?.()
   }, [])
 
-  const handleUpload = useHandleUpload()
   const codeMirror = useCodeMirrorReference()
+  const handleUpload = useHandleUpload()
 
   const onUploadImage = useCallback(
     (file: File) => {
+      if (codeMirror === undefined) {
+        logger.error("can't upload image without codemirror reference")
+        return
+      }
       const description = Optional.ofNullable(codeMirror?.state)
         .map((state) => extractSelectedText(state))
         .orElse(undefined)
-      handleUpload(file, undefined, description)
+      handleUpload(codeMirror, file, undefined, description)
     },
     [codeMirror, handleUpload]
   )
