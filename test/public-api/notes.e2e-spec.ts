@@ -316,6 +316,8 @@ describe('Notes', () => {
       );
       // save the creation time
       const createDate = note.createdAt;
+      const revisions = await note.revisions;
+      const updatedDate = revisions[revisions.length - 1].createdAt;
       // wait one second
       await new Promise((r) => setTimeout(r, 1000));
       // update the note
@@ -324,7 +326,7 @@ describe('Notes', () => {
         .get('/api/v2/notes/test5a/metadata')
         .expect(200);
       expect(metadata.body.createdAt).toEqual(createDate.toISOString());
-      expect(metadata.body.updateTime).not.toEqual(createDate.toISOString());
+      expect(metadata.body.updatedAt).not.toEqual(updatedDate.toISOString());
     });
   });
 
