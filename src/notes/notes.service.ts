@@ -7,6 +7,7 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { DefaultAccessPermission } from '../config/default-access-permission.enum';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import {
   AlreadyInDBError,
@@ -14,8 +15,10 @@ import {
   NotInDBError,
 } from '../errors/errors';
 import { GroupsService } from '../groups/groups.service';
+import { SpecialGroup } from '../groups/groups.special';
 import { HistoryEntry } from '../history/history-entry.entity';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { RealtimeNoteStore } from '../realtime/realtime-note/realtime-note-store.service';
 import { RealtimeNoteService } from '../realtime/realtime-note/realtime-note.service';
 import { Revision } from '../revisions/revision.entity';
