@@ -7,12 +7,14 @@
 import { MarkdownExtension } from './markdown-extension'
 import linkify from 'markdown-it/lib/rules_core/linkify'
 import type MarkdownIt from 'markdown-it'
+import tlds from 'tlds'
 
 /**
  * A markdown extension that detects plain text URLs and converts them into links.
  */
 export class LinkifyFixMarkdownExtension extends MarkdownExtension {
   public configureMarkdownItPost(markdownIt: MarkdownIt): void {
+    markdownIt.linkify.tlds(tlds)
     markdownIt.core.ruler.push('linkify', (state) => {
       try {
         state.md.options.linkify = true
