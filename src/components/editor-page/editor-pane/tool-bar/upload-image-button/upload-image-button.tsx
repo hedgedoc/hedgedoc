@@ -36,7 +36,6 @@ export const UploadImageButton: React.FC = () => {
         .map((state) => extractSelectedText(state))
         .orElse(undefined)
       handleUpload(file, undefined, description)
-      return Promise.resolve()
     },
     [codeMirror, handleUpload]
   )

@@ -13,7 +13,7 @@ import { cypressId } from '../../../utils/cypress-attribute'
 const log = new Logger('UploadInput')
 
 export interface UploadInputProps extends PropsWithDataCypressId {
-  onLoad: (file: File) => Promise<void>
+  onLoad: (file: File) => Promise<void> | void
   allowedFileTypes: string
   onClickRef: MutableRefObject<(() => void) | undefined>
 }
@@ -33,19 +33,22 @@ export const UploadInput: React.FC<UploadInputProps> = ({ onLoad, allowedFileTyp
   }, [])
 
   const onChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
-    (event) => {
+    async (event) => {
       const fileInput = event.currentTarget
       if (!fileInput.files || fileInput.files.length < 1) {
         return
       }
       const file = fileInput.files[0]
-      onLoad(file)
-        .then(() => {
-          fileInput.value = ''
-        })
-        .catch((error: Error) => {
-          log.error('Error while uploading file', error)
-        })
+      try {
+        const loadResult = onLoad(file)
+        if (loadResult instanceof Promise) {
+          await loadResult
+        }
+      } catch (error) {
+        log.error('Error while uploading file', error)
+      } finally {
+        fileInput.value = ''
+      }
     },
     [onLoad]
   )
