@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Linkify markdown extensions renders a .rocks link correctly 1`] = `
+<div>
+  <p>
+    <a
+      href="http://example.rocks"
+    >
+      example.rocks
+    </a>
+  </p>
+  
+
+  <p>
+    <a
+      href="http://example.com"
+    >
+      example.com
+    </a>
+  </p>
+  
+
+  <p>
+    <a
+      href="http://example.de"
+    >
+      example.de
+    </a>
+  </p>
+  
+
+</div>
+`;
