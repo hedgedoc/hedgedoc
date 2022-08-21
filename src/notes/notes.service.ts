@@ -96,6 +96,26 @@ export class NotesService {
         HistoryEntry.create(owner, newNote as Note) as HistoryEntry,
       ]);
     }
+
+    const everyonePermission = this.createGroupPermission(
+      newNote as Note,
+      await this.groupsService.getEveryoneGroup(),
+      owner === null
+        ? DefaultAccessPermission.WRITE
+        : this.noteConfig.permissions.default.everyone,
+    );
+
+    const loggedInPermission = this.createGroupPermission(
+      newNote as Note,
+      await this.groupsService.getLoggedInGroup(),
+      this.noteConfig.permissions.default.loggedIn,
+    );
+
+    newNote.groupPermissions = Promise.resolve([
+      ...Optional.ofNullable(everyonePermission).wrapInArray(),
+      ...Optional.ofNullable(loggedInPermission).wrapInArray(),
+    ]);
+
     try {
       return await this.noteRepository.save(newNote);
     } catch (e) {
@@ -111,6 +131,20 @@ export class NotesService {
         throw e;
       }
     }
+  }
+
+  private createGroupPermission(
+    note: Note,
+    group: Group,
+    permission: DefaultAccessPermission,
+  ): NoteGroupPermission | null {
+    return permission === DefaultAccessPermission.NONE
+      ? null
+      : NoteGroupPermission.create(
+          group,
+          note,
+          permission === DefaultAccessPermission.WRITE,
+        );
   }
 
   /**

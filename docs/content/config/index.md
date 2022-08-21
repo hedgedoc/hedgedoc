@@ -19,19 +19,29 @@ We also provide an `.env.example` file containing a minimal configuration in the
 
 ## General
 
-| environment variable     | default   | example                      | description                                                                                                                                            |
-|--------------------------|-----------|------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `HD_DOMAIN`              | -         | `https://md.example.com`     | The URL the HedgeDoc instance runs on.                                                                                                                 |
-| `PORT`                   | 3000      |                              | The port the HedgeDoc instance runs on.                                                                                                                |
-| `HD_RENDERER_ORIGIN`     | HD_DOMAIN |                              | The URL the renderer runs on. If omitted this will be same as `HD_DOMAIN`.                                                                             |
-| `HD_LOGLEVEL`            | warn      |                              | The loglevel that should be used. Options are `error`, `warn`, `info`, `debug` or `trace`.                                                             |
-| `HD_FORBIDDEN_NOTE_IDS`  | -         | `notAllowed, alsoNotAllowed` | A list of note ids (separated by `,`), that are not allowed to be created or requested by anyone.                                                      |
-| `HD_MAX_DOCUMENT_LENGTH` | 100000    |                              | The maximum length of any one document. Changes to this will impact performance for your users.                                                        |
-| `HD_PERSIST_INTERVAL`    | 10        | `0`, `5`, `10`, `20`         | The time interval in **minutes** for the periodic note revision creation during realtime editing. `0` deactivates the periodic note revision creation. |
+| environment variable     | default   | example                     | description                                                                                                                                            |
+|--------------------------|-----------|-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `HD_DOMAIN`              | -         | `https://md.example.com`    | The URL the HedgeDoc instance runs on.                                                                                                                 |
+| `PORT`                   | 3000      |                             | The port the HedgeDoc instance runs on.                                                                                                                |
+| `HD_RENDERER_ORIGIN`     | HD_DOMAIN |                             | The URL the renderer runs on. If omitted this will be same as `HD_DOMAIN`.                                                                             |
+| `HD_LOGLEVEL`            | warn      |                             | The loglevel that should be used. Options are `error`, `warn`, `info`, `debug` or `trace`.                                                             |
+| `HD_FORBIDDEN_NOTE_IDS`  | -         | `notAllowed,alsoNotAllowed` | A list of note ids (separated by `,`), that are not allowed to be created or requested by anyone.                                                      |
+| `HD_MAX_DOCUMENT_LENGTH` | 100000    |                             | The maximum length of any one document. Changes to this will impact performance for your users.                                                        |
+| `HD_PERSIST_INTERVAL`    | 10        | `0`, `5`, `10`, `20`        | The time interval in **minutes** for the periodic note revision creation during realtime editing. `0` deactivates the periodic note revision creation. |
 
 ### Why should I want to run my renderer on a different (sub-)domain?
 
 If the renderer is provided by another domain, it's way harder to manipulate HedgeDoc or steal credentials from the rendered note content, because renderer and editor are more isolated. This increases the security of the software and greatly mitigates [XSS attacks](https://en.wikipedia.org/wiki/Cross-site_scripting). However, you can run HedgeDoc without this extra security, but we recommend using it if possible.
+
+## Notes
+
+| environment variable                     | default | example                           | description                                                                                                                                                                          |
+|------------------------------------------|---------|-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `HD_FORBIDDEN_NOTE_IDS`                  | -       | `notAllowed, alsoNotAllowed`      | A list of note ids (separated by `,`), that are not allowed to be created or requested by anyone.                                                                                    |
+| `HD_MAX_DOCUMENT_LENGTH`                 | 100000  |                                   | The maximum length of any one document. Changes to this will impact performance for your users.                                                                                      |
+| `HD_GUEST_ACCESS`                        | `write` | `deny`, `read`, `write`, `create` | Defines the maximum access level for guest users to the instance. If guest access is set lower than the "everyone" permission of a note then the note permission will be overridden. |
+| `HD_PERMISSION_LOGGED_IN_DEFAULT_ACCESS` | `write` | `none, read, write`               | The default permission for the "logged-in" group that is set on new notes.                                                                                                           |
+| `HD_PERMISSION_EVERYONE_DEFAULT_ACCESS`  | `read`  | `none, read, write`               | The default permission for the "everyone" group (logged-in & guest users), that is set on new notes created by logged-in users. Notes created by guests always set this to "write".  |
 
 ## Authentication
 
