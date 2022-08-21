@@ -1119,7 +1119,7 @@ md.renderer.rules.fence = (tokens, idx, options, env, self) => {
 // youtube
 const youtubePlugin = new Plugin(
   // regexp to match
-  /{%youtube\s*([\d\D]*?)\s*%}/,
+  /{%youtube\s*([\w-]{11})\s*%}/,
 
   (match, utils) => {
     const videoid = match[1]
@@ -1137,7 +1137,7 @@ const youtubePlugin = new Plugin(
 // vimeo
 const vimeoPlugin = new Plugin(
   // regexp to match
-  /{%vimeo\s*([\d\D]*?)\s*%}/,
+  /{%vimeo\s*(\d{6,11})\s*%}/,
 
   (match, utils) => {
     const videoid = match[1]
@@ -1152,7 +1152,7 @@ const vimeoPlugin = new Plugin(
 // gist
 const gistPlugin = new Plugin(
   // regexp to match
-  /{%gist\s*([\d\D]*?)\s*%}/,
+  /{%gist\s*(\w+\/\w+)\s*%}/,
 
   (match, utils) => {
     const gistid = match[1]
@@ -1170,7 +1170,7 @@ const tocPlugin = new Plugin(
 // slideshare
 const slidesharePlugin = new Plugin(
   // regexp to match
-  /{%slideshare\s*([\d\D]*?)\s*%}/,
+  /{%slideshare\s*(\w+\/[\w-]+)\s*%}/,
 
   (match, utils) => {
     const slideshareid = match[1]
@@ -1182,7 +1182,7 @@ const slidesharePlugin = new Plugin(
 // speakerdeck
 const speakerdeckPlugin = new Plugin(
   // regexp to match
-  /{%speakerdeck\s*([\d\D]*?)\s*%}/,
+  /{%speakerdeck\s*(\w+\/[\w-]+)\s*%}/,
 
   (match, utils) => {
     const speakerdeckid = match[1]

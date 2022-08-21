@@ -3,6 +3,7 @@
 
 ### Enhancements
 - Add dark mode toggle in mobile view
+- Replace embedding shortcode regexes with more specific ones to safeguard against xss attacks
 
 ### Bugfixes
 - Fix a crash when using LDAP authentication with custom search attributes (thanks to [@aboettger-tuhh](https://github.com/aboettger-tuhh) for reporting)
