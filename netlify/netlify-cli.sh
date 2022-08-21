@@ -6,5 +6,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 #
 
-NETLIFY_VERSION=10.18.0
+NETLIFY_VERSION=11.3.0
 exec npx --yes netlify-cli@${NETLIFY_VERSION} $@
