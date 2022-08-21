@@ -9,7 +9,6 @@ import { EditorView } from '@codemirror/view'
 import type { Extension } from '@codemirror/state'
 import { handleUpload } from '../use-handle-upload'
 import { Optional } from '@mrdrogdrog/optional'
-import type { CursorSelection } from '../../tool-bar/formatters/types/cursor-selection'
 
 const calculateCursorPositionInEditor = (view: EditorView, event: MouseEvent): number => {
   return Optional.ofNullable(event.pageX)
@@ -21,14 +20,10 @@ const calculateCursorPositionInEditor = (view: EditorView, event: MouseEvent): n
     .orElse(view.state.selection.main.head)
 }
 
-const processFileList = (view: EditorView, fileList?: FileList, cursorSelection?: CursorSelection): boolean => {
+const extractFirstFile = (fileList?: FileList): Optional<File> => {
   return Optional.ofNullable(fileList)
     .filter((files) => files.length > 0)
-    .map((files) => {
-      handleUpload(view, files[0], cursorSelection)
-      return true
-    })
-    .orElse(false)
+    .map((files) => files[0])
 }
 
 /**
@@ -40,11 +35,16 @@ export const useCodeMirrorFileInsertExtension = (): Extension => {
   return useMemo(() => {
     return EditorView.domEventHandlers({
       drop: (event, view) => {
-        processFileList(view, event.dataTransfer?.files, { from: calculateCursorPositionInEditor(view, event) }) &&
+        extractFirstFile(event.dataTransfer?.files).ifPresent((file) => {
+          handleUpload(view, file, { from: calculateCursorPositionInEditor(view, event) })
           event.preventDefault()
+        })
       },
       paste: (event, view) => {
-        processFileList(view, event.clipboardData?.files) && event.preventDefault()
+        extractFirstFile(event.clipboardData?.files).ifPresent((file) => {
+          handleUpload(view, file)
+          event.preventDefault()
+        })
       }
     })
   }, [])
