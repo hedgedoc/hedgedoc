@@ -196,6 +196,71 @@ describe('Notes', () => {
     });
   });
 
+  describe('GET /notes/{note}/metadata', () => {
+    it('returns complete metadata object', async () => {
+      const noteAlias = 'metadata_test_note';
+      await testSetup.notesService.createNote(content, user, noteAlias);
+      const metadata = await agent
+        .get(`/api/private/notes/${noteAlias}/metadata`)
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(typeof metadata.body.id).toEqual('string');
+      expect(metadata.body.aliases[0].name).toEqual(noteAlias);
+      expect(metadata.body.primaryAddress).toEqual(noteAlias);
+      expect(metadata.body.title).toEqual('');
+      expect(metadata.body.description).toEqual('');
+      expect(typeof metadata.body.createdAt).toEqual('string');
+      expect(metadata.body.editedBy).toEqual([]);
+      expect(metadata.body.permissions.owner).toEqual('hardcoded');
+      expect(metadata.body.permissions.sharedToUsers).toEqual([]);
+      expect(metadata.body.permissions.sharedToUsers).toEqual([]);
+      expect(metadata.body.tags).toEqual([]);
+      expect(typeof metadata.body.updatedAt).toEqual('string');
+      expect(typeof metadata.body.updateUsername).toEqual('string');
+      expect(typeof metadata.body.viewCount).toEqual('number');
+      expect(metadata.body.editedBy).toEqual([]);
+    });
+
+    it('fails with a forbidden alias', async () => {
+      await agent
+        .get(`/api/private/notes/${forbiddenNoteId}/metadata`)
+        .expect('Content-Type', /json/)
+        .expect(400);
+    });
+
+    it('fails with non-existing alias', async () => {
+      // check if a missing note correctly returns 404
+      await agent
+        .get('/api/private/notes/i_dont_exist/metadata')
+        .expect('Content-Type', /json/)
+        .expect(404);
+    });
+
+    it('has the correct update/create dates', async () => {
+      const noteAlias = 'metadata_test_note_date';
+      // create a note
+      const note = await testSetup.notesService.createNote(
+        content,
+        user,
+        noteAlias,
+      );
+      // save the creation time
+      const createDate = note.createdAt;
+      const revisions = await note.revisions;
+      const updatedDate = revisions[revisions.length - 1].createdAt;
+      // wait one second
+      await new Promise((r) => setTimeout(r, 1000));
+      // update the note
+      await testSetup.notesService.updateNote(note, 'More test content');
+      const metadata = await agent
+        .get(`/api/private/notes/${noteAlias}/metadata`)
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(metadata.body.createdAt).toEqual(createDate.toISOString());
+      expect(metadata.body.updatedAt).not.toEqual(updatedDate.toISOString());
+    });
+  });
+
   describe('GET /notes/{note}/revisions', () => {
     it('works with existing alias', async () => {
       await testSetup.notesService.createNote(content, user, 'test4');
