@@ -1,4 +1,11 @@
 # Release Notes
+## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
+
+### Enhancements
+- Add dark mode toggle in mobile view
+
+### Bugfixes
+
 
 ## <i class="fa fa-tag"></i> 1.9.4 <i class="fa fa-calendar-o"></i> 2022-07-10
 
