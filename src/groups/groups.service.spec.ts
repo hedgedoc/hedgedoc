@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,6 +13,7 @@ import { AlreadyInDBError, NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
 import { Group } from './group.entity';
 import { GroupsService } from './groups.service';
+import { SpecialGroup } from './groups.special';
 
 describe('GroupsService', () => {
   let service: GroupsService;
@@ -87,6 +88,17 @@ describe('GroupsService', () => {
         NotInDBError,
       );
     });
+  });
+
+  it('getEveryoneGroup return EVERYONE group', async () => {
+    const spy = jest.spyOn(service, 'getGroupByName').mockImplementation();
+    await service.getEveryoneGroup();
+    expect(spy).toHaveBeenCalledWith(SpecialGroup.EVERYONE);
+  });
+  it('getLoggedInGroup return LOGGED_IN group', async () => {
+    const spy = jest.spyOn(service, 'getGroupByName').mockImplementation();
+    await service.getLoggedInGroup();
+    expect(spy).toHaveBeenCalledWith(SpecialGroup.LOGGED_IN);
   });
 
   describe('toGroupDto', () => {
