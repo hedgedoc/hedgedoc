@@ -189,7 +189,6 @@ describe('Notes', () => {
       const note = await testSetup.notesService.createNote(
         content,
         user,
-
         'test3',
       );
       const updateNotePermission = new NotePermissionsUpdateDto();
@@ -465,6 +464,12 @@ describe('Notes', () => {
         user2,
         alias,
       );
+      // Redact default read permissions
+      const note = await testSetup.notesService.getNoteByIdOrAlias(alias);
+      const everyone = await testSetup.groupService.getEveryoneGroup();
+      const loggedin = await testSetup.groupService.getLoggedInGroup();
+      await testSetup.permissionsService.removeGroupPermission(note, everyone);
+      await testSetup.permissionsService.removeGroupPermission(note, loggedin);
       await request(testSetup.app.getHttpServer())
         .get(`/api/v2/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
