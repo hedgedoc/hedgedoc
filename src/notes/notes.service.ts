@@ -63,6 +63,13 @@ export class NotesService {
   async getUserNotes(user: User): Promise<Note[]> {
     const notes = await this.noteRepository
       .createQueryBuilder('note')
+      .leftJoinAndSelect('note.aliases', 'alias')
+      .leftJoinAndSelect('note.owner', 'owner')
+      .leftJoinAndSelect('note.groupPermissions', 'group_permission')
+      .leftJoinAndSelect('group_permission.group', 'group')
+      .leftJoinAndSelect('note.userPermissions', 'user_permission')
+      .leftJoinAndSelect('user_permission.user', 'user')
+      .leftJoinAndSelect('note.tags', 'tag')
       .where('note.owner = :user', { user: user.id })
       .getMany();
     if (notes === null) {
@@ -275,8 +282,6 @@ export class NotesService {
     //TODO: Calculate patch
     revisions.push(Revision.create(noteContent, noteContent, note) as Revision);
     note.revisions = Promise.resolve(revisions);
-    note.userPermissions = Promise.resolve([]);
-    note.groupPermissions = Promise.resolve([]);
     return await this.noteRepository.save(note);
   }
 
