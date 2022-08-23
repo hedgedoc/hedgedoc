@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,7 @@ import { AlreadyInDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { GroupInfoDto } from './group-info.dto';
 import { Group } from './group.entity';
+import { SpecialGroup } from './groups.special';
 
 @Injectable()
 export class GroupsService {
@@ -64,6 +65,22 @@ export class GroupsService {
       throw new NotInDBError(`Group with name '${name}' not found`);
     }
     return group;
+  }
+
+  /**
+   * Get the group object for the everyone special group.
+   * @return {Group} the EVERYONE group
+   */
+  getEveryoneGroup(): Promise<Group> {
+    return this.getGroupByName(SpecialGroup.EVERYONE);
+  }
+
+  /**
+   * Get the group object for the logged-in special group.
+   * @return {Group} the LOGGED_IN group
+   */
+  getLoggedInGroup(): Promise<Group> {
+    return this.getGroupByName(SpecialGroup.LOGGED_IN);
   }
 
   /**
