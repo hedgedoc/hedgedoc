@@ -58,7 +58,7 @@
     "@mrdrogdrog/optional": "0.1.2",
     "@react-hook/resize-observer": "1.2.6",
     "@redux-devtools/core": "3.13.1",
-    "@reduxjs/toolkit": "1.8.4",
+    "@reduxjs/toolkit": "1.8.5",
     "@svgr/webpack": "6.3.1",
     "@uiw/react-codemirror": "4.11.4",
     "abcjs": "6.0.4",

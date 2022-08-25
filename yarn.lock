@@ -1944,7 +1944,7 @@ __metadata:
     "@next/bundle-analyzer": 12.2.2
     "@react-hook/resize-observer": 1.2.6
     "@redux-devtools/core": 3.13.1
-    "@reduxjs/toolkit": 1.8.4
+    "@reduxjs/toolkit": 1.8.5
     "@svgr/webpack": 6.3.1
     "@testing-library/cypress": 8.0.3
     "@testing-library/dom": 8.17.1
@@ -2838,9 +2838,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reduxjs/toolkit@npm:1.8.4":
-  version: 1.8.4
-  resolution: "@reduxjs/toolkit@npm:1.8.4"
+"@reduxjs/toolkit@npm:1.8.5":
+  version: 1.8.5
+  resolution: "@reduxjs/toolkit@npm:1.8.5"
   dependencies:
     immer: ^9.0.7
     redux: ^4.1.2
@@ -2854,7 +2854,7 @@ __metadata:
       optional: true
     react-redux:
       optional: true
-  checksum: 2ed7ee22bc84f0a2370ca2746513ece4593b8310c16c89e1ccf43ce23dcb83d7c4f4773d78049b68b4e92b3c5bee641e8081faf3947371be6b004ebba8142a51
+  checksum: 831b5c74779262351d20efa0f4c06f794702bd55b14bd8f69362e29f82f7ad43aee66f39518914345ad9e9c6c93611acdeb576a70deda260733c3f098875aaca
   languageName: node
   linkType: hard
 
