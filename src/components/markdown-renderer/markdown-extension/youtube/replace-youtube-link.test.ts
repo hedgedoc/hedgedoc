@@ -32,6 +32,21 @@ describe('Replace youtube link', () => {
           it("won't detect an URL without video id", () => {
             expect(markdownIt.renderInline(origin)).toBe(origin)
           })
+
+          it("won't detect an invalid(too short) youtube id", () => {
+            const invalidUrl = '${origin}?v=1'
+            expect(markdownIt.renderInline(invalidUrl)).toBe(invalidUrl)
+          })
+
+          it("won't detect an invalid(invalid characters) youtube id", () => {
+            const invalidUrl = '${origin}?v= /!#/'
+            expect(markdownIt.renderInline(invalidUrl)).toBe(invalidUrl)
+          })
+
+          it("won't detect an invalid(too long) youtube id", () => {
+            const invalidUrl = '${origin}?v=111111111111111111111111111111111'
+            expect(markdownIt.renderInline(invalidUrl)).toBe(invalidUrl)
+          })
         })
       })
     })

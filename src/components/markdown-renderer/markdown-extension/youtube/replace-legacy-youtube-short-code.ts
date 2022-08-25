@@ -9,7 +9,7 @@ import { YoutubeMarkdownExtension } from './youtube-markdown-extension'
 import markdownItRegex from 'markdown-it-regex'
 import type MarkdownIt from 'markdown-it'
 
-export const legacyYouTubeRegex = /^{%youtube ([^"&?\\/\s]{11}) ?%}$/
+export const legacyYouTubeRegex = /^{%youtube\s+([\w-]{11})\s*%}$/
 
 /**
  * Configure the given {@link MarkdownIt} to render legacy hedgedoc 1 youtube short codes as embeddings.

@@ -29,12 +29,17 @@ describe('Replace legacy youtube short codes', () => {
     expect(markdownIt.renderInline(code)).toBe(code)
   })
 
-  it("won't detect an invalid(to short) youtube id", () => {
+  it("won't detect an invalid(too short) youtube id", () => {
     const code = '{%youtube 1 %}'
     expect(markdownIt.renderInline(code)).toBe(code)
   })
 
-  it("won't detect an invalid(to long) youtube id", () => {
+  it("won't detect an invalid(invalid characters) youtube id", () => {
+    const code = '{%youtube /!#/ %}'
+    expect(markdownIt.renderInline(code)).toBe(code)
+  })
+
+  it("won't detect an invalid(too long) youtube id", () => {
     const code = '{%youtube 111111111111111111111111111111111 %}'
     expect(markdownIt.renderInline(code)).toBe(code)
   })

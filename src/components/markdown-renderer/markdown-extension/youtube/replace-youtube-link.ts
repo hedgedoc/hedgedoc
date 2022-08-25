@@ -12,7 +12,7 @@ import type MarkdownIt from 'markdown-it'
 const protocolRegex = /(?:http(?:s)?:\/\/)?/
 const subdomainRegex = /(?:www.)?/
 const pathRegex = /(?:youtube(?:-nocookie)?\.com\/(?:[^\\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)/
-const idRegex = /([^"&?\\/\s]{11})/
+const idRegex = /([\w-]{11})/
 const tailRegex = /(?:[?&#].*)?/
 const youtubeVideoUrlRegex = new RegExp(
   `(?:${protocolRegex.source}${subdomainRegex.source}${pathRegex.source}${idRegex.source}${tailRegex.source})`
