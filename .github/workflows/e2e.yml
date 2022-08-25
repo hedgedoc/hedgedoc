@@ -86,13 +86,11 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        if: steps.build-cache.outputs.cache-hit != 'true'
         run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
       - name: Cache yarn cache
         uses: actions/cache@v3
         id: yarn-cache
-        if: steps.build-cache.outputs.cache-hit != 'true'
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-16-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -100,7 +98,6 @@ jobs:
             ${{ runner.os }}-yarn-16
 
       - name: Install dependencies
-        if: steps.build-cache.outputs.cache-hit != 'true'
         run: yarn install --immutable
 
       - name: Download built frontend
