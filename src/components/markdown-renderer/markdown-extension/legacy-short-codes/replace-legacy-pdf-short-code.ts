@@ -8,7 +8,7 @@ import markdownItRegex from 'markdown-it-regex'
 import type MarkdownIt from 'markdown-it/lib'
 import type { RegexOptions } from '../../../../external-types/markdown-it-regex/interface'
 
-export const legacyPdfRegex = /^{%pdf (\S*) *%}$/
+export const legacyPdfRegex = /^{%pdf\s+(\S*)\s*%}$/
 
 /**
  * Configure the given {@link MarkdownIt} to render legacy hedgedoc 1 pdf shortcodes as html links.
