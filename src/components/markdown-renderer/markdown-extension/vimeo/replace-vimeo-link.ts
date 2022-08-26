@@ -11,7 +11,7 @@ import markdownItRegex from 'markdown-it-regex'
 
 const protocolRegex = /(?:http(?:s)?:\/\/)?/
 const domainRegex = /(?:player\.)?(?:vimeo\.com\/)(?:(?:channels|album|ondemand|groups)\/\w+\/)?(?:video\/)?/
-const idRegex = /([\d]{6,11})/
+const idRegex = /(\d{6,11})/
 const tailRegex = /(?:[?#].*)?/
 const vimeoVideoUrlRegex = new RegExp(
   `(?:${protocolRegex.source}${domainRegex.source}${idRegex.source}${tailRegex.source})`

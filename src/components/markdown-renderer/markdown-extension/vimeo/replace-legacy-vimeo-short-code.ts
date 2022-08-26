@@ -9,7 +9,7 @@ import { VimeoMarkdownExtension } from './vimeo-markdown-extension'
 import type MarkdownIt from 'markdown-it'
 import markdownItRegex from 'markdown-it-regex'
 
-export const legacyVimeoRegex = /^{%vimeo ([\d]{6,11}) ?%}$/
+export const legacyVimeoRegex = /^{%vimeo\s+(\d{6,11})\s*%}$/
 
 /**
  * Configure the given {@link MarkdownIt} to render legacy hedgedoc 1 vimeo short codes as embeddings.
