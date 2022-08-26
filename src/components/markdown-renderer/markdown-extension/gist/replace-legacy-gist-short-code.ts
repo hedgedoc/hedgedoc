@@ -7,7 +7,7 @@
 import type { RegexOptions } from '../../../../external-types/markdown-it-regex/interface'
 import { GistMarkdownExtension } from './gist-markdown-extension'
 
-const finalRegex = /^{%gist (\w+\/\w+) ?%}$/
+const finalRegex = /^{%gist\s+(\w+\/\w+)\s*%}$/
 
 /**
  * Replacer for legacy hedgedoc 1 gist shortcodes.
