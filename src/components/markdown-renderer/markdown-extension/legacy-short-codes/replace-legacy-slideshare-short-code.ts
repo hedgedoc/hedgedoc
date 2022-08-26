@@ -8,7 +8,7 @@ import markdownItRegex from 'markdown-it-regex'
 import type MarkdownIt from 'markdown-it/lib'
 import type { RegexOptions } from '../../../../external-types/markdown-it-regex/interface'
 
-export const legacySlideshareRegex = /^{%slideshare (\w+\/[\w-]+) ?%}$/
+export const legacySlideshareRegex = /^{%slideshare\s+(\w+\/[\w-]+)\s*%}$/
 
 /**
  * Configure the given {@link MarkdownIt} to render legacy hedgedoc 1 slideshare shortcodes as HTML links.
