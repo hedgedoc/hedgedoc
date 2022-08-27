@@ -1928,7 +1928,7 @@ __metadata:
     "@hedgedoc/realtime": 0.1.1
     "@hpcc-js/wasm": 1.12.8
     "@matejmazur/react-katex": 3.1.3
-    "@mrdrogdrog/optional": 0.1.2
+    "@mrdrogdrog/optional": 0.2.0
     "@next/bundle-analyzer": 12.2.2
     "@react-hook/resize-observer": 1.2.6
     "@redux-devtools/core": 3.13.1
@@ -2582,10 +2582,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mrdrogdrog/optional@npm:0.1.2":
-  version: 0.1.2
-  resolution: "@mrdrogdrog/optional@npm:0.1.2"
-  checksum: 547f94c1ac01222fb89a58e965e653d5e04997981e99f393caf0797cc16dcae60bd8d4ec4306c80456c2b027749cd2686646ea107058c4a93856d41792d5df06
+"@mrdrogdrog/optional@npm:0.2.0":
+  version: 0.2.0
+  resolution: "@mrdrogdrog/optional@npm:0.2.0"
+  checksum: 2540c37cc6c983b32879f46c82aedef779ca514fcbb762530912f757348af781fd974f1219cc2408961d487f35bd370a2e214a957548010996cdfffd1c377d4d
   languageName: node
   linkType: hard
 
