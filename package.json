@@ -60,7 +60,7 @@
     "@redux-devtools/core": "3.13.1",
     "@reduxjs/toolkit": "1.8.5",
     "@svgr/webpack": "6.3.1",
-    "@uiw/react-codemirror": "4.11.4",
+    "@uiw/react-codemirror": "4.11.6",
     "abcjs": "6.0.4",
     "bootstrap": "4.6.2",
     "copy-webpack-plugin": "11.0.0",
