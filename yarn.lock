@@ -2023,7 +2023,7 @@ __metadata:
     next: 12.2.2
     prettier: 2.7.1
     react: 18.2.0
-    react-bootstrap: 1.6.5
+    react-bootstrap: 1.6.6
     react-bootstrap-typeahead: 5.2.2
     react-diff-viewer: 3.1.1
     react-dom: 18.2.0
@@ -11198,9 +11198,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-bootstrap@npm:1.6.5":
-  version: 1.6.5
-  resolution: "react-bootstrap@npm:1.6.5"
+"react-bootstrap@npm:1.6.6":
+  version: 1.6.6
+  resolution: "react-bootstrap@npm:1.6.6"
   dependencies:
     "@babel/runtime": ^7.14.0
     "@restart/context": ^2.1.4
@@ -11222,7 +11222,7 @@ __metadata:
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: d579f5ba3a436a594d9c254206319f2506da4156e413ac8d8b7fa3b854a447a094e9c962b129e2390ae283bfaf1e87ec0d3a290513489cd635325425c8e8f26c
+  checksum: f89630e3c2579add750b2758c495ac65cd55b3fbe4bccc0392d99f72eca395d2fb565427f82e497af9d4adb3af11fbb7e1eef87c824d3cae110304448b2fae52
   languageName: node
   linkType: hard
 
