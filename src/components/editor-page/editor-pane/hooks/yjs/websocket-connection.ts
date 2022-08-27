@@ -51,7 +51,7 @@ export class WebsocketConnection extends WebsocketTransporter {
   private bindYDocEvents(doc: Doc): void {
     doc.on('destroy', () => this.disconnect())
     doc.on('update', (update: Uint8Array, origin: unknown) => {
-      if (origin !== this && this.isSynced()) {
+      if (origin !== this && this.isSynced() && this.isWebSocketOpen()) {
         this.send(encodeDocumentUpdateMessage(update))
       }
     })
