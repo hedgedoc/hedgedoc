@@ -20,10 +20,10 @@ describe('invert unified patch', () => {
  e`)[0]
     const result = invertUnifiedPatch(parsedPatch)
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "hunks": Array [
-          Object {
-            "linedelimiters": Array [
+      {
+        "hunks": [
+          {
+            "linedelimiters": [
               "
       ",
               "
@@ -37,7 +37,7 @@ describe('invert unified patch', () => {
               "
       ",
             ],
-            "lines": Array [
+            "lines": [
               "+a",
               "+b",
               " c",

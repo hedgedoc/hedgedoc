@@ -19,7 +19,7 @@ exports[`AbcFrame renders a music sheet 2`] = `
     style="overflow: hidden; height: 454.4200000000001px;"
   >
     <svg
-      aria-label="Sheet Music for \\"Speed the Plough\\""
+      aria-label="Sheet Music for "Speed the Plough""
       fill="currentColor"
       height="454.4200000000001"
       role="img"
@@ -184,7 +184,7 @@ exports[`AbcFrame renders a music sheet 2`] = `
       <text
         class=""
         data-name="title"
-        font-family="\\"Times New Roman\\""
+        font-family=""Times New Roman""
         font-size="27"
         font-style="normal"
         font-weight="normal"
@@ -203,7 +203,7 @@ exports[`AbcFrame renders a music sheet 2`] = `
       <text
         class=""
         data-name="composer"
-        font-family="\\"Times New Roman\\""
+        font-family=""Times New Roman""
         font-size="19"
         font-style="italic"
         font-weight="normal"
