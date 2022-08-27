@@ -1910,10 +1910,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:16.11.52":
-  version: 16.11.52
-  resolution: "@types/node@npm:16.11.52"
-  checksum: eb688bff28015f1399264b7aa347d5f40e165d438306bd5884d78993671c5e43b7849b8ddc74b91bf7c7b73e15ba54fc56ea1db2118b0e3f59f9fabd2adc7fe7
+"@types/node@npm:16.11.56":
+  version: 16.11.56
+  resolution: "@types/node@npm:16.11.56"
+  checksum: b4efade16eb08a39810921c54a1637e69c8f3184a20d87e8fe74d557d9bda73f0829ac318e2a30a32b1903e4b099812defd1dfe438be70b98dbfbea5b0d99a53
   languageName: node
   linkType: hard
 
@@ -2007,12 +2007,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/source-map-support@npm:0.5.4":
-  version: 0.5.4
-  resolution: "@types/source-map-support@npm:0.5.4"
+"@types/source-map-support@npm:0.5.6":
+  version: 0.5.6
+  resolution: "@types/source-map-support@npm:0.5.6"
   dependencies:
     source-map: ^0.6.0
-  checksum: 160ff77e8a101b18d9915cb5320fd73d484679aef8518ce007b9b5988e333631778730196c4bb15517ff881bee805663fd8640c0ce2ebfab65f061103c452369
+  checksum: b2b52b3e4901e52df30ebd23056885a352462c0d6fd73418e793684665a7602168e7c337241f0391562e8c1051ff37cbcb9b7d775990ee1f2a0d8a6ffa2cb22a
   languageName: node
   linkType: hard
 
@@ -5306,12 +5306,12 @@ __metadata:
     "@types/jest": 28.1.8
     "@types/minio": 7.0.13
     "@types/mysql": 2.15.21
-    "@types/node": 16.11.52
+    "@types/node": 16.11.56
     "@types/node-fetch": 2.6.2
     "@types/passport-http-bearer": 1.0.37
     "@types/passport-local": 1.0.34
     "@types/pg": 8.6.5
-    "@types/source-map-support": 0.5.4
+    "@types/source-map-support": 0.5.6
     "@types/supertest": 2.0.12
     "@types/ws": 8.5.3
     "@typescript-eslint/eslint-plugin": 5.33.1
