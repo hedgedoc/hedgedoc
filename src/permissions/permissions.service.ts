@@ -3,10 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import {
+  getGuestAccessOrdinal,
+  GuestAccess,
+} from '../config/guest_access.enum';
+import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { PermissionsUpdateInconsistentError } from '../errors/errors';
 import { Group } from '../groups/group.entity';
 import { GroupsService } from '../groups/groups.service';
@@ -20,25 +25,16 @@ import { checkArrayForDuplicates } from '../utils/arrayDuplicatCheck';
 import { NoteGroupPermission } from './note-group-permission.entity';
 import { NoteUserPermission } from './note-user-permission.entity';
 
-// TODO move to config or remove
-export enum GuestPermission {
-  DENY = 'deny',
-  READ = 'read',
-  WRITE = 'write',
-  CREATE = 'create',
-  CREATE_ALIAS = 'createAlias',
-}
-
 @Injectable()
 export class PermissionsService {
   constructor(
-    public usersService: UsersService,
-    public groupsService: GroupsService,
+    private usersService: UsersService,
+    private groupsService: GroupsService,
     @InjectRepository(Note) private noteRepository: Repository<Note>,
     private readonly logger: ConsoleLoggerService,
+    @Inject(noteConfiguration.KEY)
+    private noteConfig: NoteConfig,
   ) {}
-
-  public guestPermission: GuestPermission; // TODO change to configOption
 
   /**
    * Checks if the given {@link User} is allowed to read the given {@link Note}.
@@ -80,18 +76,7 @@ export class PermissionsService {
    * @return if the user is allowed to create notes
    */
   public mayCreate(user: User | null): boolean {
-    if (user) {
-      return true;
-    } else {
-      if (
-        this.guestPermission == GuestPermission.CREATE ||
-        this.guestPermission == GuestPermission.CREATE_ALIAS
-      ) {
-        // TODO change to guestPermission to config option
-        return true;
-      }
-    }
-    return false;
+    return user !== null || this.noteConfig.guestAccess === GuestAccess.CREATE;
   }
 
   async isOwner(user: User | null, note: Note): Promise<boolean> {
@@ -101,6 +86,7 @@ export class PermissionsService {
     return owner.id === user.id;
   }
 
+  // noinspection JSMethodCanBeStatic
   private async hasPermissionUser(
     user: User | null,
     note: Note,
@@ -125,28 +111,27 @@ export class PermissionsService {
     note: Note,
     wantEdit: boolean,
   ): Promise<boolean> {
-    // TODO: Get real config value
-    let guestsAllowed = false;
-    switch (this.guestPermission) {
-      case GuestPermission.CREATE_ALIAS:
-      case GuestPermission.CREATE:
-      case GuestPermission.WRITE:
-        guestsAllowed = true;
-        break;
-      case GuestPermission.READ:
-        guestsAllowed = !wantEdit;
+    if (user === null) {
+      if (
+        (!wantEdit &&
+          getGuestAccessOrdinal(this.noteConfig.guestAccess) <
+            getGuestAccessOrdinal(GuestAccess.READ)) ||
+        (wantEdit &&
+          getGuestAccessOrdinal(this.noteConfig.guestAccess) <
+            getGuestAccessOrdinal(GuestAccess.WRITE))
+      ) {
+        return false;
+      }
     }
+
     for (const groupPermission of await note.groupPermissions) {
       if (groupPermission.canEdit || !wantEdit) {
         // Handle special groups
         if ((await groupPermission.group).special) {
-          if ((await groupPermission.group).name == SpecialGroup.LOGGED_IN) {
-            return true;
-          }
           if (
-            (await groupPermission.group).name == SpecialGroup.EVERYONE &&
-            (groupPermission.canEdit || !wantEdit) &&
-            guestsAllowed
+            (user &&
+              (await groupPermission.group).name == SpecialGroup.LOGGED_IN) ||
+            (await groupPermission.group).name == SpecialGroup.EVERYONE
           ) {
             return true;
           }

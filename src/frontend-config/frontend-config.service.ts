@@ -46,7 +46,7 @@ export class FrontendConfigService {
 
   async getFrontendConfig(): Promise<FrontendConfigDto> {
     return {
-      allowAnonymous: this.noteConfig.guestAccess,
+      guestAccess: this.noteConfig.guestAccess,
       allowRegister: this.authConfig.local.enableRegister,
       authProviders: this.getAuthProviders(),
       branding: this.getBranding(),

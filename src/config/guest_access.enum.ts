@@ -11,9 +11,7 @@ export enum GuestAccess {
   CREATE = 'create',
 }
 
-export function getGuestAccessOrdinal(
-  guestAccess: GuestAccess,
-): number {
+export function getGuestAccessOrdinal(guestAccess: GuestAccess): number {
   switch (guestAccess) {
     case GuestAccess.DENY:
       return 0;

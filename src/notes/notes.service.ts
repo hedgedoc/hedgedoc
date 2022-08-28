@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { Optional } from '@mrdrogdrog/optional';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -14,8 +15,8 @@ import {
   ForbiddenIdError,
   NotInDBError,
 } from '../errors/errors';
+import { Group } from '../groups/group.entity';
 import { GroupsService } from '../groups/groups.service';
-import { SpecialGroup } from '../groups/groups.special';
 import { HistoryEntry } from '../history/history-entry.entity';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
@@ -63,13 +64,6 @@ export class NotesService {
   async getUserNotes(user: User): Promise<Note[]> {
     const notes = await this.noteRepository
       .createQueryBuilder('note')
-      .leftJoinAndSelect('note.aliases', 'alias')
-      .leftJoinAndSelect('note.owner', 'owner')
-      .leftJoinAndSelect('note.groupPermissions', 'group_permission')
-      .leftJoinAndSelect('group_permission.group', 'group')
-      .leftJoinAndSelect('note.userPermissions', 'user_permission')
-      .leftJoinAndSelect('user_permission.user', 'user')
-      .leftJoinAndSelect('note.tags', 'tag')
       .where('note.owner = :user', { user: user.id })
       .getMany();
     if (notes === null) {

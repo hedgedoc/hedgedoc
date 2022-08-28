@@ -14,6 +14,7 @@ import {
 } from 'class-validator';
 import { URL } from 'url';
 
+import { GuestAccess } from '../config/guest_access.enum';
 import { ServerVersion } from '../monitoring/server-status.dto';
 import { BaseDto } from '../utils/base.dto.';
 
@@ -140,10 +141,10 @@ export class IframeCommunicationDto extends BaseDto {
 
 export class FrontendConfigDto extends BaseDto {
   /**
-   * Is anonymous usage of the instance allowed?
+   * Maximum access level for guest users
    */
-  @IsBoolean()
-  allowAnonymous: boolean;
+  @IsString()
+  guestAccess: GuestAccess;
 
   /**
    * Are users allowed to register on this instance?
