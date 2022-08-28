@@ -709,16 +709,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hedgedoc/realtime@npm:0.1.1":
-  version: 0.1.1
-  resolution: "@hedgedoc/realtime@npm:0.1.1"
+"@hedgedoc/realtime@npm:0.2.0":
+  version: 0.2.0
+  resolution: "@hedgedoc/realtime@npm:0.2.0"
   dependencies:
     isomorphic-ws: ^5.0.0
     lib0: ^0.2.51
     typed-emitter: ^2.0.0
+    ws: ^8.0.0
     y-protocols: ^1.0.0
     yjs: ^13.0.0
-  checksum: 72e83af2d586b08daa13a56d6b2a00ff2fdff4196e9587241dc5bac80fd00fe59d88be6754631a0cc541e74d2059c63824e7c1675c7eaf0bb41ad6f6a0728f46
+  checksum: aae52554c3e37055680a090543e65d143cbcf0609e4cb762f2e60c5b6c8e88637a4b8c458ae26ab910f8e49b42177fd0c6c2e50268e392cbf6a396cbe3cd8769
   languageName: node
   linkType: hard
 
@@ -5441,7 +5442,7 @@ __metadata:
   resolution: "hedgedoc@workspace:."
   dependencies:
     "@azure/storage-blob": 12.11.0
-    "@hedgedoc/realtime": 0.1.1
+    "@hedgedoc/realtime": 0.2.0
     "@mrdrogdrog/optional": 0.2.0
     "@nestjs/cli": 9.1.1
     "@nestjs/common": 9.0.11
@@ -10157,7 +10158,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:8.8.1":
+"ws@npm:8.8.1, ws@npm:^8.0.0":
   version: 8.8.1
   resolution: "ws@npm:8.8.1"
   peerDependencies:
