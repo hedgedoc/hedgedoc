@@ -51,7 +51,7 @@
     "cookie": "0.5.0",
     "diff": "5.1.0",
     "express-session": "1.17.3",
-    "file-type": "16.5.4",
+    "file-type": "18.0.0",
     "joi": "17.6.0",
     "ldapauth-fork": "5.0.5",
     "lib0": "0.2.52",
