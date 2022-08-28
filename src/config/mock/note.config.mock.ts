@@ -7,9 +7,8 @@ import { ConfigFactoryKeyHost, registerAs } from '@nestjs/config';
 import { ConfigFactory } from '@nestjs/config/dist/interfaces';
 
 import { DefaultAccessPermission } from '../default-access-permission.enum';
-import { DefaultAccessPermission } from '../default-access-permission.enum';
-import { NoteConfig } from '../note.config';
 import { GuestAccess } from '../guest_access.enum';
+import { NoteConfig } from '../note.config';
 
 export function createDefaultMockNoteConfig(): NoteConfig {
   return {
@@ -21,6 +20,7 @@ export function createDefaultMockNoteConfig(): NoteConfig {
         loggedIn: DefaultAccessPermission.WRITE,
       },
     },
+    guestAccess: GuestAccess.CREATE,
   };
 }
 

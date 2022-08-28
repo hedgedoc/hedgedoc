@@ -13,6 +13,7 @@ import { CustomizationConfig } from '../config/customization.config';
 import { DefaultAccessPermission } from '../config/default-access-permission.enum';
 import { ExternalServicesConfig } from '../config/external-services.config';
 import { GitlabScope, GitlabVersion } from '../config/gitlab.enum';
+import { GuestAccess } from '../config/guest_access.enum';
 import { Loglevel } from '../config/loglevel.enum';
 import { NoteConfig } from '../config/note.config';
 import { LoggerModule } from '../logger/logger.module';
@@ -192,7 +193,7 @@ describe('FrontendConfigService', () => {
                   return {
                     forbiddenNoteIds: [],
                     maxDocumentLength: 200,
-                    guestAccess: true,
+                    guestAccess: GuestAccess.CREATE,
                     permissions: {
                       default: {
                         everyone: DefaultAccessPermission.READ,
@@ -358,7 +359,7 @@ describe('FrontendConfigService', () => {
                 const noteConfig: NoteConfig = {
                   forbiddenNoteIds: [],
                   maxDocumentLength: maxDocumentLength,
-                  guestAccess: true,
+                  guestAccess: GuestAccess.CREATE,
                   permissions: {
                     default: {
                       everyone: DefaultAccessPermission.READ,
@@ -392,7 +393,7 @@ describe('FrontendConfigService', () => {
                 const service = module.get(FrontendConfigService);
                 const config = await service.getFrontendConfig();
                 expect(config.allowRegister).toEqual(enableRegister);
-                expect(config.allowAnonymous).toEqual(noteConfig.guestAccess);
+                expect(config.guestAccess).toEqual(noteConfig.guestAccess);
                 expect(config.branding.name).toEqual(customName);
                 expect(config.branding.logo).toEqual(
                   customLogo ? new URL(customLogo) : undefined,
