@@ -70,11 +70,13 @@ describe('SessionService', () => {
   });
 
   it('creates a new TypeormStore on create', () => {
-    expect(typeormStoreConstructorMock).toBeCalledWith({
+    expect(typeormStoreConstructorMock).toHaveBeenCalledWith({
       cleanupLimit: 2,
       limitSubquery: true,
     });
-    expect(mockedTypeormStore.connect).toBeCalledWith(mockedSessionRepository);
+    expect(mockedTypeormStore.connect).toHaveBeenCalledWith(
+      mockedSessionRepository,
+    );
     expect(sessionService.getTypeormStore()).toBe(mockedTypeormStore);
   });
 

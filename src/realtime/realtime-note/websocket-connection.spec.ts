@@ -79,7 +79,7 @@ describe('websocket connection', () => {
 
     new WebsocketConnection(mockedWebsocket, mockedUser, mockedRealtimeNote);
 
-    expect(setupWebsocketSpy).toBeCalledWith(mockedWebsocket);
+    expect(setupWebsocketSpy).toHaveBeenCalledWith(mockedWebsocket);
   });
 
   it('forwards sent messages to the transporter', () => {
@@ -92,7 +92,7 @@ describe('websocket connection', () => {
     const sendFunctionSpy = jest.spyOn(mockedWebsocketTransporter, 'send');
     const sendContent = new Uint8Array();
     sut.send(sendContent);
-    expect(sendFunctionSpy).toBeCalledWith(sendContent);
+    expect(sendFunctionSpy).toHaveBeenCalledWith(sendContent);
   });
 
   it('forwards disconnect calls to the transporter', () => {
@@ -107,7 +107,7 @@ describe('websocket connection', () => {
       'disconnect',
     );
     sut.disconnect();
-    expect(disconnectFunctionSpy).toBeCalled();
+    expect(disconnectFunctionSpy).toHaveBeenCalled();
   });
 
   it('forwards isSynced checks to the transporter', () => {
@@ -139,7 +139,7 @@ describe('websocket connection', () => {
 
     mockedWebsocketTransporter.emit('disconnected');
 
-    expect(removeClientSpy).toBeCalledWith(sut);
+    expect(removeClientSpy).toHaveBeenCalledWith(sut);
   });
 
   it('remembers the controlled awareness-ids on awareness update', () => {
@@ -180,7 +180,7 @@ describe('websocket connection', () => {
 
     mockedWebsocketTransporter.emit('disconnected');
 
-    expect(removeAwarenessSpy).toBeCalledWith(mockedAwareness, [0], sut);
+    expect(removeAwarenessSpy).toHaveBeenCalledWith(mockedAwareness, [0], sut);
   });
 
   it('saves the correct user', () => {

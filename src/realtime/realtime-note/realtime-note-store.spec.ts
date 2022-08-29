@@ -42,7 +42,7 @@ describe('RealtimeNoteStore', () => {
     expect(realtimeNoteStore.create(mockedNote, mockedContent)).toBe(
       mockedRealtimeNote,
     );
-    expect(realtimeNoteConstructorSpy).toBeCalledWith(
+    expect(realtimeNoteConstructorSpy).toHaveBeenCalledWith(
       mockedNote,
       mockedContent,
     );

@@ -109,9 +109,12 @@ describe('RealtimeNoteService', () => {
       realtimeNoteService.getOrCreateRealtimeNote(mockedNote),
     ).resolves.toBe(mockedRealtimeNote);
 
-    expect(realtimeNoteStore.find).toBeCalledWith(mockedNoteId);
-    expect(realtimeNoteStore.create).toBeCalledWith(mockedNote, mockedContent);
-    expect(setIntervalSpy).not.toBeCalled();
+    expect(realtimeNoteStore.find).toHaveBeenCalledWith(mockedNoteId);
+    expect(realtimeNoteStore.create).toHaveBeenCalledWith(
+      mockedNote,
+      mockedContent,
+    );
+    expect(setIntervalSpy).not.toHaveBeenCalled();
   });
 
   describe('with periodic timer', () => {
@@ -125,11 +128,11 @@ describe('RealtimeNoteService', () => {
 
       await realtimeNoteService.getOrCreateRealtimeNote(mockedNote);
 
-      expect(setIntervalSpy).toBeCalledWith(
+      expect(setIntervalSpy).toHaveBeenCalledWith(
         expect.any(Function),
         1000 * 60 * 10,
       );
-      expect(addIntervalSpy).toBeCalled();
+      expect(addIntervalSpy).toHaveBeenCalled();
     });
 
     it('stops the timer if the realtime note gets destroyed', async () => {
@@ -142,8 +145,8 @@ describe('RealtimeNoteService', () => {
 
       await realtimeNoteService.getOrCreateRealtimeNote(mockedNote);
       mockedRealtimeNote.emit('destroy');
-      expect(deleteIntervalSpy).toBeCalled();
-      expect(clearIntervalSpy).toBeCalled();
+      expect(deleteIntervalSpy).toHaveBeenCalled();
+      expect(clearIntervalSpy).toHaveBeenCalled();
     });
   });
 
@@ -155,8 +158,8 @@ describe('RealtimeNoteService', () => {
     await expect(
       realtimeNoteService.getOrCreateRealtimeNote(mockedNote),
     ).rejects.toBe(`Revision for note mockedNoteId not found.`);
-    expect(realtimeNoteStore.create).not.toBeCalled();
-    expect(realtimeNoteStore.find).toBeCalledWith(mockedNoteId);
+    expect(realtimeNoteStore.create).not.toHaveBeenCalled();
+    expect(realtimeNoteStore.find).toHaveBeenCalledWith(mockedNoteId);
   });
 
   it("doesn't create a new realtime note if there is already one", async () => {
@@ -178,7 +181,7 @@ describe('RealtimeNoteService', () => {
     await expect(
       realtimeNoteService.getOrCreateRealtimeNote(mockedNote),
     ).resolves.toBe(mockedRealtimeNote);
-    expect(realtimeNoteStore.create).toBeCalledTimes(1);
+    expect(realtimeNoteStore.create).toHaveBeenCalledTimes(1);
   });
 
   it('saves a realtime note if it gets destroyed', async () => {
@@ -200,7 +203,10 @@ describe('RealtimeNoteService', () => {
       .mockImplementation(() => Promise.resolve(Mock.of<Revision>()));
 
     mockedRealtimeNote.emit('beforeDestroy');
-    expect(createRevisionSpy).toBeCalledWith(mockedNote, mockedCurrentContent);
+    expect(createRevisionSpy).toHaveBeenCalledWith(
+      mockedNote,
+      mockedCurrentContent,
+    );
   });
 
   it('logs errors that occur during saving on destroy', async () => {
@@ -224,7 +230,7 @@ describe('RealtimeNoteService', () => {
     mockedRealtimeNote.emit('beforeDestroy');
 
     await waitForOtherPromisesToFinish();
-    expect(logSpy).toBeCalled();
+    expect(logSpy).toHaveBeenCalled();
   });
 
   it('destroys every realtime note on application shutdown', () => {
@@ -236,6 +242,6 @@ describe('RealtimeNoteService', () => {
 
     realtimeNoteService.beforeApplicationShutdown();
 
-    expect(destroySpy).toBeCalled();
+    expect(destroySpy).toHaveBeenCalled();
   });
 });
