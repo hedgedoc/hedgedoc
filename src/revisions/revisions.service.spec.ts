@@ -234,7 +234,7 @@ describe('RevisionsService', () => {
 
       const createdRevision = await service.createRevision(note, oldContent);
       expect(createdRevision).toBeUndefined();
-      expect(saveSpy).not.toBeCalled();
+      expect(saveSpy).not.toHaveBeenCalled();
     });
   });
 });

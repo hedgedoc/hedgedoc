@@ -47,10 +47,10 @@ describe('websocket-doc', () => {
     const websocketDoc = new WebsocketDoc(realtimeNote, '');
     const mockUpdate = new Uint8Array([4, 5, 6, 7]);
     websocketDoc.emit('update', [mockUpdate, mockConnection1]);
-    expect(send1).not.toBeCalled();
-    expect(send2).not.toBeCalled();
-    expect(send3).toBeCalledWith(mockEncodedUpdate);
-    expect(mockedEncodeUpdateFunction).toBeCalledWith(mockUpdate);
+    expect(send1).not.toHaveBeenCalled();
+    expect(send2).not.toHaveBeenCalled();
+    expect(send3).toHaveBeenCalledWith(mockEncodedUpdate);
+    expect(mockedEncodeUpdateFunction).toHaveBeenCalledWith(mockUpdate);
     websocketDoc.destroy();
   });
 });

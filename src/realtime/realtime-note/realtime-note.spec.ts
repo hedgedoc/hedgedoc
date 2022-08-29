@@ -67,8 +67,8 @@ describe('realtime note', () => {
     const docDestroy = jest.spyOn(mockedDoc, 'destroy');
     const awarenessDestroy = jest.spyOn(mockedAwareness, 'destroy');
     sut.destroy();
-    expect(docDestroy).toBeCalled();
-    expect(awarenessDestroy).toBeCalled();
+    expect(docDestroy).toHaveBeenCalled();
+    expect(awarenessDestroy).toHaveBeenCalled();
   });
 
   it('emits destroy event on destruction', async () => {

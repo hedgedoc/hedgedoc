@@ -242,8 +242,8 @@ describe('Websocket gateway', () => {
     await expect(
       gateway.handleConnection(mockedWebsocket, request),
     ).resolves.not.toThrow();
-    expect(addClientSpy).toBeCalledWith(mockedWebsocketConnection);
-    expect(mockedWebsocketCloseSpy).not.toBeCalled();
+    expect(addClientSpy).toHaveBeenCalledWith(mockedWebsocketConnection);
+    expect(mockedWebsocketCloseSpy).not.toHaveBeenCalled();
   });
 
   it('closes the connection if invalid session cookie', async () => {
@@ -260,8 +260,8 @@ describe('Websocket gateway', () => {
     await expect(
       gateway.handleConnection(mockedWebsocket, request),
     ).resolves.not.toThrow();
-    expect(addClientSpy).not.toBeCalled();
-    expect(mockedWebsocketCloseSpy).toBeCalled();
+    expect(addClientSpy).not.toHaveBeenCalled();
+    expect(mockedWebsocketCloseSpy).toHaveBeenCalled();
   });
 
   it("closes the connection if session doesn't exist", async () => {
@@ -280,8 +280,8 @@ describe('Websocket gateway', () => {
     await expect(
       gateway.handleConnection(mockedWebsocket, request),
     ).resolves.not.toThrow();
-    expect(addClientSpy).not.toBeCalled();
-    expect(mockedWebsocketCloseSpy).toBeCalled();
+    expect(addClientSpy).not.toHaveBeenCalled();
+    expect(mockedWebsocketCloseSpy).toHaveBeenCalled();
   });
 
   it("closes the connection if user doesn't exist for username", async () => {
@@ -300,8 +300,8 @@ describe('Websocket gateway', () => {
     await expect(
       gateway.handleConnection(mockedWebsocket, request),
     ).resolves.not.toThrow();
-    expect(addClientSpy).not.toBeCalled();
-    expect(mockedWebsocketCloseSpy).toBeCalled();
+    expect(addClientSpy).not.toHaveBeenCalled();
+    expect(mockedWebsocketCloseSpy).toHaveBeenCalled();
   });
 
   it("closes the connection if url doesn't contain a valid note id", async () => {
@@ -318,8 +318,8 @@ describe('Websocket gateway', () => {
     await expect(
       gateway.handleConnection(mockedWebsocket, request),
     ).resolves.not.toThrow();
-    expect(addClientSpy).not.toBeCalled();
-    expect(mockedWebsocketCloseSpy).toBeCalled();
+    expect(addClientSpy).not.toHaveBeenCalled();
+    expect(mockedWebsocketCloseSpy).toHaveBeenCalled();
   });
 
   it('closes the connection if url contains an invalid note id', async () => {
@@ -338,8 +338,8 @@ describe('Websocket gateway', () => {
     await expect(
       gateway.handleConnection(mockedWebsocket, request),
     ).resolves.not.toThrow();
-    expect(addClientSpy).not.toBeCalled();
-    expect(mockedWebsocketCloseSpy).toBeCalled();
+    expect(addClientSpy).not.toHaveBeenCalled();
+    expect(mockedWebsocketCloseSpy).toHaveBeenCalled();
   });
 
   it('closes the connection if user has no read permissions', async () => {
@@ -358,7 +358,7 @@ describe('Websocket gateway', () => {
     await expect(
       gateway.handleConnection(mockedWebsocket, request),
     ).resolves.not.toThrow();
-    expect(addClientSpy).not.toBeCalled();
-    expect(mockedWebsocketCloseSpy).toBeCalled();
+    expect(addClientSpy).not.toHaveBeenCalled();
+    expect(mockedWebsocketCloseSpy).toHaveBeenCalled();
   });
 });

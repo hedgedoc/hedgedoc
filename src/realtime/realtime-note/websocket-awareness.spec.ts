@@ -48,10 +48,10 @@ describe('websocket-awareness', () => {
       removed: [3],
     };
     websocketAwareness.emit('update', [mockUpdate, mockConnection1]);
-    expect(send1).not.toBeCalled();
-    expect(send2).not.toBeCalled();
-    expect(send3).toBeCalledWith(mockEncodedUpdate);
-    expect(mockedEncodeUpdateFunction).toBeCalledWith(
+    expect(send1).not.toHaveBeenCalled();
+    expect(send2).not.toHaveBeenCalled();
+    expect(send3).toHaveBeenCalledWith(mockEncodedUpdate);
+    expect(mockedEncodeUpdateFunction).toHaveBeenCalledWith(
       websocketAwareness,
       [1, 2, 3],
     );
