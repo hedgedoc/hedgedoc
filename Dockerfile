@@ -4,11 +4,13 @@
 
 # BUILD
 FROM node:18-alpine AS builder
+ARG BUILD_VERSION=CLIENT_VERSION_MISSING
 ENV NEXT_TELEMETRY_DISABLED=1
 
 WORKDIR /app
 COPY . ./
 RUN yarn install --immutable && \
+    sed -i "s/CLIENT_VERSION_MISSING/${BUILD_VERSION}/" src/version.json && \
     yarn build:for-real-backend
 
 # RUNNER
