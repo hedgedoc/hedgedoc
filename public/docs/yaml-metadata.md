@@ -144,7 +144,7 @@ type: slide
 This option allows you to provide custom options to slide mode.
 
 Slide mode is achieved using [Reveal](https://revealjs.com/), an HTML presentation framework.
-In HedgeDoc 1, Reveal version 3 is in use.
+The current stable version of HedgeDoc uses Reveal 3.
 
 See the below document for more details on the available slide options:
 <https://github.com/hakimel/reveal.js/blob/3.9.2/README.md#configuration>
