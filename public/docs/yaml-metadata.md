@@ -142,8 +142,12 @@ type: slide
 ## slideOptions
 
 This option allows you to provide custom options to slide mode.
-Please below document for more details:
-<https://github.com/hakimel/reveal.js/#configuration>
+
+Slide mode is achieved using [Reveal](https://revealjs.com/), an HTML presentation framework.
+In HedgeDoc 1, Reveal version 3 is in use.
+
+See the below document for more details on the available slide options:
+<https://github.com/hakimel/reveal.js/blob/3.9.2/README.md#configuration>
 
 You could also set slide theme which named in below css files:
 <https://github.com/hakimel/reveal.js/tree/master/css/theme>
@@ -161,12 +165,12 @@ slideOptions:
 
 ## opengraph
 
-This option allows you to override the default generated opengraph metadata.  
+This option allows you to override the default generated opengraph metadata.
 See the [OpenGraph protocol documentation](https://ogp.me) for more information.
 
 **Notice: always use two spaces as indention in YAML metadata!**
 
-> default: not set (uses auto-generated metadata) 
+> default: not set (uses auto-generated metadata)
 
 **Example**
 ```yml
