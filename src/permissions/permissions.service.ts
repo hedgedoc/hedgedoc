@@ -39,29 +39,47 @@ export class PermissionsService {
   ) {}
 
   public guestPermission: GuestPermission; // TODO change to configOption
-  async mayRead(user: User | null, note: Note): Promise<boolean> {
-    if (await this.isOwner(user, note)) return true;
 
-    if (await this.hasPermissionUser(user, note, false)) return true;
-
-    // noinspection RedundantIfStatementJS
-    if (await this.hasPermissionGroup(user, note, false)) return true;
-
-    return false;
+  /**
+   * Checks if the given {@link User} is allowed to read the given {@link Note}.
+   *
+   * @async
+   * @param {User} user - The user whose permission should be checked. Value is null if guest access should be checked
+   * @param {Note} note - The note for which the permission should be checked
+   * @return if the user is allowed to read the note
+   */
+  public async mayRead(user: User | null, note: Note): Promise<boolean> {
+    return (
+      (await this.isOwner(user, note)) ||
+      (await this.hasPermissionUser(user, note, false)) ||
+      (await this.hasPermissionGroup(user, note, false))
+    );
   }
 
-  async mayWrite(user: User | null, note: Note): Promise<boolean> {
-    if (await this.isOwner(user, note)) return true;
-
-    if (await this.hasPermissionUser(user, note, true)) return true;
-
-    // noinspection RedundantIfStatementJS
-    if (await this.hasPermissionGroup(user, note, true)) return true;
-
-    return false;
+  /**
+   * Checks if the given {@link User} is allowed to edit the given {@link Note}.
+   *
+   * @async
+   * @param {User} user - The user whose permission should be checked
+   * @param {Note} note - The note for which the permission should be checked. Value is null if guest access should be checked
+   * @return if the user is allowed to edit the note
+   */
+  public async mayWrite(user: User | null, note: Note): Promise<boolean> {
+    return (
+      (await this.isOwner(user, note)) ||
+      (await this.hasPermissionUser(user, note, true)) ||
+      (await this.hasPermissionGroup(user, note, true))
+    );
   }
 
-  mayCreate(user: User | null): boolean {
+  /**
+   * Checks if the given {@link User} is allowed to create notes.
+   *
+   * @async
+   * @param {User} user - The user whose permission should be checked. Value is null if guest access should be checked
+   * @return if the user is allowed to create notes
+   */
+  public mayCreate(user: User | null): boolean {
     if (user) {
       return true;
     } else {
