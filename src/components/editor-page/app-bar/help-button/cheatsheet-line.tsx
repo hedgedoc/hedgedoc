@@ -4,8 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Suspense, useCallback, useMemo } from 'react'
+import React, { Suspense, useEffect, useMemo } from 'react'
 import { WaitSpinner } from '../../../common/wait-spinner/wait-spinner'
+import { eventEmitterContext } from '../../../markdown-renderer/hooks/use-extension-event-emitter'
+import EventEmitter2 from 'eventemitter2'
+import type { TaskCheckedEventPayload } from '../../../../extensions/extra-integrations/task-list/event-emitting-task-list-checkbox'
+import { TaskListCheckboxAppExtension } from '../../../../extensions/extra-integrations/task-list/task-list-checkbox-app-extension'
 
 export interface CheatsheetLineProps {
   markdown: string
@@ -13,7 +17,7 @@ export interface CheatsheetLineProps {
 }
 
 const HighlightedCode = React.lazy(
-  () => import('../../../markdown-renderer/markdown-extension/highlighted-fence/highlighted-code')
+  () => import('../../../../extensions/extra-integrations/highlighted-code-fence/highlighted-code')
 )
 const DocumentMarkdownRenderer = React.lazy(() => import('../../../markdown-renderer/document-markdown-renderer'))
 
@@ -26,12 +30,15 @@ const DocumentMarkdownRenderer = React.lazy(() => import('../../../markdown-rend
  */
 export const CheatsheetLine: React.FC<CheatsheetLineProps> = ({ markdown, onTaskCheckedChange }) => {
   const lines = useMemo(() => markdown.split('\n'), [markdown])
-  const checkboxClick = useCallback(
-    (lineInMarkdown: number, newValue: boolean) => {
-      onTaskCheckedChange(newValue)
-    },
-    [onTaskCheckedChange]
-  )
+  const eventEmitter = useMemo(() => new EventEmitter2(), [])
+
+  useEffect(() => {
+    const handler = ({ checked }: TaskCheckedEventPayload) => onTaskCheckedChange(checked)
+    eventEmitter.on(TaskListCheckboxAppExtension.EVENT_NAME, handler)
+    return () => {
+      eventEmitter.off(TaskListCheckboxAppExtension.EVENT_NAME, handler)
+    }
+  })
 
   return (
     <Suspense
@@ -44,11 +51,9 @@ export const CheatsheetLine: React.FC<CheatsheetLineProps> = ({ markdown, onTask
       }>
       <tr>
         <td>
-          <DocumentMarkdownRenderer
-            markdownContentLines={lines}
-            baseUrl={'https://example.org'}
-            onTaskCheckedChange={checkboxClick}
-          />
+          <eventEmitterContext.Provider value={eventEmitter}>
+            <DocumentMarkdownRenderer markdownContentLines={lines} baseUrl={'https://example.org'} />
+          </eventEmitterContext.Provider>
         </td>
         <td className={'markdown-body'}>
           <HighlightedCode code={markdown} wrapLines={true} startLineNumber={1} language={'markdown'} />

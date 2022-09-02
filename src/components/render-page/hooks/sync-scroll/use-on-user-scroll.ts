@@ -6,8 +6,8 @@
 
 import type React from 'react'
 import { useCallback } from 'react'
-import type { LineMarkerPosition } from '../../../markdown-renderer/markdown-extension/linemarker/types'
 import type { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
+import type { LineMarkerPosition } from '../../../markdown-renderer/extensions/linemarker/types'
 
 /**
  * Provides a callback to handle user scrolling.

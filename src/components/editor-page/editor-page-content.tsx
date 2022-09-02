@@ -24,6 +24,9 @@ import { NoteAndAppTitleHead } from '../layout/note-and-app-title-head'
 import equal from 'fast-deep-equal'
 import { EditorPane } from './editor-pane/editor-pane'
 import { ChangeEditorContentContextProvider } from './change-content-context/change-content-context'
+import { ExtensionEventEmitterProvider } from '../markdown-renderer/hooks/use-extension-event-emitter'
+import { useComponentsFromAppExtensions } from './editor-pane/hooks/use-components-from-app-extensions'
+import { CommunicatorImageLightbox } from '../markdown-renderer/extensions/image/communicator-image-lightbox'
 
 export enum ScrollSource {
   EDITOR = 'editor',
@@ -124,23 +127,29 @@ export const EditorPageContent: React.FC = () => {
     [onMarkdownRendererScroll, scrollState.rendererScrollState, setRendererToScrollSource]
   )
 
+  const editorExtensionComponents = useComponentsFromAppExtensions()
+
   return (
     <ChangeEditorContentContextProvider>
-      <NoteAndAppTitleHead />
-      <MotdModal />
-      <div className={'d-flex flex-column vh-100'}>
-        <AppBar mode={AppBarMode.EDITOR} />
-        <div className={'flex-fill d-flex h-100 w-100 overflow-hidden flex-row'}>
-          <Splitter
-            showLeft={editorMode === EditorMode.EDITOR || editorMode === EditorMode.BOTH}
-            left={leftPane}
-            showRight={editorMode === EditorMode.PREVIEW || editorMode === EditorMode.BOTH}
-            right={rightPane}
-            additionalContainerClassName={'overflow-hidden'}
-          />
-          <Sidebar />
+      <ExtensionEventEmitterProvider>
+        {editorExtensionComponents}
+        <CommunicatorImageLightbox />
+        <NoteAndAppTitleHead />
+        <MotdModal />
+        <div className={'d-flex flex-column vh-100'}>
+          <AppBar mode={AppBarMode.EDITOR} />
+          <div className={'flex-fill d-flex h-100 w-100 overflow-hidden flex-row'}>
+            <Splitter
+              showLeft={editorMode === EditorMode.EDITOR || editorMode === EditorMode.BOTH}
+              left={leftPane}
+              showRight={editorMode === EditorMode.PREVIEW || editorMode === EditorMode.BOTH}
+              right={rightPane}
+              additionalContainerClassName={'overflow-hidden'}
+            />
+            <Sidebar />
+          </div>
         </div>
-      </div>
+      </ExtensionEventEmitterProvider>
     </ChangeEditorContentContextProvider>
   )
 }

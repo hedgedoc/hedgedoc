@@ -6,9 +6,9 @@
 
 import type { RefObject } from 'react'
 import { useCallback, useEffect, useRef } from 'react'
-import type { LineMarkerPosition } from '../../../markdown-renderer/markdown-extension/linemarker/types'
 import type { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
 import { findLineMarks } from '../../../editor-page/synced-scroll/utils'
+import type { LineMarkerPosition } from '../../../markdown-renderer/extensions/linemarker/types'
 
 /**
  * Scrolls the given container to the correct {@link LineMarkerPosition}.

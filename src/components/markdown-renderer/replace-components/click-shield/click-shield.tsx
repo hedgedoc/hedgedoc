@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,7 +15,7 @@ import type { Property } from 'csstype'
 import type { PropsWithDataCypressId } from '../../../../utils/cypress-attribute'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import { ProxyImageFrame } from '../../markdown-extension/image/proxy-image-frame'
+import { ProxyImageFrame } from '../../extensions/image/proxy-image-frame'
 
 const log = new Logger('OneClickEmbedding')
 

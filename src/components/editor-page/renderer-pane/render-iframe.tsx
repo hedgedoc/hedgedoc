@@ -3,20 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { isTestMode } from '../../../utils/test-modes'
 import type { RendererProps } from '../../render-page/markdown-document'
 import type {
+  ExtensionEvent,
   OnFirstHeadingChangeMessage,
   OnHeightChangeMessage,
-  OnTaskCheckboxChangeMessage,
   RendererType,
   SetScrollStateMessage
 } from '../../render-page/window-post-message-communicator/rendering-message'
 import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
 import { useEditorToRendererCommunicator } from '../render-context/editor-to-renderer-communicator-context-provider'
 import { useForceRenderPageUrlOnIframeLoadCallback } from './hooks/use-force-render-page-url-on-iframe-load-callback'
-import { CommunicatorImageLightbox } from './communicator-image-lightbox'
 import { useEditorReceiveHandler } from '../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
 import { useSendDarkModeStatusToRenderer } from './hooks/use-send-dark-mode-status-to-renderer'
 import { useSendMarkdownToRenderer } from './hooks/use-send-markdown-to-renderer'
@@ -24,10 +23,10 @@ import { useSendScrollState } from './hooks/use-send-scroll-state'
 import { Logger } from '../../../utils/logger'
 import { useEffectOnRenderTypeChange } from './hooks/use-effect-on-render-type-change'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
-import { getGlobalState } from '../../../redux'
 import { ORIGIN, useBaseUrl } from '../../../hooks/common/use-base-url'
 import { ShowIf } from '../../common/show-if/show-if'
 import { WaitSpinner } from '../../common/wait-spinner/wait-spinner'
+import { useExtensionEventEmitter } from '../../markdown-renderer/hooks/use-extension-event-emitter'
 
 export interface RenderIframeProps extends RendererProps {
   rendererType: RendererType
@@ -58,7 +57,6 @@ const log = new Logger('RenderIframe')
  */
 export const RenderIframe: React.FC<RenderIframeProps> = ({
   markdownContentLines,
-  onTaskCheckedChange,
   scrollState,
   onFirstHeadingChange,
   onScroll,
@@ -92,6 +90,10 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
     }
   }, [iframeCommunicator, rendererReady])
 
+  useEffect(() => {
+    onRendererStatusChange?.(rendererReady)
+  }, [onRendererStatusChange, rendererReady])
+
   useEditorReceiveHandler(
     CommunicationMessageType.ON_FIRST_HEADING_CHANGE,
     useCallback(
@@ -105,15 +107,15 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
     useCallback(() => onMakeScrollSource?.(), [onMakeScrollSource])
   )
 
+  const eventEmitter = useExtensionEventEmitter()
+
   useEditorReceiveHandler(
-    CommunicationMessageType.ON_TASK_CHECKBOX_CHANGE,
-    useCallback(
-      (values: OnTaskCheckboxChangeMessage) => {
-        const lineOffset = getGlobalState().noteDetails.frontmatterRendererInfo.lineOffset
-        onTaskCheckedChange?.(values.lineInMarkdown + lineOffset, values.checked)
-      },
-      [onTaskCheckedChange]
-    )
+    CommunicationMessageType.EXTENSION_EVENT,
+    useMemo(() => {
+      return eventEmitter === undefined
+        ? undefined
+        : (values: ExtensionEvent) => eventEmitter.emit(values.eventName, values.payload)
+    }, [eventEmitter])
   )
 
   useEditorReceiveHandler(
@@ -169,7 +171,6 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
 
   return (
     <Fragment>
-      <CommunicatorImageLightbox />
       <ShowIf condition={!rendererReady}>
         <WaitSpinner />
       </ShowIf>

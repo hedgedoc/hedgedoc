@@ -10,18 +10,17 @@ export enum CommunicationMessageType {
   SET_MARKDOWN_CONTENT = 'SET_MARKDOWN_CONTENT',
   RENDERER_READY = 'RENDERER_READY',
   SET_DARKMODE = 'SET_DARKMODE',
-  ON_TASK_CHECKBOX_CHANGE = 'ON_TASK_CHECKBOX_CHANGE',
   ON_FIRST_HEADING_CHANGE = 'ON_FIRST_HEADING_CHANGE',
   ENABLE_RENDERER_SCROLL_SOURCE = 'ENABLE_RENDERER_SCROLL_SOURCE',
   DISABLE_RENDERER_SCROLL_SOURCE = 'DISABLE_RENDERER_SCROLL_SOURCE',
   SET_SCROLL_STATE = 'SET_SCROLL_STATE',
-  IMAGE_CLICKED = 'IMAGE_CLICKED',
   ON_HEIGHT_CHANGE = 'ON_HEIGHT_CHANGE',
   SET_BASE_CONFIGURATION = 'SET_BASE_CONFIGURATION',
   GET_WORD_COUNT = 'GET_WORD_COUNT',
   ON_WORD_COUNT_CALCULATED = 'ON_WORD_COUNT_CALCULATED',
   SET_SLIDE_OPTIONS = 'SET_SLIDE_OPTIONS',
-  IMAGE_UPLOAD = 'IMAGE_UPLOAD'
+  IMAGE_UPLOAD = 'IMAGE_UPLOAD',
+  EXTENSION_EVENT = 'EXTENSION_EVENT'
 }
 
 export interface NoPayloadMessage<TYPE extends CommunicationMessageType> {
@@ -31,6 +30,12 @@ export interface NoPayloadMessage<TYPE extends CommunicationMessageType> {
 export interface SetDarkModeMessage {
   type: CommunicationMessageType.SET_DARKMODE
   activated: boolean
+}
+
+export interface ExtensionEvent {
+  type: CommunicationMessageType.EXTENSION_EVENT
+  eventName: string
+  payload: unknown
 }
 
 export interface ImageDetails {
@@ -56,11 +61,6 @@ export interface GetWordCountMessage {
   type: CommunicationMessageType.GET_WORD_COUNT
 }
 
-export interface ImageClickedMessage {
-  type: CommunicationMessageType.IMAGE_CLICKED
-  details: ImageDetails
-}
-
 export interface SetMarkdownContentMessage {
   type: CommunicationMessageType.SET_MARKDOWN_CONTENT
   content: string[]
@@ -69,12 +69,6 @@ export interface SetMarkdownContentMessage {
 export interface SetScrollStateMessage {
   type: CommunicationMessageType.SET_SCROLL_STATE
   scrollState: ScrollState
-}
-
-export interface OnTaskCheckboxChangeMessage {
-  type: CommunicationMessageType.ON_TASK_CHECKBOX_CHANGE
-  lineInMarkdown: number
-  checked: boolean
 }
 
 export interface OnFirstHeadingChangeMessage {
@@ -104,15 +98,14 @@ export type CommunicationMessages =
   | SetDarkModeMessage
   | SetBaseUrlMessage
   | GetWordCountMessage
-  | ImageClickedMessage
   | SetMarkdownContentMessage
   | SetScrollStateMessage
-  | OnTaskCheckboxChangeMessage
   | OnFirstHeadingChangeMessage
   | SetSlideOptionsMessage
   | OnHeightChangeMessage
   | OnWordCountCalculatedMessage
   | ImageUploadMessage
+  | ExtensionEvent
 
 export type EditorToRendererMessageType =
   | CommunicationMessageType.SET_MARKDOWN_CONTENT
@@ -127,12 +120,11 @@ export type RendererToEditorMessageType =
   | CommunicationMessageType.RENDERER_READY
   | CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE
   | CommunicationMessageType.ON_FIRST_HEADING_CHANGE
-  | CommunicationMessageType.ON_TASK_CHECKBOX_CHANGE
   | CommunicationMessageType.SET_SCROLL_STATE
-  | CommunicationMessageType.IMAGE_CLICKED
   | CommunicationMessageType.ON_HEIGHT_CHANGE
   | CommunicationMessageType.ON_WORD_COUNT_CALCULATED
   | CommunicationMessageType.IMAGE_UPLOAD
+  | CommunicationMessageType.EXTENSION_EVENT
 
 export enum RendererType {
   DOCUMENT = 'document',

@@ -6,15 +6,15 @@
 
 import React, { useEffect, useMemo, useRef } from 'react'
 import { useConvertMarkdownToReactDom } from './hooks/use-convert-markdown-to-react-dom'
-import type { LineMarkerPosition } from './markdown-extension/linemarker/types'
 import { useTranslation } from 'react-i18next'
-import type { LineMarkers } from './markdown-extension/linemarker/add-line-marker-markdown-it-plugin'
 import { useCalculateLineMarkerPosition } from './utils/calculate-line-marker-positions'
 import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
-import { HeadlineAnchorsMarkdownExtension } from './markdown-extension/headline-anchors-markdown-extension'
 import { cypressId } from '../../utils/cypress-attribute'
+import { HeadlineAnchorsMarkdownExtension } from './extensions/headline-anchors-markdown-extension'
+import type { LineMarkerPosition } from './extensions/linemarker/types'
+import type { LineMarkers } from './extensions/linemarker/add-line-marker-markdown-it-plugin'
 
 export interface DocumentMarkdownRendererProps extends CommonMarkdownRendererProps {
   onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void
@@ -39,10 +39,7 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
   markdownContentLines,
   onFirstHeadingChange,
   onLineMarkerPositionChanged,
-  onTaskCheckedChange,
-  onTocChange,
   baseUrl,
-  onImageClick,
   outerContainerRef,
   newlinesAreBreaks
 }) => {
@@ -52,12 +49,10 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
   const extensions = useMarkdownExtensions(
     baseUrl,
     currentLineMarkers,
-    useMemo(() => [new HeadlineAnchorsMarkdownExtension()], []),
-    onTaskCheckedChange,
-    onImageClick,
-    onTocChange
+    useMemo(() => [new HeadlineAnchorsMarkdownExtension()], [])
   )
-  const markdownReactDom = useConvertMarkdownToReactDom(markdownContentLines, extensions, newlinesAreBreaks)
+
+  const markdownReactDom = useConvertMarkdownToReactDom(markdownContentLines, extensions, newlinesAreBreaks, true)
 
   useTranslation()
   useCalculateLineMarkerPosition(

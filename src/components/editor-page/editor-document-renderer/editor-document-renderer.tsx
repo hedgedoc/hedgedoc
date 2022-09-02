@@ -11,7 +11,6 @@ import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../../hooks/
 import { NoteType } from '../../../redux/note-details/types/note-details'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
-import { useSetCheckboxInEditor } from './hooks/use-set-checkbox-in-editor'
 import { useOnScrollWithLineOffset } from './hooks/use-on-scroll-with-line-offset'
 import { useScrollStateWithoutLineOffset } from './hooks/use-scroll-state-without-line-offset'
 import { setRendererStatus } from '../../../redux/renderer-status/methods'
@@ -31,7 +30,6 @@ export type EditorDocumentRendererProps = Omit<
 export const EditorDocumentRenderer: React.FC<EditorDocumentRendererProps> = ({ scrollState, onScroll, ...props }) => {
   const trimmedContentLines = useTrimmedNoteMarkdownContentWithoutFrontmatter()
   const noteType: NoteType = useApplicationState((state) => state.noteDetails.frontmatter.type)
-  const setCheckboxInEditor = useSetCheckboxInEditor()
   const adjustedOnScroll = useOnScrollWithLineOffset(onScroll)
   const adjustedScrollState = useScrollStateWithoutLineOffset(scrollState)
 
@@ -40,7 +38,6 @@ export const EditorDocumentRenderer: React.FC<EditorDocumentRendererProps> = ({ 
       {...props}
       onScroll={adjustedOnScroll}
       scrollState={adjustedScrollState}
-      onTaskCheckedChange={setCheckboxInEditor}
       rendererType={noteType === NoteType.SLIDE ? RendererType.SLIDESHOW : RendererType.DOCUMENT}
       markdownContentLines={trimmedContentLines}
       onRendererStatusChange={setRendererStatus}

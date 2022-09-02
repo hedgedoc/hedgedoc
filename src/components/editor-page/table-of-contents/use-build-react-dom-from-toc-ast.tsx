@@ -9,7 +9,7 @@ import type { ReactElement } from 'react'
 import React, { Fragment, useMemo } from 'react'
 import { ShowIf } from '../../common/show-if/show-if'
 import { tocSlugify } from './toc-slugify'
-import { JumpAnchor } from '../../markdown-renderer/markdown-extension/link-replacer/jump-anchor'
+import { JumpAnchor } from '../../markdown-renderer/extensions/link-replacer/jump-anchor'
 
 /**
  * Generates a React DOM part for the table of contents from the given AST of the document.

@@ -21,7 +21,6 @@ import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { EditorView } from '@codemirror/view'
 import { autocompletion } from '@codemirror/autocomplete'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
-import { findLanguageByCodeBlockName } from '../../markdown-renderer/markdown-extension/code-block-markdown-extension/find-language-by-code-block-name'
 import { languages } from '@codemirror/language-data'
 import { useCursorActivityCallback } from './hooks/use-cursor-activity-callback'
 import { useCodeMirrorReference, useSetCodeMirrorReference } from '../change-content-context/change-content-context'
@@ -39,12 +38,10 @@ import { useIsConnectionSynced } from './hooks/yjs/use-is-connection-synced'
 import { useMarkdownContentYText } from './hooks/yjs/use-markdown-content-y-text'
 import { lintGutter } from '@codemirror/lint'
 import { useLinter } from './linter/linter'
-import { YoutubeMarkdownExtension } from '../../markdown-renderer/markdown-extension/youtube/youtube-markdown-extension'
-import { VimeoMarkdownExtension } from '../../markdown-renderer/markdown-extension/vimeo/vimeo-markdown-extension'
-import { SequenceDiagramMarkdownExtension } from '../../markdown-renderer/markdown-extension/sequence-diagram/sequence-diagram-markdown-extension'
-import { LegacyShortcodesMarkdownExtension } from '../../markdown-renderer/markdown-extension/legacy-short-codes/legacy-shortcodes-markdown-extension'
 import { FrontmatterLinter } from './linter/frontmatter-linter'
 import { useOnNoteDeleted } from './hooks/yjs/use-on-note-deleted'
+import { findLanguageByCodeBlockName } from '../../markdown-renderer/extensions/base/code-block-markdown-extension/find-language-by-code-block-name'
+import { optionalAppExtensions } from '../../../extensions/extra-integrations/optional-app-extensions'
 
 /**
  * Renders the text editor pane of the editor.
@@ -90,15 +87,9 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
   useInsertNoteContentIntoYTextInMockModeEffect(firstUpdateHappened, websocketConnection)
   const spellCheck = useApplicationState((state) => state.editorConfig.spellCheck)
 
-  // ToDo: Don't initialize new extension array here, instead refactor to global extension array
   const markdownExtensionsLinters = useMemo(() => {
-    return [
-      new YoutubeMarkdownExtension(),
-      new VimeoMarkdownExtension(),
-      new SequenceDiagramMarkdownExtension(),
-      new LegacyShortcodesMarkdownExtension()
-    ]
-      .flatMap((extension) => extension.buildLinter())
+    return optionalAppExtensions
+      .flatMap((extension) => extension.buildCodeMirrorLinter())
       .concat(new FrontmatterLinter())
   }, [])
   const linter = useLinter(markdownExtensionsLinters)

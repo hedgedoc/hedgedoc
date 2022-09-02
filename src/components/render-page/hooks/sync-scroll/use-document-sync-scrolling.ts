@@ -6,10 +6,10 @@
 
 import type React from 'react'
 import { useCallback, useMemo, useState } from 'react'
-import type { LineMarkerPosition } from '../../../markdown-renderer/markdown-extension/linemarker/types'
 import type { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
 import { useOnUserScroll } from './use-on-user-scroll'
 import { useScrollToLineMark } from './use-scroll-to-line-mark'
+import type { LineMarkerPosition } from '../../../markdown-renderer/extensions/linemarker/types'
 
 /**
  * Synchronizes the scroll status of the given container with the given scroll state and posts changes if the user scrolls.

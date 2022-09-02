@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { LineMarkerPosition } from '../../markdown-renderer/markdown-extension/linemarker/types'
+import type { LineMarkerPosition } from '../../markdown-renderer/extensions/linemarker/types'
 
 /**
  * Finds the {@link LineMarkerPosition line markers} from a list of given line markers that are the closest to the given line number.

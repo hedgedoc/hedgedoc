@@ -7,15 +7,13 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 import { useConvertMarkdownToReactDom } from './hooks/use-convert-markdown-to-react-dom'
 import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
-import type { TocAst } from 'markdown-it-toc-done-right'
-import { useOnRefChange } from './hooks/use-on-ref-change'
 import { REVEAL_STATUS, useReveal } from './hooks/use-reveal'
 import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 import { LoadingSlide } from './loading-slide'
-import { RevealMarkdownExtension } from './markdown-extension/reveal/reveal-markdown-extension'
 import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
 import type { SlideOptions } from '../../redux/note-details/types/slide-show-options'
+import { RevealMarkdownExtension } from './extensions/reveal/reveal-markdown-extension'
 
 export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererProps {
   slideOptions?: SlideOptions
@@ -39,26 +37,19 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
   className,
   markdownContentLines,
   onFirstHeadingChange,
-  onTaskCheckedChange,
-  onTocChange,
   baseUrl,
-  onImageClick,
   newlinesAreBreaks,
   slideOptions
 }) => {
   const markdownBodyRef = useRef<HTMLDivElement>(null)
-  const tocAst = useRef<TocAst>()
 
   const extensions = useMarkdownExtensions(
     baseUrl,
     undefined,
-    useMemo(() => [new RevealMarkdownExtension()], []),
-    onTaskCheckedChange,
-    onImageClick,
-    onTocChange
+    useMemo(() => [new RevealMarkdownExtension()], [])
   )
 
-  const markdownReactDom = useConvertMarkdownToReactDom(markdownContentLines, extensions, newlinesAreBreaks)
+  const markdownReactDom = useConvertMarkdownToReactDom(markdownContentLines, extensions, newlinesAreBreaks, true)
   const revealStatus = useReveal(markdownContentLines, slideOptions)
 
   const extractFirstHeadline = useExtractFirstHeadline(markdownBodyRef, onFirstHeadingChange)
@@ -67,8 +58,6 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
       extractFirstHeadline()
     }
   }, [extractFirstHeadline, markdownContentLines, revealStatus])
-
-  useOnRefChange(tocAst, onTocChange)
 
   const slideShowDOM = useMemo(
     () => (revealStatus === REVEAL_STATUS.INITIALISED ? markdownReactDom : <LoadingSlide />),
@@ -83,5 +72,3 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
     </div>
   )
 }
-
-export default SlideshowMarkdownRenderer

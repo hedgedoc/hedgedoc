@@ -10,9 +10,9 @@ import { convertNodeToReactElement } from '@hedgedoc/html-to-react/dist/convertN
 import type { ComponentReplacer, NodeReplacement, ValidReactDomElement } from '../replace-components/component-replacer'
 import { DO_NOT_REPLACE } from '../replace-components/component-replacer'
 import React from 'react'
-import type { LineWithId } from '../markdown-extension/linemarker/types'
 import { Optional } from '@mrdrogdrog/optional'
-import { LinemarkerMarkdownExtension } from '../markdown-extension/linemarker/linemarker-markdown-extension'
+import { LinemarkerMarkdownExtension } from '../extensions/linemarker/linemarker-markdown-extension'
+import type { LineWithId } from '../extensions/linemarker/types'
 
 type LineIndexPair = [startLineIndex: number, endLineIndex: number]
 

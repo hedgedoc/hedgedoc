@@ -4,25 +4,20 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { TocAst } from 'markdown-it-toc-done-right'
 import type { MutableRefObject } from 'react'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import useResizeObserver from '@react-hook/resize-observer'
 import { useDocumentSyncScrolling } from './hooks/sync-scroll/use-document-sync-scrolling'
 import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import { DocumentMarkdownRenderer } from '../markdown-renderer/document-markdown-renderer'
-import type { ImageClickHandler } from '../markdown-renderer/markdown-extension/image/proxy-image-replacer'
 import styles from './markdown-document.module.scss'
-import { WidthBasedTableOfContents } from './width-based-table-of-contents'
-import { ShowIf } from '../common/show-if/show-if'
 import { useApplicationState } from '../../hooks/common/use-application-state'
+import { DocumentTocSidebar } from './document-toc-sidebar'
 
 export interface RendererProps extends ScrollProps {
   onFirstHeadingChange?: (firstHeading: string | undefined) => void
-  onTaskCheckedChange?: (lineInMarkdown: number, checked: boolean) => void
   documentRenderPaneRef?: MutableRefObject<HTMLDivElement | null>
   markdownContentLines: string[]
-  onImageClick?: ImageClickHandler
   onHeightChange?: (height: number) => void
 }
 
@@ -55,10 +50,8 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
   additionalRendererClasses,
   onFirstHeadingChange,
   onMakeScrollSource,
-  onTaskCheckedChange,
   baseUrl,
   markdownContentLines,
-  onImageClick,
   onScroll,
   scrollState,
   onHeightChange,
@@ -77,8 +70,6 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
     setInternalDocumentRenderPaneSize(entry.contentRect)
   )
 
-  const containerWidth = internalDocumentRenderPaneSize?.width ?? 0
-  const [tocAst, setTocAst] = useState<TocAst>()
   const newlinesAreBreaks = useApplicationState((state) => state.noteDetails.frontmatter.newlinesAreBreaks)
 
   const contentLineCount = useMemo(() => markdownContentLines.length, [markdownContentLines])
@@ -106,18 +97,15 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
           markdownContentLines={markdownContentLines}
           onFirstHeadingChange={onFirstHeadingChange}
           onLineMarkerPositionChanged={onLineMarkerPositionChanged}
-          onTaskCheckedChange={onTaskCheckedChange}
-          onTocChange={setTocAst}
           baseUrl={baseUrl}
-          onImageClick={onImageClick}
           newlinesAreBreaks={newlinesAreBreaks}
         />
       </div>
-      <div className={`${styles['markdown-document-side']} pt-4`}>
-        <ShowIf condition={!!tocAst && !disableToc}>
-          <WidthBasedTableOfContents tocAst={tocAst as TocAst} baseUrl={baseUrl} width={containerWidth} />
-        </ShowIf>
-      </div>
+      <DocumentTocSidebar
+        width={internalDocumentRenderPaneSize?.width ?? 0}
+        baseUrl={baseUrl}
+        disableToc={disableToc ?? false}
+      />
     </div>
   )
 }

@@ -4,19 +4,19 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ScrollState } from '../editor-page/synced-scroll/scroll-props'
 import type { BaseConfiguration } from './window-post-message-communicator/rendering-message'
 import { CommunicationMessageType, RendererType } from './window-post-message-communicator/rendering-message'
 import { setDarkMode } from '../../redux/dark-mode/methods'
-import type { ImageClickHandler } from '../markdown-renderer/markdown-extension/image/proxy-image-replacer'
-import { useImageClickHandler } from './hooks/use-image-click-handler'
 import { MarkdownDocument } from './markdown-document'
 import { countWords } from './word-counter'
 import { useRendererToEditorCommunicator } from '../editor-page/render-context/renderer-to-editor-communicator-context-provider'
 import { useRendererReceiveHandler } from './window-post-message-communicator/hooks/use-renderer-receive-handler'
 import { SlideshowMarkdownRenderer } from '../markdown-renderer/slideshow-markdown-renderer'
 import type { SlideOptions } from '../../redux/note-details/types/slide-show-options'
+import EventEmitter2 from 'eventemitter2'
+import { eventEmitterContext } from '../markdown-renderer/hooks/use-extension-event-emitter'
 
 /**
  * Wraps the markdown rendering in an iframe.
@@ -74,17 +74,6 @@ export const IframeMarkdownRenderer: React.FC = () => {
     }, [communicator])
   )
 
-  const onTaskCheckedChange = useCallback(
-    (lineInMarkdown: number, checked: boolean) => {
-      communicator.sendMessageToOtherSide({
-        type: CommunicationMessageType.ON_TASK_CHECKBOX_CHANGE,
-        checked,
-        lineInMarkdown
-      })
-    },
-    [communicator]
-  )
-
   const onFirstHeadingChange = useCallback(
     (firstHeading?: string) => {
       communicator.sendMessageToOtherSide({
@@ -115,8 +104,6 @@ export const IframeMarkdownRenderer: React.FC = () => {
     [communicator]
   )
 
-  const onImageClick: ImageClickHandler = useImageClickHandler(communicator)
-
   const onHeightChange = useCallback(
     (height: number) => {
       communicator.sendMessageToOtherSide({
@@ -127,51 +114,75 @@ export const IframeMarkdownRenderer: React.FC = () => {
     [communicator]
   )
 
-  if (!baseConfiguration) {
-    return (
-      <span>This is the render endpoint. If you can read this text then please check your HedgeDoc configuration.</span>
-    )
-  }
+  const renderer = useMemo(() => {
+    if (!baseConfiguration) {
+      return (
+        <span>
+          This is the render endpoint. If you can read this text then please check your HedgeDoc configuration.
+        </span>
+      )
+    }
 
-  switch (baseConfiguration.rendererType) {
-    case RendererType.DOCUMENT:
-      return (
-        <MarkdownDocument
-          additionalOuterContainerClasses={'vh-100 bg-light'}
-          markdownContentLines={markdownContentLines}
-          onTaskCheckedChange={onTaskCheckedChange}
-          onFirstHeadingChange={onFirstHeadingChange}
-          onMakeScrollSource={onMakeScrollSource}
-          scrollState={scrollState}
-          onScroll={onScroll}
-          baseUrl={baseConfiguration.baseUrl}
-          onImageClick={onImageClick}
-        />
-      )
-    case RendererType.SLIDESHOW:
-      return (
-        <SlideshowMarkdownRenderer
-          markdownContentLines={markdownContentLines}
-          baseUrl={baseConfiguration.baseUrl}
-          onFirstHeadingChange={onFirstHeadingChange}
-          onImageClick={onImageClick}
-          scrollState={scrollState}
-          slideOptions={slideOptions}
-        />
-      )
-    case RendererType.MOTD:
-    case RendererType.INTRO:
-      return (
-        <MarkdownDocument
-          additionalOuterContainerClasses={'vh-100 bg-light overflow-y-hidden'}
-          markdownContentLines={markdownContentLines}
-          baseUrl={baseConfiguration.baseUrl}
-          onImageClick={onImageClick}
-          disableToc={true}
-          onHeightChange={onHeightChange}
-        />
-      )
-    default:
-      return null
-  }
+    switch (baseConfiguration.rendererType) {
+      case RendererType.DOCUMENT:
+        return (
+          <MarkdownDocument
+            additionalOuterContainerClasses={'vh-100 bg-light'}
+            markdownContentLines={markdownContentLines}
+            onFirstHeadingChange={onFirstHeadingChange}
+            onMakeScrollSource={onMakeScrollSource}
+            scrollState={scrollState}
+            onScroll={onScroll}
+            baseUrl={baseConfiguration.baseUrl}
+            onHeightChange={onHeightChange}
+          />
+        )
+      case RendererType.SLIDESHOW:
+        return (
+          <SlideshowMarkdownRenderer
+            markdownContentLines={markdownContentLines}
+            baseUrl={baseConfiguration.baseUrl}
+            onFirstHeadingChange={onFirstHeadingChange}
+            scrollState={scrollState}
+            slideOptions={slideOptions}
+          />
+        )
+      case RendererType.MOTD:
+      case RendererType.INTRO:
+        return (
+          <MarkdownDocument
+            additionalOuterContainerClasses={'vh-100 bg-light overflow-y-hidden'}
+            markdownContentLines={markdownContentLines}
+            baseUrl={baseConfiguration.baseUrl}
+            disableToc={true}
+            onHeightChange={onHeightChange}
+          />
+        )
+      default:
+        return null
+    }
+  }, [
+    baseConfiguration,
+    markdownContentLines,
+    onFirstHeadingChange,
+    onHeightChange,
+    onMakeScrollSource,
+    onScroll,
+    scrollState,
+    slideOptions
+  ])
+
+  const extensionEventEmitter = useMemo(() => new EventEmitter2({ wildcard: true }), [])
+
+  useEffect(() => {
+    extensionEventEmitter.onAny((event, values) => {
+      communicator.sendMessageToOtherSide({
+        type: CommunicationMessageType.EXTENSION_EVENT,
+        eventName: typeof event === 'object' ? event.join('.') : event,
+        payload: values
+      })
+    })
+  }, [communicator, extensionEventEmitter])
+
+  return <eventEmitterContext.Provider value={extensionEventEmitter}>{renderer}</eventEmitterContext.Provider>
 }
