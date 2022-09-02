@@ -46,7 +46,7 @@ export class PlantumlMarkdownExtension extends MarkdownExtension {
       .orElseGet(() => this.plantumlError(markdownIt))
   }
 
-  public buildTagNameWhitelist(): string[] {
+  public buildTagNameAllowList(): string[] {
     return ['plantuml-not-configured']
   }
 

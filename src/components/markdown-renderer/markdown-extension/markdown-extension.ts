@@ -31,7 +31,7 @@ export abstract class MarkdownExtension {
     return []
   }
 
-  public buildTagNameWhitelist(): string[] {
+  public buildTagNameAllowList(): string[] {
     return []
   }
 

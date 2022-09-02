@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -28,7 +28,7 @@ export class GistMarkdownExtension extends MarkdownExtension {
     return [new CustomTagWithIdComponentReplacer(GistFrame, GistMarkdownExtension.tagName)]
   }
 
-  public buildTagNameWhitelist(): string[] {
+  public buildTagNameAllowList(): string[] {
     return [GistMarkdownExtension.tagName]
   }
 }

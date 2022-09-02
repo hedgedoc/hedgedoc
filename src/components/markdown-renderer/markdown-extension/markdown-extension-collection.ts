@@ -17,7 +17,7 @@ export class MarkdownExtensionCollection {
   private extensions: MarkdownExtension[]
 
   public constructor(additionalExtensions: MarkdownExtension[]) {
-    const tagWhiteLists = additionalExtensions.flatMap((extension) => extension.buildTagNameWhitelist())
+    const tagWhiteLists = additionalExtensions.flatMap((extension) => extension.buildTagNameAllowList())
 
     this.extensions = [...additionalExtensions, new SanitizerMarkdownExtension(tagWhiteLists)]
   }

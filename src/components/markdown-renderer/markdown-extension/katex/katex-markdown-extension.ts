@@ -33,7 +33,7 @@ export class KatexMarkdownExtension extends MarkdownExtension {
     return [new KatexReplacer()]
   }
 
-  public buildTagNameWhitelist(): string[] {
+  public buildTagNameAllowList(): string[] {
     return [KatexMarkdownExtension.tagName]
   }
 }

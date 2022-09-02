@@ -30,7 +30,7 @@ export class VimeoMarkdownExtension extends MarkdownExtension {
     return [new CustomTagWithIdComponentReplacer(VimeoFrame, VimeoMarkdownExtension.tagName)]
   }
 
-  public buildTagNameWhitelist(): string[] {
+  public buildTagNameAllowList(): string[] {
     return [VimeoMarkdownExtension.tagName]
   }
 

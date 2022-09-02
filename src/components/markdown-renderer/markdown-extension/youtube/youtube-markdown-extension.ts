@@ -30,7 +30,7 @@ export class YoutubeMarkdownExtension extends MarkdownExtension {
     return [new CustomTagWithIdComponentReplacer(YouTubeFrame, YoutubeMarkdownExtension.tagName)]
   }
 
-  public buildTagNameWhitelist(): string[] {
+  public buildTagNameAllowList(): string[] {
     return [YoutubeMarkdownExtension.tagName]
   }
 
