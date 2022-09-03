@@ -703,10 +703,10 @@ abbrev@1, abbrev@^1.0.0:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
-abcjs@6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/abcjs/-/abcjs-6.1.0.tgz#423d09359d29680912ff2f44da0a9b89920f943b"
-  integrity sha512-AE0a6leb3gcG7DIm3JUEYHoyfZzCkO2YcuWo2K+bGC1XD08IJwhnaPP6JDwpW/NtO3YayVAXx2kxq4J+zlDvcQ==
+abcjs@6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/abcjs/-/abcjs-6.1.1.tgz#ce0f70cccb12473b344c3e6ba52499ee7f438b29"
+  integrity sha512-OS+R0xGy8+BbHBYBuy5FTS5rawjgKcYjQHTIa+2pjjgXRelKLYyuFD1fzhEefrbskjQcvcAGh5zPYcUpyAlLzw==
 
 abstract-logging@^2.0.0:
   version "2.0.1"
