@@ -4,28 +4,35 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
   Param,
   Post,
+  Put,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
+import { TokenAuthGuard } from '../../../auth/token.strategy';
+import { NotInDBError } from '../../../errors/errors';
+import { GroupsService } from '../../../groups/groups.service';
 import { HistoryService } from '../../../history/history.service';
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
 import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
+import { NotePermissionsDto } from '../../../notes/note-permissions.dto';
 import { NoteDto } from '../../../notes/note.dto';
 import { Note } from '../../../notes/note.entity';
 import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
 import { NotesService } from '../../../notes/notes.service';
 import { Permission } from '../../../permissions/permissions.enum';
+import { PermissionsService } from '../../../permissions/permissions.service';
 import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
@@ -51,6 +58,8 @@ export class NotesController {
     private userService: UsersService,
     private mediaService: MediaService,
     private revisionsService: RevisionsService,
+    private permissionService: PermissionsService,
+    private groupService: GroupsService,
   ) {
     this.logger.setContext(NotesController.name);
   }
@@ -185,6 +194,101 @@ export class NotesController {
   ): Promise<RevisionDto> {
     return await this.revisionsService.toRevisionDto(
       await this.revisionsService.getRevision(note, revisionId),
+    );
+  }
+
+  @UseInterceptors(GetNoteInterceptor)
+  @Permissions(Permission.OWNER)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  async setUserPermission(
+    @RequestUser() user: User,
+    @RequestNote() note: Note,
+    @Param('userName') username: string,
+    @Body() canEdit: boolean,
+  ): Promise<NotePermissionsDto> {
+    const permissionUser = await this.userService.getUserByUsername(username);
+    const returnedNote = await this.permissionService.setUserPermission(
+      note,
+      permissionUser,
+      canEdit,
+    );
+    return await this.noteService.toNotePermissionsDto(returnedNote);
+  }
+
+  @UseInterceptors(GetNoteInterceptor)
+  @Permissions(Permission.OWNER)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @Delete(':noteIdOrAlias/metadata/permissions/users/:userName')
+  async removeUserPermission(
+    @RequestUser() user: User,
+    @RequestNote() note: Note,
+    @Param('userName') username: string,
+  ): Promise<NotePermissionsDto> {
+    try {
+      const permissionUser = await this.userService.getUserByUsername(username);
+      const returnedNote = await this.permissionService.removeUserPermission(
+        note,
+        permissionUser,
+      );
+      return await this.noteService.toNotePermissionsDto(returnedNote);
+    } catch (e) {
+      if (e instanceof NotInDBError) {
+        throw new BadRequestException(
+          "Can't remove user from permissions. User not known.",
+        );
+      }
+      throw e;
+    }
+  }
+
+  @UseInterceptors(GetNoteInterceptor)
+  @Permissions(Permission.OWNER)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @Put(':noteIdOrAlias/metadata/permissions/groups/:groupName')
+  async setGroupPermission(
+    @RequestUser() user: User,
+    @RequestNote() note: Note,
+    @Param('groupName') groupName: string,
+    @Body() canEdit: boolean,
+  ): Promise<NotePermissionsDto> {
+    const permissionGroup = await this.groupService.getGroupByName(groupName);
+    const returnedNote = await this.permissionService.setGroupPermission(
+      note,
+      permissionGroup,
+      canEdit,
+    );
+    return await this.noteService.toNotePermissionsDto(returnedNote);
+  }
+
+  @UseInterceptors(GetNoteInterceptor)
+  @Permissions(Permission.OWNER)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @Delete(':noteIdOrAlias/metadata/permissions/groups/:groupName')
+  async removeGroupPermission(
+    @RequestUser() user: User,
+    @RequestNote() note: Note,
+    @Param('groupName') groupName: string,
+  ): Promise<NotePermissionsDto> {
+    const permissionGroup = await this.groupService.getGroupByName(groupName);
+    const returnedNote = await this.permissionService.removeGroupPermission(
+      note,
+      permissionGroup,
+    );
+    return await this.noteService.toNotePermissionsDto(returnedNote);
+  }
+
+  @UseInterceptors(GetNoteInterceptor)
+  @Permissions(Permission.OWNER)
+  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @Put(':noteIdOrAlias/metadata/permissions/owner')
+  async changeOwner(
+    @RequestUser() user: User,
+    @RequestNote() note: Note,
+    @Body() newOwner: string,
+  ): Promise<NoteDto> {
+    const owner = await this.userService.getUserByUsername(newOwner);
+    return await this.noteService.toNoteDto(
+      await this.permissionService.changeOwner(note, owner),
     );
   }
 }
