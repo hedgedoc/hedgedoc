@@ -1985,7 +1985,7 @@ __metadata:
     eslint-plugin-node: 11.1.0
     eslint-plugin-prettier: 4.2.1
     eslint-plugin-promise: 6.0.1
-    eslint-plugin-testing-library: 5.6.0
+    eslint-plugin-testing-library: 5.6.1
     fast-deep-equal: 3.1.3
     firacode: 6.2.0
     flowchart.js: 1.17.1
@@ -7547,14 +7547,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-testing-library@npm:5.6.0":
-  version: 5.6.0
-  resolution: "eslint-plugin-testing-library@npm:5.6.0"
+"eslint-plugin-testing-library@npm:5.6.1":
+  version: 5.6.1
+  resolution: "eslint-plugin-testing-library@npm:5.6.1"
   dependencies:
     "@typescript-eslint/utils": ^5.13.0
   peerDependencies:
     eslint: ^7.5.0 || ^8.0.0
-  checksum: 52cd25709f782bd6ff7f1aed02995a7f8b1020abfa385922947d3fd03f057f954274480ddc4c264f14061f6c59827fa7ef4699f560ffb52bfe585fb4c93b0f16
+  checksum: bf081c6a44eece3ee56ff8b789785001ea15158b631f9982aed57b6b8113cf300cc8467b4956b38f303908727188b10e22da038d42cc3245a151a7d989a05c3c
   languageName: node
   linkType: hard
 
