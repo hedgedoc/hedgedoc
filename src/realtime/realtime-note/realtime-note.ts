@@ -3,6 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  encodeDocumentDeletedMessage,
+  encodeMetadataUpdatedMessage,
+} from '@hedgedoc/realtime';
 import { Logger } from '@nestjs/common';
 import { EventEmitter } from 'events';
 import TypedEventEmitter, { EventMap } from 'typed-emitter';
@@ -129,5 +133,30 @@ export class RealtimeNote extends (EventEmitter as TypedEventEmitterConstructor<
    */
   public getNote(): Note {
     return this.note;
+  }
+
+  /**
+   * Announce to all clients that the permissions of the note have been changed.
+   */
+  public announcePermissionChange(): void {
+    this.sendToAllClients(encodeMetadataUpdatedMessage());
+  }
+
+  /**
+   * Announce to all clients that the note has been deleted.
+   */
+  public announceNoteDeletion(): void {
+    this.sendToAllClients(encodeDocumentDeletedMessage());
+  }
+
+  /**
+   * Broadcasts the given content to all connected clients.
+   *
+   * @param {Uint8Array} content The binary message to broadcast
+   */
+  private sendToAllClients(content: Uint8Array): void {
+    this.getConnections().forEach((connection) => {
+      connection.send(content);
+    });
   }
 }
