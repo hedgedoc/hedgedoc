@@ -20,7 +20,7 @@ import { GroupsService } from '../groups/groups.service';
 import { HistoryEntry } from '../history/history-entry.entity';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
-import { RealtimeNoteStore } from '../realtime/realtime-note/realtime-note-store.service';
+import { RealtimeNoteStore } from '../realtime/realtime-note/realtime-note-store';
 import { RealtimeNoteService } from '../realtime/realtime-note/realtime-note.service';
 import { Revision } from '../revisions/revision.entity';
 import { RevisionsService } from '../revisions/revisions.service';

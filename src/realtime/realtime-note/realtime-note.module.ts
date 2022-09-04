@@ -11,7 +11,7 @@ import { PermissionsModule } from '../../permissions/permissions.module';
 import { RevisionsModule } from '../../revisions/revisions.module';
 import { SessionModule } from '../../session/session.module';
 import { UsersModule } from '../../users/users.module';
-import { RealtimeNoteStore } from './realtime-note-store.service';
+import { RealtimeNoteStore } from './realtime-note-store';
 import { RealtimeNoteService } from './realtime-note.service';
 
 @Module({
