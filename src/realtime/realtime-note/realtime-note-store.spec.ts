@@ -8,7 +8,7 @@ import { Mock } from 'ts-mockery';
 import { Note } from '../../notes/note.entity';
 import * as realtimeNoteModule from './realtime-note';
 import { RealtimeNote } from './realtime-note';
-import { RealtimeNoteStore } from './realtime-note-store.service';
+import { RealtimeNoteStore } from './realtime-note-store';
 import { mockRealtimeNote } from './test-utils/mock-realtime-note';
 import { WebsocketAwareness } from './websocket-awareness';
 import { WebsocketDoc } from './websocket-doc';

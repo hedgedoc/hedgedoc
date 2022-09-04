@@ -12,7 +12,7 @@ import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { Note } from '../../notes/note.entity';
 import { RevisionsService } from '../../revisions/revisions.service';
 import { RealtimeNote } from './realtime-note';
-import { RealtimeNoteStore } from './realtime-note-store.service';
+import { RealtimeNoteStore } from './realtime-note-store';
 
 @Injectable()
 export class RealtimeNoteService implements BeforeApplicationShutdown {

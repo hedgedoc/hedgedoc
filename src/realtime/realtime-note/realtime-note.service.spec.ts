@@ -12,7 +12,7 @@ import { Note } from '../../notes/note.entity';
 import { Revision } from '../../revisions/revision.entity';
 import { RevisionsService } from '../../revisions/revisions.service';
 import { RealtimeNote } from './realtime-note';
-import { RealtimeNoteStore } from './realtime-note-store.service';
+import { RealtimeNoteStore } from './realtime-note-store';
 import { RealtimeNoteService } from './realtime-note.service';
 import { mockAwareness } from './test-utils/mock-awareness';
 import { mockRealtimeNote } from './test-utils/mock-realtime-note';
