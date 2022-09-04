@@ -35,8 +35,8 @@ export class WebsocketConnection extends WebsocketTransporter {
       }
     }
     this.on('disconnected', () => {
-      awareness.destroy()
       awareness.off('update', updateCallback)
+      awareness.destroy()
     })
 
     this.on('ready', () => {
