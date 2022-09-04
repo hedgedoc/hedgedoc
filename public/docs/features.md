@@ -250,17 +250,18 @@ Note that not all servers allow embedding their content. See [our FAQ](https://d
 
 ### MathJax
 
-You can render *LaTeX* mathematical expressions using **MathJax**, as on [math.stackexchange.com](https://math.stackexchange.com/):
+You can render *LaTeX* mathematical expressions using [**MathJax**](https://www.mathjax.org/),
+as on [math.stackexchange.com](https://math.stackexchange.com/). Examples:
 
-The *Gamma function* satisfying $\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$ is via the Euler integral
-
+* The Euler's identity: $e^{i\pi} + 1 = 0$
+* The solution of $f(x)=ax^2+bx+c$ where $a \neq 0$ and $a, b, c \in R$ is
 $$
-x = {-b \pm \sqrt{b^2-4ac} \over 2a}.
+x = {-b \pm \sqrt{b^2-4ac} \over 2a}
 $$
-
-$$
-\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
-$$
+* The *Gamma function*: $\Gamma(n) = \begin{cases}
+  \displaystyle (n-1)!\quad\forall n\in\mathbb N\\
+  \displaystyle \int_0^\infty t^{n-1}e^{-t}dt\quad\forall n\in\mathbb R^*_+
+  \end{cases}$
 
 > More information about **LaTeX** mathematical expressions [here](https://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference).
 
