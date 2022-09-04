@@ -3,14 +3,22 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { registerAs } from '@nestjs/config';
+import { ConfigFactoryKeyHost, registerAs } from '@nestjs/config';
+import { ConfigFactory } from '@nestjs/config/dist/interfaces';
 
 import { NoteConfig } from '../note.config';
 
-export default registerAs(
-  'noteConfig',
-  (): NoteConfig => ({
+export function createDefaultMockNoteConfig(): NoteConfig {
+  return {
     maxDocumentLength: 100000,
     forbiddenNoteIds: ['forbiddenNoteId'],
-  }),
-);
+  };
+}
+
+export function registerNoteConfig(
+  noteConfig: NoteConfig,
+): ConfigFactory<NoteConfig> & ConfigFactoryKeyHost<NoteConfig> {
+  return registerAs('noteConfig', (): NoteConfig => noteConfig);
+}
+
+export default registerNoteConfig(createDefaultMockNoteConfig());
