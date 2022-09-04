@@ -34,6 +34,7 @@ import {
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
+import { RealtimeNoteModule } from '../realtime/realtime-note/realtime-note.module';
 import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
 import { Session } from '../users/session.entity';
@@ -109,6 +110,7 @@ describe('PermissionsService', () => {
           ],
         }),
         GroupsModule,
+        RealtimeNoteModule,
       ],
     })
       .overrideProvider(getRepositoryToken(User))

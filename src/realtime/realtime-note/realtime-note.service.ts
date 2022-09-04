@@ -47,7 +47,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
 
   /**
    * Creates or reuses a {@link RealtimeNote} that is handling the real time editing of the {@link Note} which is identified by the given note id.
-   * @param note The for which a {@link RealtimeNote realtime note} should be retrieved.
+   * @param note The {@link Note} for which a {@link RealtimeNote realtime note} should be retrieved.
    * @throws NotInDBError if note doesn't exist or has no revisions.
    * @return A {@link RealtimeNote} that is linked to the given note.
    */
