@@ -719,9 +719,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hedgedoc/realtime@npm:0.2.0":
-  version: 0.2.0
-  resolution: "@hedgedoc/realtime@npm:0.2.0"
+"@hedgedoc/realtime@npm:0.3.0":
+  version: 0.3.0
+  resolution: "@hedgedoc/realtime@npm:0.3.0"
   dependencies:
     isomorphic-ws: ^5.0.0
     lib0: ^0.2.51
@@ -729,7 +729,7 @@ __metadata:
     ws: ^8.0.0
     y-protocols: ^1.0.0
     yjs: ^13.0.0
-  checksum: aae52554c3e37055680a090543e65d143cbcf0609e4cb762f2e60c5b6c8e88637a4b8c458ae26ab910f8e49b42177fd0c6c2e50268e392cbf6a396cbe3cd8769
+  checksum: 5feff1d20d6d68514ba9061e1b37148e73262f5aa577f79548a7d4fa52240017eba068c933a4b513701a42e9181ef22ccb5d9a71432cd2234aa3a5734a7b4126
   languageName: node
   linkType: hard
 
@@ -5370,7 +5370,7 @@ __metadata:
   resolution: "hedgedoc@workspace:."
   dependencies:
     "@azure/storage-blob": 12.11.0
-    "@hedgedoc/realtime": 0.2.0
+    "@hedgedoc/realtime": 0.3.0
     "@mrdrogdrog/optional": 0.2.0
     "@nestjs/cli": 9.1.1
     "@nestjs/common": 9.0.11
