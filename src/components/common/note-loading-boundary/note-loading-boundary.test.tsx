@@ -17,6 +17,13 @@ import * as CommonErrorPageModule from '../../error-pages/common-error-page'
 import * as LoadingScreenModule from '../../../components/application-loader/loading-screen/loading-screen'
 import * as CreateNonExistingNoteHintModule from './create-non-existing-note-hint'
 
+jest.mock('../../../hooks/common/use-single-string-url-parameter')
+jest.mock('../../../api/notes')
+jest.mock('../../../redux/note-details/methods')
+jest.mock('../../error-pages/common-error-page')
+jest.mock('../../../components/application-loader/loading-screen/loading-screen')
+jest.mock('./create-non-existing-note-hint')
+
 describe('Note loading boundary', () => {
   const mockedNoteId = 'mockedNoteId'
 

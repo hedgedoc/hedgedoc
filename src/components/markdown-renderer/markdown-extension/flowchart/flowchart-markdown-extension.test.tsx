@@ -12,6 +12,8 @@ import { FlowchartMarkdownExtension } from './flowchart-markdown-extension'
 import * as Flowchart from '../flowchart/flowchart'
 import type { CodeProps } from '../../replace-components/code-block-component-replacer'
 
+jest.mock('../flowchart/flowchart')
+
 describe('Flowchart markdown extensions', () => {
   beforeAll(async () => {
     jest.spyOn(Flowchart, 'FlowChart').mockImplementation((({ code }) => {

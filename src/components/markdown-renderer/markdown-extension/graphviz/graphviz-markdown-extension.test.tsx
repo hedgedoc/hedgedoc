@@ -12,6 +12,8 @@ import { GraphvizMarkdownExtension } from './graphviz-markdown-extension'
 import * as GraphvizFrameModule from '../graphviz/graphviz-frame'
 import type { CodeProps } from '../../replace-components/code-block-component-replacer'
 
+jest.mock('../graphviz/graphviz-frame')
+
 describe('PlantUML markdown extensions', () => {
   beforeAll(async () => {
     jest.spyOn(GraphvizFrameModule, 'GraphvizFrame').mockImplementation((({ code }) => {

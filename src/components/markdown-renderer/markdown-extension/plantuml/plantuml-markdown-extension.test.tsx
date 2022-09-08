@@ -13,6 +13,8 @@ import * as reduxModule from '../../../../redux'
 import { Mock } from 'ts-mockery'
 import type { ApplicationState } from '../../../../redux/application-state'
 
+jest.mock('../../../../redux')
+
 describe('PlantUML markdown extensions', () => {
   beforeAll(async () => {
     await mockI18n()

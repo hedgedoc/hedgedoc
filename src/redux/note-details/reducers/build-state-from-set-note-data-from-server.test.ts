@@ -12,6 +12,8 @@ import { DateTime } from 'luxon'
 import { initialSlideOptions } from '../initial-state'
 import type { Note } from '../../../api/notes/types'
 
+jest.mock('../build-state-from-updated-markdown-content')
+
 describe('build state from set note data from server', () => {
   const buildStateFromUpdatedMarkdownContentMock = jest.spyOn(
     buildStateFromUpdatedMarkdownContentModule,

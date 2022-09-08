@@ -10,6 +10,8 @@ import { Mock } from 'ts-mockery'
 import type { NoteDetails } from '../types/note-details'
 import { buildStateFromTaskListUpdate } from './build-state-from-task-list-update'
 
+jest.mock('../build-state-from-updated-markdown-content')
+
 describe('build state from task list update', () => {
   const buildStateFromUpdatedMarkdownContentLinesMock = jest.spyOn(
     buildStateFromUpdatedMarkdownContentLinesModule,

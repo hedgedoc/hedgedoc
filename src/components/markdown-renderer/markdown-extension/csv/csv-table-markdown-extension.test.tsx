@@ -12,6 +12,8 @@ import { render } from '@testing-library/react'
 import { TestMarkdownRenderer } from '../../test-utils/test-markdown-renderer'
 import { CsvTableMarkdownExtension } from './csv-table-markdown-extension'
 
+jest.mock('../csv/csv-table')
+
 describe('CSV Table Markdown Extension', () => {
   beforeAll(async () => {
     jest.spyOn(CsvTableModule, 'CsvTable').mockImplementation((({ code }) => {

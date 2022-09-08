@@ -12,6 +12,8 @@ import type { CodeProps } from '../../replace-components/code-block-component-re
 import { AbcjsMarkdownExtension } from './abcjs-markdown-extension'
 import { mockI18n } from '../../test-utils/mock-i18n'
 
+jest.mock('./abc-frame')
+
 describe('AbcJs Markdown Extension', () => {
   beforeAll(async () => {
     jest.spyOn(AbcFrameModule, 'AbcFrame').mockImplementation((({ code }) => {

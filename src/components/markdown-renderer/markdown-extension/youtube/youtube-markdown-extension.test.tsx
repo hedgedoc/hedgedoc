@@ -11,20 +11,10 @@ import * as YouTubeFrameModule from './youtube-frame'
 import React from 'react'
 import type { IdProps } from '../../replace-components/custom-tag-with-id-component-replacer'
 import { mockI18n } from '../../test-utils/mock-i18n'
-import MarkdownIt from 'markdown-it'
-import * as replaceLegacyYoutubeShortCodeMarkdownItPluginModule from './replace-legacy-youtube-short-code'
-import * as replaceYouTubeLinkMarkdownItPluginModule from './replace-youtube-link'
+
+jest.mock('./youtube-frame')
 
 describe('youtube markdown extension', () => {
-  const replaceYouTubeLinkMarkdownItPluginSpy = jest.spyOn(
-    replaceYouTubeLinkMarkdownItPluginModule,
-    'replaceYouTubeLinkMarkdownItPlugin'
-  )
-  const replaceLegacyYoutubeShortCodeMarkdownItPluginSpy = jest.spyOn(
-    replaceLegacyYoutubeShortCodeMarkdownItPluginModule,
-    'replaceLegacyYoutubeShortCodeMarkdownItPlugin'
-  )
-
   beforeAll(async () => {
     jest
       .spyOn(YouTubeFrameModule, 'YouTubeFrame')
@@ -46,8 +36,6 @@ describe('youtube markdown extension', () => {
         content={'https://www.youtube.com/watch?v=XDnhKh5V5XQ'}
       />
     )
-    expect(replaceYouTubeLinkMarkdownItPluginSpy).toHaveBeenCalledWith(expect.any(MarkdownIt))
-    expect(replaceLegacyYoutubeShortCodeMarkdownItPluginSpy).toHaveBeenCalledWith(expect.any(MarkdownIt))
     expect(view.container).toMatchSnapshot()
   })
 
@@ -55,8 +43,6 @@ describe('youtube markdown extension', () => {
     const view = render(
       <TestMarkdownRenderer extensions={[new YoutubeMarkdownExtension()]} content={'{%youtube XDnhKh5V5XQ %}'} />
     )
-    expect(replaceYouTubeLinkMarkdownItPluginSpy).toHaveBeenCalledWith(expect.any(MarkdownIt))
-    expect(replaceLegacyYoutubeShortCodeMarkdownItPluginSpy).toHaveBeenCalledWith(expect.any(MarkdownIt))
     expect(view.container).toMatchSnapshot()
   })
 
@@ -64,8 +50,6 @@ describe('youtube markdown extension', () => {
     const view = render(
       <TestMarkdownRenderer extensions={[new YoutubeMarkdownExtension()]} content={'{%youtube a %}'} />
     )
-    expect(replaceYouTubeLinkMarkdownItPluginSpy).toHaveBeenCalledWith(expect.any(MarkdownIt))
-    expect(replaceLegacyYoutubeShortCodeMarkdownItPluginSpy).toHaveBeenCalledWith(expect.any(MarkdownIt))
     expect(view.container).toMatchSnapshot()
   })
 })

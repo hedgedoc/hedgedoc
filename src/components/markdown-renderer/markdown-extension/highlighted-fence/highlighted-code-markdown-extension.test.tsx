@@ -12,6 +12,8 @@ import * as HighlightedCodeModule from './highlighted-code'
 import { mockI18n } from '../../test-utils/mock-i18n'
 import { HighlightedCodeMarkdownExtension } from './highlighted-code-markdown-extension'
 
+jest.mock('./highlighted-code')
+
 describe('Highlighted code markdown extension', () => {
   describe('renders', () => {
     beforeAll(async () => {

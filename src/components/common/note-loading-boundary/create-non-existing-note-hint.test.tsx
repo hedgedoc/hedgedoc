@@ -13,6 +13,9 @@ import type { Note, NoteMetadata } from '../../../api/notes/types'
 import { Mock } from 'ts-mockery'
 import { waitForOtherPromisesToFinish } from '../../../utils/wait-for-other-promises-to-finish'
 
+jest.mock('../../../api/notes')
+jest.mock('../../../hooks/common/use-single-string-url-parameter')
+
 describe('create non existing note hint', () => {
   const mockedNoteId = 'mockedNoteId'
 

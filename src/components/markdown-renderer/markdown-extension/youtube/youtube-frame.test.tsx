@@ -9,6 +9,8 @@ import React from 'react'
 import type { ClickShieldProps } from '../../replace-components/click-shield/click-shield'
 import * as ClickShieldModule from '../../replace-components/click-shield/click-shield'
 
+jest.mock('../../replace-components/click-shield/click-shield')
+
 describe('YoutubeFrame', () => {
   beforeEach(() => {
     jest.spyOn(ClickShieldModule, 'ClickShield').mockImplementation((({ children }) => {

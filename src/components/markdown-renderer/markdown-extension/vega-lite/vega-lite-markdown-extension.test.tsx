@@ -12,6 +12,8 @@ import { VegaLiteMarkdownExtension } from './vega-lite-markdown-extension'
 import * as VegaLiteChartModule from '../vega-lite/vega-lite-chart'
 import type { CodeProps } from '../../replace-components/code-block-component-replacer'
 
+jest.mock('../vega-lite/vega-lite-chart')
+
 describe('Vega-Lite markdown extensions', () => {
   beforeAll(async () => {
     jest.spyOn(VegaLiteChartModule, 'VegaLiteChart').mockImplementation((({ code }) => {
