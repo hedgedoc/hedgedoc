@@ -56,14 +56,6 @@
       ]
     },
     {
-      "groupName": "markmap",
-      "matchPackagePatterns": [
-        "markmap-view",
-        "markmap-lib",
-        "markmap-common"
-      ]
-    },
-    {
       "groupName": "vega",
       "packagePatterns": [
         "vega",

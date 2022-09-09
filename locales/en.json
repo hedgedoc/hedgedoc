@@ -12,10 +12,6 @@
     "highlightCode": {
       "copyCode": "Copy code to clipboard"
     },
-    "markmap": {
-      "locked": "Mouse input locked",
-      "unlocked": "Mouse input unlocked"
-    },
     "plantuml": {
       "notConfigured": "PlantUML plugin is enabled but not properly configured."
     },

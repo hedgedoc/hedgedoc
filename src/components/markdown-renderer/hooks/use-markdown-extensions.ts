@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,8 +8,6 @@ import type { MutableRefObject } from 'react'
 import { useMemo, useRef } from 'react'
 import { TableOfContentsMarkdownExtension } from '../markdown-extension/table-of-contents-markdown-extension'
 import { VegaLiteMarkdownExtension } from '../markdown-extension/vega-lite/vega-lite-markdown-extension'
-//TODO: fix dependency issues in markmap
-//import { MarkmapMarkdownExtension } from '../markdown-extension/markmap/markmap-markdown-extension'
 import { LinemarkerMarkdownExtension } from '../markdown-extension/linemarker/linemarker-markdown-extension'
 import { GistMarkdownExtension } from '../markdown-extension/gist/gist-markdown-extension'
 import { YoutubeMarkdownExtension } from '../markdown-extension/youtube/youtube-markdown-extension'
@@ -70,7 +68,6 @@ export const useMarkdownExtensions = (
       new TableOfContentsMarkdownExtension((ast?: TocAst) => (toc.current = ast)),
       ...additionalExtensions,
       new VegaLiteMarkdownExtension(),
-      // new MarkmapMarkdownExtension(),
       new LinemarkerMarkdownExtension(
         currentLineMarkers ? (lineMarkers) => (currentLineMarkers.current = lineMarkers) : undefined
       ),

@@ -9,14 +9,6 @@ describe('Diagram codeblock ', () => {
     cy.visitTestNote()
   })
 
-  /*
-   TODO: Readd test after fixing https://github.com/hedgedoc/react-client/issues/1709
-   it('renders markmap', () => {
-   cy.setCodemirrorContent('```markmap\n- pro\n- contra\n```')
-   cy.getMarkdownBody().findByCypressId('markmap').children().should('be.visible')
-   })
-   */
-
   it('renders mermaid', () => {
     cy.setCodemirrorContent('```mermaid\ngraph TD;\n    A-->B;\n```')
     cy.getMarkdownBody().findByCypressId('mermaid-frame').children().should('be.visible')
