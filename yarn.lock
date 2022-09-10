@@ -1967,7 +1967,7 @@ __metadata:
     "@types/markdown-it-plantuml": 1.4.1
     "@types/mermaid": 8.2.9
     "@types/node": 18.0.0
-    "@types/react": 18.0.18
+    "@types/react": 18.0.19
     "@types/react-bootstrap-typeahead": 5.1.8
     "@types/react-dom": 18.0.6
     "@types/sass": 1.43.1
@@ -3907,14 +3907,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.0.18":
-  version: 18.0.18
-  resolution: "@types/react@npm:18.0.18"
+"@types/react@npm:18.0.19":
+  version: 18.0.19
+  resolution: "@types/react@npm:18.0.19"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 6d72d35ab3eecf382a5e0f225923f5a2c753045fce02e4e29713f36c99a24f0f770666a49dde96167f37c86271f93339d1b7e2b8969d011b137a9ebd24ee6806
+  checksum: 7dc048f9a6a38176c4c64ecf7f4c24c732df118402d7f34a4ff1702984c06f040fae1457b1b98b7f447ca2a3392dea7d027a05782dfe1b350475606f82ce6d63
   languageName: node
   linkType: hard
 
