@@ -9,6 +9,13 @@
   ],
   "packageRules": [
     {
+      "groupName": "d3-graphviz",
+      "packagePatterns" : [
+        "d3-graphviz",
+        "@hpcc-js/wasm"
+      ]
+    },
+    {
       "groupName": "linters",
       "extends": "packages:linters"
     },
