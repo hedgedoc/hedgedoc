@@ -2034,7 +2034,7 @@ __metadata:
     redux: 4.2.0
     reveal.js: 4.3.1
     sanitize-filename: 1.6.3
-    sass: 1.54.8
+    sass: 1.54.9
     sharp: 0.30.7
     tlds: 1.231.0
     ts-loader: 9.3.1
@@ -12006,16 +12006,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:1.54.8":
-  version: 1.54.8
-  resolution: "sass@npm:1.54.8"
+"sass@npm:1.54.9":
+  version: 1.54.9
+  resolution: "sass@npm:1.54.9"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 72893b2dc6284a6194fc560a578da57ab0082130ee558a96bcb9893cc7b517b836dac6e17b3a52b040975e70b4cdefb1268907df955a706b5bf70e3860afcfba
+  checksum: 90182b566072b48e2263c5a87229ab85164e13b71b24847ba76a8e68eb952cb69a7dcef815f4ccc0189dd2d0c254311acff6972166603338d33bbc96f6d500c6
   languageName: node
   linkType: hard
 
