@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,7 @@ import { useApplicationState } from '../../../hooks/common/use-application-state
 import { useTranslation } from 'react-i18next'
 import { Typeahead } from 'react-bootstrap-typeahead'
 import { useHistoryToolbarState } from './toolbar-context/use-history-toolbar-state'
+import type { Option } from 'react-bootstrap-typeahead/types/types'
 
 /**
  * Renders an input field that filters history entries by selected tags.
@@ -28,10 +29,10 @@ export const TagSelectionInput: React.FC = () => {
   }, [historyEntries])
 
   const onChange = useCallback(
-    (selectedTags: string[]) => {
+    (selectedTags: Option[]) => {
       setHistoryToolbarState((state) => ({
         ...state,
-        selectedTags
+        selectedTags: selectedTags as string[]
       }))
     },
     [setHistoryToolbarState]
