@@ -146,7 +146,7 @@ describe('Media', () => {
       .expect(201);
 
     // try to delete upload with second user
-    await agent2.delete('/api/private/media/' + filename).expect(401);
+    await agent2.delete('/api/private/media/' + filename).expect(403);
 
     // delete upload for real
     await agent.delete('/api/private/media/' + filename).expect(204);
