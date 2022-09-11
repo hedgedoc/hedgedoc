@@ -53,7 +53,7 @@ export class TokensController {
     @Body() createDto: AuthTokenCreateDto,
     @RequestUser() user: User,
   ): Promise<AuthTokenWithSecretDto> {
-    return await this.authService.createTokenForUser(
+    return await this.authService.addToken(
       user,
       createDto.label,
       createDto.validUntil,

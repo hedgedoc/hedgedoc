@@ -48,16 +48,16 @@ export class AuthToken {
     keyId: string,
     user: User,
     label: string,
-    accessToken: string,
+    tokenString: string,
     validUntil: Date,
   ): Omit<AuthToken, 'id' | 'createdAt'> {
-    const newToken = new AuthToken();
-    newToken.keyId = keyId;
-    newToken.user = Promise.resolve(user);
-    newToken.label = label;
-    newToken.accessTokenHash = accessToken;
-    newToken.validUntil = validUntil;
-    newToken.lastUsedAt = null;
-    return newToken;
+    const token = new AuthToken();
+    token.keyId = keyId;
+    token.user = Promise.resolve(user);
+    token.label = label;
+    token.accessTokenHash = tokenString;
+    token.validUntil = validUntil;
+    token.lastUsedAt = null;
+    return token;
   }
 }

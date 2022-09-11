@@ -343,7 +343,7 @@ export class TestSetupBuilder {
       // create auth tokens
       this.testSetup.authTokens = await Promise.all(
         this.testSetup.users.map(async (user) => {
-          return await this.testSetup.authService.createTokenForUser(
+          return await this.testSetup.authService.addToken(
             user,
             'test',
             new Date().getTime() + 60 * 60 * 1000,
