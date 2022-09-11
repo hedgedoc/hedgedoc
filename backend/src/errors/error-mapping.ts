@@ -38,7 +38,7 @@ const mapOfHedgeDocErrorsToHttpErrors: Map<string, HttpExceptionConstructor> =
     ['ClientError', (object): HttpException => new BadRequestException(object)],
     [
       'PermissionError',
-      (object): HttpException => new UnauthorizedException(object),
+      (object): HttpException => new ForbiddenException(object),
     ],
     [
       'TokenNotValidError',
