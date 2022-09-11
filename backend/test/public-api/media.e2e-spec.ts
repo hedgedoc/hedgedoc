@@ -8,19 +8,15 @@ import { join } from 'path';
 import request from 'supertest';
 
 import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
-import { Note } from '../../src/notes/note.entity';
-import { User } from '../../src/users/user.entity';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 import { ensureDeleted } from '../utils';
 
 describe('Media', () => {
   let testSetup: TestSetup;
   let uploadPath: string;
-  let testNote: Note;
-  let user: User;
 
   beforeAll(async () => {
-    testSetup = await TestSetupBuilder.create().withMockAuth().build();
+    testSetup = await TestSetupBuilder.create().withUsers().build();
 
     uploadPath =
       testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
@@ -34,13 +30,6 @@ describe('Media', () => {
     const logger = await testSetup.app.resolve(ConsoleLoggerService);
     logger.log('Switching logger', 'AppBootstrap');
     testSetup.app.useLogger(logger);
-
-    user = await testSetup.userService.createUser('hardcoded', 'Testy');
-    testNote = await testSetup.notesService.createNote(
-      'test content',
-      null,
-      'test_upload_media',
-    );
   });
 
   afterAll(async () => {
@@ -54,8 +43,9 @@ describe('Media', () => {
     it('works', async () => {
       const uploadResponse = await request(testSetup.app.getHttpServer())
         .post('/api/v2/media')
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .attach('file', 'test/public-api/fixtures/test.png')
-        .set('HedgeDoc-Note', 'test_upload_media')
+        .set('HedgeDoc-Note', 'testAlias1')
         .expect('Content-Type', /json/)
         .expect(201);
       const path: string = uploadResponse.body.url;
@@ -76,14 +66,16 @@ describe('Media', () => {
       it('MIME type not supported', async () => {
         await request(testSetup.app.getHttpServer())
           .post('/api/v2/media')
+          .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
           .attach('file', 'test/public-api/fixtures/test.zip')
-          .set('HedgeDoc-Note', 'test_upload_media')
+          .set('HedgeDoc-Note', 'testAlias1')
           .expect(400);
         await expect(fs.access(uploadPath)).rejects.toBeDefined();
       });
       it('note does not exist', async () => {
         await request(testSetup.app.getHttpServer())
           .post('/api/v2/media')
+          .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
           .attach('file', 'test/public-api/fixtures/test.zip')
           .set('HedgeDoc-Note', 'i_dont_exist')
           .expect(404);
@@ -95,8 +87,9 @@ describe('Media', () => {
         });
         await request(testSetup.app.getHttpServer())
           .post('/api/v2/media')
+          .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
           .attach('file', 'test/public-api/fixtures/test.png')
-          .set('HedgeDoc-Note', 'test_upload_media')
+          .set('HedgeDoc-Note', 'testAlias1')
           .expect('Content-Type', /json/)
           .expect(500);
       });
@@ -106,16 +99,32 @@ describe('Media', () => {
     });
   });
 
-  it('DELETE /media/{filename}', async () => {
-    const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-    const upload = await testSetup.mediaService.saveFile(
-      testImage,
-      user,
-      testNote,
-    );
-    const filename = upload.fileUrl.split('/').pop() || '';
-    await request(testSetup.app.getHttpServer())
-      .delete('/api/v2/media/' + filename)
-      .expect(204);
+  describe('DELETE /media/{filename}', () => {
+    it('successfully deletes an uploaded file', async () => {
+      const testImage = await fs.readFile('test/public-api/fixtures/test.png');
+      const upload = await testSetup.mediaService.saveFile(
+        testImage,
+        testSetup.users[0],
+        testSetup.ownedNotes[0],
+      );
+      const filename = upload.fileUrl.split('/').pop() || '';
+      await request(testSetup.app.getHttpServer())
+        .delete('/api/v2/media/' + filename)
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+        .expect(204);
+    });
+    it('returns an error if the user does not own the file', async () => {
+      const testImage = await fs.readFile('test/public-api/fixtures/test.png');
+      const upload = await testSetup.mediaService.saveFile(
+        testImage,
+        testSetup.users[0],
+        testSetup.ownedNotes[0],
+      );
+      const filename = upload.fileUrl.split('/').pop() || '';
+      await request(testSetup.app.getHttpServer())
+        .delete('/api/v2/media/' + filename)
+        .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
+        .expect(403);
+    });
   });
 });
