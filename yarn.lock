@@ -5304,10 +5304,10 @@ he@1.2.0, he@^1.2.0:
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
-helmet@^4.5.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/helmet/-/helmet-4.6.0.tgz#579971196ba93c5978eb019e4e8ec0e50076b4df"
-  integrity sha512-HVqALKZlR95ROkrnesdhbbZJFi/rIVSoNq6f3jA/9u6MIbTsPh3xZwihjeI5+DO/2sOV6HMHooXcEOuwskHpTg==
+helmet@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/helmet/-/helmet-6.0.0.tgz#8e183820ddccd7729a206ad73c577b264f495595"
+  integrity sha512-FO9RpR1wNJepH/GbLPQVtkE2eESglXL641p7SdyoT4LngHFJcZheHMoyUcjCZF4qpuMMO1u5q6RK0l9Ux8JBcg==
 
 hexoid@1.0.0:
   version "1.0.0"
