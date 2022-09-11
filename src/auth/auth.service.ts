@@ -33,39 +33,29 @@ export class AuthService {
     this.logger.setContext(AuthService.name);
   }
 
-  async validateToken(token: string): Promise<User> {
-    const [keyId, secret] = token.split('.');
+  async validateToken(tokenString: string): Promise<User> {
+    const [keyId, secret] = tokenString.split('.');
     if (!secret) {
       throw new TokenNotValidError('Invalid AuthToken format');
     }
     if (secret.length != 86) {
       // We always expect 86 characters, as the secret is generated with 64 bytes
       // and then converted to a base64url string
-      throw new TokenNotValidError(`AuthToken '${token}' has incorrect length`);
+      throw new TokenNotValidError(
+        `AuthToken '${tokenString}' has incorrect length`,
+      );
     }
-    const accessToken = await this.getAuthTokenAndValidate(keyId, secret);
+    const token = await this.getAuthToken(keyId);
+    this.checkToken(secret, token);
     await this.setLastUsedToken(keyId);
-    return await this.usersService.getUserByUsername(
-      (
-        await accessToken.user
-      ).username,
-    );
+    return await token.user;
   }
 
-  async createTokenForUser(
+  createToken(
     user: User,
     identifier: string,
     validUntil: TimestampMillis | undefined,
-  ): Promise<AuthTokenWithSecretDto> {
-    user.authTokens = this.getTokensByUser(user);
-
-    if ((await user.authTokens).length >= 200) {
-      // This is a very high ceiling unlikely to hinder legitimate usage,
-      // but should prevent possible attack vectors
-      throw new TooManyTokensError(
-        `User '${user.username}' has already 200 tokens and can't have anymore`,
-      );
-    }
+  ): [Omit<AuthToken, 'id' | 'createdAt'>, string] {
     const secret = bufferToBase64Url(randomBytes(64));
     const keyId = bufferToBase64Url(randomBytes(8));
     // More about the choice of SHA-512 in the dev docs
@@ -94,39 +84,60 @@ export class AuthService {
         new Date(validUntil),
       );
     }
+    return [token, secret];
+  }
+
+  async addToken(
+    user: User,
+    identifier: string,
+    validUntil: TimestampMillis | undefined,
+  ): Promise<AuthTokenWithSecretDto> {
+    user.authTokens = this.getTokensByUser(user);
+
+    if ((await user.authTokens).length >= 200) {
+      // This is a very high ceiling unlikely to hinder legitimate usage,
+      // but should prevent possible attack vectors
+      throw new TooManyTokensError(
+        `User '${user.username}' has already 200 tokens and can't have anymore`,
+      );
+    }
+    const [token, secret] = this.createToken(user, identifier, validUntil);
     const createdToken = (await this.authTokenRepository.save(
       token,
     )) as AuthToken;
-    return this.toAuthTokenWithSecretDto(createdToken, `${keyId}.${secret}`);
+    return this.toAuthTokenWithSecretDto(
+      createdToken,
+      `${createdToken.keyId}.${secret}`,
+    );
   }
 
   async setLastUsedToken(keyId: string): Promise<void> {
-    const accessToken = await this.authTokenRepository.findOne({
+    const token = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
     });
-    if (accessToken === null) {
+    if (token === null) {
       throw new NotInDBError(`AuthToken for key '${keyId}' not found`);
     }
-    accessToken.lastUsedAt = new Date();
-    await this.authTokenRepository.save(accessToken);
+    token.lastUsedAt = new Date();
+    await this.authTokenRepository.save(token);
   }
 
-  async getAuthTokenAndValidate(
-    keyId: string,
-    token: string,
-  ): Promise<AuthToken> {
-    const accessToken = await this.authTokenRepository.findOne({
+  async getAuthToken(keyId: string): Promise<AuthToken> {
+    const token = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
       relations: ['user'],
     });
-    if (accessToken === null) {
-      throw new NotInDBError(`AuthToken '${token}' not found`);
+    if (token === null) {
+      throw new NotInDBError(`AuthToken '${keyId}' not found`);
     }
-    // Hash the user-provided token
+    return token;
+  }
+
+  checkToken(secret: string, token: AuthToken): void {
     const userHash = Buffer.from(
-      crypto.createHash('sha512').update(token).digest('hex'),
+      crypto.createHash('sha512').update(secret).digest('hex'),
     );
-    const dbHash = Buffer.from(accessToken.accessTokenHash);
+    const dbHash = Buffer.from(token.accessTokenHash);
     if (
       // Normally, both hashes have the same length, as they are both SHA512
       // This is only defense-in-depth, as timingSafeEqual throws if the buffers are not of the same length
@@ -134,18 +145,18 @@ export class AuthService {
       !crypto.timingSafeEqual(userHash, dbHash)
     ) {
       // hashes are not the same
-      throw new TokenNotValidError(`AuthToken '${token}' is not valid.`);
-    }
-    if (
-      accessToken.validUntil &&
-      accessToken.validUntil.getTime() < new Date().getTime()
-    ) {
-      // tokens validUntil Date lies in the past
       throw new TokenNotValidError(
-        `AuthToken '${token}' is not valid since ${accessToken.validUntil.toISOString()}.`,
+        `Secret does not match Token ${token.label}.`,
       );
     }
-    return accessToken;
+    if (token.validUntil && token.validUntil.getTime() < new Date().getTime()) {
+      // tokens validUntil Date lies in the past
+      throw new TokenNotValidError(
+        `AuthToken '${
+          token.label
+        }' is not valid since ${token.validUntil.toISOString()}.`,
+      );
+    }
   }
 
   async getTokensByUser(user: User): Promise<AuthToken[]> {

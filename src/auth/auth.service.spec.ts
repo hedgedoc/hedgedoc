@@ -17,7 +17,6 @@ import { LoggerModule } from '../logger/logger.module';
 import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
-import { hashPassword } from '../utils/password';
 import { AuthToken } from './auth-token.entity';
 import { AuthService } from './auth.service';
 
@@ -96,10 +95,7 @@ describe('AuthService', () => {
         user: Promise.resolve(user),
         accessTokenHash: accessTokenHash,
       });
-      const authTokenFromCall = await service.getAuthTokenAndValidate(
-        authToken.keyId,
-        token,
-      );
+      const authTokenFromCall = await service.getAuthToken(authToken.keyId);
       expect(authTokenFromCall).toEqual({
         ...authToken,
         user: Promise.resolve(user),
@@ -109,32 +105,39 @@ describe('AuthService', () => {
     describe('fails:', () => {
       it('AuthToken could not be found', async () => {
         jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(null);
-        await expect(
-          service.getAuthTokenAndValidate(authToken.keyId, token),
-        ).rejects.toThrow(NotInDBError);
+        await expect(service.getAuthToken(authToken.keyId)).rejects.toThrow(
+          NotInDBError,
+        );
       });
-      it('AuthToken has wrong hash', async () => {
-        jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
-          ...authToken,
-          user: Promise.resolve(user),
-          accessTokenHash: 'the wrong hash',
-        });
-        await expect(
-          service.getAuthTokenAndValidate(authToken.keyId, token),
-        ).rejects.toThrow(TokenNotValidError);
-      });
-      it('AuthToken has wrong validUntil Date', async () => {
-        const accessTokenHash = await hashPassword(token);
-        jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
-          ...authToken,
-          user: Promise.resolve(user),
-          accessTokenHash: accessTokenHash,
-          validUntil: new Date(1549312452000),
-        });
-        await expect(
-          service.getAuthTokenAndValidate(authToken.keyId, token),
-        ).rejects.toThrow(TokenNotValidError);
-      });
+    });
+  });
+  describe('checkToken', () => {
+    it('works', () => {
+      const [accessToken, secret] = service.createToken(
+        user,
+        'TestToken',
+        undefined,
+      );
+
+      expect(() =>
+        service.checkToken(secret, accessToken as AuthToken),
+      ).not.toThrow();
+    });
+    it('AuthToken has wrong hash', () => {
+      const [accessToken] = service.createToken(user, 'TestToken', undefined);
+      expect(() =>
+        service.checkToken('secret', accessToken as AuthToken),
+      ).toThrow(TokenNotValidError);
+    });
+    it('AuthToken has wrong validUntil Date', () => {
+      const [accessToken, secret] = service.createToken(
+        user,
+        'Test',
+        1549312452000,
+      );
+      expect(() =>
+        service.checkToken(secret, accessToken as AuthToken),
+      ).toThrow(TokenNotValidError);
     });
   });
 
@@ -233,7 +236,7 @@ describe('AuthService', () => {
     });
   });
 
-  describe('createTokenForUser', () => {
+  describe('addToken', () => {
     describe('works', () => {
       const identifier = 'testIdentifier';
       it('with validUntil 0', async () => {
@@ -246,7 +249,7 @@ describe('AuthService', () => {
               return authTokenSaved;
             },
           );
-        const token = await service.createTokenForUser(user, identifier, 0);
+        const token = await service.addToken(user, identifier, 0);
         expect(token.label).toEqual(identifier);
         expect(
           token.validUntil.getTime() -
@@ -266,11 +269,7 @@ describe('AuthService', () => {
             },
           );
         const validUntil = new Date().getTime() + 30000;
-        const token = await service.createTokenForUser(
-          user,
-          identifier,
-          validUntil,
-        );
+        const token = await service.addToken(user, identifier, validUntil);
         expect(token.label).toEqual(identifier);
         expect(token.validUntil.getTime()).toEqual(validUntil);
         expect(token.lastUsedAt).toBeNull();
