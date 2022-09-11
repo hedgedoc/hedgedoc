@@ -27,7 +27,7 @@ export class GroupInfoDto extends BaseDto {
 
   /**
    * True if this group must be specially handled
-   * Used for e.g. "everybody", "all logged in users"
+   * Used for e.g. "guests", "all logged in users"
    * @example false
    */
   @IsBoolean()

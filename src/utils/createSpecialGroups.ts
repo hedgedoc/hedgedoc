@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,8 +15,8 @@ export async function setupSpecialGroups(
   const groupService = app.get<GroupsService>(GroupsService);
   try {
     await groupService.createGroup(
-      SpecialGroup.EVERYONE,
-      SpecialGroup.EVERYONE,
+      SpecialGroup.GUESTS,
+      SpecialGroup.GUESTS,
       true,
     );
     await groupService.createGroup(

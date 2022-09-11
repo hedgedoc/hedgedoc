@@ -196,26 +196,26 @@ describe('PermissionsService', () => {
 
     (await note7.userPermissions).push(noteUserPermission2);
 
-    const everybody = {} as Group;
-    everybody.name = SpecialGroup.EVERYONE;
-    everybody.special = true;
-    const noteEverybodyRead = createNote(user1);
+    const guests = {} as Group;
+    guests.name = SpecialGroup.GUESTS;
+    guests.special = true;
+    const noteGuestsRead = createNote(user1);
 
     const noteGroupPermissionRead = {} as NoteGroupPermission;
-    noteGroupPermissionRead.group = everybody;
+    noteGroupPermissionRead.group = guests;
     noteGroupPermissionRead.canEdit = false;
-    noteGroupPermissionRead.note = noteEverybodyRead;
-    noteEverybodyRead.groupPermissions = Promise.resolve([
+    noteGroupPermissionRead.note = noteGuestsRead;
+    noteGuestsRead.groupPermissions = Promise.resolve([
       noteGroupPermissionRead,
     ]);
 
-    const noteEverybodyWrite = createNote(user1);
+    const noteGuestsWrite = createNote(user1);
 
     const noteGroupPermissionWrite = {} as NoteGroupPermission;
-    noteGroupPermissionWrite.group = everybody;
+    noteGroupPermissionWrite.group = guests;
     noteGroupPermissionWrite.canEdit = true;
-    noteGroupPermissionWrite.note = noteEverybodyWrite;
-    noteEverybodyWrite.groupPermissions = Promise.resolve([
+    noteGroupPermissionWrite.note = noteGuestsWrite;
+    noteGuestsWrite.groupPermissions = Promise.resolve([
       noteGroupPermissionWrite,
     ]);
 
@@ -228,8 +228,8 @@ describe('PermissionsService', () => {
       note5,
       note6,
       note7,
-      noteEverybodyRead,
-      noteEverybodyWrite,
+      noteGuestsRead,
+      noteGuestsWrite,
     ];
   }
 
@@ -326,12 +326,12 @@ describe('PermissionsService', () => {
   function createGroups(): { [id: string]: Group } {
     const result: { [id: string]: Group } = {};
 
-    const everybody: Group = Group.create(
-      SpecialGroup.EVERYONE,
-      SpecialGroup.EVERYONE,
+    const guests: Group = Group.create(
+      SpecialGroup.GUESTS,
+      SpecialGroup.GUESTS,
       true,
     ) as Group;
-    result[SpecialGroup.EVERYONE] = everybody;
+    result[SpecialGroup.GUESTS] = guests;
 
     const loggedIn = Group.create(
       SpecialGroup.LOGGED_IN,
@@ -383,12 +383,12 @@ describe('PermissionsService', () => {
       return NoteGroupPermission.create(group, {} as Note, write);
     }
 
-    const everybodyRead = createNoteGroupPermission(
-      groups[SpecialGroup.EVERYONE],
+    const guestsRead = createNoteGroupPermission(
+      groups[SpecialGroup.GUESTS],
       false,
     );
-    const everybodyWrite = createNoteGroupPermission(
-      groups[SpecialGroup.EVERYONE],
+    const guestsWrite = createNoteGroupPermission(
+      groups[SpecialGroup.GUESTS],
       true,
     );
 
@@ -440,7 +440,7 @@ describe('PermissionsService', () => {
     return [
       [user1groupRead, user1and2groupRead, user2and1groupRead, null], // group0: allow user1 to read via group
       [user2and1groupWrite, user1and2groupWrite, user1groupWrite, null], // group1: allow user1 to write via group
-      [everybodyRead, everybodyWrite, null], // group2: permissions of the special group everybody
+      [guestsRead, guestsWrite, null], // group2: permissions of the special group guests
       [loggedInRead, loggedInWrite, null], // group3: permissions of the special group loggedIn
       [user2groupWrite, user2groupRead, null], // group4: don't allow user1 to read or write via group
     ];
@@ -476,7 +476,7 @@ describe('PermissionsService', () => {
               }
 
               if (group2 !== null) {
-                // everybody group TODO config options
+                // guest group TODO config options
                 switch (guestPermission) {
                   case GuestPermission.CREATE_ALIAS:
                   case GuestPermission.CREATE:

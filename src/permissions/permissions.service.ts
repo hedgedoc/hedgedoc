@@ -126,7 +126,7 @@ export class PermissionsService {
             return true;
           }
           if (
-            groupPermission.group.name == SpecialGroup.EVERYONE &&
+            groupPermission.group.name == SpecialGroup.GUESTS &&
             (groupPermission.canEdit || !wantEdit) &&
             guestsAllowed
           ) {

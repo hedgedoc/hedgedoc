@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -28,7 +28,7 @@ export class Group {
 
   /**
    * Is set to denote a special group
-   * Special groups are used to map the old share settings like "everyone can edit"
+   * Special groups are used to map the old share settings like "guests can edit"
    * or "logged in users can view" to the group permission system
    */
   @Column()

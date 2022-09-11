@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -94,13 +94,13 @@ dataSource
       ]);
     }
     const createdUsers = await dataSource.manager.find(User);
-    const groupEveryone = Group.create('_EVERYONE', 'Everyone', true) as Group;
+    const groupGuests = Group.create('_GUESTS', 'Guests', true) as Group;
     const groupLoggedIn = Group.create(
       '_LOGGED_IN',
       'Logged-in users',
       true,
     ) as Group;
-    await dataSource.manager.save([groupEveryone, groupLoggedIn]);
+    await dataSource.manager.save([groupGuests, groupLoggedIn]);
 
     for (let i = 0; i < 3; i++) {
       if (i === 0) {
@@ -121,7 +121,7 @@ dataSource
 
       if (i === 1) {
         const readPermission = NoteGroupPermission.create(
-          groupEveryone,
+          groupGuests,
           notes[i],
           false,
         );
