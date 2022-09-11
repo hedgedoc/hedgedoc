@@ -10,14 +10,14 @@
     "<rootDir>/test/**/*.e2e-spec.{ts,js}"
   ],
   "transform": {
-    "^.+\\.(t|j)s$": "ts-jest"
+    "^.+\\.(t|j)s$": [
+      "ts-jest",
+      {
+        "tsconfig": "test/tsconfig.json"
+      }
+    ]
   },
   "coverageDirectory": "./coverage-e2e",
   "testTimeout": 10000,
-  "globals": {
-    "ts-jest": {
-      "tsconfig": "test/tsconfig.json"
-    }
-  },
   "reporters": ["default", "github-actions"]
 }
