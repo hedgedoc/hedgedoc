@@ -1956,7 +1956,7 @@ __metadata:
     "@types/d3-graphviz": 2.6.7
     "@types/diff": 5.0.2
     "@types/dompurify": 2.3.4
-    "@types/jest": 29.0.0
+    "@types/jest": 29.0.1
     "@types/js-yaml": 4.0.5
     "@types/luxon": 3.0.1
     "@types/markdown-it": 12.2.3
@@ -3358,23 +3358,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:*":
+"@types/jest@npm:*, @types/jest@npm:29.0.1":
   version: 29.0.1
   resolution: "@types/jest@npm:29.0.1"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
   checksum: efd30357c290b5d385382302fae927885f2a9bde0aa45d4c7f970fa6e6d750df83edef73f16d1e9a005e08a5bcd7c6ff56a43f5ac2534a517df9ad1e44dd30c4
-  languageName: node
-  linkType: hard
-
-"@types/jest@npm:29.0.0":
-  version: 29.0.0
-  resolution: "@types/jest@npm:29.0.0"
-  dependencies:
-    expect: ^29.0.0
-    pretty-format: ^29.0.0
-  checksum: b20c4b38c7c963862d82c21c0a1ae2b96015afb1511c835da43e8fd53659ca884f8103a2159be2ce74d2888472a1ac93d20d08ec1ac0970385cbb74c46d47585
   languageName: node
   linkType: hard
 
