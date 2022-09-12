@@ -1701,19 +1701,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/theme-one-dark@npm:6.0.0":
-  version: 6.0.0
-  resolution: "@codemirror/theme-one-dark@npm:6.0.0"
-  dependencies:
-    "@codemirror/language": ^6.0.0
-    "@codemirror/state": ^6.0.0
-    "@codemirror/view": ^6.0.0
-    "@lezer/highlight": ^1.0.0
-  checksum: 916f23e3ce0e003224e4bcee209ebcae57eb620c942adb180d7e0a1a0f2091bb042723d07cbd855c7016cb86fae66aa374de115001dcbe3d033f86c1624c3f9b
-  languageName: node
-  linkType: hard
-
-"@codemirror/theme-one-dark@npm:^6.0.0":
+"@codemirror/theme-one-dark@npm:6.1.0, @codemirror/theme-one-dark@npm:^6.0.0":
   version: 6.1.0
   resolution: "@codemirror/theme-one-dark@npm:6.1.0"
   dependencies:
@@ -1933,7 +1921,7 @@ __metadata:
     "@codemirror/language-data": 6.1.0
     "@codemirror/lint": 6.0.0
     "@codemirror/state": 6.1.1
-    "@codemirror/theme-one-dark": 6.0.0
+    "@codemirror/theme-one-dark": 6.1.0
     "@codemirror/view": 6.2.3
     "@fontsource/source-sans-pro": 4.5.11
     "@hedgedoc/html-to-react": 1.4.5
@@ -1971,7 +1959,7 @@ __metadata:
     "@types/uuid": 8.3.4
     "@typescript-eslint/eslint-plugin": 5.36.2
     "@typescript-eslint/parser": 5.36.2
-    "@uiw/react-codemirror": 4.12.1
+    "@uiw/react-codemirror": 4.12.2
     abcjs: 6.1.3
     bootstrap: 4.6.2
     copy-webpack-plugin: 11.0.0
@@ -3758,9 +3746,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uiw/codemirror-extensions-basic-setup@npm:4.12.1":
-  version: 4.12.1
-  resolution: "@uiw/codemirror-extensions-basic-setup@npm:4.12.1"
+"@uiw/codemirror-extensions-basic-setup@npm:4.12.2":
+  version: 4.12.2
+  resolution: "@uiw/codemirror-extensions-basic-setup@npm:4.12.2"
   dependencies:
     "@codemirror/autocomplete": ^6.0.0
     "@codemirror/commands": ^6.0.0
@@ -3777,28 +3765,29 @@ __metadata:
     "@codemirror/search": ">=6.0.0"
     "@codemirror/state": ">=6.0.0"
     "@codemirror/view": ">=6.0.0"
-  checksum: 7f98080c78982624d5834a5d1859fd9c751417b7f0e11161243a767bc9a71d6fa5aae5de33621b0fa4e5902fe168a56066474fbb47fe64135c9d898e4437bc9f
+  checksum: 98ac2e248f877afa4acbd1ca0f8859d526b74af1cb973ae2ee1a2fb8512f9a7e268f46a8dca41fb09518f0e6363e705536e9a36d3e6b8b90b69d4a44a6ed6d94
   languageName: node
   linkType: hard
 
-"@uiw/react-codemirror@npm:4.12.1":
-  version: 4.12.1
-  resolution: "@uiw/react-codemirror@npm:4.12.1"
+"@uiw/react-codemirror@npm:4.12.2":
+  version: 4.12.2
+  resolution: "@uiw/react-codemirror@npm:4.12.2"
   dependencies:
     "@babel/runtime": ^7.18.6
     "@codemirror/commands": ^6.1.0
     "@codemirror/state": ^6.1.1
     "@codemirror/theme-one-dark": ^6.0.0
-    "@uiw/codemirror-extensions-basic-setup": 4.12.1
+    "@uiw/codemirror-extensions-basic-setup": 4.12.2
     codemirror: ^6.0.0
   peerDependencies:
     "@babel/runtime": ">=7.11.0"
+    "@codemirror/state": ">=6.0.0"
     "@codemirror/theme-one-dark": ">=6.0.0"
     "@codemirror/view": ">=6.0.0"
     codemirror: ">=6.0.0"
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 4413839e6f40f5886f512f938c9c5389b6f95db89526eefb0a0530bac7dc46644fd734a11f1c0b0f6f78c2671e7de64465f058b399dee7374ae1b13ca75760a7
+  checksum: 8b51277b4c4b71ff6b62c78163691d2639d5121dba6f89567d8e8bff524d9f3c763874f7f7b3bc356e6168a995ac51fc3655a4565975763e6e0b8715a75b0d81
   languageName: node
   linkType: hard
 
