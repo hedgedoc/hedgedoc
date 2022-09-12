@@ -9,7 +9,7 @@
   ],
   "packageRules": [
     {
-      "groupName": "d3-graphviz",
+      "groupName": "graphviz",
       "packagePatterns" : [
         "d3-graphviz",
         "@hpcc-js/wasm"
