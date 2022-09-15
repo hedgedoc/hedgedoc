@@ -10,13 +10,13 @@ import type { ReactElement } from 'react'
 
 export type ValidReactDomElement = ReactElement | string | null
 
-export type SubNodeTransform = (node: Node, subKey: number | string) => NodeReplacement
+export type SubNodeTransform = (node: Node, subKey: number | string) => ValidReactDomElement
 
 export type NativeRenderer = () => ValidReactDomElement
 
-export const REPLACE_WITH_NOTHING = null
-export const DO_NOT_REPLACE = undefined
-export type NodeReplacement = ValidReactDomElement | typeof REPLACE_WITH_NOTHING | typeof DO_NOT_REPLACE
+export const DO_NOT_REPLACE = Symbol()
+
+export type NodeReplacement = ValidReactDomElement | typeof DO_NOT_REPLACE
 
 /**
  * Base class for all component replacers.
@@ -42,7 +42,7 @@ export abstract class ComponentReplacer {
    * @param subNodeTransform The transformer that should be used.
    * @return The children as react elements.
    */
-  protected static transformChildren(node: Element, subNodeTransform: SubNodeTransform): NodeReplacement[] {
+  protected static transformChildren(node: Element, subNodeTransform: SubNodeTransform): ValidReactDomElement[] {
     return node.children.map((value, index) => subNodeTransform(value, index))
   }
 

@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { ValidReactDomElement } from './component-replacer'
-import { ComponentReplacer } from './component-replacer'
+import type { NodeReplacement } from './component-replacer'
+import { ComponentReplacer, DO_NOT_REPLACE } from './component-replacer'
 import type { FunctionComponent } from 'react'
 import React from 'react'
 import type { Element } from 'domhandler'
@@ -22,9 +22,9 @@ export class CodeBlockComponentReplacer extends ComponentReplacer {
     super()
   }
 
-  replace(node: Element): ValidReactDomElement | undefined {
+  replace(node: Element): NodeReplacement {
     const code = CodeBlockComponentReplacer.extractTextFromCodeNode(node, this.language)
-    return code ? React.createElement(this.component, { code: code }) : undefined
+    return code ? React.createElement(this.component, { code: code }) : DO_NOT_REPLACE
   }
 
   /**

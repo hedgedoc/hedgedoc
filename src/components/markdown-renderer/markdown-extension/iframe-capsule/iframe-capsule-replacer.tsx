@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,17 +16,15 @@ import { ClickShield } from '../../replace-components/click-shield/click-shield'
  */
 export class IframeCapsuleReplacer extends ComponentReplacer {
   replace(node: Element, subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer): NodeReplacement {
-    if (node.name === 'iframe') {
-      return (
-        <ClickShield
-          hoverIcon={'globe'}
-          targetDescription={node.attribs.src}
-          data-cypress-id={'iframe-capsule-click-shield'}>
-          {nativeRenderer()}
-        </ClickShield>
-      )
-    } else {
-      return DO_NOT_REPLACE
-    }
+    return node.name !== 'iframe' ? (
+      DO_NOT_REPLACE
+    ) : (
+      <ClickShield
+        hoverIcon={'globe'}
+        targetDescription={node.attribs.src}
+        data-cypress-id={'iframe-capsule-click-shield'}>
+        {nativeRenderer()}
+      </ClickShield>
+    )
   }
 }

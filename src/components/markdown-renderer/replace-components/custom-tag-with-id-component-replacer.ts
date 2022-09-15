@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import type { NodeReplacement } from './component-replacer'
-import { ComponentReplacer } from './component-replacer'
+import { ComponentReplacer, DO_NOT_REPLACE } from './component-replacer'
 import type { FunctionComponent } from 'react'
 import React from 'react'
 import type { Element } from 'domhandler'
@@ -24,7 +24,7 @@ export class CustomTagWithIdComponentReplacer extends ComponentReplacer {
 
   public replace(node: Element): NodeReplacement {
     const id = this.extractId(node)
-    return id ? React.createElement(this.component, { id: id }) : undefined
+    return id ? React.createElement(this.component, { id: id }) : DO_NOT_REPLACE
   }
 
   /**

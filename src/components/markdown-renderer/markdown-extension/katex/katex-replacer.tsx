@@ -7,6 +7,7 @@
 import type { Element } from 'domhandler'
 import { isTag } from 'domhandler'
 import React from 'react'
+import type { NodeReplacement } from '../../replace-components/component-replacer'
 import { ComponentReplacer, DO_NOT_REPLACE } from '../../replace-components/component-replacer'
 import { KatexMarkdownExtension } from './katex-markdown-extension'
 import { Optional } from '@mrdrogdrog/optional'
@@ -17,7 +18,7 @@ const KaTeX = React.lazy(() => import(/* webpackChunkName: "katex" */ './katex-f
  * Detects LaTeX syntax and renders it with KaTeX.
  */
 export class KatexReplacer extends ComponentReplacer {
-  public replace(node: Element): React.ReactElement | undefined {
+  public replace(node: Element): NodeReplacement {
     return this.extractKatexContent(node)
       .map((latexContent) => {
         const isInline = !!node.attribs?.['data-inline']

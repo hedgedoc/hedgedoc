@@ -8,7 +8,7 @@ import { NodeToReactTransformer } from './node-to-react-transformer'
 import { Element } from 'domhandler'
 import type { ReactElement, ReactHTMLElement } from 'react'
 import type { NodeReplacement } from '../replace-components/component-replacer'
-import { ComponentReplacer, DO_NOT_REPLACE, REPLACE_WITH_NOTHING } from '../replace-components/component-replacer'
+import { ComponentReplacer, DO_NOT_REPLACE } from '../replace-components/component-replacer'
 
 describe('node to react transformer', () => {
   let nodeToReactTransformer: NodeToReactTransformer
@@ -30,7 +30,7 @@ describe('node to react transformer', () => {
       nodeToReactTransformer.setReplacers([
         new (class extends ComponentReplacer {
           replace(): NodeReplacement {
-            return REPLACE_WITH_NOTHING
+            return null
           }
         })()
       ])

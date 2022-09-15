@@ -8,7 +8,7 @@ import type { Element, Node } from 'domhandler'
 import { isTag } from 'domhandler'
 import { convertNodeToReactElement } from '@hedgedoc/html-to-react/dist/convertNodeToReactElement'
 import type { ComponentReplacer, NodeReplacement, ValidReactDomElement } from '../replace-components/component-replacer'
-import { DO_NOT_REPLACE, REPLACE_WITH_NOTHING } from '../replace-components/component-replacer'
+import { DO_NOT_REPLACE } from '../replace-components/component-replacer'
 import React from 'react'
 import type { LineWithId } from '../markdown-extension/linemarker/types'
 import { Optional } from '@mrdrogdrog/optional'
@@ -45,7 +45,7 @@ export class NodeToReactTransformer {
    * @param index The index of the node within its parents child list.
    * @return the created react element
    */
-  public translateNodeToReactElement(node: Node, index: number | string): ValidReactDomElement | undefined {
+  public translateNodeToReactElement(node: Node, index: number | string): ValidReactDomElement {
     return isTag(node)
       ? this.translateElementToReactElement(node, index)
       : convertNodeToReactElement(node, index, this.translateNodeToReactElement.bind(this))
@@ -58,10 +58,10 @@ export class NodeToReactTransformer {
    * @param index The index of the element within its parents child list.
    * @return the created react element
    */
-  private translateElementToReactElement(element: Element, index: number | string): ValidReactDomElement | undefined {
+  private translateElementToReactElement(element: Element, index: number | string): ValidReactDomElement {
     const elementKey = this.calculateUniqueKey(element).orElseGet(() => (-index).toString())
     const replacement = this.findElementReplacement(element, elementKey)
-    if (replacement === REPLACE_WITH_NOTHING) {
+    if (replacement === null) {
       return null
     } else if (replacement === DO_NOT_REPLACE) {
       return this.renderNativeNode(element, elementKey)
@@ -101,7 +101,7 @@ export class NodeToReactTransformer {
    *
    * @param element The {@link Element} that should be checked.
    * @param elementKey The unique key for the element
-   * @return The replacement or {@link DO_NOT_REPLACE} if the element shouldn't be replaced or {@link REPLACE_WITH_NOTHING} if the node shouldn't be rendered at all.
+   * @return The replacement or {@link DO_NOT_REPLACE} if the element shouldn't be replaced with a custom component.
    */
   private findElementReplacement(element: Element, elementKey: string): NodeReplacement {
     const transformer = this.translateNodeToReactElement.bind(this)

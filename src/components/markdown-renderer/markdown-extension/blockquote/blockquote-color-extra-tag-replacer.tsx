@@ -22,22 +22,20 @@ import { Optional } from '@mrdrogdrog/optional'
  */
 export class BlockquoteColorExtraTagReplacer extends ComponentReplacer {
   replace(element: Element): NodeReplacement {
-    if (
-      element.tagName === BlockquoteExtraTagMarkdownExtension.tagName &&
-      element.attribs?.['data-label'] === 'color' &&
-      element.children !== undefined
-    ) {
-      let index = 0
-      return Optional.ofNullable(element.children[0])
-        .filter(isText)
-        .map((child) => (child as Text).data)
-        .filter((content) => cssColor.test(content))
-        .map((color) => (
-          <span className={'blockquote-extra'} key={(index += 1)} style={{ color: color }}>
-            <ForkAwesomeIcon key='icon' className={'mx-1'} icon={'tag'} />
-          </span>
-        ))
-        .orElse(DO_NOT_REPLACE)
-    }
+    return Optional.of(element)
+      .filter(
+        (element) =>
+          element.tagName === BlockquoteExtraTagMarkdownExtension.tagName && element.attribs?.['data-label'] === 'color'
+      )
+      .map((element) => element.children[0])
+      .filter(isText)
+      .map((child) => (child as Text).data)
+      .filter((content) => cssColor.test(content))
+      .map((color) => (
+        <span className={'blockquote-extra'} key={1} style={{ color: color }}>
+          <ForkAwesomeIcon key='icon' className={'mx-1'} icon={'tag'} />
+        </span>
+      ))
+      .orElse(DO_NOT_REPLACE)
   }
 }

@@ -1,12 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import type { Element } from 'domhandler'
 import React from 'react'
-import { ComponentReplacer } from '../../replace-components/component-replacer'
+import type { NodeReplacement } from '../../replace-components/component-replacer'
+import { ComponentReplacer, DO_NOT_REPLACE } from '../../replace-components/component-replacer'
 import { CsvTable } from './csv-table'
 import { CodeBlockComponentReplacer } from '../../replace-components/code-block-component-replacer'
 
@@ -14,10 +15,10 @@ import { CodeBlockComponentReplacer } from '../../replace-components/code-block-
  * Detects code blocks with "csv" as language and renders them as table.
  */
 export class CsvReplacer extends ComponentReplacer {
-  public replace(codeNode: Element): React.ReactElement | undefined {
+  public replace(codeNode: Element): NodeReplacement {
     const code = CodeBlockComponentReplacer.extractTextFromCodeNode(codeNode, 'csv')
     if (!code) {
-      return
+      return DO_NOT_REPLACE
     }
 
     const extraData = codeNode.attribs['data-extra']

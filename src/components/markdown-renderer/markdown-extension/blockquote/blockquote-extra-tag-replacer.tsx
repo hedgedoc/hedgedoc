@@ -23,16 +23,17 @@ import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-mark
  */
 export class BlockquoteExtraTagReplacer extends ComponentReplacer {
   replace(element: Element, subNodeTransform: SubNodeTransform): NodeReplacement {
-    if (element.tagName !== BlockquoteExtraTagMarkdownExtension.tagName || !element.attribs) {
-      return DO_NOT_REPLACE
-    }
-
-    return (
-      <span className={'blockquote-extra'}>
-        {this.buildIconElement(element)}
-        {BlockquoteExtraTagReplacer.transformChildren(element, subNodeTransform)}
-      </span>
-    )
+    return Optional.of(element)
+      .filter(
+        (element) => element.tagName === BlockquoteExtraTagMarkdownExtension.tagName && element.attribs !== undefined
+      )
+      .map((element) => (
+        <span className={'blockquote-extra'} key={1}>
+          {this.buildIconElement(element)}
+          {BlockquoteExtraTagReplacer.transformChildren(element, subNodeTransform)}
+        </span>
+      ))
+      .orElse(DO_NOT_REPLACE)
   }
 
   /**

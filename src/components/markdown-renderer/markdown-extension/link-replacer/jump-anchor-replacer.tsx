@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -22,10 +22,10 @@ export class JumpAnchorReplacer extends ComponentReplacer {
     const jumpId = node.attribs['data-jump-target-id']
     delete node.attribs['data-jump-target-id']
     const replacement = nativeRenderer()
-    if (replacement === null || typeof replacement === 'string') {
-      return replacement
-    } else {
-      return <JumpAnchor {...(replacement.props as AllHTMLAttributes<HTMLAnchorElement>)} jumpTargetId={jumpId} />
-    }
+    return replacement === null || typeof replacement === 'string' ? (
+      replacement
+    ) : (
+      <JumpAnchor {...(replacement.props as AllHTMLAttributes<HTMLAnchorElement>)} jumpTargetId={jumpId} />
+    )
   }
 }
