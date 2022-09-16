@@ -24,7 +24,7 @@ describe('History', () => {
     describe('is as given when not empty', () => {
       beforeEach(() => {
         cy.clearLocalStorage('history')
-        cy.intercept('GET', '/api/mock-backend/private/me/history', {
+        cy.intercept('GET', 'api/private/me/history', {
           body: [
             {
               identifier: 'cypress',
@@ -51,7 +51,7 @@ describe('History', () => {
     describe('is untitled when not empty', () => {
       beforeEach(() => {
         cy.clearLocalStorage('history')
-        cy.intercept('GET', '/api/mock-backend/private/me/history', {
+        cy.intercept('GET', 'api/private/me/history', {
           body: [
             {
               identifier: 'cypress-no-title',
@@ -84,7 +84,7 @@ describe('History', () => {
 
     describe('working', () => {
       beforeEach(() => {
-        cy.intercept('PUT', '/api/mock-backend/private/me/history/features', (req) => {
+        cy.intercept('PUT', 'api/private/me/history/features', (req) => {
           req.reply(200, req.body)
         })
       })
@@ -106,7 +106,7 @@ describe('History', () => {
 
     describe('failing', () => {
       beforeEach(() => {
-        cy.intercept('PUT', '/api/mock-backend/private/me/history/features', {
+        cy.intercept('PUT', 'api/private/me/history/features', {
           statusCode: 401
         })
       })
@@ -128,7 +128,7 @@ describe('History', () => {
   describe('Import', () => {
     beforeEach(() => {
       cy.clearLocalStorage('history')
-      cy.intercept('GET', '/api/mock-backend/private/me/history', {
+      cy.intercept('GET', 'api/private/me/history', {
         body: []
       })
       cy.visitHistory()

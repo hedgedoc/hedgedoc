@@ -12,7 +12,7 @@ describe('Delete note', () => {
   })
 
   it('correctly deletes a note', () => {
-    cy.intercept('DELETE', `/api/mock-backend/private/notes/${testNoteId}`, {
+    cy.intercept('DELETE', `api/private/notes/${testNoteId}`, {
       statusCode: 204
     })
     cy.getByCypressId('sidebar.deleteNote.button').click()

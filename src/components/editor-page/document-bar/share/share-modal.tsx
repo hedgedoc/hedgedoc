@@ -13,7 +13,7 @@ import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { NoteType } from '../../../../redux/note-details/types/note-details'
-import { useFrontendBaseUrl } from '../../../../hooks/common/use-frontend-base-url'
+import { useBaseUrl } from '../../../../hooks/common/use-base-url'
 
 /**
  * Renders a modal which provides shareable URLs of this note.
@@ -25,7 +25,7 @@ export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => 
   useTranslation()
   const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)
   const editorMode = useApplicationState((state) => state.editorConfig.editorMode)
-  const baseUrl = useFrontendBaseUrl()
+  const baseUrl = useBaseUrl()
   const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
 
   return (

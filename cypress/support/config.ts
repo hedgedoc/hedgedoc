@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,7 +14,7 @@ declare namespace Cypress {
 
 export const branding = {
   name: 'DEMO Corp',
-  logo: '/mock-public/img/demo.png'
+  logo: 'public/img/demo.png'
 }
 
 export const authProviders = [
@@ -77,15 +77,11 @@ export const config = {
     commit: 'MOCK'
   },
   plantumlServer: 'http://mock-plantuml.local',
-  maxDocumentLength: 200,
-  iframeCommunication: {
-    editorOrigin: 'http://127.0.0.1:3001/',
-    rendererOrigin: 'http://127.0.0.1:3001/'
-  }
+  maxDocumentLength: 200
 }
 
 Cypress.Commands.add('loadConfig', (additionalConfig?: Partial<typeof config>) => {
-  return cy.intercept('/api/mock-backend/private/config', {
+  return cy.intercept('api/private/config', {
     statusCode: 200,
     body: {
       ...config,
@@ -97,11 +93,11 @@ Cypress.Commands.add('loadConfig', (additionalConfig?: Partial<typeof config>) =
 beforeEach(() => {
   cy.loadConfig()
 
-  cy.intercept('GET', '/mock-public/motd.md', {
+  cy.intercept('GET', 'public/motd.md', {
     body: '404 Not Found!',
     statusCode: 404
   })
-  cy.intercept('HEAD', '/mock-public/motd.md', {
+  cy.intercept('HEAD', 'public/motd.md', {
     statusCode: 404
   })
 })

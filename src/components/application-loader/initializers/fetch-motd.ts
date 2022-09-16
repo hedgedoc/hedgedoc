@@ -6,7 +6,6 @@
 
 import { setMotd } from '../../../redux/motd/methods'
 import { Logger } from '../../../utils/logger'
-import { customizeAssetsUrl } from '../../../utils/customize-assets-url'
 import { defaultConfig } from '../../../api/common/default-config'
 
 export const MOTD_LOCAL_STORAGE_KEY = 'motd.lastModified'
@@ -21,7 +20,7 @@ const log = new Logger('Motd')
  */
 export const fetchMotd = async (): Promise<void> => {
   const cachedLastModified = window.localStorage.getItem(MOTD_LOCAL_STORAGE_KEY)
-  const motdUrl = `${customizeAssetsUrl}motd.md`
+  const motdUrl = `public/motd.md`
 
   if (cachedLastModified) {
     const response = await fetch(motdUrl, {

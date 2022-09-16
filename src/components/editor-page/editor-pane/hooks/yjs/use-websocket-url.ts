@@ -5,9 +5,9 @@
  */
 
 import { useMemo } from 'react'
-import { backendUrl } from '../../../../../utils/backend-url'
 import { isMockMode } from '../../../../../utils/test-modes'
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
+import { useBaseUrl } from '../../../../../hooks/common/use-base-url'
 
 const LOCAL_FALLBACK_URL = 'ws://localhost:8080/realtime/'
 
@@ -16,13 +16,14 @@ const LOCAL_FALLBACK_URL = 'ws://localhost:8080/realtime/'
  */
 export const useWebsocketUrl = (): URL => {
   const noteId = useApplicationState((state) => state.noteDetails.id)
+  const baseUrl = useBaseUrl()
 
-  const baseUrl = useMemo(() => {
+  const websocketUrl = useMemo(() => {
     if (isMockMode) {
-      return process.env.NEXT_PUBLIC_REALTIME_URL ?? LOCAL_FALLBACK_URL
+      return LOCAL_FALLBACK_URL
     }
     try {
-      const backendBaseUrlParsed = new URL(backendUrl, window.location.toString())
+      const backendBaseUrlParsed = new URL(baseUrl, window.location.toString())
       backendBaseUrlParsed.protocol = backendBaseUrlParsed.protocol === 'https:' ? 'wss:' : 'ws:'
       backendBaseUrlParsed.pathname += 'realtime'
       return backendBaseUrlParsed.toString()
@@ -30,11 +31,11 @@ export const useWebsocketUrl = (): URL => {
       console.error(e)
       return LOCAL_FALLBACK_URL
     }
-  }, [])
+  }, [baseUrl])
 
   return useMemo(() => {
-    const url = new URL(baseUrl)
+    const url = new URL(websocketUrl)
     url.search = `?noteId=${noteId}`
     return url
-  }, [baseUrl, noteId])
+  }, [noteId, websocketUrl])
 }

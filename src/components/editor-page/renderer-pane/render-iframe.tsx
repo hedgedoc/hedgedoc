@@ -26,8 +26,8 @@ import { useSendScrollState } from './hooks/use-send-scroll-state'
 import { Logger } from '../../../utils/logger'
 import { useEffectOnRenderTypeChange } from './hooks/use-effect-on-render-type-change'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
-import { ORIGIN_TYPE, useOriginFromConfig } from '../render-context/use-origin-from-config'
 import { getGlobalState } from '../../../redux'
+import { ORIGIN, useBaseUrl } from '../../../hooks/common/use-base-url'
 
 export interface RenderIframeProps extends RendererProps {
   rendererType: RendererType
@@ -64,14 +64,14 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   forcedDarkMode
 }) => {
   const frameReference = useRef<HTMLIFrameElement>(null)
-  const rendererOrigin = useOriginFromConfig(ORIGIN_TYPE.RENDERER)
+  const rendererBaseUrl = useBaseUrl(ORIGIN.RENDERER)
   const iframeCommunicator = useEditorToRendererCommunicator()
   const resetRendererReady = useCallback(() => {
     log.debug('Reset render status')
     setRendererStatus(false)
   }, [])
   const rendererReady = useIsRendererReady()
-  const onIframeLoad = useForceRenderPageUrlOnIframeLoadCallback(frameReference, rendererOrigin, resetRendererReady)
+  const onIframeLoad = useForceRenderPageUrlOnIframeLoadCallback(frameReference, resetRendererReady)
   const [frameHeight, setFrameHeight] = useState<number>(0)
 
   useEffect(() => () => setRendererStatus(false), [iframeCommunicator])
@@ -124,8 +124,9 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
         log.error('Load triggered without content window')
         return
       }
-      log.debug(`Set iframecommunicator window with origin ${rendererOrigin ?? 'undefined'}`)
-      iframeCommunicator.setMessageTarget(otherWindow, rendererOrigin)
+      const origin = new URL(rendererBaseUrl).origin
+      log.debug(`Set iframecommunicator window with origin ${origin ?? 'undefined'}`)
+      iframeCommunicator.setMessageTarget(otherWindow, origin)
       iframeCommunicator.enableCommunication()
       iframeCommunicator.sendMessageToOtherSide({
         type: CommunicationMessageType.SET_BASE_CONFIGURATION,
@@ -135,7 +136,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
         }
       })
       setRendererStatus(true)
-    }, [iframeCommunicator, rendererOrigin, rendererType])
+    }, [iframeCommunicator, rendererBaseUrl, rendererType])
   )
 
   useEffectOnRenderTypeChange(rendererType, onIframeLoad)

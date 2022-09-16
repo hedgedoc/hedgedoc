@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { apiUrl } from '../../../utils/api-url'
 import deepmerge from 'deepmerge'
 import { defaultConfig, defaultHeaders } from '../default-config'
 import { ApiResponse } from '../api-response'
@@ -28,7 +27,7 @@ export abstract class ApiRequestBuilder<ResponseType> {
    * @param endpoint The target endpoint without a leading slash.
    */
   constructor(endpoint: string) {
-    this.targetUrl = apiUrl + endpoint
+    this.targetUrl = `api/private/${endpoint}`
   }
 
   protected async sendRequestAndVerifyResponse(

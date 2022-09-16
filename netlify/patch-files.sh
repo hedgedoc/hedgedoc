@@ -8,9 +8,11 @@
 set -e
 
 echo 'Patch intro.md to include netlify banner.'
-cp netlify/intro.md public/mock-public/intro.md
+cp netlify/intro.md public/public/intro.md
 echo 'Patch motd.md to include privacy policy.'
-cp netlify/motd.md public/mock-public/motd.md
+cp netlify/motd.md public/public/motd.md
 echo 'Patch version.json to include git hash'
 jq ".version = \"0.0.0+${GITHUB_SHA:0:8}\"" src/version.json > src/_version.json
 mv src/_version.json src/version.json
+echo "Patch base URL"
+echo HD_EDITOR_BASE_URL="https://${1}--hedgedoc-ui-test.netlify.app/" >> .env.production

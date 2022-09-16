@@ -21,7 +21,7 @@ const customEmojis: CustomEmoji[] = ForkAwesomeIcons.map((name) => ({
   category: 'ForkAwesome'
 }))
 
-const EMOJI_DATA_PATH = '/_next/static/js/emoji-data.json'
+const EMOJI_DATA_PATH = '_next/static/js/emoji-data.json'
 
 const emojiPickerConfig = {
   customEmoji: customEmojis,

@@ -72,6 +72,8 @@ This will build the app in production mode and save it into the `.next` folder. 
 best performance, minimized and the filenames include a hash value of the content. Don't edit them by hand!
 
 You can run the production build using the built-in server with `yarn start`.
+You MUST provide the environment variable `HD_EDITOR_BASE_URL` with protocol, domain and (if needed) path (e.g. `http://127.0.0.1:3001/`) so the app knows under which URL it is available in the browser.
+You can also provide `HD_RENDERER_BASE_URL` if the renderer should use another domain than the editor. This is recommended for security reasons but not mandatory.
 
 ## UI Test
 

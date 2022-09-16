@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,7 +8,7 @@ import type { PropsWithChildren } from 'react'
 import React, { createContext, useContext, useEffect, useMemo } from 'react'
 import { RendererToEditorCommunicator } from '../../render-page/window-post-message-communicator/renderer-to-editor-communicator'
 import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
-import { ORIGIN_TYPE, useOriginFromConfig } from './use-origin-from-config'
+import { ORIGIN, useBaseUrl } from '../../../hooks/common/use-base-url'
 
 const RendererToEditorCommunicatorContext = createContext<RendererToEditorCommunicator | undefined>(undefined)
 
@@ -27,12 +27,13 @@ export const useRendererToEditorCommunicator: () => RendererToEditorCommunicator
 }
 
 export const RendererToEditorCommunicatorContextProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
-  const editorOrigin = useOriginFromConfig(ORIGIN_TYPE.EDITOR)
+  const editorOrigin = useBaseUrl(ORIGIN.EDITOR)
   const communicator = useMemo<RendererToEditorCommunicator>(() => new RendererToEditorCommunicator(), [])
 
   useEffect(() => {
     const currentCommunicator = communicator
-    currentCommunicator.setMessageTarget(window.parent, editorOrigin)
+
+    currentCommunicator.setMessageTarget(window.parent, new URL(editorOrigin).origin)
     currentCommunicator.registerEventListener()
     currentCommunicator.enableCommunication()
     currentCommunicator.sendMessageToOtherSide({

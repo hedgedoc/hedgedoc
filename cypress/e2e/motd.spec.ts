@@ -11,13 +11,13 @@ const motdMockHtml = 'This is the <strong>mock</strong> Motd call'
 
 describe('Motd', () => {
   const mockExistingMotd = (useEtag?: boolean, content = motdMockContent) => {
-    cy.intercept('GET', '/mock-public/motd.md', {
+    cy.intercept('GET', 'public/motd.md', {
       statusCode: 200,
       headers: { [useEtag ? 'etag' : 'Last-Modified']: MOCK_LAST_MODIFIED },
       body: content
     })
 
-    cy.intercept('HEAD', '/mock-public/motd.md', {
+    cy.intercept('HEAD', 'public/motd.md', {
       statusCode: 200,
       headers: { [useEtag ? 'etag' : 'Last-Modified']: MOCK_LAST_MODIFIED }
     })

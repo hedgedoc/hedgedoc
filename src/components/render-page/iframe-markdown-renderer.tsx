@@ -128,7 +128,9 @@ export const IframeMarkdownRenderer: React.FC = () => {
   )
 
   if (!baseConfiguration) {
-    return null
+    return (
+      <span>This is the render endpoint. If you can read this text then please check your HedgeDoc configuration.</span>
+    )
   }
 
   switch (baseConfiguration.rendererType) {

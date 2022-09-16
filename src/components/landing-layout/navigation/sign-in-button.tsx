@@ -34,7 +34,7 @@ export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props })
       const metadata = getOneClickProviderMetadata(oneClickProviders[0])
       return metadata.url
     }
-    return '/login'
+    return 'login'
   }, [authProviders])
 
   return (

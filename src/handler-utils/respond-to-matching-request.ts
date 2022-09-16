@@ -5,6 +5,7 @@
  */
 
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { isMockMode } from '../utils/test-modes'
 
 export enum HttpMethod {
   GET = 'GET',
@@ -31,6 +32,10 @@ export const respondToMatchingRequest = <T>(
   response: T,
   statusCode = 200
 ): boolean => {
+  if (!isMockMode) {
+    res.status(404).send('Mock API is disabled')
+    return false
+  }
   if (method !== req.method) {
     res.status(405).send('Method not allowed')
     return false

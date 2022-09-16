@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,7 +14,6 @@ export interface Config {
   version: BackendVersion
   plantumlServer?: string
   maxDocumentLength: number
-  iframeCommunication: iframeCommunicationConfig
 }
 
 export enum AuthProviderType {
@@ -66,11 +65,6 @@ export interface AuthProviderWithoutCustomName {
 }
 
 export type AuthProvider = AuthProviderWithCustomName | AuthProviderWithoutCustomName
-
-export interface iframeCommunicationConfig {
-  editorOrigin: string
-  rendererOrigin: string
-}
 
 export interface BrandingConfig {
   name?: string

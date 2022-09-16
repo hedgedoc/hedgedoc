@@ -35,13 +35,13 @@ jobs:
           node-version: 18
 
       - name: Patch files
-        run: bash netlify/patch-files.sh
+        run: bash netlify/patch-files.sh "${{ github.event.number }}"
 
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Build netlify variant
-        run: yarn build:netlify
+      - name: Build mock variant
+        run: yarn build:mock
 
       - name: Remove Next.js cache to avoid it being deployed
         run: rm -r .next/cache

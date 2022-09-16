@@ -6,7 +6,6 @@
 import React from 'react'
 import { useAsync } from 'react-use'
 import { getUser } from '../../../api/users'
-import { customizeAssetsUrl } from '../../../utils/customize-assets-url'
 import type { UserAvatarProps } from './user-avatar'
 import { UserAvatar } from './user-avatar'
 import type { UserInfo } from '../../../api/users/types'
@@ -34,7 +33,7 @@ export const UserAvatarForUsername: React.FC<UserAvatarForUsernameProps> = ({ us
     }
     return {
       displayName: t('common.guestUser'),
-      photo: `${customizeAssetsUrl}img/avatar.png`,
+      photo: `public/img/avatar.png`,
       username: ''
     }
   }, [username, t])

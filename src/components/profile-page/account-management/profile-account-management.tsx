@@ -9,7 +9,6 @@ import { Button, Card } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { AccountDeletionModal } from './account-deletion-modal'
-import { apiUrl } from '../../../utils/api-url'
 import { useBooleanState } from '../../../hooks/common/use-boolean-state'
 
 /**
@@ -26,7 +25,7 @@ export const ProfileAccountManagement: React.FC = () => {
           <Card.Title>
             <Trans i18nKey='profile.accountManagement' />
           </Card.Title>
-          <Button variant='secondary' block href={apiUrl + 'me/export'} className='mb-2'>
+          <Button variant='secondary' block href={'me/export'} className='mb-2'>
             <ForkAwesomeIcon icon='cloud-download' fixedWidth={true} className='mx-2' />
             <Trans i18nKey='profile.exportUserData' />
           </Button>

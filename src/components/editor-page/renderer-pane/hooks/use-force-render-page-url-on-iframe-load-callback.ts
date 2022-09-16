@@ -7,6 +7,7 @@
 import type { RefObject } from 'react'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { Logger } from '../../../../utils/logger'
+import { ORIGIN, useBaseUrl } from '../../../../hooks/common/use-base-url'
 
 const log = new Logger('IframeLoader')
 
@@ -14,15 +15,18 @@ const log = new Logger('IframeLoader')
  * Generates a callback for an iframe load handler, that enforces a given URL if frame navigates away.
  *
  * @param iFrameReference A reference to the iframe react dom element.
- * @param rendererOrigin The base url that should be enforced.
  * @param onNavigateAway An optional callback that is executed when the iframe leaves the enforced URL.
  */
 export const useForceRenderPageUrlOnIframeLoadCallback = (
   iFrameReference: RefObject<HTMLIFrameElement>,
-  rendererOrigin: string,
   onNavigateAway?: () => void
 ): (() => void) => {
-  const forcedUrl = useMemo(() => `${rendererOrigin}render`, [rendererOrigin])
+  const rendererBaseUrl = useBaseUrl(ORIGIN.RENDERER)
+  const forcedUrl = useMemo(() => {
+    const renderUrl = new URL(rendererBaseUrl)
+    renderUrl.pathname += 'render'
+    return renderUrl.toString()
+  }, [rendererBaseUrl])
   const redirectionInProgress = useRef<boolean>(false)
 
   const loadCallback = useCallback(() => {

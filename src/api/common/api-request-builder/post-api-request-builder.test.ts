@@ -20,14 +20,14 @@ describe('PostApiRequestBuilder', () => {
 
   describe('sendRequest without body', () => {
     it('without headers', async () => {
-      expectFetch('/api/mock-backend/private/test', 201, { method: 'POST' })
+      expectFetch('api/private/test', 201, { method: 'POST' })
       await new PostApiRequestBuilder<string, undefined>('test').sendRequest()
     })
 
     it('with single header', async () => {
       const expectedHeaders = new Headers()
       expectedHeaders.append('test', 'true')
-      expectFetch('/api/mock-backend/private/test', 201, {
+      expectFetch('api/private/test', 201, {
         method: 'POST',
         headers: expectedHeaders
       })
@@ -37,7 +37,7 @@ describe('PostApiRequestBuilder', () => {
     it('with overriding single header', async () => {
       const expectedHeaders = new Headers()
       expectedHeaders.append('test', 'false')
-      expectFetch('/api/mock-backend/private/test', 201, {
+      expectFetch('api/private/test', 201, {
         method: 'POST',
         headers: expectedHeaders
       })
@@ -51,7 +51,7 @@ describe('PostApiRequestBuilder', () => {
       const expectedHeaders = new Headers()
       expectedHeaders.append('test', 'true')
       expectedHeaders.append('test2', 'false')
-      expectFetch('/api/mock-backend/private/test', 201, {
+      expectFetch('api/private/test', 201, {
         method: 'POST',
         headers: expectedHeaders
       })
@@ -66,7 +66,7 @@ describe('PostApiRequestBuilder', () => {
     const expectedHeaders = new Headers()
     expectedHeaders.append('Content-Type', 'application/json')
 
-    expectFetch('/api/mock-backend/private/test', 201, {
+    expectFetch('api/private/test', 201, {
       method: 'POST',
       headers: expectedHeaders,
       body: '{"test":true,"foo":"bar"}'
@@ -80,7 +80,7 @@ describe('PostApiRequestBuilder', () => {
   })
 
   it('sendRequest with other body', async () => {
-    expectFetch('/api/mock-backend/private/test', 201, {
+    expectFetch('api/private/test', 201, {
       method: 'POST',
       body: 'HedgeDoc'
     })
@@ -88,13 +88,13 @@ describe('PostApiRequestBuilder', () => {
   })
 
   it('sendRequest with expected status code', async () => {
-    expectFetch('/api/mock-backend/private/test', 200, { method: 'POST' })
+    expectFetch('api/private/test', 200, { method: 'POST' })
     await new PostApiRequestBuilder<string, undefined>('test').withExpectedStatusCode(200).sendRequest()
   })
 
   describe('sendRequest with custom options', () => {
     it('with one option', async () => {
-      expectFetch('/api/mock-backend/private/test', 201, {
+      expectFetch('api/private/test', 201, {
         method: 'POST',
         cache: 'force-cache'
       })
@@ -106,7 +106,7 @@ describe('PostApiRequestBuilder', () => {
     })
 
     it('overriding single option', async () => {
-      expectFetch('/api/mock-backend/private/test', 201, {
+      expectFetch('api/private/test', 201, {
         method: 'POST',
         cache: 'no-store'
       })
@@ -121,7 +121,7 @@ describe('PostApiRequestBuilder', () => {
     })
 
     it('with multiple options', async () => {
-      expectFetch('/api/mock-backend/private/test', 201, {
+      expectFetch('api/private/test', 201, {
         method: 'POST',
         cache: 'force-cache',
         integrity: 'test'
@@ -137,7 +137,7 @@ describe('PostApiRequestBuilder', () => {
 
   describe('sendRequest with custom error map', () => {
     it('for valid status code', async () => {
-      expectFetch('/api/mock-backend/private/test', 201, { method: 'POST' })
+      expectFetch('api/private/test', 201, { method: 'POST' })
       await new PostApiRequestBuilder<string, undefined>('test')
         .withStatusCodeErrorMapping({
           400: 'noooooo',
@@ -147,7 +147,7 @@ describe('PostApiRequestBuilder', () => {
     })
 
     it('for invalid status code 1', async () => {
-      expectFetch('/api/mock-backend/private/test', 400, { method: 'POST' })
+      expectFetch('api/private/test', 400, { method: 'POST' })
       const request = new PostApiRequestBuilder<string, undefined>('test')
         .withStatusCodeErrorMapping({
           400: 'noooooo',
@@ -158,7 +158,7 @@ describe('PostApiRequestBuilder', () => {
     })
 
     it('for invalid status code 2', async () => {
-      expectFetch('/api/mock-backend/private/test', 401, { method: 'POST' })
+      expectFetch('api/private/test', 401, { method: 'POST' })
       const request = new PostApiRequestBuilder<string, undefined>('test')
         .withStatusCodeErrorMapping({
           400: 'noooooo',

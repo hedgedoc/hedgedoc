@@ -7,7 +7,6 @@ import type { AuthProvider } from '../../../../api/config/types'
 import { AuthProviderType } from '../../../../api/config/types'
 import type { IconName } from '../../../common/fork-awesome/types'
 import styles from '../via-one-click.module.scss'
-import { backendUrl } from '../../../../utils/backend-url'
 import { Logger } from '../../../../utils/logger'
 
 export interface OneClickMetadata {
@@ -18,7 +17,7 @@ export interface OneClickMetadata {
 }
 
 const getBackendAuthUrl = (providerIdentifer: string): string => {
-  return `${backendUrl}auth/${providerIdentifer}`
+  return `auth/${providerIdentifer}`
 }
 
 const logger = new Logger('GetOneClickProviderMetadata')

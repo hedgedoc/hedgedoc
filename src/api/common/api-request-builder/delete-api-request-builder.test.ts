@@ -19,14 +19,14 @@ describe('DeleteApiRequestBuilder', () => {
   })
   describe('sendRequest without body', () => {
     it('without headers', async () => {
-      expectFetch('/api/mock-backend/private/test', 204, { method: 'DELETE' })
+      expectFetch('api/private/test', 204, { method: 'DELETE' })
       await new DeleteApiRequestBuilder<string, undefined>('test').sendRequest()
     })
 
     it('with single header', async () => {
       const expectedHeaders = new Headers()
       expectedHeaders.append('test', 'true')
-      expectFetch('/api/mock-backend/private/test', 204, {
+      expectFetch('api/private/test', 204, {
         method: 'DELETE',
         headers: expectedHeaders
       })
@@ -36,7 +36,7 @@ describe('DeleteApiRequestBuilder', () => {
     it('with overriding single header', async () => {
       const expectedHeaders = new Headers()
       expectedHeaders.append('test', 'false')
-      expectFetch('/api/mock-backend/private/test', 204, {
+      expectFetch('api/private/test', 204, {
         method: 'DELETE',
         headers: expectedHeaders
       })
@@ -50,7 +50,7 @@ describe('DeleteApiRequestBuilder', () => {
       const expectedHeaders = new Headers()
       expectedHeaders.append('test', 'true')
       expectedHeaders.append('test2', 'false')
-      expectFetch('/api/mock-backend/private/test', 204, {
+      expectFetch('api/private/test', 204, {
         method: 'DELETE',
         headers: expectedHeaders
       })
@@ -65,7 +65,7 @@ describe('DeleteApiRequestBuilder', () => {
     const expectedHeaders = new Headers()
     expectedHeaders.append('Content-Type', 'application/json')
 
-    expectFetch('/api/mock-backend/private/test', 204, {
+    expectFetch('api/private/test', 204, {
       method: 'DELETE',
       headers: expectedHeaders,
       body: '{"test":true,"foo":"bar"}'
@@ -79,7 +79,7 @@ describe('DeleteApiRequestBuilder', () => {
   })
 
   it('sendRequest with other body', async () => {
-    expectFetch('/api/mock-backend/private/test', 204, {
+    expectFetch('api/private/test', 204, {
       method: 'DELETE',
       body: 'HedgeDoc'
     })
@@ -87,13 +87,13 @@ describe('DeleteApiRequestBuilder', () => {
   })
 
   it('sendRequest with expected status code', async () => {
-    expectFetch('/api/mock-backend/private/test', 200, { method: 'DELETE' })
+    expectFetch('api/private/test', 200, { method: 'DELETE' })
     await new DeleteApiRequestBuilder<string, undefined>('test').withExpectedStatusCode(200).sendRequest()
   })
 
   describe('sendRequest with custom options', () => {
     it('with one option', async () => {
-      expectFetch('/api/mock-backend/private/test', 204, {
+      expectFetch('api/private/test', 204, {
         method: 'DELETE',
         cache: 'force-cache'
       })
@@ -105,7 +105,7 @@ describe('DeleteApiRequestBuilder', () => {
     })
 
     it('overriding single option', async () => {
-      expectFetch('/api/mock-backend/private/test', 204, {
+      expectFetch('api/private/test', 204, {
         method: 'DELETE',
         cache: 'no-store'
       })
@@ -120,7 +120,7 @@ describe('DeleteApiRequestBuilder', () => {
     })
 
     it('with multiple options', async () => {
-      expectFetch('/api/mock-backend/private/test', 204, {
+      expectFetch('api/private/test', 204, {
         method: 'DELETE',
         cache: 'force-cache',
         integrity: 'test'
@@ -136,7 +136,7 @@ describe('DeleteApiRequestBuilder', () => {
 
   describe('sendRequest with custom error map', () => {
     it('for valid status code', async () => {
-      expectFetch('/api/mock-backend/private/test', 204, { method: 'DELETE' })
+      expectFetch('api/private/test', 204, { method: 'DELETE' })
       await new DeleteApiRequestBuilder<string, undefined>('test')
         .withStatusCodeErrorMapping({
           400: 'noooooo',
@@ -146,7 +146,7 @@ describe('DeleteApiRequestBuilder', () => {
     })
 
     it('for invalid status code 1', async () => {
-      expectFetch('/api/mock-backend/private/test', 400, { method: 'DELETE' })
+      expectFetch('api/private/test', 400, { method: 'DELETE' })
       const request = new DeleteApiRequestBuilder<string, undefined>('test')
         .withStatusCodeErrorMapping({
           400: 'noooooo',
@@ -157,7 +157,7 @@ describe('DeleteApiRequestBuilder', () => {
     })
 
     it('for invalid status code 2', async () => {
-      expectFetch('/api/mock-backend/private/test', 401, { method: 'DELETE' })
+      expectFetch('api/private/test', 401, { method: 'DELETE' })
       const request = new DeleteApiRequestBuilder<string, undefined>('test')
         .withStatusCodeErrorMapping({
           400: 'noooooo',

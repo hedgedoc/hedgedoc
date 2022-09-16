@@ -20,14 +20,14 @@ describe('GetApiRequestBuilder', () => {
 
   describe('sendRequest', () => {
     it('without headers', async () => {
-      expectFetch('/api/mock-backend/private/test', 200, { method: 'GET' })
+      expectFetch('api/private/test', 200, { method: 'GET' })
       await new GetApiRequestBuilder<string>('test').sendRequest()
     })
 
     it('with single header', async () => {
       const expectedHeaders = new Headers()
       expectedHeaders.append('test', 'true')
-      expectFetch('/api/mock-backend/private/test', 200, {
+      expectFetch('api/private/test', 200, {
         method: 'GET',
         headers: expectedHeaders
       })
@@ -37,7 +37,7 @@ describe('GetApiRequestBuilder', () => {
     it('with overriding single header', async () => {
       const expectedHeaders = new Headers()
       expectedHeaders.append('test', 'false')
-      expectFetch('/api/mock-backend/private/test', 200, {
+      expectFetch('api/private/test', 200, {
         method: 'GET',
         headers: expectedHeaders
       })
@@ -51,7 +51,7 @@ describe('GetApiRequestBuilder', () => {
       const expectedHeaders = new Headers()
       expectedHeaders.append('test', 'true')
       expectedHeaders.append('test2', 'false')
-      expectFetch('/api/mock-backend/private/test', 200, {
+      expectFetch('api/private/test', 200, {
         method: 'GET',
         headers: expectedHeaders
       })
@@ -63,13 +63,13 @@ describe('GetApiRequestBuilder', () => {
   })
 
   it('sendRequest with expected status code', async () => {
-    expectFetch('/api/mock-backend/private/test', 200, { method: 'GET' })
+    expectFetch('api/private/test', 200, { method: 'GET' })
     await new GetApiRequestBuilder<string>('test').withExpectedStatusCode(200).sendRequest()
   })
 
   describe('sendRequest with custom options', () => {
     it('with one option', async () => {
-      expectFetch('/api/mock-backend/private/test', 200, {
+      expectFetch('api/private/test', 200, {
         method: 'GET',
         cache: 'force-cache'
       })
@@ -81,7 +81,7 @@ describe('GetApiRequestBuilder', () => {
     })
 
     it('overriding single option', async () => {
-      expectFetch('/api/mock-backend/private/test', 200, {
+      expectFetch('api/private/test', 200, {
         method: 'GET',
         cache: 'no-store'
       })
@@ -96,7 +96,7 @@ describe('GetApiRequestBuilder', () => {
     })
 
     it('with multiple options', async () => {
-      expectFetch('/api/mock-backend/private/test', 200, {
+      expectFetch('api/private/test', 200, {
         method: 'GET',
         cache: 'force-cache',
         integrity: 'test'
@@ -112,7 +112,7 @@ describe('GetApiRequestBuilder', () => {
 
   describe('sendRequest with custom error map', () => {
     it('for valid status code', async () => {
-      expectFetch('/api/mock-backend/private/test', 200, { method: 'GET' })
+      expectFetch('api/private/test', 200, { method: 'GET' })
       await new GetApiRequestBuilder<string>('test')
         .withStatusCodeErrorMapping({
           400: 'noooooo',
@@ -122,7 +122,7 @@ describe('GetApiRequestBuilder', () => {
     })
 
     it('for invalid status code 1', async () => {
-      expectFetch('/api/mock-backend/private/test', 400, { method: 'GET' })
+      expectFetch('api/private/test', 400, { method: 'GET' })
       const request = new GetApiRequestBuilder<string>('test')
         .withStatusCodeErrorMapping({
           400: 'noooooo',
@@ -133,7 +133,7 @@ describe('GetApiRequestBuilder', () => {
     })
 
     it('for invalid status code 2', async () => {
-      expectFetch('/api/mock-backend/private/test', 401, { method: 'GET' })
+      expectFetch('api/private/test', 401, { method: 'GET' })
       const request = new GetApiRequestBuilder<string>('test')
         .withStatusCodeErrorMapping({
           400: 'noooooo',
