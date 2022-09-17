@@ -2017,7 +2017,7 @@ __metadata:
     markdown-it-sup: 1.0.0
     markdown-it-task-lists: 2.1.1
     markdown-it-toc-done-right: 4.2.0
-    mermaid: 9.1.6
+    mermaid: 9.1.7
     next: 12.3.0
     prettier: 2.7.1
     react: 18.2.0
@@ -6319,13 +6319,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:2.3.10":
-  version: 2.3.10
-  resolution: "dompurify@npm:2.3.10"
-  checksum: ee343876b4c065e82d194818c66af76a6d2290264c7db583ad71761c11781fd626f0245f9f4670175d5707c4b8fcfb89adae80bed0418a9426a47ee7f36b0ffc
-  languageName: node
-  linkType: hard
-
 "dompurify@npm:2.4.0":
   version: 2.4.0
   resolution: "dompurify@npm:2.4.0"
@@ -9489,20 +9482,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mermaid@npm:9.1.6":
-  version: 9.1.6
-  resolution: "mermaid@npm:9.1.6"
+"mermaid@npm:9.1.7":
+  version: 9.1.7
+  resolution: "mermaid@npm:9.1.7"
   dependencies:
     "@braintree/sanitize-url": ^6.0.0
     d3: ^7.0.0
     dagre: ^0.8.5
     dagre-d3: ^0.6.4
-    dompurify: 2.3.10
+    dompurify: 2.4.0
     graphlib: ^2.1.8
     khroma: ^2.0.0
     moment-mini: 2.24.0
     stylis: ^4.0.10
-  checksum: 46c3334e40bb6547d4876d1ec8f178ae48789811d8af44106e637ec2aafb6fc452e00a33029a06ff53a1e247c3d03721d073f18b4d38a991780d6410e68f4144
+  checksum: 7f3f4c55de9e290aa4fa37b01d37772bceae8b7fad888a034ba4cebbdba5e25632fcfbdcadc168d9c3589d173399b6bb74517bba91237f3b0ce7f945e62ab21c
   languageName: node
   linkType: hard
 
