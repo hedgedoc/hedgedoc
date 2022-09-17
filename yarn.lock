@@ -33,19 +33,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/schematics-cli@npm:14.2.1":
-  version: 14.2.1
-  resolution: "@angular-devkit/schematics-cli@npm:14.2.1"
+"@angular-devkit/core@npm:14.2.2":
+  version: 14.2.2
+  resolution: "@angular-devkit/core@npm:14.2.2"
   dependencies:
-    "@angular-devkit/core": 14.2.1
-    "@angular-devkit/schematics": 14.2.1
+    ajv: 8.11.0
+    ajv-formats: 2.1.1
+    jsonc-parser: 3.1.0
+    rxjs: 6.6.7
+    source-map: 0.7.4
+  peerDependencies:
+    chokidar: ^3.5.2
+  peerDependenciesMeta:
+    chokidar:
+      optional: true
+  checksum: 63a38df8a6983eb07933cd4b05ebbdc0f7690ab88ebcb739c15931d048083d84527316d03f81aa37ae2ae601790d789fc4da7a764f11be27ab7edb79cf7528e6
+  languageName: node
+  linkType: hard
+
+"@angular-devkit/schematics-cli@npm:14.2.2":
+  version: 14.2.2
+  resolution: "@angular-devkit/schematics-cli@npm:14.2.2"
+  dependencies:
+    "@angular-devkit/core": 14.2.2
+    "@angular-devkit/schematics": 14.2.2
     ansi-colors: 4.1.3
     inquirer: 8.2.4
     symbol-observable: 4.0.0
     yargs-parser: 21.1.1
   bin:
     schematics: bin/schematics.js
-  checksum: 54c54ad332f3f3e966026f54ea48bb8a965fa8a3133fd8808e090fbde01e53223229de31a9ab97fa7f01cdd2f34991c2c6885549bd8b867f559a4dc54e860147
+  checksum: 024c334cc14bbdda8eb1e7ab2e93b908828a310ec8e0dcd8f97c6e25edb335073da706d5ba3558daafc564285bf5f1945cb1804a034f2cb8aa353813dce04fc4
   languageName: node
   linkType: hard
 
@@ -59,6 +77,19 @@ __metadata:
     ora: 5.4.1
     rxjs: 6.6.7
   checksum: 74af9c50b0953ae8a4cf8390d935b1acc28acb4f8816f771aa08cd9293ecdbd2bc07a3be619f4eb779e3ccfd4a71e367480787739ca47a5ff272f61c5f9ff28d
+  languageName: node
+  linkType: hard
+
+"@angular-devkit/schematics@npm:14.2.2":
+  version: 14.2.2
+  resolution: "@angular-devkit/schematics@npm:14.2.2"
+  dependencies:
+    "@angular-devkit/core": 14.2.2
+    jsonc-parser: 3.1.0
+    magic-string: 0.26.2
+    ora: 5.4.1
+    rxjs: 6.6.7
+  checksum: 4a7cc5c51a3a3e12de6450e8e65e66799ae576ed78830e27eb0113e43009299cfa30cf052b1963945eb806a084cdaf7f5df2132822a6f92ca0e3be31d5d6ce3f
   languageName: node
   linkType: hard
 
@@ -1106,13 +1137,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/cli@npm:9.1.2":
-  version: 9.1.2
-  resolution: "@nestjs/cli@npm:9.1.2"
+"@nestjs/cli@npm:9.1.3":
+  version: 9.1.3
+  resolution: "@nestjs/cli@npm:9.1.3"
   dependencies:
-    "@angular-devkit/core": 14.2.1
-    "@angular-devkit/schematics": 14.2.1
-    "@angular-devkit/schematics-cli": 14.2.1
+    "@angular-devkit/core": 14.2.2
+    "@angular-devkit/schematics": 14.2.2
+    "@angular-devkit/schematics-cli": 14.2.2
     "@nestjs/schematics": ^9.0.0
     chalk: 3.0.0
     chokidar: 3.5.3
@@ -1129,12 +1160,12 @@ __metadata:
     tree-kill: 1.2.2
     tsconfig-paths: 4.1.0
     tsconfig-paths-webpack-plugin: 4.0.0
-    typescript: 4.7.4
+    typescript: 4.8.3
     webpack: 5.74.0
     webpack-node-externals: 3.0.0
   bin:
     nest: bin/nest.js
-  checksum: 3a4fffd874c43dd4fded929f3f4f7c2d0e28262fb314b0ca400c71ab805365565e854b6fdc9f8c8b144df170de962ed8e8c4f90844491d24b8101fffa4ae7ce0
+  checksum: a051c75df98c39b2a8a88fe872872d1e31906755f89a5189125c26cbcd2d3119a5728b33c71470697804ddb57bc8c7a7ecdccc1046be86e221d423109f91475a
   languageName: node
   linkType: hard
 
@@ -5442,7 +5473,7 @@ __metadata:
     "@azure/storage-blob": 12.11.0
     "@hedgedoc/realtime": 0.3.0
     "@mrdrogdrog/optional": 0.2.0
-    "@nestjs/cli": 9.1.2
+    "@nestjs/cli": 9.1.3
     "@nestjs/common": 9.0.11
     "@nestjs/config": 2.2.0
     "@nestjs/core": 9.0.11
@@ -9747,6 +9778,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:4.8.3":
+  version: 4.8.3
+  resolution: "typescript@npm:4.8.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 8286a5edcaf3d68e65c451aa1e7150ad1cf53ee0813c07ec35b7abdfdb10f355ecaa13c6a226a694ae7a67785fd7eeebf89f845da0b4f7e4a35561ddc459aba0
+  languageName: node
+  linkType: hard
+
 "typescript@patch:typescript@4.7.4#~builtin<compat/typescript>":
   version: 4.7.4
   resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=a1c5e5"
@@ -9754,6 +9795,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 9096d8f6c16cb80ef3bf96fcbbd055bf1c4a43bd14f3b7be45a9fbe7ada46ec977f604d5feed3263b4f2aa7d4c7477ce5f9cd87de0d6feedec69a983f3a4f93e
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@4.8.3#~builtin<compat/typescript>":
+  version: 4.8.3
+  resolution: "typescript@patch:typescript@npm%3A4.8.3#~builtin<compat/typescript>::version=4.8.3&hash=a1c5e5"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 2222d2382fb3146089b1d27ce2b55e9d1f99cc64118f1aba75809b693b856c5d3c324f052f60c75b577947fc538bc1c27bad0eb76cbdba9a63a253489504ba7e
   languageName: node
   linkType: hard
 
