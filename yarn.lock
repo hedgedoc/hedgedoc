@@ -5546,7 +5546,7 @@ __metadata:
     rimraf: 3.0.2
     rxjs: 7.5.6
     source-map-support: 0.5.21
-    sqlite3: 5.0.11
+    sqlite3: 5.1.1
     supertest: 6.2.4
     ts-jest: 29.0.1
     ts-mockery: 1.2.0
@@ -8983,9 +8983,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sqlite3@npm:5.0.11":
-  version: 5.0.11
-  resolution: "sqlite3@npm:5.0.11"
+"sqlite3@npm:5.1.1":
+  version: 5.1.1
+  resolution: "sqlite3@npm:5.1.1"
   dependencies:
     "@mapbox/node-pre-gyp": ^1.0.0
     node-addon-api: ^4.2.0
@@ -8999,7 +8999,7 @@ __metadata:
   peerDependenciesMeta:
     node-gyp:
       optional: true
-  checksum: 9847d56af4aea1872678e66f35c4f5fed599c6aee0441eda8d1f56a5263fc8ab38e0fc9e46cbf02e7043272e39e665ec7b880886d36c16e865a8e375a6f045fc
+  checksum: aaedb724b3b3df8c5a5f2df0b1691b8d0c19a93407c792796ef736f173198c28fdd31ddb414e7bd52d82717233abb183fc161ab515b081d6f640c92ce84d3b7a
   languageName: node
   linkType: hard
 
