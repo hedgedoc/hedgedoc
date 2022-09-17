@@ -1440,9 +1440,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/autocomplete@npm:6.1.1, @codemirror/autocomplete@npm:^6.0.0":
-  version: 6.1.1
-  resolution: "@codemirror/autocomplete@npm:6.1.1"
+"@codemirror/autocomplete@npm:6.2.0, @codemirror/autocomplete@npm:^6.0.0":
+  version: 6.2.0
+  resolution: "@codemirror/autocomplete@npm:6.2.0"
   dependencies:
     "@codemirror/language": ^6.0.0
     "@codemirror/state": ^6.0.0
@@ -1453,7 +1453,7 @@ __metadata:
     "@codemirror/state": ^6.0.0
     "@codemirror/view": ^6.0.0
     "@lezer/common": ^1.0.0
-  checksum: d5dc9f0394d52ed891845f077e3ab5f0b337b1dd6e9735d18dddaafef634ceb4fa0f272b7bcf824a720666af0bc721a0c7b5a3c7cefcd18f1235753f27d4b86c
+  checksum: fc20334d54b8e59abb48f0a813b0c409804a87eb918b6e46aa098fcb7125a7e1902cfa1628d4dc92ee3a535b3bebce4f8ce778fbc7b339cb796ca05b10150b37
   languageName: node
   linkType: hard
 
@@ -1713,7 +1713,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:6.2.3, @codemirror/view@npm:^6.0.0, @codemirror/view@npm:^6.2.2":
+"@codemirror/view@npm:6.2.4":
+  version: 6.2.4
+  resolution: "@codemirror/view@npm:6.2.4"
+  dependencies:
+    "@codemirror/state": ^6.0.0
+    style-mod: ^4.0.0
+    w3c-keyname: ^2.2.4
+  checksum: 5fd3dfe92f00c91e3f51a9881decdbc5ffbf3399d8d92258ee37b2b6ceab01053bdd527e15a0f87256c82e11e7c46a70d9fca463035c25ae78a3a3718a818297
+  languageName: node
+  linkType: hard
+
+"@codemirror/view@npm:^6.0.0, @codemirror/view@npm:^6.2.2":
   version: 6.2.3
   resolution: "@codemirror/view@npm:6.2.3"
   dependencies:
@@ -1914,7 +1925,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/react-client@workspace:."
   dependencies:
-    "@codemirror/autocomplete": 6.1.1
+    "@codemirror/autocomplete": 6.2.0
     "@codemirror/commands": 6.1.0
     "@codemirror/lang-markdown": 6.0.1
     "@codemirror/language": 6.2.1
@@ -1922,7 +1933,7 @@ __metadata:
     "@codemirror/lint": 6.0.0
     "@codemirror/state": 6.1.1
     "@codemirror/theme-one-dark": 6.1.0
-    "@codemirror/view": 6.2.3
+    "@codemirror/view": 6.2.4
     "@fontsource/source-sans-pro": 4.5.11
     "@hedgedoc/html-to-react": 1.4.5
     "@hedgedoc/markdown-it-image-size": 1.0.3
@@ -1959,7 +1970,7 @@ __metadata:
     "@types/uuid": 8.3.4
     "@typescript-eslint/eslint-plugin": 5.37.0
     "@typescript-eslint/parser": 5.37.0
-    "@uiw/react-codemirror": 4.12.2
+    "@uiw/react-codemirror": 4.12.3
     abcjs: 6.1.3
     bootstrap: 4.6.2
     copy-webpack-plugin: 11.0.0
@@ -3861,9 +3872,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uiw/codemirror-extensions-basic-setup@npm:4.12.2":
-  version: 4.12.2
-  resolution: "@uiw/codemirror-extensions-basic-setup@npm:4.12.2"
+"@uiw/codemirror-extensions-basic-setup@npm:4.12.3":
+  version: 4.12.3
+  resolution: "@uiw/codemirror-extensions-basic-setup@npm:4.12.3"
   dependencies:
     "@codemirror/autocomplete": ^6.0.0
     "@codemirror/commands": ^6.0.0
@@ -3880,19 +3891,19 @@ __metadata:
     "@codemirror/search": ">=6.0.0"
     "@codemirror/state": ">=6.0.0"
     "@codemirror/view": ">=6.0.0"
-  checksum: 98ac2e248f877afa4acbd1ca0f8859d526b74af1cb973ae2ee1a2fb8512f9a7e268f46a8dca41fb09518f0e6363e705536e9a36d3e6b8b90b69d4a44a6ed6d94
+  checksum: 14c5c6694b2f5ce34bba2ed3fa7017a268c36f3ba234711580d31243603a14adc2b31ebec7d665cd6687917a8ac617d6ac453861d32bf277f43b65946ac1c656
   languageName: node
   linkType: hard
 
-"@uiw/react-codemirror@npm:4.12.2":
-  version: 4.12.2
-  resolution: "@uiw/react-codemirror@npm:4.12.2"
+"@uiw/react-codemirror@npm:4.12.3":
+  version: 4.12.3
+  resolution: "@uiw/react-codemirror@npm:4.12.3"
   dependencies:
     "@babel/runtime": ^7.18.6
     "@codemirror/commands": ^6.1.0
     "@codemirror/state": ^6.1.1
     "@codemirror/theme-one-dark": ^6.0.0
-    "@uiw/codemirror-extensions-basic-setup": 4.12.2
+    "@uiw/codemirror-extensions-basic-setup": 4.12.3
     codemirror: ^6.0.0
   peerDependencies:
     "@babel/runtime": ">=7.11.0"
@@ -3902,7 +3913,7 @@ __metadata:
     codemirror: ">=6.0.0"
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 8b51277b4c4b71ff6b62c78163691d2639d5121dba6f89567d8e8bff524d9f3c763874f7f7b3bc356e6168a995ac51fc3655a4565975763e6e0b8715a75b0d81
+  checksum: 504003e6162dbe672072ace980117d1eeb9264282d6ad314de0398e0d29925133bc8d8c484c3aadb91b6ebedb8ebb259307b838cc31d39ab4792af5ab061949c
   languageName: node
   linkType: hard
 
