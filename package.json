@@ -141,7 +141,7 @@
     "@types/markdown-it": "12.2.3",
     "@types/markdown-it-container": "2.0.5",
     "@types/markdown-it-plantuml": "1.4.1",
-    "@types/mermaid": "8.2.9",
+    "@types/mermaid": "9.1.0",
     "@types/node": "18.0.0",
     "@types/react": "18.0.20",
     "@types/react-dom": "18.0.6",

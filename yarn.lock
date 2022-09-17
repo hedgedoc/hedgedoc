@@ -1950,7 +1950,7 @@ __metadata:
     "@types/markdown-it": 12.2.3
     "@types/markdown-it-container": 2.0.5
     "@types/markdown-it-plantuml": 1.4.1
-    "@types/mermaid": 8.2.9
+    "@types/mermaid": 9.1.0
     "@types/node": 18.0.0
     "@types/react": 18.0.20
     "@types/react-dom": 18.0.6
@@ -3454,10 +3454,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mermaid@npm:8.2.9":
-  version: 8.2.9
-  resolution: "@types/mermaid@npm:8.2.9"
-  checksum: 5602d4bc3a1ae9cbe7b5f674cdf19c1d0334e1be6c35546ca216ae28763cf1693c2d1f8364c5c801d73c1ff85bf37d77a07abc832ffcbe0450453ceb39907ec8
+"@types/mermaid@npm:9.1.0":
+  version: 9.1.0
+  resolution: "@types/mermaid@npm:9.1.0"
+  checksum: ea3756826c89c85efd4e182c6ef025ea24a20ee70dc168673390b1125f158f57ae231f36cb2c700ef0ea6e9c322551963404759f8d019e0e48fb7cb5d6da1f96
   languageName: node
   linkType: hard
 
