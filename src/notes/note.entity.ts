@@ -26,8 +26,8 @@ import { generatePublicId } from './utils';
 
 @Entity()
 export class Note {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ type: 'text' })
   publicId: string;

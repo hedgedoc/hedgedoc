@@ -139,9 +139,9 @@ describe('PermissionsService', () => {
 
   // The two users we test with:
   const user2 = {} as User;
-  user2.id = '2';
+  user2.id = 2;
   const user1 = {} as User;
-  user1.id = '1';
+  user1.id = 1;
 
   it('should be defined', () => {
     expect(service).toBeDefined();
@@ -676,9 +676,9 @@ describe('PermissionsService', () => {
         const noteWithPreexistingPermissions: Note = { ...note };
         noteWithPreexistingPermissions.userPermissions = Promise.resolve([
           {
-            noteId: '',
+            noteId: 4711,
             note: noteWithPreexistingPermissions,
-            userId: '',
+            userId: 4711,
             user: user,
             canEdit: !userPermissionUpdate.canEdit,
           },
@@ -750,9 +750,9 @@ describe('PermissionsService', () => {
         const noteWithUserPermission: Note = { ...note };
         noteWithUserPermission.userPermissions = Promise.resolve([
           {
-            noteId: '',
+            noteId: 4711,
             note: noteWithUserPermission,
-            userId: '',
+            userId: 4711,
             user: user,
             canEdit: !userPermissionUpdate.canEdit,
           },
@@ -788,7 +788,7 @@ describe('PermissionsService', () => {
         const noteWithPreexistingPermissions: Note = { ...note };
         noteWithPreexistingPermissions.groupPermissions = Promise.resolve([
           {
-            noteId: '',
+            noteId: 4711,
             note: noteWithPreexistingPermissions,
             groupId: 0,
             group: group,
@@ -820,7 +820,7 @@ describe('PermissionsService', () => {
         const noteWithPreexistingPermissions: Note = { ...note };
         noteWithPreexistingPermissions.groupPermissions = Promise.resolve([
           {
-            noteId: '',
+            noteId: 4711,
             note: noteWithPreexistingPermissions,
             groupId: 0,
             group: group,
@@ -858,7 +858,7 @@ describe('PermissionsService', () => {
         const noteWithPreexistingPermissions: Note = { ...note };
         noteWithPreexistingPermissions.groupPermissions = Promise.resolve([
           {
-            noteId: '',
+            noteId: 4711,
             note: noteWithPreexistingPermissions,
             groupId: 0,
             group: group,
@@ -867,9 +867,9 @@ describe('PermissionsService', () => {
         ]);
         noteWithPreexistingPermissions.userPermissions = Promise.resolve([
           {
-            noteId: '',
+            noteId: 4711,
             note: noteWithPreexistingPermissions,
-            userId: '',
+            userId: 4711,
             user: user,
             canEdit: !userPermissionUpdate.canEdit,
           },

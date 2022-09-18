@@ -131,9 +131,9 @@ export class NotesController {
         await this.mediaService.removeNoteFromMediaUpload(mediaUpload);
       }
     }
-    this.logger.debug('Deleting note: ' + note.id, 'deleteNote');
+    this.logger.debug(`Deleting note: ${note.id}`, 'deleteNote');
     await this.noteService.deleteNote(note);
-    this.logger.debug('Successfully deleted ' + note.id, 'deleteNote');
+    this.logger.debug(`Successfully deleted ${note.id}`, 'deleteNote');
     return;
   }
 
@@ -172,12 +172,12 @@ export class NotesController {
     @RequestNote() note: Note,
   ): Promise<void> {
     this.logger.debug(
-      'Purging history of note: ' + note.id,
+      `Purging history of note: ${note.id}`,
       'purgeNoteRevisions',
     );
     await this.revisionsService.purgeRevisions(note);
     this.logger.debug(
-      'Successfully purged history of note ' + note.id,
+      `Successfully purged history of note ${note.id}`,
       'purgeNoteRevisions',
     );
     return;

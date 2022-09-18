@@ -18,7 +18,7 @@ export class NoteUserPermission {
    */
 
   @PrimaryColumn()
-  userId: string;
+  userId: number;
 
   @ManyToOne((_) => User, {
     onDelete: 'CASCADE', // This deletes the NoteUserPermission, when the associated Note is deleted
@@ -27,7 +27,7 @@ export class NoteUserPermission {
   user: User;
 
   @PrimaryColumn()
-  noteId: string;
+  noteId: number;
 
   @ManyToOne((_) => Note, (note) => note.userPermissions, {
     onDelete: 'CASCADE', // This deletes the NoteUserPermission, when the associated Note is deleted

@@ -268,7 +268,7 @@ describe('MediaService', () => {
           id: 'testMediaUpload',
           backendData: 'testBackendData',
           note: Promise.resolve({
-            id: '123',
+            id: 123,
           } as Note),
         } as MediaUpload;
         const createQueryBuilder = {
@@ -283,7 +283,7 @@ describe('MediaService', () => {
           // @ts-ignore
           .mockImplementation(() => createQueryBuilder);
         const mediaList = await service.listUploadsByNote({
-          id: '123',
+          id: 123,
         } as Note);
         expect(mediaList).toEqual([mockMediaUploadEntry]);
       });
@@ -301,7 +301,7 @@ describe('MediaService', () => {
           // @ts-ignore
           .mockImplementation(() => createQueryBuilder);
         const mediaList = await service.listUploadsByNote({
-          id: '123',
+          id: 123,
         } as Note);
         expect(mediaList).toEqual([]);
       });
@@ -318,7 +318,7 @@ describe('MediaService', () => {
           // @ts-ignore
           .mockImplementation(() => createQueryBuilder);
         const mediaList = await service.listUploadsByNote({
-          id: '123',
+          id: 123,
         } as Note);
         expect(mediaList).toEqual([]);
       });

@@ -22,7 +22,7 @@ import { WebsocketDoc } from './websocket-doc';
 
 describe('RealtimeNoteService', () => {
   const mockedContent = 'mockedContent';
-  const mockedNoteId = 'mockedNoteId';
+  const mockedNoteId = 4711;
   let websocketDoc: WebsocketDoc;
   let mockedNote: Note;
   let mockedRealtimeNote: RealtimeNote;

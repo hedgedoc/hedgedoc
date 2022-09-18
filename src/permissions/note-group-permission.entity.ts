@@ -26,7 +26,7 @@ export class NoteGroupPermission {
   group: Group;
 
   @PrimaryColumn()
-  noteId: string;
+  noteId: number;
 
   @ManyToOne((_) => Note, (note) => note.groupPermissions, {
     onDelete: 'CASCADE', // This deletes the NoteGroupPermission, when the associated Note is deleted

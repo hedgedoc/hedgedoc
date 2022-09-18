@@ -141,9 +141,9 @@ export class NotesController {
         await this.mediaService.removeNoteFromMediaUpload(mediaUpload);
       }
     }
-    this.logger.debug('Deleting note: ' + note.id, 'deleteNote');
+    this.logger.debug(`Deleting note: ${note.id}`, 'deleteNote');
     await this.noteService.deleteNote(note);
-    this.logger.debug('Successfully deleted ' + note.id, 'deleteNote');
+    this.logger.debug(`Successfully deleted ${note.id}`, 'deleteNote');
     return;
   }
 

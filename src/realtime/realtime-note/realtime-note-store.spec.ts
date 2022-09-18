@@ -19,7 +19,7 @@ describe('RealtimeNoteStore', () => {
   let mockedRealtimeNote: RealtimeNote;
   let realtimeNoteConstructorSpy: jest.SpyInstance;
   const mockedContent = 'mockedContent';
-  const mockedNoteId = 'mockedNoteId';
+  const mockedNoteId = 4711;
 
   beforeEach(async () => {
     jest.resetAllMocks();
