@@ -50,3 +50,4 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: bash netlify/deploy-main.sh "${{ github.event.head_commit.id }}" "${{ github.event.head_commit.message }}"
+
