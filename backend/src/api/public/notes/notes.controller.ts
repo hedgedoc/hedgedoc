@@ -268,7 +268,7 @@ export class NotesController {
     @RequestUser() user: User,
     @RequestNote() note: Note,
     @Param('userName') username: string,
-    @Body() canEdit: boolean,
+    @Body('canEdit') canEdit: boolean,
   ): Promise<NotePermissionsDto> {
     const permissionUser = await this.userService.getUserByUsername(username);
     const returnedNote = await this.permissionService.setUserPermission(
@@ -321,7 +321,7 @@ export class NotesController {
   @OpenApi(
     {
       code: 200,
-      description: 'Set the permissions for a user on a note',
+      description: 'Set the permissions for a group on a note',
       dto: NotePermissionsDto,
     },
     403,
@@ -331,7 +331,7 @@ export class NotesController {
     @RequestUser() user: User,
     @RequestNote() note: Note,
     @Param('groupName') groupName: string,
-    @Body() canEdit: boolean,
+    @Body('canEdit') canEdit: boolean,
   ): Promise<NotePermissionsDto> {
     const permissionGroup = await this.groupService.getGroupByName(groupName);
     const returnedNote = await this.permissionService.setGroupPermission(
