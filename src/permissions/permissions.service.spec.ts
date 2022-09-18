@@ -168,14 +168,14 @@ describe('PermissionsService', () => {
     const note6 = createNote(user2);
     const note7 = createNote(user2);
     const noteUserPermission1 = {} as NoteUserPermission;
-    noteUserPermission1.user = user1;
+    noteUserPermission1.user = Promise.resolve(user1);
     const noteUserPermission2 = {} as NoteUserPermission;
-    noteUserPermission2.user = user2;
+    noteUserPermission2.user = Promise.resolve(user2);
     const noteUserPermission3 = {} as NoteUserPermission;
-    noteUserPermission3.user = user1;
+    noteUserPermission3.user = Promise.resolve(user1);
     noteUserPermission3.canEdit = true;
     const noteUserPermission4 = {} as NoteUserPermission;
-    noteUserPermission4.user = user2;
+    noteUserPermission4.user = Promise.resolve(user2);
     noteUserPermission4.canEdit = true;
 
     (await note1.userPermissions).push(noteUserPermission1);
@@ -202,9 +202,9 @@ describe('PermissionsService', () => {
     const noteEverybodyRead = createNote(user1);
 
     const noteGroupPermissionRead = {} as NoteGroupPermission;
-    noteGroupPermissionRead.group = everybody;
+    noteGroupPermissionRead.group = Promise.resolve(everybody);
     noteGroupPermissionRead.canEdit = false;
-    noteGroupPermissionRead.note = noteEverybodyRead;
+    noteGroupPermissionRead.note = Promise.resolve(noteEverybodyRead);
     noteEverybodyRead.groupPermissions = Promise.resolve([
       noteGroupPermissionRead,
     ]);
@@ -212,9 +212,9 @@ describe('PermissionsService', () => {
     const noteEverybodyWrite = createNote(user1);
 
     const noteGroupPermissionWrite = {} as NoteGroupPermission;
-    noteGroupPermissionWrite.group = everybody;
+    noteGroupPermissionWrite.group = Promise.resolve(everybody);
     noteGroupPermissionWrite.canEdit = true;
-    noteGroupPermissionWrite.note = noteEverybodyWrite;
+    noteGroupPermissionWrite.note = Promise.resolve(noteEverybodyWrite);
     noteEverybodyWrite.groupPermissions = Promise.resolve([
       noteGroupPermissionWrite,
     ]);
@@ -568,7 +568,7 @@ describe('PermissionsService', () => {
       note.groupPermissions = Promise.resolve(permission.permissions);
       let permissionString = '';
       for (const perm of permission.permissions) {
-        permissionString += ` ${perm.group.name}:${String(perm.canEdit)}`;
+        permissionString += ` ${perm.id}:${String(perm.canEdit)}`;
       }
       it(`mayWrite - test #${i}:${permissionString}`, async () => {
         service.guestPermission = guestPermission;
@@ -642,6 +642,8 @@ describe('PermissionsService', () => {
       it('with empty GroupPermissions and with empty UserPermissions', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -655,6 +657,8 @@ describe('PermissionsService', () => {
       it('with empty GroupPermissions and with new UserPermissions', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -664,9 +668,9 @@ describe('PermissionsService', () => {
           sharedToGroups: [],
         });
         expect(await savedNote.userPermissions).toHaveLength(1);
-        expect((await savedNote.userPermissions)[0].user.username).toEqual(
-          userPermissionUpdate.username,
-        );
+        expect(
+          (await (await savedNote.userPermissions)[0].user).username,
+        ).toEqual(userPermissionUpdate.username);
         expect((await savedNote.userPermissions)[0].canEdit).toEqual(
           userPermissionUpdate.canEdit,
         );
@@ -676,15 +680,16 @@ describe('PermissionsService', () => {
         const noteWithPreexistingPermissions: Note = { ...note };
         noteWithPreexistingPermissions.userPermissions = Promise.resolve([
           {
-            noteId: 4711,
-            note: noteWithPreexistingPermissions,
-            userId: 4711,
-            user: user,
+            id: 1,
+            note: Promise.resolve(noteWithPreexistingPermissions),
+            user: Promise.resolve(user),
             canEdit: !userPermissionUpdate.canEdit,
           },
         ]);
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -694,9 +699,9 @@ describe('PermissionsService', () => {
           sharedToGroups: [],
         });
         expect(await savedNote.userPermissions).toHaveLength(1);
-        expect((await savedNote.userPermissions)[0].user.username).toEqual(
-          userPermissionUpdate.username,
-        );
+        expect(
+          (await (await savedNote.userPermissions)[0].user).username,
+        ).toEqual(userPermissionUpdate.username);
         expect((await savedNote.userPermissions)[0].canEdit).toEqual(
           userPermissionUpdate.canEdit,
         );
@@ -705,6 +710,8 @@ describe('PermissionsService', () => {
       it('with new GroupPermissions and with empty UserPermissions', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -714,9 +721,9 @@ describe('PermissionsService', () => {
           sharedToGroups: [groupPermissionUpdate],
         });
         expect(await savedNote.userPermissions).toHaveLength(0);
-        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
-          groupPermissionUpdate.groupName,
-        );
+        expect(
+          (await (await savedNote.groupPermissions)[0].group).name,
+        ).toEqual(groupPermissionUpdate.groupName);
         expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpdate.canEdit,
         );
@@ -724,6 +731,8 @@ describe('PermissionsService', () => {
       it('with new GroupPermissions and with new UserPermissions', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -733,15 +742,15 @@ describe('PermissionsService', () => {
           sharedToUsers: [userPermissionUpdate],
           sharedToGroups: [groupPermissionUpdate],
         });
-        expect((await savedNote.userPermissions)[0].user.username).toEqual(
-          userPermissionUpdate.username,
-        );
+        expect(
+          (await (await savedNote.userPermissions)[0].user).username,
+        ).toEqual(userPermissionUpdate.username);
         expect((await savedNote.userPermissions)[0].canEdit).toEqual(
           userPermissionUpdate.canEdit,
         );
-        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
-          groupPermissionUpdate.groupName,
-        );
+        expect(
+          (await (await savedNote.groupPermissions)[0].group).name,
+        ).toEqual(groupPermissionUpdate.groupName);
         expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpdate.canEdit,
         );
@@ -750,15 +759,16 @@ describe('PermissionsService', () => {
         const noteWithUserPermission: Note = { ...note };
         noteWithUserPermission.userPermissions = Promise.resolve([
           {
-            noteId: 4711,
-            note: noteWithUserPermission,
-            userId: 4711,
-            user: user,
+            id: 1,
+            note: Promise.resolve(noteWithUserPermission),
+            user: Promise.resolve(user),
             canEdit: !userPermissionUpdate.canEdit,
           },
         ]);
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -771,15 +781,15 @@ describe('PermissionsService', () => {
             sharedToGroups: [groupPermissionUpdate],
           },
         );
-        expect((await savedNote.userPermissions)[0].user.username).toEqual(
-          userPermissionUpdate.username,
-        );
+        expect(
+          (await (await savedNote.userPermissions)[0].user).username,
+        ).toEqual(userPermissionUpdate.username);
         expect((await savedNote.userPermissions)[0].canEdit).toEqual(
           userPermissionUpdate.canEdit,
         );
-        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
-          groupPermissionUpdate.groupName,
-        );
+        expect(
+          (await (await savedNote.groupPermissions)[0].group).name,
+        ).toEqual(groupPermissionUpdate.groupName);
         expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpdate.canEdit,
         );
@@ -788,16 +798,17 @@ describe('PermissionsService', () => {
         const noteWithPreexistingPermissions: Note = { ...note };
         noteWithPreexistingPermissions.groupPermissions = Promise.resolve([
           {
-            noteId: 4711,
-            note: noteWithPreexistingPermissions,
-            groupId: 0,
-            group: group,
+            id: 1,
+            note: Promise.resolve(noteWithPreexistingPermissions),
+            group: Promise.resolve(group),
             canEdit: !groupPermissionUpdate.canEdit,
           },
         ]);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -809,9 +820,9 @@ describe('PermissionsService', () => {
           },
         );
         expect(await savedNote.userPermissions).toHaveLength(0);
-        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
-          groupPermissionUpdate.groupName,
-        );
+        expect(
+          (await (await savedNote.groupPermissions)[0].group).name,
+        ).toEqual(groupPermissionUpdate.groupName);
         expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpdate.canEdit,
         );
@@ -820,15 +831,16 @@ describe('PermissionsService', () => {
         const noteWithPreexistingPermissions: Note = { ...note };
         noteWithPreexistingPermissions.groupPermissions = Promise.resolve([
           {
-            noteId: 4711,
-            note: noteWithPreexistingPermissions,
-            groupId: 0,
-            group: group,
+            id: 1,
+            note: Promise.resolve(noteWithPreexistingPermissions),
+            group: Promise.resolve(group),
             canEdit: !groupPermissionUpdate.canEdit,
           },
         ]);
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -841,15 +853,15 @@ describe('PermissionsService', () => {
             sharedToGroups: [groupPermissionUpdate],
           },
         );
-        expect((await savedNote.userPermissions)[0].user.username).toEqual(
-          userPermissionUpdate.username,
-        );
+        expect(
+          (await (await savedNote.userPermissions)[0].user).username,
+        ).toEqual(userPermissionUpdate.username);
         expect((await savedNote.userPermissions)[0].canEdit).toEqual(
           userPermissionUpdate.canEdit,
         );
-        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
-          groupPermissionUpdate.groupName,
-        );
+        expect(
+          (await (await savedNote.groupPermissions)[0].group).name,
+        ).toEqual(groupPermissionUpdate.groupName);
         expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpdate.canEdit,
         );
@@ -858,24 +870,24 @@ describe('PermissionsService', () => {
         const noteWithPreexistingPermissions: Note = { ...note };
         noteWithPreexistingPermissions.groupPermissions = Promise.resolve([
           {
-            noteId: 4711,
-            note: noteWithPreexistingPermissions,
-            groupId: 0,
-            group: group,
+            id: 1,
+            note: Promise.resolve(noteWithPreexistingPermissions),
+            group: Promise.resolve(group),
             canEdit: !groupPermissionUpdate.canEdit,
           },
         ]);
         noteWithPreexistingPermissions.userPermissions = Promise.resolve([
           {
-            noteId: 4711,
-            note: noteWithPreexistingPermissions,
-            userId: 4711,
-            user: user,
+            id: 1,
+            note: Promise.resolve(noteWithPreexistingPermissions),
+            user: Promise.resolve(user),
             canEdit: !userPermissionUpdate.canEdit,
           },
         ]);
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -888,15 +900,15 @@ describe('PermissionsService', () => {
             sharedToGroups: [groupPermissionUpdate],
           },
         );
-        expect((await savedNote.userPermissions)[0].user.username).toEqual(
-          userPermissionUpdate.username,
-        );
+        expect(
+          (await (await savedNote.userPermissions)[0].user).username,
+        ).toEqual(userPermissionUpdate.username);
         expect((await savedNote.userPermissions)[0].canEdit).toEqual(
           userPermissionUpdate.canEdit,
         );
-        expect((await savedNote.groupPermissions)[0].group.name).toEqual(
-          groupPermissionUpdate.groupName,
-        );
+        expect(
+          (await (await savedNote.groupPermissions)[0].group).name,
+        ).toEqual(groupPermissionUpdate.groupName);
         expect((await savedNote.groupPermissions)[0].canEdit).toEqual(
           groupPermissionUpdate.canEdit,
         );
@@ -937,6 +949,8 @@ describe('PermissionsService', () => {
       it('with user not added before and editable', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -951,6 +965,8 @@ describe('PermissionsService', () => {
       it('with user not added before and not editable', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -965,6 +981,8 @@ describe('PermissionsService', () => {
       it('with user added before and editable', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -983,6 +1001,8 @@ describe('PermissionsService', () => {
       it('with user added before and not editable', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -1005,6 +1025,8 @@ describe('PermissionsService', () => {
       it('with user added before and editable', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -1020,6 +1042,8 @@ describe('PermissionsService', () => {
       it('with user not added before and not editable', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -1039,6 +1063,8 @@ describe('PermissionsService', () => {
       it('with group not added before and editable', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -1057,6 +1083,8 @@ describe('PermissionsService', () => {
       it('with group not added before and not editable', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -1075,6 +1103,8 @@ describe('PermissionsService', () => {
       it('with group added before and editable', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -1097,6 +1127,8 @@ describe('PermissionsService', () => {
       it('with group added before and not editable', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -1123,6 +1155,8 @@ describe('PermissionsService', () => {
       it('with user added before and editable', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -1138,6 +1172,8 @@ describe('PermissionsService', () => {
       it('with user not added before and not editable', async () => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementationOnce(async (entry: Note) => {
             return entry;
           });
@@ -1158,6 +1194,8 @@ describe('PermissionsService', () => {
       const user = User.create('test', 'Testy') as User;
       jest
         .spyOn(noteRepo, 'save')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         .mockImplementationOnce(async (entry: Note) => {
           return entry;
         });

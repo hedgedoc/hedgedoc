@@ -57,6 +57,8 @@ describe('NotesService', () => {
     const content = 'testContent';
     jest
       .spyOn(noteRepo, 'save')
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       .mockImplementation(async (note: Note): Promise<Note> => note);
     const note = await service.createNote(content, null);
     const revisions = await note.revisions;
@@ -94,19 +96,17 @@ describe('NotesService', () => {
     note.owner = Promise.resolve(user);
     note.userPermissions = Promise.resolve([
       {
-        noteId: note.id,
-        note: note,
-        userId: user.id,
-        user: user,
+        id: 1,
+        note: Promise.resolve(note),
+        user: Promise.resolve(user),
         canEdit: true,
       },
     ]);
     note.groupPermissions = Promise.resolve([
       {
-        noteId: note.id,
-        note: note,
-        groupId: group.id,
-        group: group,
+        id: 1,
+        note: Promise.resolve(note),
+        group: Promise.resolve(group),
         canEdit: true,
       },
     ]);
@@ -291,6 +291,8 @@ describe('NotesService', () => {
       beforeEach(() => {
         jest
           .spyOn(noteRepo, 'save')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           .mockImplementation(async (note: Note): Promise<Note> => note);
       });
       it('without alias, without owner', async () => {
@@ -368,6 +370,8 @@ describe('NotesService', () => {
       const content = 'testContent';
       jest
         .spyOn(noteRepo, 'save')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         .mockImplementation(async (note: Note): Promise<Note> => note);
       const newNote = await service.createNote(content, null);
       const revisions = await newNote.revisions;

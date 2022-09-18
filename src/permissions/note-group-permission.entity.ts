@@ -3,35 +3,34 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 import { Group } from '../groups/group.entity';
 import { Note } from '../notes/note.entity';
 
 @Entity()
+@Index(['group', 'note'], { unique: true })
 export class NoteGroupPermission {
-  /**
-   * The `group` and `note` properties cannot be converted to promises
-   * (to lazy-load them), as TypeORM gets confused about lazy composite
-   * primary keys.
-   * See https://github.com/typeorm/typeorm/issues/6908
-   */
-
-  @PrimaryColumn()
-  groupId: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ManyToOne((_) => Group, {
     onDelete: 'CASCADE', // This deletes the NoteGroupPermission, when the associated Group is deleted
+    orphanedRowAction: 'delete', // This ensures the whole row is deleted when the Permission stops being referenced
   })
-  group: Group;
-
-  @PrimaryColumn()
-  noteId: number;
+  group: Promise<Group>;
 
   @ManyToOne((_) => Note, (note) => note.groupPermissions, {
     onDelete: 'CASCADE', // This deletes the NoteGroupPermission, when the associated Note is deleted
+    orphanedRowAction: 'delete', // This ensures the whole row is deleted when the Permission stops being referenced
   })
-  note: Note;
+  note: Promise<Note>;
 
   @Column()
   canEdit: boolean;
@@ -45,8 +44,8 @@ export class NoteGroupPermission {
     canEdit: boolean,
   ): NoteGroupPermission {
     const groupPermission = new NoteGroupPermission();
-    groupPermission.group = group;
-    groupPermission.note = note;
+    groupPermission.group = Promise.resolve(group);
+    groupPermission.note = Promise.resolve(note);
     groupPermission.canEdit = canEdit;
     return groupPermission;
   }
