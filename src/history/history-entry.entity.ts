@@ -23,13 +23,13 @@ export class HistoryEntry {
 
   @ManyToOne((_) => User, (user) => user.historyEntries, {
     onDelete: 'CASCADE',
-    orphanedRowAction: 'delete', // This ensures the whole row is deleted when the Entry stops being referenced
+    orphanedRowAction: 'delete', // This ensures the row of the history entry is deleted when no user references it anymore
   })
   user: Promise<User>;
 
   @ManyToOne((_) => Note, (note) => note.historyEntries, {
     onDelete: 'CASCADE',
-    orphanedRowAction: 'delete', // This ensures the whole row is deleted when the Entry stops being referenced
+    orphanedRowAction: 'delete', // This ensures the row of the history entry is deleted when no note references it anymore
   })
   note: Promise<Note>;
 
