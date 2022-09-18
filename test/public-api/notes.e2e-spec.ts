@@ -211,9 +211,9 @@ describe('Notes', () => {
       expect((await updatedNote.userPermissions)[0].canEdit).toEqual(
         updateNotePermission.sharedToUsers[0].canEdit,
       );
-      expect((await updatedNote.userPermissions)[0].user.username).toEqual(
-        user.username,
-      );
+      expect(
+        (await (await updatedNote.userPermissions)[0].user).username,
+      ).toEqual(user.username);
       expect(await updatedNote.groupPermissions).toHaveLength(0);
       await request(testSetup.app.getHttpServer())
         .delete('/api/v2/notes/test3')

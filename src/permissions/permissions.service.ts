@@ -93,7 +93,7 @@ export class PermissionsService {
     }
     for (const userPermission of await note.userPermissions) {
       if (
-        userPermission.user.id === user.id &&
+        (await userPermission.user).id === user.id &&
         (userPermission.canEdit || !wantEdit)
       ) {
         return true;
@@ -121,12 +121,12 @@ export class PermissionsService {
     for (const groupPermission of await note.groupPermissions) {
       if (groupPermission.canEdit || !wantEdit) {
         // Handle special groups
-        if (groupPermission.group.special) {
-          if (groupPermission.group.name == SpecialGroup.LOGGED_IN) {
+        if ((await groupPermission.group).special) {
+          if ((await groupPermission.group).name == SpecialGroup.LOGGED_IN) {
             return true;
           }
           if (
-            groupPermission.group.name == SpecialGroup.EVERYONE &&
+            (await groupPermission.group).name == SpecialGroup.EVERYONE &&
             (groupPermission.canEdit || !wantEdit) &&
             guestsAllowed
           ) {
@@ -135,7 +135,9 @@ export class PermissionsService {
         } else {
           // Handle normal groups
           if (user) {
-            for (const member of await groupPermission.group.members) {
+            for (const member of await (
+              await groupPermission.group
+            ).members) {
               if (member.id === user.id) return true;
             }
           }
@@ -189,7 +191,7 @@ export class PermissionsService {
         note,
         newUserPermission.canEdit,
       );
-      createdPermission.note = note;
+      createdPermission.note = Promise.resolve(note);
       (await note.userPermissions).push(createdPermission);
     }
 
@@ -203,7 +205,7 @@ export class PermissionsService {
         note,
         newGroupPermission.canEdit,
       );
-      createdPermission.note = note;
+      createdPermission.note = Promise.resolve(note);
       (await note.groupPermissions).push(createdPermission);
     }
 
@@ -225,9 +227,9 @@ export class PermissionsService {
   ): Promise<Note> {
     const permissions = await note.userPermissions;
     let permissionIndex = 0;
-    const permission = permissions.find((value, index) => {
+    const permission = permissions.find(async (value, index) => {
       permissionIndex = index;
-      return value.user.id == permissionUser.id;
+      return (await value.user).id == permissionUser.id;
     });
     if (permission != undefined) {
       permission.canEdit = canEdit;
@@ -252,10 +254,13 @@ export class PermissionsService {
    */
   async removeUserPermission(note: Note, permissionUser: User): Promise<Note> {
     const permissions = await note.userPermissions;
-    const permissionsFiltered = permissions.filter(
-      (value) => value.user.id != permissionUser.id,
-    );
-    note.userPermissions = Promise.resolve(permissionsFiltered);
+    const newPermissions = [];
+    for (const permission of permissions) {
+      if ((await permission.user).id != permissionUser.id) {
+        newPermissions.push(permission);
+      }
+    }
+    note.userPermissions = Promise.resolve(newPermissions);
     return await this.noteRepository.save(note);
   }
 
@@ -272,16 +277,24 @@ export class PermissionsService {
     permissionGroup: Group,
     canEdit: boolean,
   ): Promise<Note> {
+    this.logger.debug(
+      `Setting group permission for group ${permissionGroup.name} on note ${note.id}`,
+      'setGroupPermission',
+    );
     const permissions = await note.groupPermissions;
     let permissionIndex = 0;
-    const permission = permissions.find((value, index) => {
+    const permission = permissions.find(async (value, index) => {
       permissionIndex = index;
-      return value.group.id == permissionGroup.id;
+      return (await value.group).id == permissionGroup.id;
     });
     if (permission != undefined) {
       permission.canEdit = canEdit;
       permissions[permissionIndex] = permission;
     } else {
+      this.logger.debug(
+        `Permission does not exist yet, creating new one.`,
+        'setGroupPermission',
+      );
       const noteGroupPermission = NoteGroupPermission.create(
         permissionGroup,
         note,
@@ -304,12 +317,13 @@ export class PermissionsService {
     permissionGroup: Group,
   ): Promise<Note> {
     const permissions = await note.groupPermissions;
-    const permissionsFiltered = permissions.filter(
-      (value: NoteGroupPermission) => {
-        return value.group.id != permissionGroup.id;
-      },
-    );
-    note.groupPermissions = Promise.resolve(permissionsFiltered);
+    const newPermissions = [];
+    for (const permission of permissions) {
+      if ((await permission.group).id != permissionGroup.id) {
+        newPermissions.push(permission);
+      }
+    }
+    note.groupPermissions = Promise.resolve(newPermissions);
     return await this.noteRepository.save(note);
   }
 

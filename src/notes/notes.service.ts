@@ -285,14 +285,18 @@ export class NotesService {
     const groupPermissions = await note.groupPermissions;
     return {
       owner: owner ? owner.username : null,
-      sharedToUsers: userPermissions.map((noteUserPermission) => ({
-        username: noteUserPermission.user.username,
-        canEdit: noteUserPermission.canEdit,
-      })),
-      sharedToGroups: groupPermissions.map((noteGroupPermission) => ({
-        groupName: noteGroupPermission.group.name,
-        canEdit: noteGroupPermission.canEdit,
-      })),
+      sharedToUsers: await Promise.all(
+        userPermissions.map(async (noteUserPermission) => ({
+          username: (await noteUserPermission.user).username,
+          canEdit: noteUserPermission.canEdit,
+        })),
+      ),
+      sharedToGroups: await Promise.all(
+        groupPermissions.map(async (noteGroupPermission) => ({
+          groupName: (await noteGroupPermission.group).name,
+          canEdit: noteGroupPermission.canEdit,
+        })),
+      ),
     };
   }
 
