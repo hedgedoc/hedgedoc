@@ -15,4 +15,4 @@ echo 'Patch version.json to include git hash'
 jq ".version = \"0.0.0+${GITHUB_SHA:0:8}\"" src/version.json > src/_version.json
 mv src/_version.json src/version.json
 echo "Patch base URL"
-echo HD_EDITOR_BASE_URL="https://${1}--hedgedoc-ui-test.netlify.app/" >> .env.production
+echo HD_EDITOR_BASE_URL="${1}" >> .env.production

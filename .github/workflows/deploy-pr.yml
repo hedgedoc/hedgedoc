@@ -35,7 +35,7 @@ jobs:
           node-version: 18
 
       - name: Patch files
-        run: bash netlify/patch-files.sh "${{ github.event.number }}"
+        run: bash netlify/patch-files.sh "https://${{ github.event.number }}--hedgedoc-ui-test.netlify.app/"
 
       - name: Install dependencies
         run: yarn install --immutable
