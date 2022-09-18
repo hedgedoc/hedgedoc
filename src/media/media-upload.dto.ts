@@ -19,13 +19,13 @@ export class MediaUploadDto extends BaseDto {
   url: string;
 
   /**
-   * The noteId of the note to which the uploaded file is linked to.
+   * The publicId of the note to which the uploaded file is linked to.
    * @example "noteId" TODO how looks a note id?
    */
   @IsString()
   @IsOptional()
   @ApiProperty()
-  noteId: string | null;
+  notePublicId: string | null;
 
   /**
    * The date when the upload objects was created.

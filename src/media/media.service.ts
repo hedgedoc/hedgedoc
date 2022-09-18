@@ -225,7 +225,7 @@ export class MediaService {
   async toMediaUploadDto(mediaUpload: MediaUpload): Promise<MediaUploadDto> {
     return {
       url: mediaUpload.fileUrl,
-      noteId: (await mediaUpload.note)?.id ?? null,
+      notePublicId: (await mediaUpload.note)?.publicId ?? null,
       createdAt: mediaUpload.createdAt,
       username: (await mediaUpload.user).username,
     };
