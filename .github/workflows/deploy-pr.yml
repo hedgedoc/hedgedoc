@@ -40,7 +40,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Build mock variant
+      - name: Build app
         run: yarn build:mock
 
       - name: Remove Next.js cache to avoid it being deployed

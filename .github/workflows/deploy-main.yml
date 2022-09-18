@@ -40,8 +40,8 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Build netlify variant
-        run: yarn build:netlify
+      - name: Build app
+        run: yarn build:mock
 
       - name: Remove Next.js cache to avoid it being deployed
         run: rm -r .next/cache
