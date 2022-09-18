@@ -254,6 +254,7 @@ export class NotesController {
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
   @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @Put(':noteIdOrAlias/metadata/permissions/users/:userName')
   @OpenApi(
     {
       code: 200,
