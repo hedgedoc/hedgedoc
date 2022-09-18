@@ -6,8 +6,9 @@
 import {
   Column,
   Entity,
+  Index,
   ManyToOne,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
@@ -15,28 +16,22 @@ import { Note } from '../notes/note.entity';
 import { User } from '../users/user.entity';
 
 @Entity()
+@Index(['note', 'user'], { unique: true })
 export class HistoryEntry {
-  /**
-   * The `user` and `note` properties cannot be converted to promises
-   * (to lazy-load them), as TypeORM gets confused about lazy composite
-   * primary keys.
-   * See https://github.com/typeorm/typeorm/issues/6908
-   */
-  @PrimaryColumn()
-  userId: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ManyToOne((_) => User, (user) => user.historyEntries, {
     onDelete: 'CASCADE',
+    orphanedRowAction: 'delete', // This ensures the whole row is deleted when the Entry stops being referenced
   })
-  user: User;
-
-  @PrimaryColumn()
-  noteId: string;
+  user: Promise<User>;
 
   @ManyToOne((_) => Note, (note) => note.historyEntries, {
     onDelete: 'CASCADE',
+    orphanedRowAction: 'delete', // This ensures the whole row is deleted when the Entry stops being referenced
   })
-  note: Note;
+  note: Promise<Note>;
 
   @Column()
   pinStatus: boolean;
@@ -56,8 +51,8 @@ export class HistoryEntry {
     pinStatus = false,
   ): Omit<HistoryEntry, 'updatedAt'> {
     const newHistoryEntry = new HistoryEntry();
-    newHistoryEntry.user = user;
-    newHistoryEntry.note = note;
+    newHistoryEntry.user = Promise.resolve(user);
+    newHistoryEntry.note = Promise.resolve(note);
     newHistoryEntry.pinStatus = pinStatus;
     return newHistoryEntry;
   }

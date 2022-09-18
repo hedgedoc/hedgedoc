@@ -177,8 +177,8 @@ export class HistoryService {
     return {
       identifier: await getIdentifier(entry),
       lastVisitedAt: entry.updatedAt,
-      tags: await this.notesService.toTagList(entry.note),
-      title: entry.note.title ?? '',
+      tags: await this.notesService.toTagList(await entry.note),
+      title: (await entry.note).title ?? '',
       pinStatus: entry.pinStatus,
     };
   }

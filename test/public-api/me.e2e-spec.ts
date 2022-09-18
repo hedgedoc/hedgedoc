@@ -118,7 +118,7 @@ describe('Me', () => {
       let theEntry: HistoryEntryDto;
       for (const entry of history) {
         if (
-          (await entry.note.aliases).find(
+          (await (await entry.note).aliases).find(
             (element) => element.name === noteName,
           )
         ) {
@@ -147,7 +147,7 @@ describe('Me', () => {
       const history = await testSetup.historyService.getEntriesByUser(user);
       for (const entry of history) {
         if (
-          (await entry.note.aliases).find(
+          (await (await entry.note).aliases).find(
             (element) => element.name === noteName,
           )
         ) {

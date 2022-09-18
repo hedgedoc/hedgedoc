@@ -313,7 +313,7 @@ describe('NotesService', () => {
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
         expect(await newNote.historyEntries).toHaveLength(1);
-        expect((await newNote.historyEntries)[0].user).toEqual(user);
+        expect(await (await newNote.historyEntries)[0].user).toEqual(user);
         expect(await newNote.userPermissions).toHaveLength(0);
         expect(await newNote.groupPermissions).toHaveLength(0);
         expect(await newNote.tags).toHaveLength(0);
@@ -338,7 +338,7 @@ describe('NotesService', () => {
         expect(revisions).toHaveLength(1);
         expect(revisions[0].content).toEqual(content);
         expect(await newNote.historyEntries).toHaveLength(1);
-        expect((await newNote.historyEntries)[0].user).toEqual(user);
+        expect(await (await newNote.historyEntries)[0].user).toEqual(user);
         expect(await newNote.userPermissions).toHaveLength(0);
         expect(await newNote.groupPermissions).toHaveLength(0);
         expect(await newNote.tags).toHaveLength(0);
