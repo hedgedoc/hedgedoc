@@ -7,13 +7,13 @@ import { getPrimaryAlias } from '../notes/utils';
 import { HistoryEntry } from './history-entry.entity';
 
 export async function getIdentifier(entry: HistoryEntry): Promise<string> {
-  const aliases = await entry.note.aliases;
+  const aliases = await (await entry.note).aliases;
   if (!aliases || aliases.length === 0) {
-    return entry.note.publicId;
+    return (await entry.note).publicId;
   }
-  const primaryAlias = await getPrimaryAlias(entry.note);
+  const primaryAlias = await getPrimaryAlias(await entry.note);
   if (primaryAlias === undefined) {
-    return entry.note.publicId;
+    return (await entry.note).publicId;
   }
   return primaryAlias;
 }

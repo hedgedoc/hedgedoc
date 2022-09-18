@@ -101,16 +101,16 @@ describe('History', () => {
         .expect(201);
       const userEntries = await testSetup.historyService.getEntriesByUser(user);
       expect(userEntries.length).toEqual(1);
-      expect((await userEntries[0].note.aliases)[0].name).toEqual(
+      expect((await (await userEntries[0].note).aliases)[0].name).toEqual(
         (await note2.aliases)[0].name,
       );
-      expect((await userEntries[0].note.aliases)[0].primary).toEqual(
+      expect((await (await userEntries[0].note).aliases)[0].primary).toEqual(
         (await note2.aliases)[0].primary,
       );
-      expect((await userEntries[0].note.aliases)[0].id).toEqual(
+      expect((await (await userEntries[0].note).aliases)[0].id).toEqual(
         (await note2.aliases)[0].id,
       );
-      expect(userEntries[0].user.username).toEqual(user.username);
+      expect((await userEntries[0].user).username).toEqual(user.username);
       expect(userEntries[0].pinStatus).toEqual(pinStatus);
       expect(userEntries[0].updatedAt).toEqual(lastVisited);
     });
@@ -161,11 +161,13 @@ describe('History', () => {
           user,
         );
         expect(historyEntries).toHaveLength(1);
-        expect(await historyEntries[0].note.aliases).toEqual(
-          await prevEntry.note.aliases,
+        expect(await (await historyEntries[0].note).aliases).toEqual(
+          await (
+            await prevEntry.note
+          ).aliases,
         );
-        expect(historyEntries[0].user.username).toEqual(
-          prevEntry.user.username,
+        expect((await historyEntries[0].user).username).toEqual(
+          (await prevEntry.user).username,
         );
         expect(historyEntries[0].pinStatus).toEqual(prevEntry.pinStatus);
         expect(historyEntries[0].updatedAt).toEqual(prevEntry.updatedAt);
@@ -189,8 +191,9 @@ describe('History', () => {
       user,
     );
     expect(entry.pinStatus).toBeFalsy();
-    const alias = (await entry.note.aliases).filter((alias) => alias.primary)[0]
-      .name;
+    const alias = (await (await entry.note).aliases).filter(
+      (alias) => alias.primary,
+    )[0].name;
     await agent
       .put(`/api/private/me/history/${alias || 'null'}`)
       .send({ pinStatus: true })
@@ -203,8 +206,9 @@ describe('History', () => {
 
   it('DELETE /me/history/:note', async () => {
     const entry = await historyService.updateHistoryEntryTimestamp(note2, user);
-    const alias = (await entry.note.aliases).filter((alias) => alias.primary)[0]
-      .name;
+    const alias = (await (await entry.note).aliases).filter(
+      (alias) => alias.primary,
+    )[0].name;
     const entry2 = await historyService.updateHistoryEntryTimestamp(note, user);
     const entryDto = await historyService.toHistoryEntryDto(entry2);
     await agent

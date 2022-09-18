@@ -178,10 +178,12 @@ describe('HistoryService', () => {
           Note.create(user, alias) as Note,
           user,
         );
-        expect(await createHistoryEntry.note.aliases).toHaveLength(1);
-        expect((await createHistoryEntry.note.aliases)[0].name).toEqual(alias);
-        expect(await createHistoryEntry.note.owner).toEqual(user);
-        expect(createHistoryEntry.user).toEqual(user);
+        expect(await (await createHistoryEntry.note).aliases).toHaveLength(1);
+        expect((await (await createHistoryEntry.note).aliases)[0].name).toEqual(
+          alias,
+        );
+        expect(await (await createHistoryEntry.note).owner).toEqual(user);
+        expect(await createHistoryEntry.user).toEqual(user);
         expect(createHistoryEntry.pinStatus).toEqual(false);
       });
 
@@ -196,10 +198,12 @@ describe('HistoryService', () => {
           Note.create(user, alias) as Note,
           user,
         );
-        expect(await createHistoryEntry.note.aliases).toHaveLength(1);
-        expect((await createHistoryEntry.note.aliases)[0].name).toEqual(alias);
-        expect(await createHistoryEntry.note.owner).toEqual(user);
-        expect(createHistoryEntry.user).toEqual(user);
+        expect(await (await createHistoryEntry.note).aliases).toHaveLength(1);
+        expect((await (await createHistoryEntry.note).aliases)[0].name).toEqual(
+          alias,
+        );
+        expect(await (await createHistoryEntry.note).owner).toEqual(user);
+        expect(await createHistoryEntry.user).toEqual(user);
         expect(createHistoryEntry.pinStatus).toEqual(false);
         expect(createHistoryEntry.updatedAt.getTime()).toBeGreaterThanOrEqual(
           historyEntry.updatedAt.getTime(),
@@ -231,10 +235,12 @@ describe('HistoryService', () => {
             pinStatus: true,
           },
         );
-        expect(await updatedHistoryEntry.note.aliases).toHaveLength(1);
-        expect((await updatedHistoryEntry.note.aliases)[0].name).toEqual(alias);
-        expect(await updatedHistoryEntry.note.owner).toEqual(user);
-        expect(updatedHistoryEntry.user).toEqual(user);
+        expect(await (await updatedHistoryEntry.note).aliases).toHaveLength(1);
+        expect(
+          (await (await updatedHistoryEntry.note).aliases)[0].name,
+        ).toEqual(alias);
+        expect(await (await updatedHistoryEntry.note).owner).toEqual(user);
+        expect(await updatedHistoryEntry.user).toEqual(user);
         expect(updatedHistoryEntry.pinStatus).toEqual(true);
       });
 
@@ -357,13 +363,13 @@ describe('HistoryService', () => {
         remove: jest
           .fn()
           .mockImplementationOnce(async (entry: HistoryEntry) => {
-            expect(await entry.note.aliases).toHaveLength(1);
-            expect((await entry.note.aliases)[0].name).toEqual(alias);
+            expect(await (await entry.note).aliases).toHaveLength(1);
+            expect((await (await entry.note).aliases)[0].name).toEqual(alias);
             expect(entry.pinStatus).toEqual(false);
           }),
-        save: jest.fn().mockImplementationOnce((entry: HistoryEntry) => {
-          expect(entry.note.aliases).toEqual(
-            newlyCreatedHistoryEntry.note.aliases,
+        save: jest.fn().mockImplementationOnce(async (entry: HistoryEntry) => {
+          expect((await entry.note).aliases).toEqual(
+            (await newlyCreatedHistoryEntry.note).aliases,
           );
           expect(entry.pinStatus).toEqual(newlyCreatedHistoryEntry.pinStatus);
           expect(entry.updatedAt).toEqual(newlyCreatedHistoryEntry.updatedAt);
