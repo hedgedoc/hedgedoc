@@ -1937,7 +1937,7 @@ __metadata:
     "@reduxjs/toolkit": 1.8.5
     "@svgr/webpack": 6.3.1
     "@testing-library/cypress": 8.0.3
-    "@testing-library/dom": 8.17.1
+    "@testing-library/dom": 8.18.0
     "@testing-library/jest-dom": 5.16.5
     "@testing-library/react": 13.4.0
     "@testing-library/user-event": 14.4.3
@@ -3066,7 +3066,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:8.17.1, @testing-library/dom@npm:^8.1.0, @testing-library/dom@npm:^8.5.0":
+"@testing-library/dom@npm:8.18.0":
+  version: 8.18.0
+  resolution: "@testing-library/dom@npm:8.18.0"
+  dependencies:
+    "@babel/code-frame": ^7.10.4
+    "@babel/runtime": ^7.12.5
+    "@types/aria-query": ^4.2.0
+    aria-query: ^5.0.0
+    chalk: ^4.1.0
+    dom-accessibility-api: ^0.5.9
+    lz-string: ^1.4.4
+    pretty-format: ^27.0.2
+  checksum: 24fd4fad91a5939a300f8a6c0c79d49dc7576823a2c0713d8ee67fea4f41e47e6a3122c04d45cc2844a25ed12bbe59a299d1e2055d53c707c8cad4d672767d13
+  languageName: node
+  linkType: hard
+
+"@testing-library/dom@npm:^8.1.0, @testing-library/dom@npm:^8.5.0":
   version: 8.17.1
   resolution: "@testing-library/dom@npm:8.17.1"
   dependencies:
