@@ -530,4 +530,60 @@ describe('Notes', () => {
         .expect(403);
     });
   });
+
+  describe('permissions', () => {
+    it('can be fetched', async function () {
+      const permissions = await request(testSetup.app.getHttpServer())
+        .get(`/api/v2/notes/testAlias1/metadata/permissions`)
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(permissions.body.owner).toBe('testuser1');
+      expect(permissions.body.sharedToUsers).toEqual([]);
+      expect(permissions.body.sharedToGroups).toEqual([]);
+    });
+    it('can be updated', async function () {
+      // add permission for testuser2
+      await request(testSetup.app.getHttpServer())
+        .put(`/api/v2/notes/testAlias1/metadata/permissions/users/testuser2`)
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+        .send({
+          canEdit: true,
+        })
+        .expect(200);
+
+      // check permissions
+      let permissions = await request(testSetup.app.getHttpServer())
+        .get(`/api/v2/notes/testAlias1/metadata/permissions`)
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+        .expect(200);
+      expect(permissions.body.owner).toBe('testuser1');
+      expect(permissions.body.sharedToUsers).toEqual([
+        { username: 'testuser2', canEdit: true },
+      ]);
+      expect(permissions.body.sharedToGroups).toEqual([]);
+
+      // add permission for everyone
+      await request(testSetup.app.getHttpServer())
+        .put(`/api/v2/notes/testAlias1/metadata/permissions/groups/_EVERYONE`)
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+        .send({
+          canEdit: true,
+        })
+        .expect(200);
+
+      // check permissions
+      permissions = await request(testSetup.app.getHttpServer())
+        .get(`/api/v2/notes/testAlias1/metadata/permissions`)
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+        .expect(200);
+      expect(permissions.body.owner).toBe('testuser1');
+      expect(permissions.body.sharedToUsers).toEqual([
+        { username: 'testuser2', canEdit: true },
+      ]);
+      expect(permissions.body.sharedToGroups).toEqual([
+        { groupName: '_EVERYONE', canEdit: true },
+      ]);
+    });
+  });
 });
