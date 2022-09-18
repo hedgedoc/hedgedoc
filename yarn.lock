@@ -1694,7 +1694,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/state@npm:6.1.1, @codemirror/state@npm:^6.0.0, @codemirror/state@npm:^6.1.1":
+"@codemirror/state@npm:6.1.1":
   version: 6.1.1
   resolution: "@codemirror/state@npm:6.1.1"
   checksum: 26b767af3a3385479d9bb6a31b5d4fb7d2485d4f502c3056aa3117c12ba0b4e80bbbf358d81e81a03d147e404b7ef65cc1449058b2f869f698882d1969b74996
@@ -1721,17 +1721,6 @@ __metadata:
     style-mod: ^4.0.0
     w3c-keyname: ^2.2.4
   checksum: 5fd3dfe92f00c91e3f51a9881decdbc5ffbf3399d8d92258ee37b2b6ceab01053bdd527e15a0f87256c82e11e7c46a70d9fca463035c25ae78a3a3718a818297
-  languageName: node
-  linkType: hard
-
-"@codemirror/view@npm:^6.0.0, @codemirror/view@npm:^6.2.2":
-  version: 6.2.3
-  resolution: "@codemirror/view@npm:6.2.3"
-  dependencies:
-    "@codemirror/state": ^6.0.0
-    style-mod: ^4.0.0
-    w3c-keyname: ^2.2.4
-  checksum: 93d6f159c49ffd9276e9b6ba28cef2c41934be7eb68aa49acf1971dede97ee2684bde6daeb7494da8e15f2ef937933c3fa076253127b230c6996db0fe7a79ef2
   languageName: node
   linkType: hard
 
