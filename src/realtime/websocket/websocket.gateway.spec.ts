@@ -186,7 +186,7 @@ describe('Websocket gateway', () => {
         }
       });
 
-    const mockedNote = Mock.of<Note>({ id: 'mocknote' });
+    const mockedNote = Mock.of<Note>({ id: 4711 });
     jest
       .spyOn(notesService, 'getNoteByIdOrAlias')
       .mockImplementation((noteId: string) =>

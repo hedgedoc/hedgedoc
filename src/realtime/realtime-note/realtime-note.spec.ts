@@ -32,7 +32,7 @@ describe('realtime note', () => {
       .spyOn(websocketAwarenessModule, 'WebsocketAwareness')
       .mockImplementation(() => mockedAwareness);
 
-    mockedNote = Mock.of<Note>({ id: 'mock-note' });
+    mockedNote = Mock.of<Note>({ id: 4711 });
   });
 
   afterAll(() => {

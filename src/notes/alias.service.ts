@@ -86,8 +86,8 @@ export class AliasService {
    */
   async makeAliasPrimary(note: Note, alias: string): Promise<Alias> {
     let newPrimaryFound = false;
-    let oldPrimaryId = '';
-    let newPrimaryId = '';
+    let oldPrimaryId = 0;
+    let newPrimaryId = 0;
 
     this.notesService.checkNoteIdOrAlias(alias);
 

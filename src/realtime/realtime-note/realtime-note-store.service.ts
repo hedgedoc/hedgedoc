@@ -10,7 +10,7 @@ import { RealtimeNote } from './realtime-note';
 
 @Injectable()
 export class RealtimeNoteStore {
-  private noteIdToRealtimeNote = new Map<string, RealtimeNote>();
+  private noteIdToRealtimeNote = new Map<number, RealtimeNote>();
 
   /**
    * Creates a new {@link RealtimeNote} for the given {@link Note} and memorizes it.
@@ -37,7 +37,7 @@ export class RealtimeNoteStore {
    * @param noteId The id of the {@link Note}
    * @return A {@link RealtimeNote} or {@code undefined} if no instance is existing.
    */
-  public find(noteId: string): RealtimeNote | undefined {
+  public find(noteId: number): RealtimeNote | undefined {
     return this.noteIdToRealtimeNote.get(noteId);
   }
 

@@ -21,8 +21,8 @@ import { Revision } from './revision.entity';
  */
 @Entity()
 export class Edit {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   /**
    * Revisions this edit appears in

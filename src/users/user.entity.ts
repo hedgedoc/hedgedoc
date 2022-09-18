@@ -23,8 +23,8 @@ import { Note } from '../notes/note.entity';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({
     unique: true,

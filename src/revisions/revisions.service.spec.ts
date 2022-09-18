@@ -116,7 +116,7 @@ describe('RevisionsService', () => {
   describe('purgeRevisions', () => {
     it('purges the revision history', async () => {
       const note = {} as Note;
-      note.id = 'test';
+      note.id = 4711;
       let revisions: Revision[] = [];
       const revision1 = Revision.create('a', 'a', note) as Revision;
       revision1.id = 1;
@@ -146,7 +146,7 @@ describe('RevisionsService', () => {
     });
     it('has no effect on revision history when a single revision is present', async () => {
       const note = {} as Note;
-      note.id = 'test';
+      note.id = 4711;
       let revisions: Revision[] = [];
       const revision1 = Revision.create('a', 'a', note) as Revision;
       revision1.id = 1;

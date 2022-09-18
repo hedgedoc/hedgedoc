@@ -17,8 +17,8 @@ import { PrimaryValueTransformer } from './primary.value-transformer';
 @Entity()
 @Unique('Only one primary alias per note', ['note', 'primary'])
 export class Alias {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   /**
    * the actual alias
