@@ -3,6 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  encodeDocumentDeletedMessage,
+  encodeMetadataUpdatedMessage,
+} from '@hedgedoc/realtime';
 import { Mock } from 'ts-mockery';
 
 import { Note } from '../../notes/note.entity';
@@ -86,5 +90,37 @@ describe('realtime note', () => {
     const sut = new RealtimeNote(mockedNote, 'nothing');
     sut.destroy();
     expect(() => sut.destroy()).toThrow();
+  });
+
+  it('announcePermissionChange to all clients', () => {
+    const sut = new RealtimeNote(mockedNote, 'nothing');
+    const client1 = mockConnection(true);
+    sut.addClient(client1);
+    const client2 = mockConnection(true);
+    sut.addClient(client2);
+    const metadataMessage = encodeMetadataUpdatedMessage();
+    sut.announcePermissionChange();
+    expect(client1.send).toHaveBeenCalledWith(metadataMessage);
+    expect(client2.send).toHaveBeenCalledWith(metadataMessage);
+    sut.removeClient(client2);
+    sut.announcePermissionChange();
+    expect(client1.send).toHaveBeenCalledTimes(2);
+    expect(client2.send).toHaveBeenCalledTimes(1);
+  });
+
+  it('announceNoteDeletion to all clients', () => {
+    const sut = new RealtimeNote(mockedNote, 'nothing');
+    const client1 = mockConnection(true);
+    sut.addClient(client1);
+    const client2 = mockConnection(true);
+    sut.addClient(client2);
+    const deletedMessage = encodeDocumentDeletedMessage();
+    sut.announceNoteDeletion();
+    expect(client1.send).toHaveBeenCalledWith(deletedMessage);
+    expect(client2.send).toHaveBeenCalledWith(deletedMessage);
+    sut.removeClient(client2);
+    sut.announceNoteDeletion();
+    expect(client1.send).toHaveBeenCalledTimes(2);
+    expect(client2.send).toHaveBeenCalledTimes(1);
   });
 });
