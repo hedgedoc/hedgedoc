@@ -11,10 +11,12 @@ import type {
   SetNoteDocumentContentAction,
   SetNotePermissionsFromServerAction,
   UpdateCursorPositionAction,
+  UpdateMetadataAction,
   UpdateNoteTitleByFirstHeadingAction
 } from './types'
 import { NoteDetailsActionType } from './types'
 import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
+import { getNoteMetadata } from '../../api/notes'
 
 /**
  * Sets the content of the current note, extracts and parses the frontmatter and extracts the markdown content part.
@@ -65,4 +67,15 @@ export const updateCursorPositions = (selection: CursorSelection): void => {
     type: NoteDetailsActionType.UPDATE_CURSOR_POSITION,
     selection
   } as UpdateCursorPositionAction)
+}
+
+/**
+ * Updates the current note's metadata from the server.
+ */
+export const updateMetadata = async (): Promise<void> => {
+  const updatedMetadata = await getNoteMetadata(store.getState().noteDetails.id)
+  store.dispatch({
+    type: NoteDetailsActionType.UPDATE_METADATA,
+    updatedMetadata
+  } as UpdateMetadataAction)
 }

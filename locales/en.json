@@ -455,6 +455,17 @@
         "viewOnlyDescription": "This link points to a read-only version of this note. You can use this e.g. for feedback from friends and colleagues.",
         "slidesDescription": "This link points to the presentation view of the slides."
       },
+      "aliases": {
+        "title": "Aliases",
+        "explanation": "Aliases are alternative names for this note. You may access this note under all the listed names below.",
+        "addAlias": "Add alias",
+        "makePrimary": "Mark this alias as primary",
+        "isPrimary": "This is the primary alias",
+        "removeAlias": "Remove this alias",
+        "errorAddingAlias": "The chosen alias can not be added to this note",
+        "errorRemovingAlias": "There was an error removing the alias",
+        "errorMakingPrimary": "There was an error marking the alias as primary"
+      },
       "preferences": {
         "title": "Preferences",
         "theme": {

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { Note, NoteDeletionOptions } from './types'
+import type { Note, NoteDeletionOptions, NoteMetadata } from './types'
 import type { MediaUpload } from '../media/types'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
@@ -20,6 +20,17 @@ export const getNote = async (noteIdOrAlias: string): Promise<Note> => {
   const response = await new GetApiRequestBuilder<Note>('notes/' + noteIdOrAlias)
     .withStatusCodeErrorMapping({ 404: 'api.note.notFound', 403: 'api.note.forbidden' })
     .sendRequest()
+  return response.asParsedJsonObject()
+}
+
+/**
+ * Retrieves the metadata of the specified note.
+ *
+ * @param noteIdOrAlias The id or alias of the note.
+ * @return Metadata of the specified note.
+ */
+export const getNoteMetadata = async (noteIdOrAlias: string): Promise<NoteMetadata> => {
+  const response = await new GetApiRequestBuilder<NoteMetadata>(`notes/${noteIdOrAlias}/metadata`).sendRequest()
   return response.asParsedJsonObject()
 }
 

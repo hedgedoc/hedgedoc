@@ -7,9 +7,9 @@
 import type { NoteDetails } from '../types/note-details'
 import { buildStateFromUpdatedMarkdownContent } from '../build-state-from-updated-markdown-content'
 import { initialState } from '../initial-state'
-import { DateTime } from 'luxon'
 import { calculateLineStartIndexes } from '../calculate-line-start-indexes'
 import type { Note } from '../../../api/notes/types'
+import { buildStateFromMetadataUpdate } from './build-state-from-metadata-update'
 
 /**
  * Builds a {@link NoteDetails} redux state from a DTO received as an API response.
@@ -28,25 +28,15 @@ export const buildStateFromServerDto = (dto: Note): NoteDetails => {
  * @return The NoteDetails object corresponding to the DTO.
  */
 const convertNoteDtoToNoteDetails = (note: Note): NoteDetails => {
+  const stateWithMetadata = buildStateFromMetadataUpdate(initialState, note.metadata)
   const newLines = note.content.split('\n')
   return {
-    ...initialState,
-    updateUsername: note.metadata.updateUsername,
-    permissions: note.metadata.permissions,
-    editedBy: note.metadata.editedBy,
-    primaryAddress: note.metadata.primaryAddress,
-    id: note.metadata.id,
-    aliases: note.metadata.aliases,
-    title: note.metadata.title,
-    version: note.metadata.version,
-    viewCount: note.metadata.viewCount,
+    ...stateWithMetadata,
     markdownContent: {
       plain: note.content,
       lines: newLines,
       lineStartIndexes: calculateLineStartIndexes(newLines)
     },
-    rawFrontmatter: '',
-    createdAt: DateTime.fromISO(note.metadata.createdAt).toSeconds(),
-    updatedAt: DateTime.fromISO(note.metadata.updatedAt).toSeconds()
+    rawFrontmatter: ''
   }
 }

@@ -14,6 +14,7 @@ import { buildStateFromUpdateCursorPosition } from './reducers/build-state-from-
 import { buildStateFromFirstHeadingUpdate } from './reducers/build-state-from-first-heading-update'
 import { buildStateFromServerDto } from './reducers/build-state-from-set-note-data-from-server'
 import { buildStateFromServerPermissions } from './reducers/build-state-from-server-permissions'
+import { buildStateFromMetadataUpdate } from './reducers/build-state-from-metadata-update'
 
 export const NoteDetailsReducer: Reducer<NoteDetails, NoteDetailsActions> = (
   state: NoteDetails = initialState,
@@ -30,6 +31,8 @@ export const NoteDetailsReducer: Reducer<NoteDetails, NoteDetailsActions> = (
       return buildStateFromFirstHeadingUpdate(state, action.firstHeading)
     case NoteDetailsActionType.SET_NOTE_DATA_FROM_SERVER:
       return buildStateFromServerDto(action.noteFromServer)
+    case NoteDetailsActionType.UPDATE_METADATA:
+      return buildStateFromMetadataUpdate(state, action.updatedMetadata)
     default:
       return state
   }

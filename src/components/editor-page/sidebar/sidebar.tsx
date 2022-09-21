@@ -17,6 +17,7 @@ import { ShareSidebarEntry } from './specific-sidebar-entries/share-sidebar-entr
 import styles from './style/sidebar.module.scss'
 import { DocumentSidebarMenuSelection } from './types'
 import { UsersOnlineSidebarMenu } from './users-online-sidebar-menu/users-online-sidebar-menu'
+import { AliasesSidebarEntry } from './specific-sidebar-entries/aliases-sidebar-entry'
 
 /**
  * Renders the sidebar for the editor.
@@ -50,6 +51,7 @@ export const Sidebar: React.FC = () => {
         <NoteInfoSidebarEntry hide={selectionIsNotNone} />
         <RevisionSidebarEntry hide={selectionIsNotNone} />
         <PermissionsSidebarEntry hide={selectionIsNotNone} />
+        <AliasesSidebarEntry hide={selectionIsNotNone} />
         <ImportMenuSidebarMenu
           menuId={DocumentSidebarMenuSelection.IMPORT}
           selectedMenuId={selectedMenu}
