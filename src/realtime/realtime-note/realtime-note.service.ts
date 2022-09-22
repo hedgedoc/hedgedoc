@@ -5,9 +5,11 @@
  */
 import { Optional } from '@mrdrogdrog/optional';
 import { BeforeApplicationShutdown, Inject, Injectable } from '@nestjs/common';
+import { OnEvent } from '@nestjs/event-emitter';
 import { SchedulerRegistry } from '@nestjs/schedule';
 
 import appConfiguration, { AppConfig } from '../../config/app.config';
+import { NoteEvent } from '../../events';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { Note } from '../../notes/note.entity';
 import { RevisionsService } from '../../revisions/revisions.service';
@@ -100,5 +102,21 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
           );
         });
       });
+  }
+
+  @OnEvent(NoteEvent.PERMISSION_CHANGE)
+  public handleNotePermissionChanged(noteId: Note['id']): void {
+    const realtimeNote = this.realtimeNoteStore.find(noteId);
+    if (realtimeNote) {
+      realtimeNote.announcePermissionChange();
+    }
+  }
+
+  @OnEvent(NoteEvent.DELETION)
+  public handleNoteDeleted(noteId: Note['id']): void {
+    const realtimeNote = this.realtimeNoteStore.find(noteId);
+    if (realtimeNote) {
+      realtimeNote.announceNoteDeletion();
+    }
   }
 }

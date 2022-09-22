@@ -5,6 +5,7 @@
  */
 import { Optional } from '@mrdrogdrog/optional';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -15,6 +16,7 @@ import {
   ForbiddenIdError,
   NotInDBError,
 } from '../errors/errors';
+import { NoteEvent } from '../events';
 import { Group } from '../groups/group.entity';
 import { GroupsService } from '../groups/groups.service';
 import { HistoryEntry } from '../history/history-entry.entity';
@@ -51,6 +53,7 @@ export class NotesService {
     @Inject(forwardRef(() => AliasService)) private aliasService: AliasService,
     private realtimeNoteService: RealtimeNoteService,
     private realtimeNoteStore: RealtimeNoteStore,
+    private eventEmitter: EventEmitter2,
   ) {
     this.logger.setContext(NotesService.name);
   }
@@ -260,10 +263,7 @@ export class NotesService {
    * @throws {NotInDBError} there is no note with this id or alias
    */
   async deleteNote(note: Note): Promise<Note> {
-    const realtimeNote = this.realtimeNoteStore.find(note.id);
-    if (realtimeNote) {
-      realtimeNote.announceNoteDeletion();
-    }
+    this.eventEmitter.emit(NoteEvent.DELETION, note.id);
     return await this.noteRepository.remove(note);
   }
 

@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { GroupsModule } from '../groups/groups.module';
 import { LoggerModule } from '../logger/logger.module';
 import { Note } from '../notes/note.entity';
-import { RealtimeNoteModule } from '../realtime/realtime-note/realtime-note.module';
 import { UsersModule } from '../users/users.module';
 import { PermissionsService } from './permissions.service';
 
@@ -19,7 +18,6 @@ import { PermissionsService } from './permissions.service';
     UsersModule,
     GroupsModule,
     LoggerModule,
-    forwardRef(() => RealtimeNoteModule),
   ],
   exports: [PermissionsService],
   providers: [PermissionsService],
