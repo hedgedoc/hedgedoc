@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Inject, Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -13,14 +14,13 @@ import {
 } from '../config/guest_access.enum';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { PermissionsUpdateInconsistentError } from '../errors/errors';
+import { NoteEvent } from '../events';
 import { Group } from '../groups/group.entity';
 import { GroupsService } from '../groups/groups.service';
 import { SpecialGroup } from '../groups/groups.special';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { NotePermissionsUpdateDto } from '../notes/note-permissions.dto';
 import { Note } from '../notes/note.entity';
-import { RealtimeNoteStore } from '../realtime/realtime-note/realtime-note-store';
-import { RealtimeNoteService } from '../realtime/realtime-note/realtime-note.service';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { checkArrayForDuplicates } from '../utils/arrayDuplicatCheck';
@@ -36,8 +36,7 @@ export class PermissionsService {
     private readonly logger: ConsoleLoggerService,
     @Inject(noteConfiguration.KEY)
     private noteConfig: NoteConfig,
-    private realtimeNoteService: RealtimeNoteService,
-    private realtimeNoteStore: RealtimeNoteStore,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   /**
@@ -155,10 +154,7 @@ export class PermissionsService {
   }
 
   private notifyOthers(noteId: Note['id']): void {
-    const realtimeNote = this.realtimeNoteStore.find(noteId);
-    if (realtimeNote) {
-      realtimeNote.announcePermissionChange();
-    }
+    this.eventEmitter.emit(NoteEvent.PERMISSION_CHANGE, noteId);
   }
 
   /**
