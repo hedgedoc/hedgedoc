@@ -5,6 +5,7 @@
  */
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RouterModule, Routes } from 'nest-router';
@@ -22,6 +23,7 @@ import externalConfig from './config/external-services.config';
 import hstsConfig from './config/hsts.config';
 import mediaConfig from './config/media.config';
 import noteConfig from './config/note.config';
+import { eventModuleConfig } from './events';
 import { FrontendConfigModule } from './frontend-config/frontend-config.module';
 import { FrontendConfigService } from './frontend-config/frontend-config.service';
 import { GroupsModule } from './groups/groups.module';
@@ -87,6 +89,7 @@ const routes: Routes = [
       ],
       isGlobal: true,
     }),
+    EventEmitterModule.forRoot(eventModuleConfig),
     ScheduleModule.forRoot(),
     NotesModule,
     UsersModule,
