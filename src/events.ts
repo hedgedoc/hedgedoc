@@ -4,6 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+export const eventModuleConfig = {
+  wildcard: false,
+  delimiter: '.',
+  newListener: false,
+  removeListener: false,
+  maxListeners: 10,
+  verboseMemoryLeak: true,
+  ignoreErrors: false,
+};
+
 export enum NoteEvent {
   PERMISSION_CHANGE = 'note.permission_change',
   DELETION = 'note.deletion',
