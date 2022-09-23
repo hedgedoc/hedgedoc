@@ -6,9 +6,9 @@
 
 import type { ReactElement } from 'react'
 import React, { Fragment, useMemo } from 'react'
-import { MarkdownExtensionCollection } from '../../markdown-extension-collection'
 import convertHtmlToReact from '@hedgedoc/html-to-react'
 import type { HLJSApi } from 'highlight.js'
+import { sanitize } from 'dompurify'
 
 /**
  * Highlights the given code using highlight.js. If the language wasn't recognized then it won't be highlighted.
@@ -32,8 +32,6 @@ export const useCodeDom = (code: string, hljs: HLJSApi | undefined, language?: s
   }, [code, hljs, language])
 }
 
-const nodeProcessor = new MarkdownExtensionCollection([]).buildFlatNodeProcessor()
-
 /**
  * Converts the given html code to react elements without any custom transformation but with sanitizing.
  *
@@ -41,13 +39,7 @@ const nodeProcessor = new MarkdownExtensionCollection([]).buildFlatNodeProcessor
  * @return the code represented as react elements
  */
 const createHtmlLinesToReactDOM = (code: string[]): ReactElement[] => {
-  return code.map((line, lineIndex) => (
-    <Fragment key={lineIndex}>
-      {convertHtmlToReact(line, {
-        preprocessNodes: nodeProcessor
-      })}
-    </Fragment>
-  ))
+  return code.map((line, lineIndex) => <Fragment key={lineIndex}>{convertHtmlToReact(sanitize(line))}</Fragment>)
 }
 
 /**
