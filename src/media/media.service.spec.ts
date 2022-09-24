@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ConfigModule } from '@nestjs/config';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { promises as fs } from 'fs';
@@ -17,6 +18,7 @@ import databaseConfigMock from '../config/mock/database.config.mock';
 import mediaConfigMock from '../config/mock/media.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
 import { ClientError, NotInDBError } from '../errors/errors';
+import { eventModuleConfig } from '../events';
 import { Group } from '../groups/group.entity';
 import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
@@ -65,6 +67,7 @@ describe('MediaService', () => {
         LoggerModule,
         NotesModule,
         UsersModule,
+        EventEmitterModule.forRoot(eventModuleConfig),
       ],
     })
       .overrideProvider(getRepositoryToken(Edit))
