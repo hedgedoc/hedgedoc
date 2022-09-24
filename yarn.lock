@@ -2020,10 +2020,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:16.11.59":
-  version: 16.11.59
-  resolution: "@types/node@npm:16.11.59"
-  checksum: b3a2986ef8f8216bb7fd1187dcf2e69aca3e6b6b5fdfd6abf4cf11c44e3cdd587fae875a28dc4ef257e2b369e2c5290642aff6a0a9d702f3385a78f561293259
+"@types/node@npm:16.11.60":
+  version: 16.11.60
+  resolution: "@types/node@npm:16.11.60"
+  checksum: 8c9670801f736a06f5ec8dd4ade00cb8d822f1dd168ad255909af6f6439a50abc231fa684418810002fdcd4c282804f56ceee6e7d3cd3209736c4fad115f4b2c
   languageName: node
   linkType: hard
 
@@ -5499,7 +5499,7 @@ __metadata:
     "@types/jest": 29.0.3
     "@types/minio": 7.0.13
     "@types/mysql": 2.15.21
-    "@types/node": 16.11.59
+    "@types/node": 16.11.60
     "@types/node-fetch": 2.6.2
     "@types/passport-http-bearer": 1.0.37
     "@types/passport-local": 1.0.34
