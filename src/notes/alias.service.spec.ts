@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { DataSource, EntityManager, Repository } from 'typeorm';
@@ -20,6 +21,7 @@ import {
   NotInDBError,
   PrimaryAliasDeletionForbiddenError,
 } from '../errors/errors';
+import { eventModuleConfig } from '../events';
 import { Group } from '../groups/group.entity';
 import { GroupsModule } from '../groups/groups.module';
 import { Identity } from '../identity/identity.entity';
@@ -93,6 +95,7 @@ describe('AliasService', () => {
         RevisionsModule,
         NotesModule,
         RealtimeNoteModule,
+        EventEmitterModule.forRoot(eventModuleConfig),
       ],
     })
       .overrideProvider(getRepositoryToken(Note))

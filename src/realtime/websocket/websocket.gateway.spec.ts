@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ConfigModule } from '@nestjs/config';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { IncomingMessage } from 'http';
@@ -17,6 +18,7 @@ import appConfigMock from '../../config/mock/app.config.mock';
 import authConfigMock from '../../config/mock/auth.config.mock';
 import databaseConfigMock from '../../config/mock/database.config.mock';
 import noteConfigMock from '../../config/mock/note.config.mock';
+import { eventModuleConfig } from '../../events';
 import { Group } from '../../groups/group.entity';
 import { Identity } from '../../identity/identity.entity';
 import { LoggerModule } from '../../logger/logger.module';
@@ -110,6 +112,7 @@ describe('Websocket gateway', () => {
             noteConfigMock,
           ],
         }),
+        EventEmitterModule.forRoot(eventModuleConfig),
       ],
     })
       .overrideProvider(getRepositoryToken(User))

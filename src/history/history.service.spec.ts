@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ConfigModule } from '@nestjs/config';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getDataSourceToken, getRepositoryToken } from '@nestjs/typeorm';
 import { Mock } from 'ts-mockery';
@@ -16,6 +17,7 @@ import authConfigMock from '../config/mock/auth.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
 import { NotInDBError } from '../errors/errors';
+import { eventModuleConfig } from '../events';
 import { Group } from '../groups/group.entity';
 import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
@@ -89,6 +91,7 @@ describe('HistoryService', () => {
             noteConfigMock,
           ],
         }),
+        EventEmitterModule.forRoot(eventModuleConfig),
       ],
     })
       .overrideProvider(getRepositoryToken(User))

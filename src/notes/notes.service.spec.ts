@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import {
@@ -29,6 +30,7 @@ import {
   ForbiddenIdError,
   NotInDBError,
 } from '../errors/errors';
+import { eventModuleConfig, NoteEvent } from '../events';
 import { Group } from '../groups/group.entity';
 import { GroupsModule } from '../groups/groups.module';
 import { SpecialGroup } from '../groups/groups.special';
@@ -238,6 +240,7 @@ describe('NotesService', () => {
             registerNoteConfig(noteMockConfig),
           ],
         }),
+        EventEmitterModule.forRoot(eventModuleConfig),
       ],
     })
       .overrideProvider(getRepositoryToken(Note))

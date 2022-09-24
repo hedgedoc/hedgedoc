@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ConfigModule } from '@nestjs/config';
+import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { DataSource, EntityManager, Repository } from 'typeorm';
@@ -21,6 +22,7 @@ import {
 } from '../config/mock/note.config.mock';
 import { NoteConfig } from '../config/note.config';
 import { PermissionsUpdateInconsistentError } from '../errors/errors';
+import { eventModuleConfig, NoteEvent } from '../events';
 import { Group } from '../groups/group.entity';
 import { GroupsModule } from '../groups/groups.module';
 import { SpecialGroup } from '../groups/groups.special';
@@ -34,7 +36,6 @@ import {
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
-import { RealtimeNoteModule } from '../realtime/realtime-note/realtime-note.module';
 import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
 import { Session } from '../users/session.entity';
@@ -110,7 +111,7 @@ describe('PermissionsService', () => {
           ],
         }),
         GroupsModule,
-        RealtimeNoteModule,
+        EventEmitterModule.forRoot(eventModuleConfig),
       ],
     })
       .overrideProvider(getRepositoryToken(User))

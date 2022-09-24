@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
@@ -30,6 +31,7 @@ import externalServicesConfigMock from '../src/config/mock/external-services.con
 import mediaConfigMock from '../src/config/mock/media.config.mock';
 import noteConfigMock from '../src/config/mock/note.config.mock';
 import { ErrorExceptionMapping } from '../src/errors/error-mapping';
+import { eventModuleConfig } from '../src/events';
 import { FrontendConfigModule } from '../src/frontend-config/frontend-config.module';
 import { GroupsModule } from '../src/groups/groups.module';
 import { GroupsService } from '../src/groups/groups.service';
@@ -233,6 +235,7 @@ export class TestSetupBuilder {
         FrontendConfigModule,
         IdentityModule,
         SessionModule,
+        EventEmitterModule.forRoot(eventModuleConfig),
       ],
       providers: [
         {
