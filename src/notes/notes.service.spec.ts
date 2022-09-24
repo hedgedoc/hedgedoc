@@ -61,6 +61,7 @@ describe('NotesService', () => {
   let forbiddenNoteId: string;
   let everyoneDefaultAccessPermission: string;
   let loggedinDefaultAccessPermission: string;
+  let eventEmitter: EventEmitter2;
   const everyone = Group.create(
     SpecialGroup.EVERYONE,
     SpecialGroup.EVERYONE,
@@ -281,6 +282,7 @@ describe('NotesService', () => {
     revisionRepo = module.get<Repository<Revision>>(
       getRepositoryToken(Revision),
     );
+    eventEmitter = module.get<EventEmitter2>(EventEmitter2);
   });
 
   it('should be defined', () => {
@@ -584,7 +586,15 @@ describe('NotesService', () => {
           expect(entry).toEqual(note);
           return entry;
         });
+      const mockedEventEmitter = jest
+        .spyOn(eventEmitter, 'emit')
+        .mockImplementationOnce((event) => {
+          expect(event).toEqual(NoteEvent.DELETION);
+          return true;
+        });
+      expect(mockedEventEmitter).not.toHaveBeenCalled();
       await service.deleteNote(note);
+      expect(mockedEventEmitter).toHaveBeenCalled();
     });
   });
 

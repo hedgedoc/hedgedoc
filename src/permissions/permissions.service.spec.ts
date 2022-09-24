@@ -52,6 +52,7 @@ describe('PermissionsService', () => {
   let noteRepo: Repository<Note>;
   let userRepo: Repository<User>;
   let groupRepo: Repository<Group>;
+  let eventEmitter: EventEmitter2;
   const noteMockConfig: NoteConfig = createDefaultMockNoteConfig();
 
   beforeAll(async () => {
@@ -145,6 +146,11 @@ describe('PermissionsService', () => {
     notes = await createNoteUserPermissionNotes();
     groupRepo = module.get<Repository<Group>>(getRepositoryToken(Group));
     noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
+    eventEmitter = module.get<EventEmitter2>(EventEmitter2);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   // The two users we test with:
@@ -730,6 +736,27 @@ describe('PermissionsService', () => {
       false,
     ) as Group;
     const note = Note.create(user) as Note;
+    it('emits PERMISSION_CHANGE event', async () => {
+      jest
+        .spyOn(noteRepo, 'save')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementationOnce(async (entry: Note) => {
+          return entry;
+        });
+      const mockedEventEmitter = jest
+        .spyOn(eventEmitter, 'emit')
+        .mockImplementationOnce((event) => {
+          expect(event).toEqual(NoteEvent.PERMISSION_CHANGE);
+          return true;
+        });
+      expect(mockedEventEmitter).not.toHaveBeenCalled();
+      await service.updateNotePermissions(note, {
+        sharedToUsers: [],
+        sharedToGroups: [],
+      });
+      expect(mockedEventEmitter).toHaveBeenCalled();
+    });
     describe('works', () => {
       it('with empty GroupPermissions and with empty UserPermissions', async () => {
         jest
@@ -1037,6 +1064,26 @@ describe('PermissionsService', () => {
   });
 
   describe('setUserPermission', () => {
+    it('emits PERMISSION_CHANGE event', async () => {
+      jest
+        .spyOn(noteRepo, 'save')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementationOnce(async (entry: Note) => {
+          return entry;
+        });
+      const note = Note.create(null) as Note;
+      const user = User.create('test', 'Testy') as User;
+      const mockedEventEmitter = jest
+        .spyOn(eventEmitter, 'emit')
+        .mockImplementationOnce((event) => {
+          expect(event).toEqual(NoteEvent.PERMISSION_CHANGE);
+          return true;
+        });
+      expect(mockedEventEmitter).not.toHaveBeenCalled();
+      await service.setUserPermission(note, user, true);
+      expect(mockedEventEmitter).toHaveBeenCalled();
+    });
     describe('works', () => {
       it('with user not added before and editable', async () => {
         jest
@@ -1113,6 +1160,29 @@ describe('PermissionsService', () => {
   });
 
   describe('removeUserPermission', () => {
+    it('emits PERMISSION_CHANGE event', async () => {
+      jest
+        .spyOn(noteRepo, 'save')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementationOnce(async (entry: Note) => {
+          return entry;
+        });
+      const note = Note.create(null) as Note;
+      const user = User.create('test', 'Testy') as User;
+      note.userPermissions = Promise.resolve([
+        NoteUserPermission.create(user, note, true),
+      ]);
+      const mockedEventEmitter = jest
+        .spyOn(eventEmitter, 'emit')
+        .mockImplementationOnce((event) => {
+          expect(event).toEqual(NoteEvent.PERMISSION_CHANGE);
+          return true;
+        });
+      expect(mockedEventEmitter).not.toHaveBeenCalled();
+      await service.removeUserPermission(note, user);
+      expect(mockedEventEmitter).toHaveBeenCalled();
+    });
     describe('works', () => {
       it('with user added before and editable', async () => {
         jest
@@ -1151,6 +1221,26 @@ describe('PermissionsService', () => {
   });
 
   describe('setGroupPermission', () => {
+    it('emits PERMISSION_CHANGE event', async () => {
+      jest
+        .spyOn(noteRepo, 'save')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementationOnce(async (entry: Note) => {
+          return entry;
+        });
+      const note = Note.create(null) as Note;
+      const group = Group.create('test', 'Testy', false) as Group;
+      const mockedEventEmitter = jest
+        .spyOn(eventEmitter, 'emit')
+        .mockImplementationOnce((event) => {
+          expect(event).toEqual(NoteEvent.PERMISSION_CHANGE);
+          return true;
+        });
+      expect(mockedEventEmitter).not.toHaveBeenCalled();
+      await service.setGroupPermission(note, group, true);
+      expect(mockedEventEmitter).toHaveBeenCalled();
+    });
     describe('works', () => {
       it('with group not added before and editable', async () => {
         jest
@@ -1243,6 +1333,29 @@ describe('PermissionsService', () => {
   });
 
   describe('removeGroupPermission', () => {
+    it('emits PERMISSION_CHANGE event', async () => {
+      jest
+        .spyOn(noteRepo, 'save')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementationOnce(async (entry: Note) => {
+          return entry;
+        });
+      const note = Note.create(null) as Note;
+      const group = Group.create('test', 'Testy', false) as Group;
+      note.groupPermissions = Promise.resolve([
+        NoteGroupPermission.create(group, note, true),
+      ]);
+      const mockedEventEmitter = jest
+        .spyOn(eventEmitter, 'emit')
+        .mockImplementationOnce((event) => {
+          expect(event).toEqual(NoteEvent.PERMISSION_CHANGE);
+          return true;
+        });
+      expect(mockedEventEmitter).not.toHaveBeenCalled();
+      await service.removeGroupPermission(note, group);
+      expect(mockedEventEmitter).toHaveBeenCalled();
+    });
     describe('works', () => {
       it('with user added before and editable', async () => {
         jest
