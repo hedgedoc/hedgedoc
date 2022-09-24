@@ -15,6 +15,144 @@ describe('authConfig', () => {
     /* eslint-enable @typescript-eslint/naming-convention */
   };
 
+  describe('local', () => {
+    const enableLogin = true;
+    const enableRegister = true;
+    const minimalPasswordStrength = 1;
+    const completeLocalConfig = {
+      /* eslint-disable @typescript-eslint/naming-convention */
+      HD_AUTH_LOCAL_ENABLE_LOGIN: String(enableLogin),
+      HD_AUTH_LOCAL_ENABLE_REGISTER: String(enableRegister),
+      HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH: String(minimalPasswordStrength),
+      /* eslint-enable @typescript-eslint/naming-convention */
+    };
+    describe('is correctly parsed', () => {
+      it('when given correct and complete environment variables', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeLocalConfig,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.local.enableLogin).toEqual(enableLogin);
+        expect(config.local.enableRegister).toEqual(enableRegister);
+        expect(config.local.minimalPasswordStrength).toEqual(
+          minimalPasswordStrength,
+        );
+        restore();
+      });
+
+      it('when HD_AUTH_LOCAL_ENABLE_LOGIN is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeLocalConfig,
+            HD_AUTH_LOCAL_ENABLE_LOGIN: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.local.enableLogin).toEqual(false);
+        expect(config.local.enableRegister).toEqual(enableRegister);
+        expect(config.local.minimalPasswordStrength).toEqual(
+          minimalPasswordStrength,
+        );
+        restore();
+      });
+
+      it('when HD_AUTH_LOCAL_ENABLE_REGISTER is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeLocalConfig,
+            HD_AUTH_LOCAL_ENABLE_REGISTER: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.local.enableLogin).toEqual(enableLogin);
+        expect(config.local.enableRegister).toEqual(false);
+        expect(config.local.minimalPasswordStrength).toEqual(
+          minimalPasswordStrength,
+        );
+        restore();
+      });
+
+      it('when HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeLocalConfig,
+            HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.local.enableLogin).toEqual(enableLogin);
+        expect(config.local.enableRegister).toEqual(enableRegister);
+        expect(config.local.minimalPasswordStrength).toEqual(2);
+        restore();
+      });
+    });
+
+    describe('fails to be parsed', () => {
+      it('when HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH is 5', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeLocalConfig,
+            HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH: '5',
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        expect(() => authConfig()).toThrow(
+          '"HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH" must be less than or equal to 4',
+        );
+        restore();
+      });
+      it('when HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH is -1', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeLocalConfig,
+            HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH: '-1',
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        expect(() => authConfig()).toThrow(
+          '"HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH" must be greater than or equal to 0',
+        );
+        restore();
+      });
+    });
+  });
+
   describe('ldap', () => {
     const ldapNames = ['futurama'];
     const providerName = 'Futurama LDAP';
