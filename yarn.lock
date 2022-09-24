@@ -2431,6 +2431,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@zxcvbn-ts/core@npm:2.0.5":
+  version: 2.0.5
+  resolution: "@zxcvbn-ts/core@npm:2.0.5"
+  checksum: b5aa4aef6c3b6aaa87228bd7460d5a9d7bc9db6ea40fb65d5f91eeeb9364a111390abc8569922df970c78cc04b1d04d56c7e2567a96c4ead8ac58cf231cb00bc
+  languageName: node
+  linkType: hard
+
+"@zxcvbn-ts/language-common@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@zxcvbn-ts/language-common@npm:2.0.1"
+  checksum: 75bbda3b4f453f977c0f1457aa5e4bbb3e4065ef0e0ec1ab5e5270544ab88d9962d32493ae6ad2dbd847cb50e723e60e42fc0f62100d979029c4bed8b7a3c189
+  languageName: node
+  linkType: hard
+
+"@zxcvbn-ts/language-en@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@zxcvbn-ts/language-en@npm:2.1.0"
+  checksum: 73473860490530e31e4e90f0897bcdd71dba9f5d672867108fb1668eb3104ca154c73b45c7e4c8a00c72cd55e398a1f09209afdb0237ef421b527169a284a52e
+  languageName: node
+  linkType: hard
+
 "@zxing/text-encoding@npm:0.9.0":
   version: 0.9.0
   resolution: "@zxing/text-encoding@npm:0.9.0"
@@ -5426,6 +5447,9 @@ __metadata:
     "@types/ws": 8.5.3
     "@typescript-eslint/eslint-plugin": 5.38.1
     "@typescript-eslint/parser": 5.38.1
+    "@zxcvbn-ts/core": 2.0.5
+    "@zxcvbn-ts/language-common": 2.0.1
+    "@zxcvbn-ts/language-en": 2.1.0
     base32-encode: 1.2.0
     bcrypt: 5.0.1
     class-transformer: 0.5.1
