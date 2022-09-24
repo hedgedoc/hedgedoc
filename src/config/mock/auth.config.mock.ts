@@ -17,6 +17,7 @@ export default registerAs(
     local: {
       enableLogin: true,
       enableRegister: true,
+      minimalPasswordStrength: 2,
     },
     facebook: {
       clientID: '',

@@ -38,6 +38,7 @@ export interface AuthConfig {
   local: {
     enableLogin: boolean;
     enableRegister: boolean;
+    minimalPasswordStrength: number;
   };
   facebook: {
     clientID: string;
@@ -126,6 +127,12 @@ const authSchema = Joi.object({
       .default(false)
       .optional()
       .label('HD_AUTH_LOCAL_ENABLE_REGISTER'),
+    minimalPasswordStrength: Joi.number()
+      .default(2)
+      .min(0)
+      .max(4)
+      .optional()
+      .label('HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH'),
   },
   facebook: {
     clientID: Joi.string().optional().label('HD_AUTH_FACEBOOK_CLIENT_ID'),
@@ -368,6 +375,9 @@ export default registerAs('authConfig', () => {
       local: {
         enableLogin: process.env.HD_AUTH_LOCAL_ENABLE_LOGIN,
         enableRegister: process.env.HD_AUTH_LOCAL_ENABLE_REGISTER,
+        minimalPasswordStrength: parseOptionalNumber(
+          process.env.HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH,
+        ),
       },
       facebook: {
         clientID: process.env.HD_AUTH_FACEBOOK_CLIENT_ID,
