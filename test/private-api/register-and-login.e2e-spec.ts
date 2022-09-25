@@ -14,7 +14,7 @@ describe('Register and Login', () => {
 
   const USERNAME = 'testuser';
   const DISPLAYNAME = 'A Test User';
-  const PASSWORD = 'secure';
+  const PASSWORD = 'AVerySecurePassword';
 
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().build();
@@ -103,6 +103,7 @@ describe('Register and Login', () => {
       password: PASSWORD,
       username: USERNAME,
     };
+    const newPassword = 'ASecureNewPassword';
     let session = request.agent(testSetup.app.getHttpServer());
     await session
       .post('/api/private/auth/local/login')
@@ -117,7 +118,7 @@ describe('Register and Login', () => {
       .send(
         JSON.stringify({
           currentPassword: PASSWORD,
-          newPassword: 'newPassword',
+          newPassword: newPassword,
         }),
       )
       .expect(200);
@@ -129,7 +130,7 @@ describe('Register and Login', () => {
     await session.get('/api/private/me').expect(401);
 
     // login with new password
-    loginDto.password = 'newPassword';
+    loginDto.password = newPassword;
     await session
       .post('/api/private/auth/local/login')
       .set('Content-Type', 'application/json')

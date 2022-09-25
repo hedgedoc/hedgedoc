@@ -6,7 +6,12 @@
 import request from 'supertest';
 
 import { LoginDto } from '../../src/identity/local/login.dto';
-import { TestSetup, TestSetupBuilder } from '../test-setup';
+import {
+  password1,
+  TestSetup,
+  TestSetupBuilder,
+  username1,
+} from '../test-setup';
 
 describe('Groups', () => {
   let testSetup: TestSetup;
@@ -21,8 +26,8 @@ describe('Groups', () => {
 
     // log in to create a session
     const loginDto: LoginDto = {
-      password: 'testuser1',
-      username: 'testuser1',
+      password: password1,
+      username: username1,
     };
     testuser1Session = request.agent(testSetup.app.getHttpServer());
     await testuser1Session

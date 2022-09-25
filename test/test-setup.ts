@@ -320,27 +320,27 @@ export class TestSetupBuilder {
     this.setupPostCompile.push(async () => {
       // Create users
       this.testSetup.users.push(
-        await this.testSetup.userService.createUser('testuser1', 'Test User 1'),
+        await this.testSetup.userService.createUser(username1, 'Test User 1'),
       );
       this.testSetup.users.push(
-        await this.testSetup.userService.createUser('testuser2', 'Test User 2'),
+        await this.testSetup.userService.createUser(username2, 'Test User 2'),
       );
       this.testSetup.users.push(
-        await this.testSetup.userService.createUser('testuser3', 'Test User 3'),
+        await this.testSetup.userService.createUser(username3, 'Test User 3'),
       );
 
       // Create identities for login
       await this.testSetup.identityService.createLocalIdentity(
         this.testSetup.users[0],
-        'testuser1',
+        password1,
       );
       await this.testSetup.identityService.createLocalIdentity(
         this.testSetup.users[1],
-        'testuser2',
+        password2,
       );
       await this.testSetup.identityService.createLocalIdentity(
         this.testSetup.users[2],
-        'testuser3',
+        password3,
       );
 
       // create auth tokens
@@ -410,3 +410,10 @@ export class TestSetupBuilder {
     return this;
   }
 }
+
+export const username1 = 'testuser1';
+export const password1 = 'AStrongP@sswordForUser1';
+export const username2 = 'testuser2';
+export const password2 = 'AStrongP@sswordForUser2';
+export const username3 = 'testuser3';
+export const password3 = 'AStrongP@sswordForUser3';
