@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -50,4 +50,8 @@ export class InvalidCredentialsError extends Error {
 
 export class NoLocalIdentityError extends Error {
   name = 'NoLocalIdentityError';
+}
+
+export class PasswordTooWeakError extends Error {
+  name = 'PasswordTooWeakError';
 }

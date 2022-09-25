@@ -66,6 +66,10 @@ const mapOfHedgeDocErrorsToHttpErrors: Map<string, HttpExceptionConstructor> =
       'NoLocalIdentityError',
       (object): HttpException => new BadRequestException(object),
     ],
+    [
+      'PasswordTooWeakError',
+      (object): HttpException => new BadRequestException(object),
+    ],
   ]);
 
 @Catch()
