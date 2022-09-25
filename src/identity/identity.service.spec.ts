@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,6 +13,7 @@ import authConfigMock from '../config/mock/auth.config.mock';
 import {
   InvalidCredentialsError,
   NoLocalIdentityError,
+  PasswordTooWeakError,
 } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
 import { User } from '../users/user.entity';
@@ -25,7 +26,7 @@ describe('IdentityService', () => {
   let service: IdentityService;
   let user: User;
   let identityRepo: Repository<Identity>;
-  const password = 'test123';
+  const password = 'AStrongPasswordToStartWith123';
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -81,7 +82,7 @@ describe('IdentityService', () => {
       user.identities = Promise.resolve([identity]);
     });
     it('works', async () => {
-      const newPassword = 'newPassword';
+      const newPassword = 'ThisIsAStrongNewP@ssw0rd';
       const identity = await service.updateLocalPassword(user, newPassword);
       await checkPassword(newPassword, identity.passwordHash ?? '').then(
         (result) => expect(result).toBeTruthy(),
@@ -93,6 +94,11 @@ describe('IdentityService', () => {
       await expect(service.updateLocalPassword(user, password)).rejects.toThrow(
         NoLocalIdentityError,
       );
+    });
+    it('fails, when new password is too weak', async () => {
+      await expect(
+        service.updateLocalPassword(user, 'password1'),
+      ).rejects.toThrow(PasswordTooWeakError);
     });
   });
 
