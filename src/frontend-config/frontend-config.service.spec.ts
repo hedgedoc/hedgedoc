@@ -35,6 +35,7 @@ describe('FrontendConfigService', () => {
     local: {
       enableLogin: false,
       enableRegister: false,
+      minimalPasswordStrength: 2,
     },
     facebook: {
       clientID: undefined,
@@ -339,6 +340,7 @@ describe('FrontendConfigService', () => {
                   local: {
                     enableLogin: true,
                     enableRegister,
+                    minimalPasswordStrength: 3,
                   },
                 };
                 const customizationConfig: CustomizationConfig = {

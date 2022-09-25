@@ -33,21 +33,23 @@ describe('History', () => {
       testSetup.configService.get('noteConfig').forbiddenNoteIds[0];
 
     const moduleRef = testSetup.moduleRef;
+    const username = 'hardcoded';
+    const password = 'AHardcodedStrongP@ssword123';
 
     await testSetup.app.init();
     content = 'This is a test note.';
     historyService = moduleRef.get(HistoryService);
     const userService = moduleRef.get(UsersService);
     identityService = moduleRef.get(IdentityService);
-    user = await userService.createUser('hardcoded', 'Testy');
-    await identityService.createLocalIdentity(user, 'test');
+    user = await userService.createUser(username, 'Testy');
+    await identityService.createLocalIdentity(user, password);
     const notesService = moduleRef.get(NotesService);
     note = await notesService.createNote(content, user, 'note');
     note2 = await notesService.createNote(content, user, 'note2');
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
       .post('/api/private/auth/local/login')
-      .send({ username: 'hardcoded', password: 'test' })
+      .send({ username: username, password: password })
       .expect(201);
   });
 

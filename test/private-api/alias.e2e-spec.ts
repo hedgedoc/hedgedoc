@@ -8,7 +8,14 @@ import request from 'supertest';
 import { AliasCreateDto } from '../../src/notes/alias-create.dto';
 import { AliasUpdateDto } from '../../src/notes/alias-update.dto';
 import { User } from '../../src/users/user.entity';
-import { TestSetup, TestSetupBuilder } from '../test-setup';
+import {
+  password1,
+  password2,
+  TestSetup,
+  TestSetupBuilder,
+  username1,
+  username2,
+} from '../test-setup';
 
 describe('Alias', () => {
   let testSetup: TestSetup;
@@ -31,13 +38,13 @@ describe('Alias', () => {
     agent1 = request.agent(testSetup.app.getHttpServer());
     await agent1
       .post('/api/private/auth/local/login')
-      .send({ username: 'testuser1', password: 'testuser1' })
+      .send({ username: username1, password: password1 })
       .expect(201);
 
     agent2 = request.agent(testSetup.app.getHttpServer());
     await agent2
       .post('/api/private/auth/local/login')
-      .send({ username: 'testuser2', password: 'testuser2' })
+      .send({ username: username2, password: password2 })
       .expect(201);
   });
 

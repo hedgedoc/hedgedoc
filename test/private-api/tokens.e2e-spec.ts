@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,15 +17,17 @@ describe('Tokens', () => {
 
   beforeAll(async () => {
     testSetup = await TestSetupBuilder.create().build();
+    const username = 'hardcoded';
+    const password = 'AHardcodedStrongP@ssword123';
 
-    user = await testSetup.userService.createUser('hardcoded', 'Testy');
-    await testSetup.identityService.createLocalIdentity(user, 'test');
+    user = await testSetup.userService.createUser(username, 'Testy');
+    await testSetup.identityService.createLocalIdentity(user, password);
     await testSetup.app.init();
 
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
       .post('/api/private/auth/local/login')
-      .send({ username: 'hardcoded', password: 'test' })
+      .send({ username: username, password: password })
       .expect(201);
   });
 

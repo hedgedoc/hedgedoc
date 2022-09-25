@@ -31,21 +31,22 @@ describe('Notes', () => {
       testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
 
     await testSetup.app.init();
+    const username1 = 'hardcoded';
+    const password1 = 'AHardcodedStrongP@ssword123';
+    const username2 = 'hardcoded2';
+    const password2 = 'AHardcodedStrongP@ssword12';
 
-    user = await testSetup.userService.createUser('hardcoded', 'Testy');
-    await testSetup.identityService.createLocalIdentity(user, 'test');
-    user2 = await testSetup.userService.createUser(
-      'hardcoded2',
-      'Max Mustermann',
-    );
-    await testSetup.identityService.createLocalIdentity(user2, 'test');
+    user = await testSetup.userService.createUser(username1, 'Testy');
+    await testSetup.identityService.createLocalIdentity(user, password1);
+    user2 = await testSetup.userService.createUser(username2, 'Max Mustermann');
+    await testSetup.identityService.createLocalIdentity(user2, password2);
     content = 'This is a test note.';
     testImage = await fs.readFile('test/public-api/fixtures/test.png');
 
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
       .post('/api/private/auth/local/login')
-      .send({ username: 'hardcoded', password: 'test' })
+      .send({ username: username1, password: password1 })
       .expect(201);
   });
 

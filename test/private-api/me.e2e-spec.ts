@@ -28,11 +28,12 @@ describe('Me', () => {
 
     uploadPath =
       testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
-
+    const username = 'hardcoded';
+    const password = 'AHardcodedStrongP@ssword123';
     await testSetup.app.init();
 
-    user = await testSetup.userService.createUser('hardcoded', 'Testy');
-    await testSetup.identityService.createLocalIdentity(user, 'test');
+    user = await testSetup.userService.createUser(username, 'Testy');
+    await testSetup.identityService.createLocalIdentity(user, password);
 
     content = 'This is a test note.';
     alias2 = 'note2';
@@ -41,7 +42,7 @@ describe('Me', () => {
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
       .post('/api/private/auth/local/login')
-      .send({ username: 'hardcoded', password: 'test' })
+      .send({ username: username, password: password })
       .expect(201);
   });
 
