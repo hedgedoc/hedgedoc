@@ -5,6 +5,9 @@
  */
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { zxcvbnAsync, zxcvbnOptions } from '@zxcvbn-ts/core';
+import zxcvbnCommonPackage from '@zxcvbn-ts/language-common';
+import zxcvbnEnPackage from '@zxcvbn-ts/language-en';
 import { Repository } from 'typeorm';
 
 import authConfiguration, { AuthConfig } from '../config/auth.config';
@@ -12,6 +15,7 @@ import {
   InvalidCredentialsError,
   NoLocalIdentityError,
   NotInDBError,
+  PasswordTooWeakError,
 } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { User } from '../users/user.entity';
@@ -30,6 +34,15 @@ export class IdentityService {
     private authConfig: AuthConfig,
   ) {
     this.logger.setContext(IdentityService.name);
+    const options = {
+      dictionary: {
+        ...zxcvbnCommonPackage.dictionary,
+        ...zxcvbnEnPackage.dictionary,
+      },
+      graphs: zxcvbnCommonPackage.adjacencyGraphs,
+      translations: zxcvbnEnPackage.translations,
+    };
+    zxcvbnOptions.setOptions(options);
   }
 
   /**
@@ -119,6 +132,7 @@ export class IdentityService {
    */
   async createLocalIdentity(user: User, password: string): Promise<Identity> {
     const identity = Identity.create(user, ProviderType.LOCAL, false);
+    await this.checkPasswordStrength(password);
     identity.passwordHash = await hashPassword(password);
     return await this.identityRepository.save(identity);
   }
@@ -144,6 +158,7 @@ export class IdentityService {
       );
       throw new NoLocalIdentityError('This user has no internal identity.');
     }
+    await this.checkPasswordStrength(newPassword);
     internalIdentity.passwordHash = await hashPassword(newPassword);
     return await this.identityRepository.save(internalIdentity);
   }
@@ -172,6 +187,20 @@ export class IdentityService {
         'checkLocalPassword',
       );
       throw new InvalidCredentialsError('Password is not correct');
+    }
+  }
+
+  /**
+   * @async
+   * Check if the password is strong enough.
+   * This check is performed against the minimalPasswordStrength of the {@link AuthConfig}.
+   * @param {string} password - the password to check
+   * @throws {PasswordTooWeakError} the password is too weak
+   */
+  private async checkPasswordStrength(password: string): Promise<void> {
+    const result = await zxcvbnAsync(password);
+    if (result.score < this.authConfig.local.minimalPasswordStrength) {
+      throw new PasswordTooWeakError();
     }
   }
 }
