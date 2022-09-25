@@ -6,5 +6,11 @@
 #
 
 set -e
-curl -o caddy "https://caddyserver.com/api/download?os=linux&arch=amd64"
+
+if [ ! -f caddy ]
+then
+curl -o caddy "https://caddyserver.com/api/download"
 chmod +x ./caddy
+fi
+
+exec ./caddy run
