@@ -34,6 +34,7 @@ import { useWebsocketConnection } from './hooks/yjs/use-websocket-connection'
 import { useBindYTextToRedux } from './hooks/yjs/use-bind-y-text-to-redux'
 import { useInsertNoteContentIntoYTextInMockModeEffect } from './hooks/yjs/use-insert-note-content-into-y-text-in-mock-mode-effect'
 import { useOnFirstEditorUpdateExtension } from './hooks/yjs/use-on-first-editor-update-extension'
+import { useOnMetadataUpdated } from './hooks/yjs/use-on-metadata-updated'
 import { useIsConnectionSynced } from './hooks/yjs/use-is-connection-synced'
 import { useMarkdownContentYText } from './hooks/yjs/use-markdown-content-y-text'
 import { lintGutter } from '@codemirror/lint'
@@ -43,6 +44,7 @@ import { VimeoMarkdownExtension } from '../../markdown-renderer/markdown-extensi
 import { SequenceDiagramMarkdownExtension } from '../../markdown-renderer/markdown-extension/sequence-diagram/sequence-diagram-markdown-extension'
 import { LegacyShortcodesMarkdownExtension } from '../../markdown-renderer/markdown-extension/legacy-short-codes/legacy-shortcodes-markdown-extension'
 import { FrontmatterLinter } from './linter/frontmatter-linter'
+import { useOnNoteDeleted } from './hooks/yjs/use-on-note-deleted'
 
 /**
  * Renders the text editor pane of the editor.
@@ -80,6 +82,8 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
   const websocketConnection = useWebsocketConnection(yDoc, awareness)
   const connectionSynced = useIsConnectionSynced(websocketConnection)
   useBindYTextToRedux(yText)
+  useOnMetadataUpdated(websocketConnection)
+  useOnNoteDeleted(websocketConnection)
 
   const yjsExtension = useCodeMirrorYjsExtension(yText, awareness)
   const [firstEditorUpdateExtension, firstUpdateHappened] = useOnFirstEditorUpdateExtension()

@@ -586,5 +586,11 @@
       "title": "Note could not be created",
       "description": "The note could not be created. Maybe you don't have permission to create notes."
     }
+  },
+  "notifications": {
+    "noteDeleted": {
+      "title": "Note '{{noteTitle}}' deleted",
+      "text": "You were redirected to the history page, because the note you just edited was deleted."
+    }
   }
 }
