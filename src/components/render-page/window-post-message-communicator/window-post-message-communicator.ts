@@ -6,6 +6,7 @@
 
 import type { Logger } from '../../../utils/logger'
 import { Optional } from '@mrdrogdrog/optional'
+import EventEmitter2 from 'eventemitter2'
 
 /**
  * Error that will be thrown if a message couldn't be sent.
@@ -15,12 +16,6 @@ export class IframeCommunicatorSendingError extends Error {}
 export type Handler<MESSAGES, MESSAGE_TYPE extends string> = (
   values: Extract<MESSAGES, MessagePayload<MESSAGE_TYPE>>
 ) => void
-
-export type MaybeHandler<MESSAGES, MESSAGE_TYPE extends string> = Handler<MESSAGES, MESSAGE_TYPE> | undefined
-
-export type HandlerMap<MESSAGES, MESSAGE_TYPE extends string> = Partial<{
-  [key in MESSAGE_TYPE]: MaybeHandler<MESSAGES, MESSAGE_TYPE>
-}>
 
 export interface MessagePayload<MESSAGE_TYPE extends string> {
   type: MESSAGE_TYPE
@@ -37,7 +32,7 @@ export abstract class WindowPostMessageCommunicator<
   private messageTarget?: Window
   private targetOrigin?: string
   private communicationEnabled: boolean
-  private readonly handlers: HandlerMap<MESSAGES, RECEIVE_TYPE> = {}
+  private readonly emitter: EventEmitter2 = new EventEmitter2()
   private readonly log: Logger
   private readonly boundListener: (event: MessageEvent) => void
 
@@ -113,15 +108,25 @@ export abstract class WindowPostMessageCommunicator<
   }
 
   /**
-   * Sets the handler method that processes messages with the given message type.
-   * If there is already a handler for the given message type then the handler will be overwritten.
+   * Registers a handler for the given message type.
    *
    * @param messageType The message type for which the handler should be called
    * @param handler The handler that processes messages with the given message type.
    */
-  public setHandler<R extends RECEIVE_TYPE>(messageType: R, handler: MaybeHandler<MESSAGES, R>): void {
-    this.log.debug(handler === undefined ? 'Unset' : 'Set', 'handler for', messageType)
-    this.handlers[messageType] = handler as MaybeHandler<MESSAGES, RECEIVE_TYPE>
+  public on<R extends RECEIVE_TYPE>(messageType: R, handler: Handler<MESSAGES, R>): void {
+    this.log.debug('Set handler for', messageType)
+    this.emitter.on(messageType, handler)
+  }
+
+  /**
+   * Deletes a handler for the given message type.
+   *
+   * @param messageType The message type for which the handler should be removed
+   * @param handler The handler that should be removed.
+   */
+  public off<R extends RECEIVE_TYPE>(messageType: R, handler: Handler<MESSAGES, R>): void {
+    this.log.debug('Unset handler for', messageType)
+    this.emitter.off(messageType, handler)
   }
 
   /**
@@ -142,10 +147,7 @@ export abstract class WindowPostMessageCommunicator<
    * Processes a {@link MessagePayload message payload} using the correct {@link Handler handler}.
    * @param payload The payload that should be processed
    */
-  private processPayload(payload: MessagePayload<RECEIVE_TYPE>): void {
-    return Optional.ofNullable<Handler<MESSAGES, RECEIVE_TYPE>>(this.handlers[payload.type]).ifPresent((handler) => {
-      this.log.debug('Received event', payload)
-      handler(payload as Extract<MESSAGES, MessagePayload<RECEIVE_TYPE>>)
-    })
+  private processPayload(payload: MessagePayload<string>): void {
+    this.emitter.emit(payload.type, payload)
   }
 }

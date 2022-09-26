@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -26,9 +26,7 @@ export const useRendererReceiveHandler = <MESSAGE_TYPE extends EditorToRendererM
 ): void => {
   const editorToRendererCommunicator = useRendererToEditorCommunicator()
   useEffect(() => {
-    editorToRendererCommunicator.setHandler(messageType, handler)
-    return () => {
-      editorToRendererCommunicator.setHandler(messageType, undefined)
-    }
+    editorToRendererCommunicator.on(messageType, handler)
+    return () => editorToRendererCommunicator.off(messageType, handler)
   }, [editorToRendererCommunicator, handler, messageType])
 }

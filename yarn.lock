@@ -1987,6 +1987,7 @@ __metadata:
     eslint-plugin-prettier: 4.2.1
     eslint-plugin-promise: 6.0.1
     eslint-plugin-testing-library: 5.7.0
+    eventemitter2: 6.4.9
     fast-deep-equal: 3.1.3
     firacode: 6.2.0
     flowchart.js: 1.17.1
@@ -7006,6 +7007,13 @@ __metadata:
   version: 6.4.7
   resolution: "eventemitter2@npm:6.4.7"
   checksum: 1b36a77e139d6965ebf3a36c01fa00c089ae6b80faa1911e52888f40b3a7057b36a2cc45dcd1ad87cda3798fe7b97a0aabcbb8175a8b96092a23bb7d0f039e66
+  languageName: node
+  linkType: hard
+
+"eventemitter2@npm:6.4.9":
+  version: 6.4.9
+  resolution: "eventemitter2@npm:6.4.9"
+  checksum: be59577c1e1c35509c7ba0e2624335c35bbcfd9485b8a977384c6cc6759341ea1a98d3cb9dbaa5cea4fff9b687e504504e3f9c2cc1674cf3bd8a43a7c74ea3eb
   languageName: node
   linkType: hard
 
