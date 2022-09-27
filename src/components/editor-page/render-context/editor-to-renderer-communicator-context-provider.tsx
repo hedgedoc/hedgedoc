@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,6 +7,7 @@
 import type { PropsWithChildren } from 'react'
 import React, { createContext, useContext, useEffect, useMemo } from 'react'
 import { EditorToRendererCommunicator } from '../../render-page/window-post-message-communicator/editor-to-renderer-communicator'
+import { v4 as uuid } from 'uuid'
 
 const EditorToRendererCommunicatorContext = createContext<EditorToRendererCommunicator | undefined>(undefined)
 
@@ -27,8 +28,8 @@ export const useEditorToRendererCommunicator: () => EditorToRendererCommunicator
 /**
  * Provides a {@link EditorToRendererCommunicator editor to renderer communicator} for the child components via Context.
  */
-export const EditorToRendererCommunicatorContextProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
-  const communicator = useMemo<EditorToRendererCommunicator>(() => new EditorToRendererCommunicator(), [])
+export const EditorToRendererCommunicatorContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
+  const communicator = useMemo<EditorToRendererCommunicator>(() => new EditorToRendererCommunicator(uuid()), [])
 
   useEffect(() => {
     const currentCommunicator = communicator

@@ -9,6 +9,7 @@ import React, { createContext, useContext, useEffect, useMemo } from 'react'
 import { RendererToEditorCommunicator } from '../../render-page/window-post-message-communicator/renderer-to-editor-communicator'
 import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
 import { ORIGIN, useBaseUrl } from '../../../hooks/common/use-base-url'
+import { useSingleStringUrlParameter } from '../../../hooks/common/use-single-string-url-parameter'
 
 const RendererToEditorCommunicatorContext = createContext<RendererToEditorCommunicator | undefined>(undefined)
 
@@ -28,7 +29,14 @@ export const useRendererToEditorCommunicator: () => RendererToEditorCommunicator
 
 export const RendererToEditorCommunicatorContextProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
   const editorOrigin = useBaseUrl(ORIGIN.EDITOR)
-  const communicator = useMemo<RendererToEditorCommunicator>(() => new RendererToEditorCommunicator(), [])
+  const uuid = useSingleStringUrlParameter('uuid', undefined)
+  const communicator = useMemo<RendererToEditorCommunicator>(() => {
+    if (uuid === undefined) {
+      throw new Error('no uuid found in url!')
+    } else {
+      return new RendererToEditorCommunicator(uuid)
+    }
+  }, [uuid])
 
   useEffect(() => {
     const currentCommunicator = communicator

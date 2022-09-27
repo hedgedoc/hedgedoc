@@ -17,6 +17,11 @@ export type Handler<MESSAGES, MESSAGE_TYPE extends string> = (
   values: Extract<MESSAGES, MessagePayload<MESSAGE_TYPE>>
 ) => void
 
+export interface MessagePayloadWithUuid<MESSAGE_TYPE extends string> {
+  uuid: string
+  payload: MessagePayload<MESSAGE_TYPE>
+}
+
 export interface MessagePayload<MESSAGE_TYPE extends string> {
   type: MESSAGE_TYPE
 }
@@ -36,10 +41,14 @@ export abstract class WindowPostMessageCommunicator<
   private readonly log: Logger
   private readonly boundListener: (event: MessageEvent) => void
 
-  public constructor() {
+  public constructor(private uuid: string) {
     this.boundListener = this.handleEvent.bind(this)
     this.communicationEnabled = false
     this.log = this.createLogger()
+  }
+
+  public getUuid(): string {
+    return this.uuid
   }
 
   protected abstract createLogger(): Logger
@@ -104,7 +113,13 @@ export abstract class WindowPostMessageCommunicator<
       )
     }
     this.log.debug('Sent event', message)
-    this.messageTarget.postMessage(message, this.targetOrigin)
+    this.messageTarget.postMessage(
+      {
+        uuid: this.uuid,
+        payload: message
+      } as MessagePayloadWithUuid<SEND_TYPE>,
+      this.targetOrigin
+    )
   }
 
   /**
@@ -135,19 +150,13 @@ export abstract class WindowPostMessageCommunicator<
    * @param event The received event
    * @return {@link true} if the event was processed.
    */
-  protected handleEvent(event: MessageEvent<MessagePayload<RECEIVE_TYPE>>): void {
-    Optional.ofNullable(event.data).ifPresent((payload) => {
-      event.stopPropagation()
-      event.preventDefault()
-      this.processPayload(payload)
-    })
-  }
-
-  /**
-   * Processes a {@link MessagePayload message payload} using the correct {@link Handler handler}.
-   * @param payload The payload that should be processed
-   */
-  private processPayload(payload: MessagePayload<string>): void {
-    this.emitter.emit(payload.type, payload)
+  protected handleEvent(event: MessageEvent<MessagePayloadWithUuid<RECEIVE_TYPE>>): void {
+    Optional.ofNullable(event.data)
+      .filter((value) => value.uuid === this.uuid)
+      .ifPresent((payload) => {
+        event.stopPropagation()
+        event.preventDefault()
+        this.emitter.emit(payload.payload.type, payload.payload)
+      })
   }
 }
