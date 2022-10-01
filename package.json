@@ -49,7 +49,7 @@
     "@hedgedoc/markdown-it-image-size": "1.0.3",
     "@hedgedoc/markdown-it-task-lists": "1.0.5",
     "@hedgedoc/realtime": "0.3.0",
-    "@hpcc-js/wasm": "1.16.1",
+    "@hpcc-js/wasm": "1.16.5",
     "@mrdrogdrog/optional": "0.2.0",
     "@react-hook/resize-observer": "1.2.6",
     "@redux-devtools/core": "3.13.1",
