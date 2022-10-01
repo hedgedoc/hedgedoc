@@ -10,18 +10,22 @@ import { useConvertMarkdownToReactDom } from '../../markdown-renderer/hooks/use-
 import { LinkifyFixMarkdownExtension } from '../../markdown-renderer/markdown-extension/linkify-fix-markdown-extension'
 import { EmojiMarkdownExtension } from '../../markdown-renderer/markdown-extension/emoji/emoji-markdown-extension'
 import { DebuggerMarkdownExtension } from '../../markdown-renderer/markdown-extension/debugger-markdown-extension'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { ProxyImageMarkdownExtension } from '../../markdown-renderer/markdown-extension/image/proxy-image-markdown-extension'
 import { YoutubeMarkdownExtension } from '../../markdown-renderer/markdown-extension/youtube/youtube-markdown-extension'
 import { AlertMarkdownExtension } from '../../markdown-renderer/markdown-extension/alert-markdown-extension'
 import { SpoilerMarkdownExtension } from '../../markdown-renderer/markdown-extension/spoiler-markdown-extension'
 import { BlockquoteExtraTagMarkdownExtension } from '../../markdown-renderer/markdown-extension/blockquote/blockquote-extra-tag-markdown-extension'
 import { VimeoMarkdownExtension } from '../../markdown-renderer/markdown-extension/vimeo/vimeo-markdown-extension'
+import { testId } from '../../../utils/test-id'
+
+export interface MotdRendererProps {
+  content: string
+}
 
 /**
  * Reads the motd from the global application state and renders it as markdown with a subset of the usual features and without HTML support.
  */
-export const MotdRenderer: React.FC = () => {
+export const MotdRenderer: React.FC<MotdRendererProps> = ({ content }) => {
   const extensions = useMemo(
     () => [
       new YoutubeMarkdownExtension(),
@@ -38,11 +42,14 @@ export const MotdRenderer: React.FC = () => {
     []
   )
 
-  const motdState = useApplicationState((state) => state.motd)
-  const lines = useMemo(() => (motdState ? motdState.text.split('\n') : []), [motdState])
+  const lines = useMemo(() => content.split('\n'), [content])
   const dom = useConvertMarkdownToReactDom(lines, extensions, true, false)
 
-  return <div className={'markdown-body'}>{dom}</div>
+  return (
+    <div {...testId('motd-renderer')} className={'markdown-body'}>
+      {dom}
+    </div>
+  )
 }
 
 export default MotdRenderer

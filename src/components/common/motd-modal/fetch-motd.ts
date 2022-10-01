@@ -4,12 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { setMotd } from '../../../redux/motd/methods'
 import { Logger } from '../../../utils/logger'
 import { defaultConfig } from '../../../api/common/default-config'
 
 export const MOTD_LOCAL_STORAGE_KEY = 'motd.lastModified'
 const log = new Logger('Motd')
+
+export interface MotdApiResponse {
+  motdText: string
+  lastModified: string | null
+}
 
 /**
  * Fetches the current motd from the backend and sets the content in the global application state.
@@ -18,7 +22,7 @@ const log = new Logger('Motd')
  * will be compared to the saved value from the browser's local storage.
  * @return A promise that gets resolved if the motd was fetched successfully.
  */
-export const fetchMotd = async (): Promise<void> => {
+export const fetchMotd = async (): Promise<MotdApiResponse | undefined> => {
   const cachedLastModified = window.localStorage.getItem(MOTD_LOCAL_STORAGE_KEY)
   const motdUrl = `public/motd.md`
 
@@ -28,11 +32,11 @@ export const fetchMotd = async (): Promise<void> => {
       method: 'HEAD'
     })
     if (response.status !== 200) {
-      return
+      return undefined
     }
     const lastModified = response.headers.get('Last-Modified') || response.headers.get('etag')
     if (lastModified === cachedLastModified) {
-      return
+      return undefined
     }
   }
 
@@ -41,7 +45,7 @@ export const fetchMotd = async (): Promise<void> => {
   })
 
   if (response.status !== 200) {
-    return
+    return undefined
   }
 
   const lastModified = response.headers.get('Last-Modified') || response.headers.get('etag')
@@ -49,6 +53,5 @@ export const fetchMotd = async (): Promise<void> => {
     log.warn("'Last-Modified' or 'Etag' not found for motd.md!")
   }
 
-  const motdText = await response.text()
-  setMotd(motdText, lastModified)
+  return { motdText: await response.text(), lastModified }
 }

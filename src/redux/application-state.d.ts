@@ -6,7 +6,6 @@
 
 import type { OptionalUserState } from './user/types'
 import type { Config } from '../api/config/types'
-import type { OptionalMotdState } from './motd/types'
 import type { EditorConfig } from './editor/types'
 import type { DarkModeConfig } from './dark-mode/types'
 import type { NoteDetails } from './note-details/types/note-details'
@@ -17,7 +16,6 @@ import type { RealtimeState } from './realtime/types'
 export interface ApplicationState {
   user: OptionalUserState
   config: Config
-  motd: OptionalMotdState
   history: HistoryEntryWithOrigin[]
   editorConfig: EditorConfig
   darkMode: DarkModeConfig

@@ -6,7 +6,6 @@
 
 import { setUpI18n } from './setupI18n'
 import { refreshHistoryState } from '../../../redux/history/methods'
-import { fetchMotd } from './fetch-motd'
 import { fetchAndSetUser } from '../../login-page/auth/utils'
 import { fetchFrontendConfig } from './fetch-frontend-config'
 import { loadDarkMode } from './load-dark-mode'
@@ -64,10 +63,6 @@ export const createSetUpTaskList = (): InitTask[] => {
     {
       name: 'Fetch user information',
       task: fetchUserInformation
-    },
-    {
-      name: 'Motd',
-      task: fetchMotd
     },
     {
       name: 'Load history state',
