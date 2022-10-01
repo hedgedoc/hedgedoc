@@ -5417,7 +5417,7 @@ __metadata:
     source-map-support: 0.5.21
     sqlite3: 5.1.1
     supertest: 6.2.4
-    ts-jest: 29.0.2
+    ts-jest: 29.0.3
     ts-mockery: 1.2.0
     ts-node: 10.9.1
     tsconfig-paths: 4.1.0
@@ -9297,9 +9297,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:29.0.2":
-  version: 29.0.2
-  resolution: "ts-jest@npm:29.0.2"
+"ts-jest@npm:29.0.3":
+  version: 29.0.3
+  resolution: "ts-jest@npm:29.0.3"
   dependencies:
     bs-logger: 0.x
     fast-json-stable-stringify: 2.x
@@ -9326,7 +9326,7 @@ __metadata:
       optional: true
   bin:
     ts-jest: cli.js
-  checksum: 66ece9c36e0b3b00ed617c1aad254578c77bca60409cf0d316c353ae94c9f05bc5be541366be94df6b1bc33c974701f0cd5304aa9f86c1b94917709575a13ba9
+  checksum: 541e51776d367fa2279af47f75af94b03e0538f1839ea9983de0f4ad7f188002f6eb1fc72440651d96daa62d25a7bc679a129c14e6ef291277eea9346751d56b
   languageName: node
   linkType: hard
 
