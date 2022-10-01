@@ -1946,7 +1946,7 @@ __metadata:
     "@react-hook/resize-observer": 1.2.6
     "@redux-devtools/core": 3.13.1
     "@reduxjs/toolkit": 1.8.5
-    "@svgr/webpack": 6.3.1
+    "@svgr/webpack": 6.4.0
     "@testing-library/cypress": 8.0.3
     "@testing-library/dom": 8.18.1
     "@testing-library/jest-dom": 5.16.5
@@ -2999,9 +2999,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/babel-preset@npm:^6.3.1":
-  version: 6.3.1
-  resolution: "@svgr/babel-preset@npm:6.3.1"
+"@svgr/babel-preset@npm:^6.4.0":
+  version: 6.4.0
+  resolution: "@svgr/babel-preset@npm:6.4.0"
   dependencies:
     "@svgr/babel-plugin-add-jsx-attribute": ^6.3.1
     "@svgr/babel-plugin-remove-jsx-attribute": ^6.3.1
@@ -3013,42 +3013,43 @@ __metadata:
     "@svgr/babel-plugin-transform-svg-component": ^6.3.1
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: c9cdb0889d63d8fa178c90b016e36515e6803ba5c96e980f0233798f63cac29a1e871effa2c17a40e3eaffdb150ad8e98676cc14c97dd8f978f67541c594a05f
+  checksum: b7fe2d50f8bd88b5ffcecd527e9c2196f1e05d606080b934197146829732ce764f905c75e541401a51f768a0c396ded37ed129359d703fdba2310fcf6601822f
   languageName: node
   linkType: hard
 
-"@svgr/core@npm:^6.3.1":
-  version: 6.3.1
-  resolution: "@svgr/core@npm:6.3.1"
+"@svgr/core@npm:^6.4.0":
+  version: 6.4.0
+  resolution: "@svgr/core@npm:6.4.0"
   dependencies:
-    "@svgr/plugin-jsx": ^6.3.1
+    "@svgr/babel-preset": ^6.4.0
+    "@svgr/plugin-jsx": ^6.4.0
     camelcase: ^6.2.0
     cosmiconfig: ^7.0.1
-  checksum: 753b043f48d5bfef8aa02976d5ed5a885c60e74e5ac0cdf2b00045e7867443ae722a57160ae46e7a2db563d1ecbe1fda4585a21e84ac1337b6b94113f25b9925
+  checksum: d8c884ee4e6d4adb88df7154cd2f886309da0ee8fc1b83fa39343e3a291ae6927b36ab5ee0a76497d0d9595ca57c77ecbdce33cda4d13c4bd58ef5d55e925457
   languageName: node
   linkType: hard
 
-"@svgr/hast-util-to-babel-ast@npm:^6.3.1":
-  version: 6.3.1
-  resolution: "@svgr/hast-util-to-babel-ast@npm:6.3.1"
+"@svgr/hast-util-to-babel-ast@npm:^6.4.0":
+  version: 6.4.0
+  resolution: "@svgr/hast-util-to-babel-ast@npm:6.4.0"
   dependencies:
     "@babel/types": ^7.18.4
     entities: ^4.3.0
-  checksum: e54b48a85795e103cfe918fa7102bf4603e6541dd35ee04061fad62edffa5a60d8aa210f709fe81b50c9fb6041f8e62fabf093443266323c649903200aaea604
+  checksum: a94ba920ef2c33d1ede7e50a069063265220d6df255b8aa02a0529c7ed963699b1062191a0320691dda94e76a2cdf591b11164a5afa1df7ff1b4c2560e80615f
   languageName: node
   linkType: hard
 
-"@svgr/plugin-jsx@npm:^6.3.1":
-  version: 6.3.1
-  resolution: "@svgr/plugin-jsx@npm:6.3.1"
+"@svgr/plugin-jsx@npm:^6.4.0":
+  version: 6.4.0
+  resolution: "@svgr/plugin-jsx@npm:6.4.0"
   dependencies:
     "@babel/core": ^7.18.5
-    "@svgr/babel-preset": ^6.3.1
-    "@svgr/hast-util-to-babel-ast": ^6.3.1
+    "@svgr/babel-preset": ^6.4.0
+    "@svgr/hast-util-to-babel-ast": ^6.4.0
     svg-parser: ^2.0.4
   peerDependencies:
     "@svgr/core": ^6.0.0
-  checksum: a2e487dc28d2b69b94b7d96e5cb2593857e559e64c8cb4f818035b8a43ba84e5ddb67f966d15f173b544e807e48a1cda1065da8f9064b94b8d62bbe8cb8c4d73
+  checksum: c1a40cc4f1f40dac53362f811ecb5be816b5fc94d1faf0643d84c07da6cc96fb89db18e0c2eea9a51ce8cd252fdba077c3138764670ac189c5389bbd2746daaf
   languageName: node
   linkType: hard
 
@@ -3065,19 +3066,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/webpack@npm:6.3.1":
-  version: 6.3.1
-  resolution: "@svgr/webpack@npm:6.3.1"
+"@svgr/webpack@npm:6.4.0":
+  version: 6.4.0
+  resolution: "@svgr/webpack@npm:6.4.0"
   dependencies:
     "@babel/core": ^7.18.5
     "@babel/plugin-transform-react-constant-elements": ^7.17.12
     "@babel/preset-env": ^7.18.2
     "@babel/preset-react": ^7.17.12
     "@babel/preset-typescript": ^7.17.12
-    "@svgr/core": ^6.3.1
-    "@svgr/plugin-jsx": ^6.3.1
+    "@svgr/core": ^6.4.0
+    "@svgr/plugin-jsx": ^6.4.0
     "@svgr/plugin-svgo": ^6.3.1
-  checksum: 36784eacf80601462ede7eab66347423a8635e68aa9f152308c81878b071807adee152a28eed2cce9c72faaf6553dd500f68f00601062ec6821ec0a3a77f4e13
+  checksum: c8614f3d7019cd5183931d641bff3808163d82b3b8770d6299705f19ef7f01b0487f777a972a764ab4d5e880a65338ab59f648329d6a4bb9f3166b04c4dc61ef
   languageName: node
   linkType: hard
 
