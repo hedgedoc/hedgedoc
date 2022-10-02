@@ -88,7 +88,7 @@ export class NotesController {
   }
 
   @Post()
-  @OpenApi(201)
+  @OpenApi(201, 413)
   @Permissions(Permission.CREATE)
   async createNote(
     @RequestUser() user: User,
@@ -101,7 +101,7 @@ export class NotesController {
   }
 
   @Post(':noteAlias')
-  @OpenApi(201, 400, 404, 409)
+  @OpenApi(201, 400, 404, 409, 413)
   @Permissions(Permission.CREATE)
   async createNamedNote(
     @RequestUser() user: User,

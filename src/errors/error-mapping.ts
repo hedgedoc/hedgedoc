@@ -10,6 +10,7 @@ import {
   ConflictException,
   InternalServerErrorException,
   NotFoundException,
+  PayloadTooLargeException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
@@ -69,6 +70,10 @@ const mapOfHedgeDocErrorsToHttpErrors: Map<string, HttpExceptionConstructor> =
     [
       'PasswordTooWeakError',
       (object): HttpException => new BadRequestException(object),
+    ],
+    [
+      'MaximumDocumentLengthExceededError',
+      (object): HttpException => new PayloadTooLargeException(object),
     ],
   ]);
 

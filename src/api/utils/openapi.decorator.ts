@@ -25,6 +25,7 @@ import {
   noContentDescription,
   notFoundDescription,
   okDescription,
+  payloadTooLargeDescription,
   unauthorizedDescription,
 } from './descriptions';
 
@@ -37,6 +38,7 @@ export type HttpStatusCodes =
   | 403
   | 404
   | 409
+  | 413
   | 500;
 
 /**
@@ -153,6 +155,13 @@ export const OpenApi = (
         decoratorsToApply.push(
           ApiConflictResponse({
             description: description ?? conflictDescription,
+          }),
+        );
+        break;
+      case 413:
+        decoratorsToApply.push(
+          ApiConflictResponse({
+            description: description ?? payloadTooLargeDescription,
           }),
         );
         break;

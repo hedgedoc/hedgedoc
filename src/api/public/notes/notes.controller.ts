@@ -69,7 +69,7 @@ export class NotesController {
 
   @Permissions(Permission.CREATE)
   @Post()
-  @OpenApi(201, 403, 409)
+  @OpenApi(201, 403, 409, 413)
   async createNote(
     @RequestUser() user: User,
     @MarkdownBody() text: string,
@@ -112,6 +112,7 @@ export class NotesController {
     400,
     403,
     409,
+    413,
   )
   async createNamedNote(
     @RequestUser() user: User,

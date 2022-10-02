@@ -14,6 +14,7 @@ import noteConfiguration, { NoteConfig } from '../config/note.config';
 import {
   AlreadyInDBError,
   ForbiddenIdError,
+  MaximumDocumentLengthExceededError,
   NotInDBError,
 } from '../errors/errors';
 import { NoteEvent } from '../events';
@@ -79,11 +80,12 @@ export class NotesService {
    * @async
    * Create a new note.
    * @param {string} noteContent - the content the new note should have
-   * @param {string=} alias - a optional alias the note should have
+   * @param {string=} alias - an optional alias the note should have
    * @param {User=} owner - the owner of the note
    * @return {Note} the newly created note
    * @throws {AlreadyInDBError} a note with the requested id or alias already exists
    * @throws {ForbiddenIdError} the requested id or alias is forbidden
+   * @throws {MaximumDocumentLengthExceededError} the noteContent is longer than the maxDocumentLength
    */
   async createNote(
     noteContent: string,
@@ -94,6 +96,9 @@ export class NotesService {
       this.checkNoteIdOrAlias(alias);
     }
     const newNote = Note.create(owner, alias);
+    if (noteContent.length > this.noteConfig.maxDocumentLength) {
+      throw new MaximumDocumentLengthExceededError();
+    }
     //TODO: Calculate patch
     newNote.revisions = Promise.resolve([
       Revision.create(noteContent, noteContent, newNote as Note) as Revision,

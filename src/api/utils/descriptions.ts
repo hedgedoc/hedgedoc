@@ -22,5 +22,7 @@ export const unprocessableEntityDescription =
   "The request change can't be processed";
 export const conflictDescription =
   'The request conflicts with the current state of the application';
+export const payloadTooLargeDescription =
+  'The note is longer than the maximal allowed length of a note';
 export const internalServerErrorDescription =
   'The request triggered an internal server error.';
