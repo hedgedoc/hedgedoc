@@ -126,6 +126,19 @@ describe('Notes', () => {
         .expect('Content-Type', /json/)
         .expect(409);
     });
+
+    it('fails with a content, that is too long', async () => {
+      const content = 'x'.repeat(
+        (testSetup.configService.get('noteConfig')
+          .maxDocumentLength as number) + 1,
+      );
+      await agent
+        .post('/api/private/notes/test2')
+        .set('Content-Type', 'text/markdown')
+        .send(content)
+        .expect('Content-Type', /json/)
+        .expect(413);
+    });
   });
 
   describe('DELETE /notes/{note}', () => {
