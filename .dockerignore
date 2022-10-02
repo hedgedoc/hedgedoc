@@ -2,8 +2,6 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 
-dist
-
 # Yarn 2 without zero-installs
 .yarn/*
 !.yarn/patches
@@ -11,4 +9,3 @@ dist
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
-.pnp.*

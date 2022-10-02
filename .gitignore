@@ -21,32 +21,8 @@ backups/
 *.log
 *.sqlite
 
-# ignore config files
-config.json
-.sequelizerc
-.env
-
-# ignore webpack build
-public/build
-public/views/build
-
-# ignore TypeScript built
-built/
-dist
-
-# Tests
-/coverage
-/coverage-e2e
-/.nyc_output
-
-public/uploads/*
-!public/uploads/.gitkeep
-!public/.gitkeep
-uploads
-test_uploads
-
 # Yarn 2 without zero-installs
-.yarn/*
+.yarn
 !.yarn/patches
 !.yarn/releases
 !.yarn/plugins

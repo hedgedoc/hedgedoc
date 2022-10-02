@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-name: Docker
+name: Backend / Docker
 
 on:
   push:
@@ -14,6 +14,8 @@ jobs:
   build-dev:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -28,15 +30,16 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          file: docker/Dockerfile
+          file: backend/docker/Dockerfile
           tags: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-ci:${{ github.sha }}
           target: development
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          context: .
 
   sqlite-test:
     runs-on: ubuntu-latest
-    needs: [build-dev]
+    needs: [ build-dev ]
     container:
       image: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-ci:${{ github.sha }}
     steps:
@@ -44,7 +47,7 @@ jobs:
 
   sqlite-e2e:
     runs-on: ubuntu-latest
-    needs: [build-dev]
+    needs: [ build-dev ]
     container:
       image: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-ci:${{ github.sha }}
     steps:
@@ -52,8 +55,10 @@ jobs:
 
   build-prod:
     runs-on: ubuntu-latest
-    needs: [sqlite-test, sqlite-e2e]
+    needs: [ sqlite-test, sqlite-e2e ]
     steps:
+      - uses: actions/checkout@v3
+
       - name: Generate Docker metadata
         id: meta
         uses: docker/metadata-action@v4
@@ -83,8 +88,9 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: ${{ github.event_name != 'pull_request' }}
-          file: docker/Dockerfile
+          file: backend/docker/Dockerfile
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          context: .

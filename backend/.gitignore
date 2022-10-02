@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+#
+# SPDX-License-Identifier: CC0-1.0
+
+# ignore config files
+config.json
+.sequelizerc
+.env
+
+# ignore webpack build
+public/build
+public/views/build
+
+# ignore TypeScript built
+built/
+dist
+
+# Tests
+coverage
+coverage-e2e
+.nyc_output
+
+public/uploads/*
+!public/uploads/.gitkeep
+!public/.gitkeep
+uploads
+test_uploads
