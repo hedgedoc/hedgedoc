@@ -11,7 +11,7 @@ import { Loglevel } from './loglevel.enum';
 describe('appConfig', () => {
   const domain = 'https://example.com';
   const invalidDomain = 'localhost';
-  const rendererOrigin = 'https://render.example.com';
+  const rendererBaseUrl = 'https://render.example.com';
   const port = 3333;
   const negativePort = -9000;
   const floatPort = 3.14;
@@ -27,7 +27,7 @@ describe('appConfig', () => {
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_DOMAIN: domain,
-          HD_RENDERER_ORIGIN: rendererOrigin,
+          HD_RENDERER_BASE_URL: rendererBaseUrl,
           PORT: port.toString(),
           HD_LOGLEVEL: loglevel,
           HD_PERSIST_INTERVAL: '100',
@@ -39,7 +39,7 @@ describe('appConfig', () => {
       );
       const config = appConfig();
       expect(config.domain).toEqual(domain);
-      expect(config.rendererOrigin).toEqual(rendererOrigin);
+      expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.port).toEqual(port);
       expect(config.loglevel).toEqual(loglevel);
       expect(config.persistInterval).toEqual(100);
@@ -62,7 +62,7 @@ describe('appConfig', () => {
       );
       const config = appConfig();
       expect(config.domain).toEqual(domain);
-      expect(config.rendererOrigin).toEqual(domain);
+      expect(config.rendererBaseUrl).toEqual(domain);
       expect(config.port).toEqual(port);
       expect(config.loglevel).toEqual(loglevel);
       expect(config.persistInterval).toEqual(100);
@@ -74,7 +74,7 @@ describe('appConfig', () => {
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_DOMAIN: domain,
-          HD_RENDERER_ORIGIN: rendererOrigin,
+          HD_RENDERER_BASE_URL: rendererBaseUrl,
           HD_LOGLEVEL: loglevel,
           HD_PERSIST_INTERVAL: '100',
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -85,7 +85,7 @@ describe('appConfig', () => {
       );
       const config = appConfig();
       expect(config.domain).toEqual(domain);
-      expect(config.rendererOrigin).toEqual(rendererOrigin);
+      expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.port).toEqual(3000);
       expect(config.loglevel).toEqual(loglevel);
       expect(config.persistInterval).toEqual(100);
@@ -97,7 +97,7 @@ describe('appConfig', () => {
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_DOMAIN: domain,
-          HD_RENDERER_ORIGIN: rendererOrigin,
+          HD_RENDERER_BASE_URL: rendererBaseUrl,
           PORT: port.toString(),
           HD_PERSIST_INTERVAL: '100',
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -108,7 +108,7 @@ describe('appConfig', () => {
       );
       const config = appConfig();
       expect(config.domain).toEqual(domain);
-      expect(config.rendererOrigin).toEqual(rendererOrigin);
+      expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.port).toEqual(port);
       expect(config.loglevel).toEqual(Loglevel.WARN);
       expect(config.persistInterval).toEqual(100);
@@ -120,7 +120,7 @@ describe('appConfig', () => {
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_DOMAIN: domain,
-          HD_RENDERER_ORIGIN: rendererOrigin,
+          HD_RENDERER_BASE_URL: rendererBaseUrl,
           HD_LOGLEVEL: loglevel,
           PORT: port.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -131,7 +131,7 @@ describe('appConfig', () => {
       );
       const config = appConfig();
       expect(config.domain).toEqual(domain);
-      expect(config.rendererOrigin).toEqual(rendererOrigin);
+      expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.port).toEqual(port);
       expect(config.loglevel).toEqual(Loglevel.TRACE);
       expect(config.persistInterval).toEqual(10);
@@ -143,7 +143,7 @@ describe('appConfig', () => {
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_DOMAIN: domain,
-          HD_RENDERER_ORIGIN: rendererOrigin,
+          HD_RENDERER_BASE_URL: rendererBaseUrl,
           HD_LOGLEVEL: loglevel,
           PORT: port.toString(),
           HD_PERSIST_INTERVAL: '0',
@@ -155,7 +155,7 @@ describe('appConfig', () => {
       );
       const config = appConfig();
       expect(config.domain).toEqual(domain);
-      expect(config.rendererOrigin).toEqual(rendererOrigin);
+      expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.port).toEqual(port);
       expect(config.loglevel).toEqual(Loglevel.TRACE);
       expect(config.persistInterval).toEqual(0);

@@ -168,7 +168,7 @@ describe('FrontendConfigService', () => {
       it(`works with ${JSON.stringify(authConfigConfigured)}`, async () => {
         const appConfig: AppConfig = {
           domain: domain,
-          rendererOrigin: domain,
+          rendererBaseUrl: 'https://renderer.example.org',
           port: 3000,
           loglevel: Loglevel.ERROR,
           persistInterval: 10,
@@ -315,119 +315,106 @@ describe('FrontendConfigService', () => {
   const customName = 'Test Branding Name';
 
   let index = 1;
-  for (const renderOrigin of [undefined, 'http://md-renderer.example.com']) {
-    for (const customLogo of [undefined, 'https://example.com/logo.png']) {
-      for (const privacyLink of [undefined, 'https://example.com/privacy']) {
-        for (const termsOfUseLink of [undefined, 'https://example.com/terms']) {
-          for (const imprintLink of [
+  for (const customLogo of [undefined, 'https://example.com/logo.png']) {
+    for (const privacyLink of [undefined, 'https://example.com/privacy']) {
+      for (const termsOfUseLink of [undefined, 'https://example.com/terms']) {
+        for (const imprintLink of [undefined, 'https://example.com/imprint']) {
+          for (const plantUmlServer of [
             undefined,
-            'https://example.com/imprint',
+            'https://plantuml.example.com',
           ]) {
-            for (const plantUmlServer of [
-              undefined,
-              'https://plantuml.example.com',
-            ]) {
-              it(`combination #${index} works`, async () => {
-                const appConfig: AppConfig = {
-                  domain: domain,
-                  rendererOrigin: renderOrigin ?? domain,
-                  port: 3000,
-                  loglevel: Loglevel.ERROR,
-                  persistInterval: 10,
-                };
-                const authConfig: AuthConfig = {
-                  ...emptyAuthConfig,
-                  local: {
-                    enableLogin: true,
-                    enableRegister,
-                    minimalPasswordStrength: 3,
+            it(`combination #${index} works`, async () => {
+              const appConfig: AppConfig = {
+                domain: domain,
+                rendererBaseUrl: 'https://renderer.example.org',
+                port: 3000,
+                loglevel: Loglevel.ERROR,
+                persistInterval: 10,
+              };
+              const authConfig: AuthConfig = {
+                ...emptyAuthConfig,
+                local: {
+                  enableLogin: true,
+                  enableRegister,
+                  minimalPasswordStrength: 3,
+                },
+              };
+              const customizationConfig: CustomizationConfig = {
+                branding: {
+                  customName: customName,
+                  customLogo: customLogo,
+                },
+                specialUrls: {
+                  privacy: privacyLink,
+                  termsOfUse: termsOfUseLink,
+                  imprint: imprintLink,
+                },
+              };
+              const externalServicesConfig: ExternalServicesConfig = {
+                plantUmlServer: plantUmlServer,
+                imageProxy: imageProxy,
+              };
+              const noteConfig: NoteConfig = {
+                forbiddenNoteIds: [],
+                maxDocumentLength: maxDocumentLength,
+                guestAccess: GuestAccess.CREATE,
+                permissions: {
+                  default: {
+                    everyone: DefaultAccessPermission.READ,
+                    loggedIn: DefaultAccessPermission.WRITE,
                   },
-                };
-                const customizationConfig: CustomizationConfig = {
-                  branding: {
-                    customName: customName,
-                    customLogo: customLogo,
-                  },
-                  specialUrls: {
-                    privacy: privacyLink,
-                    termsOfUse: termsOfUseLink,
-                    imprint: imprintLink,
-                  },
-                };
-                const externalServicesConfig: ExternalServicesConfig = {
-                  plantUmlServer: plantUmlServer,
-                  imageProxy: imageProxy,
-                };
-                const noteConfig: NoteConfig = {
-                  forbiddenNoteIds: [],
-                  maxDocumentLength: maxDocumentLength,
-                  guestAccess: GuestAccess.CREATE,
-                  permissions: {
-                    default: {
-                      everyone: DefaultAccessPermission.READ,
-                      loggedIn: DefaultAccessPermission.WRITE,
-                    },
-                  },
-                };
-                const module: TestingModule = await Test.createTestingModule({
-                  imports: [
-                    ConfigModule.forRoot({
-                      isGlobal: true,
-                      load: [
-                        registerAs('appConfig', () => appConfig),
-                        registerAs('authConfig', () => authConfig),
-                        registerAs(
-                          'customizationConfig',
-                          () => customizationConfig,
-                        ),
-                        registerAs(
-                          'externalServicesConfig',
-                          () => externalServicesConfig,
-                        ),
-                        registerAs('noteConfig', () => noteConfig),
-                      ],
-                    }),
-                    LoggerModule,
-                  ],
-                  providers: [FrontendConfigService],
-                }).compile();
+                },
+              };
+              const module: TestingModule = await Test.createTestingModule({
+                imports: [
+                  ConfigModule.forRoot({
+                    isGlobal: true,
+                    load: [
+                      registerAs('appConfig', () => appConfig),
+                      registerAs('authConfig', () => authConfig),
+                      registerAs(
+                        'customizationConfig',
+                        () => customizationConfig,
+                      ),
+                      registerAs(
+                        'externalServicesConfig',
+                        () => externalServicesConfig,
+                      ),
+                      registerAs('noteConfig', () => noteConfig),
+                    ],
+                  }),
+                  LoggerModule,
+                ],
+                providers: [FrontendConfigService],
+              }).compile();
 
-                const service = module.get(FrontendConfigService);
-                const config = await service.getFrontendConfig();
-                expect(config.allowRegister).toEqual(enableRegister);
-                expect(config.guestAccess).toEqual(noteConfig.guestAccess);
-                expect(config.branding.name).toEqual(customName);
-                expect(config.branding.logo).toEqual(
-                  customLogo ? new URL(customLogo) : undefined,
-                );
-                expect(config.iframeCommunication.editorOrigin).toEqual(
-                  new URL(appConfig.domain),
-                );
-                expect(config.iframeCommunication.rendererOrigin).toEqual(
-                  appConfig.rendererOrigin
-                    ? new URL(appConfig.rendererOrigin)
-                    : new URL(appConfig.domain),
-                );
-                expect(config.maxDocumentLength).toEqual(maxDocumentLength);
-                expect(config.plantUmlServer).toEqual(
-                  plantUmlServer ? new URL(plantUmlServer) : undefined,
-                );
-                expect(config.specialUrls.imprint).toEqual(
-                  imprintLink ? new URL(imprintLink) : undefined,
-                );
-                expect(config.specialUrls.privacy).toEqual(
-                  privacyLink ? new URL(privacyLink) : undefined,
-                );
-                expect(config.specialUrls.termsOfUse).toEqual(
-                  termsOfUseLink ? new URL(termsOfUseLink) : undefined,
-                );
-                expect(config.useImageProxy).toEqual(!!imageProxy);
-                expect(config.version).toEqual(
-                  await getServerVersionFromPackageJson(),
-                );
-              });
-              index += 1;
-            }
+              const service = module.get(FrontendConfigService);
+              const config = await service.getFrontendConfig();
+              expect(config.allowRegister).toEqual(enableRegister);
+              expect(config.guestAccess).toEqual(noteConfig.guestAccess);
+              expect(config.branding.name).toEqual(customName);
+              expect(config.branding.logo).toEqual(
+                customLogo ? new URL(customLogo) : undefined,
+              );
+              expect(config.maxDocumentLength).toEqual(maxDocumentLength);
+              expect(config.plantUmlServer).toEqual(
+                plantUmlServer ? new URL(plantUmlServer) : undefined,
+              );
+              expect(config.specialUrls.imprint).toEqual(
+                imprintLink ? new URL(imprintLink) : undefined,
+              );
+              expect(config.specialUrls.privacy).toEqual(
+                privacyLink ? new URL(privacyLink) : undefined,
+              );
+              expect(config.specialUrls.termsOfUse).toEqual(
+                termsOfUseLink ? new URL(termsOfUseLink) : undefined,
+              );
+              expect(config.useImageProxy).toEqual(!!imageProxy);
+              expect(config.version).toEqual(
+                await getServerVersionFromPackageJson(),
+              );
+            });
+            index += 1;
           }
         }
       }

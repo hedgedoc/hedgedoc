@@ -123,22 +123,6 @@ export class SpecialUrlsDto extends BaseDto {
   imprint?: URL;
 }
 
-export class IframeCommunicationDto extends BaseDto {
-  /**
-   * The origin under which the editor page will be served
-   * @example https://md.example.com
-   */
-  @IsUrl()
-  editorOrigin: URL;
-
-  /**
-   * The origin under which the renderer page will be served
-   * @example https://md-renderer.example.com
-   */
-  @IsUrl()
-  rendererOrigin: URL;
-}
-
 export class FrontendConfigDto extends BaseDto {
   /**
    * Maximum access level for guest users
@@ -195,12 +179,4 @@ export class FrontendConfigDto extends BaseDto {
    */
   @IsNumber()
   maxDocumentLength: number;
-
-  /**
-   * The frontend capsules the markdown rendering into a secured iframe, to increase the security. The browser will treat the iframe target as cross-origin even if they are on the same domain.
-   * You can go even one step further and serve the editor and the renderer on different (sub)domains to eliminate even more attack vectors by making sessions, cookies, etc. not available for the renderer, because they aren't set on the renderer origin.
-   * However, The editor and the renderer need to know the other's origin to communicate with each other, even if they are the same.
-   */
-  @ValidateNested()
-  iframeCommunication: IframeCommunicationDto;
 }
