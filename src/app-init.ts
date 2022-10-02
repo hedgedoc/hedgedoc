@@ -52,9 +52,12 @@ export async function setupApp(
   );
 
   app.enableCors({
-    origin: appConfig.rendererOrigin,
+    origin: appConfig.rendererBaseUrl,
   });
-  logger.log(`Enabling CORS for '${appConfig.rendererOrigin}'`, 'AppBootstrap');
+  logger.log(
+    `Enabling CORS for '${appConfig.rendererBaseUrl}'`,
+    'AppBootstrap',
+  );
 
   app.useGlobalPipes(setupValidationPipe(logger));
 

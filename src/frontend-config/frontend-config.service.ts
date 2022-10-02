@@ -22,7 +22,6 @@ import {
   AuthProviderType,
   BrandingDto,
   FrontendConfigDto,
-  IframeCommunicationDto,
   SpecialUrlsDto,
 } from './frontend-config.dto';
 
@@ -50,7 +49,6 @@ export class FrontendConfigService {
       allowRegister: this.authConfig.local.enableRegister,
       authProviders: this.getAuthProviders(),
       branding: this.getBranding(),
-      iframeCommunication: this.getIframeCommunication(),
       maxDocumentLength: this.noteConfig.maxDocumentLength,
       plantUmlServer: this.externalServicesConfig.plantUmlServer
         ? new URL(this.externalServicesConfig.plantUmlServer)
@@ -144,13 +142,6 @@ export class FrontendConfigService {
       termsOfUse: this.customizationConfig.specialUrls.termsOfUse
         ? new URL(this.customizationConfig.specialUrls.termsOfUse)
         : undefined,
-    };
-  }
-
-  private getIframeCommunication(): IframeCommunicationDto {
-    return {
-      editorOrigin: new URL(this.appConfig.domain),
-      rendererOrigin: new URL(this.appConfig.rendererOrigin),
     };
   }
 }

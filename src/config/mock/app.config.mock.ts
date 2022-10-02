@@ -12,7 +12,7 @@ export default registerAs(
   'appConfig',
   (): AppConfig => ({
     domain: 'md.example.com',
-    rendererOrigin: 'md-renderer.example.com',
+    rendererBaseUrl: 'md-renderer.example.com',
     port: 3000,
     loglevel: Loglevel.ERROR,
     persistInterval: 10,
