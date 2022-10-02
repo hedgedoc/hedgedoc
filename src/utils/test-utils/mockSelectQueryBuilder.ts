@@ -24,6 +24,7 @@ export function mockSelectQueryBuilder<T>(
     getOne: () => Promise.resolve(returnValue),
     orWhere: () => mockedQueryBuilder,
     setParameter: () => mockedQueryBuilder,
+    getMany: () => Promise.resolve(returnValue ? [returnValue] : []),
   });
   return mockedQueryBuilder;
 }
