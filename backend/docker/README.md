@@ -16,17 +16,17 @@ It uses features which are only available in BuildKit - see https://docs.docker.
 **Note:** This does not include any frontend!
 
 To build a production image, run the following command *from the root of the repository*:  
-`docker build -t hedgedoc-prod -f docker/Dockerfile .`
+`docker buildx build -t hedgedoc-prod -f backend/docker/Dockerfile .`
 
 When you run the image, you need to provide environment variables to configure HedgeDoc.
-See [the config docs](../docs/content/config/index.md) for more information.
+See [the config docs](../../docs/content/config/index.md) for more information.
 This example starts HedgeDoc on localhost, with non-persistent storage:  
 `docker run -e HD_DOMAIN=http://localhost -e HD_MEDIA_BACKEND=filesystem -e HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH=uploads -e HD_DATABASE_TYPE=sqlite -e HD_DATABASE_NAME=hedgedoc.sqlite -e HD_SESSION_SECRET=foobar -e HD_LOGLEVEL=debug -p 3000:3000 hedgedoc-prod`
 
 
 ## Build a development image
 You can build a development image using the `development` target:  
-`docker build -t hedgedoc-dev -f docker/Dockerfile --target development .`
+`docker buildx build -t hedgedoc-dev -f backend/docker/Dockerfile --target development .`
 
 You can then, e.g. run tests inside the image:  
 `docker run hedgedoc-dev yarn run test:e2e`

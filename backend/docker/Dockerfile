@@ -19,8 +19,8 @@ ENTRYPOINT ["tini"]
 USER node
 WORKDIR /usr/src/app
 
-COPY --chown=node .yarn .yarn
-COPY --chown=node package.json yarn.lock .yarnrc.yml ./
+COPY --chown=node .yarn ../.yarn
+COPY --chown=node backend/package.json backend/yarn.lock backend/.yarnrc.yml ./
 
 
 ## Stage 1: Code with all dependencies
@@ -32,8 +32,8 @@ WORKDIR /usr/src/app
 RUN --mount=type=cache,sharing=locked,uid=1000,gid=1000,target=/tmp/.yarn \
     YARN_CACHE_FOLDER=/tmp/.yarn yarn install --immutable
 
-COPY --chown=node nest-cli.json tsconfig.json tsconfig.build.json ./
-COPY --chown=node src src
+COPY --chown=node backend/nest-cli.json backend/tsconfig.json backend/tsconfig.build.json ./
+COPY --chown=node backend/src src
 
 
 ## Stage 2a: Dev config files and tests
@@ -41,8 +41,8 @@ FROM code-with-deps as development
 USER node
 WORKDIR /usr/src/app
 
-COPY --chown=node .eslintrc.js eslint-local-rules.js .prettierrc jest-e2e.json  ./
-COPY --chown=node test test
+COPY --chown=node backend/.eslintrc.js backend/eslint-local-rules.js backend/.prettierrc backend/jest-e2e.json  ./
+COPY --chown=node backend/test test
 
 CMD ["node", "-r", "ts-node/register", "src/main.ts"]
 
