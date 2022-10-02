@@ -6,7 +6,7 @@
     "build": "cross-env NODE_ENV=production next build",
     "build:mock": "cross-env NEXT_PUBLIC_USE_MOCK_API=true next build",
     "build:test": "cross-env NODE_ENV=test NEXT_PUBLIC_TEST_MODE=true next build",
-    "analyze": "cross-env ANALYZE=true next build",
+    "analyze": "cross-env ANALYZE=true yarn build",
     "dev": "cross-env PORT=3001 next dev",
     "dev:test": "cross-env PORT=3001 NODE_ENV=test NEXT_PUBLIC_TEST_MODE=true next dev",
     "dev:for-real-backend": "cross-env PORT=3001 NEXT_PUBLIC_USE_MOCK_API=false HD_EDITOR_BASE_URL=http://localhost:8080/ next dev",
