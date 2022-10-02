@@ -5,7 +5,7 @@
  */
 import { Injectable } from '@nestjs/common';
 import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
-import { Connection, Equal, Repository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
@@ -40,10 +40,10 @@ export class HistoryService {
    * @return {HistoryEntry[]} an array of history entries of the specified user
    */
   async getEntriesByUser(user: User): Promise<HistoryEntry[]> {
-    return await this.historyEntryRepository.find({
-      where: { user: Equal(user) },
-      relations: ['note', 'note.aliases', 'user'],
-    });
+    return await this.historyEntryRepository
+      .createQueryBuilder('entry')
+      .where('entry.userId = :userId', { userId: user.id })
+      .getMany();
   }
 
   /**
@@ -149,10 +149,10 @@ export class HistoryService {
     history: HistoryEntryImportDto[],
   ): Promise<void> {
     await this.connection.transaction(async (manager) => {
-      const currentHistory = await manager.find<HistoryEntry>(HistoryEntry, {
-        where: { user: Equal(user) },
-        relations: ['note', 'note.aliases', 'user'],
-      });
+      const currentHistory = await manager
+        .createQueryBuilder(HistoryEntry, 'entry')
+        .where('entry.userId = :userId', { userId: user.id })
+        .getMany();
       for (const entry of currentHistory) {
         await manager.remove<HistoryEntry>(entry);
       }

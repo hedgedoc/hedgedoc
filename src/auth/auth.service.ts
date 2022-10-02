@@ -7,7 +7,7 @@ import { Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import crypto, { randomBytes } from 'crypto';
-import { Equal, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import {
   NotInDBError,
@@ -160,9 +160,10 @@ export class AuthService {
   }
 
   async getTokensByUser(user: User): Promise<AuthToken[]> {
-    const tokens = await this.authTokenRepository.find({
-      where: { user: Equal(user) },
-    });
+    const tokens = await this.authTokenRepository
+      .createQueryBuilder('token')
+      .where('token.userId = :userId', { userId: user.id })
+      .getMany();
     if (tokens === null) {
       return [];
     }

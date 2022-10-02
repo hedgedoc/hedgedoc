@@ -27,6 +27,17 @@ describe('AuthService', () => {
   let userRepo: Repository<User>;
   let authTokenRepo: Repository<AuthToken>;
 
+  class CreateQueryBuilderClass {
+    leftJoinAndSelect: () => CreateQueryBuilderClass;
+    where: () => CreateQueryBuilderClass;
+    orWhere: () => CreateQueryBuilderClass;
+    setParameter: () => CreateQueryBuilderClass;
+    getOne: () => AuthToken;
+    getMany: () => AuthToken[];
+  }
+
+  let createQueryBuilderFunc: CreateQueryBuilderClass;
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -68,6 +79,21 @@ describe('AuthService', () => {
       'abc',
       new Date(new Date().getTime() + 60000), // make this AuthToken valid for 1min
     ) as AuthToken;
+
+    const createQueryBuilder = {
+      leftJoinAndSelect: () => createQueryBuilder,
+      where: () => createQueryBuilder,
+      orWhere: () => createQueryBuilder,
+      setParameter: () => createQueryBuilder,
+      getOne: () => authToken,
+      getMany: () => [authToken],
+    };
+    createQueryBuilderFunc = createQueryBuilder;
+    jest
+      .spyOn(authTokenRepo, 'createQueryBuilder')
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      .mockImplementation(() => createQueryBuilder);
   });
 
   it('should be defined', () => {
@@ -76,7 +102,7 @@ describe('AuthService', () => {
 
   describe('getTokensByUser', () => {
     it('works', async () => {
-      jest.spyOn(authTokenRepo, 'find').mockResolvedValueOnce([authToken]);
+      createQueryBuilderFunc.getMany = () => [authToken];
       const tokens = await service.getTokensByUser(user);
       expect(tokens).toHaveLength(1);
       expect(tokens).toEqual([authToken]);

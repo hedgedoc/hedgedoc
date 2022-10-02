@@ -8,7 +8,7 @@ import { ModuleRef } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import crypto from 'crypto';
 import * as FileType from 'file-type';
-import { Equal, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import mediaConfiguration, { MediaConfig } from '../config/media.config';
 import { ClientError, NotInDBError } from '../errors/errors';
@@ -147,10 +147,10 @@ export class MediaService {
    * @return {MediaUpload[]} arary of media uploads owned by the user
    */
   async listUploadsByUser(user: User): Promise<MediaUpload[]> {
-    const mediaUploads = await this.mediaUploadRepository.find({
-      where: { user: Equal(user) },
-      relations: ['user', 'note'],
-    });
+    const mediaUploads = await this.mediaUploadRepository
+      .createQueryBuilder('media')
+      .where('media.userId = :userId', { userId: user.id })
+      .getMany();
     if (mediaUploads === null) {
       return [];
     }

@@ -31,6 +31,7 @@ import { Revision } from '../revisions/revision.entity';
 import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
+import { BackendType } from './backends/backend-type.enum';
 import { FilesystemBackend } from './backends/filesystem-backend';
 import { BackendData, MediaUpload } from './media-upload.entity';
 import { MediaService } from './media.service';
@@ -40,6 +41,17 @@ describe('MediaService', () => {
   let noteRepo: Repository<Note>;
   let userRepo: Repository<User>;
   let mediaRepo: Repository<MediaUpload>;
+
+  class CreateQueryBuilderClass {
+    leftJoinAndSelect: () => CreateQueryBuilderClass;
+    where: () => CreateQueryBuilderClass;
+    orWhere: () => CreateQueryBuilderClass;
+    setParameter: () => CreateQueryBuilderClass;
+    getOne: () => MediaUpload;
+    getMany: () => MediaUpload[];
+  }
+
+  let createQueryBuilderFunc: CreateQueryBuilderClass;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -103,6 +115,32 @@ describe('MediaService', () => {
     mediaRepo = module.get<Repository<MediaUpload>>(
       getRepositoryToken(MediaUpload),
     );
+
+    const user = User.create('test123', 'Test 123') as User;
+    const note = Note.create(user) as Note;
+    const mediaUpload = MediaUpload.create(
+      'test',
+      note,
+      user,
+      '.jpg',
+      BackendType.FILESYSTEM,
+      'test/test',
+    ) as MediaUpload;
+
+    const createQueryBuilder = {
+      leftJoinAndSelect: () => createQueryBuilder,
+      where: () => createQueryBuilder,
+      orWhere: () => createQueryBuilder,
+      setParameter: () => createQueryBuilder,
+      getOne: () => mediaUpload,
+      getMany: () => [mediaUpload],
+    };
+    createQueryBuilderFunc = createQueryBuilder;
+    jest
+      .spyOn(mediaRepo, 'createQueryBuilder')
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      .mockImplementation(() => createQueryBuilder);
   });
 
   it('should be defined', () => {
@@ -236,23 +274,21 @@ describe('MediaService', () => {
             username: username,
           } as User),
         } as MediaUpload;
-        jest
-          .spyOn(mediaRepo, 'find')
-          .mockResolvedValueOnce([mockMediaUploadEntry]);
+        createQueryBuilderFunc.getMany = () => [mockMediaUploadEntry];
         expect(
           await service.listUploadsByUser({ username: 'hardcoded' } as User),
         ).toEqual([mockMediaUploadEntry]);
       });
 
       it('without uploads from user', async () => {
-        jest.spyOn(mediaRepo, 'find').mockResolvedValueOnce([]);
+        createQueryBuilderFunc.getMany = () => [];
         const mediaList = await service.listUploadsByUser({
           username: username,
         } as User);
         expect(mediaList).toEqual([]);
       });
       it('with error (null as return value of find)', async () => {
-        jest.spyOn(mediaRepo, 'find').mockResolvedValueOnce(null);
+        createQueryBuilderFunc.getMany = () => [];
         const mediaList = await service.listUploadsByUser({
           username: username,
         } as User);
