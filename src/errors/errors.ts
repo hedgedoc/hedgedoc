@@ -55,3 +55,7 @@ export class NoLocalIdentityError extends Error {
 export class PasswordTooWeakError extends Error {
   name = 'PasswordTooWeakError';
 }
+
+export class MaximumDocumentLengthExceededError extends Error {
+  name = 'MaximumDocumentLengthExceededError';
+}
