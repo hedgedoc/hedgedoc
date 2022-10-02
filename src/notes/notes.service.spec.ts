@@ -28,6 +28,7 @@ import { NoteConfig } from '../config/note.config';
 import {
   AlreadyInDBError,
   ForbiddenIdError,
+  MaximumDocumentLengthExceededError,
   NotInDBError,
 } from '../errors/errors';
 import { eventModuleConfig, NoteEvent } from '../events';
@@ -464,6 +465,37 @@ describe('NotesService', () => {
         expect(await newNote.aliases).toHaveLength(1);
         expect((await newNote.aliases)[0].name).toEqual(alias);
       });
+      describe('with maxDocumentLength 1000', () => {
+        beforeEach(() => (noteMockConfig.maxDocumentLength = 1000));
+        it('and content has length maxDocumentLength', async () => {
+          const content = 'x'.repeat(noteMockConfig.maxDocumentLength);
+          const newNote = await service.createNote(content, user, alias);
+          const revisions = await newNote.revisions;
+          expect(revisions).toHaveLength(1);
+          expect(revisions[0].content).toEqual(content);
+          expect(await newNote.historyEntries).toHaveLength(1);
+          expect(await (await newNote.historyEntries)[0].user).toEqual(user);
+          expect(await newNote.userPermissions).toHaveLength(0);
+          const groupPermissions = await newNote.groupPermissions;
+          expect(groupPermissions).toHaveLength(2);
+          expect(groupPermissions[0].canEdit).toEqual(
+            everyoneDefaultAccessPermission === DefaultAccessPermission.WRITE,
+          );
+          expect((await groupPermissions[0].group).name).toEqual(
+            SpecialGroup.EVERYONE,
+          );
+          expect(groupPermissions[1].canEdit).toEqual(
+            loggedinDefaultAccessPermission === DefaultAccessPermission.WRITE,
+          );
+          expect((await groupPermissions[1].group).name).toEqual(
+            SpecialGroup.LOGGED_IN,
+          );
+          expect(await newNote.tags).toHaveLength(0);
+          expect(await newNote.owner).toEqual(user);
+          expect(await newNote.aliases).toHaveLength(1);
+          expect((await newNote.aliases)[0].name).toEqual(alias);
+        });
+      });
       describe('with other', () => {
         beforeEach(
           () =>
@@ -509,6 +541,19 @@ describe('NotesService', () => {
         await expect(service.createNote(content, null, alias)).rejects.toThrow(
           AlreadyInDBError,
         );
+      });
+      describe('with maxDocumentLength 1000', () => {
+        beforeEach(() => (noteMockConfig.maxDocumentLength = 1000));
+        it('document is too long', async () => {
+          mockGroupRepo();
+          jest.spyOn(noteRepo, 'save').mockImplementationOnce(async () => {
+            throw new Error();
+          });
+          const content = 'x'.repeat(noteMockConfig.maxDocumentLength + 1);
+          await expect(
+            service.createNote(content, user, alias),
+          ).rejects.toThrow(MaximumDocumentLengthExceededError);
+        });
       });
     });
   });
