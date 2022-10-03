@@ -165,7 +165,7 @@ export class NotesController {
 
   @Delete(':noteIdOrAlias/revisions')
   @OpenApi(204, 404)
-  @Permissions(Permission.READ)
+  @Permissions(Permission.OWNER)
   @UseInterceptors(GetNoteInterceptor)
   async purgeNoteRevisions(
     @RequestUser() user: User,
