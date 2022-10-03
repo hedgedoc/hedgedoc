@@ -9,6 +9,7 @@ import request from 'supertest';
 
 import { NotInDBError } from '../../src/errors/errors';
 import { NotePermissionsUpdateDto } from '../../src/notes/note-permissions.dto';
+import * as utils from '../../src/notes/utils';
 import { User } from '../../src/users/user.entity';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
@@ -46,21 +47,55 @@ describe('Notes', () => {
     await testSetup.cleanup();
   });
 
-  it('POST /notes', async () => {
-    const response = await request(testSetup.app.getHttpServer())
-      .post('/api/v2/notes')
-      .set('Content-Type', 'text/markdown')
-      .send(content)
-      .expect('Content-Type', /json/)
-      .expect(201);
-    expect(response.body.metadata?.id).toBeDefined();
-    expect(
-      await testSetup.notesService.getNoteContent(
-        await testSetup.notesService.getNoteByIdOrAlias(
-          response.body.metadata.id,
+  describe('POST /notes', () => {
+    it('creates a note', async () => {
+      const response = await request(testSetup.app.getHttpServer())
+        .post('/api/v2/notes')
+        .set('Content-Type', 'text/markdown')
+        .send(content)
+        .expect('Content-Type', /json/)
+        .expect(201);
+      expect(response.body.metadata?.id).toBeDefined();
+      expect(
+        await testSetup.notesService.getNoteContent(
+          await testSetup.notesService.getNoteByIdOrAlias(
+            response.body.metadata.id,
+          ),
         ),
-      ),
-    ).toEqual(content);
+      ).toEqual(content);
+    });
+    describe('does not create a note', () => {
+      it('if content exceeds maxDocumentLength', async () => {
+        const content = 'x'.repeat(
+          (testSetup.configService.get('noteConfig')
+            .maxDocumentLength as number) + 1,
+        );
+        await request(testSetup.app.getHttpServer())
+          .post('/api/v2/notes')
+          .set('Content-Type', 'text/markdown')
+          .send(content)
+          .expect('Content-Type', /json/)
+          .expect(413);
+      });
+      it('if publicId already exists', async () => {
+        // This should not happen, but you at least theoretical it's possible
+        const response = await request(testSetup.app.getHttpServer())
+          .post('/api/v2/notes')
+          .set('Content-Type', 'text/markdown')
+          .send(content)
+          .expect('Content-Type', /json/)
+          .expect(201);
+        jest
+          .spyOn(utils, 'generatePublicId')
+          .mockReturnValueOnce(response.body.metadata?.id);
+        await request(testSetup.app.getHttpServer())
+          .post('/api/v2/notes')
+          .set('Content-Type', 'text/markdown')
+          .send(content)
+          .expect('Content-Type', /json/)
+          .expect(409);
+      });
+    });
   });
 
   describe('GET /notes/{note}', () => {

@@ -139,6 +139,14 @@ export class NotesService {
         throw new AlreadyInDBError(
           `A note with the alias '${alias}' already exists.`,
         );
+      } else if ((e as Error).message.includes('publicId')) {
+        this.logger.debug(
+          `A note with the publicId '${newNote.publicId}' already exists.`,
+          'createNote',
+        );
+        throw new AlreadyInDBError(
+          `A note with the publicId '${newNote.publicId}' already exists.`,
+        );
       } else {
         throw e;
       }
