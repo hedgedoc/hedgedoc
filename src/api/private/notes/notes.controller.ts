@@ -69,7 +69,7 @@ export class NotesController {
   @Permissions(Permission.READ)
   @UseInterceptors(GetNoteInterceptor)
   async getNote(
-    @RequestUser() user: User,
+    @RequestUser({ guestsAllowed: true }) user: User | null,
     @RequestNote() note: Note,
   ): Promise<NoteDto> {
     await this.historyService.updateHistoryEntryTimestamp(note, user);
@@ -91,7 +91,7 @@ export class NotesController {
   @OpenApi(201, 413)
   @Permissions(Permission.CREATE)
   async createNote(
-    @RequestUser() user: User,
+    @RequestUser({ guestsAllowed: true }) user: User | null,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
     this.logger.debug('Got raw markdown:\n' + text, 'createNote');
@@ -104,7 +104,7 @@ export class NotesController {
   @OpenApi(201, 400, 404, 409, 413)
   @Permissions(Permission.CREATE)
   async createNamedNote(
-    @RequestUser() user: User,
+    @RequestUser({ guestsAllowed: true }) user: User | null,
     @Param('noteAlias') noteAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
@@ -141,7 +141,7 @@ export class NotesController {
   @Permissions(Permission.READ)
   @Get(':noteIdOrAlias/metadata')
   async getNoteMetadata(
-    @RequestUser() user: User,
+    @RequestUser({ guestsAllowed: true }) user: User | null,
     @RequestNote() note: Note,
   ): Promise<NoteMetadataDto> {
     return await this.noteService.toNoteMetadataDto(note);
@@ -152,7 +152,7 @@ export class NotesController {
   @Permissions(Permission.READ)
   @UseInterceptors(GetNoteInterceptor)
   async getNoteRevisions(
-    @RequestUser() user: User,
+    @RequestUser({ guestsAllowed: true }) user: User | null,
     @RequestNote() note: Note,
   ): Promise<RevisionMetadataDto[]> {
     const revisions = await this.revisionsService.getAllRevisions(note);
@@ -188,7 +188,7 @@ export class NotesController {
   @Permissions(Permission.READ)
   @UseInterceptors(GetNoteInterceptor)
   async getNoteRevision(
-    @RequestUser() user: User,
+    @RequestUser({ guestsAllowed: true }) user: User | null,
     @RequestNote() note: Note,
     @Param('revisionId') revisionId: number,
   ): Promise<RevisionDto> {
