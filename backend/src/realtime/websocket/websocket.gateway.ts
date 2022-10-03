@@ -52,10 +52,12 @@ export class WebsocketGateway implements OnGatewayConnection {
         extractNoteIdFromRequestUrl(request),
       );
 
+      const username = user?.username ?? 'guest';
+
       if (!(await this.permissionsService.mayRead(user, note))) {
         //TODO: [mrdrogdrog] inform client about reason of disconnect.
         this.logger.log(
-          `Access denied to note '${note.id}' for user '${user.username}'`,
+          `Access denied to note '${note.id}' for user '${username}'`,
           'handleConnection',
         );
         clientSocket.close();
@@ -65,7 +67,7 @@ export class WebsocketGateway implements OnGatewayConnection {
       this.logger.debug(
         `New realtime connection to note '${note.id}' (${
           note.publicId
-        }) by user '${user.username}' from ${
+        }) by user '${username}' from ${
           request.socket.remoteAddress ?? 'unknown'
         }`,
       );
@@ -98,11 +100,15 @@ export class WebsocketGateway implements OnGatewayConnection {
    */
   private async findUserByRequestSession(
     request: IncomingMessage,
-  ): Promise<User> {
-    const sessionId =
-      this.sessionService.extractVerifiedSessionIdFromRequest(request);
+  ): Promise<User | null> {
+    const sessionId = this.sessionService.extractSessionIdFromRequest(request);
+
+    if (sessionId.isEmpty()) {
+      return null;
+    }
+
     const username = await this.sessionService.fetchUsernameForSessionId(
-      sessionId,
+      sessionId.get(),
     );
     return await this.userService.getUserByUsername(username);
   }

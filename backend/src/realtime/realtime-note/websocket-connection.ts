@@ -30,7 +30,7 @@ export class WebsocketConnection {
    */
   constructor(
     websocket: WebSocket,
-    private user: User,
+    private user: User | null,
     realtimeNote: RealtimeNote,
   ) {
     const awareness = realtimeNote.getAwareness();
@@ -94,7 +94,11 @@ export class WebsocketConnection {
     return this.controlledAwarenessIds;
   }
 
-  public getUser(): User {
+  public getUser(): User | null {
     return this.user;
+  }
+
+  public getUsername(): string {
+    return this.getUser()?.username ?? 'Guest';
   }
 }

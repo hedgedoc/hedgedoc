@@ -70,27 +70,37 @@ export class SessionService {
    * Extracts the hedgedoc session cookie from the given {@link IncomingMessage request} and checks if the signature is correct.
    *
    * @param request The http request that contains a session cookie
-   * @return The extracted session id
-   * @throws Error if no session cookie was found
-   * @throws Error if the cookie content is malformed
-   * @throws Error if the cookie content isn't signed
+   * @return An {@link Optional optional} that either contains the extracted session id or is empty if no session cookie has been found
+   * @throws Error if the cookie has been found but the content is malformed
+   * @throws Error if the cookie has been found but the content isn't signed
    */
-  extractVerifiedSessionIdFromRequest(request: IncomingMessage): string {
-    return Optional.ofNullable(request.headers.cookie)
+  extractSessionIdFromRequest(request: IncomingMessage): Optional<string> {
+    return Optional.ofNullable(request.headers?.cookie)
       .map((cookieHeader) => parseCookie(cookieHeader)[HEDGEDOC_SESSION])
-      .orThrow(() => new Error(`No ${HEDGEDOC_SESSION} cookie found`))
-      .map((cookie) => SessionService.sessionCookieContentRegex.exec(cookie))
-      .orThrow(
-        () =>
-          new Error(
-            `${HEDGEDOC_SESSION} cookie doesn't look like a signed cookie`,
-          ),
-      )
-      .guard(
-        (cookie) => unsign(cookie[1], this.authConfig.session.secret) !== false,
-        () => new Error(`Signature of ${HEDGEDOC_SESSION} cookie isn't valid.`),
-      )
-      .map((cookie) => cookie[2])
-      .get();
+      .map((rawCookie) =>
+        this.extractVerifiedSessionIdFromCookieContent(rawCookie),
+      );
+  }
+
+  /**
+   * Parses the given session cookie content and extracts the session id.
+   *
+   * @param rawCookie The cookie to parse
+   * @return The extracted session id
+   * @throws Error if the cookie has been found but the content is malformed
+   * @throws Error if the cookie has been found but the content isn't signed
+   */
+  private extractVerifiedSessionIdFromCookieContent(rawCookie: string): string {
+    const parsedCookie =
+      SessionService.sessionCookieContentRegex.exec(rawCookie);
+    if (parsedCookie === null) {
+      throw new Error(
+        `cookie "${HEDGEDOC_SESSION}" doesn't look like a signed session cookie`,
+      );
+    }
+    if (unsign(parsedCookie[1], this.authConfig.session.secret) === false) {
+      throw new Error(`signature of cookie "${HEDGEDOC_SESSION}" isn't valid.`);
+    }
+    return parsedCookie[2];
   }
 }
