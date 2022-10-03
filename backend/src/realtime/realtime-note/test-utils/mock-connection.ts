@@ -18,5 +18,6 @@ export function mockConnection(synced: boolean): WebsocketConnection {
     isSynced: jest.fn(() => synced),
     send: jest.fn(),
     getUser: jest.fn(() => Mock.of<User>({ username: 'mockedUser' })),
+    getUsername: jest.fn(() => 'mocked user'),
   });
 }

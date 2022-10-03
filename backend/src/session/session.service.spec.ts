@@ -129,9 +129,9 @@ describe('SessionService', () => {
       const mockedRequest = Mock.of<IncomingMessage>({
         headers: {},
       });
-      expect(() =>
-        sessionService.extractVerifiedSessionIdFromRequest(mockedRequest),
-      ).toThrow('No hedgedoc-session cookie found');
+      expect(
+        sessionService.extractSessionIdFromRequest(mockedRequest).isEmpty(),
+      ).toBeTruthy();
     });
 
     it("fails if the cookie header isn't valid", () => {
@@ -139,9 +139,9 @@ describe('SessionService', () => {
         headers: { cookie: 'no' },
       });
       mockParseCookieModule(`s:anyValidSessionId.validSignature`);
-      expect(() =>
-        sessionService.extractVerifiedSessionIdFromRequest(mockedRequest),
-      ).toThrow('No hedgedoc-session cookie found');
+      expect(
+        sessionService.extractSessionIdFromRequest(mockedRequest).isEmpty(),
+      ).toBeTruthy();
     });
 
     it("fails if the hedgedoc session cookie isn't marked as signed", () => {
@@ -150,8 +150,10 @@ describe('SessionService', () => {
       });
       mockParseCookieModule('sessionId.validSignature');
       expect(() =>
-        sessionService.extractVerifiedSessionIdFromRequest(mockedRequest),
-      ).toThrow("cookie doesn't look like a signed cookie");
+        sessionService.extractSessionIdFromRequest(mockedRequest),
+      ).toThrow(
+        'cookie "hedgedoc-session" doesn\'t look like a signed session cookie',
+      );
     });
 
     it("fails if the hedgedoc session cookie doesn't contain a session id", () => {
@@ -160,8 +162,10 @@ describe('SessionService', () => {
       });
       mockParseCookieModule('s:.validSignature');
       expect(() =>
-        sessionService.extractVerifiedSessionIdFromRequest(mockedRequest),
-      ).toThrow("cookie doesn't look like a signed cookie");
+        sessionService.extractSessionIdFromRequest(mockedRequest),
+      ).toThrow(
+        'cookie "hedgedoc-session" doesn\'t look like a signed session cookie',
+      );
     });
 
     it("fails if the hedgedoc session cookie doesn't contain a signature", () => {
@@ -170,8 +174,10 @@ describe('SessionService', () => {
       });
       mockParseCookieModule('s:sessionId.');
       expect(() =>
-        sessionService.extractVerifiedSessionIdFromRequest(mockedRequest),
-      ).toThrow("cookie doesn't look like a signed cookie");
+        sessionService.extractSessionIdFromRequest(mockedRequest),
+      ).toThrow(
+        'cookie "hedgedoc-session" doesn\'t look like a signed session cookie',
+      );
     });
 
     it("fails if the hedgedoc session cookie isn't signed correctly", () => {
@@ -180,8 +186,8 @@ describe('SessionService', () => {
       });
       mockParseCookieModule('s:sessionId.invalidSignature');
       expect(() =>
-        sessionService.extractVerifiedSessionIdFromRequest(mockedRequest),
-      ).toThrow("Signature of hedgedoc-session cookie isn't valid.");
+        sessionService.extractSessionIdFromRequest(mockedRequest),
+      ).toThrow('signature of cookie "hedgedoc-session" isn\'t valid.');
     });
 
     it('can extract a session id from a valid request', () => {
@@ -190,7 +196,7 @@ describe('SessionService', () => {
       });
       mockParseCookieModule(`s:${validSessionId}.validSignature`);
       expect(
-        sessionService.extractVerifiedSessionIdFromRequest(mockedRequest),
+        sessionService.extractSessionIdFromRequest(mockedRequest).get(),
       ).toBe(validSessionId);
     });
   });

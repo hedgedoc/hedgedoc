@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { Optional } from '@mrdrogdrog/optional';
 import { ConfigModule } from '@nestjs/config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -64,7 +65,9 @@ describe('Websocket gateway', () => {
   const mockedValidSessionCookie = 'mockedValidSessionCookie';
   const mockedSessionIdWithUser = 'mockedSessionIdWithUser';
   const mockedValidUrl = 'mockedValidUrl';
+  const mockedValidGuestUrl = 'mockedValidGuestUrl';
   const mockedValidNoteId = 'mockedValidNoteId';
+  const mockedValidGuestNoteId = 'mockedValidGuestNoteId';
 
   let sessionExistsForUser = true;
   let noteExistsForNoteId = true;
@@ -151,14 +154,15 @@ describe('Websocket gateway', () => {
     permissionsService = module.get<PermissionsService>(PermissionsService);
 
     jest
-      .spyOn(sessionService, 'extractVerifiedSessionIdFromRequest')
-      .mockImplementation((request: IncomingMessage): string => {
-        if (request.headers.cookie === mockedValidSessionCookie) {
-          return mockedSessionIdWithUser;
-        } else {
-          throw new Error('no valid session cookie found');
-        }
-      });
+      .spyOn(sessionService, 'extractSessionIdFromRequest')
+      .mockImplementation(
+        (request: IncomingMessage): Optional<string> =>
+          Optional.ofNullable(
+            request.headers?.cookie === mockedValidSessionCookie
+              ? mockedSessionIdWithUser
+              : null,
+          ),
+      );
 
     const mockUsername = 'mockUsername';
     jest
@@ -184,26 +188,37 @@ describe('Websocket gateway', () => {
       .mockImplementation((request: IncomingMessage): string => {
         if (request.url === mockedValidUrl) {
           return mockedValidNoteId;
+        } else if (request.url === mockedValidGuestUrl) {
+          return mockedValidGuestNoteId;
         } else {
           throw new Error('no valid note id found');
         }
       });
 
     const mockedNote = Mock.of<Note>({ id: 4711 });
+    const mockedGuestNote = Mock.of<Note>({ id: 1235 });
     jest
       .spyOn(notesService, 'getNoteByIdOrAlias')
-      .mockImplementation((noteId: string) =>
-        noteExistsForNoteId && noteId === mockedValidNoteId
-          ? Promise.resolve(mockedNote)
-          : Promise.reject('no note found'),
-      );
+      .mockImplementation((noteId: string) => {
+        if (noteExistsForNoteId && noteId === mockedValidNoteId) {
+          return Promise.resolve(mockedNote);
+        }
+        if (noteId === mockedValidGuestNoteId) {
+          return Promise.resolve(mockedGuestNote);
+        } else {
+          return Promise.reject('no note found');
+        }
+      });
 
     jest
       .spyOn(permissionsService, 'mayRead')
       .mockImplementation(
         (user: User | null, note: Note): Promise<boolean> =>
           Promise.resolve(
-            user === mockUser && note === mockedNote && userHasReadPermissions,
+            (user === mockUser &&
+              note === mockedNote &&
+              userHasReadPermissions) ||
+              (user === null && note === mockedGuestNote),
           ),
       );
 
@@ -229,6 +244,22 @@ describe('Websocket gateway', () => {
 
     mockedWebsocketCloseSpy = jest.spyOn(mockedWebsocket, 'close');
     addClientSpy = jest.spyOn(mockedRealtimeNote, 'addClient');
+  });
+
+  it('adds a valid connection request without a session', async () => {
+    const request = Mock.of<IncomingMessage>({
+      socket: {
+        remoteAddress: 'mockHost',
+      },
+      url: mockedValidGuestUrl,
+      headers: {},
+    });
+
+    await expect(
+      gateway.handleConnection(mockedWebsocket, request),
+    ).resolves.not.toThrow();
+    expect(addClientSpy).toHaveBeenCalledWith(mockedWebsocketConnection);
+    expect(mockedWebsocketCloseSpy).not.toHaveBeenCalled();
   });
 
   it('adds a valid connection request', async () => {

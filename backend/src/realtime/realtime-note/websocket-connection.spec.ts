@@ -192,4 +192,26 @@ describe('websocket connection', () => {
 
     expect(sut.getUser()).toBe(mockedUser);
   });
+
+  it('returns the correct username', () => {
+    const mockedUserWithUsername = Mock.of<User>({ username: 'MockUser' });
+
+    const sut = new WebsocketConnection(
+      mockedWebsocket,
+      mockedUserWithUsername,
+      mockedRealtimeNote,
+    );
+
+    expect(sut.getUsername()).toBe('MockUser');
+  });
+
+  it('returns a fallback if no username has been set', () => {
+    const sut = new WebsocketConnection(
+      mockedWebsocket,
+      mockedUser,
+      mockedRealtimeNote,
+    );
+
+    expect(sut.getUsername()).toBe('Guest');
+  });
 });

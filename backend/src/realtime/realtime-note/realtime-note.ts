@@ -52,7 +52,7 @@ export class RealtimeNote extends (EventEmitter as TypedEventEmitterConstructor<
    */
   public addClient(client: WebsocketConnection): void {
     this.clients.add(client);
-    this.logger.debug(`User '${client.getUser().username}' connected`);
+    this.logger.debug(`User '${client.getUsername()}' connected`);
   }
 
   /**
@@ -63,7 +63,7 @@ export class RealtimeNote extends (EventEmitter as TypedEventEmitterConstructor<
   public removeClient(client: WebsocketConnection): void {
     this.clients.delete(client);
     this.logger.debug(
-      `User '${client.getUser().username}' disconnected. ${
+      `User '${client.getUsername()}' disconnected. ${
         this.clients.size
       } clients left.`,
     );
