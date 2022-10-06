@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,6 +14,7 @@ import { RendererType } from '../../render-page/window-post-message-communicator
 import { useSetCheckboxInEditor } from './hooks/use-set-checkbox-in-editor'
 import { useOnScrollWithLineOffset } from './hooks/use-on-scroll-with-line-offset'
 import { useScrollStateWithoutLineOffset } from './hooks/use-scroll-state-without-line-offset'
+import { setRendererStatus } from '../../../redux/renderer-status/methods'
 
 export type EditorDocumentRendererProps = Omit<
   RenderIframeProps,
@@ -42,6 +43,7 @@ export const EditorDocumentRenderer: React.FC<EditorDocumentRendererProps> = ({ 
       onTaskCheckedChange={setCheckboxInEditor}
       rendererType={noteType === NoteType.SLIDE ? RendererType.SLIDESHOW : RendererType.DOCUMENT}
       markdownContentLines={trimmedContentLines}
+      onRendererStatusChange={setRendererStatus}
     />
   )
 }

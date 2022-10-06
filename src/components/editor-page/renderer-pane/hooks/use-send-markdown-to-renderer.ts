@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,8 +12,9 @@ import { CommunicationMessageType } from '../../../render-page/window-post-messa
  * Sends the given markdown content to the renderer.
  *
  * @param markdownContentLines The markdown content to send.
+ * @param rendererReady Defines if the target renderer is ready
  */
-export const useSendMarkdownToRenderer = (markdownContentLines: string[]): void => {
+export const useSendMarkdownToRenderer = (markdownContentLines: string[], rendererReady: boolean): void => {
   return useSendToRenderer(
     useMemo(
       () => ({
@@ -21,6 +22,7 @@ export const useSendMarkdownToRenderer = (markdownContentLines: string[]): void 
         content: markdownContentLines
       }),
       [markdownContentLines]
-    )
+    ),
+    rendererReady
   )
 }

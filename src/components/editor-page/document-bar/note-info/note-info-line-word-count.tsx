@@ -5,7 +5,7 @@
  */
 
 import type { PropsWithChildren } from 'react'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { NoteInfoLine } from './note-info-line'
@@ -14,8 +14,8 @@ import { useEditorToRendererCommunicator } from '../../render-context/editor-to-
 import type { OnWordCountCalculatedMessage } from '../../../render-page/window-post-message-communicator/rendering-message'
 import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
 import { useEditorReceiveHandler } from '../../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
-import { useEffectOnRendererReady } from '../../../render-page/window-post-message-communicator/hooks/use-effect-on-renderer-ready'
 import { cypressId } from '../../../../utils/cypress-attribute'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 /**
  * Creates a new info line for the document information dialog that holds the
@@ -31,11 +31,12 @@ export const NoteInfoLineWordCount: React.FC<PropsWithChildren<unknown>> = () =>
     useCallback((values: OnWordCountCalculatedMessage) => setWordCount(values.words), [setWordCount])
   )
 
-  useEffectOnRendererReady(
-    useCallback(() => {
+  const rendererReady = useApplicationState((state) => state.rendererStatus.rendererReady)
+  useEffect(() => {
+    if (rendererReady) {
       editorToRendererCommunicator.sendMessageToOtherSide({ type: CommunicationMessageType.GET_WORD_COUNT })
-    }, [editorToRendererCommunicator])
-  )
+    }
+  }, [editorToRendererCommunicator, rendererReady])
 
   return (
     <NoteInfoLine icon={'align-left'} size={'2x'}>

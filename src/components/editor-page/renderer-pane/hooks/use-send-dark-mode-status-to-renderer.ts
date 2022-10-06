@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,8 +13,9 @@ import { useSendToRenderer } from '../../../render-page/window-post-message-comm
  * Sends the current dark mode setting to the renderer.
  *
  * @param forcedDarkMode Overwrites the value from the global application states if set.
+ * @param rendererReady Defines if the target renderer is ready
  */
-export const useSendDarkModeStatusToRenderer = (forcedDarkMode?: boolean): void => {
+export const useSendDarkModeStatusToRenderer = (forcedDarkMode: boolean | undefined, rendererReady: boolean): void => {
   const savedDarkMode = useIsDarkModeActivated()
 
   useSendToRenderer(
@@ -24,6 +25,7 @@ export const useSendDarkModeStatusToRenderer = (forcedDarkMode?: boolean): void 
         activated: forcedDarkMode ?? savedDarkMode
       }),
       [forcedDarkMode, savedDarkMode]
-    )
+    ),
+    rendererReady
   )
 }

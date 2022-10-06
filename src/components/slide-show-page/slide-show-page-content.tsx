@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../hooks/common/use-trimmed-note-markdown-content-without-frontmatter'
 import { useSendToRenderer } from '../render-page/window-post-message-communicator/hooks/use-send-to-renderer'
 import { useApplicationState } from '../../hooks/common/use-application-state'
+import { setRendererStatus } from '../../redux/renderer-status/methods'
 
 /**
  * Renders the current markdown content as a slideshow.
@@ -24,6 +25,7 @@ export const SlideShowPageContent: React.FC = () => {
   useTranslation()
 
   const slideOptions = useApplicationState((state) => state.noteDetails.frontmatter.slideOptions)
+  const rendererReady = useApplicationState((state) => state.rendererStatus.rendererReady)
   useSendToRenderer(
     useMemo(
       () => ({
@@ -31,7 +33,8 @@ export const SlideShowPageContent: React.FC = () => {
         slideOptions
       }),
       [slideOptions]
-    )
+    ),
+    rendererReady
   )
 
   return (
@@ -41,6 +44,7 @@ export const SlideShowPageContent: React.FC = () => {
         markdownContentLines={markdownContentLines}
         rendererType={RendererType.SLIDESHOW}
         onFirstHeadingChange={updateNoteTitleByFirstHeading}
+        onRendererStatusChange={setRendererStatus}
       />
     </div>
   )

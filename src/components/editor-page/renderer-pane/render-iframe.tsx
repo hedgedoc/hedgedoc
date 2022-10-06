@@ -17,9 +17,7 @@ import { CommunicationMessageType } from '../../render-page/window-post-message-
 import { useEditorToRendererCommunicator } from '../render-context/editor-to-renderer-communicator-context-provider'
 import { useForceRenderPageUrlOnIframeLoadCallback } from './hooks/use-force-render-page-url-on-iframe-load-callback'
 import { CommunicatorImageLightbox } from './communicator-image-lightbox'
-import { setRendererStatus } from '../../../redux/renderer-status/methods'
 import { useEditorReceiveHandler } from '../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
-import { useIsRendererReady } from '../../render-page/window-post-message-communicator/hooks/use-is-renderer-ready'
 import { useSendDarkModeStatusToRenderer } from './hooks/use-send-dark-mode-status-to-renderer'
 import { useSendMarkdownToRenderer } from './hooks/use-send-markdown-to-renderer'
 import { useSendScrollState } from './hooks/use-send-scroll-state'
@@ -33,6 +31,7 @@ export interface RenderIframeProps extends RendererProps {
   rendererType: RendererType
   forcedDarkMode?: boolean
   frameClasses?: string
+  onRendererStatusChange?: undefined | ((rendererReady: boolean) => void)
 }
 
 const log = new Logger('RenderIframe')
@@ -51,6 +50,7 @@ const log = new Logger('RenderIframe')
  * @param frameClasses CSS classes that should be applied to the iframe
  * @param rendererType The {@link RendererType type} of the renderer to use.
  * @param forcedDarkMode If set, the dark mode will be set to the given value. Otherwise, the dark mode won't be changed.
+ * @param onRendererStatusChange Callback that is fired when the renderer in the iframe is ready
  */
 export const RenderIframe: React.FC<RenderIframeProps> = ({
   markdownContentLines,
@@ -61,20 +61,25 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   onMakeScrollSource,
   frameClasses,
   rendererType,
-  forcedDarkMode
+  forcedDarkMode,
+  onRendererStatusChange
 }) => {
+  const [rendererReady, setRendererReady] = useState<boolean>(false)
   const frameReference = useRef<HTMLIFrameElement>(null)
   const rendererBaseUrl = useBaseUrl(ORIGIN.RENDERER)
   const iframeCommunicator = useEditorToRendererCommunicator()
   const resetRendererReady = useCallback(() => {
     log.debug('Reset render status')
-    setRendererStatus(false)
+    setRendererReady(false)
   }, [])
-  const rendererReady = useIsRendererReady()
   const onIframeLoad = useForceRenderPageUrlOnIframeLoadCallback(frameReference, resetRendererReady)
   const [frameHeight, setFrameHeight] = useState<number>(0)
 
-  useEffect(() => () => setRendererStatus(false), [iframeCommunicator])
+  useEffect(() => {
+    onRendererStatusChange?.(rendererReady)
+  }, [onRendererStatusChange, rendererReady])
+
+  useEffect(() => () => setRendererReady(false), [iframeCommunicator])
 
   useEffect(() => {
     if (!rendererReady) {
@@ -108,7 +113,9 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
 
   useEditorReceiveHandler(
     CommunicationMessageType.ON_HEIGHT_CHANGE,
-    useCallback((values: OnHeightChangeMessage) => setFrameHeight?.(values.height), [setFrameHeight])
+    useCallback((values: OnHeightChangeMessage) => {
+      setFrameHeight?.(values.height)
+    }, [])
   )
 
   useEditorReceiveHandler(
@@ -135,13 +142,13 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
           rendererType
         }
       })
-      setRendererStatus(true)
+      setRendererReady(true)
     }, [iframeCommunicator, rendererBaseUrl, rendererType])
   )
 
   useEffectOnRenderTypeChange(rendererType, onIframeLoad)
-  useSendDarkModeStatusToRenderer(forcedDarkMode)
-  useSendMarkdownToRenderer(markdownContentLines)
+  useSendDarkModeStatusToRenderer(forcedDarkMode, rendererReady)
+  useSendMarkdownToRenderer(markdownContentLines, rendererReady)
 
   useSendScrollState(scrollState)
 
