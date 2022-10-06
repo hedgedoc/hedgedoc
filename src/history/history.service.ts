@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -74,13 +74,16 @@ export class HistoryService {
    * Updates the updatedAt timestamp of a HistoryEntry.
    * If no history entry exists, it will be created.
    * @param {Note} note - the note that the history entry belongs to
-   * @param {User} user - the user that the history entry belongs to
+   * @param {User | null} user - the user that the history entry belongs to
    * @return {HistoryEntry} the requested history entry
    */
   async updateHistoryEntryTimestamp(
     note: Note,
-    user: User,
-  ): Promise<HistoryEntry> {
+    user: User | null,
+  ): Promise<HistoryEntry | null> {
+    if (user == null) {
+      return null;
+    }
     try {
       const entry = await this.getEntryByNote(note, user);
       entry.updatedAt = new Date();
