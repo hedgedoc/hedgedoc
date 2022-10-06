@@ -7,12 +7,16 @@
 import { RendererType } from '../../src/components/render-page/window-post-message-communicator/rendering-message'
 
 declare namespace Cypress {
-  interface Chainable {
+  interface Chainable<Subject = unknown> {
     getIframeBody(rendererType?: RendererType): Chainable<Element>
 
     getReveal(): Chainable<Element>
 
     getMarkdownBody(): Chainable<Element>
+
+    getIntroBody(): Chainable<Element>
+
+    getMotdBody(): Chainable<Element>
   }
 }
 
@@ -38,4 +42,8 @@ Cypress.Commands.add('getMarkdownBody', () => {
 
 Cypress.Commands.add('getIntroBody', () => {
   return cy.getIframeBody(RendererType.INTRO).findByCypressId('markdown-body')
+})
+
+Cypress.Commands.add('getMotdBody', () => {
+  return cy.getIframeBody(RendererType.MOTD).findByCypressId('markdown-body')
 })

@@ -159,6 +159,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
           slideOptions={slideOptions}
         />
       )
+    case RendererType.MOTD:
     case RendererType.INTRO:
       return (
         <MarkdownDocument

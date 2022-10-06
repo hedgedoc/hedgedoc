@@ -23,7 +23,7 @@ describe('Motd', () => {
       headers: { 'Last-Modified': MOCK_LAST_MODIFIED }
     })
     cy.visitHome()
-    cy.getByCypressId('motd-modal').find('.markdown-body').should('contain.html', motdMockHtml)
+    cy.getMotdBody().should('contain.html', motdMockHtml)
     cy.getByCypressId('motd-dismiss')
       .click()
       .then(() => {

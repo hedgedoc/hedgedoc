@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Suspense, useCallback, useEffect, useState } from 'react'
+import React, { Suspense, useCallback, useMemo, useEffect, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { CommonModal } from '../modals/common-modal'
 import { Trans, useTranslation } from 'react-i18next'
@@ -13,9 +13,11 @@ import { fetchMotd, MOTD_LOCAL_STORAGE_KEY } from './fetch-motd'
 import { useAsync } from 'react-use'
 import { Logger } from '../../../utils/logger'
 import { testId } from '../../../utils/test-id'
+import { RenderIframe } from '../../editor-page/renderer-pane/render-iframe'
+import { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
+import { EditorToRendererCommunicatorContextProvider } from '../../editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import { cypressId } from '../../../utils/cypress-attribute'
 
-const MotdRenderer = React.lazy(() => import('./motd-renderer'))
 const logger = new Logger('Motd')
 
 /**
@@ -28,6 +30,8 @@ export const MotdModal: React.FC = () => {
 
   const { error, loading, value } = useAsync(fetchMotd)
   const [dismissed, setDismissed] = useState(false)
+
+  const lines = useMemo(() => value?.motdText.split('\n'), [value?.motdText])
 
   const dismiss = useCallback(() => {
     if (value?.lastModified) {
@@ -47,10 +51,17 @@ export const MotdModal: React.FC = () => {
   }
 
   return (
-    <CommonModal show={!!value && !loading && !error && !dismissed} title={'motd.title'} {...cypressId('motd-modal')}>
-      <Modal.Body>
+    <CommonModal show={!!lines && !loading && !error && !dismissed} title={'motd.title'} {...cypressId('motd-modal')}>
+      <Modal.Body className={'bg-light'}>
         <Suspense fallback={<WaitSpinner />}>
-          <MotdRenderer content={value?.motdText as string} />
+          <EditorToRendererCommunicatorContextProvider>
+            <RenderIframe
+              frameClasses={'w-100'}
+              rendererType={RendererType.MOTD}
+              markdownContentLines={lines as string[]}
+              adaptFrameHeightToContent={true}
+            />
+          </EditorToRendererCommunicatorContextProvider>
         </Suspense>
       </Modal.Body>
       <Modal.Footer>

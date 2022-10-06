@@ -1,40 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`motd modal doesn't allow html in the motd 1`] = `
-<div>
-  <span>
-    This is a mock implementation of a Modal:
-    <dialog>
-      <div
-        class="modal-body"
-      >
-        <div
-          class="markdown-body"
-          data-testid="motd-renderer"
-        >
-          <p>
-            &lt;iframe&gt;&lt;/iframe&gt;
-          </p>
-          
-
-        </div>
-      </div>
-      <div
-        class="modal-footer"
-      >
-        <button
-          class="btn btn-success"
-          data-testid="motd-dismiss"
-          type="button"
-        >
-          common.dismiss
-        </button>
-      </div>
-    </dialog>
-  </span>
-</div>
-`;
-
 exports[`motd modal doesn't render a modal if no motd has been fetched 1`] = `
 <div>
   <span
@@ -46,21 +11,17 @@ exports[`motd modal doesn't render a modal if no motd has been fetched 1`] = `
 exports[`motd modal renders a modal if a motd was fetched and can dismiss it 1`] = `
 <div>
   <span>
-    This is a mock implementation of a Modal:
+    This is a mock implementation of a Modal: 
     <dialog>
       <div
-        class="modal-body"
+        class="bg-light modal-body"
       >
-        <div
-          class="markdown-body"
+        <span
           data-testid="motd-renderer"
         >
-          <p>
-            very important mock text!
-          </p>
-          
-
-        </div>
+          This is a mock implementation of a iframe renderer. Props: 
+          {"frameClasses":"w-100","rendererType":"motd","markdownContentLines":["very important mock text!"],"adaptFrameHeightToContent":true}
+        </span>
       </div>
       <div
         class="modal-footer"
@@ -81,7 +42,7 @@ exports[`motd modal renders a modal if a motd was fetched and can dismiss it 1`]
 exports[`motd modal renders a modal if a motd was fetched and can dismiss it 2`] = `
 <div>
   <span>
-    This is a mock implementation of a Modal:
+    This is a mock implementation of a Modal: 
     Modal is invisible
   </span>
 </div>

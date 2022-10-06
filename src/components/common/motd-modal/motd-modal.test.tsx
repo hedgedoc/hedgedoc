@@ -12,9 +12,12 @@ import type { PropsWithChildren } from 'react'
 import React from 'react'
 import type { CommonModalProps } from '../modals/common-modal'
 import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
+import * as RenderIframeModule from '../../editor-page/renderer-pane/render-iframe'
+import { testId } from '../../../utils/test-id'
 
 jest.mock('./fetch-motd')
 jest.mock('../modals/common-modal')
+jest.mock('../../editor-page/renderer-pane/render-iframe')
 
 describe('motd modal', () => {
   beforeAll(mockI18n)
@@ -28,11 +31,17 @@ describe('motd modal', () => {
     jest.spyOn(CommonModalModule, 'CommonModal').mockImplementation((({ children, show }) => {
       return (
         <span>
-          This is a mock implementation of a Modal:
-          {show ? <dialog>{children}</dialog> : 'Modal is invisible'}
+          This is a mock implementation of a Modal: {show ? <dialog>{children}</dialog> : 'Modal is invisible'}
         </span>
       )
     }) as React.FC<PropsWithChildren<CommonModalProps>>)
+    jest.spyOn(RenderIframeModule, 'RenderIframe').mockImplementation((props) => {
+      return (
+        <span {...testId('motd-renderer')}>
+          This is a mock implementation of a iframe renderer. Props: {JSON.stringify(props)}
+        </span>
+      )
+    })
   })
 
   it('renders a modal if a motd was fetched and can dismiss it', async () => {
@@ -59,15 +68,6 @@ describe('motd modal', () => {
     })
     const view = render(<MotdModal></MotdModal>)
     await screen.findByTestId('loaded not visible')
-    expect(view.container).toMatchSnapshot()
-  })
-
-  it("doesn't allow html in the motd", async () => {
-    jest.spyOn(fetchMotdModule, 'fetchMotd').mockImplementation(() => {
-      return Promise.resolve({ motdText: '<iframe></iframe>', lastModified: 'yesterday' })
-    })
-    const view = render(<MotdModal></MotdModal>)
-    await screen.findByTestId('motd-renderer')
     expect(view.container).toMatchSnapshot()
   })
 })
