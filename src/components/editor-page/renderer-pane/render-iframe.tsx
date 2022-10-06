@@ -32,6 +32,7 @@ export interface RenderIframeProps extends RendererProps {
   forcedDarkMode?: boolean
   frameClasses?: string
   onRendererStatusChange?: undefined | ((rendererReady: boolean) => void)
+  adaptFrameHeightToContent?: boolean
 }
 
 const log = new Logger('RenderIframe')
@@ -50,6 +51,7 @@ const log = new Logger('RenderIframe')
  * @param frameClasses CSS classes that should be applied to the iframe
  * @param rendererType The {@link RendererType type} of the renderer to use.
  * @param forcedDarkMode If set, the dark mode will be set to the given value. Otherwise, the dark mode won't be changed.
+ * @param adaptFrameHeightToContent If set, the iframe height will be adjusted to the content height
  * @param onRendererStatusChange Callback that is fired when the renderer in the iframe is ready
  */
 export const RenderIframe: React.FC<RenderIframeProps> = ({
@@ -62,6 +64,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   frameClasses,
   rendererType,
   forcedDarkMode,
+  adaptFrameHeightToContent,
   onRendererStatusChange
 }) => {
   const [rendererReady, setRendererReady] = useState<boolean>(false)
@@ -113,9 +116,14 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
 
   useEditorReceiveHandler(
     CommunicationMessageType.ON_HEIGHT_CHANGE,
-    useCallback((values: OnHeightChangeMessage) => {
-      setFrameHeight?.(values.height)
-    }, [])
+    useCallback(
+      (values: OnHeightChangeMessage) => {
+        if (adaptFrameHeightToContent) {
+          setFrameHeight?.(values.height)
+        }
+      },
+      [adaptFrameHeightToContent]
+    )
   )
 
   useEditorReceiveHandler(

@@ -32,6 +32,7 @@ export const IntroCustomContent: React.FC = () => {
       markdownContentLines={content}
       rendererType={RendererType.INTRO}
       forcedDarkMode={true}
+      adaptFrameHeightToContent={true}
     />
   )
 }
