@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getDataSourceToken, getRepositoryToken } from '@nestjs/typeorm';
+import assert from 'assert';
 import { Mock } from 'ts-mockery';
 import { DataSource, EntityManager, Repository } from 'typeorm';
 
@@ -181,6 +182,7 @@ describe('HistoryService', () => {
           Note.create(user, alias) as Note,
           user,
         );
+        assert(createHistoryEntry != null);
         expect(await (await createHistoryEntry.note).aliases).toHaveLength(1);
         expect((await (await createHistoryEntry.note).aliases)[0].name).toEqual(
           alias,
@@ -201,6 +203,7 @@ describe('HistoryService', () => {
           Note.create(user, alias) as Note,
           user,
         );
+        assert(createHistoryEntry != null);
         expect(await (await createHistoryEntry.note).aliases).toHaveLength(1);
         expect((await (await createHistoryEntry.note).aliases)[0].name).toEqual(
           alias,
@@ -212,6 +215,10 @@ describe('HistoryService', () => {
           historyEntry.updatedAt.getTime(),
         );
       });
+    });
+    it('returns null if user is null', async () => {
+      const entry = await service.updateHistoryEntryTimestamp({} as Note, null);
+      expect(entry).toBeNull();
     });
   });
 
