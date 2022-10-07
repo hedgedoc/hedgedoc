@@ -4,35 +4,37 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useEffect, useState } from 'react'
-import { WaitSpinner } from '../common/wait-spinner/wait-spinner'
+import React, { useEffect } from 'react'
 import { RenderIframe } from '../editor-page/renderer-pane/render-iframe'
 import { RendererType } from '../render-page/window-post-message-communicator/rendering-message'
-import { useTranslation } from 'react-i18next'
 import { fetchFrontPageContent } from './requests'
+import { Logger } from '../../utils/logger'
+import { useAsync } from 'react-use'
+import { AsyncLoadingBoundary } from '../common/async-loading-boundary'
+
+const logger = new Logger('Intro Content')
 
 /**
  * Fetches the content for the customizable part of the intro page and renders it.
  */
 export const IntroCustomContent: React.FC = () => {
-  const { t } = useTranslation()
-  const [content, setContent] = useState<string[] | undefined>(undefined)
+  const { value, error, loading } = useAsync(async () => (await fetchFrontPageContent()).split('\n'), [])
 
   useEffect(() => {
-    fetchFrontPageContent()
-      .then((content) => setContent(content.split('\n')))
-      .catch(() => setContent(undefined))
-  }, [t])
+    if (error) {
+      logger.error('Error while loading custom intro content', error)
+    }
+  }, [error])
 
-  return content === undefined ? (
-    <WaitSpinner />
-  ) : (
-    <RenderIframe
-      frameClasses={'w-100 overflow-y-hidden'}
-      markdownContentLines={content}
-      rendererType={RendererType.INTRO}
-      forcedDarkMode={true}
-      adaptFrameHeightToContent={true}
-    />
+  return (
+    <AsyncLoadingBoundary loading={loading} error={error} componentName={'custom intro content'}>
+      <RenderIframe
+        frameClasses={'w-100 overflow-y-hidden'}
+        markdownContentLines={value as string[]}
+        rendererType={RendererType.INTRO}
+        forcedDarkMode={true}
+        adaptFrameHeightToContent={true}
+      />
+    </AsyncLoadingBoundary>
   )
 }
