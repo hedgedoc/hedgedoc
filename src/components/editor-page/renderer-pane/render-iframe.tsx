@@ -26,6 +26,8 @@ import { useEffectOnRenderTypeChange } from './hooks/use-effect-on-render-type-c
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { getGlobalState } from '../../../redux'
 import { ORIGIN, useBaseUrl } from '../../../hooks/common/use-base-url'
+import { ShowIf } from '../../common/show-if/show-if'
+import { WaitSpinner } from '../../common/wait-spinner/wait-spinner'
 
 export interface RenderIframeProps extends RendererProps {
   rendererType: RendererType
@@ -168,6 +170,9 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   return (
     <Fragment>
       <CommunicatorImageLightbox />
+      <ShowIf condition={!rendererReady}>
+        <WaitSpinner />
+      </ShowIf>
       <iframe
         style={{ height: `${frameHeight}px` }}
         {...cypressId('documentIframe')}
