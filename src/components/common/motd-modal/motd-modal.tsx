@@ -4,11 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Suspense, useCallback, useMemo, useEffect, useState } from 'react'
+import React, { useCallback, useMemo, useEffect, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { CommonModal } from '../modals/common-modal'
 import { Trans, useTranslation } from 'react-i18next'
-import { WaitSpinner } from '../wait-spinner/wait-spinner'
 import { fetchMotd, MOTD_LOCAL_STORAGE_KEY } from './fetch-motd'
 import { useAsync } from 'react-use'
 import { Logger } from '../../../utils/logger'
@@ -53,16 +52,14 @@ export const MotdModal: React.FC = () => {
   return (
     <CommonModal show={!!lines && !loading && !error && !dismissed} title={'motd.title'} {...cypressId('motd-modal')}>
       <Modal.Body className={'bg-light'}>
-        <Suspense fallback={<WaitSpinner />}>
-          <EditorToRendererCommunicatorContextProvider>
-            <RenderIframe
-              frameClasses={'w-100'}
-              rendererType={RendererType.MOTD}
-              markdownContentLines={lines as string[]}
-              adaptFrameHeightToContent={true}
-            />
-          </EditorToRendererCommunicatorContextProvider>
-        </Suspense>
+        <EditorToRendererCommunicatorContextProvider>
+          <RenderIframe
+            frameClasses={'w-100'}
+            rendererType={RendererType.MOTD}
+            markdownContentLines={lines as string[]}
+            adaptFrameHeightToContent={true}
+          />
+        </EditorToRendererCommunicatorContextProvider>
       </Modal.Body>
       <Modal.Footer>
         <Button variant={'success'} onClick={dismiss} {...testId('motd-dismiss')} {...cypressId('motd-dismiss')}>
