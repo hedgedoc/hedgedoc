@@ -22,11 +22,4 @@ describe('Renderer mode', () => {
     cy.setCodemirrorContent('---\ntype: EinDokument\n---\n')
     cy.getMarkdownBody().should('exist')
   })
-
-  it("should change from 'reveal.js' to 'document' if changed from 'slide' to something else", () => {
-    cy.setCodemirrorContent('---\ntype: slide\n---\n')
-    cy.getReveal().should('exist')
-    cy.setCodemirrorContent('')
-    cy.getMarkdownBody().should('exist')
-  })
 })
