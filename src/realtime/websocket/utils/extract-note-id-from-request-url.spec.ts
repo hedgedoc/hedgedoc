@@ -30,6 +30,13 @@ describe('extract note id from path', () => {
     expect(() => extractNoteIdFromRequestUrl(mockedRequest)).toThrow();
   });
 
+  it('fails if note id is empty', () => {
+    const mockedRequest = Mock.of<IncomingMessage>({
+      url: '/realtime?noteId=',
+    });
+    expect(() => extractNoteIdFromRequestUrl(mockedRequest)).toThrow();
+  });
+
   it('fails if path is empty', () => {
     const mockedRequest = Mock.of<IncomingMessage>({
       url: '',
