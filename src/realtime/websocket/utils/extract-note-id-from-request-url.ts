@@ -20,8 +20,8 @@ export function extractNoteIdFromRequestUrl(request: IncomingMessage): string {
   // The example.org domain should be safe to use according to RFC 6761 §6.5.
   const url = new URL(request.url, 'https://example.org');
   const noteId = url.searchParams.get('noteId');
-  if (noteId === null) {
-    throw new Error("Path doesn't contain parameter noteId");
+  if (noteId === null || noteId === '') {
+    throw new Error(`Path doesn't contain parameter noteId: ${request.url}`);
   } else {
     return noteId;
   }
