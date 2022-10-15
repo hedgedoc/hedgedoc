@@ -417,12 +417,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/parser@npm:7.17.8":
-  version: 7.17.8
-  resolution: "@babel/parser@npm:7.17.8"
+"@babel/parser@npm:7.18.9":
+  version: 7.18.9
+  resolution: "@babel/parser@npm:7.18.9"
   bin:
     parser: ./bin/babel-parser.js
-  checksum: 1771808491982cc47baa888a997aef6b58308e3844c8c00f730f8fd97defe57d32cdbf46075cd49aaee310fa31f3d2c80a0d41b41a4ee0ff336ee09e2ff6c222
+  checksum: 81a966b334e3ef397e883c64026265a5ae0ad435a86f52a84f60a5ee1efc0738c1f42c55e0dc5f191cc6a83ba0c61350433eee417bf1dff160ca5f3cfde244c6
   languageName: node
   linkType: hard
 
@@ -1546,20 +1546,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trivago/prettier-plugin-sort-imports@npm:3.3.0":
-  version: 3.3.0
-  resolution: "@trivago/prettier-plugin-sort-imports@npm:3.3.0"
+"@trivago/prettier-plugin-sort-imports@npm:3.3.1":
+  version: 3.3.1
+  resolution: "@trivago/prettier-plugin-sort-imports@npm:3.3.1"
   dependencies:
     "@babel/core": 7.17.8
     "@babel/generator": 7.17.7
-    "@babel/parser": 7.17.8
+    "@babel/parser": 7.18.9
     "@babel/traverse": 7.17.3
     "@babel/types": 7.17.0
     javascript-natural-sort: 0.7.1
     lodash: 4.17.21
   peerDependencies:
     prettier: 2.x
-  checksum: 3777efd72c72a5ca7e56a7a279fddc48e02b2786873172ed25a41020455117e3d1220b8e77396418bb203242a31216097b861f657e454c6d3617c33f3cc42793
+  checksum: 6e6751846b21fc5511bf5e02e85f43fee52156fad6bfd5bb2dd6daf144acf58f1f68dbae0b2354dec98587984359ac52675acdc6854a301b04c6e86da2d95881
   languageName: node
   linkType: hard
 
@@ -5401,7 +5401,7 @@ __metadata:
     "@nestjs/testing": 9.1.4
     "@nestjs/typeorm": 9.0.1
     "@nestjs/websockets": 9.1.4
-    "@trivago/prettier-plugin-sort-imports": 3.3.0
+    "@trivago/prettier-plugin-sort-imports": 3.3.1
     "@tsconfig/node12": 1.0.11
     "@types/bcrypt": 5.0.0
     "@types/cli-color": 2.0.2
