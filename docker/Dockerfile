@@ -10,7 +10,7 @@
 #    DOCKER_BUILDKIT=1 docker build -f docker/Dockerfile .
 
 ## Stage 0: Base image with only yarn and package.json
-FROM docker.io/node:18-alpine@sha256:99086216b9a030dd6d5b2c303e0b94de3d511f6c69b5b529f804bb7f41d4381e as base
+FROM docker.io/node:18-alpine@sha256:38f184d0c4fb07836f9408af0f6b493c54da862f49532ab9ca8d282488587749 as base
 # Add tini to handle signals
 # https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md#handling-kernel-signals
 RUN apk add --no-cache tini
