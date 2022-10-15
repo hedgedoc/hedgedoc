@@ -2044,7 +2044,7 @@ __metadata:
     uuid: 9.0.0
     vega: 5.22.1
     vega-embed: 6.21.0
-    vega-lite: 5.5.0
+    vega-lite: 5.6.0
     words-count: 2.0.2
     ws: 8.9.0
     y-codemirror.next: 0.3.2
@@ -4156,13 +4156,6 @@ __metadata:
   version: 5.0.2
   resolution: "aria-query@npm:5.0.2"
   checksum: 2ecb77a64b9bbb030f5267b8672042b9559bdc507348d7c5efc14a6c180b06704c63481b162913f0466391837569b6d84f93ab18d73629e7bfa34c4f927c1fbc
-  languageName: node
-  linkType: hard
-
-"array-flat-polyfill@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "array-flat-polyfill@npm:1.0.1"
-  checksum: 5d578b191a7f145a1351a4962df9a14d905060c7dfcd8f85062954b7a44b2bff1c9d2bff2d56b07756de774d5e9e4feafe4572f5641b1e9c8a968aca5cbe4902
   languageName: node
   linkType: hard
 
@@ -12685,12 +12678,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-lite@npm:5.5.0":
-  version: 5.5.0
-  resolution: "vega-lite@npm:5.5.0"
+"vega-lite@npm:5.6.0":
+  version: 5.6.0
+  resolution: "vega-lite@npm:5.6.0"
   dependencies:
     "@types/clone": ~2.1.1
-    array-flat-polyfill: ^1.0.1
     clone: ~2.1.2
     fast-deep-equal: ~3.1.3
     fast-json-stable-stringify: ~2.1.0
@@ -12699,7 +12691,7 @@ __metadata:
     vega-event-selector: ~3.0.0
     vega-expression: ~5.0.0
     vega-util: ~1.17.0
-    yargs: ~17.5.1
+    yargs: ~17.6.0
   peerDependencies:
     vega: ^5.22.0
   bin:
@@ -12707,7 +12699,7 @@ __metadata:
     vl2png: bin/vl2png
     vl2svg: bin/vl2svg
     vl2vg: bin/vl2vg
-  checksum: ca0895f7140c91158588ee1f18222d8a83e924d07159e18b9bd6c33f72aa6f2cc714124b0f4db7961b8af830c5aec50681fb91a5cb6ef54f3e8e21f5d19ba0af
+  checksum: 5cc92eb00f62f3f9cbceb8bed89209ba5eb380acff8578b022f8fedefad9e422e7839a1e051e981891d1e350fff12c3d50b47af2dcdf03a5fca7ff27ab212667
   languageName: node
   linkType: hard
 
@@ -13271,7 +13263,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:17.5.1, yargs@npm:~17.5.1":
+"yargs@npm:17.5.1":
   version: 17.5.1
   resolution: "yargs@npm:17.5.1"
   dependencies:
@@ -13286,7 +13278,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.3.1":
+"yargs@npm:^17.3.1, yargs@npm:~17.6.0":
   version: 17.6.0
   resolution: "yargs@npm:17.6.0"
   dependencies:
