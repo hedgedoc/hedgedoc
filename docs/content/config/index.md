@@ -8,8 +8,8 @@ The `.env` file should be placed in the root of the project and contains key-val
 HD_DOMAIN="http://localhost"
 HD_MEDIA_BACKEND="filesystem"
 HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH="uploads/"
-HD_DATABASE_DIALECT="sqlite"
-HD_DATABASE_STORAGE="./hedgedoc.sqlite"
+HD_DATABASE_TYPE="sqlite"
+HD_DATABASE_NAME="./hedgedoc.sqlite"
 ```
 
 We also provide an `.env.example` file containing a minimal configuration in the root of the project. This should help you to write your own configuration.
