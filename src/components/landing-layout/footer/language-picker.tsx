@@ -86,7 +86,7 @@ export const LanguagePicker: React.FC = () => {
   )
 
   return (
-    <Form.Control
+    <Form.Select
       as='select'
       size='sm'
       className='mb-2 mx-auto w-auto'
@@ -94,6 +94,6 @@ export const LanguagePicker: React.FC = () => {
       onChange={onChangeLang}
       {...cypressId('language-picker')}>
       {languageOptions}
-    </Form.Control>
+    </Form.Select>
   )
 }

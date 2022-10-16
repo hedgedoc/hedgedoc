@@ -53,7 +53,7 @@ describe('Intro page', () => {
       cy.getByCypressId('version-modal').should('not.exist')
       cy.getByCypressId('show-version-modal').click()
       cy.getByCypressId('version-modal').should('be.visible')
-      cy.getByCypressId('version-modal').find('.modal-header .close').click()
+      cy.getByCypressId('version-modal').find('.modal-header .btn-close').click()
       cy.getByCypressId('version-modal').should('not.exist')
     })
   })

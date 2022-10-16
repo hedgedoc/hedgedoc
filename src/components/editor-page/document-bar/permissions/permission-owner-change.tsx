@@ -33,7 +33,7 @@ export const PermissionOwnerChange: React.FC<PermissionOwnerChangeProps> = ({ on
   }, [ownerFieldValue])
 
   return (
-    <InputGroup className={'mr-1 mb-1'}>
+    <InputGroup className={'me-1 mb-1'}>
       <FormControl
         value={ownerFieldValue}
         placeholder={t('editor.modal.permissions.ownerChange.placeholder')}
@@ -43,7 +43,7 @@ export const PermissionOwnerChange: React.FC<PermissionOwnerChangeProps> = ({ on
         variant='light'
         title={t('common.save')}
         onClick={onClickConfirm}
-        className={'ml-2'}
+        className={'ms-2'}
         disabled={confirmButtonDisabled}>
         <ForkAwesomeIcon icon={'check'} />
       </Button>

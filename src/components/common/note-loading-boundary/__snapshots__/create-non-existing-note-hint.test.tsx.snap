@@ -8,7 +8,7 @@ exports[`create non existing note hint shows success message when the note has b
     role="alert"
   >
     <i
-      class="fa  fa-check-circle mr-2 "
+      class="fa  fa-check-circle me-2 "
     />
     noteLoadingBoundary.createNote.success
   </div>
@@ -23,7 +23,7 @@ exports[`create non existing note hint renders a waiting message when button is 
     role="alert"
   >
     <i
-      class="fa  fa-spinner fa-spin mr-2 "
+      class="fa  fa-spinner fa-spin me-2 "
     />
     noteLoadingBoundary.createNote.creating
   </div>
@@ -63,7 +63,7 @@ exports[`create non existing note hint shows an error message if note couldn't b
     role="alert"
   >
     <i
-      class="fa  fa-exclamation-triangle mr-1 "
+      class="fa  fa-exclamation-triangle me-1 "
     />
     noteLoadingBoundary.createNote.error
   </div>

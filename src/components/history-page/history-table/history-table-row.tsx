@@ -54,13 +54,13 @@ export const HistoryTableRow: React.FC<HistoryEntryProps & HistoryEventHandlers>
       <td>{formatHistoryDate(entry.lastVisitedAt)}</td>
       <td>
         {entry.tags.map((tag) => (
-          <Badge variant={'light'} className={'mr-1 mb-1'} key={tag}>
+          <Badge className={'bg-light me-1 mb-1'} key={tag}>
             {tag}
           </Badge>
         ))}
       </td>
       <td>
-        <PinButton isDark={true} isPinned={entry.pinStatus} onPinClick={onPinEntry} className={'mb-1 mr-1'} />
+        <PinButton isDark={true} isPinned={entry.pinStatus} onPinClick={onPinEntry} className={'mb-1 me-1'} />
         <EntryMenu
           id={entry.identifier}
           title={entryTitle}

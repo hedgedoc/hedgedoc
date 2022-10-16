@@ -48,7 +48,7 @@ export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = (
   const tags = useMemo(
     () =>
       entry.tags.map((tag) => (
-        <Badge variant={'dark'} className={'mr-1 mb-1'} key={tag}>
+        <Badge className={'bg-dark me-1 mb-1'} key={tag}>
           {tag}
         </Badge>
       )),

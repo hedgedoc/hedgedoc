@@ -4,7 +4,7 @@ exports[`AliasesAddForm renders the input form 1`] = `
 <div>
   <form>
     <div
-      class="mr-1 mb-1 input-group has-validation"
+      class="me-1 mb-1 input-group has-validation"
     >
       <input
         class="form-control"
@@ -14,7 +14,7 @@ exports[`AliasesAddForm renders the input form 1`] = `
         value=""
       />
       <button
-        class="text-secondary ml-2 btn btn-light"
+        class="text-secondary ms-2 btn btn-light"
         data-testid="addAliasButton"
         disabled=""
         title="editor.modal.aliases.addAlias"

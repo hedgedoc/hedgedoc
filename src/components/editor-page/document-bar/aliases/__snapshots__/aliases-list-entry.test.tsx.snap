@@ -8,7 +8,7 @@ exports[`AliasesListEntry renders an AliasesListEntry that is not primary 1`] = 
     test-non-primary
     <div>
       <button
-        class="mr-2 btn btn-light"
+        class="me-2 btn btn-light"
         data-testid="aliasButtonMakePrimary"
         title="editor.modal.aliases.makePrimary"
         type="button"
@@ -40,7 +40,7 @@ exports[`AliasesListEntry renders an AliasesListEntry that is primary 1`] = `
     test-primary
     <div>
       <button
-        class="mr-2 text-warning btn btn-light"
+        class="me-2 text-warning btn btn-light"
         data-testid="aliasIsPrimary"
         disabled=""
         title="editor.modal.aliases.isPrimary"

@@ -6,7 +6,7 @@
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AccessLevel, SpecialGroup } from './types'
-import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
+import { Button, ToggleButtonGroup } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { removeGroupPermission, setGroupPermission } from '../../../../api/permissions'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
@@ -66,31 +66,25 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
     <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
       <span>{name}</span>
       <div>
-        <ToggleButtonGroup type='radio' name='edit-mode' value={level}>
-          <ToggleButton
+        <ToggleButtonGroup type='radio' name='edit-mode'>
+          <Button
             title={t('editor.modal.permissions.denyGroup', { name })}
-            variant={'light'}
-            className={'text-secondary'}
-            value={AccessLevel.NONE}
+            variant={level === AccessLevel.NONE ? 'secondary' : 'outline-secondary'}
             onClick={onSetEntryDenied}>
             <ForkAwesomeIcon icon={'ban'} />
-          </ToggleButton>
-          <ToggleButton
+          </Button>
+          <Button
             title={t('editor.modal.permissions.viewOnlyGroup', { name })}
-            variant={'light'}
-            className={'text-secondary'}
-            value={AccessLevel.READ_ONLY}
+            variant={level === AccessLevel.READ_ONLY ? 'secondary' : 'outline-secondary'}
             onClick={onSetEntryReadOnly}>
             <ForkAwesomeIcon icon={'eye'} />
-          </ToggleButton>
-          <ToggleButton
+          </Button>
+          <Button
             title={t('editor.modal.permissions.editGroup', { name })}
-            variant={'light'}
-            className={'text-secondary'}
-            value={AccessLevel.WRITEABLE}
-            onClick={onSetEntryWriteable}>
+            variant={level === AccessLevel.WRITEABLE ? 'secondary' : 'outline-secondary'}
+            onClick={() => onSetEntryWriteable}>
             <ForkAwesomeIcon icon={'pencil'} />
-          </ToggleButton>
+          </Button>
         </ToggleButtonGroup>
       </div>
     </li>

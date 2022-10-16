@@ -5,7 +5,7 @@
  */
 
 import React, { useCallback } from 'react'
-import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
+import { Button, ToggleButtonGroup } from 'react-bootstrap'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { ViewStateEnum } from './history-toolbar'
 import { useTranslation } from 'react-i18next'
@@ -30,23 +30,20 @@ export const HistoryViewModeToggleButton: React.FC = () => {
   )
 
   return (
-    <ToggleButtonGroup
-      type='radio'
-      name='options'
-      dir='auto'
-      value={historyToolbarState.viewState}
-      className={'button-height'}
-      onChange={onViewStateChange}>
-      <ToggleButton className={'btn-light'} value={ViewStateEnum.CARD} title={t('landing.history.toolbar.cards')}>
+    <ToggleButtonGroup type='radio' name='options' dir='auto' className={'button-height'} onChange={onViewStateChange}>
+      <Button
+        title={t('landing.history.toolbar.cards')}
+        variant={historyToolbarState.viewState === ViewStateEnum.CARD ? 'light' : 'outline-light'}
+        onClick={() => onViewStateChange(ViewStateEnum.CARD)}>
         <ForkAwesomeIcon icon={'sticky-note'} className={'fa-fix-line-height'} />
-      </ToggleButton>
-      <ToggleButton
+      </Button>
+      <Button
         {...cypressId('history-mode-table')}
-        className={'btn-light'}
-        value={ViewStateEnum.TABLE}
-        title={t('landing.history.toolbar.table')}>
+        variant={historyToolbarState.viewState === ViewStateEnum.TABLE ? 'light' : 'outline-light'}
+        title={t('landing.history.toolbar.table')}
+        onClick={() => onViewStateChange(ViewStateEnum.TABLE)}>
         <ForkAwesomeIcon icon={'table'} className={'fa-fix-line-height'} />
-      </ToggleButton>
+      </Button>
     </ToggleButtonGroup>
   )
 }

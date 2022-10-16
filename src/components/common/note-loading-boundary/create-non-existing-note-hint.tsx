@@ -48,21 +48,21 @@ export const CreateNonExistingNoteHint: React.FC<CreateNonExistingNoteHintProps>
   } else if (returnState.value) {
     return (
       <Alert variant={'info'} {...testId('noteCreated')} className={'mt-5'}>
-        <ForkAwesomeIcon icon={'check-circle'} className={'mr-2'} />
+        <ForkAwesomeIcon icon={'check-circle'} className={'me-2'} />
         <Trans i18nKey={'noteLoadingBoundary.createNote.success'} />
       </Alert>
     )
   } else if (returnState.loading) {
     return (
       <Alert variant={'info'} {...testId('loadingMessage')} className={'mt-5'}>
-        <ForkAwesomeIcon icon={'spinner'} className={'fa-spin mr-2'} />
+        <ForkAwesomeIcon icon={'spinner'} className={'fa-spin me-2'} />
         <Trans i18nKey={'noteLoadingBoundary.createNote.creating'} />
       </Alert>
     )
   } else if (returnState.error !== undefined) {
     return (
       <Alert variant={'danger'} {...testId('failedMessage')} className={'mt-5'}>
-        <ForkAwesomeIcon icon={'exclamation-triangle'} className={'mr-1'} />
+        <ForkAwesomeIcon icon={'exclamation-triangle'} className={'me-1'} />
         <Trans i18nKey={'noteLoadingBoundary.createNote.error'} />
       </Alert>
     )
@@ -81,7 +81,7 @@ export const CreateNonExistingNoteHint: React.FC<CreateNonExistingNoteHintProps>
             onClick={onClickHandler}
             {...testId('createNoteButton')}>
             <ShowIf condition={returnState.loading}>
-              <ForkAwesomeIcon icon={'spinner'} className={'fa-spin mr-2'} />
+              <ForkAwesomeIcon icon={'spinner'} className={'fa-spin me-2'} />
             </ShowIf>
             <Trans i18nKey={'noteLoadingBoundary.createNote.create'} />
           </Button>

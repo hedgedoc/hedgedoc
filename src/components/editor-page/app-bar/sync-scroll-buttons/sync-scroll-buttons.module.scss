@@ -12,28 +12,12 @@
 
   :global(.btn) {
     svg g {
-      @import "../../../../../global-styles/variables.light";
-      fill: $secondary;
+      fill: var(--bs-secondary);
     }
 
     :global(&.active), &:hover {
       svg g {
-        @import "../../../../../global-styles/variables.light";
-        fill: $light;
-      }
-    }
-
-    :global(body.dark) & {
-      svg g {
-        @import "../../../../../global-styles/variables.dark";
-        fill: $secondary;
-      }
-
-      :global(&.active), &:hover {
-        svg g {
-          @import "../../../../../global-styles/variables.dark";
-          fill: $light;
-        }
+        fill: var(--bs-light);
       }
     }
   }

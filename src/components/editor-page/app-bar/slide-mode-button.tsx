@@ -23,7 +23,7 @@ export const SlideModeButton: React.FC = () => {
       <a target='_blank'>
         <Button
           title={t('editor.documentBar.slideMode')}
-          className='ml-2 text-secondary'
+          className='ms-2 text-secondary'
           size='sm'
           variant='outline-light'>
           <ForkAwesomeIcon icon='television' />

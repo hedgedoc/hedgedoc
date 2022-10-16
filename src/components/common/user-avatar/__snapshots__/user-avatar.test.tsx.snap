@@ -14,7 +14,7 @@ exports[`UserAvatar adds additionalClasses props to wrapping span 1`] = `
       width="20"
     />
     <span
-      class="ml-2 mr-1 user-line-name"
+      class="ms-2 me-1 user-line-name"
     >
       Boaty McBoatFace
     </span>
@@ -53,7 +53,7 @@ exports[`UserAvatar renders the user avatar correctly 1`] = `
       width="20"
     />
     <span
-      class="ml-2 mr-1 user-line-name"
+      class="ms-2 me-1 user-line-name"
     >
       Boaty McBoatFace
     </span>
@@ -75,7 +75,7 @@ exports[`UserAvatar renders the user avatar in size lg 1`] = `
       width="30"
     />
     <span
-      class="ml-2 mr-1 user-line-name"
+      class="ms-2 me-1 user-line-name"
     >
       Boaty McBoatFace
     </span>
@@ -97,7 +97,7 @@ exports[`UserAvatar renders the user avatar in size sm 1`] = `
       width="16"
     />
     <span
-      class="ml-2 mr-1 user-line-name"
+      class="ms-2 me-1 user-line-name"
     >
       Boaty McBoatFace
     </span>

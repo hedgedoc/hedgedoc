@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import React, { useMemo } from 'react'
-import { Button, ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
+import { Button, ToggleButtonGroup } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { AccessLevel } from './types'
 import { useTranslation } from 'react-i18next'
@@ -68,26 +68,22 @@ export const PermissionEntryButtons: React.FC<PermissionEntryButtonsProps> = ({
 
   return (
     <div>
-      <Button variant='light' className={'text-danger mr-2'} title={t(i18nKeys.remove, { name })} onClick={onRemove}>
+      <Button variant='light' className={'text-danger me-2'} title={t(i18nKeys.remove, { name })} onClick={onRemove}>
         <ForkAwesomeIcon icon={'times'} />
       </Button>
       <ToggleButtonGroup type='radio' name='edit-mode' value={currentSetting}>
-        <ToggleButton
+        <Button
           title={t(i18nKeys.setReadOnly, { name })}
-          variant={'light'}
-          className={'text-secondary'}
-          value={AccessLevel.READ_ONLY}
+          variant={currentSetting === AccessLevel.READ_ONLY ? 'secondary' : 'outline-secondary'}
           onClick={onSetReadOnly}>
           <ForkAwesomeIcon icon='eye' />
-        </ToggleButton>
-        <ToggleButton
+        </Button>
+        <Button
           title={t(i18nKeys.setWriteable, { name })}
-          variant={'light'}
-          className={'text-secondary'}
-          value={AccessLevel.WRITEABLE}
+          variant={currentSetting === AccessLevel.WRITEABLE ? 'secondary' : 'outline-secondary'}
           onClick={onSetWriteable}>
           <ForkAwesomeIcon icon='pencil' />
-        </ToggleButton>
+        </Button>
       </ToggleButtonGroup>
     </div>
   )

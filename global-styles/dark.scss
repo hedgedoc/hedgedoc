@@ -4,8 +4,23 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-@import "variables.dark";
 
 body.dark {
-  @import "bootstrap-color-theme/include";
+  @import "variables.dark";
+
+  /* redefine theme color variables */
+  @each $color, $value in $theme-colors {
+    --#{$prefix}#{$color}: #{$value};
+  }
+
+  $theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+
+  @each $color, $value in $theme-colors-rgb {
+    --#{$prefix}#{$color}-rgb: #{$value};
+  }
+
+  --#{$prefix}body-color: #{$body-color};
+  --#{$prefix}body-bg: #{$body-bg};
+
+  @import "~bootstrap";
 }

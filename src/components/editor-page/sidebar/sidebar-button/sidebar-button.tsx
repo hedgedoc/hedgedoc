@@ -5,16 +5,12 @@
  */
 
 import type { PropsWithChildren } from 'react'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import type { IconName } from '../../../common/fork-awesome/types'
 import { ShowIf } from '../../../common/show-if/show-if'
 import type { SidebarEntryProps } from '../types'
 import styles from './sidebar-button.module.scss'
-
-export interface SidebarButton extends SidebarEntryProps {
-  variant?: 'primary'
-}
 
 /**
  * A button that should be rendered in the sidebar.
@@ -28,24 +24,19 @@ export interface SidebarButton extends SidebarEntryProps {
  * @param disabled If the button should be disabled
  * @param props Other button props
  */
-export const SidebarButton: React.FC<PropsWithChildren<SidebarButton>> = ({
+export const SidebarButton: React.FC<PropsWithChildren<SidebarEntryProps>> = ({
   children,
   icon,
   className,
   buttonRef,
   hide,
-  variant,
   disabled,
   ...props
 }) => {
-  const variantClass = useMemo(() => {
-    return variant !== undefined ? styles['sidebar-button-' + variant] : ''
-  }, [variant])
-
   return (
     <button
       ref={buttonRef}
-      className={`${styles['sidebar-button']} ${variantClass} ${hide ? styles['hide'] : ''} ${className ?? ''}`}
+      className={`${styles['sidebar-button']} ${hide ? styles['hide'] : ''} ${className ?? ''}`}
       disabled={disabled}
       {...props}>
       <ShowIf condition={!!icon}>

@@ -39,8 +39,8 @@ export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
   const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)
 
   return (
-    <Navbar bg={'light'}>
-      <Nav className='mr-auto d-flex align-items-center'>
+    <Navbar expand={true} className={'bg-light px-3'}>
+      <Nav className='me-auto d-flex align-items-center'>
         <NavbarBranding />
         <ShowIf condition={mode === AppBarMode.EDITOR}>
           <EditorViewMode />
@@ -57,7 +57,7 @@ export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
           <HelpButton />
         </ShowIf>
       </Nav>
-      <Nav className='d-flex align-items-center text-secondary'>
+      <Nav className='d-flex align-items-center text-secondary justify-content-end'>
         <NewNoteButton />
         <ShowIf condition={!userExists}>
           <SignInButton size={'sm'} />

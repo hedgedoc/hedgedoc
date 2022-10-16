@@ -45,7 +45,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
       <div>
         <ShowIf condition={alias.primaryAlias}>
           <Button
-            className={'mr-2 text-warning'}
+            className={'me-2 text-warning'}
             variant='light'
             disabled={true}
             title={t('editor.modal.aliases.isPrimary')}
@@ -55,7 +55,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
         </ShowIf>
         <ShowIf condition={!alias.primaryAlias}>
           <Button
-            className={'mr-2'}
+            className={'me-2'}
             variant='light'
             title={t('editor.modal.aliases.makePrimary')}
             onClick={onMakePrimaryClick}

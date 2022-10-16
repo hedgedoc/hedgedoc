@@ -70,7 +70,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({ user, size, additionalCl
       />
       <ShowIf condition={showName}>
         <OverlayTrigger overlay={tooltip}>
-          <span className={`ml-2 mr-1 ${styles['user-line-name']}`}>{user.displayName}</span>
+          <span className={`ms-2 me-1 ${styles['user-line-name']}`}>{user.displayName}</span>
         </OverlayTrigger>
       </ShowIf>
     </span>

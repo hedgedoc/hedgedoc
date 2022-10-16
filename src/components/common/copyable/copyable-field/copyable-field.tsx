@@ -52,15 +52,15 @@ export const CopyableField: React.FC<CopyableFieldProps> = ({ content, shareOrig
   return (
     <InputGroup className='my-3'>
       <FormControl readOnly={true} className={'text-center'} value={content} />
-      <InputGroup.Append>
+      <InputGroup.Text>
         <CopyToClipboardButton variant={'outline-secondary'} content={content} />
-      </InputGroup.Append>
+      </InputGroup.Text>
       <ShowIf condition={sharingSupported}>
-        <InputGroup.Append>
-          <Button variant='outline-secondary' title={'Share'} onClick={doShareAction}>
+        <InputGroup.Text>
+          <Button variant='secondary' title={'Share'} onClick={doShareAction}>
             <ForkAwesomeIcon icon='share-alt' />
           </Button>
-        </InputGroup.Append>
+        </InputGroup.Text>
       </ShowIf>
     </InputGroup>
   )

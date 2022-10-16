@@ -85,10 +85,10 @@ export const TableSizePickerPopover: React.FC<TableSizePickerPopoverProps> = ({
       id={'table-picker'}
       {...cypressId('table-size-picker-popover')}
       className={`${styles['table-picker-container']} bg-light`}>
-      <Popover.Title>
+      <Popover.Header>
         <TableSizeText tableSize={tableSize} />
-      </Popover.Title>
-      <Popover.Content>
+      </Popover.Header>
+      <Popover.Body>
         <div className={styles['table-container']} role='grid'>
           {tableContainer}
         </div>
@@ -99,7 +99,7 @@ export const TableSizePickerPopover: React.FC<TableSizePickerPopoverProps> = ({
             <Trans i18nKey={'editor.editorToolbar.table.customSize'} />
           </Button>
         </div>
-      </Popover.Content>
+      </Popover.Body>
     </Popover>
   )
 }

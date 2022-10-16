@@ -4,38 +4,21 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 .online-entry {
-  @import "../../../../../global-styles/variables.light";
-
-  @mixin text-stroke($shadow-color) {
-    text-shadow: 0px 0px 1px $shadow-color,
-    1px 0px 1px $shadow-color,
-    0px 1px 1px $shadow-color,
-    -1px 0px 1px $shadow-color,
-    0px -1px 1px $shadow-color,
-    1px 1px 1px $shadow-color,
-    -1px -1px 1px $shadow-color,
-    -1px 1px 1px $shadow-color,
-    1px -1px 1px $shadow-color;
-  }
-
   &:hover {
     :global(.sidebar-button-icon):after {
-      color: $primary;
-      $shadow-color: #ffffff;
-      @include text-stroke(#ffffff);
+      color: inherit;
     }
   }
 
   --users-online: '0';
 
   :global(.sidebar-button-icon):after {
-    @include text-stroke($primary);
     content: var(--users-online);
     position: absolute;
     right: 5px;
     bottom: 3px;
     font-size: 0.9rem;
-    color: #ffffff;
+    color: var(--bg-primary);
     line-height: 1;
   }
 }

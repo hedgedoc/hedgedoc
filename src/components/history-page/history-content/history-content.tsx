@@ -5,7 +5,7 @@
  */
 
 import React, { Fragment, useCallback, useMemo, useState } from 'react'
-import { Alert, Row } from 'react-bootstrap'
+import { Alert, Col, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { PagerPagination } from '../../common/pagination/pager-pagination'
 import { HistoryCardList } from '../history-card/history-card-list'
@@ -116,12 +116,14 @@ export const HistoryContent: React.FC = () => {
     return (
       <Fragment>
         {historyContent}
-        <Row className='justify-content-center'>
-          <PagerPagination
-            numberOfPageButtonsToShowAfterAndBeforeCurrent={2}
-            lastPageIndex={lastPageIndex}
-            onPageChange={setPageIndex}
-          />
+        <Row>
+          <Col className={'justify-content-center d-flex'}>
+            <PagerPagination
+              numberOfPageButtonsToShowAfterAndBeforeCurrent={2}
+              lastPageIndex={lastPageIndex}
+              onPageChange={setPageIndex}
+            />
+          </Col>
         </Row>
       </Fragment>
     )

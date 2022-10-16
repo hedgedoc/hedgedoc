@@ -47,7 +47,7 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
     if (entries.length === 0) {
       return (
         <SidebarButton>
-          <span className={'ml-3'}>
+          <span className={'ms-3'}>
             <Trans i18nKey={'editor.onlineStatus.noUsers'}></Trans>
           </span>
         </SidebarButton>
@@ -70,8 +70,7 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         buttonRef={buttonRef}
         onClick={onClickHandler}
         icon={expand ? 'arrow-left' : 'users'}
-        className={`${styles['online-entry']} ${className ?? ''}`}
-        variant={'primary'}>
+        className={`${styles['online-entry']} ${className ?? ''}`}>
         <Trans i18nKey={'editor.onlineStatus.online'} />
       </SidebarButton>
       <SidebarMenu expand={expand}>{onlineUserElements}</SidebarMenu>

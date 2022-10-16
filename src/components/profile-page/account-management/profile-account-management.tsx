@@ -5,7 +5,7 @@
  */
 
 import React, { Fragment } from 'react'
-import { Button, Card } from 'react-bootstrap'
+import { Button, Card, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { AccountDeletionModal } from './account-deletion-modal'
@@ -25,14 +25,18 @@ export const ProfileAccountManagement: React.FC = () => {
           <Card.Title>
             <Trans i18nKey='profile.accountManagement' />
           </Card.Title>
-          <Button variant='secondary' block href={'me/export'} className='mb-2'>
-            <ForkAwesomeIcon icon='cloud-download' fixedWidth={true} className='mx-2' />
-            <Trans i18nKey='profile.exportUserData' />
-          </Button>
-          <Button variant='danger' block onClick={showModal}>
-            <ForkAwesomeIcon icon='trash' fixedWidth={true} className='mx-2' />
-            <Trans i18nKey='profile.deleteUser' />
-          </Button>
+          <Row>
+            <Button variant='secondary' href={'me/export'} className='mb-2'>
+              <ForkAwesomeIcon icon='cloud-download' fixedWidth={true} className='mx-2' />
+              <Trans i18nKey='profile.exportUserData' />
+            </Button>
+          </Row>
+          <Row>
+            <Button variant='danger' onClick={showModal}>
+              <ForkAwesomeIcon icon='trash' fixedWidth={true} className='mx-2' />
+              <Trans i18nKey='profile.deleteUser' />
+            </Button>
+          </Row>
         </Card.Body>
       </Card>
       <AccountDeletionModal show={modalVisibility} onHide={closeModal} />

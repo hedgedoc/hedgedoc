@@ -58,34 +58,27 @@
   }
 
   @mixin colors {
-    color: $dark;
+    color: black;
 
 
     &.sidebar-button-primary {
-      background: $primary;
-      color: $white;
+      color: var(--bs-light);
+      background: var(--bs-primary);
 
       &:hover {
-        color: $primary;
-        background: $entry-hover-bg;
+        color: var(--bs-primary);
+        background:  var(--bs-light);
       }
     }
 
     &:hover {
-      background: $entry-hover-bg;
-      color: $dark;
+      color: var(--bs-light);
+      background:  var(--bs-primary);
     }
   }
 
-  @import "../../../../../global-styles/variables.light";
-  $entry-hover-bg: darken($body-bg, 10%);
+  $entry-hover-bg: darken(black, 10%);
   @include colors;
-
-  :global(body.dark) & {
-    @import "../../../../../global-styles/variables.dark";
-    $entry-hover-bg: darken($body-bg, 10%);
-    @include colors;
-  }
 }
 
 

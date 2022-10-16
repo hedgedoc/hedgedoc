@@ -12,15 +12,15 @@
   overflow: hidden;
 
   .preview-hover {
-    display: inline;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     color: white;
     opacity: 0.5;
     transition: opacity 0.2s;
     text-shadow: #000000 0 0 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .preview-hover-text {
@@ -44,12 +44,6 @@
     min-height: 300px;
     width: 100%;
 
-    :global(body.dark) &{
-      @import "../../../../../global-styles/variables.dark";
-      box-shadow: inset fade-out($black, 0.5) 0 0 20px;
-    }
-
-    @import "../../../../../global-styles/variables.light";
-    box-shadow: inset fade-out($black, 0.5) 0 0 20px;
+    box-shadow: inset rgba(var(--bs-dark), 0.5) 0 0 20px;
   }
 }

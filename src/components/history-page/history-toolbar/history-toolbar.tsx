@@ -5,7 +5,7 @@
  */
 
 import React, { useCallback } from 'react'
-import { Button, Form, InputGroup } from 'react-bootstrap'
+import { Button, Col } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../../common/show-if/show-if'
@@ -62,41 +62,41 @@ export const HistoryToolbar: React.FC = () => {
   }, [userExists, historyEntries, showErrorNotification, safeRefreshHistoryState])
 
   return (
-    <Form inline={true}>
-      <InputGroup className={'mr-1 mb-1'}>
+    <Col className={'d-flex flex-row'}>
+      <div className={'me-1 mb-1'}>
         <TagSelectionInput />
-      </InputGroup>
-      <InputGroup className={'mr-1 mb-1'}>
+      </div>
+      <div className={'me-1 mb-1'}>
         <KeywordSearchInput />
-      </InputGroup>
-      <InputGroup className={'mr-1 mb-1'}>
+      </div>
+      <div className={'me-1 mb-1'}>
         <SortByTitleButton />
-      </InputGroup>
-      <InputGroup className={'mr-1 mb-1'}>
+      </div>
+      <div className={'me-1 mb-1'}>
         <SortByLastVisitedButton />
-      </InputGroup>
-      <InputGroup className={'mr-1 mb-1'}>
+      </div>
+      <div className={'me-1 mb-1'}>
         <ExportHistoryButton />
-      </InputGroup>
-      <InputGroup className={'mr-1 mb-1'}>
+      </div>
+      <div className={'me-1 mb-1'}>
         <ImportHistoryButton />
-      </InputGroup>
-      <InputGroup className={'mr-1 mb-1'}>
+      </div>
+      <div className={'me-1 mb-1'}>
         <ClearHistoryButton />
-      </InputGroup>
-      <InputGroup className={'mr-1 mb-1'}>
+      </div>
+      <div className={'me-1 mb-1'}>
         <HistoryRefreshButton />
-      </InputGroup>
+      </div>
       <ShowIf condition={userExists}>
-        <InputGroup className={'mr-1 mb-1'}>
+        <div className={'me-1 mb-1'}>
           <Button variant={'light'} title={t('landing.history.toolbar.uploadAll')} onClick={onUploadAllToRemote}>
             <ForkAwesomeIcon icon='cloud-upload' />
           </Button>
-        </InputGroup>
+        </div>
       </ShowIf>
-      <InputGroup className={'mr-1 mb-1'}>
+      <div className={'me-1 mb-1'}>
         <HistoryViewModeToggleButton />
-      </InputGroup>
-    </Form>
+      </div>
+    </Col>
   )
 }

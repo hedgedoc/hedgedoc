@@ -6,12 +6,9 @@
 
 
 .table-picker-container {
-  @import "../../../../../../global-styles/variables.light";
-
   z-index: 1111;
 
   .table-cell {
-    border: 1px solid $gray-700;
     margin: 1px;
     border-radius: 2px;
   }

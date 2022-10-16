@@ -26,7 +26,7 @@ export const UnitalicBoldContent: React.FC<PropsWithChildren<UnitalicBoldContent
   ...props
 }) => {
   return (
-    <strong className={'font-style-normal mr-1'} {...cypressId(props)}>
+    <strong className={'font-style-normal me-1'} {...cypressId(props)}>
       {text}
       {children}
     </strong>

@@ -29,7 +29,7 @@ export const DocumentInfobar: React.FC = () => {
           <NoteInfoLineUpdated />
           <hr />
         </div>
-        <span className={'ml-auto'}>
+        <span className={'ms-auto'}>
           {noteDetails.viewCount} <Trans i18nKey={'views.readOnly.viewCount'} />
           <ShowIf condition={true}>
             <InternalLink

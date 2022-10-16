@@ -4,42 +4,38 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React from 'react'
-import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
+import React, { useCallback } from 'react'
+import { Button, ButtonGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { useIsDarkModeActivated } from '../../../hooks/common/use-is-dark-mode-activated'
 import { setDarkMode } from '../../../redux/dark-mode/methods'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
-
-enum DarkModeState {
-  DARK,
-  LIGHT
-}
 
 /**
  * Renders a button group to activate / deactivate the dark mode.
  */
 const DarkModeButton: React.FC = () => {
   const { t } = useTranslation()
-  const darkModeEnabled = useIsDarkModeActivated() ? DarkModeState.DARK : DarkModeState.LIGHT
+  const darkModeEnabled = useIsDarkModeActivated()
+
+  const enable = useCallback(() => setDarkMode(true), [])
+  const disable = useCallback(() => setDarkMode(false), [])
 
   return (
-    <ToggleButtonGroup type='radio' name='dark-mode' value={darkModeEnabled} className='ml-2'>
-      <ToggleButton
-        value={DarkModeState.DARK}
-        variant='outline-secondary'
-        title={t('editor.darkMode.switchToDark')}
-        onChange={() => setDarkMode(true)}>
+    <ButtonGroup className='ms-2'>
+      <Button
+        onClick={enable}
+        variant={darkModeEnabled ? 'secondary' : 'outline-secondary'}
+        title={t('editor.darkMode.switchToDark')}>
         <ForkAwesomeIcon icon='moon' />
-      </ToggleButton>
-      <ToggleButton
-        value={DarkModeState.LIGHT}
-        variant='outline-secondary'
-        title={t('editor.darkMode.switchToLight')}
-        onChange={() => setDarkMode(false)}>
+      </Button>
+      <Button
+        onClick={disable}
+        variant={darkModeEnabled ? 'outline-secondary' : 'secondary'}
+        title={t('editor.darkMode.switchToLight')}>
         <ForkAwesomeIcon icon='sun-o' />
-      </ToggleButton>
-    </ToggleButtonGroup>
+      </Button>
+    </ButtonGroup>
   )
 }
 

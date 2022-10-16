@@ -86,10 +86,15 @@ export const ClickShield: React.FC<ClickShieldProps> = ({
 
   const previewBackground = useMemo(() => {
     return previewImageUrl === undefined ? (
-      <span className={'preview-background embed-responsive-item'} style={fallbackBackgroundStyle} />
+      <span
+        className={`${styles['preview-background']} embed-responsive-item`}
+        {...cypressId('preview-background')}
+        style={fallbackBackgroundStyle}
+      />
     ) : (
       <ProxyImageFrame
-        className={'preview-background embed-responsive-item'}
+        {...cypressId('preview-background')}
+        className={`${styles['preview-background']} embed-responsive-item`}
         style={fallbackBackgroundStyle}
         src={previewImageUrl}
         alt={previewHoverText}
@@ -104,13 +109,12 @@ export const ClickShield: React.FC<ClickShieldProps> = ({
     <span className={containerClassName} {...cypressId(props['data-cypress-id'])}>
       <ShowIf condition={showChildren}>{children}</ShowIf>
       <ShowIf condition={!showChildren}>
-        <span className={`${styles['click-shield']} embed-responsive embed-responsive-16by9`} onClick={doShowChildren}>
+        <span className={`${styles['click-shield']} ratio ratio-16x9`} onClick={doShowChildren}>
           {previewBackground}
-          <span className={`${styles['preview-hover']} text-center`}>
+          <span className={`${styles['preview-hover']}`}>
             <span className={`${styles['preview-hover-text']}`}>
               <Trans i18nKey={'renderer.clickShield.previewHoverText'} values={hoverTextTranslationValues} />
             </span>
-            <br />
             <ForkAwesomeIcon icon={hoverIcon} size={'5x'} className={'mb-2'} />
           </span>
         </span>

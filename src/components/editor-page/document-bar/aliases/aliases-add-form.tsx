@@ -47,7 +47,7 @@ export const AliasesAddForm: React.FC = () => {
 
   return (
     <form onSubmit={onAddAlias}>
-      <InputGroup className={'mr-1 mb-1'} hasValidation={true}>
+      <InputGroup className={'me-1 mb-1'} hasValidation={true}>
         <Form.Control
           value={newAlias}
           placeholder={t('editor.modal.aliases.addAlias')}
@@ -59,7 +59,7 @@ export const AliasesAddForm: React.FC = () => {
         <Button
           type={'submit'}
           variant='light'
-          className={'text-secondary ml-2'}
+          className={'text-secondary ms-2'}
           disabled={!newAliasValid || newAlias === ''}
           title={t('editor.modal.aliases.addAlias')}
           {...testId('addAliasButton')}>

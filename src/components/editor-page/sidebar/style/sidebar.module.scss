@@ -21,20 +21,13 @@
     top: 0;
     left: 0;
     transition: left 0.3s;
-    box-shadow: 0 0 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
 
     &:hover, &.show {
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
       left: (-$menu-width + $height);
     }
 
-    :global(body.dark) & {
-      @import "../../../../../global-styles/variables.dark";
-      background: $body-bg;
-    }
-
-    @import "../../../../../global-styles/variables.light";
-    background: $body-bg;
+    background: var(--bs-light);
   }
-
 }

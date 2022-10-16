@@ -5,13 +5,7 @@
  */
 
 .image-drop {
-  @import "../../../../../global-styles/variables.light.scss";
-  border: 3px dashed $dark;
-
-  :global(body.dark) & {
-    @import "../../../../../global-styles/variables.dark.scss";
-    border-color: $dark;
-  }
+  border: 3px dashed var(--bs-dark);
 
   border-radius: 3px;
   transition: background-color 50ms, color 50ms;

@@ -26,7 +26,7 @@ export const UserDropdown: React.FC = () => {
   }
 
   return (
-    <Dropdown alignRight>
+    <Dropdown align={'end'}>
       <Dropdown.Toggle size='sm' variant='dark' {...cypressId('user-dropdown')} className={'d-flex align-items-center'}>
         <UserAvatar user={user} />
       </Dropdown.Toggle>

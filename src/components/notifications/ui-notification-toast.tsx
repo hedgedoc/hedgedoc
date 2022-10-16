@@ -101,9 +101,9 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({ notificatio
       onClose={dismissNow}
       {...cypressId('notification-toast')}>
       <Toast.Header>
-        <strong className='mr-auto'>
+        <strong className='me-auto'>
           <ShowIf condition={!!notification.icon}>
-            <ForkAwesomeIcon icon={notification.icon as IconName} fixedWidth={true} className={'mr-1'} />
+            <ForkAwesomeIcon icon={notification.icon as IconName} fixedWidth={true} className={'me-1'} />
           </ShowIf>
           <Trans i18nKey={notification.titleI18nKey} tOptions={notification.titleI18nOptions} />
         </strong>

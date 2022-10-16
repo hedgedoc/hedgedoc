@@ -5,7 +5,7 @@
  */
 
 import React from 'react'
-import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
+import { Button, ButtonGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { setEditorMode } from '../../../redux/editor/methods'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
@@ -27,34 +27,28 @@ export const EditorViewMode: React.FC = () => {
   const editorMode = useApplicationState((state) => state.editorConfig.editorMode)
 
   return (
-    <ToggleButtonGroup
-      type='radio'
-      name='options'
-      value={editorMode}
-      onChange={(value: EditorMode) => {
-        setEditorMode(value)
-      }}>
-      <ToggleButton
+    <ButtonGroup>
+      <Button
         {...cypressId('view-mode-editor')}
-        value={EditorMode.EDITOR}
-        variant='outline-secondary'
+        onClick={() => setEditorMode(EditorMode.EDITOR)}
+        variant={editorMode === EditorMode.EDITOR ? 'secondary' : 'outline-secondary'}
         title={t('editor.viewMode.edit')}>
         <ForkAwesomeIcon icon='pencil' />
-      </ToggleButton>
-      <ToggleButton
+      </Button>
+      <Button
         {...cypressId('view-mode-both')}
-        value={EditorMode.BOTH}
-        variant='outline-secondary'
+        onClick={() => setEditorMode(EditorMode.BOTH)}
+        variant={editorMode === EditorMode.BOTH ? 'secondary' : 'outline-secondary'}
         title={t('editor.viewMode.both')}>
         <ForkAwesomeIcon icon='columns' />
-      </ToggleButton>
-      <ToggleButton
+      </Button>
+      <Button
         {...cypressId('view-mode-preview')}
-        value={EditorMode.PREVIEW}
-        variant='outline-secondary'
+        onClick={() => setEditorMode(EditorMode.PREVIEW)}
+        variant={editorMode === EditorMode.PREVIEW ? 'secondary' : 'outline-secondary'}
         title={t('editor.viewMode.view')}>
         <ForkAwesomeIcon icon='eye' />
-      </ToggleButton>
-    </ToggleButtonGroup>
+      </Button>
+    </ButtonGroup>
   )
 }

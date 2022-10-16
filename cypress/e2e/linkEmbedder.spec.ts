@@ -13,7 +13,7 @@ describe('Link gets replaced with embedding: ', () => {
 
   it('GitHub Gist', () => {
     cy.setCodemirrorContent('https://gist.github.com/schacon/1')
-    cy.getMarkdownBody().findByCypressId('click-shield-gist').find('.preview-background').parent().click()
+    cy.getMarkdownBody().findByCypressId('click-shield-gist').findByCypressId('preview-background').parent().click()
     cy.getMarkdownBody().findByCypressId('gh-gist').should('be.visible')
   })
 })

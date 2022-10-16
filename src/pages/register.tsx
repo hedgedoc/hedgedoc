@@ -101,7 +101,7 @@ export const RegisterPage: NextPage = () => {
 
                   <RegisterInfos />
 
-                  <Button variant='primary' type='submit' block={true} disabled={!ready}>
+                  <Button variant='primary' type='submit' disabled={!ready}>
                     <Trans i18nKey='login.register.title' />
                   </Button>
                 </Form>

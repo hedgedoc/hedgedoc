@@ -24,7 +24,7 @@ export const StatusBar: React.FC = () => {
         <SelectedCharacters />
         <SelectedLines />
       </div>
-      <div className='ml-auto'>
+      <div className='ms-auto'>
         <NumberOfLinesInDocumentInfo />
         <SeparatorDash />
         <RemainingCharactersInfo />
