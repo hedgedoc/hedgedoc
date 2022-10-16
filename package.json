@@ -178,6 +178,7 @@
   "resolutions": {
     "domhandler": "5.0.3",
     "@codemirror/state": "6.1.2",
-    "@codemirror/view": "6.3.1"
+    "@codemirror/view": "6.3.1",
+    "@hpcc-js/wasm": "1.16.5"
   }
 }
