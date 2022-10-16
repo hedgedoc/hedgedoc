@@ -5,13 +5,11 @@
  */
 
 import type { Reducer } from 'redux'
-import { EditorMode } from '../../components/editor-page/app-bar/editor-view-mode'
 import { loadFromLocalStorage, saveToLocalStorage } from './methods'
 import type { EditorConfig, EditorConfigActions } from './types'
 import { EditorConfigActionType } from './types'
 
 const initialState: EditorConfig = {
-  editorMode: EditorMode.BOTH,
   ligatures: true,
   syncScroll: true,
   smartPaste: true,
@@ -28,13 +26,6 @@ export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (
 ) => {
   let newState: EditorConfig
   switch (action.type) {
-    case EditorConfigActionType.SET_EDITOR_VIEW_MODE:
-      newState = {
-        ...state,
-        editorMode: action.mode
-      }
-      saveToLocalStorage(newState)
-      return newState
     case EditorConfigActionType.SET_SYNC_SCROLL:
       newState = {
         ...state,

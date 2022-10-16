@@ -24,7 +24,6 @@ import { useBaseUrl } from '../../../../hooks/common/use-base-url'
 export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   useTranslation()
   const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)
-  const editorMode = useApplicationState((state) => state.editorConfig.editorMode)
   const baseUrl = useBaseUrl()
   const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
 
@@ -32,10 +31,7 @@ export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => 
     <CommonModal show={show} onHide={onHide} showCloseButton={true} title={'editor.modal.shareLink.title'}>
       <Modal.Body>
         <Trans i18nKey={'editor.modal.shareLink.editorDescription'} />
-        <CopyableField
-          content={`${baseUrl}n/${noteIdentifier}?${editorMode}`}
-          shareOriginUrl={`${baseUrl}n/${noteIdentifier}?${editorMode}`}
-        />
+        <CopyableField content={`${baseUrl}n/${noteIdentifier}`} shareOriginUrl={`${baseUrl}n/${noteIdentifier}`} />
         <ShowIf condition={noteFrontmatter.type === NoteType.SLIDE}>
           <Trans i18nKey={'editor.modal.shareLink.slidesDescription'} />
           <CopyableField content={`${baseUrl}p/${noteIdentifier}`} shareOriginUrl={`${baseUrl}p/${noteIdentifier}`} />

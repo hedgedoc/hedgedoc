@@ -10,7 +10,6 @@ import { ShowIf } from '../../common/show-if/show-if'
 import { SignInButton } from '../../landing-layout/navigation/sign-in-button'
 import { UserDropdown } from '../../landing-layout/navigation/user-dropdown'
 import { DarkModeButton } from './dark-mode-button'
-import { EditorViewMode } from './editor-view-mode'
 import { HelpButton } from './help-button/help-button'
 import { NavbarBranding } from './navbar-branding'
 import { SyncScrollButtons } from './sync-scroll-buttons/sync-scroll-buttons'
@@ -43,7 +42,6 @@ export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
       <Nav className='me-auto d-flex align-items-center'>
         <NavbarBranding />
         <ShowIf condition={mode === AppBarMode.EDITOR}>
-          <EditorViewMode />
           <SyncScrollButtons />
         </ShowIf>
         <DarkModeButton />

@@ -10,7 +10,6 @@ const title = 'This is a test title'
 describe('Document Title', () => {
   beforeEach(() => {
     cy.visitTestNote()
-    cy.getByCypressId('view-mode-both').should('exist')
   })
 
   describe('title should be yaml metadata title', () => {

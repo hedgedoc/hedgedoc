@@ -9,29 +9,24 @@ import { Splitter } from './splitter'
 import { Mock } from 'ts-mockery'
 
 describe('Splitter', () => {
-  it('can render only the left pane', () => {
-    const view = render(<Splitter showLeft={true} showRight={false} left={<>left</>} right={<>right</>} />)
-    expect(view.container).toMatchSnapshot()
-  })
-
-  it('can render only the right pane', () => {
-    const view = render(<Splitter showLeft={false} showRight={true} left={<>left</>} right={<>right</>} />)
-    expect(view.container).toMatchSnapshot()
-  })
-
-  it('can render both panes', () => {
-    const view = render(<Splitter showLeft={true} showRight={true} left={<>left</>} right={<>right</>} />)
-    expect(view.container).toMatchSnapshot()
-  })
-
   describe('resize', () => {
     beforeEach(() => {
       Object.defineProperty(window.HTMLDivElement.prototype, 'clientWidth', { value: 1920 })
       Object.defineProperty(window.HTMLDivElement.prototype, 'offsetLeft', { value: 0 })
     })
 
+    it('can react to shortcuts', () => {
+      const view = render(<Splitter left={<>left</>} right={<>right</>} />)
+      fireEvent.keyDown(document, Mock.of<KeyboardEvent>({ ctrlKey: true, altKey: true, key: 'v' }))
+      expect(view.container).toMatchSnapshot()
+      fireEvent.keyDown(document, Mock.of<KeyboardEvent>({ ctrlKey: true, altKey: true, key: 'e' }))
+      expect(view.container).toMatchSnapshot()
+      fireEvent.keyDown(document, Mock.of<KeyboardEvent>({ ctrlKey: true, altKey: true, key: 'b' }))
+      expect(view.container).toMatchSnapshot()
+    })
+
     it('can change size with mouse', async () => {
-      const view = render(<Splitter showLeft={true} showRight={true} left={<>left</>} right={<>right</>} />)
+      const view = render(<Splitter left={<>left</>} right={<>right</>} />)
       expect(view.container).toMatchSnapshot()
       const divider = await screen.findByTestId('splitter-divider')
 
@@ -50,7 +45,7 @@ describe('Splitter', () => {
     })
 
     it('can change size with touch', async () => {
-      const view = render(<Splitter showLeft={true} showRight={true} left={<>left</>} right={<>right</>} />)
+      const view = render(<Splitter left={<>left</>} right={<>right</>} />)
       expect(view.container).toMatchSnapshot()
       const divider = await screen.findByTestId('splitter-divider')
 

@@ -10,12 +10,9 @@ import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
 import { MotdModal } from '../common/motd-modal/motd-modal'
 import { AppBar, AppBarMode } from './app-bar/app-bar'
-import { EditorMode } from './app-bar/editor-view-mode'
-import { useViewModeShortcuts } from './hooks/use-view-mode-shortcuts'
 import { Sidebar } from './sidebar/sidebar'
 import { Splitter } from './splitter/splitter'
 import type { DualScrollState, ScrollState } from './synced-scroll/scroll-props'
-import { useEditorModeFromUrl } from './hooks/use-editor-mode-from-url'
 import { useUpdateLocalHistoryEntry } from './hooks/use-update-local-history-entry'
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { EditorDocumentRenderer } from './editor-document-renderer/editor-document-renderer'
@@ -41,7 +38,6 @@ const log = new Logger('EditorPage')
 export const EditorPageContent: React.FC = () => {
   useTranslation()
   const scrollSource = useRef<ScrollSource>(ScrollSource.EDITOR)
-  const editorMode: EditorMode = useApplicationState((state) => state.editorConfig.editorMode)
   const editorSyncScroll: boolean = useApplicationState((state) => state.editorConfig.syncScroll)
 
   const [scrollState, setScrollState] = useState<DualScrollState>(() => ({
@@ -83,9 +79,7 @@ export const EditorPageContent: React.FC = () => {
     [editorSyncScroll]
   )
 
-  useViewModeShortcuts()
   useApplyDarkMode()
-  useEditorModeFromUrl()
 
   useUpdateLocalHistoryEntry()
 
@@ -140,11 +134,9 @@ export const EditorPageContent: React.FC = () => {
           <AppBar mode={AppBarMode.EDITOR} />
           <div className={'flex-fill d-flex h-100 w-100 overflow-hidden flex-row'}>
             <Splitter
-              showLeft={editorMode === EditorMode.EDITOR || editorMode === EditorMode.BOTH}
               left={leftPane}
-              showRight={editorMode === EditorMode.PREVIEW || editorMode === EditorMode.BOTH}
               right={rightPane}
-              additionalContainerClassName={'overflow-hidden'}
+              additionalContainerClassName={'overflow-hidden position-relative'}
             />
             <Sidebar />
           </div>

@@ -5,14 +5,69 @@
  */
 
 .split-divider {
-  width: 10px;
+  width: 15px;
   background: white;
   z-index: 1;
-  cursor: col-resize;
   box-shadow: 3px 0 6px #e7e7e7;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   :global(body.dark) & {
     box-shadow: 3px 0 6px #7b7b7b;
+  }
+}
+
+.grabber {
+  cursor: col-resize;
+}
+
+.middle {
+  width: 35px;
+  height: 35px;
+  z-index: 100000;
+  position: absolute;
+  border-radius: 90px;
+  border: solid 1px #d5d5d5;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transition: width 150ms ease-in-out, height 150ms ease-in-out, border-radius 50ms ease-in-out, transform 50ms ease-in-out;
+  transform: translateX(0);
+
+  &.shift-right {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    transform: translateX(8px);
+  }
+
+  &.shift-left {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    transform: translateX(-8px);
+  }
+
+  &:hover, &.open {
+    width: 135px;
+    height: 50px;
+    border-radius: 90px;
+  }
+
+  :global(.btn) {
+    border-radius: 90px;
+  }
+
+  .buttons {
+    height: 40px;
+    width: 3*40px;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 

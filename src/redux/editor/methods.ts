@@ -5,13 +5,11 @@
  */
 
 import { store } from '..'
-import type { EditorMode } from '../../components/editor-page/app-bar/editor-view-mode'
 import type {
   EditorConfig,
   SetEditorLigaturesAction,
   SetEditorSmartPasteAction,
-  SetEditorSyncScrollAction,
-  SetEditorViewModeAction
+  SetEditorSyncScrollAction
 } from './types'
 import { EditorConfigActionType } from './types'
 import { Logger } from '../../utils/logger'
@@ -37,14 +35,6 @@ export const saveToLocalStorage = (editorConfig: EditorConfig): void => {
   } catch (error) {
     log.error('Error while saving editor config in local storage', error)
   }
-}
-
-export const setEditorMode = (editorMode: EditorMode): void => {
-  const action: SetEditorViewModeAction = {
-    type: EditorConfigActionType.SET_EDITOR_VIEW_MODE,
-    mode: editorMode
-  }
-  store.dispatch(action)
 }
 
 export const setEditorSyncScroll = (syncScroll: boolean): void => {

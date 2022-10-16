@@ -4,20 +4,17 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { ReactElement } from 'react'
-import React, { useCallback, useRef, useState } from 'react'
-import { ShowIf } from '../../common/show-if/show-if'
-import { SplitDivider } from './split-divider/split-divider'
+import type { ReactElement, TouchEvent, MouseEvent } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { DividerButtonsShift, SplitDivider } from './split-divider/split-divider'
 import styles from './splitter.module.scss'
-import { useAdjustedRelativeSplitValue } from './hooks/use-adjusted-relative-split-value'
-import { useBindPointerMovementEventOnWindow } from '../../../hooks/common/use-bind-pointer-movement-event-on-window'
+import { ShowIf } from '../../common/show-if/show-if'
+import { useKeyboardShortcuts } from './hooks/use-keyboard-shortcuts'
 
 export interface SplitterProps {
   left?: ReactElement
   right?: ReactElement
   additionalContainerClassName?: string
-  showLeft: boolean
-  showRight: boolean
 }
 
 /**
@@ -26,7 +23,7 @@ export interface SplitterProps {
  * @param event the event to check
  * @return {@link true} if the given event is a {@link MouseEvent}
  */
-const isMouseEvent = (event: Event): event is MouseEvent => {
+const isMouseEvent = (event: MouseEvent | TouchEvent): event is MouseEvent => {
   return (event as MouseEvent).buttons !== undefined
 }
 
@@ -48,43 +45,49 @@ const extractHorizontalPosition = (moveEvent: MouseEvent | TouchEvent): number |
   }
 }
 
+const SNAP_PERCENTAGE = 10
+
 /**
  * Creates a Left/Right splitter react component.
  *
  * @param additionalContainerClassName css classes that are added to the split container.
  * @param left the react component that should be shown on the left side.
  * @param right the react component that should be shown on the right side.
- * @param showLeft defines if the left component should be shown or hidden. Settings this prop will hide the component with css.
- * @param showRight defines if the right component should be shown or hidden. Settings this prop will hide the component with css.
  * @return the created component
  */
-export const Splitter: React.FC<SplitterProps> = ({
-  additionalContainerClassName,
-  left,
-  right,
-  showLeft,
-  showRight
-}) => {
+export const Splitter: React.FC<SplitterProps> = ({ additionalContainerClassName, left, right }) => {
   const [relativeSplitValue, setRelativeSplitValue] = useState(50)
-  const adjustedRelativeSplitValue = useAdjustedRelativeSplitValue(showLeft, showRight, relativeSplitValue)
-  const resizingInProgress = useRef(false)
+  const [resizingInProgress, setResizingInProgress] = useState(false)
+  const adjustedRelativeSplitValue = useMemo(() => Math.min(100, Math.max(0, relativeSplitValue)), [relativeSplitValue])
   const splitContainer = useRef<HTMLDivElement>(null)
 
   /**
    * Starts the splitter resizing.
    */
   const onStartResizing = useCallback(() => {
-    resizingInProgress.current = true
+    setResizingInProgress(true)
   }, [])
 
   /**
    * Stops the splitter resizing.
    */
   const onStopResizing = useCallback(() => {
-    if (resizingInProgress.current) {
-      resizingInProgress.current = false
-    }
+    setResizingInProgress(false)
   }, [])
+
+  useEffect(() => {
+    if (!resizingInProgress) {
+      setRelativeSplitValue((value) => {
+        if (value < SNAP_PERCENTAGE) {
+          return 0
+        }
+        if (value > 100 - SNAP_PERCENTAGE) {
+          return 100
+        }
+        return value
+      })
+    }
+  }, [resizingInProgress])
 
   /**
    * Recalculates the panel split based on the absolute mouse/touch position.
@@ -92,11 +95,11 @@ export const Splitter: React.FC<SplitterProps> = ({
    * @param moveEvent is a {@link MouseEvent} or {@link TouchEvent} that got triggered.
    */
   const onMove = useCallback((moveEvent: MouseEvent | TouchEvent) => {
-    if (!resizingInProgress.current || !splitContainer.current) {
+    if (!splitContainer.current) {
       return
     }
     if (isMouseEvent(moveEvent) && !isLeftMouseButtonClicked(moveEvent)) {
-      resizingInProgress.current = false
+      setResizingInProgress(false)
       moveEvent.preventDefault()
       return undefined
     }
@@ -107,28 +110,56 @@ export const Splitter: React.FC<SplitterProps> = ({
     }
     const horizontalPositionInSplitContainer = horizontalPosition - splitContainer.current.offsetLeft
     const newRelativeSize = horizontalPositionInSplitContainer / splitContainer.current.clientWidth
-    setRelativeSplitValue(newRelativeSize * 100)
+    const number = newRelativeSize * 100
+    setRelativeSplitValue(number)
     moveEvent.preventDefault()
   }, [])
 
-  useBindPointerMovementEventOnWindow(onMove, onStopResizing)
+  const onLeftButtonClick = useCallback(() => {
+    setRelativeSplitValue((value) => (value === 100 ? 50 : 0))
+  }, [])
+
+  const onRightButtonClick = useCallback(() => {
+    setRelativeSplitValue((value) => (value === 0 ? 50 : 100))
+  }, [])
+
+  const dividerButtonsShift = useMemo(() => {
+    if (relativeSplitValue === 0) {
+      return DividerButtonsShift.SHIFT_TO_RIGHT
+    } else if (relativeSplitValue === 100) {
+      return DividerButtonsShift.SHIFT_TO_LEFT
+    } else {
+      return DividerButtonsShift.NO_SHIFT
+    }
+  }, [relativeSplitValue])
+
+  useKeyboardShortcuts(setRelativeSplitValue)
 
   return (
     <div ref={splitContainer} className={`flex-fill flex-row d-flex ${additionalContainerClassName || ''}`}>
-      <div
-        className={`${styles['splitter']} ${styles['left']} ${!showLeft ? 'd-none' : ''}`}
-        style={{ width: `calc(${adjustedRelativeSplitValue}% - 5px)` }}>
-        {left}
-      </div>
-      <ShowIf condition={showLeft && showRight}>
-        <div className={`${styles['splitter']} ${styles['separator']}`}>
-          <SplitDivider onGrab={onStartResizing} />
-        </div>
+      <ShowIf condition={resizingInProgress}>
+        <div
+          className={styles['move-overlay']}
+          onTouchMove={onMove}
+          onMouseMove={onMove}
+          onTouchCancel={onStopResizing}
+          onTouchEnd={onStopResizing}
+          onMouseUp={onStopResizing}></div>
       </ShowIf>
-      <div
-        className={`${styles['splitter']}${!showRight ? ' d-none' : ''}`}
-        style={{ width: `calc(100% - ${adjustedRelativeSplitValue}%)` }}>
-        {right}
+      <div className={styles['left']} style={{ width: `calc(${adjustedRelativeSplitValue}% - 5px)` }}>
+        <div className={styles['inner']}>{left}</div>
+      </div>
+      <SplitDivider
+        onGrab={onStartResizing}
+        onLeftButtonClick={onLeftButtonClick}
+        onRightButtonClick={onRightButtonClick}
+        forceOpen={resizingInProgress}
+        focusLeft={relativeSplitValue < SNAP_PERCENTAGE}
+        focusRight={relativeSplitValue > 100 - SNAP_PERCENTAGE}
+        dividerButtonsShift={dividerButtonsShift}
+      />
+      <div className={styles['right']} style={{ width: `calc(100% - ${adjustedRelativeSplitValue}%)` }}>
+        <div className={styles['inner']}>{right}</div>
       </div>
     </div>
   )

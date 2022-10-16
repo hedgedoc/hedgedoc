@@ -5,7 +5,6 @@
  */
 
 import type { Action } from 'redux'
-import type { EditorMode } from '../../components/editor-page/app-bar/editor-view-mode'
 
 export enum EditorConfigActionType {
   SET_EDITOR_VIEW_MODE = 'editor/view-mode/set',
@@ -16,7 +15,6 @@ export enum EditorConfigActionType {
 }
 
 export interface EditorConfig {
-  editorMode: EditorMode
   syncScroll: boolean
   ligatures: boolean
   smartPaste: boolean
@@ -27,7 +25,6 @@ export type EditorConfigActions =
   | SetEditorSyncScrollAction
   | SetEditorLigaturesAction
   | SetEditorSmartPasteAction
-  | SetEditorViewModeAction
   | SetSpellCheckAction
 
 export interface SetEditorSyncScrollAction extends Action<EditorConfigActionType> {
@@ -43,11 +40,6 @@ export interface SetEditorLigaturesAction extends Action<EditorConfigActionType>
 export interface SetEditorSmartPasteAction extends Action<EditorConfigActionType> {
   type: EditorConfigActionType.SET_SMART_PASTE
   smartPaste: boolean
-}
-
-export interface SetEditorViewModeAction extends Action<EditorConfigActionType> {
-  type: EditorConfigActionType.SET_EDITOR_VIEW_MODE
-  mode: EditorMode
 }
 
 export interface SetSpellCheckAction extends Action<EditorConfigActionType> {
