@@ -6,7 +6,6 @@
 
 import React, { Fragment, useCallback } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import links from '../../../../links.json'
 import { ExportMarkdownSidebarEntry } from './export-markdown-sidebar-entry'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import { SidebarMenu } from '../sidebar-menu/sidebar-menu'
@@ -55,15 +54,6 @@ export const ExportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         <SidebarButton icon={'file-code-o'}>HTML</SidebarButton>
         <SidebarButton icon={'file-code-o'}>
           <Trans i18nKey='editor.export.rawHtml' />
-        </SidebarButton>
-        <SidebarButton icon={'file-pdf-o'}>
-          <a className='small text-muted' dir={'auto'} href={links.faq} target={'_blank'} rel='noopener noreferrer'>
-            <Trans i18nKey={'editor.export.pdf'} />
-            &nbsp;
-            <span className={'text-primary'}>
-              <Trans i18nKey={'common.why'} />
-            </span>
-          </a>
         </SidebarButton>
       </SidebarMenu>
     </Fragment>
