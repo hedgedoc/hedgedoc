@@ -690,6 +690,7 @@
 
 "Idle.Js@git+https://github.com/shawnmclean/Idle.js":
   version "0.0.1"
+  uid "2b57cc6e49d177b7ddce0cca00ef5cbe07453541"
   resolved "git+https://github.com/shawnmclean/Idle.js#2b57cc6e49d177b7ddce0cca00ef5cbe07453541"
 
 JSV@^4.0.x:
@@ -2377,6 +2378,7 @@ cls-bluebird@^2.1.0:
 
 "codemirror@git+https://github.com/hedgedoc/CodeMirror.git":
   version "5.65.9"
+  uid "951b3d94bb5ad9ac7b44642adbe595e843390506"
   resolved "git+https://github.com/hedgedoc/CodeMirror.git#951b3d94bb5ad9ac7b44642adbe595e843390506"
 
 collection-visit@^1.0.0:
@@ -3584,6 +3586,7 @@ dezalgo@1.0.3:
 
 "diff-match-patch@git+https://github.com/hackmdio/diff-match-patch.git":
   version "1.1.1"
+  uid c2f8fb9d69aa9490b764850aa86ba442c93ccf78
   resolved "git+https://github.com/hackmdio/diff-match-patch.git#c2f8fb9d69aa9490b764850aa86ba442c93ccf78"
 
 diff@5.0.0:
@@ -6064,6 +6067,7 @@ js-sdsl@^4.1.4:
 
 "js-sequence-diagrams@git+https://github.com/hedgedoc/js-sequence-diagrams.git":
   version "2.0.1"
+  uid bda0e49b6c2754f3c7158b1dfb9ccf26efc24b39
   resolved "git+https://github.com/hedgedoc/js-sequence-diagrams.git#bda0e49b6c2754f3c7158b1dfb9ccf26efc24b39"
   dependencies:
     lodash "4.17.x"
@@ -6595,6 +6599,7 @@ lutim@^1.0.2:
 
 "lz-string@git+https://github.com/hackmdio/lz-string.git":
   version "1.4.4"
+  uid efd1f64676264d6d8871b01f4f375fc6ef4f9022
   resolved "git+https://github.com/hackmdio/lz-string.git#efd1f64676264d6d8871b01f4f375fc6ef4f9022"
 
 make-dir@^1.0.0:
@@ -6897,6 +6902,7 @@ mermaid@9.1.7:
 
 "meta-marked@git+https://github.com/hedgedoc/meta-marked":
   version "0.4.5"
+  uid "0cb5065253ab0f9851baec34dc9edbb40eabf3d0"
   resolved "git+https://github.com/hedgedoc/meta-marked#0cb5065253ab0f9851baec34dc9edbb40eabf3d0"
   dependencies:
     js-yaml "~4.1.0"
@@ -11214,15 +11220,14 @@ util@^0.11.0:
     inherits "2.0.3"
 
 util@^0.12.3, util@^0.12.4:
-  version "0.12.4"
-  resolved "https://registry.yarnpkg.com/util/-/util-0.12.4.tgz#66121a31420df8f01ca0c464be15dfa1d1850253"
-  integrity sha512-bxZ9qtSlGUWSOy9Qa9Xgk11kSslpuZwaxCg4sNIDj6FLucDab2JxnHwyNTCpHMtK1MjoQiWQ6DiUMZYbSrO+Sw==
+  version "0.12.5"
+  resolved "https://registry.yarnpkg.com/util/-/util-0.12.5.tgz#5f17a6059b73db61a875668781a1c2b136bd6fbc"
+  integrity sha512-kZf/K6hEIrWHI6XqOFUiiMa+79wE/D8Q+NCNAWclkyg3b4d2k7s0QGepNjiABc+aR3N1PAyHL7p6UcLY6LmrnA==
   dependencies:
     inherits "^2.0.3"
     is-arguments "^1.0.4"
     is-generator-function "^1.0.7"
     is-typed-array "^1.1.3"
-    safe-buffer "^5.1.2"
     which-typed-array "^1.1.2"
 
 utila@~0.4:
