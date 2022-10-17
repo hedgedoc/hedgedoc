@@ -21,7 +21,7 @@ export function extractNoteIdFromRequestUrl(request: IncomingMessage): string {
   const url = new URL(request.url, 'https://example.org');
   const noteId = url.searchParams.get('noteId');
   if (noteId === null || noteId === '') {
-    throw new Error(`Path doesn't contain parameter noteId: ${request.url}`);
+    throw new Error("Path doesn't contain parameter noteId");
   } else {
     return noteId;
   }
