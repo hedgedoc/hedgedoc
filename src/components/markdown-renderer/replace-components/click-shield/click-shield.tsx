@@ -109,7 +109,7 @@ export const ClickShield: React.FC<ClickShieldProps> = ({
     <span className={containerClassName} {...cypressId(props['data-cypress-id'])}>
       <ShowIf condition={showChildren}>{children}</ShowIf>
       <ShowIf condition={!showChildren}>
-        <span className={`${styles['click-shield']} ratio ratio-16x9`} onClick={doShowChildren}>
+        <span className={`${styles['click-shield']} d-inline-block ratio ratio-16x9`} onClick={doShowChildren}>
           {previewBackground}
           <span className={`${styles['preview-hover']}`}>
             <span className={`${styles['preview-hover-text']}`}>
