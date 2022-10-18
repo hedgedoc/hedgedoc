@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { registerAs } from '@nestjs/config';
+import { ConfigFactoryKeyHost, registerAs } from '@nestjs/config';
+import { ConfigFactory } from '@nestjs/config/dist/interfaces';
 
 import { AuthConfig } from '../auth.config';
 
-export default registerAs(
-  'authConfig',
-  (): AuthConfig => ({
+export function createDefaultMockAuthConfig(): AuthConfig {
+  return {
     session: {
       secret: 'my_secret',
       lifetime: 1209600000,
@@ -45,5 +45,13 @@ export default registerAs(
     ldap: [],
     saml: [],
     oauth2: [],
-  }),
-);
+  };
+}
+
+export function registerAuthConfig(
+  authConfig: AuthConfig,
+): ConfigFactory<AuthConfig> & ConfigFactoryKeyHost<AuthConfig> {
+  return registerAs('authConfig', (): AuthConfig => authConfig);
+}
+
+export default registerAuthConfig(createDefaultMockAuthConfig());
