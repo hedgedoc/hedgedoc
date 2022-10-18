@@ -53,8 +53,8 @@ const mediaSchema = Joi.object({
     s3: Joi.when('use', {
       is: Joi.valid(BackendType.S3),
       then: Joi.object({
-        accessKey: Joi.string().label('HD_MEDIA_BACKEND_S3_ACCESS_KEY'),
-        secretKey: Joi.string().label('HD_MEDIA_BACKEND_S3_SECRET_KEY'),
+        accessKeyId: Joi.string().label('HD_MEDIA_BACKEND_S3_ACCESS_KEY'),
+        secretAccessKey: Joi.string().label('HD_MEDIA_BACKEND_S3_SECRET_KEY'),
         bucket: Joi.string().label('HD_MEDIA_BACKEND_S3_BUCKET'),
         endPoint: Joi.string().label('HD_MEDIA_BACKEND_S3_ENDPOINT'),
       }),
@@ -104,8 +104,8 @@ export default registerAs('mediaConfig', () => {
           uploadPath: process.env.HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH,
         },
         s3: {
-          accessKey: process.env.HD_MEDIA_BACKEND_S3_ACCESS_KEY,
-          secretKey: process.env.HD_MEDIA_BACKEND_S3_SECRET_KEY,
+          accessKeyId: process.env.HD_MEDIA_BACKEND_S3_ACCESS_KEY,
+          secretAccessKey: process.env.HD_MEDIA_BACKEND_S3_SECRET_KEY,
           bucket: process.env.HD_MEDIA_BACKEND_S3_BUCKET,
           endPoint: process.env.HD_MEDIA_BACKEND_S3_ENDPOINT,
         },
