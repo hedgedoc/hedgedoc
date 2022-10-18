@@ -9,6 +9,9 @@ import { linter } from '@codemirror/lint'
 import { useMemo } from 'react'
 import type { Extension } from '@codemirror/state'
 import type { EditorView } from '@codemirror/view'
+import { optionalAppExtensions } from '../../../../extensions/extra-integrations/optional-app-extensions'
+import { FrontmatterLinter } from './frontmatter-linter'
+import { useIsDarkModeActivated } from '../../../../hooks/common/use-is-dark-mode-activated'
 
 /**
  * The Linter interface.
@@ -19,12 +22,22 @@ export interface Linter {
   lint(view: EditorView): Diagnostic[]
 }
 
+const createLinterExtension = () =>
+  linter((view) =>
+    optionalAppExtensions
+      .flatMap((extension) => extension.buildCodeMirrorLinter())
+      .concat(new FrontmatterLinter())
+      .flatMap((aLinter) => aLinter.lint(view))
+  )
+
 /**
- * The hook to create a single codemirror linter from all our linters.
+ * Creates a codemirror linter that runs all markdown extension linters.
+ * Due to a bug in codemirror that breaks the "fix" buttons when switching themes, the extension is recreated if the app switches between dark and light mode.
  *
- * @param linters The {@link Linter linters} to use for the codemirror linter.
- * @return The build codemirror linter
+ * @return The build codemirror linter extension
  */
-export const useLinter = (linters: Linter[]): Extension => {
-  return useMemo(() => linter((view) => linters.flatMap((aLinter) => aLinter.lint(view))), [linters])
+export const useLinter = (): Extension => {
+  const darkModeActivated = useIsDarkModeActivated()
+
+  return useMemo(() => (darkModeActivated ? createLinterExtension() : createLinterExtension()), [darkModeActivated])
 }

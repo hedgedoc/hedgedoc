@@ -38,10 +38,9 @@ import { useIsConnectionSynced } from './hooks/yjs/use-is-connection-synced'
 import { useMarkdownContentYText } from './hooks/yjs/use-markdown-content-y-text'
 import { lintGutter } from '@codemirror/lint'
 import { useLinter } from './linter/linter'
-import { FrontmatterLinter } from './linter/frontmatter-linter'
 import { useOnNoteDeleted } from './hooks/yjs/use-on-note-deleted'
 import { findLanguageByCodeBlockName } from '../../markdown-renderer/extensions/base/code-block-markdown-extension/find-language-by-code-block-name'
-import { optionalAppExtensions } from '../../../extensions/extra-integrations/optional-app-extensions'
+import { useIsDarkModeActivated } from '../../../hooks/common/use-is-dark-mode-activated'
 
 /**
  * Renders the text editor pane of the editor.
@@ -86,13 +85,7 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
   const [firstEditorUpdateExtension, firstUpdateHappened] = useOnFirstEditorUpdateExtension()
   useInsertNoteContentIntoYTextInMockModeEffect(firstUpdateHappened, websocketConnection)
   const spellCheck = useApplicationState((state) => state.editorConfig.spellCheck)
-
-  const markdownExtensionsLinters = useMemo(() => {
-    return optionalAppExtensions
-      .flatMap((extension) => extension.buildCodeMirrorLinter())
-      .concat(new FrontmatterLinter())
-  }, [])
-  const linter = useLinter(markdownExtensionsLinters)
+  const linter = useLinter()
 
   const extensions = useMemo(
     () => [
@@ -135,6 +128,8 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
 
   const { t } = useTranslation()
 
+  const darkModeActivated = useIsDarkModeActivated()
+
   return (
     <div
       className={`d-flex flex-column h-100 position-relative`}
@@ -154,7 +149,7 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
         maxWidth={'100%'}
         basicSetup={true}
         className={codeMirrorClassName}
-        theme={oneDark}
+        theme={darkModeActivated ? oneDark : undefined}
       />
       <StatusBar />
     </div>

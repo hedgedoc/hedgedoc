@@ -5,7 +5,6 @@
  */
 
 import React from 'react'
-import styles from './status-bar.module.scss'
 import { RemainingCharactersInfo } from './remaining-characters-info'
 import { NumberOfLinesInDocumentInfo } from './number-of-lines-in-document-info'
 import { CursorPositionInfo } from './cursor-position-info'
@@ -18,7 +17,7 @@ import { SelectedLines } from './selected-lines'
  */
 export const StatusBar: React.FC = () => {
   return (
-    <div className={`d-flex flex-row ${styles['status-bar']} px-2`}>
+    <div className={`d-flex flex-row border-secondary border-top small bg-light px-2`}>
       <div>
         <CursorPositionInfo />
         <SelectedCharacters />
