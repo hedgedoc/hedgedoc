@@ -3,14 +3,28 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { registerAs } from '@nestjs/config';
+import { ConfigFactoryKeyHost, registerAs } from '@nestjs/config';
+import { ConfigFactory } from '@nestjs/config/dist/interfaces';
 
 import { ExternalServicesConfig } from '../external-services.config';
 
-export default registerAs(
-  'externalServicesConfig',
-  (): ExternalServicesConfig => ({
+export function createDefaultMockExternalServicesConfig(): ExternalServicesConfig {
+  return {
     plantUmlServer: 'plantuml.example.com',
     imageProxy: 'imageProxy.example.com',
-  }),
+  };
+}
+
+export function registerExternalServiceConfig(
+  externalServicesConfig: ExternalServicesConfig,
+): ConfigFactory<ExternalServicesConfig> &
+  ConfigFactoryKeyHost<ExternalServicesConfig> {
+  return registerAs(
+    'externalServicesConfig',
+    (): ExternalServicesConfig => externalServicesConfig,
+  );
+}
+
+export default registerExternalServiceConfig(
+  createDefaultMockExternalServicesConfig(),
 );

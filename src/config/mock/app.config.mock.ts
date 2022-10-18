@@ -3,18 +3,26 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { registerAs } from '@nestjs/config';
+import { ConfigFactoryKeyHost, registerAs } from '@nestjs/config';
+import { ConfigFactory } from '@nestjs/config/dist/interfaces';
 
 import { AppConfig } from '../app.config';
 import { Loglevel } from '../loglevel.enum';
 
-export default registerAs(
-  'appConfig',
-  (): AppConfig => ({
+export function createDefaultMockAppConfig(): AppConfig {
+  return {
     domain: 'md.example.com',
     rendererBaseUrl: 'md-renderer.example.com',
     port: 3000,
     loglevel: Loglevel.ERROR,
     persistInterval: 10,
-  }),
-);
+  };
+}
+
+export function registerAppConfig(
+  appConfig: AppConfig,
+): ConfigFactory<AppConfig> & ConfigFactoryKeyHost<AppConfig> {
+  return registerAs('appConfig', (): AppConfig => appConfig);
+}
+
+export default registerAppConfig(createDefaultMockAppConfig());

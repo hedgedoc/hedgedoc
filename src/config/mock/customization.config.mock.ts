@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { registerAs } from '@nestjs/config';
+import { ConfigFactoryKeyHost, registerAs } from '@nestjs/config';
+import { ConfigFactory } from '@nestjs/config/dist/interfaces';
 
 import { CustomizationConfig } from '../customization.config';
 
-export default registerAs(
-  'customizationConfig',
-  (): CustomizationConfig => ({
+export function createDefaultMockCustomizationConfig(): CustomizationConfig {
+  return {
     branding: {
       customName: 'ACME Corp',
       customLogo: '',
@@ -19,5 +19,19 @@ export default registerAs(
       termsOfUse: '/test/termsOfUse',
       imprint: '/test/imprint',
     },
-  }),
+  };
+}
+
+export function registerCustomizationConfig(
+  customizationConfig: CustomizationConfig,
+): ConfigFactory<CustomizationConfig> &
+  ConfigFactoryKeyHost<CustomizationConfig> {
+  return registerAs(
+    'customizationConfig',
+    (): CustomizationConfig => customizationConfig,
+  );
+}
+
+export default registerCustomizationConfig(
+  createDefaultMockCustomizationConfig(),
 );

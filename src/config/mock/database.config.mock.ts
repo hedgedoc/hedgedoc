@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { registerAs } from '@nestjs/config';
+import { ConfigFactoryKeyHost, registerAs } from '@nestjs/config';
+import { ConfigFactory } from '@nestjs/config/dist/interfaces';
 
 import { DatabaseType } from '../database-type.enum';
 import { DatabaseConfig } from '../database.config';
 
-export default registerAs(
-  'databaseConfig',
-  (): DatabaseConfig => ({
+export function createDefaultMockDatabaseConfig(): DatabaseConfig {
+  return {
     type: (process.env.HEDGEDOC_TEST_DB_TYPE ||
       DatabaseType.SQLITE) as DatabaseType,
     database: 'hedgedoc',
@@ -18,5 +18,13 @@ export default registerAs(
     host: 'localhost',
     port: 0,
     username: 'hedgedoc',
-  }),
-);
+  };
+}
+
+export function registerDatabaseConfig(
+  databaseConfig: DatabaseConfig,
+): ConfigFactory<DatabaseConfig> & ConfigFactoryKeyHost<DatabaseConfig> {
+  return registerAs('databaseConfig', (): DatabaseConfig => databaseConfig);
+}
+
+export default registerDatabaseConfig(createDefaultMockDatabaseConfig());
