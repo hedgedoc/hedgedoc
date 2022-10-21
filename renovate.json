@@ -93,13 +93,24 @@
   "regexManagers": [
     {
       "fileMatch": [
-        "netlify-cli.sh$"
+        ".github/workflows/deploy-main.yml$",
+        ".github/workflows/deploy-pr.yml$"
       ],
       "matchStrings": [
         "NETLIFY_VERSION=(?<currentValue>.*?)\\n"
       ],
       "datasourceTemplate" : "npm",
       "depNameTemplate" : "netlify-cli"
+    },
+    {
+      "fileMatch": [
+        ".github/workflows/deploy-main.yml$",
+        ".github/workflows/deploy-pr.yml$"
+      ],
+      "matchStrings": [
+        "NODE_VERSION=(?<currentValue>.*?)\\n"
+      ],
+      "datasourceTemplate" : "node"
     }
   ]
 }

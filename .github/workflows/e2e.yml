@@ -7,8 +7,14 @@ name: e2e
 on:
   push:
     branches: [ main ]
-  pull_request:
+  pull_request_target:
     branches: [ main ]
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: 18
 
 jobs:
   build-frontend:
@@ -36,15 +42,15 @@ jobs:
         if: steps.build-cache.outputs.cache-hit != 'true'
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-18-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-18
+            ${{ runner.os }}-yarn-${{ env.NODE_VERSION }}
 
       - name: Set up NodeJS
         if: steps.build-cache.outputs.cache-hit != 'true'
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Install dependencies
         if: steps.build-cache.outputs.cache-hit != 'true'
@@ -93,9 +99,15 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-16-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-16
+            ${{ runner.os }}-yarn-${{ env.NODE_VERSION }}
+
+      - name: Set up NodeJS
+        if: steps.build-cache.outputs.cache-hit != 'true'
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Install dependencies
         run: yarn install --immutable

@@ -5,13 +5,30 @@
 name: deploy
 
 on:
-  pull_request:
+  pull_request_target:
+    branches: [ main ]
+    types:
+      - labeled
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+permissions:
+  contents: read
+  deployments: write
+
+env:
+  NETLIFY_VERSION: 12.0.11
+  NODE_VERSION: 18
 
 jobs:
   deploy:
-    if: github.event.pull_request.draft == false
+    if: github.event.pull_request.draft == false || contains( github.event.pull_request.labels.*.name, 'FORCE DEPLOY').
     runs-on: ubuntu-latest
     name: Deploys to netlify
+    env:
+      DEPLOY_URL: "https://${{ github.event.number }}--hedgedoc-ui-test.netlify.app/"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -25,17 +42,26 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-18-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-18
+            ${{ runner.os }}-yarn-${{ env.NODE_VERSION }}
 
       - name: Set up NodeJS
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: ${{ env.NODE_VERSION }}
 
-      - name: Patch files
-        run: bash netlify/patch-files.sh "https://${{ github.event.number }}--hedgedoc-ui-test.netlify.app/"
+      - name: Patch intro.md to include netlify banner.
+        run: cp netlify/intro.md public/public/intro.md
+
+      - name: Patch motd.md to include privacy policy.
+        run: cp netlify/motd.md public/public/motd.md
+
+      - name: Patch version.json to include git hash
+        run: jq ".version = \"0.0.0+${GITHUB_SHA:0:8}\"" src/version.json > src/_version.json && mv src/_version.json src/version.json
+
+      - name: Patch base URL
+        run: echo "HD_EDITOR_BASE_URL=\"${{ env.DEPLOY_URL }}\"" >> .env.production
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -56,11 +82,13 @@ jobs:
           override: true
           ref: ${{ github.head_ref }}
 
-      - name: Run netlify CLI deployment
+      - name: Install netlify CLI
+        run: "npm install -g netlify-cli@${{ env.NETLIFY_VERSION }}"
+
+      - name: Run netlify CLI
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: bash netlify/deploy-pr.sh "${{ github.event.number }}" "${{ github.event.pull_request.title }}"
-        id: netlify-result
+        run: "netlify deploy --build --context deploy-preview --alias \"${{ github.event.number }}\" --json --message \"PR #${{ github.event.number }}\""
 
       - name: Mark GitHub deployment as finished
         if: always()
@@ -68,9 +96,8 @@ jobs:
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
-          env_url: ${{ steps.netlify-result.outputs.url }}
+          env_url: ${{ env.DEPLOY_URL }}
           env: ${{ steps.github-deployment.outputs.env }}
-          logs: ${{ steps.netlify-result.outputs.logs }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.github-deployment.outputs.deployment_id }}
           override: true

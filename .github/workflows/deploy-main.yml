@@ -8,6 +8,10 @@ on:
   push:
     branches: [ main ]
 
+env:
+  NETLIFY_VERSION: 12.0.11
+  NODE_VERSION: 18
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -25,17 +29,26 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-18-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-18
+            ${{ runner.os }}-yarn-${{ env.NODE_VERSION }}
 
       - name: Set up NodeJS
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: ${{ env.NODE_VERSION }}
 
-      - name: Patch files
-        run: bash netlify/patch-files.sh "https://hedgedoc.dev/"
+      - name: Patch intro.md to include netlify banner.
+        run: cp netlify/intro.md public/public/intro.md
+
+      - name: Patch motd.md to include privacy policy.
+        run: cp netlify/motd.md public/public/motd.md
+
+      - name: Patch version.json to include git hash
+        run: jq ".version = \"0.0.0+${GITHUB_SHA:0:8}\"" src/version.json > src/_version.json && mv src/_version.json src/version.json
+
+      - name: Patch base URL
+        run: echo "HD_EDITOR_BASE_URL=\"https://hedgedoc.dev/\"" >> .env.production
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -46,7 +59,10 @@ jobs:
       - name: Remove Next.js cache to avoid it being deployed
         run: rm -r .next/cache
 
+      - name: Install netlify CLI
+        run: "npm install -g netlify-cli@${{ env.NETLIFY_VERSION }}"
+
       - name: Run netlify CLI deployment
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: bash netlify/deploy-main.sh "${{ github.event.head_commit.id }}" "${{ github.event.head_commit.message }}"
+        run: "netlify deploy --build --prod --message \"${{ github.event.head_commit.id }}: ${{ github.event.head_commit.message }}\""
