@@ -2049,7 +2049,7 @@ __metadata:
     ws: 8.9.0
     y-codemirror.next: 0.3.2
     y-protocols: 1.0.5
-    yjs: 13.5.41
+    yjs: 13.5.42
   languageName: unknown
   linkType: soft
 
@@ -13302,7 +13302,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs@npm:13.5.41, yjs@npm:^13.0.0":
+"yjs@npm:13.5.42":
+  version: 13.5.42
+  resolution: "yjs@npm:13.5.42"
+  dependencies:
+    lib0: ^0.2.49
+  checksum: 0952a6bb51e6a5d4d1d8ed8841be8524e22adeaa89ead62f14c5b30649dd4bd90832519c2bc37cfb3ffa0c2e989d1278e7d344117b51905841f0c80fc29728e4
+  languageName: node
+  linkType: hard
+
+"yjs@npm:^13.0.0":
   version: 13.5.41
   resolution: "yjs@npm:13.5.41"
   dependencies:
