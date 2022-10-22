@@ -13,8 +13,8 @@ export interface UiNotificationButton {
 }
 
 export interface DispatchOptions {
-  titleI18nOptions: TOptions | string
-  contentI18nOptions: TOptions | string
+  titleI18nOptions: TOptions
+  contentI18nOptions: TOptions
   durationInSecond: number
   icon?: IconName
   buttons: UiNotificationButton[]
