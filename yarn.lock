@@ -2000,7 +2000,7 @@ __metadata:
     jest: 29.2.1
     jest-environment-jsdom: 29.2.1
     js-yaml: 4.1.0
-    katex: 0.16.2
+    katex: 0.16.3
     luxon: 3.0.4
     markdown-it: 13.0.1
     markdown-it-abbr: 1.0.4
@@ -9202,14 +9202,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"katex@npm:0.16.2":
-  version: 0.16.2
-  resolution: "katex@npm:0.16.2"
+"katex@npm:0.16.3":
+  version: 0.16.3
+  resolution: "katex@npm:0.16.3"
   dependencies:
     commander: ^8.0.0
   bin:
     katex: cli.js
-  checksum: c0031c2e1287bb13102d733dcc3dada50752cf0d45b48a536c09937633ce8d6b438d18cbf382e64d4d237b957d8b3a8bd6414845720c7a8e1079c352b4ebf487
+  checksum: 3ee588b6420da2b8d087c524502163f52340c4b0bf9ccddb2603d90d66eb637d088696ddf97316eb88d3bb41340784c4270e1824dcf7311110ed4cb2bc5458db
   languageName: node
   linkType: hard
 
