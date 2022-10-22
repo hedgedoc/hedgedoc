@@ -1943,10 +1943,10 @@ __metadata:
     "@types/d3-graphviz": 2.6.7
     "@types/diff": 5.0.2
     "@types/dompurify": 2.3.4
-    "@types/jest": 29.1.2
+    "@types/jest": 29.2.0
     "@types/js-yaml": 4.0.5
     "@types/katex": 0.14.0
-    "@types/luxon": 3.0.1
+    "@types/luxon": 3.0.2
     "@types/markdown-it": 12.2.3
     "@types/markdown-it-container": 2.0.5
     "@types/markdown-it-plantuml": 1.4.1
@@ -3346,13 +3346,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:*, @types/jest@npm:29.1.2":
+"@types/jest@npm:*":
   version: 29.1.2
   resolution: "@types/jest@npm:29.1.2"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
   checksum: a6761b5ac132c641740886f9c0714607255ebffb6add5989f51ea9e392fc3c5cd474e7590f12b003d5b67ce177dfbc8d3d60d0baa335c48c50deeee6b755a473
+  languageName: node
+  linkType: hard
+
+"@types/jest@npm:29.2.0":
+  version: 29.2.0
+  resolution: "@types/jest@npm:29.2.0"
+  dependencies:
+    expect: ^29.0.0
+    pretty-format: ^29.0.0
+  checksum: 6779e63d8d7507b116a61b2935a200e48531849fc1ac74090212759fe17716777ca6d2c3a8d927a563e9cfa474ae91d40b1688376ae80e3a08974b3c9e9691e1
   languageName: node
   linkType: hard
 
@@ -3409,10 +3419,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/luxon@npm:3.0.1":
-  version: 3.0.1
-  resolution: "@types/luxon@npm:3.0.1"
-  checksum: a81444f9b474ea9b3063ab4cc68b917a2634e38b4e229f86c78c35023a32bf5e8d1044d7c229c011291662c976cb6c4cf109dc3d2077c571790a31779a554178
+"@types/luxon@npm:3.0.2":
+  version: 3.0.2
+  resolution: "@types/luxon@npm:3.0.2"
+  checksum: e47e199c5d70ce16e4eff54b21fdf385065f1134774109b40c36dba8b5fd29a732b763125e93863d6070dd22ba6a3f18dbdd368cf3748aae9f24bb335c5c210d
   languageName: node
   linkType: hard
 
