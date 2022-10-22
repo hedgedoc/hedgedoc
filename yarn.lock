@@ -2031,7 +2031,7 @@ __metadata:
     react-test-renderer: 18.2.0
     react-use: 17.4.0
     redux: 4.2.0
-    reveal.js: 4.3.1
+    reveal.js: 4.4.0
     sanitize-filename: 1.6.3
     sass: 1.55.0
     sharp: 0.31.1
@@ -11003,10 +11003,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reveal.js@npm:4.3.1":
-  version: 4.3.1
-  resolution: "reveal.js@npm:4.3.1"
-  checksum: 351bff23674c85683a40bd67d0e69484726b1856e4df75a64bf5b509a80e8562185ddaac3e11d7542dcacb2b6e031a1a94a35f1081b04af920f8c4b7612a82df
+"reveal.js@npm:4.4.0":
+  version: 4.4.0
+  resolution: "reveal.js@npm:4.4.0"
+  checksum: e3918968e919a53d7a572b175c81ba53133617f60ab149085e57c93a441ff5195434a187b127f0e8c29a0a073fe49c4b9cbec92245ad7d62ae65f0fb80de6ede
   languageName: node
   linkType: hard
 
