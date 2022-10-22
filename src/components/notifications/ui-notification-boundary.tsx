@@ -23,7 +23,7 @@ interface UiNotificationContext {
     dispatchOptions: Partial<DispatchOptions>
   ) => void
 
-  showErrorNotification: (messageI18nKey: string, messageI18nOptions?: TOptions | string) => (error: Error) => void
+  showErrorNotification: (messageI18nKey: string, messageI18nOptions?: TOptions) => (error: Error) => void
 
   dismissNotification: (notificationUuid: string) => void
 }
@@ -76,7 +76,7 @@ export const UiNotificationBoundary: React.FC<PropsWithChildren> = ({ children }
   )
 
   const showErrorNotification = useCallback(
-    (messageI18nKey: string, messageI18nOptions?: TOptions | string) =>
+    (messageI18nKey: string, messageI18nOptions?: TOptions) =>
       (error: Error): void => {
         log.error(t(messageI18nKey, messageI18nOptions), error)
         void dispatchUiNotification('common.errorOccurred', messageI18nKey, {
