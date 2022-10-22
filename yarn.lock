@@ -2597,10 +2597,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zxcvbn-ts/core@npm:2.0.5":
-  version: 2.0.5
-  resolution: "@zxcvbn-ts/core@npm:2.0.5"
-  checksum: b5aa4aef6c3b6aaa87228bd7460d5a9d7bc9db6ea40fb65d5f91eeeb9364a111390abc8569922df970c78cc04b1d04d56c7e2567a96c4ead8ac58cf231cb00bc
+"@zxcvbn-ts/core@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@zxcvbn-ts/core@npm:2.1.0"
+  checksum: b5178b0086cbfcf086a5df535e382034418166f6e45322cf5d8b07a89ffadc69db16e0ab9900a3edac2dba752f2ef55e831cf82f4d2e11d90143c4396fadba4e
   languageName: node
   linkType: hard
 
@@ -5624,7 +5624,7 @@ __metadata:
     "@types/ws": 8.5.3
     "@typescript-eslint/eslint-plugin": 5.40.1
     "@typescript-eslint/parser": 5.40.1
-    "@zxcvbn-ts/core": 2.0.5
+    "@zxcvbn-ts/core": 2.1.0
     "@zxcvbn-ts/language-common": 2.0.1
     "@zxcvbn-ts/language-en": 2.1.0
     base32-encode: 1.2.0
