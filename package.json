@@ -43,7 +43,7 @@
     "@codemirror/lint": "6.0.0",
     "@codemirror/state": "6.1.2",
     "@codemirror/theme-one-dark": "6.1.0",
-    "@codemirror/view": "6.3.1",
+    "@codemirror/view": "6.4.0",
     "@fontsource/source-sans-pro": "4.5.11",
     "@hedgedoc/html-to-react": "1.4.5",
     "@hedgedoc/markdown-it-image-size": "1.0.3",
@@ -178,7 +178,7 @@
   "resolutions": {
     "domhandler": "5.0.3",
     "@codemirror/state": "6.1.2",
-    "@codemirror/view": "6.3.1",
+    "@codemirror/view": "6.4.0",
     "@hpcc-js/wasm": "1.16.5"
   }
 }
