@@ -5,6 +5,9 @@
  */
 import request from 'supertest';
 
+import { GuestAccess } from '../../src/config/guest_access.enum';
+import { createDefaultMockNoteConfig } from '../../src/config/mock/note.config.mock';
+import { NoteConfig } from '../../src/config/note.config';
 import { LoginDto } from '../../src/identity/local/login.dto';
 import {
   password1,
@@ -16,9 +19,14 @@ import {
 describe('Groups', () => {
   let testSetup: TestSetup;
   let testuser1Session: request.SuperAgentTest;
+  const noteConfigMock: NoteConfig = createDefaultMockNoteConfig();
 
   beforeEach(async () => {
-    testSetup = await TestSetupBuilder.create().withUsers().build();
+    testSetup = await TestSetupBuilder.create({
+      noteConfigMock: noteConfigMock,
+    })
+      .withUsers()
+      .build();
     await testSetup.app.init();
 
     // create a test group
@@ -57,10 +65,15 @@ describe('Groups', () => {
     expect(response.status).toBe(404);
   });
 
-  test('API requires authentication', async () => {
-    const response = await request(testSetup.app.getHttpServer()).get(
-      '/api/private/groups/testgroup1',
-    );
-    expect(response.status).toBe(401);
+  describe('API requires authentication', () => {
+    beforeAll(() => {
+      noteConfigMock.guestAccess = GuestAccess.DENY;
+    });
+    test('get group', async () => {
+      const response = await request(testSetup.app.getHttpServer()).get(
+        '/api/private/groups/testgroup1',
+      );
+      expect(response.status).toBe(401);
+    });
   });
 });
