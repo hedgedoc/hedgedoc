@@ -22,14 +22,39 @@ import { TokenAuthGuard } from '../src/auth/token.strategy';
 import { AuthorsModule } from '../src/authors/authors.module';
 import { AppConfig } from '../src/config/app.config';
 import { AuthConfig } from '../src/config/auth.config';
+import { CustomizationConfig } from '../src/config/customization.config';
+import { DatabaseConfig } from '../src/config/database.config';
+import { ExternalServicesConfig } from '../src/config/external-services.config';
 import { MediaConfig } from '../src/config/media.config';
-import appConfigMock from '../src/config/mock/app.config.mock';
-import authConfigMock from '../src/config/mock/auth.config.mock';
-import customizationConfigMock from '../src/config/mock/customization.config.mock';
-import databaseConfigMock from '../src/config/mock/database.config.mock';
-import externalServicesConfigMock from '../src/config/mock/external-services.config.mock';
-import mediaConfigMock from '../src/config/mock/media.config.mock';
-import noteConfigMock from '../src/config/mock/note.config.mock';
+import {
+  createDefaultMockAppConfig,
+  registerAppConfig,
+} from '../src/config/mock/app.config.mock';
+import {
+  createDefaultMockAuthConfig,
+  registerAuthConfig,
+} from '../src/config/mock/auth.config.mock';
+import {
+  createDefaultMockCustomizationConfig,
+  registerCustomizationConfig,
+} from '../src/config/mock/customization.config.mock';
+import {
+  createDefaultMockDatabaseConfig,
+  registerDatabaseConfig,
+} from '../src/config/mock/database.config.mock';
+import {
+  createDefaultMockExternalServicesConfig,
+  registerExternalServiceConfig,
+} from '../src/config/mock/external-services.config.mock';
+import {
+  createDefaultMockMediaConfig,
+  registerMediaConfig,
+} from '../src/config/mock/media.config.mock';
+import {
+  createDefaultMockNoteConfig,
+  registerNoteConfig,
+} from '../src/config/mock/note.config.mock';
+import { NoteConfig } from '../src/config/note.config';
 import { ErrorExceptionMapping } from '../src/errors/error-mapping';
 import { eventModuleConfig } from '../src/events';
 import { FrontendConfigModule } from '../src/frontend-config/frontend-config.module';
@@ -57,6 +82,16 @@ import { SessionService } from '../src/session/session.service';
 import { User } from '../src/users/user.entity';
 import { UsersModule } from '../src/users/users.module';
 import { UsersService } from '../src/users/users.service';
+
+interface CreateTestSetupParameters {
+  appConfigMock?: AppConfig;
+  authConfigMock?: AuthConfig;
+  customizationConfigMock?: CustomizationConfig;
+  databaseConfigMock?: DatabaseConfig;
+  externalServicesConfigMock?: ExternalServicesConfig;
+  mediaConfigMock?: MediaConfig;
+  noteConfigMock?: NoteConfig;
+}
 
 export class TestSetup {
   moduleRef: TestingModule;
@@ -187,7 +222,7 @@ export class TestSetupBuilder {
   /**
    * Creates a new instance of TestSetupBuilder
    */
-  public static create(): TestSetupBuilder {
+  public static create(mocks?: CreateTestSetupParameters): TestSetupBuilder {
     const testSetupBuilder = new TestSetupBuilder();
     testSetupBuilder.testId =
       'hedgedoc_test_' + Math.random().toString(36).substring(2, 15);
@@ -210,13 +245,29 @@ export class TestSetupBuilder {
         ConfigModule.forRoot({
           isGlobal: true,
           load: [
-            appConfigMock,
-            databaseConfigMock,
-            noteConfigMock,
-            authConfigMock,
-            mediaConfigMock,
-            customizationConfigMock,
-            externalServicesConfigMock,
+            registerAppConfig(
+              mocks?.appConfigMock ?? createDefaultMockAppConfig(),
+            ),
+            registerAuthConfig(
+              mocks?.authConfigMock ?? createDefaultMockAuthConfig(),
+            ),
+            registerCustomizationConfig(
+              mocks?.customizationConfigMock ??
+                createDefaultMockCustomizationConfig(),
+            ),
+            registerDatabaseConfig(
+              mocks?.databaseConfigMock ?? createDefaultMockDatabaseConfig(),
+            ),
+            registerExternalServiceConfig(
+              mocks?.externalServicesConfigMock ??
+                createDefaultMockExternalServicesConfig(),
+            ),
+            registerMediaConfig(
+              mocks?.mediaConfigMock ?? createDefaultMockMediaConfig(),
+            ),
+            registerNoteConfig(
+              mocks?.noteConfigMock ?? createDefaultMockNoteConfig(),
+            ),
           ],
         }),
         NotesModule,
