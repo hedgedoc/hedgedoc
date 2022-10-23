@@ -1894,10 +1894,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hedgedoc/markdown-it-image-size@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@hedgedoc/markdown-it-image-size@npm:1.0.3"
-  checksum: cf5c236b707239ceaff1d2c3d61ec5bbc20f5e7cd43a7954be9478079ef8c5021137348c133656aa16775277ed5525be72a1d9225eef88621bb7dd8ad1a0d163
+"@hedgedoc/markdown-it-image-size@npm:2.0.2":
+  version: 2.0.2
+  resolution: "@hedgedoc/markdown-it-image-size@npm:2.0.2"
+  peerDependencies:
+    markdown-it: ">=12"
+  checksum: 9b27c453da07256ce884040e9ded7a18d400eb318f370d97b563efba28d015e8223561d90ff6670730451924a625f2ecaa1d5a20087f3c7fa728f646dc6fce5b
   languageName: node
   linkType: hard
 
@@ -1925,7 +1927,7 @@ __metadata:
     "@codemirror/view": 6.4.0
     "@fontsource/source-sans-pro": 4.5.11
     "@hedgedoc/html-to-react": 1.4.5
-    "@hedgedoc/markdown-it-image-size": 1.0.3
+    "@hedgedoc/markdown-it-image-size": 2.0.2
     "@hedgedoc/markdown-it-task-lists": 1.0.5
     "@hedgedoc/realtime": 0.3.0
     "@hpcc-js/wasm": 1.16.5
