@@ -50,7 +50,7 @@
     "@hedgedoc/markdown-it-task-lists": "2.0.1",
     "@hedgedoc/realtime": "0.3.0",
     "@hpcc-js/wasm": "1.17.1",
-    "@mrdrogdrog/optional": "0.2.0",
+    "@mrdrogdrog/optional": "1.0.0",
     "@react-hook/resize-observer": "1.2.6",
     "@redux-devtools/core": "3.13.1",
     "@reduxjs/toolkit": "1.8.6",
