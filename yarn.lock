@@ -1903,12 +1903,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hedgedoc/markdown-it-task-lists@npm:1.0.5":
-  version: 1.0.5
-  resolution: "@hedgedoc/markdown-it-task-lists@npm:1.0.5"
+"@hedgedoc/markdown-it-task-lists@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@hedgedoc/markdown-it-task-lists@npm:2.0.1"
   peerDependencies:
     markdown-it: ">=12"
-  checksum: 550908ea342dafbd68d46f3619f5dbbf9f29d8ea8dee482b47e547c84a3891aece3d75e70090c157029c8b864496f54f45eb9f21b5ddf03fefdeb39ba17c32dd
+  checksum: 356fbca24538d99100317faf57d13d5adab4c13906374aaf3d2c3e505aa22d5efa817cf1058081d209e3423aaa8b4f811320d622717f640542e0182e0c98b624
   languageName: node
   linkType: hard
 
@@ -1928,7 +1928,7 @@ __metadata:
     "@fontsource/source-sans-pro": 4.5.11
     "@hedgedoc/html-to-react": 1.4.5
     "@hedgedoc/markdown-it-image-size": 2.0.2
-    "@hedgedoc/markdown-it-task-lists": 1.0.5
+    "@hedgedoc/markdown-it-task-lists": 2.0.1
     "@hedgedoc/realtime": 0.3.0
     "@hpcc-js/wasm": 1.16.5
     "@mrdrogdrog/optional": 0.2.0
@@ -2018,7 +2018,6 @@ __metadata:
     markdown-it-regex: 0.2.0
     markdown-it-sub: 1.0.0
     markdown-it-sup: 1.0.0
-    markdown-it-task-lists: 2.1.1
     markdown-it-toc-done-right: 4.2.0
     mermaid: 9.1.7
     next: 12.3.1
@@ -9576,13 +9575,6 @@ __metadata:
   version: 1.0.0
   resolution: "markdown-it-sup@npm:1.0.0"
   checksum: 9e593acb8c79dbb917645affde3c46ecb50baa59c740ffe4ecc7bfa470b5b746338f12c65219d6c4112f9f2b01b68cbd151aaabbac878f34e07c7120e5959324
-  languageName: node
-  linkType: hard
-
-"markdown-it-task-lists@npm:2.1.1":
-  version: 2.1.1
-  resolution: "markdown-it-task-lists@npm:2.1.1"
-  checksum: 8fc634bfc28a47ed582ca1f68af306f86289bdca0ca654de835bc28ac2c0a286894285fab34af21ec3a87e86fd19236bb0562b2dcb4d2fd34a9c992e3d3f41c2
   languageName: node
   linkType: hard
 
