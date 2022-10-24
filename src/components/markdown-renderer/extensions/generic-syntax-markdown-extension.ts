@@ -13,7 +13,7 @@ import superscript from 'markdown-it-sup'
 import inserted from 'markdown-it-ins'
 import marked from 'markdown-it-mark'
 import footnote from 'markdown-it-footnote'
-import { imageSize } from '@hedgedoc/markdown-it-image-size'
+import { imageSize } from '@hedgedoc/markdown-it-plugins'
 
 /**
  * Adds some common markdown syntaxes to the markdown rendering.

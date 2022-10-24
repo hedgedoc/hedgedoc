@@ -6,16 +6,16 @@
 
 import type MarkdownIt from 'markdown-it'
 import { TaskListReplacer } from './task-list-replacer'
-import markdownItTaskLists from '@hedgedoc/markdown-it-task-lists'
 import type { ComponentReplacer } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
+import { tasksLists } from '@hedgedoc/markdown-it-plugins'
 
 /**
  * Adds support for interactive checkbox lists to the markdown rendering using the github checklist syntax.
  */
 export class TaskListMarkdownExtension extends MarkdownRendererExtension {
   public configureMarkdownIt(markdownIt: MarkdownIt): void {
-    markdownItTaskLists(markdownIt, {
+    tasksLists(markdownIt, {
       enabled: true,
       label: true,
       lineNumber: true
