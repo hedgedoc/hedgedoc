@@ -1917,7 +1917,7 @@ __metadata:
     "@hedgedoc/html-to-react": 1.4.5
     "@hedgedoc/markdown-it-plugins": 1.0.0
     "@hedgedoc/realtime": 0.3.0
-    "@hpcc-js/wasm": 1.17.1
+    "@hpcc-js/wasm": 1.18.0
     "@mrdrogdrog/optional": 1.0.0
     "@next/bundle-analyzer": 12.3.1
     "@react-hook/resize-observer": 1.2.6
@@ -2055,14 +2055,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hpcc-js/wasm@npm:1.17.1":
-  version: 1.17.1
-  resolution: "@hpcc-js/wasm@npm:1.17.1"
+"@hpcc-js/wasm@npm:1.18.0":
+  version: 1.18.0
+  resolution: "@hpcc-js/wasm@npm:1.18.0"
   dependencies:
     yargs: 17.6.0
   bin:
     dot-wasm: bin/cli.js
-  checksum: 8b0a1baf276d20a92f30c7df3ddc419f4b39cc9d3691932b38dee9f8b4ef0695ddc433629a0751bace83b59cf2a744b93d4d05b43cbc779d157018a64d742fa9
+  checksum: 59f49d8b4eee21252ddda78df37594f27a3d93302aa7df4b4e505a3b48da343d12ee7b5de932d3e8bff1b865114aef49c85ee5be8eeeae238033dc8d033fff3e
   languageName: node
   linkType: hard
 
