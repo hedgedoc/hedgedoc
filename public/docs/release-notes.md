@@ -1,13 +1,13 @@
 # Release Notes
-## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
+## <i class="fa fa-tag"></i> 1.9.5 <i class="fa fa-calendar-o"></i> 2022-10-30
 
 ### Enhancements
 - Add dark mode toggle in mobile view
-- Replace embedding shortcode regexes with more specific ones to safeguard against xss attacks
+- Replace embedding shortcode regexes with more specific ones to safeguard against XSS attacks
 
 ### Bugfixes
 - Fix a crash when using LDAP authentication with custom search attributes (thanks to [@aboettger-tuhh](https://github.com/aboettger-tuhh) for reporting)
-- Fix crash caused by a long note history when the MySQL database is used
+- Fix a crash caused by a long note history when the MySQL database is used
 - Fix `breaks` option not being respected in the publish-view
 - Fix missing syntax highlighting in the markdown editor
 
