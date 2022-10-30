@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Mock } from 'ts-mockery';
-import { Repository, SelectQueryBuilder } from 'typeorm';
+import { ObjectLiteral, Repository, SelectQueryBuilder } from 'typeorm';
 
 /**
  * Mocks a {@link SelectQueryBuilder} that returns a given entity.
@@ -36,7 +36,7 @@ export function mockSelectQueryBuilder<T>(
  * @return The mocked query builder
  * @see mockSelectQueryBuilder
  */
-export function mockSelectQueryBuilderInRepo<T>(
+export function mockSelectQueryBuilderInRepo<T extends ObjectLiteral>(
   repository: Repository<T>,
   returnValue: T | null,
 ): SelectQueryBuilder<T> {
