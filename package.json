@@ -92,7 +92,7 @@
     "@types/express-session": "1.17.5",
     "@types/jest": "29.2.0",
     "@types/mysql": "2.15.21",
-    "@types/node": "18.11.7",
+    "@types/node": "18.11.8",
     "@types/passport-local": "1.0.34",
     "@types/pg": "8.6.5",
     "@types/source-map-support": "0.5.6",
