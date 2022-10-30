@@ -11,6 +11,13 @@
 - Fix `breaks` option not being respected in the publish-view
 - Fix missing syntax highlighting in the markdown editor
 
+### Contributors
+- Bateausurleau (translator)
+- Goncalo (translator)
+- Ívarr Vinter (translator)
+- Oein0219 (translator)
+- [Pol Dellaiera](https://github.com/drupol)
+
 ## <i class="fa fa-tag"></i> 1.9.4 <i class="fa fa-calendar-o"></i> 2022-07-10
 
 **Please note:** This release dropped support for Node 12, which is end-of-life since April 2022.
