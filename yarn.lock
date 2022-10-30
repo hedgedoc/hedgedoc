@@ -38,7 +38,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.18.5":
+"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.19.6":
   version: 7.19.6
   resolution: "@babel/core@npm:7.19.6"
   dependencies:
@@ -1051,7 +1051,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-react-constant-elements@npm:^7.17.12":
+"@babel/plugin-transform-react-constant-elements@npm:^7.18.12":
   version: 7.18.12
   resolution: "@babel/plugin-transform-react-constant-elements@npm:7.18.12"
   dependencies:
@@ -1226,7 +1226,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-env@npm:^7.18.2":
+"@babel/preset-env@npm:^7.19.4":
   version: 7.19.4
   resolution: "@babel/preset-env@npm:7.19.4"
   dependencies:
@@ -1326,7 +1326,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-react@npm:^7.17.12":
+"@babel/preset-react@npm:^7.18.6":
   version: 7.18.6
   resolution: "@babel/preset-react@npm:7.18.6"
   dependencies:
@@ -1342,7 +1342,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-typescript@npm:^7.17.12":
+"@babel/preset-typescript@npm:^7.18.6":
   version: 7.18.6
   resolution: "@babel/preset-typescript@npm:7.18.6"
   dependencies:
@@ -1412,7 +1412,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/types@npm:^7.0.0, @babel/types@npm:^7.18.10, @babel/types@npm:^7.18.4, @babel/types@npm:^7.18.6, @babel/types@npm:^7.18.9, @babel/types@npm:^7.19.0, @babel/types@npm:^7.19.4, @babel/types@npm:^7.3.0, @babel/types@npm:^7.3.3, @babel/types@npm:^7.4.4, @babel/types@npm:^7.8.3":
+"@babel/types@npm:^7.0.0, @babel/types@npm:^7.18.10, @babel/types@npm:^7.18.6, @babel/types@npm:^7.18.9, @babel/types@npm:^7.19.0, @babel/types@npm:^7.19.4, @babel/types@npm:^7.3.0, @babel/types@npm:^7.3.3, @babel/types@npm:^7.4.4, @babel/types@npm:^7.8.3":
   version: 7.19.4
   resolution: "@babel/types@npm:7.19.4"
   dependencies:
@@ -1420,6 +1420,17 @@ __metadata:
     "@babel/helper-validator-identifier": ^7.19.1
     to-fast-properties: ^2.0.0
   checksum: 4032f6407093f80dd4f4764be676f7527d2a5c0381586967cd79683cf8af01cdc16745a381b9cef045f702f0c9b0dffd880d84ee55dad59ba01bd23d5d52a8e0
+  languageName: node
+  linkType: hard
+
+"@babel/types@npm:^7.20.0":
+  version: 7.20.0
+  resolution: "@babel/types@npm:7.20.0"
+  dependencies:
+    "@babel/helper-string-parser": ^7.19.4
+    "@babel/helper-validator-identifier": ^7.19.1
+    to-fast-properties: ^2.0.0
+  checksum: 8729b1114c707a03625cd79e3ae3a28d69b36ddcf804cb0a4599af226e5e9fad71665bdc0e56c43527ecfcabc545d9c797231f5ce718ae1ab52d31a57b6c2024
   languageName: node
   linkType: hard
 
@@ -1923,7 +1934,7 @@ __metadata:
     "@react-hook/resize-observer": 1.2.6
     "@redux-devtools/core": 3.13.1
     "@reduxjs/toolkit": 1.8.6
-    "@svgr/webpack": 6.5.0
+    "@svgr/webpack": 6.5.1
     "@testing-library/cypress": 8.0.3
     "@testing-library/dom": 8.19.0
     "@testing-library/jest-dom": 5.16.5
@@ -2884,16 +2895,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/babel-plugin-add-jsx-attribute@npm:^6.5.0":
-  version: 6.5.0
-  resolution: "@svgr/babel-plugin-add-jsx-attribute@npm:6.5.0"
+"@svgr/babel-plugin-add-jsx-attribute@npm:^6.5.1":
+  version: 6.5.1
+  resolution: "@svgr/babel-plugin-add-jsx-attribute@npm:6.5.1"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: f65ca26905240b685929a7766411618700bda233673cebd74eb9a8da45af8ce8e0536074a178b37762cd23db8868db494e15067e74b2d73e377b2d247895d054
+  checksum: cab83832830a57735329ed68f67c03b57ca21fa037b0134847b0c5c0ef4beca89956d7dacfbf7b2a10fd901e7009e877512086db2ee918b8c69aee7742ae32c0
   languageName: node
   linkType: hard
 
-"@svgr/babel-plugin-remove-jsx-attribute@npm:^6.5.0":
+"@svgr/babel-plugin-remove-jsx-attribute@npm:*":
   version: 6.5.0
   resolution: "@svgr/babel-plugin-remove-jsx-attribute@npm:6.5.0"
   peerDependencies:
@@ -2902,7 +2913,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/babel-plugin-remove-jsx-empty-expression@npm:^6.5.0":
+"@svgr/babel-plugin-remove-jsx-empty-expression@npm:*":
   version: 6.5.0
   resolution: "@svgr/babel-plugin-remove-jsx-empty-expression@npm:6.5.0"
   peerDependencies:
@@ -2911,132 +2922,132 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/babel-plugin-replace-jsx-attribute-value@npm:^6.5.0":
-  version: 6.5.0
-  resolution: "@svgr/babel-plugin-replace-jsx-attribute-value@npm:6.5.0"
+"@svgr/babel-plugin-replace-jsx-attribute-value@npm:^6.5.1":
+  version: 6.5.1
+  resolution: "@svgr/babel-plugin-replace-jsx-attribute-value@npm:6.5.1"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: e8e77e4026f2e2f910a3495be8bd283f413865449b6e2f639318d76edc05b373e18d86e1210c808038a5477ae273858d3b313b2a7df8e6929450ed902c1441bc
+  checksum: b7d2125758e766e1ebd14b92216b800bdc976959bc696dbfa1e28682919147c1df4bb8b1b5fd037d7a83026e27e681fea3b8d3741af8d3cf4c9dfa3d412125df
   languageName: node
   linkType: hard
 
-"@svgr/babel-plugin-svg-dynamic-title@npm:^6.5.0":
-  version: 6.5.0
-  resolution: "@svgr/babel-plugin-svg-dynamic-title@npm:6.5.0"
+"@svgr/babel-plugin-svg-dynamic-title@npm:^6.5.1":
+  version: 6.5.1
+  resolution: "@svgr/babel-plugin-svg-dynamic-title@npm:6.5.1"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 55f36f6e3ef986f2d0ba4cd9e2ebf6b17d68c5c2cf98821abc0dbd551d4fd7d92cf3cda83a91898d988ad7118a9768042ac5afe534ad594bdac024fe0009bae1
+  checksum: 0fd42ebf127ae9163ef341e84972daa99bdcb9e6ed3f83aabd95ee173fddc43e40e02fa847fbc0a1058cf5549f72b7960a2c5e22c3e4ac18f7e3ac81277852ae
   languageName: node
   linkType: hard
 
-"@svgr/babel-plugin-svg-em-dimensions@npm:^6.5.0":
-  version: 6.5.0
-  resolution: "@svgr/babel-plugin-svg-em-dimensions@npm:6.5.0"
+"@svgr/babel-plugin-svg-em-dimensions@npm:^6.5.1":
+  version: 6.5.1
+  resolution: "@svgr/babel-plugin-svg-em-dimensions@npm:6.5.1"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: af6508c042a7d256081c09520e79e2d3278ecf361a74707dcc1bc61713845ec7fd6eeb52bbc3a2e114ecbbb1df49b16674caf8b97345570a6c5f0a631118cb5e
+  checksum: c1550ee9f548526fa66fd171e3ffb5696bfc4e4cd108a631d39db492c7410dc10bba4eb5a190e9df824bf806130ccc586ae7d2e43c547e6a4f93bbb29a18f344
   languageName: node
   linkType: hard
 
-"@svgr/babel-plugin-transform-react-native-svg@npm:^6.5.0":
-  version: 6.5.0
-  resolution: "@svgr/babel-plugin-transform-react-native-svg@npm:6.5.0"
+"@svgr/babel-plugin-transform-react-native-svg@npm:^6.5.1":
+  version: 6.5.1
+  resolution: "@svgr/babel-plugin-transform-react-native-svg@npm:6.5.1"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 0e7f1d85a25ef0c49b2bfacdc9ae80520959a0925304e030edc739684c75d41a7d4173ac4a1cd6ec8dee8bc618e7465da49ae59dd5638b87e75dccee05498f4c
+  checksum: 4c924af22b948b812629e80efb90ad1ec8faae26a232d8ca8a06b46b53e966a2c415a57806a3ff0ea806a622612e546422719b69ec6839717a7755dac19171d9
   languageName: node
   linkType: hard
 
-"@svgr/babel-plugin-transform-svg-component@npm:^6.5.0":
-  version: 6.5.0
-  resolution: "@svgr/babel-plugin-transform-svg-component@npm:6.5.0"
+"@svgr/babel-plugin-transform-svg-component@npm:^6.5.1":
+  version: 6.5.1
+  resolution: "@svgr/babel-plugin-transform-svg-component@npm:6.5.1"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 8613ef673b7e881d661057188729419b9a9d0b3802247954283293698a9910d76414b4fe106b5255e06fb2329c41f9da147ac5e153149b3b82024e06ab87a2b3
+  checksum: e496bb5ee871feb6bcab250b6e067322da7dd5c9c2b530b41e5586fe090f86611339b49d0a909c334d9b24cbca0fa755c949a2526c6ad03c6b5885666874cf5f
   languageName: node
   linkType: hard
 
-"@svgr/babel-preset@npm:^6.5.0":
-  version: 6.5.0
-  resolution: "@svgr/babel-preset@npm:6.5.0"
+"@svgr/babel-preset@npm:^6.5.1":
+  version: 6.5.1
+  resolution: "@svgr/babel-preset@npm:6.5.1"
   dependencies:
-    "@svgr/babel-plugin-add-jsx-attribute": ^6.5.0
-    "@svgr/babel-plugin-remove-jsx-attribute": ^6.5.0
-    "@svgr/babel-plugin-remove-jsx-empty-expression": ^6.5.0
-    "@svgr/babel-plugin-replace-jsx-attribute-value": ^6.5.0
-    "@svgr/babel-plugin-svg-dynamic-title": ^6.5.0
-    "@svgr/babel-plugin-svg-em-dimensions": ^6.5.0
-    "@svgr/babel-plugin-transform-react-native-svg": ^6.5.0
-    "@svgr/babel-plugin-transform-svg-component": ^6.5.0
+    "@svgr/babel-plugin-add-jsx-attribute": ^6.5.1
+    "@svgr/babel-plugin-remove-jsx-attribute": "*"
+    "@svgr/babel-plugin-remove-jsx-empty-expression": "*"
+    "@svgr/babel-plugin-replace-jsx-attribute-value": ^6.5.1
+    "@svgr/babel-plugin-svg-dynamic-title": ^6.5.1
+    "@svgr/babel-plugin-svg-em-dimensions": ^6.5.1
+    "@svgr/babel-plugin-transform-react-native-svg": ^6.5.1
+    "@svgr/babel-plugin-transform-svg-component": ^6.5.1
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 987f6eafebc347b061bfab7d15f87b48601eecdf7cde9ff0e4e99c44acad3bb126e554996b0c48f1ccf24d5e6785226b1662850bb4e2182927b2ded24f226ae8
+  checksum: 9f124be39a8e64f909162f925b3a63ddaa5a342a5e24fc0b7f7d9d4d7f7e3b916596c754fb557dc259928399cad5366a27cb231627a0d2dcc4b13ac521cf05af
   languageName: node
   linkType: hard
 
-"@svgr/core@npm:^6.5.0":
-  version: 6.5.0
-  resolution: "@svgr/core@npm:6.5.0"
+"@svgr/core@npm:^6.5.1":
+  version: 6.5.1
+  resolution: "@svgr/core@npm:6.5.1"
   dependencies:
-    "@babel/core": ^7.18.5
-    "@svgr/babel-preset": ^6.5.0
-    "@svgr/plugin-jsx": ^6.5.0
+    "@babel/core": ^7.19.6
+    "@svgr/babel-preset": ^6.5.1
+    "@svgr/plugin-jsx": ^6.5.1
     camelcase: ^6.2.0
     cosmiconfig: ^7.0.1
-  checksum: 235747a1d1c0e8918aa16da7e44c9dd2024a9ebaadc6bdff00001756d604566437b25e42d61e521f6f38a32c386d44a18dee57a77a92aedef1116f2410b504e6
+  checksum: fd6d6d5da5aeb956703310480b626c1fb3e3973ad9fe8025efc1dcf3d895f857b70d100c63cf32cebb20eb83c9607bafa464c9436e18fe6fe4fafdc73ed6b1a5
   languageName: node
   linkType: hard
 
-"@svgr/hast-util-to-babel-ast@npm:^6.5.0":
-  version: 6.5.0
-  resolution: "@svgr/hast-util-to-babel-ast@npm:6.5.0"
+"@svgr/hast-util-to-babel-ast@npm:^6.5.1":
+  version: 6.5.1
+  resolution: "@svgr/hast-util-to-babel-ast@npm:6.5.1"
   dependencies:
-    "@babel/types": ^7.18.4
-    entities: ^4.3.0
-  checksum: 77dcadb467eded0ce5cba71dbd4cbb4c7ffd7961f351828a4066ab6105d466d55533506bc3bc7db78f938af6692008ceda9fa2ea3dda75fd54e2b736b81ae458
+    "@babel/types": ^7.20.0
+    entities: ^4.4.0
+  checksum: 37923cce1b3f4e2039077b0c570b6edbabe37d1cf1a6ee35e71e0fe00f9cffac450eec45e9720b1010418131a999cb0047331ba1b6d1d2c69af1b92ac785aacf
   languageName: node
   linkType: hard
 
-"@svgr/plugin-jsx@npm:^6.5.0":
-  version: 6.5.0
-  resolution: "@svgr/plugin-jsx@npm:6.5.0"
+"@svgr/plugin-jsx@npm:^6.5.1":
+  version: 6.5.1
+  resolution: "@svgr/plugin-jsx@npm:6.5.1"
   dependencies:
-    "@babel/core": ^7.18.5
-    "@svgr/babel-preset": ^6.5.0
-    "@svgr/hast-util-to-babel-ast": ^6.5.0
+    "@babel/core": ^7.19.6
+    "@svgr/babel-preset": ^6.5.1
+    "@svgr/hast-util-to-babel-ast": ^6.5.1
     svg-parser: ^2.0.4
   peerDependencies:
     "@svgr/core": ^6.0.0
-  checksum: dec7cd47f16cc1b23dd37e333594d596401e7e49825545f4d808c74fe0a3a12a56c1bd55f507794addd6675e1b81dd58346bac4f752daa04016d3edac03e1625
+  checksum: 42f22847a6bdf930514d7bedd3c5e1fd8d53eb3594779f9db16cb94c762425907c375cd8ec789114e100a4d38068aca6c7ab5efea4c612fba63f0630c44cc859
   languageName: node
   linkType: hard
 
-"@svgr/plugin-svgo@npm:^6.5.0":
-  version: 6.5.0
-  resolution: "@svgr/plugin-svgo@npm:6.5.0"
+"@svgr/plugin-svgo@npm:^6.5.1":
+  version: 6.5.1
+  resolution: "@svgr/plugin-svgo@npm:6.5.1"
   dependencies:
     cosmiconfig: ^7.0.1
     deepmerge: ^4.2.2
     svgo: ^2.8.0
   peerDependencies:
-    "@svgr/core": ^6.0.0
-  checksum: d1a0ee79283a997aa4af2c2848f502dff71a9fd99623b47b0b2476effd7fe53077456afd1ff54283512a7dd10f30df91736f5d20eb931a462b34f281c90347e0
+    "@svgr/core": "*"
+  checksum: cd2833530ac0485221adc2146fd992ab20d79f4b12eebcd45fa859721dd779483158e11dfd9a534858fe468416b9412416e25cbe07ac7932c44ed5fa2021c72e
   languageName: node
   linkType: hard
 
-"@svgr/webpack@npm:6.5.0":
-  version: 6.5.0
-  resolution: "@svgr/webpack@npm:6.5.0"
+"@svgr/webpack@npm:6.5.1":
+  version: 6.5.1
+  resolution: "@svgr/webpack@npm:6.5.1"
   dependencies:
-    "@babel/core": ^7.18.5
-    "@babel/plugin-transform-react-constant-elements": ^7.17.12
-    "@babel/preset-env": ^7.18.2
-    "@babel/preset-react": ^7.17.12
-    "@babel/preset-typescript": ^7.17.12
-    "@svgr/core": ^6.5.0
-    "@svgr/plugin-jsx": ^6.5.0
-    "@svgr/plugin-svgo": ^6.5.0
-  checksum: 2c0b18b20694b1301e86893e488269882ae136259cc17b4ab47c208c6edcdfeaefa23894b3fe68d36384e26380eafde23571b0cb143aadf538c027d72eb1d702
+    "@babel/core": ^7.19.6
+    "@babel/plugin-transform-react-constant-elements": ^7.18.12
+    "@babel/preset-env": ^7.19.4
+    "@babel/preset-react": ^7.18.6
+    "@babel/preset-typescript": ^7.18.6
+    "@svgr/core": ^6.5.1
+    "@svgr/plugin-jsx": ^6.5.1
+    "@svgr/plugin-svgo": ^6.5.1
+  checksum: d10582eb4fa82a5b6d314cb49f2c640af4fd3a60f5b76095d2b14e383ef6a43a6f4674b68774a21787dbde69dec0a251cfcfc3f9a96c82754ba5d5c6daf785f0
   languageName: node
   linkType: hard
 
