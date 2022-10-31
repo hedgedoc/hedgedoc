@@ -177,6 +177,7 @@
     "domhandler": "5.0.3",
     "@codemirror/state": "6.1.2",
     "@codemirror/view": "6.4.0",
+    "@codemirror/language": "6.3.0",
     "@hpcc-js/wasm": "1.18.0",
     "yjs": "13.5.42"
   }
