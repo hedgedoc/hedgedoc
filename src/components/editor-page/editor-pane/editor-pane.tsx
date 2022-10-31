@@ -141,7 +141,7 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
       <ToolBar />
       <ReactCodeMirror
         editable={firstUpdateHappened && connectionSynced}
-        placeholder={t('editor.placeholder')}
+        placeholder={t('editor.placeholder') ?? ''}
         extensions={extensions}
         width={'100%'}
         height={'100%'}
