@@ -110,4 +110,4 @@ The license does not include the HedgeDoc logo, whose terms of usage can be foun
 [hedgedoc-community]: https://community.hedgedoc.org
 [hedgedoc-community-calls]: https://community.hedgedoc.org/t/codimd-community-call/19
 [social-mastodon]: https://social.hedgedoc.org/mastodon
-[social-mastodon-image]: https://img.shields.io/mastodon/follow/49593?domain=https%3A%2F%2Fsocial.snopyta.org&style=social
+[social-mastodon-image]: https://img.shields.io/mastodon/follow/109259563190314667?domain=https%3A%2F%2Ffosstodon.org&style=social
