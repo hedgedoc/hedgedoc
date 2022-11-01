@@ -79,7 +79,7 @@ the [github repository](https://github.com/hedgedoc/hedgedoc-logo).
 
 [social-mastodon]: https://social.hedgedoc.org/mastodon
 
-[social-mastodon-image]: https://img.shields.io/mastodon/follow/49593?domain=https%3A%2F%2Fsocial.snopyta.org&style=social
+[social-mastodon-image]: https://img.shields.io/mastodon/follow/109259563190314667?domain=https%3A%2F%2Ffosstodon.org&style=social
 
 [social-twitter]: https://social.hedgedoc.org/twitter
 
