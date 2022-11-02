@@ -3,15 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import {
   encodeAwarenessUpdateMessage,
   encodeCompleteAwarenessStateRequestMessage,
   encodeDocumentUpdateMessage,
   WebsocketTransporter
 } from '@hedgedoc/realtime'
-import type { Doc } from 'yjs'
+import WebSocket from 'isomorphic-ws'
 import type { Awareness } from 'y-protocols/awareness'
+import type { Doc } from 'yjs'
 
 /**
  * Handles the communication with the realtime endpoint of the backend and synchronizes the given y-doc and awareness with other clients.

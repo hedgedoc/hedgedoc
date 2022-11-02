@@ -1,4 +1,9 @@
-{
+/**
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: CC0-1.0
+ **/
+module.exports = {
   "root": true,
   "parserOptions": {
     "tsconfigRootDir": ".",
@@ -7,7 +12,9 @@
     ]
   },
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": ["error",
+      require('./.prettierrc.json')
+    ],
     "no-use-before-define": "off",
     "no-debugger": "warn",
     "default-param-last": "off",

@@ -71,7 +71,7 @@ jobs:
     container:
       image: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-ci:${{ github.sha }}
     steps:
-      - run: cd /usr/src/app && yarn run test
+      - run: cd /usr/src/app/backend && yarn run test
 
   sqlite-e2e:
     runs-on: ubuntu-latest
@@ -80,7 +80,7 @@ jobs:
     container:
       image: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-ci:${{ github.sha }}
     steps:
-      - run: cd /usr/src/app && yarn run test:e2e
+      - run: cd /usr/src/app/backend && yarn run test:e2e
 
   build-prod:
     runs-on: ubuntu-latest

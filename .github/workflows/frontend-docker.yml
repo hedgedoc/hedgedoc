@@ -79,7 +79,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          file: frontend/Dockerfile
+          file: frontend/docker/Dockerfile
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha

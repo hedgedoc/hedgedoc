@@ -52,6 +52,9 @@ module.exports = {
     jest: true,
   },
   rules: {
+    "prettier/prettier": ["error",
+      require('./.prettierrc.json')
+    ],
     'local-rules/correct-logger-context': 'error',
     'func-style': ['error', 'declaration'],
     '@typescript-eslint/no-unused-vars': [
