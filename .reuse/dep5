@@ -87,7 +87,7 @@ Files: frontend/public/robots.txt
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC0-1.0
 
-Files: frontend/.yarnrc.yml
+Files: .yarnrc.yml
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC0-1.0
 

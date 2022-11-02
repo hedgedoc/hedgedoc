@@ -85,7 +85,10 @@ const rawNextConfig = {
       }
     ])
   },
-  output: 'standalone'
+  output: 'standalone',
+  experimental: {
+    outputFileTracingRoot: path.join(__dirname, '../')
+  }
 }
 const completeNextConfig = withBundleAnalyzer(rawNextConfig)
 
