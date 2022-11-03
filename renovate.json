@@ -110,7 +110,8 @@
       "matchStrings": [
         "NODE_VERSION=(?<currentValue>.*?)\\n"
       ],
-      "datasourceTemplate" : "node"
+      "datasourceTemplate" : "node",
+      "depNameTemplate" : "node version in workflows"
     }
   ]
 }
