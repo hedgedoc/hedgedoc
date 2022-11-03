@@ -24,7 +24,7 @@ env:
 
 jobs:
   deploy:
-    if: github.event.pull_request.draft == false || contains( github.event.pull_request.labels.*.name, 'FORCE DEPLOY').
+    if: github.event.pull_request.draft == false || contains( github.event.pull_request.labels.*.name, 'FORCE DEPLOY')
     runs-on: ubuntu-latest
     name: Deploys to netlify
     env:
