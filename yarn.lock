@@ -1550,9 +1550,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/lang-markdown@npm:6.0.3":
-  version: 6.0.3
-  resolution: "@codemirror/lang-markdown@npm:6.0.3"
+"@codemirror/lang-markdown@npm:6.0.4":
+  version: 6.0.4
+  resolution: "@codemirror/lang-markdown@npm:6.0.4"
   dependencies:
     "@codemirror/lang-html": ^6.0.0
     "@codemirror/language": ^6.3.0
@@ -1560,7 +1560,7 @@ __metadata:
     "@codemirror/view": ^6.0.0
     "@lezer/common": ^1.0.0
     "@lezer/markdown": ^1.0.0
-  checksum: e76c88b564b3b2ab3d04e57ff0b6d8f948cb2563b10f58cc4c17691b76125a008b3214a6b48a20a39a4898b0751e35992a59e7ff74af031de571b4ab1c040589
+  checksum: 3929c0756baf2d40abd4457be2b1bd3d610149d6f4aebae1ea89a1e1b1d722dad7eb282e6ede7da77215bfc1b3a3f3fb66e44e751d94fcc5c9e696720a1640bb
   languageName: node
   linkType: hard
 
@@ -1931,7 +1931,7 @@ __metadata:
   dependencies:
     "@codemirror/autocomplete": 6.3.0
     "@codemirror/commands": 6.1.2
-    "@codemirror/lang-markdown": 6.0.3
+    "@codemirror/lang-markdown": 6.0.4
     "@codemirror/language": 6.3.0
     "@codemirror/language-data": 6.1.0
     "@codemirror/lint": 6.0.0
