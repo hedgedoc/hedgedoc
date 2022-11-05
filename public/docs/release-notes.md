@@ -1,4 +1,10 @@
 # Release Notes
+
+## <i class="fa fa-tag"></i> 1.9.6 <i class="fa fa-calendar-o"></i> UNRELEASED
+
+### Bugfixes
+- Fix a bug in the migrations, that deleted users notes in sqlite.
+
 ## <i class="fa fa-tag"></i> 1.9.5 <i class="fa fa-calendar-o"></i> 2022-10-30
 
 ### Enhancements
