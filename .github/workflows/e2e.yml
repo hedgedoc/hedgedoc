@@ -15,6 +15,7 @@ permissions:
 
 env:
   NODE_VERSION: 18
+  BUILD_CACHE_KEY: "${{ !!github.event.pull_request && github.event.pull_request.head.sha || github.sha }}"
 
 jobs:
   build-frontend:
@@ -29,7 +30,7 @@ jobs:
         id: build-cache
         with:
           path: .next
-          key: build-${{ github.sha }}
+          key: ${{ env.BUILD_CACHE_KEY }}
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -88,7 +89,7 @@ jobs:
         id: build-cache
         with:
           path: .next
-          key: build-${{ github.sha }}
+          key: ${{ env.BUILD_CACHE_KEY }}
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
