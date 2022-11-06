@@ -11,33 +11,32 @@ describe('Test word count with', () => {
 
   it('empty note', () => {
     cy.setCodemirrorContent('')
-    cy.wait(500)
     cy.getByCypressId('sidebar-btn-document-info').click()
     cy.getByCypressId('document-info-modal').should('be.visible')
-    cy.getByCypressId('document-info-word-count').should('have.text', '0')
+    cy.getByCypressId('document-info-word-count').contains('0')
   })
 
   it('simple words', () => {
     cy.setCodemirrorContent('five words should be enough')
-    cy.wait(500)
+    cy.getMarkdownBody().contains('five words should be enough')
     cy.getByCypressId('sidebar-btn-document-info').click()
     cy.getByCypressId('document-info-modal').should('be.visible')
-    cy.getByCypressId('document-info-word-count').should('have.text', '5')
+    cy.getByCypressId('document-info-word-count').contains('5')
   })
 
   it('excluded codeblocks', () => {
     cy.setCodemirrorContent('```\nthis is should be ignored\n```\n\ntwo `words`')
-    cy.wait(500)
+    cy.getMarkdownBody().contains('two words')
     cy.getByCypressId('sidebar-btn-document-info').click()
     cy.getByCypressId('document-info-modal').should('be.visible')
-    cy.getByCypressId('document-info-word-count').should('have.text', '2')
+    cy.getByCypressId('document-info-word-count').contains('2')
   })
 
   it('excluded images', () => {
     cy.setCodemirrorContent('![ignored alt text](https://dummyimage.com/48) not ignored text')
-    cy.wait(500)
+    cy.getMarkdownBody().contains('not ignored text')
     cy.getByCypressId('sidebar-btn-document-info').click()
     cy.getByCypressId('document-info-modal').should('be.visible')
-    cy.getByCypressId('document-info-word-count').should('have.text', '3')
+    cy.getByCypressId('document-info-word-count').contains('3')
   })
 })
