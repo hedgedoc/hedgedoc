@@ -11,6 +11,8 @@ import type { CodeProps } from '../../../components/markdown-renderer/replace-co
 import { cypressId } from '../../../utils/cypress-attribute'
 import { ShowIf } from '../../../components/common/show-if/show-if'
 import { Logger } from '../../../utils/logger'
+import { useAsync } from 'react-use'
+import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary'
 
 const log = new Logger('GraphvizFrame')
 /**
@@ -23,6 +25,22 @@ export const GraphvizFrame: React.FC<CodeProps> = ({ code }) => {
   const container = useRef<HTMLDivElement>(null)
   const [error, setError] = useState<string>()
 
+  const { basePath } = useRouter()
+
+  const {
+    value: graphvizImport,
+    error: libLoadingError,
+    loading: isLibLoading
+  } = useAsync(
+    async () =>
+      import(/* webpackChunkName: "d3-graphviz" */ '@hpcc-js/wasm')
+        .then((wasmPlugin) => {
+          wasmPlugin.wasmFolder(`${basePath}/_next/static/js`)
+        })
+        .then(() => import(/* webpackChunkName: "d3-graphviz" */ 'd3-graphviz')),
+    []
+  )
+
   const showError = useCallback((error: string) => {
     if (!container.current) {
       return
@@ -32,45 +50,32 @@ export const GraphvizFrame: React.FC<CodeProps> = ({ code }) => {
     container.current.querySelectorAll('svg').forEach((child) => child.remove())
   }, [])
 
-  const { basePath } = useRouter()
-
   useEffect(() => {
-    if (!container.current) {
+    if (!container.current || !graphvizImport) {
       return
     }
-    const actualContainer = container.current
 
-    import(/* webpackChunkName: "d3-graphviz" */ '@hpcc-js/wasm')
-      .then((wasmPlugin) => {
-        wasmPlugin.wasmFolder(`${basePath}/_next/static/js`)
-      })
-      .then(() => import(/* webpackChunkName: "d3-graphviz" */ 'd3-graphviz'))
-      .then((graphvizImport) => {
-        try {
-          setError(undefined)
-          graphvizImport
-            .graphviz(actualContainer, {
-              useWorker: false,
-              zoom: false
-            })
-            .onerror(showError)
-            .renderDot(code)
-        } catch (error) {
-          showError(error as string)
-        }
-      })
-      .catch((error: Error) => {
-        log.error('Error while loading graphviz', error)
-      })
-  }, [code, basePath, showError])
+    try {
+      setError(undefined)
+      graphvizImport
+        .graphviz(container.current, {
+          useWorker: false,
+          zoom: false
+        })
+        .onerror(showError)
+        .renderDot(code)
+    } catch (error) {
+      showError(error as string)
+    }
+  }, [code, basePath, showError, graphvizImport])
 
   return (
-    <Fragment>
+    <AsyncLoadingBoundary loading={isLibLoading} componentName={'graphviz'} error={libLoadingError}>
       <ShowIf condition={!!error}>
         <Alert variant={'warning'}>{error}</Alert>
       </ShowIf>
       <div className={'svg-container'} {...cypressId('graphviz')} ref={container} />
-    </Fragment>
+    </AsyncLoadingBoundary>
   )
 }
 
