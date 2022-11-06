@@ -19,16 +19,14 @@ export const SlideModeButton: React.FC = () => {
   const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
 
   return (
-    <Link href={`/p/${noteIdentifier}`}>
-      <a target='_blank'>
-        <Button
-          title={t('editor.documentBar.slideMode')}
-          className='ms-2 text-secondary'
-          size='sm'
-          variant='outline-light'>
-          <ForkAwesomeIcon icon='television' />
-        </Button>
-      </a>
+    <Link href={`/p/${noteIdentifier}`} target='_blank'>
+      <Button
+        title={t('editor.documentBar.slideMode')}
+        className='ms-2 text-secondary'
+        size='sm'
+        variant='outline-light'>
+        <ForkAwesomeIcon icon='television' />
+      </Button>
     </Link>
   )
 }

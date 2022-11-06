@@ -64,22 +64,20 @@ export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = (
           <div className={'d-flex flex-column'}>
             <PinButton isDark={false} isPinned={entry.pinStatus} onPinClick={onPinEntry} />
           </div>
-          <Link href={`/n/${entry.identifier}`}>
-            <a className='text-decoration-none flex-fill text-dark'>
-              <div className={'d-flex flex-column justify-content-between'}>
-                <Card.Title className='m-0 mt-1dot5' {...cypressId('history-entry-title')}>
-                  {entryTitle}
-                </Card.Title>
-                <div>
-                  <div className='text-black-50 mt-2'>
-                    <ForkAwesomeIcon icon='clock-o' /> {DateTime.fromISO(entry.lastVisitedAt).toRelative()}
-                    <br />
-                    {lastVisited}
-                  </div>
-                  <div className={`${styles['card-footer-min-height']} p-0`}>{tags}</div>
+          <Link href={`/n/${entry.identifier}`} className='text-decoration-none flex-fill text-dark'>
+            <div className={'d-flex flex-column justify-content-between'}>
+              <Card.Title className='m-0 mt-1dot5' {...cypressId('history-entry-title')}>
+                {entryTitle}
+              </Card.Title>
+              <div>
+                <div className='text-black-50 mt-2'>
+                  <ForkAwesomeIcon icon='clock-o' /> {DateTime.fromISO(entry.lastVisitedAt).toRelative()}
+                  <br />
+                  {lastVisited}
                 </div>
+                <div className={`${styles['card-footer-min-height']} p-0`}>{tags}</div>
               </div>
-            </a>
+            </div>
           </Link>
           <div className={'d-flex flex-column'}>
             <EntryMenu

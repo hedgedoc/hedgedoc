@@ -19,16 +19,14 @@ export const ReadOnlyModeButton: React.FC = () => {
   const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
 
   return (
-    <Link href={`/s/${noteIdentifier}`}>
-      <a target='_blank'>
-        <Button
-          title={t('editor.documentBar.readOnlyMode')}
-          className='ms-2 text-secondary'
-          size='sm'
-          variant='outline-light'>
-          <ForkAwesomeIcon icon='file-text-o' />
-        </Button>
-      </a>
+    <Link href={`/s/${noteIdentifier}`} target='_blank'>
+      <Button
+        title={t('editor.documentBar.readOnlyMode')}
+        className='ms-2 text-secondary'
+        size='sm'
+        variant='outline-light'>
+        <ForkAwesomeIcon icon='file-text-o' />
+      </Button>
     </Link>
   )
 }
