@@ -13,6 +13,7 @@ import type { IconName } from '../fork-awesome/types'
 import { ShowIf } from '../show-if/show-if'
 import type { PropsWithDataCypressId } from '../../../utils/cypress-attribute'
 import { cypressId } from '../../../utils/cypress-attribute'
+import { testId } from '../../../utils/test-id'
 
 export interface ModalVisibilityProps {
   show: boolean
@@ -69,6 +70,7 @@ export const CommonModal: React.FC<PropsWithChildren<CommonModalProps>> = ({
         show={show}
         onHide={onHide}
         animation={true}
+        {...testId('commonModal')}
         dialogClassName={`text-dark ${additionalClasses ?? ''}`}
         size={modalSize}>
         <Modal.Header closeButton={!!showCloseButton}>
