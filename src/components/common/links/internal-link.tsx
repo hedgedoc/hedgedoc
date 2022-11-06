@@ -31,12 +31,14 @@ export const InternalLink: React.FC<LinkWithTextProps> = ({
   title
 }) => {
   return (
-    <Link href={href} className={className} id={id} title={title}>
-      <ShowIf condition={!!icon}>
-        <ForkAwesomeIcon icon={icon as IconName} fixedWidth={true} />
-        &nbsp;
-      </ShowIf>
-      {text}
+    <Link href={href}>
+      <a className={className} id={id} title={title}>
+        <ShowIf condition={!!icon}>
+          <ForkAwesomeIcon icon={icon as IconName} fixedWidth={true} />
+          &nbsp;
+        </ShowIf>
+        {text}
+      </a>
     </Link>
   )
 }

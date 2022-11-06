@@ -45,8 +45,10 @@ export const HistoryTableRow: React.FC<HistoryEntryProps & HistoryEventHandlers>
   return (
     <tr>
       <td>
-        <Link href={`/n/${entry.identifier}`} className='text-light' {...cypressId('history-entry-title')}>
-          {entryTitle}
+        <Link href={`/n/${entry.identifier}`}>
+          <a className='text-light' {...cypressId('history-entry-title')}>
+            {entryTitle}
+          </a>
         </Link>
       </td>
       <td>{formatHistoryDate(entry.lastVisitedAt)}</td>

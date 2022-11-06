@@ -32,7 +32,10 @@ export const Redirect: React.FC<RedirectProps> = ({ to }) => {
 
   return (
     <span {...testId('redirect')}>
-      Redirecting to <Link href={to}>{to}</Link>
+      Redirecting to{' '}
+      <Link href={to}>
+        <a>{to}</a>
+      </Link>
     </span>
   )
 }
