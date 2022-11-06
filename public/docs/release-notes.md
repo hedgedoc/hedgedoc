@@ -1,6 +1,6 @@
 # Release Notes
 
-## <i class="fa fa-tag"></i> 1.9.6 <i class="fa fa-calendar-o"></i> UNRELEASED
+## <i class="fa fa-tag"></i> 1.9.6 <i class="fa fa-calendar-o"></i> 2022-11-06
 
 ### Bugfixes
 - Fix migrations deleting all notes when SQLite is used
