@@ -5,6 +5,14 @@
 name: deploy
 
 on:
+  pull_request:
+    branches: [ main ]
+    types:
+      - labeled
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
   pull_request_target:
     branches: [ main ]
     types:
@@ -24,7 +32,7 @@ env:
 
 jobs:
   deploy:
-    if: github.event.pull_request.draft == false || contains( github.event.pull_request.labels.*.name, 'FORCE DEPLOY')
+    if: (github.event.pull_request.draft == false || contains( github.event.pull_request.labels.*.name, 'FORCE DEPLOY')) && (github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork
     runs-on: ubuntu-latest
     name: Deploys to netlify
     env:

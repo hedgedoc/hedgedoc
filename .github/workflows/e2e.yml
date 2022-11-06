@@ -9,6 +9,8 @@ on:
     branches: [ main ]
   pull_request_target:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -19,6 +21,7 @@ env:
 
 jobs:
   build-frontend:
+    if: "${{ (github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork  }}"
     runs-on: ubuntu-latest
     name: Build test build of frontend
     steps:
