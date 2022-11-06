@@ -17,7 +17,7 @@ permissions:
 
 env:
   NODE_VERSION: 18
-  BUILD_CACHE_KEY: "${{ !!github.event.pull_request && github.event.pull_request.head.sha || github.sha }}"
+  HEAD_COMMIT_HASH: "${{ !!github.event.pull_request && github.event.pull_request.head.sha || github.sha }}"
 
 jobs:
   build-frontend:
@@ -27,13 +27,15 @@ jobs:
     steps:
       - name: Check out repo
         uses: actions/checkout@v3
+        with:
+          ref: ${{ env.HEAD_COMMIT_HASH }}
 
       - name: Cache build
         uses: actions/cache@v3.0.11
         id: build-cache
         with:
           path: .next
-          key: ${{ env.BUILD_CACHE_KEY }}
+          key: ${{ env.HEAD_COMMIT_HASH }}
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -93,7 +95,7 @@ jobs:
         id: build-cache
         with:
           path: .next
-          key: ${{ env.BUILD_CACHE_KEY }}
+          key: ${{ env.HEAD_COMMIT_HASH }}
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
