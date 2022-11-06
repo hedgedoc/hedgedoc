@@ -63,10 +63,11 @@ jobs:
 
       - uses: actions/upload-artifact@master
         with:
-          name: next-build
+          name: e2e-build
           path: |
             .next
             !.next/cache
+            !.next/standalone
 
   end2end:
     name: Perform E2E Test in ${{ matrix.browser }}
@@ -116,7 +117,7 @@ jobs:
       - name: Download built frontend
         uses: actions/download-artifact@master
         with:
-          name: next-build
+          name: e2e-build
           path: .next
 
       - name: Run server
