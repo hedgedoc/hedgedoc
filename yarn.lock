@@ -1951,7 +1951,6 @@ __metadata:
     "@hedgedoc/html-to-react": 1.4.5
     "@hedgedoc/markdown-it-plugins": 1.0.0
     "@hedgedoc/realtime": 0.3.0
-    "@hpcc-js/wasm": 1.18.0
     "@mrdrogdrog/optional": 1.0.0
     "@next/bundle-analyzer": 13.0.2
     "@react-hook/resize-observer": 1.2.6
@@ -2088,14 +2087,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hpcc-js/wasm@npm:1.18.0":
-  version: 1.18.0
-  resolution: "@hpcc-js/wasm@npm:1.18.0"
+"@hpcc-js/wasm@npm:1.16.1":
+  version: 1.16.1
+  resolution: "@hpcc-js/wasm@npm:1.16.1"
   dependencies:
-    yargs: 17.6.0
+    yargs: 17.5.1
   bin:
     dot-wasm: bin/cli.js
-  checksum: 59f49d8b4eee21252ddda78df37594f27a3d93302aa7df4b4e505a3b48da343d12ee7b5de932d3e8bff1b865114aef49c85ee5be8eeeae238033dc8d033fff3e
+  checksum: b70bc1fece40e8f6c81011534b5b9bbde9123bac453d13c9642b112565f7dd85b1fb7656bec06447c78295f7c893afd1cd08dc17945d6b8f9319ba2e289f4597
   languageName: node
   linkType: hard
 
@@ -4850,6 +4849,17 @@ __metadata:
   version: 0.0.1
   resolution: "client-only@npm:0.0.1"
   checksum: 0c16bf660dadb90610553c1d8946a7fdfb81d624adea073b8440b7d795d5b5b08beb3c950c6a2cf16279365a3265158a236876d92bce16423c485c322d7dfaf8
+  languageName: node
+  linkType: hard
+
+"cliui@npm:^7.0.2":
+  version: 7.0.4
+  resolution: "cliui@npm:7.0.4"
+  dependencies:
+    string-width: ^4.2.0
+    strip-ansi: ^6.0.0
+    wrap-ansi: ^7.0.0
+  checksum: ce2e8f578a4813806788ac399b9e866297740eecd4ad1823c27fd344d78b22c5f8597d548adbcc46f0573e43e21e751f39446c5a5e804a12aace402b7a315d7f
   languageName: node
   linkType: hard
 
@@ -13413,7 +13423,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:17.6.0, yargs@npm:^17.3.1, yargs@npm:~17.6.0":
+"yargs@npm:17.5.1":
+  version: 17.5.1
+  resolution: "yargs@npm:17.5.1"
+  dependencies:
+    cliui: ^7.0.2
+    escalade: ^3.1.1
+    get-caller-file: ^2.0.5
+    require-directory: ^2.1.1
+    string-width: ^4.2.3
+    y18n: ^5.0.5
+    yargs-parser: ^21.0.0
+  checksum: 00d58a2c052937fa044834313f07910fd0a115dec5ee35919e857eeee3736b21a4eafa8264535800ba8bac312991ce785ecb8a51f4d2cc8c4676d865af1cfbde
+  languageName: node
+  linkType: hard
+
+"yargs@npm:^17.3.1, yargs@npm:~17.6.0":
   version: 17.6.0
   resolution: "yargs@npm:17.6.0"
   dependencies:
