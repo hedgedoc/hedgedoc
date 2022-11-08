@@ -4,48 +4,66 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Fragment, useCallback, useState } from 'react'
-import { Button } from 'react-bootstrap'
+import React, { Fragment, useCallback, useRef, useState } from 'react'
+import { Button, Overlay } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
-import { EmojiPicker } from './emoji-picker'
+import { EmojiPickerPopover } from './emoji-picker-popover'
 import { cypressId } from '../../../../../utils/cypress-attribute'
 import type { EmojiClickEventDetail } from 'emoji-picker-element/shared'
-import { Optional } from '@mrdrogdrog/optional'
 import { useChangeEditorContentCallback } from '../../../change-content-context/use-change-editor-content-callback'
 import { replaceSelection } from '../formatters/replace-selection'
 import { extractEmojiShortCode } from './extract-emoji-short-code'
+import styles from './emoji-picker.module.scss'
+import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
 
 /**
  * Renders a button to open the emoji picker.
- * @see EmojiPicker
+ * @see EmojiPickerPopover
  */
 export const EmojiPickerButton: React.FC = () => {
   const { t } = useTranslation()
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
   const changeEditorContent = useChangeEditorContentCallback()
+  const buttonRef = useRef(null)
 
   const onEmojiSelected = useCallback(
     (emojiClickEvent: EmojiClickEventDetail) => {
       setShowEmojiPicker(false)
-      Optional.ofNullable(extractEmojiShortCode(emojiClickEvent)).ifPresent((shortCode) => {
+      const shortCode = extractEmojiShortCode(emojiClickEvent)
+      if (shortCode) {
         changeEditorContent?.(({ currentSelection }) => replaceSelection(currentSelection, shortCode, false))
-      })
+      }
     },
     [changeEditorContent]
   )
   const hidePicker = useCallback(() => setShowEmojiPicker(false), [])
   const showPicker = useCallback(() => setShowEmojiPicker(true), [])
 
+  const createPopoverElement = useCallback<(props: OverlayInjectedProps) => React.ReactElement>(
+    (props) => <EmojiPickerPopover {...props} className={styles.tooltip} onEmojiSelected={onEmojiSelected} />,
+    [onEmojiSelected]
+  )
+
   return (
     <Fragment>
-      <EmojiPicker show={showEmojiPicker} onEmojiSelected={onEmojiSelected} onDismiss={hidePicker} />
+      <Overlay
+        show={showEmojiPicker}
+        onHide={hidePicker}
+        placement={'auto'}
+        flip={true}
+        target={buttonRef.current}
+        rootClose={true}
+        offset={[0, 0]}>
+        {createPopoverElement}
+      </Overlay>
       <Button
         {...cypressId('show-emoji-picker')}
         variant='light'
         onClick={showPicker}
         title={t('editor.editorToolbar.emoji')}
-        disabled={!changeEditorContent}>
+        disabled={!changeEditorContent}
+        ref={buttonRef}>
         <ForkAwesomeIcon icon='smile-o' />
       </Button>
     </Fragment>
