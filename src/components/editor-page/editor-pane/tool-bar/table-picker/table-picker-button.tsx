@@ -15,6 +15,7 @@ import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
 import { replaceSelection } from '../formatters/replace-selection'
 import { useChangeEditorContentCallback } from '../../../change-content-context/use-change-editor-content-callback'
 import { createMarkdownTable } from './create-markdown-table'
+import './table-picker.module.scss'
 
 enum PickerMode {
   INVISIBLE,
@@ -58,11 +59,10 @@ export const TablePickerButton: React.FC = () => {
   }, [])
 
   const createPopoverElement = useCallback<(props: OverlayInjectedProps) => React.ReactElement>(
-    ({ ref, ...popoverProps }) => (
+    (popoverProps) => (
       <TableSizePickerPopover
         onTableSizeSelected={onSizeSelect}
         onShowCustomSizeModal={onShowModal}
-        onRefUpdate={ref}
         {...popoverProps}
       />
     ),
@@ -84,7 +84,9 @@ export const TablePickerButton: React.FC = () => {
         target={button.current}
         onHide={onOverlayHide}
         show={pickerMode === PickerMode.GRID}
-        placement={'bottom'}
+        placement={'auto'}
+        flip={true}
+        offset={[0, 0]}
         rootClose={pickerMode === PickerMode.GRID}>
         {createPopoverElement}
       </Overlay>

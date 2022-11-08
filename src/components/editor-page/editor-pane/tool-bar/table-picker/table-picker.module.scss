@@ -4,19 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-
-.table-picker-container {
-  z-index: 1111;
-
-  .table-cell {
-    margin: 1px;
-    border-radius: 2px;
-  }
-
-  .table-container {
-    display: grid;
-    grid-template-columns: repeat(10, 15px [col-start]);
-    grid-template-rows: repeat(8, 15px [row-start]);
-  }
+.table-cell {
+  margin: 1px;
+  border-radius: 2px;
+  border: solid 1px var(--bs-dark);
 }
 
+.table-container {
+  display: grid;
+  grid-template-columns: repeat(10, 15px [col-start]);
+  grid-template-rows: repeat(8, 15px [row-start]);
+}
