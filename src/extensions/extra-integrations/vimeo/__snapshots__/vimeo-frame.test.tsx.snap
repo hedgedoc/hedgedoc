@@ -10,8 +10,8 @@ exports[`VimeoFrame renders a click shield 1`] = `
       <iframe
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         class="embed-responsive-item"
-        src="https://player.vimeo.com/video/valid vimeo id?autoplay=1"
-        title="vimeo video of valid vimeo id"
+        src="https://player.vimeo.com/video/validVimeoId?autoplay=1"
+        title="vimeo video of validVimeoId"
       />
     </span>
   </span>

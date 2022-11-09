@@ -9,15 +9,8 @@ import markdownItRegex from 'markdown-it-regex'
 import type MarkdownIt from 'markdown-it'
 import type { RegexOptions } from '../../../external-types/markdown-it-regex/interface'
 
-const protocolRegex = /(?:http(?:s)?:\/\/)?/
-const subdomainRegex = /(?:www.)?/
-const pathRegex = /(?:youtube(?:-nocookie)?\.com\/(?:[^\\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)/
-const idRegex = /([\w-]{11})/
-const tailRegex = /(?:[?&#].*)?/
-const youtubeVideoUrlRegex = new RegExp(
-  `(?:${protocolRegex.source}${subdomainRegex.source}${pathRegex.source}${idRegex.source}${tailRegex.source})`
-)
-const linkRegex = new RegExp(`^${youtubeVideoUrlRegex.source}$`, 'i')
+const linkRegex =
+  /^(?:https?:\/\/)?(?:www.)?(?:youtube(?:-nocookie)?\.com\/(?:[^\\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([\w-]{11})(?:[?&#].*)?$/i
 
 /**
  * Replacer for youtube links.

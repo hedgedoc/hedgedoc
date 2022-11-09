@@ -19,7 +19,7 @@ describe('YoutubeFrame', () => {
   })
 
   it('renders a click shield', () => {
-    const view = render(<YouTubeFrame id={'valid youtube id'} />)
+    const view = render(<YouTubeFrame id={'validYoutubeId'} />)
     expect(view.container).toMatchSnapshot()
   })
 })

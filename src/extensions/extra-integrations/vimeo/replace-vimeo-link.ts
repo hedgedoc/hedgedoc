@@ -9,14 +9,8 @@ import type MarkdownIt from 'markdown-it'
 import markdownItRegex from 'markdown-it-regex'
 import type { RegexOptions } from '../../../external-types/markdown-it-regex/interface'
 
-const protocolRegex = /(?:http(?:s)?:\/\/)?/
-const domainRegex = /(?:player\.)?(?:vimeo\.com\/)(?:(?:channels|album|ondemand|groups)\/\w+\/)?(?:video\/)?/
-const idRegex = /(\d{6,11})/
-const tailRegex = /(?:[?#].*)?/
-const vimeoVideoUrlRegex = new RegExp(
-  `(?:${protocolRegex.source}${domainRegex.source}${idRegex.source}${tailRegex.source})`
-)
-const linkRegex = new RegExp(`^${vimeoVideoUrlRegex.source}$`, 'i')
+const linkRegex =
+  /^(?:https?:\/\/)?(?:player\.)?vimeo\.com\/(?:(?:channels|album|ondemand|groups)\/\w+\/)?(?:video\/)?(\d{6,11})(?:[?#].*)?$/i
 
 const replaceVimeoLink: RegexOptions = {
   name: 'vimeo-link',

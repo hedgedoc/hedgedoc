@@ -19,7 +19,7 @@ describe('VimeoFrame', () => {
   })
 
   it('renders a click shield', () => {
-    const view = render(<VimeoFrame id={'valid vimeo id'} />)
+    const view = render(<VimeoFrame id={'validVimeoId'} />)
     expect(view.container).toMatchSnapshot()
   })
 })

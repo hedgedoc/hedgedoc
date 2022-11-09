@@ -151,6 +151,9 @@ export abstract class WindowPostMessageCommunicator<
    * @return {@link true} if the event was processed.
    */
   protected handleEvent(event: MessageEvent<MessagePayloadWithUuid<RECEIVE_TYPE>>): void {
+    if (event.origin !== this.targetOrigin) {
+      return
+    }
     Optional.ofNullable(event.data)
       .filter((value) => value.uuid === this.uuid)
       .ifPresent((payload) => {
