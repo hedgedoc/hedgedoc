@@ -23,7 +23,6 @@ import { useSendScrollState } from './hooks/use-send-scroll-state'
 import { Logger } from '../../../utils/logger'
 import { useEffectOnRenderTypeChange } from './hooks/use-effect-on-render-type-change'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
-import { ORIGIN, useBaseUrl } from '../../../hooks/common/use-base-url'
 import { ShowIf } from '../../common/show-if/show-if'
 import { WaitSpinner } from '../../common/wait-spinner/wait-spinner'
 import { useExtensionEventEmitter } from '../../markdown-renderer/hooks/use-extension-event-emitter'
@@ -69,7 +68,6 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
 }) => {
   const [rendererReady, setRendererReady] = useState<boolean>(false)
   const frameReference = useRef<HTMLIFrameElement>(null)
-  const rendererBaseUrl = useBaseUrl(ORIGIN.RENDERER)
   const iframeCommunicator = useEditorToRendererCommunicator()
   const resetRendererReady = useCallback(() => {
     log.debug('Reset render status')
@@ -143,9 +141,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
         log.error('Load triggered without content window')
         return
       }
-      const origin = new URL(rendererBaseUrl).origin
-      log.debug(`Set iframecommunicator window with origin ${origin ?? 'undefined'}`)
-      iframeCommunicator.setMessageTarget(otherWindow, origin)
+      iframeCommunicator.setMessageTarget(otherWindow)
       iframeCommunicator.enableCommunication()
       iframeCommunicator.sendMessageToOtherSide({
         type: CommunicationMessageType.SET_BASE_CONFIGURATION,
@@ -155,7 +151,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
         }
       })
       setRendererReady(true)
-    }, [iframeCommunicator, rendererBaseUrl, rendererType])
+    }, [iframeCommunicator, rendererType])
   )
 
   useEffectOnRenderTypeChange(rendererType, onIframeLoad)

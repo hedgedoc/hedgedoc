@@ -28,27 +28,27 @@ export const useRendererToEditorCommunicator: () => RendererToEditorCommunicator
 }
 
 export const RendererToEditorCommunicatorContextProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
-  const editorOrigin = useBaseUrl(ORIGIN.EDITOR)
+  const editorUrl = useBaseUrl(ORIGIN.EDITOR)
   const uuid = useSingleStringUrlParameter('uuid', undefined)
   const communicator = useMemo<RendererToEditorCommunicator>(() => {
     if (uuid === undefined) {
       throw new Error('no uuid found in url!')
     } else {
-      return new RendererToEditorCommunicator(uuid)
+      return new RendererToEditorCommunicator(uuid, new URL(editorUrl).origin)
     }
-  }, [uuid])
+  }, [editorUrl, uuid])
 
   useEffect(() => {
     const currentCommunicator = communicator
 
-    currentCommunicator.setMessageTarget(window.parent, new URL(editorOrigin).origin)
+    currentCommunicator.setMessageTarget(window.parent)
     currentCommunicator.registerEventListener()
     currentCommunicator.enableCommunication()
     currentCommunicator.sendMessageToOtherSide({
       type: CommunicationMessageType.RENDERER_READY
     })
     return () => currentCommunicator?.unregisterEventListener()
-  }, [communicator, editorOrigin])
+  }, [communicator, editorUrl])
 
   /**
    * Provides a {@link RendererToEditorCommunicator renderer to editor communicator} for the child components via Context.

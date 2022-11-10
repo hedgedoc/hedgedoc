@@ -35,13 +35,12 @@ export abstract class WindowPostMessageCommunicator<
   MESSAGES extends MessagePayload<RECEIVE_TYPE | SEND_TYPE>
 > {
   private messageTarget?: Window
-  private targetOrigin?: string
   private communicationEnabled: boolean
   private readonly emitter: EventEmitter2 = new EventEmitter2()
   private readonly log: Logger
   private readonly boundListener: (event: MessageEvent) => void
 
-  public constructor(private uuid: string) {
+  public constructor(private readonly uuid: string, private readonly targetOrigin: string) {
     this.boundListener = this.handleEvent.bind(this)
     this.communicationEnabled = false
     this.log = this.createLogger()
@@ -72,12 +71,10 @@ export abstract class WindowPostMessageCommunicator<
    * Messages can be sent as soon as the communication is enabled.
    *
    * @param otherSide The target {@link Window} that should receive the messages.
-   * @param otherOrigin The origin from the URL of the target. If this isn't correct then the message sending will produce CORS errors.
    * @see enableCommunication
    */
-  public setMessageTarget(otherSide: Window, otherOrigin: string): void {
+  public setMessageTarget(otherSide: Window): void {
     this.messageTarget = otherSide
-    this.targetOrigin = otherOrigin
     this.communicationEnabled = false
   }
 
@@ -86,7 +83,6 @@ export abstract class WindowPostMessageCommunicator<
    */
   public unsetMessageTarget(): void {
     this.messageTarget = undefined
-    this.targetOrigin = undefined
     this.communicationEnabled = false
   }
 
@@ -152,6 +148,10 @@ export abstract class WindowPostMessageCommunicator<
    */
   protected handleEvent(event: MessageEvent<MessagePayloadWithUuid<RECEIVE_TYPE>>): void {
     if (event.origin !== this.targetOrigin) {
+      this.log.error(
+        `message declined. origin was "${event.origin}" but expected "${String(this.targetOrigin)}"`,
+        event.data
+      )
       return
     }
     Optional.ofNullable(event.data)

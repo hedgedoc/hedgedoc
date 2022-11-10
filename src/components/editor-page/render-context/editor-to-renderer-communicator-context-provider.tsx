@@ -8,6 +8,7 @@ import type { PropsWithChildren } from 'react'
 import React, { createContext, useContext, useEffect, useMemo } from 'react'
 import { EditorToRendererCommunicator } from '../../render-page/window-post-message-communicator/editor-to-renderer-communicator'
 import { v4 as uuid } from 'uuid'
+import { ORIGIN, useBaseUrl } from '../../../hooks/common/use-base-url'
 
 const EditorToRendererCommunicatorContext = createContext<EditorToRendererCommunicator | undefined>(undefined)
 
@@ -29,7 +30,12 @@ export const useEditorToRendererCommunicator: () => EditorToRendererCommunicator
  * Provides a {@link EditorToRendererCommunicator editor to renderer communicator} for the child components via Context.
  */
 export const EditorToRendererCommunicatorContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const communicator = useMemo<EditorToRendererCommunicator>(() => new EditorToRendererCommunicator(uuid()), [])
+  const rendererUrl = useBaseUrl(ORIGIN.RENDERER)
+
+  const communicator = useMemo<EditorToRendererCommunicator>(
+    () => new EditorToRendererCommunicator(uuid(), new URL(rendererUrl).origin),
+    [rendererUrl]
+  )
 
   useEffect(() => {
     const currentCommunicator = communicator
