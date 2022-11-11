@@ -90,6 +90,7 @@
     "randomcolor": "^0.6.0",
     "readline-sync": "^1.4.7",
     "rimraf": "^3.0.2",
+    "sanitize-filename": "^1.6.3",
     "scrypt-kdf": "^2.0.1",
     "sequelize": "^5.21.1",
     "shortid": "2.2.16",
