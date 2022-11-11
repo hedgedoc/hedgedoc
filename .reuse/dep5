@@ -66,3 +66,43 @@ License: Apache-2.0
 Files: backend/public/*.md
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC0-1.0
+
+Files: frontend/public/public/*
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: frontend/public/icons/*
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: LicenseRef-HedgeDoc-Icon-Usage-Guidelines
+
+Files: frontend/locales/*
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC-BY-SA-4.0
+
+Files: frontend/public/public/img/highres.jpg
+Copyright: Vincent van Gogh
+License: CC0-1.0
+
+Files: frontend/public/robots.txt
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: frontend/.yarnrc.yml
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: frontend/.gitattributes
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: frontend/netlify.toml
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: frontend/.netlify/*
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: frontend/**/__snapshots__/*.snap
+Copyright: 2022 The HedgeDoc developers (see AUTHORS file)
+License: AGPL-3.0-only
