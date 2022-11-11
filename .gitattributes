@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+#
+# SPDX-License-Identifier: CC0-1.0
+
+/.yarn/releases/** binary
+/.yarn/plugins/** binary
