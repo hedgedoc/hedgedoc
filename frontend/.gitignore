@@ -9,14 +9,6 @@
 /.pnp
 .pnp.*
 
-# package manager
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-
 # testing
 /coverage
 
@@ -54,9 +46,3 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-
-# IDE
-.idea
-!.idea/dictionaries/hedgedoc.xml
-!.idea/copyright
-!.idea/prettier.xml
