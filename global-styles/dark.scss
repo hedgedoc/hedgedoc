@@ -22,5 +22,5 @@ body.dark {
   --#{$prefix}body-color: #{$body-color};
   --#{$prefix}body-bg: #{$body-bg};
 
-  @import "~bootstrap";
+  @import "colors-only-bootstrap/bootstrap";
 }

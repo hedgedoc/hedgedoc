@@ -1,0 +1,41 @@
+/*!
+ * SPDX-FileCopyrightText: Original code: Copyright (c) 2011-2022 Twitter, Inc. + Copyright (c) 2011-2022 The Bootstrap Authors. Modification: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+// The dropdown menu
+.dropdown-menu {
+  // scss-docs-start dropdown-css-vars
+  --#{$prefix}dropdown-color: #{$dropdown-color};
+  --#{$prefix}dropdown-bg: #{$dropdown-bg};
+  --#{$prefix}dropdown-border-color: #{$dropdown-border-color};
+  --#{$prefix}dropdown-divider-bg: #{$dropdown-divider-bg};
+  --#{$prefix}dropdown-box-shadow: #{$dropdown-box-shadow};
+  --#{$prefix}dropdown-link-color: #{$dropdown-link-color};
+  --#{$prefix}dropdown-link-hover-color: #{$dropdown-link-hover-color};
+  --#{$prefix}dropdown-link-hover-bg: #{$dropdown-link-hover-bg};
+  --#{$prefix}dropdown-link-active-color: #{$dropdown-link-active-color};
+  --#{$prefix}dropdown-link-active-bg: #{$dropdown-link-active-bg};
+  --#{$prefix}dropdown-link-disabled-color: #{$dropdown-link-disabled-color};
+  --#{$prefix}dropdown-header-color: #{$dropdown-header-color};
+  // scss-docs-end dropdown-css-vars
+}
+
+// Dark dropdowns
+.dropdown-menu-dark {
+  // scss-docs-start dropdown-dark-css-vars
+  --#{$prefix}dropdown-color: #{$dropdown-dark-color};
+  --#{$prefix}dropdown-bg: #{$dropdown-dark-bg};
+  --#{$prefix}dropdown-border-color: #{$dropdown-dark-border-color};
+  --#{$prefix}dropdown-box-shadow: #{$dropdown-dark-box-shadow};
+  --#{$prefix}dropdown-link-color: #{$dropdown-dark-link-color};
+  --#{$prefix}dropdown-link-hover-color: #{$dropdown-dark-link-hover-color};
+  --#{$prefix}dropdown-divider-bg: #{$dropdown-dark-divider-bg};
+  --#{$prefix}dropdown-link-hover-bg: #{$dropdown-dark-link-hover-bg};
+  --#{$prefix}dropdown-link-active-color: #{$dropdown-dark-link-active-color};
+  --#{$prefix}dropdown-link-active-bg: #{$dropdown-dark-link-active-bg};
+  --#{$prefix}dropdown-link-disabled-color: #{$dropdown-dark-link-disabled-color};
+  --#{$prefix}dropdown-header-color: #{$dropdown-dark-header-color};
+  // scss-docs-end dropdown-dark-css-vars
+}

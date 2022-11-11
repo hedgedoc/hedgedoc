@@ -1,0 +1,51 @@
+/*!
+ * SPDX-FileCopyrightText: Original code: Copyright (c) 2011-2022 Twitter, Inc. + Copyright (c) 2011-2022 The Bootstrap Authors. Modification: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+/**
+[mrdrogdrog] This directory is a modified copy of Bootstrap 5. But it contains only color rules. This is helpful when creating color themes like dark modes.
+ */
+@import "~bootstrap/scss/mixins/banner";
+@include bsBanner("");
+
+// scss-docs-start import-stack
+// Configuration
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/maps";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/utilities";
+
+// Layout & components
+@import "root";
+@import "type";
+@import "images";
+@import "tables";
+@import "forms";
+@import "buttons";
+//@import "~bootstrap/scss/transitions"; // removed because it clashes with reveal.js
+@import "dropdown";
+@import "nav";
+@import "navbar";
+@import "card";
+@import "accordion";
+@import "breadcrumb";
+@import "pagination";
+@import "badge";
+@import "alert";
+@import "progress";
+@import "list-group";
+@import "close";
+@import "toasts";
+@import "modal";
+@import "tooltip";
+@import "popover";
+@import "carousel";
+@import "offcanvas";
+
+// Helpers
+@import "helpers";
+
+// scss-docs-end import-stack

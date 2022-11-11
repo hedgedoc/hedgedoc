@@ -1,0 +1,58 @@
+/*!
+ * SPDX-FileCopyrightText: Original code: Copyright (c) 2011-2022 Twitter, Inc. + Copyright (c) 2011-2022 The Bootstrap Authors. Modification: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+//
+// Left/right controls for nav
+//
+
+.carousel-control-prev,
+.carousel-control-next {
+  color: $carousel-control-color;
+
+  // Hover/focus state
+  &:hover,
+  &:focus {
+    color: $carousel-control-color;
+  }
+}
+
+.carousel-control-prev-icon {
+  background-image: escape-svg($carousel-control-prev-icon-bg);
+}
+.carousel-control-next-icon {
+  background-image: escape-svg($carousel-control-next-icon-bg);
+}
+
+// Optional indicator pips/controls
+//
+// Add a container (such as a list) with the following class and add an item (ideally a focusable control,
+// like a button) with data-bs-target for each slide your carousel holds.
+
+.carousel-indicators {
+  [data-bs-target] {
+    background-color: $carousel-indicator-active-bg;
+  }
+}
+
+// Optional captions
+//
+//
+
+.carousel-caption {
+  color: $carousel-caption-color;
+}
+
+// Dark mode carousel
+
+.carousel-dark {
+  .carousel-indicators [data-bs-target] {
+    background-color: $carousel-dark-indicator-active-bg;
+  }
+
+  .carousel-caption {
+    color: $carousel-dark-caption-color;
+  }
+}

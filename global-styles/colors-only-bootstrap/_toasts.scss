@@ -1,0 +1,17 @@
+/*!
+ * SPDX-FileCopyrightText: Original code: Copyright (c) 2011-2022 Twitter, Inc. + Copyright (c) 2011-2022 The Bootstrap Authors. Modification: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+.toast {
+  // scss-docs-start toast-css-vars
+  --#{$prefix}toast-color: #{$toast-color};
+  --#{$prefix}toast-bg: #{$toast-background-color};
+  --#{$prefix}toast-border-color: #{$toast-border-color};
+  --#{$prefix}toast-box-shadow: #{$toast-box-shadow};
+  --#{$prefix}toast-header-color: #{$toast-header-color};
+  --#{$prefix}toast-header-bg: #{$toast-header-background-color};
+  --#{$prefix}toast-header-border-color: #{$toast-header-border-color};
+  // scss-docs-end toast-css-vars
+}

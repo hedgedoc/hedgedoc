@@ -1,0 +1,16 @@
+/*!
+ * SPDX-FileCopyrightText: Original code: Copyright (c) 2011-2022 Twitter, Inc. + Copyright (c) 2011-2022 The Bootstrap Authors. Modification: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+// Image thumbnails
+.img-thumbnail {
+  background-color: $thumbnail-bg;
+  border-color: $thumbnail-border-color;
+  @include box-shadow($thumbnail-box-shadow);
+}
+
+.figure-caption {
+  color: $figure-caption-color;
+}
