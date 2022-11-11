@@ -9,7 +9,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ARG BUILD_VERSION=CLIENT_VERSION_MISSING
 
 WORKDIR /app
-COPY . ./
+COPY --chown=node .yarn ../.yarn
+COPY --chown=node frontend ./
 RUN rm -rf public/public && \
     rm -rf src/pages/api && \
     yarn install --immutable && \
