@@ -1,21 +1,28 @@
 # Getting started
 
-## Preparing for running the backend code
+## Preparation
 
-**ToDo:** Document how to set up development environment using docker.
-
-1. Clone the repository with `git clone https://github.com/hedgedoc/hedgedoc.git`
-   (cloning is the preferred way, but you can also download and unzip a release)
-
-2. Enter the directory and run `yarn install`.
-
-3. Run `cp .env.example .env` to use the example configuration.
-
-   Alternatively, set up a [.env](../config/index.md) or set up
-   [environment variables](../config/index.md) yourself.
-   
-4. Run `openssl rand -hex 16 | sed -E 's/(.*)/HD_SESSION_SECRET=\1/' >> .env` to generate a session secret if you have not set one manually before.
+Setup the [backend](./setup/backend.md) and the [frontend](./setup/frontend.md).
 
 ## Running backend and frontend together
 
-The documentation for setting up the frontend and how to use it and the backend together can be found in the [frontend repository README](https://github.com/hedgedoc/react-client/blob/main/README.md).
+To use backend and frontend together in development mode you'll need a local reverse proxy that combines both services under one URL origin.
+We recommend to use our pre-configured [caddy](https://caddyserver.com/) configuration.
+
+### Prepare the backend
+
+In the `backend` directory
+1. make sure that `HD_DOMAIN` in `.env` is set to `http://localhost:8080`.
+2. start the backend by running `yarn start:dev`.  
+
+### Preparing the frontend
+
+In the frontend directory
+1. Start the frontend in dev or production mode using any method described in the [frontend setup documentation](./setup/frontend.md). 
+   If you use the production build then make sure that you set the environment variable `HD_EDITOR_BASE_URL` to the same value as `HD_DOMAIN` in the backend.
+
+### Running the reverse proxy
+
+1. Download the latest version of caddy from [the caddy website](https://caddyserver.com/). You don't need any plugin. Place the downloaded binary in the directory `dev-reverse-proxy`. Don't forget to mark the file as executable using `chmod +x caddy`
+2. Start the reverse proxy using `./caddy run`.
+3. Open your browser on http://localhost:8080

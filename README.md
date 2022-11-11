@@ -32,11 +32,19 @@ We are currently working on HedgeDoc 2, a complete rewrite of HedgeDoc. Please n
 
 - This branch contains the latest development code and does not implement all features yet.
   **If you are looking for the 1.x source code, have a look at the [master branch](https://github.com/hedgedoc/hedgedoc/tree/master).**
-- HedgeDoc 2 will be split in two components: the backend (this repo) and the frontend in
-  the [react-client repo](https://github.com/hedgedoc/react-client).
 - The 1.x release is maintenance-only. We do not accept feature requests or PRs for this release anymore and may choose
   to close non-critical bug reports, if the bug will be non-existent in 2.0.
+- HedgeDoc 2 will be split in two components. The backend and the frontend. Both are present in this repository.
 
+## Development
+Information for setting up a local development environment can be found in the [developer documentation](./docs/content/dev/getting-started.md)
+
+## HedgeDoc 2 UI Test
+Curious about the new look and feel of HedgeDoc 2? We provide a demo of the new UI on [hedgedoc.dev](https://hedgedoc.dev). This
+version uses mocked data and has no data persistence.
+
+The UI test is hosted by [netlify](https://netlify.com). Please check
+their [privacy policy](https://netlify.com/privacy) as well as [ours](https://hedgedoc.org/privacy-policy).
 
 ## Contributions
 
