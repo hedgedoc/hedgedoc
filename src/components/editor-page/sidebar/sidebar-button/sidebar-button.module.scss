@@ -58,8 +58,7 @@
   }
 
   @mixin colors {
-    color: black;
-
+    color: var(--bs-dark);
 
     &.sidebar-button-primary {
       color: var(--bs-light);
