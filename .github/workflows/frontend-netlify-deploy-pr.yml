@@ -2,11 +2,11 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-name: deploy
+name: Frontend / Deploy PR to Netlify
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ develop ]
     types:
       - labeled
       - opened
@@ -14,7 +14,7 @@ on:
       - reopened
       - ready_for_review
   pull_request_target:
-    branches: [ main ]
+    branches: [ develop ]
     types:
       - labeled
       - opened
@@ -30,59 +30,100 @@ env:
   NETLIFY_VERSION: 12.0.11
   NODE_VERSION: 18
 
+defaults:
+  run:
+    working-directory: frontend
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  changes:
+    name: Check for frontend changes
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      changed: ${{ steps.changed.outputs.files }}
+    steps:
+      - name: Check for frontend file changes
+        uses: dorny/paths-filter@v2
+        id: changed
+        with:
+          filters: |
+            files:
+              - 'frontend/**'
+              - '.github/**'
+              - '.yarn/**'
+
   deploy:
-    if: (github.event.pull_request.draft == false || contains( github.event.pull_request.labels.*.name, 'FORCE DEPLOY')) && (github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork
+    needs: changes
+    if: "github.event.pull_request.draft == false || contains( github.event.pull_request.labels.*.name, 'ci: force deployment') && (github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
     runs-on: ubuntu-latest
     name: Deploys to netlify
     env:
       DEPLOY_URL: "https://${{ github.event.number }}--hedgedoc-ui-test.netlify.app/"
     steps:
       - name: Checkout repository
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Get yarn cache directory path
+        if: needs.changes.outputs.changed == 'true'
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
       - name: Cache yarn cache
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/cache@v3
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('frontend/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-${{ env.NODE_VERSION }}
 
       - name: Set up NodeJS
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache-dependency-path: frontend/yarn.lock
+          cache: 'yarn'
 
       - name: Patch intro.md to include netlify banner.
+        if: needs.changes.outputs.changed == 'true'
         run: cp netlify/intro.md public/public/intro.md
 
       - name: Patch motd.md to include privacy policy.
+        if: needs.changes.outputs.changed == 'true'
         run: cp netlify/motd.md public/public/motd.md
 
       - name: Patch version.json to include git hash
+        if: needs.changes.outputs.changed == 'true'
         run: jq ".version = \"0.0.0+${GITHUB_SHA:0:8}\"" src/version.json > src/_version.json && mv src/_version.json src/version.json
 
       - name: Patch base URL
+        if: needs.changes.outputs.changed == 'true'
         run: echo "HD_EDITOR_BASE_URL=\"${{ env.DEPLOY_URL }}\"" >> .env.production
 
       - name: Install dependencies
+        if: needs.changes.outputs.changed == 'true'
         run: yarn install --immutable
 
       - name: Build app
+        if: needs.changes.outputs.changed == 'true'
         run: yarn build:mock
 
       - name: Remove Next.js cache to avoid it being deployed
+        if: needs.changes.outputs.changed == 'true'
         run: rm -r .next/cache
 
       - name: Mark GitHub deployment as started
+        if: needs.changes.outputs.changed == 'true'
         uses: bobheadxi/deployments@v1.3.0
         id: github-deployment
         with:
@@ -93,15 +134,17 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Install netlify CLI
+        if: needs.changes.outputs.changed == 'true'
         run: "npm install -g netlify-cli@${{ env.NETLIFY_VERSION }}"
 
       - name: Run netlify CLI
+        if: needs.changes.outputs.changed == 'true'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: "netlify deploy --build --context deploy-preview --alias \"${{ github.event.number }}\" --json --message \"PR #${{ github.event.number }}\""
 
       - name: Mark GitHub deployment as finished
-        if: always()
+        if: needs.changes.outputs.changed == 'true'
         uses: bobheadxi/deployments@v1.3.0
         with:
           step: finish

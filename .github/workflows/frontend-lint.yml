@@ -2,45 +2,76 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-name: lint
+name: Frontend / Lint
 
 on:
   push:
-    branches: [ main ]
+    branches: [ develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ develop ]
 
 env:
   NODE_VERSION: 18
 
+defaults:
+  run:
+    working-directory: frontend
+
 jobs:
+  changes:
+    name: Check for frontend changes
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      changed: ${{ steps.changed.outputs.files }}
+    steps:
+      - name: Check for frontend file changes
+        uses: dorny/paths-filter@v2
+        id: changed
+        with:
+          filters: |
+            files:
+              - 'frontend/**'
+              - '.github/**'
+              - '.yarn/**'
+
   lint:
+    needs: changes
     runs-on: ubuntu-latest
     name: Lints all .ts and .tsx files
     steps:
       - name: Checkout repository
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/checkout@v3
 
       - name: Get yarn cache directory path
+        if: needs.changes.outputs.changed == 'true'
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
       - name: Cache yarn cache
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/cache@v3
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('frontend/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-${{ env.NODE_VERSION }}
 
       - name: Set up NodeJS
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache-dependency-path: frontend/yarn.lock
+          cache: 'yarn'
 
       - name: Install dependencies
+        if: needs.changes.outputs.changed == 'true'
         run: yarn install --immutable
 
       - name: Lint code
+        if: needs.changes.outputs.changed == 'true'
         run: yarn lint

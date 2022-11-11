@@ -2,16 +2,39 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-name: test, build
+name: Frontend / Run unit tests & build
 
 on:
   push:
-    branches: [ main ]
+    branches: [ develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ develop ]
+
+defaults:
+  run:
+    working-directory: frontend
 
 jobs:
+  changes:
+    name: Check for frontend changes
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      changed: ${{ steps.changed.outputs.files }}
+    steps:
+      - name: Check for frontend file changes
+        uses: dorny/paths-filter@v2
+        id: changed
+        with:
+          filters: |
+            files:
+              - 'frontend/**'
+              - '.github/**'
+              - '.yarn/**'
+
   build:
+    needs: changes
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -19,31 +42,40 @@ jobs:
     name: Test and build with NodeJS ${{ matrix.node }}
     steps:
       - name: Checkout repository
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/checkout@v3
 
       - name: Get yarn cache directory path
+        if: needs.changes.outputs.changed == 'true'
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
       - name: Cache yarn cache
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/cache@v3
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-${{ matrix.node }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ matrix.node }}-yarn-${{ hashFiles('frontend/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-${{ matrix.node }}
 
       - name: Set up NodeJS
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
+          cache-dependency-path: frontend/yarn.lock
+          cache: 'yarn'
 
       - name: Install dependencies
+        if: needs.changes.outputs.changed == 'true'
         run: yarn install --immutable
 
       - name: Test Project
+        if: needs.changes.outputs.changed == 'true'
         run: yarn test:ci
 
       - name: Build project
+        if: needs.changes.outputs.changed == 'true'
         run: yarn build:mock

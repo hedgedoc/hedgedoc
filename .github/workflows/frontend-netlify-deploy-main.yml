@@ -2,67 +2,109 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-name: deploy
+name: Frontend / Deploy develop branch to Netlify
 
 on:
   push:
-    branches: [ main ]
+    branches: [ develop ]
 
 env:
   NETLIFY_VERSION: 12.0.11
   NODE_VERSION: 18
 
+defaults:
+  run:
+    working-directory: frontend
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  changes:
+    name: Check for frontend changes
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      changed: ${{ steps.changed.outputs.files }}
+    steps:
+      - name: Check for frontend file changes
+        uses: dorny/paths-filter@v2
+        id: changed
+        with:
+          filters: |
+            files:
+              - 'frontend/**'
+              - '.github/**'
+              - '.yarn/**'
+
   deploy:
+    needs: changes
     runs-on: ubuntu-latest
     name: Deploys to netlify
     steps:
       - name: Checkout repository
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/checkout@v3
 
       - name: Get yarn cache directory path
+        if: needs.changes.outputs.changed == 'true'
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
       - name: Cache yarn cache
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/cache@v3
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('frontend/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-${{ env.NODE_VERSION }}
 
       - name: Set up NodeJS
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache-dependency-path: frontend/yarn.lock
+          cache: 'yarn'
 
       - name: Patch intro.md to include netlify banner.
+        if: needs.changes.outputs.changed == 'true'
         run: cp netlify/intro.md public/public/intro.md
 
       - name: Patch motd.md to include privacy policy.
+        if: needs.changes.outputs.changed == 'true'
         run: cp netlify/motd.md public/public/motd.md
 
       - name: Patch version.json to include git hash
+        if: needs.changes.outputs.changed == 'true'
         run: jq ".version = \"0.0.0+${GITHUB_SHA:0:8}\"" src/version.json > src/_version.json && mv src/_version.json src/version.json
 
       - name: Patch base URL
+        if: needs.changes.outputs.changed == 'true'
         run: echo "HD_EDITOR_BASE_URL=\"https://hedgedoc.dev/\"" >> .env.production
 
       - name: Install dependencies
+        if: needs.changes.outputs.changed == 'true'
         run: yarn install --immutable
 
       - name: Build app
+        if: needs.changes.outputs.changed == 'true'
         run: yarn build:mock
 
       - name: Remove Next.js cache to avoid it being deployed
+        if: needs.changes.outputs.changed == 'true'
         run: rm -r .next/cache
 
       - name: Install netlify CLI
+        if: needs.changes.outputs.changed == 'true'
         run: "npm install -g netlify-cli@${{ env.NETLIFY_VERSION }}"
 
       - name: Run netlify CLI deployment
+        if: needs.changes.outputs.changed == 'true'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: "netlify deploy --build --prod --message \"${{ github.event.head_commit.id }}: ${{ github.event.head_commit.message }}\""
