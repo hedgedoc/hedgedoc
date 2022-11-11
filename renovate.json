@@ -6,6 +6,8 @@
     "group:socketio",
     "group:linters",
     "group:test",
+    "group:reactMonorepo",
+    "group:typescript-eslintMonorepo",
     "docker:enableMajor",
     "docker:pinDigests",
     "default:automergeDigest",
@@ -29,6 +31,74 @@
       "packagePatterns": [
         "^@nestjs/"
       ]
+    },
+    {
+      "groupName": "Graphviz",
+      "packagePatterns": [
+        "d3-graphviz",
+        "@hpcc-js/wasm"
+      ]
+    },
+    {
+      "groupName": "cypress",
+      "matchPackagePatterns": [
+        "^@cypress",
+        "^cypress"
+      ]
+    },
+    {
+      "groupName": "vega",
+      "packagePatterns": [
+        "vega",
+        "vega-embed",
+        "vega-lite"
+      ]
+    },
+    {
+      "groupName": "i18next",
+      "matchPackagePatterns": [
+        "i18next",
+        "i18next-browser-languagedetector",
+        "i18next-http-backend",
+        "react-i18next"
+      ]
+    },
+    {
+      "groupName": "CodeMirror",
+      "matchPackagePatterns": [
+        "^@codemirror/",
+        "@uiw/react-codemirror"
+      ]
+    },
+    {
+      "groupName": "testing-library",
+      "matchPackagePatterns": [
+        "^@testing-library/"
+      ]
+    }
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": [
+        ".github/workflows/deploy-main.yml$",
+        ".github/workflows/deploy-pr.yml$"
+      ],
+      "matchStrings": [
+        "NETLIFY_VERSION=(?<currentValue>.*?)\\n"
+      ],
+      "datasourceTemplate": "npm",
+      "depNameTemplate": "netlify-cli"
+    },
+    {
+      "fileMatch": [
+        ".github/workflows/deploy-main.yml$",
+        ".github/workflows/deploy-pr.yml$"
+      ],
+      "matchStrings": [
+        "NODE_VERSION=(?<currentValue>.*?)\\n"
+      ],
+      "datasourceTemplate": "node",
+      "depNameTemplate": "node version in workflows"
     }
   ]
 }
