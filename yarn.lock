@@ -2018,7 +2018,7 @@ __metadata:
     markdown-it-sub: 1.0.0
     markdown-it-sup: 1.0.0
     markdown-it-toc-done-right: 4.2.0
-    mermaid: 9.2.0
+    mermaid: 9.2.2
     next: 12.3.2
     prettier: 2.7.1
     react: 18.2.0
@@ -9678,9 +9678,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mermaid@npm:9.2.0":
-  version: 9.2.0
-  resolution: "mermaid@npm:9.2.0"
+"mermaid@npm:9.2.2":
+  version: 9.2.2
+  resolution: "mermaid@npm:9.2.2"
   dependencies:
     "@braintree/sanitize-url": ^6.0.0
     d3: ^7.0.0
@@ -9695,7 +9695,7 @@ __metadata:
     non-layered-tidy-tree-layout: ^2.0.2
     stylis: ^4.1.2
     uuid: ^9.0.0
-  checksum: 23cf5ec4465cfb828053cea51e0c641c0925b60357b1e0dc3162bbb248bcd129c6593732d6e9bb465d781fd19f46bc94c3352459c2ac94c97add7a007de8a0b3
+  checksum: 866573c13d92af3098dbbeb7afbd852645b641a45f8106a5bcbbd3eaf8da33453aac4471da8149f15f29126e4ea86c747d81e8fe6de8f877b6d178f83639edc4
   languageName: node
   linkType: hard
 
