@@ -19,49 +19,94 @@ defaults:
     working-directory: backend
 
 jobs:
+  changes:
+    name: Check for backend changes
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      changed: ${{ steps.changed.outputs.files }}
+    steps:
+      - name: Check for backend file changes
+        uses: dorny/paths-filter@v2
+        id: changed
+        with:
+          filters: |
+            files:
+              - 'backend/**'
+              - '.github/**'
+              - '.yarn/**'
+
   lint:
+    needs: changes
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        if: needs.changes.outputs.changed == 'true'
+
       - name: Use Node.js ${{ env.NODEJS_VERSION }}
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
           cache-dependency-path: backend/yarn.lock
           node-version: ${{ env.NODEJS_VERSION }}
           cache: 'yarn'
+
       - run: yarn install --immutable
+        if: needs.changes.outputs.changed == 'true'
+
       - run: yarn run lint
+        if: needs.changes.outputs.changed == 'true'
+
   build:
+    needs: changes
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [ 14.x, 16.x, 18.x ]
     steps:
       - uses: actions/checkout@v3
+        if: needs.changes.outputs.changed == 'true'
+
       - name: Use Node.js ${{ matrix.node-version }}
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
           cache-dependency-path: backend/yarn.lock
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
+
       - run: yarn install --immutable
+        if: needs.changes.outputs.changed == 'true'
+
       - run: yarn run build
+        if: needs.changes.outputs.changed == 'true'
 
   integration-tests:
+    needs: changes
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        if: needs.changes.outputs.changed == 'true'
         with:
           fetch-depth: 0
+
       - name: Use Node.js ${{ env.NODEJS_VERSION }}
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
           cache-dependency-path: backend/yarn.lock
           node-version: ${{ env.NODEJS_VERSION }}
           cache: 'yarn'
+
       - run: yarn install --immutable
+        if: needs.changes.outputs.changed == 'true'
+
       - run: yarn run test:cov
+        if: needs.changes.outputs.changed == 'true'
+
       - uses: codecov/codecov-action@v3
+        if: needs.changes.outputs.changed == 'true'
         with:
           directory: backend/coverage
           flags: integration-tests

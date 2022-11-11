@@ -18,26 +18,55 @@ defaults:
     working-directory: backend
 
 jobs:
+  changes:
+    name: Check for backend changes
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      changed: ${{ steps.changed.outputs.files }}
+    steps:
+      - name: Check for backend file changes
+        uses: dorny/paths-filter@v2
+        id: changed
+        with:
+          filters: |
+            files:
+              - 'backend/**'
+              - '.github/**'
+              - '.yarn/**'
+
   sqlite: # This run also collects coverage
+    needs: changes
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        if: needs.changes.outputs.changed == 'true'
         with:
           fetch-depth: 0
+
       - name: Use Node.js ${{ env.NODEJS_VERSION }}
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
           cache-dependency-path: backend/yarn.lock
           node-version: ${{ env.NODEJS_VERSION }}
           cache: 'yarn'
+
       - run: yarn install --immutable
+        if: needs.changes.outputs.changed == 'true'
+
       - run: yarn run test:e2e:cov
+        if: needs.changes.outputs.changed == 'true'
+
       - uses: codecov/codecov-action@v3
+        if: needs.changes.outputs.changed == 'true'
         with:
           directory: backend/coverage-e2e
           flags: e2e-tests
 
   mariadb:
+    needs: changes
     runs-on: ubuntu-latest
     services:
       mariadb:
@@ -52,20 +81,27 @@ jobs:
           - 3306:3306
     steps:
       - uses: actions/checkout@v3
+        if: needs.changes.outputs.changed == 'true'
         with:
           fetch-depth: 0
+
       - name: Use Node.js ${{ env.NODEJS_VERSION }}
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
           cache-dependency-path: backend/yarn.lock
           node-version: ${{ env.NODEJS_VERSION }}
           cache: 'yarn'
       - run: yarn install --immutable
+        if: needs.changes.outputs.changed == 'true'
+
       - run: yarn run test:e2e
+        if: needs.changes.outputs.changed == 'true'
         env:
           HEDGEDOC_TEST_DB_TYPE: mariadb
 
   postgres:
+    needs: changes
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -78,15 +114,22 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@v3
+        if: needs.changes.outputs.changed == 'true'
         with:
           fetch-depth: 0
+
       - name: Use Node.js ${{ env.NODEJS_VERSION }}
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
           cache-dependency-path: backend/yarn.lock
           node-version: ${{ env.NODEJS_VERSION }}
           cache: 'yarn'
+
       - run: yarn install --immutable
+        if: needs.changes.outputs.changed == 'true'
+
       - run: yarn run test:e2e
+        if: needs.changes.outputs.changed == 'true'
         env:
           HEDGEDOC_TEST_DB_TYPE: postgres
