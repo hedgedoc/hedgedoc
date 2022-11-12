@@ -1981,7 +1981,7 @@ __metadata:
     fork-awesome: 1.2.0
     highlight.js: 11.6.0
     htmlparser2: 8.0.1
-    i18next: 22.0.4
+    i18next: 22.0.5
     i18next-browser-languagedetector: 7.0.1
     i18next-resources-to-backend: 1.0.0
     jest: 29.3.1
@@ -7908,12 +7908,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:22.0.4":
-  version: 22.0.4
-  resolution: "i18next@npm:22.0.4"
+"i18next@npm:22.0.5":
+  version: 22.0.5
+  resolution: "i18next@npm:22.0.5"
   dependencies:
     "@babel/runtime": ^7.17.2
-  checksum: aa49e6e48583833ee673c0dd9568081a5e15fde9549aa3e47a99ad91d3fdb7469f8a315864fc45ec466b1e60caa00d5fc8371e47840068048b4ab79a69dc2b19
+  checksum: fb0233ac096456a1a2f85ebeb08dbec26fe9f86056a5c082b8e86b1eb2b4443fd7c582fafddca86afab43583e9e7a92a2c215a29a7ac1e37eb5cb61b1e0c6173
   languageName: node
   linkType: hard
 
