@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useCallback, useMemo, useState } from 'react'
 import type { FormEvent } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Form, InputGroup } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { useTranslation } from 'react-i18next'
@@ -50,7 +50,7 @@ export const AliasesAddForm: React.FC = () => {
       <InputGroup className={'me-1 mb-1'} hasValidation={true}>
         <Form.Control
           value={newAlias}
-          placeholder={t('editor.modal.aliases.addAlias')}
+          placeholder={t('editor.modal.aliases.addAlias') ?? undefined}
           onChange={onNewAliasInputChange}
           isInvalid={!newAliasValid}
           required={true}
@@ -61,7 +61,7 @@ export const AliasesAddForm: React.FC = () => {
           variant='light'
           className={'text-secondary ms-2'}
           disabled={!newAliasValid || newAlias === ''}
-          title={t('editor.modal.aliases.addAlias')}
+          title={t('editor.modal.aliases.addAlias') ?? undefined}
           {...testId('addAliasButton')}>
           <ForkAwesomeIcon icon={'plus'} />
         </Button>

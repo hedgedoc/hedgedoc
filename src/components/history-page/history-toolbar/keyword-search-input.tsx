@@ -26,8 +26,8 @@ export const KeywordSearchInput: React.FC = () => {
 
   return (
     <FormControl
-      placeholder={t('landing.history.toolbar.searchKeywords')}
-      aria-label={t('landing.history.toolbar.searchKeywords')}
+      placeholder={t('landing.history.toolbar.searchKeywords') ?? undefined}
+      aria-label={t('landing.history.toolbar.searchKeywords') ?? undefined}
       onChange={onChange}
       value={historyToolbarState.search}
     />

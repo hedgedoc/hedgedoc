@@ -34,8 +34,8 @@ export const PermissionAddEntryField: React.FC<PermissionAddEntryFieldProps> = (
   return (
     <li className={'list-group-item'}>
       <InputGroup className={'me-1 mb-1'}>
-        <FormControl value={newEntryIdentifier} placeholder={t(i18nKey)} onChange={onChange} />
-        <Button variant='light' className={'text-secondary ms-2'} title={t(i18nKey)} onClick={onSubmit}>
+        <FormControl value={newEntryIdentifier} placeholder={t(i18nKey) ?? undefined} onChange={onChange} />
+        <Button variant='light' className={'text-secondary ms-2'} title={t(i18nKey) ?? undefined} onClick={onSubmit}>
           <ForkAwesomeIcon icon={'plus'} />
         </Button>
       </InputGroup>

@@ -43,7 +43,7 @@ export const TagSelectionInput: React.FC = () => {
       id={'tagsSelection'}
       options={tags}
       multiple={true}
-      placeholder={t('landing.history.toolbar.selectTags')}
+      placeholder={t('landing.history.toolbar.selectTags') ?? undefined}
       onChange={onChange}
       selected={historyToolbarState.selectedTags}
     />

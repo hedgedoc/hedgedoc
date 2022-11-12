@@ -23,7 +23,7 @@ export const HelpButton: React.FC = () => {
     <Fragment>
       <Button
         {...cypressId('editor-help-button')}
-        title={t('editor.documentBar.help')}
+        title={t('editor.documentBar.help') ?? undefined}
         className='ms-2 text-secondary'
         size='sm'
         variant='outline-light'

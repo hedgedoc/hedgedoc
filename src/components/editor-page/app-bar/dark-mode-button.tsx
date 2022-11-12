@@ -26,13 +26,13 @@ const DarkModeButton: React.FC = () => {
       <Button
         onClick={enable}
         variant={darkModeEnabled ? 'secondary' : 'outline-secondary'}
-        title={t('editor.darkMode.switchToDark')}>
+        title={t('editor.darkMode.switchToDark') ?? undefined}>
         <ForkAwesomeIcon icon='moon' />
       </Button>
       <Button
         onClick={disable}
         variant={darkModeEnabled ? 'outline-secondary' : 'secondary'}
-        title={t('editor.darkMode.switchToLight')}>
+        title={t('editor.darkMode.switchToLight') ?? undefined}>
         <ForkAwesomeIcon icon='sun-o' />
       </Button>
     </ButtonGroup>

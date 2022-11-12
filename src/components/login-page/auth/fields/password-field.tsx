@@ -24,7 +24,7 @@ export const PasswordField: React.FC<AuthFieldProps> = ({ onChange, invalid }) =
         isInvalid={invalid}
         type='password'
         size='sm'
-        placeholder={t('login.auth.password')}
+        placeholder={t('login.auth.password') ?? undefined}
         onChange={onChange}
         className='bg-dark text-light'
         autoComplete='current-password'

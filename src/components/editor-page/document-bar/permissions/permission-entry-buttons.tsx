@@ -68,18 +68,22 @@ export const PermissionEntryButtons: React.FC<PermissionEntryButtonsProps> = ({
 
   return (
     <div>
-      <Button variant='light' className={'text-danger me-2'} title={t(i18nKeys.remove, { name })} onClick={onRemove}>
+      <Button
+        variant='light'
+        className={'text-danger me-2'}
+        title={t(i18nKeys.remove, { name }) ?? undefined}
+        onClick={onRemove}>
         <ForkAwesomeIcon icon={'times'} />
       </Button>
       <ToggleButtonGroup type='radio' name='edit-mode' value={currentSetting}>
         <Button
-          title={t(i18nKeys.setReadOnly, { name })}
+          title={t(i18nKeys.setReadOnly, { name }) ?? undefined}
           variant={currentSetting === AccessLevel.READ_ONLY ? 'secondary' : 'outline-secondary'}
           onClick={onSetReadOnly}>
           <ForkAwesomeIcon icon='eye' />
         </Button>
         <Button
-          title={t(i18nKeys.setWriteable, { name })}
+          title={t(i18nKeys.setWriteable, { name }) ?? undefined}
           variant={currentSetting === AccessLevel.WRITEABLE ? 'secondary' : 'outline-secondary'}
           onClick={onSetWriteable}>
           <ForkAwesomeIcon icon='pencil' />

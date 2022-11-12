@@ -28,13 +28,13 @@ export const SyncScrollButtons: React.FC = () => {
       <Button
         onClick={enable}
         variant={syncScrollEnabled ? 'secondary' : 'outline-secondary'}
-        title={t('editor.appBar.syncScroll.enable')}>
+        title={t('editor.appBar.syncScroll.enable') ?? undefined}>
         <EnabledScroll />
       </Button>
       <Button
         onClick={disable}
         variant={syncScrollEnabled ? 'outline-secondary' : 'secondary'}
-        title={t('editor.appBar.syncScroll.disable')}>
+        title={t('editor.appBar.syncScroll.disable') ?? undefined}>
         <DisabledScroll />
       </Button>
     </ButtonGroup>

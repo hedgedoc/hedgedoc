@@ -48,7 +48,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
             className={'me-2 text-warning'}
             variant='light'
             disabled={true}
-            title={t('editor.modal.aliases.isPrimary')}
+            title={t('editor.modal.aliases.isPrimary') ?? undefined}
             {...testId('aliasIsPrimary')}>
             <ForkAwesomeIcon icon={'star'} />
           </Button>
@@ -57,7 +57,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
           <Button
             className={'me-2'}
             variant='light'
-            title={t('editor.modal.aliases.makePrimary')}
+            title={t('editor.modal.aliases.makePrimary') ?? undefined}
             onClick={onMakePrimaryClick}
             {...testId('aliasButtonMakePrimary')}>
             <ForkAwesomeIcon icon={'star-o'} />
@@ -66,7 +66,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
         <Button
           variant='light'
           className={'text-danger'}
-          title={t('editor.modal.aliases.removeAlias')}
+          title={t('editor.modal.aliases.removeAlias') ?? undefined}
           onClick={onRemoveClick}
           {...testId('aliasButtonRemove')}>
           <ForkAwesomeIcon icon={'times'} />

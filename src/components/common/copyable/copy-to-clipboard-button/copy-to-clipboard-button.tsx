@@ -44,7 +44,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButtonProps> = ({
         ref={button}
         size={size}
         variant={variant}
-        title={t('renderer.highlightCode.copyCode')}
+        title={t('renderer.highlightCode.copyCode') ?? undefined}
         onClick={copyToClipboard}
         {...cypressId(props)}>
         <ForkAwesomeIcon icon='files-o' />

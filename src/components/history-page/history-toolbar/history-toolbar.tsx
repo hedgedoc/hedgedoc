@@ -89,7 +89,10 @@ export const HistoryToolbar: React.FC = () => {
       </div>
       <ShowIf condition={userExists}>
         <div className={'me-1 mb-1'}>
-          <Button variant={'light'} title={t('landing.history.toolbar.uploadAll')} onClick={onUploadAllToRemote}>
+          <Button
+            variant={'light'}
+            title={t('landing.history.toolbar.uploadAll') ?? undefined}
+            onClick={onUploadAllToRemote}>
             <ForkAwesomeIcon icon='cloud-upload' />
           </Button>
         </div>

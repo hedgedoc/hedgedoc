@@ -24,7 +24,7 @@ export const UsernameField: React.FC<AuthFieldProps> = ({ onChange, invalid }) =
         isInvalid={invalid}
         type='text'
         size='sm'
-        placeholder={t('login.auth.username')}
+        placeholder={t('login.auth.username') ?? undefined}
         onChange={onChange}
         className='bg-dark text-light'
         autoComplete='username'

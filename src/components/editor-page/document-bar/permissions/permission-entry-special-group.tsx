@@ -68,19 +68,19 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
       <div>
         <ToggleButtonGroup type='radio' name='edit-mode'>
           <Button
-            title={t('editor.modal.permissions.denyGroup', { name })}
+            title={t('editor.modal.permissions.denyGroup', { name }) ?? undefined}
             variant={level === AccessLevel.NONE ? 'secondary' : 'outline-secondary'}
             onClick={onSetEntryDenied}>
             <ForkAwesomeIcon icon={'ban'} />
           </Button>
           <Button
-            title={t('editor.modal.permissions.viewOnlyGroup', { name })}
+            title={t('editor.modal.permissions.viewOnlyGroup', { name }) ?? undefined}
             variant={level === AccessLevel.READ_ONLY ? 'secondary' : 'outline-secondary'}
             onClick={onSetEntryReadOnly}>
             <ForkAwesomeIcon icon={'eye'} />
           </Button>
           <Button
-            title={t('editor.modal.permissions.editGroup', { name })}
+            title={t('editor.modal.permissions.editGroup', { name }) ?? undefined}
             variant={level === AccessLevel.WRITEABLE ? 'secondary' : 'outline-secondary'}
             onClick={() => onSetEntryWriteable}>
             <ForkAwesomeIcon icon={'pencil'} />

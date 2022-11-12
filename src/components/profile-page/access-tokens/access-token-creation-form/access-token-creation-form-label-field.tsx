@@ -38,7 +38,7 @@ export const AccessTokenCreationFormLabelField: React.FC<AccessTokenCreationForm
       <Form.Control
         type='text'
         size='sm'
-        placeholder={t('profile.accessTokens.label')}
+        placeholder={t('profile.accessTokens.label') ?? undefined}
         value={formValues.label}
         className='bg-dark text-light'
         onChange={onChangeLabel}

@@ -74,7 +74,7 @@ export const CustomTableSizeModal: React.FC<CustomTableSizeModalProps> = ({ show
         <Form.Control
           type={'number'}
           min={1}
-          placeholder={t('editor.editorToolbar.table.cols')}
+          placeholder={t('editor.editorToolbar.table.cols') ?? undefined}
           isInvalid={tableSize.columns <= 0}
           onChange={onColChange}
         />
@@ -82,7 +82,7 @@ export const CustomTableSizeModal: React.FC<CustomTableSizeModalProps> = ({ show
         <Form.Control
           type={'number'}
           min={1}
-          placeholder={t('editor.editorToolbar.table.rows')}
+          placeholder={t('editor.editorToolbar.table.rows') ?? undefined}
           isInvalid={tableSize.rows <= 0}
           onChange={onRowChange}
         />

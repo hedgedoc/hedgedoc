@@ -37,7 +37,7 @@ export const ClearHistoryButton: React.FC = () => {
     <Fragment>
       <Button
         variant={'light'}
-        title={t('landing.history.toolbar.clear')}
+        title={t('landing.history.toolbar.clear') ?? undefined}
         onClick={showModal}
         {...cypressId('history-clear-button')}>
         <ForkAwesomeIcon icon={'trash'} />

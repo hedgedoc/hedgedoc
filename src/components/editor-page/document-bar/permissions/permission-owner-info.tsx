@@ -27,7 +27,10 @@ export const PermissionOwnerInfo: React.FC<PermissionOwnerInfoProps> = ({ onEdit
   return (
     <Fragment>
       <UserAvatarForUsername username={noteOwner} />
-      <Button variant='light' title={t('editor.modal.permissions.ownerChange.button')} onClick={onEditOwner}>
+      <Button
+        variant='light'
+        title={t('editor.modal.permissions.ownerChange.button') ?? undefined}
+        onClick={onEditOwner}>
         <ForkAwesomeIcon icon={'pencil'} />
       </Button>
     </Fragment>

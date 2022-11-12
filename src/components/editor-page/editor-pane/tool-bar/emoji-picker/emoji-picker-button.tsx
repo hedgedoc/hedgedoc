@@ -61,7 +61,7 @@ export const EmojiPickerButton: React.FC = () => {
         {...cypressId('show-emoji-picker')}
         variant='light'
         onClick={showPicker}
-        title={t('editor.editorToolbar.emoji')}
+        title={t('editor.editorToolbar.emoji') ?? undefined}
         disabled={!changeEditorContent}
         ref={buttonRef}>
         <ForkAwesomeIcon icon='smile-o' />

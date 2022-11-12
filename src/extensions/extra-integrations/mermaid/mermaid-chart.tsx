@@ -60,7 +60,7 @@ export const MermaidChart: React.FC<CodeProps> = ({ code }) => {
       const message = (error as Error).message
       log.error(error)
       diagramContainer.current?.querySelectorAll('svg').forEach((child) => child.remove())
-      throw new Error(message || t('renderer.mermaid.unknownError'))
+      throw new Error(message ?? t('renderer.mermaid.unknownError'))
     }
   }, [code, t])
 

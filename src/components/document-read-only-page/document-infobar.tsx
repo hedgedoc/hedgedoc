@@ -37,7 +37,7 @@ export const DocumentInfobar: React.FC = () => {
               href={`/n/${noteDetails.primaryAddress}`}
               icon={'pencil'}
               className={'text-primary text-decoration-none mx-1'}
-              title={t('views.readOnly.editNote')}
+              title={t('views.readOnly.editNote') ?? undefined}
             />
           </ShowIf>
         </span>

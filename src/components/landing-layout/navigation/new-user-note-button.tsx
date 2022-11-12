@@ -19,7 +19,7 @@ export const NewUserNoteButton: React.FC = () => {
   return (
     <Link href={'/new'} passHref={true}>
       <Button
-        title={t('landing.navigation.newNote')}
+        title={t('landing.navigation.newNote') ?? undefined}
         variant='primary'
         size='sm'
         className='d-inline-flex align-items-center'

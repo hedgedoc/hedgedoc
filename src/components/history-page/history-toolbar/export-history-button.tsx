@@ -17,7 +17,7 @@ export const ExportHistoryButton: React.FC = () => {
   const { t } = useTranslation()
 
   return (
-    <Button variant={'light'} title={t('landing.history.toolbar.export')} onClick={downloadHistory}>
+    <Button variant={'light'} title={t('landing.history.toolbar.export') ?? undefined} onClick={downloadHistory}>
       <ForkAwesomeIcon icon='download' />
     </Button>
   )

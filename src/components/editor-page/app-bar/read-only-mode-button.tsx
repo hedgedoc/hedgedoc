@@ -22,7 +22,7 @@ export const ReadOnlyModeButton: React.FC = () => {
     <Link href={`/s/${noteIdentifier}`}>
       <a target='_blank'>
         <Button
-          title={t('editor.documentBar.readOnlyMode')}
+          title={t('editor.documentBar.readOnlyMode') ?? undefined}
           className='ms-2 text-secondary'
           size='sm'
           variant='outline-light'>

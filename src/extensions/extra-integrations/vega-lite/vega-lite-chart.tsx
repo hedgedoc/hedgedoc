@@ -46,8 +46,8 @@ export const VegaLiteChart: React.FC<CodeProps> = ({ code }) => {
         editor: false
       },
       i18n: {
-        PNG_ACTION: t('renderer.vega-lite.png'),
-        SVG_ACTION: t('renderer.vega-lite.svg')
+        PNG_ACTION: t('renderer.vega-lite.png') ?? undefined,
+        SVG_ACTION: t('renderer.vega-lite.svg') ?? undefined
       }
     })
   }, [code, vegaEmbed])

@@ -40,7 +40,11 @@ export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props })
   return (
     <ShowIf condition={authProviders.length > 0}>
       <Link href={loginLink} passHref={true}>
-        <Button title={t('login.signIn')} {...cypressId('sign-in-button')} variant={variant || 'success'} {...props}>
+        <Button
+          title={t('login.signIn') ?? undefined}
+          {...cypressId('sign-in-button')}
+          variant={variant || 'success'}
+          {...props}>
           <Trans i18nKey='login.signIn' />
         </Button>
       </Link>

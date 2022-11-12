@@ -32,7 +32,7 @@ export const HistoryViewModeToggleButton: React.FC = () => {
   return (
     <ToggleButtonGroup type='radio' name='options' dir='auto' className={'button-height'} onChange={onViewStateChange}>
       <Button
-        title={t('landing.history.toolbar.cards')}
+        title={t('landing.history.toolbar.cards') ?? undefined}
         variant={historyToolbarState.viewState === ViewStateEnum.CARD ? 'light' : 'outline-light'}
         onClick={() => onViewStateChange(ViewStateEnum.CARD)}>
         <ForkAwesomeIcon icon={'sticky-note'} className={'fa-fix-line-height'} />
@@ -40,7 +40,7 @@ export const HistoryViewModeToggleButton: React.FC = () => {
       <Button
         {...cypressId('history-mode-table')}
         variant={historyToolbarState.viewState === ViewStateEnum.TABLE ? 'light' : 'outline-light'}
-        title={t('landing.history.toolbar.table')}
+        title={t('landing.history.toolbar.table') ?? undefined}
         onClick={() => onViewStateChange(ViewStateEnum.TABLE)}>
         <ForkAwesomeIcon icon={'table'} className={'fa-fix-line-height'} />
       </Button>
