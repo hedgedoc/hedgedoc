@@ -1930,7 +1930,7 @@ __metadata:
     "@testing-library/user-event": 14.4.3
     "@types/d3-graphviz": 2.6.7
     "@types/diff": 5.0.2
-    "@types/dompurify": 2.3.4
+    "@types/dompurify": 2.4.0
     "@types/jest": 29.2.2
     "@types/js-yaml": 4.0.5
     "@types/katex": 0.14.0
@@ -3272,12 +3272,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/dompurify@npm:2.3.4":
-  version: 2.3.4
-  resolution: "@types/dompurify@npm:2.3.4"
+"@types/dompurify@npm:2.4.0":
+  version: 2.4.0
+  resolution: "@types/dompurify@npm:2.4.0"
   dependencies:
     "@types/trusted-types": "*"
-  checksum: ea55678bc9fd32fcdae904ca191f2b8cc5b475277937e5e4c024690b0c3b9c73accfb7391f56d26d0f53fcff496a013773293e189a07a79afdd2b2ed4efacd5f
+  checksum: b48cd81e997794ebc390c7c5bef1a67ec14a6f2f0521973e07e06af186c7583abe114d94d24868c0632b9573f5bd77131a4b76f3fffdf089ba99a4e53dd46c39
   languageName: node
   linkType: hard
 
