@@ -54,13 +54,18 @@ export class AuthController {
   @UseGuards(RegistrationEnabledGuard)
   @Post('local')
   @OpenApi(201, 400, 409)
-  async registerUser(@Body() registerDto: RegisterDto): Promise<void> {
+  async registerUser(
+    @Req() request: RequestWithSession,
+    @Body() registerDto: RegisterDto,
+  ): Promise<void> {
     const user = await this.usersService.createUser(
       registerDto.username,
       registerDto.displayName,
     );
     // ToDo: Figure out how to rollback user if anything with this calls goes wrong
     await this.identityService.createLocalIdentity(user, registerDto.password);
+    request.session.user = registerDto.username;
+    request.session.authProvider = 'local';
   }
 
   @UseGuards(LoginEnabledGuard, SessionGuard)
