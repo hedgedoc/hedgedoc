@@ -9,7 +9,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getDataSourceToken, getRepositoryToken } from '@nestjs/typeorm';
 import assert from 'assert';
 import { Mock } from 'ts-mockery';
-import { DataSource, EntityManager, Repository } from 'typeorm';
+import {
+  DataSource,
+  EntityManager,
+  EntityTarget,
+  Repository,
+  SelectQueryBuilder,
+} from 'typeorm';
 
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
@@ -38,6 +44,8 @@ import { HistoryEntryImportDto } from './history-entry-import.dto';
 import { HistoryEntry } from './history-entry.entity';
 import { HistoryService } from './history.service';
 
+import Any = jasmine.Any;
+
 describe('HistoryService', () => {
   let service: HistoryService;
   let historyRepo: Repository<HistoryEntry>;
@@ -47,16 +55,17 @@ describe('HistoryService', () => {
     [(entityManager: EntityManager) => Promise<void>]
   >;
 
-  class CreateQueryBuilderClass {
-    leftJoinAndSelect: () => CreateQueryBuilderClass;
-    where: () => CreateQueryBuilderClass;
-    orWhere: () => CreateQueryBuilderClass;
-    setParameter: () => CreateQueryBuilderClass;
-    getOne: () => HistoryEntry;
-    getMany: () => HistoryEntry[];
+  class CreateQueryBuilderClass<Entity> {
+    leftJoinAndSelect: () => CreateQueryBuilderClass<Entity>;
+    where: () => CreateQueryBuilderClass<Entity>;
+    orWhere: () => CreateQueryBuilderClass<Entity>;
+    setParameter: () => CreateQueryBuilderClass<Entity>;
+    getOne: () => Entity;
+    getMany: () => Entity[];
   }
 
-  let createQueryBuilderFunc: CreateQueryBuilderClass;
+  let createQueryBuilderFunc: CreateQueryBuilderClass<HistoryEntry>;
+  let createQueryBuilderFuncNote: CreateQueryBuilderClass<Note>;
 
   beforeEach(async () => {
     noteRepo = new Repository<Note>(
@@ -148,12 +157,29 @@ describe('HistoryService', () => {
       getOne: () => historyEntry,
       getMany: () => [historyEntry],
     };
-    createQueryBuilderFunc = createQueryBuilder as CreateQueryBuilderClass;
+    createQueryBuilderFunc =
+      createQueryBuilder as CreateQueryBuilderClass<HistoryEntry>;
+    const note = Note.create(null);
     jest
       .spyOn(historyRepo, 'createQueryBuilder')
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       .mockImplementation(() => createQueryBuilder);
+    const createQueryBuilderNote = {
+      leftJoinAndSelect: () => createQueryBuilderNote,
+      where: () => createQueryBuilderNote,
+      orWhere: () => createQueryBuilderNote,
+      setParameter: () => createQueryBuilderNote,
+      getOne: () => note,
+      getMany: () => [note],
+    };
+    createQueryBuilderFuncNote =
+      createQueryBuilderNote as CreateQueryBuilderClass<Note>;
+    jest
+      .spyOn(historyRepo, 'createQueryBuilder')
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      .mockImplementation(() => createQueryBuilderNote);
   });
 
   it('should be defined', () => {
@@ -388,16 +414,41 @@ describe('HistoryService', () => {
         updatedAt: historyEntryImport.lastVisitedAt,
       };
 
-      const createQueryBuilder = mockSelectQueryBuilderInRepo(noteRepo, note);
+      function createQueryBuilder(entityClass: any): SelectQueryBuilder<any> {
+        if (entityClass.name == 'HistoryEntry') {
+          return mockSelectQueryBuilderInRepo(
+            historyRepo,
+            newlyCreatedHistoryEntry,
+          );
+        } else {
+          return mockSelectQueryBuilderInRepo(noteRepo, note);
+        }
+      }
+      /*
+      class QueryBuilderExtension<Entity> extends SelectQueryBuilder<Entity>{
+        createQueryBuilder(): this {
+          if (Entity.toString() == 'HistoryEntry') {
+            return mockSelectQueryBuilderInRepo(
+              historyRepo,
+              newlyCreatedHistoryEntry,
+            );
+          } else {
+            return mockSelectQueryBuilderInRepo(noteRepo, note);
+          }
+        }
+      }
+      */
+
       const mockedManager = Mock.of<EntityManager>({
         find: jest.fn().mockResolvedValueOnce([historyEntry]),
-        createQueryBuilder: () => createQueryBuilder,
-        remove: jest.fn().mockImplementationOnce(async (_: HistoryEntry) => {
-          // TODO: reimplement checks below
-          //expect(await (await entry.note).aliases).toHaveLength(1);
-          //expect((await (await entry.note).aliases)[0].name).toEqual(alias);
-          //expect(entry.pinStatus).toEqual(false);
-        }),
+        remove: jest
+          .fn()
+          .mockImplementationOnce(async (entry: HistoryEntry) => {
+            expect(await (await entry.note).aliases).toHaveLength(1);
+            expect((await (await entry.note).aliases)[0].name).toEqual(alias);
+            expect(entry.pinStatus).toEqual(true);
+          }),
+        createQueryBuilder: jest.fn(),
         save: jest.fn().mockImplementationOnce(async (entry: HistoryEntry) => {
           expect((await entry.note).aliases).toEqual(
             (await newlyCreatedHistoryEntry.note).aliases,
@@ -406,6 +457,11 @@ describe('HistoryService', () => {
           expect(entry.updatedAt).toEqual(newlyCreatedHistoryEntry.updatedAt);
         }),
       });
+      jest
+        .spyOn(mockedManager, 'createQueryBuilder')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockImplementation((type) => createQueryBuilder(type));
       mockedTransaction.mockImplementation((cb) => cb(mockedManager));
       await service.setHistory(user, [historyEntryImport]);
     });
