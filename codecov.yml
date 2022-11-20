@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: CC0-1.0
 
 ignore:
-  - "src/utils/test-utils"
-  - "src/realtime/realtime-note/test-utils"
+  - "backend/src/utils/test-utils"
+  - "backend/src/realtime/realtime-note/test-utils"
 
 codecov:
   notify:
