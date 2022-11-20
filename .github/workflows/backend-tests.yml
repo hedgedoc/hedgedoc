@@ -27,6 +27,7 @@ jobs:
     outputs:
       changed: ${{ steps.changed.outputs.files }}
     steps:
+      - uses: actions/checkout@v3
       - name: Check for backend file changes
         uses: dorny/paths-filter@v2
         id: changed
