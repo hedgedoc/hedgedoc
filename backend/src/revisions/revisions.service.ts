@@ -153,7 +153,7 @@ export class RevisionsService {
       return undefined;
     }
     const patch = createPatch(
-      'markdownContent',
+      note.publicId,
       latestRevision.content,
       newContent,
     );
