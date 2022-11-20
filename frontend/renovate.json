@@ -1,0 +1,117 @@
+{
+  "extends": [
+    "config:base",
+    ":gitSignOff",
+    ":maintainLockFilesWeekly"
+  ],
+  "labels": [
+    "type: maintenance"
+  ],
+  "packageRules": [
+    {
+      "groupName": "graphviz",
+      "packagePatterns" : [
+        "d3-graphviz",
+        "@hpcc-js/wasm"
+      ]
+    },
+    {
+      "groupName": "linters",
+      "extends": "packages:linters"
+    },
+    {
+      "groupName": "eslint",
+      "extends": "monorepo:typescript-eslint",
+      "matchPackagePatterns": [
+        "^eslint"
+      ]
+    },
+    {
+      "groupName": "cypress",
+      "matchPackagePatterns": [
+        "^@cypress",
+        "^cypress"
+      ]
+    },
+    {
+      "groupName": "react",
+      "extends": "monorepo:react"
+    },
+    {
+      "groupName": "react router",
+      "extends": "monorepo:reactrouter"
+    },
+    {
+      "groupName": "definitely typed",
+      "matchPackagePatterns": [
+        "^@types/"
+      ]
+    },
+    {
+      "groupName": "vega",
+      "packagePatterns": [
+        "vega",
+        "vega-embed",
+        "vega-lite"
+      ]
+    },
+    {
+      "groupName": "vega",
+      "packagePatterns": [
+        "vega",
+        "vega-embed",
+        "vega-lite"
+      ]
+    },
+    {
+      "groupName": "i18next",
+      "matchPackagePatterns": [
+        "i18next",
+        "i18next-browser-languagedetector",
+        "i18next-http-backend",
+        "react-i18next"
+      ]
+    },
+    {
+      "groupName": "jest",
+      "matchPackagePatterns": [
+        "^@testing-library/"
+      ]
+    },
+    {
+      "groupName": "CodeMirror",
+      "matchPackagePatterns": [
+        "^@codemirror/",
+        "@uiw/react-codemirror"
+      ]
+    }
+  ],
+  "prHourlyLimit": 0,
+  "schedule": [
+    "on Saturday"
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": [
+        ".github/workflows/deploy-main.yml$",
+        ".github/workflows/deploy-pr.yml$"
+      ],
+      "matchStrings": [
+        "NETLIFY_VERSION=(?<currentValue>.*?)\\n"
+      ],
+      "datasourceTemplate" : "npm",
+      "depNameTemplate" : "netlify-cli"
+    },
+    {
+      "fileMatch": [
+        ".github/workflows/deploy-main.yml$",
+        ".github/workflows/deploy-pr.yml$"
+      ],
+      "matchStrings": [
+        "NODE_VERSION=(?<currentValue>.*?)\\n"
+      ],
+      "datasourceTemplate" : "node",
+      "depNameTemplate" : "node version in workflows"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+/*!
+ * SPDX-FileCopyrightText: Original code: Copyright (c) 2011-2022 Twitter, Inc. + Copyright (c) 2011-2022 The Bootstrap Authors. Modification: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+//
+// Base styles
+//
+
+.card {
+  // scss-docs-start card-css-vars
+  --#{$prefix}card-border-color: #{$card-border-color};
+  --#{$prefix}card-box-shadow: #{$card-box-shadow};
+  --#{$prefix}card-cap-bg: #{$card-cap-bg};
+  --#{$prefix}card-cap-color: #{$card-cap-color};
+  --#{$prefix}card-color: #{$card-color};
+  --#{$prefix}card-bg: #{$card-bg};
+  // scss-docs-end card-css-vars
+}

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CSV Table Markdown Extension renders a csv codeblock 1`] = `
+<div>
+  <pre>
+    <code
+      class="csv"
+    >
+      a;b;c
+d;e;f
+
+    </code>
+  </pre>
+  
+
+</div>
+`;

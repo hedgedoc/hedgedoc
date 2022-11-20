@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `
+<div>
+  <i
+    class="fa  fa-heart  fa-stack-1x"
+  />
+</div>
+`;
+
+exports[`ForkAwesomeIcon renders a heart correctly 1`] = `
+<div>
+  <i
+    class="fa  fa-heart  "
+  />
+</div>
+`;
+
+exports[`ForkAwesomeIcon renders in size 2x 1`] = `
+<div>
+  <i
+    class="fa  fa-heart  fa-2x"
+  />
+</div>
+`;
+
+exports[`ForkAwesomeIcon renders in size 3x 1`] = `
+<div>
+  <i
+    class="fa  fa-heart  fa-3x"
+  />
+</div>
+`;
+
+exports[`ForkAwesomeIcon renders in size 4x 1`] = `
+<div>
+  <i
+    class="fa  fa-heart  fa-4x"
+  />
+</div>
+`;
+
+exports[`ForkAwesomeIcon renders in size 5x 1`] = `
+<div>
+  <i
+    class="fa  fa-heart  fa-5x"
+  />
+</div>
+`;
+
+exports[`ForkAwesomeIcon renders with additional className 1`] = `
+<div>
+  <i
+    class="fa  fa-heart testClass "
+  />
+</div>
+`;
+
+exports[`ForkAwesomeIcon renders with fixed width icon 1`] = `
+<div>
+  <i
+    class="fa fa-fw fa-heart  "
+  />
+</div>
+`;

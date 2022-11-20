@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AliasesList renders the AliasList sorted 1`] = `
+<div>
+  <span>
+    Alias: 
+    a-test
+     (
+    non-primary
+    )
+  </span>
+  <span>
+    Alias: 
+    b-test
+     (
+    primary
+    )
+  </span>
+  <span>
+    Alias: 
+    z-test
+     (
+    non-primary
+    )
+  </span>
+</div>
+`;

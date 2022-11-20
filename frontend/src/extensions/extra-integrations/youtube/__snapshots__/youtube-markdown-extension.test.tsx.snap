@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`youtube markdown extension doesn't render invalid youtube ids in short code syntax 1`] = `
+<div>
+  <p>
+    {%youtube a %}
+  </p>
+  
+
+</div>
+`;
+
+exports[`youtube markdown extension renders legacy youtube syntax 1`] = `
+<div>
+  <p>
+    <span>
+      this is a mock for the youtube frame with id 
+      XDnhKh5V5XQ
+    </span>
+  </p>
+  
+
+</div>
+`;
+
+exports[`youtube markdown extension renders plain youtube URLs 1`] = `
+<div>
+  <p>
+    <span>
+      this is a mock for the youtube frame with id 
+      XDnhKh5V5XQ
+    </span>
+  </p>
+  
+
+</div>
+`;

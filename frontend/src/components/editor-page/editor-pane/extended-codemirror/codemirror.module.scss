@@ -1,0 +1,31 @@
+/*!
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+.extendedCodemirror {
+  :global(.cm-editor .cm-line) {
+    @import '../../../../../global-styles/variables.module';
+    font-family: "Fira Code", $font-family-emojis, Consolas, monaco, monospace;
+  }
+
+  &.no-ligatures {
+    :global(.cm-editor .cm-line) {
+      font-variant-ligatures: none;
+    }
+  }
+
+  :global {
+    .cm-widgetBuffer {
+      display: none;
+    }
+
+    .cm-diagnostic {
+      max-width: 400px;
+      padding: 10px;
+    }
+
+    //workarounds for line break problem.. see https://github.com/yjs/y-codemirror.next/pull/12
+  }
+}

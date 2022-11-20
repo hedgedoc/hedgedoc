@@ -1,0 +1,191 @@
+{
+    "app": {
+        "slogan": "De beste manier om je kennis vast te leggen en te delen. ",
+        "title": "Samenwerkende markdown notities"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Ontdek alle features",
+            "features": {
+                "collaboration": "Samenwerken met URL",
+                "katex": "Ondersteunt grafieken en KaTeX",
+                "slides": "Ondersteunt presentatiemodus"
+            }
+        },
+        "history": {
+            "noHistory": "Geen geschidenis gevonden",
+            "localHistory": "Hier onder staat de browser geschiedenis",
+            "toolbar": {
+                "selectTags": "Selecteer tags...",
+                "searchKeywords": "Zoeken op keyword...",
+                "sortByTitle": "Sorteren op titel",
+                "sortByLastVisited": "Sorteren op tijd",
+                "export": "Exporteer geschiedenis",
+                "import": "Importeer geschiedenis",
+                "clear": "Verwijder geschiedenis",
+                "refresh": "Ververs geschiedenis"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Introductie",
+            "history": "Geschiedenis",
+            "newGuestNote": "Nieuwe gastnotitie",
+            "newNote": "Nieuwe notitie"
+        },
+        "footer": {
+            "releases": "Versies",
+            "poweredBy": "Powered by <0></0>",
+            "imprint": "Afdruk",
+            "followUs": "Volg ons op <0></0>, <1></1>, <2></2>, <3></3> en <4></4>.",
+            "privacy": "Privacy",
+            "termsOfUse": "Gebruikersvoorwaarden"
+        },
+        "versionInfo": {
+            "sourceCode": "Broncode"
+        }
+    },
+    "profile": {
+        "deleteUser": "Gebruiker verwijderen",
+        "exportUserData": "Gebruikersdata exporteren",
+        "modal": {
+            "deleteUser": {
+                "title": "Gebruiker verwijderen",
+                "message": "Weet je zeker dat je je account wilt verwijderen?",
+                "subMessage": "Dit zal je account verwijderen. Alle notities waar je eigenaar van bent worden verwijderd, samen met alle verwijzingen naar je account."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Contacten",
+                "community": "Lid worden",
+                "meetUsOn": "Ontmoet ons op {{service}}",
+                "helpTranslating": "Help ons vertalen",
+                "reportIssue": "Probleem rapporteren"
+            },
+            "documents": {
+                "title": "Documenten",
+                "yamlMetadata": "YAML Metadata",
+                "slideExample": "Slide Voorbeeld"
+            },
+            "cheatsheet": {
+                "title": "Spiekbrief",
+                "example": "Voorbeeld",
+                "syntax": "Syntax",
+                "underlinedText": "Onderstreepte tekst",
+                "highlightedText": "Gemarkeerde tekst",
+                "externalService": "Uiterlijkheden"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Deze notitie is vergrendeld",
+                "description": "Sorry, alleen de eigenaar kan deze notitie aanpassen."
+            },
+            "limitReached": {
+                "title": "Limiet bereikt",
+                "description": "Sorry, je notitie heeft de maximale lengte bereikt.",
+                "advice": "Verwijder alsjeblieft wat tekst of verdeel het over meerdere notities!"
+            },
+            "incompatible": {
+                "title": "Je client is niet compatibel.",
+                "advice": "Ververs om te updaten."
+            },
+            "newVersion": {
+                "title": "Nieuwe versie beschikbaar!",
+                "linkText": "Bekijk de release notes hier",
+                "advice": "Ververs om de nieuwe features te zien."
+            },
+            "userStateChanged": {
+                "title": "Je gebruikers-status is veranderd.",
+                "description": "Ververs om je nieuwe gebruikers-status te zien."
+            }
+        },
+        "viewMode": {
+            "view": "Bekijken",
+            "both": "Beide"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Vette tekst",
+            "strikethrough": "Doorstreepte tekst",
+            "header": "Koptekst",
+            "code": "Code",
+            "blockquote": "Citaat",
+            "unorderedList": "Ongesorteerde Lijst",
+            "orderedList": "Gesorteerde List",
+            "checkList": "Todo Lijst",
+            "link": "Link",
+            "image": "Afbeelding",
+            "uploadImage": "Afbeelding uploaden"
+        },
+        "documentBar": {
+            "menu": "Menu",
+            "new": "Nieuw",
+            "shareLink": "",
+            "extra": "Extra",
+            "revision": "Versie",
+            "slideMode": "Presentatiemodus",
+            "download": "Downloaden",
+            "help": "Help"
+        },
+        "export": {
+            "rawHtml": "Ruwe HTML"
+        },
+        "import": {
+            "clipboard": "Kladbord"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Imporeren vanaf een Snippet",
+                "selectProject": "Selecteer van beschikbare projecten",
+                "selectSnippet": "Selecteer van beschikbare Snippets"
+            },
+            "gistImport": {
+                "title": "Importeren vanaf een Gist",
+                "insertGistUrl": "Plak je Gist URL hier..."
+            },
+            "snippetExport": {
+                "title": "Exporteren naar Snippet",
+                "visibilityLevel": "Selecteer zichtbaarheids niveau"
+            },
+            "revision": {
+                "title": "Versie",
+                "revertButton": "Terugzetten"
+            },
+            "clipboardImport": {
+                "title": "Importeren from kladbord",
+                "insertMarkdown": "Plak je markdown of webpagina hier..."
+            },
+            "deleteNote": {
+                "question": "Will je deze notitie echt verwijderen?",
+                "warning": "Alle gebruikers zullen hun verbinding verliezen."
+            }
+        }
+    },
+    "common": {
+        "import": "Importeren",
+        "export": "Exporteer",
+        "refresh": "Ververs",
+        "cancel": "Stoppen",
+        "ok": "OK",
+        "or": "of"
+    },
+    "login": {
+        "chooseMethod": "Kies methode",
+        "signInVia": "Log in via {{service}}",
+        "signIn": "Inloggen",
+        "signOut": "Uitloggen",
+        "register": {
+            "title": "Registreren"
+        },
+        "auth": {
+            "error": {}
+        }
+    }
+}

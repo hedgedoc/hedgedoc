@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Emoji Markdown Extension renders a fork awesome code 1`] = `
+<div>
+  <p>
+    <i
+      class="fa fa-circle-thin"
+    />
+  </p>
+  
+
+</div>
+`;
+
+exports[`Emoji Markdown Extension renders a skin tone code 1`] = `
+<div>
+  <p>
+    🏽
+  </p>
+  
+
+</div>
+`;
+
+exports[`Emoji Markdown Extension renders an emoji code 1`] = `
+<div>
+  <p>
+    😄
+  </p>
+  
+
+</div>
+`;

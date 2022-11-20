@@ -1,0 +1,19 @@
+/*!
+ * SPDX-FileCopyrightText: Original code: Copyright (c) 2011-2022 Twitter, Inc. + Copyright (c) 2011-2022 The Bootstrap Authors. Modification: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+//
+// Labels
+//
+
+.form-label {
+  color: $form-label-color;
+}
+
+// For use with horizontal and inline forms, when you need the label (or legend)
+// text to align with the form controls.
+.col-form-label {
+  color: $form-label-color;
+}

@@ -1,0 +1,191 @@
+{
+    "app": {
+        "slogan": "写作与分享 Markdown 的最佳平台。",
+        "title": "Markdown 协作笔记"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "探索所有功能",
+            "features": {
+                "collaboration": "实时协作",
+                "katex": "支持图表与 KaTeX",
+                "slides": "支持幻灯模式"
+            }
+        },
+        "history": {
+            "noHistory": "无历史记录",
+            "localHistory": "以下为来自浏览器的历史",
+            "toolbar": {
+                "selectTags": "选择标签...",
+                "searchKeywords": "搜索关键字...",
+                "sortByTitle": "按标题排序",
+                "sortByLastVisited": "按时间排序",
+                "export": "导出历史",
+                "import": "导入历史",
+                "clear": "清空历史",
+                "refresh": "刷新历史"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "简介",
+            "history": "历史",
+            "newGuestNote": "新建访客笔记",
+            "newNote": "新建笔记"
+        },
+        "footer": {
+            "releases": "版本",
+            "poweredBy": "由 <0></0> 驱动",
+            "imprint": "法律声明",
+            "followUs": "在 <0></0>, <1></1>, <2></2>, <3></3> 和 <4></4> 上关注我们",
+            "privacy": "隐私",
+            "termsOfUse": "使用条款"
+        },
+        "versionInfo": {
+            "sourceCode": "源代码"
+        }
+    },
+    "profile": {
+        "deleteUser": "删除帐户",
+        "exportUserData": "导出用户数据",
+        "modal": {
+            "deleteUser": {
+                "title": "删除帐户",
+                "message": "您确定要删除帐户吗？",
+                "subMessage": "您的帐户、您所拥有的笔记、他人笔记中对您帐户的引用都将被删除。"
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "联系我们",
+                "community": "加入社区",
+                "meetUsOn": "在 {{service}} 上联系我们",
+                "helpTranslating": "帮助我们翻译",
+                "reportIssue": "报告问题"
+            },
+            "documents": {
+                "title": "文档",
+                "yamlMetadata": "YAML 元数据",
+                "slideExample": "幻灯范例"
+            },
+            "cheatsheet": {
+                "title": "速查表",
+                "example": "范例",
+                "syntax": "语法",
+                "underlinedText": "下划线文字",
+                "highlightedText": "高亮文字",
+                "externalService": "外部扩展"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "这篇笔记已被锁定",
+                "description": "抱歉，只有所有者可以编辑这篇笔记。"
+            },
+            "limitReached": {
+                "title": "达到上限",
+                "description": "抱歉，您的这篇笔记已达到可用的最大长度。",
+                "advice": "请减少笔记的内容。"
+            },
+            "incompatible": {
+                "title": "您的客户端版本不兼容。",
+                "advice": "刷新页面以更新。"
+            },
+            "newVersion": {
+                "title": "新版本可用！",
+                "linkText": "在此查看更新记录",
+                "advice": "刷新页面以体验新功能。"
+            },
+            "userStateChanged": {
+                "title": "您的用户状态已变更。",
+                "description": "刷新页面以加载新的用户状态。"
+            }
+        },
+        "viewMode": {
+            "view": "预览",
+            "both": "双栏"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "粗体",
+            "strikethrough": "删除线",
+            "header": "标题",
+            "code": "代码",
+            "blockquote": "引用",
+            "unorderedList": "无序列表",
+            "orderedList": "有序列表",
+            "checkList": "清单",
+            "link": "链接",
+            "image": "图片",
+            "uploadImage": "上传图片"
+        },
+        "documentBar": {
+            "menu": "菜单",
+            "new": "新建",
+            "shareLink": "",
+            "extra": "附加功能",
+            "revision": "修订版本",
+            "slideMode": "幻灯模式",
+            "download": "下载",
+            "help": "帮助"
+        },
+        "export": {
+            "rawHtml": "原始 HTML"
+        },
+        "import": {
+            "clipboard": "剪贴板"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "从 Snippet 导入",
+                "selectProject": "从可用的项目中选择",
+                "selectSnippet": "从可用的 Snippet 中选择"
+            },
+            "gistImport": {
+                "title": "从 Gist 导入",
+                "insertGistUrl": "在这里粘贴 Gist 网址..."
+            },
+            "snippetExport": {
+                "title": "导出到 Snippet",
+                "visibilityLevel": "选择可见层级"
+            },
+            "revision": {
+                "title": "修订版本",
+                "revertButton": "还原"
+            },
+            "clipboardImport": {
+                "title": "从剪贴板导入",
+                "insertMarkdown": "在这里粘贴 Markdown 或网页内容..."
+            },
+            "deleteNote": {
+                "question": "您确定要删除这篇笔记吗？",
+                "warning": "所有用户将失去连接。"
+            }
+        }
+    },
+    "common": {
+        "import": "导入",
+        "export": "导出",
+        "refresh": "刷新",
+        "cancel": "取消",
+        "ok": "好的",
+        "or": "或"
+    },
+    "login": {
+        "chooseMethod": "选择方式",
+        "signInVia": "通过 {{service}} 登录",
+        "signIn": "登录",
+        "signOut": "登出",
+        "register": {
+            "title": "注册"
+        },
+        "auth": {
+            "error": {}
+        }
+    }
+}

@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table of contents renders correctly 1`] = `
+<div>
+  <div
+    class="markdown-toc customClassName"
+  >
+    <ul>
+      <li>
+        <a
+          href="https://example.org/#level-1"
+          title="Level 1"
+        >
+          Level 1
+        </a>
+        <ul>
+          <li>
+            <a
+              href="https://example.org/#level-2"
+              title="Level 2"
+            >
+              Level 2
+            </a>
+            <ul>
+              <li>
+                <a
+                  href="https://example.org/#level-3"
+                  title="Level 3"
+                >
+                  Level 3
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Table of contents renders only in requested max depth 1`] = `
+<div>
+  <div
+    class="markdown-toc customClassName"
+  >
+    <ul>
+      <li>
+        <a
+          href="https://example.org/#level-1"
+          title="Level 1"
+        >
+          Level 1
+        </a>
+        <ul>
+          <li>
+            <a
+              href="https://example.org/#level-2"
+              title="Level 2"
+            >
+              Level 2
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+`;

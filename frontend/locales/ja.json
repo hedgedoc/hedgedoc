@@ -1,0 +1,191 @@
+{
+    "app": {
+        "slogan": "Markdownでナレッジを蓄積・共有できるベストツール",
+        "title": "共同編集できるMarkdownノート"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "すべての機能をチェック",
+            "features": {
+                "collaboration": "URLで共同編集",
+                "katex": "グラフとKaTeXのサポート",
+                "slides": "スライドモードのサポート"
+            }
+        },
+        "history": {
+            "noHistory": "履歴はありません",
+            "localHistory": "ブラウザからの履歴",
+            "toolbar": {
+                "selectTags": "タグで検索",
+                "searchKeywords": "キーワードで検索",
+                "sortByTitle": "タイトル順でソート",
+                "sortByLastVisited": "日時順でソート",
+                "export": "履歴をエクスポート",
+                "import": "履歴をインポート",
+                "clear": "履歴をクリア",
+                "refresh": "履歴を更新"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "サービスの紹介",
+            "history": "履歴",
+            "newGuestNote": "新規ゲストノート",
+            "newNote": "新規ノート"
+        },
+        "footer": {
+            "releases": "リリース",
+            "poweredBy": "Powered by <0></0>",
+            "imprint": "インプリント",
+            "followUs": "<0></0>, <1></1>, <2></2>, <3></3>, と <4></4> でフォローしてください。",
+            "privacy": "プライバシー",
+            "termsOfUse": "利用条件"
+        },
+        "versionInfo": {
+            "sourceCode": "ソースコード"
+        }
+    },
+    "profile": {
+        "deleteUser": "ユーザーの削除",
+        "exportUserData": "ユーザーデータをエクスポート",
+        "modal": {
+            "deleteUser": {
+                "title": "ユーザーの削除",
+                "message": "本当にアカウントを削除しますか？",
+                "subMessage": "この操作はあなたのアカウントとあなたの所有するすべてのノートを削除し、さらに他の人のノートからあなたのアカウントへの参照を除去します。"
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "コンタクト",
+                "community": "コミュニティに参加しましょう",
+                "meetUsOn": "{{service}}でチャットする",
+                "helpTranslating": "翻訳のお手伝いをお願いします",
+                "reportIssue": "問題を報告する"
+            },
+            "documents": {
+                "title": "ドキュメント",
+                "yamlMetadata": "YAMLメタデータ",
+                "slideExample": "スライドサンプル"
+            },
+            "cheatsheet": {
+                "title": "チートシート",
+                "example": "例",
+                "syntax": "構文",
+                "underlinedText": "挿入文",
+                "highlightedText": "マーカー",
+                "externalService": "モジュール"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "このノートはロックされています",
+                "description": "このノートはオーナーのみが編集できます"
+            },
+            "limitReached": {
+                "title": "上限に達しました",
+                "description": "ノートの文字数が上限に達しました。",
+                "advice": "内容を減らすか、別のノートに分けてください"
+            },
+            "incompatible": {
+                "title": "クライアントのバージョンが一致しません",
+                "advice": "リロードして更新を反映させてください"
+            },
+            "newVersion": {
+                "title": "新しいバージョンが利用できます！",
+                "linkText": "リリースノートをごらんください",
+                "advice": "リロードして新しい機能を試してみましょう"
+            },
+            "userStateChanged": {
+                "title": "ユーザー情報が変更されました",
+                "description": "リロードすると最新のユーザー情報が反映されます"
+            }
+        },
+        "viewMode": {
+            "view": "表示モード",
+            "both": "分割モード"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "太字",
+            "strikethrough": "打ち消し線",
+            "header": "見出し",
+            "code": "コード",
+            "blockquote": "引用文",
+            "unorderedList": "番号なしリスト",
+            "orderedList": "番号付きリスト",
+            "checkList": "TODOリスト",
+            "link": "リンク",
+            "image": "画像",
+            "uploadImage": "画像をアップロード"
+        },
+        "documentBar": {
+            "menu": "メニュー",
+            "new": "新規作成",
+            "shareLink": "",
+            "extra": "その他",
+            "revision": "編集履歴",
+            "slideMode": "スライドモード",
+            "download": "ダウンロード",
+            "help": "ヘルプ"
+        },
+        "export": {
+            "rawHtml": "HTMLパーツ"
+        },
+        "import": {
+            "clipboard": "クリップボード"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "スニペットからインポート",
+                "selectProject": "プロジェクトを一覧から選択してください",
+                "selectSnippet": "スニペットを一覧から選択してください"
+            },
+            "gistImport": {
+                "title": "gistからインポート",
+                "insertGistUrl": "gistのURLを貼り付けてください"
+            },
+            "snippetExport": {
+                "title": "スニペットにエクスポート",
+                "visibilityLevel": "公開範囲を選んでください"
+            },
+            "revision": {
+                "title": "編集履歴",
+                "revertButton": "戻す"
+            },
+            "clipboardImport": {
+                "title": "クリップボードからインポート",
+                "insertMarkdown": "Markdownまたはウェブページを貼り付けてください"
+            },
+            "deleteNote": {
+                "question": "本当にこのノートを削除しますか？",
+                "warning": "すべてのユーザーの接続が切断されます。"
+            }
+        }
+    },
+    "common": {
+        "import": "インポート",
+        "export": "エクスポート",
+        "refresh": "リロード",
+        "cancel": "キャンセル",
+        "ok": "OK",
+        "or": "または"
+    },
+    "login": {
+        "chooseMethod": "選択してください",
+        "signInVia": "{{service}}でサインイン",
+        "signIn": "サインイン",
+        "signOut": "サインアウト",
+        "register": {
+            "title": "登録"
+        },
+        "auth": {
+            "error": {}
+        }
+    }
+}

@@ -1,0 +1,22 @@
+/*!
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+.notifications-area {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 2000;
+
+  .toast {
+    min-width: 250px;
+    max-width: 100vw;
+  }
+
+  .progress {
+    border-radius: 0;
+    height: 0.25rem;
+  }
+}

@@ -1,0 +1,67 @@
+/*!
+ * SPDX-FileCopyrightText: Original code: Copyright (c) 2011-2022 Twitter, Inc. + Copyright (c) 2011-2022 The Bootstrap Authors. Modification: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+//
+// General form controls (plus a few specific high-level interventions)
+//
+
+.form-control {
+  color: $input-color;
+  background-color: $input-bg;
+  border-color: $input-border-color;
+
+  @include box-shadow($input-box-shadow);
+
+  // Customize the `:focus` state to imitate native WebKit styles.
+  &:focus {
+    color: $input-focus-color;
+    background-color: $input-focus-bg;
+    border-color: $input-focus-border-color;
+    @if $enable-shadows {
+      @include box-shadow($input-box-shadow, $input-focus-box-shadow);
+    } @else {
+      // Avoid using mixin so we can pass custom focus shadow properly
+      box-shadow: $input-focus-box-shadow;
+    }
+  }
+
+  // Placeholder
+  &::placeholder {
+    color: $input-placeholder-color;
+  }
+
+  // Disabled inputs
+  //
+  // HTML5 says that controls under a fieldset > legend:first-child won't be
+  // disabled if the fieldset is disabled. Due to implementation difficulty, we
+  // don't honor that edge case; we style them as disabled anyway.
+  &:disabled {
+    color: $input-disabled-color;
+    background-color: $input-disabled-bg;
+    border-color: $input-disabled-border-color;
+  }
+
+  // File input buttons theming
+  &::file-selector-button {
+    color: $form-file-button-color;
+    @include gradient-bg($form-file-button-bg);
+    border-color: inherit;
+  }
+
+  &:hover:not(:disabled):not([readonly])::file-selector-button {
+    background-color: $form-file-button-hover-bg;
+  }
+}
+
+// Readonly controls as plain text
+//
+// Apply class to a readonly input to make it appear like regular plain
+// text (without any border, background color, focus indicator)
+
+.form-control-plaintext {
+  color: $input-plaintext-color;
+  background-color: transparent;
+}

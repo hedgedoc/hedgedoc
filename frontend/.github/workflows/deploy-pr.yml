@@ -1,0 +1,113 @@
+# SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+name: deploy
+
+on:
+  pull_request:
+    branches: [ main ]
+    types:
+      - labeled
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+  pull_request_target:
+    branches: [ main ]
+    types:
+      - labeled
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+permissions:
+  contents: read
+  deployments: write
+
+env:
+  NETLIFY_VERSION: 12.0.11
+  NODE_VERSION: 18
+
+jobs:
+  deploy:
+    if: (github.event.pull_request.draft == false || contains( github.event.pull_request.labels.*.name, 'FORCE DEPLOY')) && (github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork
+    runs-on: ubuntu-latest
+    name: Deploys to netlify
+    env:
+      DEPLOY_URL: "https://${{ github.event.number }}--hedgedoc-ui-test.netlify.app/"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Cache yarn cache
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-${{ env.NODE_VERSION }}
+
+      - name: Set up NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Patch intro.md to include netlify banner.
+        run: cp netlify/intro.md public/public/intro.md
+
+      - name: Patch motd.md to include privacy policy.
+        run: cp netlify/motd.md public/public/motd.md
+
+      - name: Patch version.json to include git hash
+        run: jq ".version = \"0.0.0+${GITHUB_SHA:0:8}\"" src/version.json > src/_version.json && mv src/_version.json src/version.json
+
+      - name: Patch base URL
+        run: echo "HD_EDITOR_BASE_URL=\"${{ env.DEPLOY_URL }}\"" >> .env.production
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build app
+        run: yarn build:mock
+
+      - name: Remove Next.js cache to avoid it being deployed
+        run: rm -r .next/cache
+
+      - name: Mark GitHub deployment as started
+        uses: bobheadxi/deployments@v1.3.0
+        id: github-deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: "PR #${{ github.event.number }}"
+          override: true
+          ref: ${{ github.head_ref }}
+
+      - name: Install netlify CLI
+        run: "npm install -g netlify-cli@${{ env.NETLIFY_VERSION }}"
+
+      - name: Run netlify CLI
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: "netlify deploy --build --context deploy-preview --alias \"${{ github.event.number }}\" --json --message \"PR #${{ github.event.number }}\""
+
+      - name: Mark GitHub deployment as finished
+        if: always()
+        uses: bobheadxi/deployments@v1.3.0
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env_url: ${{ env.DEPLOY_URL }}
+          env: ${{ steps.github-deployment.outputs.env }}
+          status: ${{ job.status }}
+          deployment_id: ${{ steps.github-deployment.outputs.deployment_id }}
+          override: true

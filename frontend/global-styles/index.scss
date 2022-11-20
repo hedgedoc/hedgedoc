@@ -1,0 +1,104 @@
+/*
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+@import "variables.module";
+@import "variables.light";
+@import "~bootstrap/scss/bootstrap";
+@import '~react-bootstrap-typeahead/css/Typeahead';
+@import "~@fontsource/source-sans-pro/index.css";
+@import "~twemoji-colr-font/twemoji";
+@import '~fork-awesome/css/fork-awesome.min.css';
+@import '~firacode/distr/fira_code';
+@import "typeahead";
+@import "./button-inside";
+@import "./highlight-js";
+@import "./github-markdown";
+@import "./markdown-tweaks";
+@import "./reveal";
+
+.text-black, body.dark .text-black {
+  color: $black;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+body {
+  background-color: $dark;
+}
+
+#__next {
+  height: 100vh;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+}
+
+*:focus {
+  outline: 0 !important;
+}
+
+.mt-1dot5 {
+  margin-top: 0.375rem !important;
+}
+
+.fa.fa-fix-line-height {
+  line-height: inherit;
+}
+
+.text-start {
+  text-align: start;
+}
+
+.mvh-100 {
+  min-height: 100vh;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
+.font-style-normal {
+  font-style: normal;
+}
+
+.cursor-zoom-in {
+  cursor: zoom-in;
+}
+
+.cursor-zoom-out {
+  cursor: zoom-out;
+}
+
+.faded-fa {
+  .fa, &::after {
+    opacity: 0.5;
+  }
+
+  &:hover .fa, &:hover::after {
+    opacity: 1;
+  }
+}
+
+.dropup .dropdown-toggle, .dropdown-toggle {
+  &.no-arrow::after {
+    content: initial;
+  }
+}
+
+.overflow-x-auto {
+  overflow-x: auto !important;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden !important;
+}

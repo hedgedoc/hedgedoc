@@ -1,0 +1,169 @@
+{
+    "app": {
+        "slogan": "La plej bona maniero skribi kaj havigi vian scion marksubene.",
+        "title": "Kunlaborataj marksubenaj notoj"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Esploru ĉiujn eblecojn",
+            "features": {
+                "collaboration": "Kunlaboru per URL",
+                "katex": "Ebleco por skemoj kaj KaTeX",
+                "slides": "Ebleco por bildvica modo"
+            }
+        },
+        "history": {
+            "noHistory": "Neniu historio",
+            "localHistory": "Malsupre estas la historio de la retumilo",
+            "toolbar": {
+                "selectTags": "Elektu etikedojn..",
+                "searchKeywords": "Serĉu ĉefvorton...",
+                "sortByTitle": "Ordigu laŭ titolo",
+                "sortByLastVisited": "Ordigu laŭ tempo",
+                "export": "Elportu historion",
+                "import": "Alportu historion",
+                "clear": "Malplenigu historion",
+                "refresh": "Refreŝigu historion"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Enkonduko",
+            "history": "Historio",
+            "newGuestNote": "Novan gastan noton",
+            "newNote": "Novan Noton"
+        },
+        "footer": {
+            "releases": "Eldonoj"
+        },
+        "versionInfo": {}
+    },
+    "profile": {
+        "modal": {
+            "deleteUser": {}
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Kontaktuloj",
+                "reportIssue": "Raportu problemon"
+            },
+            "documents": {
+                "title": "Dosieroj",
+                "yamlMetadata": "YAML metadateno",
+                "slideExample": "Bildvica ekzemplo"
+            },
+            "cheatsheet": {
+                "title": "Gvidfolio",
+                "example": "Ekzemplo",
+                "syntax": "Sintakso",
+                "underlinedText": "Enmetita teksto",
+                "highlightedText": "Markita teksto",
+                "externalService": "Eksteraĵoj"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Ĉi tiu noto estas ŝlosita",
+                "description": "Bedaŭrinde, nur la proprulo povas redakti ĉi tiun noton."
+            },
+            "limitReached": {
+                "title": "Atingi la limigon",
+                "description": "Pardonon, ĉi tiu noto jam atingis maksimuman longecon.",
+                "advice": "Bonvolu malpligrandigi la enhavaĵon, aŭ dividi ĝin en pliajn notojn!"
+            },
+            "incompatible": {
+                "title": "Vi havas malkongruan klientversion.",
+                "advice": "Refreŝigu por ĝisdatigi"
+            },
+            "newVersion": {
+                "title": "Nova versio disponeblas!",
+                "linkText": "Vidu elsendajn notojn ĉi tie",
+                "advice": "Refreŝigu por ĝui novajn eblecojn."
+            },
+            "userStateChanged": {
+                "title": "Via uzantstato ŝanĝiĝis.",
+                "description": "Refreŝigu por ŝargi novan uzantstaton."
+            }
+        },
+        "viewMode": {
+            "view": "Vidu",
+            "both": "Ambaŭ"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Dika tiparo",
+            "strikethrough": "Trastrekita",
+            "header": "Paĝokapo",
+            "code": "Kodo",
+            "blockquote": "Deŝovita cito",
+            "unorderedList": "Neordita Listo",
+            "orderedList": "Ordita Listo",
+            "checkList": "Farenda Listo",
+            "link": "Ligilo",
+            "image": "Bildo",
+            "uploadImage": "Alŝutu bildon"
+        },
+        "documentBar": {
+            "menu": "Menuo",
+            "new": "Nova",
+            "shareLink": "",
+            "extra": "Plia",
+            "revision": "Versio",
+            "slideMode": "Bildvica modo",
+            "download": "Elŝuti",
+            "help": "Helpo"
+        },
+        "export": {
+            "rawHtml": "Kruda HTML"
+        },
+        "import": {
+            "clipboard": "Poŝo"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Alportu el tekstero",
+                "selectProject": "Elektu el disponeblaj projektoj",
+                "selectSnippet": "Elektu el disponeblaj teksteroj"
+            },
+            "gistImport": {
+                "title": "Alportu el Gist",
+                "insertGistUrl": "Algluu vian gist-an URL-n ĉi tie..."
+            },
+            "snippetExport": {
+                "title": "Elportu al Snippet",
+                "visibilityLevel": "Elektu videblecan nivelon"
+            },
+            "revision": {
+                "title": "Versio",
+                "revertButton": "Malfaru ŝanĝojn"
+            },
+            "clipboardImport": {
+                "title": "Alportu de la poŝo",
+                "insertMarkdown": "Algluu vian marksubenon aŭ retpaĝaron ĉi tie..."
+            },
+            "deleteNote": {}
+        }
+    },
+    "common": {
+        "import": "Alportu",
+        "export": "Elportu",
+        "refresh": "Refreŝigu",
+        "cancel": "Nuligu",
+        "ok": "Bone",
+        "or": "aŭ"
+    },
+    "login": {
+        "chooseMethod": "Elektu metodon",
+        "signInVia": "Ensalutu per {{service}}",
+        "signIn": "Ensalutu",
+        "signOut": "Elsalutu",
+        "auth": {
+            "error": {}
+        }
+    }
+}

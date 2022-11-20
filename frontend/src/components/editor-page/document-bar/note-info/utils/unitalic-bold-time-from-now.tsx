@@ -1,0 +1,18 @@
+/*
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+import React from 'react'
+import type { TimeFromNowProps } from '../time-from-now'
+import { TimeFromNow } from '../time-from-now'
+import { UnitalicBoldContent } from '../unitalic-bold-content'
+
+export const UnitalicBoldTimeFromNow: React.FC<TimeFromNowProps> = ({ time }) => {
+  return (
+    <UnitalicBoldContent>
+      <TimeFromNow time={time} />
+    </UnitalicBoldContent>
+  )
+}

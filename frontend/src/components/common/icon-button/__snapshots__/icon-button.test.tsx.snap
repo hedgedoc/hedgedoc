@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IconButton correctly uses the onClick callback 1`] = `
+<div>
+  <button
+    class="btn-icon p-0 d-inline-flex align-items-stretch   btn btn-primary"
+    data-testid="icon-button"
+    type="button"
+  >
+    <span
+      class="icon-part d-flex align-items-center"
+    >
+      <i
+        class="fa  fa-heart icon "
+      />
+    </span>
+    <span
+      class="text-part d-flex align-items-center"
+    >
+      test with onClick
+    </span>
+  </button>
+</div>
+`;
+
+exports[`IconButton renders heart icon 1`] = `
+<div>
+  <button
+    class="btn-icon p-0 d-inline-flex align-items-stretch   btn btn-primary"
+    data-testid="icon-button"
+    type="button"
+  >
+    <span
+      class="icon-part d-flex align-items-center"
+    >
+      <i
+        class="fa  fa-heart icon "
+      />
+    </span>
+    <span
+      class="text-part d-flex align-items-center"
+    >
+      test
+    </span>
+  </button>
+</div>
+`;
+
+exports[`IconButton renders with additional className 1`] = `
+<div>
+  <button
+    class="btn-icon p-0 d-inline-flex align-items-stretch  testClass btn btn-primary"
+    data-testid="icon-button"
+    type="button"
+  >
+    <span
+      class="icon-part d-flex align-items-center"
+    >
+      <i
+        class="fa  fa-heart icon "
+      />
+    </span>
+    <span
+      class="text-part d-flex align-items-center"
+    >
+      test with additional className
+    </span>
+  </button>
+</div>
+`;
+
+exports[`IconButton renders with border 1`] = `
+<div>
+  <button
+    class="btn-icon p-0 d-inline-flex align-items-stretch with-border  btn btn-primary"
+    data-testid="icon-button"
+    type="button"
+  >
+    <span
+      class="icon-part d-flex align-items-center"
+    >
+      <i
+        class="fa  fa-heart icon "
+      />
+    </span>
+    <span
+      class="text-part d-flex align-items-center"
+    >
+      test with border
+    </span>
+  </button>
+</div>
+`;
+
+exports[`IconButton renders with fixed width icon 1`] = `
+<div>
+  <button
+    class="btn-icon p-0 d-inline-flex align-items-stretch   btn btn-primary"
+    data-testid="icon-button"
+    type="button"
+  >
+    <span
+      class="icon-part d-flex align-items-center"
+    >
+      <i
+        class="fa fa-fw fa-heart icon "
+      />
+    </span>
+    <span
+      class="text-part d-flex align-items-center"
+    >
+      test with fixed with icon
+    </span>
+  </button>
+</div>
+`;

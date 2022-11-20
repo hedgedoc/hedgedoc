@@ -1,0 +1,10 @@
+{
+  "chat": "https://matrix.to/#/#hedgedoc:matrix.org",
+  "community": "https://community.hedgedoc.org",
+  "githubOrg": "https://github.com/hedgedoc/",
+  "backendSourceCode": "https://github.com/hedgedoc/hedgedoc",
+  "backendIssues": "https://github.com/hedgedoc/hedgedoc/issues",
+  "mastodon": "https://social.hedgedoc.org",
+  "translate": "https://translate.hedgedoc.org",
+  "webpage": "https://hedgedoc.org"
+}

@@ -1,0 +1,190 @@
+{
+    "app": {
+        "slogan": "Савршен начин за писање и дељење знања у markdown формату",
+        "title": "Дељене белешке у Markdown формату"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Истражи све могућности",
+            "features": {
+                "collaboration": "Сарадња уз помоћ URL-а",
+                "katex": "Подршка за графиконе и KaTeX",
+                "slides": "Подршка за слајдове и презентације"
+            }
+        },
+        "history": {
+            "noHistory": "Нема историје",
+            "localHistory": "Ниже је историјат преузет из прегледача",
+            "toolbar": {
+                "selectTags": "Одабери тагове...",
+                "searchKeywords": "Претрага по кључној речи...",
+                "sortByTitle": "Редослед по наслову",
+                "sortByLastVisited": "Редослед по времену",
+                "export": "Извези историјат",
+                "import": "Увези историјат",
+                "clear": "Очисти историју",
+                "refresh": "Освежи историју"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Увод",
+            "history": "Историја",
+            "newGuestNote": "Нова белешка госта",
+            "newNote": "Нова белешка"
+        },
+        "footer": {
+            "releases": "Издања",
+            "poweredBy": "Покреће <0></0>",
+            "followUs": "Пратите нас на <0></0>, <1></1>, <2></2>, <3></3> и <4></4>.",
+            "privacy": "Приватност",
+            "termsOfUse": "Услови коришћења"
+        },
+        "versionInfo": {
+            "sourceCode": "Изворни код"
+        }
+    },
+    "profile": {
+        "deleteUser": "Обриши корисника",
+        "exportUserData": "Извоз свих корисничких података",
+        "modal": {
+            "deleteUser": {
+                "title": "Обриши корисника",
+                "message": "Да ли заиста желите да трајно обришете свој налог?",
+                "subMessage": "Ова операција ће избрисати ваш налог, све ваше белешке, а уклониће и све везе ка вашем налогу из других белешки."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Контакти",
+                "community": "Приступите заједници",
+                "meetUsOn": "Пронађите нас на {{service}}",
+                "helpTranslating": "Помозите око превода",
+                "reportIssue": "Пријава проблема"
+            },
+            "documents": {
+                "title": "Документи",
+                "yamlMetadata": "YAML Метаподаци",
+                "slideExample": "Пример слајда"
+            },
+            "cheatsheet": {
+                "title": "Трикови и форе",
+                "example": "Пример",
+                "syntax": "Синтакса",
+                "underlinedText": "Уметнут текст",
+                "highlightedText": "Означени текст",
+                "externalService": "Спољни"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Ова белешка је закључана",
+                "description": "Жао нам је, ову белешку може мењати само њен власник."
+            },
+            "limitReached": {
+                "title": "Досегни лимит",
+                "description": "Нажалост, досегли сте максималну дужину ове белешке.",
+                "advice": "Молимо Вас да смањите количину текста или да га поделите на више белешки, хвала!"
+            },
+            "incompatible": {
+                "title": "Ова верзија клијента није компатибилна.",
+                "advice": "Освежите за приказ измена."
+            },
+            "newVersion": {
+                "title": "Доступна је нова верзија!",
+                "linkText": "Овде погледајте напомене о издањима",
+                "advice": "Освежите како бисте уживали у новим функцијама."
+            },
+            "userStateChanged": {
+                "title": "Ваше корисничко стање се променило.",
+                "description": "Освежите за учитавање новог корисничког стања."
+            }
+        },
+        "viewMode": {
+            "view": "Прегледај",
+            "both": "Обоје"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Масна слова",
+            "strikethrough": "Прецртано",
+            "header": "Заглавље",
+            "code": "Код",
+            "blockquote": "Пасус са наводима",
+            "unorderedList": "Неуређени списак",
+            "orderedList": "Уређени списак",
+            "checkList": "Списак обавеза",
+            "link": "Линк",
+            "image": "Слика",
+            "uploadImage": "Пошаљи слику"
+        },
+        "documentBar": {
+            "menu": "Мени",
+            "new": "Ново",
+            "shareLink": "",
+            "extra": "Додатно",
+            "revision": "Ревизија",
+            "slideMode": "Презентациони мод",
+            "download": "Преузимање",
+            "help": "Помоћ"
+        },
+        "export": {
+            "rawHtml": "Сирови HTML"
+        },
+        "import": {
+            "clipboard": "Клипборд"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Увези из \"исечака\"",
+                "selectProject": "Изабери из доступних пројеката",
+                "selectSnippet": "Изабери из доступних исечака"
+            },
+            "gistImport": {
+                "title": "Увези из Github Gist-а",
+                "insertGistUrl": "Залепите Gist URL адресу овде..."
+            },
+            "snippetExport": {
+                "title": "Извези у \"исечак\"",
+                "visibilityLevel": "Изаберите ниво читкости"
+            },
+            "revision": {
+                "title": "Ревизија",
+                "revertButton": "Врати"
+            },
+            "clipboardImport": {
+                "title": "Увези из клипборда",
+                "insertMarkdown": "Залепи свој markdown или веб страну овде..."
+            },
+            "deleteNote": {
+                "question": "Да ли заиста желите да обришете ову белешку?",
+                "warning": "Сви корисници ће изгубити везу у реалном времену."
+            }
+        }
+    },
+    "common": {
+        "import": "Увоз",
+        "export": "Извоз",
+        "refresh": "Освежи",
+        "cancel": "Одустани",
+        "ok": "OK",
+        "or": "или"
+    },
+    "login": {
+        "chooseMethod": "Изаберите начин",
+        "signInVia": "Пријави се уз {{service}}",
+        "signIn": "Пријави се",
+        "signOut": "Одјави се",
+        "register": {
+            "title": "Региструј се"
+        },
+        "auth": {
+            "error": {}
+        }
+    }
+}

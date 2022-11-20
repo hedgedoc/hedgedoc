@@ -1,0 +1,39 @@
+/*
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+import React from 'react'
+import { mockI18n } from '../../test-utils/mock-i18n'
+import { render } from '@testing-library/react'
+import { TestMarkdownRenderer } from '../../test-utils/test-markdown-renderer'
+import { EmojiMarkdownExtension } from './emoji-markdown-extension'
+
+describe('Emoji Markdown Extension', () => {
+  beforeAll(async () => {
+    await mockI18n()
+  })
+
+  afterAll(() => {
+    jest.resetModules()
+    jest.restoreAllMocks()
+  })
+
+  it('renders an emoji code', () => {
+    const view = render(<TestMarkdownRenderer extensions={[new EmojiMarkdownExtension()]} content={':smile:'} />)
+    expect(view.container).toMatchSnapshot()
+  })
+
+  it('renders a fork awesome code', () => {
+    const view = render(
+      <TestMarkdownRenderer extensions={[new EmojiMarkdownExtension()]} content={':fa-circle-thin:'} />
+    )
+    expect(view.container).toMatchSnapshot()
+  })
+
+  it('renders a skin tone code', () => {
+    const view = render(<TestMarkdownRenderer extensions={[new EmojiMarkdownExtension()]} content={':skin-tone-3:'} />)
+    expect(view.container).toMatchSnapshot()
+  })
+})

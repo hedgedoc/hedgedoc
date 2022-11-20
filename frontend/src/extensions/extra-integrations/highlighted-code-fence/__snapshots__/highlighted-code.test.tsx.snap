@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Highlighted Code can hide the line numbers 1`] = `
+<code
+  class="hljs  wrapLines"
+  data-testid="code-highlighter"
+>
+  <span
+    class="linenumber"
+  >
+    1
+  </span>
+  <div
+    class="codeline"
+  >
+    <span>
+      const a = 1
+    </span>
+  </div>
+</code>
+`;
+
+exports[`Highlighted Code highlights code 1`] = `
+<code
+  class="hljs showGutter "
+  data-testid="code-highlighter"
+>
+  <span
+    class="linenumber"
+  >
+    1
+  </span>
+  <div
+    class="codeline"
+  >
+    <span
+      class="hljs-keyword"
+    >
+      const
+    </span>
+     a = 
+    <span
+      class="hljs-number"
+    >
+      1
+    </span>
+  </div>
+</code>
+`;
+
+exports[`Highlighted Code renders plain text 1`] = `
+<code
+  class="hljs showGutter "
+  data-testid="code-highlighter"
+>
+  <span
+    class="linenumber"
+  >
+    1
+  </span>
+  <div
+    class="codeline"
+  >
+    <span>
+      a
+    </span>
+  </div>
+  <span
+    class="linenumber"
+  >
+    2
+  </span>
+  <div
+    class="codeline"
+  >
+    <span>
+      b
+    </span>
+  </div>
+  <span
+    class="linenumber"
+  >
+    3
+  </span>
+  <div
+    class="codeline"
+  >
+    <span>
+      c
+    </span>
+  </div>
+</code>
+`;
+
+exports[`Highlighted Code starts with a specific line 1`] = `
+<code
+  class="hljs showGutter wrapLines"
+  data-testid="code-highlighter"
+>
+  <span
+    class="linenumber"
+  >
+    100
+  </span>
+  <div
+    class="codeline"
+  >
+    <span>
+      const a = 1
+    </span>
+  </div>
+</code>
+`;
+
+exports[`Highlighted Code wraps code 1`] = `
+<code
+  class="hljs showGutter wrapLines"
+  data-testid="code-highlighter"
+>
+  <span
+    class="linenumber"
+  >
+    1
+  </span>
+  <div
+    class="codeline"
+  >
+    <span>
+      const a = 1
+    </span>
+  </div>
+</code>
+`;

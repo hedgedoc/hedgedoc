@@ -1,0 +1,191 @@
+{
+    "app": {
+        "slogan": "أحسن منصة لكتابة ومشاركة ماركداون.",
+        "title": "ملاحظات ماركداون تعاونية"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "استكشف جميع الميزات",
+            "features": {
+                "collaboration": "تعاون آني",
+                "katex": "دعم المنحنيات البيانية و KaTeX",
+                "slides": "دعم الشرائح التقديمية"
+            }
+        },
+        "history": {
+            "noHistory": "ليس هناك سِجِل",
+            "localHistory": "تحته سِجِل هذا المتصفّح",
+            "toolbar": {
+                "selectTags": "اختر كلمات مفتاحية...",
+                "searchKeywords": "البحث عن كلمة مفتاحية...",
+                "sortByTitle": "الترتيب حسب العنوان",
+                "sortByLastVisited": "فرز حسب الوقت",
+                "export": "تصدير التاريخ",
+                "import": "استيراد التاريخ",
+                "clear": "مسح التاريخ",
+                "refresh": "حدث التاريخ"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "مُقدِّمة",
+            "history": "التاريخ",
+            "newGuestNote": "ملاحظة جديدة كضَيف",
+            "newNote": "ملاحظة جديدة"
+        },
+        "footer": {
+            "releases": "إصدارات",
+            "poweredBy": "مدعوم بـ <0></0>",
+            "imprint": "Imprint",
+            "followUs": "تابِعنا على <0></0>, <1></1>, <2></2>, <3></3> و على <4></4>.",
+            "privacy": "الخصوصية",
+            "termsOfUse": "شروط الاستخدام"
+        },
+        "versionInfo": {
+            "sourceCode": "الشفرة المصدرية"
+        }
+    },
+    "profile": {
+        "deleteUser": "احذف المستخدم",
+        "exportUserData": "تصدير بيانات المستخدم",
+        "modal": {
+            "deleteUser": {
+                "title": "احذف المستخدم",
+                "message": "هل تريد حقًا حذف حسابك؟",
+                "subMessage": "سيؤدي هذا إلى حذف حسابك ، وجميع الملاحظات التي تملكها وإزالة جميع الإشارات إلى حسابك من الملاحظات الأخرى."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "جهات الاتصال",
+                "community": "انضم إلى المجتمع",
+                "meetUsOn": "قابِلنا في {{service}}",
+                "helpTranslating": "ساعدنا في الترجمة",
+                "reportIssue": "بلغ عن خطأ"
+            },
+            "documents": {
+                "title": "المستندات",
+                "yamlMetadata": "YAML Metadata",
+                "slideExample": "Slide Example"
+            },
+            "cheatsheet": {
+                "title": "Cheatsheet",
+                "example": "مثال",
+                "syntax": "Syntax",
+                "underlinedText": "نص مُسَطَّر",
+                "highlightedText": "نص بارز",
+                "externalService": "Externals"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "هذه الملاحظة مقفلة",
+                "description": "آسف ، يمكن للمالك فقط تعديل هذه الملاحظة."
+            },
+            "limitReached": {
+                "title": "Reach the limit",
+                "description": "عذرًا ، لقد بلغت الحد الأقصى لطول هذه الملاحظة.",
+                "advice": "يرجى جعل هذه الملاحظة قصيرة."
+            },
+            "incompatible": {
+                "title": "نسخة عميلك غير متوافقة.",
+                "advice": "حدث الصفحة للحصول على التحديث"
+            },
+            "newVersion": {
+                "title": "نسخة جديدة متوفرة!",
+                "linkText": "إطلع على ملاحظات الإصدار هنا",
+                "advice": "حدث الصفحة لتستمتع بالميزات الجديدة."
+            },
+            "userStateChanged": {
+                "title": "لقد تغيرت حالة المستخدم الخاصة بك.",
+                "description": "قم بتحديث الصفحة لتحميل حالة المستخدم الجديدة."
+            }
+        },
+        "viewMode": {
+            "view": "عرض",
+            "both": "معا"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "خط غامق",
+            "strikethrough": "Strikethrough",
+            "header": "الرأسية",
+            "code": "الشفرة",
+            "blockquote": "Blockquote",
+            "unorderedList": "قائمة غير مرتبة",
+            "orderedList": "قائمة مرتبة",
+            "checkList": "Checklist",
+            "link": "الرابط",
+            "image": "صورة",
+            "uploadImage": "تحميل صورة"
+        },
+        "documentBar": {
+            "menu": "القائمة",
+            "new": "جديد",
+            "shareLink": "",
+            "extra": "إضافي",
+            "revision": "مراجعة",
+            "slideMode": "نمط الشرائح التقديمية",
+            "download": "تنزيل",
+            "help": "المساعدة"
+        },
+        "export": {
+            "rawHtml": "Raw HTML"
+        },
+        "import": {
+            "clipboard": "الحافظة"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "استرداد من سنيبت",
+                "selectProject": "اختر من بين المشاريع المتاحة",
+                "selectSnippet": "اختر من بين المقتطفات المتاحة"
+            },
+            "gistImport": {
+                "title": "استيراد من Gist",
+                "insertGistUrl": "الصق عنوان url الخاص بك هنا..."
+            },
+            "snippetExport": {
+                "title": "صدر إلى سنيبت",
+                "visibilityLevel": "حدد مستوى الرؤية"
+            },
+            "revision": {
+                "title": "مراجعة",
+                "revertButton": "تراجع"
+            },
+            "clipboardImport": {
+                "title": "استيراد من الحافظة",
+                "insertMarkdown": "يرجى وضع ماركداون أو صفحة الويب الخاصة بك هنا…"
+            },
+            "deleteNote": {
+                "question": "هل تريد حقًا حذف هذه الملاحظة؟",
+                "warning": "سيفقد جميع المستخدمين اتصالهم."
+            }
+        }
+    },
+    "common": {
+        "import": "استيراد",
+        "export": "تصدير",
+        "refresh": "تحديث",
+        "cancel": "إلغاء",
+        "ok": "حسنا",
+        "or": "أو"
+    },
+    "login": {
+        "chooseMethod": "اختر الطريقة",
+        "signInVia": "لِج عبر {{service}}",
+        "signIn": "لِج",
+        "signOut": "خروج",
+        "register": {
+            "title": "انشئ حسابا"
+        },
+        "auth": {
+            "error": {}
+        }
+    }
+}

@@ -1,0 +1,21 @@
+/*!
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+.image-drop {
+  border: 3px dashed var(--bs-dark);
+
+  border-radius: 3px;
+  transition: background-color 50ms, color 50ms;
+
+  .altText {
+    text-overflow: ellipsis;
+    flex: 1 1;
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+    text-align: center;
+  }
+}

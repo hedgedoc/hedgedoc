@@ -1,0 +1,11 @@
+/*!
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+.lightbox img {
+  max-width: calc(100vw - 3.5rem);
+  max-height: calc(100vh - 3.5rem - 75px);
+  object-fit: contain;
+}

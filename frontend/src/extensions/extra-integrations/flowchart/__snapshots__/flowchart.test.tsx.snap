@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Flowchart handles error if lib loading failed 1`] = `
+<div>
+  <div
+    class="fade alert alert-danger show"
+    role="alert"
+  >
+    common.errorWhileLoading
+  </div>
+</div>
+`;
+
+exports[`Flowchart handles error while rendering 1`] = `
+<div>
+  <div
+    class="fade alert alert-danger show"
+    role="alert"
+  >
+    renderer.flowchart.invalidSyntax
+  </div>
+  <div
+    class="text-center"
+    data-testid="flowchart"
+  />
+</div>
+`;
+
+exports[`Flowchart renders correctly 1`] = `
+<div>
+  <div
+    class="text-center"
+    data-testid="flowchart"
+  >
+    Flowchart rendering succeeded!
+  </div>
+</div>
+`;

@@ -1,0 +1,13 @@
+/*
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+$font-family-emojis: "Apple Color Emoji", "Twemoji";
+$font-family-base: "Source Sans Pro", Helvetica, Arial, $font-family-emojis, sans-serif;
+
+:export {
+  font-family-emojis: $font-family-emojis;
+  font-family-base: $font-family-base;
+}

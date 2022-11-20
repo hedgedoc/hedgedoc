@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Note loading boundary loads a note 1`] = `
+<div>
+  <span
+    data-testid="success"
+  >
+    success!
+  </span>
+</div>
+`;
+
+exports[`Note loading boundary shows an error 1`] = `
+<div>
+  <span
+    data-testid="CommonErrorPage"
+  >
+    This is a mock for CommonErrorPage.
+  </span>
+  <span>
+    titleI18nKey: 
+    api.note.notFound.title
+  </span>
+  <span>
+    descriptionI18nKey: 
+    api.note.notFound.description
+  </span>
+  <span>
+    children: 
+    <span>
+      This is a mock for CreateNonExistingNoteHint
+    </span>
+  </span>
+</div>
+`;

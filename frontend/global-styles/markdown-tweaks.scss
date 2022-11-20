@@ -1,0 +1,70 @@
+/*
+ * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+.markdown-body {
+  position: relative;
+  word-break: break-word;
+  & {
+    @import "./variables.module.scss";
+    font-family: $font-family-base;
+  }
+
+  .svg-container {
+    overflow-x: auto;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+
+    svg {
+      max-width: 100%;
+    }
+  }
+
+  .alert {
+    & > p, & > ul {
+      margin-bottom: 0;
+    }
+  }
+
+  // This is necessary since we need to set this for all DOM Element that could be children of .markdown-body and since we support all of HTML that would literally be everything
+  & > * {
+    width: 100%;
+    max-width: 900px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    .heading-anchor {
+      font-size: 0.75em;
+      margin-top: 0.25em;
+      opacity: 0.3;
+      transition: opacity 0.1s;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  blockquote .blockquote-extra {
+    font-size: 0.85em;
+    margin-inline-start: 0.5em;
+
+    &:first-of-type {
+      &::before {
+        content: '\2014 \00A0'
+      }
+    }
+  }
+
+  pre {
+    overflow: visible;
+
+    code {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  }
+}

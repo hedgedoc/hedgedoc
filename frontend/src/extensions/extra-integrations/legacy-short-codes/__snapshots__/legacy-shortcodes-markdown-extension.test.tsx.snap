@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Legacy shortcodes markdown extension transforms a pdf short code into an URL 1`] = `
+<div>
+  <p>
+    <a
+      href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+    >
+      https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
+    </a>
+  </p>
+  
+
+</div>
+`;
+
+exports[`Legacy shortcodes markdown extension transforms a slideshare short code into an URL 1`] = `
+<div>
+  <p>
+    <a
+      href="https://www.slideshare.net/example/123456789"
+    >
+      https://www.slideshare.net/example/123456789
+    </a>
+  </p>
+  
+
+</div>
+`;
+
+exports[`Legacy shortcodes markdown extension transforms a speakerdeck short code into an URL 1`] = `
+<div>
+  <p>
+    <a
+      href="https://speakerdeck.com/example/123456789"
+    >
+      https://speakerdeck.com/example/123456789
+    </a>
+  </p>
+  
+
+</div>
+`;

@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`YoutubeFrame renders a click shield 1`] = `
+<div>
+  <span>
+    This is a click shield for 
+    <span
+      class="embed-responsive embed-responsive-16by9"
+    >
+      <iframe
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        class="embed-responsive-item"
+        src="https://www.youtube-nocookie.com/embed/validYoutubeId?autoplay=1"
+        title="youtube video of validYoutubeId"
+      />
+    </span>
+  </span>
+</div>
+`;

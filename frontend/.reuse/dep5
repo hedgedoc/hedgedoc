@@ -1,0 +1,60 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: react-client
+Upstream-Contact: The HedgeDoc developers <license@hedgedoc.org>
+Source: https://github.com/hedgedoc/react-client
+
+Files: public/public/*
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: public/icons/*
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: LicenseRef-HedgeDoc-Icon-Usage-Guidelines
+
+Files: locales/*
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC-BY-SA-4.0
+
+Files: public/public/img/highres.jpg
+Copyright: Vincent van Gogh
+License: CC0-1.0
+
+Files: public/robots.txt
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: .yarnrc.yml
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: .yarn/**
+Copyright: Yarn contributors
+License: BSD-2-Clause
+
+Files: .gitattributes
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: .idea/**
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: netlify.toml
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: .netlify/*
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: .github/ISSUE_TEMPLATE/*.md
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC-BY-SA-4.0
+
+Files: .github/pull_request_template.md
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC-BY-SA-4.0
+
+Files: **/__snapshots__/*.snap
+Copyright: 2022 The HedgeDoc developers (see AUTHORS file)
+License: AGPL-3.0-only

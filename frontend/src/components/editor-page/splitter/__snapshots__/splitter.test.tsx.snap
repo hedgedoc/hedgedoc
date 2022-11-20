@@ -1,0 +1,716 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Splitter resize can change size with mouse 1`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="left"
+      style="width: calc(50% - 5px);"
+    >
+      <div
+        class="inner"
+      >
+        left
+      </div>
+    </div>
+    <div
+      class="split-divider"
+      data-testid="splitter-divider"
+    >
+      <div
+        class="bg-light middle  "
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-left  "
+            />
+          </button>
+          <span
+            class="grabber"
+          >
+            <i
+              class="fa  fa-arrows-h  "
+            />
+          </span>
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-right  "
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="right"
+      style="width: calc(100% - 50%);"
+    >
+      <div
+        class="inner"
+      >
+        right
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with mouse 2`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="left"
+      style="width: calc(50% - 5px);"
+    >
+      <div
+        class="inner"
+      >
+        left
+      </div>
+    </div>
+    <div
+      class="split-divider"
+      data-testid="splitter-divider"
+    >
+      <div
+        class="bg-light middle  "
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-left  "
+            />
+          </button>
+          <span
+            class="grabber"
+          >
+            <i
+              class="fa  fa-arrows-h  "
+            />
+          </span>
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-right  "
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="right"
+      style="width: calc(100% - 50%);"
+    >
+      <div
+        class="inner"
+      >
+        right
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with mouse 3`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="left"
+      style="width: calc(50% - 5px);"
+    >
+      <div
+        class="inner"
+      >
+        left
+      </div>
+    </div>
+    <div
+      class="split-divider"
+      data-testid="splitter-divider"
+    >
+      <div
+        class="bg-light middle  "
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-left  "
+            />
+          </button>
+          <span
+            class="grabber"
+          >
+            <i
+              class="fa  fa-arrows-h  "
+            />
+          </span>
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-right  "
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="right"
+      style="width: calc(100% - 50%);"
+    >
+      <div
+        class="inner"
+      >
+        right
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with mouse 4`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="left"
+      style="width: calc(50% - 5px);"
+    >
+      <div
+        class="inner"
+      >
+        left
+      </div>
+    </div>
+    <div
+      class="split-divider"
+      data-testid="splitter-divider"
+    >
+      <div
+        class="bg-light middle  "
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-left  "
+            />
+          </button>
+          <span
+            class="grabber"
+          >
+            <i
+              class="fa  fa-arrows-h  "
+            />
+          </span>
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-right  "
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="right"
+      style="width: calc(100% - 50%);"
+    >
+      <div
+        class="inner"
+      >
+        right
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with touch 1`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="left"
+      style="width: calc(50% - 5px);"
+    >
+      <div
+        class="inner"
+      >
+        left
+      </div>
+    </div>
+    <div
+      class="split-divider"
+      data-testid="splitter-divider"
+    >
+      <div
+        class="bg-light middle  "
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-left  "
+            />
+          </button>
+          <span
+            class="grabber"
+          >
+            <i
+              class="fa  fa-arrows-h  "
+            />
+          </span>
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-right  "
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="right"
+      style="width: calc(100% - 50%);"
+    >
+      <div
+        class="inner"
+      >
+        right
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with touch 2`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="left"
+      style="width: calc(50% - 5px);"
+    >
+      <div
+        class="inner"
+      >
+        left
+      </div>
+    </div>
+    <div
+      class="split-divider"
+      data-testid="splitter-divider"
+    >
+      <div
+        class="bg-light middle  "
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-left  "
+            />
+          </button>
+          <span
+            class="grabber"
+          >
+            <i
+              class="fa  fa-arrows-h  "
+            />
+          </span>
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-right  "
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="right"
+      style="width: calc(100% - 50%);"
+    >
+      <div
+        class="inner"
+      >
+        right
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with touch 3`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="left"
+      style="width: calc(50% - 5px);"
+    >
+      <div
+        class="inner"
+      >
+        left
+      </div>
+    </div>
+    <div
+      class="split-divider"
+      data-testid="splitter-divider"
+    >
+      <div
+        class="bg-light middle  "
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-left  "
+            />
+          </button>
+          <span
+            class="grabber"
+          >
+            <i
+              class="fa  fa-arrows-h  "
+            />
+          </span>
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-right  "
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="right"
+      style="width: calc(100% - 50%);"
+    >
+      <div
+        class="inner"
+      >
+        right
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with touch 4`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="left"
+      style="width: calc(50% - 5px);"
+    >
+      <div
+        class="inner"
+      >
+        left
+      </div>
+    </div>
+    <div
+      class="split-divider"
+      data-testid="splitter-divider"
+    >
+      <div
+        class="bg-light middle  "
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-left  "
+            />
+          </button>
+          <span
+            class="grabber"
+          >
+            <i
+              class="fa  fa-arrows-h  "
+            />
+          </span>
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-right  "
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="right"
+      style="width: calc(100% - 50%);"
+    >
+      <div
+        class="inner"
+      >
+        right
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can react to shortcuts 1`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="left"
+      style="width: calc(0% - 5px);"
+    >
+      <div
+        class="inner"
+      >
+        left
+      </div>
+    </div>
+    <div
+      class="split-divider"
+      data-testid="splitter-divider"
+    >
+      <div
+        class="bg-light middle  shift-right"
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="btn btn-secondary"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-left  "
+            />
+          </button>
+          <span
+            class="grabber"
+          >
+            <i
+              class="fa  fa-arrows-h  "
+            />
+          </span>
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-right  "
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="right"
+      style="width: calc(100% - 0%);"
+    >
+      <div
+        class="inner"
+      >
+        right
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can react to shortcuts 2`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="left"
+      style="width: calc(100% - 5px);"
+    >
+      <div
+        class="inner"
+      >
+        left
+      </div>
+    </div>
+    <div
+      class="split-divider"
+      data-testid="splitter-divider"
+    >
+      <div
+        class="bg-light middle  shift-left"
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-left  "
+            />
+          </button>
+          <span
+            class="grabber"
+          >
+            <i
+              class="fa  fa-arrows-h  "
+            />
+          </span>
+          <button
+            class="btn btn-secondary"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-right  "
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="right"
+      style="width: calc(100% - 100%);"
+    >
+      <div
+        class="inner"
+      >
+        right
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can react to shortcuts 3`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="left"
+      style="width: calc(50% - 5px);"
+    >
+      <div
+        class="inner"
+      >
+        left
+      </div>
+    </div>
+    <div
+      class="split-divider"
+      data-testid="splitter-divider"
+    >
+      <div
+        class="bg-light middle  "
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-left  "
+            />
+          </button>
+          <span
+            class="grabber"
+          >
+            <i
+              class="fa  fa-arrows-h  "
+            />
+          </span>
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            <i
+              class="fa  fa-arrow-right  "
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="right"
+      style="width: calc(100% - 50%);"
+    >
+      <div
+        class="inner"
+      >
+        right
+      </div>
+    </div>
+  </div>
+</div>
+`;

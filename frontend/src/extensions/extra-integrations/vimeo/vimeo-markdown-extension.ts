@@ -1,0 +1,33 @@
+/*
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+import type MarkdownIt from 'markdown-it'
+import { replaceVimeoLinkMarkdownItPlugin } from './replace-vimeo-link'
+import { VimeoFrame } from './vimeo-frame'
+import { replaceLegacyVimeoShortCodeMarkdownItPlugin } from './replace-legacy-vimeo-short-code'
+import type { ComponentReplacer } from '../../../components/markdown-renderer/replace-components/component-replacer'
+import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
+import { CustomTagWithIdComponentReplacer } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
+
+/**
+ * Adds vimeo video embeddings using link detection and the legacy vimeo short code syntax.
+ */
+export class VimeoMarkdownExtension extends MarkdownRendererExtension {
+  public static readonly tagName = 'app-vimeo'
+
+  public configureMarkdownIt(markdownIt: MarkdownIt): void {
+    replaceLegacyVimeoShortCodeMarkdownItPlugin(markdownIt)
+    replaceVimeoLinkMarkdownItPlugin(markdownIt)
+  }
+
+  public buildReplacers(): ComponentReplacer[] {
+    return [new CustomTagWithIdComponentReplacer(VimeoFrame, VimeoMarkdownExtension.tagName)]
+  }
+
+  public buildTagNameAllowList(): string[] {
+    return [VimeoMarkdownExtension.tagName]
+  }
+}

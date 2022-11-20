@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AbcJs Markdown Extension renders an abc codeblock 1`] = `
+<div>
+  <pre>
+    <span>
+      this is a mock for abc js frame
+      <code>
+        X:1\\nT:Speed the Plough\\nM:4/4\\nC:Trad.\\nK:G\\n|:GABc dedB|dedB dedB|c2ec B2dB|c2A2 A2BA|\\nGABc dedB|dedB dedB|c2ec B2dB|A2F2 G4:|\\n|:g2gf gdBd|g2f2 e2d2|c2ec B2dB|c2A2 A2df|\\ng2gf g2Bd|g2f2 e2d2|c2ec B2dB|A2F2 G4:|
+
+      </code>
+    </span>
+  </pre>
+  
+
+</div>
+`;

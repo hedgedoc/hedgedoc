@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Flowchart markdown extensions renders a flowchart codeblock 1`] = `
+<div>
+  <pre>
+    <span>
+      this is a mock for flowchart frame
+      <code>
+        st=&gt;start: Start
+e=&gt;end: End
+st-&gt;e
+
+      </code>
+    </span>
+  </pre>
+  
+
+</div>
+`;

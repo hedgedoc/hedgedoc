@@ -1,0 +1,169 @@
+{
+    "app": {
+        "slogan": "Bedste måde at skrive og dele din viden i markdown.",
+        "title": "Kollaborative markdown-noter"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Udforsk alle features",
+            "features": {
+                "collaboration": "Samarbejd via URL",
+                "katex": "Mulighed for diagrammer og KaTeX",
+                "slides": "Mulighed for præsentationer"
+            }
+        },
+        "history": {
+            "noHistory": "Ingen historik",
+            "localHistory": "Forneden findes historikken fra browseren",
+            "toolbar": {
+                "selectTags": "Vælg tags...",
+                "searchKeywords": "Søg nøgleord...",
+                "sortByTitle": "Sortér titler",
+                "sortByLastVisited": "Sortér kronologisk",
+                "export": "Eksportér historik",
+                "import": "Importér historik",
+                "clear": "Ryd hsitorik",
+                "refresh": "Genindlæs historik"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Intro",
+            "history": "Historik",
+            "newGuestNote": "Ny gæstenote",
+            "newNote": "Ny note"
+        },
+        "footer": {
+            "releases": "Releases"
+        },
+        "versionInfo": {}
+    },
+    "profile": {
+        "modal": {
+            "deleteUser": {}
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Kontakter",
+                "reportIssue": "Rapportér en fejl"
+            },
+            "documents": {
+                "title": "Dokumenter",
+                "yamlMetadata": "YAML Metadata",
+                "slideExample": "Præsentationseksempel"
+            },
+            "cheatsheet": {
+                "title": "Snydeark",
+                "example": "Eksempel",
+                "syntax": "Syntaks",
+                "underlinedText": "Indsat tekst",
+                "highlightedText": "Markeret tekst",
+                "externalService": "Eksterne"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Denne note er låst",
+                "description": "Beklager, men kun ejeren kan redigere denne note."
+            },
+            "limitReached": {
+                "title": "Nå grænsen",
+                "description": "Beklager, du har nået grænsen for den maksimale længde denne note må være.",
+                "advice": "Vær venlig at begrænse indholdets mængde eller opdel det i flere noter, tak!"
+            },
+            "incompatible": {
+                "title": "Din klientversion er inkompatibel.",
+                "advice": "Genindlæs for at opdatere."
+            },
+            "newVersion": {
+                "title": "Ny version tilgængelig!",
+                "linkText": "Se release notes her",
+                "advice": "Genindlæs for at anvende ny funktionalitet."
+            },
+            "userStateChanged": {
+                "title": "Din brugerstatus er ændret.",
+                "description": "Genindlæs for at anvende ny brugerstatus."
+            }
+        },
+        "viewMode": {
+            "view": "Vis",
+            "both": "Begge"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Fed skrift",
+            "strikethrough": "Gennemstregning",
+            "header": "Overskrift",
+            "code": "Kode",
+            "blockquote": "Blokcitat",
+            "unorderedList": "Uordnet Liste",
+            "orderedList": "Ordnet Liste",
+            "checkList": "Tjekliste",
+            "link": "Link",
+            "image": "Billede",
+            "uploadImage": "Upload billede"
+        },
+        "documentBar": {
+            "menu": "Menu",
+            "new": "Ny",
+            "shareLink": "",
+            "extra": "Ekstra",
+            "revision": "Revision",
+            "slideMode": "Præsentationstilstand",
+            "download": "Download",
+            "help": "Hjælp"
+        },
+        "export": {
+            "rawHtml": "Rå HTML"
+        },
+        "import": {
+            "clipboard": "Udklipsholder"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Importér fra Snippet",
+                "selectProject": "Vælg fra tilgængelige projekter",
+                "selectSnippet": "Vælg fra tilgængelige Snippets"
+            },
+            "gistImport": {
+                "title": "Importér fra Gist",
+                "insertGistUrl": "Indsæt din gist-url her..."
+            },
+            "snippetExport": {
+                "title": "Eksportér til Snippet",
+                "visibilityLevel": "Vælg synlighedsniveau"
+            },
+            "revision": {
+                "title": "Revision",
+                "revertButton": "Fortryd ændringer"
+            },
+            "clipboardImport": {
+                "title": "Importér fra udklipsholder",
+                "insertMarkdown": "Indsæt din markdown eller hjemmeside her..."
+            },
+            "deleteNote": {}
+        }
+    },
+    "common": {
+        "import": "Importér",
+        "export": "Eksportér",
+        "refresh": "Genindlæs",
+        "cancel": "Afbryd",
+        "ok": "Okay",
+        "or": "eller"
+    },
+    "login": {
+        "chooseMethod": "Vælg metode",
+        "signInVia": "Log ind med {{service}}",
+        "signIn": "Log Ind",
+        "signOut": " Log Ud",
+        "auth": {
+            "error": {}
+        }
+    }
+}

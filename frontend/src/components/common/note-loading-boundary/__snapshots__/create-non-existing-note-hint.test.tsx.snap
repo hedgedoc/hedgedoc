@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`create non existing note hint shows success message when the note has been created 1`] = `
+<div>
+  <div
+    class="fade mt-5 alert alert-info show"
+    data-testid="noteCreated"
+    role="alert"
+  >
+    <i
+      class="fa  fa-check-circle me-2 "
+    />
+    noteLoadingBoundary.createNote.success
+  </div>
+</div>
+`;
+
+exports[`create non existing note hint renders a waiting message when button is clicked 1`] = `
+<div>
+  <div
+    class="fade mt-5 alert alert-info show"
+    data-testid="loadingMessage"
+    role="alert"
+  >
+    <i
+      class="fa  fa-spinner fa-spin me-2 "
+    />
+    noteLoadingBoundary.createNote.creating
+  </div>
+</div>
+`;
+
+exports[`create non existing note hint renders an button as initial state 1`] = `
+<div>
+  <div
+    class="fade mt-5 alert alert-info show"
+    data-testid="createNoteMessage"
+    role="alert"
+  >
+    <span>
+      noteLoadingBoundary.createNote.question
+    </span>
+    <div
+      class="mt-3"
+    >
+      <button
+        class="mx-2 btn btn-primary"
+        data-testid="createNoteButton"
+        type="submit"
+      >
+        noteLoadingBoundary.createNote.create
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`create non existing note hint shows an error message if note couldn't be created 1`] = `
+<div>
+  <div
+    class="fade mt-5 alert alert-danger show"
+    data-testid="failedMessage"
+    role="alert"
+  >
+    <i
+      class="fa  fa-exclamation-triangle me-1 "
+    />
+    noteLoadingBoundary.createNote.error
+  </div>
+</div>
+`;

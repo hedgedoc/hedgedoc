@@ -1,0 +1,16 @@
+/*!
+ * SPDX-FileCopyrightText: Original code: Copyright (c) 2011-2022 Twitter, Inc. + Copyright (c) 2011-2022 The Bootstrap Authors. Modification: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+// Textual addons
+//
+// Serves as a catch-all element for any text or radio/checkbox input you wish
+// to prepend or append to an input.
+
+.input-group-text {
+  color: $input-group-addon-color;
+  background-color: $input-group-addon-bg;
+  border: $input-border-width solid $input-group-addon-border-color;
+}

@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlantUML markdown extensions renders a plantuml codeblock 1`] = `
+<div>
+  <img
+    alt="uml diagram"
+    src="https://example.org/svg/SoWkIImgAStDuKhEIImkLd2jICmjo4dbSaZDIm6A0W00"
+  />
+  
+
+</div>
+`;
+
+exports[`PlantUML markdown extensions renders an error if no server is defined 1`] = `
+<div>
+  <p
+    class="alert alert-danger"
+  >
+    renderer.plantuml.notConfigured
+  </p>
+</div>
+`;

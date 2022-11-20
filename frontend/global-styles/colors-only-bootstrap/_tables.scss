@@ -1,0 +1,36 @@
+/*!
+ * SPDX-FileCopyrightText: Original code: Copyright (c) 2011-2022 Twitter, Inc. + Copyright (c) 2011-2022 The Bootstrap Authors. Modification: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+//
+// Basic Bootstrap table
+//
+
+.table {
+  --#{$prefix}table-color: #{$table-color};
+  --#{$prefix}table-bg: #{$table-bg};
+  --#{$prefix}table-border-color: #{$table-border-color};
+  --#{$prefix}table-accent-bg: #{$table-accent-bg};
+  --#{$prefix}table-striped-color: #{$table-striped-color};
+  --#{$prefix}table-striped-bg: #{$table-striped-bg};
+  --#{$prefix}table-active-color: #{$table-active-color};
+  --#{$prefix}table-active-bg: #{$table-active-bg};
+  --#{$prefix}table-hover-color: #{$table-hover-color};
+  --#{$prefix}table-hover-bg: #{$table-hover-bg};
+}
+
+.table-group-divider {
+  border-top-color: $table-group-separator-color;
+}
+
+
+// Table variants
+//
+// Table variants set the table cell backgrounds, border colors
+// and the colors of the striped, hovered & active tables
+
+@each $color, $value in $table-variants {
+  @include table-variant($color, $value);
+}

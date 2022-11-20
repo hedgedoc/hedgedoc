@@ -1,0 +1,271 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Highlighted code markdown extension renders with just the language and line wrapping doesn't show a gutter 1`] = `
+<div>
+  <pre>
+    <span>
+      this is a mock for highlighted code
+      <code>
+        let x = 0
+
+      </code>
+      <span>
+        language: 
+        javascript
+      </span>
+      <span>
+        start line number: 
+      </span>
+      <span>
+        wrap line: 
+        true
+      </span>
+    </span>
+  </pre>
+  
+
+</div>
+`;
+
+exports[`Highlighted code markdown extension renders with just the language doesn't show a gutter 1`] = `
+<div>
+  <pre>
+    <span>
+      this is a mock for highlighted code
+      <code>
+        let x = 0
+
+      </code>
+      <span>
+        language: 
+        javascript
+      </span>
+      <span>
+        start line number: 
+      </span>
+      <span>
+        wrap line: 
+        false
+      </span>
+    </span>
+  </pre>
+  
+
+</div>
+`;
+
+exports[`Highlighted code markdown extension renders with the language and show gutter and line wrapping shows the correct line number 1`] = `
+<div>
+  <pre>
+    <span>
+      this is a mock for highlighted code
+      <code>
+        let x = 0
+
+      </code>
+      <span>
+        language: 
+        javascript
+      </span>
+      <span>
+        start line number: 
+        1
+      </span>
+      <span>
+        wrap line: 
+        true
+      </span>
+    </span>
+  </pre>
+  
+
+</div>
+`;
+
+exports[`Highlighted code markdown extension renders with the language and show gutter shows the correct line number 1`] = `
+<div>
+  <pre>
+    <span>
+      this is a mock for highlighted code
+      <code>
+        let x = 0
+
+      </code>
+      <span>
+        language: 
+        javascript
+      </span>
+      <span>
+        start line number: 
+        1
+      </span>
+      <span>
+        wrap line: 
+        false
+      </span>
+    </span>
+  </pre>
+  
+
+</div>
+`;
+
+exports[`Highlighted code markdown extension renders with the language, show gutter with a start number and line wrapping shows the correct line number 1`] = `
+<div>
+  <pre>
+    <span>
+      this is a mock for highlighted code
+      <code>
+        let x = 0
+
+      </code>
+      <span>
+        language: 
+        javascript
+      </span>
+      <span>
+        start line number: 
+        100
+      </span>
+      <span>
+        wrap line: 
+        true
+      </span>
+    </span>
+  </pre>
+  
+
+</div>
+`;
+
+exports[`Highlighted code markdown extension renders with the language, show gutter with a start number and line wrapping shows the correct line number and continues in another codeblock 1`] = `
+<div>
+  <pre>
+    <span>
+      this is a mock for highlighted code
+      <code>
+        let x = 0
+let y = 1
+
+      </code>
+      <span>
+        language: 
+        javascript
+      </span>
+      <span>
+        start line number: 
+        100
+      </span>
+      <span>
+        wrap line: 
+        true
+      </span>
+    </span>
+  </pre>
+  
+
+  <pre>
+    <span>
+      this is a mock for highlighted code
+      <code>
+        let y = 2
+
+      </code>
+      <span>
+        language: 
+        javascript
+      </span>
+      <span>
+        start line number: 
+        102
+      </span>
+      <span>
+        wrap line: 
+        false
+      </span>
+    </span>
+  </pre>
+  
+
+</div>
+`;
+
+exports[`Highlighted code markdown extension renders with the language, show gutter with a start number shows the correct line number 1`] = `
+<div>
+  <pre>
+    <span>
+      this is a mock for highlighted code
+      <code>
+        let x = 0
+
+      </code>
+      <span>
+        language: 
+        javascript
+      </span>
+      <span>
+        start line number: 
+        100
+      </span>
+      <span>
+        wrap line: 
+        false
+      </span>
+    </span>
+  </pre>
+  
+
+</div>
+`;
+
+exports[`Highlighted code markdown extension renders with the language, show gutter with a start number shows the correct line number and continues in another codeblock 1`] = `
+<div>
+  <pre>
+    <span>
+      this is a mock for highlighted code
+      <code>
+        let x = 0
+let y = 1
+
+      </code>
+      <span>
+        language: 
+        javascript
+      </span>
+      <span>
+        start line number: 
+        100
+      </span>
+      <span>
+        wrap line: 
+        false
+      </span>
+    </span>
+  </pre>
+  
+
+  <pre>
+    <span>
+      this is a mock for highlighted code
+      <code>
+        let y = 2
+
+      </code>
+      <span>
+        language: 
+        javascript
+      </span>
+      <span>
+        start line number: 
+        102
+      </span>
+      <span>
+        wrap line: 
+        false
+      </span>
+    </span>
+  </pre>
+  
+
+</div>
+`;

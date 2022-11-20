@@ -1,0 +1,17 @@
+/*!
+ * SPDX-FileCopyrightText: Original code: Copyright (c) 2011-2022 Twitter, Inc. + Copyright (c) 2011-2022 The Bootstrap Authors. Modification: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+.popover {
+  // scss-docs-start popover-css-vars
+  --#{$prefix}popover-bg: #{$popover-bg};
+  --#{$prefix}popover-border-color: #{$popover-border-color};
+  --#{$prefix}popover-box-shadow: #{$popover-box-shadow};
+  --#{$prefix}popover-header-color: #{$popover-header-color};
+  --#{$prefix}popover-header-bg: #{$popover-header-bg};
+  --#{$prefix}popover-body-color: #{$popover-body-color};
+  --#{$prefix}popover-arrow-border: var(--#{$prefix}popover-border-color);
+  // scss-docs-end popover-css-vars
+}

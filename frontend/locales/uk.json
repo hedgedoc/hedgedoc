@@ -1,0 +1,169 @@
+{
+    "app": {
+        "slogan": "Кращий спосіб, щоб записувати і ділитись своїми знаннями щодо знижок в реальному часі.",
+        "title": "Спільні примітки щодо знижок"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Дослідити всі можливості",
+            "features": {
+                "collaboration": "Спільна робота по URL",
+                "katex": "Підтримка графіків і KaTeX",
+                "slides": "Підтримка режиму слайдера"
+            }
+        },
+        "history": {
+            "noHistory": "Історія відсутня",
+            "localHistory": "Нижче показана історія браузера",
+            "toolbar": {
+                "selectTags": "Вибрати теги...",
+                "searchKeywords": "Пошук...",
+                "sortByTitle": "Сортувати по заголовку",
+                "sortByLastVisited": "Сортувати по часу",
+                "export": "Еспортувати історію",
+                "import": "Імпортувати історію",
+                "clear": "Очистити історію",
+                "refresh": "Оновити історію"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Вступ",
+            "history": "Історія",
+            "newGuestNote": "Примітка нового гостя",
+            "newNote": "Нова примітка"
+        },
+        "footer": {
+            "releases": "Релізи"
+        },
+        "versionInfo": {}
+    },
+    "profile": {
+        "modal": {
+            "deleteUser": {}
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Контакти",
+                "reportIssue": "Повідомити про проблему"
+            },
+            "documents": {
+                "title": "Документи",
+                "yamlMetadata": "Метадані YAML",
+                "slideExample": "Приклад слайдера"
+            },
+            "cheatsheet": {
+                "title": "Шпаргалка",
+                "example": "Приклад",
+                "syntax": "Синтаксис",
+                "underlinedText": "Підкреслений текст",
+                "highlightedText": "Виділений текст",
+                "externalService": "Зовнішнє"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Ця замітка заблокована",
+                "description": "Вибачте, лише власник може редагувати цю замітку."
+            },
+            "limitReached": {
+                "title": "Досягнено ліміту",
+                "description": "Нажаль, ви досягли максимальної довжини замітки.",
+                "advice": "Будь-ласка, зменшіть розмір вмісту або розділіть його на декілька заміток!"
+            },
+            "incompatible": {
+                "title": "Ви використовуєте несумісну версію клієнта.",
+                "advice": "Оновіть сторінку для оновлення."
+            },
+            "newVersion": {
+                "title": "Нова версія доступна!",
+                "linkText": "Огляньте деталі оновлень тут",
+                "advice": "Оновіть, щоб насолоджуватись новими можливостями."
+            },
+            "userStateChanged": {
+                "title": "Ваш акаунт змінено.",
+                "description": "Оновіть, щоб завантажити зміни акаунта."
+            }
+        },
+        "viewMode": {
+            "view": "Вигляд",
+            "both": "Обоє"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Жирний шрифт",
+            "strikethrough": "Перекреслений",
+            "header": "Заголовок",
+            "code": "Код",
+            "blockquote": "Цитата",
+            "unorderedList": "Маркований список",
+            "orderedList": "Нумерований список",
+            "checkList": "Список завдань",
+            "link": "Посилання",
+            "image": "Зображення",
+            "uploadImage": "Завантажити зображення"
+        },
+        "documentBar": {
+            "menu": "Меню",
+            "new": "Нова",
+            "shareLink": "",
+            "extra": "Дотатково",
+            "revision": "Ревізія",
+            "slideMode": "Режим слайдера",
+            "download": "Завантажити",
+            "help": "Допомога"
+        },
+        "export": {
+            "rawHtml": "Raw HTML"
+        },
+        "import": {
+            "clipboard": "Буфер обміну"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Імпортувати фрагмент коду",
+                "selectProject": "Виберіть з доступних проектів",
+                "selectSnippet": "Виберіть з доступних фрагментів коду"
+            },
+            "gistImport": {
+                "title": "Імпортувати з Gist",
+                "insertGistUrl": "Вставте посилання на ваш gist тут..."
+            },
+            "snippetExport": {
+                "title": "Експорт фрагменту коду",
+                "visibilityLevel": "Вибрати рівень видимості"
+            },
+            "revision": {
+                "title": "Ревізія",
+                "revertButton": "Відмінити"
+            },
+            "clipboardImport": {
+                "title": "Імпорт з буферу обміну",
+                "insertMarkdown": "Вставте ваш markdown або веб-сторінку тут..."
+            },
+            "deleteNote": {}
+        }
+    },
+    "common": {
+        "import": "Імпорт",
+        "export": "Експорт",
+        "refresh": "Оновити",
+        "cancel": "Відмінити",
+        "ok": "OK",
+        "or": "або"
+    },
+    "login": {
+        "chooseMethod": "Вибрати метод",
+        "signInVia": "Увійти за допомогою {{service}}",
+        "signIn": "Ввійти",
+        "signOut": "Вийти",
+        "auth": {
+            "error": {}
+        }
+    }
+}

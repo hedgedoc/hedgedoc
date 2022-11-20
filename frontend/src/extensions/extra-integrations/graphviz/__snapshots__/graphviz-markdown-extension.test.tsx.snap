@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlantUML markdown extensions renders a plantuml codeblock 1`] = `
+<div>
+  <pre>
+    <span>
+      this is a mock for graphviz frame
+      <code>
+        graph {
+a -- b
+}
+
+      </code>
+    </span>
+  </pre>
+  
+
+</div>
+`;

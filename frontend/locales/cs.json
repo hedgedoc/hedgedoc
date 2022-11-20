@@ -1,0 +1,191 @@
+{
+    "app": {
+        "slogan": "Nejlepší platforma pro tvorbu a sdílení vašich znalostí v markdown.",
+        "title": "Kolaborativní markdown poznámky"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Prozkoumat všechny funkce",
+            "features": {
+                "collaboration": "Spolupráce v reálném čase",
+                "katex": "Funguje s grafy a KaTeX",
+                "slides": "Podporuje režim prezentace"
+            }
+        },
+        "history": {
+            "noHistory": "Žádná historie",
+            "localHistory": "Níže je historie z tohoto prohlížeče",
+            "toolbar": {
+                "selectTags": "Zvolit štítky…",
+                "searchKeywords": "Vyhledat klíčové slovo …",
+                "sortByTitle": "Seřadit podle názvu",
+                "sortByLastVisited": "Seřadit podle času",
+                "export": "Exportovat historii",
+                "import": "Importovat historii",
+                "clear": "Odstranit historii",
+                "refresh": "Aktualizovat historii"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Intro",
+            "history": "Historie",
+            "newGuestNote": "Nová poznámka hosta",
+            "newNote": "Nová poznámka"
+        },
+        "footer": {
+            "releases": "Vydání",
+            "poweredBy": "Powered by <0></0>",
+            "imprint": "Otisk",
+            "followUs": "Sledujte nás na <0></0>, <1></1>, <2></2>, <3></3>, a <4></4>.",
+            "privacy": "Soukromí",
+            "termsOfUse": "Podmínky použití"
+        },
+        "versionInfo": {
+            "sourceCode": "Zdrojový kód"
+        }
+    },
+    "profile": {
+        "deleteUser": "Smazat uživatele",
+        "exportUserData": "Exportovat uživatelská data",
+        "modal": {
+            "deleteUser": {
+                "title": "Smazat uživatele",
+                "message": "Opravdu chcete smazat váš uživatelský účet?",
+                "subMessage": "Tato operace odstraní váš účet, všechny poznámky, které vlastníte, a také odstraní všechny odkazy na váš účet z jiných poznámek."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Kontakty",
+                "community": "Připojit ke komunitě",
+                "meetUsOn": "Potkejte se s námi na {{service}}",
+                "helpTranslating": "Pomoci nám s překladem",
+                "reportIssue": "Nahlásit problém"
+            },
+            "documents": {
+                "title": "Dokumenty",
+                "yamlMetadata": "YAML metadata",
+                "slideExample": "Příklad prezentace"
+            },
+            "cheatsheet": {
+                "title": "Tahák",
+                "example": "Příklad",
+                "syntax": "Syntaxe",
+                "underlinedText": "Podtržený text",
+                "highlightedText": "Zvýrazněný text",
+                "externalService": "Externí"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Tato poznámka je uzamčena",
+                "description": "Omlouvám se, pouze vlastník může editovat tuto poznámku."
+            },
+            "limitReached": {
+                "title": "Dosažení limitu",
+                "description": "Omlouvám se, dosáhli jste maximální možné délky této poznámky.",
+                "advice": "Prosím zkraťte poznámku."
+            },
+            "incompatible": {
+                "title": "Verze vašeho klienta není kompatibilní.",
+                "advice": "Znovu načíst a aktualizovat."
+            },
+            "newVersion": {
+                "title": "Je dostupná nová verze!",
+                "linkText": "Viz poznámky k vydání zde",
+                "advice": "Znovu načíst a užít si nové funkce."
+            },
+            "userStateChanged": {
+                "title": "Váš uživatelský status se změnil.",
+                "description": "Znovu načíst a nahrát nový uživatelský status."
+            }
+        },
+        "viewMode": {
+            "view": "Zobrazit",
+            "both": "Obojí"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Tučně",
+            "strikethrough": "Přeškrtnuté",
+            "header": "Hlavička",
+            "code": "Kód",
+            "blockquote": "Citace",
+            "unorderedList": "Nečíslovaný seznam",
+            "orderedList": "Číslovaný seznam",
+            "checkList": "Kontrolní seznam",
+            "link": "Odkaz",
+            "image": "Obrázek",
+            "uploadImage": "Nahrát obrázek"
+        },
+        "documentBar": {
+            "menu": "Menu",
+            "new": "Nová",
+            "shareLink": "",
+            "extra": "Extra",
+            "revision": "Revize",
+            "slideMode": "Režim prezentace",
+            "download": "Stáhnout",
+            "help": "Nápověda"
+        },
+        "export": {
+            "rawHtml": "Raw HTML"
+        },
+        "import": {
+            "clipboard": "Schránka"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Importovat ze Snippet",
+                "selectProject": "Zvolit z dostupných projektů",
+                "selectSnippet": "Zvolit z dostupných úryvků"
+            },
+            "gistImport": {
+                "title": "Importovat z Gist",
+                "insertGistUrl": "Sem vložte vaši gist url…"
+            },
+            "snippetExport": {
+                "title": "Exportovat do úryvku",
+                "visibilityLevel": "Zvolit úroveň viditelnosti"
+            },
+            "revision": {
+                "title": "Revize",
+                "revertButton": "Vrátit"
+            },
+            "clipboardImport": {
+                "title": "Importovat ze schránky",
+                "insertMarkdown": "Sem vložte váš markdown nebo webovou stránku…"
+            },
+            "deleteNote": {
+                "question": "Opravdu chcete odstranit tuto poznámku?",
+                "warning": "Všichni uživatelé ztratí spojení."
+            }
+        }
+    },
+    "common": {
+        "import": "Import",
+        "export": "Export",
+        "refresh": "Znovu načíst",
+        "cancel": "Storno",
+        "ok": "OK",
+        "or": "nebo"
+    },
+    "login": {
+        "chooseMethod": "Zvolit metodu",
+        "signInVia": "Přihlásit se přes {{service}}",
+        "signIn": "Přihlásit",
+        "signOut": "Odhlásit",
+        "register": {
+            "title": "Registrovat"
+        },
+        "auth": {
+            "error": {}
+        }
+    }
+}

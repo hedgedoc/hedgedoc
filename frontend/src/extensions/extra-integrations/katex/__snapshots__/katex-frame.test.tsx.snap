@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`katex frame renders a valid latex expression as explicit block 1`] = `
+<div>
+  <div
+    data-testid="katex-block"
+  >
+    <span>
+      This is a mock for lib katex with this parameters:
+    </span>
+    
+
+    <ul>
+      
+  
+      <li>
+        tex: \\int_0^\\infty x^2 dx
+      </li>
+      
+  
+      <li>
+        block: true
+      </li>
+      
+
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`katex frame renders a valid latex expression as explicit inline 1`] = `
+<div>
+  <span
+    data-testid="katex-inline"
+  >
+    <span>
+      This is a mock for lib katex with this parameters:
+    </span>
+    
+
+    <ul>
+      
+  
+      <li>
+        tex: \\int_0^\\infty x^2 dx
+      </li>
+      
+  
+      <li>
+        block: false
+      </li>
+      
+
+    </ul>
+  </span>
+</div>
+`;
+
+exports[`katex frame renders a valid latex expression as implicit inline 1`] = `
+<div>
+  <span
+    data-testid="katex-inline"
+  >
+    <span>
+      This is a mock for lib katex with this parameters:
+    </span>
+    
+
+    <ul>
+      
+  
+      <li>
+        tex: \\int_0^\\infty x^2 dx
+      </li>
+      
+  
+      <li>
+        block: false
+      </li>
+      
+
+    </ul>
+  </span>
+</div>
+`;
+
+exports[`katex frame renders an error for an invalid latex expression as explicit block 1`] = `
+<div>
+  <div
+    data-testid="katex-block"
+  >
+    <div
+      class="fade alert alert-danger show"
+      role="alert"
+    >
+      mocked parseerror
+    </div>
+  </div>
+</div>
+`;
+
+exports[`katex frame renders an error for an invalid latex expression as explicit inline 1`] = `
+<div>
+  <span
+    data-testid="katex-inline"
+  >
+    <div
+      class="fade d-inline-block alert alert-danger show"
+      role="alert"
+    >
+      mocked parseerror
+    </div>
+  </span>
+</div>
+`;
+
+exports[`katex frame renders an error for an invalid latex expression as implicit inline 1`] = `
+<div>
+  <span
+    data-testid="katex-inline"
+  >
+    <div
+      class="fade d-inline-block alert alert-danger show"
+      role="alert"
+    >
+      mocked parseerror
+    </div>
+  </span>
+</div>
+`;

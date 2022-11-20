@@ -1,0 +1,191 @@
+{
+    "app": {
+        "slogan": "La millor forma d'escriure i compartir el teu coneixement a Markdown.",
+        "title": "Notes col·laboratives a Markdown"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Explorar totes les funcions",
+            "features": {
+                "collaboration": "Col·laborar a través de URL",
+                "katex": "Soport per a gràfics i KaTeX",
+                "slides": "Soport per a diapositives"
+            }
+        },
+        "history": {
+            "noHistory": "Cap historial",
+            "localHistory": "A continuació es mostra l'historial del navegador",
+            "toolbar": {
+                "selectTags": "Seleccionar etiquetes...",
+                "searchKeywords": "Buscar paraules clau...",
+                "sortByTitle": "Ordenar per títol",
+                "sortByLastVisited": "Ordenar per hora",
+                "export": "Exportar historial",
+                "import": "Importar historial",
+                "clear": "Borrar historial",
+                "refresh": "Actualitzar historial"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Introducció",
+            "history": "Història",
+            "newGuestNote": "Nova nota com a convidat",
+            "newNote": "Nova nota"
+        },
+        "footer": {
+            "releases": "Versions",
+            "poweredBy": "Impulsat per <0></0>",
+            "imprint": "Emprenta",
+            "followUs": "Segueix-nos a <0></0>, <1></1>, <2></2>, <3></3> i <4></4>",
+            "privacy": "Privacitat",
+            "termsOfUse": "Condicions d'ús"
+        },
+        "versionInfo": {
+            "sourceCode": "Codi Font"
+        }
+    },
+    "profile": {
+        "deleteUser": "Esborrar compte",
+        "exportUserData": "Exportar dades",
+        "modal": {
+            "deleteUser": {
+                "title": "Esborrar compte",
+                "message": "Estàs segur que vols eliminar el teu compte?",
+                "subMessage": "Això esborrarà el teu compte, totes les teves notes i totes les teves referències cap al teu compte d'altres notes."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Contactes",
+                "community": "Unir-se a la comunitat",
+                "meetUsOn": "Coneix-nos a {{service}}",
+                "helpTranslating": "Ajuda'ns traduïnt",
+                "reportIssue": "Reportar un problema"
+            },
+            "documents": {
+                "title": "Documents",
+                "yamlMetadata": "Metadades de YAML",
+                "slideExample": "Exemple de diapositiva"
+            },
+            "cheatsheet": {
+                "title": "Ajudamemories",
+                "example": "Exemple",
+                "syntax": "Sintaxis",
+                "underlinedText": "Text subrallat",
+                "highlightedText": "Text marcat",
+                "externalService": "Externs"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Aquesta nota està bloquejada",
+                "description": "Perdona, només l'amo pot editar aquesta nota."
+            },
+            "limitReached": {
+                "title": "Ha arribat al límit",
+                "description": "Perdona, ha arribat a la longitut màxima que pot tenir aquesta nota.",
+                "advice": "Siusplau, redueix el contingut o divideix-la en més notes, gràcies!"
+            },
+            "incompatible": {
+                "title": "Tens una versió del client incompatible.",
+                "advice": "Refrescar per actualitzar"
+            },
+            "newVersion": {
+                "title": "Nova versió disponible!",
+                "linkText": "Veure les notes de publicació aquí",
+                "advice": "Actualitzar per fer servir les noves funcions."
+            },
+            "userStateChanged": {
+                "title": "L'estat del teu usuari ha canviat.",
+                "description": "Refrescar per actualitzar l'estat del teu usuari."
+            }
+        },
+        "viewMode": {
+            "view": "Veure",
+            "both": "Ambdós"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Font negreta",
+            "strikethrough": "Ratllat",
+            "header": "Capçelera",
+            "code": "Codi",
+            "blockquote": "Bloc de cita",
+            "unorderedList": "Llista desordenada",
+            "orderedList": "Llista ordenada",
+            "checkList": "Llista de tasques",
+            "link": "Enllaç",
+            "image": "Imatge",
+            "uploadImage": "Pujar imatge"
+        },
+        "documentBar": {
+            "menu": "Menú",
+            "new": "Nou",
+            "shareLink": "",
+            "extra": "Extra",
+            "revision": "Revisió",
+            "slideMode": "Mode presentació",
+            "download": "Descarregar",
+            "help": "Ajuda"
+        },
+        "export": {
+            "rawHtml": "HTML pur"
+        },
+        "import": {
+            "clipboard": "Portapapers"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Importar d'Snippet",
+                "selectProject": "Triar d'un projecte disponsible",
+                "selectSnippet": "Triar d'un Snippet disponible"
+            },
+            "gistImport": {
+                "title": "Importar d'un Gist",
+                "insertGistUrl": "Enganxa l'URL del teu Gist aquí..."
+            },
+            "snippetExport": {
+                "title": "Exportar a Snippet",
+                "visibilityLevel": "Triar el nivell de visibilitat"
+            },
+            "revision": {
+                "title": "Revisió",
+                "revertButton": "Revertir"
+            },
+            "clipboardImport": {
+                "title": "Importar del portapapers",
+                "insertMarkdown": "Enganxa la teva markdown o pàgina web aquí..."
+            },
+            "deleteNote": {
+                "question": "Estàs segur que vols eliminar aquesta nota?",
+                "warning": "Tots els usuaris perdran la seva connexió."
+            }
+        }
+    },
+    "common": {
+        "import": "Importar",
+        "export": "Exportar",
+        "refresh": "Refrescar",
+        "cancel": "Cancel·lar",
+        "ok": "OK",
+        "or": "o"
+    },
+    "login": {
+        "chooseMethod": "Triar mètode",
+        "signInVia": "Entrar a través de {{service}}",
+        "signIn": "Entrar",
+        "signOut": "Sortir",
+        "register": {
+            "title": "Registrar-se"
+        },
+        "auth": {
+            "error": {}
+        }
+    }
+}

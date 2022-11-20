@@ -1,0 +1,191 @@
+{
+    "app": {
+        "slogan": "Bästa sättet att skriva och dela din kunskap i markdown.",
+        "title": "Kollaborativa markdownanteckningar"
+    },
+    "landing": {
+        "intro": {
+            "exploreFeatures": "Upptäck alla funktioner",
+            "features": {
+                "collaboration": "Samarbeta med URL",
+                "katex": "Stöd för diagram och KaTeX",
+                "slides": "Stöd för slide mode"
+            }
+        },
+        "history": {
+            "noHistory": "Ingen historik",
+            "localHistory": "Nedanför finns historia från webbläsaren",
+            "toolbar": {
+                "selectTags": "Välj taggar...",
+                "searchKeywords": "Sök nyckelord...",
+                "sortByTitle": "Sortera titlar",
+                "sortByLastVisited": "Sortera kronologiskt",
+                "export": "Exporthistorik",
+                "import": "Importhistorik",
+                "clear": "Rensa historik",
+                "refresh": "Uppdatera historik"
+            },
+            "modal": {
+                "clearHistory": {}
+            },
+            "tableHeader": {}
+        },
+        "navigation": {
+            "intro": "Intro",
+            "history": "Historik",
+            "newGuestNote": "Ny gästanteckning",
+            "newNote": "Ny anteckning"
+        },
+        "footer": {
+            "releases": "Lanseringar",
+            "poweredBy": "Drivs av <0></0>",
+            "imprint": "Avtryck",
+            "followUs": "Följ oss på <0></0>, <1></1>, <2></2>, <3></3> och <4></4>.",
+            "privacy": "Integritet",
+            "termsOfUse": "Villkor"
+        },
+        "versionInfo": {
+            "sourceCode": "Källkod"
+        }
+    },
+    "profile": {
+        "deleteUser": "Ta bort användare",
+        "exportUserData": "Exportera användardata",
+        "modal": {
+            "deleteUser": {
+                "title": "Ta bort användare",
+                "message": "Vill du verkligen ta bort ditt användarkonto?",
+                "subMessage": "Detta tar bort ditt konto, alla anteckningar som ägs av dig och tar bort alla referenser till ditt konto från andra anteckningar."
+            }
+        }
+    },
+    "editor": {
+        "help": {
+            "contacts": {
+                "title": "Kontakter",
+                "community": "Gå med i samhället",
+                "meetUsOn": "Träffa oss på {{service}}",
+                "helpTranslating": "Hjälp oss att översätta",
+                "reportIssue": "Rapportera ett fel"
+            },
+            "documents": {
+                "title": "Dokument",
+                "yamlMetadata": "YAML Metadata",
+                "slideExample": "Slideexempel"
+            },
+            "cheatsheet": {
+                "title": "Cheatsheet",
+                "example": "Exempel",
+                "syntax": "Syntax",
+                "underlinedText": "Insatt text",
+                "highlightedText": "Markerad text",
+                "externalService": "Externa"
+            }
+        },
+        "error": {
+            "locked": {
+                "title": "Anteckningen är låst",
+                "description": "Ursäkta, men endast ägaren kan redigera den här anteckningen."
+            },
+            "limitReached": {
+                "title": "Nå gränsen",
+                "description": "Usräkta, men duhar nått maxlängden för vad en anteckning får vara.",
+                "advice": "Var vänlig förkorta innehållet eller dela upp det i flera anteckningar, tack!"
+            },
+            "incompatible": {
+                "title": "Du har en inkompatibel klientversion.",
+                "advice": "Ladda om för att uppdatera."
+            },
+            "newVersion": {
+                "title": "Ny version tillgänglig!",
+                "linkText": "Se releaseanteckningar här",
+                "advice": "Ladda om för att använda de nya funktionerna."
+            },
+            "userStateChanged": {
+                "title": "Din användarstatus har förändrats.",
+                "description": "Ladda om för att ladda ny användarstatus."
+            }
+        },
+        "viewMode": {
+            "view": "Visa",
+            "both": "Båda"
+        },
+        "darkMode": {},
+        "editorToolbar": {
+            "bold": "Fet stil",
+            "strikethrough": "Genomstrykning",
+            "header": "Huvud",
+            "code": "Kod",
+            "blockquote": "Blockcitat",
+            "unorderedList": "Oordnad lists",
+            "orderedList": "Ordnad lista",
+            "checkList": "Todo-lista",
+            "link": "Länk",
+            "image": "Bild",
+            "uploadImage": "Ladda upp bilder"
+        },
+        "documentBar": {
+            "menu": "Meny",
+            "new": "Ny",
+            "shareLink": "",
+            "extra": "Extra",
+            "revision": "Revision",
+            "slideMode": "Slide Mode",
+            "download": "Ladda ner",
+            "help": "Hjälp"
+        },
+        "export": {
+            "rawHtml": "Rå HTML"
+        },
+        "import": {
+            "clipboard": "Urklipp"
+        },
+        "modal": {
+            "snippetImport": {
+                "title": "Importera från Snippet",
+                "selectProject": "Välj från tillgängliga projekt",
+                "selectSnippet": "Välj från tillgängliga Snippets"
+            },
+            "gistImport": {
+                "title": "Importera från Gist",
+                "insertGistUrl": "Klipp in din gist-url här..."
+            },
+            "snippetExport": {
+                "title": "Exportera till Snippet",
+                "visibilityLevel": "Välj synlighetsnivå"
+            },
+            "revision": {
+                "title": "Revision",
+                "revertButton": "Återgå"
+            },
+            "clipboardImport": {
+                "title": "Importera från urklipp",
+                "insertMarkdown": "Klipp in din markdown eller hemsida här..."
+            },
+            "deleteNote": {
+                "question": "Vill du verkligen radera denna anteckning?",
+                "warning": "Alla användare kommer att förlora sin anslutning."
+            }
+        }
+    },
+    "common": {
+        "import": "Importera",
+        "export": "Exportera",
+        "refresh": "Ladda om",
+        "cancel": "Avbryt",
+        "ok": "Okej",
+        "or": "eller"
+    },
+    "login": {
+        "chooseMethod": "Välj metod",
+        "signInVia": "Logga in via {{service}}",
+        "signIn": "Logga in",
+        "signOut": "Logga ut",
+        "register": {
+            "title": "Registrera"
+        },
+        "auth": {
+            "error": {}
+        }
+    }
+}

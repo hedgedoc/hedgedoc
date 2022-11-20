@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AliasesModal renders the modal 1`] = `
+<div>
+  <span>
+    This is a mock implementation of a Modal: 
+    <dialog>
+      <div
+        class="modal-body"
+      >
+        <p>
+          editor.modal.aliases.explanation
+        </p>
+        <div
+          class="list-group"
+        >
+          <span>
+            This is a mock for the AliasesList that is tested separately.
+          </span>
+          <div
+            class="list-group-item"
+          >
+            <span>
+              This is a mock for the AliasesAddForm that is tested separately.
+            </span>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  </span>
+</div>
+`;
