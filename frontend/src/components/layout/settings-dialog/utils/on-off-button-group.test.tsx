@@ -18,7 +18,7 @@ describe('Settings On-Off Button Group', () => {
     const view = render(<OnOffButtonGroup value={value} onSelect={onSelect} />)
     expect(view.container).toMatchSnapshot()
     const onButton = await screen.findByTestId('onOffButtonGroupOn')
-    act(() => {
+    await act(() => {
       onButton.click()
     })
     expect(value).toBeTruthy()
@@ -26,7 +26,7 @@ describe('Settings On-Off Button Group', () => {
     view.rerender(<OnOffButtonGroup value={value} onSelect={onSelect} />)
     expect(view.container).toMatchSnapshot()
     const offButton = await screen.findByTestId('onOffButtonGroupOff')
-    act(() => {
+    await act(() => {
       offButton.click()
     })
     expect(value).toBeFalsy()
