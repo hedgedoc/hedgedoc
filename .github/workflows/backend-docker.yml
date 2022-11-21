@@ -63,21 +63,21 @@ jobs:
 
   sqlite-test:
     runs-on: ubuntu-latest
+    if: needs.changes.outputs.changed == 'true'
     needs: [ build-dev, changes ]
     container:
       image: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-ci:${{ github.sha }}
     steps:
       - run: cd /usr/src/app && yarn run test
-        if: needs.changes.outputs.changed == 'true'
 
   sqlite-e2e:
     runs-on: ubuntu-latest
+    if: needs.changes.outputs.changed == 'true'
     needs: [ build-dev, changes ]
     container:
       image: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-ci:${{ github.sha }}
     steps:
       - run: cd /usr/src/app && yarn run test:e2e
-        if: needs.changes.outputs.changed == 'true'
 
   build-prod:
     runs-on: ubuntu-latest
