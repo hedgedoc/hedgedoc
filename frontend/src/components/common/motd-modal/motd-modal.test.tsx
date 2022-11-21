@@ -61,7 +61,7 @@ describe('motd modal', () => {
     expect(view.container).toMatchSnapshot()
 
     const button = await screen.findByTestId('motd-dismiss')
-    act(() => {
+    await act(() => {
       button.click()
     })
     expect(view.container).toMatchSnapshot()

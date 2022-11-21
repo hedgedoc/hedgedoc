@@ -47,7 +47,7 @@ describe('AliasesAddForm', () => {
     const input = await screen.findByTestId('addAliasInput')
     await testEvent.type(input, 'abc')
     expect(button).toBeEnabled()
-    act(() => {
+    await act(() => {
       button.click()
     })
     expect(AliasModule.addAlias).toBeCalledWith('mock-note', 'abc')
