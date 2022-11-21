@@ -34,10 +34,13 @@ jobs:
     permissions:
       pull-requests: read
     outputs:
-      changed: ${{ steps.changed.outputs.files }}
+      changed: ${{ github.event_name == 'push' || steps.changed.outputs.files }}
     steps:
       - uses: actions/checkout@v3
+        if: github.event_name != 'push'
+
       - name: Check for frontend file changes
+        if: github.event_name != 'push'
         uses: dorny/paths-filter@v2
         id: changed
         with:
