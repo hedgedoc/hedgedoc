@@ -793,7 +793,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/core@npm:^29.2.2, @jest/core@npm:^29.3.1":
+"@jest/core@npm:^29.3.1":
   version: 29.3.1
   resolution: "@jest/core@npm:29.3.1"
   dependencies:
@@ -995,7 +995,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/types@npm:^29.2.1, @jest/types@npm:^29.3.1":
+"@jest/types@npm:^29.3.1":
   version: 29.3.1
   resolution: "@jest/types@npm:29.3.1"
   dependencies:
@@ -5614,7 +5614,7 @@ __metadata:
     express-session: 1.17.3
     file-type: 16.5.4
     http-proxy-middleware: 2.0.6
-    jest: 29.2.2
+    jest: 29.3.1
     joi: 17.7.0
     ldapauth-fork: 5.0.5
     lib0: 0.2.53
@@ -6332,7 +6332,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-cli@npm:^29.2.2":
+"jest-cli@npm:^29.3.1":
   version: 29.3.1
   resolution: "jest-cli@npm:29.3.1"
   dependencies:
@@ -6729,14 +6729,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:29.2.2":
-  version: 29.2.2
-  resolution: "jest@npm:29.2.2"
+"jest@npm:29.3.1":
+  version: 29.3.1
+  resolution: "jest@npm:29.3.1"
   dependencies:
-    "@jest/core": ^29.2.2
-    "@jest/types": ^29.2.1
+    "@jest/core": ^29.3.1
+    "@jest/types": ^29.3.1
     import-local: ^3.0.2
-    jest-cli: ^29.2.2
+    jest-cli: ^29.3.1
   peerDependencies:
     node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
   peerDependenciesMeta:
@@ -6744,7 +6744,7 @@ __metadata:
       optional: true
   bin:
     jest: bin/jest.js
-  checksum: 6b4c0af3b5a0fddee46e26c9a539d70a3945700c20444ad3568e14faba27e89671f972dfaa8a02225c4e02b6d422171535660f5e167b1eb765a0922aea82533b
+  checksum: 613f4ec657b14dd84c0056b2fef1468502927fd551bef0b19d4a91576a609678fb316c6a5b5fc6120dd30dd4ff4569070ffef3cb507db9bb0260b28ddaa18d7a
   languageName: node
   linkType: hard
 
