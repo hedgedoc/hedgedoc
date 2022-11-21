@@ -6,7 +6,7 @@
 
 import * as useSingleStringUrlParameterModule from '../../../hooks/common/use-single-string-url-parameter'
 import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
-import { act, render, screen } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import { CreateNonExistingNoteHint } from './create-non-existing-note-hint'
 import * as createNoteWithPrimaryAliasModule from '../../../api/notes'
 import type { Note, NoteMetadata } from '../../../api/notes/types'
@@ -34,6 +34,7 @@ describe('create non existing note hint', () => {
         expect(markdown).toBe('')
         expect(primaryAlias).toBe(mockedNoteId)
         const metadata: NoteMetadata = Mock.of<NoteMetadata>({ primaryAddress: 'mockedPrimaryAlias' })
+        await new Promise((resolve) => setTimeout(resolve, 100))
         await waitForOtherPromisesToFinish()
         return Mock.of<Note>({ metadata })
       })
@@ -80,7 +81,9 @@ describe('create non existing note hint', () => {
     await act(() => {
       button.click()
     })
-    await screen.findByTestId('loadingMessage')
+    await waitFor(async () => {
+      expect(await screen.findByTestId('loadingMessage')).toBeInTheDocument()
+    })
     expect(onNoteCreatedCallback).not.toBeCalled()
     expect(view.container).toMatchSnapshot()
   })
@@ -93,7 +96,9 @@ describe('create non existing note hint', () => {
     await act(() => {
       button.click()
     })
-    await screen.findByTestId('noteCreated')
+    await waitFor(async () => {
+      expect(await screen.findByTestId('noteCreated')).toBeInTheDocument()
+    })
     expect(onNoteCreatedCallback).toBeCalled()
     expect(view.container).toMatchSnapshot()
   })
@@ -106,7 +111,9 @@ describe('create non existing note hint', () => {
     await act(() => {
       button.click()
     })
-    await screen.findByTestId('failedMessage')
+    await waitFor(async () => {
+      expect(await screen.findByTestId('failedMessage')).toBeInTheDocument()
+    })
     expect(onNoteCreatedCallback).not.toBeCalled()
     expect(view.container).toMatchSnapshot()
   })
