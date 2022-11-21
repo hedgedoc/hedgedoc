@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 # BUILD
-FROM node:18-alpine AS builder
+FROM node:18-alpine@sha256:9eff44230b2fdcca57a73b8f908c8029e72d24dd05cac5339c79d3dedf6b208b AS builder
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ARG BUILD_VERSION=CLIENT_VERSION_MISSING
@@ -18,7 +18,7 @@ RUN rm -rf public/public && \
     yarn build
 
 # RUNNER
-FROM node:18-alpine
+FROM node:18-alpine@sha256:9eff44230b2fdcca57a73b8f908c8029e72d24dd05cac5339c79d3dedf6b208b
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
