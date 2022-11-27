@@ -199,7 +199,7 @@ describe('RevisionsService', () => {
 
   describe('createRevision', () => {
     it('creates a new revision', async () => {
-      const note = Mock.of<Note>({});
+      const note = Mock.of<Note>({ publicId: 'test-note' });
       const oldContent = 'old content\n';
       const newContent = 'new content\n';
 
@@ -216,10 +216,10 @@ describe('RevisionsService', () => {
       expect(createdRevision?.content).toBe(newContent);
       await expect(createdRevision?.note).resolves.toBe(note);
       expect(createdRevision?.patch).toMatchInlineSnapshot(`
-        "Index: markdownContent
+        "Index: test-note
         ===================================================================
-        --- markdownContent
-        +++ markdownContent
+        --- test-note
+        +++ test-note
         @@ -1,1 +1,1 @@
         -old content
         +new content
