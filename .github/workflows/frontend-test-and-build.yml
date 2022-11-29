@@ -49,32 +49,11 @@ jobs:
         if: needs.changes.outputs.changed == 'true'
         uses: actions/checkout@v3
 
-      - name: Get yarn cache directory path
+      - name: Setup node
         if: needs.changes.outputs.changed == 'true'
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-
-      - name: Cache yarn cache
-        if: needs.changes.outputs.changed == 'true'
-        uses: actions/cache@v3
-        id: yarn-cache
+        uses: ./.github/actions/setup-node
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-${{ matrix.node }}-yarn-${{ hashFiles('frontend/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-${{ matrix.node }}
-
-      - name: Set up NodeJS
-        if: needs.changes.outputs.changed == 'true'
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node }}
-          cache-dependency-path: frontend/yarn.lock
-          cache: 'yarn'
-
-      - name: Install dependencies
-        if: needs.changes.outputs.changed == 'true'
-        run: yarn install --immutable
+          NODE_VERSION: ${{ matrix.node }}
 
       - name: Test Project
         if: needs.changes.outputs.changed == 'true'

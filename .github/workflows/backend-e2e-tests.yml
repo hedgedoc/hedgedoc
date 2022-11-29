@@ -49,16 +49,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Use Node.js ${{ env.NODEJS_VERSION }}
+      - name: Setup node
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/setup-node@v3
+        uses: ./.github/actions/setup-node
         with:
-          cache-dependency-path: backend/yarn.lock
-          node-version: ${{ env.NODEJS_VERSION }}
-          cache: 'yarn'
-
-      - run: yarn install --immutable
-        if: needs.changes.outputs.changed == 'true'
+          NODE_VERSION: ${{ env.NODEJS_VERSION }}
 
       - run: yarn run test:e2e:cov
         if: needs.changes.outputs.changed == 'true'
@@ -93,9 +88,8 @@ jobs:
         if: needs.changes.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
-          cache-dependency-path: backend/yarn.lock
           node-version: ${{ env.NODEJS_VERSION }}
-          cache: 'yarn'
+
       - run: yarn install --immutable
         if: needs.changes.outputs.changed == 'true'
 
@@ -126,9 +120,7 @@ jobs:
         if: needs.changes.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
-          cache-dependency-path: backend/yarn.lock
           node-version: ${{ env.NODEJS_VERSION }}
-          cache: 'yarn'
 
       - run: yarn install --immutable
         if: needs.changes.outputs.changed == 'true'

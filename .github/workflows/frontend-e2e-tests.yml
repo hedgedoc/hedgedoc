@@ -71,32 +71,11 @@ jobs:
           path: frontend/.next
           key: ${{ env.HEAD_COMMIT_HASH }}
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
+      - name: Setup node
         if: steps.build-cache.outputs.cache-hit != 'true' && needs.changes.outputs.changed == 'true'
-        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-
-      - name: Cache yarn cache
-        uses: actions/cache@v3
-        id: yarn-cache
-        if: steps.build-cache.outputs.cache-hit != 'true' && needs.changes.outputs.changed == 'true'
+        uses: ./.github/actions/setup-node
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('frontend/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-${{ env.NODE_VERSION }}
-
-      - name: Set up NodeJS
-        if: steps.build-cache.outputs.cache-hit != 'true' && needs.changes.outputs.changed == 'true'
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache-dependency-path: frontend/yarn.lock
-          cache: 'yarn'
-
-      - name: Install dependencies
-        if: steps.build-cache.outputs.cache-hit != 'true' && needs.changes.outputs.changed == 'true'
-        run: yarn install --immutable
+          NODE_VERSION: ${{ env.NODE_VERSION }}
 
       - name: Build test production build
         if: steps.build-cache.outputs.cache-hit != 'true' && needs.changes.outputs.changed == 'true'
@@ -159,8 +138,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache-dependency-path: frontend/yarn.lock
-          cache: 'yarn'
 
       - name: Install dependencies
         if: needs.changes.outputs.changed == 'true'

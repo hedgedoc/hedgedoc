@@ -1,0 +1,38 @@
+# SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+name: Setup Node
+description: "Setups node and configures the cache"
+
+inputs:
+  NODE_VERSION:
+    required: true
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Cache yarn cache
+      uses: actions/cache@v3
+      id: yarn-cache
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-${{ inputs.NODE_VERSION }}-yarn-${{ hashFiles('frontend/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-${{ inputs.NODE_VERSION }}
+
+    - name: Set up NodeJS
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.NODE_VERSION }}
+
+    - name: Install dependencies
+      run: yarn install --immutable
+      working-directory: .
+      shell: bash
