@@ -52,7 +52,7 @@ jobs:
 
   build-frontend:
     needs: changes
-    if: "${{ (github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork  }}"
+    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
     runs-on: ubuntu-latest
     name: Build test build of frontend
     steps:
