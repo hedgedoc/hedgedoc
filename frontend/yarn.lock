@@ -1976,11 +1976,11 @@ __metadata:
     emoji-picker-element: 1.13.1
     emoji-picker-element-data: 1.3.0
     eslint: 8.28.0
-    eslint-config-next: 13.0.4
+    eslint-config-next: 13.0.5
     eslint-config-prettier: 8.5.0
     eslint-plugin-chai-friendly: 0.7.2
     eslint-plugin-cypress: 2.12.1
-    eslint-plugin-jest: 27.1.5
+    eslint-plugin-jest: 27.1.6
     eslint-plugin-node: 11.1.0
     eslint-plugin-prettier: 4.2.1
     eslint-plugin-promise: 6.1.1
@@ -2578,12 +2578,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/eslint-plugin-next@npm:13.0.4":
-  version: 13.0.4
-  resolution: "@next/eslint-plugin-next@npm:13.0.4"
+"@next/eslint-plugin-next@npm:13.0.5":
+  version: 13.0.5
+  resolution: "@next/eslint-plugin-next@npm:13.0.5"
   dependencies:
     glob: 7.1.7
-  checksum: 012afa22ce363c7571b6c5d3782c448390b93ee8d1b54d4ea366391c9e98a33ade6b7d4d9e280eeacd97a08b36b3e69019b3fe3c999563249af6cb2f3bf74d87
+  checksum: 94d60dd108325db191fc3a2cf53a07984f18c98f92e62c7383e75eade72b0696d1abe27d12d20cc4b1bab365243f279c2cf0faa5009043c5890bb57b0cb5275f
   languageName: node
   linkType: hard
 
@@ -6718,11 +6718,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-next@npm:13.0.4":
-  version: 13.0.4
-  resolution: "eslint-config-next@npm:13.0.4"
+"eslint-config-next@npm:13.0.5":
+  version: 13.0.5
+  resolution: "eslint-config-next@npm:13.0.5"
   dependencies:
-    "@next/eslint-plugin-next": 13.0.4
+    "@next/eslint-plugin-next": 13.0.5
     "@rushstack/eslint-patch": ^1.1.3
     "@typescript-eslint/parser": ^5.42.0
     eslint-import-resolver-node: ^0.3.6
@@ -6737,7 +6737,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 2c00fd8ecbfe1f021c9f1b33ff6bf669dec19290f2849f8caf075f7a104b8a662bba430aaa5e34d3e7f11a79d85b26cfffc76f36b040539a7e4af7f1a06cce52
+  checksum: 645939ed8fc77732346136771a7f9797cb595cbde7c824013283025cc9778a621a1fde57642f2c33b42f3685b9755a65b67c2704e0561312dd2d53c4e96c2c17
   languageName: node
   linkType: hard
 
@@ -6847,9 +6847,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jest@npm:27.1.5":
-  version: 27.1.5
-  resolution: "eslint-plugin-jest@npm:27.1.5"
+"eslint-plugin-jest@npm:27.1.6":
+  version: 27.1.6
+  resolution: "eslint-plugin-jest@npm:27.1.6"
   dependencies:
     "@typescript-eslint/utils": ^5.10.0
   peerDependencies:
@@ -6860,7 +6860,7 @@ __metadata:
       optional: true
     jest:
       optional: true
-  checksum: 7c9de765793f7161afa0bdcdce67f4d072944152880fa638b25d228188dcee47a4b4aada26c57db72bc10193c96a1979e17afb8a7c3e400e961d8adfbf23ddbe
+  checksum: 5b1640b5d575f0d5e27da8ef8cb3110a29f94ebd50ae51edc5ea34c1054f5dcf305416865b2919ac424bc02c4569848bbe7fd2c86e7e1aff23e77f1ff9ef7dfd
   languageName: node
   linkType: hard
 
