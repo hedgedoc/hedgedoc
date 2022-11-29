@@ -48,16 +48,11 @@ jobs:
       - uses: actions/checkout@v3
         if: needs.changes.outputs.changed == 'true'
 
-      - name: Use Node.js ${{ env.NODEJS_VERSION }}
+      - name: Setup node
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/setup-node@v3
+        uses: ./.github/actions/setup-node
         with:
-          cache-dependency-path: backend/yarn.lock
-          node-version: ${{ env.NODEJS_VERSION }}
-          cache: 'yarn'
-
-      - run: yarn install --immutable
-        if: needs.changes.outputs.changed == 'true'
+          NODE_VERSION: ${{ env.NODEJS_VERSION }}
 
       - run: yarn run lint
         if: needs.changes.outputs.changed == 'true'
@@ -76,9 +71,7 @@ jobs:
         if: needs.changes.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
-          cache-dependency-path: backend/yarn.lock
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
 
       - run: yarn install --immutable
         if: needs.changes.outputs.changed == 'true'
@@ -99,9 +92,7 @@ jobs:
         if: needs.changes.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
-          cache-dependency-path: backend/yarn.lock
           node-version: ${{ env.NODEJS_VERSION }}
-          cache: 'yarn'
 
       - run: yarn install --immutable
         if: needs.changes.outputs.changed == 'true'

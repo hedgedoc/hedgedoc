@@ -52,28 +52,11 @@ jobs:
         if: needs.changes.outputs.changed == 'true'
         uses: actions/checkout@v3
 
-      - name: Get yarn cache directory path
+      - name: Setup node
         if: needs.changes.outputs.changed == 'true'
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-
-      - name: Cache yarn cache
-        if: needs.changes.outputs.changed == 'true'
-        uses: actions/cache@v3
-        id: yarn-cache
+        uses: ./.github/actions/setup-node
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-yarn-${{ hashFiles('frontend/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-${{ env.NODE_VERSION }}
-
-      - name: Set up NodeJS
-        if: needs.changes.outputs.changed == 'true'
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache-dependency-path: frontend/yarn.lock
-          cache: 'yarn'
+          NODE_VERSION: ${{ env.NODE_VERSION }}
 
       - name: Patch intro.md to include netlify banner.
         if: needs.changes.outputs.changed == 'true'
@@ -90,10 +73,6 @@ jobs:
       - name: Patch base URL
         if: needs.changes.outputs.changed == 'true'
         run: echo "HD_EDITOR_BASE_URL=\"https://hedgedoc.dev/\"" >> .env.production
-
-      - name: Install dependencies
-        if: needs.changes.outputs.changed == 'true'
-        run: yarn install --immutable
 
       - name: Build app
         if: needs.changes.outputs.changed == 'true'
