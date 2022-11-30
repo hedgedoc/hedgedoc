@@ -57,7 +57,7 @@
     "@types/katex": "0.14.0",
     "@uiw/react-codemirror": "4.15.1",
     "abcjs": "6.1.7",
-    "bootstrap": "5.2.2",
+    "bootstrap": "5.2.3",
     "copy-webpack-plugin": "11.0.0",
     "cross-env": "7.0.3",
     "d3-graphviz": "4.4.0",
