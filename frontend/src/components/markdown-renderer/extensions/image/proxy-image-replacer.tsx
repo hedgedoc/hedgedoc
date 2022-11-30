@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Element } from 'domhandler'
-import React from 'react'
 import type { NodeReplacement } from '../../replace-components/component-replacer'
 import { ComponentReplacer, DO_NOT_REPLACE } from '../../replace-components/component-replacer'
 import { EventEmittingProxyImageFrame } from './event-emitting-proxy-image-frame'
+import type { Element } from 'domhandler'
+import React from 'react'
 
 export type ImageClickHandler = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => void
 

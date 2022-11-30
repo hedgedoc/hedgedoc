@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
-import { render } from '@testing-library/react'
 import { TranslatedIconButton } from './translated-icon-button'
+import { render } from '@testing-library/react'
 
 describe('TranslatedIconButton', () => {
   it('renders heart icon with i18nKey', async () => {

@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
 import { CopyToClipboardButton } from './copy-to-clipboard-button'
 import { act, render, screen } from '@testing-library/react'

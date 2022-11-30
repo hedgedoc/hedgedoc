@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ShowIf } from '../../common/show-if/show-if'
+import styles from '../application-loader.module.scss'
+import { LoadingAnimation } from './loading-animation'
 import type { ReactElement } from 'react'
 import React from 'react'
 import { Alert } from 'react-bootstrap'
-import { LoadingAnimation } from './loading-animation'
-import { ShowIf } from '../../common/show-if/show-if'
-import styles from '../application-loader.module.scss'
 
 export interface LoadingScreenProps {
   errorMessage?: string | ReactElement

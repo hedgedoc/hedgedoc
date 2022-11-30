@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { PropsWithChildren } from 'react'
-import React from 'react'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import type { IconName } from '../../../common/fork-awesome/types'
+import type { PropsWithChildren } from 'react'
+import React from 'react'
 
 export interface NoteInfoLineProps {
   icon: IconName

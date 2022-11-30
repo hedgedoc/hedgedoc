@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { Linter } from './linter'
-import type { EditorView } from '@codemirror/view'
 import type { Diagnostic } from '@codemirror/lint'
+import type { EditorView } from '@codemirror/view'
 import { t } from 'i18next'
 
 interface LineWithStartIndex {

@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ORIGIN, useBaseUrl } from '../../../../hooks/common/use-base-url'
+import { Logger } from '../../../../utils/logger'
+import { useEditorToRendererCommunicator } from '../../render-context/editor-to-renderer-communicator-context-provider'
 import type { RefObject } from 'react'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
-import { Logger } from '../../../../utils/logger'
-import { ORIGIN, useBaseUrl } from '../../../../hooks/common/use-base-url'
-import { useEditorToRendererCommunicator } from '../../render-context/editor-to-renderer-communicator-context-provider'
 
 const log = new Logger('IframeLoader')
 

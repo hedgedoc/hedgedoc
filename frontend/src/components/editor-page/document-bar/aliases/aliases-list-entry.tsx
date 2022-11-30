@@ -3,16 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useCallback } from 'react'
+import { deleteAlias, markAliasAsPrimary } from '../../../../api/alias'
+import type { Alias } from '../../../../api/alias/types'
+import { updateMetadata } from '../../../../redux/note-details/methods'
+import { testId } from '../../../../utils/test-id'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { ShowIf } from '../../../common/show-if/show-if'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
+import React, { useCallback } from 'react'
 import { Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import { ShowIf } from '../../../common/show-if/show-if'
-import type { Alias } from '../../../../api/alias/types'
-import { deleteAlias, markAliasAsPrimary } from '../../../../api/alias'
-import { updateMetadata } from '../../../../redux/note-details/methods'
-import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
-import { testId } from '../../../../utils/test-id'
 
 export interface AliasesListEntryProps {
   alias: Alias

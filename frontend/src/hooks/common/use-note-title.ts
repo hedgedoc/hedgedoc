@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useTranslation } from 'react-i18next'
 import { useApplicationState } from './use-application-state'
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Retrieves the title of the note or a placeholder text, if no title is set.

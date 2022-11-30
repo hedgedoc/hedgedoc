@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback } from 'react'
-import { Badge } from 'react-bootstrap'
+import { cypressId } from '../../../utils/cypress-attribute'
 import { EntryMenu } from '../entry-menu/entry-menu'
 import type { HistoryEntryProps, HistoryEventHandlers } from '../history-content/history-content'
 import { PinButton } from '../pin-button/pin-button'
-import { formatHistoryDate } from '../utils'
 import { useHistoryEntryTitle } from '../use-history-entry-title'
-import { cypressId } from '../../../utils/cypress-attribute'
+import { formatHistoryDate } from '../utils'
 import Link from 'next/link'
+import React, { useCallback } from 'react'
+import { Badge } from 'react-bootstrap'
 
 /**
  * Renders a history entry as a table row.

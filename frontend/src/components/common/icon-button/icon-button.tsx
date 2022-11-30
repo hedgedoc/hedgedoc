@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import type { ButtonProps } from 'react-bootstrap'
-import { Button } from 'react-bootstrap'
+import type { PropsWithDataTestId } from '../../../utils/test-id'
+import { testId } from '../../../utils/test-id'
 import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
 import type { IconName } from '../fork-awesome/types'
 import { ShowIf } from '../show-if/show-if'
 import styles from './icon-button.module.scss'
-import type { PropsWithDataTestId } from '../../../utils/test-id'
-import { testId } from '../../../utils/test-id'
+import React from 'react'
+import type { ButtonProps } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 export interface IconButtonProps extends ButtonProps, PropsWithDataTestId {
   icon: IconName

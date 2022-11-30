@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useBaseUrl } from '../hooks/common/use-base-url'
+import { isClientSideRendering } from './is-client-side-rendering'
 import React, { Fragment, useMemo } from 'react'
 import type { PropsWithChildren } from 'react'
-import { isClientSideRendering } from './is-client-side-rendering'
-import { useBaseUrl } from '../hooks/common/use-base-url'
 
 /**
  * Checks if the url of the current browser window matches the expected origin.

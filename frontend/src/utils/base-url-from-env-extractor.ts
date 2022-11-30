@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { Optional } from '@mrdrogdrog/optional'
 import type { BaseUrls } from '../components/common/base-url/base-url-context-provider'
 import { Logger } from './logger'
 import { isTestMode } from './test-modes'
+import { Optional } from '@mrdrogdrog/optional'
 
 /**
  * Extracts the editor and renderer base urls from the environment variables.

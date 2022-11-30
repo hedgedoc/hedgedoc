@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { ExternalLink } from './external-link'
 import type { TranslatedLinkProps } from './types'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 /**
  * An {@link ExternalLink external link} with translated text.

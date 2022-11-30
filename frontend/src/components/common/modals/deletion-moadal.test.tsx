@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
-import { render, screen } from '@testing-library/react'
 import { DeletionModal } from './deletion-modal'
+import { render, screen } from '@testing-library/react'
 
 describe('DeletionModal', () => {
   it('renders correctly with deletionButtonI18nKey', async () => {

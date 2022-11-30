@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { ErrorInfo, PropsWithChildren, ReactNode } from 'react'
-import React, { Component } from 'react'
-import { Button, Container } from 'react-bootstrap'
 import links from '../../links.json'
+import { Logger } from '../../utils/logger'
 import frontendVersion from '../../version.json'
 import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
 import { ExternalLink } from '../common/links/external-link'
-import { Logger } from '../../utils/logger'
+import type { ErrorInfo, PropsWithChildren, ReactNode } from 'react'
+import React, { Component } from 'react'
+import { Button, Container } from 'react-bootstrap'
 
 const log = new Logger('ErrorBoundary')
 

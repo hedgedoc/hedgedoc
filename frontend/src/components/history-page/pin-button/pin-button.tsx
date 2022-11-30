@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { Button } from 'react-bootstrap'
+import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import styles from './pin-button.module.scss'
-import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
+import React from 'react'
+import { Button } from 'react-bootstrap'
 
 export interface PinButtonProps {
   isPinned: boolean

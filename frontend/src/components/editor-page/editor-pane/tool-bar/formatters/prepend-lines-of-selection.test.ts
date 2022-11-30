@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { prependLinesOfSelection } from './prepend-lines-of-selection'
 import type { ContentEdits } from './types/changes'
 

@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { ChangePasswordDto, LoginDto, RegisterDto } from './types'
-import { AuthError, RegisterError } from './types'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
+import type { ChangePasswordDto, LoginDto, RegisterDto } from './types'
+import { AuthError, RegisterError } from './types'
 
 /**
  * Requests to do a local login with a provided username and password.

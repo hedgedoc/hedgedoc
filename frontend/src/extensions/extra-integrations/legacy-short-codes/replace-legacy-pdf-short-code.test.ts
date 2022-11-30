@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import MarkdownIt from 'markdown-it'
 import { legacyPdfShortCode } from './replace-legacy-pdf-short-code'
+import MarkdownIt from 'markdown-it'
 
 describe('Legacy pdf short code', () => {
   it('replaces with link', () => {

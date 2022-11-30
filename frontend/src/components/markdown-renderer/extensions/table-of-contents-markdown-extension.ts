@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type MarkdownIt from 'markdown-it'
-import type { TocAst } from 'markdown-it-toc-done-right'
-import toc from 'markdown-it-toc-done-right'
 import { tocSlugify } from '../../editor-page/table-of-contents/toc-slugify'
 import { MarkdownRendererExtension } from './base/markdown-renderer-extension'
 import equal from 'fast-deep-equal'
+import type MarkdownIt from 'markdown-it'
+import type { TocAst } from 'markdown-it-toc-done-right'
+import toc from 'markdown-it-toc-done-right'
 
 /**
  * Adds table of content to the markdown rendering.

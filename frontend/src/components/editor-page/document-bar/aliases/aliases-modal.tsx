@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React from 'react'
-import { ListGroup, ListGroupItem, Modal } from 'react-bootstrap'
 import type { CommonModalProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
-import { Trans, useTranslation } from 'react-i18next'
-import { AliasesList } from './aliases-list'
 import { AliasesAddForm } from './aliases-add-form'
+import { AliasesList } from './aliases-list'
+import React from 'react'
+import { ListGroup, ListGroupItem, Modal } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Component that holds a modal containing a list of aliases associated with the current note.

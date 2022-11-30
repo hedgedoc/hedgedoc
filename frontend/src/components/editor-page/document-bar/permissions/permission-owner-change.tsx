@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useOnInputChange } from '../../../../hooks/common/use-on-input-change'
-import { Button, FormControl, InputGroup } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import React, { useCallback, useMemo, useState } from 'react'
+import { Button, FormControl, InputGroup } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 
 export interface PermissionOwnerChangeProps {
   onConfirmOwnerChange: (newOwner: string) => void

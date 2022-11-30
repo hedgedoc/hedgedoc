@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useMemo } from 'react'
 import type { Extension } from '@codemirror/state'
+import { useMemo } from 'react'
 import { yCollab } from 'y-codemirror.next'
 import type { Awareness } from 'y-protocols/awareness'
 import type { YText } from 'yjs/dist/src/types/YText'

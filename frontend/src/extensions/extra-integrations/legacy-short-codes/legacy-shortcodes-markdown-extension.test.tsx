@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
+import { LegacyShortcodesMarkdownExtension } from './legacy-shortcodes-markdown-extension'
 import { render } from '@testing-library/react'
 import React from 'react'
-import { LegacyShortcodesMarkdownExtension } from './legacy-shortcodes-markdown-extension'
-import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
 
 describe('Legacy shortcodes markdown extension', () => {
   it('transforms a pdf short code into an URL', () => {

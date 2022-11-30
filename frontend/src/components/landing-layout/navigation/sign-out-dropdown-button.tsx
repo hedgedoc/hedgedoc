@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback } from 'react'
+import { doLogout } from '../../../api/auth'
 import { clearUser } from '../../../redux/user/methods'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
-import { Trans, useTranslation } from 'react-i18next'
-import { Dropdown } from 'react-bootstrap'
-import { doLogout } from '../../../api/auth'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
+import React, { useCallback } from 'react'
+import { Dropdown } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Renders a sign-out button as a dropdown item for the user-dropdown.

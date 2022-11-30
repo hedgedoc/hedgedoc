@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { TravelerNodeProcessor } from '../../../components/markdown-renderer/node-preprocessors/traveler-node-processor'
+import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
+import { Optional } from '@mrdrogdrog/optional'
 import type { Element, Node } from 'domhandler'
 import { isTag, isText } from 'domhandler'
-import { Optional } from '@mrdrogdrog/optional'
-import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
-import { TravelerNodeProcessor } from '../../../components/markdown-renderer/node-preprocessors/traveler-node-processor'
 
 /**
  * Detects blockquotes with blockquote color tags and uses them to color the blockquote border.

@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { calculatePlaceholderContainerSize, parseSizeNumber } from './build-placeholder-size-css'
 
 describe('parseSizeNumber', () => {

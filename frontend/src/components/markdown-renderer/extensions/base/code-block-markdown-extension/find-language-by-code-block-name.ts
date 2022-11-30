@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { Optional } from '@mrdrogdrog/optional'
-import type { LanguageDescription } from '@codemirror/language'
 import { parseCodeBlockParameters } from './code-block-parameters'
+import type { LanguageDescription } from '@codemirror/language'
+import { Optional } from '@mrdrogdrog/optional'
 
 /**
  * Finds the {@link LanguageDescription code mirror language descriptions} that matches the given language name or any alias.

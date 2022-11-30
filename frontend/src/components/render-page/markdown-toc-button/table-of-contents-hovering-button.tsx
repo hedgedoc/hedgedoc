@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { Dropdown } from 'react-bootstrap'
-import type { TocAst } from 'markdown-it-toc-done-right'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { TableOfContents } from '../../editor-page/table-of-contents/table-of-contents'
 import styles from './markdown-toc-button.module.scss'
+import type { TocAst } from 'markdown-it-toc-done-right'
+import React from 'react'
+import { Dropdown } from 'react-bootstrap'
 
 export interface MarkdownTocButtonProps {
   tocAst: TocAst

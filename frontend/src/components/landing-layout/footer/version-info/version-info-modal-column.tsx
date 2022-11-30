@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
 import { CopyableField } from '../../../common/copyable/copyable-field/copyable-field'
 import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
 import { ShowIf } from '../../../common/show-if/show-if'
-import { Trans, useTranslation } from 'react-i18next'
+import React from 'react'
 import { Col } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 export interface VersionInfoModalColumnProps {
   titleI18nKey: string

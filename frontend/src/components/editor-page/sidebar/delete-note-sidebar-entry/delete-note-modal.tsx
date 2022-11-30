@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { cypressId } from '../../../../utils/cypress-attribute'
-import { Trans } from 'react-i18next'
-import { DeletionModal } from '../../../common/modals/deletion-modal'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { cypressId } from '../../../../utils/cypress-attribute'
 import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
+import { DeletionModal } from '../../../common/modals/deletion-modal'
+import React from 'react'
+import { Trans } from 'react-i18next'
 
 export interface DeleteHistoryNoteModalProps {
   modalTitleI18nKey?: string

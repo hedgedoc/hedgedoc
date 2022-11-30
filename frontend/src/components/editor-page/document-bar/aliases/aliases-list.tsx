@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Fragment, useMemo } from 'react'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import type { ApplicationState } from '../../../../redux/application-state'
 import { AliasesListEntry } from './aliases-list-entry'
+import React, { Fragment, useMemo } from 'react'
 
 /**
  * Renders the list of aliases.

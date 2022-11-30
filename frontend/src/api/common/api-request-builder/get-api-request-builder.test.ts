@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { expectFetch } from './test-utils/expect-fetch'
 import { GetApiRequestBuilder } from './get-api-request-builder'
+import { expectFetch } from './test-utils/expect-fetch'
 
 describe('GetApiRequestBuilder', () => {
   let originalFetch: typeof global['fetch']

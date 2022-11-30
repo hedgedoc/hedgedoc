@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { parseCodeBlockParameters } from './code-block-parameters'
+import { Optional } from '@mrdrogdrog/optional'
 import type MarkdownIt from 'markdown-it'
 import type { RuleCore } from 'markdown-it/lib/parser_core'
-import { Optional } from '@mrdrogdrog/optional'
-import { parseCodeBlockParameters } from './code-block-parameters'
 
 const ruleName = 'code-highlighter'
 

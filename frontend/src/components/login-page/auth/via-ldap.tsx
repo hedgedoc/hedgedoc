@@ -3,19 +3,17 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { doLdapLogin } from '../../../api/auth/ldap'
+import { AuthError as AuthErrorType } from '../../../api/auth/types'
+import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
+import { AuthError } from './auth-error/auth-error'
+import { PasswordField } from './fields/password-field'
+import { UsernameField } from './fields/username-field'
+import { fetchAndSetUser } from './utils'
 import type { FormEvent } from 'react'
 import React, { useCallback, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
-
 import { Trans, useTranslation } from 'react-i18next'
-import { doLdapLogin } from '../../../api/auth/ldap'
-import { fetchAndSetUser } from './utils'
-import { AuthError as AuthErrorType } from '../../../api/auth/types'
-import { UsernameField } from './fields/username-field'
-import { PasswordField } from './fields/password-field'
-import { AuthError } from './auth-error/auth-error'
-import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
 
 export interface ViaLdapProps {
   providerName: string

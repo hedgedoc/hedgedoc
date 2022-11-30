@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Action } from 'redux'
 import type { HistoryEntryWithOrigin } from '../../api/history/types'
+import type { Action } from 'redux'
 
 export interface V1HistoryEntry {
   id: string

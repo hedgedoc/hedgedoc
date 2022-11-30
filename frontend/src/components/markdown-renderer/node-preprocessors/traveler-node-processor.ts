@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { NodeProcessor } from './node-processor'
 import type { Document, Node } from 'domhandler'
 import { hasChildren } from 'domhandler'

@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
+import type { AccessTokenWithSecret } from '../../../api/tokens/types'
 import { cypressId } from '../../../utils/cypress-attribute'
-import { Button, Modal } from 'react-bootstrap'
-import { Trans } from 'react-i18next'
 import { CopyableField } from '../../common/copyable/copyable-field/copyable-field'
 import type { ModalVisibilityProps } from '../../common/modals/common-modal'
 import { CommonModal } from '../../common/modals/common-modal'
-import type { AccessTokenWithSecret } from '../../../api/tokens/types'
+import React from 'react'
+import { Button, Modal } from 'react-bootstrap'
+import { Trans } from 'react-i18next'
 
 export interface AccessTokenCreatedModalProps extends ModalVisibilityProps {
   tokenWithSecret?: AccessTokenWithSecret

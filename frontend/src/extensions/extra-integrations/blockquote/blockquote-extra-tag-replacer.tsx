@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Element } from 'domhandler'
-import { Optional } from '@mrdrogdrog/optional'
-import type { ReactElement } from 'react'
-import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
+import type { ForkAwesomeIconProps } from '../../../components/common/fork-awesome/fork-awesome-icon'
+import { ForkAwesomeIcon } from '../../../components/common/fork-awesome/fork-awesome-icon'
+import { ForkAwesomeIcons } from '../../../components/common/fork-awesome/fork-awesome-icons'
+import type { IconName } from '../../../components/common/fork-awesome/types'
 import type {
   NodeReplacement,
   SubNodeTransform
@@ -16,10 +15,10 @@ import {
   ComponentReplacer,
   DO_NOT_REPLACE
 } from '../../../components/markdown-renderer/replace-components/component-replacer'
-import { ForkAwesomeIcons } from '../../../components/common/fork-awesome/fork-awesome-icons'
-import type { ForkAwesomeIconProps } from '../../../components/common/fork-awesome/fork-awesome-icon'
-import { ForkAwesomeIcon } from '../../../components/common/fork-awesome/fork-awesome-icon'
-import type { IconName } from '../../../components/common/fork-awesome/types'
+import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
+import { Optional } from '@mrdrogdrog/optional'
+import type { Element } from 'domhandler'
+import type { ReactElement } from 'react'
 
 /**
  * Replaces <blockquote-tag> elements with an icon and a small text.

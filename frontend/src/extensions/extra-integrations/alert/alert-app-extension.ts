@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 import { AppExtension } from '../../base/app-extension'
 import { AlertMarkdownExtension } from './alert-markdown-extension'
-import type { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 
 /**
  * Adds alert boxes to the markdown rendering.

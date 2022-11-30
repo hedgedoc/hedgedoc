@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { NoteDetails } from './types/note-details'
-import { extractFrontmatter } from './frontmatter-extractor/extractor'
-import { initialState } from './initial-state'
-import type { PresentFrontmatterExtractionResult } from './frontmatter-extractor/types'
-import { createNoteFrontmatterFromYaml } from './raw-note-frontmatter-parser/parser'
-import { generateNoteTitle } from './generate-note-title'
 import { calculateLineStartIndexes } from './calculate-line-start-indexes'
+import { extractFrontmatter } from './frontmatter-extractor/extractor'
+import type { PresentFrontmatterExtractionResult } from './frontmatter-extractor/types'
+import { generateNoteTitle } from './generate-note-title'
+import { initialState } from './initial-state'
+import { createNoteFrontmatterFromYaml } from './raw-note-frontmatter-parser/parser'
+import type { NoteDetails } from './types/note-details'
 
 /**
  * Copies a {@link NoteDetails} but with another markdown content.

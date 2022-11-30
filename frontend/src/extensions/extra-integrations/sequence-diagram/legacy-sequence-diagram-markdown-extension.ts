@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { SequenceDiagram } from './sequence-diagram'
 import { CodeBlockMarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/code-block-markdown-extension/code-block-markdown-renderer-extension'
 import { CodeBlockComponentReplacer } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
+import { SequenceDiagram } from './sequence-diagram'
 
 /**
  * Adds legacy support for sequence diagram to the markdown rendering using code fences with "sequence" as language.

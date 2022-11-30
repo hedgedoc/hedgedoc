@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { buildStateFromFirstHeadingUpdate } from './build-state-from-first-heading-update'
 import { initialState } from '../initial-state'
+import { buildStateFromFirstHeadingUpdate } from './build-state-from-first-heading-update'
 
 // noinspection JSUnusedGlobalSymbols
 jest.mock('../generate-note-title', () => ({

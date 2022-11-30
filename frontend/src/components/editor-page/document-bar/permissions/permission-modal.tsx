@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { Modal } from 'react-bootstrap'
 import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { PermissionSectionOwner } from './permission-section-owner'
-import { PermissionSectionUsers } from './permission-section-users'
 import { PermissionSectionSpecialGroups } from './permission-section-special-groups'
+import { PermissionSectionUsers } from './permission-section-users'
+import React from 'react'
+import { Modal } from 'react-bootstrap'
 
 /**
  * Modal for viewing and managing the permissions of the note.

@@ -3,19 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import * as useSingleStringUrlParameterModule from '../../../hooks/common/use-single-string-url-parameter'
 import * as getNoteModule from '../../../api/notes'
-import * as setNoteDataFromServerModule from '../../../redux/note-details/methods'
 import type { Note } from '../../../api/notes/types'
-import { Mock } from 'ts-mockery'
-import { render, screen } from '@testing-library/react'
-import { NoteLoadingBoundary } from './note-loading-boundary'
-import { testId } from '../../../utils/test-id'
-import { Fragment } from 'react'
-import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
-import * as CommonErrorPageModule from '../../error-pages/common-error-page'
 import * as LoadingScreenModule from '../../../components/application-loader/loading-screen/loading-screen'
+import * as useSingleStringUrlParameterModule from '../../../hooks/common/use-single-string-url-parameter'
+import * as setNoteDataFromServerModule from '../../../redux/note-details/methods'
+import { testId } from '../../../utils/test-id'
+import * as CommonErrorPageModule from '../../error-pages/common-error-page'
+import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
 import * as CreateNonExistingNoteHintModule from './create-non-existing-note-hint'
+import { NoteLoadingBoundary } from './note-loading-boundary'
+import { render, screen } from '@testing-library/react'
+import { Fragment } from 'react'
+import { Mock } from 'ts-mockery'
 
 jest.mock('../../../hooks/common/use-single-string-url-parameter')
 jest.mock('../../../api/notes')

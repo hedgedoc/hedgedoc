@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { store } from '..'
+import { Logger } from '../../utils/logger'
 import type {
   EditorConfig,
   SetEditorLigaturesAction,
@@ -12,7 +12,6 @@ import type {
   SetEditorSyncScrollAction
 } from './types'
 import { EditorConfigActionType } from './types'
-import { Logger } from '../../utils/logger'
 
 const log = new Logger('Redux > Editor')
 

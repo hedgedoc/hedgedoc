@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { render } from '@testing-library/react'
 import { InternalLink } from './internal-link'
+import { render } from '@testing-library/react'
 
 describe('InternalLink', () => {
   const href = '/test'

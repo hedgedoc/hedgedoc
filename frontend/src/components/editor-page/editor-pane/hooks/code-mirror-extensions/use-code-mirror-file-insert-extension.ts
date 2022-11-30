@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useMemo } from 'react'
-import { EditorView } from '@codemirror/view'
-import type { Extension } from '@codemirror/state'
 import { useHandleUpload } from '../use-handle-upload'
+import type { Extension } from '@codemirror/state'
+import { EditorView } from '@codemirror/view'
 import { Optional } from '@mrdrogdrog/optional'
+import { useMemo } from 'react'
 
 const calculateCursorPositionInEditor = (view: EditorView, event: MouseEvent): number => {
   return Optional.ofNullable(event.pageX)

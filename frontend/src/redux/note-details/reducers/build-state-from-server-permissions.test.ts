@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { initialState } from '../initial-state'
 import type { NotePermissions } from '../../../api/notes/types'
-import { buildStateFromServerPermissions } from './build-state-from-server-permissions'
+import { initialState } from '../initial-state'
 import type { NoteDetails } from '../types/note-details'
+import { buildStateFromServerPermissions } from './build-state-from-server-permissions'
 
 describe('build state from server permissions', () => {
   it('creates a new state with the given permissions', () => {

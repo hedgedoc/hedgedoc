@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type React from 'react'
-import { useCallback, useMemo, useState } from 'react'
 import type { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
+import type { LineMarkerPosition } from '../../../markdown-renderer/extensions/linemarker/types'
 import { useOnUserScroll } from './use-on-user-scroll'
 import { useScrollToLineMark } from './use-scroll-to-line-mark'
-import type { LineMarkerPosition } from '../../../markdown-renderer/extensions/linemarker/types'
+import type React from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 /**
  * Synchronizes the scroll status of the given container with the given scroll state and posts changes if the user scrolls.

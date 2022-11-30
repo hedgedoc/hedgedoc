@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { cypressId } from '../../../../utils/cypress-attribute'
+import styles from '../highlighted-code.module.scss'
 import type { ReactElement } from 'react'
 import { Fragment, useMemo } from 'react'
-import styles from '../highlighted-code.module.scss'
-import { cypressId } from '../../../../utils/cypress-attribute'
 
 /**
  * Wraps the given {@link ReactElement elements} to attach line numbers to them.

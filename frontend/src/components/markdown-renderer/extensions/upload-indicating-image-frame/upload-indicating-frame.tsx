@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { usePlaceholderSizeStyle } from '../image-placeholder/hooks/use-placeholder-size-style'
+import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
 export interface UploadIndicatingFrameProps {

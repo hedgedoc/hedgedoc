@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useCallback, useMemo } from 'react'
 import type { ScrollState } from '../../../synced-scroll/scroll-props'
-import { EditorView } from '@codemirror/view'
 import type { Extension } from '@codemirror/state'
+import { EditorView } from '@codemirror/view'
+import { useCallback, useMemo } from 'react'
 
 export type OnScrollCallback = ((scrollState: ScrollState) => void) | undefined
 

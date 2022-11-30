@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { YoutubeMarkdownExtension } from './youtube-markdown-extension'
-import markdownItRegex from 'markdown-it-regex'
-import type MarkdownIt from 'markdown-it'
 import type { RegexOptions } from '../../../external-types/markdown-it-regex/interface'
+import { YoutubeMarkdownExtension } from './youtube-markdown-extension'
+import type MarkdownIt from 'markdown-it'
+import markdownItRegex from 'markdown-it-regex'
 
 const linkRegex =
   /^(?:https?:\/\/)?(?:www.)?(?:youtube(?:-nocookie)?\.com\/(?:[^\\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([\w-]{11})(?:[?&#].*)?$/i

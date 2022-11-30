@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { DateTime } from 'luxon'
-import type { FormEvent } from 'react'
-import { useCallback } from 'react'
 import { postNewAccessToken } from '../../../../../api/tokens'
 import type { AccessTokenWithSecret } from '../../../../../api/tokens/types'
 import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
+import { DateTime } from 'luxon'
+import type { FormEvent } from 'react'
+import { useCallback } from 'react'
 
 /**
  * Callback for requesting a new access token from the API and returning the response token and secret.

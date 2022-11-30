@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { ListGroup } from 'react-bootstrap'
-import { useTranslation } from 'react-i18next'
 import { SettingLine } from '../utils/setting-line'
 import { LigatureSettingButtonGroup } from './ligature-setting-button-group'
 import { SmartPasteSettingButtonGroup } from './smart-paste-setting-button-group'
 import { SyncScrollSettingButtonGroup } from './sync-scroll-setting-button-group'
+import React from 'react'
+import { ListGroup } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Shows the editor specific settings.

@@ -3,17 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { PropsWithDataCypressId } from '../../../utils/cypress-attribute'
+import { cypressId } from '../../../utils/cypress-attribute'
+import { testId } from '../../../utils/test-id'
+import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
+import type { IconName } from '../fork-awesome/types'
+import { ShowIf } from '../show-if/show-if'
 import type { PropsWithChildren } from 'react'
 import React, { useMemo } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
-import type { IconName } from '../fork-awesome/types'
-import { ShowIf } from '../show-if/show-if'
-import type { PropsWithDataCypressId } from '../../../utils/cypress-attribute'
-import { cypressId } from '../../../utils/cypress-attribute'
-import { testId } from '../../../utils/test-id'
 
 export interface ModalVisibilityProps {
   show: boolean

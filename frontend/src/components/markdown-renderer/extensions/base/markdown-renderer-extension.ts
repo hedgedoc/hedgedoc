@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type EventEmitter2 from 'eventemitter2'
-import type MarkdownIt from 'markdown-it'
 import type { NodeProcessor } from '../../node-preprocessors/node-processor'
 import type { ComponentReplacer } from '../../replace-components/component-replacer'
+import type EventEmitter2 from 'eventemitter2'
+import type MarkdownIt from 'markdown-it'
 
 /**
  * Base class for Markdown extensions.

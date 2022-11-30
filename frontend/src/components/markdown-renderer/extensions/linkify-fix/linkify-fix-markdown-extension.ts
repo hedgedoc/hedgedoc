@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { MarkdownRendererExtension } from '../base/markdown-renderer-extension'
-import linkify from 'markdown-it/lib/rules_core/linkify'
 import type MarkdownIt from 'markdown-it'
+import linkify from 'markdown-it/lib/rules_core/linkify'
 import tlds from 'tlds'
 
 /**

@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import MarkdownIt from 'markdown-it'
 import { legacySlideshareShortCode } from './replace-legacy-slideshare-short-code'
+import MarkdownIt from 'markdown-it'
 
 describe('Legacy slideshare short code', () => {
   it('replaces with link', () => {

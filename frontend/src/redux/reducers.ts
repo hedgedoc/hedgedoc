@@ -3,18 +3,17 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { ApplicationState } from './application-state'
+import { ConfigReducer } from './config/reducers'
+import { DarkModeConfigReducer } from './dark-mode/reducers'
+import { EditorConfigReducer } from './editor/reducers'
+import { HistoryReducer } from './history/reducers'
+import { NoteDetailsReducer } from './note-details/reducer'
+import { RealtimeReducer } from './realtime/reducers'
+import { RendererStatusReducer } from './renderer-status/reducers'
+import { UserReducer } from './user/reducers'
 import type { Reducer } from 'redux'
 import { combineReducers } from 'redux'
-import { UserReducer } from './user/reducers'
-import { ConfigReducer } from './config/reducers'
-import { HistoryReducer } from './history/reducers'
-import { EditorConfigReducer } from './editor/reducers'
-import { DarkModeConfigReducer } from './dark-mode/reducers'
-import { NoteDetailsReducer } from './note-details/reducer'
-import { RendererStatusReducer } from './renderer-status/reducers'
-import type { ApplicationState } from './application-state'
-import { RealtimeReducer } from './realtime/reducers'
 
 export const allReducers: Reducer<ApplicationState> = combineReducers<ApplicationState>({
   user: UserReducer,

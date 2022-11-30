@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useMemo } from 'react'
-import { Trans } from 'react-i18next'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { NoteInfoLine } from './note-info-line'
 import type { NoteInfoTimeLineProps } from './note-info-time-line'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { UnitalicBoldTimeFromNow } from './utils/unitalic-bold-time-from-now'
 import { DateTime } from 'luxon'
+import React, { useMemo } from 'react'
+import { Trans } from 'react-i18next'
 
 /**
  * Renders an info line about the creation of the current note.

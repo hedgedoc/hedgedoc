@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { Fragment, useCallback, useMemo } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { PermissionEntryUser } from './permission-entry-user'
-import { PermissionAddEntryField } from './permission-add-entry-field'
 import { setUserPermission } from '../../../../api/permissions'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { setNotePermissionsFromServer } from '../../../../redux/note-details/methods'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
+import { PermissionAddEntryField } from './permission-add-entry-field'
+import { PermissionEntryUser } from './permission-entry-user'
+import React, { Fragment, useCallback, useMemo } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Section of the permission modal for managing user access to the note.

@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { UnitalicBoldContent } from '../unitalic-bold-content'
 import React from 'react'
 import { Trans } from 'react-i18next'
-import { UnitalicBoldContent } from '../unitalic-bold-content'
 
 export interface UnitalicBoldTransProps {
   i18nKey?: string

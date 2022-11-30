@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useEffect, useRef } from 'react'
 import type { RendererType } from '../../../render-page/window-post-message-communicator/rendering-message'
+import { useEffect, useRef } from 'react'
 
 /**
  * Execute the given reload callback if the given render type changes.

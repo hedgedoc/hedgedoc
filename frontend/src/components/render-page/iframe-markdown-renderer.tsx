@@ -3,20 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { setDarkModePreference } from '../../redux/dark-mode/methods'
+import type { SlideOptions } from '../../redux/note-details/types/slide-show-options'
+import { useRendererToEditorCommunicator } from '../editor-page/render-context/renderer-to-editor-communicator-context-provider'
 import type { ScrollState } from '../editor-page/synced-scroll/scroll-props'
+import { eventEmitterContext } from '../markdown-renderer/hooks/use-extension-event-emitter'
+import { SlideshowMarkdownRenderer } from '../markdown-renderer/slideshow-markdown-renderer'
+import { MarkdownDocument } from './markdown-document'
+import { useRendererReceiveHandler } from './window-post-message-communicator/hooks/use-renderer-receive-handler'
 import type { BaseConfiguration } from './window-post-message-communicator/rendering-message'
 import { CommunicationMessageType, RendererType } from './window-post-message-communicator/rendering-message'
-import { setDarkModePreference } from '../../redux/dark-mode/methods'
-import { MarkdownDocument } from './markdown-document'
 import { countWords } from './word-counter'
-import { useRendererToEditorCommunicator } from '../editor-page/render-context/renderer-to-editor-communicator-context-provider'
-import { useRendererReceiveHandler } from './window-post-message-communicator/hooks/use-renderer-receive-handler'
-import { SlideshowMarkdownRenderer } from '../markdown-renderer/slideshow-markdown-renderer'
-import type { SlideOptions } from '../../redux/note-details/types/slide-show-options'
 import EventEmitter2 from 'eventemitter2'
-import { eventEmitterContext } from '../markdown-renderer/hooks/use-extension-event-emitter'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 /**
  * Wraps the markdown rendering in an iframe.

@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Fragment, useMemo } from 'react'
-import type { ValidReactDomElement } from '../replace-components/component-replacer'
-import convertHtmlToReact from '@hedgedoc/html-to-react'
-import { NodeToReactTransformer } from '../utils/node-to-react-transformer'
-import { LineIdMapper } from '../utils/line-id-mapper'
 import type { MarkdownRendererExtension } from '../extensions/base/markdown-renderer-extension'
 import { SanitizerMarkdownExtension } from '../extensions/sanitizer/sanitizer-markdown-extension'
+import type { ValidReactDomElement } from '../replace-components/component-replacer'
+import { LineIdMapper } from '../utils/line-id-mapper'
+import { NodeToReactTransformer } from '../utils/node-to-react-transformer'
 import { useCombinedNodePreprocessor } from './use-combined-node-preprocessor'
 import { useConfiguredMarkdownIt } from './use-configured-markdown-it'
+import convertHtmlToReact from '@hedgedoc/html-to-react'
+import React, { Fragment, useMemo } from 'react'
 
 /**
  * Renders Markdown-Code into react elements.

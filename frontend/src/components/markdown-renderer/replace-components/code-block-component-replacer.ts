@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { NodeReplacement } from './component-replacer'
 import { ComponentReplacer, DO_NOT_REPLACE } from './component-replacer'
+import type { Element } from 'domhandler'
 import type { FunctionComponent } from 'react'
 import React from 'react'
-import type { Element } from 'domhandler'
 
 export interface CodeProps {
   code: string

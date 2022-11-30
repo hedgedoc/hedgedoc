@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { SlideOptions } from './slide-show-options'
-import type { ISO6391 } from './iso6391'
 import type { NoteMetadata } from '../../../api/notes/types'
 import type { CursorSelection } from '../../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
+import type { ISO6391 } from './iso6391'
+import type { SlideOptions } from './slide-show-options'
 
 type UnnecessaryNoteAttributes = 'updatedAt' | 'createdAt' | 'tags' | 'description'
 

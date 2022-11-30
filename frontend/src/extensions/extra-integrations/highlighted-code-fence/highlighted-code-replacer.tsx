@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Element } from 'domhandler'
-import React from 'react'
 import {
   ComponentReplacer,
   DO_NOT_REPLACE
 } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import type { NodeReplacement } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import { HighlightedCode } from './highlighted-code'
+import type { Element } from 'domhandler'
+import React from 'react'
 
 /**
  * Detects code blocks and renders them as highlighted code blocks

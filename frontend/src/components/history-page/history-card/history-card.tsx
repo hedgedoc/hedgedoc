@@ -3,19 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { DateTime } from 'luxon'
-import React, { useCallback, useMemo } from 'react'
-import { Badge, Card } from 'react-bootstrap'
+import { cypressId } from '../../../utils/cypress-attribute'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { EntryMenu } from '../entry-menu/entry-menu'
 import type { HistoryEntryProps, HistoryEventHandlers } from '../history-content/history-content'
 import { PinButton } from '../pin-button/pin-button'
+import { useHistoryEntryTitle } from '../use-history-entry-title'
 import { formatHistoryDate } from '../utils'
 import styles from './history-card.module.scss'
-import { useHistoryEntryTitle } from '../use-history-entry-title'
-import { cypressId } from '../../../utils/cypress-attribute'
+import { DateTime } from 'luxon'
 import Link from 'next/link'
+import React, { useCallback, useMemo } from 'react'
+import { Badge, Card } from 'react-bootstrap'
 
 /**
  * Renders a history entry as a card.

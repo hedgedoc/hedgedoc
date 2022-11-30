@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { WebsocketConnection } from './websocket-connection'
-import { useEffect, useMemo } from 'react'
-import { useWebsocketUrl } from './use-websocket-url'
-import type { Doc } from 'yjs'
-import type { Awareness } from 'y-protocols/awareness'
 import { isMockMode } from '../../../../../utils/test-modes'
 import { MockConnection } from './mock-connection'
+import { useWebsocketUrl } from './use-websocket-url'
+import { WebsocketConnection } from './websocket-connection'
 import type { YDocMessageTransporter } from '@hedgedoc/realtime'
+import { useEffect, useMemo } from 'react'
+import type { Awareness } from 'y-protocols/awareness'
+import type { Doc } from 'yjs'
 
 /**
  * Creates a {@link WebsocketConnection websocket connection handler } that handles the realtime communication with the backend.

@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import deepmerge from 'deepmerge'
-import { defaultConfig, defaultHeaders } from '../default-config'
 import { ApiResponse } from '../api-response'
+import { defaultConfig, defaultHeaders } from '../default-config'
+import deepmerge from 'deepmerge'
 
 /**
  * Builder to construct and execute a call to the HTTP API.

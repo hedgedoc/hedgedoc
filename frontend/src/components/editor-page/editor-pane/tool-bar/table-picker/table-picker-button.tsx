@@ -3,19 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { cypressId } from '../../../../../utils/cypress-attribute'
+import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
+import { useChangeEditorContentCallback } from '../../../change-content-context/use-change-editor-content-callback'
+import { replaceSelection } from '../formatters/replace-selection'
+import { createMarkdownTable } from './create-markdown-table'
+import { CustomTableSizeModal } from './custom-table-size-modal'
+import './table-picker.module.scss'
+import { TableSizePickerPopover } from './table-size-picker-popover'
 import React, { Fragment, useCallback, useMemo, useRef, useState } from 'react'
 import { Button, Overlay } from 'react-bootstrap'
-import { useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
-import { cypressId } from '../../../../../utils/cypress-attribute'
-import { TableSizePickerPopover } from './table-size-picker-popover'
-import { CustomTableSizeModal } from './custom-table-size-modal'
 import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
-import { replaceSelection } from '../formatters/replace-selection'
-import { useChangeEditorContentCallback } from '../../../change-content-context/use-change-editor-content-callback'
-import { createMarkdownTable } from './create-markdown-table'
-import './table-picker.module.scss'
+import { useTranslation } from 'react-i18next'
 
 enum PickerMode {
   INVISIBLE,

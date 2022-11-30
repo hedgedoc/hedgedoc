@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { MarkdownRendererExtension } from '../base/markdown-renderer-extension'
-import type MarkdownIt from 'markdown-it'
-import { addSlideSectionsMarkdownItPlugin } from './reveal-sections'
-import { RevealCommentCommandNodePreprocessor } from './process-reveal-comment-nodes'
 import type { NodeProcessor } from '../../node-preprocessors/node-processor'
+import { MarkdownRendererExtension } from '../base/markdown-renderer-extension'
+import { RevealCommentCommandNodePreprocessor } from './process-reveal-comment-nodes'
+import { addSlideSectionsMarkdownItPlugin } from './reveal-sections'
+import type MarkdownIt from 'markdown-it'
 
 /**
  * Adds support for reveal.js to the markdown rendering.

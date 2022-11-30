@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { isCursorInCodeFence } from './codefenceDetection'
 
 describe('Check whether cursor is in codefence', () => {

@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { RevisionDetails, RevisionMetadata } from './types'
-import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
+import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
+import type { RevisionDetails, RevisionMetadata } from './types'
 
 /**
  * Retrieves a note revision while using a cache for often retrieved revisions.

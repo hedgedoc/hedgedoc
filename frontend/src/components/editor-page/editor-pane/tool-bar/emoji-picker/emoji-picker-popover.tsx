@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import fontStyles from '../../../../../../global-styles/variables.module.scss'
+import { useDarkModeState } from '../../../../../hooks/common/use-dark-mode-state'
+import { ForkAwesomeIcons } from '../../../../common/fork-awesome/fork-awesome-icons'
+import styles from './emoji-picker.module.scss'
+import forkawesomeIcon from './forkawesome.png'
 import { Picker } from 'emoji-picker-element'
 import type { CustomEmoji, EmojiClickEvent, EmojiClickEventDetail } from 'emoji-picker-element/shared'
 import React, { useEffect, useRef } from 'react'
-import { useDarkModeState } from '../../../../../hooks/common/use-dark-mode-state'
-import styles from './emoji-picker.module.scss'
-import forkawesomeIcon from './forkawesome.png'
-import { ForkAwesomeIcons } from '../../../../common/fork-awesome/fork-awesome-icons'
-import fontStyles from '../../../../../../global-styles/variables.module.scss'
 import { Popover } from 'react-bootstrap'
 import type { PopoverProps } from 'react-bootstrap/Popover'
 

@@ -3,20 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { cypressId } from '../../../../../utils/cypress-attribute'
+import { Logger } from '../../../../../utils/logger'
+import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
+import { ShowIf } from '../../../../common/show-if/show-if'
+import { acceptedMimeTypes } from '../../../../common/upload-image-mimetypes'
+import { useCodeMirrorReference } from '../../../change-content-context/change-content-context'
+import { UploadInput } from '../../../sidebar/upload-input'
+import { useHandleUpload } from '../../hooks/use-handle-upload'
+import { extractSelectedText } from './extract-selected-text'
+import { Optional } from '@mrdrogdrog/optional'
 import React, { Fragment, useCallback, useRef } from 'react'
 import { Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
-import { UploadInput } from '../../../sidebar/upload-input'
-import { acceptedMimeTypes } from '../../../../common/upload-image-mimetypes'
-import { cypressId } from '../../../../../utils/cypress-attribute'
-import { useHandleUpload } from '../../hooks/use-handle-upload'
-import { ShowIf } from '../../../../common/show-if/show-if'
-import { useCodeMirrorReference } from '../../../change-content-context/change-content-context'
-import { extractSelectedText } from './extract-selected-text'
-import { Optional } from '@mrdrogdrog/optional'
-import { Logger } from '../../../../../utils/logger'
 
 const logger = new Logger('Upload image button')
 

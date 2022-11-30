@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ShowIf } from '../show-if/show-if'
-import styles from './user-avatar.module.scss'
 import type { UserInfo } from '../../../api/users/types'
+import { ShowIf } from '../show-if/show-if'
 import defaultAvatar from './default-avatar.png'
+import styles from './user-avatar.module.scss'
+import React, { useCallback, useMemo } from 'react'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
+import { useTranslation } from 'react-i18next'
 
 export interface UserAvatarProps {
   size?: 'sm' | 'lg'

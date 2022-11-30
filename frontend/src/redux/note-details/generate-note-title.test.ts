@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { generateNoteTitle } from './generate-note-title'
 import { initialState } from './initial-state'
 

@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { Logger } from '../../../utils/logger'
 import { defaultConfig } from '../../../api/common/default-config'
+import { Logger } from '../../../utils/logger'
 
 export const MOTD_LOCAL_STORAGE_KEY = 'motd.lastModified'
 const log = new Logger('Motd')

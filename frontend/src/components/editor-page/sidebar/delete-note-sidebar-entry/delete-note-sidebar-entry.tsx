@@ -3,20 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { deleteNote } from '../../../../api/notes'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
+import { cypressId } from '../../../../utils/cypress-attribute'
+import { Logger } from '../../../../utils/logger'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
+import { SidebarButton } from '../sidebar-button/sidebar-button'
+import type { SpecificSidebarEntryProps } from '../types'
+import { DeleteNoteModal } from './delete-note-modal'
+import { useRouter } from 'next/router'
 import type { PropsWithChildren } from 'react'
 import React, { Fragment, useCallback } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { SidebarButton } from '../sidebar-button/sidebar-button'
-import type { SpecificSidebarEntryProps } from '../types'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { cypressId } from '../../../../utils/cypress-attribute'
-import { deleteNote } from '../../../../api/notes'
-import { DeleteNoteModal } from './delete-note-modal'
-import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
-import { useRouter } from 'next/router'
-import { Logger } from '../../../../utils/logger'
-import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 
 const logger = new Logger('note-deletion')
 

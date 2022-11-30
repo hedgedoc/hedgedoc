@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { isDevMode } from '../../../utils/test-modes'
 import type { ResourceKey } from 'i18next'
 import i18n, { use as i18nUse } from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import resourcesToBackend from 'i18next-resources-to-backend'
 import { Settings } from 'luxon'
 import { initReactI18next } from 'react-i18next'
-import { isDevMode } from '../../../utils/test-modes'
 
 /**
  * Set up the internationalisation framework i18n.

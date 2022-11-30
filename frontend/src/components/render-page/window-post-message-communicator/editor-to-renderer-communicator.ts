@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { WindowPostMessageCommunicator } from './window-post-message-communicator'
+import { Logger } from '../../../utils/logger'
 import type {
   CommunicationMessages,
   EditorToRendererMessageType,
   RendererToEditorMessageType
 } from './rendering-message'
-import { Logger } from '../../../utils/logger'
+import { WindowPostMessageCommunicator } from './window-post-message-communicator'
 
 /**
  * The communicator that is used to send messages from the editor to the renderer.

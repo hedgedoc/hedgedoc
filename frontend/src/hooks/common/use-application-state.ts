@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useSelector } from 'react-redux'
-import equal from 'fast-deep-equal'
 import type { ApplicationState } from '../../redux/application-state'
+import equal from 'fast-deep-equal'
+import { useSelector } from 'react-redux'
 
 /**
  * Accesses the global application state to retrieve information.

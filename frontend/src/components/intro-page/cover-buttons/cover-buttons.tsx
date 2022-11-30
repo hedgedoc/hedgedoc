@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { Button } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { cypressId } from '../../../utils/cypress-attribute'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SignInButton } from '../../landing-layout/navigation/sign-in-button'
 import './cover-buttons.module.scss'
-import { cypressId } from '../../../utils/cypress-attribute'
 import Link from 'next/link'
+import React from 'react'
+import { Button } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 export const CoverButtons: React.FC = () => {
   useTranslation()

@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Reducer } from 'redux'
+import type { HistoryEntryWithOrigin } from '../../api/history/types'
 import type { HistoryActions } from './types'
 import { HistoryActionType } from './types'
-import type { HistoryEntryWithOrigin } from '../../api/history/types'
+import type { Reducer } from 'redux'
 
 // Q: Why is the reducer initialized with an empty array instead of the actual history entries like in the config reducer?
 // A: The history reducer will be created without entries because of async entry retrieval.

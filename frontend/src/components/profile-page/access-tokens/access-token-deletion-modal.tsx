@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback } from 'react'
+import { deleteAccessToken } from '../../../api/tokens'
+import type { AccessToken } from '../../../api/tokens/types'
+import { cypressId } from '../../../utils/cypress-attribute'
 import type { ModalVisibilityProps } from '../../common/modals/common-modal'
 import { CommonModal } from '../../common/modals/common-modal'
-import { cypressId } from '../../../utils/cypress-attribute'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
+import React, { useCallback } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import type { AccessToken } from '../../../api/tokens/types'
-import { deleteAccessToken } from '../../../api/tokens'
-import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 
 export interface AccessTokenDeletionModalProps extends ModalVisibilityProps {
   token: AccessToken

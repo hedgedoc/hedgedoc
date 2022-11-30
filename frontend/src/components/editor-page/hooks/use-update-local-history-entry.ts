@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import equal from 'fast-deep-equal'
-import { useEffect, useRef } from 'react'
-import { getGlobalState } from '../../../redux'
-import { updateLocalHistoryEntry } from '../../../redux/history/methods'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
 import type { HistoryEntryWithOrigin } from '../../../api/history/types'
 import { HistoryEntryOrigin } from '../../../api/history/types'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { getGlobalState } from '../../../redux'
+import { updateLocalHistoryEntry } from '../../../redux/history/methods'
+import equal from 'fast-deep-equal'
+import { useEffect, useRef } from 'react'
 
 /**
  * An effect that uses information of the current note state to update a local {@link HistoryEntryWithOrigin history entry}.

@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { BaseUrlFromEnvExtractor } from './base-url-from-env-extractor'
 
 describe('BaseUrlFromEnvExtractor', () => {

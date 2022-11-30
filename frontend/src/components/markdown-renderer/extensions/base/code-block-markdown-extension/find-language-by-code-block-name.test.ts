@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { findLanguageByCodeBlockName } from './find-language-by-code-block-name'
-import { Mock } from 'ts-mockery'
 import type { LanguageDescription } from '@codemirror/language'
+import { Mock } from 'ts-mockery'
 
 describe('filter language name', () => {
   const mockedLanguage1 = Mock.of<LanguageDescription>({ name: 'Mocky', alias: ['mocky'] })

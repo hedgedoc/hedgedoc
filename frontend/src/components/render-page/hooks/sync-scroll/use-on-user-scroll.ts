@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type React from 'react'
-import { useCallback } from 'react'
 import type { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
 import type { LineMarkerPosition } from '../../../markdown-renderer/extensions/linemarker/types'
+import type React from 'react'
+import { useCallback } from 'react'
 
 /**
  * Provides a callback to handle user scrolling.

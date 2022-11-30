@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { cypressId } from '../../../../utils/cypress-attribute'
+import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
+import { CommonModal } from '../../../common/modals/common-modal'
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
-import { CommonModal } from '../../../common/modals/common-modal'
-import { cypressId } from '../../../../utils/cypress-attribute'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 /**
  * Shows a modal that informs the user that the document is too long.

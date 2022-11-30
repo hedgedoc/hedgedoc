@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { YoutubeMarkdownExtension } from './youtube-markdown-extension'
-import { render } from '@testing-library/react'
-import * as YouTubeFrameModule from './youtube-frame'
-import React from 'react'
+import type { IdProps } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
 import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
 import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
-import type { IdProps } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
+import * as YouTubeFrameModule from './youtube-frame'
+import { YoutubeMarkdownExtension } from './youtube-markdown-extension'
+import { render } from '@testing-library/react'
+import React from 'react'
 
 jest.mock('./youtube-frame')
 

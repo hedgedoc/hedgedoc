@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type React from 'react'
-import { useSetCheckboxInEditor } from './use-set-checkbox-in-editor'
 import { useExtensionEventEmitterHandler } from '../../../components/markdown-renderer/hooks/use-extension-event-emitter'
 import { TaskListCheckboxAppExtension } from './task-list-checkbox-app-extension'
+import { useSetCheckboxInEditor } from './use-set-checkbox-in-editor'
+import type React from 'react'
 
 /**
  * Receives task-checkbox-change events and modify the current editor content.

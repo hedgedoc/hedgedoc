@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { MarkdownRendererExtension } from '../base/markdown-renderer-extension'
+import { combinedEmojiData } from './mapping'
 import type MarkdownIt from 'markdown-it'
 import emoji from 'markdown-it-emoji/bare'
-import { combinedEmojiData } from './mapping'
 
 /**
  * Adds support for utf-8 emojis.

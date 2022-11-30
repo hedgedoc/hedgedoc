@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { render } from '@testing-library/react'
 import { ShowIf } from './show-if'
+import { render } from '@testing-library/react'
 
 describe('ShowIf', () => {
   it('renders child if condition is true', () => {

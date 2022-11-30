@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
-import { UiNotificationToast } from './ui-notification-toast'
 import styles from './notifications.module.scss'
 import type { UiNotification } from './types'
+import { UiNotificationToast } from './ui-notification-toast'
+import React, { useMemo } from 'react'
 
 export interface UiNotificationsProps {
   notifications: UiNotification[]

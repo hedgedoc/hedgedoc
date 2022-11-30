@@ -3,27 +3,26 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { doLocalRegister } from '../api/auth/local'
+import { RegisterError as RegisterErrorType } from '../api/auth/types'
+import { DisplayNameField } from '../components/common/fields/display-name-field'
+import { NewPasswordField } from '../components/common/fields/new-password-field'
+import { PasswordAgainField } from '../components/common/fields/password-again-field'
+import { UsernameField } from '../components/common/fields/username-field'
+import { Redirect } from '../components/common/redirect'
+import { LandingLayout } from '../components/landing-layout/landing-layout'
+import { fetchAndSetUser } from '../components/login-page/auth/utils'
+import { useUiNotifications } from '../components/notifications/ui-notification-boundary'
+import { RegisterError } from '../components/register-page/register-error/register-error'
+import { RegisterInfos } from '../components/register-page/register-infos/register-infos'
+import { useApplicationState } from '../hooks/common/use-application-state'
+import { useOnInputChange } from '../hooks/common/use-on-input-change'
+import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import type { FormEvent } from 'react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Card, Col, Form, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { doLocalRegister } from '../api/auth/local'
-import { useApplicationState } from '../hooks/common/use-application-state'
-import { fetchAndSetUser } from '../components/login-page/auth/utils'
-import { RegisterError as RegisterErrorType } from '../api/auth/types'
-import { RegisterInfos } from '../components/register-page/register-infos/register-infos'
-import { UsernameField } from '../components/common/fields/username-field'
-import { DisplayNameField } from '../components/common/fields/display-name-field'
-import { NewPasswordField } from '../components/common/fields/new-password-field'
-import { PasswordAgainField } from '../components/common/fields/password-again-field'
-import { useOnInputChange } from '../hooks/common/use-on-input-change'
-import { RegisterError } from '../components/register-page/register-error/register-error'
-import { LandingLayout } from '../components/landing-layout/landing-layout'
-import { useRouter } from 'next/router'
-import type { NextPage } from 'next'
-import { Redirect } from '../components/common/redirect'
-import { useUiNotifications } from '../components/notifications/ui-notification-boundary'
 
 /**
  * Renders the registration page with fields for username, display name, password, password retype and information about terms and conditions.

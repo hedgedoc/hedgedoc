@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { render } from '@testing-library/react'
-import { YouTubeFrame } from './youtube-frame'
-import React from 'react'
 import * as ClickShieldModule from '../../../components/markdown-renderer/replace-components/click-shield/click-shield'
 import type { ClickShieldProps } from '../../../components/markdown-renderer/replace-components/click-shield/click-shield'
+import { YouTubeFrame } from './youtube-frame'
+import { render } from '@testing-library/react'
+import React from 'react'
 
 jest.mock('../../../components/markdown-renderer/replace-components/click-shield/click-shield')
 

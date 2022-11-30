@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { render } from '@testing-library/react'
 import { CsvTable } from './csv-table'
+import { render } from '@testing-library/react'
 
 describe('CSV Table', () => {
   it('renders correctly with header', () => {

@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { Trans, useTranslation } from 'react-i18next'
+import { createNoteWithPrimaryAlias } from '../../../api/notes'
+import { useSingleStringUrlParameter } from '../../../hooks/common/use-single-string-url-parameter'
+import { testId } from '../../../utils/test-id'
+import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
+import { ShowIf } from '../show-if/show-if'
 import React, { useCallback, useEffect } from 'react'
 import { Alert, Button } from 'react-bootstrap'
-import { useSingleStringUrlParameter } from '../../../hooks/common/use-single-string-url-parameter'
-import { createNoteWithPrimaryAlias } from '../../../api/notes'
+import { Trans, useTranslation } from 'react-i18next'
 import { useAsyncFn } from 'react-use'
-import { ShowIf } from '../show-if/show-if'
-import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
-import { testId } from '../../../utils/test-id'
 
 export interface CreateNonExistingNoteHintProps {
   onNoteCreated: () => void

@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useMemo } from 'react'
 import { useApplicationState } from './use-application-state'
+import { useMemo } from 'react'
 
 /**
  * Calculates the app title with branding if set.

@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { calculatePlaceholderContainerSize } from '../utils/build-placeholder-size-css'
 import type { CSSProperties } from 'react'
 import { useMemo } from 'react'
-import { calculatePlaceholderContainerSize } from '../utils/build-placeholder-size-css'
 
 /**
  * Creates the style attribute for a placeholder container with width and height.

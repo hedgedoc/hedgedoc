@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback, useMemo } from 'react'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { useTranslation } from 'react-i18next'
-import { Typeahead } from 'react-bootstrap-typeahead'
 import { useHistoryToolbarState } from './toolbar-context/use-history-toolbar-state'
+import React, { useCallback, useMemo } from 'react'
+import { Typeahead } from 'react-bootstrap-typeahead'
 import type { Option } from 'react-bootstrap-typeahead/types/types'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Renders an input field that filters history entries by selected tags.

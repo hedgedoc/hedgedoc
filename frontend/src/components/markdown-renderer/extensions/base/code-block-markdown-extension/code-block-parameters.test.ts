@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { parseCodeBlockParameters } from './code-block-parameters'
 
 describe('Code block parameter parsing', () => {

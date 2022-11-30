@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { Button, Modal } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
-import React, { useMemo, useState } from 'react'
 import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
-import { ShortcutTabContent } from './shortcuts-tab-content'
-import { LinksTabContent } from './links-tab-content'
 import { CheatsheetTabContent } from './cheatsheet-tab-content'
+import { LinksTabContent } from './links-tab-content'
+import { ShortcutTabContent } from './shortcuts-tab-content'
+import React, { useMemo, useState } from 'react'
+import { Button, Modal } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 export enum HelpTabStatus {
   Cheatsheet = 'cheatsheet.title',

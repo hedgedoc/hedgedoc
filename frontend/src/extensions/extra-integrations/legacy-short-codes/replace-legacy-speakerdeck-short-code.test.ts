@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import MarkdownIt from 'markdown-it'
 import { legacySpeakerdeckShortCode } from './replace-legacy-speakerdeck-short-code'
+import MarkdownIt from 'markdown-it'
 
 describe('Legacy speakerdeck short code', () => {
   it('replaces with link', () => {

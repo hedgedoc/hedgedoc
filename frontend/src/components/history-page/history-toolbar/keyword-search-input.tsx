@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { FormControl } from 'react-bootstrap'
 import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
 import { useHistoryToolbarState } from './toolbar-context/use-history-toolbar-state'
+import React from 'react'
+import { FormControl } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 
 /**
  * A text input that is used to filter history entries for specific keywords.

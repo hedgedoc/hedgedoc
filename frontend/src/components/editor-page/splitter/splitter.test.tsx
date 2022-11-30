@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { fireEvent, render, screen } from '@testing-library/react'
 import { Splitter } from './splitter'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { Mock } from 'ts-mockery'
 
 describe('Splitter', () => {

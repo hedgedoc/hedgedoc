@@ -3,17 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { cypressId } from '../../../../utils/cypress-attribute'
+import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
+import { CommonModal } from '../../../common/modals/common-modal'
+import { NoteInfoLineContributors } from './note-info-line-contributors'
+import { NoteInfoLineCreated } from './note-info-line-created'
+import { NoteInfoLineUpdated } from './note-info-line-updated'
+import { NoteInfoLineWordCount } from './note-info-line-word-count'
 import React from 'react'
 import { ListGroup, Modal } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
-import { CommonModal } from '../../../common/modals/common-modal'
-import { NoteInfoLineWordCount } from './note-info-line-word-count'
-import { cypressId } from '../../../../utils/cypress-attribute'
-import { NoteInfoLineCreated } from './note-info-line-created'
-import { NoteInfoLineUpdated } from './note-info-line-updated'
-import { NoteInfoLineContributors } from './note-info-line-contributors'
 
 /**
  * Modal that shows informational data about the current note.

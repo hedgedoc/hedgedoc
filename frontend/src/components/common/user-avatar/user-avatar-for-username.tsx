@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React from 'react'
-import { useAsync } from 'react-use'
 import { getUser } from '../../../api/users'
+import type { UserInfo } from '../../../api/users/types'
+import { AsyncLoadingBoundary } from '../async-loading-boundary'
 import type { UserAvatarProps } from './user-avatar'
 import { UserAvatar } from './user-avatar'
-import type { UserInfo } from '../../../api/users/types'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { AsyncLoadingBoundary } from '../async-loading-boundary'
+import { useAsync } from 'react-use'
 
 export interface UserAvatarForUsernameProps extends Omit<UserAvatarProps, 'user'> {
   username: string | null

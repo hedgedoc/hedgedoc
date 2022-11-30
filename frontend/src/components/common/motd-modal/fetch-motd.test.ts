@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { Mock } from 'ts-mockery'
 import { fetchMotd } from './fetch-motd'
+import { Mock } from 'ts-mockery'
 
 describe('fetch motd', () => {
   const motdUrl = 'public/motd.md'

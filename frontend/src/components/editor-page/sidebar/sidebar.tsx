@@ -3,13 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback, useRef, useState } from 'react'
-import { useClickAway } from 'react-use'
 import { DeleteNoteSidebarEntry } from './delete-note-sidebar-entry/delete-note-sidebar-entry'
-import { NoteInfoSidebarEntry } from './specific-sidebar-entries/note-info-sidebar-entry'
+import { AliasesSidebarEntry } from './specific-sidebar-entries/aliases-sidebar-entry'
 import { ExportMenuSidebarMenu } from './specific-sidebar-entries/export-menu-sidebar-menu'
 import { ImportMenuSidebarMenu } from './specific-sidebar-entries/import-menu-sidebar-menu'
+import { NoteInfoSidebarEntry } from './specific-sidebar-entries/note-info-sidebar-entry'
 import { PermissionsSidebarEntry } from './specific-sidebar-entries/permissions-sidebar-entry'
 import { PinNoteSidebarEntry } from './specific-sidebar-entries/pin-note-sidebar-entry'
 import { RevisionSidebarEntry } from './specific-sidebar-entries/revision-sidebar-entry'
@@ -17,7 +15,8 @@ import { ShareSidebarEntry } from './specific-sidebar-entries/share-sidebar-entr
 import styles from './style/sidebar.module.scss'
 import { DocumentSidebarMenuSelection } from './types'
 import { UsersOnlineSidebarMenu } from './users-online-sidebar-menu/users-online-sidebar-menu'
-import { AliasesSidebarEntry } from './specific-sidebar-entries/aliases-sidebar-entry'
+import React, { useCallback, useRef, useState } from 'react'
+import { useClickAway } from 'react-use'
 
 /**
  * Renders the sidebar for the editor.

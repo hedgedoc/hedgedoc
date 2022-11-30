@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { IconName } from '../fork-awesome/types'
 import { IconButton } from './icon-button'
 import { fireEvent, render, screen } from '@testing-library/react'

@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Reducer } from 'redux'
 import type { OptionalUserState, UserActions } from './types'
 import { UserActionType } from './types'
+import type { Reducer } from 'redux'
 
 export const UserReducer: Reducer<OptionalUserState, UserActions> = (
   state: OptionalUserState = null,

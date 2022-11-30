@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
-import { parseCsv } from './csv-parser'
 import { cypressId } from '../../../utils/cypress-attribute'
+import { parseCsv } from './csv-parser'
+import React, { useMemo } from 'react'
 
 export interface CsvTableProps {
   code: string

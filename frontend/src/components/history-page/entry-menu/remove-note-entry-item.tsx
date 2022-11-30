@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { DropdownItemWithDeletionModal } from './dropdown-item-with-deletion-modal'
 import { cypressId } from '../../../utils/cypress-attribute'
+import { DropdownItemWithDeletionModal } from './dropdown-item-with-deletion-modal'
+import React from 'react'
 
 export interface RemoveNoteEntryItemProps {
   onConfirm: () => void

@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useContext, useMemo } from 'react'
-import { useRouter } from 'next/router'
 import { baseUrlContext } from '../../components/common/base-url/base-url-context-provider'
+import { useRouter } from 'next/router'
+import { useContext, useMemo } from 'react'
 
 export enum ORIGIN {
   EDITOR,

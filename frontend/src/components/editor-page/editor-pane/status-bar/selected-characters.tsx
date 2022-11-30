@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Fragment, useMemo } from 'react'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { SeparatorDash } from './separator-dash'
+import React, { Fragment, useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**

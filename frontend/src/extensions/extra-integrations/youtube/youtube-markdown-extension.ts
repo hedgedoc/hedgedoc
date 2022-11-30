@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { replaceYouTubeLinkMarkdownItPlugin } from './replace-youtube-link'
-import { replaceLegacyYoutubeShortCodeMarkdownItPlugin } from './replace-legacy-youtube-short-code'
-import type MarkdownIt from 'markdown-it'
-import { YouTubeFrame } from './youtube-frame'
 import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
-import { CustomTagWithIdComponentReplacer } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
 import type { ComponentReplacer } from '../../../components/markdown-renderer/replace-components/component-replacer'
+import { CustomTagWithIdComponentReplacer } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
+import { replaceLegacyYoutubeShortCodeMarkdownItPlugin } from './replace-legacy-youtube-short-code'
+import { replaceYouTubeLinkMarkdownItPlugin } from './replace-youtube-link'
+import { YouTubeFrame } from './youtube-frame'
+import type MarkdownIt from 'markdown-it'
 
 /**
  * Adds YouTube video embeddings using link detection and the legacy YouTube short code syntax.

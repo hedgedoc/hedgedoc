@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { load } from 'js-yaml'
-import type { SlideOptions } from '../types/slide-show-options'
+import { initialSlideOptions, initialState } from '../initial-state'
+import { ISO6391 } from '../types/iso6391'
 import type { Iso6391Language, NoteFrontmatter, OpenGraph } from '../types/note-details'
 import { NoteTextDirection, NoteType } from '../types/note-details'
-import { ISO6391 } from '../types/iso6391'
+import type { SlideOptions } from '../types/slide-show-options'
 import type { RawNoteFrontmatter } from './types'
-import { initialSlideOptions, initialState } from '../initial-state'
+import { load } from 'js-yaml'
 
 /**
  * Creates a new frontmatter metadata instance based on a raw yaml string.

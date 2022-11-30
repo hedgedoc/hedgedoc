@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { Element, Node } from 'domhandler'
 import { isText } from 'domhandler'
 import type { ReactElement } from 'react'

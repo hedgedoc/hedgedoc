@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 import type MarkdownIt from 'markdown-it'
 import markdownItContainer from 'markdown-it-container'
-import type Token from 'markdown-it/lib/token'
 import { escapeHtml } from 'markdown-it/lib/common/utils'
-import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
+import type Token from 'markdown-it/lib/token'
 
 /**
  * Adds support for html spoiler tags.

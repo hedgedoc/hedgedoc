@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import convertHtmlToReact from '@hedgedoc/html-to-react'
+import { sanitize } from 'dompurify'
+import type { HLJSApi } from 'highlight.js'
 import type { ReactElement } from 'react'
 import React, { Fragment, useMemo } from 'react'
-import convertHtmlToReact from '@hedgedoc/html-to-react'
-import type { HLJSApi } from 'highlight.js'
-import { sanitize } from 'dompurify'
 
 /**
  * Highlights the given code using highlight.js. If the language wasn't recognized then it won't be highlighted.

@@ -3,20 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { RevisionMetadata } from '../../../../api/revisions/types'
+import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { ShowIf } from '../../../common/show-if/show-if'
+import { UserAvatar } from '../../../common/user-avatar/user-avatar'
+import { WaitSpinner } from '../../../common/wait-spinner/wait-spinner'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
+import styles from './revision-list-entry.module.scss'
+import { getUserDataForRevision } from './utils'
 import { DateTime } from 'luxon'
 import React, { useMemo } from 'react'
 import { ListGroup } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import { UserAvatar } from '../../../common/user-avatar/user-avatar'
-import styles from './revision-list-entry.module.scss'
-import type { RevisionMetadata } from '../../../../api/revisions/types'
-import { getUserDataForRevision } from './utils'
 import { useAsync } from 'react-use'
-import { ShowIf } from '../../../common/show-if/show-if'
-import { WaitSpinner } from '../../../common/wait-spinner/wait-spinner'
-import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 
 export interface RevisionListEntryProps {
   active: boolean

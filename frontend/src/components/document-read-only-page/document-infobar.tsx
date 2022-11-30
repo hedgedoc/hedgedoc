@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { useApplicationState } from '../../hooks/common/use-application-state'
 import { InternalLink } from '../common/links/internal-link'
 import { ShowIf } from '../common/show-if/show-if'
-import styles from './document-infobar.module.scss'
-import { useApplicationState } from '../../hooks/common/use-application-state'
 import { NoteInfoLineCreated } from '../editor-page/document-bar/note-info/note-info-line-created'
 import { NoteInfoLineUpdated } from '../editor-page/document-bar/note-info/note-info-line-updated'
+import styles from './document-infobar.module.scss'
+import React from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Renders an info bar with metadata about the current note.

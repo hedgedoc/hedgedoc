@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { cypressId } from '../../../../../utils/cypress-attribute'
+import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
+import { CommonModal } from '../../../../common/modals/common-modal'
+import type { TableSize } from './table-size-picker-popover'
 import type { ChangeEvent } from 'react'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Button, Form, ModalFooter } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
-import { CommonModal } from '../../../../common/modals/common-modal'
-import type { TableSize } from './table-size-picker-popover'
-import { cypressId } from '../../../../../utils/cypress-attribute'
 
 export interface CustomTableSizeModalProps {
   showModal: boolean

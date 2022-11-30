@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { UserAvatar } from './user-avatar'
-import { render } from '@testing-library/react'
 import type { UserInfo } from '../../../api/users/types'
 import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
+import { UserAvatar } from './user-avatar'
+import { render } from '@testing-library/react'
 
 describe('UserAvatar', () => {
   const user: UserInfo = {

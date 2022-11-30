@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 import type MarkdownIt from 'markdown-it'
 import markdownItContainer from 'markdown-it-container'
-import type Token from 'markdown-it/lib/token'
 import type Renderer from 'markdown-it/lib/renderer'
-import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
+import type Token from 'markdown-it/lib/token'
 
 export const alertLevels = ['success', 'danger', 'info', 'warning']
 

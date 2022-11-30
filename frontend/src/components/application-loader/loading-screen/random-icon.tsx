@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useEffect, useState } from 'react'
-import type { IconName } from '../../common/fork-awesome/types'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import type { IconName } from '../../common/fork-awesome/types'
 import styles from './animations.module.scss'
+import React, { useEffect, useState } from 'react'
 
 const elements: IconName[] = [
   'file-text',

@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { testNoteId } from './visit-test-editor'
 
 declare namespace Cypress {

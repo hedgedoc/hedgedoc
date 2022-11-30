@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { ApiRequestBuilder } from './api-request-builder'
 import type { ApiResponse } from '../api-response'
+import { ApiRequestBuilder } from './api-request-builder'
 
 /**
  * Builder to construct a GET request to the API.

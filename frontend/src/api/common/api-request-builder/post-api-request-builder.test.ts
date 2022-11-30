@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { PostApiRequestBuilder } from './post-api-request-builder'
 import { expectFetch } from './test-utils/expect-fetch'
 

@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Fragment } from 'react'
 import { useBooleanState } from '../../../hooks/common/use-boolean-state'
+import { cypressId } from '../../../utils/cypress-attribute'
 import { IconButton } from '../../common/icon-button/icon-button'
 import { SettingsModal } from './settings-modal'
+import React, { Fragment } from 'react'
 import type { ButtonProps } from 'react-bootstrap'
-import { cypressId } from '../../../utils/cypress-attribute'
 
 export type SettingsButtonProps = Omit<ButtonProps, 'onClick'>
 /**

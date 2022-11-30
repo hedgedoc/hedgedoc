@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { DateTime } from 'luxon'
-import { SortModeEnum } from './sort-button/sort-button'
-import type { HistoryToolbarState } from './history-toolbar/history-toolbar-state'
 import type { HistoryEntryWithOrigin } from '../../api/history/types'
+import type { HistoryToolbarState } from './history-toolbar/history-toolbar-state'
+import { SortModeEnum } from './sort-button/sort-button'
+import { DateTime } from 'luxon'
 
 /**
  * Parses a given ISO formatted date string and outputs it as a date and time string.

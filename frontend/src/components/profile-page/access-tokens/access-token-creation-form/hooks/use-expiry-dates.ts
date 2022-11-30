@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useMemo } from 'react'
 import { DateTime } from 'luxon'
+import { useMemo } from 'react'
 
 interface ExpiryDates {
   default: string

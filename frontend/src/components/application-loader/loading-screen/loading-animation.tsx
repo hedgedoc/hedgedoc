@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
-import styles from './animations.module.scss'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
-import { IconRow } from './icon-row'
 import { createNumberRangeArray } from '../../common/number-range/number-range'
+import styles from './animations.module.scss'
+import { IconRow } from './icon-row'
+import React, { useMemo } from 'react'
 
 export interface HedgeDocLogoProps {
   error: boolean

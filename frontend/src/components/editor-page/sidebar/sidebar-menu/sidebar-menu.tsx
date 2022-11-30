@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { PropsWithChildren } from 'react'
-import React from 'react'
 import type { SidebarMenuProps } from '../types'
 import styles from './sidebar-menu.module.scss'
+import type { PropsWithChildren } from 'react'
+import React from 'react'
 
 /**
  * Renders a sidebar menu.

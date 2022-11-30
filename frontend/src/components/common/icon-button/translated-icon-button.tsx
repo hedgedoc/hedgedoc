@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { Trans } from 'react-i18next'
 import type { IconButtonProps } from './icon-button'
 import { IconButton } from './icon-button'
+import React from 'react'
+import { Trans } from 'react-i18next'
 
 export interface TranslatedIconButtonProps extends IconButtonProps {
   i18nKey: string

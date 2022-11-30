@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { NoteDetails } from './types/note-details'
 import { NoteTextDirection, NoteType } from './types/note-details'
 import type { SlideOptions } from './types/slide-show-options'

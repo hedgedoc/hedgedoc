@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ClickShield } from '../../replace-components/click-shield/click-shield'
 import type { NativeRenderer, NodeReplacement, SubNodeTransform } from '../../replace-components/component-replacer'
 import { ComponentReplacer, DO_NOT_REPLACE } from '../../replace-components/component-replacer'
 import type { Element } from 'domhandler'
-import { ClickShield } from '../../replace-components/click-shield/click-shield'
 
 /**
  * Capsules <iframe> elements with a click shield.

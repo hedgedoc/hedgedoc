@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { render } from '@testing-library/react'
 import { ExternalLink } from './external-link'
+import { render } from '@testing-library/react'
 
 describe('ExternalLink', () => {
   const href = 'https://example.com'

@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
 import LogoBwHorizontal from './logo_text_bw_horizontal.svg'
 import LogoColorVertical from './logo_text_color_vertical.svg'
 import LogoWbHorizontal from './logo_text_wb_horizontal.svg'
+import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export enum HedgeDocLogoSize {

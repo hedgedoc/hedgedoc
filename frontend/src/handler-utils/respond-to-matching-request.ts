@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { NextApiRequest, NextApiResponse } from 'next'
 import { isMockMode } from '../utils/test-modes'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 export enum HttpMethod {
   GET = 'GET',

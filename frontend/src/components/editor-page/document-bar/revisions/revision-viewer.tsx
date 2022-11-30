@@ -3,16 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useMemo } from 'react'
-import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
-import { useAsync } from 'react-use'
 import { getRevision } from '../../../../api/revisions'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { useDarkModeState } from '../../../../hooks/common/use-dark-mode-state'
 import { AsyncLoadingBoundary } from '../../../common/async-loading-boundary'
-import { applyPatch, parsePatch } from 'diff'
 import { invertUnifiedPatch } from './invert-unified-patch'
 import { Optional } from '@mrdrogdrog/optional'
+import { applyPatch, parsePatch } from 'diff'
+import React, { useMemo } from 'react'
+import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
+import { useAsync } from 'react-use'
 
 export interface RevisionViewerProps {
   selectedRevisionId?: number

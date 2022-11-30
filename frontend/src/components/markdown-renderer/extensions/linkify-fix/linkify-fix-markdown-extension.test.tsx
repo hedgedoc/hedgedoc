@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { mockI18n } from '../../test-utils/mock-i18n'
-import { render } from '@testing-library/react'
 import { TestMarkdownRenderer } from '../../test-utils/test-markdown-renderer'
 import { LinkifyFixMarkdownExtension } from './linkify-fix-markdown-extension'
+import { render } from '@testing-library/react'
 
 describe('Linkify markdown extensions', () => {
   beforeAll(async () => {

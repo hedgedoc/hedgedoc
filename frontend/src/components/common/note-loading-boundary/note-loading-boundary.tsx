@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { PropsWithChildren } from 'react'
-import React, { Fragment, useEffect } from 'react'
-import { useLoadNoteFromServer } from './hooks/use-load-note-from-server'
 import { LoadingScreen } from '../../application-loader/loading-screen/loading-screen'
 import { CommonErrorPage } from '../../error-pages/common-error-page'
-import { CreateNonExistingNoteHint } from './create-non-existing-note-hint'
 import { ShowIf } from '../show-if/show-if'
+import { CreateNonExistingNoteHint } from './create-non-existing-note-hint'
+import { useLoadNoteFromServer } from './hooks/use-load-note-from-server'
+import type { PropsWithChildren } from 'react'
+import React, { Fragment, useEffect } from 'react'
 
 /**
  * Loads the note identified by the note-id in the URL.

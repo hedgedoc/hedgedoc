@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { UserInfo } from './types'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
+import type { UserInfo } from './types'
 
 /**
  * Retrieves information about a specific user while using a cache to avoid many requests for the same username.

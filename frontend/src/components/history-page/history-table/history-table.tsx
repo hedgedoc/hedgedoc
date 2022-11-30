@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
-import { Table } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { cypressId } from '../../../utils/cypress-attribute'
 import { Pager } from '../../common/pagination/pager'
 import type { HistoryEntriesProps, HistoryEventHandlers } from '../history-content/history-content'
 import { HistoryTableRow } from './history-table-row'
 import styles from './history-table.module.scss'
-import { cypressId } from '../../../utils/cypress-attribute'
+import React, { useMemo } from 'react'
+import { Table } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Renders a paginated table of history entries.

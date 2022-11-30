@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { replaceSelection } from './replace-selection'
 import type { ContentEdits } from './changes'
+import { replaceSelection } from './replace-selection'
 
 describe('replace selection', () => {
   it('inserts a text after the from-cursor if no to-cursor is present', () => {

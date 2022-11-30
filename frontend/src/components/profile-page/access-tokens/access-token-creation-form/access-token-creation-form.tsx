@@ -3,19 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { AccessTokenWithSecret } from '../../../../api/tokens/types'
+import { AccessTokenCreatedModal } from '../access-token-created-modal'
+import type { AccessTokenUpdateProps } from '../profile-access-tokens'
+import { AccessTokenCreationFormExpiryField } from './access-token-creation-form-expiry-field'
+import { AccessTokenCreationFormLabelField } from './access-token-creation-form-label-field'
+import { AccessTokenCreationFormSubmitButton } from './access-token-creation-form-submit-button'
+import { useExpiryDates } from './hooks/use-expiry-dates'
+import { useOnCreateToken } from './hooks/use-on-create-token'
 import type { ChangeEvent } from 'react'
 import React, { Fragment, useCallback, useMemo, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { AccessTokenCreatedModal } from '../access-token-created-modal'
-import type { AccessTokenWithSecret } from '../../../../api/tokens/types'
-import { AccessTokenCreationFormLabelField } from './access-token-creation-form-label-field'
-import { AccessTokenCreationFormExpiryField } from './access-token-creation-form-expiry-field'
-import { AccessTokenCreationFormSubmitButton } from './access-token-creation-form-submit-button'
-import { useExpiryDates } from './hooks/use-expiry-dates'
-import { useOnCreateToken } from './hooks/use-on-create-token'
-import type { AccessTokenUpdateProps } from '../profile-access-tokens'
 
 interface NewTokenFormValues {
   label: string

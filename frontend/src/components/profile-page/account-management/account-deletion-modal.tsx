@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback } from 'react'
-import type { ModalVisibilityProps } from '../../common/modals/common-modal'
-import { CommonModal } from '../../common/modals/common-modal'
-import { Trans, useTranslation } from 'react-i18next'
-import { Button, Modal } from 'react-bootstrap'
-import { CountdownButton } from '../../common/countdown-button/countdown-button'
 import { deleteUser } from '../../../api/me'
 import { clearUser } from '../../../redux/user/methods'
+import { CountdownButton } from '../../common/countdown-button/countdown-button'
+import type { ModalVisibilityProps } from '../../common/modals/common-modal'
+import { CommonModal } from '../../common/modals/common-modal'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
+import React, { useCallback } from 'react'
+import { Button, Modal } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Confirmation modal for deleting your account.

@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { PropsWithChildren } from 'react'
-import React, { createContext, useContext, useEffect, useMemo } from 'react'
-import { RendererToEditorCommunicator } from '../../render-page/window-post-message-communicator/renderer-to-editor-communicator'
-import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
 import { ORIGIN, useBaseUrl } from '../../../hooks/common/use-base-url'
 import { useSingleStringUrlParameter } from '../../../hooks/common/use-single-string-url-parameter'
+import { RendererToEditorCommunicator } from '../../render-page/window-post-message-communicator/renderer-to-editor-communicator'
+import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
+import type { PropsWithChildren } from 'react'
+import React, { createContext, useContext, useEffect, useMemo } from 'react'
 
 const RendererToEditorCommunicatorContext = createContext<RendererToEditorCommunicator | undefined>(undefined)
 

@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
-import { Row } from 'react-bootstrap'
 import { Pager } from '../../common/pagination/pager'
 import type { HistoryEntriesProps, HistoryEventHandlers } from '../history-content/history-content'
 import { HistoryCard } from './history-card'
+import React, { useMemo } from 'react'
+import { Row } from 'react-bootstrap'
 
 /**
  * Renders a paginated list of history entry cards.

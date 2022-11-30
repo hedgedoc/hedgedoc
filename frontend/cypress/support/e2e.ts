@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 // ***********************************************************
 // This example support/index.ts is processed and
 // loaded automatically before your test files.
@@ -18,13 +17,12 @@
 // You can read more here:
 // https://on.cypress.io/configuration
 // ***********************************************************
-
-import 'cypress-commands'
 import './check-links'
 import './config'
 import './fill'
 import './get-by-id'
 import './get-iframe-content'
 import './logout'
-import './visit-test-editor'
 import './visit'
+import './visit-test-editor'
+import 'cypress-commands'

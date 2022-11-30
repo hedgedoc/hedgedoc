@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { branding } from '../support/config'
 
 const title = 'This is a test title'

@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
+import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
+import * as reduxModule from '../../../redux'
+import type { ApplicationState } from '../../../redux/application-state'
+import { PlantumlMarkdownExtension } from './plantuml-markdown-extension'
 import { render } from '@testing-library/react'
 import React from 'react'
-import { PlantumlMarkdownExtension } from './plantuml-markdown-extension'
-import * as reduxModule from '../../../redux'
 import { Mock } from 'ts-mockery'
-import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
-import type { ApplicationState } from '../../../redux/application-state'
-import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
 
 jest.mock('../../../redux')
 

@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
 import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
+import React from 'react'
 
 /**
  * Renders a indefinitely spinning spinner.

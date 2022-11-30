@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback } from 'react'
+import type { ImageDetails } from '../../../render-page/window-post-message-communicator/rendering-message'
 import { useExtensionEventEmitter } from '../../hooks/use-extension-event-emitter'
 import { ProxyImageFrame } from './proxy-image-frame'
-import type { ImageDetails } from '../../../render-page/window-post-message-communicator/rendering-message'
+import React, { useCallback } from 'react'
 
 type EventEmittingProxyImageFrameProps = Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'onClick'>
 

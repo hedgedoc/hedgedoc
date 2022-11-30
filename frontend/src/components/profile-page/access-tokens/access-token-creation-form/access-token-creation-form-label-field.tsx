@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { cypressId } from '../../../../utils/cypress-attribute'
 import type { ChangeEvent } from 'react'
 import React, { useMemo } from 'react'
 import { Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { cypressId } from '../../../../utils/cypress-attribute'
 
 interface AccessTokenCreationFormLabelFieldProps extends AccessTokenCreationFormFieldProps {
   onChangeLabel: (event: ChangeEvent<HTMLInputElement>) => void

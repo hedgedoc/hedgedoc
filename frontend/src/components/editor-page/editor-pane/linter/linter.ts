@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { optionalAppExtensions } from '../../../../extensions/extra-integrations/optional-app-extensions'
+import { useDarkModeState } from '../../../../hooks/common/use-dark-mode-state'
+import { FrontmatterLinter } from './frontmatter-linter'
 import type { Diagnostic } from '@codemirror/lint'
 import { linter } from '@codemirror/lint'
-import { useMemo } from 'react'
 import type { Extension } from '@codemirror/state'
 import type { EditorView } from '@codemirror/view'
-import { optionalAppExtensions } from '../../../../extensions/extra-integrations/optional-app-extensions'
-import { FrontmatterLinter } from './frontmatter-linter'
-import { useDarkModeState } from '../../../../hooks/common/use-dark-mode-state'
+import { useMemo } from 'react'
 
 /**
  * The Linter interface.

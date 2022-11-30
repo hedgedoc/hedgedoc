@@ -3,9 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
+import { Logger } from '../../../utils/logger'
 import { isTestMode } from '../../../utils/test-modes'
+import { ShowIf } from '../../common/show-if/show-if'
+import { WaitSpinner } from '../../common/wait-spinner/wait-spinner'
+import { useExtensionEventEmitter } from '../../markdown-renderer/hooks/use-extension-event-emitter'
 import type { RendererProps } from '../../render-page/markdown-document'
+import { useEditorReceiveHandler } from '../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
 import type {
   ExtensionEvent,
   OnFirstHeadingChangeMessage,
@@ -15,17 +20,12 @@ import type {
 } from '../../render-page/window-post-message-communicator/rendering-message'
 import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
 import { useEditorToRendererCommunicator } from '../render-context/editor-to-renderer-communicator-context-provider'
+import { useEffectOnRenderTypeChange } from './hooks/use-effect-on-render-type-change'
 import { useForceRenderPageUrlOnIframeLoadCallback } from './hooks/use-force-render-page-url-on-iframe-load-callback'
-import { useEditorReceiveHandler } from '../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
 import { useSendDarkModeStatusToRenderer } from './hooks/use-send-dark-mode-status-to-renderer'
 import { useSendMarkdownToRenderer } from './hooks/use-send-markdown-to-renderer'
 import { useSendScrollState } from './hooks/use-send-scroll-state'
-import { Logger } from '../../../utils/logger'
-import { useEffectOnRenderTypeChange } from './hooks/use-effect-on-render-type-change'
-import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
-import { ShowIf } from '../../common/show-if/show-if'
-import { WaitSpinner } from '../../common/wait-spinner/wait-spinner'
-import { useExtensionEventEmitter } from '../../markdown-renderer/hooks/use-extension-event-emitter'
+import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 export interface RenderIframeProps extends RendererProps {
   rendererType: RendererType

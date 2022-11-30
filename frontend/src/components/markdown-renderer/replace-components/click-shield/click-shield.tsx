@@ -3,19 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { PropsWithDataCypressId } from '../../../../utils/cypress-attribute'
+import { cypressId } from '../../../../utils/cypress-attribute'
+import { Logger } from '../../../../utils/logger'
+import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import type { IconName } from '../../../common/fork-awesome/types'
+import { ShowIf } from '../../../common/show-if/show-if'
+import { ProxyImageFrame } from '../../extensions/image/proxy-image-frame'
+import styles from './click-shield.module.scss'
+import type { Property } from 'csstype'
 import type { PropsWithChildren } from 'react'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import type { IconName } from '../../../common/fork-awesome/types'
-import { ShowIf } from '../../../common/show-if/show-if'
-import styles from './click-shield.module.scss'
-import { Logger } from '../../../../utils/logger'
-import type { Property } from 'csstype'
-import type { PropsWithDataCypressId } from '../../../../utils/cypress-attribute'
-import { cypressId } from '../../../../utils/cypress-attribute'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import { ProxyImageFrame } from '../../extensions/image/proxy-image-frame'
 
 const log = new Logger('OneClickEmbedding')
 

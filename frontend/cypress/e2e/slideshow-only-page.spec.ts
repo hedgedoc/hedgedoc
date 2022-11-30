@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { PAGE_MODE } from '../support/visit'
 
 describe('Slideshow only page', () => {

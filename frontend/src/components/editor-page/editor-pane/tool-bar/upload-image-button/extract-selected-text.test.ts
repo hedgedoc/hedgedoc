@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { extractSelectedText } from './extract-selected-text'
 import type { EditorState, SelectionRange } from '@codemirror/state'
 import { Mock } from 'ts-mockery'
-import { extractSelectedText } from './extract-selected-text'
 
 describe('extract selected text', () => {
   const mockContent = "I'm a mock content!"

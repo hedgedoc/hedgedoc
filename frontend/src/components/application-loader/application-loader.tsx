@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { PropsWithChildren } from 'react'
-import React, { Fragment, Suspense, useMemo } from 'react'
+import { Logger } from '../../utils/logger'
+import { ApplicationLoaderError } from './application-loader-error'
 import { createSetUpTaskList } from './initializers'
 import { LoadingScreen } from './loading-screen/loading-screen'
-import { Logger } from '../../utils/logger'
+import type { PropsWithChildren } from 'react'
+import React, { Fragment, Suspense, useMemo } from 'react'
 import { useAsync } from 'react-use'
-import { ApplicationLoaderError } from './application-loader-error'
 
 const log = new Logger('ApplicationLoader')
 

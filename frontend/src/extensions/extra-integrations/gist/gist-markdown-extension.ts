@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import markdownItRegex from 'markdown-it-regex'
-import type MarkdownIt from 'markdown-it'
+import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
+import type { ComponentReplacer } from '../../../components/markdown-renderer/replace-components/component-replacer'
+import { CustomTagWithIdComponentReplacer } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
+import { GistFrame } from './gist-frame'
 import { replaceGistLink } from './replace-gist-link'
 import { replaceLegacyGistShortCode } from './replace-legacy-gist-short-code'
-import { GistFrame } from './gist-frame'
-import type { ComponentReplacer } from '../../../components/markdown-renderer/replace-components/component-replacer'
-import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
-import { CustomTagWithIdComponentReplacer } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
+import type MarkdownIt from 'markdown-it'
+import markdownItRegex from 'markdown-it-regex'
 
 /**
  * Adds support for embeddings of GitHub Gists by detecting gist links and the legacy gist shortcode.

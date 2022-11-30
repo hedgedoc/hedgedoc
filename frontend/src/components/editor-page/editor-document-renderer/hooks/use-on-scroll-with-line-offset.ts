@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { ScrollState } from '../../synced-scroll/scroll-props'
 import { getGlobalState } from '../../../../redux'
-import { useMemo } from 'react'
+import type { ScrollState } from '../../synced-scroll/scroll-props'
 import type { ScrollCallback } from '../../synced-scroll/scroll-props'
+import { useMemo } from 'react'
 
 /**
  * Adjusts the given onScroll callback to include the frontmatter line offset.

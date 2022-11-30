@@ -3,19 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { uploadFile } from '../../../../api/media'
 import { getGlobalState } from '../../../../redux'
 import { supportedMimeTypes } from '../../../common/upload-image-mimetypes'
-import { t } from 'i18next'
-import { useCallback } from 'react'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
+import type { ContentFormatter } from '../../change-content-context/change-content-context'
 import { changeEditorContent } from '../../change-content-context/use-change-editor-content-callback'
-import { replaceSelection } from '../tool-bar/formatters/replace-selection'
 import { replaceInContent } from '../tool-bar/formatters/replace-in-content'
+import { replaceSelection } from '../tool-bar/formatters/replace-selection'
 import type { CursorSelection } from '../tool-bar/formatters/types/cursor-selection'
 import type { EditorView } from '@codemirror/view'
-import type { ContentFormatter } from '../../change-content-context/change-content-context'
-import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
+import { t } from 'i18next'
+import { useCallback } from 'react'
 
 /**
  * @param view the codemirror instance that is used to insert the Markdown code

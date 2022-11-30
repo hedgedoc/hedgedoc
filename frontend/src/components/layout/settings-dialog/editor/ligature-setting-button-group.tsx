@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { OnOffButtonGroup } from '../utils/on-off-button-group'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { setEditorLigatures } from '../../../../redux/editor/methods'
+import { OnOffButtonGroup } from '../utils/on-off-button-group'
+import React from 'react'
 
 /**
  * Allows to change if ligatures should be used or not in the editor.

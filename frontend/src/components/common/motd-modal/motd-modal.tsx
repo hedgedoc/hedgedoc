@@ -3,19 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback, useMemo, useEffect, useState } from 'react'
-import { Button, Modal } from 'react-bootstrap'
-import { CommonModal } from '../modals/common-modal'
-import { Trans, useTranslation } from 'react-i18next'
-import { fetchMotd, MOTD_LOCAL_STORAGE_KEY } from './fetch-motd'
-import { useAsync } from 'react-use'
+import { cypressId } from '../../../utils/cypress-attribute'
 import { Logger } from '../../../utils/logger'
 import { testId } from '../../../utils/test-id'
+import { EditorToRendererCommunicatorContextProvider } from '../../editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import { RenderIframe } from '../../editor-page/renderer-pane/render-iframe'
 import { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
-import { EditorToRendererCommunicatorContextProvider } from '../../editor-page/render-context/editor-to-renderer-communicator-context-provider'
-import { cypressId } from '../../../utils/cypress-attribute'
+import { CommonModal } from '../modals/common-modal'
+import { fetchMotd, MOTD_LOCAL_STORAGE_KEY } from './fetch-motd'
+import React, { useCallback, useMemo, useEffect, useState } from 'react'
+import { Button, Modal } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
+import { useAsync } from 'react-use'
 
 const logger = new Logger('Motd')
 

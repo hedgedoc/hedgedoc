@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback } from 'react'
-import { ToggleButtonGroup } from 'react-bootstrap'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { SettingsToggleButton } from '../utils/settings-toggle-button'
 import { setDarkModePreference } from '../../../../redux/dark-mode/methods'
 import { DarkModePreference } from '../../../../redux/dark-mode/types'
+import { SettingsToggleButton } from '../utils/settings-toggle-button'
+import React, { useCallback } from 'react'
+import { ToggleButtonGroup } from 'react-bootstrap'
 
 /**
  * Allows to change if the app should enforce dark mode, light mode or let the browser decide.

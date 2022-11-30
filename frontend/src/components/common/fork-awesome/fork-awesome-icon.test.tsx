@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ForkAwesomeIcon } from './fork-awesome-icon'
 import type { IconName } from './types'
 import { render } from '@testing-library/react'
-import { ForkAwesomeIcon } from './fork-awesome-icon'
 
 describe('ForkAwesomeIcon', () => {
   const icon: IconName = 'heart'

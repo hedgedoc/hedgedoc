@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { useSendToRenderer } from '../../../render-page/window-post-message-communicator/hooks/use-send-to-renderer'
-import { useMemo } from 'react'
 import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
+import { useMemo } from 'react'
 
 /**
  * Sends the given markdown content to the renderer.

@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { SlideOptions } from '../../../redux/note-details/types/slide-show-options'
+import { Logger } from '../../../utils/logger'
 import { useEffect, useRef, useState } from 'react'
 import type Reveal from 'reveal.js'
-import { Logger } from '../../../utils/logger'
-import type { SlideOptions } from '../../../redux/note-details/types/slide-show-options'
 
 const log = new Logger('reveal.js')
 

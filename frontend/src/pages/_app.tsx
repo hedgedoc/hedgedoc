@@ -3,19 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { AppInitialProps, AppProps } from 'next/app'
-import { ErrorBoundary } from '../components/error-boundary/error-boundary'
-import { ApplicationLoader } from '../components/application-loader/application-loader'
 import '../../global-styles/dark.scss'
 import '../../global-styles/index.scss'
-import { BaseHead } from '../components/layout/base-head'
-import { StoreProvider } from '../redux/store-provider'
-import { UiNotificationBoundary } from '../components/notifications/ui-notification-boundary'
-import { ExpectedOriginBoundary } from '../utils/uri-origin-boundary'
-import React from 'react'
+import { ApplicationLoader } from '../components/application-loader/application-loader'
 import { BaseUrlContextProvider } from '../components/common/base-url/base-url-context-provider'
 import type { BaseUrls } from '../components/common/base-url/base-url-context-provider'
+import { ErrorBoundary } from '../components/error-boundary/error-boundary'
+import { BaseHead } from '../components/layout/base-head'
+import { UiNotificationBoundary } from '../components/notifications/ui-notification-boundary'
+import { StoreProvider } from '../redux/store-provider'
 import { BaseUrlFromEnvExtractor } from '../utils/base-url-from-env-extractor'
+import { ExpectedOriginBoundary } from '../utils/uri-origin-boundary'
+import type { AppInitialProps, AppProps } from 'next/app'
+import React from 'react'
 
 interface AppPageProps {
   baseUrls: BaseUrls | undefined

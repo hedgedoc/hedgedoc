@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { Alias, NewAliasDto, PrimaryAliasDto } from './types'
+import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
-import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
+import type { Alias, NewAliasDto, PrimaryAliasDto } from './types'
 
 /**
  * Adds an alias to an existing note.

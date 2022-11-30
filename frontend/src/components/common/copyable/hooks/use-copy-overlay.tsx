@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { isClientSideRendering } from '../../../../utils/is-client-side-rendering'
+import { Logger } from '../../../../utils/logger'
+import { ShowIf } from '../../show-if/show-if'
 import type { ReactElement, RefObject } from 'react'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Overlay, Tooltip } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { v4 as uuid } from 'uuid'
-import { ShowIf } from '../../show-if/show-if'
-import { Logger } from '../../../../utils/logger'
-import { isClientSideRendering } from '../../../../utils/is-client-side-rendering'
 import { useTimeoutFn } from 'react-use'
+import { v4 as uuid } from 'uuid'
 
 const log = new Logger('useCopyOverlay')
 

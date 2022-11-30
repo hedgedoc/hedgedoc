@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import mathJax from 'markdown-it-mathjax'
-import type MarkdownIt from 'markdown-it'
-import { KatexReplacer } from './katex-replacer'
-import type { ComponentReplacer } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
+import type { ComponentReplacer } from '../../../components/markdown-renderer/replace-components/component-replacer'
+import { KatexReplacer } from './katex-replacer'
+import type MarkdownIt from 'markdown-it'
+import mathJax from 'markdown-it-mathjax'
 
 /**
  * Adds support for rendering of LaTeX code using KaTeX.

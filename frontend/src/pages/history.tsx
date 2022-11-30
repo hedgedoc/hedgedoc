@@ -3,15 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useEffect } from 'react'
-import type { NextPage } from 'next'
-import { Trans, useTranslation } from 'react-i18next'
-import { HistoryToolbar } from '../components/history-page/history-toolbar/history-toolbar'
-import { Row } from 'react-bootstrap'
 import { HistoryContent } from '../components/history-page/history-content/history-content'
-import { LandingLayout } from '../components/landing-layout/landing-layout'
-import { HistoryToolbarStateContextProvider } from '../components/history-page/history-toolbar/toolbar-context/history-toolbar-state-context-provider'
+import { HistoryToolbar } from '../components/history-page/history-toolbar/history-toolbar'
 import { useSafeRefreshHistoryStateCallback } from '../components/history-page/history-toolbar/hooks/use-safe-refresh-history-state'
+import { HistoryToolbarStateContextProvider } from '../components/history-page/history-toolbar/toolbar-context/history-toolbar-state-context-provider'
+import { LandingLayout } from '../components/landing-layout/landing-layout'
+import type { NextPage } from 'next'
+import React, { useEffect } from 'react'
+import { Row } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * The page that shows the local and remote note history.

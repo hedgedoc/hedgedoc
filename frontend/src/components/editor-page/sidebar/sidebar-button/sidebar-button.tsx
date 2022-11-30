@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { PropsWithChildren } from 'react'
-import React from 'react'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import type { IconName } from '../../../common/fork-awesome/types'
 import { ShowIf } from '../../../common/show-if/show-if'
 import type { SidebarEntryProps } from '../types'
 import styles from './sidebar-button.module.scss'
+import type { PropsWithChildren } from 'react'
+import React from 'react'
 
 /**
  * A button that should be rendered in the sidebar.

@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { NextPage } from 'next'
-import { useSingleStringUrlParameter } from '../hooks/common/use-single-string-url-parameter'
-import { useAsync } from 'react-use'
 import { createNote } from '../api/notes'
 import { AsyncLoadingBoundary } from '../components/common/async-loading-boundary'
 import { Redirect } from '../components/common/redirect'
 import { CommonErrorPage } from '../components/error-pages/common-error-page'
+import { useSingleStringUrlParameter } from '../hooks/common/use-single-string-url-parameter'
+import type { NextPage } from 'next'
+import { useAsync } from 'react-use'
 
 /**
  * Creates a new note, optionally including the passed content and redirects to that note.

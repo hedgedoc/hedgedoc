@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { CursorSelection } from './types/cursor-selection'
 import type { ContentEdits } from './types/changes'
+import type { CursorSelection } from './types/cursor-selection'
 
 const beforeDescription = '['
 const afterDescriptionBeforeLink = ']('

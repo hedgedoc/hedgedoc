@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
+import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
 import type { NotePermissions } from '../notes/types'
 import type { OwnerChangeDto, PermissionSetDto } from './types'
-import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
-import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 
 /**
  * Sets the owner of a note.

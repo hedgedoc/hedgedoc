@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { SortModeEnum } from '../sort-button/sort-button'
 import type { ViewStateEnum } from './history-toolbar'
 

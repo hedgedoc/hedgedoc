@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { Button } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { cypressId } from '../../../../utils/cypress-attribute'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import styles from './image-placeholder.module.scss'
 import { acceptedMimeTypes } from '../../../common/upload-image-mimetypes'
 import { useOnImageUpload } from './hooks/use-on-image-upload'
 import { usePlaceholderSizeStyle } from './hooks/use-placeholder-size-style'
-import { cypressId } from '../../../../utils/cypress-attribute'
+import styles from './image-placeholder.module.scss'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
+import { Button } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 export interface PlaceholderImageFrameProps {
   alt?: string

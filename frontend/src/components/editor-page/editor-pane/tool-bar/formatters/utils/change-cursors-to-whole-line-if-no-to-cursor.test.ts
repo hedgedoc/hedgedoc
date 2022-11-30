@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { CursorSelection } from '../types/cursor-selection'
 import {
   changeCursorsToWholeLineIfNoToCursor,
   searchForEndOfLine,
   searchForStartOfLine
 } from './change-cursors-to-whole-line-if-no-to-cursor'
-import type { CursorSelection } from '../types/cursor-selection'
 
 describe('changeCursorsToWholeLineIfNoToCursor', () => {
   it(`returns the given selection if to cursor is present`, () => {

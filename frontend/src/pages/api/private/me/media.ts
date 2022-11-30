@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { HttpMethod, respondToMatchingRequest } from '../../../../handler-utils/respond-to-matching-request'
 import type { MediaUpload } from '../../../../api/media/types'
+import { HttpMethod, respondToMatchingRequest } from '../../../../handler-utils/respond-to-matching-request'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 /*
  * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)

@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Fragment } from 'react'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { UserAvatarForUsername } from '../../../common/user-avatar/user-avatar-for-username'
+import React, { Fragment } from 'react'
 import { Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { UserAvatarForUsername } from '../../../common/user-avatar/user-avatar-for-username'
 
 export interface PermissionOwnerInfoProps {
   onEditOwner: () => void

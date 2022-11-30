@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Document } from 'domhandler'
+import { NodeProcessor } from '../../node-preprocessors/node-processor'
 import render from 'dom-serializer'
+import type { Document } from 'domhandler'
 import DOMPurify from 'dompurify'
 import { parseDocument } from 'htmlparser2'
-import { NodeProcessor } from '../../node-preprocessors/node-processor'
 
 /**
  * Sanitizes the given {@link Document document}.

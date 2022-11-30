@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import emojiData from 'emoji-picker-element-data/en/emojibase/data.json'
 import { ForkAwesomeIcons } from '../../../common/fork-awesome/fork-awesome-icons'
+import emojiData from 'emoji-picker-element-data/en/emojibase/data.json'
 
 interface EmojiEntry {
   shortcodes: string[]

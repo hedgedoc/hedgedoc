@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { NoteEdit } from '../notes/types'
 
 export interface RevisionDetails extends RevisionMetadata {

@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useEffect, useMemo, useState } from 'react'
-import { Pagination } from 'react-bootstrap'
 import { ShowIf } from '../show-if/show-if'
 import { PagerItem } from './pager-item'
+import React, { useEffect, useMemo, useState } from 'react'
+import { Pagination } from 'react-bootstrap'
 
 export interface PaginationProps {
   numberOfPageButtonsToShowAfterAndBeforeCurrent: number

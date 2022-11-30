@@ -3,19 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Element } from 'domhandler'
-import { isText } from 'domhandler'
-import { cssColor } from './blockquote-border-color-node-preprocessor'
-import type { Text } from 'domhandler/lib/node'
-import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
-import { Optional } from '@mrdrogdrog/optional'
+import { ForkAwesomeIcon } from '../../../components/common/fork-awesome/fork-awesome-icon'
 import type { NodeReplacement } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import {
   ComponentReplacer,
   DO_NOT_REPLACE
 } from '../../../components/markdown-renderer/replace-components/component-replacer'
-import { ForkAwesomeIcon } from '../../../components/common/fork-awesome/fork-awesome-icon'
+import { cssColor } from './blockquote-border-color-node-preprocessor'
+import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
+import { Optional } from '@mrdrogdrog/optional'
+import type { Element } from 'domhandler'
+import { isText } from 'domhandler'
+import type { Text } from 'domhandler/lib/node'
 
 /**
  * Replaces <blockquote-tag> elements with "color" as label and a valid color as content

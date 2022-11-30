@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
-import KaTeX from 'katex'
-import convertHtmlToReact from '@hedgedoc/html-to-react'
-import 'katex/dist/katex.min.css'
-import { Alert } from 'react-bootstrap'
-import { sanitize } from 'dompurify'
 import { testId } from '../../../utils/test-id'
+import convertHtmlToReact from '@hedgedoc/html-to-react'
+import { sanitize } from 'dompurify'
+import KaTeX from 'katex'
+import 'katex/dist/katex.min.css'
+import React, { useMemo } from 'react'
+import { Alert } from 'react-bootstrap'
 
 interface KatexFrameProps {
   expression: string

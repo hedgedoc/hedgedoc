@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { Logger } from '../../../../utils/logger'
+import type { HLJSApi } from 'highlight.js'
 import { useAsync } from 'react-use'
 import type { AsyncState } from 'react-use/lib/useAsyncFn'
-import type { HLJSApi } from 'highlight.js'
-import { Logger } from '../../../../utils/logger'
 
 const log = new Logger('HighlightedCode')
 

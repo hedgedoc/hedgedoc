@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useMemo } from 'react'
-import { Button, ToggleButtonGroup } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { AccessLevel } from './types'
+import React, { useMemo } from 'react'
+import { Button, ToggleButtonGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 
 interface PermissionEntryButtonI18nKeys {

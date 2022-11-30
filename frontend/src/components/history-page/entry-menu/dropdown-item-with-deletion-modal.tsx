@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Fragment, useCallback } from 'react'
-import { Dropdown } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { useBooleanState } from '../../../hooks/common/use-boolean-state'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import type { IconName } from '../../common/fork-awesome/types'
 import type { DeleteHistoryNoteModalProps } from '../../editor-page/sidebar/delete-note-sidebar-entry/delete-note-modal'
 import { DeleteNoteModal } from '../../editor-page/sidebar/delete-note-sidebar-entry/delete-note-modal'
-import { useBooleanState } from '../../../hooks/common/use-boolean-state'
+import React, { Fragment, useCallback } from 'react'
+import { Dropdown } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 export interface DropdownItemWithDeletionModalProps {
   onConfirm: () => void

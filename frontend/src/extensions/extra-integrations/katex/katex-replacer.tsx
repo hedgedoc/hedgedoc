@@ -3,10 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Element } from 'domhandler'
-import { isTag } from 'domhandler'
-import React from 'react'
 import type { NodeReplacement } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import {
   ComponentReplacer,
@@ -14,6 +10,9 @@ import {
 } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import { KatexMarkdownExtension } from './katex-markdown-extension'
 import { Optional } from '@mrdrogdrog/optional'
+import type { Element } from 'domhandler'
+import { isTag } from 'domhandler'
+import React from 'react'
 
 const KaTeX = React.lazy(() => import(/* webpackChunkName: "katex" */ './katex-frame'))
 

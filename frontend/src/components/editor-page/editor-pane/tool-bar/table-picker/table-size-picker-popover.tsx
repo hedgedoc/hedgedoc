@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback, useMemo, useState } from 'react'
-import { createNumberRangeArray } from '../../../../common/number-range/number-range'
-import { Button, Popover } from 'react-bootstrap'
-import { TableSizeText } from './table-size-text'
-import { Trans, useTranslation } from 'react-i18next'
 import { cypressAttribute, cypressId } from '../../../../../utils/cypress-attribute'
 import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
-import type { PopoverProps } from 'react-bootstrap/Popover'
+import { createNumberRangeArray } from '../../../../common/number-range/number-range'
 import styles from './table-picker.module.scss'
+import { TableSizeText } from './table-size-text'
+import React, { useCallback, useMemo, useState } from 'react'
+import { Button, Popover } from 'react-bootstrap'
+import type { PopoverProps } from 'react-bootstrap/Popover'
+import { Trans, useTranslation } from 'react-i18next'
 
 export interface TableSizePickerPopoverProps extends PopoverProps {
   onShowCustomSizeModal: () => void

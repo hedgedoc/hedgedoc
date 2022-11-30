@@ -3,19 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Fragment, useCallback, useRef, useState } from 'react'
-import { Button, Overlay } from 'react-bootstrap'
-import { useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
-import { EmojiPickerPopover } from './emoji-picker-popover'
 import { cypressId } from '../../../../../utils/cypress-attribute'
-import type { EmojiClickEventDetail } from 'emoji-picker-element/shared'
+import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
 import { useChangeEditorContentCallback } from '../../../change-content-context/use-change-editor-content-callback'
 import { replaceSelection } from '../formatters/replace-selection'
-import { extractEmojiShortCode } from './extract-emoji-short-code'
+import { EmojiPickerPopover } from './emoji-picker-popover'
 import styles from './emoji-picker.module.scss'
+import { extractEmojiShortCode } from './extract-emoji-short-code'
+import type { EmojiClickEventDetail } from 'emoji-picker-element/shared'
+import React, { Fragment, useCallback, useRef, useState } from 'react'
+import { Button, Overlay } from 'react-bootstrap'
 import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Renders a button to open the emoji picker.

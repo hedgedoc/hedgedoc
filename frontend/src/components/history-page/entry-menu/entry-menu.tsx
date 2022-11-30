@@ -3,18 +3,17 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { Dropdown } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { HistoryEntryOrigin } from '../../../api/history/types'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { cypressId } from '../../../utils/cypress-attribute'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { ShowIf } from '../../common/show-if/show-if'
 import { DeleteNoteItem } from './delete-note-item'
 import styles from './entry-menu.module.scss'
 import { RemoveNoteEntryItem } from './remove-note-entry-item'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { cypressId } from '../../../utils/cypress-attribute'
-import { HistoryEntryOrigin } from '../../../api/history/types'
+import React from 'react'
+import { Dropdown } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 export interface EntryMenuProps {
   id: string

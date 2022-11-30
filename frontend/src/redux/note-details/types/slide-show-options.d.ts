@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { RevealOptions } from 'reveal.js'
 
 type WantedRevealOptions = 'autoSlide' | 'autoSlideStoppable' | 'transition' | 'backgroundTransition' | 'slideNumber'

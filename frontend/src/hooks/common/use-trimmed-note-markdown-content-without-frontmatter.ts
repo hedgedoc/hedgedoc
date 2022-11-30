@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useMemo } from 'react'
 import { useApplicationState } from './use-application-state'
+import { useMemo } from 'react'
 
 /**
  * Returns the markdown content from the global application state trimmed to the maximal note length and without the frontmatter lines.

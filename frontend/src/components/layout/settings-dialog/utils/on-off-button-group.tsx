@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { testId } from '../../../../utils/test-id'
+import { SettingsToggleButton } from './settings-toggle-button'
 import React, { useCallback, useMemo } from 'react'
 import { ToggleButtonGroup } from 'react-bootstrap'
-import { SettingsToggleButton } from './settings-toggle-button'
-import { testId } from '../../../../utils/test-id'
 
 enum OnOffState {
   ON,

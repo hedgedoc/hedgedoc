@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import React, { useState } from 'react'
 import type { ButtonProps } from 'react-bootstrap'
 import { Button } from 'react-bootstrap'

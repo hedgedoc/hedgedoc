@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import type { TocAst } from 'markdown-it-toc-done-right'
 import { TableOfContents } from '../editor-page/table-of-contents/table-of-contents'
 import { TableOfContentsHoveringButton } from './markdown-toc-button/table-of-contents-hovering-button'
+import type { TocAst } from 'markdown-it-toc-done-right'
+import React from 'react'
 
 export interface DocumentExternalTocProps {
   tocAst: TocAst

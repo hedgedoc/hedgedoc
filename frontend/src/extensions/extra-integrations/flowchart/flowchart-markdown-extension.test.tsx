@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
+import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
+import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
+import * as Flowchart from '../flowchart/flowchart'
+import { FlowchartMarkdownExtension } from './flowchart-markdown-extension'
 import { render } from '@testing-library/react'
 import React from 'react'
-import { FlowchartMarkdownExtension } from './flowchart-markdown-extension'
-import * as Flowchart from '../flowchart/flowchart'
-import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
-import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
-import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
 
 jest.mock('../flowchart/flowchart')
 

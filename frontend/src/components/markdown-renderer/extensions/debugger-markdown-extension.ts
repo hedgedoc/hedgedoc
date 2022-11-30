@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { MarkdownRendererExtension } from './base/markdown-renderer-extension'
-import type MarkdownIt from 'markdown-it'
 import { Logger } from '../../../utils/logger'
 import { isDevMode } from '../../../utils/test-modes'
+import { MarkdownRendererExtension } from './base/markdown-renderer-extension'
+import type MarkdownIt from 'markdown-it'
 
 const log = new Logger('DebuggerMarkdownExtension')
 

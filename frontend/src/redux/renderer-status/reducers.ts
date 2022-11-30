@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { RendererStatus, RendererStatusActions } from './types'
 import { RendererStatusActionType } from './types'
 import type { Reducer } from 'redux'

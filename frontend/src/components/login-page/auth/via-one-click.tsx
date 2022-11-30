@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
-import { SocialLinkButton } from './social-link-button/social-link-button'
 import type { AuthProvider, AuthProviderWithCustomName } from '../../../api/config/types'
+import { SocialLinkButton } from './social-link-button/social-link-button'
 import { getOneClickProviderMetadata } from './utils/get-one-click-provider-metadata'
+import React, { useMemo } from 'react'
 
 export interface ViaOneClickProps {
   provider: AuthProvider

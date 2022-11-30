@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 import { AppExtension } from '../../base/app-extension'
 import { AbcjsMarkdownExtension } from './abcjs-markdown-extension'
-import type { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 
 export class AbcjsAppExtension extends AppExtension {
   buildMarkdownRendererExtensions(): MarkdownRendererExtension[] {

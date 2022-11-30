@@ -3,17 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { doLocalPasswordChange } from '../../../api/auth/local'
+import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
+import { CurrentPasswordField } from '../../common/fields/current-password-field'
+import { NewPasswordField } from '../../common/fields/new-password-field'
+import { PasswordAgainField } from '../../common/fields/password-again-field'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import type { FormEvent } from 'react'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { doLocalPasswordChange } from '../../../api/auth/local'
-import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
-import { NewPasswordField } from '../../common/fields/new-password-field'
-import { PasswordAgainField } from '../../common/fields/password-again-field'
-import { CurrentPasswordField } from '../../common/fields/current-password-field'
-import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 
 /**
  * Profile page section for changing the password when using internal login.

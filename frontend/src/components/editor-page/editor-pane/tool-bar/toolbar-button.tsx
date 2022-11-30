@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback, useMemo } from 'react'
-import { Button } from 'react-bootstrap'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import type { IconName } from '../../../common/fork-awesome/types'
-import { useTranslation } from 'react-i18next'
-import { useChangeEditorContentCallback } from '../../change-content-context/use-change-editor-content-callback'
 import type { ContentFormatter } from '../../change-content-context/change-content-context'
+import { useChangeEditorContentCallback } from '../../change-content-context/use-change-editor-content-callback'
+import React, { useCallback, useMemo } from 'react'
+import { Button } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 
 export interface ToolbarButtonProps {
   i18nKey: string

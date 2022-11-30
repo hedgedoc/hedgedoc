@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback } from 'react'
 import { ClickShield } from '../../../components/markdown-renderer/replace-components/click-shield/click-shield'
 import type { IdProps } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
+import React, { useCallback } from 'react'
 
 interface VimeoApiResponse {
   // Vimeo uses strange names for their fields. ESLint doesn't like that.

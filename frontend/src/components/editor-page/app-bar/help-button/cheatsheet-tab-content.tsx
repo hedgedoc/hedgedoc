@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { CheatsheetLine } from './cheatsheet-line'
+import styles from './cheatsheet.module.scss'
 import React, { useMemo, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { CheatsheetLine } from './cheatsheet-line'
-import styles from './cheatsheet.module.scss'
 
 /**
  * Renders the content of the cheat sheet for the {@link HelpModal}.

@@ -3,16 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { CommonModalProps } from '../../../common/modals/common-modal'
+import * as CommonModalModule from '../../../common/modals/common-modal'
+import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
+import * as useUiNotificationsModule from '../../../notifications/ui-notification-boundary'
+import * as AliasesAddFormModule from './aliases-add-form'
+import * as AliasesListModule from './aliases-list'
+import { AliasesModal } from './aliases-modal'
 import { render } from '@testing-library/react'
 import React from 'react'
 import type { PropsWithChildren } from 'react'
-import type { CommonModalProps } from '../../../common/modals/common-modal'
-import * as CommonModalModule from '../../../common/modals/common-modal'
-import * as AliasesListModule from './aliases-list'
-import * as AliasesAddFormModule from './aliases-add-form'
-import * as useUiNotificationsModule from '../../../notifications/ui-notification-boundary'
-import { AliasesModal } from './aliases-modal'
-import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
 
 jest.mock('./aliases-list')
 jest.mock('./aliases-add-form')

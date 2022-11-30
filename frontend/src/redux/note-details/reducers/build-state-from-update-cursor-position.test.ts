@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { initialState } from '../initial-state'
-import { Mock } from 'ts-mockery'
-import { buildStateFromUpdateCursorPosition } from './build-state-from-update-cursor-position'
 import type { CursorSelection } from '../../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
+import { initialState } from '../initial-state'
+import { buildStateFromUpdateCursorPosition } from './build-state-from-update-cursor-position'
+import { Mock } from 'ts-mockery'
 
 describe('build state from update cursor position', () => {
   it('creates a new state with the given cursor', () => {

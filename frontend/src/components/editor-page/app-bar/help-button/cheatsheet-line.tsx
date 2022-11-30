@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Suspense, useEffect, useMemo } from 'react'
+import type { TaskCheckedEventPayload } from '../../../../extensions/extra-integrations/task-list/event-emitting-task-list-checkbox'
+import { TaskListCheckboxAppExtension } from '../../../../extensions/extra-integrations/task-list/task-list-checkbox-app-extension'
 import { WaitSpinner } from '../../../common/wait-spinner/wait-spinner'
 import { eventEmitterContext } from '../../../markdown-renderer/hooks/use-extension-event-emitter'
 import EventEmitter2 from 'eventemitter2'
-import type { TaskCheckedEventPayload } from '../../../../extensions/extra-integrations/task-list/event-emitting-task-list-checkbox'
-import { TaskListCheckboxAppExtension } from '../../../../extensions/extra-integrations/task-list/task-list-checkbox-app-extension'
+import React, { Suspense, useEffect, useMemo } from 'react'
 
 export interface CheatsheetLineProps {
   markdown: string

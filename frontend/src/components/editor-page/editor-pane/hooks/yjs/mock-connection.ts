@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { YDocMessageTransporter } from '@hedgedoc/realtime'
-import type { Doc } from 'yjs'
-import type { Awareness } from 'y-protocols/awareness'
 import { MARKDOWN_CONTENT_CHANNEL_NAME } from './use-markdown-content-y-text'
+import { YDocMessageTransporter } from '@hedgedoc/realtime'
+import type { Awareness } from 'y-protocols/awareness'
+import type { Doc } from 'yjs'
 
 /**
  * A mocked connection that doesn't send or receive any data and is instantly ready.

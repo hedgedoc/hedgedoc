@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { initialState } from '../initial-state'
 import type { NoteMetadata } from '../../../api/notes/types'
+import { initialState } from '../initial-state'
 import type { NoteDetails } from '../types/note-details'
 import { buildStateFromMetadataUpdate } from './build-state-from-metadata-update'
 

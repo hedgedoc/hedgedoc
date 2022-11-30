@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
-import { render } from '@testing-library/react'
 import { TableOfContents } from './table-of-contents'
+import { render } from '@testing-library/react'
 import type { TocAst } from 'markdown-it-toc-done-right'
 
 describe('Table of contents', () => {

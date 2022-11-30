@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ORIGIN, useBaseUrl } from '../../../hooks/common/use-base-url'
+import { EditorToRendererCommunicator } from '../../render-page/window-post-message-communicator/editor-to-renderer-communicator'
 import type { PropsWithChildren } from 'react'
 import React, { createContext, useContext, useEffect, useMemo } from 'react'
-import { EditorToRendererCommunicator } from '../../render-page/window-post-message-communicator/editor-to-renderer-communicator'
 import { v4 as uuid } from 'uuid'
-import { ORIGIN, useBaseUrl } from '../../../hooks/common/use-base-url'
 
 const EditorToRendererCommunicatorContext = createContext<EditorToRendererCommunicator | undefined>(undefined)
 

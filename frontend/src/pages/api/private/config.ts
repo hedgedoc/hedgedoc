@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { NextApiRequest, NextApiResponse } from 'next'
 import type { Config } from '../../../api/config/types'
 import { AuthProviderType } from '../../../api/config/types'
 import { HttpMethod, respondToMatchingRequest } from '../../../handler-utils/respond-to-matching-request'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
   respondToMatchingRequest<Config>(HttpMethod.GET, req, res, {

@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { NodeReplacement } from '../replace-components/component-replacer'
+import { ComponentReplacer, DO_NOT_REPLACE } from '../replace-components/component-replacer'
 import { NodeToReactTransformer } from './node-to-react-transformer'
 import { Element } from 'domhandler'
 import type { ReactElement, ReactHTMLElement } from 'react'
-import type { NodeReplacement } from '../replace-components/component-replacer'
-import { ComponentReplacer, DO_NOT_REPLACE } from '../replace-components/component-replacer'
 
 describe('node to react transformer', () => {
   let nodeToReactTransformer: NodeToReactTransformer

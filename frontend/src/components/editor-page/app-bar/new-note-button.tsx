@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
-import { Trans, useTranslation } from 'react-i18next'
-import { Button } from 'react-bootstrap'
 import Link from 'next/link'
+import React from 'react'
+import { Button } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Renders a button to create a new note.

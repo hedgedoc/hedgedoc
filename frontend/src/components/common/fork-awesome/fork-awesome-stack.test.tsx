@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { render } from '@testing-library/react'
-import { ForkAwesomeStack } from './fork-awesome-stack'
 import type { ForkAwesomeIconProps } from './fork-awesome-icon'
 import { ForkAwesomeIcon } from './fork-awesome-icon'
+import { ForkAwesomeStack } from './fork-awesome-stack'
+import { render } from '@testing-library/react'
 import type { ReactElement } from 'react'
 
 describe('ForkAwesomeStack', () => {

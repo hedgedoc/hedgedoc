@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback } from 'react'
+import { useExtensionEventEmitter } from '../../../components/markdown-renderer/hooks/use-extension-event-emitter'
 import type { TaskCheckedChangeHandler, TaskListProps } from './task-list-checkbox'
 import { TaskListCheckbox } from './task-list-checkbox'
-import { useExtensionEventEmitter } from '../../../components/markdown-renderer/hooks/use-extension-event-emitter'
 import { TaskListCheckboxAppExtension } from './task-list-checkbox-app-extension'
+import React, { useCallback } from 'react'
 
 type EventEmittingTaskListCheckboxProps = Omit<TaskListProps, 'onTaskCheckedChange' | 'disabled'>
 

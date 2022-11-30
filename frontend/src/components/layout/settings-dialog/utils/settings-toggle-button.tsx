@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { PropsWithDataTestId } from '../../../../utils/test-id'
 import React, { useCallback, useMemo } from 'react'
 import type { ButtonProps } from 'react-bootstrap'
 import { Button } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import type { PropsWithDataTestId } from '../../../../utils/test-id'
 
 type DarkModeToggleButtonProps = Omit<ButtonProps, 'onSelect'> &
   PropsWithDataTestId & {

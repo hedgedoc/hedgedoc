@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { NodeReplacement } from '../../replace-components/component-replacer'
 import { ComponentReplacer, DO_NOT_REPLACE } from '../../replace-components/component-replacer'
-import type { Element } from 'domhandler'
 import { UploadIndicatingFrame } from './upload-indicating-frame'
+import type { Element } from 'domhandler'
 
 const uploadIdRegex = /^upload-(.+)$/
 

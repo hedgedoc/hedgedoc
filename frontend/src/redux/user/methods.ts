@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { store } from '..'
+import type { LoginUserInfo } from '../../api/me/types'
 import type { ClearUserAction, SetUserAction } from './types'
 import { UserActionType } from './types'
-import type { LoginUserInfo } from '../../api/me/types'
 
 /**
  * Sets the given user state into the redux.

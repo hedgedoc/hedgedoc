@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useLineBasedFromPosition } from '../hooks/use-line-based-position'
 import React, { useMemo } from 'react'
 import { Trans } from 'react-i18next'
-import { useLineBasedFromPosition } from '../hooks/use-line-based-position'
 
 /**
  * Renders a translated text that shows the given cursor position.

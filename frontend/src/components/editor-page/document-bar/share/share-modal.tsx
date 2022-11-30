@@ -3,17 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { Modal } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useBaseUrl } from '../../../../hooks/common/use-base-url'
+import { NoteType } from '../../../../redux/note-details/types/note-details'
 import { CopyableField } from '../../../common/copyable/copyable-field/copyable-field'
 import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { NoteType } from '../../../../redux/note-details/types/note-details'
-import { useBaseUrl } from '../../../../hooks/common/use-base-url'
+import React from 'react'
+import { Modal } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Renders a modal which provides shareable URLs of this note.

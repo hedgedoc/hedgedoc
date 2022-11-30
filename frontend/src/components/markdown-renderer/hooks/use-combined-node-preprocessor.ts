@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useMemo } from 'react'
-import type { Document } from 'domhandler'
 import type { MarkdownRendererExtension } from '../extensions/base/markdown-renderer-extension'
+import type { Document } from 'domhandler'
+import { useMemo } from 'react'
 
 /**
  * Creates a function that applies the node preprocessors of every given {@link MarkdownRendererExtension} to a {@link Document}.
