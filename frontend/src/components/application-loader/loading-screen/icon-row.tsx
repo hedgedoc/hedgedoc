@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
 import { createNumberRangeArray } from '../../common/number-range/number-range'
-import { RandomIcon } from './random-icon'
 import styles from './animations.module.scss'
+import { RandomIcon } from './random-icon'
+import React, { useMemo } from 'react'
 
 /**
  * Shows a number of {@link RandomIcon random icons in a row}.

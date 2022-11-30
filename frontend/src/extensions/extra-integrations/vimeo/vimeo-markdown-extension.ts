@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type MarkdownIt from 'markdown-it'
+import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
+import type { ComponentReplacer } from '../../../components/markdown-renderer/replace-components/component-replacer'
+import { CustomTagWithIdComponentReplacer } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
+import { replaceLegacyVimeoShortCodeMarkdownItPlugin } from './replace-legacy-vimeo-short-code'
 import { replaceVimeoLinkMarkdownItPlugin } from './replace-vimeo-link'
 import { VimeoFrame } from './vimeo-frame'
-import { replaceLegacyVimeoShortCodeMarkdownItPlugin } from './replace-legacy-vimeo-short-code'
-import type { ComponentReplacer } from '../../../components/markdown-renderer/replace-components/component-replacer'
-import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
-import { CustomTagWithIdComponentReplacer } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
+import type MarkdownIt from 'markdown-it'
 
 /**
  * Adds vimeo video embeddings using link detection and the legacy vimeo short code syntax.

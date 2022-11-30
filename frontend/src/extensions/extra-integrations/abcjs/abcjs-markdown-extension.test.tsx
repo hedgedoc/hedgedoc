@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { render } from '@testing-library/react'
+import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
+import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
+import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
 import * as AbcFrameModule from './abc-frame'
 import { AbcjsMarkdownExtension } from './abcjs-markdown-extension'
-import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
-import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
-import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
+import { render } from '@testing-library/react'
+import React from 'react'
 
 jest.mock('./abc-frame')
 

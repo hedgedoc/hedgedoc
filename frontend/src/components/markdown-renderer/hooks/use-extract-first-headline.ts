@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { Optional } from '@mrdrogdrog/optional'
 import type React from 'react'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
-import { Optional } from '@mrdrogdrog/optional'
 
 /**
  * Extracts the plain text content of a {@link ChildNode node}.

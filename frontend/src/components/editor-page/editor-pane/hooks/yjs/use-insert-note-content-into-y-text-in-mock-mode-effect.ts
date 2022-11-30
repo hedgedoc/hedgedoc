@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useEffect } from 'react'
-import { isMockMode } from '../../../../../utils/test-modes'
 import { getGlobalState } from '../../../../../redux'
-import type { YDocMessageTransporter } from '@hedgedoc/realtime'
+import { isMockMode } from '../../../../../utils/test-modes'
 import { MockConnection } from './mock-connection'
+import type { YDocMessageTransporter } from '@hedgedoc/realtime'
+import { useEffect } from 'react'
 
 /**
  * When in mock mode this effect inserts the current markdown content into the yDoc of the given connection to simulate a sync from the server.

@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useState } from 'react'
-import styles from './markdown-document.module.scss'
 import { ShowIf } from '../common/show-if/show-if'
+import { TableOfContentsMarkdownExtension } from '../markdown-renderer/extensions/table-of-contents-markdown-extension'
+import { useExtensionEventEmitterHandler } from '../markdown-renderer/hooks/use-extension-event-emitter'
+import styles from './markdown-document.module.scss'
 import { WidthBasedTableOfContents } from './width-based-table-of-contents'
 import type { TocAst } from 'markdown-it-toc-done-right'
-import { useExtensionEventEmitterHandler } from '../markdown-renderer/hooks/use-extension-event-emitter'
-import { TableOfContentsMarkdownExtension } from '../markdown-renderer/extensions/table-of-contents-markdown-extension'
+import React, { useState } from 'react'
 
 export interface DocumentTocSidebarProps {
   width: number

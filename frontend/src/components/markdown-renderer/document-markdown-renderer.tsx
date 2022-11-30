@@ -3,18 +3,17 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useEffect, useMemo, useRef } from 'react'
-import { useConvertMarkdownToReactDom } from './hooks/use-convert-markdown-to-react-dom'
-import { useTranslation } from 'react-i18next'
-import { useCalculateLineMarkerPosition } from './utils/calculate-line-marker-positions'
-import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
-import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
-import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
 import { cypressId } from '../../utils/cypress-attribute'
+import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 import { HeadlineAnchorsMarkdownExtension } from './extensions/headline-anchors-markdown-extension'
-import type { LineMarkerPosition } from './extensions/linemarker/types'
 import type { LineMarkers } from './extensions/linemarker/add-line-marker-markdown-it-plugin'
+import type { LineMarkerPosition } from './extensions/linemarker/types'
+import { useConvertMarkdownToReactDom } from './hooks/use-convert-markdown-to-react-dom'
+import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
+import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
+import { useCalculateLineMarkerPosition } from './utils/calculate-line-marker-positions'
+import React, { useEffect, useMemo, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export interface DocumentMarkdownRendererProps extends CommonMarkdownRendererProps {
   onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void

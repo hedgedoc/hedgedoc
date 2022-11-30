@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { act, render, screen } from '@testing-library/react'
-import { OnOffButtonGroup } from './on-off-button-group'
 import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
+import { OnOffButtonGroup } from './on-off-button-group'
+import { act, render, screen } from '@testing-library/react'
 
 describe('Settings On-Off Button Group', () => {
   beforeAll(mockI18n)

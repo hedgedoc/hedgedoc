@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Fragment } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
+import { cypressId } from '../../../../utils/cypress-attribute'
 import { NoteInfoModal } from '../../document-bar/note-info/note-info-modal'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../types'
-import { cypressId } from '../../../../utils/cypress-attribute'
-import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
+import React, { Fragment } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Sidebar entry that allows to open the {@link NoteInfoModal} containing information about the current note.

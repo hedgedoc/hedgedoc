@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { Fragment, useCallback, useState } from 'react'
-import { Trans } from 'react-i18next'
-import { PermissionOwnerChange } from './permission-owner-change'
-import { PermissionOwnerInfo } from './permission-owner-info'
 import { setNoteOwner } from '../../../../api/permissions'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { setNotePermissionsFromServer } from '../../../../redux/note-details/methods'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
+import { PermissionOwnerChange } from './permission-owner-change'
+import { PermissionOwnerInfo } from './permission-owner-info'
+import React, { Fragment, useCallback, useState } from 'react'
+import { Trans } from 'react-i18next'
 
 /**
  * Section in the permissions modal for managing the owner of a note.

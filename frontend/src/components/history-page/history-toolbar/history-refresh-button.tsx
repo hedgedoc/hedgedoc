@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { useSafeRefreshHistoryStateCallback } from './hooks/use-safe-refresh-history-state'
 import React from 'react'
 import { Button } from 'react-bootstrap'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { useTranslation } from 'react-i18next'
-import { useSafeRefreshHistoryStateCallback } from './hooks/use-safe-refresh-history-state'
 
 /**
  * Fetches the current history from the server.

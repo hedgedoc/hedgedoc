@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useMemo } from 'react'
-import { Optional } from '@mrdrogdrog/optional'
+import type { CursorSelection } from '../editor-pane/tool-bar/formatters/types/cursor-selection'
 import type { ContentFormatter } from './change-content-context'
 import { useCodeMirrorReference } from './change-content-context'
-import type { CursorSelection } from '../editor-pane/tool-bar/formatters/types/cursor-selection'
 import type { EditorView } from '@codemirror/view'
+import { Optional } from '@mrdrogdrog/optional'
+import { useMemo } from 'react'
 
 /**
  * Changes the content of the given CodeMirror view using the given formatter function.

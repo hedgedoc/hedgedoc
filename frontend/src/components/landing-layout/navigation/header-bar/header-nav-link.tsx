@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import Link from 'next/link'
-import type { PropsWithChildren } from 'react'
-import React, { useMemo } from 'react'
-import { Nav } from 'react-bootstrap'
 import type { PropsWithDataCypressId } from '../../../../utils/cypress-attribute'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import styles from './header-nav-link.module.scss'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import type { PropsWithChildren } from 'react'
+import React, { useMemo } from 'react'
+import { Nav } from 'react-bootstrap'
 
 export interface HeaderNavLinkProps extends PropsWithDataCypressId {
   to: string

@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useMemo, useRef } from 'react'
 import { updateCursorPositions } from '../../../../redux/note-details/methods'
+import type { Extension, SelectionRange } from '@codemirror/state'
 import type { ViewUpdate } from '@codemirror/view'
 import { EditorView } from '@codemirror/view'
-import type { Extension, SelectionRange } from '@codemirror/state'
+import { useMemo, useRef } from 'react'
 
 /**
  * Provides a callback for codemirror that handles cursor changes.

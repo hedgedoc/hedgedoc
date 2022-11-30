@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { Doc } from 'yjs'
 import { useEffect, useMemo } from 'react'
+import { Doc } from 'yjs'
 
 /**
  * Creates a new {@link Doc y-doc}.

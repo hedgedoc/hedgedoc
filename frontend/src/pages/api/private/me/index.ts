@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { HttpMethod, respondToMatchingRequest } from '../../../../handler-utils/respond-to-matching-request'
 import type { LoginUserInfo } from '../../../../api/me/types'
+import { HttpMethod, respondToMatchingRequest } from '../../../../handler-utils/respond-to-matching-request'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = (req: NextApiRequest, res: NextApiResponse): void => {
   respondToMatchingRequest<LoginUserInfo>(HttpMethod.GET, req, res, {

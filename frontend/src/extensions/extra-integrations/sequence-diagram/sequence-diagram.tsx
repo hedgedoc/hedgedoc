@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { MermaidChart } from '../mermaid/mermaid-chart'
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
+import { MermaidChart } from '../mermaid/mermaid-chart'
+import React from 'react'
 
 /**
  * Renders a sequence diagram with a deprecation notice.

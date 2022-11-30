@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
 import { getNote } from '../api/notes'
-import type { NextPage } from 'next'
-import { useAsync } from 'react-use'
 import { Redirect } from '../components/common/redirect'
 import { useSingleStringUrlParameter } from '../hooks/common/use-single-string-url-parameter'
 import Custom404 from './404'
+import type { NextPage } from 'next'
+import React from 'react'
+import { useAsync } from 'react-use'
 
 /**
  * Redirects the user to the editor if the link is a root level direct link to a version 1 note.

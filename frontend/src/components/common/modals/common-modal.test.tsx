@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { fireEvent, render, screen } from '@testing-library/react'
 import { CommonModal } from './common-modal'
+import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 
 describe('CommonModal', () => {

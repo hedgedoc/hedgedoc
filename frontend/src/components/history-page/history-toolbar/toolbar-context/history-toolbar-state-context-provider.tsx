@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { PropsWithChildren } from 'react'
-import React, { createContext, useState } from 'react'
-import type { HistoryToolbarStateWithDispatcher } from './toolbar-context'
+import { useArrayStringUrlParameter } from '../../../../hooks/common/use-array-string-url-parameter'
+import { useSingleStringUrlParameter } from '../../../../hooks/common/use-single-string-url-parameter'
 import { SortModeEnum } from '../../sort-button/sort-button'
 import { ViewStateEnum } from '../history-toolbar'
-import { useSingleStringUrlParameter } from '../../../../hooks/common/use-single-string-url-parameter'
-import { useArrayStringUrlParameter } from '../../../../hooks/common/use-array-string-url-parameter'
 import type { HistoryToolbarState } from '../history-toolbar-state'
+import type { HistoryToolbarStateWithDispatcher } from './toolbar-context'
+import type { PropsWithChildren } from 'react'
+import React, { createContext, useState } from 'react'
 
 export const historyToolbarStateContext = createContext<HistoryToolbarStateWithDispatcher | undefined>(undefined)
 

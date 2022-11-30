@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useEffect, useRef } from 'react'
-import type { ScrollState } from '../../synced-scroll/scroll-props'
-import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
-import equal from 'fast-deep-equal'
-import { useEditorToRendererCommunicator } from '../../render-context/editor-to-renderer-communicator-context-provider'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
+import { useEditorToRendererCommunicator } from '../../render-context/editor-to-renderer-communicator-context-provider'
+import type { ScrollState } from '../../synced-scroll/scroll-props'
+import equal from 'fast-deep-equal'
+import { useEffect, useRef } from 'react'
 
 /**
  * Sends the given {@link ScrollState scroll state} to the renderer if the content changed.

@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
 import { PoweredByLinks } from './powered-by-links'
 import { SocialLink } from './social-links'
+import React from 'react'
 
 /**
  * Renders the footer.

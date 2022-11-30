@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
+import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
+import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
+import * as VegaLiteChartModule from '../vega-lite/vega-lite-chart'
+import { VegaLiteMarkdownExtension } from './vega-lite-markdown-extension'
 import { render } from '@testing-library/react'
 import React from 'react'
-import { VegaLiteMarkdownExtension } from './vega-lite-markdown-extension'
-import * as VegaLiteChartModule from '../vega-lite/vega-lite-chart'
-import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
-import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
-import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
 
 jest.mock('../vega-lite/vega-lite-chart')
 

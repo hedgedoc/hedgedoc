@@ -3,19 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { HistoryEntryWithOrigin } from '../../../api/history/types'
+import { HistoryEntryOrigin } from '../../../api/history/types'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { convertV1History, importHistoryEntries, mergeHistoryEntries } from '../../../redux/history/methods'
+import type { HistoryExportJson, V1HistoryEntry } from '../../../redux/history/types'
+import { cypressId } from '../../../utils/cypress-attribute'
+import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
+import { useSafeRefreshHistoryStateCallback } from './hooks/use-safe-refresh-history-state'
 import React, { useCallback, useRef, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
-import type { HistoryExportJson, V1HistoryEntry } from '../../../redux/history/types'
-import { convertV1History, importHistoryEntries, mergeHistoryEntries } from '../../../redux/history/methods'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { cypressId } from '../../../utils/cypress-attribute'
-import type { HistoryEntryWithOrigin } from '../../../api/history/types'
-import { HistoryEntryOrigin } from '../../../api/history/types'
-import { useUiNotifications } from '../../notifications/ui-notification-boundary'
-import { useSafeRefreshHistoryStateCallback } from './hooks/use-safe-refresh-history-state'
 
 /**
  * Button that lets the user select a history JSON file and uploads imports that into the history.

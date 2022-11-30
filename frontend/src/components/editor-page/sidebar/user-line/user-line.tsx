@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
+import type { ActiveIndicatorStatus } from '../../../../redux/realtime/types'
+import { UserAvatarForUsername } from '../../../common/user-avatar/user-avatar-for-username'
 import { ActiveIndicator } from '../users-online-sidebar-menu/active-indicator'
 import styles from './user-line.module.scss'
-import { UserAvatarForUsername } from '../../../common/user-avatar/user-avatar-for-username'
-import type { ActiveIndicatorStatus } from '../../../../redux/realtime/types'
+import React from 'react'
 
 export interface UserLineProps {
   username: string | null

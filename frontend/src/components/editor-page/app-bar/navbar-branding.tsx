@@ -3,10 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { Navbar } from 'react-bootstrap'
-import Link from 'next/link'
 import { useDarkModeState } from '../../../hooks/common/use-dark-mode-state'
 import { Branding } from '../../common/branding/branding'
 import {
@@ -14,6 +10,9 @@ import {
   HedgeDocLogoType,
   HedgeDocLogoWithText
 } from '../../common/hedge-doc-logo/hedge-doc-logo-with-text'
+import Link from 'next/link'
+import React from 'react'
+import { Navbar } from 'react-bootstrap'
 
 /**
  * Renders the branding for the {@link AppBar}

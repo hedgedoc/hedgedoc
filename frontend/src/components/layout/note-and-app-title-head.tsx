@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useAppTitle } from '../../hooks/common/use-app-title'
+import { useNoteTitle } from '../../hooks/common/use-note-title'
 import Head from 'next/head'
 import React, { useMemo } from 'react'
-import { useNoteTitle } from '../../hooks/common/use-note-title'
-import { useAppTitle } from '../../hooks/common/use-app-title'
 
 /**
  * Sets the note and app title for the browser window

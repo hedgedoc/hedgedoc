@@ -3,20 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { Nav, Navbar } from 'react-bootstrap'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { NoteType } from '../../../redux/note-details/types/note-details'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SignInButton } from '../../landing-layout/navigation/sign-in-button'
 import { UserDropdown } from '../../landing-layout/navigation/user-dropdown'
+import { SettingsButton } from '../../layout/settings-dialog/settings-button'
 import { HelpButton } from './help-button/help-button'
 import { NavbarBranding } from './navbar-branding'
-import { SlideModeButton } from './slide-mode-button'
-import { ReadOnlyModeButton } from './read-only-mode-button'
 import { NewNoteButton } from './new-note-button'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { NoteType } from '../../../redux/note-details/types/note-details'
-import { SettingsButton } from '../../layout/settings-dialog/settings-button'
+import { ReadOnlyModeButton } from './read-only-mode-button'
+import { SlideModeButton } from './slide-mode-button'
+import React from 'react'
+import { Nav, Navbar } from 'react-bootstrap'
 
 export enum AppBarMode {
   BASIC,

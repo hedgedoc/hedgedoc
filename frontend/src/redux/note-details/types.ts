@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Action } from 'redux'
 import type { Note, NoteMetadata, NotePermissions } from '../../api/notes/types'
 import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
+import type { Action } from 'redux'
 
 export enum NoteDetailsActionType {
   SET_DOCUMENT_CONTENT = 'note-details/content/set',

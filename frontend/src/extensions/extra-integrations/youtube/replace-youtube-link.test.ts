@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { replaceYouTubeLinkMarkdownItPlugin } from './replace-youtube-link'
 import MarkdownIt from 'markdown-it'
 

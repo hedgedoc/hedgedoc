@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useRendererToEditorCommunicator } from '../../../../editor-page/render-context/renderer-to-editor-communicator-context-provider'
-import { useCallback } from 'react'
-import { CommunicationMessageType } from '../../../../render-page/window-post-message-communicator/rendering-message'
 import { Logger } from '../../../../../utils/logger'
 import { FileContentFormat, readFile } from '../../../../../utils/read-file'
+import { useRendererToEditorCommunicator } from '../../../../editor-page/render-context/renderer-to-editor-communicator-context-provider'
+import { CommunicationMessageType } from '../../../../render-page/window-post-message-communicator/rendering-message'
+import { useCallback } from 'react'
 
 const log = new Logger('useOnImageUpload')
 

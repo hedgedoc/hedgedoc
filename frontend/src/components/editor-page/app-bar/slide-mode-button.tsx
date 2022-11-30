@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import Link from 'next/link'
 import React from 'react'
 import { Button } from 'react-bootstrap'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { useTranslation } from 'react-i18next'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
-import Link from 'next/link'
 
 /**
  * Button that links to the slide-show presentation of the current note.

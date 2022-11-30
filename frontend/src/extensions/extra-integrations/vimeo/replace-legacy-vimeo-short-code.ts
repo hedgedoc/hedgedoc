@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { RegexOptions } from '../../../external-types/markdown-it-regex/interface'
 import { VimeoMarkdownExtension } from './vimeo-markdown-extension'
 import type MarkdownIt from 'markdown-it'
 import markdownItRegex from 'markdown-it-regex'
-import type { RegexOptions } from '../../../external-types/markdown-it-regex/interface'
 
 export const legacyVimeoRegex = /^{%vimeo\s+(\d{6,11})\s*%}$/
 

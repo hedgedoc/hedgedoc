@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import Link from 'next/link'
-import React, { useEffect } from 'react'
-import { useRouter } from 'next/router'
 import { Logger } from '../../utils/logger'
 import { testId } from '../../utils/test-id'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
 
 export interface RedirectProps {
   to: string

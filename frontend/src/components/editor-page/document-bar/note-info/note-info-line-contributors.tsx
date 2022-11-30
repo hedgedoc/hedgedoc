@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { NoteInfoLine } from './note-info-line'
+import { UnitalicBoldContent } from './unitalic-bold-content'
 import React from 'react'
 import { Trans } from 'react-i18next'
-import { UnitalicBoldContent } from './unitalic-bold-content'
-import { NoteInfoLine } from './note-info-line'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 /**
  * Renders an info line about the number of contributors for the note.

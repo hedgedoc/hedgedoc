@@ -3,17 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
-import type { CommonModalProps } from '../../../common/modals/common-modal'
-import { CommonModal } from '../../../common/modals/common-modal'
-import { Modal, Row } from 'react-bootstrap'
-import { VersionInfoModalColumn } from './version-info-modal-column'
-import frontendVersion from '../../../../version.json'
-import links from '../../../../links.json'
 import type { BackendVersion } from '../../../../api/config/types'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import links from '../../../../links.json'
 import { cypressId } from '../../../../utils/cypress-attribute'
+import frontendVersion from '../../../../version.json'
+import type { CommonModalProps } from '../../../common/modals/common-modal'
+import { CommonModal } from '../../../common/modals/common-modal'
+import { VersionInfoModalColumn } from './version-info-modal-column'
+import React, { useMemo } from 'react'
+import { Modal, Row } from 'react-bootstrap'
 
 /**
  * Renders a modal with the version information.

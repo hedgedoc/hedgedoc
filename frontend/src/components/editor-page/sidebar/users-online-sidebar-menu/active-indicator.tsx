@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import styles from './active-indicator.module.scss'
 import type { ActiveIndicatorStatus } from '../../../../redux/realtime/types'
+import styles from './active-indicator.module.scss'
+import React from 'react'
 
 export interface ActiveIndicatorProps {
   status: ActiveIndicatorStatus

@@ -3,19 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { NextPage } from 'next'
-import { LandingLayout } from '../components/landing-layout/landing-layout'
-import { EditorToRendererCommunicatorContextProvider } from '../components/editor-page/render-context/editor-to-renderer-communicator-context-provider'
+import { Branding } from '../components/common/branding/branding'
 import {
   HedgeDocLogoSize,
   HedgeDocLogoType,
   HedgeDocLogoWithText
 } from '../components/common/hedge-doc-logo/hedge-doc-logo-with-text'
-import { Trans } from 'react-i18next'
-import { Branding } from '../components/common/branding/branding'
+import { EditorToRendererCommunicatorContextProvider } from '../components/editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import { CoverButtons } from '../components/intro-page/cover-buttons/cover-buttons'
-import React from 'react'
 import { IntroCustomContent } from '../components/intro-page/intro-custom-content'
+import { LandingLayout } from '../components/landing-layout/landing-layout'
+import type { NextPage } from 'next'
+import React from 'react'
+import { Trans } from 'react-i18next'
 
 /**
  * Renders the intro page with the logo and the customizable intro text.

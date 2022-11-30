@@ -3,8 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Dispatch, SetStateAction } from 'react'
 import type { HistoryToolbarState } from '../history-toolbar-state'
+import type { Dispatch, SetStateAction } from 'react'
 
 export type HistoryToolbarStateWithDispatcher = [HistoryToolbarState, Dispatch<SetStateAction<HistoryToolbarState>>]

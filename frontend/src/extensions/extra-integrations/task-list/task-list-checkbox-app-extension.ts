@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type EventEmitter2 from 'eventemitter2'
 import { AppExtension } from '../../base/app-extension'
-import { TaskListMarkdownExtension } from './task-list-markdown-extension'
-import type React from 'react'
 import { SetCheckboxInEditor } from './set-checkbox-in-editor'
+import { TaskListMarkdownExtension } from './task-list-markdown-extension'
+import type EventEmitter2 from 'eventemitter2'
+import type React from 'react'
 
 /**
  * Adds support for interactive checkbox lists to the markdown renderer.

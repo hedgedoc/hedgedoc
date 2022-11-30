@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
 import { AuthError as AuthErrorType } from '../../../../api/auth/types'
-import { Trans, useTranslation } from 'react-i18next'
+import React, { useMemo } from 'react'
 import { Alert } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 export interface AuthErrorProps {
   error?: AuthErrorType

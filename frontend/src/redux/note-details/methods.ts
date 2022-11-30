@@ -3,9 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { store } from '..'
+import { getNoteMetadata } from '../../api/notes'
 import type { Note, NotePermissions } from '../../api/notes/types'
+import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
 import type {
   SetNoteDetailsFromServerAction,
   SetNoteDocumentContentAction,
@@ -15,8 +16,6 @@ import type {
   UpdateNoteTitleByFirstHeadingAction
 } from './types'
 import { NoteDetailsActionType } from './types'
-import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
-import { getNoteMetadata } from '../../api/notes'
 
 /**
  * Sets the content of the current note, extracts and parses the frontmatter and extracts the markdown content part.

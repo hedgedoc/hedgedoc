@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { WaitSpinner } from './wait-spinner/wait-spinner'
 import type { PropsWithChildren, ReactNode } from 'react'
 import React, { Fragment } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
-import { WaitSpinner } from './wait-spinner/wait-spinner'
 import { Alert } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 export interface AsyncLoadingBoundaryProps {
   loading: boolean

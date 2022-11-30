@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { DarkModePreference } from '../../redux/dark-mode/types'
 import { useApplicationState } from './use-application-state'
 import useMediaQuery from '@restart/hooks/useMediaQuery'
-import { DarkModePreference } from '../../redux/dark-mode/types'
 
 /**
  * Uses the user settings and the browser preference to determine if dark mode should be used.

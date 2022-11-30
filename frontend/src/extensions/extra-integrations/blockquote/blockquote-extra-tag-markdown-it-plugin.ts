@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type MarkdownIt from 'markdown-it/lib'
-import type Token from 'markdown-it/lib/token'
-import { Optional } from '@mrdrogdrog/optional'
-import type StateInline from 'markdown-it/lib/rules_inline/state_inline'
-import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
-import type { RuleInline } from 'markdown-it/lib/parser_inline'
 import type { IconName } from '../../../components/common/fork-awesome/types'
+import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
+import { Optional } from '@mrdrogdrog/optional'
+import type MarkdownIt from 'markdown-it/lib'
+import type { RuleInline } from 'markdown-it/lib/parser_inline'
+import type StateInline from 'markdown-it/lib/rules_inline/state_inline'
+import type Token from 'markdown-it/lib/token'
 
 export interface BlockquoteTagOptions {
   parseSubTags?: boolean

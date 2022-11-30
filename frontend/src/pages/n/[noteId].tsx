@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
+import { NoteLoadingBoundary } from '../../components/common/note-loading-boundary/note-loading-boundary'
+import { EditorPageContent } from '../../components/editor-page/editor-page-content'
 import { EditorToRendererCommunicatorContextProvider } from '../../components/editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import type { NextPage } from 'next'
-import { EditorPageContent } from '../../components/editor-page/editor-page-content'
-import { NoteLoadingBoundary } from '../../components/common/note-loading-boundary/note-loading-boundary'
+import React from 'react'
 
 /**
  * Renders a page that is used by the user to edit markdown notes. It contains the editor and a renderer.

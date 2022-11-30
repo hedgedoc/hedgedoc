@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { ReactElement, TouchEvent, MouseEvent } from 'react'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { DividerButtonsShift, SplitDivider } from './split-divider/split-divider'
-import styles from './splitter.module.scss'
 import { ShowIf } from '../../common/show-if/show-if'
 import { useKeyboardShortcuts } from './hooks/use-keyboard-shortcuts'
+import { DividerButtonsShift, SplitDivider } from './split-divider/split-divider'
+import styles from './splitter.module.scss'
+import type { ReactElement, TouchEvent, MouseEvent } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 export interface SplitterProps {
   left?: ReactElement

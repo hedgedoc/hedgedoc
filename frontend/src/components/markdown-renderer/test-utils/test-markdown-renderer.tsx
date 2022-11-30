@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
-import { useConvertMarkdownToReactDom } from '../hooks/use-convert-markdown-to-react-dom'
 import { StoreProvider } from '../../../redux/store-provider'
 import type { MarkdownRendererExtension } from '../extensions/base/markdown-renderer-extension'
+import { useConvertMarkdownToReactDom } from '../hooks/use-convert-markdown-to-react-dom'
+import React, { useMemo } from 'react'
 
 export interface SimpleMarkdownRendererProps {
   content: string

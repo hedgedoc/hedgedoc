@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { ImageDetails } from '../../../render-page/window-post-message-communicator/rendering-message'
-import React, { useCallback, useState } from 'react'
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
-import { ImageLightboxModal } from './image-lightbox-modal'
+import type { ImageDetails } from '../../../render-page/window-post-message-communicator/rendering-message'
 import { useExtensionEventEmitterHandler } from '../../hooks/use-extension-event-emitter'
 import { SHOW_IMAGE_LIGHTBOX_EVENT_NAME } from './event-emitting-proxy-image-frame'
+import { ImageLightboxModal } from './image-lightbox-modal'
+import React, { useCallback, useState } from 'react'
 
 /**
  * Handles messages from the render in the iframe to open a {@link ImageLightboxModal}.

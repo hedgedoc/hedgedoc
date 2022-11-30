@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useApplicationState } from '../../../../../hooks/common/use-application-state'
+import { Logger } from '../../../../../utils/logger'
+import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
 import type { YDocMessageTransporter } from '@hedgedoc/realtime'
 import { MessageType } from '@hedgedoc/realtime'
-import { useCallback, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { Logger } from '../../../../../utils/logger'
-import { useApplicationState } from '../../../../../hooks/common/use-application-state'
-import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
+import { useCallback, useEffect } from 'react'
 
 const logger = new Logger('UseOnNoteDeleted')
 

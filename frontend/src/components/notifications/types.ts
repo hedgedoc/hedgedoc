@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { TOptions } from 'i18next'
 import type { IconName } from '../common/fork-awesome/types'
+import type { TOptions } from 'i18next'
 
 export interface UiNotificationButton {
   label: string

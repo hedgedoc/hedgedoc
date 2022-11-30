@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { initialState } from '../initial-state'
 import * as buildStateFromUpdatedMarkdownContentLinesModule from '../build-state-from-updated-markdown-content'
-import { Mock } from 'ts-mockery'
+import { initialState } from '../initial-state'
 import type { NoteDetails } from '../types/note-details'
 import { buildStateFromTaskListUpdate } from './build-state-from-task-list-update'
+import { Mock } from 'ts-mockery'
 
 jest.mock('../build-state-from-updated-markdown-content')
 

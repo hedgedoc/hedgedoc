@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { PropsWithChildren } from 'react'
-import React, { createContext, useContext, useState } from 'react'
-import { Optional } from '@mrdrogdrog/optional'
-import type { EditorView } from '@codemirror/view'
 import type { ContentEdits } from '../editor-pane/tool-bar/formatters/types/changes'
 import type { CursorSelection } from '../editor-pane/tool-bar/formatters/types/cursor-selection'
+import type { EditorView } from '@codemirror/view'
+import { Optional } from '@mrdrogdrog/optional'
+import type { PropsWithChildren } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
 export type CodeMirrorReference = EditorView | undefined
 type SetCodeMirrorReference = (value: CodeMirrorReference) => void

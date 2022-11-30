@@ -3,21 +3,20 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Fragment, useCallback, useMemo, useState } from 'react'
-import { Alert, Col, Row } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import type { HistoryEntryWithOrigin } from '../../../api/history/types'
+import { deleteNote } from '../../../api/notes'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { removeHistoryEntry, toggleHistoryEntryPinning } from '../../../redux/history/methods'
 import { PagerPagination } from '../../common/pagination/pager-pagination'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import { HistoryCardList } from '../history-card/history-card-list'
 import { HistoryTable } from '../history-table/history-table'
 import { ViewStateEnum } from '../history-toolbar/history-toolbar'
-import { removeHistoryEntry, toggleHistoryEntryPinning } from '../../../redux/history/methods'
-import { deleteNote } from '../../../api/notes'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { sortAndFilterEntries } from '../utils'
 import { useHistoryToolbarState } from '../history-toolbar/toolbar-context/use-history-toolbar-state'
-import type { HistoryEntryWithOrigin } from '../../../api/history/types'
-import { useUiNotifications } from '../../notifications/ui-notification-boundary'
+import { sortAndFilterEntries } from '../utils'
+import React, { Fragment, useCallback, useMemo, useState } from 'react'
+import { Alert, Col, Row } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 type OnEntryClick = (entryId: string) => void
 

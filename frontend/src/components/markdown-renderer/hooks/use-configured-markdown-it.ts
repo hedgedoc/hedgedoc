@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useMemo } from 'react'
-import MarkdownIt from 'markdown-it/lib'
 import type { MarkdownRendererExtension } from '../extensions/base/markdown-renderer-extension'
+import MarkdownIt from 'markdown-it/lib'
+import { useMemo } from 'react'
 
 /**
  * Creates a new {@link MarkdownIt markdown-it instance} and configures it using the given {@link MarkdownRendererExtension markdown renderer extensions}.

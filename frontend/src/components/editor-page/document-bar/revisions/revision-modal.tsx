@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
+import { CommonModal } from '../../../common/modals/common-modal'
+import { RevisionList } from './revision-list'
+import { RevisionModalFooter } from './revision-modal-footer'
+import styles from './revision-modal.module.scss'
+import { RevisionViewer } from './revision-viewer'
 import React, { useState } from 'react'
 import { Col, Modal, Row } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
-import { CommonModal } from '../../../common/modals/common-modal'
-import styles from './revision-modal.module.scss'
-import { RevisionModalFooter } from './revision-modal-footer'
-import { RevisionViewer } from './revision-viewer'
-import { RevisionList } from './revision-list'
 
 /**
  * Modal that shows the available revisions and allows for comparison between them.

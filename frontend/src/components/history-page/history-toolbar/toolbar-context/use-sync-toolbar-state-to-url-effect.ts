@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useEffect } from 'react'
+import { useArrayStringUrlParameter } from '../../../../hooks/common/use-array-string-url-parameter'
+import { useSingleStringUrlParameter } from '../../../../hooks/common/use-single-string-url-parameter'
+import { Logger } from '../../../../utils/logger'
+import { useHistoryToolbarState } from './use-history-toolbar-state'
 import equal from 'fast-deep-equal'
 import { useRouter } from 'next/router'
-import { Logger } from '../../../../utils/logger'
-import { useSingleStringUrlParameter } from '../../../../hooks/common/use-single-string-url-parameter'
-import { useArrayStringUrlParameter } from '../../../../hooks/common/use-array-string-url-parameter'
-import { useHistoryToolbarState } from './use-history-toolbar-state'
+import { useEffect } from 'react'
 
 const logger = new Logger('useSyncToolbarStateToUrl')
 

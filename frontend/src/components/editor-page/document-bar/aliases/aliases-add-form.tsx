@@ -3,17 +3,17 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { addAlias } from '../../../../api/alias'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useOnInputChange } from '../../../../hooks/common/use-on-input-change'
+import { updateMetadata } from '../../../../redux/note-details/methods'
+import { testId } from '../../../../utils/test-id'
+import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import type { FormEvent } from 'react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Form, InputGroup } from 'react-bootstrap'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { useTranslation } from 'react-i18next'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { addAlias } from '../../../../api/alias'
-import { updateMetadata } from '../../../../redux/note-details/methods'
-import { useOnInputChange } from '../../../../hooks/common/use-on-input-change'
-import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
-import { testId } from '../../../../utils/test-id'
 
 const validAliasRegex = /^[a-z0-9_-]*$/
 

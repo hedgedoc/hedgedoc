@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useEffect, useRef } from 'react'
-import { MaxLengthWarningModal } from './max-length-warning-modal'
-import { useNoteMarkdownContent } from '../../../../hooks/common/use-note-markdown-content'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
+import { useNoteMarkdownContent } from '../../../../hooks/common/use-note-markdown-content'
+import { MaxLengthWarningModal } from './max-length-warning-modal'
+import React, { useEffect, useRef } from 'react'
 
 /**
  * Watches the length of the document and shows a warning modal to the user if the document length exceeds the configured value.

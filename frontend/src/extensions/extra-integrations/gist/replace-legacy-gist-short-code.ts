@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { GistMarkdownExtension } from './gist-markdown-extension'
 import type { RegexOptions } from '../../../external-types/markdown-it-regex/interface'
+import { GistMarkdownExtension } from './gist-markdown-extension'
 
 const finalRegex = /^{%gist\s+(\w+\/\w+)\s*%}$/
 

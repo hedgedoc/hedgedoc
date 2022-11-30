@@ -3,18 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useCallback } from 'react'
-import { UserAvatar } from '../../../common/user-avatar/user-avatar'
 import type { NoteUserPermissionEntry } from '../../../../api/notes/types'
-import { PermissionEntryButtons, PermissionType } from './permission-entry-buttons'
-import { AccessLevel } from './types'
-import { useAsync } from 'react-use'
-import { getUser } from '../../../../api/users'
-import { ShowIf } from '../../../common/show-if/show-if'
 import { removeUserPermission, setUserPermission } from '../../../../api/permissions'
+import { getUser } from '../../../../api/users'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { setNotePermissionsFromServer } from '../../../../redux/note-details/methods'
+import { ShowIf } from '../../../common/show-if/show-if'
+import { UserAvatar } from '../../../common/user-avatar/user-avatar'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
+import { PermissionEntryButtons, PermissionType } from './permission-entry-buttons'
+import { AccessLevel } from './types'
+import React, { useCallback } from 'react'
+import { useAsync } from 'react-use'
 
 export interface PermissionEntryUserProps {
   entry: NoteUserPermissionEntry

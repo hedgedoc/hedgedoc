@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { createMarkdownTable } from './create-markdown-table'
 
 describe('create markdown table', () => {

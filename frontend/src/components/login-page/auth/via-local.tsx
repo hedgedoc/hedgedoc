@@ -3,21 +3,20 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { doLocalLogin } from '../../../api/auth/local'
+import { AuthError as AuthErrorType } from '../../../api/auth/types'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
+import { ShowIf } from '../../common/show-if/show-if'
+import { AuthError } from './auth-error/auth-error'
+import { PasswordField } from './fields/password-field'
+import { UsernameField } from './fields/username-field'
+import { fetchAndSetUser } from './utils'
+import Link from 'next/link'
 import type { FormEvent } from 'react'
 import React, { useCallback, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { doLocalLogin } from '../../../api/auth/local'
-import { ShowIf } from '../../common/show-if/show-if'
-import { fetchAndSetUser } from './utils'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { AuthError as AuthErrorType } from '../../../api/auth/types'
-import { UsernameField } from './fields/username-field'
-import { PasswordField } from './fields/password-field'
-import { AuthError } from './auth-error/auth-error'
-import Link from 'next/link'
-import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
 
 /**
  * Renders the local login box with username and password field and the optional button for registering a new user.

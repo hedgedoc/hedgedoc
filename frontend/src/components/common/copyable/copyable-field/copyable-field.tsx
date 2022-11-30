@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { isClientSideRendering } from '../../../../utils/is-client-side-rendering'
+import { Logger } from '../../../../utils/logger'
+import { ForkAwesomeIcon } from '../../fork-awesome/fork-awesome-icon'
+import { ShowIf } from '../../show-if/show-if'
+import { CopyToClipboardButton } from '../copy-to-clipboard-button/copy-to-clipboard-button'
 import React, { useCallback, useMemo } from 'react'
 import { Button, FormControl, InputGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../../fork-awesome/fork-awesome-icon'
-import { ShowIf } from '../../show-if/show-if'
-import { Logger } from '../../../../utils/logger'
-import { isClientSideRendering } from '../../../../utils/is-client-side-rendering'
-import { CopyToClipboardButton } from '../copy-to-clipboard-button/copy-to-clipboard-button'
 
 export interface CopyableFieldProps {
   content: string

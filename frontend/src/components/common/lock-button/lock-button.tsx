@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
 import React from 'react'
 import { Button } from 'react-bootstrap'
-import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
 
 export interface LockButtonProps {
   locked: boolean

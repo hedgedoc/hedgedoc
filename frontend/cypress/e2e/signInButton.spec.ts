@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { AuthProvider } from '../../src/api/config/types'
 import { AuthProviderType } from '../../src/api/config/types'
 

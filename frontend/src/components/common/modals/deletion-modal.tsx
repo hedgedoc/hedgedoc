@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { cypressId } from '../../../utils/cypress-attribute'
+import type { CommonModalProps } from './common-modal'
+import { CommonModal } from './common-modal'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import type { CommonModalProps } from './common-modal'
-import { CommonModal } from './common-modal'
-import { cypressId } from '../../../utils/cypress-attribute'
 
 export interface DeletionModalProps extends CommonModalProps {
   onConfirm: () => void

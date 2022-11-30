@@ -3,24 +3,23 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { optionalAppExtensions } from '../../../extensions/extra-integrations/optional-app-extensions'
+import type { MarkdownRendererExtension } from '../extensions/base/markdown-renderer-extension'
+import { DebuggerMarkdownExtension } from '../extensions/debugger-markdown-extension'
+import { EmojiMarkdownExtension } from '../extensions/emoji/emoji-markdown-extension'
+import { GenericSyntaxMarkdownExtension } from '../extensions/generic-syntax-markdown-extension'
+import { IframeCapsuleMarkdownExtension } from '../extensions/iframe-capsule/iframe-capsule-markdown-extension'
+import { ImagePlaceholderMarkdownExtension } from '../extensions/image-placeholder/image-placeholder-markdown-extension'
+import { ProxyImageMarkdownExtension } from '../extensions/image/proxy-image-markdown-extension'
+import type { LineMarkers } from '../extensions/linemarker/add-line-marker-markdown-it-plugin'
+import { LinemarkerMarkdownExtension } from '../extensions/linemarker/linemarker-markdown-extension'
+import { LinkAdjustmentMarkdownExtension } from '../extensions/link-replacer/link-adjustment-markdown-extension'
+import { LinkifyFixMarkdownExtension } from '../extensions/linkify-fix/linkify-fix-markdown-extension'
+import { TableOfContentsMarkdownExtension } from '../extensions/table-of-contents-markdown-extension'
+import { UploadIndicatingImageFrameMarkdownExtension } from '../extensions/upload-indicating-image-frame/upload-indicating-image-frame-markdown-extension'
+import { useExtensionEventEmitter } from './use-extension-event-emitter'
 import type { MutableRefObject } from 'react'
 import { useMemo } from 'react'
-import { GenericSyntaxMarkdownExtension } from '../extensions/generic-syntax-markdown-extension'
-import type { LineMarkers } from '../extensions/linemarker/add-line-marker-markdown-it-plugin'
-import { DebuggerMarkdownExtension } from '../extensions/debugger-markdown-extension'
-import { UploadIndicatingImageFrameMarkdownExtension } from '../extensions/upload-indicating-image-frame/upload-indicating-image-frame-markdown-extension'
-import { IframeCapsuleMarkdownExtension } from '../extensions/iframe-capsule/iframe-capsule-markdown-extension'
-import { LinkifyFixMarkdownExtension } from '../extensions/linkify-fix/linkify-fix-markdown-extension'
-import { LinkAdjustmentMarkdownExtension } from '../extensions/link-replacer/link-adjustment-markdown-extension'
-import { EmojiMarkdownExtension } from '../extensions/emoji/emoji-markdown-extension'
-import { LinemarkerMarkdownExtension } from '../extensions/linemarker/linemarker-markdown-extension'
-import { TableOfContentsMarkdownExtension } from '../extensions/table-of-contents-markdown-extension'
-import { ImagePlaceholderMarkdownExtension } from '../extensions/image-placeholder/image-placeholder-markdown-extension'
-import type { MarkdownRendererExtension } from '../extensions/base/markdown-renderer-extension'
-import { useExtensionEventEmitter } from './use-extension-event-emitter'
-import { optionalAppExtensions } from '../../../extensions/extra-integrations/optional-app-extensions'
-import { ProxyImageMarkdownExtension } from '../extensions/image/proxy-image-markdown-extension'
 
 const optionalMarkdownRendererExtensions = optionalAppExtensions.flatMap((value) =>
   value.buildMarkdownRendererExtensions()

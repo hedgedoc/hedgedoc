@@ -3,17 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { cypressId } from '../../../utils/cypress-attribute'
+import { ShowIf } from '../../common/show-if/show-if'
+import { filterOneClickProviders } from '../../login-page/auth/utils'
+import { getOneClickProviderMetadata } from '../../login-page/auth/utils/get-one-click-provider-metadata'
+import Link from 'next/link'
 import React, { useMemo } from 'react'
 import { Button } from 'react-bootstrap'
 import type { ButtonProps } from 'react-bootstrap/Button'
 import { Trans, useTranslation } from 'react-i18next'
-import { ShowIf } from '../../common/show-if/show-if'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { cypressId } from '../../../utils/cypress-attribute'
-import Link from 'next/link'
-import { filterOneClickProviders } from '../../login-page/auth/utils'
-import { getOneClickProviderMetadata } from '../../login-page/auth/utils/get-one-click-provider-metadata'
 
 export type SignInButtonProps = Omit<ButtonProps, 'href'>
 

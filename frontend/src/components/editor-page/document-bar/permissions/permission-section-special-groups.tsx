@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { Fragment, useMemo } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { PermissionEntrySpecialGroup } from './permission-entry-special-group'
 import { AccessLevel, SpecialGroup } from './types'
+import React, { Fragment, useMemo } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Section of the permission modal for managing special group access to the note.

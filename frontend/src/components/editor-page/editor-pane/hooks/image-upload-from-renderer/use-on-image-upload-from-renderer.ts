@@ -3,18 +3,17 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { getGlobalState } from '../../../../../redux'
+import { Logger } from '../../../../../utils/logger'
 import { useEditorReceiveHandler } from '../../../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
 import type { ImageUploadMessage } from '../../../../render-page/window-post-message-communicator/rendering-message'
 import { CommunicationMessageType } from '../../../../render-page/window-post-message-communicator/rendering-message'
-import { useCallback } from 'react'
-import { getGlobalState } from '../../../../../redux'
-import { Logger } from '../../../../../utils/logger'
+import { useCodeMirrorReference } from '../../../change-content-context/change-content-context'
+import type { CursorSelection } from '../../tool-bar/formatters/types/cursor-selection'
+import { useHandleUpload } from '../use-handle-upload'
 import { findRegexMatchInText } from './find-regex-match-in-text'
 import { Optional } from '@mrdrogdrog/optional'
-import { useHandleUpload } from '../use-handle-upload'
-import type { CursorSelection } from '../../tool-bar/formatters/types/cursor-selection'
-import { useCodeMirrorReference } from '../../../change-content-context/change-content-context'
+import { useCallback } from 'react'
 
 const log = new Logger('useOnImageUpload')
 const imageWithPlaceholderLinkRegex = /!\[([^\]]*)]\(https:\/\/([^)]*)\)/g

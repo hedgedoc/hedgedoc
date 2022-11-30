@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback } from 'react'
-import styles from './gist-frame.module.scss'
-import { useResizeGistFrame } from './use-resize-gist-frame'
+import { ClickShield } from '../../../components/markdown-renderer/replace-components/click-shield/click-shield'
 import type { IdProps } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
 import { cypressId } from '../../../utils/cypress-attribute'
-import { ClickShield } from '../../../components/markdown-renderer/replace-components/click-shield/click-shield'
+import styles from './gist-frame.module.scss'
+import { useResizeGistFrame } from './use-resize-gist-frame'
+import React, { useCallback } from 'react'
 
 /**
  * This component renders a GitHub Gist by placing the gist URL in an {@link HTMLIFrameElement iframe}.

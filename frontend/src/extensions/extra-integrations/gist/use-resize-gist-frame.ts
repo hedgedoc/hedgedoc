@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useBindPointerMovementEventOnWindow } from '../../../hooks/common/use-bind-pointer-movement-event-on-window'
 import type React from 'react'
 import { useCallback, useRef, useState } from 'react'
-import { useBindPointerMovementEventOnWindow } from '../../../hooks/common/use-bind-pointer-movement-event-on-window'
 
 /**
  * Determines if the left mouse button is pressed in the given event

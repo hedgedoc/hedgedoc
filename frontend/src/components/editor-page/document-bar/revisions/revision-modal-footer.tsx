@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { getRevision } from '../../../../api/revisions'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
+import { downloadRevision } from './utils'
 import React, { useCallback } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { downloadRevision } from './utils'
-import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { getRevision } from '../../../../api/revisions'
-import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 
 export interface RevisionModalFooterProps {
   selectedRevisionId?: number

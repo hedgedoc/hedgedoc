@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { buildStateFromAddUser } from './reducers/build-state-from-add-user'
+import { buildStateFromRemoveUser } from './reducers/build-state-from-remove-user'
 import type { RealtimeActions, RealtimeState } from './types'
 import { RealtimeActionType } from './types'
 import type { Reducer } from 'redux'
-import { buildStateFromRemoveUser } from './reducers/build-state-from-remove-user'
-import { buildStateFromAddUser } from './reducers/build-state-from-add-user'
 
 const initialState: RealtimeState = {
   users: []

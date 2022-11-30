@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { LineMarkers } from '../extensions/linemarker/add-line-marker-markdown-it-plugin'
+import type { LineMarkerPosition } from '../extensions/linemarker/types'
+import useResizeObserver from '@react-hook/resize-observer'
 import equal from 'fast-deep-equal'
 import type { RefObject } from 'react'
 import { useCallback, useEffect, useRef } from 'react'
-import useResizeObserver from '@react-hook/resize-observer'
-import type { LineMarkerPosition } from '../extensions/linemarker/types'
-import type { LineMarkers } from '../extensions/linemarker/add-line-marker-markdown-it-plugin'
 
 const calculateLineMarkerPositions = (
   documentElement: HTMLDivElement,

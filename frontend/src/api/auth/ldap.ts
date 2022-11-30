@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 import type { LoginDto } from './types'
 import { AuthError } from './types'
-import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 
 /**
  * Requests to log in a user via LDAP credentials.

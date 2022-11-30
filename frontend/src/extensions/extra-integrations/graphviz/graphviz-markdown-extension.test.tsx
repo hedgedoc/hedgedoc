@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
+import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
+import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
+import * as GraphvizFrameModule from '../graphviz/graphviz-frame'
+import { GraphvizMarkdownExtension } from './graphviz-markdown-extension'
 import { render } from '@testing-library/react'
 import React from 'react'
-import { GraphvizMarkdownExtension } from './graphviz-markdown-extension'
-import * as GraphvizFrameModule from '../graphviz/graphviz-frame'
-import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
-import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
-import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
 
 jest.mock('../graphviz/graphviz-frame')
 

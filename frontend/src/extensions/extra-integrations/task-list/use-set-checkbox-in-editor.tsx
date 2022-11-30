@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useCallback } from 'react'
-import { Optional } from '@mrdrogdrog/optional'
 import { useChangeEditorContentCallback } from '../../../components/editor-page/change-content-context/use-change-editor-content-callback'
 import type { ContentEdits } from '../../../components/editor-page/editor-pane/tool-bar/formatters/types/changes'
-import type { TaskCheckedEventPayload } from './event-emitting-task-list-checkbox'
 import { store } from '../../../redux'
+import type { TaskCheckedEventPayload } from './event-emitting-task-list-checkbox'
+import { Optional } from '@mrdrogdrog/optional'
+import { useCallback } from 'react'
 
 const TASK_REGEX = /(\s*(?:[-*+]|\d+[.)]) )(\[[ xX]?])/
 

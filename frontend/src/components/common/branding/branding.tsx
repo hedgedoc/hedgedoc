@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { ShowIf } from '../show-if/show-if'
 import styles from './branding.module.scss'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
+import React, { useMemo } from 'react'
 
 export interface BrandingProps {
   inline?: boolean

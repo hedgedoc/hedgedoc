@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useEffect } from 'react'
+import { Logger } from '../../utils/logger'
+import { AsyncLoadingBoundary } from '../common/async-loading-boundary'
 import { RenderIframe } from '../editor-page/renderer-pane/render-iframe'
 import { RendererType } from '../render-page/window-post-message-communicator/rendering-message'
 import { fetchFrontPageContent } from './requests'
-import { Logger } from '../../utils/logger'
+import React, { useEffect } from 'react'
 import { useAsync } from 'react-use'
-import { AsyncLoadingBoundary } from '../common/async-loading-boundary'
 
 const logger = new Logger('Intro Content')
 

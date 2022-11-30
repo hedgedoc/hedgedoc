@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { PropsWithChildren } from 'react'
-import React, { createContext, useCallback, useContext, useMemo, useState } from 'react'
-import { UiNotifications } from './ui-notifications'
+import { Logger } from '../../utils/logger'
 import type { DispatchOptions, UiNotification } from './types'
-import { DateTime } from 'luxon'
+import { UiNotifications } from './ui-notifications'
 import type { TOptions } from 'i18next'
 import { t } from 'i18next'
-import { Logger } from '../../utils/logger'
+import { DateTime } from 'luxon'
+import type { PropsWithChildren } from 'react'
+import React, { createContext, useCallback, useContext, useMemo, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 
 const log = new Logger('Notifications')

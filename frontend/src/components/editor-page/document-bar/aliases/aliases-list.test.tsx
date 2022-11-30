@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { render } from '@testing-library/react'
-import React from 'react'
-import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
 import type { Alias } from '../../../../api/alias/types'
 import * as useApplicationStateModule from '../../../../hooks/common/use-application-state'
+import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
+import { AliasesList } from './aliases-list'
 import * as AliasesListEntryModule from './aliases-list-entry'
 import type { AliasesListEntryProps } from './aliases-list-entry'
-import { AliasesList } from './aliases-list'
+import { render } from '@testing-library/react'
+import React from 'react'
 
 jest.mock('../../../../hooks/common/use-application-state')
 jest.mock('./aliases-list-entry')

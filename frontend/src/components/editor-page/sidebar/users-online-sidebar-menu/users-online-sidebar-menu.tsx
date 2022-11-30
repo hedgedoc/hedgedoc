@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Fragment, useCallback, useEffect, useMemo, useRef } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import { SidebarMenu } from '../sidebar-menu/sidebar-menu'
 import type { SpecificSidebarMenuProps } from '../types'
 import { DocumentSidebarMenuSelection } from '../types'
-import styles from './online-counter.module.scss'
 import { UserLine } from '../user-line/user-line'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import styles from './online-counter.module.scss'
+import React, { Fragment, useCallback, useEffect, useMemo, useRef } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Sidebar menu that contains the list of currently online users in the current note session.

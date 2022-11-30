@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { BlockquoteColorExtraTagReplacer } from './blockquote-color-extra-tag-replacer'
-import { BlockquoteExtraTagReplacer } from './blockquote-extra-tag-replacer'
-import type MarkdownIt from 'markdown-it'
-import { BlockquoteBorderColorNodePreprocessor } from './blockquote-border-color-node-preprocessor'
-import { BlockquoteExtraTagMarkdownItPlugin } from './blockquote-extra-tag-markdown-it-plugin'
+import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 import type { NodeProcessor } from '../../../components/markdown-renderer/node-preprocessors/node-processor'
 import type { ComponentReplacer } from '../../../components/markdown-renderer/replace-components/component-replacer'
-import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
+import { BlockquoteBorderColorNodePreprocessor } from './blockquote-border-color-node-preprocessor'
+import { BlockquoteColorExtraTagReplacer } from './blockquote-color-extra-tag-replacer'
+import { BlockquoteExtraTagMarkdownItPlugin } from './blockquote-extra-tag-markdown-it-plugin'
+import { BlockquoteExtraTagReplacer } from './blockquote-extra-tag-replacer'
+import type MarkdownIt from 'markdown-it'
 
 /**
  * Adds support for generic blockquote extra tags and blockquote color extra tags.

@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { RefObject } from 'react'
-import { useCallback, useEffect, useRef } from 'react'
 import type { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
 import { findLineMarks } from '../../../editor-page/synced-scroll/utils'
 import type { LineMarkerPosition } from '../../../markdown-renderer/extensions/linemarker/types'
+import type { RefObject } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 /**
  * Scrolls the given container to the correct {@link LineMarkerPosition}.

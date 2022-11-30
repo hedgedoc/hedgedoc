@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { ContentEdits } from './types/changes'
 import type { CursorSelection } from './types/cursor-selection'
 import { searchForEndOfLine, searchForStartOfLine } from './utils/change-cursors-to-whole-line-if-no-to-cursor'
-import type { ContentEdits } from './types/changes'
 
 /**
  * Creates a copy of the given markdown content lines but modifies the whole selected lines.

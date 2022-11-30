@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useBooleanState } from '../../../hooks/common/use-boolean-state'
+import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { AccountDeletionModal } from './account-deletion-modal'
 import React, { Fragment } from 'react'
 import { Button, Card, Row } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
-import { AccountDeletionModal } from './account-deletion-modal'
-import { useBooleanState } from '../../../hooks/common/use-boolean-state'
 
 /**
  * Profile page section that allows to export all data from the account or to delete the account.

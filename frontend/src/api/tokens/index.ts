@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { AccessToken, AccessTokenWithSecret, CreateAccessTokenDto } from './types'
+import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
-import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
+import type { AccessToken, AccessTokenWithSecret, CreateAccessTokenDto } from './types'
 
 /**
  * Retrieves the access tokens for the current user.

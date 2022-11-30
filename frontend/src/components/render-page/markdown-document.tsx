@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { MutableRefObject } from 'react'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import useResizeObserver from '@react-hook/resize-observer'
-import { useDocumentSyncScrolling } from './hooks/sync-scroll/use-document-sync-scrolling'
+import { useApplicationState } from '../../hooks/common/use-application-state'
 import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import { DocumentMarkdownRenderer } from '../markdown-renderer/document-markdown-renderer'
-import styles from './markdown-document.module.scss'
-import { useApplicationState } from '../../hooks/common/use-application-state'
 import { DocumentTocSidebar } from './document-toc-sidebar'
+import { useDocumentSyncScrolling } from './hooks/sync-scroll/use-document-sync-scrolling'
+import styles from './markdown-document.module.scss'
+import useResizeObserver from '@react-hook/resize-observer'
+import type { MutableRefObject } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 export interface RendererProps extends ScrollProps {
   onFirstHeadingChange?: (firstHeading: string | undefined) => void

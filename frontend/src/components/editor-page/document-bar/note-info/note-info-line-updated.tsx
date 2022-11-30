@@ -3,15 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useMemo } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
-import { NoteInfoLine } from './note-info-line'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { UserAvatarForUsername } from '../../../common/user-avatar/user-avatar-for-username'
+import { NoteInfoLine } from './note-info-line'
 import type { NoteInfoTimeLineProps } from './note-info-time-line'
 import { UnitalicBoldTimeFromNow } from './utils/unitalic-bold-time-from-now'
 import { UnitalicBoldTrans } from './utils/unitalic-bold-trans'
-import { UserAvatarForUsername } from '../../../common/user-avatar/user-avatar-for-username'
 import { DateTime } from 'luxon'
+import React, { useMemo } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Renders an info line about the last update of the current note.

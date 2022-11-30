@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
+import { cypressId } from '../../../../utils/cypress-attribute'
+import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { HelpModal } from './help-modal'
 import React, { Fragment } from 'react'
 import { Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import { HelpModal } from './help-modal'
-import { cypressId } from '../../../../utils/cypress-attribute'
-import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
 
 /**
  * Renders the button to open the {@link HelpModal}.

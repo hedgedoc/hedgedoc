@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { TFunction } from 'i18next'
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'

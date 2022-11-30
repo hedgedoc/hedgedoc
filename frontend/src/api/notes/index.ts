@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { Note, NoteDeletionOptions, NoteMetadata } from './types'
-import type { MediaUpload } from '../media/types'
+import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
-import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
+import type { MediaUpload } from '../media/types'
+import type { Note, NoteDeletionOptions, NoteMetadata } from './types'
 
 /**
  * Retrieves the content and metadata about the specified note.

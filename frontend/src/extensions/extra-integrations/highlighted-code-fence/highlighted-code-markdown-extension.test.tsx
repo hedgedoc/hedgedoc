@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { render } from '@testing-library/react'
-import React from 'react'
+import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
+import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
 import type { HighlightedCodeProps } from './highlighted-code'
 import * as HighlightedCodeModule from './highlighted-code'
 import { HighlightedCodeMarkdownExtension } from './highlighted-code-markdown-extension'
-import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
-import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
+import { render } from '@testing-library/react'
+import React from 'react'
 
 jest.mock('./highlighted-code')
 

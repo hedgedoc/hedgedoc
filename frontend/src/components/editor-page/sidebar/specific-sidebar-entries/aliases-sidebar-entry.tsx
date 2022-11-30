@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
+import { AliasesModal } from '../../document-bar/aliases/aliases-modal'
+import { SidebarButton } from '../sidebar-button/sidebar-button'
+import type { SpecificSidebarEntryProps } from '../types'
 import React, { Fragment } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import type { SpecificSidebarEntryProps } from '../types'
-import { SidebarButton } from '../sidebar-button/sidebar-button'
-import { AliasesModal } from '../../document-bar/aliases/aliases-modal'
-import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
 
 /**
  * Component that shows a button in the editor sidebar for opening the aliases modal.

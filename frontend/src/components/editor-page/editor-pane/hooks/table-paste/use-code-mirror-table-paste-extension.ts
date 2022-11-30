@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useMemo } from 'react'
-import { EditorView } from '@codemirror/view'
-import type { Extension } from '@codemirror/state'
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { changeEditorContent } from '../../../change-content-context/use-change-editor-content-callback'
-import { Optional } from '@mrdrogdrog/optional'
 import { replaceSelection } from '../../tool-bar/formatters/replace-selection'
-import { convertClipboardTableToMarkdown, isTable } from './table-extractor'
 import { isCursorInCodeFence } from './codefenceDetection'
+import { convertClipboardTableToMarkdown, isTable } from './table-extractor'
+import type { Extension } from '@codemirror/state'
+import { EditorView } from '@codemirror/view'
+import { Optional } from '@mrdrogdrog/optional'
+import { useMemo } from 'react'
 
 /**
  * Creates a {@link Extension code mirror extension} that handles the smart table detection on paste-from-clipboard events.

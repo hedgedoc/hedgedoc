@@ -3,17 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { updateDisplayName } from '../../../api/me'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
+import { DisplayNameField } from '../../common/fields/display-name-field'
+import { fetchAndSetUser } from '../../login-page/auth/utils'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import type { FormEvent } from 'react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { updateDisplayName } from '../../../api/me'
-import { fetchAndSetUser } from '../../login-page/auth/utils'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { DisplayNameField } from '../../common/fields/display-name-field'
-import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
-import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 
 /**
  * Profile page section for changing the current display name.

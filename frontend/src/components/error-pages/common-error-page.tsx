@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { ShowIf } from '../common/show-if/show-if'
+import { LandingLayout } from '../landing-layout/landing-layout'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
-import { LandingLayout } from '../landing-layout/landing-layout'
 import { Trans, useTranslation } from 'react-i18next'
-import { ShowIf } from '../common/show-if/show-if'
 
 export interface CommonErrorPageProps {
   titleI18nKey: string

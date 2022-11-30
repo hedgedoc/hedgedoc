@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useEffect, useRef } from 'react'
+import { Logger } from '../../../../utils/logger'
+import { useCodeMirrorReference } from '../../change-content-context/change-content-context'
 import type { ScrollState } from '../../synced-scroll/scroll-props'
 import { EditorView } from '@codemirror/view'
 import equal from 'fast-deep-equal'
-import { useCodeMirrorReference } from '../../change-content-context/change-content-context'
-import { Logger } from '../../../../utils/logger'
+import { useEffect, useRef } from 'react'
 
 const logger = new Logger('useApplyScrollState')
 

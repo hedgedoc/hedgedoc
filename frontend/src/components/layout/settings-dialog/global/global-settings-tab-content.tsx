@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { DarkModeSettingButtonGroup } from './dark-mode-setting-button-group'
-import { ListGroup } from 'react-bootstrap'
-import { LanguagePicker } from './language-picker'
 import { SettingLine } from '../utils/setting-line'
+import { DarkModeSettingButtonGroup } from './dark-mode-setting-button-group'
+import { LanguagePicker } from './language-picker'
+import React from 'react'
+import { ListGroup } from 'react-bootstrap'
 
 /**
  * Contains global settings that influence every page of the app.

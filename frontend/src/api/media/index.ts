@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { ImageProxyRequestDto, ImageProxyResponse, MediaUpload } from './types'
-import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
+import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
+import type { ImageProxyRequestDto, ImageProxyResponse, MediaUpload } from './types'
 
 /**
  * Requests an image-proxy URL from the backend for a given image URL.

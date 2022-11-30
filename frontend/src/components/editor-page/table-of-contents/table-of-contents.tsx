@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { TocAst } from 'markdown-it-toc-done-right'
-import React from 'react'
-import { Trans, useTranslation } from 'react-i18next'
 import { ShowIf } from '../../common/show-if/show-if'
 import styles from './table-of-contents.module.scss'
 import { useBuildReactDomFromTocAst } from './use-build-react-dom-from-toc-ast'
+import type { TocAst } from 'markdown-it-toc-done-right'
+import React from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
 export interface TableOfContentsProps {
   ast: TocAst

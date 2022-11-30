@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { RevisionDetails } from '../../../../api/revisions/types'
 import { getUser } from '../../../../api/users'
 import type { UserInfo } from '../../../../api/users/types'

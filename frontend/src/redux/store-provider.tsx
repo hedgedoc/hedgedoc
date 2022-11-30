@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { store } from './index'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { Provider } from 'react-redux'
-import { store } from './index'
 
 /**
  * Sets the redux store for the children components.

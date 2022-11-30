@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { NoteDetails } from '../types/note-details'
 import type { NotePermissions } from '../../../api/notes/types'
+import type { NoteDetails } from '../types/note-details'
 
 /**
  * Builds the updated state from a given previous state and updated NotePermissions data.

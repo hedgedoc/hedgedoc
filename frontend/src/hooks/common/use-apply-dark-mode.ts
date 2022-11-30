@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useEffect } from 'react'
-import { useApplicationState } from './use-application-state'
+import { DarkModePreference } from '../../redux/dark-mode/types'
 import { isClientSideRendering } from '../../utils/is-client-side-rendering'
 import { Logger } from '../../utils/logger'
+import { useApplicationState } from './use-application-state'
 import useMediaQuery from '@restart/hooks/useMediaQuery'
-import { DarkModePreference } from '../../redux/dark-mode/types'
+import { useEffect } from 'react'
 
 const logger = new Logger('useApplyDarkMode')
 

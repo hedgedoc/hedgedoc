@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import React, { useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 /**
  * Renders a translated text that shows the number of lines in the document.

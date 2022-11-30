@@ -3,17 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type MarkdownIt from 'markdown-it'
-import plantuml from 'markdown-it-plantuml'
-import type Renderer from 'markdown-it/lib/renderer'
-import type Token from 'markdown-it/lib/token'
-import type { Options } from 'markdown-it/lib'
-import { PlantumlNotConfiguredComponentReplacer } from './plantuml-not-configured-component-replacer'
-import { Optional } from '@mrdrogdrog/optional'
+import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 import type { ComponentReplacer } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import { getGlobalState } from '../../../redux'
-import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
+import { PlantumlNotConfiguredComponentReplacer } from './plantuml-not-configured-component-replacer'
+import { Optional } from '@mrdrogdrog/optional'
+import type MarkdownIt from 'markdown-it'
+import plantuml from 'markdown-it-plantuml'
+import type { Options } from 'markdown-it/lib'
+import type Renderer from 'markdown-it/lib/renderer'
+import type Token from 'markdown-it/lib/token'
 
 /**
  * Adds support for chart rendering using plantuml to the markdown rendering using code fences with "plantuml" as language.

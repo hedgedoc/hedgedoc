@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
-import { cypressId } from '../../../../utils/cypress-attribute'
-import { Trans, useTranslation } from 'react-i18next'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { cypressId } from '../../../../utils/cypress-attribute'
+import React, { useMemo } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Renders a translated text that shows the number of remaining characters.

@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { AppExtension } from '../../base/app-extension'
-import type { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
-import { LegacySequenceDiagramMarkdownExtension } from './legacy-sequence-diagram-markdown-extension'
 import type { Linter } from '../../../components/editor-page/editor-pane/linter/linter'
 import { SingleLineRegexLinter } from '../../../components/editor-page/editor-pane/linter/single-line-regex-linter'
+import type { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
+import { AppExtension } from '../../base/app-extension'
+import { LegacySequenceDiagramMarkdownExtension } from './legacy-sequence-diagram-markdown-extension'
 import { t } from 'i18next'
 
 /**

@@ -3,20 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
-import { Button, ProgressBar, Toast } from 'react-bootstrap'
-import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
-import { ShowIf } from '../common/show-if/show-if'
-import type { IconName } from '../common/fork-awesome/types'
-import { Trans, useTranslation } from 'react-i18next'
-import { Logger } from '../../utils/logger'
 import { cypressId } from '../../utils/cypress-attribute'
-import { useEffectOnce, useInterval } from 'react-use'
+import { Logger } from '../../utils/logger'
+import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
+import type { IconName } from '../common/fork-awesome/types'
+import { ShowIf } from '../common/show-if/show-if'
 import styles from './notifications.module.scss'
-import { DateTime } from 'luxon'
 import type { UiNotification } from './types'
 import { useUiNotifications } from './ui-notification-boundary'
+import { DateTime } from 'luxon'
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
+import { Button, ProgressBar, Toast } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
+import { useEffectOnce, useInterval } from 'react-use'
 
 const STEPS_PER_SECOND = 10
 const log = new Logger('UiNotificationToast')

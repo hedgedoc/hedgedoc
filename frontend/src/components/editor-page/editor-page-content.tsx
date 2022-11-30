@@ -3,27 +3,26 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useApplicationState } from '../../hooks/common/use-application-state'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import { updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
+import { Logger } from '../../utils/logger'
 import { MotdModal } from '../common/motd-modal/motd-modal'
+import { NoteAndAppTitleHead } from '../layout/note-and-app-title-head'
+import { CommunicatorImageLightbox } from '../markdown-renderer/extensions/image/communicator-image-lightbox'
+import { ExtensionEventEmitterProvider } from '../markdown-renderer/hooks/use-extension-event-emitter'
 import { AppBar, AppBarMode } from './app-bar/app-bar'
+import { ChangeEditorContentContextProvider } from './change-content-context/change-content-context'
+import { EditorDocumentRenderer } from './editor-document-renderer/editor-document-renderer'
+import { EditorPane } from './editor-pane/editor-pane'
+import { useComponentsFromAppExtensions } from './editor-pane/hooks/use-components-from-app-extensions'
+import { useUpdateLocalHistoryEntry } from './hooks/use-update-local-history-entry'
 import { Sidebar } from './sidebar/sidebar'
 import { Splitter } from './splitter/splitter'
 import type { DualScrollState, ScrollState } from './synced-scroll/scroll-props'
-import { useUpdateLocalHistoryEntry } from './hooks/use-update-local-history-entry'
-import { useApplicationState } from '../../hooks/common/use-application-state'
-import { EditorDocumentRenderer } from './editor-document-renderer/editor-document-renderer'
-import { Logger } from '../../utils/logger'
-import { NoteAndAppTitleHead } from '../layout/note-and-app-title-head'
 import equal from 'fast-deep-equal'
-import { EditorPane } from './editor-pane/editor-pane'
-import { ChangeEditorContentContextProvider } from './change-content-context/change-content-context'
-import { ExtensionEventEmitterProvider } from '../markdown-renderer/hooks/use-extension-event-emitter'
-import { useComponentsFromAppExtensions } from './editor-pane/hooks/use-components-from-app-extensions'
-import { CommunicatorImageLightbox } from '../markdown-renderer/extensions/image/communicator-image-lightbox'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export enum ScrollSource {
   EDITOR = 'editor',

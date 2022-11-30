@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
 
 /**
  * Redirects the user back to the previous URL.

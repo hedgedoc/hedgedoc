@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
+import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
+import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 import type { MediaUpload } from '../media/types'
 import type { ChangeDisplayNameDto, LoginUserInfo } from './types'
-import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
-import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
-import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 
 /**
  * Returns metadata about the currently signed-in user from the API.

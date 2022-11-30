@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Fragment, useCallback } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
-import { ImportMarkdownSidebarEntry } from './import-markdown-sidebar-entry'
+import { cypressId } from '../../../../utils/cypress-attribute'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import { SidebarMenu } from '../sidebar-menu/sidebar-menu'
 import type { SpecificSidebarMenuProps } from '../types'
 import { DocumentSidebarMenuSelection } from '../types'
-import { cypressId } from '../../../../utils/cypress-attribute'
+import { ImportMarkdownSidebarEntry } from './import-markdown-sidebar-entry'
+import React, { Fragment, useCallback } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Renders the import menu for the sidebar.

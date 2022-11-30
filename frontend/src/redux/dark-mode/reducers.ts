@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Reducer } from 'redux'
 import type { DarkModeConfig, DarkModeConfigAction } from './types'
 import { DarkModeConfigActionType, DarkModePreference } from './types'
+import type { Reducer } from 'redux'
 
 const initialState: DarkModeConfig = {
   darkModePreference: DarkModePreference.AUTO

@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Fragment } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 import links from '../../../links.json'
 import { ExternalLink } from '../../common/links/external-link'
 import { TranslatedExternalLink } from '../../common/links/translated-external-link'
 import { TranslatedInternalLink } from '../../common/links/translated-internal-link'
 import { VersionInfoLink } from './version-info/version-info-link'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
+import React, { Fragment } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Renders a powered-by link.

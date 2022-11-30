@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { Alert } from 'react-bootstrap'
-import { useRouter } from 'next/router'
+import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary'
+import { ShowIf } from '../../../components/common/show-if/show-if'
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
 import { cypressId } from '../../../utils/cypress-attribute'
-import { ShowIf } from '../../../components/common/show-if/show-if'
 import { Logger } from '../../../utils/logger'
+import { useRouter } from 'next/router'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { Alert } from 'react-bootstrap'
 import { useAsync } from 'react-use'
-import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary'
 
 const log = new Logger('GraphvizFrame')
 /**

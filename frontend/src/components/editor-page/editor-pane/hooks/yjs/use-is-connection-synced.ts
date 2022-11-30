@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useEffect, useState } from 'react'
 import type { YDocMessageTransporter } from '@hedgedoc/realtime'
+import { useEffect, useState } from 'react'
 
 /**
  * Checks if the given message transporter has received at least one full synchronisation.

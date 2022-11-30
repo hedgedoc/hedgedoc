@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
 import type { CommonModalProps } from '../../common/modals/common-modal'
 import { CommonModal } from '../../common/modals/common-modal'
-import { Modal, Tab, Tabs } from 'react-bootstrap'
-import { t } from 'i18next'
-import { GlobalSettingsTabContent } from './global/global-settings-tab-content'
 import { EditorSettingsTabContent } from './editor/editor-settings-tab-content'
+import { GlobalSettingsTabContent } from './global/global-settings-tab-content'
+import { t } from 'i18next'
+import React from 'react'
+import { Modal, Tab, Tabs } from 'react-bootstrap'
 
 /**
  * Shows global and scope specific settings

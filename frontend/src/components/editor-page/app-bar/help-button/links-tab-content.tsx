@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { Col, Row } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
 import links from '../../../../links.json'
 import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
 import { TranslatedInternalLink } from '../../../common/links/translated-internal-link'
+import React from 'react'
+import { Col, Row } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Renders a bunch of links, where further help can be requested.

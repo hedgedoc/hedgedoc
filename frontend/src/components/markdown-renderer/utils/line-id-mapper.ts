@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { LineWithId } from '../extensions/linemarker/types'
 import type { ArrayChange } from 'diff'
 import { diffArrays } from 'diff'
-import type { LineWithId } from '../extensions/linemarker/types'
 
 type NewLine = string
 type LineChange = ArrayChange<NewLine | LineWithId>

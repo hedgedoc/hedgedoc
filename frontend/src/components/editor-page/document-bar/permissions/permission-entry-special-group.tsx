@@ -3,15 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useCallback, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { AccessLevel, SpecialGroup } from './types'
-import { Button, ToggleButtonGroup } from 'react-bootstrap'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { removeGroupPermission, setGroupPermission } from '../../../../api/permissions'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { setNotePermissionsFromServer } from '../../../../redux/note-details/methods'
+import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
+import { AccessLevel, SpecialGroup } from './types'
+import React, { useCallback, useMemo } from 'react'
+import { Button, ToggleButtonGroup } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 
 export interface PermissionEntrySpecialGroupProps {
   level: AccessLevel

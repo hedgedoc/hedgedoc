@@ -3,19 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { cypressId } from '../../../../utils/cypress-attribute'
+import { ShowIf } from '../../../common/show-if/show-if'
+import { useEditorReceiveHandler } from '../../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
+import type { OnWordCountCalculatedMessage } from '../../../render-page/window-post-message-communicator/rendering-message'
+import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
+import { useEditorToRendererCommunicator } from '../../render-context/editor-to-renderer-communicator-context-provider'
+import { NoteInfoLine } from './note-info-line'
+import { UnitalicBoldContent } from './unitalic-bold-content'
 import type { PropsWithChildren } from 'react'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { ShowIf } from '../../../common/show-if/show-if'
-import { NoteInfoLine } from './note-info-line'
-import { UnitalicBoldContent } from './unitalic-bold-content'
-import { useEditorToRendererCommunicator } from '../../render-context/editor-to-renderer-communicator-context-provider'
-import type { OnWordCountCalculatedMessage } from '../../../render-page/window-post-message-communicator/rendering-message'
-import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
-import { useEditorReceiveHandler } from '../../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
-import { cypressId } from '../../../../utils/cypress-attribute'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 
 /**
  * Creates a new info line for the document information dialog that holds the

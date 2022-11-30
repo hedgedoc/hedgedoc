@@ -3,17 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useBooleanState } from '../../../hooks/common/use-boolean-state'
+import { deleteAllHistoryEntries } from '../../../redux/history/methods'
+import { cypressId } from '../../../utils/cypress-attribute'
+import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { DeletionModal } from '../../common/modals/deletion-modal'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
+import { useSafeRefreshHistoryStateCallback } from './hooks/use-safe-refresh-history-state'
 import React, { Fragment, useCallback } from 'react'
 import { Button } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
-import { DeletionModal } from '../../common/modals/deletion-modal'
-import { deleteAllHistoryEntries } from '../../../redux/history/methods'
-import { cypressId } from '../../../utils/cypress-attribute'
-import { useBooleanState } from '../../../hooks/common/use-boolean-state'
-import { useUiNotifications } from '../../notifications/ui-notification-boundary'
-import { useSafeRefreshHistoryStateCallback } from './hooks/use-safe-refresh-history-state'
 
 /**
  * Renders a button to clear the complete history of the user.

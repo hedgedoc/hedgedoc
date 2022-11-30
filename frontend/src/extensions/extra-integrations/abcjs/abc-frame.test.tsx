@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import { render, screen } from '@testing-library/react'
-import { AbcFrame } from './abc-frame'
 import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
+import { AbcFrame } from './abc-frame'
+import { render, screen } from '@testing-library/react'
+import React from 'react'
 
 describe('AbcFrame', () => {
   afterEach(() => {

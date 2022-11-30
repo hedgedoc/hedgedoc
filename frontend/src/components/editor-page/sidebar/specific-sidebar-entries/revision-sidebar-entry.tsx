@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Fragment } from 'react'
-import { Trans } from 'react-i18next'
+import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
 import { RevisionModal } from '../../document-bar/revisions/revision-modal'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../types'
-import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
+import React, { Fragment } from 'react'
+import { Trans } from 'react-i18next'
 
 /**
  * Renders a button to open the revision modal for the sidebar.

@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import type { ButtonProps } from 'react-bootstrap'
 import type { IconName } from '../../common/fork-awesome/types'
 import { IconButton } from '../../common/icon-button/icon-button'
+import React from 'react'
+import type { ButtonProps } from 'react-bootstrap'
 
 export enum SortModeEnum {
   up = 1,

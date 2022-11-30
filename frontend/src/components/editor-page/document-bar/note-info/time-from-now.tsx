@@ -3,9 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { DateTime } from 'luxon'
-
 import React from 'react'
 
 export interface TimeFromNowProps {

@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Action } from 'redux'
 import type { LoginUserInfo } from '../../api/me/types'
+import type { Action } from 'redux'
 
 export enum UserActionType {
   SET_USER = 'user/set',

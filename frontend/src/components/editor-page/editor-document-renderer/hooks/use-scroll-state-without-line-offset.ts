@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import type { ScrollState } from '../../synced-scroll/scroll-props'
 import { useMemo } from 'react'

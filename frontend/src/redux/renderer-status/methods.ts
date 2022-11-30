@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { store } from '..'
 import type { SetRendererStatusAction } from './types'
 import { RendererStatusActionType } from './types'

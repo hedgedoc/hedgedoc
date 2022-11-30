@@ -3,17 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import type { RenderIframeProps } from '../renderer-pane/render-iframe'
-import { RenderIframe } from '../renderer-pane/render-iframe'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../../hooks/common/use-trimmed-note-markdown-content-without-frontmatter'
 import { NoteType } from '../../../redux/note-details/types/note-details'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { setRendererStatus } from '../../../redux/renderer-status/methods'
 import { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
+import type { RenderIframeProps } from '../renderer-pane/render-iframe'
+import { RenderIframe } from '../renderer-pane/render-iframe'
 import { useOnScrollWithLineOffset } from './hooks/use-on-scroll-with-line-offset'
 import { useScrollStateWithoutLineOffset } from './hooks/use-scroll-state-without-line-offset'
-import { setRendererStatus } from '../../../redux/renderer-status/methods'
+import React from 'react'
 
 export type EditorDocumentRendererProps = Omit<
   RenderIframeProps,

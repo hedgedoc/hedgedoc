@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import styles from './split-divider.module.scss'
 import { testId } from '../../../../utils/test-id'
-import { Button } from 'react-bootstrap'
 import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import styles from './split-divider.module.scss'
+import React from 'react'
+import { Button } from 'react-bootstrap'
 
 export enum DividerButtonsShift {
   SHIFT_TO_LEFT = 'shift-left',

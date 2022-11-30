@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Element } from 'domhandler'
-import React from 'react'
 import type { NodeReplacement } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import {
   ComponentReplacer,
   DO_NOT_REPLACE
 } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import { EventEmittingTaskListCheckbox } from './event-emitting-task-list-checkbox'
+import type { Element } from 'domhandler'
+import React from 'react'
 
 /**
  * Detects task lists and renders them as checkboxes that execute a callback if clicked.

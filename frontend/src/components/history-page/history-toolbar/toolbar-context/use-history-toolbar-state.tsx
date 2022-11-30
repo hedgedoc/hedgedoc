@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { historyToolbarStateContext } from './history-toolbar-state-context-provider'
+import type { HistoryToolbarStateWithDispatcher } from './toolbar-context'
 import { Optional } from '@mrdrogdrog/optional'
 import { useContext } from 'react'
-import type { HistoryToolbarStateWithDispatcher } from './toolbar-context'
-import { historyToolbarStateContext } from './history-toolbar-state-context-provider'
 
 /**
  * Receives a {@link React.Context react context} for the history toolbar state.

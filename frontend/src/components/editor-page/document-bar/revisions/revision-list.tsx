@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
-import { RevisionListEntry } from './revision-list-entry'
-import { useAsync } from 'react-use'
 import { getAllRevisions } from '../../../../api/revisions'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { ListGroup } from 'react-bootstrap'
 import { AsyncLoadingBoundary } from '../../../common/async-loading-boundary'
+import { RevisionListEntry } from './revision-list-entry'
 import { DateTime } from 'luxon'
+import React, { useMemo } from 'react'
+import { ListGroup } from 'react-bootstrap'
+import { useAsync } from 'react-use'
 
 export interface RevisionListProps {
   selectedRevisionId?: number

@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { MutableRefObject } from 'react'
-import React, { useCallback, useEffect, useRef } from 'react'
-import { Logger } from '../../../utils/logger'
 import type { PropsWithDataCypressId } from '../../../utils/cypress-attribute'
 import { cypressId } from '../../../utils/cypress-attribute'
+import { Logger } from '../../../utils/logger'
+import type { MutableRefObject } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 
 const log = new Logger('UploadInput')
 

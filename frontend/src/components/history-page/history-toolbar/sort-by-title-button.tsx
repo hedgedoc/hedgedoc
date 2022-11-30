@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback } from 'react'
 import { SortButton, SortModeEnum } from '../sort-button/sort-button'
-import { Trans, useTranslation } from 'react-i18next'
 import { useHistoryToolbarState } from './toolbar-context/use-history-toolbar-state'
+import React, { useCallback } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Controls if history entries should be sorted by title.

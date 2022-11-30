@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { cypressId } from '../../../../utils/cypress-attribute'
+import { useExpiryDates } from './hooks/use-expiry-dates'
 import type { ChangeEvent } from 'react'
 import React from 'react'
 import { Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { cypressId } from '../../../../utils/cypress-attribute'
-import { useExpiryDates } from './hooks/use-expiry-dates'
 
 interface AccessTokenCreationFormExpiryFieldProps extends AccessTokenCreationFormFieldProps {
   onChangeExpiry: (event: ChangeEvent<HTMLInputElement>) => void

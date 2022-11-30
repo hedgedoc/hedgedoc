@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useMemo } from 'react'
-import { isMockMode } from '../../../../../utils/test-modes'
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { useBaseUrl } from '../../../../../hooks/common/use-base-url'
+import { isMockMode } from '../../../../../utils/test-modes'
+import { useMemo } from 'react'
 
 const LOCAL_FALLBACK_URL = 'ws://localhost:8080/realtime/'
 

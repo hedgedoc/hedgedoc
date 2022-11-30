@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { updateMetadata } from '../../../../../redux/note-details/methods'
 import type { YDocMessageTransporter } from '@hedgedoc/realtime'
 import { MessageType } from '@hedgedoc/realtime'
-import { updateMetadata } from '../../../../../redux/note-details/methods'
 import { useCallback, useEffect } from 'react'
 
 /**

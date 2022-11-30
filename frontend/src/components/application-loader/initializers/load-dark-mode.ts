@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { setDarkModePreference } from '../../../redux/dark-mode/methods'
-import { Logger } from '../../../utils/logger'
-import { isClientSideRendering } from '../../../utils/is-client-side-rendering'
-import { DarkModePreference } from '../../../redux/dark-mode/types'
 import { DARK_MODE_LOCAL_STORAGE_KEY } from '../../../hooks/common/use-apply-dark-mode'
+import { setDarkModePreference } from '../../../redux/dark-mode/methods'
+import { DarkModePreference } from '../../../redux/dark-mode/types'
+import { isClientSideRendering } from '../../../utils/is-client-side-rendering'
+import { Logger } from '../../../utils/logger'
 
 const logger = new Logger('Dark mode initializer')
 

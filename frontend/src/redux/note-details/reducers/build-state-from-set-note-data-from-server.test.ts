@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { buildStateFromServerDto } from './build-state-from-set-note-data-from-server'
+import type { Note } from '../../../api/notes/types'
 import * as buildStateFromUpdatedMarkdownContentModule from '../build-state-from-updated-markdown-content'
-import { Mock } from 'ts-mockery'
+import { initialSlideOptions } from '../initial-state'
 import type { NoteDetails } from '../types/note-details'
 import { NoteTextDirection, NoteType } from '../types/note-details'
+import { buildStateFromServerDto } from './build-state-from-set-note-data-from-server'
 import { DateTime } from 'luxon'
-import { initialSlideOptions } from '../initial-state'
-import type { Note } from '../../../api/notes/types'
+import { Mock } from 'ts-mockery'
 
 jest.mock('../build-state-from-updated-markdown-content')
 

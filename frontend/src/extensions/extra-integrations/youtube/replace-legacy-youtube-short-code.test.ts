@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import MarkdownIt from 'markdown-it'
 import { replaceLegacyYoutubeShortCodeMarkdownItPlugin } from './replace-legacy-youtube-short-code'
+import MarkdownIt from 'markdown-it'
 
 describe('Replace legacy youtube short codes', () => {
   let markdownIt: MarkdownIt

@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { NextApiRequest, NextApiResponse } from 'next'
 import type { MediaUpload } from '../../../api/media/types'
 import { HttpMethod, respondToMatchingRequest } from '../../../handler-utils/respond-to-matching-request'
 import { isMockMode, isTestMode } from '../../../utils/test-modes'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   if (isMockMode && !isTestMode) {

@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { RefObject } from 'react'
-import type { IconName } from '../../common/fork-awesome/types'
 import type { PropsWithDataCypressId } from '../../../utils/cypress-attribute'
+import type { IconName } from '../../common/fork-awesome/types'
+import type { RefObject } from 'react'
 
 export interface SpecificSidebarEntryProps {
   className?: string

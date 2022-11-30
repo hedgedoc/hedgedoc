@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type MarkdownIt from 'markdown-it'
+import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 import { legacyPdfShortCode } from './replace-legacy-pdf-short-code'
 import { legacySlideshareShortCode } from './replace-legacy-slideshare-short-code'
 import { legacySpeakerdeckShortCode } from './replace-legacy-speakerdeck-short-code'
-import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
+import type MarkdownIt from 'markdown-it'
 
 /**
  * Adds support for legacy shortcodes (pdf, slideshare and speakerdeck) by replacing them with anchor elements.

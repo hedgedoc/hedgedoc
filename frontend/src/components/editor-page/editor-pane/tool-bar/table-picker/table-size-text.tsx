@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { TableSize } from './table-size-picker-popover'
 import React, { useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import type { TableSize } from './table-size-picker-popover'
 
 export interface TableSizeProps {
   tableSize?: TableSize

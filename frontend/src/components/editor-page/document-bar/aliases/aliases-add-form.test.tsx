@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import * as AliasModule from '../../../../api/alias'
+import * as useApplicationStateModule from '../../../../hooks/common/use-application-state'
+import * as NoteDetailsReduxModule from '../../../../redux/note-details/methods'
+import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
+import * as useUiNotificationsModule from '../../../notifications/ui-notification-boundary'
+import { AliasesAddForm } from './aliases-add-form'
 import { render, act, screen } from '@testing-library/react'
 import testEvent from '@testing-library/user-event'
 import React from 'react'
-import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
-import * as AliasModule from '../../../../api/alias'
-import * as NoteDetailsReduxModule from '../../../../redux/note-details/methods'
-import * as useApplicationStateModule from '../../../../hooks/common/use-application-state'
-import { AliasesAddForm } from './aliases-add-form'
-import * as useUiNotificationsModule from '../../../notifications/ui-notification-boundary'
 
 jest.mock('../../../../api/alias')
 jest.mock('../../../../redux/note-details/methods')

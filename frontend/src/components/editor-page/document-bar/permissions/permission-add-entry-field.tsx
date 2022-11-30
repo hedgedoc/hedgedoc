@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { useOnInputChange } from '../../../../hooks/common/use-on-input-change'
+import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
 import React, { useCallback, useState } from 'react'
 import { Button, FormControl, InputGroup } from 'react-bootstrap'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import { useOnInputChange } from '../../../../hooks/common/use-on-input-change'
 import { useTranslation } from 'react-i18next'
 
 export interface PermissionAddEntryFieldProps {

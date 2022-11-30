@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useMemo, useState } from 'react'
-import { EditorView } from '@codemirror/view'
 import type { Extension } from '@codemirror/state'
+import { EditorView } from '@codemirror/view'
+import { useMemo, useState } from 'react'
 
 /**
  * Provides an extension that checks when the code mirror, that loads the extension, has its first update.

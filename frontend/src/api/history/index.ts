@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { ChangePinStatusDto, HistoryEntry, HistoryEntryPutDto } from './types'
+import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
-import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
+import type { ChangePinStatusDto, HistoryEntry, HistoryEntryPutDto } from './types'
 
 /**
  * Fetches the remote history for the user from the server.

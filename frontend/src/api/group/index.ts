@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { GroupInfo } from './types'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
+import type { GroupInfo } from './types'
 
 /**
  * Retrieves information about a group with a given name.

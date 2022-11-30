@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { ContentEdits } from './types/changes'
 import { Optional } from '@mrdrogdrog/optional'
 

@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { wrapSelection } from './wrap-selection'
 import type { ContentEdits } from './types/changes'
+import { wrapSelection } from './wrap-selection'
 
 describe('wrap selection', () => {
   it(`doesn't modify any line if no to-cursor is present`, () => {

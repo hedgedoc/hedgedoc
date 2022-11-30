@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { setUpI18n } from './setupI18n'
 import { refreshHistoryState } from '../../../redux/history/methods'
+import { Logger } from '../../../utils/logger'
+import { isDevMode, isTestMode } from '../../../utils/test-modes'
 import { fetchAndSetUser } from '../../login-page/auth/utils'
 import { fetchFrontendConfig } from './fetch-frontend-config'
 import { loadDarkMode } from './load-dark-mode'
-import { isDevMode, isTestMode } from '../../../utils/test-modes'
-import { Logger } from '../../../utils/logger'
+import { setUpI18n } from './setupI18n'
 
 const logger = new Logger('Application Loader')
 

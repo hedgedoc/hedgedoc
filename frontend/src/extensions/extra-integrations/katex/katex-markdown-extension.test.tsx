@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { render, screen } from '@testing-library/react'
+import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
 import { KatexMarkdownExtension } from './katex-markdown-extension'
-import { Suspense } from 'react'
+import { render, screen } from '@testing-library/react'
 import type { KatexOptions } from 'katex'
 import { default as KatexDefault } from 'katex'
-import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
+import { Suspense } from 'react'
 
 jest.mock('katex')
 

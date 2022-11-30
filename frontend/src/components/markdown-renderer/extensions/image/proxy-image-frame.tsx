@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useEffect, useState } from 'react'
 import { getProxiedUrl } from '../../../../api/media'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { Logger } from '../../../../utils/logger'
+import React, { useEffect, useState } from 'react'
 
 const log = new Logger('ProxyImageFrame')
 

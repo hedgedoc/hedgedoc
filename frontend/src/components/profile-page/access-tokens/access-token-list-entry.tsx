@@ -3,17 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback, useMemo } from 'react'
-import { Col, ListGroup, Row } from 'react-bootstrap'
-import { cypressId } from '../../../utils/cypress-attribute'
-import { Trans, useTranslation } from 'react-i18next'
-import { DateTime } from 'luxon'
-import { IconButton } from '../../common/icon-button/icon-button'
 import type { AccessToken } from '../../../api/tokens/types'
+import { useBooleanState } from '../../../hooks/common/use-boolean-state'
+import { cypressId } from '../../../utils/cypress-attribute'
+import { IconButton } from '../../common/icon-button/icon-button'
 import { AccessTokenDeletionModal } from './access-token-deletion-modal'
 import type { AccessTokenUpdateProps } from './profile-access-tokens'
-import { useBooleanState } from '../../../hooks/common/use-boolean-state'
+import { DateTime } from 'luxon'
+import React, { useCallback, useMemo } from 'react'
+import { Col, ListGroup, Row } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 export interface AccessTokenListEntryProps {
   token: AccessToken

@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { Fragment } from 'react'
-import { Trans } from 'react-i18next'
-import { VersionInfoModal } from './version-info-modal'
-import { cypressId } from '../../../../utils/cypress-attribute'
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
+import { cypressId } from '../../../../utils/cypress-attribute'
+import { VersionInfoModal } from './version-info-modal'
+import React, { Fragment } from 'react'
 import { Button } from 'react-bootstrap'
+import { Trans } from 'react-i18next'
 
 /**
  * Renders a link for the version info and the {@link VersionInfoModal}.

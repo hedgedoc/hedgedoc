@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { Linter } from './linter'
-import type { EditorView } from '@codemirror/view'
-import type { Diagnostic } from '@codemirror/lint'
 import { extractFrontmatter } from '../../../../redux/note-details/frontmatter-extractor/extractor'
-import { load } from 'js-yaml'
 import type { RawNoteFrontmatter } from '../../../../redux/note-details/raw-note-frontmatter-parser/types'
+import type { Linter } from './linter'
+import type { Diagnostic } from '@codemirror/lint'
+import type { EditorView } from '@codemirror/view'
 import { t } from 'i18next'
+import { load } from 'js-yaml'
 
 /**
  * Creates a {@link Linter linter} for the yaml frontmatter.

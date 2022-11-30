@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Element, Node } from 'domhandler'
-import { isTag } from 'domhandler'
-import { convertNodeToReactElement } from '@hedgedoc/html-to-react/dist/convertNodeToReactElement'
-import type { ComponentReplacer, NodeReplacement, ValidReactDomElement } from '../replace-components/component-replacer'
-import { DO_NOT_REPLACE } from '../replace-components/component-replacer'
-import React from 'react'
-import { Optional } from '@mrdrogdrog/optional'
 import { LinemarkerMarkdownExtension } from '../extensions/linemarker/linemarker-markdown-extension'
 import type { LineWithId } from '../extensions/linemarker/types'
+import type { ComponentReplacer, NodeReplacement, ValidReactDomElement } from '../replace-components/component-replacer'
+import { DO_NOT_REPLACE } from '../replace-components/component-replacer'
+import { convertNodeToReactElement } from '@hedgedoc/html-to-react/dist/convertNodeToReactElement'
+import { Optional } from '@mrdrogdrog/optional'
+import type { Element, Node } from 'domhandler'
+import { isTag } from 'domhandler'
+import React from 'react'
 
 type LineIndexPair = [startLineIndex: number, endLineIndex: number]
 

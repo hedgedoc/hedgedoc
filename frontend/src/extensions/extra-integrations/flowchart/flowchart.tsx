@@ -3,18 +3,17 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import fontStyles from '../../../../global-styles/variables.module.scss'
+import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary'
+import { ShowIf } from '../../../components/common/show-if/show-if'
+import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
+import { useDarkModeState } from '../../../hooks/common/use-dark-mode-state'
+import { Logger } from '../../../utils/logger'
+import { testId } from '../../../utils/test-id'
 import React, { useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import fontStyles from '../../../../global-styles/variables.module.scss'
 import { useAsync } from 'react-use'
-import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
-import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary'
-import { ShowIf } from '../../../components/common/show-if/show-if'
-import { testId } from '../../../utils/test-id'
-import { useDarkModeState } from '../../../hooks/common/use-dark-mode-state'
-import { Logger } from '../../../utils/logger'
 
 const log = new Logger('FlowChart')
 

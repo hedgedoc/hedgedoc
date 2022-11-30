@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
-import Head from 'next/head'
 import { useAppTitle } from '../../hooks/common/use-app-title'
-import { FavIcon } from './fav-icon'
 import { useBaseUrl } from '../../hooks/common/use-base-url'
+import { FavIcon } from './fav-icon'
+import Head from 'next/head'
+import React from 'react'
 
 /**
  * Sets basic browser meta tags.

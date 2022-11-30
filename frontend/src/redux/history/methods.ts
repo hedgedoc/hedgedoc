@@ -3,12 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { getGlobalState, store } from '../index'
-import type { HistoryExportJson, RemoveEntryAction, SetEntriesAction, UpdateEntryAction, V1HistoryEntry } from './types'
-import { HistoryActionType } from './types'
-import { download } from '../../components/common/download/download'
-import { DateTime } from 'luxon'
 import {
   deleteRemoteHistory,
   deleteRemoteHistoryEntry,
@@ -17,9 +11,14 @@ import {
   updateRemoteHistoryEntryPinStatus
 } from '../../api/history'
 import { addRemoteOriginToHistoryEntry, historyEntryToHistoryEntryPutDto } from '../../api/history/dto-methods'
-import { Logger } from '../../utils/logger'
 import type { HistoryEntry, HistoryEntryWithOrigin } from '../../api/history/types'
 import { HistoryEntryOrigin } from '../../api/history/types'
+import { download } from '../../components/common/download/download'
+import { Logger } from '../../utils/logger'
+import { getGlobalState, store } from '../index'
+import type { HistoryExportJson, RemoveEntryAction, SetEntriesAction, UpdateEntryAction, V1HistoryEntry } from './types'
+import { HistoryActionType } from './types'
+import { DateTime } from 'luxon'
 
 const log = new Logger('Redux > History')
 

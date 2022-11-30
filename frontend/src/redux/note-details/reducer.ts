@@ -3,18 +3,17 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Reducer } from 'redux'
+import { buildStateFromUpdatedMarkdownContent } from './build-state-from-updated-markdown-content'
+import { initialState } from './initial-state'
+import { buildStateFromFirstHeadingUpdate } from './reducers/build-state-from-first-heading-update'
+import { buildStateFromMetadataUpdate } from './reducers/build-state-from-metadata-update'
+import { buildStateFromServerPermissions } from './reducers/build-state-from-server-permissions'
+import { buildStateFromServerDto } from './reducers/build-state-from-set-note-data-from-server'
+import { buildStateFromUpdateCursorPosition } from './reducers/build-state-from-update-cursor-position'
 import type { NoteDetailsActions } from './types'
 import { NoteDetailsActionType } from './types'
-import { initialState } from './initial-state'
 import type { NoteDetails } from './types/note-details'
-import { buildStateFromUpdatedMarkdownContent } from './build-state-from-updated-markdown-content'
-import { buildStateFromUpdateCursorPosition } from './reducers/build-state-from-update-cursor-position'
-import { buildStateFromFirstHeadingUpdate } from './reducers/build-state-from-first-heading-update'
-import { buildStateFromServerDto } from './reducers/build-state-from-set-note-data-from-server'
-import { buildStateFromServerPermissions } from './reducers/build-state-from-server-permissions'
-import { buildStateFromMetadataUpdate } from './reducers/build-state-from-metadata-update'
+import type { Reducer } from 'redux'
 
 export const NoteDetailsReducer: Reducer<NoteDetails, NoteDetailsActions> = (
   state: NoteDetails = initialState,

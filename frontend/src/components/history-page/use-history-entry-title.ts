@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { HistoryEntryWithOrigin } from '../../api/history/types'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { HistoryEntryWithOrigin } from '../../api/history/types'
 
 /**
  * Hook that returns the title of a note in the history if present or the translation for "untitled" otherwise.

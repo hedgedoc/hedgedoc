@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useEffect } from 'react'
 import { setNoteContent } from '../../../../../redux/note-details/methods'
+import { useEffect } from 'react'
 import type { YText } from 'yjs/dist/src/types/YText'
 
 /**

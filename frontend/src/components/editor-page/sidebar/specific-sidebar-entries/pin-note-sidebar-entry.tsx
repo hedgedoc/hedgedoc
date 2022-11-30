@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useCallback, useMemo } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { toggleHistoryEntryPinning } from '../../../../redux/history/methods'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../types'
-import { toggleHistoryEntryPinning } from '../../../../redux/history/methods'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import styles from './pin-note-sidebar-entry.module.css'
-import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
+import React, { useCallback, useMemo } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Sidebar entry button that toggles the pinned status of the current note in the history.

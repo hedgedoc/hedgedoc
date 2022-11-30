@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useEffect } from 'react'
+import { useRendererToEditorCommunicator } from '../../../editor-page/render-context/renderer-to-editor-communicator-context-provider'
 import type { CommunicationMessages, EditorToRendererMessageType } from '../rendering-message'
 import type { Handler } from '../window-post-message-communicator'
-import { useRendererToEditorCommunicator } from '../../../editor-page/render-context/renderer-to-editor-communicator-context-provider'
+import { useEffect } from 'react'
 
 export type CommunicationMessageHandler<MESSAGE_TYPE extends EditorToRendererMessageType> = Handler<
   CommunicationMessages,

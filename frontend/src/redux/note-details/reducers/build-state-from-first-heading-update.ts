@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { NoteDetails } from '../types/note-details'
 import { generateNoteTitle } from '../generate-note-title'
+import type { NoteDetails } from '../types/note-details'
 
 /**
  * Builds a {@link NoteDetails} redux state with an updated note title from frontmatter data and the first heading.

@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { getMe } from '../../../api/me'
-import { setUser } from '../../../redux/user/methods'
 import type { AuthProvider } from '../../../api/config/types'
 import { authProviderTypeOneClick } from '../../../api/config/types'
+import { getMe } from '../../../api/me'
+import { setUser } from '../../../redux/user/methods'
 
 /**
  * Fetches metadata about the currently signed-in user from the API and stores it into the redux.

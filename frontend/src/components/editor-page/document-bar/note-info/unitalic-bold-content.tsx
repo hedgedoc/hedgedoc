@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { PropsWithChildren } from 'react'
-import React from 'react'
 import type { PropsWithDataCypressId } from '../../../../utils/cypress-attribute'
 import { cypressId } from '../../../../utils/cypress-attribute'
+import type { PropsWithChildren } from 'react'
+import React from 'react'
 
 export interface UnitalicBoldContentProps extends PropsWithDataCypressId {
   text?: string | number

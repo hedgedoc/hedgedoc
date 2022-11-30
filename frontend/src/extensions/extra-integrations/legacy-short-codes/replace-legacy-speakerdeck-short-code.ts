@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import type { RegexOptions } from '../../../external-types/markdown-it-regex/interface'
 import markdownItRegex from 'markdown-it-regex'
 import type MarkdownIt from 'markdown-it/lib'
-import type { RegexOptions } from '../../../external-types/markdown-it-regex/interface'
 
 export const legacySpeakerdeckRegex = /^{%speakerdeck\s+(\w+\/[\w-]+)\s*%}$/
 

@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import wordsCount from 'words-count'
 
 /** List of HTML tag names that should not be counted. */

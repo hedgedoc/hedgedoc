@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
 import { SingleLineRegexLinter } from './single-line-regex-linter'
 import type { Diagnostic } from '@codemirror/lint'
-import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
+import type { EditorState, Text } from '@codemirror/state'
 import type { EditorView } from '@codemirror/view'
 import { Mock } from 'ts-mockery'
-import type { EditorState, Text } from '@codemirror/state'
 
 export const mockEditorView = (content: string): EditorView => {
   const docMock = Mock.of<Text>()

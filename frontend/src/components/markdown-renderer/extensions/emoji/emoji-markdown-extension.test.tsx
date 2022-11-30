@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React from 'react'
 import { mockI18n } from '../../test-utils/mock-i18n'
-import { render } from '@testing-library/react'
 import { TestMarkdownRenderer } from '../../test-utils/test-markdown-renderer'
 import { EmojiMarkdownExtension } from './emoji-markdown-extension'
+import { render } from '@testing-library/react'
+import React from 'react'
 
 describe('Emoji Markdown Extension', () => {
   beforeAll(async () => {

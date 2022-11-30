@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { Doc } from 'yjs'
 import { useMemo } from 'react'
+import type { Doc } from 'yjs'
 import type { YText } from 'yjs/dist/src/types/YText'
 
 export const MARKDOWN_CONTENT_CHANNEL_NAME = 'markdownContent'

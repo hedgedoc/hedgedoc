@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import * as CsvTableModule from '../csv/csv-table'
-import React from 'react'
-import { render } from '@testing-library/react'
-import { CsvTableMarkdownExtension } from './csv-table-markdown-extension'
-import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
+import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
 import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
+import * as CsvTableModule from '../csv/csv-table'
+import { CsvTableMarkdownExtension } from './csv-table-markdown-extension'
+import { render } from '@testing-library/react'
+import React from 'react'
 
 jest.mock('../csv/csv-table')
 

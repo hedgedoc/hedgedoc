@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
+import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary'
+import { ShowIf } from '../../../components/common/show-if/show-if'
+import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
+import { Logger } from '../../../utils/logger'
 import React, { useEffect, useRef } from 'react'
 import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import type { VisualizationSpec } from 'vega-embed'
 import { useAsync } from 'react-use'
-import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
-import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary'
-import { ShowIf } from '../../../components/common/show-if/show-if'
-import { Logger } from '../../../utils/logger'
+import type { VisualizationSpec } from 'vega-embed'
 
 const log = new Logger('VegaChart')
 

@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { render, screen } from '@testing-library/react'
-import { FlowChart } from './flowchart'
-import type * as flowchartJsModule from 'flowchart.js'
 import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
 import { StoreProvider } from '../../../redux/store-provider'
+import { FlowChart } from './flowchart'
 import * as useMediaQuery from '@restart/hooks/useMediaQuery'
+import { render, screen } from '@testing-library/react'
+import type * as flowchartJsModule from 'flowchart.js'
 
 jest.mock('@restart/hooks/useMediaQuery')
 

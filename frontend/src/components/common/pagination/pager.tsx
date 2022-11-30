@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import type { PropsWithChildren } from 'react'
 import React, { Fragment, useEffect, useMemo } from 'react'
 

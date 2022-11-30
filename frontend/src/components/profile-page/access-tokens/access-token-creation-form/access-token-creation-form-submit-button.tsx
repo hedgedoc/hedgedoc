@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import React, { useMemo } from 'react'
 import { cypressId } from '../../../../utils/cypress-attribute'
-import { Trans } from 'react-i18next'
+import React, { useMemo } from 'react'
 import { Button } from 'react-bootstrap'
+import { Trans } from 'react-i18next'
 
 /**
  * Submit button for creating a new access token.

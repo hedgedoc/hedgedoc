@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { Awareness } from 'y-protocols/awareness'
-import { useEffect, useMemo } from 'react'
+import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { addOnlineUser, removeOnlineUser } from '../../../../../redux/realtime/methods'
 import { ActiveIndicatorStatus } from '../../../../../redux/realtime/types'
-import { useApplicationState } from '../../../../../hooks/common/use-application-state'
-import type { Doc } from 'yjs'
 import { Logger } from '../../../../../utils/logger'
+import { useEffect, useMemo } from 'react'
+import { Awareness } from 'y-protocols/awareness'
+import type { Doc } from 'yjs'
 
 const ownAwarenessClientId = -1
 

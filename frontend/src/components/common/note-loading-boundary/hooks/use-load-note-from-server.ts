@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { useAsyncFn } from 'react-use'
 import { getNote } from '../../../../api/notes'
-import { setNoteDataFromServer } from '../../../../redux/note-details/methods'
 import { useSingleStringUrlParameter } from '../../../../hooks/common/use-single-string-url-parameter'
+import { setNoteDataFromServer } from '../../../../redux/note-details/methods'
+import { useAsyncFn } from 'react-use'
 import type { AsyncState } from 'react-use/lib/useAsyncFn'
 
 /**
