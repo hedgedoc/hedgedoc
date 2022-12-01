@@ -44,7 +44,7 @@
     "@codemirror/lint": "6.1.0",
     "@codemirror/state": "6.1.4",
     "@codemirror/theme-one-dark": "6.1.0",
-    "@codemirror/view": "6.5.1",
+    "@codemirror/view": "6.6.0",
     "@fontsource/source-sans-pro": "4.5.11",
     "@hedgedoc/html-to-react": "1.4.5",
     "@hedgedoc/markdown-it-plugins": "1.0.0",
@@ -175,7 +175,7 @@
   "resolutions": {
     "domhandler": "5.0.3",
     "@codemirror/state": "6.1.4",
-    "@codemirror/view": "6.5.1",
+    "@codemirror/view": "6.6.0",
     "@codemirror/language": "6.3.1",
     "yjs": "13.5.42"
   }

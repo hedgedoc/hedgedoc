@@ -1738,14 +1738,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:6.5.1":
-  version: 6.5.1
-  resolution: "@codemirror/view@npm:6.5.1"
+"@codemirror/view@npm:6.6.0":
+  version: 6.6.0
+  resolution: "@codemirror/view@npm:6.6.0"
   dependencies:
     "@codemirror/state": ^6.1.4
     style-mod: ^4.0.0
     w3c-keyname: ^2.2.4
-  checksum: 1bd66b4f174642c559a521b546e80a67556fdc1b7cc7d1c7baf1cac37fed83e0e63d7a9ff6a88f3991a82d11bbbcfcca6e7b3491dcdd536c4c114de142b0300d
+  checksum: 9b007eedcf13e94ec7d9c30ee302e1a1fcd382bef2481bd9afa3a116458652983e745b40494eb29d80df1dca8f99e91dcb1e4eba37670c2553ffc90bef0933e7
   languageName: node
   linkType: hard
 
@@ -1940,7 +1940,7 @@ __metadata:
     "@codemirror/lint": 6.1.0
     "@codemirror/state": 6.1.4
     "@codemirror/theme-one-dark": 6.1.0
-    "@codemirror/view": 6.5.1
+    "@codemirror/view": 6.6.0
     "@fontsource/source-sans-pro": 4.5.11
     "@hedgedoc/html-to-react": 1.4.5
     "@hedgedoc/markdown-it-plugins": 1.0.0
