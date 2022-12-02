@@ -5,8 +5,8 @@
  */
 import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
 import { TableOfContents } from './table-of-contents'
+import type { TocAst } from '@hedgedoc/markdown-it-plugins'
 import { render } from '@testing-library/react'
-import type { TocAst } from 'markdown-it-toc-done-right'
 
 describe('Table of contents', () => {
   beforeAll(async () => {
@@ -14,29 +14,29 @@ describe('Table of contents', () => {
   })
 
   const level4Ast: TocAst = {
-    n: 'Level 4',
-    l: 4,
-    c: []
+    name: 'Level 4',
+    level: 4,
+    children: []
   }
   const level3Ast: TocAst = {
-    n: 'Level 3',
-    l: 3,
-    c: [level4Ast]
+    name: 'Level 3',
+    level: 3,
+    children: [level4Ast]
   }
   const level2Ast: TocAst = {
-    n: 'Level 2',
-    l: 2,
-    c: [level3Ast]
+    name: 'Level 2',
+    level: 2,
+    children: [level3Ast]
   }
   const level1Ast: TocAst = {
-    n: 'Level 1',
-    l: 1,
-    c: [level2Ast]
+    name: 'Level 1',
+    level: 1,
+    children: [level2Ast]
   }
   const level0Ast: TocAst = {
-    n: '',
-    l: 0,
-    c: [level1Ast]
+    name: '',
+    level: 0,
+    children: [level1Ast]
   }
 
   it('renders correctly', () => {

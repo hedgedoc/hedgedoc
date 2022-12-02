@@ -6,7 +6,7 @@
 import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 import type { ComponentReplacer } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import { TaskListReplacer } from './task-list-replacer'
-import { tasksLists } from '@hedgedoc/markdown-it-plugins'
+import { taskLists } from '@hedgedoc/markdown-it-plugins'
 import type MarkdownIt from 'markdown-it'
 
 /**
@@ -14,7 +14,7 @@ import type MarkdownIt from 'markdown-it'
  */
 export class TaskListMarkdownExtension extends MarkdownRendererExtension {
   public configureMarkdownIt(markdownIt: MarkdownIt): void {
-    tasksLists(markdownIt, {
+    taskLists(markdownIt, {
       enabled: true,
       label: true,
       lineNumber: true

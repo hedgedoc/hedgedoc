@@ -8,7 +8,7 @@ import { TableOfContentsMarkdownExtension } from '../markdown-renderer/extension
 import { useExtensionEventEmitterHandler } from '../markdown-renderer/hooks/use-extension-event-emitter'
 import styles from './markdown-document.module.scss'
 import { WidthBasedTableOfContents } from './width-based-table-of-contents'
-import type { TocAst } from 'markdown-it-toc-done-right'
+import type { TocAst } from '@hedgedoc/markdown-it-plugins'
 import React, { useState } from 'react'
 
 export interface DocumentTocSidebarProps {
