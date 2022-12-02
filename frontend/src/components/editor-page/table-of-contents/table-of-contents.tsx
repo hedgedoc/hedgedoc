@@ -6,7 +6,7 @@
 import { ShowIf } from '../../common/show-if/show-if'
 import styles from './table-of-contents.module.scss'
 import { useBuildReactDomFromTocAst } from './use-build-react-dom-from-toc-ast'
-import type { TocAst } from 'markdown-it-toc-done-right'
+import type { TocAst } from '@hedgedoc/markdown-it-plugins'
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -31,7 +31,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ ast, maxDepth 
 
   return (
     <div className={`${styles['markdown-toc']} ${className ?? ''}`}>
-      <ShowIf condition={ast.c.length === 0}>
+      <ShowIf condition={ast.children.length === 0}>
         <Trans i18nKey={'editor.infoToc'} />
       </ShowIf>
       {tocTree}

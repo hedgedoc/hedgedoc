@@ -2340,7 +2340,7 @@ __metadata:
     "@fontsource/source-sans-pro": 4.5.11
     "@hedgedoc/commons": "workspace:commons"
     "@hedgedoc/html-to-react": 1.4.5
-    "@hedgedoc/markdown-it-plugins": 1.0.0
+    "@hedgedoc/markdown-it-plugins": 2.0.0
     "@mrdrogdrog/optional": 1.0.0
     "@next/bundle-analyzer": 13.0.6
     "@react-hook/resize-observer": 1.2.6
@@ -2429,7 +2429,6 @@ __metadata:
     markdown-it-regex: 0.2.0
     markdown-it-sub: 1.0.0
     markdown-it-sup: 1.0.0
-    markdown-it-toc-done-right: 4.2.0
     mermaid: 9.2.2
     next: 13.0.6
     prettier: 2.8.1
@@ -2478,12 +2477,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hedgedoc/markdown-it-plugins@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@hedgedoc/markdown-it-plugins@npm:1.0.0"
+"@hedgedoc/markdown-it-plugins@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@hedgedoc/markdown-it-plugins@npm:2.0.0"
   peerDependencies:
     markdown-it: ">=12"
-  checksum: d8536d548d370d7c81a67fbf666d3e2bcedd5774fd933f3e1a3f432b7d2007b5d7c1790685a33e5a443d66648d5d0e8269c3e507d367c247b821679deba89407
+  checksum: 07e79bb239310cc0957d8e7fd00237eb3713566b8ec0de934a78b1c9f1bda75e625de3d9e1d3c6ab2329532580675b006692b3d3558a5e5b46da255d53bceaa2
   languageName: node
   linkType: hard
 
@@ -13315,13 +13314,6 @@ __metadata:
   version: 1.0.0
   resolution: "markdown-it-sup@npm:1.0.0"
   checksum: 9e593acb8c79dbb917645affde3c46ecb50baa59c740ffe4ecc7bfa470b5b746338f12c65219d6c4112f9f2b01b68cbd151aaabbac878f34e07c7120e5959324
-  languageName: node
-  linkType: hard
-
-"markdown-it-toc-done-right@npm:4.2.0":
-  version: 4.2.0
-  resolution: "markdown-it-toc-done-right@npm:4.2.0"
-  checksum: 1f6a88a5591ee21fda87aa64ba814e099f5a69f57affdfc222c176959871279907367f18dce962b10e076c6aa61938e137471fdc1dc622327e02b4a6a593c04f
   languageName: node
   linkType: hard
 

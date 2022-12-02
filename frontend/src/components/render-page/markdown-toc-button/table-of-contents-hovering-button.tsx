@@ -6,7 +6,7 @@
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { TableOfContents } from '../../editor-page/table-of-contents/table-of-contents'
 import styles from './markdown-toc-button.module.scss'
-import type { TocAst } from 'markdown-it-toc-done-right'
+import type { TocAst } from '@hedgedoc/markdown-it-plugins'
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
 
