@@ -76,7 +76,7 @@
     "typeorm": "0.3.7",
     "ws": "8.11.0",
     "y-protocols": "1.0.5",
-    "yjs": "13.5.42"
+    "yjs": "13.5.43"
   },
   "devDependencies": {
     "@nestjs/cli": "9.1.5",
@@ -143,6 +143,6 @@
   },
   "packageManager": "yarn@3.3.0",
   "resolutions": {
-    "yjs": "13.5.42"
+    "yjs": "13.5.43"
   }
 }

@@ -122,7 +122,7 @@
     "ws": "8.11.0",
     "y-codemirror.next": "0.3.2",
     "y-protocols": "1.0.5",
-    "yjs": "13.5.42"
+    "yjs": "13.5.43"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "12.3.4",
@@ -177,6 +177,6 @@
     "@codemirror/state": "6.1.4",
     "@codemirror/view": "6.6.0",
     "@codemirror/language": "6.3.1",
-    "yjs": "13.5.42"
+    "yjs": "13.5.43"
   }
 }
