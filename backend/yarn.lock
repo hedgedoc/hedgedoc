@@ -5642,7 +5642,7 @@ __metadata:
     rxjs: 7.5.7
     source-map-support: 0.5.21
     sqlite3: 5.1.2
-    supertest: 6.3.1
+    supertest: 6.3.2
     ts-jest: 29.0.3
     ts-mockery: 1.2.0
     ts-node: 10.9.1
@@ -9294,13 +9294,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supertest@npm:6.3.1":
-  version: 6.3.1
-  resolution: "supertest@npm:6.3.1"
+"supertest@npm:6.3.2":
+  version: 6.3.2
+  resolution: "supertest@npm:6.3.2"
   dependencies:
     methods: ^1.1.2
     superagent: ^8.0.3
-  checksum: 024d10e305bbaf926efff3d2dc68d339ae8d8650917a82ad121886c4a3a70707af92fdd1a1fd139054235d65ddab842ec54d48bb7161f6969bf98ef29eea3740
+  checksum: 97f6834df65c2837e08f448742d5956df7bd89f77021a6f11344f226247d67855f6b0d92324f8aa14994b0acf79b3f3fb28ad9ce7854f18e51926609ef8d9083
   languageName: node
   linkType: hard
 
