@@ -6,7 +6,7 @@
 import { getGlobalState } from '../../../../../redux'
 import { isMockMode } from '../../../../../utils/test-modes'
 import { MockConnection } from './mock-connection'
-import type { YDocMessageTransporter } from '@hedgedoc/realtime'
+import type { YDocMessageTransporter } from '@hedgedoc/commons'
 import { useEffect } from 'react'
 
 /**

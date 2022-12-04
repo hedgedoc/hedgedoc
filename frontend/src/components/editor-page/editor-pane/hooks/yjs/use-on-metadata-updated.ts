@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { updateMetadata } from '../../../../../redux/note-details/methods'
-import type { YDocMessageTransporter } from '@hedgedoc/realtime'
-import { MessageType } from '@hedgedoc/realtime'
+import type { YDocMessageTransporter } from '@hedgedoc/commons'
+import { MessageType } from '@hedgedoc/commons'
 import { useCallback, useEffect } from 'react'
 
 /**
@@ -19,9 +19,9 @@ export const useOnMetadataUpdated = (websocketConnection: YDocMessageTransporter
   }, [])
 
   useEffect(() => {
-    websocketConnection.on(MessageType.METADATA_UPDATED, updateMetadataHandler)
+    websocketConnection.on(String(MessageType.METADATA_UPDATED), () => void updateMetadataHandler())
     return () => {
-      websocketConnection.off(MessageType.METADATA_UPDATED, updateMetadataHandler)
+      websocketConnection.off(String(MessageType.METADATA_UPDATED), () => void updateMetadataHandler())
     }
   })
 }

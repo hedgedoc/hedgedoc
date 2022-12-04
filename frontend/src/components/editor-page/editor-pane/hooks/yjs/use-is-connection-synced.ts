@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { YDocMessageTransporter } from '@hedgedoc/realtime'
+import type { YDocMessageTransporter } from '@hedgedoc/commons'
 import { useEffect, useState } from 'react'
 
 /**
@@ -18,9 +18,11 @@ export const useIsConnectionSynced = (connection: YDocMessageTransporter): boole
   useEffect(() => {
     const enableEditor = () => setEditorEnabled(true)
     const disableEditor = () => setEditorEnabled(false)
-    connection.on('synced', enableEditor).on('disconnected', disableEditor)
+    connection.on('synced', enableEditor)
+    connection.on('disconnected', disableEditor)
     return () => {
-      connection.off('synced', enableEditor).off('disconnected', disableEditor)
+      connection.off('synced', enableEditor)
+      connection.off('disconnected', disableEditor)
     }
   }, [connection])
 

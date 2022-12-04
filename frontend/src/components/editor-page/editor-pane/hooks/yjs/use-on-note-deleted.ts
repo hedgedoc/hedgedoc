@@ -6,8 +6,8 @@
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { Logger } from '../../../../../utils/logger'
 import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
-import type { YDocMessageTransporter } from '@hedgedoc/realtime'
-import { MessageType } from '@hedgedoc/realtime'
+import type { YDocMessageTransporter } from '@hedgedoc/commons'
+import { MessageType } from '@hedgedoc/commons'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect } from 'react'
 
@@ -35,9 +35,9 @@ export const useOnNoteDeleted = (websocketConnection: YDocMessageTransporter): v
   }, [router, noteTitle, dispatchUiNotification])
 
   useEffect(() => {
-    websocketConnection.on(MessageType.DOCUMENT_DELETED, noteDeletedHandler)
+    websocketConnection.on(String(MessageType.DOCUMENT_DELETED), noteDeletedHandler)
     return () => {
-      websocketConnection.off(MessageType.DOCUMENT_DELETED, noteDeletedHandler)
+      websocketConnection.off(String(MessageType.DOCUMENT_DELETED), noteDeletedHandler)
     }
   })
 }

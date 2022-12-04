@@ -13,14 +13,20 @@ USER node
 WORKDIR /usr/src/app
 
 COPY --chown=node .yarn/plugins .yarn/plugins
+COPY --chown=node .yarn/patches .yarn/patches
 COPY --chown=node .yarn/releases .yarn/releases
 COPY --chown=node .yarnrc.yml .yarnrc.yml
 COPY --chown=node package.json package.json
 COPY --chown=node yarn.lock yarn.lock
 COPY --chown=node backend/package.json backend/
+COPY --chown=node commons commons
 COPY --chown=node frontend frontend
 RUN --mount=type=cache,sharing=locked,uid=1000,gid=1000,target=/tmp/.yarn \
     yarn install --immutable && yarn workspaces focus @hedgedoc/frontend
+
+WORKDIR /usr/src/app/commons
+
+RUN yarn build
 
 WORKDIR /usr/src/app/frontend
 
