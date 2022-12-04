@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { encodeAwarenessUpdateMessage } from '@hedgedoc/realtime';
+import { encodeAwarenessUpdateMessage } from '@hedgedoc/commons';
 import { Awareness } from 'y-protocols/awareness';
 
 import { RealtimeNote } from './realtime-note';

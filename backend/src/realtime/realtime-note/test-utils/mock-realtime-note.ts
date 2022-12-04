@@ -3,18 +3,17 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { EventEmitter } from 'events';
+import { EventEmitter2 } from 'eventemitter2';
 import { Mock } from 'ts-mockery';
-import TypedEmitter from 'typed-emitter';
 
 import { Note } from '../../../notes/note.entity';
-import { RealtimeNote, RealtimeNoteEvents } from '../realtime-note';
+import { RealtimeNote } from '../realtime-note';
 import { WebsocketAwareness } from '../websocket-awareness';
 import { WebsocketDoc } from '../websocket-doc';
 import { mockAwareness } from './mock-awareness';
 import { mockWebsocketDoc } from './mock-websocket-doc';
 
-class MockRealtimeNote extends (EventEmitter as new () => TypedEmitter<RealtimeNoteEvents>) {
+class MockRealtimeNote extends EventEmitter2 {
   constructor(
     private note: Note,
     private doc: WebsocketDoc,

@@ -26,19 +26,26 @@ USER node
 WORKDIR /usr/src/app
 
 COPY --chown=node .yarn/plugins .yarn/plugins
+COPY --chown=node .yarn/patches .yarn/patches
 COPY --chown=node .yarn/releases .yarn/releases
 COPY --chown=node .yarnrc.yml .yarnrc.yml
 COPY --chown=node package.json package.json
 COPY --chown=node yarn.lock yarn.lock
 COPY --chown=node backend/package.json backend/
+COPY --chown=node commons/package.json commons/
 COPY --chown=node frontend/package.json frontend/
 
 # Install dependencies first to not invalidate the cache on every source change
 RUN --mount=type=cache,sharing=locked,uid=1000,gid=1000,target=/tmp/.yarn \
     yarn install --immutable && yarn workspaces focus @hedgedoc/backend
 
+COPY --chown=node commons/ commons/
 COPY --chown=node backend/nest-cli.json backend/tsconfig.json backend/tsconfig.build.json backend/
 COPY --chown=node backend/src backend/src
+
+WORKDIR /usr/src/app/commons
+
+RUN yarn build
 
 ## Stage 2a: Dev config files and tests
 FROM code-with-deps as development

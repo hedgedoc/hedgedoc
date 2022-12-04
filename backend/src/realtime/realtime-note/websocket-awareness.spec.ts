@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import * as hedgedocRealtimeModule from '@hedgedoc/realtime';
+import * as hedgedocRealtimeModule from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
 
 import { RealtimeNote } from './realtime-note';
@@ -11,6 +11,8 @@ import { mockConnection } from './test-utils/mock-connection';
 import { ClientIdUpdate, WebsocketAwareness } from './websocket-awareness';
 import { WebsocketConnection } from './websocket-connection';
 import { WebsocketDoc } from './websocket-doc';
+
+jest.mock('@hedgedoc/commons');
 
 describe('websocket-awareness', () => {
   it('distributes content updates to other synced clients', () => {

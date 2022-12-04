@@ -72,14 +72,11 @@ jobs:
       - uses: actions/checkout@v3
         if: needs.changes.outputs.changed == 'true'
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup node
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/setup-node@v3
+        uses: ./.github/actions/setup-node
         with:
-          node-version: ${{ matrix.node-version }}
-
-      - run: yarn install --immutable
-        if: needs.changes.outputs.changed == 'true'
+          NODE_VERSION: ${{ env.NODE_VERSION }}
 
       - run: yarn run build
         if: needs.changes.outputs.changed == 'true'
@@ -93,14 +90,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Use Node.js ${{ env.NODEJS_VERSION }}
+      - name: Setup node
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/setup-node@v3
+        uses: ./.github/actions/setup-node
         with:
-          node-version: ${{ env.NODEJS_VERSION }}
-
-      - run: yarn install --immutable
-        if: needs.changes.outputs.changed == 'true'
+          NODE_VERSION: ${{ env.NODE_VERSION }}
 
       - run: yarn run test:cov
         if: needs.changes.outputs.changed == 'true'

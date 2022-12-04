@@ -6,7 +6,7 @@
 import {
   encodeDocumentDeletedMessage,
   encodeMetadataUpdatedMessage,
-} from '@hedgedoc/realtime';
+} from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
 
 import { Note } from '../../notes/note.entity';

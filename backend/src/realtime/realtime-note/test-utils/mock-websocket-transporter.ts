@@ -3,13 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { WebsocketTransporter } from '@hedgedoc/realtime';
-import { MessageTransporterEvents } from '@hedgedoc/realtime/dist/mjs/y-doc-message-transporter';
-import { EventEmitter } from 'events';
+import { WebsocketTransporter } from '@hedgedoc/commons';
+import { EventEmitter2 } from 'eventemitter2';
 import { Mock } from 'ts-mockery';
-import TypedEmitter from 'typed-emitter';
 
-class MockMessageTransporter extends (EventEmitter as new () => TypedEmitter<MessageTransporterEvents>) {
+class MockMessageTransporter extends EventEmitter2 {
   setupWebsocket(): void {
     //intentionally left blank
   }
