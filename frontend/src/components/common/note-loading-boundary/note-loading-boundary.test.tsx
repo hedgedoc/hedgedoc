@@ -20,7 +20,9 @@ import { Mock } from 'ts-mockery'
 jest.mock('../../../hooks/common/use-single-string-url-parameter')
 jest.mock('../../../api/notes')
 jest.mock('../../../redux/note-details/methods')
-jest.mock('../../error-pages/common-error-page')
+jest.mock('../../error-pages/common-error-page', () => ({
+  CommonErrorPage: jest.fn()
+}))
 jest.mock('../../../components/application-loader/loading-screen/loading-screen')
 jest.mock('./create-non-existing-note-hint')
 
