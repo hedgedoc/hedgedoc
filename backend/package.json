@@ -71,7 +71,7 @@
     "raw-body": "2.5.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
-    "rxjs": "7.5.7",
+    "rxjs": "7.6.0",
     "sqlite3": "5.1.2",
     "typeorm": "0.3.7",
     "ws": "8.11.0",
