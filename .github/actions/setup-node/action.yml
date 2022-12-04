@@ -36,3 +36,8 @@ runs:
       run: yarn install --immutable
       working-directory: .
       shell: bash
+
+    - name: Build commons lib
+      run: yarn build
+      working-directory: commons
+      shell: bash

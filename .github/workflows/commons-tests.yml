@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-name: Frontend / Lint
+name: Commons / Run unit tests & build
 
 on:
   push:
@@ -10,16 +10,17 @@ on:
   pull_request:
     branches: [ develop ]
 
-env:
-  NODE_VERSION: 18
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.job }}
+  cancel-in-progress: true
 
 defaults:
   run:
-    working-directory: frontend
+    working-directory: commons
 
 jobs:
   changes:
-    name: Check for frontend changes
+    name: Check for commons changes
     runs-on: ubuntu-latest
     permissions:
       pull-requests: read
@@ -37,14 +38,16 @@ jobs:
           filters: |
             files:
               - 'commons/**'
-              - 'frontend/**'
               - '.github/**'
               - '.yarn/**'
 
-  lint:
+  build:
     needs: changes
     runs-on: ubuntu-latest
-    name: Lints all .ts and .tsx files
+    strategy:
+      matrix:
+        node: [ '14', '16', '18' ]
+    name: Test and build with NodeJS ${{ matrix.node }}
     steps:
       - name: Checkout repository
         if: needs.changes.outputs.changed == 'true'
@@ -54,8 +57,12 @@ jobs:
         if: needs.changes.outputs.changed == 'true'
         uses: ./.github/actions/setup-node
         with:
-          NODE_VERSION: ${{ env.NODE_VERSION }}
+          NODE_VERSION: ${{ matrix.node }}
 
-      - name: Lint code
+      - name: Test Project
         if: needs.changes.outputs.changed == 'true'
-        run: yarn lint
+        run: yarn test
+
+      - name: Build project
+        if: needs.changes.outputs.changed == 'true'
+        run: yarn build

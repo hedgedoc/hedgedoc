@@ -41,6 +41,7 @@ jobs:
         with:
           filters: |
             files:
+              - 'commons/**'
               - 'backend/**'
               - '.github/**'
               - '.yarn/**'
