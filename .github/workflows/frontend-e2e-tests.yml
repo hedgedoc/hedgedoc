@@ -18,14 +18,13 @@ permissions:
 env:
   NODE_VERSION: 18
   HEAD_COMMIT_HASH: "${{ !!github.event.pull_request && github.event.pull_request.head.sha || github.sha }}"
-  HEAD_REF: "${{ !!github.event.pull_request && github.event.pull_request.head.label || github.ref }}"
 
 defaults:
   run:
     working-directory: frontend
 
 concurrency:
-  group: ${{ github.workflow }}-${{ env.HEAD_REF }}-${{ github.event_name }}
+  group: ${{ github.workflow }}-${{ !!github.event.pull_request && github.event.pull_request.head.label || github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
