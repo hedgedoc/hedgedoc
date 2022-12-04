@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "lib": [
+      "es2020",
+      "dom"
+    ],
+    "declaration": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "outDir": "dist/",
+    "rootDir": "./src",
+    "allowJs": true,
+    "sourceMap": true
+  },
+  "include": ["./src"],
+  "exclude": ["./dist", "**/*.test.*", "**/__mocks__/*", "**/__tests__/*"]
+}

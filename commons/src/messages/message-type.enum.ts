@@ -1,0 +1,20 @@
+/*
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+export enum MessageType {
+  COMPLETE_DOCUMENT_STATE_REQUEST = 0,
+  COMPLETE_DOCUMENT_STATE_ANSWER = 1,
+  DOCUMENT_UPDATE = 2,
+  AWARENESS_UPDATE = 3,
+  COMPLETE_AWARENESS_STATE_REQUEST = 4,
+  PING = 5,
+  PONG = 6,
+  READY_REQUEST = 7,
+  READY_ANSWER = 8,
+  METADATA_UPDATED = 9,
+  DOCUMENT_DELETED = 10,
+  SERVER_VERSION_UPDATED = 11
+}

@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-name: Frontend / Lint
+name: Commons / Lint
 
 on:
   push:
@@ -15,11 +15,11 @@ env:
 
 defaults:
   run:
-    working-directory: frontend
+    working-directory: commons
 
 jobs:
   changes:
-    name: Check for frontend changes
+    name: Check for commons changes
     runs-on: ubuntu-latest
     permissions:
       pull-requests: read
@@ -37,7 +37,6 @@ jobs:
           filters: |
             files:
               - 'commons/**'
-              - 'frontend/**'
               - '.github/**'
               - '.yarn/**'
 
