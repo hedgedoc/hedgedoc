@@ -22,7 +22,7 @@ backups/
 *.sqlite
 
 # Yarn 2 without zero-installs
-.yarn
+.yarn/*
 !.yarn/patches
 !.yarn/releases
 !.yarn/plugins
