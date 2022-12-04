@@ -8,7 +8,7 @@ import {
   encodeCompleteAwarenessStateRequestMessage,
   encodeDocumentUpdateMessage,
   WebsocketTransporter
-} from '@hedgedoc/realtime'
+} from '@hedgedoc/commons'
 import WebSocket from 'isomorphic-ws'
 import type { Awareness } from 'y-protocols/awareness'
 import type { Doc } from 'yjs'
