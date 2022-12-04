@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import * as hedgedocRealtimeModule from '@hedgedoc/realtime';
-import { WebsocketTransporter } from '@hedgedoc/realtime';
+import * as hedgedocRealtimeModule from '@hedgedoc/commons';
+import { WebsocketTransporter } from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
 import WebSocket from 'ws';
 import * as yProtocolsAwarenessModule from 'y-protocols/awareness';
@@ -24,6 +24,8 @@ import * as websocketDocModule from './websocket-doc';
 import { WebsocketDoc } from './websocket-doc';
 
 import SpyInstance = jest.SpyInstance;
+
+jest.mock('@hedgedoc/commons');
 
 describe('websocket connection', () => {
   let mockedDoc: WebsocketDoc;

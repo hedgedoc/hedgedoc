@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { WebsocketTransporter } from '@hedgedoc/realtime';
+import { WebsocketTransporter } from '@hedgedoc/commons';
 import { Logger } from '@nestjs/common';
 import WebSocket from 'ws';
 import { Awareness, removeAwarenessStates } from 'y-protocols/awareness';

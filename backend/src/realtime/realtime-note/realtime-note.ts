@@ -6,10 +6,9 @@
 import {
   encodeDocumentDeletedMessage,
   encodeMetadataUpdatedMessage,
-} from '@hedgedoc/realtime';
+} from '@hedgedoc/commons';
 import { Logger } from '@nestjs/common';
-import { EventEmitter } from 'events';
-import TypedEventEmitter, { EventMap } from 'typed-emitter';
+import { EventEmitter2 } from 'eventemitter2';
 import { Awareness } from 'y-protocols/awareness';
 
 import { Note } from '../../notes/note.entity';
@@ -17,18 +16,10 @@ import { WebsocketAwareness } from './websocket-awareness';
 import { WebsocketConnection } from './websocket-connection';
 import { WebsocketDoc } from './websocket-doc';
 
-export type RealtimeNoteEvents = {
-  beforeDestroy: () => void;
-  destroy: () => void;
-};
-
-type TypedEventEmitterConstructor<T extends EventMap> =
-  new () => TypedEventEmitter<T>;
-
 /**
  * Represents a note currently being edited by a number of clients.
  */
-export class RealtimeNote extends (EventEmitter as TypedEventEmitterConstructor<RealtimeNoteEvents>) {
+export class RealtimeNote extends EventEmitter2 {
   protected logger: Logger;
   private readonly websocketDoc: WebsocketDoc;
   private readonly websocketAwareness: WebsocketAwareness;
