@@ -13,7 +13,7 @@ defaults:
     working-directory: frontend
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.job }}
   cancel-in-progress: true
 
 jobs:
