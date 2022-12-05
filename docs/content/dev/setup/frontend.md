@@ -6,12 +6,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Setting up the frontend
 
-You need at least Node 14 (we recommend Node 18) and [yarn](https://yarnpkg.com/).
-You MUST use yarn! There is no support for npm.
-
-1. Clone this repo (e.g. `git clone https://github.com/hedgedoc/hedgedoc.git hedgedoc`)
-2. Go into the frontend directory (e.g. `cd hedgedoc/frontend`)
-3. Run `yarn install`
+Follow the preparation instructions in [getting started](../getting-started.md)
 
 ## Development mode
 
