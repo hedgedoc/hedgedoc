@@ -2252,7 +2252,6 @@ __metadata:
     jest: 29.5.0
     joi: 17.8.4
     ldapauth-fork: 5.0.5
-    lib0: 0.2.67
     minio: 7.0.32
     mocked-env: 1.3.5
     mysql: 2.18.1
@@ -2278,7 +2277,6 @@ __metadata:
     typeorm: 0.3.7
     typescript: 4.9.5
     ws: 8.13.0
-    y-protocols: 1.0.5
     yjs: 13.5.50
   languageName: unknown
   linkType: soft
@@ -2299,13 +2297,11 @@ __metadata:
     eventemitter2: 6.4.9
     isomorphic-ws: 5.0.0
     jest: 29.5.0
-    lib0: 0.2.67
     microbundle: 0.15.1
     prettier: 2.8.4
     ts-jest: 29.0.5
     typescript: 4.9.5
     ws: 8.13.0
-    y-protocols: 1.0.5
     yjs: 13.5.50
   languageName: unknown
   linkType: soft
@@ -2450,8 +2446,6 @@ __metadata:
     vega-lite: 5.6.1
     words-count: 2.0.2
     ws: 8.13.0
-    y-codemirror.next: 0.3.2
-    y-protocols: 1.0.5
     yjs: 13.5.50
   languageName: unknown
   linkType: soft
@@ -12490,7 +12484,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lib0@npm:0.2.67":
+"lib0@npm:^0.2.49":
   version: 0.2.67
   resolution: "lib0@npm:0.2.67"
   dependencies:
@@ -12498,17 +12492,6 @@ __metadata:
   bin:
     0gentesthtml: bin/gentesthtml.js
   checksum: 9b931424d06a2af9a960b73506c6d1048afbb51ac587a1c5ce0a5c99c71d184ed9cf3bcea2ecada5b74179bd104fdc7d23939930058a29c5e12d413e11e78c61
-  languageName: node
-  linkType: hard
-
-"lib0@npm:^0.2.42, lib0@npm:^0.2.49":
-  version: 0.2.66
-  resolution: "lib0@npm:0.2.66"
-  dependencies:
-    isomorphic.js: ^0.2.4
-  bin:
-    0gentesthtml: bin/gentesthtml.js
-  checksum: 500210fd1c91112b4bd309b988f83282fd6b5e8ae0ca49e1675047524cdb26760becd54c36d214263f911005a2e995da1680ce359d0b411b3cced0b7ae5a921f
   languageName: node
   linkType: hard
 
@@ -19097,37 +19080,6 @@ __metadata:
   version: 4.0.2
   resolution: "xtend@npm:4.0.2"
   checksum: ac5dfa738b21f6e7f0dd6e65e1b3155036d68104e67e5d5d1bde74892e327d7e5636a076f625599dc394330a731861e87343ff184b0047fef1360a7ec0a5a36a
-  languageName: node
-  linkType: hard
-
-"y-codemirror.next@npm:0.3.2":
-  version: 0.3.2
-  resolution: "y-codemirror.next@npm:0.3.2"
-  dependencies:
-    lib0: ^0.2.42
-  peerDependencies:
-    "@codemirror/state": ^6.0.0
-    "@codemirror/view": ^6.0.0
-    yjs: ^13.5.6
-  checksum: d86cae29fe654ad4e556782c08055eb3e4ee1706cdb1bd7bf5b15c2ce1c91cb5b9d7785c8b0a9ee85444337fd3a0dba84d9d276895114a62dba9dab6d9d05ca0
-  languageName: node
-  linkType: hard
-
-"y-protocols@npm:1.0.5":
-  version: 1.0.5
-  resolution: "y-protocols@npm:1.0.5"
-  dependencies:
-    lib0: ^0.2.42
-  checksum: d19404a4ebafcf3761c28b881abe8c32ab6e457db0e5ffc7dbb749cbc2c3bb98e003a43f3e8eba7f245b2698c76f2c4cdd1c2db869f8ec0c6ef94736d9a88652
-  languageName: node
-  linkType: hard
-
-"y-protocols@patch:y-protocols@npm%3A1.0.5#./.yarn/patches/y-protocols-npm-1.0.5-af6f64b4df.patch::locator=hedgedoc%40workspace%3A.":
-  version: 1.0.5
-  resolution: "y-protocols@patch:y-protocols@npm%3A1.0.5#./.yarn/patches/y-protocols-npm-1.0.5-af6f64b4df.patch::version=1.0.5&hash=74a689&locator=hedgedoc%40workspace%3A."
-  dependencies:
-    lib0: ^0.2.42
-  checksum: 95480e7d8dac9e14cf82473f3a151aee131e0624d4e4920b63c96a91e7fcf3597612852368f62741c7ba3ff8a6aea1d77b7ddca3f4c9426da7dd8f4c6c98b728
   languageName: node
   linkType: hard
 

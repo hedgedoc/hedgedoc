@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { useBaseUrl, ORIGIN } from '../../../hooks/common/use-base-url'
+import { ORIGIN, useBaseUrl } from '../../../hooks/common/use-base-url'
 import { useDarkModeState } from '../../../hooks/common/use-dark-mode-state'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { findLanguageByCodeBlockName } from '../../markdown-renderer/extensions/base/code-block-markdown-extension/find-language-by-code-block-name'
@@ -17,18 +17,18 @@ import { useOnImageUploadFromRenderer } from './hooks/image-upload-from-renderer
 import { useCodeMirrorTablePasteExtension } from './hooks/table-paste/use-code-mirror-table-paste-extension'
 import { useApplyScrollState } from './hooks/use-apply-scroll-state'
 import { useCursorActivityCallback } from './hooks/use-cursor-activity-callback'
+import { useSendRemoteCursor } from './hooks/use-send-remote-cursor'
 import { useUpdateCodeMirrorReference } from './hooks/use-update-code-mirror-reference'
-import { useAwareness } from './hooks/yjs/use-awareness'
 import { useBindYTextToRedux } from './hooks/yjs/use-bind-y-text-to-redux'
 import { useCodeMirrorYjsExtension } from './hooks/yjs/use-code-mirror-yjs-extension'
-import { useInsertNoteContentIntoYTextInMockModeEffect } from './hooks/yjs/use-insert-note-content-into-y-text-in-mock-mode-effect'
-import { useIsConnectionSynced } from './hooks/yjs/use-is-connection-synced'
 import { useMarkdownContentYText } from './hooks/yjs/use-markdown-content-y-text'
-import { useOnFirstEditorUpdateExtension } from './hooks/yjs/use-on-first-editor-update-extension'
 import { useOnMetadataUpdated } from './hooks/yjs/use-on-metadata-updated'
 import { useOnNoteDeleted } from './hooks/yjs/use-on-note-deleted'
-import { useWebsocketConnection } from './hooks/yjs/use-websocket-connection'
+import { useRealtimeConnection } from './hooks/yjs/use-realtime-connection'
+import { useReceiveRealtimeUsers } from './hooks/yjs/use-receive-realtime-users'
+import { useSyncRealtimeUsersToCodeMirror } from './hooks/yjs/use-sync-realtime-users-to-code-mirror'
 import { useYDoc } from './hooks/yjs/use-y-doc'
+import { useYDocSyncClient } from './hooks/yjs/use-y-doc-sync-client'
 import { useLinter } from './linter/linter'
 import { MaxLengthWarning } from './max-length-warning/max-length-warning'
 import { StatusBar } from './status-bar/status-bar'
@@ -40,8 +40,10 @@ import { lintGutter } from '@codemirror/lint'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { EditorView } from '@codemirror/view'
 import ReactCodeMirror from '@uiw/react-codemirror'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+
+export type EditorPaneProps = ScrollProps
 
 /**
  * Renders the text editor pane of the editor.
@@ -52,36 +54,41 @@ import { useTranslation } from 'react-i18next'
  * @param onMakeScrollSource The callback to request to become the scroll source.
  * @external {ReactCodeMirror} https://npmjs.com/@uiw/react-codemirror
  */
-export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMakeScrollSource }) => {
-  const ligaturesEnabled = useApplicationState((state) => state.editorConfig.ligatures)
-
+export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, onMakeScrollSource }) => {
   useApplyScrollState(scrollState)
+
+  const yDoc = useYDoc()
+  const yText = useMarkdownContentYText(yDoc)
 
   const editorScrollExtension = useCodeMirrorScrollWatchExtension(onScroll)
   const tablePasteExtensions = useCodeMirrorTablePasteExtension()
   const fileInsertExtension = useCodeMirrorFileInsertExtension()
   const spellCheckExtension = useCodeMirrorSpellCheckExtension()
   const cursorActivityExtension = useCursorActivityCallback()
-
   const updateViewContextExtension = useUpdateCodeMirrorReference()
+  const [yjsExtension, pluginLoaded] = useCodeMirrorYjsExtension(yText)
+  const linterExtension = useLinter()
 
-  const yDoc = useYDoc()
-  const awareness = useAwareness(yDoc)
-  const yText = useMarkdownContentYText(yDoc)
-  const websocketConnection = useWebsocketConnection(yDoc, awareness)
-  const connectionSynced = useIsConnectionSynced(websocketConnection)
+  const messageTransporter = useRealtimeConnection()
+  const syncAdapter = useYDocSyncClient(messageTransporter, yDoc)
+
+  useOnMetadataUpdated(messageTransporter)
+  useOnNoteDeleted(messageTransporter)
+  useEffect(() => {
+    if (pluginLoaded) {
+      messageTransporter.asSoonAsConnected(() => syncAdapter.requestDocumentState())
+    }
+  }, [messageTransporter, pluginLoaded, syncAdapter])
+
   useBindYTextToRedux(yText)
-  useOnMetadataUpdated(websocketConnection)
-  useOnNoteDeleted(websocketConnection)
 
-  const yjsExtension = useCodeMirrorYjsExtension(yText, awareness)
-  const [firstEditorUpdateExtension, firstUpdateHappened] = useOnFirstEditorUpdateExtension()
-  useInsertNoteContentIntoYTextInMockModeEffect(firstUpdateHappened, websocketConnection)
-  const linter = useLinter()
+  useReceiveRealtimeUsers(messageTransporter)
+  const cursorSelectionExtension = useSendRemoteCursor(messageTransporter)
+  useSyncRealtimeUsersToCodeMirror()
 
   const extensions = useMemo(
     () => [
-      linter,
+      linterExtension,
       lintGutter(),
       markdown({
         base: markdownLanguage,
@@ -89,40 +96,40 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
       }),
       EditorView.lineWrapping,
       editorScrollExtension,
+      cursorSelectionExtension,
       tablePasteExtensions,
       fileInsertExtension,
       autocompletion(),
       cursorActivityExtension,
       updateViewContextExtension,
       yjsExtension,
-      firstEditorUpdateExtension,
       spellCheckExtension
     ],
     [
-      linter,
+      linterExtension,
       editorScrollExtension,
+      cursorSelectionExtension,
       tablePasteExtensions,
       fileInsertExtension,
       cursorActivityExtension,
       updateViewContextExtension,
       yjsExtension,
-      firstEditorUpdateExtension,
       spellCheckExtension
     ]
   )
 
   useOnImageUploadFromRenderer()
 
+  const ligaturesEnabled = useApplicationState((state) => state.editorConfig.ligatures)
   const codeMirrorClassName = useMemo(
     () => `overflow-hidden ${styles.extendedCodemirror} h-100 ${ligaturesEnabled ? '' : styles['no-ligatures']}`,
     [ligaturesEnabled]
   )
 
   const { t } = useTranslation()
-
   const darkModeActivated = useDarkModeState()
-
   const editorOrigin = useBaseUrl(ORIGIN.EDITOR)
+  const isSynced = useApplicationState((state) => state.realtimeStatus.isSynced)
 
   return (
     <div
@@ -130,11 +137,11 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
       onTouchStart={onMakeScrollSource}
       onMouseEnter={onMakeScrollSource}
       {...cypressId('editor-pane')}
-      {...cypressAttribute('editor-ready', String(firstUpdateHappened && connectionSynced))}>
+      {...cypressAttribute('editor-ready', String(updateViewContextExtension !== null && isSynced))}>
       <MaxLengthWarning />
       <ToolBar />
       <ReactCodeMirror
-        editable={firstUpdateHappened && connectionSynced}
+        editable={updateViewContextExtension !== null && isSynced}
         placeholder={t('editor.placeholder', { host: editorOrigin }) ?? ''}
         extensions={extensions}
         width={'100%'}

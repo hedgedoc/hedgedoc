@@ -20,6 +20,7 @@ import { useUpdateLocalHistoryEntry } from './hooks/use-update-local-history-ent
 import { Sidebar } from './sidebar/sidebar'
 import { Splitter } from './splitter/splitter'
 import type { DualScrollState, ScrollState } from './synced-scroll/scroll-props'
+import { RealtimeConnectionModal } from './websocket-connection-modal/realtime-connection-modal'
 import equal from 'fast-deep-equal'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -79,7 +80,6 @@ export const EditorPageContent: React.FC = () => {
   )
 
   useApplyDarkMode()
-
   useUpdateLocalHistoryEntry()
 
   const setRendererToScrollSource = useCallback(() => {
@@ -129,6 +129,7 @@ export const EditorPageContent: React.FC = () => {
         <CommunicatorImageLightbox />
         <HeadMetaProperties />
         <MotdModal />
+        <RealtimeConnectionModal />
         <div className={'d-flex flex-column vh-100'}>
           <AppBar mode={AppBarMode.EDITOR} />
           <div className={'flex-fill d-flex h-100 w-100 overflow-hidden flex-row'}>

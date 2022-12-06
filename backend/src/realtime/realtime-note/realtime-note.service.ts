@@ -42,7 +42,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
     this.revisionsService
       .createRevision(
         realtimeNote.getNote(),
-        realtimeNote.getYDoc().getCurrentContent(),
+        realtimeNote.getDoc().getCurrentContent(),
       )
       .catch((reason) => this.logger.error(reason));
   }

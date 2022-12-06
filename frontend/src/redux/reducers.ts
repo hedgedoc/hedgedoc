@@ -9,7 +9,7 @@ import { DarkModeConfigReducer } from './dark-mode/reducers'
 import { EditorConfigReducer } from './editor/reducers'
 import { HistoryReducer } from './history/reducers'
 import { NoteDetailsReducer } from './note-details/reducer'
-import { RealtimeReducer } from './realtime/reducers'
+import { RealtimeStatusReducer } from './realtime/reducers'
 import { RendererStatusReducer } from './renderer-status/reducers'
 import { UserReducer } from './user/reducers'
 import type { Reducer } from 'redux'
@@ -23,5 +23,5 @@ export const allReducers: Reducer<ApplicationState> = combineReducers<Applicatio
   darkMode: DarkModeConfigReducer,
   noteDetails: NoteDetailsReducer,
   rendererStatus: RendererStatusReducer,
-  realtime: RealtimeReducer
+  realtimeStatus: RealtimeStatusReducer
 })

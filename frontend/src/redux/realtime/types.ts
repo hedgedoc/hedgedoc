@@ -3,38 +3,43 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { RealtimeUser } from '@hedgedoc/commons'
 import type { Action } from 'redux'
 
-export enum RealtimeActionType {
-  ADD_ONLINE_USER = 'realtime/add-user',
-  REMOVE_ONLINE_USER = 'realtime/remove-user',
-  UPDATE_ONLINE_USER = 'realtime/update-user'
+export enum RealtimeStatusActionType {
+  SET_REALTIME_USERS = 'realtime/set-users',
+  SET_REALTIME_CONNECTION_STATUS = 'realtime/set-connection-status',
+  SET_REALTIME_SYNCED_STATUS = 'realtime/set-synced-status',
+  RESET_REALTIME_STATUS = 'realtime/reset-realtime-status'
 }
 
-export interface RealtimeState {
-  users: Record<number, OnlineUser>
+export interface SetRealtimeUsersAction extends Action<RealtimeStatusActionType> {
+  type: RealtimeStatusActionType.SET_REALTIME_USERS
+  users: RealtimeUser[]
 }
 
-export enum ActiveIndicatorStatus {
-  ACTIVE = 'active',
-  INACTIVE = 'inactive'
+export interface SetRealtimeConnectionStatusAction extends Action<RealtimeStatusActionType> {
+  type: RealtimeStatusActionType.SET_REALTIME_CONNECTION_STATUS
+  isConnected: boolean
 }
 
-export interface OnlineUser {
-  username: string
-  color: string
-  active: ActiveIndicatorStatus
+export interface SetRealtimeSyncStatusAction extends Action<RealtimeStatusActionType> {
+  type: RealtimeStatusActionType.SET_REALTIME_SYNCED_STATUS
+  isSynced: boolean
 }
 
-export interface AddOnlineUserAction extends Action<RealtimeActionType> {
-  type: RealtimeActionType.ADD_ONLINE_USER
-  clientId: number
-  user: OnlineUser
+export interface ResetRealtimeStatusAction extends Action<RealtimeStatusActionType> {
+  type: RealtimeStatusActionType.RESET_REALTIME_STATUS
 }
 
-export interface RemoveOnlineUserAction extends Action<RealtimeActionType> {
-  type: RealtimeActionType.REMOVE_ONLINE_USER
-  clientId: number
+export interface RealtimeStatus {
+  onlineUsers: RealtimeUser[]
+  isConnected: boolean
+  isSynced: boolean
 }
 
-export type RealtimeActions = AddOnlineUserAction | RemoveOnlineUserAction
+export type RealtimeStatusActions =
+  | SetRealtimeUsersAction
+  | SetRealtimeConnectionStatusAction
+  | SetRealtimeSyncStatusAction
+  | ResetRealtimeStatusAction

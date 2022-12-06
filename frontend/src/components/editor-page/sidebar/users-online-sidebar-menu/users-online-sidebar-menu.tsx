@@ -31,21 +31,19 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   selectedMenuId
 }) => {
   const buttonRef = useRef<HTMLButtonElement>(null)
-  const onlineUsers = useApplicationState((state) => state.realtime.users)
+  const realtimeUsers = useApplicationState((state) => state.realtimeStatus.onlineUsers)
   useTranslation()
 
   useEffect(() => {
-    const value = `${Object.keys(onlineUsers).length}`
-    buttonRef.current?.style.setProperty('--users-online', `"${value}"`)
-  }, [onlineUsers])
+    buttonRef.current?.style.setProperty('--users-online', `"${realtimeUsers.length}"`)
+  }, [realtimeUsers])
 
   const hide = selectedMenuId !== DocumentSidebarMenuSelection.NONE && selectedMenuId !== menuId
   const expand = selectedMenuId === menuId
   const onClickHandler = useCallback(() => onClick(menuId), [menuId, onClick])
 
   const onlineUserElements = useMemo(() => {
-    const entries = Object.entries(onlineUsers)
-    if (entries.length === 0) {
+    if (realtimeUsers.length === 0) {
       return (
         <SidebarButton>
           <span className={'ms-3'}>
@@ -54,15 +52,15 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         </SidebarButton>
       )
     } else {
-      return entries.map(([clientId, onlineUser]) => {
+      return realtimeUsers.map((realtimeUser) => {
         return (
-          <SidebarButton key={clientId}>
-            <UserLine username={onlineUser.username} color={onlineUser.color} status={onlineUser.active} />
+          <SidebarButton key={realtimeUser.styleIndex}>
+            <UserLine username={realtimeUser.username} color={realtimeUser.styleIndex} active={realtimeUser.active} />
           </SidebarButton>
         )
       })
     }
-  }, [onlineUsers])
+  }, [realtimeUsers])
 
   return (
     <Fragment>

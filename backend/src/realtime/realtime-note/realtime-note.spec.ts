@@ -3,39 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  encodeDocumentDeletedMessage,
-  encodeMetadataUpdatedMessage,
-} from '@hedgedoc/commons';
+import { Message, MessageType } from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
 
 import { Note } from '../../notes/note.entity';
+import * as extendedDocModule from './extended-doc';
+import { ExtendedDoc } from './extended-doc';
 import { RealtimeNote } from './realtime-note';
-import { mockAwareness } from './test-utils/mock-awareness';
 import { mockConnection } from './test-utils/mock-connection';
-import { mockWebsocketDoc } from './test-utils/mock-websocket-doc';
-import * as websocketAwarenessModule from './websocket-awareness';
-import { WebsocketAwareness } from './websocket-awareness';
-import * as websocketDocModule from './websocket-doc';
-import { WebsocketDoc } from './websocket-doc';
 
 describe('realtime note', () => {
-  let mockedDoc: WebsocketDoc;
-  let mockedAwareness: WebsocketAwareness;
   let mockedNote: Note;
 
   beforeEach(() => {
-    jest.resetAllMocks();
-    jest.resetModules();
-    mockedDoc = mockWebsocketDoc();
-    mockedAwareness = mockAwareness();
-    jest
-      .spyOn(websocketDocModule, 'WebsocketDoc')
-      .mockImplementation(() => mockedDoc);
-    jest
-      .spyOn(websocketAwarenessModule, 'WebsocketAwareness')
-      .mockImplementation(() => mockedAwareness);
-
     mockedNote = Mock.of<Note>({ id: 4711 });
   });
 
@@ -51,7 +31,7 @@ describe('realtime note', () => {
 
   it('can connect and disconnect clients', () => {
     const sut = new RealtimeNote(mockedNote, 'nothing');
-    const client1 = mockConnection(true);
+    const client1 = mockConnection(sut);
     sut.addClient(client1);
     expect(sut.getConnections()).toStrictEqual([client1]);
     expect(sut.hasConnections()).toBeTruthy();
@@ -60,19 +40,22 @@ describe('realtime note', () => {
     expect(sut.hasConnections()).toBeFalsy();
   });
 
-  it('creates a y-doc and y-awareness', () => {
-    const sut = new RealtimeNote(mockedNote, 'nothing');
-    expect(sut.getYDoc()).toBe(mockedDoc);
-    expect(sut.getAwareness()).toBe(mockedAwareness);
+  it('creates a y-doc', () => {
+    const initialContent = 'nothing';
+    const mockedDoc = new ExtendedDoc(initialContent);
+    const docSpy = jest
+      .spyOn(extendedDocModule, 'ExtendedDoc')
+      .mockReturnValue(mockedDoc);
+    const sut = new RealtimeNote(mockedNote, initialContent);
+    expect(docSpy).toHaveBeenCalledWith(initialContent);
+    expect(sut.getDoc()).toBe(mockedDoc);
   });
 
-  it('destroys y-doc and y-awareness on self-destruction', () => {
+  it('destroys y-doc on self-destruction', () => {
     const sut = new RealtimeNote(mockedNote, 'nothing');
-    const docDestroy = jest.spyOn(mockedDoc, 'destroy');
-    const awarenessDestroy = jest.spyOn(mockedAwareness, 'destroy');
+    const docDestroy = jest.spyOn(sut.getDoc(), 'destroy');
     sut.destroy();
     expect(docDestroy).toHaveBeenCalled();
-    expect(awarenessDestroy).toHaveBeenCalled();
   });
 
   it('emits destroy event on destruction', async () => {
@@ -92,35 +75,78 @@ describe('realtime note', () => {
     expect(() => sut.destroy()).toThrow();
   });
 
+  it('distributes y-doc updates to all clients', () => {
+    const sut = new RealtimeNote(mockedNote, 'nothing');
+
+    const client1 = mockConnection(sut);
+    const client2 = mockConnection(sut);
+    const client3 = mockConnection(sut);
+    const client4 = mockConnection(sut);
+
+    const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
+    const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
+    const sendMessage3Spy = jest.spyOn(client3.getTransporter(), 'sendMessage');
+    const sendMessage4Spy = jest.spyOn(client4.getTransporter(), 'sendMessage');
+
+    sut.addClient(client1);
+    sut.addClient(client2);
+    sut.addClient(client3);
+    sut.addClient(client4);
+
+    jest.spyOn(client2.getSyncAdapter(), 'isSynced').mockReturnValue(false);
+
+    sut.getDoc().emit('update', [new Uint8Array([0, 1, 2, 3, 4]), client1]);
+
+    const expectedMessage: Message<MessageType.NOTE_CONTENT_UPDATE> = {
+      payload: [0, 1, 2, 3, 4],
+      type: MessageType.NOTE_CONTENT_UPDATE,
+    };
+
+    expect(sendMessage1Spy).toHaveBeenCalledTimes(0);
+    expect(sendMessage2Spy).toHaveBeenCalledTimes(0);
+    expect(sendMessage3Spy).toHaveBeenCalledWith(expectedMessage);
+    expect(sendMessage4Spy).toHaveBeenCalledWith(expectedMessage);
+  });
+
   it('announcePermissionChange to all clients', () => {
     const sut = new RealtimeNote(mockedNote, 'nothing');
-    const client1 = mockConnection(true);
+
+    const client1 = mockConnection(sut);
+    const client2 = mockConnection(sut);
+
+    const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
+    const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
+
     sut.addClient(client1);
-    const client2 = mockConnection(true);
     sut.addClient(client2);
-    const metadataMessage = encodeMetadataUpdatedMessage();
+
+    const metadataMessage = { type: MessageType.METADATA_UPDATED };
     sut.announcePermissionChange();
-    expect(client1.send).toHaveBeenCalledWith(metadataMessage);
-    expect(client2.send).toHaveBeenCalledWith(metadataMessage);
+    expect(sendMessage1Spy).toHaveBeenCalledWith(metadataMessage);
+    expect(sendMessage2Spy).toHaveBeenCalledWith(metadataMessage);
     sut.removeClient(client2);
     sut.announcePermissionChange();
-    expect(client1.send).toHaveBeenCalledTimes(2);
-    expect(client2.send).toHaveBeenCalledTimes(1);
+    expect(sendMessage1Spy).toHaveBeenCalledTimes(2);
+    expect(sendMessage2Spy).toHaveBeenCalledTimes(1);
   });
 
   it('announceNoteDeletion to all clients', () => {
     const sut = new RealtimeNote(mockedNote, 'nothing');
-    const client1 = mockConnection(true);
+    const client1 = mockConnection(sut);
+    const client2 = mockConnection(sut);
+
+    const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
+    const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
+
     sut.addClient(client1);
-    const client2 = mockConnection(true);
     sut.addClient(client2);
-    const deletedMessage = encodeDocumentDeletedMessage();
+    const deletedMessage = { type: MessageType.DOCUMENT_DELETED };
     sut.announceNoteDeletion();
-    expect(client1.send).toHaveBeenCalledWith(deletedMessage);
-    expect(client2.send).toHaveBeenCalledWith(deletedMessage);
+    expect(sendMessage1Spy).toHaveBeenCalledWith(deletedMessage);
+    expect(sendMessage2Spy).toHaveBeenCalledWith(deletedMessage);
     sut.removeClient(client2);
     sut.announceNoteDeletion();
-    expect(client1.send).toHaveBeenCalledTimes(2);
-    expect(client2.send).toHaveBeenCalledTimes(1);
+    expect(sendMessage1Spy).toHaveBeenCalledTimes(2);
+    expect(sendMessage2Spy).toHaveBeenCalledTimes(1);
   });
 });

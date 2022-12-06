@@ -58,7 +58,6 @@
     "file-type": "16.5.4",
     "joi": "17.8.4",
     "ldapauth-fork": "5.0.5",
-    "lib0": "0.2.67",
     "minio": "7.0.32",
     "mysql": "2.18.1",
     "nest-router": "1.0.9",
@@ -75,7 +74,6 @@
     "sqlite3": "5.1.6",
     "typeorm": "0.3.7",
     "ws": "8.13.0",
-    "y-protocols": "1.0.5",
     "yjs": "13.5.50"
   },
   "devDependencies": {

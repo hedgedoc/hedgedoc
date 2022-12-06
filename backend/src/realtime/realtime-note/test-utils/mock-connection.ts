@@ -3,21 +3,32 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  MockedBackendMessageTransporter,
+  YDocSyncServer,
+} from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
 
 import { User } from '../../../users/user.entity';
-import { WebsocketConnection } from '../websocket-connection';
+import { RealtimeConnection } from '../realtime-connection';
+import { RealtimeNote } from '../realtime-note';
 
 /**
- * Provides a partial mock for {@link WebsocketConnection}.
+ * Provides a partial mock for {@link RealtimeConnection}.
  *
- * @param synced Defines the return value for the `isSynced` function.
+ * @param realtimeNote the {@link RealtimeNote realtime note} that belongs to the connection.
  */
-export function mockConnection(synced: boolean): WebsocketConnection {
-  return Mock.of<WebsocketConnection>({
-    isSynced: jest.fn(() => synced),
-    send: jest.fn(),
+export function mockConnection(realtimeNote: RealtimeNote): RealtimeConnection {
+  const transporter = new MockedBackendMessageTransporter('');
+  const yDocSyncAdapter = new YDocSyncServer(
+    realtimeNote.getDoc(),
+    transporter,
+  );
+
+  return Mock.of<RealtimeConnection>({
     getUser: jest.fn(() => Mock.of<User>({ username: 'mockedUser' })),
     getUsername: jest.fn(() => 'mocked user'),
+    getSyncAdapter: jest.fn(() => yDocSyncAdapter),
+    getTransporter: jest.fn(() => transporter),
   });
 }
