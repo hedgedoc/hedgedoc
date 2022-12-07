@@ -11,7 +11,7 @@
     "domhandler": "5.0.3",
     "yjs": "13.5.42",
     "@codemirror/state": "6.1.4",
-    "@codemirror/view": "6.6.0",
+    "@codemirror/view": "6.7.0",
     "@codemirror/language": "6.3.1"
   }
 }
