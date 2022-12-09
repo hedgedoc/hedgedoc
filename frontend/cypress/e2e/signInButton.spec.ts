@@ -36,7 +36,7 @@ describe('When logged-out ', () => {
           type: AuthProviderType.LOCAL
         }
       ])
-      cy.getByCypressId('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
+      cy.getByCypressId('sign-in-button').should('be.visible').parent().should('have.attr', 'href', '/login')
     })
 
     it('sign-in button points to login route: ldap', () => {
@@ -47,7 +47,7 @@ describe('When logged-out ', () => {
           providerName: 'cy LDAP'
         }
       ])
-      cy.getByCypressId('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
+      cy.getByCypressId('sign-in-button').should('be.visible').parent().should('have.attr', 'href', '/login')
     })
   })
 
@@ -60,6 +60,7 @@ describe('When logged-out ', () => {
       ])
       cy.getByCypressId('sign-in-button')
         .should('be.visible')
+        .parent()
         // The absolute URL is used because it is defined as API base URL absolute.
         .should('have.attr', 'href', '/auth/github')
     })
@@ -75,7 +76,7 @@ describe('When logged-out ', () => {
           type: AuthProviderType.GOOGLE
         }
       ])
-      cy.getByCypressId('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
+      cy.getByCypressId('sign-in-button').should('be.visible').parent().should('have.attr', 'href', '/login')
     })
   })
 
@@ -89,7 +90,7 @@ describe('When logged-out ', () => {
           type: AuthProviderType.LOCAL
         }
       ])
-      cy.getByCypressId('sign-in-button').should('be.visible').should('have.attr', 'href', '/login')
+      cy.getByCypressId('sign-in-button').should('be.visible').parent().should('have.attr', 'href', '/login')
     })
   })
 })
