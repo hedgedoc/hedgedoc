@@ -81,7 +81,7 @@
     "i18next-resources-to-backend": "1.0.0",
     "isomorphic-ws": "5.0.0",
     "js-yaml": "4.1.0",
-    "katex": "0.16.3",
+    "katex": "0.16.4",
     "luxon": "3.1.1",
     "markdown-it": "13.0.1",
     "markdown-it-abbr": "1.0.4",
