@@ -2183,7 +2183,7 @@ __metadata:
     "@types/diff": 5.0.2
     "@types/express": 4.17.14
     "@types/express-session": 1.17.5
-    "@types/jest": 29.2.3
+    "@types/jest": 29.2.4
     "@types/minio": 7.0.15
     "@types/mysql": 2.15.21
     "@types/node": 18.11.12
@@ -2237,7 +2237,7 @@ __metadata:
     rxjs: 7.6.0
     source-map-support: 0.5.21
     sqlite3: 5.1.2
-    supertest: 6.3.2
+    supertest: 6.3.3
     ts-jest: 29.0.3
     ts-mockery: 1.2.0
     ts-node: 10.9.1
@@ -2281,7 +2281,7 @@ __metadata:
     "@types/d3-graphviz": 2.6.7
     "@types/diff": 5.0.2
     "@types/dompurify": 2.4.0
-    "@types/jest": 29.2.3
+    "@types/jest": 29.2.4
     "@types/js-yaml": 4.0.5
     "@types/katex": 0.14.0
     "@types/luxon": 3.1.0
@@ -4316,13 +4316,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:*, @types/jest@npm:29.2.3":
+"@types/jest@npm:*":
   version: 29.2.3
   resolution: "@types/jest@npm:29.2.3"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
   checksum: 55370906711b600a05b9e497c22aa74d80d8adcdbe4ac2f1bc9311f6f6ca0dd192862b6f38df6ac0d45e92396bcd796e377b1d8058c10bdfd584aeee580c3ce1
+  languageName: node
+  linkType: hard
+
+"@types/jest@npm:29.2.4":
+  version: 29.2.4
+  resolution: "@types/jest@npm:29.2.4"
+  dependencies:
+    expect: ^29.0.0
+    pretty-format: ^29.0.0
+  checksum: 9deb4756fe1b438d41ff1aae7d6c216c9e49e5fe60f539f8edb6698ffeb530ff7b25d37e223439b03602ca3a7397c9c2e53e1a39c7bd616353472fce0cc04107
   languageName: node
   linkType: hard
 
@@ -9840,7 +9850,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formidable@npm:^2.0.1":
+"formidable@npm:^2.1.1":
   version: 2.1.2
   resolution: "formidable@npm:2.1.2"
   dependencies:
@@ -15748,31 +15758,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"superagent@npm:^8.0.3":
-  version: 8.0.5
-  resolution: "superagent@npm:8.0.5"
+"superagent@npm:^8.0.5":
+  version: 8.0.6
+  resolution: "superagent@npm:8.0.6"
   dependencies:
     component-emitter: ^1.3.0
     cookiejar: ^2.1.3
     debug: ^4.3.4
     fast-safe-stringify: ^2.1.1
     form-data: ^4.0.0
-    formidable: ^2.0.1
+    formidable: ^2.1.1
     methods: ^1.1.2
     mime: 2.6.0
     qs: ^6.11.0
     semver: ^7.3.8
-  checksum: 24d56047811b0664727d07117c5ae9cf17d9b074f1636447d511e8027b1ebd61116a78edb2628e9ef5ef330b1bf2afff72b5418e30b9a83a22de435ef569bc4d
+  checksum: 2dfe44b74acd37da34cb44617919927ebf689570f46f89234be3a0b8e89cae5afca8e28adae6b6be77a3cd06661f47cf5c4c872e9d98ba184e8f12fcb041a29d
   languageName: node
   linkType: hard
 
-"supertest@npm:6.3.2":
-  version: 6.3.2
-  resolution: "supertest@npm:6.3.2"
+"supertest@npm:6.3.3":
+  version: 6.3.3
+  resolution: "supertest@npm:6.3.3"
   dependencies:
     methods: ^1.1.2
-    superagent: ^8.0.3
-  checksum: 97f6834df65c2837e08f448742d5956df7bd89f77021a6f11344f226247d67855f6b0d92324f8aa14994b0acf79b3f3fb28ad9ce7854f18e51926609ef8d9083
+    superagent: ^8.0.5
+  checksum: 38239e517f7ba62b7a139a79c5c48d55f8d67b5ff4b6e51d5b07732ca8bbc4a28ffa1b10916fbb403dd013a054dbf028edc5850057d9a43aecbff439d494673e
   languageName: node
   linkType: hard
 
