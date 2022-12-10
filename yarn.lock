@@ -2373,7 +2373,7 @@ __metadata:
     sanitize-filename: 1.6.3
     sass: 1.56.2
     sharp: 0.31.2
-    tlds: 1.234.0
+    tlds: 1.235.0
     ts-loader: 9.4.2
     ts-mockery: 1.2.0
     ts-node: 10.9.1
@@ -16130,12 +16130,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tlds@npm:1.234.0":
-  version: 1.234.0
-  resolution: "tlds@npm:1.234.0"
+"tlds@npm:1.235.0":
+  version: 1.235.0
+  resolution: "tlds@npm:1.235.0"
   bin:
     tlds: bin.js
-  checksum: 8beccadeff8f41ad4d859227f01e4a9a569fea3bccb3b11ce1f37a0366b1f3736bae2d8e7314572e238541e45c95c975572dec423f4dba53ce5cf1f53eb9d031
+  checksum: a7b3ea55e3a3909d3b84e92e1ef340912251f2e3b7c84d4c0f06b6af4d04334c5983975c8dff5a340a7ed28e44e9ed222446b8d0ed0d8acf9160d8b188d95a91
   languageName: node
   linkType: hard
 
