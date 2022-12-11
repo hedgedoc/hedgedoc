@@ -95,7 +95,7 @@
         ".github/workflows/deploy-pr.yml$"
       ],
       "matchStrings": [
-        "NODE_VERSION=(?<currentValue>.*?)\\n"
+        "NODEJS_VERSION=(?<currentValue>.*?)\\n"
       ],
       "datasourceTemplate": "node",
       "depNameTemplate": "node version in workflows"

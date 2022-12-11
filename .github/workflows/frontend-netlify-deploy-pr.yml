@@ -28,7 +28,7 @@ permissions:
 
 env:
   NETLIFY_VERSION: 12.0.11
-  NODE_VERSION: 18
+  NODEJS_VERSION: 18
 
 defaults:
   run:
@@ -59,8 +59,8 @@ jobs:
             files:
               - 'commons/**'
               - 'frontend/**'
-              - '.github/**'
-              - '.yarn/**'
+              - 'yarn.lock'
+              - 'package.json'
 
   deploy:
     needs: changes
@@ -80,7 +80,7 @@ jobs:
         if: needs.changes.outputs.changed == 'true'
         uses: ./.github/actions/setup-node
         with:
-          NODE_VERSION: ${{ env.NODE_VERSION }}
+          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
 
       - name: Patch intro.md to include netlify banner.
         if: needs.changes.outputs.changed == 'true'
@@ -100,7 +100,14 @@ jobs:
 
       - name: Build app
         if: needs.changes.outputs.changed == 'true'
-        run: yarn build:mock
+        run: yarn turbo run build --filter=frontend
+        shell: bash
+        working-directory: .
+        env:
+          NEXT_PUBLIC_USE_MOCK_API: true
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_API: ${{ vars.TURBO_API }}
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
       - name: Remove Next.js cache to avoid it being deployed
         if: needs.changes.outputs.changed == 'true'

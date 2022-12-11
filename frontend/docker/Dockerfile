@@ -2,8 +2,15 @@
 #
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
+# BASE
+FROM docker.io/node:18-alpine@sha256:bc329c7332cffc30c2d4801e38df03cbfa8dcbae2a7a52a449db104794f168a3 AS base
+RUN apk add --no-cache tini
+ENTRYPOINT ["tini", "--"]
+
 # BUILD
-FROM docker.io/node:18-alpine@sha256:bc329c7332cffc30c2d4801e38df03cbfa8dcbae2a7a52a449db104794f168a3 AS builder
+FROM base AS builder
+
+RUN apk add --no-cache libc6-compat
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ARG BUILD_VERSION=CLIENT_VERSION_MISSING
@@ -12,31 +19,21 @@ ENV YARN_CACHE_FOLDER /tmp/.yarn
 USER node
 WORKDIR /usr/src/app
 
-COPY --chown=node .yarn/plugins .yarn/plugins
-COPY --chown=node .yarn/patches .yarn/patches
-COPY --chown=node .yarn/releases .yarn/releases
-COPY --chown=node .yarnrc.yml .yarnrc.yml
-COPY --chown=node package.json package.json
-COPY --chown=node yarn.lock yarn.lock
-COPY --chown=node backend/package.json backend/
-COPY --chown=node commons commons
-COPY --chown=node frontend frontend
+COPY --chown=node . .
 RUN --mount=type=cache,sharing=locked,uid=1000,gid=1000,target=/tmp/.yarn \
-    yarn install --immutable && yarn workspaces focus @hedgedoc/frontend
+    yarn install --immutable && yarn workspaces focus hedgedoc @hedgedoc/backend @hedgedoc/commons
 
-WORKDIR /usr/src/app/commons
+ARG TURBO_TEAM
+ARG TURBO_API
+ARG TURBO_TOKEN
 
-RUN yarn build
-
-WORKDIR /usr/src/app/frontend
-
-RUN rm -rf public/public && \
-    rm -rf src/pages/api && \
-    sed -i "s/CLIENT_VERSION_MISSING/${BUILD_VERSION}/" src/version.json
-RUN yarn build
+RUN rm -rf frontend/public/public
+RUN rm -rf frontend/src/pages/api
+RUN sed -i "s/CLIENT_VERSION_MISSING/${BUILD_VERSION}/" frontend/src/version.json
+RUN yarn turbo run build --filter=frontend --no-cache --no-daemon
 
 # RUNNER
-FROM docker.io/node:18-alpine@sha256:bc329c7332cffc30c2d4801e38df03cbfa8dcbae2a7a52a449db104794f168a3
+FROM base
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 

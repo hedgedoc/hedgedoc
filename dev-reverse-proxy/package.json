@@ -1,0 +1,9 @@
+{
+  "name": "@hedgedoc/dev-reverse-proxy",
+  "version": "0.0.0",
+  "private": true,
+  "license": "AGPL-3.0",
+  "scripts": {
+    "start:dev": "./caddy run"
+  }
+}

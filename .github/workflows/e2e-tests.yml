@@ -1,0 +1,193 @@
+# SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+name: E2E Tests
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request_target:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ !!github.event.pull_request && github.event.pull_request.head.label || github.ref }}-${{ github.event_name }}-${{ github.job }}
+  cancel-in-progress: true
+
+env:
+  NODEJS_VERSION: 18
+  HEAD_COMMIT_HASH: "${{ !!github.event.pull_request && github.event.pull_request.head.sha || github.sha }}"
+
+jobs:
+  backend-sqlite: # This run also collects coverage
+    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+        with:
+          fetch-depth: 0
+      - name: Setup node
+        uses: ./.github/actions/setup-node
+        with:
+          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
+
+      - name: Run e2e tests
+        run: yarn turbo run test:e2e:ci --filter=backend
+        shell: bash
+        env:
+          HEDGEDOC_TEST_DB_TYPE: sqlite
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_API: ${{ vars.TURBO_API }}
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70 # v3.1.1
+        with:
+          directory: backend/coverage-e2e
+          flags: e2e-tests
+
+  backend-mariadb:
+    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
+    runs-on: ubuntu-latest
+    services:
+      mariadb:
+        image: mariadb
+        env:
+          MYSQL_USER: hedgedoc
+          MYSQL_PASSWORD: hedgedoc
+          MYSQL_DATABASE: hedgedoc
+          MYSQL_ROOT_PASSWORD: hedgedoc
+        options: --health-cmd "mysqladmin ping" --health-interval 5s --health-timeout 2s --health-retries 5
+        ports:
+          - 3306:3306
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+        with:
+          fetch-depth: 0
+      - name: Setup node
+        uses: ./.github/actions/setup-node
+        with:
+          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
+
+      - name: Run e2e tests
+        run: yarn turbo run test:e2e:ci --filter=backend
+        shell: bash
+        env:
+          HEDGEDOC_TEST_DB_TYPE: mariadb
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_API: ${{ vars.TURBO_API }}
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+  backend-postgres:
+    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: hedgedoc
+          POSTGRES_USER: hedgedoc
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 2s --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+        with:
+          fetch-depth: 0
+      - name: Setup node
+        uses: ./.github/actions/setup-node
+        with:
+          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
+
+      - name: Run e2e tests
+        run: yarn turbo run test:e2e:ci --filter=backend
+        shell: bash
+        env:
+          HEDGEDOC_TEST_DB_TYPE: postgres
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_API: ${{ vars.TURBO_API }}
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+  frontend-build:
+    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
+    runs-on: ubuntu-latest
+    name: Build test build of frontend
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+        with:
+          ref: ${{ env.HEAD_COMMIT_HASH }}
+
+      - name: Setup node
+        uses: ./.github/actions/setup-node
+        with:
+          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
+
+      - name: Build test production build
+        run: yarn turbo run build:test --filter=frontend
+        shell: bash
+        env:
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_API: ${{ vars.TURBO_API }}
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+  frontend-cypress:
+    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
+    needs: frontend-build
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node18.12.0-chrome106-ff106
+      options: --shm-size=2g
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [ 1, 2, 3 ]
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - name: Setup node
+        uses: ./.github/actions/setup-node
+        with:
+          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
+
+      - name: Install jq
+        run: apt-get update && apt-get install -y jq
+
+      - name: Build test production build
+        run: yarn turbo run build:test --filter=frontend
+        shell: bash
+        env:
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_API: ${{ vars.TURBO_API }}
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+      - name: Run server
+        working-directory: frontend/
+        run: yarn start:ci &
+        env:
+          NODE_ENV: test
+
+      - name: Wait for server
+        run: "sleep 3 && curl --max-time 120 http://127.0.0.1:3001/"
+
+      - name: Run cypress
+        run: yarn turbo run test:e2e:ci --filter=frontend
+        shell: bash
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_API: ${{ vars.TURBO_API }}
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+          CYPRESS_CONTAINER_ID: ${{ matrix.containers }}
+
+      - uses: actions/upload-artifact@65d862660abb392b8c4a3d1195a2108db131dd05 # master
+        with:
+          name: screenshots
+          path: cypress/screenshots
