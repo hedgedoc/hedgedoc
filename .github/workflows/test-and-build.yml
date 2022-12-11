@@ -1,0 +1,59 @@
+# SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+name: Run tests & build
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.job }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [ '14', '16', '18' ]
+        include:
+          - node: '18'
+            coverage: true
+    name: Test and build with NodeJS ${{ matrix.node }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - name: Setup node
+        uses: ./.github/actions/setup-node
+        with:
+          NODEJS_VERSION: ${{ matrix.node }}
+
+      - name: Build project
+        run: yarn turbo run build
+        shell: bash
+        env:
+          NODEJS_VERSION: ${{ matrix.node }}
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_API: ${{ vars.TURBO_API }}
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+      - name: Test Project
+        run: yarn turbo run test:ci
+        shell: bash
+        env:
+          NODEJS_VERSION: ${{ matrix.node }}
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_API: ${{ vars.TURBO_API }}
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+      - name: Upload coverage
+        if: "${{ matrix.coverage == true }}"
+        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70 # v3.1.1
+        with:
+          directory: backend/coverage
+          flags: integration-tests

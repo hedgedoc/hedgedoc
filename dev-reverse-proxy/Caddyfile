@@ -8,6 +8,8 @@
 
 log {
 	output stdout
+	level WARN
+	format console
 }
 
 reverse_proxy /realtime http://127.0.0.1:3000

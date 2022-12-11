@@ -1,0 +1,108 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {},
+    "@hedgedoc/commons#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    },
+    "@hedgedoc/frontend#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**"
+      ],
+      "env": [
+        "NODEJS_VERSION"
+      ]
+    },
+    "@hedgedoc/backend#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ],
+      "env": [
+        "NODEJS_VERSION"
+      ]
+    },
+
+    "build:test": {},
+    "@hedgedoc/frontend#build:test": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**"
+      ],
+      "env": [
+        "NODEJS_VERSION"
+      ]
+    },
+
+    "lint": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+
+    "format": {},
+
+    "test:ci": {},
+    "@hedgedoc/backend#test:ci": {
+      "dependsOn": [
+        "^build"
+      ],
+      "env": [
+        "NODEJS_VERSION"
+      ],
+      "outputs": [
+        "coverage/**"
+      ]
+    },
+    "@hedgedoc/frontend#test:ci": {
+      "dependsOn": [
+        "^build"
+      ],
+      "env": [
+        "NODEJS_VERSION"
+      ]
+    },
+
+    "test:e2e:ci": {},
+    "@hedgedoc/frontend#test:e2e:ci": {
+      "dependsOn": [
+        "^build"
+      ],
+      "env": [
+        "CYPRESS_CONTAINER_ID"
+      ]
+    },
+    "@hedgedoc/backend#test:e2e:ci": {
+      "dependsOn": [
+        "^build"
+      ],
+      "env": [
+        "HEDGEDOC_TEST_DB_TYPE"
+      ],
+      "outputs": [
+        "coverage-e2e/**"
+      ]
+    },
+
+    "start:dev": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": false,
+      "persistent": true
+    }
+  }
+}
+

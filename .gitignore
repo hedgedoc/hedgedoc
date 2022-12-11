@@ -20,6 +20,8 @@ backups/
 *.pid
 *.log
 *.sqlite
+.turbo
+
 
 # Yarn 2 without zero-installs
 .yarn/*

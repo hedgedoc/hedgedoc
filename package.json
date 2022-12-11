@@ -5,8 +5,15 @@
   "workspaces": [
     "backend",
     "frontend",
-    "commons"
+    "commons",
+    "dev-reverse-proxy"
   ],
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "start:dev": "turbo run start:dev"
+  },
   "packageManager": "yarn@3.4.1",
   "resolutions": {
     "domhandler": "5.0.3",
@@ -22,5 +29,8 @@
     "@types/react": "18.0.27",
     "y-protocols@^1.0.0": "patch:y-protocols@npm%3A1.0.5#./.yarn/patches/y-protocols-npm-1.0.5-af6f64b4df.patch",
     "y-protocols@1.0.5": "patch:y-protocols@npm%3A1.0.5#./.yarn/patches/y-protocols-npm-1.0.5-af6f64b4df.patch"
+  },
+  "devDependencies": {
+    "turbo": "1.6.3"
   }
 }

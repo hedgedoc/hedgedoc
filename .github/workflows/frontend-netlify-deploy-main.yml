@@ -10,7 +10,7 @@ on:
 
 env:
   NETLIFY_VERSION: 12.0.11
-  NODE_VERSION: 18
+  NODEJS_VERSION: 18
 
 defaults:
   run:
@@ -21,74 +21,47 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  changes:
-    name: Check for frontend changes
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: read
-    outputs:
-      changed: ${{ github.event_name == 'push' || steps.changed.outputs.files }}
-    steps:
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
-        if: github.event_name != 'push'
-
-      - name: Check for frontend file changes
-        if: github.event_name != 'push'
-        uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
-        id: changed
-        with:
-          filters: |
-            files:
-              - 'commons/**'
-              - 'frontend/**'
-              - '.github/**'
-              - '.yarn/**'
-
   deploy:
-    needs: changes
     runs-on: ubuntu-latest
     name: Deploys to netlify
     steps:
       - name: Checkout repository
-        if: needs.changes.outputs.changed == 'true'
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
 
       - name: Setup node
-        if: needs.changes.outputs.changed == 'true'
         uses: ./.github/actions/setup-node
         with:
-          NODE_VERSION: ${{ env.NODE_VERSION }}
+          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
 
       - name: Patch intro.md to include netlify banner.
-        if: needs.changes.outputs.changed == 'true'
         run: cp netlify/intro.md public/public/intro.md
 
       - name: Patch motd.md to include privacy policy.
-        if: needs.changes.outputs.changed == 'true'
         run: cp netlify/motd.md public/public/motd.md
 
       - name: Patch version.json to include git hash
-        if: needs.changes.outputs.changed == 'true'
         run: jq ".version = \"0.0.0+${GITHUB_SHA:0:8}\"" src/version.json > src/_version.json && mv src/_version.json src/version.json
 
       - name: Patch base URL
-        if: needs.changes.outputs.changed == 'true'
         run: echo "HD_BASE_URL=\"https://hedgedoc.dev/\"" >> .env.production
 
       - name: Build app
-        if: needs.changes.outputs.changed == 'true'
-        run: yarn build:mock
+        run: yarn turbo run build --filter=frontend
+        shell: bash
+        working-directory: .
+        env:
+          NEXT_PUBLIC_USE_MOCK_API: true
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_API: ${{ vars.TURBO_API }}
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
       - name: Remove Next.js cache to avoid it being deployed
-        if: needs.changes.outputs.changed == 'true'
         run: rm -r .next/cache
 
       - name: Install netlify CLI
-        if: needs.changes.outputs.changed == 'true'
         run: "npm install -g netlify-cli@${{ env.NETLIFY_VERSION }}"
 
       - name: Run netlify CLI deployment
-        if: needs.changes.outputs.changed == 'true'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: "netlify deploy --build --prod --message \"${{ github.event.head_commit.id }}: ${{ github.event.head_commit.message }}\""

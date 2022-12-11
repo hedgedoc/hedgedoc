@@ -6,9 +6,9 @@ name: Setup Node
 description: "Setups node and configures the cache"
 
 inputs:
-  NODE_VERSION:
+  NODEJS_VERSION:
     required: true
-    type: string
+    description: "NodeJS version to install"
 
 runs:
   using: "composite"
@@ -23,21 +23,16 @@ runs:
       id: yarn-cache
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-${{ inputs.NODE_VERSION }}-yarn-${{ hashFiles('frontend/yarn.lock') }}
+        key: ${{ runner.os }}-${{ inputs.NODEJS_VERSION }}-yarn-${{ hashFiles('yarn.lock') }}
         restore-keys: |
-          ${{ runner.os }}-yarn-${{ inputs.NODE_VERSION }}
+          ${{ runner.os }}-yarn-${{ inputs.NODEJS_VERSION }}
 
     - name: Set up NodeJS
       uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
       with:
-        node-version: ${{ inputs.NODE_VERSION }}
+        node-version: ${{ inputs.NODEJS_VERSION }}
 
     - name: Install dependencies
       run: yarn install --immutable
       working-directory: .
-      shell: bash
-
-    - name: Build commons lib
-      run: yarn build
-      working-directory: commons
       shell: bash
