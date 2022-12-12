@@ -2226,7 +2226,7 @@ __metadata:
     "@types/bcrypt": 5.0.0
     "@types/cli-color": 2.0.2
     "@types/cookie": 0.5.1
-    "@types/cookie-signature": 1.0.4
+    "@types/cookie-signature": 1.1.0
     "@types/cron": 2.0.0
     "@types/diff": 5.0.2
     "@types/express": 4.17.14
@@ -4229,10 +4229,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/cookie-signature@npm:1.0.4":
-  version: 1.0.4
-  resolution: "@types/cookie-signature@npm:1.0.4"
-  checksum: e5ad4448e2369fc5447d6840d748f6a2488de4700458bea7902d6650bf1751dc9c98745abe75bffed745bf10ca8a0fa2f4aefe702b92b0bd8307c6e76111a9d5
+"@types/cookie-signature@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@types/cookie-signature@npm:1.1.0"
+  dependencies:
+    "@types/node": "*"
+  checksum: e0322dc81b2831e9ebc1a68b58f39912095083beb9c07238bfa0f9b941635e0062a0eacd395404d8b8e272834dee73c4d43801dc0e541a85e8450de0d737c0f3
   languageName: node
   linkType: hard
 
