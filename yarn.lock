@@ -2380,7 +2380,7 @@ __metadata:
     cypress: 11.2.0
     cypress-commands: 3.0.0
     cypress-fill-command: 1.0.2
-    d3-graphviz: 4.4.0
+    d3-graphviz: 4.5.0
     d3-selection: 3.0.0
     deepmerge: 4.2.2
     diff: 5.1.0
@@ -2486,14 +2486,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hpcc-js/wasm@npm:1.16.1":
-  version: 1.16.1
-  resolution: "@hpcc-js/wasm@npm:1.16.1"
+"@hpcc-js/wasm@npm:1.16.6":
+  version: 1.16.6
+  resolution: "@hpcc-js/wasm@npm:1.16.6"
   dependencies:
     yargs: 17.5.1
   bin:
     dot-wasm: bin/cli.js
-  checksum: b70bc1fece40e8f6c81011534b5b9bbde9123bac453d13c9642b112565f7dd85b1fb7656bec06447c78295f7c893afd1cd08dc17945d6b8f9319ba2e289f4597
+  checksum: cab04e6162cd6a6b6271326b579597109504e9545791997fe8bf8c8895f158299cc054a08b0b79ee6e084bde96600647259a2b9bdf646c3c3eee5b1334c24389
   languageName: node
   linkType: hard
 
@@ -8066,11 +8066,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-graphviz@npm:4.4.0":
-  version: 4.4.0
-  resolution: "d3-graphviz@npm:4.4.0"
+"d3-graphviz@npm:4.5.0":
+  version: 4.5.0
+  resolution: "d3-graphviz@npm:4.5.0"
   dependencies:
-    "@hpcc-js/wasm": 1.16.1
+    "@hpcc-js/wasm": 1.16.6
     d3-dispatch: ^2.0.0
     d3-format: ^2.0.0
     d3-interpolate: ^2.0.1
@@ -8080,7 +8080,7 @@ __metadata:
     d3-zoom: ^2.0.0
   peerDependencies:
     d3-selection: ^2.0.0
-  checksum: 23e7c419af3ca64e74e94e3faa6d3f2342c1f634349125e4ec17deac43e20335dbf2f86756caba1ebc83b3f19ce85ba7392bbf6e6b5b583f00ecfa0e440e2087
+  checksum: 5bf16d9c017dd2c6fad424575835191006026f9ff58bb93fc9b7571fb77dff43d73a586b1379b67a879bf33283647313cee2956bb3e795438e0300fe361f7e8f
   languageName: node
   linkType: hard
 
