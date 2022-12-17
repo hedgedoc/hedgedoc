@@ -106,7 +106,7 @@
     "xss": "^1.0.3"
   },
   "engines": {
-    "node": "^14.13.1 || 16.x"
+    "node": "^14.13.1 || 16.x || 18.x"
   },
   "bugs": "https://github.com/hedgedoc/hedgedoc/issues",
   "keywords": [
