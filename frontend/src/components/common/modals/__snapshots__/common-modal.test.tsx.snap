@@ -95,7 +95,9 @@ exports[`CommonModal render correctly with i18nTitle 1`] = `
     >
       <div
         class="modal-title h4"
-      />
+      >
+        testTitle
+      </div>
     </div>
     testText
   </div>
@@ -115,7 +117,9 @@ exports[`CommonModal render correctly with title 1`] = `
     >
       <div
         class="modal-title h4"
-      />
+      >
+        testTitle
+      </div>
     </div>
     testText
   </div>
