@@ -1758,23 +1758,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/autocomplete@npm:^6.0.0, @codemirror/autocomplete@npm:^6.3.2":
-  version: 6.3.4
-  resolution: "@codemirror/autocomplete@npm:6.3.4"
-  dependencies:
-    "@codemirror/language": ^6.0.0
-    "@codemirror/state": ^6.0.0
-    "@codemirror/view": ^6.6.0
-    "@lezer/common": ^1.0.0
-  peerDependencies:
-    "@codemirror/language": ^6.0.0
-    "@codemirror/state": ^6.0.0
-    "@codemirror/view": ^6.0.0
-    "@lezer/common": ^1.0.0
-  checksum: dafb6b3dee11551ed7a2ec1d20fa05641abefe2e0b5da045d4a3383146bb04f0b9650448a378a5921cc183944d626482a608b71f3da5a036a881a873006b8dbf
-  languageName: node
-  linkType: hard
-
 "@codemirror/commands@npm:6.1.2, @codemirror/commands@npm:^6.0.0, @codemirror/commands@npm:^6.1.0":
   version: 6.1.2
   resolution: "@codemirror/commands@npm:6.1.2"
