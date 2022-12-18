@@ -75,7 +75,7 @@ export const UiNotificationBoundary: React.FC<PropsWithChildren> = ({ children }
   )
 
   const showErrorNotification = useCallback(
-    (messageI18nKey: string, messageI18nOptions?: TOptions) =>
+    (messageI18nKey: string, messageI18nOptions: Record<string, unknown> = {}) =>
       (error: Error): void => {
         log.error(t(messageI18nKey, messageI18nOptions), error)
         void dispatchUiNotification('common.errorOccurred', messageI18nKey, {

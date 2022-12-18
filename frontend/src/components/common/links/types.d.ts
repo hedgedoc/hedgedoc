@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { IconName } from '../fork-awesome/fork-awesome-icon'
-import type { TOptions } from 'i18next'
+import type { TOptionsBase } from 'i18next'
 
 interface GeneralLinkProp {
   href: string
@@ -20,5 +20,5 @@ export interface LinkWithTextProps extends GeneralLinkProp {
 
 export interface TranslatedLinkProps extends GeneralLinkProp {
   i18nKey: string
-  i18nOption?: TOptions
+  i18nOption?: TOptionsBase & Record<string, unknown>
 }

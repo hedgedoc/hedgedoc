@@ -5,7 +5,7 @@
  */
 import { ExternalLink } from './external-link'
 import type { TranslatedLinkProps } from './types'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 /**
@@ -17,5 +17,6 @@ import { useTranslation } from 'react-i18next'
  */
 export const TranslatedExternalLink: React.FC<TranslatedLinkProps> = ({ i18nKey, i18nOption, ...props }) => {
   const { t } = useTranslation()
-  return <ExternalLink text={t(i18nKey, i18nOption)} {...props} />
+  const text = useMemo(() => (i18nOption ? t(i18nKey, i18nOption) : t(i18nKey)), [i18nKey, i18nOption, t])
+  return <ExternalLink text={text} {...props} />
 }
