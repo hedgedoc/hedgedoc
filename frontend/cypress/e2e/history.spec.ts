@@ -91,16 +91,24 @@ describe('History', () => {
 
       it('Cards', () => {
         cy.getByCypressId('history-card').should('be.visible')
-        cy.getByCypressId('history-entry-pin-button').first().as('pin-button')
-        cy.get('@pin-button').should('have.attr', 'data-cypress-pinned', 'true').click()
-        cy.get('@pin-button').should('have.attr', 'data-cypress-pinned', 'false')
+        cy.get('[data-cypress-card-title=Features]')
+          .findByCypressId('history-entry-pin-button')
+          .should('have.attr', 'data-cypress-pinned', 'true')
+          .click()
+        cy.get('[data-cypress-card-title=Features]')
+          .findByCypressId('history-entry-pin-button')
+          .should('have.attr', 'data-cypress-pinned', 'false')
       })
 
       it('Table', () => {
         cy.getByCypressId('history-mode-table').click()
-        cy.getByCypressId('history-entry-pin-button').first().as('pin-button')
-        cy.get('@pin-button').should('have.attr', 'data-cypress-pinned', 'true').click()
-        cy.get('@pin-button').should('have.attr', 'data-cypress-pinned', 'false')
+        cy.get('[data-cypress-entry-title=Features]')
+          .findByCypressId('history-entry-pin-button')
+          .should('have.attr', 'data-cypress-pinned', 'true')
+          .click()
+        cy.get('[data-cypress-entry-title=Features]')
+          .findByCypressId('history-entry-pin-button')
+          .should('have.attr', 'data-cypress-pinned', 'false')
       })
     })
 
@@ -113,13 +121,19 @@ describe('History', () => {
 
       it('Cards', () => {
         cy.getByCypressId('history-card').should('be.visible')
-        cy.getByCypressId('history-entry-pin-button').first().click()
+        cy.get('[data-cypress-card-title=Features]')
+          .findByCypressId('history-entry-pin-button')
+          .should('have.attr', 'data-cypress-pinned', 'true')
+          .click()
         cy.getByCypressId('notification-toast').should('be.visible')
       })
 
       it('Table', () => {
         cy.getByCypressId('history-mode-table').click()
-        cy.getByCypressId('history-entry-pin-button').first().click()
+        cy.get('[data-cypress-entry-title=Features]')
+          .findByCypressId('history-entry-pin-button')
+          .should('have.attr', 'data-cypress-pinned', 'true')
+          .click()
         cy.getByCypressId('notification-toast').should('be.visible')
       })
     })

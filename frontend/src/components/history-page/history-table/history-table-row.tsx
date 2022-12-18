@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { cypressId } from '../../../utils/cypress-attribute'
+import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { EntryMenu } from '../entry-menu/entry-menu'
 import type { HistoryEntryProps, HistoryEventHandlers } from '../history-content/history-content'
 import { PinButton } from '../pin-button/pin-button'
@@ -42,7 +42,7 @@ export const HistoryTableRow: React.FC<HistoryEntryProps & HistoryEventHandlers>
   }, [onDeleteNoteClick, entry.identifier])
 
   return (
-    <tr>
+    <tr {...cypressAttribute('entry-title', entryTitle)}>
       <td>
         <Link href={`/n/${entry.identifier}`} className='text-light' {...cypressId('history-entry-title')}>
           {entryTitle}

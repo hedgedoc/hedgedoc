@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { cypressId } from '../../../utils/cypress-attribute'
+import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
 import { EntryMenu } from '../entry-menu/entry-menu'
 import type { HistoryEntryProps, HistoryEventHandlers } from '../history-content/history-content'
@@ -57,7 +57,10 @@ export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = (
   const lastVisited = useMemo(() => formatHistoryDate(entry.lastVisitedAt), [entry.lastVisitedAt])
 
   return (
-    <div className='p-2 col-xs-12 col-sm-6 col-md-6 col-lg-4' {...cypressId('history-card')}>
+    <div
+      className='p-2 col-xs-12 col-sm-6 col-md-6 col-lg-4'
+      {...cypressId('history-card')}
+      {...cypressAttribute('card-title', entryTitle)}>
       <Card className={styles['card-min-height']} text={'dark'} bg={'light'}>
         <Card.Body className='p-2 d-flex flex-row justify-content-between'>
           <div className={'d-flex flex-column'}>
