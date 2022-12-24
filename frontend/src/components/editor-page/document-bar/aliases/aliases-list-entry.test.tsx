@@ -46,7 +46,7 @@ describe('AliasesListEntry', () => {
     const view = render(<AliasesListEntry alias={testAlias} />)
     expect(view.container).toMatchSnapshot()
     const button = await screen.findByTestId('aliasButtonRemove')
-    await act(() => {
+    await act<void>(() => {
       button.click()
     })
     expect(AliasModule.deleteAlias).toBeCalledWith(testAlias.name)
@@ -63,14 +63,14 @@ describe('AliasesListEntry', () => {
     const view = render(<AliasesListEntry alias={testAlias} />)
     expect(view.container).toMatchSnapshot()
     const buttonRemove = await screen.findByTestId('aliasButtonRemove')
-    await act(() => {
+    await act<void>(() => {
       buttonRemove.click()
     })
     expect(AliasModule.deleteAlias).toBeCalledWith(testAlias.name)
     await deletePromise
     expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
     const buttonMakePrimary = await screen.findByTestId('aliasButtonMakePrimary')
-    await act(() => {
+    await act<void>(() => {
       buttonMakePrimary.click()
     })
     expect(AliasModule.markAliasAsPrimary).toBeCalledWith(testAlias.name)
