@@ -54,7 +54,7 @@
     "@redux-devtools/core": "3.13.1",
     "@reduxjs/toolkit": "1.9.1",
     "@svgr/webpack": "6.5.1",
-    "@types/katex": "0.14.0",
+    "@types/katex": "0.16.0",
     "@uiw/react-codemirror": "4.19.4",
     "abcjs": "6.1.7",
     "bootstrap": "5.2.3",

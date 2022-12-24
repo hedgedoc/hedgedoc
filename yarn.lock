@@ -2348,7 +2348,7 @@ __metadata:
     "@types/dompurify": 2.4.0
     "@types/jest": 29.2.4
     "@types/js-yaml": 4.0.5
-    "@types/katex": 0.14.0
+    "@types/katex": 0.16.0
     "@types/luxon": 3.1.0
     "@types/markdown-it": 12.2.3
     "@types/markdown-it-container": 2.0.5
@@ -4572,10 +4572,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/katex@npm:0.14.0":
-  version: 0.14.0
-  resolution: "@types/katex@npm:0.14.0"
-  checksum: 330e0d0337ba48c87f5b793965fbad673653789bf6e50dfe8d726a7b0cbefd37195055e31503aae629814aa79447e4f23a4b87ad1ac565c0d9a9d9978836f39b
+"@types/katex@npm:0.16.0":
+  version: 0.16.0
+  resolution: "@types/katex@npm:0.16.0"
+  checksum: f93ceb2496621d18a28252264c0b7f5b0bdf125f9dc92d1adfbd9bf00942cd2918de336fae628d3929e615aaf84b7adb1781711c4e4605664be0827b1013ec14
   languageName: node
   linkType: hard
 
