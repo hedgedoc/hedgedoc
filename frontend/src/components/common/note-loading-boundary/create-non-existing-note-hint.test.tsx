@@ -77,7 +77,7 @@ describe('create non existing note hint', () => {
     const onNoteCreatedCallback = jest.fn()
     const view = render(<CreateNonExistingNoteHint onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>)
     const button = await screen.findByTestId('createNoteButton')
-    await act(() => {
+    await act<void>(() => {
       button.click()
     })
     await waitFor(async () => {
@@ -92,7 +92,7 @@ describe('create non existing note hint', () => {
     const onNoteCreatedCallback = jest.fn()
     const view = render(<CreateNonExistingNoteHint onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>)
     const button = await screen.findByTestId('createNoteButton')
-    await act(() => {
+    await act<void>(() => {
       button.click()
     })
     await waitFor(async () => {
@@ -107,7 +107,7 @@ describe('create non existing note hint', () => {
     const onNoteCreatedCallback = jest.fn()
     const view = render(<CreateNonExistingNoteHint onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>)
     const button = await screen.findByTestId('createNoteButton')
-    await act(() => {
+    await act<void>(() => {
       button.click()
     })
     await waitFor(async () => {

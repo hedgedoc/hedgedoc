@@ -39,7 +39,7 @@ describe('Copy to clipboard button', () => {
     const view = render(copyToClipboardButton)
     expect(view.container).toMatchSnapshot()
     const button = await screen.findByTitle('renderer.highlightCode.copyCode')
-    await act(() => {
+    await act<void>(() => {
       button.click()
     })
     const tooltip = await screen.findByRole('tooltip')
