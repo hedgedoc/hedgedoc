@@ -1991,10 +1991,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/state@npm:6.1.4":
-  version: 6.1.4
-  resolution: "@codemirror/state@npm:6.1.4"
-  checksum: ef6bc495d3b89d2f0202b6b1c0fc3e3610f8d815f4ca91f86153d6093c9b93ddbe2cfb787802d07514a7114f0b200cf2eeb54c1cd34d7e00eff774ecea97d845
+"@codemirror/state@npm:6.2.0":
+  version: 6.2.0
+  resolution: "@codemirror/state@npm:6.2.0"
+  checksum: fdc99c773dc09c700dd02bf918f06132aa8d3069c262cc4eb6ca5c810ce24ae2d7e90719ae7630a8158fd263018de6d40bd78f312e6bfba754e737b64e6c6b3d
   languageName: node
   linkType: hard
 
@@ -2328,7 +2328,7 @@ __metadata:
     "@codemirror/language": 6.3.2
     "@codemirror/language-data": 6.1.0
     "@codemirror/lint": 6.1.0
-    "@codemirror/state": 6.1.4
+    "@codemirror/state": 6.2.0
     "@codemirror/theme-one-dark": 6.1.0
     "@codemirror/view": 6.7.1
     "@fontsource/source-sans-pro": 4.5.11
