@@ -10,7 +10,7 @@
   "packageManager": "yarn@3.3.1",
   "resolutions": {
     "domhandler": "5.0.3",
-    "@codemirror/state": "6.1.4",
+    "@codemirror/state": "6.2.0",
     "@codemirror/autocomplete": "6.4.0",
     "@codemirror/view": "6.7.1",
     "@codemirror/language": "6.3.2",
