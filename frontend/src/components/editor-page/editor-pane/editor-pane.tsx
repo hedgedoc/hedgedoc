@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { useBaseUrl, ORIGIN } from '../../../hooks/common/use-base-url'
 import { useDarkModeState } from '../../../hooks/common/use-dark-mode-state'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { findLanguageByCodeBlockName } from '../../markdown-renderer/extensions/base/code-block-markdown-extension/find-language-by-code-block-name'
@@ -129,6 +130,8 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
 
   const darkModeActivated = useDarkModeState()
 
+  const editorOrigin = useBaseUrl(ORIGIN.EDITOR)
+
   return (
     <div
       className={`d-flex flex-column h-100 position-relative`}
@@ -140,7 +143,7 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
       <ToolBar />
       <ReactCodeMirror
         editable={firstUpdateHappened && connectionSynced}
-        placeholder={t('editor.placeholder') ?? ''}
+        placeholder={t('editor.placeholder', { host: editorOrigin }) ?? ''}
         extensions={extensions}
         width={'100%'}
         height={'100%'}
