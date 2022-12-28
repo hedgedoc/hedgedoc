@@ -106,6 +106,13 @@ describe('Media', () => {
           .expect('Content-Type', /json/)
           .expect(500);
       });
+      it('no media uploaded', async () => {
+        await agent
+          .post('/api/private/media')
+          .set('HedgeDoc-Note', 'test_upload_media')
+          .expect(400);
+        await expect(fs.access(uploadPath)).rejects.toBeDefined();
+      });
       afterEach(async () => {
         await ensureDeleted(uploadPath);
       });
