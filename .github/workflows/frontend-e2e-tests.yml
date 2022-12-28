@@ -65,7 +65,7 @@ jobs:
 
       - name: Cache build
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         id: build-cache
         with:
           path: frontend/.next
@@ -112,7 +112,7 @@ jobs:
 
       - name: Cache build
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         id: build-cache
         with:
           path: frontend/.next
