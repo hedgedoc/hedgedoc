@@ -30,15 +30,7 @@ export const GraphvizFrame: React.FC<CodeProps> = ({ code }) => {
     value: graphvizImport,
     error: libLoadingError,
     loading: isLibLoading
-  } = useAsync(
-    async () =>
-      import(/* webpackChunkName: "d3-graphviz" */ '@hpcc-js/wasm')
-        .then((wasmPlugin) => {
-          wasmPlugin.wasmFolder(`${basePath}/_next/static/js`)
-        })
-        .then(() => import(/* webpackChunkName: "d3-graphviz" */ 'd3-graphviz')),
-    []
-  )
+  } = useAsync(() => import(/* webpackChunkName: "d3-graphviz" */ 'd3-graphviz'), [])
 
   const showError = useCallback((error: string) => {
     if (!container.current) {
