@@ -96,6 +96,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - Note tags can be set as yaml-array in frontmatter.
 - If only one external login provider is configured, the sign-in button will directly link to it.
 - Links in Gist-Frames work only if explicitly opened in new tabs.
+- Changed default editor-placeholder to include the full url to the /features-page as new users might not find it otherwise.
 
 ---
 

@@ -233,7 +233,7 @@
       "failed": "Error while uploading {{fileName}}"
     },
     "untitledNote": "Untitled",
-    "placeholder": "← Start by entering a title here\n===\nVisit the features page if you don't know what to do.\nHappy hacking :)",
+    "placeholder": "← Start by entering a title here\n===\nVisit {{host}}features if you don't know what to do.\nHappy hacking :)",
     "infoToc": "Structure your note with headings to see a table-of-contents here.",
     "help": {
       "shortcuts": {
