@@ -58,14 +58,11 @@ const rawNextConfig = {
       ]
     })
 
-    const wasmModulePath = path.dirname(require.resolve('@hpcc-js/wasm'))
     const emojiPickerDataModulePath = path.dirname(require.resolve('emoji-picker-element-data/en/emojibase/data.json'))
 
     config.plugins.push(
       new CopyWebpackPlugin({
         patterns: [
-          { from: path.join(wasmModulePath, 'graphvizlib.wasm'), to: 'static/js' },
-          { from: path.join(wasmModulePath, 'expatlib.wasm'), to: 'static/js' },
           {
             from: emojiPickerDataModulePath,
             to: 'static/js/emoji-data.json'
