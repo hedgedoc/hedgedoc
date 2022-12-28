@@ -93,6 +93,10 @@ export abstract class WindowPostMessageCommunicator<
     this.communicationEnabled = true
   }
 
+  public isCommunicationEnabled(): boolean {
+    return this.communicationEnabled
+  }
+
   /**
    * Sends a message to the message target.
    *

@@ -21,7 +21,12 @@ export const useSendScrollState = (scrollState: ScrollState | undefined): void =
   const rendererReady = useApplicationState((state) => state.rendererStatus.rendererReady)
 
   useEffect(() => {
-    if (rendererReady && scrollState && !equal(scrollState, oldScrollState.current)) {
+    if (
+      iframeCommunicator.isCommunicationEnabled() &&
+      rendererReady &&
+      scrollState &&
+      !equal(scrollState, oldScrollState.current)
+    ) {
       oldScrollState.current = scrollState
       iframeCommunicator.sendMessageToOtherSide({ type: CommunicationMessageType.SET_SCROLL_STATE, scrollState })
     }
