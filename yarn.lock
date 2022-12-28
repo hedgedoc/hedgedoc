@@ -1764,18 +1764,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/commands@npm:^6.0.0, @codemirror/commands@npm:^6.1.0":
-  version: 6.1.2
-  resolution: "@codemirror/commands@npm:6.1.2"
-  dependencies:
-    "@codemirror/language": ^6.0.0
-    "@codemirror/state": ^6.0.0
-    "@codemirror/view": ^6.0.0
-    "@lezer/common": ^1.0.0
-  checksum: 3e00b02ea12a5bb8a07162aea006e13e6dcbf9be8535e2fd645dd75634f39d8de2d18bb6ccf302fd22bd0956e38490ccf0bafc60d44945df19e449876b09a0df
-  languageName: node
-  linkType: hard
-
 "@codemirror/lang-cpp@npm:^6.0.0":
   version: 6.0.2
   resolution: "@codemirror/lang-cpp@npm:6.0.2"
@@ -1850,7 +1838,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/lang-markdown@npm:6.0.5, @codemirror/lang-markdown@npm:^6.0.0":
+"@codemirror/lang-markdown@npm:6.0.5":
   version: 6.0.5
   resolution: "@codemirror/lang-markdown@npm:6.0.5"
   dependencies:
@@ -1981,7 +1969,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/lint@npm:6.1.0, @codemirror/lint@npm:^6.0.0":
+"@codemirror/lint@npm:6.1.0":
   version: 6.1.0
   resolution: "@codemirror/lint@npm:6.1.0"
   dependencies:
@@ -2010,7 +1998,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/theme-one-dark@npm:6.1.0, @codemirror/theme-one-dark@npm:^6.0.0":
+"@codemirror/theme-one-dark@npm:6.1.0":
   version: 6.1.0
   resolution: "@codemirror/theme-one-dark@npm:6.1.0"
   dependencies:
