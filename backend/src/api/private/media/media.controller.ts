@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
+  BadRequestException,
   Controller,
   Delete,
   Param,
@@ -73,12 +74,15 @@ export class MediaController {
     500,
   )
   async uploadMedia(
-    @UploadedFile() file: MulterFile,
+    @UploadedFile() file: MulterFile | undefined,
     @RequestNote() note: Note,
     @RequestUser() user: User,
   ): Promise<MediaUploadDto> {
+    if (file === undefined) {
+      throw new BadRequestException('Request does not contain a file');
+    }
     this.logger.debug(
-      `Recieved filename '${file.originalname}' for note '${note.id}' from user '${user.username}'`,
+      `Received filename '${file.originalname}' for note '${note.id}' from user '${user.username}'`,
       'uploadMedia',
     );
     const upload = await this.mediaService.saveFile(file.buffer, user, note);
