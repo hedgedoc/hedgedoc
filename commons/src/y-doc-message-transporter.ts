@@ -82,9 +82,10 @@ export abstract class YDocMessageTransporter extends EventEmitter2 {
         break
       case MessageType.COMPLETE_AWARENESS_STATE_REQUEST:
         this.send(
-          encodeAwarenessUpdateMessage(this.awareness, [
-            ...this.awareness.getStates().keys()
-          ])
+          encodeAwarenessUpdateMessage(
+            this.awareness,
+            Array.from(this.awareness.getStates().keys())
+          )
         )
         break
       case MessageType.AWARENESS_UPDATE:
