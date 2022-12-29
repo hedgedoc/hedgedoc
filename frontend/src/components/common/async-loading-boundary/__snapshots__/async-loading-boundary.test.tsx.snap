@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Async loading boundary shows a waiting spinner if loading 1`] = `
+<div>
+  <div
+    class="m-3 d-flex align-items-center justify-content-center"
+  >
+    <i
+      class="fa  fa-spinner fa-spin "
+    />
+  </div>
+</div>
+`;
+
+exports[`Async loading boundary shows an error if error is given with loading 1`] = `
+<div>
+  <div
+    class="fade alert alert-danger show"
+    role="alert"
+  >
+    common.errorWhileLoading
+  </div>
+</div>
+`;
+
+exports[`Async loading boundary shows an error if error is given without loading 1`] = `
+<div>
+  <div
+    class="fade alert alert-danger show"
+    role="alert"
+  >
+    common.errorWhileLoading
+  </div>
+</div>
+`;
+
+exports[`Async loading boundary shows the children if not loading and no error 1`] = `
+<div>
+  children
+</div>
+`;

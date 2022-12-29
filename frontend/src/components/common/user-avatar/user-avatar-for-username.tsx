@@ -5,7 +5,7 @@
  */
 import { getUser } from '../../../api/users'
 import type { UserInfo } from '../../../api/users/types'
-import { AsyncLoadingBoundary } from '../async-loading-boundary'
+import { AsyncLoadingBoundary } from '../async-loading-boundary/async-loading-boundary'
 import type { UserAvatarProps } from './user-avatar'
 import { UserAvatar } from './user-avatar'
 import React from 'react'

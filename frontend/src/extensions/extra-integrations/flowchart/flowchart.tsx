@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import fontStyles from '../../../../global-styles/variables.module.scss'
-import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary'
+import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary/async-loading-boundary'
 import { ShowIf } from '../../../components/common/show-if/show-if'
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
 import { useDarkModeState } from '../../../hooks/common/use-dark-mode-state'

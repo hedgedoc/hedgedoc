@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { createNote } from '../api/notes'
-import { AsyncLoadingBoundary } from '../components/common/async-loading-boundary'
+import { LoadingScreen } from '../components/application-loader/loading-screen/loading-screen'
+import { CustomAsyncLoadingBoundary } from '../components/common/async-loading-boundary/custom-async-loading-boundary'
 import { Redirect } from '../components/common/redirect'
 import { CommonErrorPage } from '../components/error-pages/common-error-page'
 import { useSingleStringUrlParameter } from '../hooks/common/use-single-string-url-parameter'
@@ -22,10 +23,10 @@ export const NewNotePage: NextPage = () => {
   }, [newContent])
 
   return (
-    <AsyncLoadingBoundary
+    <CustomAsyncLoadingBoundary
       loading={loading}
-      componentName={'NewNotePage'}
       error={error}
+      loadingComponent={<LoadingScreen />}
       errorComponent={
         <CommonErrorPage
           titleI18nKey={'errors.noteCreationFailed.title'}
@@ -33,7 +34,7 @@ export const NewNotePage: NextPage = () => {
         />
       }>
       {value ? <Redirect to={`/n/${value.metadata.primaryAddress}`} /> : null}
-    </AsyncLoadingBoundary>
+    </CustomAsyncLoadingBoundary>
   )
 }
 

@@ -3,9 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { WaitSpinner } from './wait-spinner/wait-spinner'
-import type { PropsWithChildren, ReactNode } from 'react'
-import React, { Fragment } from 'react'
+import { WaitSpinner } from '../wait-spinner/wait-spinner'
+import { CustomAsyncLoadingBoundary } from './custom-async-loading-boundary'
+import type { PropsWithChildren } from 'react'
+import React, { Fragment, useMemo } from 'react'
 import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -13,7 +14,6 @@ export interface AsyncLoadingBoundaryProps {
   loading: boolean
   error?: Error | boolean
   componentName: string
-  errorComponent?: ReactNode
 }
 
 /**
@@ -30,22 +30,27 @@ export const AsyncLoadingBoundary: React.FC<PropsWithChildren<AsyncLoadingBounda
   loading,
   error,
   componentName,
-  errorComponent,
   children
 }) => {
   useTranslation()
-  if (error !== undefined && error !== false) {
-    if (errorComponent) {
-      return <Fragment>{errorComponent}</Fragment>
-    }
-    return (
+
+  const errorComponent = useMemo(() => {
+    return error ? (
       <Alert variant={'danger'}>
         <Trans i18nKey={'common.errorWhileLoading'} values={{ name: componentName }} />
       </Alert>
+    ) : (
+      <Fragment></Fragment>
     )
-  } else if (loading) {
-    return <WaitSpinner />
-  } else {
-    return <Fragment>{children}</Fragment>
-  }
+  }, [componentName, error])
+
+  return (
+    <CustomAsyncLoadingBoundary
+      loading={loading}
+      error={error}
+      errorComponent={errorComponent}
+      loadingComponent={<WaitSpinner />}>
+      {children}
+    </CustomAsyncLoadingBoundary>
+  )
 }
