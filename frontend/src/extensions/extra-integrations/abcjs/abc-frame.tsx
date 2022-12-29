@@ -49,7 +49,7 @@ export const AbcFrame: React.FC<CodeProps> = ({ code }) => {
   }, [code, abcLib])
 
   return (
-    <AsyncLoadingBoundary loading={loading} error={!!loadingError} componentName={'abc.js'}>
+    <AsyncLoadingBoundary loading={loading || !abcLib} error={!!loadingError} componentName={'abc.js'}>
       <ShowIf condition={!!renderError}>
         <Alert variant={'danger'}>
           <Trans i18nKey={'editor.embeddings.abcJs.errorWhileRendering'} />

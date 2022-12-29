@@ -70,7 +70,7 @@ export const FlowChart: React.FC<CodeProps> = ({ code }) => {
   }, [code, darkModeActivated, flowchartLib])
 
   return (
-    <AsyncLoadingBoundary loading={loading} componentName={'flowchart.js'} error={!!libLoadingError}>
+    <AsyncLoadingBoundary loading={loading || !flowchartLib} componentName={'flowchart.js'} error={!!libLoadingError}>
       <ShowIf condition={syntaxError}>
         <Alert variant={'danger'}>
           <Trans i18nKey={'renderer.flowchart.invalidSyntax'} />

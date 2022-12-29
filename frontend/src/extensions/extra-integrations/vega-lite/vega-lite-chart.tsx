@@ -58,7 +58,7 @@ export const VegaLiteChart: React.FC<CodeProps> = ({ code }) => {
   }, [renderingError])
 
   return (
-    <AsyncLoadingBoundary loading={libLoading} error={libLoadingError} componentName={'Vega Lite'}>
+    <AsyncLoadingBoundary loading={libLoading || !vegaEmbed} error={libLoadingError} componentName={'Vega Lite'}>
       <ShowIf condition={!!renderingError}>
         <Alert variant={'danger'}>
           <Trans i18nKey={'renderer.vega-lite.errorJson'} />

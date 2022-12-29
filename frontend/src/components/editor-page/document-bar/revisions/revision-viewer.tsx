@@ -51,7 +51,7 @@ export const RevisionViewer: React.FC<RevisionViewerProps> = ({ selectedRevision
   }
 
   return (
-    <AsyncLoadingBoundary loading={loading} componentName={'RevisionViewer'} error={error}>
+    <AsyncLoadingBoundary loading={loading || !value} componentName={'RevisionViewer'} error={error}>
       <ReactDiffViewer
         oldValue={previousRevisionContent ?? ''}
         newValue={value?.content ?? ''}
