@@ -4,44 +4,6 @@ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-# Setting up the frontend
-
-Follow the preparation instructions in [getting started](../getting-started.md)
-
-## Development mode
-
-### Mocked Backend Mode
-
-To start the development mode run `yarn run dev`. If not configured otherwise the development mode will run in mock-mode
-which
-emulates a HedgeDoc backend.
-The app should run now and be available under [http://localhost:3001](http://localhost:3001) in your browser.
-In development mode the app will autoload changes you make to the code.
-
-### With local backend
-
-To start the development mode with an actual HedgeDoc backend use `yarn run dev:with-local-backend` instead.
-This task will automatically set `HD_EDITOR_BASE_URL` to `http://localhost:8080`.
-
-### Performance
-
-The development mode compiles everything on demand. So the first time you open a page in the browser it may take some
-time.
-
-## Production mode
-
-Use `yarn build` to build the app in production mode and save it into the `.next` folder. The production build is
-minimized
-and optimized for best performance. Don't edit the generated files in the `.next` folder by hand!
-
-You can run the production build using the built-in server with `yarn start`.
-You MUST provide the environment variable `HD_EDITOR_BASE_URL` with protocol, domain and (if needed) subdirectory path (
-e.g. `http://localhost:3001/`) so the app knows under which URL the frontend is available in the browser.
-
-### Production mock build
-
-It is also possible to create a production build that uses the emulated backend by using `yarn build:mock`. This is
-usually not needed except for demonstration purposes like `https://hedgedoc.dev`.
 
 ## Environment Variables
 

@@ -50,7 +50,7 @@ Google account and use it to login afterwards.
 HedgeDoc is configured with two auth providers.
 
 - A user logs in using auth provider A.
-- The backend recieves the profile information from provider A and notices that the username in the profile
+- The backend receives the profile information from provider A and notices that the username in the profile
   already exists in the database, but no identity for this provider-username combination exists.
 - The backend creates a new user with another username to solve the username conflict.
 - The frontend warns the user that the username provided by the auth provider is already taken and that another
