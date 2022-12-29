@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Custom error async loading boundary shows a waiting spinner if loading 1`] = `
+<div>
+  wait
+</div>
+`;
+
+exports[`Custom error async loading boundary shows an error if error is given with loading 1`] = `
+<div>
+  error
+</div>
+`;
+
+exports[`Custom error async loading boundary shows an error if error is given without loading 1`] = `
+<div>
+  error
+</div>
+`;
+
+exports[`Custom error async loading boundary shows the children if not loading and no error 1`] = `
+<div>
+  children
+</div>
+`;

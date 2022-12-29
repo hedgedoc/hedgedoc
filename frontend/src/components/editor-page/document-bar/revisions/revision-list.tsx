@@ -5,7 +5,7 @@
  */
 import { getAllRevisions } from '../../../../api/revisions'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { AsyncLoadingBoundary } from '../../../common/async-loading-boundary'
+import { AsyncLoadingBoundary } from '../../../common/async-loading-boundary/async-loading-boundary'
 import { RevisionListEntry } from './revision-list-entry'
 import { DateTime } from 'luxon'
 import React, { useMemo } from 'react'

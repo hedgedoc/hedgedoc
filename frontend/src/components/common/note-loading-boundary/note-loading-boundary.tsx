@@ -5,11 +5,12 @@
  */
 import { LoadingScreen } from '../../application-loader/loading-screen/loading-screen'
 import { CommonErrorPage } from '../../error-pages/common-error-page'
+import { CustomAsyncLoadingBoundary } from '../async-loading-boundary/custom-async-loading-boundary'
 import { ShowIf } from '../show-if/show-if'
 import { CreateNonExistingNoteHint } from './create-non-existing-note-hint'
 import { useLoadNoteFromServer } from './hooks/use-load-note-from-server'
 import type { PropsWithChildren } from 'react'
-import React, { Fragment, useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 
 /**
  * Loads the note identified by the note-id in the URL.
@@ -18,16 +19,17 @@ import React, { Fragment, useEffect } from 'react'
  *
  * @param children The react elements that will be shown when the loading was successful.
  */
-export const NoteLoadingBoundary: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
-  const [{ error, loading }, loadNoteFromServer] = useLoadNoteFromServer()
+export const NoteLoadingBoundary: React.FC<PropsWithChildren> = ({ children }) => {
+  const [{ error, loading, value }, loadNoteFromServer] = useLoadNoteFromServer()
 
   useEffect(() => {
     loadNoteFromServer()
   }, [loadNoteFromServer])
 
-  if (loading) {
-    return <LoadingScreen />
-  } else if (error) {
+  const errorComponent = useMemo(() => {
+    if (error === undefined) {
+      return <></>
+    }
     return (
       <CommonErrorPage titleI18nKey={`${error.message}.title`} descriptionI18nKey={`${error.message}.description`}>
         <ShowIf condition={error.message === 'api.note.notFound'}>
@@ -35,7 +37,15 @@ export const NoteLoadingBoundary: React.FC<PropsWithChildren<unknown>> = ({ chil
         </ShowIf>
       </CommonErrorPage>
     )
-  } else {
-    return <Fragment>{children}</Fragment>
-  }
+  }, [error, loadNoteFromServer])
+
+  return (
+    <CustomAsyncLoadingBoundary
+      loading={loading || !value}
+      error={error}
+      errorComponent={errorComponent}
+      loadingComponent={<LoadingScreen />}>
+      {children}
+    </CustomAsyncLoadingBoundary>
+  )
 }

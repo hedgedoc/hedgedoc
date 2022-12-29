@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary'
+import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary/async-loading-boundary'
 import { CopyToClipboardButton } from '../../../components/common/copyable/copy-to-clipboard-button/copy-to-clipboard-button'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { testId } from '../../../utils/test-id'

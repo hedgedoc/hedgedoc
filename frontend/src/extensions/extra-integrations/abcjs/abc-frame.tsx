@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary'
+import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary/async-loading-boundary'
 import { ShowIf } from '../../../components/common/show-if/show-if'
 import { WaitSpinner } from '../../../components/common/wait-spinner/wait-spinner'
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
