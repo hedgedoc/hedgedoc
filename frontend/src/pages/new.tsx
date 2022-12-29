@@ -24,7 +24,7 @@ export const NewNotePage: NextPage = () => {
 
   return (
     <CustomAsyncLoadingBoundary
-      loading={loading}
+      loading={loading || !value}
       error={error}
       loadingComponent={<LoadingScreen />}
       errorComponent={

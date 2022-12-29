@@ -61,7 +61,7 @@ export const GraphvizFrame: React.FC<CodeProps> = ({ code }) => {
   }, [code, basePath, showError, graphvizImport])
 
   return (
-    <AsyncLoadingBoundary loading={isLibLoading} componentName={'graphviz'} error={libLoadingError}>
+    <AsyncLoadingBoundary loading={isLibLoading || !graphvizImport} componentName={'graphviz'} error={libLoadingError}>
       <ShowIf condition={!!error}>
         <Alert variant={'warning'}>{error}</Alert>
       </ShowIf>

@@ -36,7 +36,7 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
   const wrappedDomLines = useAttachLineNumbers(codeDom, startLineNumber)
 
   return (
-    <AsyncLoadingBoundary loading={loading} error={!!error} componentName={'highlight.js'}>
+    <AsyncLoadingBoundary loading={loading || !hljsApi} error={!!error} componentName={'highlight.js'}>
       <div className={styles['code-highlighter']} {...cypressId('highlighted-code-block')}>
         <code
           {...testId('code-highlighter')}

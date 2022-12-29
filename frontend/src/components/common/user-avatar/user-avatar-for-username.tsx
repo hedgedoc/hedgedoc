@@ -38,13 +38,9 @@ export const UserAvatarForUsername: React.FC<UserAvatarForUsernameProps> = ({ us
     }
   }, [username, t])
 
-  if (!value) {
-    return null
-  }
-
   return (
-    <AsyncLoadingBoundary loading={loading} error={error} componentName={'UserAvatarForUsername'}>
-      <UserAvatar user={value} {...props} />
+    <AsyncLoadingBoundary loading={loading || !value} error={error} componentName={'UserAvatarForUsername'}>
+      <UserAvatar user={value as UserInfo} {...props} />
     </AsyncLoadingBoundary>
   )
 }

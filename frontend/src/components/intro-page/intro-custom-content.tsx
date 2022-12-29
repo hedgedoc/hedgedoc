@@ -26,7 +26,7 @@ export const IntroCustomContent: React.FC = () => {
   }, [error])
 
   return (
-    <AsyncLoadingBoundary loading={loading} error={error} componentName={'custom intro content'}>
+    <AsyncLoadingBoundary loading={loading || !value} error={error} componentName={'custom intro content'}>
       <RenderIframe
         frameClasses={'w-100 overflow-y-hidden'}
         markdownContentLines={value as string[]}

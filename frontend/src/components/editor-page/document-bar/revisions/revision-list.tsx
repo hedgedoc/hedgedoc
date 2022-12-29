@@ -55,7 +55,7 @@ export const RevisionList: React.FC<RevisionListProps> = ({ selectedRevisionId, 
   }, [loading, onRevisionSelect, revisions, selectedRevisionId])
 
   return (
-    <AsyncLoadingBoundary loading={loading} error={error} componentName={'revision list'}>
+    <AsyncLoadingBoundary loading={loading || !revisions} error={error} componentName={'revision list'}>
       <ListGroup>{revisionList}</ListGroup>
     </AsyncLoadingBoundary>
   )

@@ -14,7 +14,7 @@ import type { AsyncState } from 'react-use/lib/useAsyncFn'
  *
  * @return An {@link AsyncState async state} that represents the current state of the loading process.
  */
-export const useLoadNoteFromServer = (): [AsyncState<void>, () => void] => {
+export const useLoadNoteFromServer = (): [AsyncState<boolean>, () => void] => {
   const id = useSingleStringUrlParameter('noteId', undefined)
 
   return useAsyncFn(async () => {
@@ -23,5 +23,6 @@ export const useLoadNoteFromServer = (): [AsyncState<void>, () => void] => {
     }
     const noteFromServer = await getNote(id)
     setNoteDataFromServer(noteFromServer)
+    return true
   }, [id])
 }
