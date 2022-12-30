@@ -2235,7 +2235,7 @@ __metadata:
     "@types/pg": 8.6.6
     "@types/source-map-support": 0.5.6
     "@types/supertest": 2.0.12
-    "@types/ws": 8.5.3
+    "@types/ws": 8.5.4
     "@typescript-eslint/eslint-plugin": 5.47.1
     "@typescript-eslint/parser": 5.47.1
     "@zxcvbn-ts/core": 2.1.0
@@ -2297,7 +2297,7 @@ __metadata:
   resolution: "@hedgedoc/commons@workspace:commons"
   dependencies:
     "@jest/types": 29.3.1
-    "@types/ws": 8.5.3
+    "@types/ws": 8.5.4
     "@typescript-eslint/eslint-plugin": 5.47.1
     "@typescript-eslint/parser": 5.47.1
     eslint: 8.30.0
@@ -2362,7 +2362,7 @@ __metadata:
     "@types/sass": 1.43.1
     "@types/testing-library__jest-dom": 5.14.5
     "@types/uuid": 9.0.0
-    "@types/ws": 8.5.3
+    "@types/ws": 8.5.4
     "@typescript-eslint/eslint-plugin": 5.47.1
     "@typescript-eslint/parser": 5.47.1
     "@uiw/react-codemirror": 4.19.5
@@ -4975,12 +4975,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ws@npm:8.5.3":
-  version: 8.5.3
-  resolution: "@types/ws@npm:8.5.3"
+"@types/ws@npm:8.5.4":
+  version: 8.5.4
+  resolution: "@types/ws@npm:8.5.4"
   dependencies:
     "@types/node": "*"
-  checksum: 0ce46f850d41383fcdc2149bcacc86d7232fa7a233f903d2246dff86e31701a02f8566f40af5f8b56d1834779255c04ec6ec78660fe0f9b2a69cf3d71937e4ae
+  checksum: fefbad20d211929bb996285c4e6f699b12192548afedbe4930ab4384f8a94577c9cd421acaad163cacd36b88649509970a05a0b8f20615b30c501ed5269038d1
   languageName: node
   linkType: hard
 

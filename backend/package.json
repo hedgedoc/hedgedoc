@@ -97,7 +97,7 @@
     "@types/pg": "8.6.6",
     "@types/source-map-support": "0.5.6",
     "@types/supertest": "2.0.12",
-    "@types/ws": "8.5.3",
+    "@types/ws": "8.5.4",
     "@typescript-eslint/eslint-plugin": "5.47.1",
     "@typescript-eslint/parser": "5.47.1",
     "eslint": "8.30.0",
