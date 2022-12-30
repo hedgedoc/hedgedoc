@@ -5,8 +5,14 @@
  */
 import request from 'supertest';
 
-import { User } from '../../src/users/user.entity';
-import { TestSetup, TestSetupBuilder } from '../test-setup';
+import {
+  password1,
+  password2,
+  TestSetup,
+  TestSetupBuilder,
+  username1,
+  username2,
+} from '../test-setup';
 
 describe('Tokens', () => {
   let testSetup: TestSetup;
@@ -21,7 +27,7 @@ describe('Tokens', () => {
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
       .post('/api/private/auth/local/login')
-      .send({ username: 'testuser1', password: 'testuser1' })
+      .send({ username: username1, password: password1 })
       .expect(201);
   });
 
@@ -66,7 +72,7 @@ describe('Tokens', () => {
     const agent2 = request.agent(testSetup.app.getHttpServer());
     await agent2
       .post('/api/private/auth/local/login')
-      .send({ username: 'testuser2', password: 'testuser2' })
+      .send({ username: username2, password: password2 })
       .expect(201);
     let response = await agent2
       .delete('/api/private/tokens/' + keyId)
