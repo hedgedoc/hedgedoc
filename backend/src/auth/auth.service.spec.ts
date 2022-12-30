@@ -94,6 +94,8 @@ describe('AuthService', () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       .mockImplementation(() => createQueryBuilder);
+
+    jest.spyOn(authTokenRepo, 'find').mockResolvedValue([authToken]);
   });
 
   it('should be defined', () => {
