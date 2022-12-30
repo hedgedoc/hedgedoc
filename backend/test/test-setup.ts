@@ -20,7 +20,7 @@ import { AuthService } from '../src/auth/auth.service';
 import { MockAuthGuard } from '../src/auth/mock-auth.guard';
 import { TokenAuthGuard } from '../src/auth/token.strategy';
 import { AuthorsModule } from '../src/authors/authors.module';
-import { AppConfig } from '../src/config/app.config';
+import appConfig, { AppConfig } from '../src/config/app.config';
 import { AuthConfig } from '../src/config/auth.config';
 import { CustomizationConfig } from '../src/config/customization.config';
 import { DatabaseConfig } from '../src/config/database.config';
@@ -236,6 +236,8 @@ export class TestSetupBuilder {
         module: PrivateApiModule,
       },
     ];
+    process.env.HD_DOMAIN =
+      'https://md-' + testSetupBuilder.testId + '.example.com';
     testSetupBuilder.testingModuleBuilder = Test.createTestingModule({
       imports: [
         RouterModule.forRoutes(routes),
