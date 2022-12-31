@@ -2225,7 +2225,7 @@ __metadata:
     "@types/diff": 5.0.2
     "@types/express": 4.17.15
     "@types/express-session": 1.17.5
-    "@types/jest": 29.2.4
+    "@types/jest": 29.2.5
     "@types/minio": 7.0.15
     "@types/mysql": 2.15.21
     "@types/node": 18.11.18
@@ -2349,7 +2349,7 @@ __metadata:
     "@types/d3-graphviz": 2.6.7
     "@types/diff": 5.0.2
     "@types/dompurify": 2.4.0
-    "@types/jest": 29.2.4
+    "@types/jest": 29.2.5
     "@types/js-yaml": 4.0.5
     "@types/katex": 0.16.0
     "@types/luxon": 3.1.0
@@ -4506,13 +4506,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:*, @types/jest@npm:29.2.4":
+"@types/jest@npm:*":
   version: 29.2.4
   resolution: "@types/jest@npm:29.2.4"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
   checksum: 9deb4756fe1b438d41ff1aae7d6c216c9e49e5fe60f539f8edb6698ffeb530ff7b25d37e223439b03602ca3a7397c9c2e53e1a39c7bd616353472fce0cc04107
+  languageName: node
+  linkType: hard
+
+"@types/jest@npm:29.2.5":
+  version: 29.2.5
+  resolution: "@types/jest@npm:29.2.5"
+  dependencies:
+    expect: ^29.0.0
+    pretty-format: ^29.0.0
+  checksum: d668470f00ec4cb8b8457f1fd90f7358fad8f22d74b85006dad6be522d6b9bf10f49f597e88d1d1a518d211c1b65be32a1f27f0e49ce0658d110a9206b8ea310
   languageName: node
   linkType: hard
 
