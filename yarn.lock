@@ -2201,7 +2201,7 @@ __metadata:
     "@types/node": 18.11.18
     "@types/node-fetch": 2.6.2
     "@types/passport-http-bearer": 1.0.37
-    "@types/passport-local": 1.0.34
+    "@types/passport-local": 1.0.35
     "@types/pg": 8.6.6
     "@types/source-map-support": 0.5.6
     "@types/supertest": 2.0.12
@@ -4674,14 +4674,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/passport-local@npm:1.0.34":
-  version: 1.0.34
-  resolution: "@types/passport-local@npm:1.0.34"
+"@types/passport-local@npm:1.0.35":
+  version: 1.0.35
+  resolution: "@types/passport-local@npm:1.0.35"
   dependencies:
     "@types/express": "*"
     "@types/passport": "*"
     "@types/passport-strategy": "*"
-  checksum: c8e162f571c8685344f4496b1473645eb1244a2ecb1c810854d43ac8897145083ac7412b8d3a3231f72f27a22d57e526fc8421d8208c18cdff8f83266e875f37
+  checksum: b4ed4c40d2c7c42370c8a0ca7e18728bf3dbf2a56171d45c4f4d0281af9d91595ef9677a4f47ef10fdd5374a917b0ea64fb02d44ff4c424e48965e92915da294
   languageName: node
   linkType: hard
 
