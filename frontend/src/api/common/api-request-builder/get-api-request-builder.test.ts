@@ -7,7 +7,7 @@ import { GetApiRequestBuilder } from './get-api-request-builder'
 import { expectFetch } from './test-utils/expect-fetch'
 
 describe('GetApiRequestBuilder', () => {
-  let originalFetch: typeof global['fetch']
+  let originalFetch: (typeof global)['fetch']
 
   beforeAll(() => {
     originalFetch = global.fetch

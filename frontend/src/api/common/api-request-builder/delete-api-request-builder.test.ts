@@ -7,7 +7,7 @@ import { DeleteApiRequestBuilder } from './delete-api-request-builder'
 import { expectFetch } from './test-utils/expect-fetch'
 
 describe('DeleteApiRequestBuilder', () => {
-  let originalFetch: typeof global['fetch']
+  let originalFetch: (typeof global)['fetch']
 
   beforeAll(() => {
     originalFetch = global.fetch
