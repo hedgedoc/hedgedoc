@@ -28,7 +28,7 @@ export interface NoteDetails extends Omit<NoteMetadata, UnnecessaryNoteAttribute
   frontmatterRendererInfo: RendererFrontmatterInfo
 }
 
-export type Iso6391Language = typeof ISO6391[number]
+export type Iso6391Language = (typeof ISO6391)[number]
 
 export type OpenGraph = Record<string, string>
 
