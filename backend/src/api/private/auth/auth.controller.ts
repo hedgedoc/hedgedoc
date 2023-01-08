@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -53,7 +53,7 @@ export class AuthController {
 
   @UseGuards(RegistrationEnabledGuard)
   @Post('local')
-  @OpenApi(201, 400, 409)
+  @OpenApi(201, 400, 403, 409)
   async registerUser(
     @Req() request: RequestWithSession,
     @Body() registerDto: RegisterDto,

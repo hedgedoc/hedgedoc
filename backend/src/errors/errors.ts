@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -58,4 +58,8 @@ export class PasswordTooWeakError extends Error {
 
 export class MaximumDocumentLengthExceededError extends Error {
   name = 'MaximumDocumentLengthExceededError';
+}
+
+export class RegistrationDisabledError extends Error {
+  name = 'RegistrationDisabledError';
 }
