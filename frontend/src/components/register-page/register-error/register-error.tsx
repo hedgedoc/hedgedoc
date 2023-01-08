@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -22,6 +22,8 @@ export const RegisterError: React.FC<RegisterErrorProps> = ({ error }) => {
 
   const errorMessageI18nKey = useMemo(() => {
     switch (error) {
+      case RegisterErrorType.PASSWORD_TOO_WEAK:
+        return 'login.register.error.passwordTooWeak'
       case RegisterErrorType.REGISTRATION_DISABLED:
         return 'login.register.error.registrationDisabled'
       case RegisterErrorType.USERNAME_EXISTING:

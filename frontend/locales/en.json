@@ -561,7 +561,8 @@
         "message": "Your account has been registered successfully. You can now log in with your username and password."
       },
       "error": {
-        "registrationDisabled": "The registration is disabled",
+        "passwordTooWeak": "The password is too weak.",
+        "registrationDisabled": "The registration is disabled.",
         "usernameExisting": "There is already an account with this username.",
         "other": "There was an error while registering your account. Just try it again."
       }

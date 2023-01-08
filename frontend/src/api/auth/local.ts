@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -36,6 +36,7 @@ export const doLocalLogin = async (username: string, password: string): Promise<
  * @param username The username of the new user.
  * @param displayName The display name of the new user.
  * @param password The password of the new user.
+ * @throws {RegisterError.PASSWORD_TOO_WEAK} when the backend deems the password too weak.
  * @throws {RegisterError.USERNAME_EXISTING} when there is already an existing user with the same username.
  * @throws {RegisterError.REGISTRATION_DISABLED} when the registration of local users has been disabled on the backend.
  * @throws {Error} when the api request wasn't successful.
@@ -48,7 +49,8 @@ export const doLocalRegister = async (username: string, displayName: string, pas
       password
     })
     .withStatusCodeErrorMapping({
-      400: RegisterError.REGISTRATION_DISABLED,
+      400: RegisterError.PASSWORD_TOO_WEAK,
+      403: RegisterError.REGISTRATION_DISABLED,
       409: RegisterError.USERNAME_EXISTING
     })
     .sendRequest()
