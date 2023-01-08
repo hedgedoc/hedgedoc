@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,9 +7,11 @@ import { ConsoleLoggerService } from './console-logger.service';
 
 describe('sanitize', () => {
   it('removes non-printable ASCII character', () => {
-    for (let i = 0; i++; i < 32) {
-      const hexString = i.toString(16);
-      expect(ConsoleLoggerService.sanitize(`a${hexString}b`)).toEqual('ab');
+    for (let i = 0; i < 32; i++) {
+      const nonPrintableString = String.fromCharCode(i);
+      expect(ConsoleLoggerService.sanitize(`a${nonPrintableString}b`)).toEqual(
+        'ab',
+      );
     }
   });
   it('replaces non-zero-width space with space', () => {
