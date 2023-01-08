@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { ContentEdits } from './changes'
 import { replaceSelection } from './replace-selection'
+import type { ContentEdits } from './types/changes'
 
 describe('replace selection', () => {
   it('inserts a text after the from-cursor if no to-cursor is present', () => {
