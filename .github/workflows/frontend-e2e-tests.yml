@@ -36,12 +36,12 @@ jobs:
     outputs:
       changed: ${{ github.event_name == 'push' || steps.changed.outputs.files }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
         if: github.event_name != 'push'
 
       - name: Check for frontend file changes
         if: github.event_name != 'push'
-        uses: dorny/paths-filter@v2
+        uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
         id: changed
         with:
           filters: |
@@ -59,13 +59,13 @@ jobs:
     steps:
       - name: Check out repo
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/checkout@v3
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
         with:
           ref: ${{ env.HEAD_COMMIT_HASH }}
 
       - name: Cache build
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/cache@v3.2.2
+        uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         id: build-cache
         with:
           path: frontend/.next
@@ -81,7 +81,7 @@ jobs:
         if: steps.build-cache.outputs.cache-hit != 'true' && needs.changes.outputs.changed == 'true'
         run: yarn build:test
 
-      - uses: actions/upload-artifact@master
+      - uses: actions/upload-artifact@0c366cb4fc8897159c94880f94b55bc716ad6a66 # master
         if: needs.changes.outputs.changed == 'true'
         with:
           retention-days: 1
@@ -108,11 +108,11 @@ jobs:
     steps:
       - name: Check out repo
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/checkout@v3
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
 
       - name: Cache build
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/cache@v3.2.2
+        uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         id: build-cache
         with:
           path: frontend/.next
@@ -125,7 +125,7 @@ jobs:
 
       - name: Cache yarn cache
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/cache@v3
+        uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -135,7 +135,7 @@ jobs:
 
       - name: Set up NodeJS
         if: steps.build-cache.outputs.cache-hit != 'true' && needs.changes.outputs.changed == 'true'
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           node-version: ${{ env.NODE_VERSION }}
 
@@ -145,7 +145,7 @@ jobs:
 
       - name: Download built frontend
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@2a5974104b6d5dbdb2f9468a3e54da3bdd241578 # master
         with:
           name: e2e-build
           path: frontend/.next
@@ -167,7 +167,7 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/upload-artifact@master
+      - uses: actions/upload-artifact@0c366cb4fc8897159c94880f94b55bc716ad6a66 # master
         if: needs.changes.outputs.changed == 'true'
         with:
           name: screenshots
