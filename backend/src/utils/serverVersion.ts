@@ -22,11 +22,15 @@ export async function getServerVersionFromPackageJson(): Promise<ServerVersion> 
     const versionParts: number[] = packageInfo.version
       .split('.')
       .map((x) => parseInt(x, 10));
+    const preRelease = 'dev'; // TODO: Replace this?
     versionCache = {
       major: versionParts[0],
       minor: versionParts[1],
       patch: versionParts[2],
-      preRelease: 'dev', // TODO: Replace this?
+      preRelease: preRelease,
+      fullString: `${versionParts[0]}.${versionParts[1]}.${versionParts[2]}${
+        preRelease ? '-' + preRelease : ''
+      }`,
     };
   }
 
