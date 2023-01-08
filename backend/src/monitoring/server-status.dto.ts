@@ -18,6 +18,8 @@ export class ServerVersion {
   preRelease?: string;
   @ApiProperty()
   commit?: string;
+  @ApiProperty()
+  fullString: string;
 }
 
 export class ServerStatusDto extends BaseDto {

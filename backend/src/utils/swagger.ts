@@ -8,12 +8,13 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { PrivateApiModule } from '../api/private/private-api.module';
 import { PublicApiModule } from '../api/public/public-api.module';
+import { getServerVersionFromPackageJson } from './serverVersion';
 
-export function setupPublicApiDocs(app: INestApplication): void {
+export async function setupPublicApiDocs(app: INestApplication): Promise<void> {
+  const version = await getServerVersionFromPackageJson();
   const publicApiOptions = new DocumentBuilder()
     .setTitle('HedgeDoc Public API')
-    // TODO: Use real version
-    .setVersion('2.0-dev')
+    .setVersion(version.fullString)
     .addSecurity('token', {
       type: 'http',
       scheme: 'bearer',
@@ -25,11 +26,13 @@ export function setupPublicApiDocs(app: INestApplication): void {
   SwaggerModule.setup('apidoc', app, publicApi);
 }
 
-export function setupPrivateApiDocs(app: INestApplication): void {
+export async function setupPrivateApiDocs(
+  app: INestApplication,
+): Promise<void> {
+  const version = await getServerVersionFromPackageJson();
   const privateApiOptions = new DocumentBuilder()
     .setTitle('HedgeDoc Private API')
-    // TODO: Use real version
-    .setVersion('2.0-dev')
+    .setVersion(version.fullString)
     .build();
 
   const privateApi = SwaggerModule.createDocument(app, privateApiOptions, {
