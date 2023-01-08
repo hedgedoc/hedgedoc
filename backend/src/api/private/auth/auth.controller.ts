@@ -58,6 +58,7 @@ export class AuthController {
     @Req() request: RequestWithSession,
     @Body() registerDto: RegisterDto,
   ): Promise<void> {
+    await this.identityService.checkPasswordStrength(registerDto.password);
     const user = await this.usersService.createUser(
       registerDto.username,
       registerDto.displayName,
