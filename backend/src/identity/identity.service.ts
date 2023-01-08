@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -197,7 +197,7 @@ export class IdentityService {
    * @param {string} password - the password to check
    * @throws {PasswordTooWeakError} the password is too weak
    */
-  private async checkPasswordStrength(password: string): Promise<void> {
+  async checkPasswordStrength(password: string): Promise<void> {
     const result = await zxcvbnAsync(password);
     if (result.score < this.authConfig.local.minimalPasswordStrength) {
       throw new PasswordTooWeakError();

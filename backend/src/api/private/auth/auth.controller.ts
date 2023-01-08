@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -58,6 +58,7 @@ export class AuthController {
     @Req() request: RequestWithSession,
     @Body() registerDto: RegisterDto,
   ): Promise<void> {
+    await this.identityService.checkPasswordStrength(registerDto.password);
     const user = await this.usersService.createUser(
       registerDto.username,
       registerDto.displayName,
