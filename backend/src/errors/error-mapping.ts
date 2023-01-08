@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,6 +8,7 @@ import {
   BadRequestException,
   Catch,
   ConflictException,
+  ForbiddenException,
   InternalServerErrorException,
   NotFoundException,
   PayloadTooLargeException,
@@ -74,6 +75,10 @@ const mapOfHedgeDocErrorsToHttpErrors: Map<string, HttpExceptionConstructor> =
     [
       'MaximumDocumentLengthExceededError',
       (object): HttpException => new PayloadTooLargeException(object),
+    ],
+    [
+      'RegistrationDisabledError',
+      (object): HttpException => new ForbiddenException(object),
     ],
   ]);
 
