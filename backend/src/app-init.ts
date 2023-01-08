@@ -29,16 +29,16 @@ export async function setupApp(
   mediaConfig: MediaConfig,
   logger: ConsoleLoggerService,
 ): Promise<void> {
-  setupPublicApiDocs(app);
+  await setupPublicApiDocs(app);
   logger.log(
-    `Serving OpenAPI docs for public api under '/apidoc'`,
+    `Serving OpenAPI docs for public API under '/apidoc/v2'`,
     'AppBootstrap',
   );
 
   if (process.env.NODE_ENV === 'development') {
-    setupPrivateApiDocs(app);
+    await setupPrivateApiDocs(app);
     logger.log(
-      `Serving OpenAPI docs for private api under '/private/apidoc'`,
+      `Serving OpenAPI docs for private API under '/apidoc/private'`,
       'AppBootstrap',
     );
   }

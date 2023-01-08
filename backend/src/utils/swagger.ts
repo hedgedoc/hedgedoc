@@ -23,7 +23,7 @@ export async function setupPublicApiDocs(app: INestApplication): Promise<void> {
   const publicApi = SwaggerModule.createDocument(app, publicApiOptions, {
     include: [PublicApiModule],
   });
-  SwaggerModule.setup('apidoc', app, publicApi);
+  SwaggerModule.setup('apidoc/v2', app, publicApi);
 }
 
 export async function setupPrivateApiDocs(
@@ -38,5 +38,5 @@ export async function setupPrivateApiDocs(
   const privateApi = SwaggerModule.createDocument(app, privateApiOptions, {
     include: [PrivateApiModule],
   });
-  SwaggerModule.setup('private/apidoc', app, privateApi);
+  SwaggerModule.setup('apidoc/private', app, privateApi);
 }
