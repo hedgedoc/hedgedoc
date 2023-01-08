@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -92,7 +92,7 @@ describe('Auth', () => {
           .post('/api/private/auth/local')
           .set('Content-Type', 'application/json')
           .send(JSON.stringify(registrationDto))
-          .expect(400);
+          .expect(403);
         testSetup.configService.get('authConfig').local.enableRegister = true;
       });
     });
