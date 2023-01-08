@@ -30,12 +30,12 @@ jobs:
     outputs:
       changed: ${{ github.event_name == 'push' || steps.changed.outputs.files }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
         if: github.event_name != 'push'
 
       - name: Check for backend file changes
         if: github.event_name != 'push'
-        uses: dorny/paths-filter@v2
+        uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
         id: changed
         with:
           filters: |
@@ -49,7 +49,7 @@ jobs:
     needs: changes
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
         if: needs.changes.outputs.changed == 'true'
         with:
           fetch-depth: 0
@@ -84,7 +84,7 @@ jobs:
         ports:
           - 3306:3306
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
         if: needs.changes.outputs.changed == 'true'
         with:
           fetch-depth: 0
@@ -113,7 +113,7 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
         if: needs.changes.outputs.changed == 'true'
         with:
           fetch-depth: 0

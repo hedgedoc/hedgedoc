@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Cleanup CI containers
-        uses: snok/container-retention-policy@v1
+        uses: snok/container-retention-policy@6601a342b42bf08909bbd5b48736d4176100365b # v1.5.1
         with:
           image-names: hedgedoc-ci
           cut-off: A day ago UTC
