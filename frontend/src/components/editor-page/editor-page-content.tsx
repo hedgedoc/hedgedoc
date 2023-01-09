@@ -17,6 +17,7 @@ import { EditorDocumentRenderer } from './editor-document-renderer/editor-docume
 import { EditorPane } from './editor-pane/editor-pane'
 import { useComponentsFromAppExtensions } from './editor-pane/hooks/use-components-from-app-extensions'
 import { useUpdateLocalHistoryEntry } from './hooks/use-update-local-history-entry'
+import { OpengraphHead } from './opengraph-head/opengraph-head'
 import { Sidebar } from './sidebar/sidebar'
 import { Splitter } from './splitter/splitter'
 import type { DualScrollState, ScrollState } from './synced-scroll/scroll-props'
@@ -128,6 +129,7 @@ export const EditorPageContent: React.FC = () => {
         {editorExtensionComponents}
         <CommunicatorImageLightbox />
         <NoteAndAppTitleHead />
+        <OpengraphHead />
         <MotdModal />
         <div className={'d-flex flex-column vh-100'}>
           <AppBar mode={AppBarMode.EDITOR} />
